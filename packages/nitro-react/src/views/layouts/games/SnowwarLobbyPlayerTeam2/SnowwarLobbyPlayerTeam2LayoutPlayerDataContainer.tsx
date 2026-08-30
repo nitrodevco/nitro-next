@@ -36,57 +36,44 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerDataContainer = ({ captionPlayer
                 tint={tintPlayerDataBackground}
                 layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 62 }}
             />
-            <Region
+            <ThemeText
+                text={captionPlayerNameStroke ?? 'Painimies'}
+                textOptions={{ fill: strokeTextColor ?? '#666666' }}
                 name="playerName_stroke"
-                layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPlayerNameStroke ?? 'Painimies'}
-                    textOptions={{ fill: strokeTextColor ?? '#666666' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150 }}
+            />
+            <ThemeText
+                text={captionPlayerName ?? 'Painimies'}
+                textOptions={{ fill: '#ffffff' }}
                 name="playerName"
-                layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPlayerName ?? 'Painimies'}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150 }}
+            />
             <SnowwarLobbyPlayerTeam2LayoutPlayerStats {...playerStats} />
             <Region
                 name="playerTotalStats"
                 layout={{ position: 'absolute', left: 13, width: 140, top: 24, height: 35 }}
             >
-                <Region layout={{ position: 'absolute', left: 0, width: 50, top: 9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={captionTotalScoreLabel ?? t('snowwar.stats.total_score')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={captionTotalScoreLabel ?? t('snowwar.stats.total_score')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff' }}
+                    layout={{ position: 'absolute', left: 0, width: 50, top: 9, height: 17 }}
+                />
                 <Region layout={{ position: 'absolute', left: 100, width: 54, top: 9, height: 17 }}>
-                    <Region
+                    <ThemeText
+                        text={captionTotalScoreStroke ?? '20'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: strokeTextColor ?? '#cc6666' }}
                         name="totalScore_stroke"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTotalScoreStroke ?? '20'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: strokeTextColor ?? '#cc6666' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 24 }}
+                    />
+                    <ThemeText
+                        text={captionTotalScore ?? '20'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
                         name="totalScore"
-                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, bottom: 0, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTotalScore ?? '20'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, bottom: 0, minWidth: 20 }}
+                    />
                 </Region>
             </Region>
             {(visibleScoreTooltip ?? false) && (

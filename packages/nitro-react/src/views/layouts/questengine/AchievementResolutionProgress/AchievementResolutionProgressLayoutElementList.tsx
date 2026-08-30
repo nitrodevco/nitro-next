@@ -48,24 +48,19 @@ export const AchievementResolutionProgressLayoutElementList = ({ achievementBadg
                         </WidgetSlot>
                     </Region>
                     <Region layout={{ flexShrink: 0, flexDirection: 'column', gap: 5 }}>
-                        <Region
+                        <ThemeText
+                            text={captionAchievementName ?? 'Achievement name'}
+                            textStyle="text-style-il-heading-2"
                             name="achievement.name"
-                            layout={{ width: 110, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAchievementName ?? 'Achievement name'}
-                                textStyle="text-style-il-heading-2"
-                            />
-                        </Region>
-                        <Region
+                            layout={{ width: 110, height: 17, flexShrink: 0 }}
+                        />
+                        <ThemeText
+                            text={captionAchievementDesc ?? 'Achievement description'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 294 }}
                             name="achievement.desc"
-                            layout={{ width: 294, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAchievementDesc ?? 'Achievement description'}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 294 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 294, height: 16, flexShrink: 0 }}
+                        />
                         <Button
                             variant="102"
                             name="reset_button"
@@ -89,13 +84,12 @@ export const AchievementResolutionProgressLayoutElementList = ({ achievementBadg
                 >
                     {timeLeftWidget}
                 </WidgetSlot>
-                <Region layout={{ position: 'absolute', left: -11, width: 144, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <ThemeText
-                        text={t('resolution.progress.time.left')}
-                        textStyle="text-style-u-headline-small"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('resolution.progress.time.left')}
+                    textStyle="text-style-u-headline-small"
+                    textOptions={{ align: 'right' }}
+                    layout={{ position: 'absolute', left: -11, width: 144, top: 2, height: 19 }}
+                />
             </Region>
         </Region>
     );

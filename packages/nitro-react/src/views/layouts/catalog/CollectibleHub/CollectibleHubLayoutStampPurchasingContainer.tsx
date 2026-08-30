@@ -35,24 +35,18 @@ export const CollectibleHubLayoutStampPurchasingContainer = ({ captionMintTokenB
                     src={layoutImage('collectables_icon_curator_stamp_large.png')}
                     layout={{ position: 'absolute', left: 12, width: 48, top: 12, height: 48 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionStampsHeader ?? t('shop.minting.tokens')}
+                    textStyle="text-style-u-bold"
                     name="stamps_header"
-                    layout={{ position: 'absolute', left: 68, width: 122, top: 12, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStampsHeader ?? t('shop.minting.tokens')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 68, width: 122, top: 12, height: 18 }}
+                />
+                <ThemeText
+                    text={captionMintTokenBalance ?? '0'}
+                    textStyle="text-style-u-bold"
                     name="mint_token_balance"
-                    layout={{ position: 'absolute', left: 67, width: 21, top: 26, height: 37, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMintTokenBalance ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 67, width: 21, top: 26, height: 37 }}
+                />
             </Border>
             <Border
                 variant="3"
@@ -61,15 +55,12 @@ export const CollectibleHubLayoutStampPurchasingContainer = ({ captionMintTokenB
                 layout={{ position: 'absolute', left: 246, width: 200, top: 14, height: 72 }}
             >
                 <Region layout={{ position: 'absolute', right: 4, top: 4, flexDirection: 'row', gap: 6 }}>
-                    <Region
+                    <ThemeText
+                        text={captionStampsHeader2 ?? t('collectibles.buy.mint.tokens')}
+                        textStyle="text-style-u-bold"
                         name="stamps_header"
-                        layout={{ width: 100, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionStampsHeader2 ?? t('collectibles.buy.mint.tokens')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
+                        layout={{ width: 100, height: 17, flexShrink: 0 }}
+                    />
                     {/* `border` is hidden and has no name to show it by */}
                     <Dropmenu
                         variant="0"
@@ -81,15 +72,12 @@ export const CollectibleHubLayoutStampPurchasingContainer = ({ captionMintTokenB
                     </Dropmenu>
                 </Region>
                 <Region layout={{ position: 'absolute', right: 4, top: 36, flexDirection: 'row' }}>
-                    <Region
+                    <ThemeText
+                        text={captionSilverCostText ?? '1'}
+                        textStyle="text-style-u-bold"
                         name="silver_cost_text"
-                        layout={{ width: 13, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSilverCostText ?? '1'}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
+                        layout={{ width: 13, height: 21, flexShrink: 0 }}
+                    />
                     <Region
                         name="spacing"
                         layout={{ width: 4, height: 30, flexShrink: 0 }}

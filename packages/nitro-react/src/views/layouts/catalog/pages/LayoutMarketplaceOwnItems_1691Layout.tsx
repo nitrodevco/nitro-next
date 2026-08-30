@@ -1,10 +1,10 @@
 import { BoxLayout, Region } from '#base/theme';
-import { MarketPlaceOwnItemsWidget, MarketPlaceOwnItemsWidgetProps } from '#base/views/layouts/catalog/widgets/MarketPlaceOwnItemsWidget';
+import { MarketPlaceOwnItemsWidget2, MarketPlaceOwnItemsWidget2Props } from '#base/views/layouts/catalog/widgets/MarketPlaceOwnItemsWidget2';
 
 /** Generated from `1691_layout_marketplace_own_items_xml` (layout "ctlg_marketplace", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutMarketplaceOwnItems_1691LayoutProps {
     layout?: BoxLayout;
-    marketPlaceOwnItemsWidget?: MarketPlaceOwnItemsWidgetProps;
+    marketPlaceOwnItemsWidget?: MarketPlaceOwnItemsWidget2Props;
 }
 
 export const LayoutMarketplaceOwnItems_1691Layout = ({ layout, marketPlaceOwnItemsWidget }: LayoutMarketplaceOwnItems_1691LayoutProps) => {
@@ -15,7 +15,7 @@ export const LayoutMarketplaceOwnItems_1691Layout = ({ layout, marketPlaceOwnIte
                 backgroundColor="#ffffff"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <MarketPlaceOwnItemsWidget
+                <MarketPlaceOwnItemsWidget2
                     layout={{ position: 'absolute', left: 10, right: 10, bottom: 0, height: 390 }}
                     {...marketPlaceOwnItemsWidget}
                 />

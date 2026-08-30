@@ -26,25 +26,20 @@ export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHea
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionHeaderTxt ?? t('group.homeroominfo.title')}
+                textOptions={{ fill: '#ffffff' }}
                 name="header_txt"
-                layout={{ position: 'absolute', marginLeft: -4.5, marginRight: 4.5, width: 156, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeaderTxt ?? t('group.homeroominfo.title')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', marginLeft: -4.5, marginRight: 4.5, width: 156, top: 2, height: 18 }}
+            />
+            <ThemeText
+                text={captionGroupNameTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 125 }}
                 name="group_name_txt"
-                layout={{ position: 'absolute', left: 59, width: 125, top: 27, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionGroupNameTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 125 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 59, width: 125, top: 27, height: 50 }}
+            />
             <ThemeImage
                 name="group_base_icon"
                 src={srcGroupBaseIcon ?? '${image.library.url}guilds/group_base_icon.png'}

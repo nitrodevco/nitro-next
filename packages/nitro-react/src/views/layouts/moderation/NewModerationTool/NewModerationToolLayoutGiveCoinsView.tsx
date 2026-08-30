@@ -25,15 +25,12 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
                 name="give_coins_view"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
             >
-                <Region
+                <ThemeText
+                    text={captionUserTxt ?? t('moderation.give_coins.user')}
+                    textOptions={{ fill: '#333333' }}
                     name="user_txt"
-                    layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionUserTxt ?? t('moderation.give_coins.user')}
-                        textOptions={{ fill: '#333333' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16 }}
+                />
                 <Border
                     variant="105"
                     layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
@@ -44,15 +41,12 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
                         layout={{ position: 'absolute', left: 5, right: 8, top: 5, bottom: 5 }}
                     />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionAmountTxt ?? t('moderation.give_coins.amount')}
+                    textOptions={{ fill: '#333333' }}
                     name="amount_txt"
-                    layout={{ position: 'absolute', left: 9, width: 131, top: 66, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAmountTxt ?? t('moderation.give_coins.amount')}
-                        textOptions={{ fill: '#333333' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 9, width: 131, top: 66, height: 16 }}
+                />
                 <Border
                     variant="105"
                     layout={{ position: 'absolute', left: 10, right: 142, top: 87, height: 26 }}

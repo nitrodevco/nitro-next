@@ -61,16 +61,14 @@ export const CatalogVolterLayoutCatalogMainContainer = ({ captionCatalogHeaderDe
                 src={srcCatalogHeaderImage ?? '${image.library.url}catalogue/catalog_header_roombuilder.gif'}
                 layout={{ position: 'absolute', left: 6, width: 359, top: 35, height: 70 }}
             />
-            <Region
+            <ThemeText
+                text={captionCatalogHeaderDescription ?? t('lorem.header')}
+                textStyle="text-style-u-italic"
+                textOptions={{ wordWrap: true, wordWrapWidth: 355 }}
                 name="catalog.header.description"
-                layout={{ position: 'absolute', left: 10, width: 355, top: 110, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCatalogHeaderDescription ?? t('lorem.header')}
-                    textStyle="text-style-u-italic"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 355 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, width: 355, top: 110, height: 30 }}
+            />
         </Region>
     );
 };

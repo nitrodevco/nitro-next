@@ -34,16 +34,13 @@ export const NextLtdAvailableLayout = ({ captionHeader, colorableTextColor, coun
                 >
                     {countdown}
                 </WidgetSlot>
-                <Region
+                <ThemeText
+                    text={captionHeader ?? t('landing.view.next.ltd.header')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: colorableTextColor }}
                     name="header"
-                    layout={{ position: 'absolute', left: 73, width: 151, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHeader ?? t('landing.view.next.ltd.header')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: colorableTextColor }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 73, width: 151, top: 5, height: 16 }}
+                />
                 {(visibleGet ?? false) && (
                     <Button
                         variant="100"

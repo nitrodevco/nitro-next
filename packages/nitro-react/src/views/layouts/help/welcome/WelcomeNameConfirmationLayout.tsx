@@ -17,36 +17,28 @@ export const WelcomeNameConfirmationLayout = ({ captionConfirmText, captionFinal
     return (
         <Region layout={{ position: 'relative', width: 303, height: 193, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? t('tutorial.name_change.info.confirm')}
+                    textStyle="text-style-il-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
                     name="info_text"
-                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 205, top: 29, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? t('tutorial.name_change.info.confirm')}
-                        textStyle="text-style-il-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 205, top: 29, height: 37 }}
+                />
+                <ThemeText
+                    text={captionConfirmText ?? t('tutorial.name_change.confirm')}
+                    textStyle="text-style-il-regular"
+                    textOptions={{ align: 'center' }}
                     name="confirm_text"
-                    layout={{ position: 'absolute', left: 8, right: 10, top: 78, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionConfirmText ?? t('tutorial.name_change.confirm')}
-                        textStyle="text-style-il-regular"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 8, right: 10, top: 78, height: 16 }}
+                />
+                <ThemeText
+                    text={captionFinalName ?? 'final_name'}
+                    textStyle="text-style-il-regular"
+                    textOptions={{ align: 'center' }}
                     name="final_name"
-                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 205, top: 105, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionFinalName ?? 'final_name'}
-                        textStyle="text-style-il-regular"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 205, top: 105, height: 16 }}
+                />
                 <Button
                     variant="3"
                     name="confirm_name_button"

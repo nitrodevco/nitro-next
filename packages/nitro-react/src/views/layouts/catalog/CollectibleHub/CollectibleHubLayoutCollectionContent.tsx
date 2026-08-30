@@ -24,12 +24,11 @@ export const CollectibleHubLayoutCollectionContent = ({ captionCollectionName, c
                 tintColor="#cbd1d8"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCollectionName ?? 'Collection name'}
                     name="collection_name"
-                    layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionCollectionName ?? 'Collection name'}
-                </Region>
+                    layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 21 }}
+                />
                 <Region
                     name="progress_header_container"
                     layout={{ position: 'absolute', left: 248, width: 40, top: 2, height: 26, minWidth: 40, maxWidth: 40 }}
@@ -40,15 +39,12 @@ export const CollectibleHubLayoutCollectionContent = ({ captionCollectionName, c
                         tintColor="#00910a"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionProgressText ?? '88/88'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="progress_text"
-                        layout={{ position: 'absolute', left: 2, width: 36, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionProgressText ?? '88/88'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 4, height: 17 }}
+                    />
                 </Region>
             </Border>
             <CollectibleHubLayoutPreviewContainer2 {...previewContainer} />

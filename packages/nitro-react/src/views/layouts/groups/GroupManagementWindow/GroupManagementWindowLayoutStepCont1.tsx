@@ -53,62 +53,54 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 17, width: 94, top: 110, height: 18, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionStep1MembersTxt ?? 'Members PH'}
+                    textStyle="text-style-u-bold"
                     name="step_1_members_txt"
-                    layout={{ position: 'absolute', width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStep1MembersTxt ?? 'Members PH'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 74, top: 0, height: 17 }}
+                />
             </Region>
-            <Region
+            <ThemeText
+                text={captionNameLabel ?? t('group.edit.name')}
                 name="name_label"
-                layout={{ position: 'absolute', left: 126, right: 140, top: -8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionNameLabel ?? t('group.edit.name')}
-            </Region>
+                layout={{ position: 'absolute', left: 126, right: 140, top: -8, height: 18 }}
+            />
             <TextInput
                 value={nameTxtValue}
                 onChange={setNameTxtValue}
                 maxLength={29}
                 layout={{ position: 'absolute', left: 126, right: 0, top: 14, height: 26 }}
             />
-            <Region
+            <ThemeText
+                text={captionDescLabel ?? t('group.edit.desc')}
                 name="desc_label"
-                layout={{ position: 'absolute', left: 126, right: 147, top: 52, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionDescLabel ?? t('group.edit.desc')}
-            </Region>
+                layout={{ position: 'absolute', left: 126, right: 147, top: 52, height: 18 }}
+            />
             <TextInput
                 value={descTxtValue}
                 onChange={setDescTxtValue}
                 maxLength={254}
                 layout={{ position: 'absolute', left: 126, right: 0, top: 74, height: 80 }}
             />
-            <Region
+            <ThemeText
+                text={captionBaseLabel ?? t('group.edit.base')}
                 name="base_label"
-                layout={{ position: 'absolute', left: 126, right: 146, top: 166, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionBaseLabel ?? t('group.edit.base')}
-            </Region>
+                layout={{ position: 'absolute', left: 126, right: 146, top: 166, height: 18 }}
+            />
             <Dropmenu
                 variant="0"
                 name="base_dropmenu"
                 onPointerTap={onBaseDropmenu}
                 layout={{ position: 'absolute', left: 126, right: 0, top: 188, height: 26 }}
             />
-            <Region
+            <ThemeText
+                text={captionBaseWarning ?? t('group.edit.base.warning')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 247 }}
                 name="base_warning"
-                layout={{ position: 'absolute', left: 126, right: 0, top: 214, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBaseWarning ?? t('group.edit.base.warning')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 247 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 126, right: 0, top: 214, height: 38 }}
+            />
             <Region
                 name="create_room_link_region"
                 layout={{ position: 'absolute', left: 126, width: 247, top: 252, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

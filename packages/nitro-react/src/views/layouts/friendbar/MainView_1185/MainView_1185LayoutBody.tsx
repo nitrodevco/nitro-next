@@ -39,15 +39,13 @@ export const MainView_1185LayoutBody = ({ captionRankTypeInfo, itemsButtons, lay
                     src={srcRankTypeExtendedImg ?? layoutImage('badge_rarity_badges_emblem_unique_extended.png')}
                     layout={{ position: 'absolute', left: 4, width: 65, top: 1, height: 47 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionRankTypeInfo ?? 'Players with the most unique badges.Unique badges can be obtained from exceptional events where only a single user is awarded the badge.'}
+                    textOptions={{ fill: '#222222', wordWrap: true, wordWrapWidth: 295 }}
                     name="rank_type_info"
-                    layout={{ position: 'absolute', left: 74, width: 295, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRankTypeInfo ?? 'Players with the most unique badges.Unique badges can be obtained from exceptional events where only a single user is awarded the badge.'}
-                        textOptions={{ fill: '#222222', wordWrap: true, wordWrapWidth: 295 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 74, width: 295, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 40 }}
+                />
             </Region>
             <MainView_1185LayoutRankingList {...rankingList} />
             <MainView_1185LayoutOwnContainer {...ownContainer} />

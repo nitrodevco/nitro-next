@@ -66,16 +66,13 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                                 src={srcGuideIconColor ?? layoutImage('me_menu_me_guide.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionFieldText ?? t('widget.memenu.guide')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionFieldText ?? t('widget.memenu.guide')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="guide_icon_grey"
                                 src={srcGuideIconGrey ?? layoutImage('me_menu_me_guide.png')}
@@ -93,16 +90,13 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                                 src={srcTalentsIconColor ?? layoutImage('me_menu_me_talents.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionTalentsFieldText ?? t('widget.memenu.talents')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionTalentsFieldText ?? t('widget.memenu.talents')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="talents_icon_grey"
                                 src={srcTalentsIconGrey ?? layoutImage('me_menu_me_talents.png')}
@@ -120,16 +114,13 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                                 src={srcMinimailIconColor ?? layoutImage('me_menu_me_mail.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionMinimailFieldText ?? t('widget.memenu.minimail')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionMinimailFieldText ?? t('widget.memenu.minimail')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="minimail_icon_grey"
                                 src={srcMinimailIconGrey ?? layoutImage('me_menu_me_mail.png')}
@@ -147,16 +138,13 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                                 src={srcProfileIconColor ?? layoutImage('me_menu_me_profile.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionProfileFieldText ?? t('widget.memenu.profile')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionProfileFieldText ?? t('widget.memenu.profile')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="profile_icon_grey"
                                 src={srcProfileIconGrey ?? layoutImage('me_menu_me_profile.png')}
@@ -174,16 +162,13 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                                 src={srcRoomsIconColor ?? layoutImage('me_menu_me_rooms.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionRoomsFieldText ?? t('widget.memenu.myrooms')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionRoomsFieldText ?? t('widget.memenu.myrooms')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="rooms_icon_grey"
                                 src={srcRoomsIconGrey ?? layoutImage('me_menu_me_rooms.png')}
@@ -201,16 +186,13 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                                 src={srcClothesIconColor ?? layoutImage('me_menu_me_clothing.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionClothesFieldText ?? t('widget.memenu.editavatar')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionClothesFieldText ?? t('widget.memenu.editavatar')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="clothes_icon_grey"
                                 src={srcClothesIconGrey ?? layoutImage('me_menu_me_clothing.png')}
@@ -228,16 +210,13 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                                 src={srcForumsIconColor ?? layoutImage('me_menu_me_forums.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionForumsFieldText ?? t('widget.memenu.forums')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionForumsFieldText ?? t('widget.memenu.forums')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="forums_icon_grey"
                                 src={srcForumsIconGrey ?? layoutImage('me_menu_me_forums.png')}
@@ -255,16 +234,13 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                                 src={srcCollectiblesIconColor ?? layoutImage('me_menu_me_cabinet.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionCollectiblesFieldText ?? t('memenu.collectibles')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 49, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionCollectiblesFieldText ?? t('memenu.collectibles')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 49, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="collectibles_icon_grey"
                                 src={srcCollectiblesIconGrey ?? layoutImage('me_menu_me_cabinet.png')}

@@ -69,13 +69,12 @@ export const FeedDisplayLayoutNotifications = ({ layout, onInfo, onInfoToggle, o
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, right: 15, top: 5, height: 25 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, right: 35, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                        <ThemeText
-                            text="_settings"
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff', align: 'right' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text="_settings"
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff', align: 'right' }}
+                        layout={{ position: 'absolute', left: 0, right: 35, top: 0, height: 18 }}
+                    />
                 </Region>
                 <Icon
                     variant="7"

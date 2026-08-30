@@ -49,16 +49,14 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem2 = ({ captionOptionHeading,
                 </Region>
             )}
             {(visibleOptionHeading ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionOptionHeading ?? 'Lorem Ipsum is simply dummy'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 108 }}
                     name="option_heading"
-                    layout={{ position: 'absolute', left: 0, width: 108, top: 112, height: 24, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOptionHeading ?? 'Lorem Ipsum is simply dummy'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 108 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, width: 108, top: 112, height: 24, maxHeight: 32 }}
+                />
             )}
             {(visibleOptionButton ?? true) && (
                 <Button

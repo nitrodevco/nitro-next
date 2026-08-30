@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Dropmenu, Region } from '#base/theme';
+import { Border, BoxLayout, Dropmenu, Region, ThemeText } from '#base/theme';
 
 import { WiredMenuViewLayoutPreferencesContainer2, WiredMenuViewLayoutPreferencesContainer2Props } from './WiredMenuViewLayoutPreferencesContainer2';
 
@@ -19,12 +19,11 @@ export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, 
             name="preferences_container"
             layout={{ position: 'absolute', left: 14, width: 472, top: 237, height: 131, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTitle ?? t('wiredmenu.settings.preferences')}
                 name="title"
-                layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionTitle ?? t('wiredmenu.settings.preferences')}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 19 }}
+            />
             <Border
                 variant="3"
                 name="preferences_border"
@@ -43,9 +42,10 @@ export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, 
                     name="wored_style_container"
                     layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        {t('wiredmenu.settings.preferences.wired_style')}
-                    </Region>
+                    <ThemeText
+                        text={t('wiredmenu.settings.preferences.wired_style')}
+                        layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20 }}
+                    />
                     <Dropmenu
                         variant="3"
                         name="wired_style_picker"

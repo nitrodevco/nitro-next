@@ -35,12 +35,11 @@ export const BuilderWidgetLayout = ({ captionErrorMessage, layout, onPlaceMany, 
                 >
                     {t('builder.placement_widget.place_many')}
                 </ButtonThick>
-                <Region layout={{ position: 'absolute', left: 5, width: 143, top: 3, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('builder.placement_widget.hint')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('builder.placement_widget.hint')}
+                    textStyle="text-style-u-small"
+                    layout={{ position: 'absolute', left: 5, width: 143, top: 3, height: 15 }}
+                />
                 <Region
                     name="error_container"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25 }}
@@ -55,16 +54,13 @@ export const BuilderWidgetLayout = ({ captionErrorMessage, layout, onPlaceMany, 
                         src={srcErrorIcon ?? layoutImage('icons_builder_error_full.png')}
                         layout={{ position: 'absolute', left: 4, width: 25, top: 0, height: 25 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionErrorMessage ?? 'We have a problem!'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#de0e0a' }}
                         name="error_message"
-                        layout={{ position: 'absolute', left: 38, width: 105, top: 5, bottom: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionErrorMessage ?? 'We have a problem!'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#de0e0a' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 38, width: 105, top: 5, bottom: 4 }}
+                    />
                 </Region>
             </Region>
         </Region>

@@ -34,33 +34,25 @@ export const GamesMainLayoutTeaserContainer = ({ captionHeader, captionHeaderStr
                 name="header_text_container"
                 layout={{ position: 'absolute', left: 70, width: 279, top: 107, height: 165 }}
             >
-                <Region
+                <ThemeText
+                    text={captionHeaderStroke ?? t('snowwar.descriptionHeader')}
+                    textOptions={{ fill: '#1077ac', align: 'center' }}
                     name="header_stroke"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionHeaderStroke ?? t('snowwar.descriptionHeader')}
-                        textOptions={{ fill: '#1077ac', align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139 }}
+                />
+                <ThemeText
+                    text={captionHeader ?? t('snowwar.descriptionHeader')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="header"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionHeader ?? t('snowwar.descriptionHeader')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139 }}
+                />
+                <ThemeText
+                    text={captionHeaderTextContainerHeader ?? t('snowwar.descriptionBody')}
+                    textOptions={{ fill: '#1077ac', wordWrap: true, wordWrapWidth: 243, align: 'center' }}
                     name="header"
-                    layout={{ position: 'absolute', left: 18, right: 18, top: 30, bottom: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionHeaderTextContainerHeader ?? t('snowwar.descriptionBody')}
-                        textOptions={{ fill: '#1077ac', wordWrap: true, wordWrapWidth: 243, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 18, right: 18, top: 30, bottom: 117 }}
+                />
             </Region>
             <Region
                 name="instructions_link"

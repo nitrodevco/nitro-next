@@ -37,16 +37,13 @@ export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox
                             src="${image.library.url}/catalogue/icon_193.png"
                             layout={{ position: 'absolute', left: 8, width: 15, top: 5, height: 15 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionItemHeader ?? 'item name'}
+                            textStyle="text-style-u-headline-medium"
+                            textOptions={{ fill: '#ffffff' }}
                             name="item_header"
-                            layout={{ position: 'absolute', left: 33, width: 88, top: 2, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionItemHeader ?? 'item name'}
-                                textStyle="text-style-u-headline-medium"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 33, width: 88, top: 2, height: 21 }}
+                        />
                     </Border>
                     <Region layout={{ position: 'absolute', left: 9, width: 125, top: 45, height: 24, flexDirection: 'row', gap: 3 }}>
                         <Region

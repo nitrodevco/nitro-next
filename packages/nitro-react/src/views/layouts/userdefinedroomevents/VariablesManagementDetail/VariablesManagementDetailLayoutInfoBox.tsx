@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region, TextInput, WidgetSlot } from '#base/theme';
+import { Border, BoxLayout, Region, TextInput, ThemeText, WidgetSlot } from '#base/theme';
 
 /** Named region `info_box` of VariablesManagementDetailLayout - configured through the parent's `infoBox` prop. */
 export interface VariablesManagementDetailLayoutInfoBoxProps {
@@ -25,12 +25,11 @@ export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreview, avatarPr
             name="info_box"
             layout={{ position: 'absolute', left: 18, width: 303, top: 73, height: 114, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTitle ?? t('wiredmenu.variable_management_detail.holder_info')}
                 name="title"
-                layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionTitle ?? t('wiredmenu.variable_management_detail.holder_info')}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19 }}
+            />
             <Border
                 variant="2"
                 name="preview"

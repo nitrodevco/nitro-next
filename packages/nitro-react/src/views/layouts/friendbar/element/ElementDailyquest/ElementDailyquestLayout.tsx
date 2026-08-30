@@ -38,15 +38,12 @@ export const ElementDailyquestLayout = ({ captionHardRegionLabelTxt, captionLabe
                             cursor="pointer"
                             layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 18 }}
                         >
-                            <Region
+                            <ThemeText
+                                text={captionLabelTxt ?? t('landing.view.quest.easy')}
+                                textOptions={{ fill: colorableTextColor }}
                                 name="label_txt"
-                                layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionLabelTxt ?? t('landing.view.quest.easy')}
-                                    textOptions={{ fill: colorableTextColor }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14 }}
+                            />
                         </Region>
                         <ThemeImage
                             name="divider"
@@ -59,15 +56,12 @@ export const ElementDailyquestLayout = ({ captionHardRegionLabelTxt, captionLabe
                             cursor="pointer"
                             layout={{ position: 'absolute', left: 112, width: 99, top: 0, height: 18 }}
                         >
-                            <Region
+                            <ThemeText
+                                text={captionHardRegionLabelTxt ?? t('landing.view.quest.hard')}
+                                textOptions={{ fill: colorableTextColor }}
                                 name="label_txt"
-                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionHardRegionLabelTxt ?? t('landing.view.quest.hard')}
-                                    textOptions={{ fill: colorableTextColor }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 14 }}
+                            />
                         </Region>
                     </Region>
                 )}

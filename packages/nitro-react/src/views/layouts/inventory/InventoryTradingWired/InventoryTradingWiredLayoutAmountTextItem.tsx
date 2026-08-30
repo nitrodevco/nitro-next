@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `amount_text` of InventoryTradingWiredLayout - pass real rows through its `items…` slot. */
 export interface InventoryTradingWiredLayoutAmountTextItemProps {
@@ -8,11 +8,10 @@ export interface InventoryTradingWiredLayoutAmountTextItemProps {
 
 export const InventoryTradingWiredLayoutAmountTextItem = ({ captionAmountText, layout }: InventoryTradingWiredLayoutAmountTextItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionAmountText ?? '2x'}
             name="amount_text"
-            layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionAmountText ?? '2x'}
-        </Region>
+            layout={{ width: 17, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

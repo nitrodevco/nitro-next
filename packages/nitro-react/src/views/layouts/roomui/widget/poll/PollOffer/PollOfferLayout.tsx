@@ -71,26 +71,20 @@ export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOffer
                     name="poll_options_container"
                     layout={{ position: 'absolute', right: 0, width: 250, bottom: 41, height: 42 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPollOfferButtonCancel ?? `${t('cancel')}...`}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#333333' }}
                         name="poll_offer_button_cancel"
-                        layout={{ position: 'absolute', left: 1, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPollOfferButtonCancel ?? `${t('cancel')}...`}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 1, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74 }}
+                    />
+                    <ThemeText
+                        text={captionPollOfferButtonLater ?? t('poll_offer_later')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#333333' }}
                         name="poll_offer_button_later"
-                        layout={{ position: 'absolute', left: 75, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPollOfferButtonLater ?? t('poll_offer_later')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 75, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74 }}
+                    />
                     <ButtonThick
                         variant="5"
                         name="poll_offer_button_ok"

@@ -22,16 +22,13 @@ export const NewFriendEntityLayoutHeaderItem = ({ captionName, layout, onHeader,
             layout={{ width: 119, height: 35, flexShrink: 0, ...layout }}
         >
             {(visibleName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionName ?? ''}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
                     name="name"
-                    layout={{ position: 'absolute', left: 33, width: 86, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionName ?? ''}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 33, width: 86, top: 2, height: 18 }}
+                />
             )}
             {(visibleRegionProfile ?? true) && (
                 <Region

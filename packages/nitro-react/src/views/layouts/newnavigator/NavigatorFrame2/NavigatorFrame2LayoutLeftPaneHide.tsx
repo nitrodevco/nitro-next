@@ -32,12 +32,11 @@ export const NavigatorFrame2LayoutLeftPaneHide = ({ layout, onLeftPaneHide, visi
                         src={layoutImage('newnavigator_button_quicklink_add.png')}
                         layout={{ position: 'absolute', left: 3, width: 18, top: 3, height: 18 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 20, width: 149, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('navigator.quick.links.title')}
-                            textStyle="text-style-id-heading-2"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('navigator.quick.links.title')}
+                        textStyle="text-style-id-heading-2"
+                        layout={{ position: 'absolute', left: 20, width: 149, top: 2, height: 17 }}
+                    />
                 </Region>
                 {(visibleLeftShowContainer ?? false) && (
                     <Region
@@ -48,13 +47,12 @@ export const NavigatorFrame2LayoutLeftPaneHide = ({ layout, onLeftPaneHide, visi
                             src={layoutImage('newnavigator_button_quicklink_add.png')}
                             layout={{ position: 'absolute', left: 3, width: 12, top: 3, height: 12 }}
                         />
-                        <Region layout={{ position: 'absolute', left: 20, width: 136, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('navigator.quick.links.title')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('navigator.quick.links.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff' }}
+                            layout={{ position: 'absolute', left: 20, width: 136, top: 1, height: 16 }}
+                        />
                     </Region>
                 )}
             </Border>

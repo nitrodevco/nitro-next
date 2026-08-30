@@ -26,15 +26,12 @@ export const PetViewLayoutStatusWellbeingContainerItem = ({ captionStatusWellbei
             layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             {(visibleStatusWellbeingText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionStatusWellbeingText ?? t('infostand.pet.text.wellbeing')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="status_wellbeing_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 144, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusWellbeingText ?? t('infostand.pet.text.wellbeing')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 144, top: 1, height: 13 }}
+                />
             )}
             {(visibleStatusWellbeingBitmap ?? true) && (
                 <ThemeImage
@@ -45,15 +42,12 @@ export const PetViewLayoutStatusWellbeingContainerItem = ({ captionStatusWellbei
                 />
             )}
             {(visibleStatusWellbeingValueText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionStatusWellbeingValueText ?? ''}
+                    textOptions={{ fill: '#ffffff' }}
                     name="status_wellbeing_value_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusWellbeingValueText ?? ''}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4 }}
+                />
             )}
             {(visibleStatusWellbeingIcon ?? true) && (
                 <ThemeImage

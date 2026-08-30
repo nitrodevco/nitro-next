@@ -26,27 +26,22 @@ export const AreaHideUiLayoutAreaContainerItem = ({ captionAreaselectionInfo, ca
             layout={{ alignSelf: 'stretch', height: 98, flexShrink: 0, ...layout }}
         >
             {(visibleAreaselectionTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionAreaselectionTitle ?? t('widget.areahide.area_selection')}
+                    textStyle="text-style-u-small"
                     name="areaselection_title"
-                    layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAreaselectionTitle ?? t('widget.areahide.area_selection')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 15 }}
+                />
             )}
             {(visibleAreaselectionInfo ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionAreaselectionInfo ?? t('widget.areahide.area_selection.info')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 262 }}
                     name="areaselection_info"
-                    layout={{ position: 'absolute', left: 0, right: -2, top: 20, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAreaselectionInfo ?? t('widget.areahide.area_selection.info')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 262 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: -2, top: 20, height: 40 }}
+                />
             )}
             {(visibleButtonContainer ?? true) && (
                 <Region

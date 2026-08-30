@@ -38,24 +38,18 @@ export const QuestHelpLayout = ({ captionHelpHeaderShort, captionHelpHeaderTitle
                         tint={tintHelpHeaderImg}
                         layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 27 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionHelpHeaderTitle ?? t('quest.help.title')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="help.header.title"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionHelpHeaderTitle ?? t('quest.help.title')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 14 }}
+                    />
+                    <ThemeText
+                        text={captionHelpHeaderShort ?? t('quest.help.short')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="help.header.short"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 12, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionHelpHeaderShort ?? t('quest.help.short')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 12, height: 14 }}
+                    />
                 </Region>
                 <ScrollArea
                     orientation="vertical"

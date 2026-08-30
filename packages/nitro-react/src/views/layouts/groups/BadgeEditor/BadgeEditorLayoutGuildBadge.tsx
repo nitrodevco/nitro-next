@@ -25,15 +25,12 @@ export const BadgeEditorLayoutGuildBadge = ({ captionGuildBadge, layout, srcLaye
             name="guild_badge"
             layout={{ position: 'absolute', left: 0, width: 128, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionGuildBadge ?? t('group.edit.badge.badge')}
+                textStyle="text-style-u-bold"
                 name="guild_badge"
-                layout={{ position: 'absolute', left: 25, width: 71, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionGuildBadge ?? t('group.edit.badge.badge')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 25, width: 71, top: 8, height: 17 }}
+            />
             <Border
                 variant="0"
                 name="border"

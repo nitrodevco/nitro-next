@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Frame, Region } from '#base/theme';
+import { BoxLayout, Frame, Region, ThemeText } from '#base/theme';
 
 import { GrsMainWindowNewLayoutTabbedview, GrsMainWindowNewLayoutTabbedviewProps } from './GrsMainWindowNewLayoutTabbedview';
 
@@ -28,12 +28,11 @@ export const GrsMainWindowNewLayout = ({ captionLoadingText, layout, onClose, ta
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <GrsMainWindowNewLayoutTabbedview {...tabbedview} />
                 {(visibleLoadingText ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionLoadingText ?? t('navigator.loading')}
                         name="loading_text"
-                        layout={{ position: 'absolute', marginLeft: -61, marginRight: 61, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionLoadingText ?? t('navigator.loading')}
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -61, marginRight: 61, width: 104, top: 210, height: 13 }}
+                    />
                 )}
             </Region>
         </Frame>

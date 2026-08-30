@@ -32,24 +32,20 @@ export const AchievementsLayoutAchievementsHeaderCont = ({ captionCategoryNameTx
                 src={srcCategoryPicBitmap}
                 layout={{ position: 'absolute', left: 297, width: 84, top: 3, height: 72 }}
             />
-            <Region
+            <ThemeText
+                text={captionCategoryNameTxt ?? 'Category Name Placeholder'}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 286 }}
                 name="category_name_txt"
-                layout={{ position: 'absolute', left: 78, right: 25, top: 13, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCategoryNameTxt ?? 'Category Name Placeholder'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 286 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 78, right: 25, top: 13, height: 24 }}
+            />
+            <ThemeText
+                text={captionCategoryProgressTxt ?? t('achievements.details.categoryprogress')}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 245 }}
                 name="category_progress_txt"
-                layout={{ position: 'absolute', left: 78, right: 66, top: 40, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCategoryProgressTxt ?? t('achievements.details.categoryprogress')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 245 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 78, right: 66, top: 40, height: 24 }}
+            />
             <Region
                 name="back_button"
                 onPointerTap={onBackButton}

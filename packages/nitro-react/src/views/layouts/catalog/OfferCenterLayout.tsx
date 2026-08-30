@@ -24,12 +24,11 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
             layout={{ width: 377, height: 412, minWidth: 377, maxWidth: 377, minHeight: 412, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', marginLeft: 4.5, marginRight: -4.5, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('offers.center.rewards.label')}
-                        textStyle="text-style-u-headline-small"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('offers.center.rewards.label')}
+                    textStyle="text-style-u-headline-small"
+                    layout={{ position: 'absolute', marginLeft: 4.5, marginRight: -4.5, width: 186, top: 9, height: 19 }}
+                />
                 <Border
                     variant="0"
                     tintColor="#bbbbb4"
@@ -57,26 +56,20 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
                                         tintColor="#aadde6"
                                         layout={{ position: 'absolute', left: 3, width: 299, top: 3, height: 25 }}
                                     />
-                                    <Region
+                                    <ThemeText
+                                        text={captionRewardDate ?? '2013.01.15, 16:48'}
+                                        textStyle="text-style-u-small"
+                                        textOptions={{ fill: '#5f8c9f' }}
                                         name="reward_date"
-                                        layout={{ position: 'absolute', left: 7, width: 86, top: 15, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                    >
-                                        <ThemeText
-                                            text={captionRewardDate ?? '2013.01.15, 16:48'}
-                                            textStyle="text-style-u-small"
-                                            textOptions={{ fill: '#5f8c9f' }}
-                                        />
-                                    </Region>
-                                    <Region
+                                        layout={{ position: 'absolute', left: 7, width: 86, top: 15, height: 15 }}
+                                    />
+                                    <ThemeText
+                                        text={captionRewardName ?? 'Reward name'}
+                                        textStyle="text-style-u-bold"
+                                        textOptions={{ fill: '#ffffff' }}
                                         name="reward_name"
-                                        layout={{ position: 'absolute', left: 9, width: 80, top: 29, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                    >
-                                        <ThemeText
-                                            text={captionRewardName ?? 'Reward name'}
-                                            textStyle="text-style-u-bold"
-                                            textOptions={{ fill: '#ffffff' }}
-                                        />
-                                    </Region>
+                                        layout={{ position: 'absolute', left: 9, width: 80, top: 29, height: 17 }}
+                                    />
                                 </Border>
                                 <ThemeImage
                                     name="reward_icon"

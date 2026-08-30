@@ -45,15 +45,12 @@ export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout,
                 />
             )}
             {(visibleButtonText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionButtonText ?? t('reward_track.tasks.tab.all_tasks')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="button_text"
-                    layout={{ position: 'absolute', width: 78, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionButtonText ?? t('reward_track.tasks.tab.all_tasks')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 78, top: 5, height: 17 }}
+                />
             )}
         </Region>
     );

@@ -10,7 +10,7 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 /**
  * Catalog widget `newPetsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutPets_1592Layout); each passes its own placement through `layout`.
+ * (LayoutPets_1697Layout); each passes its own placement through `layout`.
  */
 /** Named region `newPetsWidget` of NewPetsWidget2 - configured through the parent's `newPetsWidget` prop. */
 export interface NewPetsWidget2Props extends CatalogWidgetFlags {
@@ -38,57 +38,51 @@ export const NewPetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText2, caption
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}
                 tint={tintCtlgTeaserimg1}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 30, height: 127 }}
             />
-            <Region
+            <ThemeText
+                text={captionPetBreedText ?? t('lorem.title')}
+                textStyle="text-style-u-bold"
+                textOptions={{ align: 'center' }}
                 name="pet_breed_text"
-                layout={{ position: 'absolute', left: 10, width: 74, top: 16, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPetBreedText ?? t('lorem.title')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 10, right: 9, top: 136, height: 17 }}
+            />
+            <ThemeText
+                text={captionCtlgText3 ?? t('lorem.title')}
+                textStyle="text-style-u-small"
+                textOptions={{ align: 'center' }}
                 name="ctlg_text_3"
-                layout={{ position: 'absolute', left: 12, width: 62, top: 326, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgText3 ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 12, right: 7, top: 156, height: 15 }}
+            />
             <ColourGridWidget
-                layout={{ position: 'absolute', left: 0, right: 0, top: 245, height: 80 }}
+                layout={{ position: 'absolute', left: 5, right: 4, top: 173, height: 70 }}
                 {...colourGridWidget}
             />
-            <Region
+            <ThemeText
+                text={captionCtlgText2 ?? t('lorem.title')}
+                textStyle="text-style-u-small"
+                textOptions={{ align: 'center' }}
                 name="ctlg_text_2"
-                layout={{ position: 'absolute', left: 12, width: 62, top: 363, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgText2 ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 12, right: 8, top: 253, height: 15 }}
+            />
             <Border
                 variant="4"
                 tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 10, width: 340, top: 385, height: 25 }}
+                layout={{ position: 'absolute', left: 10, right: 9, top: 275, height: 25 }}
             >
                 <TextInput
                     value={nameInputTextValue}
                     onChange={setNameInputTextValue}
                     maxLength={16}
-                    layout={{ position: 'absolute', left: 4, width: 325, top: 4, height: 17 }}
+                    layout={{ position: 'absolute', left: 4, right: 11, top: 4, bottom: 4 }}
                 />
             </Border>
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, right: 0, bottom: 1, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: -1, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
             <AddOnBadgeViewWidget
-                layout={{ position: 'absolute', left: 13, width: 40, top: 177, height: 40 }}
+                layout={{ position: 'absolute', left: 30, width: 40, top: 85, height: 40 }}
                 {...addOnBadgeViewWidget}
             />
         </Region>

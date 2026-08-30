@@ -21,12 +21,12 @@ export const Doorbell_889Layout = ({ itemsUserList, layout, onClose }: Doorbell_
             onClose={onClose}
             layout={{ width: 249, height: 165, minWidth: 249, minHeight: 165, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 10, right: 12, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('widgets.doorbell.info')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('widgets.doorbell.info')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, right: 12, top: 13, height: 32 }}
+            />
             <Region
                 name="user_list_container"
                 backgroundColor="#eaece8"

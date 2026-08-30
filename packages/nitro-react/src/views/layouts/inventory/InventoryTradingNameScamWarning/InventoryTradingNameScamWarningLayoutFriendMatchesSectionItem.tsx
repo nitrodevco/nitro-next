@@ -19,23 +19,20 @@ export const InventoryTradingNameScamWarningLayoutFriendMatchesSectionItem = ({ 
             layout={{ width: 330, height: 58, flexShrink: 0, ...layout }}
         >
             {(visibleFriendMatchesHeader ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionFriendMatchesHeader ?? t('inventory.trading.namescam.similar_in_friends')}
                     name="friend_matches_header"
-                    layout={{ position: 'absolute', left: 0, width: 172, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionFriendMatchesHeader ?? t('inventory.trading.namescam.similar_in_friends')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 172, top: 0, height: 17 }}
+                />
             )}
             {(visibleFriendMatchesText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionFriendMatchesText ?? 'Friend 1'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
                     name="friend_matches_text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFriendMatchesText ?? 'Friend 1'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 38 }}
+                />
             )}
         </Region>
     );

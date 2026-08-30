@@ -44,15 +44,12 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
                         />
                     )}
                     {(visibleGamesDucketValue ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionGamesDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="gamesDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionGamesDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
                         />
                     )}
                     {(visibleGamesCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionGamesCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="gamesCreditValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionGamesCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
                         />
                     )}
                     {(visibleGamesLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionGamesLabel ?? t('earnings.games.label')}
+                            textStyle="text-style-u-bold"
                             name="games_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionGamesLabel ?? t('earnings.games.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

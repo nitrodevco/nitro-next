@@ -28,16 +28,13 @@ export const LevelUpLayoutRewardPerkTemplateItem = ({ captionPerkName, layout, p
                 </WidgetSlot>
             )}
             {(visiblePerkName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionPerkName ?? 'perk name'}
+                    textStyle="text-style-il-heading-2"
+                    textOptions={{ fill: '#222222' }}
                     name="perk_name"
-                    layout={{ position: 'absolute', left: 37, width: 62, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPerkName ?? 'perk name'}
-                        textStyle="text-style-il-heading-2"
-                        textOptions={{ fill: '#222222' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 37, width: 62, alignSelf: 'center', height: 17 }}
+                />
             )}
         </Region>
     );

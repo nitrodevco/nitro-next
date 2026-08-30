@@ -31,24 +31,20 @@ export const ClubDiscountPromotionLayout = ({ captionPromoText, captionPromoText
                     cursor="pointer"
                     layout={{ position: 'absolute', right: 5, width: 161, top: 6, bottom: 8 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPromoTextShadow ?? 'club extend discount promo text'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
                         name="promo_text_shadow"
-                        layout={{ position: 'absolute', left: 1, right: 0, top: 1, bottom: -1, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPromoTextShadow ?? 'club extend discount promo text'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 1, right: 0, top: 1, bottom: -1, minWidth: 160, maxWidth: 160 }}
+                    />
+                    <ThemeText
+                        text={captionPromoText ?? 'club extend discount promo text'}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 160 }}
                         name="promo_text"
-                        layout={{ position: 'absolute', left: 0, right: 1, top: 0, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPromoText ?? 'club extend discount promo text'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 160 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, right: 1, top: 0, minWidth: 160, maxWidth: 160 }}
+                    />
                 </Region>
                 <Icon
                     variant="14"

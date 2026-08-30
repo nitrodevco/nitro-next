@@ -50,12 +50,11 @@ export const GrsMainWindowNewLayoutCustomFooter = ({ adCont, captionAdCaption, c
                         tint={tintCreateRoom}
                         layout={{ position: 'absolute', left: 4, width: 23, top: 3, height: 23 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionMoreRoomsCaption ?? t('navigator.moreroomscaption')}
                         name="more_rooms_caption"
-                        layout={{ position: 'absolute', left: 32, width: 146, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionMoreRoomsCaption ?? t('navigator.moreroomscaption')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 32, width: 146, top: 8, height: 13 }}
+                    />
                     <Button
                         variant="0"
                         name="create_room_but"
@@ -73,12 +72,11 @@ export const GrsMainWindowNewLayoutCustomFooter = ({ adCont, captionAdCaption, c
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 85 }}
             >
                 {(visibleAdCaption ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionAdCaption ?? t('navigator.adcaption')}
                         name="ad_caption"
-                        layout={{ position: 'absolute', left: 6, width: 121, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionAdCaption ?? t('navigator.adcaption')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 6, width: 121, top: 2, height: 13 }}
+                    />
                 )}
                 <Region
                     name="ad_cont"
@@ -102,15 +100,12 @@ export const GrsMainWindowNewLayoutCustomFooter = ({ adCont, captionAdCaption, c
                     tintColor="#cccccc"
                     layout={{ position: 'absolute', left: 0, width: 369, top: 8, height: 29 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionGetEventCaption ?? t('roomad.get.event.caption')}
+                        textStyle="text-style-il-regular"
                         name="get_event_caption"
-                        layout={{ position: 'absolute', left: 5, width: 150, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionGetEventCaption ?? t('roomad.get.event.caption')}
-                            textStyle="text-style-il-regular"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 5, width: 150, top: 8, height: 16 }}
+                    />
                     <Button
                         variant="0"
                         name="get_event_but"

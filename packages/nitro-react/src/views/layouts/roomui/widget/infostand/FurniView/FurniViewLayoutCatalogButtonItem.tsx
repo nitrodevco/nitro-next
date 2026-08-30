@@ -28,12 +28,11 @@ export const FurniViewLayoutCatalogButtonItem = ({ layout, onCatalogButton, srcI
                         layout={{ width: 20, height: 18, flexShrink: 0 }}
                     />
                 )}
-                <Region layout={{ width: 44, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('infostand.button.buy')}
-                        textStyle="text-style-regular"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('infostand.button.buy')}
+                    textStyle="text-style-regular"
+                    layout={{ width: 44, height: 13, flexShrink: 0 }}
+                />
             </Region>
         </ContainerButton>
     );

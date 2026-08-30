@@ -58,16 +58,13 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
                     src={srcIndicatorImage}
                     layout={{ position: 'absolute', left: 19, width: 29, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 18 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTopIndicator ?? 'top indicator'}
+                    textStyle="text-style-il-border"
+                    textOptions={{ fill: '#555555' }}
                     name="top_indicator"
-                    layout={{ position: 'absolute', left: 40, width: 77, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTopIndicator ?? 'top indicator'}
-                        textStyle="text-style-il-border"
-                        textOptions={{ fill: '#555555' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 40, width: 77, alignSelf: 'center', height: 15 }}
+                />
             </WidgetSlot>
             {(visibleQuestionPane ?? false) && (
                 <Region
@@ -97,24 +94,19 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
                     name="failure_pane"
                     layout={{ position: 'absolute', left: 0, width: 498, top: 50, height: 320, justifyContent: 'center' }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionFailureResults ?? ''}
+                        textStyle="text-style-il-heading-title"
                         name="failure_results"
-                        layout={{ position: 'absolute', width: 4, top: 27, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionFailureResults ?? ''}
-                            textStyle="text-style-il-heading-title"
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', width: 4, top: 27, height: 4 }}
+                    />
+                    <ThemeText
+                        text={captionFailureAdvice ?? ''}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 291, align: 'center' }}
                         name="failure_advice"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 291, top: 70, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionFailureAdvice ?? ''}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 291, align: 'center' }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 291, top: 70, height: 4 }}
+                    />
                     <ThemeImage
                         name="failure_illustration"
                         src={srcFailureIllustration ?? '${image.library.url}habboway/quiz_failure.png'}
@@ -127,16 +119,14 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
                     name="success_pane"
                     layout={{ position: 'absolute', left: 0, width: 498, top: 50, height: 320, justifyContent: 'center' }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionSuccessResults ?? ''}
+                        textStyle="text-style-il-heading-title"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 421, align: 'center' }}
                         name="success_results"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 421, top: 27, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionSuccessResults ?? ''}
-                            textStyle="text-style-il-heading-title"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 421, align: 'center' }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 421, top: 27, height: 4 }}
+                    />
                     <ThemeImage
                         name="success_illustration"
                         src={srcSuccessIllustration ?? '${image.library.url}habboway/quiz_success.png'}
@@ -195,15 +185,12 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
                         {t('habbo.way.quiz.exit.button')}
                     </Button>
                     {(visibleRetakeTimeNotice ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionRetakeTimeNotice ?? t('habbo.way.quiz.wait.indication')}
+                            textStyle="text-style-il-small"
                             name="retake_time_notice"
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 126, top: 43, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionRetakeTimeNotice ?? t('habbo.way.quiz.wait.indication')}
-                                textStyle="text-style-il-small"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 126, top: 43, height: 14 }}
+                        />
                     )}
                 </Region>
             )}

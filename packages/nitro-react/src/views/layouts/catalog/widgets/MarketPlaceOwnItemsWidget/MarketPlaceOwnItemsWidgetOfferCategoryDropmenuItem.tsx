@@ -1,12 +1,12 @@
 import { BoxLayout, Dropmenu } from '#base/theme';
 
-/** Row template `offer_category_dropmenu` of MarketPlaceOwnItemsWidget2 - pass real rows through its `items…` slot. */
-export interface MarketPlaceOwnItemsWidget2OfferCategoryDropmenuItemProps {
+/** Row template `offer_category_dropmenu` of MarketPlaceOwnItemsWidget - pass real rows through its `items…` slot. */
+export interface MarketPlaceOwnItemsWidgetOfferCategoryDropmenuItemProps {
     layout?: BoxLayout;
     onOfferCategoryDropmenu?: () => void;
 }
 
-export const MarketPlaceOwnItemsWidget2OfferCategoryDropmenuItem = ({ layout, onOfferCategoryDropmenu }: MarketPlaceOwnItemsWidget2OfferCategoryDropmenuItemProps) => {
+export const MarketPlaceOwnItemsWidgetOfferCategoryDropmenuItem = ({ layout, onOfferCategoryDropmenu }: MarketPlaceOwnItemsWidgetOfferCategoryDropmenuItemProps) => {
     return (
         <Dropmenu
             variant="3"

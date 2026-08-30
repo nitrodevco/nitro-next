@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, CheckBox, Region } from '#base/theme';
+import { BoxLayout, CheckBox, Region, ThemeText } from '#base/theme';
 
 /** Named region `modify_settings_container` of WiredMenuViewLayout - configured through the parent's `modifySettingsContainer` prop. */
 export interface WiredMenuViewLayoutModifySettingsContainerProps {
@@ -17,9 +17,10 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Ch
             name="modify_settings_container"
             layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 102, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                {t('wiredmenu.settings.room_settings.modify_rights')}
-            </Region>
+            <ThemeText
+                text={t('wiredmenu.settings.room_settings.modify_rights')}
+                layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20 }}
+            />
             <Region
                 name="option_box"
                 layout={{ position: 'absolute', left: 0, width: 214, top: 20, height: 20 }}
@@ -30,9 +31,10 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Ch
                     onPointerTap={onModify1Checkbox}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
-                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredmenu.settings.permission_level.1')}
-                </Region>
+                <ThemeText
+                    text={t('wiredmenu.settings.permission_level.1')}
+                    layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19 }}
+                />
             </Region>
             <Region
                 name="option_box"
@@ -44,9 +46,10 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Ch
                     onPointerTap={onModify2Checkbox}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
-                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredmenu.settings.permission_level.2')}
-                </Region>
+                <ThemeText
+                    text={t('wiredmenu.settings.permission_level.2')}
+                    layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19 }}
+                />
             </Region>
             <Region
                 name="option_box"
@@ -58,9 +61,10 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Ch
                     onPointerTap={onModify3Checkbox}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
-                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredmenu.settings.permission_level.3')}
-                </Region>
+                <ThemeText
+                    text={t('wiredmenu.settings.permission_level.3')}
+                    layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19 }}
+                />
             </Region>
         </Region>
     );

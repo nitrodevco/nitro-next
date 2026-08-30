@@ -28,16 +28,13 @@ export const RoomToolsToolbarLayoutButtonChatHistoryItem = ({ captionTextChatHis
                 layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
             />
             {(visibleTextChatHistory ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTextChatHistory ?? t('room.chathistory.button.text')}
+                    textStyle="text-style-u-button-tab"
+                    textOptions={{ fill: '#bbbbbb' }}
                     name="text_chat_history"
-                    layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextChatHistory ?? t('room.chathistory.button.text')}
-                        textStyle="text-style-u-button-tab"
-                        textOptions={{ fill: '#bbbbbb' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90 }}
+                />
             )}
         </Region>
     );

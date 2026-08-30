@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `amount_text_right` of TotalPriceWidget - pass real rows through its `items…` slot. */
 export interface TotalPriceWidgetAmountTextRightItemProps {
@@ -8,11 +8,10 @@ export interface TotalPriceWidgetAmountTextRightItemProps {
 
 export const TotalPriceWidgetAmountTextRightItem = ({ captionAmountTextRight, layout }: TotalPriceWidgetAmountTextRightItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionAmountTextRight ?? '0'}
             name="amount_text_right"
-            layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionAmountTextRight ?? '0'}
-        </Region>
+            layout={{ width: 10, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

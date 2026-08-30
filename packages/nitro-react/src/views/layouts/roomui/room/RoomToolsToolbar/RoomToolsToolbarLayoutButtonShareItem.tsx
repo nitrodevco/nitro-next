@@ -27,16 +27,13 @@ export const RoomToolsToolbarLayoutButtonShareItem = ({ captionTextShare, layout
                 layout={{ position: 'absolute', left: 2, width: 27, top: 0, height: 25 }}
             />
             {(visibleTextShare ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTextShare ?? t('navigator.embed.caption')}
+                    textStyle="text-style-u-button-tab"
+                    textOptions={{ fill: '#bbbbbb' }}
                     name="text_share"
-                    layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextShare ?? t('navigator.embed.caption')}
-                        textStyle="text-style-u-button-tab"
-                        textOptions={{ fill: '#bbbbbb' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90 }}
+                />
             )}
         </Region>
     );

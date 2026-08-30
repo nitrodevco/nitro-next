@@ -31,18 +31,16 @@ export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout }: IssueHan
                     <IssueHandlerLayoutReportedUserInfoItem />
                 </>
             )}
-            <Region layout={{ width: 100, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="Caller User Info"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region layout={{ width: 60, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="Messages"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+            <ThemeText
+                text="Caller User Info"
+                textOptions={{ fill: '#ffffff' }}
+                layout={{ width: 100, height: 13, flexShrink: 0 }}
+            />
+            <ThemeText
+                text="Messages"
+                textOptions={{ fill: '#ffffff' }}
+                layout={{ width: 60, height: 14, flexShrink: 0 }}
+            />
         </Region>
     );
 };

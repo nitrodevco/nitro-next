@@ -24,15 +24,13 @@ export const LayoutTrophies_1610LayoutCtlgTrophies = ({ captionTrophyDescription
             name="ctlg_trophies"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTrophyDescription ?? t('loremipsum.html')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
                 name="trophy.description"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 190, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTrophyDescription ?? t('loremipsum.html')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 190 }}
+            />
             <TrophyWidget3
                 layout={{ position: 'absolute', left: 0, right: 0, top: 145, height: 135 }}
                 {...trophyWidget}
@@ -41,16 +39,14 @@ export const LayoutTrophies_1610LayoutCtlgTrophies = ({ captionTrophyDescription
                 layout={{ position: 'absolute', left: 0, right: 0, top: 285, height: 40 }}
                 {...colourGridWidget}
             />
-            <Region
+            <ThemeText
+                text={captionTrophyEnscription ?? t('lorem.title')}
+                textStyle="text-style-u-small"
+                textOptions={{ wordWrap: true, wordWrapWidth: 355 }}
                 name="trophy.enscription"
-                layout={{ position: 'absolute', left: 6, width: 355, top: 326, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTrophyEnscription ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 355 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 6, width: 355, top: 326, height: 15 }}
+            />
             <Border
                 variant="5"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 340, bottom: 37 }}

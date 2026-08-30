@@ -61,21 +61,17 @@ export const AvatarEditorContentLayoutGridContainer = ({ captionContentNotificat
                     {itemsPalette1}
                 </Region>
             </ScrollArea>
-            <Region
+            <ThemeText
+                text={captionContentNotification ?? t('avatar.editor.content.notification')}
                 name="content_notification"
-                layout={{ position: 'absolute', left: 0, width: 298, top: 30, height: 128, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionContentNotification ?? t('avatar.editor.content.notification')}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 0, width: 298, top: 30, height: 128 }}
+            />
+            <ThemeText
+                text={captionContentTitle ?? t('avatar.editor.content.title')}
+                textStyle="text-style-u-bold"
                 name="content_title"
-                layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionContentTitle ?? t('avatar.editor.content.title')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 30 }}
+            />
         </Region>
     );
 };

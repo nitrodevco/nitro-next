@@ -44,15 +44,12 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
                         />
                     )}
                     {(visibleHabboclubDucketValue ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionHabboclubDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="habboclubDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionHabboclubDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
                         />
                     )}
                     {(visibleHabboclubCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionHabboclubCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="habboclubCreditValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionHabboclubCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
                         />
                     )}
                     {(visibleHabboclubLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionHabboclubLabel ?? t('earnings.hc.label')}
+                            textStyle="text-style-u-bold"
                             name="habboclub_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionHabboclubLabel ?? t('earnings.hc.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

@@ -49,15 +49,12 @@ export const RosFlatControllerLayout = ({ bgRegion, captionUserNameTxt, layout, 
                         layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionUserNameTxt ?? 'User name PH'}
+                    textStyle="text-style-u-regular"
                     name="user_name_txt"
-                    layout={{ position: 'absolute', left: 24, width: 80, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionUserNameTxt ?? 'User name PH'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 24, width: 80, top: 1, height: 17 }}
+                />
                 <ThemeImage
                     name="arrow_icon"
                     src={srcArrowIcon ?? '${image.library.url}Events/arrow_move_right.png'}

@@ -26,16 +26,16 @@ export const SafetyQuizPromoLayout = ({ avatar, layout, onSafetyQuizButton }: Sa
                     variant="106"
                     layout={{ position: 'absolute', left: 3, right: 3, top: 3, height: 51 }}
                 />
-                <Region layout={{ position: 'absolute', left: 73, width: 174, top: 11, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('safety.promo.widget.title')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ fill: '#9b0000' }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 74, width: 160, top: 30, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('safety.promo.widget.message')}
-                </Region>
+                <ThemeText
+                    text={t('safety.promo.widget.title')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#9b0000' }}
+                    layout={{ position: 'absolute', left: 73, width: 174, top: 11, height: 19 }}
+                />
+                <ThemeText
+                    text={t('safety.promo.widget.message')}
+                    layout={{ position: 'absolute', left: 74, width: 160, top: 30, height: 16 }}
+                />
                 <Button
                     variant="100"
                     name="safety_quiz_button"

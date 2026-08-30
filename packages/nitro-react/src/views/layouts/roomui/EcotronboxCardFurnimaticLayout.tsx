@@ -52,24 +52,20 @@ export const EcotronboxCardFurnimaticLayout = ({ captionEcotronboxCardDate, capt
                 >
                     {t('generic.close')}
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionEcotronboxCardMsg ?? t('widget.furni.furnimaticbox.title')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 139 }}
                     name="ecotronbox_card_msg"
-                    layout={{ position: 'absolute', left: 49, width: 139, top: 39, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEcotronboxCardMsg ?? t('widget.furni.furnimaticbox.title')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 139 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 49, width: 139, top: 39, height: 45 }}
+                />
+                <ThemeText
+                    text={captionEcotronboxCardDate ?? ''}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 104 }}
                     name="ecotronbox_card_date"
-                    layout={{ position: 'absolute', left: 12, width: 104, top: 9, height: 12, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEcotronboxCardDate ?? ''}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 104 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 12, width: 104, top: 9, height: 12 }}
+                />
             </Region>
         </Region>
     );

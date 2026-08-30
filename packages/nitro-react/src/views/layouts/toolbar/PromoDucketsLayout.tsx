@@ -24,13 +24,13 @@ export const PromoDucketsLayout = ({ layout, onCloseButton }: PromoDucketsLayout
                         tintColor="#24231e"
                         layout={{ position: 'absolute', left: 3, width: 261, top: 3, height: 37 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 30, width: 231, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('purse.duckets.promo')}
-                                textStyle="text-style-u-italic"
-                                textOptions={{ fill: '#757575', wordWrap: true, wordWrapWidth: 231 }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('purse.duckets.promo')}
+                            textStyle="text-style-u-italic"
+                            textOptions={{ fill: '#757575', wordWrap: true, wordWrapWidth: 231 }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 30, width: 231, top: 0, bottom: 0 }}
+                        />
                         <Region
                             name="close_button"
                             onPointerTap={onCloseButton}

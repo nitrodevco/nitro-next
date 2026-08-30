@@ -30,16 +30,13 @@ export const RoomToolsToolbarLayoutButtonZoomItem = ({ captionTextZoom, layout, 
                     layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
                 />
                 {(visibleTextZoom ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextZoom ?? t('room.zoom.button.text')}
+                        textStyle="text-style-u-button-tab"
+                        textOptions={{ fill: '#bbbbbb' }}
                         name="text_zoom"
-                        layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTextZoom ?? t('room.zoom.button.text')}
-                            textStyle="text-style-u-button-tab"
-                            textOptions={{ fill: '#bbbbbb' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90 }}
+                    />
                 )}
             </Region>
         )

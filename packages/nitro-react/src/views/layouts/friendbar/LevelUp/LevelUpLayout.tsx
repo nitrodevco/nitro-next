@@ -26,22 +26,19 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
             layout={{ width: 430, height: 362, minWidth: 430, minHeight: 362, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'column' }}>
-                <Region layout={{ width: 291, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('talent.track.common.levelup.title')}
-                        textStyle="text-style-il-heading-title"
-                    />
-                </Region>
-                <Region
+                <ThemeText
+                    text={t('talent.track.common.levelup.title')}
+                    textStyle="text-style-il-heading-title"
+                    layout={{ width: 291, height: 24, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={captionLevelUpMessage ?? t('talent.track.helper.levelup.message')}
+                    textStyle="text-style-il-heading-2"
+                    textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 410 }}
                     name="level_up_message"
-                    layout={{ width: 410, height: 37, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionLevelUpMessage ?? t('talent.track.helper.levelup.message')}
-                        textStyle="text-style-il-heading-2"
-                        textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 410 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ width: 410, height: 37, flexShrink: 0 }}
+                />
                 <Border
                     variant="102"
                     layout={{ width: 406, height: 176, flexShrink: 0, minWidth: 406, minHeight: 70 }}

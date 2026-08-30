@@ -22,16 +22,13 @@ export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, capti
                 name="step_cont_5"
                 layout={{ position: 'absolute', left: 0, right: -9, top: 111, height: 360, ...layout }}
             >
-                <Region
+                <ThemeText
+                    text={captionGuildType ?? t('group.edit.settings.type.caption')}
+                    textStyle="text-style-u-headline-small"
+                    textOptions={{ align: 'center' }}
                     name="guild_type"
-                    layout={{ position: 'absolute', left: 16, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionGuildType ?? t('group.edit.settings.type.caption')}
-                        textStyle="text-style-u-headline-small"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 16, width: 170, bottom: 335, height: 19 }}
+                />
                 <Border
                     variant="0"
                     layout={{ position: 'absolute', left: 16, width: 170, top: 29, height: 199 }}
@@ -44,16 +41,13 @@ export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, capti
                         <GroupManagementWindowLayoutGroupTypeSelector {...groupTypeSelector} />
                     </Border>
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionGuildRights ?? t('group.edit.settings.rights.caption')}
+                    textStyle="text-style-u-headline-small"
+                    textOptions={{ align: 'center' }}
                     name="guild_rights"
-                    layout={{ position: 'absolute', left: 207, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionGuildRights ?? t('group.edit.settings.rights.caption')}
-                        textStyle="text-style-u-headline-small"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 207, width: 170, bottom: 335, height: 19 }}
+                />
                 <Border
                     variant="0"
                     layout={{ position: 'absolute', left: 207, width: 170, top: 29, height: 144 }}
@@ -69,19 +63,18 @@ export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, capti
                             onPointerTap={onCbMemberRights}
                             layout={{ position: 'absolute', left: 5, width: 16, top: 5, height: 16 }}
                         />
-                        <Region layout={{ position: 'absolute', left: 25, width: 133, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('group.edit.settings.rights.members.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                        <Region layout={{ position: 'absolute', left: 5, width: 152, top: 25, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('group.edit.settings.rights.members.help')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 152 }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('group.edit.settings.rights.members.label')}
+                            textStyle="text-style-u-bold"
+                            layout={{ position: 'absolute', left: 25, width: 133, top: 5, height: 20 }}
+                        />
+                        <ThemeText
+                            text={t('group.edit.settings.rights.members.help')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 152 }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 5, width: 152, top: 25, height: 100 }}
+                        />
                     </Border>
                 </Border>
             </Region>

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ContainerButton, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Frame, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `986_notification_gift_unlocked_notify_xml` (layout "teaser_general", 433x260) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationGiftUnlockedNotifyLayoutProps {
@@ -46,25 +46,20 @@ export const NotificationGiftUnlockedNotifyLayout = ({ captionHeader, captionOpe
                         layout={{ position: 'absolute', left: 1, width: 419, bottom: 1, height: 159 }}
                     />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionHeader ?? t('widget.furni.teaser.notify.unlocked.title')}
+                    textStyle="text-style-bold"
+                    textOptions={{ fill: '#444444' }}
                     name="header"
-                    layout={{ position: 'absolute', right: 8, width: 282, top: 12, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHeader ?? t('widget.furni.teaser.notify.unlocked.title')}
-                        textStyle="text-style-bold"
-                        textOptions={{ fill: '#444444' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', right: 8, width: 282, top: 12, height: 21 }}
+                />
+                <ThemeText
+                    text={captionText ?? t('widget.furni.teaser.notify.unlocked.desc')}
+                    textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 282 }}
                     name="text"
-                    layout={{ position: 'absolute', right: 8, width: 282, top: 31, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? t('widget.furni.teaser.notify.unlocked.desc')}
-                        textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 282 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 8, width: 282, top: 31, height: 120 }}
+                />
                 <ContainerButton
                     variant="0"
                     name="received_ok_btn"
@@ -83,16 +78,13 @@ export const NotificationGiftUnlockedNotifyLayout = ({ captionHeader, captionOpe
                         tintColor="#309d00"
                         layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 17, minWidth: 294, maxWidth: 294, minHeight: 17, maxHeight: 17 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionOpenTxt ?? t('generic.ok')}
+                        textStyle="text-style-bold"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="open_txt"
-                        layout={{ position: 'absolute', width: 294, alignSelf: 'center', marginTop: 4.5, marginBottom: -4.5, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionOpenTxt ?? t('generic.ok')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 294, alignSelf: 'center', marginTop: 4.5, marginBottom: -4.5, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33 }}
+                    />
                 </ContainerButton>
                 <ThemeImage
                     name="deco_img"

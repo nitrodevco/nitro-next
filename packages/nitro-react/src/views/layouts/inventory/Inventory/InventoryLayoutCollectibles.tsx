@@ -82,23 +82,19 @@ export const InventoryLayoutCollectibles = ({ captionItemsShown, itemsItemGrid, 
                         name="item_grid_pages"
                         layout={{ position: 'absolute', left: 0, width: 280, bottom: 1, height: 10, flexDirection: 'row', gap: 2 }}
                     >
-                        <Region layout={{ width: 8, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text="0"
-                                textStyle="text-style-il-small"
-                            />
-                        </Region>
+                        <ThemeText
+                            text="0"
+                            textStyle="text-style-il-small"
+                            layout={{ width: 8, height: 14, flexShrink: 0 }}
+                        />
                     </Region>
                     {(visibleItemsShown ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionItemsShown ?? 'Items shown: x/y'}
+                            textOptions={{ fill: '#777777' }}
                             name="items.shown"
-                            layout={{ position: 'absolute', right: 1, width: 98, bottom: -3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionItemsShown ?? 'Items shown: x/y'}
-                                textOptions={{ fill: '#777777' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', right: 1, width: 98, bottom: -3, height: 17 }}
+                        />
                     )}
                 </Region>
                 <InventoryLayoutPreviewContainer2 {...previewContainer} />

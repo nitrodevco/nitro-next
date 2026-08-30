@@ -34,16 +34,14 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
             layout={{ width: 350, height: 270, minWidth: 350, minHeight: 270, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 345, top: 0, height: 225, justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionStaticInfoText ?? t('tutorial.name_change.title.main')}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ fill: '#007b96', wordWrap: true, wordWrapWidth: 284 }}
                     name="static_info_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 284, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStaticInfoText ?? t('tutorial.name_change.title.main')}
-                        textStyle="text-style-u-headline-big"
-                        textOptions={{ fill: '#007b96', wordWrap: true, wordWrapWidth: 284 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 284, top: 9, height: 29 }}
+                />
                 <Border
                     variant="105"
                     name="input_border"
@@ -70,16 +68,14 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
                 >
                     {t('tutorial.name_change.check')}
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? ''}
+                    textStyle="text-style-il-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
                     name="info_text"
-                    layout={{ position: 'absolute', left: 30, width: 280, top: 155, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? ''}
-                        textStyle="text-style-il-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 30, width: 280, top: 155, height: 4 }}
+                />
                 <Region
                     name="suggestions"
                     onPointerTap={onSuggestions}
@@ -117,15 +113,13 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
                         src={srcHcIconImage ?? layoutImage('talent_vip_reward.png')}
                         layout={{ position: 'absolute', left: 5, width: 60, top: 8, height: 60 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionHcOnlyText ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non cursus lorem. Donec risus erat, lacinia id commodo ac, consectetur eget tellus. '}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 230 }}
                         name="hc_only_text"
-                        layout={{ position: 'absolute', left: 80, width: 230, top: 8, height: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHcOnlyText ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non cursus lorem. Donec risus erat, lacinia id commodo ac, consectetur eget tellus. '}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 230 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 80, width: 230, top: 8, height: 60 }}
+                    />
                 </Border>
             </Region>
         </Frame>

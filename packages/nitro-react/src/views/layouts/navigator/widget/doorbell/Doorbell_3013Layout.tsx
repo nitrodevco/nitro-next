@@ -23,21 +23,18 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
             onClose={onClose}
             layout={{ width: 270, height: 182, minWidth: 270, minHeight: 182, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionRoomName ?? 'Roomname'}
                 name="room_name"
-                layout={{ position: 'absolute', left: 10, width: 64, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionRoomName ?? 'Roomname'}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 10, width: 64, top: 14, height: 17 }}
+            />
+            <ThemeText
+                text={captionInfo ?? t('navigator.doorbell.info')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
                 name="info"
-                layout={{ position: 'absolute', left: 10, right: 8, top: 35, bottom: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionInfo ?? t('navigator.doorbell.info')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, right: 8, top: 35, bottom: 40 }}
+            />
             <Region
                 backgroundColor="#eaece8"
                 layout={{ position: 'absolute', left: 10, width: 240, top: 108, height: 36 }}
@@ -48,12 +45,11 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, right: 154, top: 0, bottom: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCancel ?? t('generic.cancel')}
                         name="cancel"
-                        layout={{ position: 'absolute', left: 3, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionCancel ?? t('generic.cancel')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 3, top: 8, height: 17 }}
+                    />
                 </Region>
                 <Button
                     variant="3"

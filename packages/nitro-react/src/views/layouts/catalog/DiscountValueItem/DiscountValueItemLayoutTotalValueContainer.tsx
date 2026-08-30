@@ -21,21 +21,17 @@ export const DiscountValueItemLayoutTotalValueContainer = ({ captionTotalCurrenc
             name="total_value_container"
             layout={{ position: 'absolute', right: -3, width: 155, top: 1, height: 15, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTotalText ?? t('catalog.bundlewidget.discount.total')}
                 name="total_text"
-                layout={{ position: 'absolute', left: -3, width: 147, top: 1, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionTotalText ?? t('catalog.bundlewidget.discount.total')}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: -3, width: 147, top: 1, height: 14 }}
+            />
+            <ThemeText
+                text={captionTotalCurrencyValueLeft ?? '00000'}
+                textOptions={{ align: 'right' }}
                 name="total_currency_value_left"
-                layout={{ position: 'absolute', left: 24, width: 39, top: -1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
-                <ThemeText
-                    text={captionTotalCurrencyValueLeft ?? '00000'}
-                    textOptions={{ align: 'right' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 24, width: 39, top: -1, height: 17 }}
+            />
             <Icon
                 variant="0"
                 name="total_currency_icon_left"
@@ -48,15 +44,12 @@ export const DiscountValueItemLayoutTotalValueContainer = ({ captionTotalCurrenc
             >
                 {striketroughTotalCurrencyLeft}
             </Region>
-            <Region
+            <ThemeText
+                text={captionTotalCurrencyValueRight ?? '00000'}
+                textOptions={{ align: 'right' }}
                 name="total_currency_value_right"
-                layout={{ position: 'absolute', left: 92, width: 38, top: -1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
-                <ThemeText
-                    text={captionTotalCurrencyValueRight ?? '00000'}
-                    textOptions={{ align: 'right' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 92, width: 38, top: -1, height: 17 }}
+            />
             <Icon
                 variant="0"
                 name="total_currency_icon_right"

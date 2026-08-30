@@ -37,16 +37,14 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
                 >
                     {t('generic.cancel')}
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionHelpText ?? t('inventory.trading.minimized.trade_in_progress')}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 421 }}
                     name="help_text"
-                    layout={{ position: 'absolute', left: 42, width: 421, top: 8, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHelpText ?? t('inventory.trading.minimized.trade_in_progress')}
-                        textStyle="text-style-u-headline-big"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 421 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 42, width: 421, top: 8, height: 24 }}
+                />
                 <ThemeImage
                     src={layoutImage('icons_panic.png')}
                     layout={{ position: 'absolute', left: 11, width: 30, top: 6, height: 30 }}

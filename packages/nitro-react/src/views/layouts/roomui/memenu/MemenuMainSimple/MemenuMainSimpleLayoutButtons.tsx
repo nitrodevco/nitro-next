@@ -58,15 +58,12 @@ export const MemenuMainSimpleLayoutButtons = ({ captionAchievementsText, caption
                     tint={tintProfileIcon}
                     layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionProfileText ?? t('widget.memenu.profile')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="profile_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionProfileText ?? t('widget.memenu.profile')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70 }}
+                />
             </Region>
             <Region
                 name="minimail"
@@ -80,15 +77,12 @@ export const MemenuMainSimpleLayoutButtons = ({ captionAchievementsText, caption
                     tint={tintMinimailIcon}
                     layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionMinimailText ?? t('widget.memenu.minimail')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="minimail_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMinimailText ?? t('widget.memenu.minimail')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70 }}
+                />
             </Region>
             <Region
                 name="rooms"
@@ -102,15 +96,12 @@ export const MemenuMainSimpleLayoutButtons = ({ captionAchievementsText, caption
                     tint={tintRoomsIcon}
                     layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionRoomsText ?? t('widget.memenu.myrooms')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="rooms_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRoomsText ?? t('widget.memenu.myrooms')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70 }}
+                />
             </Region>
             <Region
                 name="settings"
@@ -124,15 +115,12 @@ export const MemenuMainSimpleLayoutButtons = ({ captionAchievementsText, caption
                     tint={tintSettingsIcon}
                     layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionSettingsText ?? t('widget.memenu.settings')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="settings_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSettingsText ?? t('widget.memenu.settings')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70 }}
+                />
             </Region>
             <Region
                 name="achievements"
@@ -146,15 +134,12 @@ export const MemenuMainSimpleLayoutButtons = ({ captionAchievementsText, caption
                     tint={tintAchievementsIcon}
                     layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionAchievementsText ?? t('widget.memenu.achievements')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="achievements_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAchievementsText ?? t('widget.memenu.achievements')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70 }}
+                />
             </Region>
             <Region
                 name="talents"
@@ -168,15 +153,12 @@ export const MemenuMainSimpleLayoutButtons = ({ captionAchievementsText, caption
                     tint={tintTalentsIcon}
                     layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTalentsText ?? t('widget.memenu.talents')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="talents_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTalentsText ?? t('widget.memenu.talents')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70 }}
+                />
             </Region>
             {(visibleGuide ?? false) && (
                 <Region
@@ -191,15 +173,12 @@ export const MemenuMainSimpleLayoutButtons = ({ captionAchievementsText, caption
                         tint={tintGuideIcon}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionGuideText ?? t('widget.memenu.guide')}
+                        textOptions={{ fill: '#ffffff' }}
                         name="guide_text"
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionGuideText ?? t('widget.memenu.guide')}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 13, maxWidth: 70 }}
+                    />
                 </Region>
             )}
         </Region>

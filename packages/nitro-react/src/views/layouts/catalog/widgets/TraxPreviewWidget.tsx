@@ -35,15 +35,13 @@ export const TraxPreviewWidget = ({ captionPlayPreviewText, layout, onListen }: 
             >
                 {t('play_preview_button')}
             </Button>
-            <Region
+            <ThemeText
+                text={captionPlayPreviewText ?? t('play_preview')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 85 }}
                 name="play_preview_text"
-                layout={{ position: 'absolute', left: 9, width: 85, alignSelf: 'center', marginTop: 2, marginBottom: -2, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPlayPreviewText ?? t('play_preview')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 85 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 9, width: 85, alignSelf: 'center', marginTop: 2, marginBottom: -2, height: 17 }}
+            />
         </Region>
     );
 };

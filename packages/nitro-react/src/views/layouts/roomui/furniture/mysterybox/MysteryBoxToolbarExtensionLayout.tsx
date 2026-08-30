@@ -42,18 +42,18 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                         backgroundColor="#676767"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 1, width: 150, top: 3, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('mysterybox.tracker.title')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 150 }}
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 6, width: 174, top: 27, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('mysterybox.tracker.description')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('mysterybox.tracker.title')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 150 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 1, width: 150, top: 3, height: 15 }}
+                    />
+                    <ThemeText
+                        text={t('mysterybox.tracker.description')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 6, width: 174, top: 27, height: 16 }}
+                    />
                     <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 89, top: 72, height: 39 }}>
                         <Region
                             name="box_region"

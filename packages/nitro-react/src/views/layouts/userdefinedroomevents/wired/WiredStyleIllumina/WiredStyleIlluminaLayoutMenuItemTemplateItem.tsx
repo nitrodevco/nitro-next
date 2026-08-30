@@ -27,15 +27,12 @@ export const WiredStyleIlluminaLayoutMenuItemTemplateItem = ({ captionText, layo
                 />
             )}
             {(visibleText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionText ?? 'Copy configuration'}
+                    textStyle="text-style-il-regular"
                     name="text"
-                    layout={{ position: 'absolute', left: 28, width: 101, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? 'Copy configuration'}
-                        textStyle="text-style-il-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 28, width: 101, top: 3, height: 16 }}
+                />
             )}
         </Region>
     );

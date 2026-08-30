@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Dropmenu, Region, TextInput, ThemeImage } from '#base/theme';
+import { Border, BoxLayout, Button, Dropmenu, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { CollectibleHubLayoutCollectionContent, CollectibleHubLayoutCollectionContentProps } from './CollectibleHubLayoutCollectionContent';
@@ -71,12 +71,11 @@ export const CollectibleHubLayoutLoadedContent2 = ({ captionSearchPlaceholder, c
                     onChange={setSearchInputValue}
                     layout={{ position: 'absolute', left: 4, width: 156, top: 4, height: 20 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionSearchPlaceholder ?? t('generic.search')}
                     name="search_placeholder"
-                    layout={{ position: 'absolute', left: 4, width: 156, top: 4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionSearchPlaceholder ?? t('generic.search')}
-                </Region>
+                    layout={{ position: 'absolute', left: 4, width: 156, top: 4, height: 20 }}
+                />
             </Border>
             <CollectibleHubLayoutNavigationContainer {...navigationContainer} />
             <CollectibleHubLayoutCollectionContent {...collectionContent} />

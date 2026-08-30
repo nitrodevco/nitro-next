@@ -18,24 +18,18 @@ export const SeasonalCalendarLayoutPromoInfoCont = ({ captionPromoHeader, captio
             name="promo_info_cont"
             layout={{ position: 'absolute', left: 106, width: 276, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionPromoHeader ?? t('quests.seasonalcalendar.promo.header')}
+                textStyle="text-style-u-bold"
                 name="promo_header"
-                layout={{ position: 'absolute', left: 0, width: 223, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPromoHeader ?? t('quests.seasonalcalendar.promo.header')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 0, width: 223, top: 7, height: 17 }}
+            />
+            <ThemeText
+                text={captionPromoInfo ?? ''}
+                textStyle="text-style-u-regular"
                 name="promo_info"
-                layout={{ position: 'absolute', left: 0, width: 4, top: 27, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPromoInfo ?? ''}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 4, top: 27, height: 4 }}
+            />
             <Button
                 variant="3"
                 name="buy_button"
@@ -64,15 +58,12 @@ export const SeasonalCalendarLayoutPromoInfoCont = ({ captionPromoHeader, captio
                     layout={{ position: 'absolute', left: 0, width: 21, top: 0, height: 20 }}
                 />
             </Region>
-            <Region
+            <ThemeText
+                text={captionYourBalanceTxt ?? t('quests.seasonalcalendar.promo.balance')}
+                textStyle="text-style-u-regular"
                 name="your_balance_txt"
-                layout={{ position: 'absolute', left: 0, width: 223, top: 72, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionYourBalanceTxt ?? t('quests.seasonalcalendar.promo.balance')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 223, top: 72, height: 17 }}
+            />
         </Region>
     );
 };

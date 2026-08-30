@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `pet_level` of ConfirmPetBreedingLayout - pass real rows through its `items…` slot. */
 export interface ConfirmPetBreedingLayoutPetLevelItem2Props {
@@ -11,15 +11,13 @@ export const ConfirmPetBreedingLayoutPetLevelItem2 = ({ captionPetLevel, layout 
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionPetLevel ?? t('breedpets.widget.pet2.level')}
+            textStyle="text-style-il-heading-3"
+            textOptions={{ wordWrap: true, wordWrapWidth: 140, align: 'center' }}
             name="pet_level"
-            layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
-        >
-            <ThemeText
-                text={captionPetLevel ?? t('breedpets.widget.pet2.level')}
-                textStyle="text-style-il-heading-3"
-                textOptions={{ wordWrap: true, wordWrapWidth: 140, align: 'center' }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, ...layout }}
+        />
     );
 };

@@ -9,16 +9,13 @@ export interface ButtonThickBlackLayoutProps {
 export const ButtonThickBlackLayout = ({ captionBTNTEXT, layout }: ButtonThickBlackLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionBTNTEXT ?? ''}
+                textStyle="text-style-button-bold"
+                textOptions={{ fill: '#ffffff' }}
                 name="_BTN_TEXT"
-                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBTNTEXT ?? ''}
-                    textStyle="text-style-button-bold"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 22 }}
+            />
         </Region>
     );
 };

@@ -35,37 +35,31 @@ export const ClubGiftWidget = ({ captionInfoText, captionPastClubDays, captionPa
                     {itemsGiftList}
                 </Region>
             </ScrollArea>
-            <Region
+            <ThemeText
+                text={captionInfoText ?? 'lorem ipsum'}
+                textStyle="text-style-u-italic"
+                textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
                 name="info_text"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 35, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionInfoText ?? 'lorem ipsum'}
-                    textStyle="text-style-u-italic"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 35 }}
+            />
+            <ThemeText
+                text={captionPastClubDays ?? 'lorem ipsum'}
+                textStyle="text-style-u-small"
+                textOptions={{ wordWrap: true, wordWrapWidth: 360, align: 'center' }}
                 name="past_club_days"
-                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionPastClubDays ?? 'lorem ipsum'}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 360, align: 'center' }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 15 }}
+            />
             {(visiblePastVipDays ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionPastVipDays ?? 'lorem ipsum'}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 310, align: 'right' }}
                     name="past_vip_days"
-                    layout={{ position: 'absolute', left: 30, width: 310, bottom: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionPastVipDays ?? 'lorem ipsum'}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 310, align: 'right' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 30, width: 310, bottom: 0, height: 15 }}
+                />
             )}
         </Region>
     );

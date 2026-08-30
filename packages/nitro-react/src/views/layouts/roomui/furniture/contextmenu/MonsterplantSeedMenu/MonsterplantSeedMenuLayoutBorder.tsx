@@ -19,16 +19,13 @@ export const MonsterplantSeedMenuLayoutBorder = ({ captionFurniName, itemsButton
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16, justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionFurniName ?? 'furni_name'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
                     name="furni_name"
-                    layout={{ position: 'absolute', width: 61, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFurniName ?? 'furni_name'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 61, top: 0, bottom: 0 }}
+                />
             </Region>
             <Region
                 backgroundColor="#000000"

@@ -23,23 +23,19 @@ export const NewExtendedProfileLayoutTopRightItem = ({ captionFriendCount, capti
             layout={{ width: 226, height: 192, flexShrink: 0, ...layout }}
         >
             {(visibleFriendCount ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionFriendCount ?? t('extendedprofile.friends.count')}
                     name="friend_count"
-                    layout={{ position: 'absolute', left: 0, width: 161, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionFriendCount ?? t('extendedprofile.friends.count')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 161, top: 5, height: 16 }}
+                />
             )}
             {(visibleRelStatusLabelTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRelStatusLabelTxt ?? t('extendedprofile.relstatus')}
+                    textStyle="text-style-u-bold"
                     name="rel_status_label_txt"
-                    layout={{ position: 'absolute', left: 0, width: 150, top: 24, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRelStatusLabelTxt ?? t('extendedprofile.relstatus')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 150, top: 24, height: 17 }}
+                />
             )}
             {(visibleRelationships ?? true) && (
                 <NewExtendedProfileLayoutRelationships {...relationships} />

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `handitem_txt` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutHanditemTxtItemProps {
@@ -13,15 +13,13 @@ export const UserViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout, visi
 
     return (
         (visibleHanditemTxt ?? false) && (
-            <Region
+            <ThemeText
+                text={captionHanditemTxt ?? t('infostand.text.handitem')}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
                 name="handitem_txt"
-                layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-            >
-                <ThemeText
-                    text={captionHanditemTxt ?? t('infostand.text.handitem')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ width: 170, height: 17, flexShrink: 0, ...layout }}
+            />
         )
     );
 };

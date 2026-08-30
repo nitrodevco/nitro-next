@@ -23,16 +23,14 @@ export const FacebookLayout = ({ captionName, layout, srcIcon, tintIcon }: Faceb
                     tint={tintIcon}
                     layout={{ position: 'absolute', left: 1, width: 14, top: 2, height: 14 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionName ?? 'Baz Bar Foo'}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 87 }}
                     name="name"
-                    layout={{ position: 'absolute', left: 32, right: 2, top: -2, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionName ?? 'Baz Bar Foo'}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 87 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 32, right: 2, top: -2 }}
+                />
             </Region>
         </Region>
     );

@@ -41,28 +41,24 @@ export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionCon
             </Region>
             <InventoryTradingLayoutItemGridBorder0 {...itemGridBorder0} />
             {(visibleInfoText0 ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionInfoText0 ?? t('inventory.trading.warning.own_account_disabled')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
                     name="info_text_0"
-                    layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText0 ?? t('inventory.trading.warning.own_account_disabled')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132 }}
+                />
             )}
-            <Region
+            <ThemeText
+                text={captionContentText1A ?? ''}
                 name="content_text_1_a"
-                layout={{ position: 'absolute', left: 80, width: 4, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionContentText1A ?? ''}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 80, width: 4, top: 162, height: 4 }}
+            />
+            <ThemeText
+                text={captionContentText1B ?? ''}
                 name="content_text_1_b"
-                layout={{ position: 'absolute', left: 80, width: 4, top: 180, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionContentText1B ?? ''}
-            </Region>
+                layout={{ position: 'absolute', left: 80, width: 4, top: 180, height: 4 }}
+            />
             <ThemeImage
                 name="lock_0"
                 src={srcLock0 ?? layoutImage('inventory_trading_trading_unlocked_icon.png')}

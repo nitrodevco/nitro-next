@@ -70,21 +70,17 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
                     </>
                 )}
                 <Region layout={{ width: 150, height: 19, flexShrink: 0, flexDirection: 'row', gap: 3 }}>
-                    <Region layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('catalog.purchase.confirmation.dialog.cost')}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
-                    <Region
+                    <ThemeText
+                        text={t('catalog.purchase.confirmation.dialog.cost')}
+                        textStyle="text-style-u-regular"
+                        layout={{ width: 237, height: 17, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionPriceAmount ?? '000'}
+                        textStyle="text-style-u-regular"
                         name="price_amount"
-                        layout={{ width: 22, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPriceAmount ?? '000'}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
+                        layout={{ width: 22, height: 17, flexShrink: 0 }}
+                    />
                     <ThemeImage
                         name="price_type"
                         src={srcPriceType ?? layoutImage('toolbar_duckat_icon_0.png')}

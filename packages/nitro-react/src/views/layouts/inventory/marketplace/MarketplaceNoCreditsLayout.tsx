@@ -23,12 +23,12 @@ export const MarketplaceNoCreditsLayout = ({ layout, onCancelNoCreditsButton, on
             layout={{ width: 252, height: 153, minWidth: 252, minHeight: 153, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -4 }}>
-                <Region layout={{ position: 'absolute', left: 7, right: 10, top: 12, bottom: 39, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('inventory.marketplace.no_credits.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 223 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('inventory.marketplace.no_credits.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 223 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 7, right: 10, top: 12, bottom: 39 }}
+                />
                 <Button
                     variant="3"
                     name="get_credits_button"

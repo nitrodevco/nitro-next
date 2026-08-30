@@ -24,39 +24,35 @@ export const PendingRequestLayout = ({ captionRequestMessage, layout, onClose, o
             layout={{ width: 369, height: 211, minWidth: 369, minHeight: 211, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, right: -2, top: 2, bottom: -7, flexDirection: 'column', gap: 3 }}>
-                <Region layout={{ width: 217, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.pending.subtitle')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ fill: '#c30000' }}
-                    />
-                </Region>
-                <Region layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, minWidth: 351, maxWidth: 351, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.pending.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 351 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.emergency.pending.subtitle')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#c30000' }}
+                    layout={{ width: 217, height: 19, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('help.emergency.pending.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 351 }}
+                    verticalAlign="top"
+                    layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, minWidth: 351, maxWidth: 351 }}
+                />
                 <Border
                     variant="102"
                     layout={{ alignSelf: 'stretch', height: 55, flexShrink: 0, minWidth: 351, maxWidth: 351, justifyContent: 'center' }}
                 >
-                    <Region layout={{ position: 'absolute', left: 13, width: 192, top: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.emergency.pending.message.title')}
-                            textStyle="text-style-il-border"
-                            textOptions={{ fill: '#444444' }}
-                        />
-                    </Region>
-                    <Region
+                    <ThemeText
+                        text={t('help.emergency.pending.message.title')}
+                        textStyle="text-style-il-border"
+                        textOptions={{ fill: '#444444' }}
+                        layout={{ position: 'absolute', left: 13, width: 192, top: 11, height: 15 }}
+                    />
+                    <ThemeText
+                        text={captionRequestMessage ?? 'message body'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 324 }}
                         name="request_message"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 324, bottom: 0, height: 27, minWidth: 324, maxWidth: 324, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRequestMessage ?? 'message body'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 324 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 324, bottom: 0, height: 27, minWidth: 324, maxWidth: 324 }}
+                    />
                 </Border>
                 <ThemeImage
                     src={layoutImage('illumina_horizontal_separator.png')}

@@ -44,15 +44,12 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
                         />
                     )}
                     {(visibleDailygiftDucketValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionDailygiftDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="dailygiftDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDailygiftDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? false) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
                         />
                     )}
                     {(visibleDailygiftCreditValue ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionDailygiftCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="dailygiftCreditValue"
-                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDailygiftCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
                         />
                     )}
                     {(visibleDailygiftLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionDailygiftLabel ?? t('earnings.dailygift.label')}
+                            textStyle="text-style-u-bold"
                             name="dailygift_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDailygiftLabel ?? t('earnings.dailygift.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

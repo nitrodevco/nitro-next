@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, ContainerButton, Region, ScrollArea, ThemeImage } from '#base/theme';
+import { BoxLayout, ContainerButton, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { VideoViewerLayoutItemItem } from './VideoViewerLayoutItemItem';
@@ -46,9 +46,10 @@ export const VideoViewerLayoutRightPane = ({ itemsPlaylists, layout, onPlaylistN
                     layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
                 />
             </ContainerButton>
-            <Region layout={{ position: 'absolute', left: 0, width: 194, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                {t('widget.furni.video_viewer.playlists')}
-            </Region>
+            <ThemeText
+                text={t('widget.furni.video_viewer.playlists')}
+                layout={{ position: 'absolute', left: 0, width: 194, top: 33, height: 17 }}
+            />
             <ScrollArea
                 orientation="vertical"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 50, bottom: 0 }}

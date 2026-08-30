@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, ButtonThick, Frame, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ButtonThick, Frame, ThemeText } from '#base/theme';
 
 /** Generated from `3029_ros_confirm_xml` (layout "ros_room_delete_confirm", 215x203) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RosConfirmLayoutProps {
@@ -22,15 +22,13 @@ export const RosConfirmLayout = ({ captionMessage, layout, onClose, onOk }: RosC
             onClose={onClose}
             layout={{ width: 215, height: 203, minWidth: 215, minHeight: 203, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionMessage ?? 'message'}
+                textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                 name="message"
-                layout={{ position: 'absolute', left: 10, right: 3, top: 7, bottom: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMessage ?? 'message'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, right: 3, top: 7, bottom: 33 }}
+            />
             <ButtonThick
                 variant="5"
                 name="ok"

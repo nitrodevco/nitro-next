@@ -39,23 +39,19 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />
                 </Border>
-                <Region layout={{ position: 'absolute', left: 10, width: 91, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('purse_coins')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ fill: '#e3af1e' }}
-                    />
-                </Region>
-                <Region
+                <ThemeText
+                    text={t('purse_coins')}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ fill: '#e3af1e' }}
+                    layout={{ position: 'absolute', left: 10, width: 91, top: 6, bottom: 7 }}
+                />
+                <ThemeText
+                    text={captionCredits ?? '0'}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ align: 'right' }}
                     name="credits"
-                    layout={{ position: 'absolute', right: 42, width: 60, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionCredits ?? '0'}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 42, width: 60, top: 6, bottom: 7 }}
+                />
                 {(visibleChangeOverlay ?? false) && (
                     <Border
                         variant="6"
@@ -63,15 +59,12 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
                         tintColor="#e3af1e"
                         layout={{ position: 'absolute', left: 44, width: 33, top: 0, bottom: 0 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionChange ?? ' 50'}
+                            textStyle="text-style-il-regular-white"
                             name="change"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionChange ?? ' 50'}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                        />
                     </Border>
                 )}
             </Region>

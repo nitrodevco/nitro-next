@@ -28,48 +28,40 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
             layout={{ width: 369, height: 228, minWidth: 369, minHeight: 228, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}>
-                <Region layout={{ width: 188, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.pending.bully.subtitle')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ fill: '#c30000' }}
-                    />
-                </Region>
-                <Region layout={{ width: 295, height: 24, flexShrink: 0, minWidth: 295, maxWidth: 295, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.pending.bully.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.pending.bully.subtitle')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#c30000' }}
+                    layout={{ width: 188, height: 19, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('guide.pending.bully.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
+                    verticalAlign="top"
+                    layout={{ width: 295, height: 24, flexShrink: 0, minWidth: 295, maxWidth: 295 }}
+                />
                 <Border
                     variant="102"
                     layout={{ width: 295, height: 88, flexShrink: 0, justifyContent: 'center' }}
                 >
-                    <Region layout={{ position: 'absolute', left: 13, width: 133, top: 12, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.pending.bully.report')}
-                            textStyle="text-style-il-border"
-                            textOptions={{ fill: '#444444' }}
-                        />
-                    </Region>
-                    <Region
+                    <ThemeText
+                        text={t('guide.pending.bully.report')}
+                        textStyle="text-style-il-border"
+                        textOptions={{ fill: '#444444' }}
+                        layout={{ position: 'absolute', left: 13, width: 133, top: 12, height: 15 }}
+                    />
+                    <ThemeText
+                        text={captionUserName ?? 'user123'}
+                        textStyle="text-style-il-border"
                         name="user_name"
-                        layout={{ position: 'absolute', left: 37, width: 42, top: 29, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionUserName ?? 'user123'}
-                            textStyle="text-style-il-border"
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 37, width: 42, top: 29, height: 15 }}
+                    />
+                    <ThemeText
+                        text={captionRoomName ?? t('guide.pending.bully.room')}
+                        textOptions={{ fill: '#444444' }}
                         name="room_name"
-                        layout={{ position: 'absolute', left: 37, width: 135, top: 42, height: 27, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRoomName ?? t('guide.pending.bully.room')}
-                            textOptions={{ fill: '#444444' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 37, width: 135, top: 42, height: 27 }}
+                    />
                     <WidgetSlot
                         widgetType="avatar_image"
                         name="user_avatar"

@@ -94,15 +94,13 @@ export const LandingViewDefaultDynamicLayoutLayoutContentBackground = ({ caption
                 src={srcLogo ?? '${image.library.url}reception/reception_logo_drape.png'}
                 layout={{ position: 'absolute', left: 100, width: 145, top: 0, height: 200 }}
             />
-            <Region
+            <ThemeText
+                text={captionWarning ?? 'Warning! Always edit .original. file, then save it as working and delete background bitmaps!'}
+                textOptions={{ wordWrap: true, wordWrapWidth: 387 }}
                 name="warning"
-                layout={{ position: 'absolute', left: 263, width: 387, top: 170, height: 101, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionWarning ?? 'Warning! Always edit .original. file, then save it as working and delete background bitmaps!'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 387 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 263, width: 387, top: 170, height: 101 }}
+            />
         </Region>
     );
 };

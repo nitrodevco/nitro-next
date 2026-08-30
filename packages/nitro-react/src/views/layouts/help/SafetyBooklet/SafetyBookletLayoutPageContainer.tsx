@@ -40,25 +40,21 @@ export const SafetyBookletLayoutPageContainer = ({ captionDescription, captionTi
                     layout={{ position: 'absolute', left: 0, width: 250, top: 50, height: 280 }}
                 />
                 <Region layout={{ position: 'absolute', left: 270, width: 210, top: 80, height: 250, flexDirection: 'column', gap: 20 }}>
-                    <Region
+                    <ThemeText
+                        text={captionTitle ?? 'Title'}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                         name="title"
-                        layout={{ width: 210, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTitle ?? 'Title'}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ width: 210, height: 19, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionDescription ?? 'Keep your full name, address, phone numbers, photos and school name secret so nobody can scam, bully you or place you in danger.'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                         name="description"
-                        layout={{ width: 210, height: 53, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionDescription ?? 'Keep your full name, address, phone numbers, photos and school name secret so nobody can scam, bully you or place you in danger.'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ width: 210, height: 53, flexShrink: 0 }}
+                    />
                 </Region>
                 <ContainerButton
                     variant="101"
@@ -80,12 +76,11 @@ export const SafetyBookletLayoutPageContainer = ({ captionDescription, captionTi
                         >
                             {separatorWidget2}
                         </WidgetSlot>
-                        <Region layout={{ width: 140, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('habbo.way.previous.button')}
-                                textStyle="text-style-il-button"
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('habbo.way.previous.button')}
+                            textStyle="text-style-il-button"
+                            layout={{ width: 140, height: 15, flexShrink: 0 }}
+                        />
                         <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
                     </Region>
                 </ContainerButton>
@@ -98,12 +93,11 @@ export const SafetyBookletLayoutPageContainer = ({ captionDescription, captionTi
                 >
                     <Region layout={{ position: 'absolute', left: 0, right: 0, top: 15, flexDirection: 'row' }}>
                         <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
-                        <Region layout={{ width: 121, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('habbo.way.next.button')}
-                                textStyle="text-style-il-button"
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('habbo.way.next.button')}
+                            textStyle="text-style-il-button"
+                            layout={{ width: 121, height: 15, flexShrink: 0 }}
+                        />
                         <WidgetSlot
                             widgetType="separator"
                             options={{ 'separator:vertical': 'true' }}

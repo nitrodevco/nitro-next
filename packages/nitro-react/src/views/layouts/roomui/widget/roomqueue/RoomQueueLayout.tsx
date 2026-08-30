@@ -25,26 +25,22 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
             layout={{ width: 229, height: 118, minWidth: 229, minHeight: 118, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? 'Your position in the queue: 5'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 217, align: 'center' }}
                     name="info_text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 21, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? 'Your position in the queue: 5'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 217, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 21, height: 17 }}
+                />
                 {(visibleSpectatorInfo ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionSpectatorInfo ?? t('room.queue.spectator.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 266 }}
                         name="spectator_info"
-                        layout={{ position: 'absolute', left: 21, width: 266, top: 68, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSpectatorInfo ?? t('room.queue.spectator.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 266 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 21, width: 266, top: 68, height: 29 }}
+                    />
                 )}
                 <Button
                     variant="3"

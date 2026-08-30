@@ -42,15 +42,12 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
                 name="sanctioninfo"
                 layout={{ position: 'absolute', left: 524, width: 215, top: 42, height: 18, maxHeight: 47 }}
             >
-                <Region
+                <ThemeText
+                    text={captionSanctionLabel ?? ''}
+                    textOptions={{ fill: '#ffffff' }}
                     name="sanction_label"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, maxWidth: 215, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSanctionLabel ?? ''}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, maxWidth: 215, maxHeight: 20 }}
+                />
             </Region>
             <Region
                 name="buttons"
@@ -89,15 +86,12 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
                 >
                     Issue handling
                 </CheckBox>
-                <Region
+                <ThemeText
+                    text={captionHandleNextText ?? 'Automatically open next issue'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="handle_next_text"
-                    layout={{ position: 'absolute', left: 138, width: 153, top: 53, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHandleNextText ?? 'Automatically open next issue'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 138, width: 153, top: 53, height: 13 }}
+                />
                 <Button
                     variant="0"
                     name="close_sanction"

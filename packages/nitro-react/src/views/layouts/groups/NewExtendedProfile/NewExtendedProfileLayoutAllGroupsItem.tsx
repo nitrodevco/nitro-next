@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ScrollArea } from '#base/theme';
+import { BoxLayout, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Row template `all_groups` of NewExtendedProfileLayout - pass real rows through its `items…` slot. */
 export interface NewExtendedProfileLayoutAllGroupsItemProps {
@@ -21,12 +21,11 @@ export const NewExtendedProfileLayoutAllGroupsItem = ({ captionTotalGroupCount, 
             layout={{ width: 83, height: 227, flexShrink: 0, ...layout }}
         >
             {(visibleTotalGroupCount ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTotalGroupCount ?? t('extendedprofile.groups.count')}
                     name="total_group_count"
-                    layout={{ position: 'absolute', left: 0, width: 159, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionTotalGroupCount ?? t('extendedprofile.groups.count')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 159, top: 0, height: 16 }}
+                />
             )}
             {(visibleGroupsList ?? true) && (
                 <ScrollArea

@@ -29,12 +29,11 @@ export const GroupManagementWindowLayoutGroupTypeSelector = ({ layout, onGroupty
                 onPointerTap={onRbTypeRegular}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 2, height: 15 }}
             />
-            <Region layout={{ position: 'absolute', left: 20, width: 112, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('group.edit.settings.type.regular.label')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+            <ThemeText
+                text={t('group.edit.settings.type.regular.label')}
+                textStyle="text-style-u-bold"
+                layout={{ position: 'absolute', left: 20, width: 112, top: 0, height: 20 }}
+            />
             <Region
                 name="grouptype_region_0"
                 tooltip={t('group.edit.settings.type.regular.help')}
@@ -48,25 +47,24 @@ export const GroupManagementWindowLayoutGroupTypeSelector = ({ layout, onGroupty
                     layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
                 />
             </Region>
-            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 15, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('group.edit.settings.type.regular.help')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('group.edit.settings.type.regular.help')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 20, width: 132, top: 15, height: 45 }}
+            />
             <RadioButton
                 variant="0"
                 name="rb_type_exclusive"
                 onPointerTap={onRbTypeExclusive}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 62, height: 15 }}
             />
-            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('group.edit.settings.type.exclusive.label')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+            <ThemeText
+                text={t('group.edit.settings.type.exclusive.label')}
+                textStyle="text-style-u-bold"
+                layout={{ position: 'absolute', left: 20, width: 132, top: 60, height: 20 }}
+            />
             <Region
                 name="grouptype_region_1"
                 tooltip={t('group.edit.settings.type.exclusive.help')}
@@ -80,25 +78,24 @@ export const GroupManagementWindowLayoutGroupTypeSelector = ({ layout, onGroupty
                     layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
                 />
             </Region>
-            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 75, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('group.edit.settings.type.exclusive.help')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('group.edit.settings.type.exclusive.help')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 20, width: 132, top: 75, height: 45 }}
+            />
             <RadioButton
                 variant="0"
                 name="rb_type_private"
                 onPointerTap={onRbTypePrivate}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 122, height: 15 }}
             />
-            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 120, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('group.edit.settings.type.private.label')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+            <ThemeText
+                text={t('group.edit.settings.type.private.label')}
+                textStyle="text-style-u-bold"
+                layout={{ position: 'absolute', left: 20, width: 132, top: 120, height: 20 }}
+            />
             <Region
                 name="grouptype_region_2"
                 tooltip={t('group.edit.settings.type.private.help')}
@@ -112,13 +109,13 @@ export const GroupManagementWindowLayoutGroupTypeSelector = ({ layout, onGroupty
                     layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
                 />
             </Region>
-            <Region layout={{ position: 'absolute', left: 20, width: 132, top: 135, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('group.edit.settings.type.private.help')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('group.edit.settings.type.private.help')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 20, width: 132, top: 135, height: 45 }}
+            />
         </Region>
     );
 };

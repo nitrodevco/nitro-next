@@ -32,21 +32,18 @@ export const ErrorInfoViewLayout = ({ captionErrorName, captionErrorText, layout
                     src={srcTypeIcon}
                     layout={{ position: 'absolute', left: 280, width: 40, top: 0, height: 40 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionErrorName ?? 'EXECUTION_CAP'}
                     name="error_name"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 101, alignSelf: 'center', marginTop: -30.5, marginBottom: 30.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionErrorName ?? 'EXECUTION_CAP'}
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 101, alignSelf: 'center', marginTop: -30.5, marginBottom: 30.5, height: 17 }}
+                />
+                <ThemeText
+                    text={captionErrorText ?? ''}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 319 }}
                     name="error_text"
-                    layout={{ position: 'absolute', left: 0, width: 319, top: 46, height: 50, minHeight: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionErrorText ?? ''}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 319 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, width: 319, top: 46, height: 50, minHeight: 50 }}
+                />
             </Region>
         </Frame>
     );

@@ -26,15 +26,13 @@ export const NewFeatureNotificationLayout = ({ captionCancelLink, captionDesc, l
                     src={srcStaticBitmap}
                     layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 55 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionDesc ?? 'text here'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 113 }}
                     name="desc"
-                    layout={{ position: 'absolute', left: 67, width: 113, top: 7, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDesc ?? 'text here'}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 113 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 67, width: 113, top: 7, height: 45 }}
+                />
                 <Button
                     variant="4"
                     name="open_button"

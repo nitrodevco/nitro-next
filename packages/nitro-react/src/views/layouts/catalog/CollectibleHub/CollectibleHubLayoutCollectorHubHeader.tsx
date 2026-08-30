@@ -78,69 +78,51 @@ export const CollectibleHubLayoutCollectorHubHeader = ({ captionCaptionAllTimeHi
                     name="score_container"
                     layout={{ position: 'absolute', left: 116, width: 220, top: 21, height: 45 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCurrentScoreKey ?? t('collectibles.score')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff', align: 'right' }}
                         name="current_score_key"
-                        layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                    >
-                        <ThemeText
-                            text={captionCurrentScoreKey ?? t('collectibles.score')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff', align: 'right' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 18 }}
+                    />
+                    <ThemeText
+                        text={captionCurrentScoreValue ?? '0'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
                         name="current_score_value"
-                        layout={{ position: 'absolute', left: 158, width: 10, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCurrentScoreValue ?? '0'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 158, width: 10, top: 0, height: 18 }}
+                    />
+                    <ThemeText
+                        text={captionCurrentHiscoreKey ?? t('collectibles.high_score')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff', align: 'right' }}
                         name="current_hiscore_key"
-                        layout={{ position: 'absolute', left: 0, width: 158, top: 26, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                    >
+                        layout={{ position: 'absolute', left: 0, width: 158, top: 26, height: 18 }}
+                    />
+                    <ThemeText
+                        text={captionCurrentHiscoreValue ?? '0'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
+                        name="current_hiscore_value"
+                        layout={{ position: 'absolute', left: 158, width: 11, top: 26, height: 18 }}
+                    />
+                    {(visibleCaptionCurrentScore ?? false) && (
                         <ThemeText
-                            text={captionCurrentHiscoreKey ?? t('collectibles.high_score')}
+                            text={captionCaptionCurrentScore ?? 'My Habbo Collector Score: 999999'}
                             textStyle="text-style-u-bold"
                             textOptions={{ fill: '#ffffff', align: 'right' }}
-                        />
-                    </Region>
-                    <Region
-                        name="current_hiscore_value"
-                        layout={{ position: 'absolute', left: 158, width: 11, top: 26, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCurrentHiscoreValue ?? '0'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    {(visibleCaptionCurrentScore ?? false) && (
-                        <Region
                             name="caption_current_score"
-                            layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                        >
-                            <ThemeText
-                                text={captionCaptionCurrentScore ?? 'My Habbo Collector Score: 999999'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff', align: 'right' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 17 }}
+                        />
                     )}
                     {(visibleCaptionAllTimeHighScore ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionCaptionAllTimeHighScore ?? 'My all time high score: 999999'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff', align: 'right' }}
                             name="caption_all_time_high_score"
-                            layout={{ position: 'absolute', left: 0, width: 197, top: 25, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                        >
-                            <ThemeText
-                                text={captionCaptionAllTimeHighScore ?? 'My all time high score: 999999'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff', align: 'right' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, width: 197, top: 25, height: 17 }}
+                        />
                     )}
                 </Region>
                 <ThemeImage
@@ -151,16 +133,13 @@ export const CollectibleHubLayoutCollectorHubHeader = ({ captionCaptionAllTimeHi
                     name="level_container"
                     layout={{ position: 'absolute', left: 344, width: 45, top: 16, height: 35 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCollectorLevel ?? '0'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="collector_level"
-                        layout={{ position: 'absolute', left: 2, width: 40, top: 0, height: 26, maxWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionCollectorLevel ?? '0'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 2, width: 40, top: 0, height: 26, maxWidth: 40 }}
+                    />
                     <Region
                         name="level_title"
                         layout={{ position: 'absolute', left: 3, width: 41, top: 22, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -184,15 +163,12 @@ export const CollectibleHubLayoutCollectorHubHeader = ({ captionCaptionAllTimeHi
                         tintColor="#3a2f29"
                         layout={{ position: 'absolute', left: 1, width: 68, top: 1, height: 20 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionSilverCurrencyValue ?? '0'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                             name="silver_currency_value"
-                            layout={{ position: 'absolute', left: 2, width: 45, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionSilverCurrencyValue ?? '0'}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 2, width: 45, top: 1, height: 17 }}
+                        />
                     </Border>
                 </Border>
                 <ThemeImage
@@ -212,15 +188,12 @@ export const CollectibleHubLayoutCollectorHubHeader = ({ captionCaptionAllTimeHi
                         tintColor="#3a2f29"
                         layout={{ position: 'absolute', left: 1, width: 68, top: 1, height: 20 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionEmeraldCurrencyValue ?? '0'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                             name="emerald_currency_value"
-                            layout={{ position: 'absolute', left: 2, width: 45, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionEmeraldCurrencyValue ?? '0'}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 2, width: 45, top: 1, height: 17 }}
+                        />
                     </Border>
                 </Border>
                 <ThemeImage

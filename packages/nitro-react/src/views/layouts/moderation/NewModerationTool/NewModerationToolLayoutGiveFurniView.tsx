@@ -25,15 +25,12 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
             name="give_furni_view"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionUserTxt ?? t('moderation.give_furni.user')}
+                textOptions={{ fill: '#333333' }}
                 name="user_txt"
-                layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionUserTxt ?? t('moderation.give_furni.user')}
-                    textOptions={{ fill: '#333333' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16 }}
+            />
             <Border
                 variant="105"
                 layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
@@ -44,15 +41,12 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
                     layout={{ position: 'absolute', left: 5, right: 8, top: 5, bottom: 5 }}
                 />
             </Border>
-            <Region
+            <ThemeText
+                text={captionAmountTxt ?? t('moderation.give_furni.amount')}
+                textOptions={{ fill: '#333333' }}
                 name="amount_txt"
-                layout={{ position: 'absolute', left: 134, width: 45, top: 66, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionAmountTxt ?? t('moderation.give_furni.amount')}
-                    textOptions={{ fill: '#333333' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 134, width: 45, top: 66, height: 16 }}
+            />
             <Border
                 variant="105"
                 layout={{ position: 'absolute', left: 134, right: 70, top: 87, height: 26 }}
@@ -64,15 +58,12 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
                     layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                 />
             </Border>
-            <Region
+            <ThemeText
+                text={captionProductNameTxt ?? t('moderation.give_furni.product')}
+                textOptions={{ fill: '#333333' }}
                 name="product_name_txt"
-                layout={{ position: 'absolute', left: 9, width: 76, top: 66, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionProductNameTxt ?? t('moderation.give_furni.product')}
-                    textOptions={{ fill: '#333333' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 9, width: 76, top: 66, height: 16 }}
+            />
             <Border
                 variant="105"
                 layout={{ position: 'absolute', left: 9, right: 119, top: 87, height: 26 }}

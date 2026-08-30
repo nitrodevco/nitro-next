@@ -25,60 +25,48 @@ export const RosRoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel
             name="tag_category_container"
             layout={{ position: 'absolute', left: 0, width: 300, top: 100, height: 192, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionCategoryLabel ?? t('navigator.category')}
+                textStyle="text-style-u-bold"
                 name="category_label"
-                layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCategoryLabel ?? t('navigator.category')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 17 }}
+            />
             <Dropmenu
                 variant="2"
                 name="categories"
                 onPointerTap={onCategories}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 16, height: 24 }}
             />
-            <Region
+            <ThemeText
+                text={captionMaxvisitorsLabel ?? t('navigator.maxvisitors')}
+                textStyle="text-style-u-bold"
                 name="maxvisitors_label"
-                layout={{ position: 'absolute', left: 0, width: 125, top: 45, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMaxvisitorsLabel ?? t('navigator.maxvisitors')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 125, top: 45, height: 17 }}
+            />
             <Dropmenu
                 variant="2"
                 name="maxvisitors"
                 onPointerTap={onMaxvisitors}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 24 }}
             />
-            <Region
+            <ThemeText
+                text={captionTradesettingsLabel ?? t('navigator.tradesettings')}
+                textStyle="text-style-u-bold"
                 name="tradesettings_label"
-                layout={{ position: 'absolute', left: 0, width: 138, top: 90, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTradesettingsLabel ?? t('navigator.tradesettings')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 138, top: 90, height: 17 }}
+            />
             <Dropmenu
                 variant="2"
                 name="tradesettings"
                 onPointerTap={onTradesettings}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 106, height: 24 }}
             />
-            <Region
+            <ThemeText
+                text={captionTagLabel ?? t('navigator.tags')}
+                textStyle="text-style-u-bold"
                 name="tag_label"
-                layout={{ position: 'absolute', left: 0, width: 86, top: 138, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTagLabel ?? t('navigator.tags')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 86, top: 138, height: 17 }}
+            />
             <TextInput
                 value={tag1Value}
                 onChange={setTag1Value}

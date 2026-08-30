@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `plus` of TotalPriceWidgetLayout - pass real rows through its `items…` slot. */
 export interface TotalPriceWidgetLayoutPlusItemProps {
@@ -8,11 +8,10 @@ export interface TotalPriceWidgetLayoutPlusItemProps {
 
 export const TotalPriceWidgetLayoutPlusItem = ({ captionPlus, layout }: TotalPriceWidgetLayoutPlusItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionPlus ?? ' '}
             name="plus"
-            layout={{ width: 8, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionPlus ?? ' '}
-        </Region>
+            layout={{ width: 8, alignSelf: 'stretch', flexShrink: 0, ...layout }}
+        />
     );
 };

@@ -23,18 +23,17 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
             layout={{ width: 221, height: 153, minWidth: 221, minHeight: 153, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', left: 5, right: 6, top: 13, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('poll_cancel_confirm_short')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 5, right: 5, top: 32, bottom: 67, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('poll_cancel_confirm_long')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 199, align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('poll_cancel_confirm_short')}
+                    textOptions={{ align: 'center' }}
+                    layout={{ position: 'absolute', left: 5, right: 6, top: 13, height: 13 }}
+                />
+                <ThemeText
+                    text={t('poll_cancel_confirm_long')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 199, align: 'center' }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 32, bottom: 67 }}
+                />
                 <Region layout={{ position: 'absolute', width: 201, bottom: -4, height: 22 }}>
                     <Button
                         variant="0"

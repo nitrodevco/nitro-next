@@ -22,34 +22,25 @@ export const ClockBaseLayout = ({ captionSeparator, captionUnit, captionValue, c
                         src={layoutImage('illumina_light_clock_background.png')}
                         layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 23 }}
                     />
-                    <Region
-                        name="value"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionValue ?? '00'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
-                        name="unit"
-                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionUnit ?? 'hrs'}
-                            textOptions={{ fill: colorableTextColor, align: 'center' }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="separator"
-                    layout={{ width: 9, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
                     <ThemeText
-                        text={captionSeparator ?? ':'}
-                        textOptions={{ fill: colorableTextColor }}
+                        text={captionValue ?? '00'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                        name="value"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 18 }}
+                    />
+                    <ThemeText
+                        text={captionUnit ?? 'hrs'}
+                        textOptions={{ fill: colorableTextColor, align: 'center' }}
+                        name="unit"
+                        layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 14 }}
                     />
                 </Region>
+                <ThemeText
+                    text={captionSeparator ?? ':'}
+                    textOptions={{ fill: colorableTextColor }}
+                    name="separator"
+                    layout={{ width: 9, height: 20, flexShrink: 0 }}
+                />
             </Region>
         </Region>
     );

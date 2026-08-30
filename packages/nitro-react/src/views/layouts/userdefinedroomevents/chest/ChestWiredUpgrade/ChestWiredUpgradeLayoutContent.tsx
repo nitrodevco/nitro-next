@@ -63,18 +63,16 @@ export const ChestWiredUpgradeLayoutContent = ({ captionFree, itemsContent, item
                     )}
                 </Region>
                 <Region layout={{ position: 'absolute', left: 142, width: 307, top: 137, height: 22, flexDirection: 'row' }}>
-                    <Region layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('catalog.purchase.confirmation.dialog.cost')}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
-                    <Region
+                    <ThemeText
+                        text={t('catalog.purchase.confirmation.dialog.cost')}
+                        textStyle="text-style-u-regular"
+                        layout={{ width: 268, height: 19, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionFree ?? t('wiredchests.upgrade.wired.cost')}
                         name="free"
-                        layout={{ width: 39, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionFree ?? t('wiredchests.upgrade.wired.cost')}
-                    </Region>
+                        layout={{ width: 39, height: 19, flexShrink: 0 }}
+                    />
                 </Region>
             </Region>
         </Region>

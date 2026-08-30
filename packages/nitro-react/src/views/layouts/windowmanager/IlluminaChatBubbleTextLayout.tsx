@@ -9,15 +9,13 @@ export interface IlluminaChatBubbleTextLayoutProps {
 export const IlluminaChatBubbleTextLayout = ({ captionMessage, layout }: IlluminaChatBubbleTextLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 207, height: 4, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionMessage ?? ''}
+                textOptions={{ wordWrap: true, wordWrapWidth: 207 }}
                 name="message"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMessage ?? ''}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 207 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 0 }}
+            />
         </Region>
     );
 };

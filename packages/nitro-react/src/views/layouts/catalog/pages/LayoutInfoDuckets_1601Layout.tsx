@@ -17,15 +17,13 @@ export const LayoutInfoDuckets_1601Layout = ({ captionCtlgDescription, layout, s
                 name="ctlg_info_duckets"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCtlgDescription ?? t('loremipsum.html')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 226 }}
                     name="ctlg_description"
-                    layout={{ position: 'absolute', left: 24, width: 226, top: 89, height: 332, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgDescription ?? t('loremipsum.html')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 226 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 24, width: 226, top: 89, height: 332 }}
+                />
                 <ThemeImage
                     name="duckets_info_illustration"
                     src={srcDucketsInfoIllustration ?? '${image.library.url}catalogue/duckets_info_illustration.gif'}

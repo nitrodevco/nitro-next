@@ -28,24 +28,20 @@ export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVip
             layout={{ position: 'absolute', justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 161, width: 188, top: 3, height: 165, flexDirection: 'column', gap: 4 }}>
-                <Region
+                <ThemeText
+                    text={captionVipTitle ?? t('catalog.vip.buy.title')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 158 }}
                     name="vip_title"
-                    layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionVipTitle ?? t('catalog.vip.buy.title')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 158 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ width: 158, height: 17, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={captionVipInfo ?? t('catalog.vip.buy.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 158 }}
                     name="vip_info"
-                    layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionVipInfo ?? t('catalog.vip.buy.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 158 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ width: 158, height: 17, flexShrink: 0 }}
+                />
             </Region>
             <ThemeImage
                 name="ctlg_teaserimg_1"
@@ -58,15 +54,12 @@ export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVip
             >
                 {itemsItemListVip}
             </Region>
-            <Region
+            <ThemeText
+                text={captionVipLink ?? t('catalog.vip.buy.link')}
+                textOptions={{ fill: '#038ef4', align: 'center' }}
                 name="vip_link"
-                layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 286, bottom: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionVipLink ?? t('catalog.vip.buy.link')}
-                    textOptions={{ fill: '#038ef4', align: 'center' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 286, bottom: 10, height: 17 }}
+            />
         </Region>
     );
 };

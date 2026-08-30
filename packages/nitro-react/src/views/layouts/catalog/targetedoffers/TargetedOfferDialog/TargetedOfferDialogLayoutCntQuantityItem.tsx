@@ -18,12 +18,11 @@ export const TargetedOfferDialogLayoutCntQuantityItem = ({ layout, visibleQuanti
             name="cnt_quantity"
             layout={{ width: 100, height: 30, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 17, maxWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('catalog.bundlewidget.quantity')}
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('catalog.bundlewidget.quantity')}
+                textOptions={{ fill: '#666666' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 17, maxWidth: 100 }}
+            />
             <Border
                 variant="0"
                 layout={{ position: 'absolute', left: 65, width: 30, top: 0, height: 25 }}

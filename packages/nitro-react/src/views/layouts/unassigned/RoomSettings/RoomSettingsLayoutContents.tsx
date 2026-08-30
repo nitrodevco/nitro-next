@@ -36,36 +36,31 @@ export const RoomSettingsLayoutContents = ({ itemsContents, layout }: RoomSettin
                         <RoomSettingsLayoutTabContainer5Item />
                     </>
                 )}
-                <Region layout={{ width: 254, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('navigator.roomsettings.tab.1')}
-                        textStyle="text-style-u-headline-big"
-                    />
-                </Region>
-                <Region layout={{ width: 254, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('navigator.roomsettings.tab.2')}
-                        textStyle="text-style-u-headline-big"
-                    />
-                </Region>
-                <Region layout={{ width: 254, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('navigator.roomsettings.tab.3')}
-                        textStyle="text-style-u-headline-big"
-                    />
-                </Region>
-                <Region layout={{ width: 254, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('navigator.roomsettings.tab.4')}
-                        textStyle="text-style-u-headline-big"
-                    />
-                </Region>
-                <Region layout={{ width: 254, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('navigator.roomsettings.tab.5')}
-                        textStyle="text-style-u-headline-big"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('navigator.roomsettings.tab.1')}
+                    textStyle="text-style-u-headline-big"
+                    layout={{ width: 254, height: 30, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('navigator.roomsettings.tab.2')}
+                    textStyle="text-style-u-headline-big"
+                    layout={{ width: 254, height: 30, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('navigator.roomsettings.tab.3')}
+                    textStyle="text-style-u-headline-big"
+                    layout={{ width: 254, height: 30, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('navigator.roomsettings.tab.4')}
+                    textStyle="text-style-u-headline-big"
+                    layout={{ width: 254, height: 30, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('navigator.roomsettings.tab.5')}
+                    textStyle="text-style-u-headline-big"
+                    layout={{ width: 254, height: 30, flexShrink: 0 }}
+                />
             </Region>
         </ScrollArea>
     );

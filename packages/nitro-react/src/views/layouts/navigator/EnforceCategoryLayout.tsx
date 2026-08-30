@@ -22,21 +22,22 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
             layout={{ width: 310, height: 240, minWidth: 310, minHeight: 240, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', left: 4, width: 295, top: 4, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('enforce.category.body.text.multiline')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('enforce.category.body.text.multiline')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 4, width: 295, top: 4, height: 75 }}
+                />
                 <Dropmenu
                     variant="3"
                     name="category"
                     onPointerTap={onCategory}
                     layout={{ position: 'absolute', left: 6, width: 279, top: 68, height: 23 }}
                 />
-                <Region layout={{ position: 'absolute', left: 4, width: 295, top: 96, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('enforce.category.trade.setting')}
-                </Region>
+                <ThemeText
+                    text={t('enforce.category.trade.setting')}
+                    layout={{ position: 'absolute', left: 4, width: 295, top: 96, height: 19 }}
+                />
                 <Dropmenu
                     variant="3"
                     name="trade_mode"

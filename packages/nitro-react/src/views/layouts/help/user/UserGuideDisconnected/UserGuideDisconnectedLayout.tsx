@@ -52,12 +52,11 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
                                 textStyle="text-style-il-heading-2"
                             />
                         </Region>
-                        <Region
+                        <ThemeText
+                            text={captionGuideDesc ?? t('guide.help.request.user.guide.disconnected.guide.desc')}
                             name="guide_desc"
-                            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionGuideDesc ?? t('guide.help.request.user.guide.disconnected.guide.desc')}
-                        </Region>
+                            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, maxWidth: 130 }}
+                        />
                     </Region>
                 </Region>
                 <Region

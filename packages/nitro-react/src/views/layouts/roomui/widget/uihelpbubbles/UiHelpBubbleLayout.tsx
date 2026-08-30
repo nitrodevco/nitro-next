@@ -28,16 +28,14 @@ export const UiHelpBubbleLayout = ({ captionHelpBubbleText, layout, onHelpBubble
                             cursor="pointer"
                             layout={{ position: 'absolute', left: 2, right: 18, top: 2, bottom: 58, maxWidth: 200 }}
                         >
-                            <Region
+                            <ThemeText
+                                text={captionHelpBubbleText ?? 'Testing Testing!testingdsf'}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ wordWrap: true }}
                                 name="help_bubble_text"
-                                layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionHelpBubbleText ?? 'Testing Testing!testingdsf'}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ wordWrap: true }}
-                                />
-                            </Region>
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 200 }}
+                            />
                         </Region>
                         <Button
                             variant="5"

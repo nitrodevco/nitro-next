@@ -1,4 +1,4 @@
-import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `rarity_tag` of ExtendedProfileBadgeDetailsLayout - pass real rows through its `items…` slot. */
 export interface ExtendedProfileBadgeDetailsLayoutRarityTagItemProps {
@@ -20,26 +20,20 @@ export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, 
                 layout={{ width: 92, height: 17, flexShrink: 0, ...layout }}
             >
                 {(visibleRarityBorder ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionRarityBorder ?? 'Unique badge'}
+                        textOptions={{ fill: '#ffffff' }}
                         name="rarity_border"
-                        layout={{ position: 'absolute', left: 5, top: 2, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRarityBorder ?? 'Unique badge'}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 5, top: 2, bottom: 2 }}
+                    />
                 )}
                 {(visibleRarity ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionRarity ?? 'Unique badge'}
+                        textStyle="text-style-bold"
                         name="rarity"
-                        layout={{ position: 'absolute', left: 5, right: 6, top: 2, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRarity ?? 'Unique badge'}
-                            textStyle="text-style-bold"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 5, right: 6, top: 2, bottom: 2 }}
+                    />
                 )}
             </Border>
         )

@@ -23,18 +23,17 @@ export const UserThanksLayout = ({ layout, onClose, onCloseButton }: UserThanksL
             layout={{ width: 282, height: 192, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 10, right: 0, top: 0, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}>
-                <Region layout={{ width: 234, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.user.thanks.info.title')}
-                        textStyle="text-style-il-heading-2"
-                    />
-                </Region>
-                <Region layout={{ alignSelf: 'stretch', height: 26, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.user.thanks.info.desc')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.help.request.user.thanks.info.title')}
+                    textStyle="text-style-il-heading-2"
+                    layout={{ width: 234, height: 17, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('guide.help.request.user.thanks.info.desc')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                    verticalAlign="top"
+                    layout={{ alignSelf: 'stretch', height: 26, flexShrink: 0 }}
+                />
                 <Region layout={{ alignSelf: 'stretch', height: 1, flexShrink: 0 }}>
                     <ThemeImage
                         src={layoutImage('help_user_feedback.png')}

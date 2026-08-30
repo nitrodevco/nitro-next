@@ -36,15 +36,12 @@ export const IlluminaLightFrameModalLayout = ({ captionHeaderTitleText, contentA
             >
                 {titlebar}
             </Region>
-            <Region
+            <ThemeText
+                text={captionHeaderTitleText ?? ''}
+                textStyle="text-style-il-frame-modal-title"
                 name="header_title_text"
-                layout={{ position: 'absolute', left: 8, width: 20, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeaderTitleText ?? ''}
-                    textStyle="text-style-il-frame-modal-title"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 8, width: 20, top: 0, height: 20 }}
+            />
             <CloseButton
                 variant="100"
                 name="header_button_close"

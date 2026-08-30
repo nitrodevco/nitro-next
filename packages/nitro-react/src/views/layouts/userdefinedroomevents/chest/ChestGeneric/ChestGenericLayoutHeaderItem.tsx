@@ -59,15 +59,13 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
                 </Region>
             )}
             {(visibleWarningText ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionWarningText ?? ''}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 406 }}
                     name="warning_text"
-                    layout={{ position: 'absolute', left: 10, right: 44, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionWarningText ?? ''}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 406 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, right: 44, top: 10, bottom: -6 }}
+                />
             )}
             {(visibleNotificationSettingsButton ?? true) && (
                 <ContainerButton

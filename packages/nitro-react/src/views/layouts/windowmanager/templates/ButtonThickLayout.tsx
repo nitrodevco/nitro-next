@@ -9,15 +9,12 @@ export interface ButtonThickLayoutProps {
 export const ButtonThickLayout = ({ captionBTNTEXT, layout }: ButtonThickLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionBTNTEXT ?? ''}
+                textStyle="text-style-button-bold"
                 name="_BTN_TEXT"
-                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBTNTEXT ?? ''}
-                    textStyle="text-style-button-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 22 }}
+            />
         </Region>
     );
 };

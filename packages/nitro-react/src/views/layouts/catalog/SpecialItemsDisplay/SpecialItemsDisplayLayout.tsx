@@ -77,24 +77,20 @@ export const SpecialItemsDisplayLayout = ({ bg1, bg2, bg3, bottom, captionClaimT
                             layout={{ position: 'absolute', left: 7, width: 380, top: 7, height: 80 }}
                         >
                             <Region layout={{ flexDirection: 'column', width: '100%' }}>
-                                <Region
+                                <ThemeText
+                                    text={captionSetTitle ?? t('special_items.wf15.header.title')}
+                                    textOptions={{ wordWrap: true, wordWrapWidth: 365, align: 'center' }}
                                     name="set_title"
-                                    layout={{ width: 365, height: 17, flexShrink: 0, maxWidth: 365, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                                >
-                                    <ThemeText
-                                        text={captionSetTitle ?? t('special_items.wf15.header.title')}
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 365, align: 'center' }}
-                                    />
-                                </Region>
-                                <Region
+                                    verticalAlign="top"
+                                    layout={{ width: 365, height: 17, flexShrink: 0, maxWidth: 365 }}
+                                />
+                                <ThemeText
+                                    text={captionSetDesc ?? t('special_items.wf15.header.desc')}
+                                    textOptions={{ wordWrap: true, wordWrapWidth: 365, align: 'center' }}
                                     name="set_desc"
-                                    layout={{ width: 365, height: 57, flexShrink: 0, maxWidth: 365, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                                >
-                                    <ThemeText
-                                        text={captionSetDesc ?? t('special_items.wf15.header.desc')}
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 365, align: 'center' }}
-                                    />
-                                </Region>
+                                    verticalAlign="top"
+                                    layout={{ width: 365, height: 57, flexShrink: 0, maxWidth: 365 }}
+                                />
                             </Region>
                         </ScrollArea>
                     </Border>
@@ -114,12 +110,11 @@ export const SpecialItemsDisplayLayout = ({ bg1, bg2, bg3, bottom, captionClaimT
                         layout={{ position: 'absolute', marginLeft: 6, marginRight: -6, width: 310, top: 115, height: 40 }}
                     >
                         <Region layout={{ position: 'absolute', left: 16, width: 277, top: 5, height: 30, flexDirection: 'row', gap: 10 }}>
-                            <Region
+                            <ThemeText
+                                text={captionClaimTxt ?? t('special_items.claim_info')}
                                 name="claim_txt"
-                                layout={{ width: 212, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionClaimTxt ?? t('special_items.claim_info')}
-                            </Region>
+                                layout={{ width: 212, height: 17, flexShrink: 0 }}
+                            />
                             <Button
                                 variant="4"
                                 name="claim_btn"

@@ -36,12 +36,11 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     name="options_container"
                     layout={{ width: 198, height: 46, flexShrink: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionText002 ?? ''}
                         name="text002"
-                        layout={{ position: 'absolute', left: 0, width: 133, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionText002 ?? ''}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 133, top: 0, height: 28 }}
+                    />
                     <CheckBox
                         variant="101"
                         name="useTicket"
@@ -63,9 +62,10 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     name="environment_container"
                     layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 72, top: 6, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        Environment:
-                    </Region>
+                    <ThemeText
+                        text="Environment:"
+                        layout={{ position: 'absolute', left: 0, width: 72, top: 6, bottom: 6 }}
+                    />
                     <Droplist
                         variant="100"
                         name="environment_list"
@@ -76,15 +76,12 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     name="name_container"
                     layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionLabelName ?? 'Name:'}
+                        textStyle="text-style-il-heading-1"
                         name="label_name"
-                        layout={{ position: 'absolute', left: 0, width: 46, top: 4, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionLabelName ?? 'Name:'}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 46, top: 4, bottom: 7 }}
+                    />
                     <Border
                         variant="105"
                         name="name_border"
@@ -102,15 +99,12 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     name="password_container"
                     layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionLabelPassword ?? 'Password:'}
+                        textStyle="text-style-il-heading-1"
                         name="label_password"
-                        layout={{ position: 'absolute', left: 0, width: 73, top: 4, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionLabelPassword ?? 'Password:'}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 73, top: 4, bottom: 7 }}
+                    />
                     <Border
                         variant="105"
                         name="password_border"
@@ -137,15 +131,13 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     name="users_container"
                     layout={{ width: 200, height: 157, flexShrink: 0, minWidth: 200 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionUsersInfo ?? 'A list of your avatars will appear after successful login.'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                         name="users_info"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionUsersInfo ?? 'A list of your avatars will appear after successful login.'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    />
                     <ScrollArea
                         orientation="vertical"
                         layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}

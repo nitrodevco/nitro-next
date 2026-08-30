@@ -35,12 +35,12 @@ export const CollectibleHubLayoutRewardsContainer = ({ layout, loadedContent, sr
                         name="headercontainer"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 100, justifyContent: 'center' }}
                     >
-                        <Region layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, top: 28, bottom: 55, minWidth: 450, maxWidth: 450, minHeight: 17, maxHeight: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                            <ThemeText
-                                text={t('collectibles.no_claims')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 450, align: 'center' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('collectibles.no_claims')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 450, align: 'center' }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, top: 28, bottom: 55, minWidth: 450, maxWidth: 450, minHeight: 17, maxHeight: 200 }}
+                        />
                     </Region>
                     <Region
                         name="image_container"

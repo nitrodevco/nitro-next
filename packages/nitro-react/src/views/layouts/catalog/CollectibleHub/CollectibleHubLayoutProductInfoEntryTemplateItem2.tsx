@@ -17,15 +17,12 @@ export const CollectibleHubLayoutProductInfoEntryTemplateItem2 = ({ captionProdu
             layout={{ width: 242, height: 20, flexShrink: 0, ...layout }}
         >
             {(visibleProductInfoKey ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionProductInfoKey ?? 'Type'}
+                    textOptions={{ fill: '#eb8f01', align: 'right' }}
                     name="product_info_key"
-                    layout={{ position: 'absolute', left: 0, width: 136, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionProductInfoKey ?? 'Type'}
-                        textOptions={{ fill: '#eb8f01', align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 136, top: 1, height: 17 }}
+                />
             )}
             {(visibleProductInfoValue ?? true) && (
                 <Region

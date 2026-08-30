@@ -24,44 +24,32 @@ export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStro
                     layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 147 }}
                 />
                 <Region layout={{ position: 'absolute', left: 29, width: 56, top: 44, height: 27 }}>
-                    <Region
+                    <ThemeText
+                        text={captionScoreBlueStroke ?? '0'}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                         name="score_blue_stroke"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionScoreBlueStroke ?? '0'}
-                            textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30 }}
+                    />
+                    <ThemeText
+                        text={captionScoreBlue ?? '0'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="score_blue"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionScoreBlue ?? '0'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, minWidth: 30 }}
+                    />
                 </Region>
                 <Region layout={{ position: 'absolute', left: 104, width: 56, top: 44, height: 27 }}>
-                    <Region
+                    <ThemeText
+                        text={captionScoreRedStroke ?? '0'}
+                        textOptions={{ fill: '#fd6859', align: 'center' }}
                         name="score_red_stroke"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionScoreRedStroke ?? '0'}
-                            textOptions={{ fill: '#fd6859', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30 }}
+                    />
+                    <ThemeText
+                        text={captionScoreRed ?? '0'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="score_red"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionScoreRed ?? '0'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
+                    />
                 </Region>
             </Region>
         </Region>

@@ -14,24 +14,18 @@ export const PropertyLayout = ({ captionPropertyName, captionPropertyValue, layo
                 name="room_property"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionPropertyName ?? 'Name PH'}
+                    textStyle="text-style-u-regular"
                     name="property_name"
-                    layout={{ position: 'absolute', left: 0, width: 70, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPropertyName ?? 'Name PH'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 70, top: 0, bottom: 0 }}
+                />
+                <ThemeText
+                    text={captionPropertyValue ?? 'Value PH'}
+                    textStyle="text-style-u-regular"
                     name="property_value"
-                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPropertyValue ?? 'Value PH'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, bottom: 0 }}
+                />
             </Region>
         </Region>
     );

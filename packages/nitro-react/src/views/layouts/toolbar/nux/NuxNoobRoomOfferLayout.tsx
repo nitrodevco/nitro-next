@@ -25,15 +25,13 @@ export const NuxNoobRoomOfferLayout = ({ captionTxtBody, layout, onBtnGo, onClos
                 layout={{ position: 'absolute', left: 0, width: 380, top: 23, height: 95 }}
             />
             <Region layout={{ position: 'absolute', right: -9, width: 364, top: 129, height: 81 }}>
-                <Region
+                <ThemeText
+                    text={captionTxtBody ?? t('nux.offer.noob.lobby.summary')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 366 }}
                     name="txtBody"
-                    layout={{ position: 'absolute', left: 0, right: -2, top: 0, height: 13, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTxtBody ?? t('nux.offer.noob.lobby.summary')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 366 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: -2, top: 0, height: 13, maxHeight: 84 }}
+                />
                 <ButtonThick
                     variant="6"
                     name="btnGo"

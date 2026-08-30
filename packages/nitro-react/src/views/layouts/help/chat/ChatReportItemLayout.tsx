@@ -13,15 +13,13 @@ export const ChatReportItemLayout = ({ captionText, layout }: ChatReportItemLayo
                 variant="105"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 64, height: 24 }}
             >
-                <Region
+                <ThemeText
+                    text={captionText ?? 'foo faa fee'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 307 }}
                     name="text"
-                    layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? 'foo faa fee'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 307 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 24 }}
+                />
             </Border>
         </Region>
     );

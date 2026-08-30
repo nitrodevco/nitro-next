@@ -26,15 +26,13 @@ export const LockConfirmLayoutOtherLockedContainerItem = ({ captionMessage, layo
                 />
             )}
             {(visibleMessage ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionMessage ?? t('friend.furniture.confirm.lock.other.locked')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 291, align: 'center' }}
                     name="message"
-                    layout={{ position: 'absolute', left: 0, width: 291, bottom: -8, height: 24, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionMessage ?? t('friend.furniture.confirm.lock.other.locked')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 291, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, width: 291, bottom: -8, height: 24, minWidth: 291, maxWidth: 291 }}
+                />
             )}
         </Region>
     );

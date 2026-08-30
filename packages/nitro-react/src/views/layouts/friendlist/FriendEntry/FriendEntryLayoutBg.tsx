@@ -41,21 +41,17 @@ export const FriendEntryLayoutBg = ({ captionCaption, captionName, captionSelect
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionName ?? 'bobber'}
                 name="name"
-                layout={{ position: 'absolute', left: 38, width: 39, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionName ?? 'bobber'}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 38, width: 39, top: 3, height: 13 }}
+            />
+            <ThemeText
+                text={captionCaption ?? 'Friends (0)'}
+                textStyle="text-style-bold"
                 name="caption"
-                layout={{ position: 'absolute', left: 0, width: 68, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCaption ?? 'Friends (0)'}
-                    textStyle="text-style-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 68, top: 4, height: 13 }}
+            />
             <Region
                 name="start_chat"
                 onPointerTap={onStartChat}
@@ -149,15 +145,12 @@ export const FriendEntryLayoutBg = ({ captionCaption, captionName, captionSelect
                 cursor="pointer"
                 layout={{ position: 'absolute', right: 6, width: 49, top: 0, height: 16 }}
             >
-                <Region
+                <ThemeText
+                    text={captionSelectAllText ?? t('friendlist.select_all')}
+                    textStyle="text-style-regular"
                     name="select_all_text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSelectAllText ?? t('friendlist.select_all')}
-                        textStyle="text-style-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 13 }}
+                />
             </Region>
         </Region>
     );

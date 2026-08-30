@@ -29,27 +29,22 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                                 tintColor="#b32e22"
                                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             />
-                            <Region
-                                name="lbl_dislike_count"
-                                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionLblDislikeCount ?? '0'}
-                                    textStyle="text-style-u-headline-small"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
-                        </Region>
-                        <Region
-                            name="quiz_topic"
-                            layout={{ height: 30, flexShrink: 0, minWidth: 10, maxWidth: 660, maxHeight: 58, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
                             <ThemeText
-                                text={captionQuizTopic ?? 'topic'}
-                                textStyle="text-style-ubuntu-condensed-regular"
-                                textOptions={{ wordWrap: true }}
+                                text={captionLblDislikeCount ?? '0'}
+                                textStyle="text-style-u-headline-small"
+                                textOptions={{ fill: '#ffffff' }}
+                                name="lbl_dislike_count"
+                                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 12, top: 7, height: 19, maxWidth: 130 }}
                             />
                         </Region>
+                        <ThemeText
+                            text={captionQuizTopic ?? 'topic'}
+                            textStyle="text-style-ubuntu-condensed-regular"
+                            textOptions={{ wordWrap: true }}
+                            name="quiz_topic"
+                            verticalAlign="top"
+                            layout={{ height: 30, flexShrink: 0, minWidth: 10, maxWidth: 660, maxHeight: 58 }}
+                        />
                         <Region
                             dynamicStyle="brightness_and_shadow_under"
                             layout={{ width: 40, height: 34, flexShrink: 0, justifyContent: 'center' }}
@@ -59,16 +54,13 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                                 tintColor="#117843"
                                 layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionLblLikeCount ?? '0'}
+                                textStyle="text-style-u-headline-small"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="lbl_like_count"
-                                layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 12, top: 7, height: 19, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionLblLikeCount ?? '0'}
-                                    textStyle="text-style-u-headline-small"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 12, top: 7, height: 19, maxWidth: 130 }}
+                            />
                         </Region>
                     </Region>
                 </Border>

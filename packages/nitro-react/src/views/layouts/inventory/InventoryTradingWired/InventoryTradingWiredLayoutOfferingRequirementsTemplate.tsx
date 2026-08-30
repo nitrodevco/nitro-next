@@ -26,15 +26,12 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
             name="offering_requirements_template"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionOfferingsTitle ?? t('inventory.wired_trading.requirements.offering')}
+                textOptions={{ align: 'center' }}
                 name="offerings_title"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionOfferingsTitle ?? t('inventory.wired_trading.requirements.offering')}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17 }}
+            />
             <Border
                 variant="0"
                 name="requirements_definition"

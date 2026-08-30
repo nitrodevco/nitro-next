@@ -53,12 +53,11 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                                 textStyle="text-style-il-heading-2"
                             />
                         </Region>
-                        <Region
+                        <ThemeText
+                            text={captionGuideDesc ?? t('guide.help.request.user.feedback.guide.desc')}
                             name="guide_desc"
-                            layout={{ width: 64, height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionGuideDesc ?? t('guide.help.request.user.feedback.guide.desc')}
-                        </Region>
+                            layout={{ width: 64, height: 16, flexShrink: 0, maxWidth: 130 }}
+                        />
                     </Region>
                 </Region>
                 <Region
@@ -75,18 +74,17 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                 </Region>
             </Border>
             <Region layout={{ position: 'absolute', left: 10, right: 0, bottom: 7, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}>
-                <Region layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.user.feedback.closed.title')}
-                        textStyle="text-style-il-heading-2"
-                    />
-                </Region>
-                <Region layout={{ alignSelf: 'stretch', height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.user.feedback.closed.desc')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.help.request.user.feedback.closed.title')}
+                    textStyle="text-style-il-heading-2"
+                    layout={{ width: 170, height: 17, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('guide.help.request.user.feedback.closed.desc')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                    verticalAlign="top"
+                    layout={{ alignSelf: 'stretch', height: 50, flexShrink: 0 }}
+                />
                 <WidgetSlot
                     widgetType="separator"
                     layout={{ width: 220, height: 10, flexShrink: 0 }}
@@ -99,13 +97,13 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                         layout={{ position: 'absolute', left: 0, width: 60, top: -17, height: 94 }}
                     />
                 </Region>
-                <Region layout={{ width: 200, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.user.feedback.question')}
-                        textStyle="text-style-il-heading-2"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.help.request.user.feedback.question')}
+                    textStyle="text-style-il-heading-2"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
+                    verticalAlign="top"
+                    layout={{ width: 200, height: 30, flexShrink: 0 }}
+                />
                 <Region layout={{ flexShrink: 0, flexDirection: 'row' }}>
                     <Button
                         variant="101"

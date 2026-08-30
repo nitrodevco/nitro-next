@@ -68,16 +68,13 @@ export const FurniChestContentsLayoutFurniTemplateItem = ({ captionFurniQuantity
                                     layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14 }}
                                 >
                                     {(visibleFurniQuantity ?? true) && (
-                                        <Region
+                                        <ThemeText
+                                            text={captionFurniQuantity ?? '0'}
+                                            textStyle="text-style-regular"
+                                            textOptions={{ fill: '#2f6982' }}
                                             name="furni_quantity"
-                                            layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                        >
-                                            <ThemeText
-                                                text={captionFurniQuantity ?? '0'}
-                                                textStyle="text-style-regular"
-                                                textOptions={{ fill: '#2f6982' }}
-                                            />
-                                        </Region>
+                                            layout={{ position: 'absolute', left: 1, top: 1, height: 13 }}
+                                        />
                                     )}
                                 </Region>
                             )}

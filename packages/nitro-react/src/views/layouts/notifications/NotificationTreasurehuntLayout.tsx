@@ -38,15 +38,13 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, layout }: N
                         />
                     </Region>
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionDescription ?? t('treasure_hunt.progress.desc')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 119 }}
                     name="description"
-                    layout={{ position: 'absolute', left: 58, width: 119, top: 29, height: 52, minHeight: 52, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescription ?? t('treasure_hunt.progress.desc')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 119 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 58, width: 119, top: 29, height: 52, minHeight: 52 }}
+                />
                 <ThemeImage
                     src={undefined}
                     layout={{ position: 'absolute', left: 7, width: 50, top: 30, height: 50 }}

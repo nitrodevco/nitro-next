@@ -1,13 +1,13 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button } from '#base/theme';
 
-/** Row template `search_button` of MarketPlaceOwnItemsWidget2 - pass real rows through its `items…` slot. */
-export interface MarketPlaceOwnItemsWidget2SearchButtonItemProps {
+/** Row template `search_button` of MarketPlaceOwnItemsWidget - pass real rows through its `items…` slot. */
+export interface MarketPlaceOwnItemsWidgetSearchButtonItemProps {
     layout?: BoxLayout;
     onSearchButton?: () => void;
 }
 
-export const MarketPlaceOwnItemsWidget2SearchButtonItem = ({ layout, onSearchButton }: MarketPlaceOwnItemsWidget2SearchButtonItemProps) => {
+export const MarketPlaceOwnItemsWidgetSearchButtonItem = ({ layout, onSearchButton }: MarketPlaceOwnItemsWidgetSearchButtonItemProps) => {
     const t = useTranslation();
 
     return (

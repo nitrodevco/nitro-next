@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Dropmenu, Region } from '#base/theme';
+import { Border, BoxLayout, Button, Dropmenu, Region, ThemeText } from '#base/theme';
 
 import { WiredMenuViewLayoutModifySettingsContainer, WiredMenuViewLayoutModifySettingsContainerProps } from './WiredMenuViewLayoutModifySettingsContainer';
 import { WiredMenuViewLayoutReadSettingsContainer, WiredMenuViewLayoutReadSettingsContainerProps } from './WiredMenuViewLayoutReadSettingsContainer';
@@ -23,12 +23,11 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
             name="room_settings_container"
             layout={{ position: 'absolute', left: 14, width: 472, top: 18, height: 220, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTitle ?? '${wiredmenu.settings.room_settings)'}
                 name="title"
-                layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionTitle ?? '${wiredmenu.settings.room_settings)'}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 19 }}
+            />
             <Border
                 variant="3"
                 name="room_settings_border"
@@ -55,9 +54,10 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
                     name="timezone_container"
                     layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        {t('wiredmenu.settings.room_settings.timezone')}
-                    </Region>
+                    <ThemeText
+                        text={t('wiredmenu.settings.room_settings.timezone')}
+                        layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20 }}
+                    />
                     <Dropmenu
                         variant="3"
                         name="timezone_picker"
@@ -76,9 +76,10 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
                     name="timezone_container"
                     layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        {t('wiredmenu.settings.room_settings.room_state')}
-                    </Region>
+                    <ThemeText
+                        text={t('wiredmenu.settings.room_settings.room_state')}
+                        layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20 }}
+                    />
                     <Button
                         variant="3"
                         name="reload_room_btn"

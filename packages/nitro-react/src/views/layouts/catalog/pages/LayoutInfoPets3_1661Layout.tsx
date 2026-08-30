@@ -29,35 +29,29 @@ export const LayoutInfoPets3_1661Layout = ({ captionCtlgText1, captionCtlgText2,
                         src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/ctlg_pet_note.gif'}
                         layout={{ position: 'absolute', left: 20, width: 57, top: 10, height: 57 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionCtlgText1 ?? t('lorem.title')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 242 }}
                         name="ctlg_text_1"
-                        layout={{ position: 'absolute', left: 85, width: 242, top: 26, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCtlgText1 ?? t('lorem.title')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 242 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 85, width: 242, top: 26, height: 21 }}
+                    />
+                    <ThemeText
+                        text={captionCtlgText2 ?? t('lorem.content')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 307 }}
                         name="ctlg_text_2"
-                        layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 307, top: 72, height: 124, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCtlgText2 ?? t('lorem.content')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 307 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 307, top: 72, height: 124 }}
+                    />
+                    <ThemeText
+                        text={captionCtlgText3 ?? t('lorem.newline')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 306 }}
                         name="ctlg_text_3"
-                        layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 306, top: 210, height: 138, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCtlgText3 ?? t('lorem.newline')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 306 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 306, top: 210, height: 138 }}
+                    />
                 </Border>
             </Region>
         </Region>

@@ -28,15 +28,12 @@ export const MemenuDanceLayoutDanceContainer = ({ captionDanceTitle, itemsButton
                 name="dance_border"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 181, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionDanceTitle ?? t('widget.memenu.dance')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="dance_title"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 5, height: 13, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDanceTitle ?? t('widget.memenu.dance')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 5, height: 13, maxWidth: 150 }}
+                />
                 <Region
                     name="line"
                     backgroundColor="#2f2f2f"

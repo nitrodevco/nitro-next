@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `product_name` of TargetedOfferPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface TargetedOfferPurchaseConfirmationLayoutProductNameItemProps {
@@ -8,15 +8,13 @@ export interface TargetedOfferPurchaseConfirmationLayoutProductNameItemProps {
 
 export const TargetedOfferPurchaseConfirmationLayoutProductNameItem = ({ captionProductName, layout }: TargetedOfferPurchaseConfirmationLayoutProductNameItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionProductName ?? '001 lorem ipsum title that wraps around'}
+            textStyle="text-style-u-bold"
+            textOptions={{ wordWrap: true, wordWrapWidth: 177 }}
             name="product_name"
-            layout={{ width: 177, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionProductName ?? '001 lorem ipsum title that wraps around'}
-                textStyle="text-style-u-bold"
-                textOptions={{ wordWrap: true, wordWrapWidth: 177 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 177, flexShrink: 0, ...layout }}
+        />
     );
 };

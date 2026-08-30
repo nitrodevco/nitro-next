@@ -40,13 +40,12 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
             </Region>
             <Region layout={{ position: 'absolute', left: 0, right: -6, top: 0, bottom: -1 }}>
                 <Region layout={{ position: 'absolute', left: 8, width: 455, top: 8, height: 81 }}>
-                    <Region layout={{ position: 'absolute', left: 70, width: 384, top: 0, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('phone.number.verify.enter.verification.code')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('phone.number.verify.enter.verification.code')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff' }}
+                        layout={{ position: 'absolute', left: 70, width: 384, top: 0, height: 24 }}
+                    />
                     <ThemeImage
                         name="phone"
                         src={srcPhone ?? '${image.library.url}returnusergifting/phone.png'}
@@ -103,16 +102,13 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                         />
                     </Region>
                     {(visibleRetryWaitLabel ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionRetryWaitLabel ?? 'HeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHehee'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#777777' }}
                             name="retry_wait_label"
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 436, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionRetryWaitLabel ?? 'HeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHehee'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#777777' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 436, top: 12, height: 17 }}
+                        />
                     )}
                 </Region>
             </Region>

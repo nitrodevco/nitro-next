@@ -23,16 +23,13 @@ export const PurseLayoutCreditCountButtonItem = ({ captionCreditCount, layout, o
             layout={{ width: 52, height: 19, flexShrink: 0, ...layout }}
         >
             {(visibleCreditCount ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionCreditCount ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#d5af22' }}
                     name="credit_count"
-                    layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCreditCount ?? '0'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#d5af22' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17 }}
+                />
             )}
             <ThemeImage
                 src={layoutImage('pursearea_credits_icon.png')}

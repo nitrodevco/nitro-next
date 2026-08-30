@@ -25,39 +25,32 @@ export const MainView_1185LayoutFrameHeaderOverride = ({ captionTitleTxt, captio
                     name="hacky_title"
                     layout={{ width: 96, height: 27, flexShrink: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionTitleTxtShadow0 ?? 'Top Badges'}
                         name="title_txt_shadow_0"
-                        layout={{ position: 'absolute', left: 0, width: 94, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTitleTxtShadow0 ?? 'Top Badges'}
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, width: 94, top: 5, height: 21 }}
+                    />
+                    <ThemeText
+                        text={captionTitleTxtShadow1 ?? 'Top Badges'}
                         name="title_txt_shadow_1"
-                        layout={{ position: 'absolute', left: 1, width: 94, top: 4, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTitleTxtShadow1 ?? 'Top Badges'}
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 1, width: 94, top: 4, height: 21 }}
+                    />
+                    <ThemeText
+                        text={captionTitleTxtShadow2 ?? 'Top Badges'}
                         name="title_txt_shadow_2"
-                        layout={{ position: 'absolute', left: 2, width: 94, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTitleTxtShadow2 ?? 'Top Badges'}
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 2, width: 94, top: 5, height: 21 }}
+                    />
+                    <ThemeText
+                        text={captionTitleTxtShadow3 ?? 'Top Badges'}
                         name="title_txt_shadow_3"
-                        layout={{ position: 'absolute', left: 1, width: 94, top: 6, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTitleTxtShadow3 ?? 'Top Badges'}
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 1, width: 94, top: 6, height: 21 }}
+                    />
+                    <ThemeText
+                        text={captionTitleTxt ?? 'Top Badges'}
+                        textOptions={{ fill: '#ffffff' }}
                         name="title_txt"
-                        layout={{ position: 'absolute', left: 1, width: 94, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTitleTxt ?? 'Top Badges'}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 1, width: 94, top: 5, height: 21 }}
+                    />
                 </Region>
                 <Region
                     name="dropdown_region"

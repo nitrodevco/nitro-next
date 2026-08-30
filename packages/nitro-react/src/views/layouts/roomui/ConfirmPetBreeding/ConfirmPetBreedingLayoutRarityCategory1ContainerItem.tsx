@@ -18,12 +18,11 @@ export const ConfirmPetBreedingLayoutRarityCategory1ContainerItem = ({ itemsBree
             name="rarityCategory1.container"
             layout={{ alignSelf: 'stretch', height: 25, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 104, top: 5, bottom: 5, minWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('breedpets.confirmation.widget.raritycategory.1')}
-                    textStyle="text-style-il-heading-3"
-                />
-            </Region>
+            <ThemeText
+                text={t('breedpets.confirmation.widget.raritycategory.1')}
+                textStyle="text-style-il-heading-3"
+                layout={{ position: 'absolute', left: 0, width: 104, top: 5, bottom: 5, minWidth: 100 }}
+            />
             {(visibleBreeds1 ?? true) && (
                 <Region
                     name="breeds1"

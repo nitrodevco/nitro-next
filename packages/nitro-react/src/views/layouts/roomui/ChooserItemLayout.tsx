@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Generated from `905_chooser_item_xml` (layout "chooser_item", 159x18) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ChooserItemLayoutProps {
@@ -16,12 +16,11 @@ export const ChooserItemLayout = ({ captionItemtext, layout }: ChooserItemLayout
                 backgroundColor="#eeeeee"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionItemtext ?? t('001_lorem_ipsum_title')}
                     name="itemtext"
-                    layout={{ position: 'absolute', left: 7, right: 0, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionItemtext ?? t('001_lorem_ipsum_title')}
-                </Region>
+                    layout={{ position: 'absolute', left: 7, right: 0, top: 2, height: 16 }}
+                />
             </Region>
         </Region>
     );

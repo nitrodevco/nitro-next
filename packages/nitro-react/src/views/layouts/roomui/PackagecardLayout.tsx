@@ -42,24 +42,20 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
                     tint={tintGiftImage}
                     layout={{ position: 'absolute', left: 10, width: 114, top: 16, height: 114 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTitle ?? t('widget.furni.present.title')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 216 }}
                     name="title"
-                    layout={{ position: 'absolute', left: 135, width: 216, top: 16, height: 52, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? t('widget.furni.present.title')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 216 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 135, width: 216, top: 16, height: 52 }}
+                />
+                <ThemeText
+                    text={captionText ?? ''}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 219 }}
                     name="text"
-                    layout={{ position: 'absolute', left: 135, width: 219, top: 68, height: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? ''}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 219 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 135, width: 219, top: 68, height: 80 }}
+                />
                 <Region
                     name="state_content"
                     backgroundColor="#eaece8"
@@ -75,12 +71,11 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
                             cursor="pointer"
                             layout={{ position: 'absolute', left: 14, width: 100, bottom: 9, height: 33 }}
                         >
-                            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <ThemeText
-                                    text={t('widget.furni.present.close')}
-                                    textOptions={{ align: 'center' }}
-                                />
-                            </Region>
+                            <ThemeText
+                                text={t('widget.furni.present.close')}
+                                textOptions={{ align: 'center' }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 22 }}
+                            />
                         </Region>
                         <ButtonThick
                             variant="5"

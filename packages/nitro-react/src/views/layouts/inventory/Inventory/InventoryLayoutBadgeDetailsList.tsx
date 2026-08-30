@@ -36,36 +36,27 @@ export const InventoryLayoutBadgeDetailsList = ({ captionBadgeOwnerCount, captio
                         tintColor="#cccccc"
                         layout={{ width: 92, height: 17, flexShrink: 0 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionBadgeRarityBorder ?? 'Unique badge'}
+                            textOptions={{ fill: '#ffffff' }}
                             name="badgeRarityBorder"
-                            layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBadgeRarityBorder ?? 'Unique badge'}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
+                            layout={{ position: 'absolute', left: 5, top: 2, height: 13 }}
+                        />
+                        <ThemeText
+                            text={captionBadgeRarity ?? 'Unique badge'}
+                            textOptions={{ fill: '#ffffff' }}
                             name="badgeRarity"
-                            layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBadgeRarity ?? 'Unique badge'}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13 }}
+                        />
                     </Border>
                 )}
                 {(visibleBadgeOwnerCount ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionBadgeOwnerCount ?? ''}
+                        textOptions={{ fill: '#555555' }}
                         name="badgeOwnerCount"
-                        layout={{ width: 4, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBadgeOwnerCount ?? ''}
-                            textOptions={{ fill: '#555555' }}
-                        />
-                    </Region>
+                        layout={{ width: 4, height: 4, flexShrink: 0 }}
+                    />
                 )}
             </Region>
         </Region>

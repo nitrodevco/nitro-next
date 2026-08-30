@@ -47,15 +47,12 @@ export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, la
                     layout={{ position: 'absolute', left: 8, right: 8, top: 36, height: 14, minHeight: 14, maxHeight: 14 }}
                 >
                     {(visibleRewardAmountText ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionRewardAmountText ?? 'x10'}
+                            textOptions={{ fill: '#ffffff' }}
                             name="reward_amount_text"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionRewardAmountText ?? 'x10'}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15 }}
+                        />
                     )}
                 </Border>
             )}

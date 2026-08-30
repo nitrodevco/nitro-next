@@ -68,12 +68,11 @@ export const InstantFriendRequestLayoutMasterContainer = ({ captionText, layout,
                         tintColor="#00aa00"
                         layout={{ position: 'absolute', left: 6, width: 16, top: 5, height: 15 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 23, width: 65, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('widget.friendrequest.accept')}
-                            textStyle="text-style-button-shiny-bold"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('widget.friendrequest.accept')}
+                        textStyle="text-style-button-shiny-bold"
+                        layout={{ position: 'absolute', left: 23, width: 65, top: 3, height: 16 }}
+                    />
                 </ContainerButton>
                 <CloseButton
                     variant="3"

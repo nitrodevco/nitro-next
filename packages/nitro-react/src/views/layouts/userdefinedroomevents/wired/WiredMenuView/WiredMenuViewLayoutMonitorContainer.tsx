@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Button, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { WiredMenuViewLayoutStatisticsContainer, WiredMenuViewLayoutStatisticsContainerProps } from './WiredMenuViewLayoutStatisticsContainer';
@@ -49,12 +49,11 @@ export const WiredMenuViewLayoutMonitorContainer = ({ captionTitle, layout, logT
                 name="log_container"
                 layout={{ position: 'absolute', left: 14, width: 472, top: 152, height: 218 }}
             >
-                <Region
+                <ThemeText
+                    text={captionTitle ?? t('wiredmenu.monitor.log')}
                     name="title"
-                    layout={{ position: 'absolute', left: 0, width: 106, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionTitle ?? t('wiredmenu.monitor.log')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 106, top: 0, height: 19 }}
+                />
                 <Region
                     name="log_table_container"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 156 }}

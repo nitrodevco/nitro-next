@@ -14,16 +14,14 @@ export const PackagecardNewOpenedLayoutMessageContainerItem = ({ captionGiftMess
             layout={{ width: 184, height: 81, flexShrink: 0, ...layout }}
         >
             {(visibleGiftMessage ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionGiftMessage ?? ''}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 184 }}
                     name="gift_message"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionGiftMessage ?? ''}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 184 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 4 }}
+                />
             )}
         </Region>
     );

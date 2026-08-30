@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `name_text` of FurniViewLayout - pass real rows through its `items…` slot. */
 export interface FurniViewLayoutNameTextItemProps {
@@ -8,14 +8,12 @@ export interface FurniViewLayoutNameTextItemProps {
 
 export const FurniViewLayoutNameTextItem = ({ captionNameText, layout }: FurniViewLayoutNameTextItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionNameText ?? 'Furni name'}
+            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 159 }}
             name="name_text"
-            layout={{ width: 159, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionNameText ?? 'Furni name'}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 159 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 159, height: 12, flexShrink: 0, ...layout }}
+        />
     );
 };

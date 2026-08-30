@@ -80,55 +80,44 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                         )}
                     </Region>
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionItemName ?? t('lorem.title')}
+                    textStyle="text-style-u-bold"
                     name="item_name"
-                    layout={{ position: 'absolute', left: 69, width: 184, top: 29, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemName ?? t('lorem.title')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 69, width: 184, top: 29, height: 17 }}
+                />
+                <ThemeText
+                    text={captionHeaderText ?? t('lorem.header')}
+                    textStyle="text-style-u-italic"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 256 }}
                     name="header_text"
-                    layout={{ position: 'absolute', left: 11, width: 256, top: 65, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHeaderText ?? t('lorem.header')}
-                        textStyle="text-style-u-italic"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 256 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 11, width: 256, top: 65, height: 36 }}
+                />
+                <ThemeText
+                    text={captionItemPrice ?? t('catalog.purchase.confirmation.dialog.costs')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 246 }}
                     name="item_price"
-                    layout={{ position: 'absolute', left: 11, width: 246, top: 100, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemPrice ?? t('catalog.purchase.confirmation.dialog.costs')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 246 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 11, width: 246, top: 100, height: 20 }}
+                />
+                <ThemeText
+                    text={captionItemAveragePrice ?? t('catalog.marketplace.offer_details.average_price')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 246 }}
                     name="item_average_price"
-                    layout={{ position: 'absolute', left: 11, width: 246, top: 120, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemAveragePrice ?? t('catalog.marketplace.offer_details.average_price')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 246 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 11, width: 246, top: 120, height: 19 }}
+                />
+                <ThemeText
+                    text={captionOfferCount ?? t('catalog.marketplace.offer_count')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 246 }}
                     name="offer_count"
-                    layout={{ position: 'absolute', left: 11, width: 246, top: 140, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOfferCount ?? t('catalog.marketplace.offer_count')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 246 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 11, width: 246, top: 140, height: 19 }}
+                />
                 <Button
                     variant="3"
                     name="buy_button"
@@ -149,13 +138,13 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                     name="disclaimer"
                     layout={{ position: 'absolute', left: 9, width: 252, top: 163, height: 24 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 17, width: 231, top: 1, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('disclaimer.credit_spending')}
-                            textStyle="text-style-u-small"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 231 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('disclaimer.credit_spending')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 231 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 17, width: 231, top: 1, height: 15 }}
+                    />
                     <CheckBox
                         variant="3"
                         name="spending_disclaimer"

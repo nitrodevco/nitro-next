@@ -25,12 +25,11 @@ export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuy
                 onPointerTap={onBuyAsGift}
                 layout={{ position: 'absolute', left: 21, width: 20, top: 0, height: 20 }}
             />
-            <Region layout={{ position: 'absolute', left: 43, width: 78, top: 1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('catalog.purchase.confirmation.dialog.buyasgift.checkbox')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+            <ThemeText
+                text={t('catalog.purchase.confirmation.dialog.buyasgift.checkbox')}
+                textStyle="text-style-u-small"
+                layout={{ position: 'absolute', left: 43, width: 78, top: 1, height: 15 }}
+            />
             <Border
                 variant="0"
                 layout={{ position: 'absolute', left: 25, width: 220, top: 24, height: 20 }}
@@ -51,13 +50,13 @@ export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuy
                     layout={{ position: 'absolute', left: 5, width: 200, top: 5, bottom: 5 }}
                 />
             </Border>
-            <Region layout={{ position: 'absolute', left: 25, width: 213, alignSelf: 'center', marginTop: -3.5, marginBottom: 3.5, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('catalog.purchase.confirmation.dialog.buyasgift.greetings.info')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 213 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('catalog.purchase.confirmation.dialog.buyasgift.greetings.info')}
+                textStyle="text-style-u-small"
+                textOptions={{ wordWrap: true, wordWrapWidth: 213 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 25, width: 213, alignSelf: 'center', marginTop: -3.5, marginBottom: 3.5, height: 26 }}
+            />
         </Region>
     );
 };

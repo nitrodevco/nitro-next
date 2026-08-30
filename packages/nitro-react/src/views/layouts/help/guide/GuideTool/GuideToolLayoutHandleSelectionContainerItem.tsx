@@ -27,12 +27,11 @@ export const GuideToolLayoutHandleSelectionContainerItem = ({ disabledScreen, la
             name="handle_selection_container"
             layout={{ alignSelf: 'stretch', height: 97, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 14, width: 246, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('guide.help.guide.tool.tickettypeselection.caption')}
-                    textStyle="text-style-il-heading-3"
-                />
-            </Region>
+            <ThemeText
+                text={t('guide.help.guide.tool.tickettypeselection.caption')}
+                textStyle="text-style-il-heading-3"
+                layout={{ position: 'absolute', left: 14, width: 246, top: 0, height: 15 }}
+            />
             {(visibleHandleGuideTickets ?? true) && (
                 <CheckBox
                     variant="101"

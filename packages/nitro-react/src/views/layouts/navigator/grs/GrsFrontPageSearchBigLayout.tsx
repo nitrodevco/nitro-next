@@ -23,15 +23,12 @@ export const GrsFrontPageSearchBigLayout = ({ captionCaption, layout, onCont, sr
                     name="button_area"
                     layout={{ position: 'absolute', left: 0, right: 9, top: 0, height: 36 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCaption ?? 'Search Caption Placeholder'}
+                        textOptions={{ fill: '#000000' }}
                         name="caption"
-                        layout={{ position: 'absolute', left: 44, width: 179, alignSelf: 'center', marginTop: -2, marginBottom: 2, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCaption ?? 'Search Caption Placeholder'}
-                            textOptions={{ fill: '#000000' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 44, width: 179, alignSelf: 'center', marginTop: -2, marginBottom: 2, height: 12 }}
+                    />
                     <ThemeImage
                         name="icon"
                         src={srcIcon}

@@ -44,15 +44,12 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
                             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     )}
-                    <Region
+                    <ThemeText
+                        text={captionOffenceName ?? 'Room tool for this room'}
+                        textStyle="text-style-il-button"
                         name="offence_name"
-                        layout={{ position: 'absolute', right: 8, width: 123, top: 7, bottom: 8, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionOffenceName ?? 'Room tool for this room'}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', right: 8, width: 123, top: 7, bottom: 8, overflow: 'hidden' }}
+                    />
                     <ThemeImage
                         src={layoutImage('roomtools_history_open_icon.png')}
                         layout={{ position: 'absolute', left: 6, width: 20, top: 6, height: 20 }}
@@ -71,15 +68,12 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
                             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     )}
-                    <Region
+                    <ThemeText
+                        text={captionChatlogButOffenceName ?? 'Chatlog for this room'}
+                        textStyle="text-style-il-button"
                         name="offence_name"
-                        layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 111, top: 7, bottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionChatlogButOffenceName ?? 'Chatlog for this room'}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 111, top: 7, bottom: 8 }}
+                    />
                     <ThemeImage
                         src={layoutImage('roomtools_chat_history.png')}
                         layout={{ position: 'absolute', left: 6, width: 20, top: 6, height: 20 }}
@@ -98,15 +92,12 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
                             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     )}
-                    <Region
+                    <ThemeText
+                        text={captionUserinfoButOffenceName ?? 'User info:'}
+                        textStyle="text-style-il-button"
                         name="offence_name"
-                        layout={{ position: 'absolute', left: 24, width: 50, top: 7, bottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionUserinfoButOffenceName ?? 'User info:'}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 24, width: 50, top: 7, bottom: 8 }}
+                    />
                     <ThemeImage
                         src={layoutImage('placeholder_avatar_small_head_cropped.png')}
                         layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 20 }}
@@ -125,15 +116,12 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
                             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     )}
-                    <Region
+                    <ThemeText
+                        text={captionTicketQueueButOffenceName ?? 'Ticket browser'}
+                        textStyle="text-style-il-button"
                         name="offence_name"
-                        layout={{ position: 'absolute', left: 24, width: 78, top: 7, bottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTicketQueueButOffenceName ?? 'Ticket browser'}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 24, width: 78, top: 7, bottom: 8 }}
+                    />
                     <ThemeImage
                         src={layoutImage('tools_file_icon.png')}
                         layout={{ position: 'absolute', left: 6, width: 20, top: 5, height: 20 }}

@@ -36,15 +36,13 @@ export const LayoutInfoRentables_1671LayoutCtlgInfoRentables = ({ captionCtlgTex
                             src={layoutImage('toolbar_duckat_icon_0.png')}
                             layout={{ position: 'absolute', left: 1, width: 23, top: 3, height: 22 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionCtlgText1 ?? t('lorem.html')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
                             name="ctlg_text_1"
-                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCtlgText1 ?? t('lorem.html')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0 }}
+                        />
                         <ThemeImage
                             name="rentables_rulepic1"
                             src={srcRentablesRulepic1 ?? '${image.library.url}catalogue/rentables_rulepic1.gif'}
@@ -56,15 +54,13 @@ export const LayoutInfoRentables_1671LayoutCtlgInfoRentables = ({ captionCtlgTex
                             src={layoutImage('toolbar_duckat_icon_0.png')}
                             layout={{ position: 'absolute', left: 1, width: 23, top: 3, height: 22 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionCtlgText2 ?? t('lorem.html')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
                             name="ctlg_text_2"
-                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCtlgText2 ?? t('lorem.html')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0 }}
+                        />
                         <ThemeImage
                             name="rentables_rulepic2"
                             src={srcRentablesRulepic2 ?? '${image.library.url}catalogue/rentables_rulepic2.gif'}
@@ -76,15 +72,13 @@ export const LayoutInfoRentables_1671LayoutCtlgInfoRentables = ({ captionCtlgTex
                             src={layoutImage('toolbar_duckat_icon_0.png')}
                             layout={{ position: 'absolute', left: 1, width: 23, top: 3, height: 22 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionCtlgText3 ?? t('lorem.html')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
                             name="ctlg_text_3"
-                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCtlgText3 ?? t('lorem.html')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0 }}
+                        />
                         <ThemeImage
                             name="rentables_rulepic3"
                             src={srcRentablesRulepic3 ?? '${image.library.url}catalogue/rentables_rulepic3.gif'}
@@ -96,15 +90,13 @@ export const LayoutInfoRentables_1671LayoutCtlgInfoRentables = ({ captionCtlgTex
                             src={layoutImage('toolbar_duckat_icon_0.png')}
                             layout={{ position: 'absolute', left: 1, width: 23, top: 3, height: 22 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionCtlgText4 ?? t('lorem.html')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
                             name="ctlg_text_4"
-                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCtlgText4 ?? t('lorem.html')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0 }}
+                        />
                         <ThemeImage
                             name="rentables_rulepic4"
                             src={srcRentablesRulepic4 ?? '${image.library.url}catalogue/rentables_rulepic4.gif'}
@@ -116,15 +108,13 @@ export const LayoutInfoRentables_1671LayoutCtlgInfoRentables = ({ captionCtlgTex
                             src={layoutImage('toolbar_duckat_icon_0.png')}
                             layout={{ position: 'absolute', left: 1, width: 23, top: 3, height: 22 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionCtlgText5 ?? t('lorem.html')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
                             name="ctlg_text_5"
-                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCtlgText5 ?? t('lorem.html')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 232 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 31, width: 232, top: 3, bottom: 0 }}
+                        />
                         <ThemeImage
                             name="rentables_rulepic5"
                             src={srcRentablesRulepic5 ?? '${image.library.url}catalogue/rentables_rulepic5.gif'}

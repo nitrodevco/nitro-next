@@ -39,16 +39,13 @@ export const SeasonalCalendarLayoutEntityTemplate = ({ captionEntityIndicatorTex
                 tintColor="#408030"
                 layout={{ position: 'absolute', left: 6, width: 65, top: 294, height: 16 }}
             >
-                <Region
+                <ThemeText
+                    text={captionEntityIndicatorText ?? 'date'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="entity_indicator_text"
-                    layout={{ position: 'absolute', left: 0, width: 66, top: -2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionEntityIndicatorText ?? 'date'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 66, top: -2, height: 18 }}
+                />
                 <ThemeImage
                     name="entity_indicator_status"
                     src={srcEntityIndicatorStatus}

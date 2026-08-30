@@ -46,12 +46,11 @@ export const CollectibleRewardLayout = ({ captionRarityText, captionRarityTitle,
                     blend={0.1}
                     layout={{ position: 'absolute', left: 0, right: 0, top: -2, height: 50 }}
                 />
-                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 80, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('collectibles.reward_box.info')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('collectibles.reward_box.info')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 80, height: 19 }}
+                />
                 <Button
                     variant="3"
                     name="ok_button"
@@ -70,25 +69,19 @@ export const CollectibleRewardLayout = ({ captionRarityText, captionRarityTitle,
                     src={srcFlagImage ?? layoutImage('collectables_reward_rarity_flag.png')}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 86 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionRarityTitle ?? t('collectibles.item.rarity')}
+                    textOptions={{ fill: '#440300', align: 'center' }}
                     name="rarity_title"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionRarityTitle ?? t('collectibles.item.rarity')}
-                        textOptions={{ fill: '#440300', align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 19 }}
+                />
+                <ThemeText
+                    text={captionRarityText ?? 'RARITY'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#440300', align: 'center' }}
                     name="rarity_text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 50, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionRarityText ?? 'RARITY'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#440300', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 50, height: 24 }}
+                />
             </Region>
         </Frame>
     );

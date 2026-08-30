@@ -48,59 +48,47 @@ export const CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorder = ({ capti
                     name="catalog.mode.header"
                     layout={{ position: 'absolute', left: 0, width: 570, top: 0, bottom: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCatalogHeaderTitle ?? t('catalog.header')}
+                        textStyle="text-style-u-headline-big"
+                        textOptions={{ fill: '#ffffff' }}
                         name="catalog.header.title"
-                        layout={{ position: 'absolute', left: 80, width: 133, top: 11, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCatalogHeaderTitle ?? t('catalog.header')}
-                            textStyle="text-style-u-headline-big"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 80, width: 133, top: 11, height: 24 }}
+                    />
+                    <ThemeText
+                        text={captionCatalogHeaderDescription ?? t('catalog.description')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
                         name="catalog.header.description"
-                        layout={{ position: 'absolute', left: 80, width: 475, top: 34, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCatalogHeaderDescription ?? t('catalog.description')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 80, width: 475, top: 34, height: 17 }}
+                    />
                 </Region>
             )}
             <Region
                 name="builder.mode.header"
                 layout={{ position: 'absolute', left: 0, width: 570, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionBuilderHeaderTitle ?? t('builder.header.title')}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ fill: '#ffffff' }}
                     name="builder.header.title"
-                    layout={{ position: 'absolute', left: 80, width: 226, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBuilderHeaderTitle ?? t('builder.header.title')}
-                        textStyle="text-style-u-headline-big"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 80, width: 226, top: 11, height: 30 }}
+                />
+                <ThemeText
+                    text={captionBuilderHeaderStatusMembership ?? t('builder.header.status.membership')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
                     name="builder.header.status.membership"
-                    layout={{ position: 'absolute', left: 80, width: 475, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBuilderHeaderStatusMembership ?? t('builder.header.status.membership')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 80, width: 475, top: 41, height: 19 }}
+                />
+                <ThemeText
+                    text={captionBuilderHeaderStatusLimit ?? t('builder.header.status.limit')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
                     name="builder.header.status.limit"
-                    layout={{ position: 'absolute', left: 80, width: 475, top: 56, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBuilderHeaderStatusLimit ?? t('builder.header.status.limit')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 80, width: 475, top: 56, height: 19 }}
+                />
             </Region>
         </Region>
     );

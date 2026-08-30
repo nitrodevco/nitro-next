@@ -7,9 +7,9 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
  * (LayoutMarketplaceOwnItems_1691Layout); each passes its own placement through `layout`.
  */
-export type MarketPlaceOwnItemsWidgetProps = Omit<MarketPlaceOwnItemsWidgetLayoutProps, 'layout'> & CatalogWidgetFlags & { layout?: BoxLayout };
+export type MarketPlaceOwnItemsWidget2Props = Omit<MarketPlaceOwnItemsWidgetLayoutProps, 'layout'> & CatalogWidgetFlags & { layout?: BoxLayout };
 
-export const MarketPlaceOwnItemsWidget = ({ layout, ...widget }: MarketPlaceOwnItemsWidgetProps) => {
+export const MarketPlaceOwnItemsWidget2 = ({ layout, ...widget }: MarketPlaceOwnItemsWidget2Props) => {
     return (
         <Region
             name="marketPlaceOwnItemsWidget"

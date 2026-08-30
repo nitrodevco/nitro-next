@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Button, Region } from '#base/theme';
+import { BoxLayout, Button, Region, ThemeText } from '#base/theme';
 
 import { WiredMenuViewLayoutChestControlsContainer, WiredMenuViewLayoutChestControlsContainerProps } from './WiredMenuViewLayoutChestControlsContainer';
 
@@ -30,12 +30,11 @@ export const WiredMenuViewLayoutChestsContainer = ({ captionTitle, captionTitleE
                     name="logs_container"
                     layout={{ position: 'absolute', left: 14, width: 472, top: 139, height: 228 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionTitle ?? t('wiredmenu.chests.room_logs')}
                         name="title"
-                        layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTitle ?? t('wiredmenu.chests.room_logs')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 17 }}
+                    />
                     <Region
                         name="title_extra"
                         layout={{ position: 'absolute', right: 3, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

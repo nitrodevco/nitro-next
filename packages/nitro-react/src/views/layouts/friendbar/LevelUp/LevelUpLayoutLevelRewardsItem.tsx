@@ -23,13 +23,12 @@ export const LevelUpLayoutLevelRewardsItem = ({ layout, rewardList, visibleRewar
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ position: 'absolute', left: 0, width: 378, top: 0, height: 2 }}
             />
-            <Region layout={{ position: 'absolute', left: 4, width: 185, top: 12, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('talent.track.common.levelup.rewards')}
-                    textStyle="text-style-il-border"
-                    textOptions={{ fill: '#333333' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('talent.track.common.levelup.rewards')}
+                textStyle="text-style-il-border"
+                textOptions={{ fill: '#333333' }}
+                layout={{ position: 'absolute', left: 4, width: 185, top: 12, height: 15 }}
+            />
             {(visibleRewardList ?? true) && (
                 <LevelUpLayoutRewardList {...rewardList} />
             )}

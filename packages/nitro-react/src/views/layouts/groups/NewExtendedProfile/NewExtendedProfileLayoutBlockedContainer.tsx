@@ -69,15 +69,13 @@ export const NewExtendedProfileLayoutBlockedContainer = ({ blockedBg, blockedBg2
                     tintColor="#e9e9e1"
                     layout={{ position: 'absolute', left: 44, width: 250, alignSelf: 'center', marginTop: -6.5, marginBottom: 6.5, height: 100 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionBlockedHtml ?? t('extendedprofile.blocked')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 218 }}
                         name="blocked_html"
-                        layout={{ position: 'absolute', left: 13, width: 218, top: 14, minWidth: 218, maxWidth: 218, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBlockedHtml ?? t('extendedprofile.blocked')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 218 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 13, width: 218, top: 14, minWidth: 218, maxWidth: 218 }}
+                    />
                 </Border>
                 <ThemeImage
                     name="frank_stop"

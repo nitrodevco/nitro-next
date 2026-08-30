@@ -30,26 +30,20 @@ export const NewExtendedProfileLayoutFriendstatusItem = ({ captionFriendRequestS
                 />
             )}
             {(visibleStatusTxt ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionStatusTxt ?? t('extendedprofile.friend')}
+                    textStyle="text-style-u-bold"
                     name="status_txt"
-                    layout={{ position: 'absolute', left: 16, width: 132, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusTxt ?? t('extendedprofile.friend')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 16, width: 132, top: 4, height: 17 }}
+                />
             )}
             {(visibleFriendRequestSentTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionFriendRequestSentTxt ?? t('extendedprofile.friendrequestsent')}
+                    textStyle="text-style-u-regular"
                     name="friend_request_sent_txt"
-                    layout={{ position: 'absolute', left: 0, width: 189, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFriendRequestSentTxt ?? t('extendedprofile.friendrequestsent')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 189, top: 4, height: 17 }}
+                />
             )}
             {(visibleAddasfriendButton ?? false) && (
                 <Button

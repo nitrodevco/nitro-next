@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `wall_height_text` of FloorPlanEditorBcLayout - pass real rows through its `items…` slot. */
 export interface FloorPlanEditorBcLayoutWallHeightTextItemProps {
@@ -11,11 +11,10 @@ export const FloorPlanEditorBcLayoutWallHeightTextItem = ({ captionWallHeightTex
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionWallHeightText ?? t('floor.editor.wall.height')}
             name="wall_height_text"
-            layout={{ width: 105, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionWallHeightText ?? t('floor.editor.wall.height')}
-        </Region>
+            layout={{ width: 105, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

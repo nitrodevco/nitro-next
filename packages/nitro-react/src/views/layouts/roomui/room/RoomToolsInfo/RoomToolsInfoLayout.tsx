@@ -20,15 +20,12 @@ export const RoomToolsInfoLayout = ({ captionRoomName, layout, ownerNameAndTags 
                     blend={0.8}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 320 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionRoomName ?? '...'}
+                        textStyle="text-style-ubuntu-condensed-title"
                         name="room_name"
-                        layout={{ position: 'absolute', left: 10, top: 6, height: 24, minWidth: 60, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRoomName ?? '...'}
-                            textStyle="text-style-ubuntu-condensed-title"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 10, top: 6, height: 24, minWidth: 60, maxWidth: 300 }}
+                    />
                     <RoomToolsInfoLayoutOwnerNameAndTags {...ownerNameAndTags} />
                 </Border>
             </Region>

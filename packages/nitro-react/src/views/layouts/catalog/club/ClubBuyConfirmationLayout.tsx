@@ -34,33 +34,28 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                         layout={{ position: 'absolute', left: 12, width: 85, top: 20, height: 40 }}
                     />
                     <Region layout={{ position: 'absolute', left: 109, top: 10, flexDirection: 'column', gap: 3 }}>
-                        <Region
+                        <ThemeText
+                            text={captionSubscriptionName ?? t('catalog.vip.buy.confirm.product')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 245 }}
                             name="subscription_name"
-                            layout={{ width: 245, flexShrink: 0, minWidth: 245, maxWidth: 245, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSubscriptionName ?? t('catalog.vip.buy.confirm.product')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 245 }}
-                            />
-                        </Region>
-                        <Region
+                            verticalAlign="top"
+                            layout={{ width: 245, flexShrink: 0, minWidth: 245, maxWidth: 245 }}
+                        />
+                        <ThemeText
+                            text={captionEndDate ?? t('catalog.vip.buy.confirm.end_date')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 207 }}
                             name="end_date"
-                            layout={{ width: 207, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionEndDate ?? t('catalog.vip.buy.confirm.end_date')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 207 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 207, height: 20, flexShrink: 0 }}
+                        />
                         <Region layout={{ flexShrink: 0, flexDirection: 'row' }}>
-                            <Region layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('catalog.purchase.confirmation.dialog.cost')}
-                                    textStyle="text-style-u-regular"
-                                />
-                            </Region>
+                            <ThemeText
+                                text={t('catalog.purchase.confirmation.dialog.cost')}
+                                textStyle="text-style-u-regular"
+                                layout={{ width: 268, height: 19, flexShrink: 0 }}
+                            />
                             <Region
                                 name="purchase_cost_box"
                                 layout={{ width: 20, height: 22, flexShrink: 0 }}
@@ -74,12 +69,12 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                     name="disclaimer"
                     layout={{ width: 353, height: 17, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 31, width: 322, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('disclaimer.credit_spending')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 322 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('disclaimer.credit_spending')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 322 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 31, width: 322, top: 0, bottom: 0 }}
+                    />
                     <CheckBox
                         variant="3"
                         name="spending_disclaimer"

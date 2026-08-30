@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `sanction_info` of SanctionInfoLayout - pass real rows through its `items…` slot. */
 export interface SanctionInfoLayoutSanctionInfoItemProps {
@@ -8,14 +8,12 @@ export interface SanctionInfoLayoutSanctionInfoItemProps {
 
 export const SanctionInfoLayoutSanctionInfoItem = ({ captionSanctionInfo, layout }: SanctionInfoLayoutSanctionInfoItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionSanctionInfo ?? 'sanction info'}
+            textOptions={{ wordWrap: true, wordWrapWidth: 404 }}
             name="sanction_info"
-            layout={{ width: 404, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionSanctionInfo ?? 'sanction info'}
-                textOptions={{ wordWrap: true, wordWrapWidth: 404 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 404, flexShrink: 0, ...layout }}
+        />
     );
 };

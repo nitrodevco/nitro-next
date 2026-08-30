@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Frame, Region, ScrollArea } from '#base/theme';
+import { BoxLayout, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 
 import { RocCreateRoomLayoutRoomSettingsContainer, RocCreateRoomLayoutRoomSettingsContainerProps } from './RocCreateRoomLayoutRoomSettingsContainer';
 
@@ -45,12 +45,11 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, itemsLayoutIte
                     </Region>
                 </ScrollArea>
                 {/* <scrollbar_vertical> for layout_item_list - rendered by that list's ScrollArea */}
-                <Region
+                <ThemeText
+                    text={captionChooseLayoutCaption ?? t('navigator.createroom.chooselayoutcaption')}
                     name="choose_layout_caption"
-                    layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionChooseLayoutCaption ?? t('navigator.createroom.chooselayoutcaption')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 13 }}
+                />
             </Region>
         </Frame>
     );

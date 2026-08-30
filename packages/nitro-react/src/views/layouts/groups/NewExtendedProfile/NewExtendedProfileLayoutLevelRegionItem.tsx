@@ -32,26 +32,20 @@ export const NewExtendedProfileLayoutLevelRegionItem = ({ captionLevelLabel, cap
                     layout={{ width: 29, height: 28, flexShrink: 0 }}
                 />
                 {(visibleLevelLabel ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionLevelLabel ?? t('generic.level')}
+                        textStyle="text-style-u-regular"
                         name="levelLabel"
-                        layout={{ width: 72, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionLevelLabel ?? t('generic.level')}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
+                        layout={{ width: 72, height: 16, flexShrink: 0 }}
+                    />
                 )}
                 {(visibleLevelValue ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionLevelValue ?? '0'}
+                        textStyle="text-style-u-regular"
                         name="levelValue"
-                        layout={{ width: 10, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionLevelValue ?? '0'}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
+                        layout={{ width: 10, height: 16, flexShrink: 0 }}
+                    />
                 )}
             </Region>
             {(visibleSpacer ?? true) && (

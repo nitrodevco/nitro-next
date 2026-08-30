@@ -35,15 +35,13 @@ export const FurniViewLayoutGroupDetailsContainerItem = ({ captionGroupName, gro
                 </WidgetSlot>
             )}
             {(visibleGroupName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionGroupName ?? ''}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 128 }}
                     name="group_name"
-                    layout={{ position: 'absolute', left: 45, width: 128, top: 10, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionGroupName ?? ''}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 128 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 45, width: 128, top: 10, height: 37 }}
+                />
             )}
         </Region>
     );

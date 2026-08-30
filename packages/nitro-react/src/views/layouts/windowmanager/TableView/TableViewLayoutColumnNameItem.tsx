@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `column_name` of TableViewLayout - pass real rows through its `items…` slot. */
 export interface TableViewLayoutColumnNameItemProps {
@@ -8,11 +8,10 @@ export interface TableViewLayoutColumnNameItemProps {
 
 export const TableViewLayoutColumnNameItem = ({ captionColumnName, layout }: TableViewLayoutColumnNameItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionColumnName ?? 'col1'}
             name="column_name"
-            layout={{ width: 100, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionColumnName ?? 'col1'}
-        </Region>
+            layout={{ width: 100, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

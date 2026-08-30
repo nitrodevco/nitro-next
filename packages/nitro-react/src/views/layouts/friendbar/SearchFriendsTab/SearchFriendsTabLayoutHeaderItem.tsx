@@ -32,16 +32,14 @@ export const SearchFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeade
                 />
             )}
             {(visibleTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTitle ?? t('friend.bar.search.title')}
+                    textStyle="text-style-headline-medium"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 77 }}
                     name="title"
-                    layout={{ position: 'absolute', left: 33, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? t('friend.bar.search.title')}
-                        textStyle="text-style-headline-medium"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 77 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 33, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30 }}
+                />
             )}
         </Region>
     );

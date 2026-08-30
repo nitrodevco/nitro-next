@@ -22,19 +22,18 @@ export const AbusiveNoticeLayout = ({ layout, onClose, onCloseButton }: AbusiveN
             layout={{ width: 309, height: 153, minWidth: 309, minHeight: 153, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}>
-                <Region layout={{ width: 216, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.abusive.subtitle')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ fill: '#c30000' }}
-                    />
-                </Region>
-                <Region layout={{ width: 291, height: 24, flexShrink: 0, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.abusive.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 291 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.emergency.abusive.subtitle')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#c30000' }}
+                    layout={{ width: 216, height: 19, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('help.emergency.abusive.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 291 }}
+                    verticalAlign="top"
+                    layout={{ width: 291, height: 24, flexShrink: 0, minWidth: 291, maxWidth: 291 }}
+                />
                 <ThemeImage
                     src={layoutImage('illumina_horizontal_separator.png')}
                     layout={{ width: 291, height: 13, flexShrink: 0 }}

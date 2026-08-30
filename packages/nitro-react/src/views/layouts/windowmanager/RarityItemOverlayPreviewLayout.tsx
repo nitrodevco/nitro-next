@@ -20,16 +20,13 @@ export const RarityItemOverlayPreviewLayout = ({ captionLevel, layout, srcPlaque
                     src={srcPlaque ?? layoutImage('rarity_item_rarity_preview_bg.png')}
                     layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 28 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionLevel ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#333300', align: 'center' }}
                     name="level"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionLevel ?? '0'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#333300', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6 }}
+                />
             </Region>
         </Region>
     );

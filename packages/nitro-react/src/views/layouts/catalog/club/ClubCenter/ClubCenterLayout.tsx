@@ -80,36 +80,26 @@ export const ClubCenterLayout = ({ avatar, captionGeneralInfo, captionGeneralInf
                     name="basic"
                     layout={{ width: 460, height: 75, flexShrink: 0 }}
                 >
-                    <Region
+                    <ThemeImage
                         name="hc_badge_container"
-                        layout={{ position: 'absolute', left: 19, width: 50, top: 11, height: 50, justifyContent: 'center' }}
-                    >
-                        <ThemeImage
-                            name="hc_badge"
-                            src={srcHcBadge}
-                            tint={tintHcBadge}
-                            layout={{ position: 'absolute', width: 50, alignSelf: 'center', height: 50 }}
-                        />
-                    </Region>
+                        src={srcHcBadge}
+                        tint={tintHcBadge}
+                        layout={{ position: 'absolute', left: 19, width: 50, top: 11, height: 50 }}
+                    />
                     <Region layout={{ position: 'absolute', left: 72, width: 360, top: 7, height: 62, flexDirection: 'row', flexWrap: 'wrap' }}>
-                        <Region
+                        <ThemeText
+                            text={captionStatusTitle ?? ''}
+                            textStyle="text-style-u-bold"
                             name="status_title"
-                            layout={{ width: 290, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStatusTitle ?? ''}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                        <Region
+                            layout={{ width: 290, height: 16, flexShrink: 0 }}
+                        />
+                        <ThemeText
+                            text={captionStatusInfo ?? ''}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
                             name="status_info"
-                            layout={{ width: 285, height: 45, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStatusInfo ?? ''}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 285, height: 45, flexShrink: 0 }}
+                        />
                     </Region>
                 </Region>
                 <Region layout={{ width: 420, height: 208, flexShrink: 0, flexDirection: 'column' }}>
@@ -122,25 +112,20 @@ export const ClubCenterLayout = ({ avatar, captionGeneralInfo, captionGeneralInf
                             tintColor="#53a3cb"
                             layout={{ position: 'absolute', left: 0, width: 412, top: 0, height: 128 }}
                         >
-                            <Region
+                            <ThemeText
+                                text={captionSpecialTitle ?? t('hccenter.special.title')}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="special_title"
-                                layout={{ position: 'absolute', left: 16, width: 180, top: 16, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionSpecialTitle ?? t('hccenter.special.title')}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
-                            <Region
+                                layout={{ position: 'absolute', left: 16, width: 180, top: 16, height: 22 }}
+                            />
+                            <ThemeText
+                                text={captionSpecialInfo ?? t('hccenter.special.info')}
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 180 }}
                                 name="special_info"
-                                layout={{ position: 'absolute', left: 16, width: 180, top: 36, height: 56, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionSpecialInfo ?? t('hccenter.special.info')}
-                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 180 }}
-                                />
-                            </Region>
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 16, width: 180, top: 36, height: 56 }}
+                            />
                             <Region
                                 name="special_infolink"
                                 layout={{ position: 'absolute', left: 16, width: 190, top: 100, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -160,25 +145,20 @@ export const ClubCenterLayout = ({ avatar, captionGeneralInfo, captionGeneralInf
                         tintColor="#54c32e"
                         layout={{ width: 412, height: 74, flexShrink: 0 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionGiftTitle ?? t('hccenter.gift.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff' }}
                             name="gift_title"
-                            layout={{ position: 'absolute', left: 16, width: 250, top: 16, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionGiftTitle ?? t('hccenter.gift.title')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
+                            layout={{ position: 'absolute', left: 16, width: 250, top: 16, height: 22 }}
+                        />
+                        <ThemeText
+                            text={captionGiftInfo ?? t('hccenter.gift.info')}
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 250 }}
                             name="gift_info"
-                            layout={{ position: 'absolute', left: 16, width: 250, top: 36, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionGiftInfo ?? t('hccenter.gift.info')}
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 250 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 16, width: 250, top: 36, height: 32 }}
+                        />
                         <ButtonThick
                             variant="5"
                             name="btn_gift"
@@ -195,25 +175,20 @@ export const ClubCenterLayout = ({ avatar, captionGeneralInfo, captionGeneralInf
                     name="footer"
                     layout={{ width: 460, height: 139, flexShrink: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionGeneralTitle ?? t('hccenter.general.title')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#4a8eb1' }}
                         name="general_title"
-                        layout={{ position: 'absolute', left: 36, width: 190, top: 6, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionGeneralTitle ?? t('hccenter.general.title')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#4a8eb1' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 36, width: 190, top: 6, height: 22 }}
+                    />
+                    <ThemeText
+                        text={captionGeneralInfo ?? t('hccenter.general.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 174 }}
                         name="general_info"
-                        layout={{ position: 'absolute', left: 36, width: 174, top: 28, height: 97, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionGeneralInfo ?? t('hccenter.general.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 174 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 36, width: 174, top: 28, height: 97 }}
+                    />
                     <Region
                         name="general_infolink"
                         layout={{ position: 'absolute', left: 36, width: 174, top: 118, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

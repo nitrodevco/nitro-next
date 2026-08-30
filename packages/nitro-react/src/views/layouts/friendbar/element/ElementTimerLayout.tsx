@@ -17,16 +17,13 @@ export const ElementTimerLayout = ({ captionTimerCaptionTxt, colorableTextColor,
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionTimerCaptionTxt ?? 'Timer caption ph'}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ fill: colorableTextColor, align: 'center' }}
                     name="timer_caption_txt"
-                    layout={{ position: 'absolute', left: 0, right: 3, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionTimerCaptionTxt ?? 'Timer caption ph'}
-                        textStyle="text-style-il-heading-3"
-                        textOptions={{ fill: colorableTextColor, align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 3, top: 0, height: 14 }}
+                />
                 <WidgetSlot
                     widgetType="countdown"
                     name="countdown_widget"

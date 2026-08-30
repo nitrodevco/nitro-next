@@ -18,12 +18,11 @@ export const ConfirmPetBreedingLayoutPuppyNamelistItem = ({ layout, visiblePuppy
             name="puppy_namelist"
             layout={{ width: 300, height: 52, flexShrink: 0, minWidth: 300, flexDirection: 'column', gap: 2, ...layout }}
         >
-            <Region layout={{ width: 70, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('breedpets.confirmation.widget.baby.name')}
-                    textStyle="text-style-il-heading-3"
-                />
-            </Region>
+            <ThemeText
+                text={t('breedpets.confirmation.widget.baby.name')}
+                textStyle="text-style-il-heading-3"
+                layout={{ width: 70, height: 15, flexShrink: 0 }}
+            />
             <Border
                 variant="105"
                 tintColor="#f0f0f0"

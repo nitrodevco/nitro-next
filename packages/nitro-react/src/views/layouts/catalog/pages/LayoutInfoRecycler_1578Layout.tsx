@@ -28,25 +28,21 @@ export const LayoutInfoRecycler_1578Layout = ({ captionCtlgDescription, captionC
                         src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/ctlg_ecotron_box.gif'}
                         layout={{ position: 'absolute', left: 20, width: 57, top: 10, height: 57 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionCtlgDescription ?? t('lorem.title')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 242 }}
                         name="ctlg_description"
-                        layout={{ position: 'absolute', left: 83, width: 242, top: 26, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCtlgDescription ?? t('lorem.title')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 242 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 83, width: 242, top: 26, height: 21 }}
+                    />
+                    <ThemeText
+                        text={captionCtlgSpecialTxt ?? t('lorem.newline')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 307 }}
                         name="ctlg_special_txt"
-                        layout={{ position: 'absolute', left: 15, width: 307, top: 72, height: 138, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCtlgSpecialTxt ?? t('lorem.newline')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 307 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 15, width: 307, top: 72, height: 138 }}
+                    />
                 </Border>
             </Region>
         </Region>

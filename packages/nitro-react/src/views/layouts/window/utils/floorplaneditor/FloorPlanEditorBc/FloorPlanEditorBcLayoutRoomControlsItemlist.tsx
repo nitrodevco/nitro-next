@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Dropmenu, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Dropmenu, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { FloorPlanEditorBcLayoutEnterdirectionContainerItem } from './FloorPlanEditorBcLayoutEnterdirectionContainerItem';
@@ -30,9 +30,10 @@ export const FloorPlanEditorBcLayoutRoomControlsItemlist = ({ itemsRoomControlsI
                 layout={{ width: 3, height: 97, flexShrink: 0 }}
             />
             <Region layout={{ width: 128, height: 99, flexShrink: 0 }}>
-                <Region layout={{ position: 'absolute', left: 14, width: 110, top: 4, height: 17, maxWidth: 110, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('floor.plan.editor.room.options')}
-                </Region>
+                <ThemeText
+                    text={t('floor.plan.editor.room.options')}
+                    layout={{ position: 'absolute', left: 14, width: 110, top: 4, height: 17, maxWidth: 110 }}
+                />
                 <Dropmenu
                     variant="3"
                     name="wall_thickness_drop"

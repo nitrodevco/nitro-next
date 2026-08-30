@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ContainerButton, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Frame, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `879_notification_teaser_xml` (layout "teaser_general", 433x260) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationTeaserLayoutProps {
@@ -40,25 +40,20 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                     name="white_border"
                     layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 160 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionCongrats ?? t('widget.furni.teaser.congrats')}
+                    textStyle="text-style-bold"
+                    textOptions={{ fill: '#666666' }}
                     name="congrats"
-                    layout={{ position: 'absolute', left: 130, width: 247, top: 12, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCongrats ?? t('widget.furni.teaser.congrats')}
-                        textStyle="text-style-bold"
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 130, width: 247, top: 12, height: 21 }}
+                />
+                <ThemeText
+                    text={captionDescription ?? t('widget.furni.teaser.description')}
+                    textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 283 }}
                     name="description"
-                    layout={{ position: 'absolute', right: 8, width: 283, top: 32, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescription ?? t('widget.furni.teaser.description')}
-                        textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 283 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 8, width: 283, top: 32, height: 120 }}
+                />
                 <ContainerButton
                     variant="1"
                     name="teaser_ok_btn"
@@ -76,16 +71,13 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                         tintColor="#309d00"
                         layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 17 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionOk ?? t('widget.furni.teaser.get')}
+                        textStyle="text-style-bold"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="ok"
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 295, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionOk ?? t('widget.furni.teaser.get')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 295, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 30 }}
+                    />
                 </ContainerButton>
                 <ThemeImage
                     name="dialog_bg"

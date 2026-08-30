@@ -23,25 +23,20 @@ export const HabbiconHubLayoutHeader = ({ captionSetDescription, captionSetProgr
                 tintColor="#e0cba6"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 1 }}
             />
-            <Region
+            <ThemeText
+                text={captionSetTitle ?? 'Habbicon set name'}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#2b2b2b' }}
                 name="set_title"
-                layout={{ position: 'absolute', left: 12, right: 138, top: 8, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionSetTitle ?? 'Habbicon set name'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#2b2b2b' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 12, right: 138, top: 8, height: 22 }}
+            />
+            <ThemeText
+                text={captionSetDescription ?? 'sdfg fdgfd gfsdgdfs ggfdfg fdfgfsdg fsdgfsdgfsd gdfg sdfgfsd gfdsgfsdgfsdgdf dfg d gsfdsf'}
+                textOptions={{ fill: '#3b3b3b', wordWrap: true, wordWrapWidth: 359 }}
                 name="set_description"
-                layout={{ position: 'absolute', left: 13, right: 8, top: 31, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionSetDescription ?? 'sdfg fdgfd gfsdgdfs ggfdfg fdfgfsdg fsdgfsdgfsd gdfg sdfgfsd gfdsgfsdgfsdgdf dfg d gsfdsf'}
-                    textOptions={{ fill: '#3b3b3b', wordWrap: true, wordWrapWidth: 359 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 13, right: 8, top: 31, height: 30 }}
+            />
             <Region
                 name="set_progress_container"
                 layout={{ position: 'absolute', left: 14, right: 136, top: 62, height: 22 }}
@@ -79,16 +74,13 @@ export const HabbiconHubLayoutHeader = ({ captionSetDescription, captionSetProgr
                         </Region>
                     </Region>
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionSetProgressText ?? '0 / 0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#2b2b2b' }}
                     name="set_progress_text"
-                    layout={{ position: 'absolute', left: 164, width: 28, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSetProgressText ?? '0 / 0'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#2b2b2b' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 164, width: 28, top: 2, height: 17 }}
+                />
             </Region>
         </Region>
     );

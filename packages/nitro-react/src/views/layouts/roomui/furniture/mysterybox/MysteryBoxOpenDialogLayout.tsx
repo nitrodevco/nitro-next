@@ -39,15 +39,12 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                     src={srcRewardOverlay ?? layoutImage('mysterybox_box_overlay.png')}
                     layout={{ position: 'absolute', left: 41, width: 39, top: 43, height: 39 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionSubtitleText ?? 'You have started opening the box.'}
+                    textStyle="text-style-il-heading-2"
                     name="subtitle_text"
-                    layout={{ position: 'absolute', left: 115, width: 201, top: 34, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSubtitleText ?? 'You have started opening the box.'}
-                        textStyle="text-style-il-heading-2"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 115, width: 201, top: 34, height: 17 }}
+                />
                 <Border
                     variant="102"
                     layout={{ position: 'absolute', marginLeft: 4.5, marginRight: -4.5, width: 310, top: 123, height: 60 }}
@@ -62,12 +59,11 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                         src={srcNeededOverlay ?? layoutImage('mysterybox_key_overlay.png')}
                         layout={{ position: 'absolute', left: 14, width: 39, top: 11, height: 39 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionWaitingText ?? 'Waiting for the other user to insert the key.'}
                         name="waiting_text"
-                        layout={{ position: 'absolute', left: 62, width: 228, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionWaitingText ?? 'Waiting for the other user to insert the key.'}
-                    </Region>
+                        layout={{ position: 'absolute', left: 62, width: 228, alignSelf: 'center', height: 16 }}
+                    />
                 </Border>
                 <Button
                     variant="101"

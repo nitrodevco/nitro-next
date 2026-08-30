@@ -62,16 +62,14 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                     layout={{ position: 'absolute', left: 0, width: 322, top: 0, height: 322 }}
                 />
                 {(visibleModerationText ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionModerationText ?? t('camera.photo.moderated')}
+                        textStyle="text-style-id-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 129 }}
                         name="moderationText"
-                        layout={{ position: 'absolute', left: 87, width: 129, top: 74, height: 16, minWidth: 308, maxWidth: 308, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionModerationText ?? t('camera.photo.moderated')}
-                            textStyle="text-style-id-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 129 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 87, width: 129, top: 74, height: 16, minWidth: 308, maxWidth: 308 }}
+                    />
                 )}
                 <StoriesImageWidgetLayoutButtonContainer {...buttonContainer} />
                 {(visibleMakeOwnButton ?? false) && (
@@ -113,23 +111,23 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                         layout={{ position: 'absolute', left: 13, width: 218, top: 65, height: 116 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
-                            <Region layout={{ position: 'absolute', left: 8, width: 200, top: 8, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('info.share.link.info')}
-                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
-                                />
-                            </Region>
+                            <ThemeText
+                                text={t('info.share.link.info')}
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 8, width: 200, top: 8, height: 17, minWidth: 200, maxWidth: 200 }}
+                            />
                             <TextInput
                                 value={urlFieldValue}
                                 onChange={setUrlFieldValue}
                                 layout={{ position: 'absolute', left: 8, width: 200, top: 30, height: 17, minWidth: 200, maxWidth: 200 }}
                             />
-                            <Region layout={{ position: 'absolute', left: 8, width: 200, top: 52, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('info.share.button.info')}
-                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
-                                />
-                            </Region>
+                            <ThemeText
+                                text={t('info.share.button.info')}
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 8, width: 200, top: 52, height: 17, minWidth: 200, maxWidth: 200 }}
+                            />
                             <Region layout={{ position: 'absolute', left: 8, width: 200, top: 74, height: 32, minWidth: 200 }}>
                                 <Region
                                     name="fbShare"
@@ -166,15 +164,12 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 129, top: 0, height: 26 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionSenderName ?? 'Sent by Joopekki-xxOO'}
+                        textStyle="text-style-id-link-regular"
                         name="senderName"
-                        layout={{ position: 'absolute', right: 0, width: 129, top: 2, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSenderName ?? 'Sent by Joopekki-xxOO'}
-                            textStyle="text-style-id-link-regular"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', right: 0, width: 129, top: 2, height: 24 }}
+                    />
                 </Region>
                 <Region
                     name="name_copy_wrapper"
@@ -182,15 +177,12 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                 >
                     {nameCopyWrapper}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionCreationDate ?? '10.4.2014 15:44'}
+                    textStyle="text-style-id-regular"
                     name="creationDate"
-                    layout={{ position: 'absolute', left: 38, width: 91, top: 17, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCreationDate ?? '10.4.2014 15:44'}
-                        textStyle="text-style-id-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 38, width: 91, top: 17, height: 24 }}
+                />
                 <Region
                     name="nextButton"
                     onPointerTap={onNextButton}
@@ -219,15 +211,13 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                         name="captionContainer"
                         layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 60 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionCaptionText ?? ''}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 310 }}
                             name="captionText"
-                            layout={{ position: 'absolute', left: 5, width: 310, top: 5, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCaptionText ?? ''}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 310 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 5, width: 310, top: 5, height: 50 }}
+                        />
                     </Border>
                 )}
             </Region>

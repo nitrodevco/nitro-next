@@ -37,15 +37,12 @@ export const RosRoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodCon
                 />
             )}
             {(visibleAllowPetsText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionAllowPetsText ?? t('navigator.roomsettings.allowpets')}
+                    textStyle="text-style-u-regular"
                     name="allow_pets_text"
-                    layout={{ position: 'absolute', left: 18, width: 191, top: 18, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAllowPetsText ?? t('navigator.roomsettings.allowpets')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 191, top: 18, height: 17 }}
+                />
             )}
             {(visibleAllowFoodconsumeCheckbox ?? true) && (
                 <CheckBox
@@ -56,15 +53,12 @@ export const RosRoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodCon
                 />
             )}
             {(visibleAllowFoodConsumeText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionAllowFoodConsumeText ?? t('navigator.roomsettings.allowfoodconsume')}
+                    textStyle="text-style-u-regular"
                     name="allow_food_consume_text"
-                    layout={{ position: 'absolute', left: 18, width: 245, top: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAllowFoodConsumeText ?? t('navigator.roomsettings.allowfoodconsume')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 245, top: 38, height: 17 }}
+                />
             )}
             {(visibleMuteAllPetsCheckbox ?? true) && (
                 <CheckBox
@@ -75,26 +69,20 @@ export const RosRoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodCon
                 />
             )}
             {(visibleMuteAllPetsText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionMuteAllPetsText ?? t('navigator.roomsettings.mute_all_pets')}
+                    textStyle="text-style-u-regular"
                     name="mute_all_pets_text"
-                    layout={{ position: 'absolute', left: 18, width: 215, top: 58, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMuteAllPetsText ?? t('navigator.roomsettings.mute_all_pets')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 215, top: 58, height: 17 }}
+                />
             )}
             {(visiblePetsContainer ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionPetsContainer ?? t('navigator.roomsettings.pets')}
+                    textStyle="text-style-u-bold"
                     name="pets_container"
-                    layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPetsContainer ?? t('navigator.roomsettings.pets')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 17 }}
+                />
             )}
         </Region>
     );

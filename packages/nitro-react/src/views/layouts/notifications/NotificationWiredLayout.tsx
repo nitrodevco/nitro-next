@@ -48,15 +48,13 @@ export const NotificationWiredLayout = ({ captionDescription, itemsSpacing, layo
                     </Region>
                 </Region>
                 <Region layout={{ position: 'absolute', left: 0, right: 0, top: 31, height: 23, flexDirection: 'column' }}>
-                    <Region
+                    <ThemeText
+                        text={captionDescription ?? 'Some textyy'}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174, align: 'center' }}
                         name="description"
-                        layout={{ width: 174, height: 16, flexShrink: 0, minWidth: 174, maxWidth: 174, minHeight: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionDescription ?? 'Some textyy'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174, align: 'center' }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ width: 174, height: 16, flexShrink: 0, minWidth: 174, maxWidth: 174, minHeight: 0 }}
+                    />
                     <Region
                         name="spacing"
                         layout={{ width: 30, height: 7, flexShrink: 0, flexDirection: 'column' }}

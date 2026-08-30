@@ -62,15 +62,12 @@ export const FurniViewLayout = ({ captionName, infostandElementList, itemsButton
                             layout={{ position: 'absolute', left: 0, top: 32, flexDirection: 'column' }}
                         >
                             <Region layout={{ width: 183, height: 26, flexShrink: 0 }}>
-                                <Region
+                                <ThemeText
+                                    text={captionName ?? 'Name:'}
+                                    textOptions={{ fill: '#ffffff' }}
                                     name="name"
-                                    layout={{ position: 'absolute', left: 1, width: 41, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionName ?? 'Name:'}
-                                        textOptions={{ fill: '#ffffff' }}
-                                    />
-                                </Region>
+                                    layout={{ position: 'absolute', left: 1, width: 41, top: 2, height: 17 }}
+                                />
                                 <TextInput
                                     value={valueValue}
                                     onChange={setValueValue}

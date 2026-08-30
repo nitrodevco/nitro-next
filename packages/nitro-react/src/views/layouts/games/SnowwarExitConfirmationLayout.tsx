@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, ContainerButton, Frame, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ContainerButton, Frame, ThemeText } from '#base/theme';
 
 /** Generated from `332_snowwar_exit_confirmation_xml` (layout "snowwar_exit_confirmation", 270x163) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SnowwarExitConfirmationLayoutProps {
@@ -20,12 +20,12 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
             onClose={onClose}
             layout={{ width: 270, height: 163, minWidth: 270, minHeight: 163, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 12, width: 238, top: 12, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('snowwar.exit.confirmation')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 238, align: 'center' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('snowwar.exit.confirmation')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 238, align: 'center' }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 12, width: 238, top: 12, height: 18 }}
+            />
             <ContainerButton
                 variant="3"
                 name="no"

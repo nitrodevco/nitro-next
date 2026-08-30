@@ -27,15 +27,12 @@ export const TalentTrackLayoutProgressContainer = ({ captionProgressText, layout
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 998, top: 309, height: 80, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionProgressText ?? t('talent.track.common.progress.title')}
+                textStyle="text-style-il-heading-2"
                 name="progress_text"
-                layout={{ position: 'absolute', left: 24, width: 196, top: 18, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionProgressText ?? t('talent.track.common.progress.title')}
-                    textStyle="text-style-il-heading-2"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 24, width: 196, top: 18, height: 17 }}
+            />
             <ThemeImage
                 name="unachieved_mid"
                 src={srcUnachievedMid ?? layoutImage('talent_unachieved_mid.png')}
@@ -70,12 +67,11 @@ export const TalentTrackLayoutProgressContainer = ({ captionProgressText, layout
                 layout={{ position: 'absolute', left: 42, width: 215, top: 64, height: 30 }}
             >
                 {progressBalloon}
-                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('talent.track.common.progress.position')}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('talent.track.common.progress.position')}
+                    textStyle="text-style-il-regular-white"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25 }}
+                />
             </WidgetSlot>
         </Region>
     );

@@ -48,25 +48,19 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     tintColor="#8e8e8e"
                     layout={{ position: 'absolute', left: 5, right: 6, top: 6, height: 28 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionQuestHeaderTxt ?? 'Frienship Quest 8/16: Share Love'}
+                        textOptions={{ fill: '#ffffff' }}
                         name="quest_header_txt"
-                        layout={{ position: 'absolute', left: 20, width: 208, top: 5, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionQuestHeaderTxt ?? 'Frienship Quest 8/16: Share Love'}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 20, width: 208, top: 5, height: 18 }}
+                    />
                     <Region layout={{ position: 'absolute', right: 10, top: 0, flexDirection: 'row', gap: 5 }}>
-                        <Region
+                        <ThemeText
+                            text={captionTimeleftTxt ?? '5 days'}
+                            textOptions={{ fill: '#ffffff' }}
                             name="timeleft_txt"
-                            layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionTimeleftTxt ?? '5 days'}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ width: 37, height: 17, flexShrink: 0 }}
+                        />
                         <ThemeImage
                             name="hourglass_icon"
                             src={srcHourglassIcon}
@@ -83,39 +77,34 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                 >
                     {t('quests.list.accept')}
                 </ButtonThick>
-                <Region
+                <ThemeText
+                    text={captionDescTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
                     name="desc_txt"
-                    layout={{ position: 'absolute', left: 98, right: 9, top: 39, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 98, right: 9, top: 39, height: 33 }}
+                />
+                <ThemeText
+                    text={captionRewardCaptionTxt ?? t('quests.list.rewardcaption')}
                     name="reward_caption_txt"
-                    layout={{ position: 'absolute', left: 99, width: 143, bottom: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionRewardCaptionTxt ?? t('quests.list.rewardcaption')}
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 99, width: 143, bottom: 15, height: 17 }}
+                />
+                <ThemeText
+                    text={captionRewardAmountTxt ?? '200'}
                     name="reward_amount_txt"
-                    layout={{ position: 'absolute', left: 150, width: 23, bottom: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionRewardAmountTxt ?? '200'}
-                </Region>
+                    layout={{ position: 'absolute', left: 150, width: 23, bottom: 15, height: 17 }}
+                />
                 <Region
                     name="cancel_region"
                     onPointerTap={onCancelRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 271, width: 100, bottom: 15, height: 18 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCancelTxt ?? t('quests.list.reject')}
                         name="cancel_txt"
-                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionCancelTxt ?? t('quests.list.reject')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
+                    />
                 </Region>
                 <ThemeImage
                     name="quest_pic_bitmap"
@@ -128,15 +117,13 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     layout={{ position: 'absolute', left: 169, width: 22, bottom: 12, height: 22 }}
                 />
                 {(visibleHintTxt ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionHintTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
                         name="hint_txt"
-                        layout={{ position: 'absolute', left: 98, right: 9, top: 72, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHintTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 98, right: 9, top: 72, height: 33 }}
+                    />
                 )}
                 {(visibleLinkRegion ?? false) && (
                     <Region
@@ -146,49 +133,42 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                         layout={{ position: 'absolute', left: 98, width: 155, top: 72, height: 18 }}
                     >
                         {(visibleLinkCatalog ?? false) && (
-                            <Region
+                            <ThemeText
+                                text={captionLinkCatalog ?? t('quests.list.opencatalog')}
                                 name="link_catalog"
-                                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionLinkCatalog ?? t('quests.list.opencatalog')}
-                            </Region>
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
+                            />
                         )}
                         {(visibleLinkNavigator ?? false) && (
-                            <Region
+                            <ThemeText
+                                text={captionLinkNavigator ?? t('quests.list.opennavigator')}
                                 name="link_navigator"
-                                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionLinkNavigator ?? t('quests.list.opennavigator')}
-                            </Region>
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
+                            />
                         )}
                         {(visibleLinkRoom ?? false) && (
-                            <Region
+                            <ThemeText
+                                text={captionLinkRoom ?? t('quests.gotocampaignroom')}
                                 name="link_room"
-                                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionLinkRoom ?? t('quests.gotocampaignroom')}
-                            </Region>
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
+                            />
                         )}
                     </Region>
                 )}
                 {(visibleDelayDescTxt ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionDelayDescTxt ?? t('quests.list.nextquestavailable')}
                         name="delay_desc_txt"
-                        layout={{ position: 'absolute', left: 98, right: 9, top: 53, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionDelayDescTxt ?? t('quests.list.nextquestavailable')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 98, right: 9, top: 53, height: 20 }}
+                    />
                 )}
                 {(visibleDelayTxt ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionDelayTxt ?? '7 hours'}
+                        textOptions={{ fill: '#0090bd' }}
                         name="delay_txt"
-                        layout={{ position: 'absolute', left: 98, right: 144, top: 71, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionDelayTxt ?? '7 hours'}
-                            textOptions={{ fill: '#0090bd' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 98, right: 144, top: 71, height: 20 }}
+                    />
                 )}
             </Border>
         </Region>

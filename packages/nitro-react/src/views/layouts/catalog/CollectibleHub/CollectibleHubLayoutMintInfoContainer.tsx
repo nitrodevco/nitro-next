@@ -25,15 +25,13 @@ export const CollectibleHubLayoutMintInfoContainer = ({ captionMintLockText, cap
                 name="right_box"
                 layout={{ position: 'absolute', left: 64, width: 226, top: 0, bottom: 0, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionMintLockText ?? t('shop.minting.region_unlocked')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 290 }}
                     name="mint_lock_text"
-                    layout={{ position: 'absolute', marginLeft: 32, marginRight: -32, width: 290, top: 4, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMintLockText ?? t('shop.minting.region_unlocked')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 290 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', marginLeft: 32, marginRight: -32, width: 290, top: 4, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17 }}
+                />
                 <Region
                     name="progress_bar"
                     backgroundColor="#112e31"
@@ -58,15 +56,12 @@ export const CollectibleHubLayoutMintInfoContainer = ({ captionMintLockText, cap
                             {progressBarBottom}
                         </Region>
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionProgressBarText ?? t('collectibles.preview.time_left')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="progress_bar_text"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionProgressBarText ?? t('collectibles.preview.time_left')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 16 }}
+                    />
                 </Region>
             </Region>
         </Region>

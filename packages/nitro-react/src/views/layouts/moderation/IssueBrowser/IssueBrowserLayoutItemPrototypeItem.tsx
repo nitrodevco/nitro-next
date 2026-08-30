@@ -1,4 +1,4 @@
-import { BoxLayout, Button, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Row template `item_prototype` of IssueBrowserLayout - pass real rows through its `items…` slot. */
 export interface IssueBrowserLayoutItemPrototypeItemProps {
@@ -39,36 +39,32 @@ export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionSc
                     layout={{ position: 'absolute', left: 0, right: 62, top: 4, height: 16 }}
                 >
                     {(visibleScore ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionScore ?? 'xx'}
                             name="score"
-                            layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionScore ?? 'xx'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17 }}
+                        />
                     )}
                     {(visibleCategory ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionCategory ?? 'Sharing personal info'}
                             name="category"
-                            layout={{ position: 'absolute', left: 40, width: 140, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionCategory ?? 'Sharing personal info'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 140, top: 0, height: 17 }}
+                        />
                     )}
                     {(visibleSource ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionSource ?? 'source'}
                             name="source"
-                            layout={{ position: 'absolute', left: 180, right: 185, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionSource ?? 'source'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 180, right: 185, top: 0, height: 19 }}
+                        />
                     )}
                     {(visibleTargetName ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTargetName ?? 'target'}
                             name="target_name"
-                            layout={{ position: 'absolute', left: 270, right: 65, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionTargetName ?? 'target'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 270, right: 65, top: 0, height: 19 }}
+                        />
                     )}
                     {(visibleTargetIcon ?? true) && (
                         <ThemeImage
@@ -79,12 +75,11 @@ export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionSc
                         />
                     )}
                     {(visibleTime ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTime ?? 'mm:ss'}
                             name="time"
-                            layout={{ position: 'absolute', right: 0, width: 45, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionTime ?? 'mm:ss'}
-                        </Region>
+                            layout={{ position: 'absolute', right: 0, width: 45, top: 0, height: 19 }}
+                        />
                     )}
                 </Region>
             )}

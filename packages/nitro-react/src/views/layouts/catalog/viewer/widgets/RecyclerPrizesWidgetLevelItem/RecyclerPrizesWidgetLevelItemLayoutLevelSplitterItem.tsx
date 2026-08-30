@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `level_splitter` of RecyclerPrizesWidgetLevelItemLayout - pass real rows through its `items…` slot. */
 export interface RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItemProps {
@@ -8,11 +8,10 @@ export interface RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItemProps {
 
 export const RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItem = ({ captionLevelSplitter, layout }: RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionLevelSplitter ?? ' -'}
             name="level_splitter"
-            layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionLevelSplitter ?? ' -'}
-        </Region>
+            layout={{ width: 10, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

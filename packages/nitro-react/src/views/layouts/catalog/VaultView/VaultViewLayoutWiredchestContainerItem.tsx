@@ -44,15 +44,12 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
                         />
                     )}
                     {(visibleWiredchestDucketValue ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionWiredchestDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="wiredchestDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionWiredchestDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
                         />
                     )}
                     {(visibleWiredchestCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionWiredchestCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="wiredchestCreditValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionWiredchestCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
                         />
                     )}
                     {(visibleWiredchestLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionWiredchestLabel ?? t('earnings.wiredchest.label')}
+                            textStyle="text-style-u-bold"
                             name="wiredchest_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionWiredchestLabel ?? t('earnings.wiredchest.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

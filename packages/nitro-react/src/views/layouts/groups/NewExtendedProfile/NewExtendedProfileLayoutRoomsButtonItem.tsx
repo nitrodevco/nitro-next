@@ -30,15 +30,12 @@ export const NewExtendedProfileLayoutRoomsButtonItem = ({ captionRoomsLinkText, 
                     layout={{ width: 32, height: 28, flexShrink: 0 }}
                 />
                 {(visibleRoomsLinkText ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionRoomsLinkText ?? t('extendedprofile.rooms')}
+                        textStyle="text-style-il-link-strong"
                         name="rooms_link_text"
-                        layout={{ width: 124, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRoomsLinkText ?? t('extendedprofile.rooms')}
-                            textStyle="text-style-il-link-strong"
-                        />
-                    </Region>
+                        layout={{ width: 124, height: 16, flexShrink: 0 }}
+                    />
                 )}
             </Region>
             {(visibleSpacer ?? true) && (

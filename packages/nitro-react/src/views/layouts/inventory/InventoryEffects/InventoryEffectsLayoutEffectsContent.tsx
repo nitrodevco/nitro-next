@@ -27,15 +27,12 @@ export const InventoryEffectsLayoutEffectsContent = ({ captionActiveTitle, capti
             name="effects_content"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionActiveTitle ?? 'Active:'}
+                textStyle="text-style-il-heading-2"
                 name="ActiveTitle"
-                layout={{ position: 'absolute', right: 110, width: 42, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionActiveTitle ?? 'Active:'}
-                    textStyle="text-style-il-heading-2"
-                />
-            </Region>
+                layout={{ position: 'absolute', right: 110, width: 42, top: 7, height: 17 }}
+            />
             <ScrollArea
                 orientation="vertical"
                 layout={{ position: 'absolute', left: 10, right: 196, top: 25, bottom: 65 }}
@@ -59,15 +56,12 @@ export const InventoryEffectsLayoutEffectsContent = ({ captionActiveTitle, capti
                 )}
             </Region>
             {/* <scrollbar_vertical> for inactive_items - rendered by that list's ScrollArea */}
-            <Region
+            <ThemeText
+                text={captionMyEffectsTitle ?? 'My Effects:'}
+                textStyle="text-style-il-heading-2"
                 name="myEffectsTitle"
-                layout={{ position: 'absolute', left: 6, right: 396, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMyEffectsTitle ?? 'My Effects:'}
-                    textStyle="text-style-il-heading-2"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 6, right: 396, top: 7, height: 17 }}
+            />
             <Region
                 name="descriptionArea"
                 layout={{ position: 'absolute', left: 0, right: -52, bottom: 0, height: 55 }}
@@ -86,16 +80,14 @@ export const InventoryEffectsLayoutEffectsContent = ({ captionActiveTitle, capti
                 >
                     Activate
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionEffectDescriptionText ?? t('inventory.effects.defaultdescription')}
+                    textStyle="text-style-il-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 256 }}
                     name="effectDescriptionText"
-                    layout={{ position: 'absolute', left: 75, right: 189, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEffectDescriptionText ?? t('inventory.effects.defaultdescription')}
-                        textStyle="text-style-il-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 256 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 75, right: 189, top: 0, bottom: 0 }}
+                />
             </Region>
         </Region>
     );

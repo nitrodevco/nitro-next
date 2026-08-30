@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `seed_rarity_level` of BreedPetsResultLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsResultLayoutSeedRarityLevelItem2Props {
@@ -11,14 +11,12 @@ export const BreedPetsResultLayoutSeedRarityLevelItem2 = ({ captionSeedRarityLev
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionSeedRarityLevel ?? t('breedpetsresult.widget.seed2.raritylevel')}
+            textOptions={{ wordWrap: true, wordWrapWidth: 134, align: 'center' }}
             name="seed_rarity_level"
-            layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
-        >
-            <ThemeText
-                text={captionSeedRarityLevel ?? t('breedpetsresult.widget.seed2.raritylevel')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 134, align: 'center' }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, ...layout }}
+        />
     );
 };

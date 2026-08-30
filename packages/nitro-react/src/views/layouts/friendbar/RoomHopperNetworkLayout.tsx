@@ -31,30 +31,24 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 0, width: 12, top: 10, height: 4 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTitle ?? t('landing.view.roomhoppernetwork.title')}
+                    textStyle="text-style-il-heading-3"
                     name="title"
-                    layout={{ position: 'absolute', left: 18, width: 174, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? t('landing.view.roomhoppernetwork.title')}
-                        textStyle="text-style-il-heading-3"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 174, top: 4, height: 14 }}
+                />
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 167, width: 100, top: 10, height: 4 }}
                 />
                 <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 198, flexDirection: 'column' }}>
-                    <Region
+                    <ThemeText
+                        text={captionHeader ?? t('landing.view.roomhoppernetwork.caption')}
+                        textStyle="text-style-il-heading-1"
                         name="header"
-                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHeader ?? t('landing.view.roomhoppernetwork.caption')}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0 }}
+                    />
                     <Region
                         name="spacing"
                         layout={{ width: 30, height: 6, flexShrink: 0 }}
@@ -70,15 +64,13 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                             src={srcBitmap ?? '${image.library.url}reception/catalog_teaser_set_mnstr_gothic.png'}
                             layout={{ position: 'absolute', right: 4, width: 120, top: 0, height: 120 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionInfo ?? t('landing.view.roomhoppernetwork.info')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 124 }}
                             name="info"
-                            layout={{ position: 'absolute', left: 0, width: 124, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionInfo ?? t('landing.view.roomhoppernetwork.info')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 124 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 0, width: 124, top: 0, bottom: 0 }}
+                        />
                     </Region>
                     <Button
                         variant="100"

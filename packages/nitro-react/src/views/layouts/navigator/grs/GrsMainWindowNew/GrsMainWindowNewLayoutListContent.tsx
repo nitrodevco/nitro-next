@@ -46,15 +46,12 @@ export const GrsMainWindowNewLayoutListContent = ({ captionNoRoomsFound, caption
                     </Region>
                 </ScrollArea>
                 {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
-                <Region
+                <ThemeText
+                    text={captionNoRoomsFound ?? t('navigator.noroomsfound')}
+                    textOptions={{ align: 'center' }}
                     name="no_rooms_found"
-                    layout={{ position: 'absolute', marginLeft: -37.5, marginRight: 37.5, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionNoRoomsFound ?? t('navigator.noroomsfound')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -37.5, marginRight: 37.5, width: 295, top: 100, height: 13 }}
+                />
             </Region>
             <Region
                 name="room_ads"
@@ -73,15 +70,12 @@ export const GrsMainWindowNewLayoutListContent = ({ captionNoRoomsFound, caption
                     </Region>
                 </ScrollArea>
                 {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
-                <Region
+                <ThemeText
+                    text={captionRoomAdsNoRoomsFound ?? t('navigator.noroomsfound')}
+                    textOptions={{ align: 'center' }}
                     name="no_rooms_found"
-                    layout={{ position: 'absolute', marginLeft: -50, marginRight: 50, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionRoomAdsNoRoomsFound ?? t('navigator.noroomsfound')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -50, marginRight: 50, width: 295, top: 100, height: 13 }}
+                />
             </Region>
             {(visiblePopularTags ?? false) && (
                 <Region
@@ -101,15 +95,12 @@ export const GrsMainWindowNewLayoutListContent = ({ captionNoRoomsFound, caption
                         </Region>
                     </ScrollArea>
                     {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
-                    <Region
+                    <ThemeText
+                        text={captionNoTagsFound ?? t('navigator.notagsfound')}
+                        textOptions={{ align: 'center' }}
                         name="no_tags_found"
-                        layout={{ position: 'absolute', marginLeft: -50, marginRight: 50, width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionNoTagsFound ?? t('navigator.notagsfound')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -50, marginRight: 50, width: 295, top: 100, height: 13 }}
+                    />
                 </Region>
             )}
             <Region

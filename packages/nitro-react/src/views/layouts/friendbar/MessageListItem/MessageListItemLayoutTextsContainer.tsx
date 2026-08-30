@@ -21,25 +21,19 @@ export const MessageListItemLayoutTextsContainer = ({ captionDate, captionReplyN
             backgroundColor="#227aad"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionDate ?? '10 days ago'}
+                textOptions={{ fill: '#eeeeee' }}
                 name="date"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDate ?? '10 days ago'}
-                    textOptions={{ fill: '#eeeeee' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 18 }}
+            />
             <Region layout={{ position: 'absolute', right: 0, width: 106, top: 0, bottom: 0, flexDirection: 'row' }}>
-                <Region
+                <ThemeText
+                    text={captionReplyNum ?? '#5'}
+                    textOptions={{ fill: '#eeeeee', align: 'right' }}
                     name="reply_num"
-                    layout={{ width: 40, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionReplyNum ?? '#5'}
-                        textOptions={{ fill: '#eeeeee', align: 'right' }}
-                    />
-                </Region>
+                    layout={{ width: 40, height: 17, flexShrink: 0 }}
+                />
                 <Region
                     name="delete_message"
                     backgroundColor="#de4537"

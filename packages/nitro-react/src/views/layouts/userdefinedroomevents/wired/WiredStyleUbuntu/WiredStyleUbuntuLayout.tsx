@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, CheckBox, ContainerButton, Dropmenu, Frame, Icon, RadioButton, Region, TextInput, ThemeImage, WidgetSlot } from '#base/theme';
+import { Border, BoxLayout, Button, CheckBox, ContainerButton, Dropmenu, Frame, Icon, RadioButton, Region, TextInput, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { WiredStyleUbuntuLayoutGrid, WiredStyleUbuntuLayoutGridProps } from './WiredStyleUbuntuLayoutGrid';
@@ -80,12 +80,11 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         tintColor="#dadada"
                         layout={{ position: 'absolute', left: 0, width: 193, top: 0, height: 68 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionTitle ?? 'Payment option 1:'}
                             name="title"
-                            layout={{ position: 'absolute', left: 6, width: 106, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionTitle ?? 'Payment option 1:'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 6, width: 106, top: 3, height: 17 }}
+                        />
                         <Region
                             name="close_rule_region"
                             dynamicStyle="brightness_and_shadow_under"
@@ -147,28 +146,25 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                     </Region>
                 )}
                 {(visibleTextView ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextView ?? 'some text'}
                         name="text_view"
-                        layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTextView ?? 'some text'}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17 }}
+                    />
                 )}
                 {(visibleTextBoldView ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextBoldView ?? 'some bold text'}
                         name="text_bold_view"
-                        layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTextBoldView ?? 'some bold text'}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 17 }}
+                    />
                 )}
                 {(visibleTextHtml ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextHtml ?? 'Use this by typing'}
                         name="text_html"
-                        layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 17, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTextHtml ?? 'Use this by typing'}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 17, overflow: 'hidden' }}
+                    />
                 )}
                 {(visibleInputTemplate ?? false) && (
                     <Border

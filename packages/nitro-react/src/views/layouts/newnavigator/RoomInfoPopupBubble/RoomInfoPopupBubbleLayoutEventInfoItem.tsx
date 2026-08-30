@@ -1,4 +1,4 @@
-import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `event_info` of RoomInfoPopupBubbleLayout - pass real rows through its `items…` slot. */
@@ -24,28 +24,23 @@ export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, capti
                 layout={{ position: 'absolute', left: 6, width: 42, top: 9, height: 40 }}
             />
             {(visibleEventName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionEventName ?? 'EVENT NAME LOREM IPSUM DOLOR SIT AMET'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
                     name="event_name"
-                    layout={{ position: 'absolute', right: 2, width: 275, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEventName ?? 'EVENT NAME LOREM IPSUM DOLOR SIT AMET'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 2, width: 275, top: 3, height: 16 }}
+                />
             )}
             {(visibleEventDesc ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionEventDesc ?? 'EVENT DESCRIPTION LOREM IPSUM DOLOR SIT AMET'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 275 }}
                     name="event_desc"
-                    layout={{ position: 'absolute', right: 2, width: 275, bottom: 0, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEventDesc ?? 'EVENT DESCRIPTION LOREM IPSUM DOLOR SIT AMET'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 275 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 2, width: 275, bottom: 0, height: 36 }}
+                />
             )}
         </Border>
     );

@@ -49,33 +49,24 @@ export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlg
                 layout={{ position: 'absolute', left: 0, right: 0, top: 245, height: 80 }}
                 {...colourGridWidget}
             />
-            <Region
+            <ThemeText
+                text={captionCtlgText1 ?? t('lorem.title')}
+                textStyle="text-style-u-small"
                 name="ctlg_text_1"
-                layout={{ position: 'absolute', left: 10, width: 62, top: 380, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgText1 ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 10, width: 62, top: 380, height: 15 }}
+            />
+            <ThemeText
+                text={captionCtlgText2 ?? t('lorem.title')}
+                textStyle="text-style-u-small"
                 name="ctlg_text_2"
-                layout={{ position: 'absolute', left: 10, width: 62, top: 225, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgText2 ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 10, width: 62, top: 225, height: 15 }}
+            />
+            <ThemeText
+                text={captionCtlgText3 ?? t('lorem.title')}
+                textStyle="text-style-u-small"
                 name="ctlg_text_3"
-                layout={{ position: 'absolute', left: 10, width: 62, top: 326, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgText3 ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 10, width: 62, top: 326, height: 15 }}
+            />
             <Dropmenu
                 variant="3"
                 name="type_drop_menu"

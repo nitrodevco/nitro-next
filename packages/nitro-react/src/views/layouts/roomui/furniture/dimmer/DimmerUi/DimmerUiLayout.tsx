@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Button, Frame, ThemeImage, ThemeText } from '#base/theme';
 
 import { DimmerUiLayoutTabbedview, DimmerUiLayoutTabbedviewProps } from './DimmerUiLayoutTabbedview';
 
@@ -32,15 +32,13 @@ export const DimmerUiLayout = ({ captionOffText, layout, onApplyButton, onClose,
                 name="off_border"
                 layout={{ position: 'absolute', left: 6, right: 5, alignSelf: 'center', marginTop: 1.5, marginBottom: -1.5, height: 133, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionOffText ?? t('widget.dimmer.info.off')}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 219 }}
                     name="off_text"
-                    layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 219, bottom: 6, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOffText ?? t('widget.dimmer.info.off')}
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 219 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 219, bottom: 6, height: 34 }}
+                />
                 <ThemeImage
                     name="off_image"
                     src={srcOffImage}

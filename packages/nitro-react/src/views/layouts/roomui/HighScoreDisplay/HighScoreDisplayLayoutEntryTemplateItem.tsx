@@ -16,26 +16,20 @@ export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionU
             layout={{ width: 258, height: 20, flexShrink: 0, ...layout }}
         >
             {(visibleUsernames ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionUsernames ?? 'USERNAMES PH, A LIST'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="usernames"
-                    layout={{ position: 'absolute', right: 136, width: 120, top: 2, height: 16, maxWidth: 180, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionUsernames ?? 'USERNAMES PH, A LIST'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 136, width: 120, top: 2, height: 16, maxWidth: 180 }}
+                />
             )}
             {(visibleScore ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionScore ?? 'SCORE PH'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="score"
-                    layout={{ position: 'absolute', right: 13, width: 56, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionScore ?? 'SCORE PH'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 13, width: 56, top: 2, height: 16 }}
+                />
             )}
         </Region>
     );

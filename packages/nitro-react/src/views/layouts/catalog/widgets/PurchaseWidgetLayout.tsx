@@ -22,13 +22,12 @@ export const PurchaseWidgetLayout = ({ captionPurchaseLabel, layout, onBuyButton
                     blend={0.5}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 10, right: 9, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('catalog.purchase.select.info')}
-                            textStyle="text-style-u-headline-small"
-                            textOptions={{ fill: '#666666', align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('catalog.purchase.select.info')}
+                        textStyle="text-style-u-headline-small"
+                        textOptions={{ fill: '#666666', align: 'center' }}
+                        layout={{ position: 'absolute', left: 10, right: 9, top: 5, bottom: 6 }}
+                    />
                 </Border>
                 {(visibleDefaultButtons ?? false) && (
                     <Region

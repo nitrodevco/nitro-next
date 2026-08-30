@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `club_info` of MemenuDanceLayout - pass real rows through its `items…` slot. */
 export interface MemenuDanceLayoutClubInfoItemProps {
@@ -11,14 +11,12 @@ export const MemenuDanceLayoutClubInfoItem = ({ captionClubInfo, layout }: Memen
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionClubInfo ?? t('widget.memenu.dance.clubinfo')}
+            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 145 }}
             name="club_info"
-            layout={{ width: 145, height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionClubInfo ?? t('widget.memenu.dance.clubinfo')}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 145 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 145, height: 50, flexShrink: 0, ...layout }}
+        />
     );
 };

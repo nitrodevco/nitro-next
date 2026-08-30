@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `variable_name_key` of VariablesManagementOverviewLayout - pass real rows through its `items…` slot. */
 export interface VariablesManagementOverviewLayoutVariableNameKeyItemProps {
@@ -11,11 +11,10 @@ export const VariablesManagementOverviewLayoutVariableNameKeyItem = ({ captionVa
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionVariableNameKey ?? t('wiredmenu.variable_management.variable_name')}
             name="variable_name_key"
-            layout={{ width: 88, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionVariableNameKey ?? t('wiredmenu.variable_management.variable_name')}
-        </Region>
+            layout={{ width: 88, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

@@ -17,21 +17,18 @@ export const RocVipPromoLayout = ({ captionLink, layout }: RocVipPromoLayoutProp
                 tintColor="#d48612"
                 layout={{ position: 'absolute', left: 0, width: 272, top: 0, height: 52 }}
             >
-                <Region layout={{ position: 'absolute', left: 52, width: 206, top: 6, height: 25, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('navigator.createroom.vippromo.text')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 206 }}
-                    />
-                </Region>
-                <Region
+                <ThemeText
+                    text={t('navigator.createroom.vippromo.text')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 206 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 52, width: 206, top: 6, height: 25 }}
+                />
+                <ThemeText
+                    text={captionLink ?? t('navigator.createroom.vippromo.link')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="link"
-                    layout={{ position: 'absolute', left: 52, width: 206, bottom: 10, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionLink ?? t('navigator.createroom.vippromo.link')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 52, width: 206, bottom: 10, height: 12 }}
+                />
                 <Icon
                     variant="16"
                     layout={{ position: 'absolute', left: 9, width: 42, top: 6, height: 43 }}

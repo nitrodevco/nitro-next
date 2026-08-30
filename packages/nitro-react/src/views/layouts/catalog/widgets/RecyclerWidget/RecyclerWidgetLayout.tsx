@@ -38,12 +38,12 @@ export const RecyclerWidgetLayout = ({ layout, normal, onPatFrankBtn, srcEmoji1,
                             pointer="right"
                             layout={{ position: 'absolute', left: 107, width: 155, bottom: 29, height: 81 }}
                         >
-                            <Region layout={{ position: 'absolute', left: 4, width: 107, top: 4, minWidth: 107, maxWidth: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('recycler.broken')}
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 107 }}
-                                />
-                            </Region>
+                            <ThemeText
+                                text={t('recycler.broken')}
+                                textOptions={{ wordWrap: true, wordWrapWidth: 107 }}
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 4, width: 107, top: 4, minWidth: 107, maxWidth: 107 }}
+                            />
                             <ThemeImage
                                 name="emoji_1"
                                 src={srcEmoji1 ?? layoutImage('franks_emotions_sad.png')}

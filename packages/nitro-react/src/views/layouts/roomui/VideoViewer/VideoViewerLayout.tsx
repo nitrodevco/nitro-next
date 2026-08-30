@@ -32,15 +32,12 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, layout, onClose, right
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 7, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
+                    textStyle="text-style-il-regular-white"
                     name="no_videos_label"
-                    layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16 }}
+                />
                 {(visibleVideoWrapper ?? false) && (
                     <Region
                         name="video_wrapper"

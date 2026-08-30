@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `3030_grs_room_ads_details_phase_one_xml` (layout "grs_room_ads_details_phase_one", 346x17) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GrsRoomAdsDetailsPhaseOneLayoutProps {
@@ -23,12 +23,11 @@ export const GrsRoomAdsDetailsPhaseOneLayout = ({ captionAdname, layout, onDetai
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionAdname ?? 'PH Room Name: Neque porro quisquam est que'}
                     name="adname"
-                    layout={{ position: 'absolute', left: 6, width: 273, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionAdname ?? 'PH Room Name: Neque porro quisquam est que'}
-                </Region>
+                    layout={{ position: 'absolute', left: 6, width: 273, top: 2, height: 13 }}
+                />
                 <ThemeImage
                     name="doormode_password_small"
                     src={srcDoormodePasswordSmall}

@@ -24,15 +24,12 @@ export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter
             layout={{ width: 251, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             {(visibleParameter ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionParameter ?? t('widget.backgroundcolor.lightness')}
+                    textStyle="text-style-u-small"
                     name="parameter"
-                    layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionParameter ?? t('widget.backgroundcolor.lightness')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 15 }}
+                />
             )}
             {(visibleSliderBase ?? true) && (
                 <ThemeImage

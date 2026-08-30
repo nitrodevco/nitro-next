@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `description_text` of RentableBotViewLayout - pass real rows through its `items…` slot. */
 export interface RentableBotViewLayoutDescriptionTextItemProps {
@@ -8,14 +8,12 @@ export interface RentableBotViewLayoutDescriptionTextItemProps {
 
 export const RentableBotViewLayoutDescriptionTextItem = ({ captionDescriptionText, layout }: RentableBotViewLayoutDescriptionTextItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionDescriptionText ?? ''}
+            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
             name="description_text"
-            layout={{ width: 170, height: 31, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionDescriptionText ?? ''}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 170, height: 31, flexShrink: 0, ...layout }}
+        />
     );
 };

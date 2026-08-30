@@ -28,13 +28,12 @@ export const AvatareditorWardrobeBaseLayoutMainContainer = ({ itemsHeader, layou
                 {itemsHeader ?? (
                     <AvatareditorWardrobeBaseLayoutHcIconItem />
                 )}
-                <Region layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('avatareditor.wardrobe.title')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#83827e' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('avatareditor.wardrobe.title')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#83827e' }}
+                    layout={{ width: 158, height: 17, flexShrink: 0 }}
+                />
             </Region>
             <Border
                 variant="4"

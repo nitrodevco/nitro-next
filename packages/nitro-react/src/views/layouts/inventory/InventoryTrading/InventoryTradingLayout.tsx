@@ -88,15 +88,12 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                         src={srcArrowLeft ?? layoutImage('inventory_trading_trading_silver_arrow_left.png')}
                         layout={{ position: 'absolute', left: 292, width: 156, top: 27, height: 28 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionSilverFeeInfoText ?? t('inventory.trading.note_silver_fee')}
+                        textOptions={{ align: 'center' }}
                         name="silver_fee_info_text"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 16, minWidth: 478, maxWidth: 478, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionSilverFeeInfoText ?? t('inventory.trading.note_silver_fee')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 16, minWidth: 478, maxWidth: 478 }}
+                    />
                     <Region
                         name="requirement_container"
                         layout={{ position: 'absolute', left: 212, right: 205, top: 29, minHeight: 25, maxHeight: 25, flexDirection: 'row', gap: 5 }}
@@ -109,24 +106,18 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                             layout={{ width: 24, height: 24, flexShrink: 0 }}
                         />
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionYourSilver ?? '0'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="your_silver"
-                        layout={{ position: 'absolute', left: 97, width: 40, top: 29, height: 24, minWidth: 40, maxWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionYourSilver ?? '0'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 97, width: 40, top: 29, height: 24, minWidth: 40, maxWidth: 40 }}
+                    />
+                    <ThemeText
+                        text={captionOtherSilver ?? '0'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="other_silver"
-                        layout={{ position: 'absolute', left: 342, width: 40, top: 29, height: 24, minWidth: 40, maxWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionOtherSilver ?? '0'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 342, width: 40, top: 29, height: 24, minWidth: 40, maxWidth: 40 }}
+                    />
                 </Border>
                 <Border
                     variant="2"
@@ -134,12 +125,11 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                     tintColor="#fc9228"
                     layout={{ position: 'absolute', left: 5, width: 466, top: 306, height: 28 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionInfoTextHighlighted ?? ''}
                         name="info_text_highlighted"
-                        layout={{ position: 'absolute', left: 5, width: 4, top: 5, height: 4, maxWidth: 453, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionInfoTextHighlighted ?? ''}
-                    </Region>
+                        layout={{ position: 'absolute', left: 5, width: 4, top: 5, height: 4, maxWidth: 453 }}
+                    />
                 </Border>
                 <Region
                     name="button_container"

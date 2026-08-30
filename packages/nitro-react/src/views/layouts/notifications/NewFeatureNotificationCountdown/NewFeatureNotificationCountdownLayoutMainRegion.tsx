@@ -37,15 +37,13 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ captionDesc, c
                     src={srcStaticBitmap}
                     layout={{ position: 'absolute', left: 8, width: 20, top: 7, height: 20 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionDesc ?? 'some text here'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 154 }}
                     name="desc"
-                    layout={{ position: 'absolute', left: 14, width: 154, top: 7, minWidth: 154, maxWidth: 154, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDesc ?? 'some text here'}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 154 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 14, width: 154, top: 7, minWidth: 154, maxWidth: 154 }}
+                />
                 <WidgetSlot
                     widgetType="countdown"
                     name="countdown_widget"

@@ -24,20 +24,20 @@ export const RoomSettingsLayoutTabContainer3Item = ({ layout, normalRightsContai
                     name="guild_rights_container"
                     layout={{ position: 'absolute', left: 6, right: -62, top: 0, bottom: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 215, top: 3, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('navigator.flatctrls.guild.caption')}
-                            textStyle="text-style-u-headline-small"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 0, width: 309, top: 42, height: 240, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('navigator.flatctrls.guild.info')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 309 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('navigator.flatctrls.guild.caption')}
+                        textStyle="text-style-u-headline-small"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, width: 215, top: 3, height: 38 }}
+                    />
+                    <ThemeText
+                        text={t('navigator.flatctrls.guild.info')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 309 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, width: 309, top: 42, height: 240 }}
+                    />
                 </Region>
             )}
             {(visibleNormalRightsContainer ?? true) && (

@@ -60,15 +60,12 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                             layout={{ position: 'absolute', right: 3, width: 16, bottom: 2, height: 13 }}
                         >
                             {(visibleQuantityAmount ?? true) && (
-                                <Region
+                                <ThemeText
+                                    text={captionQuantityAmount ?? '2'}
+                                    textOptions={{ fill: '#222222' }}
                                     name="quantity_amount"
-                                    layout={{ position: 'absolute', left: 3, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionQuantityAmount ?? '2'}
-                                        textOptions={{ fill: '#222222' }}
-                                    />
-                                </Region>
+                                    layout={{ position: 'absolute', left: 3, top: -1, height: 15 }}
+                                />
                             )}
                         </Border>
                     )}

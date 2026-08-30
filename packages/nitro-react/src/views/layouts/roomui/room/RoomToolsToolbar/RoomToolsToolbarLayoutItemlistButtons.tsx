@@ -43,15 +43,12 @@ export const RoomToolsToolbarLayoutItemlistButtons = ({ captionZoomText, itemsIt
                 </>
             )}
             <Region layout={{ width: 130, height: 30, flexShrink: 0 }}>
-                <Region
+                <ThemeText
+                    text={captionZoomText ?? t('room.zoom.text')}
+                    textOptions={{ fill: '#cccccc' }}
                     name="zoom_text"
-                    layout={{ position: 'absolute', left: 6, width: 90, top: 4, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionZoomText ?? t('room.zoom.text')}
-                        textOptions={{ fill: '#cccccc' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 6, width: 90, top: 4, height: 14, maxWidth: 90 }}
+                />
                 <Region
                     backgroundColor="#707070"
                     layout={{ position: 'absolute', left: 3, width: 125, top: 26, height: 1 }}

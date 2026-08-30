@@ -28,18 +28,17 @@ export const PlaylisteditorPlaylistSubwindowAddSongsLayout = ({ layout, srcAddSo
                     tint={tintAddSongsIconImage}
                     layout={{ position: 'absolute', left: 8, width: 46, top: 3, height: 46 }}
                 />
-                <Region layout={{ position: 'absolute', left: 63, width: 270, top: 1, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('playlist.editor.add.songs.to.your.playlist')}
-                        textStyle="text-style-bold"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', right: -2, width: 200, bottom: 3, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('playlist.editor.text.click.song.to.choose.click.again.to.move')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('playlist.editor.add.songs.to.your.playlist')}
+                    textStyle="text-style-bold"
+                    layout={{ position: 'absolute', left: 63, width: 270, top: 1, height: 19 }}
+                />
+                <ThemeText
+                    text={t('playlist.editor.text.click.song.to.choose.click.again.to.move')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: -2, width: 200, bottom: 3, height: 32 }}
+                />
             </Region>
         </Region>
     );

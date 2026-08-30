@@ -69,25 +69,19 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, lay
                     )}
                 </Frame>
                 <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 53, minWidth: 100 }}>
-                    <Region
+                    <ThemeText
+                        text={captionFrameSubtitle ?? t('talent.track.helper.frame.subtitle')}
+                        textStyle="text-style-il-frame-modal-title"
+                        textOptions={{ fill: '#cccccc' }}
                         name="frame_subtitle"
-                        layout={{ position: 'absolute', left: 18, width: 179, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionFrameSubtitle ?? t('talent.track.helper.frame.subtitle')}
-                            textStyle="text-style-il-frame-modal-title"
-                            textOptions={{ fill: '#cccccc' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 18, width: 179, top: 0, height: 16 }}
+                    />
+                    <ThemeText
+                        text={captionFrameTitle ?? t('talent.track.helper.frame.title')}
+                        textStyle="text-style-il-frame-modal-title"
                         name="frame_title"
-                        layout={{ position: 'absolute', left: 18, width: 352, top: 16, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionFrameTitle ?? t('talent.track.helper.frame.title')}
-                            textStyle="text-style-il-frame-modal-title"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 18, width: 352, top: 16, height: 30 }}
+                    />
                 </Region>
             </Region>
         </Region>

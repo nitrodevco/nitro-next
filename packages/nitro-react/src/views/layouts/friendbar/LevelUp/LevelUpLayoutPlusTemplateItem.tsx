@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `plus_template` of LevelUpLayout - pass real rows through its `items…` slot. */
 export interface LevelUpLayoutPlusTemplateItemProps {
@@ -8,15 +8,12 @@ export interface LevelUpLayoutPlusTemplateItemProps {
 
 export const LevelUpLayoutPlusTemplateItem = ({ captionPlusTemplate, layout }: LevelUpLayoutPlusTemplateItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionPlusTemplate ?? ' '}
+            textStyle="text-style-il-heading-1"
+            textOptions={{ fill: '#222222' }}
             name="plus_template"
-            layout={{ width: 22, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionPlusTemplate ?? ' '}
-                textStyle="text-style-il-heading-1"
-                textOptions={{ fill: '#222222' }}
-            />
-        </Region>
+            layout={{ width: 22, height: 19, flexShrink: 0, ...layout }}
+        />
     );
 };

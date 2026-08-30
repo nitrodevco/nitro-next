@@ -32,16 +32,14 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
                     onPointerTap={onWallitemsCheckbox}
                     layout={{ position: 'absolute', left: 1, width: 18, top: 0, height: 18 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionWallitemsTxt ?? t('widget.areahide.options.wallitems')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
                     name="wallitems_txt"
-                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionWallitemsTxt ?? t('widget.areahide.options.wallitems')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15 }}
+                />
             </Region>
             <Region
                 name="invert_option"
@@ -53,26 +51,22 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
                     onPointerTap={onInvertCheckbox}
                     layout={{ position: 'absolute', left: 1, width: 18, top: 0, height: 18 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionInvertTxt ?? t('widget.areahide.options.invert')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
                     name="invert_txt"
-                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInvertTxt ?? t('widget.areahide.options.invert')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15 }}
+                />
+                <ThemeText
+                    text={captionInvertInfo ?? t('widget.areahide.options.invert.info')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#999999', wordWrap: true, wordWrapWidth: 242 }}
                     name="invert_info"
-                    layout={{ position: 'absolute', right: 0, width: 242, bottom: -3, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInvertInfo ?? t('widget.areahide.options.invert.info')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#999999', wordWrap: true, wordWrapWidth: 242 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 0, width: 242, bottom: -3, height: 30 }}
+                />
             </Region>
             <Region
                 name="invisibility_option"
@@ -84,26 +78,22 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
                     onPointerTap={onInvisiblityCheckbox}
                     layout={{ position: 'absolute', left: 1, width: 18, top: 0, height: 18 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionInvisibilityTxt ?? t('widget.areahide.options.invisibility')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
                     name="invisibility_txt"
-                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInvisibilityTxt ?? t('widget.areahide.options.invisibility')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15 }}
+                />
+                <ThemeText
+                    text={captionInvisibilityInfo ?? t('widget.areahide.options.invisibility.info')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#999999', wordWrap: true, wordWrapWidth: 242 }}
                     name="invisibility_info"
-                    layout={{ position: 'absolute', right: 0, width: 242, bottom: -1, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInvisibilityInfo ?? t('widget.areahide.options.invisibility.info')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#999999', wordWrap: true, wordWrapWidth: 242 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 0, width: 242, bottom: -1, height: 40 }}
+                />
             </Region>
         </Region>
     );

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ThemeText } from '#base/theme';
 
 import { HabbiconHubLayoutTrayGroupGrid, HabbiconHubLayoutTrayGroupGridProps } from './HabbiconHubLayoutTrayGroupGrid';
 
@@ -23,16 +23,13 @@ export const HabbiconHubLayoutTrayGroupTemplateItem = ({ captionTrayGroupTitle, 
             layout={{ width: 506, height: 89, flexShrink: 0, ...layout }}
         >
             {(visibleTrayGroupTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTrayGroupTitle ?? t('habbicon_set_name')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#2b2b2b' }}
                     name="tray_group_title"
-                    layout={{ position: 'absolute', left: 10, width: 115, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTrayGroupTitle ?? t('habbicon_set_name')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#2b2b2b' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 10, width: 115, top: 7, height: 17 }}
+                />
             )}
             {(visibleTrayGroupGrid ?? true) && (
                 <HabbiconHubLayoutTrayGroupGrid {...trayGroupGrid} />

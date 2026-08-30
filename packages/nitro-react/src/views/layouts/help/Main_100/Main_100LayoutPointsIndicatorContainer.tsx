@@ -56,15 +56,12 @@ export const Main_100LayoutPointsIndicatorContainer = ({ captionPointsTxt, layou
                         strokeThickness={3}
                         layout={{ position: 'absolute', left: 40, width: 1, bottom: 35, height: 9 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionPointsTxt ?? '100'}
+                        textOptions={{ align: 'center' }}
                         name="points_txt"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 136, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionPointsTxt ?? '100'}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 136, height: 17 }}
+                    />
                 </Region>
             </Region>
         </Region>

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Named region `indicator_wrapper` of RecyclerWidgetLayout - configured through the parent's `indicatorWrapper` prop. */
@@ -68,9 +68,10 @@ export const RecyclerWidgetLayoutIndicatorWrapper = ({ layout, onAbortRegion, sr
                         cursor="pointer"
                         layout={{ position: 'absolute', width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            {t('catalog.recycler.button.abort')}
-                        </Region>
+                        <ThemeText
+                            text={t('catalog.recycler.button.abort')}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15 }}
+                        />
                     </Region>
                 )}
             </Region>

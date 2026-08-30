@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Row template `subitem_template` of CatalogVolterLayout - pass real rows through its `items…` slot. */
 export interface CatalogVolterLayoutSubitemTemplateItemProps {
@@ -40,12 +40,11 @@ export const CatalogVolterLayoutSubitemTemplateItem = ({ background, captionItem
                 />
             )}
             {(visibleItemTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemTitle ?? ''}
                     name="item_title"
-                    layout={{ position: 'absolute', left: 32, right: 122, top: 4, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionItemTitle ?? ''}
-                </Region>
+                    layout={{ position: 'absolute', left: 32, right: 122, top: 4, height: 4 }}
+                />
             )}
         </Region>
     );

@@ -52,16 +52,14 @@ export const PackagecardNewLayoutWarningItem = ({ bottomSpacer, captionWarningTe
                                 layout={{ width: 300, height: 50, flexShrink: 0 }}
                             >
                                 {(visibleWarningText ?? true) && (
-                                    <Region
+                                    <ThemeText
+                                        text={captionWarningText ?? t('gift.trusted.banner.text')}
+                                        textStyle="text-style-id-regular"
+                                        textOptions={{ wordWrap: true, wordWrapWidth: 235 }}
                                         name="warning_text"
-                                        layout={{ position: 'absolute', left: 65, width: 235, alignSelf: 'center', height: 30, minWidth: 235, maxWidth: 235, minHeight: 30, maxHeight: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                    >
-                                        <ThemeText
-                                            text={captionWarningText ?? t('gift.trusted.banner.text')}
-                                            textStyle="text-style-id-regular"
-                                            textOptions={{ wordWrap: true, wordWrapWidth: 235 }}
-                                        />
-                                    </Region>
+                                        verticalAlign="top"
+                                        layout={{ position: 'absolute', left: 65, width: 235, alignSelf: 'center', height: 30, minWidth: 235, maxWidth: 235, minHeight: 30, maxHeight: 80 }}
+                                    />
                                 )}
                                 {(visibleWarningIconContainer ?? true) && (
                                     <Region

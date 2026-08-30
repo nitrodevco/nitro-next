@@ -38,12 +38,11 @@ export const CollectMinimizedLayout = ({ layout, onCollectMinimized, srcClubIcon
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />
                 </Border>
-                <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('phone.number.collect.title')}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('phone.number.collect.title')}
+                    textStyle="text-style-il-regular-white"
+                    layout={{ position: 'absolute', left: 10, width: 154, top: 6, bottom: 7 }}
+                />
             </Region>
         </Region>
     );

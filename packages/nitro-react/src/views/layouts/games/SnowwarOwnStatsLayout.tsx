@@ -45,24 +45,18 @@ export const SnowwarOwnStatsLayout = ({ captionPersonalScore, captionPersonalSco
                     tint={tintUserImage}
                     layout={{ position: 'absolute', left: 0, width: 73, top: 0, height: 73 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionPersonalScoreStroke ?? '99'}
+                    textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                     name="personal_score_stroke"
-                    layout={{ position: 'absolute', left: 101, width: 55, top: 20, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionPersonalScoreStroke ?? '99'}
-                        textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 101, width: 55, top: 20, height: 30 }}
+                />
+                <ThemeText
+                    text={captionPersonalScore ?? '99'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="personal_score"
-                    layout={{ position: 'absolute', left: 101, width: 55, top: 20, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionPersonalScore ?? '99'}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 101, width: 55, top: 20, height: 30 }}
+                />
             </Region>
         </Region>
     );

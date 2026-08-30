@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, Region, ThemeText } from '#base/theme';
 
 import { ChestGenericLayoutCapacityInputBorderItem } from './ChestGenericLayoutCapacityInputBorderItem';
 import { ChestGenericLayoutMaxCapacityTxtItem } from './ChestGenericLayoutMaxCapacityTxtItem';
@@ -44,9 +44,10 @@ export const ChestGenericLayoutCapacityOptionsItem = ({ captionItemCountText, it
                     {itemsCapacityOverrideContainer ?? (
                         <ChestGenericLayoutCapacityInputBorderItem />
                     )}
-                    <Region layout={{ width: 85, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        {t('wiredchests.capacity')}
-                    </Region>
+                    <ThemeText
+                        text={t('wiredchests.capacity')}
+                        layout={{ width: 85, height: 17, flexShrink: 0 }}
+                    />
                 </Region>
             )}
             {(visibleUpgradeCapacityContainer ?? true) && (

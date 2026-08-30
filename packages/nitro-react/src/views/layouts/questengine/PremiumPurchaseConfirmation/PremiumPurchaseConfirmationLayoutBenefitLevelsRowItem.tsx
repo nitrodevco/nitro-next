@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region, ThemeImage } from '#base/theme';
+import { Border, BoxLayout, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `benefit_levels_row` of PremiumPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
@@ -24,12 +24,11 @@ export const PremiumPurchaseConfirmationLayoutBenefitLevelsRowItem = ({ captionB
                 layout={{ position: 'absolute', left: 7, width: 17, top: 5, height: 15 }}
             />
             {(visibleBenefitLevelsTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionBenefitLevelsTxt ?? t('reward_track.premium.confirm.benefit.levels')}
                     name="benefit_levels_txt"
-                    layout={{ position: 'absolute', left: 30, width: 181, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionBenefitLevelsTxt ?? t('reward_track.premium.confirm.benefit.levels')}
-                </Region>
+                    layout={{ position: 'absolute', left: 30, width: 181, top: 4, height: 17 }}
+                />
             )}
         </Border>
     );

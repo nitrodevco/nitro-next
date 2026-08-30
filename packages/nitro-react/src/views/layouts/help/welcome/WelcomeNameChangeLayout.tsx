@@ -21,18 +21,17 @@ export const WelcomeNameChangeLayout = ({ layout, onChangeNameButton, onClose, o
             layout={{ width: 315, height: 225, minWidth: 50, minHeight: 50, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -6 }}>
-                <Region layout={{ position: 'absolute', left: 6, right: 7, top: 21, height: 69, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('tutorial.name_change.info.main')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 290 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 8, right: 6, top: 96, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('tutorial.name_change.current')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('tutorial.name_change.info.main')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 290 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 6, right: 7, top: 21, height: 69 }}
+                />
+                <ThemeText
+                    text={t('tutorial.name_change.current')}
+                    textOptions={{ align: 'center' }}
+                    layout={{ position: 'absolute', left: 8, right: 6, top: 96, height: 16 }}
+                />
                 <ContainerButton
                     variant="3"
                     name="change_name_button"

@@ -99,16 +99,13 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, itemsN
                         />
                     )}
                     {(visibleNodeName ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionNodeName ?? 'name'}
+                            textStyle="text-style-regular"
+                            textOptions={{ fill: '#555555' }}
                             name="node_name"
-                            layout={{ position: 'absolute', left: 7, width: 29, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNodeName ?? 'name'}
-                                textStyle="text-style-regular"
-                                textOptions={{ fill: '#555555' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 7, width: 29, top: 3, height: 13 }}
+                        />
                     )}
                 </Region>
             )}

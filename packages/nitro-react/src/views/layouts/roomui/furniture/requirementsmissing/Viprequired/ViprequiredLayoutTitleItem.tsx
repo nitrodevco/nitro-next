@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `title` of ViprequiredLayout - pass real rows through its `items…` slot. */
 export interface ViprequiredLayoutTitleItemProps {
@@ -11,15 +11,12 @@ export const ViprequiredLayoutTitleItem = ({ captionTitle, layout }: Viprequired
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionTitle ?? t('viprequired.title')}
+            textStyle="text-style-il-heading-1"
+            textOptions={{ fill: '#c30000' }}
             name="title"
-            layout={{ width: 114, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionTitle ?? t('viprequired.title')}
-                textStyle="text-style-il-heading-1"
-                textOptions={{ fill: '#c30000' }}
-            />
-        </Region>
+            layout={{ width: 114, height: 19, flexShrink: 0, ...layout }}
+        />
     );
 };

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, ContainerButton, Icon, Region, WidgetSlot } from '#base/theme';
+import { BoxLayout, ContainerButton, Icon, Region, ThemeText, WidgetSlot } from '#base/theme';
 
 /** Row template `enterdirection_container` of FloorPlanEditorBcLayout - pass real rows through its `items…` slot. */
 export interface FloorPlanEditorBcLayoutEnterdirectionContainerItemProps {
@@ -60,9 +60,10 @@ export const FloorPlanEditorBcLayoutEnterdirectionContainerItem = ({ enterdirect
                     {enterdirectionGhostAvatar}
                 </WidgetSlot>
             )}
-            <Region layout={{ position: 'absolute', left: 7, width: 120, top: 4, height: 17, maxWidth: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                {t('floor.plan.editor.enter.direction')}
-            </Region>
+            <ThemeText
+                text={t('floor.plan.editor.enter.direction')}
+                layout={{ position: 'absolute', left: 7, width: 120, top: 4, height: 17, maxWidth: 120 }}
+            />
         </Region>
     );
 };

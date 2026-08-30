@@ -9,15 +9,12 @@ export interface DropmenuItem3LayoutProps {
 export const DropmenuItem3Layout = ({ captionBTNTEXT, layout }: DropmenuItem3LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 8, height: 12, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionBTNTEXT ?? ''}
+                textStyle="text-style-u-regular"
                 name="_BTN_TEXT"
-                layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBTNTEXT ?? ''}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 12 }}
+            />
         </Region>
     );
 };

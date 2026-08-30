@@ -30,16 +30,14 @@ export const MannequinNoClubLayout = ({ captionDescription, layout, onGetClubBut
                     tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionDescription ?? t('mannequin.widget.clubnotification')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 241 }}
                     name="description"
-                    layout={{ position: 'absolute', left: 126, width: 241, top: 52, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescription ?? t('mannequin.widget.clubnotification')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 241 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 126, width: 241, top: 52, height: 61 }}
+                />
                 <Icon
                     variant="0"
                     name="club_icon"

@@ -30,15 +30,13 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, capti
                 variant="4"
                 layout={{ position: 'absolute', left: 8, width: 603, top: 7, height: 38 }}
             >
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? 'This is a tool to manage all users that hold a permanent variable.For variables that are shared with other rooms, there is a possible 20 second synchronization delay.'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 600, align: 'center' }}
                     name="info_text"
-                    layout={{ position: 'absolute', left: 1, right: 2, top: 3, bottom: 3, minWidth: 600, maxWidth: 600, minHeight: 32, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? 'This is a tool to manage all users that hold a permanent variable.For variables that are shared with other rooms, there is a possible 20 second synchronization delay.'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 600, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 1, right: 2, top: 3, bottom: 3, minWidth: 600, maxWidth: 600, minHeight: 32, maxHeight: 32 }}
+                />
             </Border>
             <Region
                 name="key_value_pairs"
@@ -52,12 +50,11 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, capti
                 name="user_type_cont"
                 layout={{ position: 'absolute', left: 15, width: 217, top: 80, height: 25 }}
             >
-                <Region
+                <ThemeText
+                    text={captionUserTypeKey ?? t('wiredmenu.variable_management.usertype')}
                     name="user_type_key"
-                    layout={{ position: 'absolute', left: 0, width: 63, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionUserTypeKey ?? t('wiredmenu.variable_management.usertype')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 63, top: 3, height: 17 }}
+                />
                 <Dropmenu
                     variant="3"
                     name="user_type_menu"
@@ -69,12 +66,11 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, capti
                 name="sort_type_cont"
                 layout={{ position: 'absolute', left: 247, width: 217, top: 80, height: 25 }}
             >
-                <Region
+                <ThemeText
+                    text={captionSortTypeKey ?? t('wiredmenu.variable_management.sort_by')}
                     name="sort_type_key"
-                    layout={{ position: 'absolute', left: 0, width: 47, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionSortTypeKey ?? t('wiredmenu.variable_management.sort_by')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 47, top: 3, height: 17 }}
+                />
                 <Dropmenu
                     variant="3"
                     name="sort_type_menu"

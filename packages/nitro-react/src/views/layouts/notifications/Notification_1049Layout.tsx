@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ContainerButton, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Frame, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1049_notification_xml` (layout "notification", 315x191) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Notification_1049LayoutProps {
@@ -36,25 +36,20 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
                     name="white_border"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTextTitle ?? 'widget.notification.title'}
+                    textStyle="text-style-bold"
+                    textOptions={{ fill: '#666666' }}
                     name="text_title"
-                    layout={{ position: 'absolute', left: 10, width: 284, top: 12, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextTitle ?? 'widget.notification.title'}
-                        textStyle="text-style-bold"
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 10, width: 284, top: 12, height: 21 }}
+                />
+                <ThemeText
+                    text={captionTextDescription ?? 'widget.notification.description'}
+                    textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 282 }}
                     name="text_description"
-                    layout={{ position: 'absolute', left: 10, right: 11, top: 35, bottom: 66, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextDescription ?? 'widget.notification.description'}
-                        textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 282 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, right: 11, top: 35, bottom: 66 }}
+                />
                 <ContainerButton
                     variant="1"
                     name="button_ok"
@@ -71,13 +66,12 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
                         tintColor="#309d00"
                         layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 17 }}
                     />
-                    <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 25, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('ok')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('ok')}
+                        textStyle="text-style-bold"
+                        textOptions={{ fill: '#ffffff' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 25, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 24 }}
+                    />
                 </ContainerButton>
                 <ThemeImage
                     name="deco_img"

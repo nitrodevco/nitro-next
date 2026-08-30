@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Row template `username_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutUsernamePairItemProps {
@@ -14,12 +14,14 @@ export const TransactionDetailsLayoutUsernamePairItem = ({ layout }: Transaction
             name="username_pair"
             layout={{ width: 74, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region layout={{ width: 64, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                {t('wiredchests.log_details.username')}
-            </Region>
-            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                -
-            </Region>
+            <ThemeText
+                text={t('wiredchests.log_details.username')}
+                layout={{ width: 64, height: 17, flexShrink: 0 }}
+            />
+            <ThemeText
+                text="-"
+                layout={{ width: 8, height: 17, flexShrink: 0 }}
+            />
         </Region>
     );
 };

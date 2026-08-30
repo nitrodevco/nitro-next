@@ -23,15 +23,12 @@ export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, caption
                 name="send_warning_view"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
             >
-                <Region
+                <ThemeText
+                    text={captionUserTxt ?? t('moderation.warning.user')}
+                    textOptions={{ fill: '#333333' }}
                     name="user_txt"
-                    layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionUserTxt ?? t('moderation.warning.user')}
-                        textOptions={{ fill: '#333333' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16 }}
+                />
                 <Border
                     variant="105"
                     layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
@@ -42,15 +39,12 @@ export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, caption
                         layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
                     />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionTextTxt ?? t('moderation.warning.text')}
+                    textOptions={{ fill: '#333333' }}
                     name="text_txt"
-                    layout={{ position: 'absolute', left: 9, width: 72, top: 59, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextTxt ?? t('moderation.warning.text')}
-                        textOptions={{ fill: '#333333' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 9, width: 72, top: 59, height: 16 }}
+                />
                 <Border
                     variant="105"
                     layout={{ position: 'absolute', left: 9, right: 12, top: 81, height: 44 }}

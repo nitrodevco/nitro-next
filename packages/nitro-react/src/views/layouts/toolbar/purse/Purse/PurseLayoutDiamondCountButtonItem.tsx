@@ -23,16 +23,13 @@ export const PurseLayoutDiamondCountButtonItem = ({ captionDiamondCount, layout,
             layout={{ width: 52, height: 19, flexShrink: 0, ...layout }}
         >
             {(visibleDiamondCount ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionDiamondCount ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#38caeb' }}
                     name="diamond_count"
-                    layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDiamondCount ?? '0'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#38caeb' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17 }}
+                />
             )}
             <ThemeImage
                 src={layoutImage('pursearea_diamond_icon.png')}

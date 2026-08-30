@@ -45,25 +45,20 @@ export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader,
                 name="tab_container_5"
                 layout={{ position: 'absolute', left: 0, right: -4, top: 0, height: 367, ...layout }}
             >
-                <Region
+                <ThemeText
+                    text={captionModerationHeader ?? t('navigator.roomsettings.moderation.header')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 317 }}
                     name="moderation_header"
-                    layout={{ position: 'absolute', left: 6, width: 317, top: 5, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionModerationHeader ?? t('navigator.roomsettings.moderation.header')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 317 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 6, width: 317, top: 5, height: 37 }}
+                />
+                <ThemeText
+                    text={captionModerationMuteHeader ?? t('navigator.roomsettings.moderation.mute.header')}
+                    textStyle="text-style-u-bold"
                     name="moderation_mute_header"
-                    layout={{ position: 'absolute', left: 7, width: 276, top: 42, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionModerationMuteHeader ?? t('navigator.roomsettings.moderation.mute.header')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, width: 276, top: 42, height: 24 }}
+                />
                 {(visibleModerationMuteSelector ?? false) && (
                     <Region
                         name="moderation_mute_selector"
@@ -81,79 +76,61 @@ export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader,
                             onPointerTap={onModerationMuteRights}
                             layout={{ position: 'absolute', left: 110, width: 147, top: 0, height: 20 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionModerationMuteNoneLabel ?? t('navigator.roomsettings.moderation.none')}
+                            textStyle="text-style-u-regular"
                             name="moderation_mute_none_label"
-                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionModerationMuteNoneLabel ?? t('navigator.roomsettings.moderation.none')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
-                        <Region
+                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20 }}
+                        />
+                        <ThemeText
+                            text={captionModerationMuteRightsLabel ?? t('navigator.roomsettings.moderation.rights')}
+                            textStyle="text-style-u-regular"
                             name="moderation_mute_rights_label"
-                            layout={{ position: 'absolute', left: 125, width: 162, top: -2, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionModerationMuteRightsLabel ?? t('navigator.roomsettings.moderation.rights')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 125, width: 162, top: -2, height: 22 }}
+                        />
                     </Region>
                 )}
-                <Region
+                <ThemeText
+                    text={captionModerationKickHeader ?? t('navigator.roomsettings.moderation.kick.header')}
+                    textStyle="text-style-u-bold"
                     name="moderation_kick_header"
-                    layout={{ position: 'absolute', left: 7, width: 273, top: 92, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionModerationKickHeader ?? t('navigator.roomsettings.moderation.kick.header')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, width: 273, top: 92, height: 20 }}
+                />
                 {(visibleModerationKickSelector ?? false) && (
                     <Region
                         name="moderation_kick_selector"
                         layout={{ position: 'absolute', left: 10, width: 325, top: 112, height: 26 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionModerationKickAllLabel ?? t('navigator.roomsettings.moderation.all')}
+                            textStyle="text-style-u-regular"
                             name="moderation_kick_all_label"
-                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionModerationKickAllLabel ?? t('navigator.roomsettings.moderation.all')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20 }}
+                        />
                         <RadioButton
                             variant="0"
                             name="moderation_kick_all"
                             onPointerTap={onModerationKickAll}
                             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 20 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionModerationKickRightsHeader ?? t('navigator.roomsettings.moderation.rights')}
+                            textStyle="text-style-u-regular"
                             name="moderation_kick_rights_header"
-                            layout={{ position: 'absolute', left: 126, width: 123, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionModerationKickRightsHeader ?? t('navigator.roomsettings.moderation.rights')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 126, width: 123, top: -2, height: 20 }}
+                        />
                         <RadioButton
                             variant="0"
                             name="moderation_kick_none"
                             onPointerTap={onModerationKickNone}
                             layout={{ position: 'absolute', left: 240, width: 104, top: 0, height: 19 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionModerationKickNoneLabel ?? t('navigator.roomsettings.moderation.none')}
+                            textStyle="text-style-u-regular"
                             name="moderation_kick_none_label"
-                            layout={{ position: 'absolute', left: 255, width: 66, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionModerationKickNoneLabel ?? t('navigator.roomsettings.moderation.none')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 255, width: 66, top: -2, height: 20 }}
+                        />
                         <RadioButton
                             variant="0"
                             name="moderation_kick_rights"
@@ -162,29 +139,23 @@ export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader,
                         />
                     </Region>
                 )}
-                <Region
+                <ThemeText
+                    text={captionModerationBanHeader ?? t('navigator.roomsettings.moderation.ban.header')}
+                    textStyle="text-style-u-bold"
                     name="moderation_ban_header"
-                    layout={{ position: 'absolute', left: 7, width: 292, top: 142, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionModerationBanHeader ?? t('navigator.roomsettings.moderation.ban.header')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, width: 292, top: 142, height: 21 }}
+                />
                 {(visibleModerationBanSelector ?? false) && (
                     <Region
                         name="moderation_ban_selector"
                         layout={{ position: 'absolute', left: 10, width: 293, top: 161, height: 23 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionModerationBanNoneLabel ?? t('navigator.roomsettings.moderation.none')}
+                            textStyle="text-style-u-regular"
                             name="moderation_ban_none_label"
-                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionModerationBanNoneLabel ?? t('navigator.roomsettings.moderation.none')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20 }}
+                        />
                         <RadioButton
                             variant="0"
                             name="moderation_ban_none"
@@ -197,15 +168,12 @@ export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader,
                             onPointerTap={onModerationBanRights}
                             layout={{ position: 'absolute', left: 110, width: 177, top: 0, height: 20 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionModerationBanRights ?? t('navigator.roomsettings.moderation.rights')}
+                            textStyle="text-style-u-regular"
                             name="moderation_ban_rights"
-                            layout={{ position: 'absolute', left: 125, width: 197, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionModerationBanRights ?? t('navigator.roomsettings.moderation.rights')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 125, width: 197, top: -2, height: 20 }}
+                        />
                     </Region>
                 )}
                 <Border
@@ -226,15 +194,12 @@ export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader,
                     </ScrollArea>
                     {/* <scrollbar_vertical> for moderation_banned_users - rendered by that list's ScrollArea */}
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionModerationBannedUsersLabel ?? t('navigator.roomsettings.moderation.banned.users')}
+                    textStyle="text-style-u-regular"
                     name="moderation_banned_users_label"
-                    layout={{ position: 'absolute', left: 190, width: 125, top: 236, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionModerationBannedUsersLabel ?? t('navigator.roomsettings.moderation.banned.users')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 190, width: 125, top: 236, height: 23 }}
+                />
                 <Button
                     variant="3"
                     name="moderation_unban_btn"

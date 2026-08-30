@@ -39,26 +39,20 @@ export const PetViewLayoutImageContainerItem = ({ captionLevelText, captionStatu
                     layout={{ position: 'absolute', left: 76, width: 95, top: 0, height: 78, justifyContent: 'center' }}
                 >
                     {(visibleLevelText ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionLevelText ?? t('pet.level')}
+                            textOptions={{ fill: '#ffffff' }}
                             name="level_text"
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 46, top: 10, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionLevelText ?? t('pet.level')}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 46, top: 10, height: 13 }}
+                        />
                     )}
                     {(visibleStatusSkillText ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionStatusSkillText ?? t('infostand.pet.text.skill')}
+                            textOptions={{ fill: '#a4a4a4' }}
                             name="status_skill_text"
-                            layout={{ position: 'absolute', marginLeft: 11, marginRight: -11, width: 117, top: 31, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStatusSkillText ?? t('infostand.pet.text.skill')}
-                                textOptions={{ fill: '#a4a4a4' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', marginLeft: 11, marginRight: -11, width: 117, top: 31, height: 13 }}
+                        />
                     )}
                     {(visibleSkillLevelIndicator ?? true) && (
                         <ThemeImage

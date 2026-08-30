@@ -15,33 +15,25 @@ export const ListTesterItemLayout = ({ captionChatterTxt, captionMsgTxt, caption
                 name="chatline"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionTimeTxt ?? '18:30'}
+                    textOptions={{ fill: '#000000' }}
                     name="time_txt"
-                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTimeTxt ?? '18:30'}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 13 }}
+                />
+                <ThemeText
+                    text={captionChatterTxt ?? 'kurmasana'}
+                    textOptions={{ fill: '#000000' }}
                     name="chatter_txt"
-                    layout={{ position: 'absolute', left: 30, width: 110, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionChatterTxt ?? 'kurmasana'}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 30, width: 110, top: 0, height: 13 }}
+                />
+                <ThemeText
+                    text={captionMsgTxt ?? 'Sharing your password or personal details online is dangerous. The moderators might monitor these conversations for your safety.'}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 230 }}
                     name="msg_txt"
-                    layout={{ position: 'absolute', left: 140, width: 230, top: 0, height: 63, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMsgTxt ?? 'Sharing your password or personal details online is dangerous. The moderators might monitor these conversations for your safety.'}
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 230 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 140, width: 230, top: 0, height: 63 }}
+                />
             </Region>
         </Region>
     );

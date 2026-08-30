@@ -26,15 +26,12 @@ export const PetViewLayoutStatusExperienceContainerItem = ({ captionStatusExperi
             layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             {(visibleStatusExperienceText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionStatusExperienceText ?? t('infostand.pet.text.experience')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="status_experience_text"
-                    layout={{ position: 'absolute', width: 155, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusExperienceText ?? t('infostand.pet.text.experience')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 155, top: 1, height: 13 }}
+                />
             )}
             {(visibleStatusExperienceBitmap ?? true) && (
                 <ThemeImage
@@ -45,15 +42,12 @@ export const PetViewLayoutStatusExperienceContainerItem = ({ captionStatusExperi
                 />
             )}
             {(visibleStatusExperienceValueText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionStatusExperienceValueText ?? ''}
+                    textOptions={{ fill: '#ffffff' }}
                     name="status_experience_value_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusExperienceValueText ?? ''}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4 }}
+                />
             )}
             {(visibleStatusExperienceIcon ?? true) && (
                 <ThemeImage

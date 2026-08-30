@@ -40,16 +40,13 @@ export const IroTagLayout = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR
                     tint={tintBgR}
                     layout={{ position: 'absolute', right: 1, width: 5, top: 0, height: 14 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTxt ?? '0'}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#0e3139' }}
                     name="txt"
-                    layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTxt ?? '0'}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#0e3139' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 15 }}
+                />
             </Region>
         </Region>
     );

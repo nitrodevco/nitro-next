@@ -35,15 +35,13 @@ export const UseProductControllerPurchasableClothingLayout = ({ avatarPreview, c
                 >
                     {avatarPreview}
                 </WidgetSlot>
-                <Region
+                <ThemeText
+                    text={captionDescription ?? t('useproduct.widget.text.bind_clothing')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                     name="description"
-                    layout={{ position: 'absolute', left: 140, width: 200, top: 15, height: 61, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescription ?? t('useproduct.widget.text.bind_clothing')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 140, width: 200, top: 15, height: 61, minWidth: 200, maxWidth: 200 }}
+                />
                 <Region
                     name="cancel_text"
                     onPointerTap={onCancelText}
@@ -52,19 +50,18 @@ export const UseProductControllerPurchasableClothingLayout = ({ avatarPreview, c
                 >
                     {cancelText}
                 </Region>
-                <Region layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('useproduct.widget.cancel')}
-                </Region>
-                <Region
+                <ThemeText
+                    text={t('useproduct.widget.cancel')}
+                    layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 70, top: 120, height: 25 }}
+                />
+                <ThemeText
+                    text={captionInfo ?? t('useproduct.widget.info.bind_clothing')}
+                    textStyle="text-style-u-italic"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                     name="info"
-                    layout={{ position: 'absolute', left: 140, width: 200, top: 60, height: 40, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfo ?? t('useproduct.widget.info.bind_clothing')}
-                        textStyle="text-style-u-italic"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 140, width: 200, top: 60, height: 40, minWidth: 200, maxWidth: 200 }}
+                />
             </Region>
         </Region>
     );

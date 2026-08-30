@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `info_sorry` of BreedPetsResultLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsResultLayoutInfoSorryItemProps {
@@ -13,16 +13,14 @@ export const BreedPetsResultLayoutInfoSorryItem = ({ captionInfoSorry, layout, v
 
     return (
         (visibleInfoSorry ?? false) && (
-            <Region
+            <ThemeText
+                text={captionInfoSorry ?? t('breedpetsresult.widget.info.sorry')}
+                textStyle="text-style-u-italic"
+                textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
                 name="info_sorry"
-                layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-            >
-                <ThemeText
-                    text={captionInfoSorry ?? t('breedpetsresult.widget.info.sorry')}
-                    textStyle="text-style-u-italic"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ width: 254, height: 18, flexShrink: 0, ...layout }}
+            />
         )
     );
 };

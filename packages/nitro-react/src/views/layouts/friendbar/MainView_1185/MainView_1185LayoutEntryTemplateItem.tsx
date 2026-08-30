@@ -61,15 +61,12 @@ export const MainView_1185LayoutEntryTemplateItem = ({ captionRankNumber, captio
                             layout={{ position: 'absolute', width: 25, top: 7, height: 25 }}
                         >
                             {(visibleRankNumber ?? true) && (
-                                <Region
+                                <ThemeText
+                                    text={captionRankNumber ?? '1'}
+                                    textOptions={{ fill: '#ffffff' }}
                                     name="rank_number"
-                                    layout={{ position: 'absolute', left: 6, top: 2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionRankNumber ?? '1'}
-                                        textOptions={{ fill: '#ffffff' }}
-                                    />
-                                </Region>
+                                    layout={{ position: 'absolute', left: 6, top: 2, height: 20 }}
+                                />
                             )}
                         </Border>
                     )}
@@ -95,12 +92,11 @@ export const MainView_1185LayoutEntryTemplateItem = ({ captionRankNumber, captio
                 </Region>
             )}
             {(visibleUsernameTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionUsernameTxt ?? 'Username very long'}
                     name="username_txt"
-                    layout={{ position: 'absolute', left: 98, width: 114, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionUsernameTxt ?? 'Username very long'}
-                </Region>
+                    layout={{ position: 'absolute', left: 98, width: 114, alignSelf: 'center', height: 17 }}
+                />
             )}
             {(visibleRightAligned ?? true) && (
                 <Region

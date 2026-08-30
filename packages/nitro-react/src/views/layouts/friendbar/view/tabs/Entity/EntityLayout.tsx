@@ -52,26 +52,22 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                         tintColor="#9dbf5a"
                         layout={{ position: 'absolute', left: -6, width: 139, top: -113, height: 120, justifyContent: 'center' }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionBubbleTitle ?? t('friendbar.game_invite.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 93, align: 'center' }}
                             name="bubble_title"
-                            layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionBubbleTitle ?? t('friendbar.game_invite.title')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 93, align: 'center' }}
-                            />
-                        </Region>
-                        <Region
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 5, right: 41, top: 4 }}
+                        />
+                        <ThemeText
+                            text={captionBubbleMessage ?? ''}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 110, align: 'center' }}
                             name="bubble_message"
-                            layout={{ position: 'absolute', left: 5, right: 24, top: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionBubbleMessage ?? ''}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 110, align: 'center' }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 5, right: 24, top: 32 }}
+                        />
                         <CloseButton
                             variant="3"
                             name="bubble_button_close"
@@ -90,16 +86,13 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                                 tintColor="#00a900"
                                 layout={{ position: 'absolute', left: 7, width: 17, top: 6, height: 16 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionBubbleCaption ?? t('friendbar.request.accept')}
+                                textStyle="text-style-button-shiny-bold"
+                                textOptions={{ align: 'center' }}
                                 name="bubble_caption"
-                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionBubbleCaption ?? t('friendbar.request.accept')}
-                                    textStyle="text-style-button-shiny-bold"
-                                    textOptions={{ align: 'center' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17 }}
+                            />
                         </ContainerButton>
                         <Region
                             name="bubble_click_region_reject"
@@ -107,16 +100,13 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                             cursor="pointer"
                             layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15 }}
                         >
-                            <Region
+                            <ThemeText
+                                text={captionBubbleLinkReject ?? t('friendbar.request.decline')}
+                                textStyle="text-style-u-small"
+                                textOptions={{ fill: '#ffffff', align: 'center' }}
                                 name="bubble_link_reject"
-                                layout={{ position: 'absolute', left: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionBubbleLinkReject ?? t('friendbar.request.decline')}
-                                    textStyle="text-style-u-small"
-                                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 0, top: 0, bottom: 0 }}
+                            />
                         </Region>
                     </Bubble>
                 )}

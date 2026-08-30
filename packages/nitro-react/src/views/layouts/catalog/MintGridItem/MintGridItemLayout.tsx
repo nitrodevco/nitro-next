@@ -81,30 +81,24 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
                         name="clubLevelIcon"
                         layout={{ position: 'absolute', right: 2, width: 19, bottom: 24, height: 10 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionBundleCounter ?? ''}
+                        textOptions={{ fill: '#cccc66' }}
                         name="bundleCounter"
-                        layout={{ position: 'absolute', left: 18, right: 14, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBundleCounter ?? ''}
-                            textOptions={{ fill: '#cccc66' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 18, right: 14, top: 18, height: 4 }}
+                    />
                     <Border
                         variant="2"
                         name="multiContainer"
                         tintColor="#ff3300"
                         layout={{ position: 'absolute', right: 1, width: 17, top: 21, height: 13 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionMultiCounter ?? ''}
+                            textOptions={{ fill: '#cccc66' }}
                             name="multiCounter"
-                            layout={{ position: 'absolute', left: 3, width: 4, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMultiCounter ?? ''}
-                                textOptions={{ fill: '#cccc66' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 3, width: 4, top: 0, height: 4 }}
+                        />
                     </Border>
                     <ThemeImage
                         name="badge_add_on"

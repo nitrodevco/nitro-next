@@ -58,16 +58,14 @@ export const FeaturedItemsWidget = ({ captionItemTitle, eventCatcherRegion, item
                     blend={0.5}
                     layout={{ position: 'absolute', left: 5, width: 174, top: 428, bottom: 3, maxWidth: 174 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionItemTitle ?? ''}
+                        textStyle="text-style-ubuntu-condensed-title"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 174 }}
                         name="item_title"
-                        layout={{ position: 'absolute', left: 5, width: 174, top: 0, maxWidth: 174, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionItemTitle ?? ''}
-                            textStyle="text-style-ubuntu-condensed-title"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 174 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 5, width: 174, top: 0, maxWidth: 174 }}
+                    />
                 </Border>
                 <Region
                     name="event_catcher_region"

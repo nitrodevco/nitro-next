@@ -25,16 +25,13 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}>
-                    <Region
+                    <ThemeText
+                        text={captionPageHeaderTxt ?? 'Caption PH'}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ fill: colorableTextColor }}
                         name="page_header_txt"
-                        layout={{ width: 94, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPageHeaderTxt ?? 'Caption PH'}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ fill: colorableTextColor }}
-                        />
-                    </Region>
+                        layout={{ width: 94, height: 24, flexShrink: 0 }}
+                    />
                     <Region
                         backgroundColor="#000000"
                         layout={{ alignSelf: 'stretch', height: 120, flexShrink: 0 }}
@@ -44,16 +41,13 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                             src={srcPromoBitmap ?? '${image.library.url}reception/catalog_teaser_set_mnstr_gothic.png'}
                             layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 120 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionTimerCaptionTxt ?? t('landing.view.pageexpiry.timeremaining')}
+                            textStyle="text-style-il-heading-3"
+                            textOptions={{ fill: colorableTextColor, align: 'center' }}
                             name="timer_caption_txt"
-                            layout={{ position: 'absolute', right: 5, width: 146, top: 23, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionTimerCaptionTxt ?? t('landing.view.pageexpiry.timeremaining')}
-                                textStyle="text-style-il-heading-3"
-                                textOptions={{ fill: colorableTextColor, align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', right: 5, width: 146, top: 23, height: 14 }}
+                        />
                         <WidgetSlot
                             widgetType="countdown"
                             name="countdown_widget"
@@ -63,15 +57,13 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                             {countdownWidget}
                         </WidgetSlot>
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionPageDescTxt ?? 'Desc PH'}
+                        textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 250 }}
                         name="page_desc_txt"
-                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPageDescTxt ?? 'Desc PH'}
-                            textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 250 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0 }}
+                    />
                     <Button
                         variant="100"
                         name="open_catalog_button"

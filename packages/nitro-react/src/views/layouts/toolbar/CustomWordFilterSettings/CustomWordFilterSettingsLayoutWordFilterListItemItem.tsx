@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Row template `word_filter_list_item` of CustomWordFilterSettingsLayout - pass real rows through its `items…` slot. */
 export interface CustomWordFilterSettingsLayoutWordFilterListItemItemProps {
@@ -32,12 +32,11 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion,
                     </Region>
                 )}
                 {(visibleText ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionText ?? 'BadWord'}
                         name="text"
-                        layout={{ position: 'absolute', left: 0, width: 222, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionText ?? 'BadWord'}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 222, top: 0, bottom: 0 }}
+                    />
                 )}
             </Region>
         )

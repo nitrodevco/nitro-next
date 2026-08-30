@@ -31,24 +31,21 @@ export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContain
                 tint={tintPreviewPlayBackgroundImage}
                 layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110 }}
             />
-            <Region layout={{ position: 'absolute', left: 15, width: 287, top: 21, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('playlist.editor.text.preview.playing.for.you')}
-                    textStyle="text-style-bold"
-                />
-            </Region>
-            <Region
+            <ThemeText
+                text={t('playlist.editor.text.preview.playing.for.you')}
+                textStyle="text-style-bold"
+                layout={{ position: 'absolute', left: 15, width: 287, top: 21, height: 19 }}
+            />
+            <ThemeText
+                text={captionPreviewPlayTrackName ?? 'preview_track_name'}
                 name="preview_play_track_name"
-                layout={{ position: 'absolute', left: 31, width: 193, top: 40, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionPreviewPlayTrackName ?? 'preview_track_name'}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 31, width: 193, top: 40, height: 18 }}
+            />
+            <ThemeText
+                text={captionPreviewPlayAuthorName ?? 'preview_author_name'}
                 name="preview_play_author_name"
-                layout={{ position: 'absolute', left: 31, width: 193, top: 56, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionPreviewPlayAuthorName ?? 'preview_author_name'}
-            </Region>
+                layout={{ position: 'absolute', left: 31, width: 193, top: 56, height: 18 }}
+            />
             <ThemeImage
                 name="song_name_icon_bitmap"
                 src={srcSongNameIconBitmap ?? layoutImage('jb_icon_disc.png')}

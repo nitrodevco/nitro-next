@@ -35,25 +35,21 @@ export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, layout, on
                 layout={{ position: 'absolute', left: 31, width: 47, top: 32, height: 51 }}
             />
             <Region layout={{ position: 'absolute', left: 95, width: 500, top: 28, height: 50, maxHeight: 120, flexDirection: 'column', gap: 3 }}>
-                <Region
+                <ThemeText
+                    text={captionInfoHeading ?? 'December 20th'}
+                    textStyle="text-style-ubuntu-condensed-title"
+                    textOptions={{ fill: '#7ecaed', wordWrap: true, wordWrapWidth: 500 }}
                     name="info_heading"
-                    layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoHeading ?? 'December 20th'}
-                        textStyle="text-style-ubuntu-condensed-title"
-                        textOptions={{ fill: '#7ecaed', wordWrap: true, wordWrapWidth: 500 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ width: 500, flexShrink: 0, maxWidth: 500 }}
+                />
+                <ThemeText
+                    text={captionInfoBody ?? 'This spell will produce xxxxxx xxx xxxxx'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 500 }}
                     name="info_body"
-                    layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoBody ?? 'This spell will produce xxxxxx xxx xxxxx'}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 500 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ width: 500, flexShrink: 0, maxWidth: 500 }}
+                />
             </Region>
             <Region
                 name="btn_forward"

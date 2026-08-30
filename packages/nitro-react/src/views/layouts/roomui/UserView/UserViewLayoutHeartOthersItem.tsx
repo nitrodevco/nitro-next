@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `heart_others` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutHeartOthersItemProps {
@@ -11,15 +11,12 @@ export const UserViewLayoutHeartOthersItem = ({ captionHeartOthers, layout }: Us
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionHeartOthers ?? t('infostand.relstatus.heart.others')}
+            textStyle="text-style-regular"
+            textOptions={{ fill: '#ffffff' }}
             name="heart_others"
-            layout={{ width: 170, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionHeartOthers ?? t('infostand.relstatus.heart.others')}
-                textStyle="text-style-regular"
-                textOptions={{ fill: '#ffffff' }}
-            />
-        </Region>
+            layout={{ width: 170, height: 13, flexShrink: 0, ...layout }}
+        />
     );
 };

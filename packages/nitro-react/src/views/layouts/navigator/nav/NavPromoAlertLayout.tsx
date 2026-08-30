@@ -25,15 +25,13 @@ export const NavPromoAlertLayout = ({ captionBodyText, captionPromoText, layout,
             layout={{ width: 224, height: 182, minWidth: 224, minHeight: 182, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 186 }}
                     name="body_text"
-                    layout={{ position: 'absolute', left: 7, width: 186, top: 12, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 186 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 7, width: 186, top: 12, height: 57 }}
+                />
                 <Button
                     variant="3"
                     name="ok"
@@ -52,15 +50,13 @@ export const NavPromoAlertLayout = ({ captionBodyText, captionPromoText, layout,
                         variant="16"
                         layout={{ position: 'absolute', left: 0, width: 44, top: 3, height: 43 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionPromoText ?? t('002_lorem_ipsum_content')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 144 }}
                         name="promo_text"
-                        layout={{ position: 'absolute', right: 9, width: 144, top: 6, bottom: 3, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPromoText ?? t('002_lorem_ipsum_content')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 144 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', right: 9, width: 144, top: 6, bottom: 3 }}
+                    />
                 </Region>
             </Region>
         </Frame>

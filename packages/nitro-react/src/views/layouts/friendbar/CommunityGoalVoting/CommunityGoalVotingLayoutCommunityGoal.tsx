@@ -34,16 +34,13 @@ export const CommunityGoalVotingLayoutCommunityGoal = ({ captionCommunityTitle, 
                 src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                 layout={{ position: 'absolute', left: 7, width: 12, top: 10, height: 4 }}
             />
-            <Region
+            <ThemeText
+                text={captionCommunityTitle ?? t('landing.view.community.headline')}
+                textStyle="text-style-il-heading-3"
+                textOptions={{ fill: colorableTextColor }}
                 name="community_title"
-                layout={{ position: 'absolute', left: 24, width: 154, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCommunityTitle ?? t('landing.view.community.headline')}
-                    textStyle="text-style-il-heading-3"
-                    textOptions={{ fill: colorableTextColor }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 24, width: 154, top: 4, height: 14 }}
+            />
             <ThemeImage
                 name="hdr_line"
                 src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}

@@ -37,26 +37,20 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     name="dont_show_again_container"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionDontShowInfoTxt ?? 'You will see this again adad adada ad'}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: colorableTextColor ?? '#bbbbbb' }}
                         name="dont_show_info_txt"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 205, top: 24, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionDontShowInfoTxt ?? 'You will see this again adad adada ad'}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: colorableTextColor ?? '#bbbbbb' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 205, top: 24, height: 17 }}
+                    />
+                    <ThemeText
+                        text={captionDontShowAgainTxt ?? t('roomcompetition.dontshowagain.dontshow')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: colorableTextColor ?? '#ffffff' }}
                         name="dont_show_again_txt"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 247, alignSelf: 'center', marginTop: 5.5, marginBottom: -5.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionDontShowAgainTxt ?? t('roomcompetition.dontshowagain.dontshow')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: colorableTextColor ?? '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 247, alignSelf: 'center', marginTop: 5.5, marginBottom: -5.5, height: 17 }}
+                    />
                     <Region
                         name="dont_show_again_region"
                         onPointerTap={onDontShowAgainRegion}
@@ -71,16 +65,14 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                     name="normal_container"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 96 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCaptionTxt ?? 'Caption txt PH'}
+                        textStyle="text-style-il-heading-2"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                         name="caption_txt"
-                        layout={{ position: 'absolute', left: 57, right: 141, top: 14, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCaptionTxt ?? 'Caption txt PH'}
-                            textStyle="text-style-il-heading-2"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 57, right: 141, top: 14, height: 17 }}
+                    />
                     <Region
                         name="info_region"
                         layout={{ position: 'absolute', left: 57, width: 250, top: 46, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -130,15 +122,12 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                             <RoomCompetitionLayoutFurniContainerItem />
                         )}
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionButtonInfoTxt ?? 'kjhlk jh lkj hklj'}
+                        textOptions={{ align: 'center' }}
                         name="button_info_txt"
-                        layout={{ position: 'absolute', right: 1, width: 153, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionButtonInfoTxt ?? 'kjhlk jh lkj hklj'}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', right: 1, width: 153, top: 16, height: 16 }}
+                    />
                 </Border>
             </Region>
         </Region>

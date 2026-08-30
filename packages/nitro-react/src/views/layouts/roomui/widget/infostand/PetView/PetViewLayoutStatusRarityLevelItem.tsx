@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `status_rarity_level` of PetViewLayout - pass real rows through its `items…` slot. */
 export interface PetViewLayoutStatusRarityLevelItemProps {
@@ -11,14 +11,11 @@ export const PetViewLayoutStatusRarityLevelItem = ({ captionStatusRarityLevel, l
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionStatusRarityLevel ?? t('infostand.pet.text.raritylevel')}
+            textOptions={{ fill: '#ffffff' }}
             name="status_rarity_level"
-            layout={{ width: 151, height: 18, flexShrink: 0, minHeight: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionStatusRarityLevel ?? t('infostand.pet.text.raritylevel')}
-                textOptions={{ fill: '#ffffff' }}
-            />
-        </Region>
+            layout={{ width: 151, height: 18, flexShrink: 0, minHeight: 15, ...layout }}
+        />
     );
 };

@@ -28,15 +28,12 @@ export const TableViewLayoutTableContainer = ({ captionNothingToDisplayText, lay
                     name="empty_container"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0, justifyContent: 'center' }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionNothingToDisplayText ?? t('wiredmenu.table.empty')}
+                        textOptions={{ fill: '#333333' }}
                         name="nothing_to_display_text"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 107, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionNothingToDisplayText ?? t('wiredmenu.table.empty')}
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 107, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, minHeight: 17 }}
+                    />
                 </Region>
             </Border>
         </Region>

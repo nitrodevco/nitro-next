@@ -20,29 +20,23 @@ export const NoGroupsLayout = ({ captionNoGroupsCaption, captionNoGroupsInfo, la
                 name="no_groups_cont"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionNoGroupsCaption ?? 'No groups caption PH'}
+                    textStyle="text-style-u-regular"
                     name="no_groups_caption"
-                    layout={{ position: 'absolute', left: 0, width: 125, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNoGroupsCaption ?? 'No groups caption PH'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 125, top: 0, height: 17 }}
+                />
                 <ThemeImage
                     name="ext_profile_grouppic"
                     src={srcExtProfileGrouppic ?? '${image.library.url}guilds/ext_profile_grouppic.png'}
                     layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 311, top: 21, height: 136 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionNoGroupsInfo ?? t('extendedprofile.nogroups.info')}
+                    textStyle="text-style-u-regular"
                     name="no_groups_info"
-                    layout={{ position: 'absolute', left: 0, width: 174, top: 164, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNoGroupsInfo ?? t('extendedprofile.nogroups.info')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 174, top: 164, height: 17 }}
+                />
                 <ContainerButton
                     variant="0"
                     name="view_groups_button"
@@ -54,12 +48,11 @@ export const NoGroupsLayout = ({ captionNoGroupsCaption, captionNoGroupsInfo, la
                         src={srcGroupBaseIcon ?? '${image.library.url}guilds/group_base_icon.png'}
                         layout={{ position: 'absolute', left: 11, width: 24, top: 7, height: 17 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 42, width: 215, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('extendedprofile.nogroups.viewgroups')}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('extendedprofile.nogroups.viewgroups')}
+                        textStyle="text-style-u-regular"
+                        layout={{ position: 'absolute', left: 42, width: 215, top: 6, bottom: 7 }}
+                    />
                 </ContainerButton>
             </Region>
         </Region>

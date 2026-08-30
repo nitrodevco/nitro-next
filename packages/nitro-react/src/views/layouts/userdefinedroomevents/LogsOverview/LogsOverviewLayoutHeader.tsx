@@ -28,26 +28,23 @@ export const LogsOverviewLayoutHeader = ({ captionFilterKey, captionInfoText, ca
                 variant="4"
                 layout={{ position: 'absolute', left: 8, width: 580, top: 7, height: 38 }}
             >
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? t('wiredmenu.logs_overview.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 578, align: 'center' }}
                     name="info_text"
-                    layout={{ position: 'absolute', left: 1, right: 1, top: 3, bottom: 3, minWidth: 578, maxWidth: 578, minHeight: 32, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? t('wiredmenu.logs_overview.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 578, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 3, bottom: 3, minWidth: 578, maxWidth: 578, minHeight: 32, maxHeight: 32 }}
+                />
             </Border>
             <Region
                 name="filter_cont"
                 layout={{ position: 'absolute', left: 15, width: 314, top: 60, height: 25 }}
             >
-                <Region
+                <ThemeText
+                    text={captionFilterKey ?? t('wiredmenu.logs_overview.filter')}
                     name="filter_key"
-                    layout={{ position: 'absolute', left: 0, width: 38, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionFilterKey ?? t('wiredmenu.logs_overview.filter')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 38, top: 3, height: 17 }}
+                />
                 <Border
                     variant="4"
                     layout={{ position: 'absolute', left: 45, width: 269, top: 0, bottom: 0 }}
@@ -66,19 +63,19 @@ export const LogsOverviewLayoutHeader = ({ captionFilterKey, captionInfoText, ca
                 onPointerTap={onAutoRefreshCbx}
                 layout={{ position: 'absolute', left: 596, width: 15, top: 19, height: 15 }}
             />
-            <Region layout={{ position: 'absolute', left: 614, width: 90, top: 18, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                {t('wiredmenu.logs_overview.auto_refresh')}
-            </Region>
+            <ThemeText
+                text={t('wiredmenu.logs_overview.auto_refresh')}
+                layout={{ position: 'absolute', left: 614, width: 90, top: 18, height: 29 }}
+            />
             <Region
                 name="log_source_cont"
                 layout={{ position: 'absolute', left: 349, width: 164, top: 60, height: 25 }}
             >
-                <Region
+                <ThemeText
+                    text={captionLogSourceKey ?? t('wiredmenu.logs_overview.log_source')}
                     name="log_source_key"
-                    layout={{ position: 'absolute', left: 0, width: 68, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionLogSourceKey ?? t('wiredmenu.logs_overview.log_source')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 68, top: 3, height: 17 }}
+                />
                 <Dropmenu
                     variant="3"
                     name="log_source_menu"
@@ -90,12 +87,11 @@ export const LogsOverviewLayoutHeader = ({ captionFilterKey, captionInfoText, ca
                 name="log_level_cont"
                 layout={{ position: 'absolute', left: 534, width: 154, top: 60, height: 25 }}
             >
-                <Region
+                <ThemeText
+                    text={captionLogLevelKey ?? t('wiredmenu.logs_overview.log_level')}
                     name="log_level_key"
-                    layout={{ position: 'absolute', left: 0, width: 56, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionLogLevelKey ?? t('wiredmenu.logs_overview.log_level')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 56, top: 3, height: 17 }}
+                />
                 <Dropmenu
                     variant="3"
                     name="log_level_menu"

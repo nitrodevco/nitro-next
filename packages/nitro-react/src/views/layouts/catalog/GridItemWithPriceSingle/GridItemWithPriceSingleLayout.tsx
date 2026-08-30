@@ -46,17 +46,12 @@ export const GridItemWithPriceSingleLayout = ({ itemsTotalpriceContainer, layout
                         />
                     </Border>
                 </Border>
-                <Region
+                <ThemeImage
                     name="wide_container"
+                    src={srcImageWide}
+                    tint={tintImageWide}
                     layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36 }}
-                >
-                    <ThemeImage
-                        name="image_wide"
-                        src={srcImageWide}
-                        tint={tintImageWide}
-                        layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 36 }}
-                    />
-                </Region>
+                />
                 <ThemeImage
                     name="badge_add_on"
                     src={srcBadgeAddOn}

@@ -34,16 +34,13 @@ export const HabbiconselectorMenuLayoutHabbiconSearchBorderItem = ({ captionHabb
                 />
             )}
             {(visibleHabbiconSearchPlaceholder ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionHabbiconSearchPlaceholder ?? t('generic.search')}
+                    textStyle="text-style-u-italic"
+                    textOptions={{ fill: '#777777' }}
                     name="habbicon_search_placeholder"
-                    layout={{ position: 'absolute', left: 6, right: 26, alignSelf: 'center', height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHabbiconSearchPlaceholder ?? t('generic.search')}
-                        textStyle="text-style-u-italic"
-                        textOptions={{ fill: '#777777' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 6, right: 26, alignSelf: 'center', height: 18 }}
+                />
             )}
             {(visibleHabbiconSearchClearButton ?? true) && (
                 <Region

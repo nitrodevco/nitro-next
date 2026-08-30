@@ -32,18 +32,17 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                     src={layoutImage('help_help_duck.png')}
                     layout={{ position: 'absolute', left: 32, width: 124, top: 59, height: 126 }}
                 />
-                <Region layout={{ position: 'absolute', left: 32, width: 382, top: 22, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.main.frame.title')}
-                        textStyle="text-style-u-headline-big"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 170, width: 250, top: 61, height: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.main.frame.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.main.frame.title')}
+                    textStyle="text-style-u-headline-big"
+                    layout={{ position: 'absolute', left: 32, width: 382, top: 22, height: 33 }}
+                />
+                <ThemeText
+                    text={t('help.main.frame.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 170, width: 250, top: 61, height: 117 }}
+                />
                 <Region layout={{ position: 'absolute', left: 32, width: 380, top: 230, height: 150, flexDirection: 'column', gap: 5 }}>
                     {(visibleButtonHabboHelp ?? false) && (
                         <ContainerButton

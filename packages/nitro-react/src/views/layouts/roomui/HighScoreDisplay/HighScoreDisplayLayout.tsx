@@ -29,13 +29,12 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                     backgroundColor="#3f3f3f"
                     layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20, justifyContent: 'center' }}
                 >
-                    <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('high.score.display.caption')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('high.score.display.caption')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 151, top: 2, height: 17 }}
+                    />
                 </Region>
                 <Border
                     variant="100"
@@ -46,20 +45,20 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                         variant="100"
                         layout={{ position: 'absolute', left: 0, width: 190, top: 0, bottom: 0 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 1, width: 163, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            {t('high.score.display.users.header')}
-                        </Region>
+                        <ThemeText
+                            text={t('high.score.display.users.header')}
+                            layout={{ position: 'absolute', left: 1, width: 163, top: 3, height: 16 }}
+                        />
                     </Border>
                     <Border
                         variant="100"
                         layout={{ position: 'absolute', left: 188, width: 70, top: 0, bottom: 0 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionScoreHeader ?? t('high.score.display.score.header')}
                             name="score_header"
-                            layout={{ position: 'absolute', right: 5, width: 161, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionScoreHeader ?? t('high.score.display.score.header')}
-                        </Region>
+                            layout={{ position: 'absolute', right: 5, width: 161, top: 3, height: 16 }}
+                        />
                     </Border>
                 </Border>
                 <Border
@@ -68,16 +67,13 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                     tintColor="#676767"
                     layout={{ position: 'absolute', left: 8, width: 257, top: 53, height: 255 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionFooter ?? t('high.score.display.congratulations.footer')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#6f6f6f' }}
                     name="footer"
-                    layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 233, top: 311, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFooter ?? t('high.score.display.congratulations.footer')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#6f6f6f' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 233, top: 311, height: 17 }}
+                />
                 <ThemeImage
                     name="cup_icon"
                     src={srcCupIcon ?? layoutImage('high_score_highscore_cup.png')}

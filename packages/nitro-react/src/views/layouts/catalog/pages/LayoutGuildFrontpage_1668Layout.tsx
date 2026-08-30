@@ -27,24 +27,19 @@ export const LayoutGuildFrontpage_1668Layout = ({ buyGuildWidget, captionCtlgDes
                     tint={tintCtlgTeaserimg1}
                     layout={{ position: 'absolute', left: 0, width: 359, bottom: 9, height: 163 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionCtlgSpecialTxt ?? t('lorem.title')}
+                    textStyle="text-style-u-headline-medium"
                     name="ctlg_special_txt"
-                    layout={{ position: 'absolute', left: 15, width: 106, top: 32, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgSpecialTxt ?? t('lorem.title')}
-                        textStyle="text-style-u-headline-medium"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 15, width: 106, top: 32, height: 21 }}
+                />
+                <ThemeText
+                    text={captionCtlgDescription ?? t('lorem.header')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 335 }}
                     name="ctlg_description"
-                    layout={{ position: 'absolute', left: 15, width: 335, top: 76, height: 44, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgDescription ?? t('lorem.header')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 335 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 15, width: 335, top: 76, height: 44 }}
+                />
                 <BuyGuildWidget2
                     layout={{ position: 'absolute', left: 49, width: 267, bottom: 184, height: 45 }}
                     {...buyGuildWidget}

@@ -1,11 +1,11 @@
 import { BoxLayout, Region } from '#base/theme';
-import { NewPetsWidget2, NewPetsWidget2Props } from '#base/views/layouts/catalog/widgets/NewPetsWidget2';
+import { NewPetsWidget, NewPetsWidgetProps } from '#base/views/layouts/catalog/widgets/NewPetsWidget';
 import { PetsWidget, PetsWidgetProps } from '#base/views/layouts/catalog/widgets/PetsWidget';
 
 /** Named region `ctlg_pets` of LayoutPets_1592Layout - configured through the parent's `ctlgPets` prop. */
 export interface LayoutPets_1592LayoutCtlgPetsProps {
     layout?: BoxLayout;
-    newPetsWidget?: NewPetsWidget2Props;
+    newPetsWidget?: NewPetsWidgetProps;
     petsWidget?: PetsWidgetProps;
 }
 
@@ -19,7 +19,7 @@ export const LayoutPets_1592LayoutCtlgPets = ({ layout, newPetsWidget, petsWidge
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 {...petsWidget}
             />
-            <NewPetsWidget2
+            <NewPetsWidget
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 {...newPetsWidget}
             />

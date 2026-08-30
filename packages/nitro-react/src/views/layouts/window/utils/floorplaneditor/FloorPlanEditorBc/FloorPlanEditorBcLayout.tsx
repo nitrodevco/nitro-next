@@ -60,13 +60,12 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
                         src={layoutImage('floor_plan_editor_logo.png')}
                         layout={{ position: 'absolute', left: 9, width: 38, top: 5, height: 38 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 74, width: 115, top: 9, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('floor.plan.editor.subtitle')}
-                            textStyle="text-style-u-small"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('floor.plan.editor.subtitle')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ fill: '#ffffff' }}
+                        layout={{ position: 'absolute', left: 74, width: 115, top: 9, height: 15 }}
+                    />
                 </Region>
             </Region>
             <Border

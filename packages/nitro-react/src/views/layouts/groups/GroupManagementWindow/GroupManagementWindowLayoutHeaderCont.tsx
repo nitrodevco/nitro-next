@@ -112,24 +112,20 @@ export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt,
                 tint={tintHeaderPicBitmapStep6}
                 layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
             />
-            <Region
+            <ThemeText
+                text={captionHeaderCaptionTxt ?? 'Caption PH'}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 263 }}
                 name="header_caption_txt"
-                layout={{ position: 'absolute', left: 126, right: 2, top: 43, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeaderCaptionTxt ?? 'Caption PH'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 263 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 126, right: 2, top: 43, height: 24 }}
+            />
+            <ThemeText
+                text={captionHeaderDescTxt ?? 'Desc PH'}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 232 }}
                 name="header_desc_txt"
-                layout={{ position: 'absolute', left: 126, right: 33, top: 69, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeaderDescTxt ?? 'Desc PH'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 232 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 126, right: 33, top: 69, height: 40 }}
+            />
         </Region>
     );
 };

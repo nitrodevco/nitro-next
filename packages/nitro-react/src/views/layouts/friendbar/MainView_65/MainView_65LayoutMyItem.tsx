@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `my` of MainView_65Layout - pass real rows through its `items…` slot. */
 export interface MainView_65LayoutMyItemProps {
@@ -11,14 +11,11 @@ export const MainView_65LayoutMyItem = ({ captionMy, layout }: MainView_65Layout
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionMy ?? t('groupforum.view.shortcuts.my')}
+            textOptions={{ fill: '#1b79ab' }}
             name="my"
-            layout={{ width: 159, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionMy ?? t('groupforum.view.shortcuts.my')}
-                textOptions={{ fill: '#1b79ab' }}
-            />
-        </Region>
+            layout={{ width: 159, height: 16, flexShrink: 0, ...layout }}
+        />
     );
 };

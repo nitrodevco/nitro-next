@@ -84,37 +84,28 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                     </Region>
                 )}
                 {(visibleTextView ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextView ?? 'some text'}
+                        textStyle="text-style-il-regular"
                         name="text_view"
-                        layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTextView ?? 'some text'}
-                            textStyle="text-style-il-regular"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 16 }}
+                    />
                 )}
                 {(visibleTextBoldView ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextBoldView ?? 'some bold text'}
+                        textStyle="text-style-il-regular"
                         name="text_bold_view"
-                        layout={{ position: 'absolute', left: 0, width: 82, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTextBoldView ?? 'some bold text'}
-                            textStyle="text-style-il-regular"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 82, top: 0, height: 16 }}
+                    />
                 )}
                 {(visibleTextHtml ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextHtml ?? 'Use this by typing'}
+                        textStyle="text-style-il-regular"
                         name="text_html"
-                        layout={{ position: 'absolute', left: 0, width: 97, top: 0, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTextHtml ?? 'Use this by typing'}
-                            textStyle="text-style-il-regular"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 97, top: 0, height: 16, overflow: 'hidden' }}
+                    />
                 )}
                 {(visibleInputTemplate ?? false) && (
                     <Border
@@ -139,15 +130,12 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                                     blend={0.7}
                                     layout={{ position: 'absolute', right: 0, width: 49, top: 10, height: 17 }}
                                 >
-                                    <Region
+                                    <ThemeText
+                                        text={captionLimitText ?? '95/100'}
+                                        textStyle="text-style-il-regular-white"
                                         name="limit_text"
-                                        layout={{ position: 'absolute', left: 5, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                    >
-                                        <ThemeText
-                                            text={captionLimitText ?? '95/100'}
-                                            textStyle="text-style-il-regular-white"
-                                        />
-                                    </Region>
+                                        layout={{ position: 'absolute', left: 5, top: 1, height: 16 }}
+                                    />
                                 </Border>
                             </Region>
                         )}

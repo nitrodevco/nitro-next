@@ -24,15 +24,12 @@ export const NewModerationToolLayoutBanView = ({ captionUserTxt, layout, onBanBt
                 name="ban_view"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
             >
-                <Region
+                <ThemeText
+                    text={captionUserTxt ?? t('moderation.ban_management.user')}
+                    textOptions={{ fill: '#333333' }}
                     name="user_txt"
-                    layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionUserTxt ?? t('moderation.ban_management.user')}
-                        textOptions={{ fill: '#333333' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 9, width: 57, top: 8, height: 16 }}
+                />
                 <Border
                     variant="105"
                     layout={{ position: 'absolute', left: 9, right: 12, top: 29, height: 26 }}
@@ -68,18 +65,16 @@ export const NewModerationToolLayoutBanView = ({ captionUserTxt, layout, onBanBt
                 >
                     {t('moderation.ban_management.do')}
                 </Button>
-                <Region layout={{ position: 'absolute', left: 28, width: 47, top: 65, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('moderation.ban_management.ban')}
-                        textOptions={{ fill: '#333333' }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 28, width: 63, top: 86, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('moderation.ban_management.unban')}
-                        textOptions={{ fill: '#333333' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('moderation.ban_management.ban')}
+                    textOptions={{ fill: '#333333' }}
+                    layout={{ position: 'absolute', left: 28, width: 47, top: 65, height: 16 }}
+                />
+                <ThemeText
+                    text={t('moderation.ban_management.unban')}
+                    textOptions={{ fill: '#333333' }}
+                    layout={{ position: 'absolute', left: 28, width: 63, top: 86, height: 16 }}
+                />
                 <Dropmenu
                     variant="100"
                     name="duration_selector"

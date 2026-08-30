@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `ctitle` of ChestGenericLayout - pass real rows through its `items…` slot. */
 export interface ChestGenericLayoutCtitleItemProps {
@@ -11,14 +11,11 @@ export const ChestGenericLayoutCtitleItem = ({ captionCtitle, layout }: ChestGen
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionCtitle ?? t('wiredchests.capacity_info.title')}
+            textStyle="text-style-u-bold"
             name="ctitle"
-            layout={{ width: 100, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionCtitle ?? t('wiredchests.capacity_info.title')}
-                textStyle="text-style-u-bold"
-            />
-        </Region>
+            layout={{ width: 100, height: 19, flexShrink: 0, ...layout }}
+        />
     );
 };

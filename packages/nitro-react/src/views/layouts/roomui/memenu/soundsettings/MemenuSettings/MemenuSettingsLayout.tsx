@@ -29,15 +29,12 @@ export const MemenuSettingsLayout = ({ captionSettingsTitle, captionVolumeText, 
                 name="settings_brdr"
                 layout={{ position: 'absolute', left: 1, width: 312, top: 1, height: 170, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionSettingsTitle ?? t('widget.memenu.settings.title')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="settings_title"
-                    layout={{ position: 'absolute', width: 126, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionSettingsTitle ?? t('widget.memenu.settings.title')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 126, top: 5, height: 13 }}
+                />
                 <Region
                     name="line"
                     backgroundColor="#2f2f2f"
@@ -51,15 +48,12 @@ export const MemenuSettingsLayout = ({ captionSettingsTitle, captionVolumeText, 
                     tintColor="#666666"
                     layout={{ position: 'absolute', left: 10, width: 292, top: 29, height: 108 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionVolumeText ?? t('widget.memenu.settings.volume')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="volume_text"
-                    layout={{ position: 'absolute', width: 148, top: 32, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionVolumeText ?? t('widget.memenu.settings.volume')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 148, top: 32, height: 13 }}
+                />
                 <MemenuSettingsLayoutUiVolumeContainer {...uiVolumeContainer} />
                 <MemenuSettingsLayoutFurniVolumeContainer {...furniVolumeContainer} />
                 <MemenuSettingsLayoutTraxVolumeContainer {...traxVolumeContainer} />

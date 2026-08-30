@@ -33,25 +33,20 @@ export const MannequinControllerSaveLayout = ({ captionBackText, captionDescript
                     tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionOutfitNameShow ?? ''}
+                    textStyle="text-style-u-bold"
                     name="outfit_name_show"
-                    layout={{ position: 'absolute', right: 6, width: 254, top: 30, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOutfitNameShow ?? ''}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', right: 6, width: 254, top: 30, height: 33 }}
+                />
+                <ThemeText
+                    text={captionDescription ?? '${mannequin.widget.savetext '}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
                     name="description"
-                    layout={{ position: 'absolute', left: 126, width: 197, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescription ?? '${mannequin.widget.savetext '}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 126, width: 197, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 61 }}
+                />
                 <Icon
                     variant="0"
                     name="club_icon"
@@ -63,15 +58,12 @@ export const MannequinControllerSaveLayout = ({ captionBackText, captionDescript
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 15, width: 151, top: 147, height: 20 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionBackText ?? 'mannequin.widget.back'}
+                        textStyle="text-style-u-regular"
                         name="back_text"
-                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBackText ?? 'mannequin.widget.back'}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, top: 0 }}
+                    />
                 </Region>
             </Region>
         </Region>

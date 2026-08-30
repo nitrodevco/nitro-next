@@ -26,16 +26,13 @@ export const EffectsWidgetLayout = ({ captionTitle, itemsList, layout, onClose }
                     tintColor="#292929"
                     layout={{ position: 'absolute', left: 5, width: 157, top: 5, height: 22 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTitle ?? t('widget.memenu.effects')}
+                    textStyle="text-style-u-frame-title"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="title"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? t('widget.memenu.effects')}
-                        textStyle="text-style-u-frame-title"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 7, height: 17 }}
+                />
                 <CloseButton
                     variant="3"
                     name="close"
@@ -57,12 +54,11 @@ export const EffectsWidgetLayout = ({ captionTitle, itemsList, layout, onClose }
                     name="no_effects"
                     layout={{ position: 'absolute', left: 0, right: 0, bottom: 7, height: 48 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('widget.memenu.effects.info')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('widget.memenu.effects.info')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17 }}
+                    />
                 </Region>
             </Border>
         </Region>

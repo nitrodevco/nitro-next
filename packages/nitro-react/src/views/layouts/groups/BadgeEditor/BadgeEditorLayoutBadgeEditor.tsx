@@ -33,15 +33,12 @@ export const BadgeEditorLayoutBadgeEditor = ({ captionLabelSymbol, guildBadge, i
                     name="part_edit_top_labels"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionLabelSymbol ?? t('group.edit.badge.pick.symbol')}
+                        textStyle="text-style-u-bold"
                         name="label_symbol"
-                        layout={{ position: 'absolute', left: 0, width: 78, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionLabelSymbol ?? t('group.edit.badge.pick.symbol')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 78, top: 8, height: 17 }}
+                    />
                 </Region>
                 <Border
                     variant="3"

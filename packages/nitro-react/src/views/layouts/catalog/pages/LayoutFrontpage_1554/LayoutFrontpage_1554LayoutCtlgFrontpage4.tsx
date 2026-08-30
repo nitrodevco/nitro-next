@@ -24,30 +24,26 @@ export const LayoutFrontpage_1554LayoutCtlgFrontpage4 = ({ captionCtlgTxt1, capt
                 src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/frontpage_teaser.gif'}
                 layout={{ position: 'absolute', left: 246, width: 103, top: 64, height: 324 }}
             />
-            <Region
+            <ThemeText
+                text={captionCtlgTxt1 ?? t('loremipsum.html')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 225 }}
                 name="ctlg_txt1"
-                layout={{ position: 'absolute', left: 15, width: 225, top: 70, height: 320, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgTxt1 ?? t('loremipsum.html')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 225 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 15, width: 225, top: 70, height: 320 }}
+            />
             <Border
                 variant="2"
                 name="bgBorder"
                 tintColor="#51bbee"
                 layout={{ position: 'absolute', left: 8, width: 345, top: 397, height: 61 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCtlgTxt2 ?? t('lorem.title')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 272 }}
                     name="ctlg_txt2"
-                    layout={{ position: 'absolute', left: 10, width: 272, top: 6, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgTxt2 ?? t('lorem.title')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 272 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 272, top: 6, height: 17 }}
+                />
                 <RedeemItemCodeWidget
                     layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 34 }}
                     {...redeemItemCodeWidget}

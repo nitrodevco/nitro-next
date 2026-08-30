@@ -28,15 +28,12 @@ export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelec
             name="ctlg_badgedisplay"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
+                textStyle="text-style-u-small"
                 name="ctlg_selectproduct"
-                layout={{ position: 'absolute', left: 5, width: 107, top: 130, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 5, width: 107, top: 130, height: 15 }}
+            />
             <ProductViewWidget
                 layout={{ position: 'absolute', right: 5, width: 175, top: 150, height: 248 }}
                 {...productViewWidget}
@@ -57,15 +54,12 @@ export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelec
                 layout={{ position: 'absolute', right: 9, width: 170, top: 400, height: 30 }}
                 {...limitedItemWidget}
             />
-            <Region
+            <ThemeText
+                text={captionCtlgSelectbadge ?? t('catalog_selectbadge')}
+                textStyle="text-style-u-small"
                 name="ctlg_selectbadge"
-                layout={{ position: 'absolute', left: 5, width: 100, top: 227, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSelectbadge ?? t('catalog_selectbadge')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 5, width: 100, top: 227, height: 15 }}
+            />
             <UserBadgeSelectorWidget2
                 layout={{ position: 'absolute', left: 4, width: 170, top: 242, height: 175 }}
                 {...userBadgeSelectorWidget}

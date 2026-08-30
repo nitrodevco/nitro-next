@@ -49,25 +49,21 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                     tint={tintPromoBitmap}
                     layout={{ position: 'absolute', left: 5, width: 120, top: 157, height: 135 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionPageHeaderTxt ?? t('landing.view.pixelremoval.caption')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 120 }}
                     name="page_header_txt"
-                    layout={{ position: 'absolute', left: 120, width: 120, top: 161, height: 43, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPageHeaderTxt ?? t('landing.view.pixelremoval.caption')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 120 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 120, width: 120, top: 161, height: 43 }}
+                />
+                <ThemeText
+                    text={captionPageDescTxt ?? t('landing.view.pixelremoval.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 120 }}
                     name="page_desc_txt"
-                    layout={{ position: 'absolute', left: 120, width: 120, top: 198, height: 78, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPageDescTxt ?? t('landing.view.pixelremoval.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 120 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 120, width: 120, top: 198, height: 78 }}
+                />
                 <Button
                     variant="100"
                     name="open_catalog_button"
@@ -82,15 +78,12 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                 >
                     {separatorWidget}
                 </WidgetSlot>
-                <Region
+                <ThemeText
+                    text={captionPixelRemovalTitle ?? t('landing.view.pixelremoval.countdown')}
+                    textOptions={{ align: 'center' }}
                     name="pixel_removal_title"
-                    layout={{ position: 'absolute', left: 9, width: 233, top: 69, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionPixelRemovalTitle ?? t('landing.view.pixelremoval.countdown')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 9, width: 233, top: 69, height: 16 }}
+                />
                 <WidgetSlot
                     widgetType="countdown"
                     name="pixels_countdown_widget"

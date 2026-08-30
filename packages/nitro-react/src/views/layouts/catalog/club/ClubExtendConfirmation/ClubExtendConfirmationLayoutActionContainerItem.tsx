@@ -33,15 +33,12 @@ export const ClubExtendConfirmationLayoutActionContainerItem = ({ captionMaybeLa
                     layout={{ position: 'absolute', left: 0, width: 5, top: 0, height: 32 }}
                 >
                     {(visibleMaybeLaterLink ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionMaybeLaterLink ?? ''}
+                            textStyle="text-style-u-regular"
                             name="maybe_later_link"
-                            layout={{ position: 'absolute', left: 0, top: 5, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMaybeLaterLink ?? ''}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, top: 5, height: 4 }}
+                        />
                     )}
                 </Region>
             )}

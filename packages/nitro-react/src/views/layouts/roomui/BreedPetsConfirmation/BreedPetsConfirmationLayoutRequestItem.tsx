@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `request` of BreedPetsConfirmationLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsConfirmationLayoutRequestItemProps {
@@ -11,14 +11,12 @@ export const BreedPetsConfirmationLayoutRequestItem = ({ captionRequest, layout 
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionRequest ?? t('breedpets.widget.request')}
+            textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
             name="request"
-            layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionRequest ?? t('breedpets.widget.request')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 254, height: 18, flexShrink: 0, ...layout }}
+        />
     );
 };

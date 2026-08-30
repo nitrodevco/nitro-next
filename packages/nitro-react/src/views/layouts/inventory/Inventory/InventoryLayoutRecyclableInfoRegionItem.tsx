@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `recyclable_info_region` of InventoryLayout - pass real rows through its `items…` slot. */
@@ -24,12 +24,11 @@ export const InventoryLayoutRecyclableInfoRegionItem = ({ captionRecyclableNumbe
             layout={{ width: 52, height: 16, flexShrink: 0, ...layout }}
         >
             {(visibleRecyclableNumber ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRecyclableNumber ?? ''}
                     name="recyclable_number"
-                    layout={{ position: 'absolute', left: 18, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionRecyclableNumber ?? ''}
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 4, top: 1, height: 4 }}
+                />
             )}
             {(visibleRecyclableIcon ?? true) && (
                 <ThemeImage

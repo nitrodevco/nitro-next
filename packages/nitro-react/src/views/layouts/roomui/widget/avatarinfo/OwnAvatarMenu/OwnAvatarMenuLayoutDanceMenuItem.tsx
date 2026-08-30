@@ -30,16 +30,13 @@ export const OwnAvatarMenuLayoutDanceMenuItem = ({ captionLabel, layout, onButto
                         layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
                     >
                         {(visibleLabel ?? true) && (
-                            <Region
+                            <ThemeText
+                                text={captionLabel ?? t('widget.memenu.dance')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff', align: 'center' }}
                                 name="label"
-                                layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionLabel ?? t('widget.memenu.dance')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16 }}
+                            />
                         )}
                         {(visibleIcon ?? true) && (
                             <Icon

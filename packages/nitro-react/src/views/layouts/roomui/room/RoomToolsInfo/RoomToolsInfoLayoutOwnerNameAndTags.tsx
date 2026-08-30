@@ -18,16 +18,13 @@ export const RoomToolsInfoLayoutOwnerNameAndTags = ({ captionRoomOwner, itemsTag
             name="owner_name_and_tags"
             layout={{ position: 'absolute', left: 10, width: 126, top: 33, height: 44, maxWidth: 300, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionRoomOwner ?? '...'}
+                textStyle="text-style-u-headline-medium"
+                textOptions={{ fill: '#999999' }}
                 name="room_owner"
-                layout={{ position: 'absolute', left: 0, top: 0, height: 21, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRoomOwner ?? '...'}
-                    textStyle="text-style-u-headline-medium"
-                    textOptions={{ fill: '#999999' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, top: 0, height: 21, maxWidth: 300 }}
+            />
             <Region
                 name="tags"
                 layout={{ position: 'absolute', left: 0, top: 25, maxWidth: 230, flexDirection: 'row', gap: 4 }}

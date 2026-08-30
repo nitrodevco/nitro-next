@@ -18,15 +18,12 @@ export const TotalPriceWidgetTotalRightItem = ({ captionText, layout, strike, vi
             layout={{ width: 10, height: 20, flexShrink: 0, ...layout }}
         >
             {(visibleText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionText ?? '0'}
+                    textOptions={{ fill: '#999999' }}
                     name="text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? '0'}
-                        textOptions={{ fill: '#999999' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 17 }}
+                />
             )}
             {(visibleStrike ?? true) && (
                 <Region

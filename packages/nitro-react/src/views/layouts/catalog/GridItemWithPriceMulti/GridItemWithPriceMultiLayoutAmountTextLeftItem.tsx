@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `amount_text_left` of GridItemWithPriceMultiLayout - pass real rows through its `items…` slot. */
 export interface GridItemWithPriceMultiLayoutAmountTextLeftItemProps {
@@ -8,11 +8,10 @@ export interface GridItemWithPriceMultiLayoutAmountTextLeftItemProps {
 
 export const GridItemWithPriceMultiLayoutAmountTextLeftItem = ({ captionAmountTextLeft, layout }: GridItemWithPriceMultiLayoutAmountTextLeftItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionAmountTextLeft ?? '00'}
             name="amount_text_left"
-            layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionAmountTextLeft ?? '00'}
-        </Region>
+            layout={{ width: 17, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

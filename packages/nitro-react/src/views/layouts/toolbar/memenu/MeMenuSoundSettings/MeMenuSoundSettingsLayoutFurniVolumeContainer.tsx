@@ -23,15 +23,12 @@ export const MeMenuSoundSettingsLayoutFurniVolumeContainer = ({ captionTitle, la
             name="furni_volume_container"
             layout={{ position: 'absolute', left: 14, width: 285, top: 76, height: 28, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTitle ?? t('widget.memenu.settings.volume.furni')}
+                textOptions={{ fill: '#ffffff' }}
                 name="title"
-                layout={{ position: 'absolute', left: 0, width: 60, top: 6, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTitle ?? t('widget.memenu.settings.volume.furni')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 60, top: 6, height: 18 }}
+            />
             <Region
                 name="volume_container"
                 layout={{ position: 'absolute', left: 98, width: 144, top: 0, height: 24 }}

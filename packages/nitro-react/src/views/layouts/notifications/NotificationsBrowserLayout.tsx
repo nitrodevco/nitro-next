@@ -18,15 +18,12 @@ export const NotificationsBrowserLayout = ({ captionTitle, itemsNotifications, l
                 tintColor="#ffffff"
                 layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 331, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionTitle ?? 'Notification history'}
+                    textOptions={{ fill: '#777215' }}
                     name="title"
-                    layout={{ position: 'absolute', width: 120, alignSelf: 'center', marginTop: -152, marginBottom: 152, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? 'Notification history'}
-                        textOptions={{ fill: '#777215' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 120, alignSelf: 'center', marginTop: -152, marginBottom: 152, height: 13 }}
+                />
                 <Region
                     name="separator"
                     backgroundColor="#2f2f2f"

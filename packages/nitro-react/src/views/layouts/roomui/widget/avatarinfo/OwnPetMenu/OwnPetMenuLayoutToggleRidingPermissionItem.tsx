@@ -39,16 +39,14 @@ export const OwnPetMenuLayoutToggleRidingPermissionItem = ({ captionLabel, layou
                             />
                         )}
                         {(visibleLabel ?? true) && (
-                            <Region
+                            <ThemeText
+                                text={captionLabel ?? t('infostand.button.toggle_riding_permission')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 78 }}
                                 name="label"
-                                layout={{ position: 'absolute', left: 26, width: 78, alignSelf: 'center', height: 40, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionLabel ?? t('infostand.button.toggle_riding_permission')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 78 }}
-                                />
-                            </Region>
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 26, width: 78, alignSelf: 'center', height: 40, maxWidth: 78, maxHeight: 46 }}
+                            />
                         )}
                     </ContainerButton>
                 )}

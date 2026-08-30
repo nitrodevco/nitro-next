@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `name` of ExtendedProfileBadgeDetailsLayout - pass real rows through its `items…` slot. */
 export interface ExtendedProfileBadgeDetailsLayoutNameItemProps {
@@ -8,14 +8,12 @@ export interface ExtendedProfileBadgeDetailsLayoutNameItemProps {
 
 export const ExtendedProfileBadgeDetailsLayoutNameItem = ({ captionName, layout }: ExtendedProfileBadgeDetailsLayoutNameItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionName ?? ''}
+            textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
             name="name"
-            layout={{ width: 250, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionName ?? ''}
-                textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 250, height: 4, flexShrink: 0, ...layout }}
+        />
     );
 };

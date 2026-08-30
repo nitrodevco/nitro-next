@@ -12,16 +12,13 @@ export const LoginEnvironmentListItemLayout = ({ captionTitle, layout, srcIcon }
     return (
         <Region layout={{ position: 'relative', width: 172, height: 20, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 172, maxWidth: 172 }}>
-                <Region
+                <ThemeText
+                    text={captionTitle ?? 'title'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#666666' }}
                     name="title"
-                    layout={{ position: 'absolute', left: 20, width: 27, top: 2, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? 'title'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 20, width: 27, top: 2, bottom: 1 }}
+                />
                 <ThemeImage
                     name="icon"
                     src={srcIcon ?? layoutImage('illumina_light_separator.png')}

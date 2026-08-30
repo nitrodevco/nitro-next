@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, ButtonThick, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, ButtonThick, Frame, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1187_group_created_window_xml` (layout "Group created window", 358x381) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GroupCreatedWindowLayoutProps {
@@ -35,13 +35,13 @@ export const GroupCreatedWindowLayout = ({ layout, onClose, onOkButton, srcGroup
             >
                 {t('group.created.ok')}
             </ButtonThick>
-            <Region layout={{ position: 'absolute', left: 22, width: 311, top: 10, height: 150, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('group.created.info')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 311 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('group.created.info')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 311 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 22, width: 311, top: 10, height: 150 }}
+            />
         </Frame>
     );
 };

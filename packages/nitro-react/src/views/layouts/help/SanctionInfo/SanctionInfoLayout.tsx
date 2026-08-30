@@ -49,15 +49,12 @@ export const SanctionInfoLayout = ({ captionFaqLink, captionSanctionInfoDisclaim
                 name="bottom"
                 layout={{ position: 'absolute', left: 10, width: 426, top: 270, height: 40 }}
             >
-                <Region
+                <ThemeText
+                    text={captionSanctionInfoDisclaimer ?? t('help.sanction.info.disclaimer')}
+                    textOptions={{ fill: '#696969' }}
                     name="sanction_info_disclaimer"
-                    layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSanctionInfoDisclaimer ?? t('help.sanction.info.disclaimer')}
-                        textOptions={{ fill: '#696969' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 17 }}
+                />
                 <Region layout={{ position: 'absolute', left: 0, width: 420, top: 19, height: 30, flexDirection: 'row' }}>
                     <ThemeImage
                         src={layoutImage('icons_link_icon.png')}

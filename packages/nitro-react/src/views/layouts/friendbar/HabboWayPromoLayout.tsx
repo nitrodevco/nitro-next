@@ -43,36 +43,28 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                         src={srcCounterBg ?? '${image.library.url}reception/reception_counter_bg.png'}
                         layout={{ position: 'absolute', left: 35, width: 137, top: 178, height: 23 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionCounterInfoTxt ?? t('landing.view.habbowaypromo.counterinfo')}
+                        textStyle="text-style-il-heading-3"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 201, align: 'center' }}
                         name="counter_info_txt"
-                        layout={{ position: 'absolute', left: 6, width: 201, top: 210, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionCounterInfoTxt ?? t('landing.view.habbowaypromo.counterinfo')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 201, align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 6, width: 201, top: 210, height: 14 }}
+                    />
+                    <ThemeText
+                        text={captionCounterTxt ?? '00000000'}
+                        textOptions={{ fill: '#ffffff' }}
                         name="counter_txt"
-                        layout={{ position: 'absolute', left: 38, width: 140, top: 180, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCounterTxt ?? '00000000'}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 38, width: 140, top: 180, height: 17 }}
+                    />
                 </Region>
                 <Region layout={{ position: 'absolute', right: 0, width: 270, top: 0, height: 190, flexDirection: 'column' }}>
-                    <Region
+                    <ThemeText
+                        text={captionCaptionTxt ?? t('landing.view.habbowaypromo.caption')}
+                        textStyle="text-style-il-heading-1"
                         name="caption_txt"
-                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCaptionTxt ?? t('landing.view.habbowaypromo.caption')}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0 }}
+                    />
                     <Region
                         name="spacing"
                         backgroundColor="#000000"
@@ -80,15 +72,13 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                     >
                         {spacing}
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionInfoTxt ?? t('landing.view.habbowaypromo.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
                         name="info_txt"
-                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfoTxt ?? t('landing.view.habbowaypromo.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0 }}
+                    />
                     <Button
                         variant="100"
                         name="go_button"
@@ -97,16 +87,14 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                     >
                         {t('landing.view.habbowaypromo.doit')}
                     </Button>
-                    <Region
+                    <ThemeText
+                        text={captionPsTitleTxt ?? t('landing.view.habbowaypromo.ps.title')}
+                        textStyle="text-style-il-heading-3"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
                         name="ps_title_txt"
-                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPsTitleTxt ?? t('landing.view.habbowaypromo.ps.title')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0 }}
+                    />
                     <Border
                         variant="100"
                         layout={{ alignSelf: 'stretch', height: 79, flexShrink: 0 }}
@@ -116,15 +104,13 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                             src={srcCounterBg2 ?? '${image.library.url}album1584/ACH_HabboWayGraduate1.png'}
                             layout={{ position: 'absolute', left: 16, width: 38, alignSelf: 'center', marginTop: -3.5, marginBottom: 3.5, height: 38 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionInfoTxt2 ?? t('landing.view.habbowaypromo.ps.info')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 201 }}
                             name="info_txt"
-                            layout={{ position: 'absolute', right: 6, width: 201, bottom: 4, height: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionInfoTxt2 ?? t('landing.view.habbowaypromo.ps.info')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 201 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', right: 6, width: 201, bottom: 4, height: 60 }}
+                        />
                     </Border>
                 </Region>
             </Region>

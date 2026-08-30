@@ -9,15 +9,12 @@ export interface IlluminaLightSwitchLayoutProps {
 export const IlluminaLightSwitchLayout = ({ captionCAPTIONTEXT, layout }: IlluminaLightSwitchLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 50, height: 21, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionCAPTIONTEXT ?? ''}
+                textStyle="text-style-il-button"
                 name="_CAPTION_TEXT"
-                layout={{ position: 'absolute', left: 0, width: 2, top: 0, height: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCAPTIONTEXT ?? ''}
-                    textStyle="text-style-il-button"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 2, top: 0, height: 2 }}
+            />
         </Region>
     );
 };

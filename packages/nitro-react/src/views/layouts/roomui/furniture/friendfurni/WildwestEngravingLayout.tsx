@@ -30,16 +30,13 @@ export const WildwestEngravingLayout = ({ captionDate, captionHeader, captionNam
                     src={srcBackground ?? '${image.library.url}furniextras/loveLock_wildwest.png'}
                     layout={{ position: 'absolute', left: 0, width: 375, top: 0, height: 210 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionHeader ?? t('wildwest.engraving.caption')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#59224a', align: 'center' }}
                     name="header"
-                    layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 217, top: 126, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionHeader ?? t('wildwest.engraving.caption')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#59224a', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 217, top: 126, height: 17 }}
+                />
                 <ThemeImage
                     name="avatar_left"
                     src={srcAvatarLeft}
@@ -52,36 +49,27 @@ export const WildwestEngravingLayout = ({ captionDate, captionHeader, captionNam
                     tint={tintAvatarRight}
                     layout={{ position: 'absolute', left: 186, width: 70, top: 7, height: 115 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionNameLeft ?? t('wildwest.engraving.left')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#59224a', align: 'right' }}
                     name="name_left"
-                    layout={{ position: 'absolute', left: 19, width: 150, top: 175, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionNameLeft ?? t('wildwest.engraving.left')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#59224a', align: 'right' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 19, width: 150, top: 175, height: 17 }}
+                />
+                <ThemeText
+                    text={captionNameRight ?? t('wildwest.engraving.right')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#59224a' }}
                     name="name_right"
-                    layout={{ position: 'absolute', left: 199, width: 87, top: 175, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNameRight ?? t('wildwest.engraving.right')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#59224a' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 199, width: 87, top: 175, height: 17 }}
+                />
+                <ThemeText
+                    text={captionDate ?? ''}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#59224a', align: 'center' }}
                     name="date"
-                    layout={{ position: 'absolute', marginLeft: 4, marginRight: -4, width: 97, top: 151, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionDate ?? ''}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#59224a', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 4, marginRight: -4, width: 97, top: 151, height: 4 }}
+                />
                 <Region
                     name="header_button_close"
                     onPointerTap={onHeaderButtonClose}

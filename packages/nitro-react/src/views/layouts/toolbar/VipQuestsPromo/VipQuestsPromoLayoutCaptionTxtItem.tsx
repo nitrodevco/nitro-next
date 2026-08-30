@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `caption_txt` of VipQuestsPromoLayout - pass real rows through its `items…` slot. */
 export interface VipQuestsPromoLayoutCaptionTxtItemProps {
@@ -11,14 +11,12 @@ export const VipQuestsPromoLayoutCaptionTxtItem = ({ captionCaptionTxt, layout }
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionCaptionTxt ?? t('citizenship.vip.quests.caption')}
+            textOptions={{ wordWrap: true, wordWrapWidth: 170 }}
             name="caption_txt"
-            layout={{ width: 170, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionCaptionTxt ?? t('citizenship.vip.quests.caption')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 170, height: 30, flexShrink: 0, ...layout }}
+        />
     );
 };

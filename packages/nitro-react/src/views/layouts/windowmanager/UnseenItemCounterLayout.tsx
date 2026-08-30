@@ -15,15 +15,12 @@ export const UnseenItemCounterLayout = ({ captionCount, layout }: UnseenItemCoun
                 tintColor="#ee2924"
                 layout={{ position: 'absolute', right: -3, width: 29, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCount ?? '999'}
+                    textStyle="text-style-il-regular-white"
                     name="count"
-                    layout={{ position: 'absolute', left: 4, top: 0, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCount ?? '999'}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 4, top: 0, bottom: 2 }}
+                />
             </Border>
         </Region>
     );

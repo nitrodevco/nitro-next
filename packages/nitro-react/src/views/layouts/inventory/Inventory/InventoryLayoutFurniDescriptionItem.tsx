@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `furni_description` of InventoryLayout - pass real rows through its `items…` slot. */
 export interface InventoryLayoutFurniDescriptionItemProps {
@@ -8,14 +8,12 @@ export interface InventoryLayoutFurniDescriptionItemProps {
 
 export const InventoryLayoutFurniDescriptionItem = ({ captionFurniDescription, layout }: InventoryLayoutFurniDescriptionItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionFurniDescription ?? 'description lakjdsf lkjas dflkjalkjasdflkja sdlfkj asdf'}
+            textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
             name="furni_description"
-            layout={{ width: 190, height: 30, flexShrink: 0, minWidth: 190, maxWidth: 190, maxHeight: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionFurniDescription ?? 'description lakjdsf lkjas dflkjalkjasdflkja sdlfkj asdf'}
-                textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 190, height: 30, flexShrink: 0, minWidth: 190, maxWidth: 190, maxHeight: 45, ...layout }}
+        />
     );
 };

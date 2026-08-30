@@ -1031,9 +1031,34 @@ const fillsHost = (child: Element, host: Element): boolean =>
  * `host` - a container whose only child is this text, filling it - the host's own Region carries
  * the text instead of nesting two boxes.
  */
+/** Does a text/bitmap box need a `Region` of its own (something only a container can carry)? */
+const needsRegion = (ctx: EmitContext, box: Element, el: Element, host: Element | undefined): boolean => {
+    if (box.dropShadow || box.attrs.blend) return true;
+    if (el.tag === 'link') return true;
+    if (host && (host.tag === 'region' || host.tag === 'container') && host.attrs.name && (host.params & PARAM.INPUT)) return true;
+
+    const bgColor = hexColor(box.attrs.color);
+
+    return !!(bgColor && (box.attrs.background === 'true' || box.tag === 'background' || box.tag === 'gradient'));
+};
+
 const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, host?: Element): string[] => {
     const box = host ?? el;
     const { props: textProps, hasText, wordWrap, autoSize } = textElement(ctx, el, parent.name);
+
+    // The common case: the text IS the box. `ThemeText` positions itself with `layout` and
+    // aligns the rendered text inside it (`textOptions.align` / `verticalAlign`), so the
+    // Region that used to hold it is one container fewer per label.
+    if (hasText && !needsRegion(ctx, box, el, host)) {
+        const props = [
+            ...textProps,
+            ...metaProps(ctx, box),
+            ...(wordWrap ? [ 'verticalAlign="top"' ] : []),
+            `layout={${boxLayout(box, parent, {}, { autoSize: !host })}}`,
+        ];
+
+        return openTag('ThemeText', props, indent, true);
+    }
 
     ctx.imports.add('Region');
 
@@ -1063,9 +1088,9 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     return wrap('Region', regionProps, indent, child);
 };
 
-const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
+const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, host?: Element): string[] => {
     const assetName = el.vars.asset_uri ?? el.vars.bitmap_asset_name ?? '';
-    const props = [ ...metaProps(ctx, el) ];
+    const props = [ ...metaProps(ctx, host ?? el) ];
     let src: string | undefined;
 
     if (assetName.startsWith('${')) {
@@ -1103,7 +1128,7 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     props.push(...blendProp(el));
 
     ctx.imports.add('ThemeImage');
-    props.push(`layout={${boxLayout(el, parent, {}, { autoSize: true })}}`);
+    props.push(`layout={${boxLayout(host ?? el, parent, {}, { autoSize: !host })}}`);
 
     // Only a drop shadow needs a Region around the image.
     const image = openTag('ThemeImage', props, el.dropShadow ? indent + INDENT : indent, true);
@@ -1500,6 +1525,12 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         case 'gradient': {
             if (el.children.length === 1 && TEXT_TAGS.has(el.children[0].tag) && el.children[0].tag !== 'link' && fillsHost(el.children[0], el) && el.children[0].attrs.visible !== 'false') {
                 return emitText(ctx, el.children[0], parent, indent, el);
+            }
+
+            // Likewise a container holding only a bitmap that fills it: the image is the box.
+            if (el.children.length === 1 && (el.children[0].tag === 'bitmap' || el.children[0].tag === 'static_bitmap') && fillsHost(el.children[0], el)
+                && el.children[0].attrs.visible !== 'false' && !el.children[0].dropShadow && !needsRegion(ctx, el, el.children[0], el) && !(el.attrs.name && (el.params & PARAM.INPUT))) {
+                return emitBitmap(ctx, el.children[0], parent, indent, el);
             }
 
             // An empty named container was a runtime mount point (`maincontent`, `sideContainer`,

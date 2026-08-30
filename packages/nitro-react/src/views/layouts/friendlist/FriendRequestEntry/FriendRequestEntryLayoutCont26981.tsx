@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { BoxLayout, Icon, Region } from '#base/theme';
+import { BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 
 /** Named region `cont_26981` of FriendRequestEntryLayout - configured through the parent's `cont26981` prop. */
 export interface FriendRequestEntryLayoutCont26981Props {
@@ -46,18 +46,16 @@ export const FriendRequestEntryLayoutCont26981 = ({ bgRegion, captionInfoText, c
                     layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
                 />
             </Region>
-            <Region
+            <ThemeText
+                text={captionRequesterNameText ?? 'PH Requester Name'}
                 name="requester_name_text"
-                layout={{ position: 'absolute', left: 17, width: 101, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionRequesterNameText ?? 'PH Requester Name'}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 17, width: 101, top: 3, height: 13 }}
+            />
+            <ThemeText
+                text={captionInfoText ?? 'PH Info Text'}
                 name="info_text"
-                layout={{ position: 'absolute', right: 13, width: 67, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionInfoText ?? 'PH Info Text'}
-            </Region>
+                layout={{ position: 'absolute', right: 13, width: 67, top: 3, height: 13 }}
+            />
             <Region
                 name="accept"
                 onPointerTap={onAccept}

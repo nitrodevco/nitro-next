@@ -55,15 +55,13 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                     layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0 }}
                 />
             </Border>
-            <Region
+            <ThemeText
+                text={captionHeightText ?? t('widget.custom.stack.height.text')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 294 }}
                 name="height_text"
-                layout={{ position: 'absolute', left: 10, right: 4, top: 5, height: 59, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeightText ?? t('widget.custom.stack.height.text')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 294 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, right: 4, top: 5, height: 59 }}
+            />
             <Border
                 variant="105"
                 layout={{ position: 'absolute', right: 0, width: 58, alignSelf: 'center', marginTop: -1.5, marginBottom: 1.5, height: 30 }}
@@ -84,12 +82,12 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                     onPointerTap={onMultiwalkCheckbox}
                     layout={{ position: 'absolute', left: 13, width: 17, top: 3, height: 16 }}
                 />
-                <Region layout={{ position: 'absolute', right: 5, width: 282, top: 2, bottom: 3, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('widget.custom.multiwalk_mode.text')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 282 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('widget.custom.multiwalk_mode.text')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 282 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 5, width: 282, top: 2, bottom: 3 }}
+                />
             </Region>
             <ContainerButton
                 variant="102"

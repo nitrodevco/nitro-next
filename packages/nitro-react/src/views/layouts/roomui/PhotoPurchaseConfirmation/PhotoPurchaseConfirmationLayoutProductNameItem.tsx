@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `product_name` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PhotoPurchaseConfirmationLayoutProductNameItemProps {
@@ -11,15 +11,13 @@ export const PhotoPurchaseConfirmationLayoutProductNameItem = ({ captionProductN
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionProductName ?? t('camera.purchase.header')}
+            textStyle="text-style-u-bold"
+            textOptions={{ wordWrap: true, wordWrapWidth: 191 }}
             name="product_name"
-            layout={{ width: 191, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionProductName ?? t('camera.purchase.header')}
-                textStyle="text-style-u-bold"
-                textOptions={{ wordWrap: true, wordWrapWidth: 191 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 191, flexShrink: 0, ...layout }}
+        />
     );
 };

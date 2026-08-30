@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `header` of MainView_65Layout - pass real rows through its `items…` slot. */
 export interface MainView_65LayoutHeaderItemProps {
@@ -11,11 +11,10 @@ export const MainView_65LayoutHeaderItem = ({ captionHeader, layout }: MainView_
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionHeader ?? t('groupforum.view.shortcuts.header')}
             name="header"
-            layout={{ width: 191, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionHeader ?? t('groupforum.view.shortcuts.header')}
-        </Region>
+            layout={{ width: 191, height: 16, flexShrink: 0, ...layout }}
+        />
     );
 };

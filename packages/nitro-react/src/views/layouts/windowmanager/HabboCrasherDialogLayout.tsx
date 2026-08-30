@@ -1,4 +1,4 @@
-import { BoxLayout, ButtonThick, Frame, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ButtonThick, Frame, ThemeText } from '#base/theme';
 
 /** Generated from `2112_habbo_crasher_dialog_xml` (layout "habbo_crasher_dialog", 201x123) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface HabboCrasherDialogLayoutProps {
@@ -19,16 +19,14 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
             onClose={onClose}
             layout={{ width: 201, height: 123, minWidth: 201, minHeight: 123, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionCrasherText ?? 'Warning: Pressing the button crashes the client!!!'}
+                textStyle="text-style-u-bold"
+                textOptions={{ wordWrap: true, wordWrapWidth: 171 }}
                 name="crasher_text"
-                layout={{ position: 'absolute', left: 7, right: 11, top: 12, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCrasherText ?? 'Warning: Pressing the button crashes the client!!!'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 171 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 7, right: 11, top: 12, height: 36 }}
+            />
             <ButtonThick
                 variant="3"
                 name="crasher_button"

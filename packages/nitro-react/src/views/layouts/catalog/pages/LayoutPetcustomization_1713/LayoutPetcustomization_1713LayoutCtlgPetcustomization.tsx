@@ -21,16 +21,13 @@ export const LayoutPetcustomization_1713LayoutCtlgPetcustomization = ({ captionC
             name="ctlg_petcustomization"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
+                textStyle="text-style-u-small"
+                textOptions={{ fill: '#666666' }}
                 name="ctlg_selectproduct"
-                layout={{ position: 'absolute', left: 8, width: 107, top: 133, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 8, width: 107, top: 133, height: 15 }}
+            />
             <ItemGridWidget
                 layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 275 }}
                 {...itemGridWidget}

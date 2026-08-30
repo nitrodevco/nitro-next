@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Border, BoxLayout, Button, CheckBox, Frame, Region, ScrollArea } from '#base/theme';
+import { Border, BoxLayout, Button, CheckBox, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `3198_profiler_dialog_xml` (layout "habbo_profiler_dialog_2", 470x182) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ProfilerDialogLayoutProps {
@@ -25,12 +25,11 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, itemsList, 
                 variant="0"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -4 }}
             >
-                <Region
+                <ThemeText
+                    text={captionHeader ?? '...'}
                     name="header"
-                    layout={{ position: 'absolute', left: 26, right: 102, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionHeader ?? '...'}
-                </Region>
+                    layout={{ position: 'absolute', left: 26, right: 102, top: 2, height: 14 }}
+                />
                 <Region layout={{ position: 'absolute', left: 4, right: 4, top: 20, bottom: -5 }}>
                     <ScrollArea
                         orientation="vertical"
@@ -44,12 +43,11 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, itemsList, 
                         </Region>
                     </ScrollArea>
                     {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
-                    <Region
+                    <ThemeText
+                        text={captionFooter ?? 'Info text'}
                         name="footer"
-                        layout={{ position: 'absolute', left: 20, right: 382, bottom: 19, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionFooter ?? 'Info text'}
-                    </Region>
+                        layout={{ position: 'absolute', left: 20, right: 382, bottom: 19, height: 16 }}
+                    />
                     <CheckBox
                         variant="101"
                         name="footer_enable_toggle"

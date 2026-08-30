@@ -44,13 +44,12 @@ export const NavigatorFrame2LayoutRightPane = ({ blockResults, layout, onCreateR
                         src={layoutImage('newnavigator_create_room.png')}
                         layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('navigator.create.room')}
-                            textStyle="text-style-id-heading-2"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('navigator.create.room')}
+                        textStyle="text-style-id-heading-2"
+                        textOptions={{ align: 'center' }}
+                        layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17 }}
+                    />
                 </Region>
             </Border>
             <Border
@@ -69,13 +68,12 @@ export const NavigatorFrame2LayoutRightPane = ({ blockResults, layout, onCreateR
                         src={layoutImage('newnavigator_random_room.png')}
                         layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('navigator.random.room')}
-                            textStyle="text-style-id-heading-2"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('navigator.random.room')}
+                        textStyle="text-style-id-heading-2"
+                        textOptions={{ align: 'center' }}
+                        layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17 }}
+                    />
                 </Region>
             </Border>
             {(visiblePromoteRoomBorder ?? false) && (
@@ -95,13 +93,12 @@ export const NavigatorFrame2LayoutRightPane = ({ blockResults, layout, onCreateR
                             src={layoutImage('newnavigator_promote_room.png')}
                             layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
                         />
-                        <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <ThemeText
-                                text={t('navigator.promote.room')}
-                                textStyle="text-style-id-heading-2"
-                                textOptions={{ align: 'center' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('navigator.promote.room')}
+                            textStyle="text-style-id-heading-2"
+                            textOptions={{ align: 'center' }}
+                            layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17 }}
+                        />
                     </Region>
                 </Border>
             )}

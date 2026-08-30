@@ -28,24 +28,20 @@ export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
             name="ctlg_single_bundle"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionCtlgDescription ?? t('lorem.html')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 329 }}
                 name="ctlg_description"
-                layout={{ position: 'absolute', left: 15, width: 329, top: 13, height: 62, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgDescription ?? t('lorem.html')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 329 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 15, width: 329, top: 13, height: 62 }}
+            />
+            <ThemeText
+                text={captionCtlgSpecialTxt ?? t('lorem.html')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 173 }}
                 name="ctlg_special_txt"
-                layout={{ position: 'absolute', left: 159, width: 173, top: 92, height: 25, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSpecialTxt ?? t('lorem.html')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 173 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 159, width: 173, top: 92, height: 25 }}
+            />
             <Border
                 variant="6"
                 name="bundleGridScrollWidget"
@@ -78,12 +74,11 @@ export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
                     src={srcCtlgSpecialImg}
                     layout={{ position: 'absolute', left: 10, width: 32, top: 5, height: 30 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionCtlgText1 ?? t('lorem.html')}
                     name="ctlg_text_1"
-                    layout={{ position: 'absolute', left: 51, width: 256, top: 10, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionCtlgText1 ?? t('lorem.html')}
-                </Region>
+                    layout={{ position: 'absolute', left: 51, width: 256, top: 10, height: 22 }}
+                />
             </Border>
             <AddOnBadgeViewWidget
                 layout={{ position: 'absolute', left: 12, width: 40, top: 125, height: 40 }}

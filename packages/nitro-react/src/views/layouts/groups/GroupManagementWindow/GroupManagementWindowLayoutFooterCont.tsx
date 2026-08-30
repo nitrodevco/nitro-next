@@ -30,12 +30,11 @@ export const GroupManagementWindowLayoutFooterCont = ({ captionBuyTxt, captionCa
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCancelLink ?? t('cancel')}
                         name="cancel_link"
-                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionCancelLink ?? t('cancel')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
+                    />
                 </Region>
                 <Region
                     name="previous_step_link_region"
@@ -43,12 +42,11 @@ export const GroupManagementWindowLayoutFooterCont = ({ captionBuyTxt, captionCa
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPreviousStepLink ?? t('group.create.previousstep')}
                         name="previous_step_link"
-                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionPreviousStepLink ?? t('group.create.previousstep')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
+                    />
                 </Region>
                 <Border
                     variant="0"
@@ -61,15 +59,13 @@ export const GroupManagementWindowLayoutFooterCont = ({ captionBuyTxt, captionCa
                         src={srcBuyCreditIcon ?? '${image.library.url}guilds/gcreate_icon_credit.png'}
                         layout={{ position: 'absolute', left: 9, width: 21, top: 11, height: 20 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionBuyTxt ?? t('group.create.confirm.buyinfo')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 131 }}
                         name="buy_txt"
-                        layout={{ position: 'absolute', left: 37, width: 131, top: 3, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBuyTxt ?? t('group.create.confirm.buyinfo')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 131 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 37, width: 131, top: 3, height: 34 }}
+                    />
                     <ButtonThick
                         variant="3"
                         name="buy_button"

@@ -27,16 +27,13 @@ export const WiredStyleVolterLayoutMenuItemTemplateItem = ({ captionText, layout
                 />
             )}
             {(visibleText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionText ?? 'Copy configuration'}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#ffffff' }}
                     name="text"
-                    layout={{ position: 'absolute', left: 28, width: 99, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? 'Copy configuration'}
-                        textStyle="text-style-regular"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 28, width: 99, top: 3, height: 13 }}
+                />
             )}
         </Region>
     );

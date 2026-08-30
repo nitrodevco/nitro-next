@@ -42,15 +42,12 @@ export const GuideToolLayoutList = ({ captionStatusCaptionTxt, itemsList, layout
                 >
                     Off duty right now
                 </CheckBox>
-                <Region
+                <ThemeText
+                    text={captionStatusCaptionTxt ?? t('guide.help.guide.tool.yourstatus')}
+                    textOptions={{ fill: '#666666' }}
                     name="status_caption_txt"
-                    layout={{ position: 'absolute', left: 58, width: 150, top: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusCaptionTxt ?? t('guide.help.guide.tool.yourstatus')}
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 58, width: 150, top: 11, height: 15 }}
+                />
             </Border>
         </Region>
     );

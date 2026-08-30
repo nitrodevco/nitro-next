@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { BoxLayout, Icon, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Icon, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Named region `entry` of SearchEntryLayout - configured through the parent's `entry` prop. */
 export interface SearchEntryLayoutEntryProps {
@@ -35,12 +35,11 @@ export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, 
             >
                 {bgRegion}
             </Region>
-            <Region
+            <ThemeText
+                text={captionCaption ?? 'PH CAPTION'}
                 name="caption"
-                layout={{ position: 'absolute', left: 5, width: 200, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionCaption ?? 'PH CAPTION'}
-            </Region>
+                layout={{ position: 'absolute', left: 5, width: 200, top: 3, height: 20 }}
+            />
             <Region
                 name="user_info_region"
                 layout={{ position: 'absolute', left: 21, width: 15, top: 5, height: 11 }}
@@ -56,12 +55,11 @@ export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, 
                     layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
                 />
             </Region>
-            <Region
+            <ThemeText
+                text={captionName ?? 'PH Avatar Name'}
                 name="name"
-                layout={{ position: 'absolute', left: 37, width: 200, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionName ?? 'PH Avatar Name'}
-            </Region>
+                layout={{ position: 'absolute', left: 37, width: 200, top: 3, height: 20 }}
+            />
             <ThemeImage
                 name="face"
                 src={srcFace}

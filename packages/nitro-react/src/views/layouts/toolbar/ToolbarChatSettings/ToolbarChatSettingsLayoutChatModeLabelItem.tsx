@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `chat_mode_label` of ToolbarChatSettingsLayout - pass real rows through its `items…` slot. */
 export interface ToolbarChatSettingsLayoutChatModeLabelItemProps {
@@ -11,15 +11,12 @@ export const ToolbarChatSettingsLayoutChatModeLabelItem = ({ captionChatModeLabe
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionChatModeLabel ?? t('toolbar.chat.settings.mode')}
+            textStyle="text-style-u-regular"
+            textOptions={{ fill: '#ffffff' }}
             name="chat_mode_label"
-            layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionChatModeLabel ?? t('toolbar.chat.settings.mode')}
-                textStyle="text-style-u-regular"
-                textOptions={{ fill: '#ffffff' }}
-            />
-        </Region>
+            layout={{ width: 237, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

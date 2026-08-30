@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `score_txt` of MainView_1185Layout - pass real rows through its `items…` slot. */
 export interface MainView_1185LayoutScoreTxtItemProps {
@@ -8,11 +8,10 @@ export interface MainView_1185LayoutScoreTxtItemProps {
 
 export const MainView_1185LayoutScoreTxtItem = ({ captionScoreTxt, layout }: MainView_1185LayoutScoreTxtItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionScoreTxt ?? '7864'}
             name="score_txt"
-            layout={{ width: 31, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionScoreTxt ?? '7864'}
-        </Region>
+            layout={{ width: 31, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

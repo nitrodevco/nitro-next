@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `price_credits` of PremiumPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PremiumPurchaseConfirmationLayoutPriceCreditsItemProps {
@@ -8,11 +8,10 @@ export interface PremiumPurchaseConfirmationLayoutPriceCreditsItemProps {
 
 export const PremiumPurchaseConfirmationLayoutPriceCreditsItem = ({ captionPriceCredits, layout }: PremiumPurchaseConfirmationLayoutPriceCreditsItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionPriceCredits ?? '0'}
             name="price_credits"
-            layout={{ width: 10, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionPriceCredits ?? '0'}
-        </Region>
+            layout={{ width: 10, height: 18, flexShrink: 0, ...layout }}
+        />
     );
 };

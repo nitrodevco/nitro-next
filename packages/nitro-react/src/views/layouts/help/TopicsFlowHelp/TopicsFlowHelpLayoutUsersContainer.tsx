@@ -21,12 +21,11 @@ export const TopicsFlowHelpLayoutUsersContainer = ({ itemsUserList, layout, visi
                 name="users_container"
                 layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 430, ...layout }}
             >
-                <Region layout={{ position: 'absolute', left: 30, width: 278, top: 30, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.main.step.two.title')}
-                        textStyle="text-style-u-headline-medium"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.emergency.main.step.two.title')}
+                    textStyle="text-style-u-headline-medium"
+                    layout={{ position: 'absolute', left: 30, width: 278, top: 30, height: 21 }}
+                />
                 {/* `text` is hidden and has no name to show it by */}
                 <ScrollArea
                     orientation="vertical"

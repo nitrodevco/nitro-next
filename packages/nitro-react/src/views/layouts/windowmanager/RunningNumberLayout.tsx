@@ -29,16 +29,13 @@ export const RunningNumberLayout = ({ captionNumberField, layout, srcLeft, srcMi
                     src={srcRight ?? layoutImage('illumina_light_clock_background_right.png')}
                     layout={{ position: 'absolute', right: 0, width: 3, top: 0, height: 23 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionNumberField ?? ''}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
                     name="number_field"
-                    layout={{ position: 'absolute', left: 0, top: 3, height: 4, minWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNumberField ?? ''}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, top: 3, height: 4, minWidth: 60 }}
+                />
             </Region>
         </Region>
     );

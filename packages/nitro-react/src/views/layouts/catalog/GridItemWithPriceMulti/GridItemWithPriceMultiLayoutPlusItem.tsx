@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `plus` of GridItemWithPriceMultiLayout - pass real rows through its `items…` slot. */
 export interface GridItemWithPriceMultiLayoutPlusItemProps {
@@ -8,11 +8,10 @@ export interface GridItemWithPriceMultiLayoutPlusItemProps {
 
 export const GridItemWithPriceMultiLayoutPlusItem = ({ captionPlus, layout }: GridItemWithPriceMultiLayoutPlusItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionPlus ?? ' '}
             name="plus"
-            layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionPlus ?? ' '}
-        </Region>
+            layout={{ width: 10, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

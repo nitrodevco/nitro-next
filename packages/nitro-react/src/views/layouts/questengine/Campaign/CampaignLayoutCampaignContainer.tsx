@@ -43,15 +43,13 @@ export const CampaignLayoutCampaignContainer = ({ bg, bgBottom, bgTop, captionCa
             >
                 {bgBottom}
             </Region>
-            <Region
+            <ThemeText
+                text={captionCampaignHeaderTxt ?? 'Decoration'}
+                textOptions={{ wordWrap: true, wordWrapWidth: 95, align: 'center' }}
                 name="campaign_header_txt"
-                layout={{ position: 'absolute', width: 95, top: 12, height: 17, maxWidth: 95, maxHeight: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionCampaignHeaderTxt ?? 'Decoration'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 95, align: 'center' }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', width: 95, top: 12, height: 17, maxWidth: 95, maxHeight: 29 }}
+            />
             <ThemeImage
                 name="campaign_pic_bitmap"
                 src={srcCampaignPicBitmap}
@@ -72,15 +70,12 @@ export const CampaignLayoutCampaignContainer = ({ bg, bgBottom, bgTop, captionCa
                 src={srcCompletionBgGreenBitmap ?? '${image.library.questing.url}quest_counterbkg_completed.png'}
                 layout={{ position: 'absolute', width: 49, bottom: 10, height: 20 }}
             />
-            <Region
+            <ThemeText
+                text={captionCompletionTxt ?? '1/10'}
+                textOptions={{ fill: '#ffffff' }}
                 name="completion_txt"
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 30, top: 84, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCompletionTxt ?? '1/10'}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 30, top: 84, height: 18 }}
+            />
         </Region>
     );
 };

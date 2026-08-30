@@ -48,15 +48,12 @@ export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, capti
                 />
             </ContainerButton>
             {(visibleFooterInfoTxt ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionFooterInfoTxt ?? t('group.members.pageinfo')}
+                    textStyle="text-style-u-regular"
                     name="footer_info_txt"
-                    layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 144, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFooterInfoTxt ?? t('group.members.pageinfo')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 144, top: 4, height: 17 }}
+                />
             )}
             <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 178, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region

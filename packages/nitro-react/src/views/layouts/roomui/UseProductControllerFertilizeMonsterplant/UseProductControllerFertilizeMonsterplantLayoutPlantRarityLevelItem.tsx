@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `plant_rarity_level` of UseProductControllerFertilizeMonsterplantLayout - pass real rows through its `items…` slot. */
 export interface UseProductControllerFertilizeMonsterplantLayoutPlantRarityLevelItemProps {
@@ -11,14 +11,12 @@ export const UseProductControllerFertilizeMonsterplantLayoutPlantRarityLevelItem
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionPlantRarityLevel ?? t('useproduct.widget.monsterplant.plant.raritylevel')}
+            textOptions={{ wordWrap: true, wordWrapWidth: 134, align: 'center' }}
             name="plant_rarity_level"
-            layout={{ alignSelf: 'stretch', height: 44, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
-        >
-            <ThemeText
-                text={captionPlantRarityLevel ?? t('useproduct.widget.monsterplant.plant.raritylevel')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 134, align: 'center' }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ alignSelf: 'stretch', height: 44, flexShrink: 0, ...layout }}
+        />
     );
 };

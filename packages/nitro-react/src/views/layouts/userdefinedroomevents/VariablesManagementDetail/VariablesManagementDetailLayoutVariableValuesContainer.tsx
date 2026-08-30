@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Bubble, Button, Region, TextInput } from '#base/theme';
+import { Border, BoxLayout, Bubble, Button, Region, TextInput, ThemeText } from '#base/theme';
 
 /** Named region `variable_values_container` of VariablesManagementDetailLayout - configured through the parent's `variableValuesContainer` prop. */
 export interface VariablesManagementDetailLayoutVariableValuesContainerProps {
@@ -24,12 +24,11 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
             name="variable_values_container"
             layout={{ position: 'absolute', left: 18, width: 303, top: 196, bottom: 10, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTitle ?? t('wiredmenu.variable_management_detail.variables')}
                 name="title"
-                layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionTitle ?? t('wiredmenu.variable_management_detail.variables')}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19 }}
+            />
             <Region
                 name="variable_values_table_container"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 34 }}
@@ -64,9 +63,10 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                         name="variable_setting"
                         layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            {t('wiredmenu.inspection.select_variable')}
-                        </Region>
+                        <ThemeText
+                            text={t('wiredmenu.inspection.select_variable')}
+                            layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17 }}
+                        />
                         <Region
                             name="var_picker_container"
                             layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 22 }}
@@ -78,9 +78,10 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                         name="value_setting"
                         layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            {t('wiredmenu.inspection.select_value')}
-                        </Region>
+                        <ThemeText
+                            text={t('wiredmenu.inspection.select_value')}
+                            layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17 }}
+                        />
                         <Border
                             variant="4"
                             name="value_input_border"

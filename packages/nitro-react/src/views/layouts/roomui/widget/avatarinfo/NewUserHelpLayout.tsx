@@ -16,16 +16,14 @@ export const NewUserHelpLayout = ({ captionHelp, layout, visibleBorder }: NewUse
                     name="border"
                     layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionHelp ?? ''}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ wordWrap: true }}
                         name="help"
-                        layout={{ position: 'absolute', left: 5, top: 5, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHelp ?? ''}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ wordWrap: true }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 5, top: 5 }}
+                    />
                 </Bubble>
             )}
         </Region>

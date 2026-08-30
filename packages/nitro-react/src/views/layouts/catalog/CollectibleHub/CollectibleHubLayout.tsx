@@ -174,15 +174,12 @@ export const CollectibleHubLayout = ({ captionCollectorLevelDescription, caption
                                     layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17 }}
                                 >
                                     {(visibleCollectorProfileHeader ?? false) && (
-                                        <Region
+                                        <ThemeText
+                                            text={captionCollectorProfileHeader ?? 'Collector Profile Header'}
+                                            textStyle="text-style-u-regular"
                                             name="collector_profile_header"
-                                            layout={{ position: 'absolute', left: 0, width: 141, top: 0, bottom: 0, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                        >
-                                            <ThemeText
-                                                text={captionCollectorProfileHeader ?? 'Collector Profile Header'}
-                                                textStyle="text-style-u-regular"
-                                            />
-                                        </Region>
+                                            layout={{ position: 'absolute', left: 0, width: 141, top: 0, bottom: 0, minWidth: 2, maxWidth: 270 }}
+                                        />
                                     )}
                                 </Region>
                             )}
@@ -230,15 +227,12 @@ export const CollectibleHubLayout = ({ captionCollectorLevelDescription, caption
                                 cursor="pointer"
                                 layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17 }}
                             >
-                                <Region
+                                <ThemeText
+                                    text={captionCollectorLevelHeader ?? 'Levels Header'}
+                                    textStyle="text-style-u-regular"
                                     name="collector_level_header"
-                                    layout={{ position: 'absolute', left: 0, width: 83, top: 0, bottom: 0, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionCollectorLevelHeader ?? 'Levels Header'}
-                                        textStyle="text-style-u-regular"
-                                    />
-                                </Region>
+                                    layout={{ position: 'absolute', left: 0, width: 83, top: 0, bottom: 0, minWidth: 2, maxWidth: 270 }}
+                                />
                             </Region>
                             <Region
                                 name="category_minting_description_region"

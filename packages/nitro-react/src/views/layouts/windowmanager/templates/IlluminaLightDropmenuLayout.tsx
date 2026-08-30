@@ -14,15 +14,12 @@ export interface IlluminaLightDropmenuLayoutProps {
 export const IlluminaLightDropmenuLayout = ({ captionDROPLISTTITLETEXT, dROPLISTREGION, itemsDROPLISTITEMLIST, layout, onDROPLISTREGION }: IlluminaLightDropmenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 22, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionDROPLISTTITLETEXT ?? ''}
+                textStyle="text-style-il-regular"
                 name="_DROPLIST_TITLETEXT"
-                layout={{ position: 'absolute', left: 10, right: 20, top: 3, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDROPLISTTITLETEXT ?? ''}
-                    textStyle="text-style-il-regular"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 10, right: 20, top: 3, height: 14 }}
+            />
             <ScrollArea
                 orientation="vertical"
                 layout={{ position: 'absolute', left: 6, right: 6, top: 2, height: 18 }}

@@ -68,16 +68,13 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionT
                     layout={{ position: 'absolute', left: 42, width: 119, top: 25, height: 18 }}
                 >
                     {(visibleTextDiscard ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTextDiscard ?? t('friendbar.request.decline')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff' }}
                             name="text_discard"
-                            layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionTextDiscard ?? t('friendbar.request.decline')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, top: 0, height: 15 }}
+                        />
                     )}
                 </Region>
             )}

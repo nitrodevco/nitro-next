@@ -22,25 +22,21 @@ export const RespectGivingFailedNotificationLayout = ({ captionBodyTxt, captionC
             layout={{ width: 369, height: 220, minWidth: 369, minHeight: 220, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionCaptionTxt ?? t('respect.giving.failed.caption')}
+                    textStyle="text-style-il-heading-title"
+                    textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 250 }}
                     name="caption_txt"
-                    layout={{ position: 'absolute', left: 10, width: 250, top: 12, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCaptionTxt ?? t('respect.giving.failed.caption')}
-                        textStyle="text-style-il-heading-title"
-                        textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 250 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 250, top: 12, height: 46 }}
+                />
+                <ThemeText
+                    text={captionBodyTxt ?? ''}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                     name="body_txt"
-                    layout={{ position: 'absolute', left: 10, width: 250, top: 49, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBodyTxt ?? ''}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 250, top: 49, height: 100 }}
+                />
                 <ThemeImage
                     name="respectFailedNotificationBitmap"
                     src={srcRespectFailedNotificationBitmap}

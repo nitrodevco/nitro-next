@@ -44,15 +44,12 @@ export const LandingViewGenericReceptionLayoutContentBackground = ({ captionDail
                 layout={{ position: 'absolute', right: 288, width: 2, top: 0, bottom: 0 }}
             />
             <Region layout={{ position: 'absolute', left: 310, width: 299, top: 74, height: 30, flexDirection: 'row', gap: 5 }}>
-                <Region
+                <ThemeText
+                    text={captionDailyContent ?? t('landing.view.generic.content.title')}
+                    textStyle="text-style-il-heading-3"
                     name="daily_content"
-                    layout={{ width: 167, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDailyContent ?? t('landing.view.generic.content.title')}
-                        textStyle="text-style-il-heading-3"
-                    />
-                </Region>
+                    layout={{ width: 167, height: 15, flexShrink: 0 }}
+                />
                 <ThemeImage
                     name="border_bar"
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}

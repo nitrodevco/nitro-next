@@ -51,27 +51,22 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, layout,
                     layout={{ position: 'absolute', left: 64, width: 101, top: 8, height: 26, justifyContent: 'center' }}
                 >
                     {(visibleJoin ?? false) && (
-                        <Region
-                            name="join"
-                            layout={{ position: 'absolute', width: 25, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionJoin ?? 'join'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#00c1c4' }}
-                            />
-                        </Region>
-                    )}
-                    <Region
-                        name="days"
-                        layout={{ position: 'absolute', left: 25, width: 50, top: 4, height: 28, maxWidth: 50, minHeight: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
                         <ThemeText
-                            text={captionDays ?? '23 d.'}
+                            text={captionJoin ?? 'join'}
                             textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#00c1c4', wordWrap: true, wordWrapWidth: 50 }}
+                            textOptions={{ fill: '#00c1c4' }}
+                            name="join"
+                            layout={{ position: 'absolute', width: 25, top: 4, height: 17 }}
                         />
-                    </Region>
+                    )}
+                    <ThemeText
+                        text={captionDays ?? '23 d.'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#00c1c4', wordWrap: true, wordWrapWidth: 50 }}
+                        name="days"
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 25, width: 50, top: 4, height: 28, maxWidth: 50, minHeight: 28, maxHeight: 28 }}
+                    />
                     <ThemeImage
                         src={layoutImage('pursearea_hc_icon.png')}
                         layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
@@ -91,16 +86,13 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, layout,
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 64, width: 101, top: 40, height: 26 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionEarnings ?? t('earnings.title')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#00c1c4' }}
                         name="earnings"
-                        layout={{ position: 'absolute', left: 25, width: 79, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionEarnings ?? t('earnings.title')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#00c1c4' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 25, width: 79, top: 4, height: 17 }}
+                    />
                     <ThemeImage
                         src={layoutImage('pursearea_icon_earnings.png')}
                         layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}

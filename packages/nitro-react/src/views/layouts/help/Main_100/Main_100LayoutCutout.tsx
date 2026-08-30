@@ -80,19 +80,17 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
                             src={layoutImage('reward_track_point_large.png')}
                             layout={{ width: 27, height: 18, flexShrink: 0 }}
                         />
-                        <Region
-                            name="points_total_collected_txt"
-                            layout={{ width: 41, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionPointsTotalCollectedTxt ?? '125'}
-                        </Region>
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 10, width: 160, top: 36, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <ThemeText
-                            text={t('reward_track.profile.points_collected')}
-                            textOptions={{ align: 'center' }}
+                            text={captionPointsTotalCollectedTxt ?? '125'}
+                            name="points_total_collected_txt"
+                            layout={{ width: 41, height: 28, flexShrink: 0 }}
                         />
                     </Region>
+                    <ThemeText
+                        text={t('reward_track.profile.points_collected')}
+                        textOptions={{ align: 'center' }}
+                        layout={{ position: 'absolute', left: 10, width: 160, top: 36, height: 18 }}
+                    />
                 </Border>
                 <Shape
                     name="splitter"
@@ -105,12 +103,11 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
                         src={layoutImage('reward_track_checkmark.png')}
                         layout={{ width: 17, height: 15, flexShrink: 0 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionRewardsCollectedTxt ?? t('reward_track.profile.rewards_collected')}
                         name="rewards_collected_txt"
-                        layout={{ width: 224, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionRewardsCollectedTxt ?? t('reward_track.profile.rewards_collected')}
-                    </Region>
+                        layout={{ width: 224, height: 17, flexShrink: 0 }}
+                    />
                 </Region>
             </Border>
         </Region>

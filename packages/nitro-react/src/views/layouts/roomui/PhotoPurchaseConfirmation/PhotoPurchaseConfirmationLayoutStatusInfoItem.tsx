@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `status_info` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PhotoPurchaseConfirmationLayoutStatusInfoItemProps {
@@ -11,14 +11,12 @@ export const PhotoPurchaseConfirmationLayoutStatusInfoItem = ({ captionStatusInf
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionStatusInfo ?? t('camera.purchase.pleasewait')}
+            textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
             name="status_info"
-            layout={{ width: 320, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionStatusInfo ?? t('camera.purchase.pleasewait')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 320, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

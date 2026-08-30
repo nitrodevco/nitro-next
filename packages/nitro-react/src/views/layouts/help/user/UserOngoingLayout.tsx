@@ -53,12 +53,11 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                                 textStyle="text-style-il-heading-2"
                             />
                         </Region>
-                        <Region
+                        <ThemeText
+                            text={captionGuideDesc ?? t('guide.help.request.user.ongoing.guide.desc')}
                             name="guide_desc"
-                            layout={{ width: 130, height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionGuideDesc ?? t('guide.help.request.user.ongoing.guide.desc')}
-                        </Region>
+                            layout={{ width: 130, height: 16, flexShrink: 0, maxWidth: 130 }}
+                        />
                     </Region>
                 </Region>
                 <Region
@@ -82,12 +81,11 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                     name="chat_list"
                     layout={{ flexDirection: 'column', width: '100%' }}
                 >
-                    <Region layout={{ width: 140, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.help.common.typing')}
-                            textOptions={{ fill: '#555555' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('guide.help.common.typing')}
+                        textOptions={{ fill: '#555555' }}
+                        layout={{ width: 140, height: 21, flexShrink: 0 }}
+                    />
                 </Region>
             </ScrollArea>
             <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 5, height: 79 }}>

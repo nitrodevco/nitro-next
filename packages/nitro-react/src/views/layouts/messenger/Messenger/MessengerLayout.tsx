@@ -116,16 +116,13 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                         layout={{ position: 'absolute', left: 0, right: -11, top: 39, height: 15 }}
                     >
                         {separatorWidget}
-                        <Region
+                        <ThemeText
+                            text={captionSeparatorLabel ?? t('messenger.window.separator')}
+                            textStyle="text-style-il-border"
+                            textOptions={{ fill: '#444444' }}
                             name="separator_label"
-                            layout={{ position: 'absolute', left: 0, width: 157, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSeparatorLabel ?? t('messenger.window.separator')}
-                                textStyle="text-style-il-border"
-                                textOptions={{ fill: '#444444' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, width: 157, alignSelf: 'center', height: 15 }}
+                        />
                     </WidgetSlot>
                     <Region
                         name="button_strip"

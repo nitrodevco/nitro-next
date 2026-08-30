@@ -29,29 +29,25 @@ export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContai
                         src={srcRelationshipStatus}
                         layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionName ?? 'my_name_here'}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="name"
-                        layout={{ position: 'absolute', left: 16, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionName ?? 'my_name_here'}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 16, top: 3, height: 16 }}
+                    />
                     <Region
                         name="change_name_container"
                         onPointerTap={onChangeNameContainer}
                         cursor="pointer"
                         layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 123, top: 19, height: 18 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 20, width: 106, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('widget.avatar.change_name')}
-                                textStyle="text-style-u-italic"
-                                textOptions={{ fill: '#fac200' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('widget.avatar.change_name')}
+                            textStyle="text-style-u-italic"
+                            textOptions={{ fill: '#fac200' }}
+                            layout={{ position: 'absolute', left: 20, width: 106, top: 0, bottom: 0 }}
+                        />
                         <ThemeImage
                             name="pen_icon"
                             src={srcPenIcon}

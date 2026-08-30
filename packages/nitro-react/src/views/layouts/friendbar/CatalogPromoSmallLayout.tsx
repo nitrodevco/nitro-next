@@ -20,15 +20,12 @@ export const CatalogPromoSmallLayout = ({ captionCatalogPromoCaption, captionCat
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 250 }}
             >
                 <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}>
-                    <Region
+                    <ThemeText
+                        text={captionCatalogPromoCaption ?? t('landing.view.catalogpromo.caption')}
+                        textStyle="text-style-il-heading-1"
                         name="catalog_promo_caption"
-                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCatalogPromoCaption ?? t('landing.view.catalogpromo.caption')}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0 }}
+                    />
                     <Region
                         backgroundColor="#000000"
                         layout={{ alignSelf: 'stretch', height: 120, flexShrink: 0 }}
@@ -38,15 +35,13 @@ export const CatalogPromoSmallLayout = ({ captionCatalogPromoCaption, captionCat
                             src={srcPicture ?? '${image.library.url}reception/catalog_teaser_set_mnstr_gothic.png'}
                             layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 120 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionCatalogPromoInfo ?? t('landing.view.catalogpromo.info')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 124 }}
                             name="catalog_promo_info"
-                            layout={{ position: 'absolute', right: 0, width: 124, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCatalogPromoInfo ?? t('landing.view.catalogpromo.info')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 124 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', right: 0, width: 124, top: 0, bottom: 0 }}
+                        />
                     </Region>
                     <Button
                         variant="100"

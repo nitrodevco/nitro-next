@@ -30,12 +30,12 @@ export const UserCreateLayoutList = ({ captionCancelLink, itemsList, layout, onC
                     <UserCreateLayoutInputWidgetItem />
                 </>
             )}
-            <Region layout={{ alignSelf: 'stretch', height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('guide.help.request.user.create.help')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 264 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('guide.help.request.user.create.help')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 264 }}
+                verticalAlign="top"
+                layout={{ alignSelf: 'stretch', height: 50, flexShrink: 0 }}
+            />
             <Region layout={{ alignSelf: 'stretch', height: 108, flexShrink: 0 }}>
                 <Button
                     variant="101"

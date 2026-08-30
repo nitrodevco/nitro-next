@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `handitem_text` of RentableBotViewLayout - pass real rows through its `items…` slot. */
 export interface RentableBotViewLayoutHanditemTextItemProps {
@@ -11,14 +11,12 @@ export const RentableBotViewLayoutHanditemTextItem = ({ captionHanditemText, lay
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionHanditemText ?? t('infostand.text.handitem')}
+            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
             name="handitem_text"
-            layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionHanditemText ?? t('infostand.text.handitem')}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 170, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

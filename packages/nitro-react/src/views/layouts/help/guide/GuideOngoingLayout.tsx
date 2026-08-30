@@ -74,12 +74,11 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, inputW
                     name="chat_list"
                     layout={{ flexDirection: 'column', width: '100%' }}
                 >
-                    <Region layout={{ width: 140, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.help.common.typing')}
-                            textOptions={{ fill: '#555555' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('guide.help.common.typing')}
+                        textOptions={{ fill: '#555555' }}
+                        layout={{ width: 140, height: 21, flexShrink: 0 }}
+                    />
                 </Region>
             </ScrollArea>
             <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 3, height: 75 }}>

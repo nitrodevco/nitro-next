@@ -62,15 +62,12 @@ export const CameraEditorLayoutSliderContainer = ({ captionSliderEffectInfo, lay
                     layout={{ position: 'absolute', left: 0, width: 24, top: 0, height: 24 }}
                 />
             </Region>
-            <Region
+            <ThemeText
+                text={captionSliderEffectInfo ?? 'default filter 50%'}
+                textOptions={{ fill: '#eeeeee' }}
                 name="slider_effect_info"
-                layout={{ position: 'absolute', width: 110, top: 8, height: 18, maxWidth: 320, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionSliderEffectInfo ?? 'default filter 50%'}
-                    textOptions={{ fill: '#eeeeee' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 110, top: 8, height: 18, maxWidth: 320 }}
+            />
         </Region>
     );
 };

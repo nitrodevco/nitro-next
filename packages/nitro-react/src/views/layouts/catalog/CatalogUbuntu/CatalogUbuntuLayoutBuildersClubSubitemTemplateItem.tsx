@@ -54,16 +54,13 @@ export const CatalogUbuntuLayoutBuildersClubSubitemTemplateItem = ({ captionItem
                 />
             )}
             {(visibleItemTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemTitle ?? 'sub-item'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#b77734' }}
                     name="item_title"
-                    layout={{ position: 'absolute', left: 42, right: 82, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemTitle ?? 'sub-item'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#b77734' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 42, right: 82, top: 1, height: 17 }}
+                />
             )}
             {(visibleDropButton ?? false) && (
                 <Icon

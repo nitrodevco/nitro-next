@@ -34,15 +34,13 @@ export const CollectibleHubLayoutCategoryFooter = ({ captionNoWalletText, layout
                         name="no_wallet_container"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionNoWalletText ?? t('shop.minting.no_wallet.description')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
                             name="no_wallet_text"
-                            layout={{ position: 'absolute', left: 10, width: 360, alignSelf: 'center', marginTop: -41.5, marginBottom: 41.5, height: 17, minHeight: 0, maxHeight: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNoWalletText ?? t('shop.minting.no_wallet.description')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 10, width: 360, alignSelf: 'center', marginTop: -41.5, marginBottom: 41.5, height: 17, minHeight: 0, maxHeight: 60 }}
+                        />
                         <ThemeImage
                             src={layoutImage('image_connection_problem.png')}
                             layout={{ position: 'absolute', left: 380, width: 92, top: 5, height: 90 }}

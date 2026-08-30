@@ -9,15 +9,12 @@ export interface IlluminaLightDropmenuItemLayoutProps {
 export const IlluminaLightDropmenuItemLayout = ({ captionBTNTEXT, layout }: IlluminaLightDropmenuItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 8, height: 12, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionBTNTEXT ?? ''}
+                textStyle="text-style-il-regular"
                 name="_BTN_TEXT"
-                layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBTNTEXT ?? ''}
-                    textStyle="text-style-il-regular"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 12 }}
+            />
         </Region>
     );
 };

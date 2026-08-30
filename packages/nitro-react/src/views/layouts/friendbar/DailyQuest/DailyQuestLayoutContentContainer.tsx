@@ -24,24 +24,19 @@ export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captio
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 230, width: 270, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionCaptionTxt ?? 'Caption PH'}
+                textStyle="text-style-il-heading-1"
                 name="caption_txt"
-                layout={{ position: 'absolute', left: 0, width: 94, top: 32, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCaptionTxt ?? 'Caption PH'}
-                    textStyle="text-style-il-heading-1"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 0, width: 94, top: 32, height: 24 }}
+            />
+            <ThemeText
+                text={captionInfoTxt ?? '...and everything must go, so get yourself some of the sweet, sweet plastic fantastic while you still can! You don\'t want to miss out on the classics!'}
+                textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
                 name="info_txt"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 41, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionInfoTxt ?? '...and everything must go, so get yourself some of the sweet, sweet plastic fantastic while you still can! You don\'t want to miss out on the classics!'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 41 }}
+            />
             <Button
                 variant="100"
                 name="accept_button"
@@ -56,12 +51,11 @@ export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captio
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 253, top: 139, height: 19 }}
             >
-                <Region
+                <ThemeText
+                    text={captionNextQuestTxt ?? 'PH: Show me another easy quest'}
                     name="next_quest_txt"
-                    layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionNextQuestTxt ?? 'PH: Show me another easy quest'}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 14 }}
+                />
             </Region>
             <Region
                 name="cancel_quest_region"
@@ -69,12 +63,11 @@ export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captio
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 253, top: 152, height: 19 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCancelQuestTxt ?? t('landing.view.quest.cancel')}
                     name="cancel_quest_txt"
-                    layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionCancelQuestTxt ?? t('landing.view.quest.cancel')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 14 }}
+                />
             </Region>
             <Border
                 variant="100"
@@ -89,15 +82,13 @@ export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captio
                 >
                     {t('landing.view.quest.go')}
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionCurrentQuestTxt ?? t('landing.view.quest.currenttask')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 174 }}
                     name="current_quest_txt"
-                    layout={{ position: 'absolute', left: 13, width: 174, top: 10, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCurrentQuestTxt ?? t('landing.view.quest.currenttask')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 174 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 13, width: 174, top: 10, height: 34 }}
+                />
             </Border>
         </Region>
     );

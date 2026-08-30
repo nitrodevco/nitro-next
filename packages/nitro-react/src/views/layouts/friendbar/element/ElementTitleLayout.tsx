@@ -25,16 +25,13 @@ export const ElementTitleLayout = ({ captionTitleTxt, colorableTextColor, layout
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 0, width: 12, top: 10, height: 4 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTitleTxt ?? t('landing.view.pageexpiry.title')}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ fill: colorableTextColor }}
                     name="title_txt"
-                    layout={{ position: 'absolute', left: 18, width: 133, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitleTxt ?? t('landing.view.pageexpiry.title')}
-                        textStyle="text-style-il-heading-3"
-                        textOptions={{ fill: colorableTextColor }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 133, top: 4, height: 14 }}
+                />
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}

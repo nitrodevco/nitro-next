@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `hits_remaining` of CrackableFurniViewLayout - pass real rows through its `items…` slot. */
 export interface CrackableFurniViewLayoutHitsRemainingItemProps {
@@ -11,14 +11,12 @@ export const CrackableFurniViewLayoutHitsRemainingItem = ({ captionHitsRemaining
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionHitsRemaining ?? t('infostand.crackable_furni.hits_remaining')}
+            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
             name="hits_remaining"
-            layout={{ width: 170, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionHitsRemaining ?? t('infostand.crackable_furni.hits_remaining')}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 170, height: 14, flexShrink: 0, ...layout }}
+        />
     );
 };

@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `time_remaining_label` of RentablespaceLayout - pass real rows through its `items…` slot. */
 export interface RentablespaceLayoutTimeRemainingLabelItemProps {
@@ -8,14 +8,11 @@ export interface RentablespaceLayoutTimeRemainingLabelItemProps {
 
 export const RentablespaceLayoutTimeRemainingLabelItem = ({ captionTimeRemainingLabel, layout }: RentablespaceLayoutTimeRemainingLabelItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionTimeRemainingLabel ?? '5 days and 2 hours'}
+            textStyle="text-style-u-italic"
             name="time_remaining_label"
-            layout={{ width: 113, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionTimeRemainingLabel ?? '5 days and 2 hours'}
-                textStyle="text-style-u-italic"
-            />
-        </Region>
+            layout={{ width: 113, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

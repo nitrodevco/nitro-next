@@ -48,15 +48,13 @@ export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, iconW
                 >
                     {iconWidget}
                 </WidgetSlot>
-                <Region
+                <ThemeText
+                    text={captionNftPrizeDescription ?? t('collectibles.reward_box.notif.desc')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 115 }}
                     name="nft_prize_description"
-                    layout={{ position: 'absolute', left: 65, width: 115, top: 29, height: 50, minHeight: 22, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNftPrizeDescription ?? t('collectibles.reward_box.notif.desc')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 115 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 65, width: 115, top: 29, height: 50, minHeight: 22 }}
+                />
                 <ThemeImage
                     src={undefined}
                     layout={{ position: 'absolute', left: 8, width: 50, alignSelf: 'center', height: 50 }}

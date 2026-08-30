@@ -25,15 +25,13 @@ export const TransactionOverviewLayoutHeader = ({ captionWarningText, itemsKeyVa
             layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 62, ...layout }}
         >
             {(visibleWarningText ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionWarningText ?? ''}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 861 }}
                     name="warning_text"
-                    layout={{ position: 'absolute', left: 10, right: 9, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionWarningText ?? ''}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 861 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, right: 9, top: 10, bottom: -6 }}
+                />
             )}
             <Region
                 name="key_value_pairs"

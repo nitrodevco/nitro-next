@@ -23,15 +23,13 @@ export const NavSimpleAlertLayout = ({ captionBodyText, layout, onClose, onOk }:
             layout={{ width: 193, height: 157, minWidth: 193, minHeight: 157, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
                     name="body_text"
-                    layout={{ position: 'absolute', left: 12, right: 9, top: 14, height: 78, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 12, right: 9, top: 14, height: 78 }}
+                />
                 <Button
                     variant="3"
                     name="ok"

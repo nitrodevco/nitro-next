@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `plant_name` of UseProductControllerFertilizeMonsterplantLayout - pass real rows through its `items…` slot. */
 export interface UseProductControllerFertilizeMonsterplantLayoutPlantNameItemProps {
@@ -11,14 +11,11 @@ export const UseProductControllerFertilizeMonsterplantLayoutPlantNameItem = ({ c
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionPlantName ?? t('useproduct.widget.monsterplant.plant.name')}
+            textOptions={{ align: 'center' }}
             name="plant_name"
-            layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
-        >
-            <ThemeText
-                text={captionPlantName ?? t('useproduct.widget.monsterplant.plant.name')}
-                textOptions={{ align: 'center' }}
-            />
-        </Region>
+            layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

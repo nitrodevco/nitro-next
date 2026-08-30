@@ -28,16 +28,13 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                 tintColor="#79756e"
                 layout={{ position: 'absolute', left: 1, width: 242, top: 1, height: 248, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionWordFilterTitle ?? t('word_filter.settings.title')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="word_filter_title"
-                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionWordFilterTitle ?? t('word_filter.settings.title')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 153, top: 5, height: 17 }}
+                />
                 <Region
                     name="line"
                     backgroundColor="#2f2f2f"

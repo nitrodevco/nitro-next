@@ -30,15 +30,12 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, video
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 7, right: 1, top: 6, bottom: 7, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
+                    textStyle="text-style-il-regular-white"
                     name="no_videos_label"
-                    layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16 }}
+                />
                 {(visibleVideoWrapper ?? false) && (
                     <Region
                         name="video_wrapper"
@@ -53,12 +50,11 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, video
                 name="video_id_editor"
                 layout={{ position: 'absolute', left: 12, right: 6, top: 12, height: 19 }}
             >
-                <Region layout={{ position: 'absolute', left: 1, width: 52, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text="Video id:"
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                <ThemeText
+                    text="Video id:"
+                    textStyle="text-style-u-bold"
+                    layout={{ position: 'absolute', left: 1, width: 52, top: 1, height: 17 }}
+                />
                 <TextInput
                     value={videoIdValue}
                     onChange={setVideoIdValue}

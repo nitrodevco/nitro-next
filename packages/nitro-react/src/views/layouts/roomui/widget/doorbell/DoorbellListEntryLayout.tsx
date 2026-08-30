@@ -1,4 +1,4 @@
-import { BoxLayout, Icon, Region } from '#base/theme';
+import { BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 
 /** Generated from `963_doorbell_list_entry_xml` (layout "list_entry", 200x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface DoorbellListEntryLayoutProps {
@@ -15,12 +15,11 @@ export const DoorbellListEntryLayout = ({ captionUserName, layout, onAccept, onD
                 backgroundColor="#eeeeee"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionUserName ?? 'username'}
                     name="user_name"
-                    layout={{ position: 'absolute', left: 3, width: 58, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionUserName ?? 'username'}
-                </Region>
+                    layout={{ position: 'absolute', left: 3, width: 58, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17 }}
+                />
                 <Region
                     name="accept"
                     onPointerTap={onAccept}

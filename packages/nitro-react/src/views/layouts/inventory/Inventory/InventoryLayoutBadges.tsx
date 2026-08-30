@@ -86,12 +86,11 @@ export const InventoryLayoutBadges = ({ captionMyBadgesTitle, captionScoreDescri
                 name="item_grid_pages"
                 layout={{ position: 'absolute', left: 0, width: 328, bottom: 81, height: 10, flexDirection: 'row', gap: 2 }}
             >
-                <Region layout={{ width: 8, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text="0"
-                        textStyle="text-style-il-small"
-                    />
-                </Region>
+                <ThemeText
+                    text="0"
+                    textStyle="text-style-il-small"
+                    layout={{ width: 8, height: 14, flexShrink: 0 }}
+                />
             </Region>
             <Region
                 name="active_items"
@@ -100,27 +99,21 @@ export const InventoryLayoutBadges = ({ captionMyBadgesTitle, captionScoreDescri
                 {itemsActiveItems}
             </Region>
             {(visibleMyBadgesTitle ?? false) && (
-                <Region
-                    name="myBadgesTitle"
-                    layout={{ position: 'absolute', left: 20, width: 285, top: -3, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionMyBadgesTitle ?? t('inventory.badges.inactivebadges')}
-                        textStyle="text-style-u-headline-small"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-            )}
-            <Region
-                name="wearingTitle"
-                layout={{ position: 'absolute', right: 4, width: 134, top: 32, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
                 <ThemeText
-                    text={captionWearingTitle ?? t('inventory.badges.activebadges')}
+                    text={captionMyBadgesTitle ?? t('inventory.badges.inactivebadges')}
                     textStyle="text-style-u-headline-small"
                     textOptions={{ align: 'center' }}
+                    name="myBadgesTitle"
+                    layout={{ position: 'absolute', left: 20, width: 285, top: -3, height: 19 }}
                 />
-            </Region>
+            )}
+            <ThemeText
+                text={captionWearingTitle ?? t('inventory.badges.activebadges')}
+                textStyle="text-style-u-headline-small"
+                textOptions={{ align: 'center' }}
+                name="wearingTitle"
+                layout={{ position: 'absolute', right: 4, width: 134, top: 32, height: 19 }}
+            />
             <InventoryLayoutDescriptionArea {...descriptionArea} />
             {(visibleAchievementsScoreContainer ?? false) && (
                 <Region
@@ -133,15 +126,12 @@ export const InventoryLayoutBadges = ({ captionMyBadgesTitle, captionScoreDescri
                         tintColor="#428bb2"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 17, minWidth: 368 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionScoreDescriptionText ?? t('achievements_score_description')}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                             name="score_description_text"
-                            layout={{ position: 'absolute', right: 0, width: 468, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionScoreDescriptionText ?? t('achievements_score_description')}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', right: 0, width: 468, alignSelf: 'center', height: 17 }}
+                        />
                     </Border>
                 </Region>
             )}

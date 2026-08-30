@@ -32,16 +32,14 @@ export const NuxGiftSelectionLayout = ({ captionNuxGiftSelectionChooseOne, layou
                         backgroundColor="#0f4052"
                         layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionNuxGiftSelectionChooseOne ?? t('nux.gift.selection.choose.one')}
+                            textStyle="text-style-u-headline-big"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 330 }}
                             name="nux_gift_selection_choose_one"
-                            layout={{ position: 'absolute', left: 75, width: 330, top: 13, height: 28, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNuxGiftSelectionChooseOne ?? t('nux.gift.selection.choose.one')}
-                                textStyle="text-style-u-headline-big"
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 330 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 75, width: 330, top: 13, height: 28, maxHeight: 84 }}
+                        />
                     </Region>
                     <ThemeImage
                         name="club_icon"

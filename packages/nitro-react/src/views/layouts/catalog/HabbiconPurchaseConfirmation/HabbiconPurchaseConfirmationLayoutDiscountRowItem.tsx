@@ -19,28 +19,22 @@ export const HabbiconPurchaseConfirmationLayoutDiscountRowItem = ({ captionDisco
             layout={{ width: 327, height: 17, flexShrink: 0, ...layout }}
         >
             {(visibleDiscountLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionDiscountLabel ?? t('habbicon_purchase.confirm.discount')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#5f4c16' }}
                     name="discount_label"
-                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDiscountLabel ?? t('habbicon_purchase.confirm.discount')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#5f4c16' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, bottom: 0 }}
+                />
             )}
             {(visibleDiscountAmount ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionDiscountAmount ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#5f4c16', align: 'right' }}
                     name="discount_amount"
-                    layout={{ position: 'absolute', left: 232, width: 95, bottom: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionDiscountAmount ?? '0'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#5f4c16', align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 232, width: 95, bottom: 0, height: 17 }}
+                />
             )}
         </Region>
     );

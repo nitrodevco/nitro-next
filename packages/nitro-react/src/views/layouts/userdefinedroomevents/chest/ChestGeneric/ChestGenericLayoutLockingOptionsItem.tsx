@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, CheckBox, Region } from '#base/theme';
+import { BoxLayout, CheckBox, Region, ThemeText } from '#base/theme';
 
 import { ChestGenericLayoutSplitterItem } from './ChestGenericLayoutSplitterItem';
 
@@ -35,9 +35,10 @@ export const ChestGenericLayoutLockingOptionsItem = ({ itemsLockingOptions, layo
                         layout={{ width: 15, height: 15, flexShrink: 0 }}
                     />
                 )}
-                <Region layout={{ width: 86, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredchests.lock_chest')}
-                </Region>
+                <ThemeText
+                    text={t('wiredchests.lock_chest')}
+                    layout={{ width: 86, height: 17, flexShrink: 0 }}
+                />
             </Region>
             <Region layout={{ width: 286, height: 16, flexShrink: 0, flexDirection: 'row', gap: 5 }}>
                 {(visibleAutoLockChestCbx ?? true) && (
@@ -48,9 +49,10 @@ export const ChestGenericLayoutLockingOptionsItem = ({ itemsLockingOptions, layo
                         layout={{ width: 15, height: 15, flexShrink: 0 }}
                     />
                 )}
-                <Region layout={{ width: 266, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredchests.auto_lock_chest')}
-                </Region>
+                <ThemeText
+                    text={t('wiredchests.auto_lock_chest')}
+                    layout={{ width: 266, height: 17, flexShrink: 0 }}
+                />
             </Region>
         </Region>
     );

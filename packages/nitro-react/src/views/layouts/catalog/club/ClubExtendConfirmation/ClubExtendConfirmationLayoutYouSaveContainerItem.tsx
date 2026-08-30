@@ -24,27 +24,21 @@ export const ClubExtendConfirmationLayoutYouSaveContainerItem = ({ captionPlus, 
             layout={{ width: 285, height: 30, flexShrink: 0, ...layout }}
         >
             {(visibleYouSaveLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionYouSaveLabel ?? ''}
+                    textStyle="text-style-u-regular"
                     name="you_save_label"
-                    layout={{ position: 'absolute', left: 0, width: 4, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionYouSaveLabel ?? ''}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 4, bottom: 11, height: 4 }}
+                />
             )}
             {(visibleYouSavePriceLeft ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionYouSavePriceLeft ?? ''}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ align: 'right' }}
                     name="you_save_price_left"
-                    layout={{ position: 'absolute', left: 150, width: 30, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionYouSavePriceLeft ?? ''}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 150, width: 30, bottom: 11, height: 4 }}
+                />
             )}
             {(visibleYouSaveIconLeft ?? true) && (
                 <ThemeImage
@@ -55,28 +49,22 @@ export const ClubExtendConfirmationLayoutYouSaveContainerItem = ({ captionPlus, 
                 />
             )}
             {(visiblePlus ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionPlus ?? ' '}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ align: 'right' }}
                     name="plus"
-                    layout={{ position: 'absolute', left: 212, width: 10, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionPlus ?? ' '}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 212, width: 10, top: 0, height: 4 }}
+                />
             )}
             {(visibleYouSavePriceRight ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionYouSavePriceRight ?? ''}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ align: 'right' }}
                     name="you_save_price_right"
-                    layout={{ position: 'absolute', left: 220, width: 30, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionYouSavePriceRight ?? ''}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 220, width: 30, bottom: 11, height: 4 }}
+                />
             )}
             {(visibleYouSaveIconRight ?? true) && (
                 <Icon

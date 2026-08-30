@@ -44,19 +44,17 @@ export const MainWindow_1503Layout = ({ captionInfoText, layout, mainContent, on
                         tint={tintOpenEditCtgs}
                         layout={{ position: 'absolute', left: 5, width: 10, top: 5, height: 10 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 20, width: 100, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        {t('friendlist.settings')}
-                    </Region>
-                </ContainerButton>
-                <Region
-                    name="info_text"
-                    layout={{ position: 'absolute', left: 100, right: 0, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
                     <ThemeText
-                        text={captionInfoText ?? 'PH Info'}
-                        textOptions={{ fill: '#ffffff' }}
+                        text={t('friendlist.settings')}
+                        layout={{ position: 'absolute', left: 20, width: 100, top: 3, height: 20 }}
                     />
-                </Region>
+                </ContainerButton>
+                <ThemeText
+                    text={captionInfoText ?? 'PH Info'}
+                    textOptions={{ fill: '#ffffff' }}
+                    name="info_text"
+                    layout={{ position: 'absolute', left: 100, right: 0, top: 11, height: 20 }}
+                />
             </Region>
         </Frame>
     );

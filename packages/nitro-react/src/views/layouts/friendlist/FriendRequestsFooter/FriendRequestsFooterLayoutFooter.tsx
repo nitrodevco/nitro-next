@@ -35,12 +35,11 @@ export const FriendRequestsFooterLayoutFooter = ({ layout, onAcceptAllBut, onRej
                         tintColor="#ff3333"
                         layout={{ position: 'absolute', left: 9, width: 16, top: 4, height: 14 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 30, right: 13, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('friendlist.requests.dismissall')}
-                            textOptions={{ fill: '#000000' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('friendlist.requests.dismissall')}
+                        textOptions={{ fill: '#000000' }}
+                        layout={{ position: 'absolute', left: 30, right: 13, top: 3, height: 20 }}
+                    />
                 </ContainerButton>
                 <ContainerButton
                     variant="0"
@@ -54,12 +53,11 @@ export const FriendRequestsFooterLayoutFooter = ({ layout, onAcceptAllBut, onRej
                         tintColor="#33cc00"
                         layout={{ position: 'absolute', left: 9, width: 16, top: 4, height: 14 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 32, right: 11, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('friendlist.requests.acceptall')}
-                            textOptions={{ fill: '#000000' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('friendlist.requests.acceptall')}
+                        textOptions={{ fill: '#000000' }}
+                        layout={{ position: 'absolute', left: 32, right: 11, top: 3, height: 20 }}
+                    />
                 </ContainerButton>
             </Border>
         </Region>

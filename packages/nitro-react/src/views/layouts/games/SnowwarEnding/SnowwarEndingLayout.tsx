@@ -134,15 +134,12 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         tintColor="#000000"
                         layout={{ position: 'absolute', left: 0, width: 10, top: 5, height: 10 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionLeaveLink ?? t('snowwar.leave_game')}
+                        textStyle="text-style-u-bold"
                         name="leave_link"
-                        layout={{ position: 'absolute', left: 5, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionLeaveLink ?? t('snowwar.leave_game')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 5, top: 0, bottom: 0 }}
+                    />
                 </Region>
                 <Region
                     name="mostKillsContainer"
@@ -154,36 +151,27 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         tint={tintBackgroundImage}
                         layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionMostKillsLabelStroke ?? t('snowwar.most_kills')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: strokeTextColor, align: 'center' }}
                         name="mostKillsLabel_stroke"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionMostKillsLabelStroke ?? t('snowwar.most_kills')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: strokeTextColor, align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23 }}
+                    />
+                    <ThemeText
+                        text={captionMostKillsLabel ?? t('snowwar.most_kills')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="mostKillsLabel"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionMostKillsLabel ?? t('snowwar.most_kills')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23 }}
+                    />
+                    <ThemeText
+                        text={captionPlayerName ?? 'yyyy yyyyyy'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
                         name="playerName"
-                        layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionPlayerName ?? 'yyyy yyyyyy'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 130, top: 92, height: 19 }}
+                    />
                     <ThemeImage
                         name="playerImage"
                         src={srcPlayerImage}
@@ -201,33 +189,24 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         tint={tintMostHitsContainerBackgroundImage}
                         layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionMostHitsLabelStroke ?? t('snowwar.most_hits')}
+                        textOptions={{ fill: strokeTextColor, align: 'center' }}
                         name="mostHitsLabel_stroke"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionMostHitsLabelStroke ?? t('snowwar.most_hits')}
-                            textOptions={{ fill: strokeTextColor, align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23 }}
+                    />
+                    <ThemeText
+                        text={captionMostHitsLabel ?? t('snowwar.most_hits')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="mostHitsLabel"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionMostHitsLabel ?? t('snowwar.most_hits')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23 }}
+                    />
+                    <ThemeText
+                        text={captionMostHitsContainerPlayerName ?? 'xxxxx xxxxx'}
+                        textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
                         name="playerName"
-                        layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionMostHitsContainerPlayerName ?? 'xxxxx xxxxx'}
-                            textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 130, top: 92, height: 19 }}
+                    />
                     <ThemeImage
                         name="playerImage"
                         src={srcMostHitsContainerPlayerImage}
@@ -245,24 +224,18 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         tint={tintTeam1ScoreBackground}
                         layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 101 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionTeam1ScoreStroke ?? '245'}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                         name="team1Score_stroke"
-                        layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionTeam1ScoreStroke ?? '245'}
-                            textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30 }}
+                    />
+                    <ThemeText
+                        text={captionTeam1Score ?? '245'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="team1Score"
-                        layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionTeam1Score ?? '245'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30 }}
+                    />
                 </Region>
                 <Region
                     name="team2ScoreContainer"
@@ -274,86 +247,65 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                         tint={tintTeam2ScoreBackground}
                         layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 101 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionTeam2ScoreStroke ?? '245'}
+                        textOptions={{ fill: strokeTextColor ?? '#fd6859', align: 'center' }}
                         name="team2Score_stroke"
-                        layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionTeam2ScoreStroke ?? '245'}
-                            textOptions={{ fill: strokeTextColor ?? '#fd6859', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30 }}
+                    />
+                    <ThemeText
+                        text={captionTeam2Score ?? '245'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="team2Score"
-                        layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionTeam2Score ?? '245'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30 }}
+                    />
                 </Region>
                 <Region
                     name="headerContainer"
                     layout={{ position: 'absolute', width: 450, top: 118, height: 35 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionEndingInformationStroke ?? 'Blue team wins!'}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                         name="endingInformation_stroke"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionEndingInformationStroke ?? 'Blue team wins!'}
-                            textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    />
+                    <ThemeText
+                        text={captionEndingInformation ?? 'Blue team wins!'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="endingInformation"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionEndingInformation ?? 'Blue team wins!'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    />
                 </Region>
                 {(visibleLoadingContainer ?? false) && (
                     <Region
                         name="loadingContainer"
                         layout={{ position: 'absolute', left: 337, width: 208, top: 167, height: 235, justifyContent: 'center' }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionLoadingTextStroke ?? t('snowwar.waiting_players')}
+                            textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                             name="loadingText_stroke"
-                            layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionLoadingTextStroke ?? t('snowwar.waiting_players')}
-                                textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
-                            />
-                        </Region>
-                        <Region
+                            layout={{ position: 'absolute', width: 208, top: 0, height: 23 }}
+                        />
+                        <ThemeText
+                            text={captionLoadingText ?? t('snowwar.waiting_players')}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                             name="loadingText"
-                            layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionLoadingText ?? t('snowwar.waiting_players')}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', width: 208, top: 0, height: 23 }}
+                        />
                         <ThemeImage
                             name="arenaPreview"
                             src={srcArenaPreview}
                             tint={tintArenaPreview}
                             layout={{ position: 'absolute', left: 0, width: 208, top: 35, height: 100 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionArenaName ?? ''}
+                            textOptions={{ fill: '#1077ac' }}
                             name="arenaName"
-                            layout={{ position: 'absolute', width: 4, top: 140, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionArenaName ?? ''}
-                                textOptions={{ fill: '#1077ac' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', width: 4, top: 140, height: 4 }}
+                        />
                         <ThemeImage
                             name="mainLoadingIcon"
                             src={srcMainLoadingIcon}

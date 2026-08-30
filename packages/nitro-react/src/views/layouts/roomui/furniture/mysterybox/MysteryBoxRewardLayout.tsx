@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Button, Frame, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Button, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `851_mystery_box_reward_xml` (layout "mystery_box_reward", 430x234) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MysteryBoxRewardLayoutProps {
@@ -21,9 +21,10 @@ export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewa
             layout={{ width: 430, height: 234, minWidth: 430, minHeight: 234, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, top: 8, flexDirection: 'column', gap: 4 }}>
-                <Region layout={{ width: 128, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('mysterybox.reward.title')}
-                </Region>
+                <ThemeText
+                    text={t('mysterybox.reward.title')}
+                    layout={{ width: 128, height: 16, flexShrink: 0 }}
+                />
                 <Region
                     name="bitmap_container"
                     layout={{ width: 109, height: 109, flexShrink: 0, minWidth: 109, minHeight: 109, justifyContent: 'center' }}

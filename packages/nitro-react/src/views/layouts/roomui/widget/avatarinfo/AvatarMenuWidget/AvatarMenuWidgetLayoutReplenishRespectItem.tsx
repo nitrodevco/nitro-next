@@ -30,16 +30,13 @@ export const AvatarMenuWidgetLayoutReplenishRespectItem = ({ captionLabel, layou
                         layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
                     >
                         {(visibleLabel ?? true) && (
-                            <Region
+                            <ThemeText
+                                text={captionLabel ?? t('infostand.button.replenish_respect')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff', align: 'center' }}
                                 name="label"
-                                layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionLabel ?? t('infostand.button.replenish_respect')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16 }}
+                            />
                         )}
                         <ThemeImage
                             src={layoutImage('pursearea_duckets_icon.png')}

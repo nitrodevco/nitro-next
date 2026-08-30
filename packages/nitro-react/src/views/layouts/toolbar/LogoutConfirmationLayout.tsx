@@ -17,13 +17,13 @@ export const LogoutConfirmationLayout = ({ layout, onCancel, onConfirm }: Logout
                 variant="1"
                 layout={{ position: 'absolute', right: 0, width: 192, top: 0, bottom: 0 }}
             >
-                <Region layout={{ position: 'absolute', left: 11, width: 170, top: 9, height: 41, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('toolbar.logout.confirmation')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 170 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('toolbar.logout.confirmation')}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 170 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 11, width: 170, top: 9, height: 41 }}
+                />
                 <Button
                     variant="4"
                     name="confirm"

@@ -25,16 +25,14 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
             layout={{ width: 278, height: 181, minWidth: 278, minHeight: 181, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionAlertDescription ?? 'Alert'}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                     name="_alert_description"
-                    layout={{ position: 'absolute', left: 27, width: 210, top: 13, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAlertDescription ?? 'Alert'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 27, width: 210, top: 13 }}
+                />
                 <ButtonThick
                     variant="3"
                     name="_alert_button_link"

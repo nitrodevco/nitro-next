@@ -87,16 +87,14 @@ export const PackagecardNewLayoutGiftCardContainerItem = ({ captionMessageFrom, 
                 </Region>
             )}
             {(visibleMessageText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionMessageText ?? ''}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                     name="message_text"
-                    layout={{ position: 'absolute', left: 95, width: 190, top: 31, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMessageText ?? ''}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 95, width: 190, top: 31, height: 100 }}
+                />
             )}
             {(visibleMessageFrom ?? true) && (
                 <Region

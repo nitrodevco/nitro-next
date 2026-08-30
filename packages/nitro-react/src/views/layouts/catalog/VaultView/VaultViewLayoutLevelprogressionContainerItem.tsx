@@ -44,15 +44,12 @@ export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogr
                         />
                     )}
                     {(visibleLevelprogressionDucketValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionLevelprogressionDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="levelprogressionDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionLevelprogressionDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogr
                         />
                     )}
                     {(visibleLevelprogressionCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionLevelprogressionCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="levelprogressionCreditValue"
-                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionLevelprogressionCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogr
                         />
                     )}
                     {(visibleLevelprogressionLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionLevelprogressionLabel ?? t('earnings.levelprogression.label')}
+                            textStyle="text-style-u-bold"
                             name="levelprogression_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionLevelprogressionLabel ?? t('earnings.levelprogression.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

@@ -37,16 +37,14 @@ export const FeaturedItemsWidgetFeaturedItemTemplateItem = ({ captionItemTitle, 
                     layout={{ position: 'absolute', left: 5, width: 346, top: 93, bottom: 3 }}
                 >
                     {(visibleItemTitle ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionItemTitle ?? ''}
+                            textStyle="text-style-ubuntu-condensed-title"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 340 }}
                             name="item_title"
-                            layout={{ position: 'absolute', left: 5, width: 340, top: 5, maxWidth: 340, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionItemTitle ?? ''}
-                                textStyle="text-style-ubuntu-condensed-title"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 340 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 5, width: 340, top: 5, maxWidth: 340 }}
+                        />
                     )}
                 </Border>
             )}

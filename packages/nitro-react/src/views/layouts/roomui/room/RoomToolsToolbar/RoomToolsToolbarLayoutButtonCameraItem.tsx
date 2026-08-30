@@ -28,16 +28,13 @@ export const RoomToolsToolbarLayoutButtonCameraItem = ({ captionTextCamera, layo
                 layout={{ position: 'absolute', left: 2, width: 27, top: 0, height: 25 }}
             />
             {(visibleTextCamera ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTextCamera ?? t('room.camera.button.text')}
+                    textStyle="text-style-u-button-tab"
+                    textOptions={{ fill: '#bbbbbb' }}
                     name="text_camera"
-                    layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextCamera ?? t('room.camera.button.text')}
-                        textStyle="text-style-u-button-tab"
-                        textOptions={{ fill: '#bbbbbb' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90 }}
+                />
             )}
         </Region>
     );

@@ -19,16 +19,13 @@ export const BonusRarePromoLayoutMidContainer = ({ captionHeader, colorableTextC
             name="mid_container"
             layout={{ width: 304, height: 53, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionHeader ?? t('landing.view.bonus.rare.header')}
+                textStyle="text-style-u-headline-medium"
+                textOptions={{ fill: colorableTextColor }}
                 name="header"
-                layout={{ position: 'absolute', width: 246, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeader ?? t('landing.view.bonus.rare.header')}
-                    textStyle="text-style-u-headline-medium"
-                    textOptions={{ fill: colorableTextColor }}
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 246, top: 5, height: 21 }}
+            />
             <BonusRarePromoLayoutProgressBarCont {...progressBarCont} />
         </Region>
     );

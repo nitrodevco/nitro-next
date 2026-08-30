@@ -16,27 +16,23 @@ export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captio
             layout={{ width: 219, alignSelf: 'stretch', flexShrink: 0, ...layout }}
         >
             {(visibleRoomName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomName ?? 'ROOM NAME PLACEHOLDER LOREM IPSUM DOLOR SIT AMET'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 214 }}
                     name="room_name"
-                    layout={{ position: 'absolute', left: 6, right: -1, top: 0, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRoomName ?? 'ROOM NAME PLACEHOLDER LOREM IPSUM DOLOR SIT AMET'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 214 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 6, right: -1, top: 0, height: 33 }}
+                />
             )}
             {(visibleRoomDesc ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomDesc ?? 'ROOM DESC PLACEHOLDER LOREM IPSUM DOLOR SIT AMET'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 214 }}
                     name="room_desc"
-                    layout={{ position: 'absolute', left: 5, right: 0, bottom: -1, height: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRoomDesc ?? 'ROOM DESC PLACEHOLDER LOREM IPSUM DOLOR SIT AMET'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 214 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 5, right: 0, bottom: -1, height: 80 }}
+                />
             )}
         </Region>
     );

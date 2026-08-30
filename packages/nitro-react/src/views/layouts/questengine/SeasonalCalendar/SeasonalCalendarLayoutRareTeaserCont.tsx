@@ -156,24 +156,18 @@ export const SeasonalCalendarLayoutRareTeaserCont = ({ bg, bottom, captionTeaser
                     {clickRegion3}
                 </Region>
             </Region>
-            <Region
+            <ThemeText
+                text={captionTeaserHeader ?? t('quests.seasonalcalendar.rareteaser.header')}
+                textStyle="text-style-u-bold"
                 name="teaser_header"
-                layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 230, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTeaserHeader ?? t('quests.seasonalcalendar.rareteaser.header')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 230, top: 8, height: 16 }}
+            />
+            <ThemeText
+                text={captionTeaserInfo ?? t('quests.seasonalcalendar.rareteaser.info')}
+                textStyle="text-style-u-regular"
                 name="teaser_info"
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 212, top: 71, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTeaserInfo ?? t('quests.seasonalcalendar.rareteaser.info')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 212, top: 71, height: 16 }}
+            />
         </Region>
     );
 };

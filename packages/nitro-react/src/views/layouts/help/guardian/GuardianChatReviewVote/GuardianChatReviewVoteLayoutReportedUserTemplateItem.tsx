@@ -19,16 +19,14 @@ export const GuardianChatReviewVoteLayoutReportedUserTemplateItem = ({ captionMe
                 layout={{ position: 'absolute', left: 0, width: 16, top: 3, height: 17 }}
             />
             {(visibleMessage ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionMessage ?? 'lorem ipsum blah blah'}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ fill: '#a9322b', wordWrap: true, wordWrapWidth: 203 }}
                     name="message"
-                    layout={{ position: 'absolute', left: 23, width: 203, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMessage ?? 'lorem ipsum blah blah'}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ fill: '#a9322b', wordWrap: true, wordWrapWidth: 203 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 23, width: 203, top: 0, bottom: 0 }}
+                />
             )}
         </Region>
     );

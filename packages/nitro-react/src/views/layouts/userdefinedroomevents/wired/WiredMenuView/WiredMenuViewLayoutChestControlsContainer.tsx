@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Region } from '#base/theme';
+import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
 
 /** Named region `chest_controls_container` of WiredMenuViewLayout - configured through the parent's `chestControlsContainer` prop. */
 export interface WiredMenuViewLayoutChestControlsContainerProps {
@@ -18,12 +18,11 @@ export const WiredMenuViewLayoutChestControlsContainer = ({ captionTitle, layout
             name="chest_controls_container"
             layout={{ position: 'absolute', left: 14, width: 472, top: 18, height: 110, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTitle ?? t('wiredmenu.chests.chest_control')}
                 name="title"
-                layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionTitle ?? t('wiredmenu.chests.chest_control')}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 17 }}
+            />
             <Border
                 variant="3"
                 name="preferences_border"

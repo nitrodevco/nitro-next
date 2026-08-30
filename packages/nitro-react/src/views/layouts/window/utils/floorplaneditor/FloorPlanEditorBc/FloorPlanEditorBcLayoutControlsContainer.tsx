@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, Region, ThemeText } from '#base/theme';
 
 import { FloorPlanEditorBcLayoutButtonsItemlistItem } from './FloorPlanEditorBcLayoutButtonsItemlistItem';
 import { FloorPlanEditorBcLayoutTileheightControllerContainerItem } from './FloorPlanEditorBcLayoutTileheightControllerContainerItem';
@@ -27,9 +27,10 @@ export const FloorPlanEditorBcLayoutControlsContainer = ({ itemsControlsContaine
                 </>
             )}
             <Region layout={{ width: 318, height: 24, flexShrink: 0 }}>
-                <Region layout={{ position: 'absolute', left: 0, width: 161, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('floor.plan.editor.draw.mode')}
-                </Region>
+                <ThemeText
+                    text={t('floor.plan.editor.draw.mode')}
+                    layout={{ position: 'absolute', left: 0, width: 161, top: 1, height: 17 }}
+                />
             </Region>
         </Region>
     );

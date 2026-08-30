@@ -58,15 +58,12 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, contentA
             >
                 {titlebar}
             </Region>
-            <Region
+            <ThemeText
+                text={captionHeaderTitleText ?? ''}
+                textStyle="text-style-il-frame-title"
                 name="header_title_text"
-                layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeaderTitleText ?? ''}
-                    textStyle="text-style-il-frame-title"
-                />
-            </Region>
+                layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 20, top: 11, height: 20 }}
+            />
             <CloseButton
                 variant="101"
                 name="header_button_menu"

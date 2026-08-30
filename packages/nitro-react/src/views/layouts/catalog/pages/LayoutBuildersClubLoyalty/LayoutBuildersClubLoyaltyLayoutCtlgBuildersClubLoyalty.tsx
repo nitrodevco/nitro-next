@@ -14,15 +14,13 @@ export const LayoutBuildersClubLoyaltyLayoutCtlgBuildersClubLoyalty = ({ builder
             name="ctlg_builders_club_loyalty"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionCtlgDescription ?? '<b>Formatted</b> text'}
+                textOptions={{ wordWrap: true, wordWrapWidth: 276 }}
                 name="ctlg_description"
-                layout={{ position: 'absolute', left: 15, width: 276, top: 28, height: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgDescription ?? '<b>Formatted</b> text'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 276 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 15, width: 276, top: 28, height: 80 }}
+            />
             <ThemeImage
                 src="${image.library.url}catalogue/bc_bottom.png"
                 layout={{ position: 'absolute', left: 290, width: 72, top: 316, height: 90 }}

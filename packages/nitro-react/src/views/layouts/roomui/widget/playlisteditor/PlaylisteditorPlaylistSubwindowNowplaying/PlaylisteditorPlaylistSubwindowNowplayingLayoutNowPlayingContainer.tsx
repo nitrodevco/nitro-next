@@ -38,24 +38,21 @@ export const PlaylisteditorPlaylistSubwindowNowplayingLayoutNowPlayingContainer 
                     layout={{ position: 'absolute', width: 18, alignSelf: 'center', height: 20 }}
                 />
             </ContainerButton>
-            <Region layout={{ position: 'absolute', left: 63, width: 299, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('playlist.editor.text.now.playing.in.your.room')}
-                    textStyle="text-style-bold"
-                />
-            </Region>
-            <Region
+            <ThemeText
+                text={t('playlist.editor.text.now.playing.in.your.room')}
+                textStyle="text-style-bold"
+                layout={{ position: 'absolute', left: 63, width: 299, top: 0, height: 19 }}
+            />
+            <ThemeText
+                text={captionNowPlayingTrackName ?? 'Song Name'}
                 name="now_playing_track_name"
-                layout={{ position: 'absolute', left: 82, width: 69, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionNowPlayingTrackName ?? 'Song Name'}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 82, width: 69, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17 }}
+            />
+            <ThemeText
+                text={captionNowPlayingAuthorName ?? 'Author Name'}
                 name="now_playing_author_name"
-                layout={{ position: 'absolute', left: 82, width: 63, bottom: 6, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionNowPlayingAuthorName ?? 'Author Name'}
-            </Region>
+                layout={{ position: 'absolute', left: 82, width: 63, bottom: 6, height: 15 }}
+            />
             <ThemeImage
                 name="song_name_icon_bitmap"
                 src={srcSongNameIconBitmap ?? layoutImage('jb_icon_disc.png')}

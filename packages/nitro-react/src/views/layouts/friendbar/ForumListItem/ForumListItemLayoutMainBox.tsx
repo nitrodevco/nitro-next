@@ -45,19 +45,17 @@ export const ForumListItemLayoutMainBox = ({ captionDetails, captionHeader, capt
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 17 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionHeader ?? 'Some group header'}
                         name="header"
-                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionHeader ?? 'Some group header'}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, bottom: 0 }}
+                    />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionDetails ?? 'Rating 1000, last message by LongLongLongName 30 seconds ago'}
                     name="details"
-                    layout={{ position: 'absolute', left: 0, width: 459, top: 16, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionDetails ?? 'Rating 1000, last message by LongLongLongName 30 seconds ago'}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 459, top: 16, height: 16, overflow: 'hidden' }}
+                />
             </Region>
             <Region
                 name="unread_texts_container"
@@ -71,24 +69,18 @@ export const ForumListItemLayoutMainBox = ({ captionDetails, captionHeader, capt
                 >
                     {unreadRegion}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionMessages1 ?? '100 messages'}
+                    textStyle="text-style-regular"
                     name="messages1"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMessages1 ?? '100 messages'}
-                        textStyle="text-style-regular"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15 }}
+                />
+                <ThemeText
+                    text={captionMessages2 ?? '12 new'}
+                    textStyle="text-style-regular"
                     name="messages2"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMessages2 ?? '12 new'}
-                        textStyle="text-style-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 20 }}
+                />
             </Region>
         </Region>
     );

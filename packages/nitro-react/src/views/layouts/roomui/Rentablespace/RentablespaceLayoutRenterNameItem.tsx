@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `renter_name` of RentablespaceLayout - pass real rows through its `items…` slot. */
 export interface RentablespaceLayoutRenterNameItemProps {
@@ -8,14 +8,11 @@ export interface RentablespaceLayoutRenterNameItemProps {
 
 export const RentablespaceLayoutRenterNameItem = ({ captionRenterName, layout }: RentablespaceLayoutRenterNameItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionRenterName ?? 'User'}
+            textStyle="text-style-u-italic"
             name="renter_name"
-            layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionRenterName ?? 'User'}
-                textStyle="text-style-u-italic"
-            />
-        </Region>
+            layout={{ width: 37, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

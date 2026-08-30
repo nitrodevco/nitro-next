@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Row template `classificationrow` of UserclassificationFrameLayout - pass real rows through its `items…` slot. */
 export interface UserclassificationFrameLayoutClassificationrowItemProps {
@@ -18,28 +18,25 @@ export const UserclassificationFrameLayoutClassificationrowItem = ({ captionUser
             layout={{ width: 263, height: 14, flexShrink: 0, ...layout }}
         >
             {(visibleUserClassificationTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionUserClassificationTxt ?? ''}
                     name="user_classification_txt"
-                    layout={{ position: 'absolute', right: 48, width: 105, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionUserClassificationTxt ?? ''}
-                </Region>
+                    layout={{ position: 'absolute', right: 48, width: 105, top: 0, bottom: 0 }}
+                />
             )}
             {(visibleUserNameTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionUserNameTxt ?? 'whatwasit'}
                     name="user_name_txt"
-                    layout={{ position: 'absolute', left: 5, right: 158, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionUserNameTxt ?? 'whatwasit'}
-                </Region>
+                    layout={{ position: 'absolute', left: 5, right: 158, top: 0, bottom: 0 }}
+                />
             )}
             {(visibleVisitRoomTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionVisitRoomTxt ?? 'Visit'}
                     name="visit_room_txt"
-                    layout={{ position: 'absolute', right: 1, width: 39, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionVisitRoomTxt ?? 'Visit'}
-                </Region>
+                    layout={{ position: 'absolute', right: 1, width: 39, top: 0, bottom: 0 }}
+                />
             )}
         </Region>
     );

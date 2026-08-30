@@ -58,13 +58,12 @@ export const PlaylisteditorMainWindowLayout = ({ itemsMusicInventoryItemgrid, it
                     tint={tintMusicInventorySplashImage}
                     layout={{ position: 'absolute', left: 1, right: 293, top: 1, height: 100 }}
                 />
-                <Region layout={{ position: 'absolute', left: 96, width: 234, top: 29, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('playlist.editor.my.music')}
-                        textStyle="text-style-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('playlist.editor.my.music')}
+                    textStyle="text-style-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                    layout={{ position: 'absolute', left: 96, width: 234, top: 29, height: 26 }}
+                />
                 <Region
                     name="preview_play_container"
                     layout={{ position: 'absolute', left: 1, width: 278, top: 295, height: 110 }}
@@ -100,13 +99,12 @@ export const PlaylisteditorMainWindowLayout = ({ itemsMusicInventoryItemgrid, it
                     tint={tintPlaylistEditorSplashImage}
                     layout={{ position: 'absolute', left: 1, width: 100, top: 1, height: 100 }}
                 />
-                <Region layout={{ position: 'absolute', left: 96, width: 217, top: 29, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('playlist.editor.playlist')}
-                        textStyle="text-style-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('playlist.editor.playlist')}
+                    textStyle="text-style-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                    layout={{ position: 'absolute', left: 96, width: 217, top: 29, height: 26 }}
+                />
                 <Region
                     name="now_playing_container"
                     layout={{ position: 'absolute', left: 1, width: 261, top: 350, height: 56 }}

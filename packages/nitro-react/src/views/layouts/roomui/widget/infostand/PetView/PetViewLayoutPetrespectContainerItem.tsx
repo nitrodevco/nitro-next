@@ -20,15 +20,12 @@ export const PetViewLayoutPetrespectContainerItem = ({ captionPetrespectText, la
             layout={{ width: 164, height: 21, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             {(visiblePetrespectText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionPetrespectText ?? t('infostand.text.petrespect')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="petrespect_text"
-                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 137, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPetrespectText ?? t('infostand.text.petrespect')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 137, top: 5, height: 13 }}
+                />
             )}
             {(visiblePetrespectIcon ?? true) && (
                 <ThemeImage

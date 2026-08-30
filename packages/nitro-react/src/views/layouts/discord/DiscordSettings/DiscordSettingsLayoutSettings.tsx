@@ -42,13 +42,12 @@ export const DiscordSettingsLayoutSettings = ({ captionTitle, itemsSettingContai
                 {itemsSettingContainer ?? (
                     <DiscordSettingsLayoutShowHabboCbxItem />
                 )}
-                <Region layout={{ width: 190, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('discord_activity.settings.discord_status')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ fill: '#d5d4db' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('discord_activity.settings.discord_status')}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ fill: '#d5d4db' }}
+                    layout={{ width: 190, height: 17, flexShrink: 0 }}
+                />
             </Region>
             <Region
                 name="setting_container"
@@ -57,13 +56,12 @@ export const DiscordSettingsLayoutSettings = ({ captionTitle, itemsSettingContai
                 {itemsSettingContainer2 ?? (
                     <DiscordSettingsLayoutShareActivityCbxItem />
                 )}
-                <Region layout={{ width: 144, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('discord_activity.settings.share_activity')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ fill: '#d5d4db' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('discord_activity.settings.share_activity')}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ fill: '#d5d4db' }}
+                    layout={{ width: 144, height: 17, flexShrink: 0 }}
+                />
             </Region>
             <Region
                 name="setting_container"
@@ -72,13 +70,12 @@ export const DiscordSettingsLayoutSettings = ({ captionTitle, itemsSettingContai
                 {itemsSettingContainer3 ?? (
                     <DiscordSettingsLayoutHideInHiddenCbxItem />
                 )}
-                <Region layout={{ width: 165, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('discord_activity.settings.hide_hidden_rooms')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ fill: '#d5d4db' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('discord_activity.settings.hide_hidden_rooms')}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ fill: '#d5d4db' }}
+                    layout={{ width: 165, height: 17, flexShrink: 0 }}
+                />
             </Region>
             <Region
                 name="setting_container"
@@ -87,13 +84,12 @@ export const DiscordSettingsLayoutSettings = ({ captionTitle, itemsSettingContai
                 {itemsSettingContainer4 ?? (
                     <DiscordSettingsLayoutAllowJoiningCbxItem />
                 )}
-                <Region layout={{ width: 128, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('discord_activity.settings.allow_joining')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ fill: '#d5d4db' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('discord_activity.settings.allow_joining')}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ fill: '#d5d4db' }}
+                    layout={{ width: 128, height: 17, flexShrink: 0 }}
+                />
             </Region>
         </Region>
     );

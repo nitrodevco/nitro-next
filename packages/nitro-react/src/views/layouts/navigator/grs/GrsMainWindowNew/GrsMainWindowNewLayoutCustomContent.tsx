@@ -80,12 +80,11 @@ export const GrsMainWindowNewLayoutCustomContent = ({ layout, onCustomContent, o
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 33, justifyContent: 'center' }}
             >
-                <Region layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 370, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('navigator.roomcompetitionspager')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('navigator.roomcompetitionspager')}
+                    textOptions={{ align: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 370, top: 8, height: 13 }}
+                />
                 <ContainerButton
                     variant="0"
                     name="prev_button"

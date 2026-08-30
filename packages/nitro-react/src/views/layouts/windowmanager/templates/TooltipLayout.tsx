@@ -9,15 +9,12 @@ export interface TooltipLayoutProps {
 export const TooltipLayout = ({ captionBTNTEXT, layout }: TooltipLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionBTNTEXT ?? ''}
+                textStyle="text-style-u-tool-tip"
                 name="_BTN_TEXT"
-                layout={{ position: 'absolute', width: 20, alignSelf: 'center', marginTop: 6, marginBottom: -6, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBTNTEXT ?? ''}
-                    textStyle="text-style-u-tool-tip"
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 20, alignSelf: 'center', marginTop: 6, marginBottom: -6, height: 22 }}
+            />
         </Region>
     );
 };

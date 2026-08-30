@@ -1,15 +1,17 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
+import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
-/** Row template `expired_item` of MarketPlaceOwnItemsWidget2 - pass real rows through its `items…` slot. */
-export interface MarketPlaceOwnItemsWidget2ExpiredItemItemProps {
+/** Row template `ongoing_item` of MarketPlaceOwnItemsWidget - pass real rows through its `items…` slot. */
+export interface MarketPlaceOwnItemsWidgetOngoingItemItemProps {
     captionItemDesc?: string;
-    captionItemExpired?: string;
     captionItemName?: string;
+    captionItemPrice?: string;
+    captionItemTime?: string;
     layout?: BoxLayout;
+    onPickButton?: () => void;
     rarityItemOverlayWidget?: ReactNode;
     srcItemImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
@@ -17,22 +19,24 @@ export interface MarketPlaceOwnItemsWidget2ExpiredItemItemProps {
     uniqueItemOverlayWidget?: ReactNode;
     visibleImageContainer?: boolean;
     visibleItemDesc?: boolean;
-    visibleItemExpired?: boolean;
     visibleItemImage?: boolean;
     visibleItemName?: boolean;
+    visibleItemPrice?: boolean;
+    visibleItemTime?: boolean;
+    visiblePickButton?: boolean;
     visibleRarityItemOverlayWidget?: boolean;
     visibleUniqueItemBackgroundBitmap?: boolean;
     visibleUniqueItemOverlayWidget?: boolean;
 }
 
-export const MarketPlaceOwnItemsWidget2ExpiredItemItem = ({ captionItemDesc, captionItemExpired, captionItemName, layout, rarityItemOverlayWidget, srcItemImage, srcUniqueItemBackgroundBitmap, tintItemImage, uniqueItemOverlayWidget, visibleImageContainer, visibleItemDesc, visibleItemExpired, visibleItemImage, visibleItemName, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketPlaceOwnItemsWidget2ExpiredItemItemProps) => {
+export const MarketPlaceOwnItemsWidgetOngoingItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemTime, layout, onPickButton, rarityItemOverlayWidget, srcItemImage, srcUniqueItemBackgroundBitmap, tintItemImage, uniqueItemOverlayWidget, visibleImageContainer, visibleItemDesc, visibleItemImage, visibleItemName, visibleItemPrice, visibleItemTime, visiblePickButton, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketPlaceOwnItemsWidgetOngoingItemItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="100"
-            name="expired_item"
-            tintColor="#f5d5d3"
+            name="ongoing_item"
+            tintColor="#f6f6f3"
             layout={{ width: 340, height: 58, flexShrink: 0, ...layout }}
         >
             {(visibleImageContainer ?? true) && (
@@ -76,37 +80,47 @@ export const MarketPlaceOwnItemsWidget2ExpiredItemItem = ({ captionItemDesc, cap
                 </Region>
             )}
             {(visibleItemName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemName ?? t('lorem.title')}
+                    textStyle="text-style-u-bold"
                     name="item_name"
-                    layout={{ position: 'absolute', left: 58, width: 74, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemName ?? t('lorem.title')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 58, width: 74, top: 5, height: 17 }}
+                />
             )}
             {(visibleItemDesc ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemDesc ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
                     name="item_desc"
-                    layout={{ position: 'absolute', left: 58, width: 65, top: 17, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemDesc ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 58, width: 65, top: 17, height: 15 }}
+                />
             )}
-            {(visibleItemExpired ?? true) && (
-                <Region
-                    name="item_expired"
-                    layout={{ position: 'absolute', left: 58, width: 62, top: 41, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            {(visibleItemPrice ?? true) && (
+                <ThemeText
+                    text={captionItemPrice ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
+                    name="item_price"
+                    layout={{ position: 'absolute', left: 58, width: 62, top: 29, height: 15 }}
+                />
+            )}
+            {(visibleItemTime ?? true) && (
+                <ThemeText
+                    text={captionItemTime ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
+                    name="item_time"
+                    layout={{ position: 'absolute', left: 58, width: 62, top: 41, height: 15 }}
+                />
+            )}
+            {(visiblePickButton ?? true) && (
+                <Button
+                    variant="3"
+                    name="pick_button"
+                    onPointerTap={onPickButton}
+                    textStyle="text-style-button-shiny-regular"
+                    layout={{ position: 'absolute', right: 6, width: 189, top: 31, height: 22 }}
                 >
-                    <ThemeText
-                        text={captionItemExpired ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    {t('catalog.marketplace.offer.pick')}
+                </Button>
             )}
         </Border>
     );

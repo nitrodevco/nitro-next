@@ -50,15 +50,12 @@ export const NewModerationToolLayoutSubviewWrapper = ({ banView, captionHotelAle
                     name="hotel_alert_view"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionHotelAlertTxt ?? t('moderation.hotel_alert.title')}
+                        textOptions={{ fill: '#333333' }}
                         name="hotel_alert_txt"
-                        layout={{ position: 'absolute', left: 9, width: 106, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHotelAlertTxt ?? t('moderation.hotel_alert.title')}
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 9, width: 106, top: 8, height: 16 }}
+                    />
                     <Border
                         variant="105"
                         name="message_border"

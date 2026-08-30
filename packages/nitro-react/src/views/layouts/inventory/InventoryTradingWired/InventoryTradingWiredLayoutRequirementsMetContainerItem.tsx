@@ -21,15 +21,13 @@ export const InventoryTradingWiredLayoutRequirementsMetContainerItem = ({ captio
             layout={{ width: 390, height: 30, flexShrink: 0, minWidth: 220, ...layout }}
         >
             {(visibleReqMetText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionReqMetText ?? t('inventory.wired_trading.requirements.indicator.met')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 342 }}
                     name="req_met_text"
-                    layout={{ position: 'absolute', left: 5, right: 43, top: 7, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionReqMetText ?? t('inventory.wired_trading.requirements.indicator.met')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 342 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 5, right: 43, top: 7 }}
+                />
             )}
             {(visibleReqMetIcon ?? true) && (
                 <ThemeImage

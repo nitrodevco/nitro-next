@@ -31,15 +31,13 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
                 src={srcBackgroundBitmap ?? layoutImage('catalogue_clakboard.png')}
                 layout={{ position: 'absolute', left: 0, width: 182, top: 0, height: 142 }}
             />
-            <Region
+            <ThemeText
+                text={captionHeaderText ?? t('catalog.bundlewidget.info.header')}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174, align: 'center' }}
                 name="header_text"
-                layout={{ position: 'absolute', left: 4, right: 4, top: 11, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionHeaderText ?? t('catalog.bundlewidget.info.header')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174, align: 'center' }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 4, right: 4, top: 11, height: 15 }}
+            />
             <ThemeImage
                 name="formula_bitmap"
                 src={srcFormulaBitmap ?? '${image.library.catalogue.url}clakboard_formula.png'}
@@ -52,34 +50,26 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
             >
                 {underlineContainer}
             </Region>
-            <Region
+            <ThemeText
+                text={captionFreeText ?? t('catalog.bundlewidget.info.for.free')}
+                textOptions={{ fill: '#ffffff' }}
                 name="free_text"
-                layout={{ position: 'absolute', left: 103, width: 166, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionFreeText ?? t('catalog.bundlewidget.info.for.free')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 103, width: 166, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 15 }}
+            />
+            <ThemeText
+                text={captionEqualsBundleText ?? t('catalog.bundlewidget.info.equals.bundle')}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#ffffff', align: 'center' }}
                 name="equals_bundle_text"
-                layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 116, top: 85, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionEqualsBundleText ?? t('catalog.bundlewidget.info.equals.bundle')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 116, top: 85, height: 18 }}
+            />
+            <ThemeText
+                text={captionFooterText ?? t('catalog.bundlewidget.info.footer')}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174, align: 'center' }}
                 name="footer_text"
-                layout={{ position: 'absolute', left: 4, right: 4, top: 105, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionFooterText ?? t('catalog.bundlewidget.info.footer')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174, align: 'center' }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 4, right: 4, top: 105, height: 15 }}
+            />
             <Region
                 name="click_region"
                 onPointerTap={onClickRegion}

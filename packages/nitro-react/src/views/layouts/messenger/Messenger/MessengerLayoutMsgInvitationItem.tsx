@@ -1,4 +1,4 @@
-import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `msg_invitation` of MessengerLayout - pass real rows through its `items…` slot. */
@@ -21,15 +21,13 @@ export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout, visib
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
             />
             {(visibleContent ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionContent ?? ''}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
                     name="content"
-                    layout={{ position: 'absolute', left: 50, width: 205, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionContent ?? ''}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 50, width: 205, alignSelf: 'center', height: 20 }}
+                />
             )}
         </Border>
     );

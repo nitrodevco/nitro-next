@@ -49,12 +49,11 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                     layout={{ position: 'absolute', left: 529, width: 292, top: -24, height: 189 }}
                 >
                     <Region layout={{ position: 'absolute', left: 8, width: 260, top: 8, height: 158, flexDirection: 'column' }}>
-                        <Region layout={{ width: 155, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('report.status.info.title')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('report.status.info.title')}
+                            textStyle="text-style-u-bold"
+                            layout={{ width: 155, height: 19, flexShrink: 0 }}
+                        />
                         <Region
                             name="spacer"
                             layout={{ width: 0, height: 8, flexShrink: 0 }}
@@ -62,35 +61,29 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                             {spacer}
                         </Region>
                         <Region layout={{ width: 223, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
-                            <Region
+                            <ThemeText
+                                text={captionCreatedKeyTxt ?? t('report.status.info.reported')}
+                                textStyle="text-style-u-bold"
                                 name="created_key_txt"
-                                layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionCreatedKeyTxt ?? t('report.status.info.reported')}
-                                    textStyle="text-style-u-bold"
-                                />
-                            </Region>
-                            <Region
+                                layout={{ width: 158, height: 17, flexShrink: 0 }}
+                            />
+                            <ThemeText
+                                text={captionReportedDateTxt ?? '18.09.2024'}
                                 name="reported_date_txt"
-                                layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionReportedDateTxt ?? '18.09.2024'}
-                            </Region>
+                                layout={{ width: 63, height: 17, flexShrink: 0 }}
+                            />
                         </Region>
                         <Region layout={{ width: 219, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
-                            <Region layout={{ width: 154, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('report.status.info.decision')}
-                                    textStyle="text-style-u-bold"
-                                />
-                            </Region>
-                            <Region
+                            <ThemeText
+                                text={t('report.status.info.decision')}
+                                textStyle="text-style-u-bold"
+                                layout={{ width: 154, height: 17, flexShrink: 0 }}
+                            />
+                            <ThemeText
+                                text={captionDecisionDateTxt ?? '18.09.2024'}
                                 name="decision_date_txt"
-                                layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionDecisionDateTxt ?? '18.09.2024'}
-                            </Region>
+                                layout={{ width: 63, height: 17, flexShrink: 0 }}
+                            />
                         </Region>
                         <Region
                             name="spacer"
@@ -98,24 +91,19 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                         >
                             {spacer2}
                         </Region>
-                        <Region
+                        <ThemeText
+                            text={captionActionTxt ?? t('report.status.info.action')}
+                            textStyle="text-style-u-bold"
                             name="action_txt"
-                            layout={{ width: 143, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionActionTxt ?? t('report.status.info.action')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                        <Region
+                            layout={{ width: 143, height: 17, flexShrink: 0 }}
+                        />
+                        <ThemeText
+                            text={captionActionDescTxt ?? t('report.status.info.auto_moderated.no_action')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
                             name="action_desc_txt"
-                            layout={{ width: 260, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionActionDescTxt ?? t('report.status.info.auto_moderated.no_action')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 260, height: 17, flexShrink: 0 }}
+                        />
                         {(visibleSpacer ?? false) && (
                             <Region
                                 name="spacer"
@@ -124,15 +112,13 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                 {spacer3}
                             </Region>
                         )}
-                        <Region
+                        <ThemeText
+                            text={captionSanctionInfoTxt ?? 'asdasd'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
                             name="sanction_info_txt"
-                            layout={{ width: 260, height: 17, flexShrink: 0, minWidth: 260, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSanctionInfoTxt ?? 'asdasd'}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 260, height: 17, flexShrink: 0, minWidth: 260 }}
+                        />
                         <Region
                             name="spacer"
                             layout={{ width: 0, height: 8, flexShrink: 0 }}

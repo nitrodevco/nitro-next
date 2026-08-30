@@ -57,16 +57,14 @@ export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLa
                         </Border>
                     )}
                     {(visiblePreviewLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionPreviewLabel ?? t('habbicons.hud.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 110, align: 'center' }}
                             name="preview_label"
-                            layout={{ position: 'absolute', left: 8, width: 110, top: 114, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionPreviewLabel ?? t('habbicons.hud.title')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 110, align: 'center' }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 8, width: 110, top: 114, height: 17 }}
+                        />
                     )}
                 </Border>
             )}

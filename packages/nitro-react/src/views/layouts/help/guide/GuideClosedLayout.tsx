@@ -38,27 +38,24 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
                 </WidgetSlot>
             </Region>
             <Region layout={{ position: 'absolute', right: 0, top: 0, minWidth: 200, maxWidth: 200, flexDirection: 'column', gap: 5 }}>
-                <Region layout={{ alignSelf: 'stretch', height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.guide.closed.heading')}
-                        textStyle="text-style-il-heading-1"
-                    />
-                </Region>
-                <Region
+                <ThemeText
+                    text={t('guide.help.request.guide.closed.heading')}
+                    textStyle="text-style-il-heading-1"
+                    layout={{ alignSelf: 'stretch', height: 19, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={captionCloseReason ?? 'Lilyflower closed the case.'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                     name="close_reason"
-                    layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCloseReason ?? 'Lilyflower closed the case.'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                    />
-                </Region>
-                <Region layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.guide.closed.thanks')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('guide.help.request.guide.closed.thanks')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
+                    verticalAlign="top"
+                    layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0 }}
+                />
                 <Button
                     variant="101"
                     name="close_button"

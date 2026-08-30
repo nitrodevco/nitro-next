@@ -43,15 +43,13 @@ export const NikoTrophyLayout = ({ captionDate, captionHtmlTextbox, captionStore
                     src={srcPreviewImage}
                     layout={{ position: 'absolute', left: 26, width: 93, top: 30, height: 112 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionHtmlTextbox ?? t('niko.trophy.description.gold')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 249 }}
                     name="html_textbox"
-                    layout={{ position: 'absolute', left: 153, width: 249, top: 28, height: 64, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHtmlTextbox ?? t('niko.trophy.description.gold')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 249 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 153, width: 249, top: 28, height: 64 }}
+                />
                 <Region
                     name="store_link"
                     layout={{ position: 'absolute', left: 153, width: 249, top: 97, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -63,15 +61,12 @@ export const NikoTrophyLayout = ({ captionDate, captionHtmlTextbox, captionStore
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionDate ?? t('trophy.niko.date')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="date"
-                    layout={{ position: 'absolute', left: 153, width: 249, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDate ?? t('trophy.niko.date')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 153, width: 249, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 23 }}
+                />
                 <Region
                     name="appstore_region"
                     tooltip={t('trophy.niko.link.tooltip')}

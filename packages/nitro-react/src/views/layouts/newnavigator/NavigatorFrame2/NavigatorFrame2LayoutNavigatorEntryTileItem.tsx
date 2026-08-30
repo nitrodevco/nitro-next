@@ -71,16 +71,14 @@ export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, g
                 </Region>
             )}
             {(visibleRoomName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomName ?? 'Room Name PH'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 100 }}
                     name="room_name"
-                    layout={{ position: 'absolute', left: 0, width: 100, top: 116, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRoomName ?? 'Room Name PH'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 100 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, width: 100, top: 116, height: 30 }}
+                />
             )}
             {(visibleRoomInfoUsercountBorder ?? true) && (
                 <Border

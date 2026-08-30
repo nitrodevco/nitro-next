@@ -115,16 +115,14 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, cap
                     layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
                 />
             </Region>
-            <Region
+            <ThemeText
+                text={captionRoomName ?? 'Room name placeholder. Diipa daapi dipaa.'}
+                textStyle="text-style-u-bold"
+                textOptions={{ wordWrap: true, wordWrapWidth: 153 }}
                 name="room_name"
-                layout={{ position: 'absolute', left: 5, width: 153, top: 3, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRoomName ?? 'Room name placeholder. Diipa daapi dipaa.'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 153 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 5, width: 153, top: 3, height: 31 }}
+            />
             <Region
                 name="owner_name_cont"
                 tooltip={t('infostand.profile.link.tooltip')}
@@ -132,16 +130,13 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, cap
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 34, height: 16 }}
             >
-                <Region
+                <ThemeText
+                    text={captionOwnerCaption ?? t('navigator.roomownercaption')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#777777' }}
                     name="owner_caption"
-                    layout={{ position: 'absolute', left: 5, width: 168, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOwnerCaption ?? t('navigator.roomownercaption')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#777777' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 5, width: 168, top: 0, height: 17 }}
+                />
                 <Region
                     name="user_info_region"
                     layout={{ position: 'absolute', left: 50, width: 15, top: 0, height: 15 }}
@@ -157,15 +152,12 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, cap
                         layout={{ position: 'absolute', left: 0, width: 15, top: 4, height: 11 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionOwnerName ?? 'PH Owner Name'}
+                    textStyle="text-style-u-regular"
                     name="owner_name"
-                    layout={{ position: 'absolute', left: 67, width: 97, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOwnerName ?? 'PH Owner Name'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 67, width: 97, top: 0, height: 17 }}
+                />
             </Region>
             <Region
                 name="tags"
@@ -175,16 +167,14 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, cap
             >
                 {tags}
             </Region>
-            <Region
+            <ThemeText
+                text={captionRoomDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
                 name="room_desc"
-                layout={{ position: 'absolute', left: 5, width: 220, top: 52, height: 82, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRoomDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 5, width: 220, top: 52, height: 82 }}
+            />
             <Region
                 name="rating_cont"
                 onPointerTap={onRatingCont}
@@ -205,25 +195,19 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, cap
                         layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionRatingCaption ?? t('navigator.roomrating')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#777777' }}
                     name="rating_caption"
-                    layout={{ position: 'absolute', left: 0, width: 124, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRatingCaption ?? t('navigator.roomrating')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#777777' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 124, top: 0, height: 17 }}
+                />
+                <ThemeText
+                    text={captionRatingTxt ?? 'PH 123'}
+                    textStyle="text-style-u-regular"
                     name="rating_txt"
-                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRatingTxt ?? 'PH 123'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 17 }}
+                />
             </Region>
             <Region
                 name="ranking_cont"
@@ -231,25 +215,19 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, cap
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 5, width: 220, top: 125, height: 16 }}
             >
-                <Region
+                <ThemeText
+                    text={captionRankingCaption ?? t('navigator.roomranking')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#777777' }}
                     name="ranking_caption"
-                    layout={{ position: 'absolute', left: 0, width: 134, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRankingCaption ?? t('navigator.roomranking')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#777777' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 134, top: 0, height: 17 }}
+                />
+                <ThemeText
+                    text={captionRankingTxt ?? 'PH 123'}
+                    textStyle="text-style-u-regular"
                     name="ranking_txt"
-                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRankingTxt ?? 'PH 123'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 17 }}
+                />
             </Region>
             <Region
                 name="padding_cont"

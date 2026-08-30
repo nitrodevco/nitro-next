@@ -14,16 +14,13 @@ export const UnseenItemSymbolLayout = ({ captionText, layout }: UnseenItemSymbol
                 tintColor="#52a900"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionText ?? 'inventory.furni.tab.new'}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#ffffff' }}
                     name="text"
-                    layout={{ position: 'absolute', left: 4, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? 'inventory.furni.tab.new'}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 4, top: 0, bottom: 0 }}
+                />
             </Border>
         </Region>
     );

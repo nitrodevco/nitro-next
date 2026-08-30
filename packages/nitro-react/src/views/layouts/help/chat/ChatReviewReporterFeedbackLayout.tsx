@@ -25,25 +25,21 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
             layout={{ width: 369, height: 304, minWidth: 369, minHeight: 304, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 11, width: 345, top: 2, height: 266, justifyContent: 'center' }}>
-                <Region
+                <ThemeText
+                    text={captionCaptionTxt ?? t('guide.bully.request.reporter.sent.caption')}
+                    textStyle="text-style-il-heading-title"
+                    textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 284 }}
                     name="caption_txt"
-                    layout={{ position: 'absolute', left: 0, width: 284, top: 12, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCaptionTxt ?? t('guide.bully.request.reporter.sent.caption')}
-                        textStyle="text-style-il-heading-title"
-                        textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 284 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, width: 284, top: 12, height: 46 }}
+                />
+                <ThemeText
+                    text={captionBodyTxt ?? t('guide.bully.request.reporter.sent.body')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 282 }}
                     name="body_txt"
-                    layout={{ position: 'absolute', left: 0, width: 282, top: 49, height: 101, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBodyTxt ?? t('guide.bully.request.reporter.sent.body')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 282 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, width: 282, top: 49, height: 101 }}
+                />
                 <Border
                     variant="102"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 151, height: 50 }}
@@ -52,15 +48,13 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
                         src={layoutImage('help_notification.png')}
                         layout={{ position: 'absolute', left: 18, width: 16, top: 17, height: 17 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionNoteTxt ?? t('guide.bully.request.reporter.note')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 296 }}
                         name="note_txt"
-                        layout={{ position: 'absolute', left: 47, width: 296, top: 11, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionNoteTxt ?? t('guide.bully.request.reporter.note')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 296 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 47, width: 296, top: 11, height: 36 }}
+                    />
                 </Border>
                 <Button
                     variant="101"

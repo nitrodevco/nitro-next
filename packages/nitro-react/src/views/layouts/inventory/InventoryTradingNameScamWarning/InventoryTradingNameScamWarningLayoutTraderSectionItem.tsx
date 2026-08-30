@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Region, ThemeText, WidgetSlot } from '#base/theme';
+import { Border, BoxLayout, Button, ThemeText, WidgetSlot } from '#base/theme';
 
 /** Row template `trader_section` of InventoryTradingNameScamWarningLayout - pass real rows through its `items…` slot. */
 export interface InventoryTradingNameScamWarningLayoutTraderSectionItemProps {
@@ -37,23 +37,19 @@ export const InventoryTradingNameScamWarningLayoutTraderSectionItem = ({ caption
                 </WidgetSlot>
             )}
             {(visibleTraderLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTraderLabel ?? t('inventory.trading.namescam.trader')}
+                    textOptions={{ fill: '#555555' }}
                     name="trader_label"
-                    layout={{ position: 'absolute', left: 63, width: 72, top: 11, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTraderLabel ?? t('inventory.trading.namescam.trader')}
-                        textOptions={{ fill: '#555555' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 63, width: 72, top: 11, height: 17 }}
+                />
             )}
             {(visibleTraderNameText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTraderNameText ?? 'Habbo'}
                     name="trader_name_text"
-                    layout={{ position: 'absolute', left: 63, width: 44, top: 29, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionTraderNameText ?? 'Habbo'}
-                </Region>
+                    layout={{ position: 'absolute', left: 63, width: 44, top: 29, height: 18 }}
+                />
             )}
             {(visibleOpenProfileButton ?? true) && (
                 <Button

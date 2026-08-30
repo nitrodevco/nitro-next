@@ -21,15 +21,12 @@ export const ActivityPointDisplayWidgetLayout = ({ captionActivityPointsTxt, lay
                     name="activity_point_icon"
                     layout={{ position: 'absolute', left: 6, width: 23, bottom: -1, height: 23 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionActivityPointsTxt ?? 'lorem ipsum'}
+                    textStyle="text-style-u-small"
                     name="activity_points_txt"
-                    layout={{ position: 'absolute', left: 26, width: 60, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionActivityPointsTxt ?? 'lorem ipsum'}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 26, width: 60, top: 4, height: 15 }}
+                />
             </Border>
         </Region>
     );

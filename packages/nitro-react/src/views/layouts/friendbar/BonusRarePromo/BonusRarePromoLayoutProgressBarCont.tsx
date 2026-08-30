@@ -59,15 +59,13 @@ export const BonusRarePromoLayoutProgressBarCont = ({ barABkg, captionStatus, la
                 src={srcBarAR ?? layoutImage('achievement_ach_progressbar5.png')}
                 layout={{ position: 'absolute', left: 145, width: 2, top: 3, height: 17 }}
             />
-            <Region
+            <ThemeText
+                text={captionStatus ?? t('landing.view.bonus.rare.status')}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 178 }}
                 name="status"
-                layout={{ position: 'absolute', right: 68, width: 178, top: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionStatus ?? t('landing.view.bonus.rare.status')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 178 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', right: 68, width: 178, top: 3, height: 17 }}
+            />
         </Region>
     );
 };

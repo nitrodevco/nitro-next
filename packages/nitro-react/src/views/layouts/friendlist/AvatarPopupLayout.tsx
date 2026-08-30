@@ -31,57 +31,43 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                     tint={tintFace}
                     layout={{ position: 'absolute', left: 11, width: 32, top: 5, height: 72 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionNameTextOnline ?? 'PH Avatar Name'}
+                    textOptions={{ fill: '#000000' }}
                     name="name_text_online"
-                    layout={{ position: 'absolute', left: 40, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNameTextOnline ?? 'PH Avatar Name'}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 40, top: 5, height: 13 }}
+                />
+                <ThemeText
+                    text={captionNameTextOffline ?? 'PH Avatar Name'}
+                    textOptions={{ fill: '#000000' }}
                     name="name_text_offline"
-                    layout={{ position: 'absolute', right: 3, width: 140, top: 9, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNameTextOffline ?? 'PH Avatar Name'}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', right: 3, width: 140, top: 9, height: 13 }}
+                />
+                <ThemeText
+                    text={captionMottoText ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 150 }}
                     name="motto_text"
-                    layout={{ position: 'absolute', left: 40, width: 150, top: 20, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMottoText ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 150 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 40, width: 150, top: 20, height: 30 }}
+                />
+                <ThemeText
+                    text={captionOnlineText ?? t('friendlist.avatarpopup.online')}
+                    textOptions={{ fill: '#000000' }}
                     name="online_text"
-                    layout={{ position: 'absolute', left: 10, width: 180, bottom: 11, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOnlineText ?? t('friendlist.avatarpopup.online')}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 10, width: 180, bottom: 11, height: 13 }}
+                />
                 <ThemeImage
                     name="offline"
                     src={srcOffline}
                     tint={tintOffline}
                     layout={{ position: 'absolute', left: 10, width: 30, top: 8, height: 10 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionLastAccessText ?? t('friendlist.avatarpopup.lastaccess')}
+                    textOptions={{ fill: '#000000' }}
                     name="last_access_text"
-                    layout={{ position: 'absolute', left: 10, width: 180, top: 27, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionLastAccessText ?? t('friendlist.avatarpopup.lastaccess')}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 10, width: 180, top: 27, height: 13 }}
+                />
             </Border>
         </Region>
     );

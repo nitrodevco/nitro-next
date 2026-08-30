@@ -28,15 +28,12 @@ export const RoomToolsToolbarLayoutButtonAchievementsItem = ({ captionTextSettin
                 layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
             />
             {(visibleTextSettings ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTextSettings ?? t('room.achievements.button.text')}
+                    textOptions={{ fill: '#cccccc' }}
                     name="text_settings"
-                    layout={{ position: 'absolute', left: 36, width: 90, top: 4, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextSettings ?? t('room.achievements.button.text')}
-                        textOptions={{ fill: '#cccccc' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 36, width: 90, top: 4, height: 14, maxWidth: 90 }}
+                />
             )}
         </Region>
     );

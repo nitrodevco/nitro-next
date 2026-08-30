@@ -67,46 +67,37 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
                     {rarityItemOverlayWidget}
                 </WidgetSlot>
             )}
-            <Region
+            <ThemeText
+                text={captionFurniName ?? t('001_lorem_ipsum_title')}
+                textStyle="text-style-u-headline-medium"
+                textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                 name="furni_name"
-                layout={{ position: 'absolute', right: 10, width: 190, top: 13, height: 56, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionFurniName ?? t('001_lorem_ipsum_title')}
-                    textStyle="text-style-u-headline-medium"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', right: 10, width: 190, top: 13, height: 56 }}
+            />
             {(visibleFurniDesc ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionFurniDesc ?? t('002_lorem_ipsum_content')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                     name="furni_desc"
-                    layout={{ position: 'absolute', right: 10, width: 190, top: 34, height: 49, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFurniDesc ?? t('002_lorem_ipsum_content')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 10, width: 190, top: 34, height: 49 }}
+                />
             )}
-            <Region
+            <ThemeText
+                text={captionExpirationInfo ?? t('inventory.marketplace.make_offer.expiration_info_days')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 268 }}
                 name="expiration_info"
-                layout={{ position: 'absolute', left: 10, right: 10, top: 87, height: 39, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionExpirationInfo ?? t('inventory.marketplace.make_offer.expiration_info_days')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 268 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, right: 10, top: 87, height: 39 }}
+            />
+            <ThemeText
+                text={captionPriceRequest ?? t('inventory.marketplace.make_offer.price_request')}
+                textStyle="text-style-u-headline-small"
+                textOptions={{ align: 'right' }}
                 name="price_request"
-                layout={{ position: 'absolute', right: 79, width: 295, top: 131, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
-                <ThemeText
-                    text={captionPriceRequest ?? t('inventory.marketplace.make_offer.price_request')}
-                    textStyle="text-style-u-headline-small"
-                    textOptions={{ align: 'right' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', right: 79, width: 295, top: 131, height: 19 }}
+            />
             <Border
                 variant="105"
                 name="input_border"
@@ -118,16 +109,13 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
                     layout={{ position: 'absolute', left: 8, right: 8, top: 3, bottom: 4, minWidth: 50, maxWidth: 50 }}
                 />
             </Border>
-            <Region
+            <ThemeText
+                text={captionAmountRequest ?? t('sellinmarketplace.amount')}
+                textStyle="text-style-u-headline-small"
+                textOptions={{ align: 'right' }}
                 name="amount_request"
-                layout={{ position: 'absolute', right: 79, width: 295, top: 160, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
-                <ThemeText
-                    text={captionAmountRequest ?? t('sellinmarketplace.amount')}
-                    textStyle="text-style-u-headline-small"
-                    textOptions={{ align: 'right' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', right: 79, width: 295, top: 160, height: 19 }}
+            />
             <Border
                 variant="105"
                 name="amount_input_border"
@@ -140,24 +128,21 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
                 />
             </Border>
             <Region layout={{ position: 'absolute', left: 10, right: 10, bottom: 6, height: 197, flexDirection: 'column', gap: 7 }}>
-                <Region
+                <ThemeText
+                    text={captionAveragePrice ?? t('inventory.marketplace.make_offer.average_price')}
                     name="average_price"
-                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionAveragePrice ?? t('inventory.marketplace.make_offer.average_price')}
-                </Region>
-                <Region
+                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={captionLowestPrice ?? t('inventory.marketplace.make_offer.lowest_price')}
                     name="lowest_price"
-                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionLowestPrice ?? t('inventory.marketplace.make_offer.lowest_price')}
-                </Region>
-                <Region
+                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={captionSuggestedPrice ?? t('inventory.marketplace.make_offer.suggested_price')}
                     name="suggested_price"
-                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionSuggestedPrice ?? t('inventory.marketplace.make_offer.suggested_price')}
-                </Region>
+                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0 }}
+                />
                 <Button
                     variant="3"
                     name="copy_suggested_price_button"
@@ -172,15 +157,13 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
                     name="final_price_border"
                     layout={{ alignSelf: 'stretch', height: 54, flexShrink: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionFinalPrice ?? t('inventory.marketplace.make_offer.final_price')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 257, align: 'center' }}
                         name="final_price"
-                        layout={{ position: 'absolute', left: 6, right: 5, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 30, maxWidth: 257, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionFinalPrice ?? t('inventory.marketplace.make_offer.final_price')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 257, align: 'center' }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 6, right: 5, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 30, maxWidth: 257 }}
+                    />
                 </Border>
                 <Region
                     name="buttons"

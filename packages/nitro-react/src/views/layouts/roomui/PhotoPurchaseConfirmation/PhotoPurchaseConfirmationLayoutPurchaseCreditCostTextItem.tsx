@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `purchase_credit_cost_text` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PhotoPurchaseConfirmationLayoutPurchaseCreditCostTextItemProps {
@@ -8,14 +8,11 @@ export interface PhotoPurchaseConfirmationLayoutPurchaseCreditCostTextItemProps 
 
 export const PhotoPurchaseConfirmationLayoutPurchaseCreditCostTextItem = ({ captionPurchaseCreditCostText, layout }: PhotoPurchaseConfirmationLayoutPurchaseCreditCostTextItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionPurchaseCreditCostText ?? ''}
+            textStyle="text-style-u-bold"
             name="purchase_credit_cost_text"
-            layout={{ width: 4, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionPurchaseCreditCostText ?? ''}
-                textStyle="text-style-u-bold"
-            />
-        </Region>
+            layout={{ width: 4, height: 4, flexShrink: 0, ...layout }}
+        />
     );
 };

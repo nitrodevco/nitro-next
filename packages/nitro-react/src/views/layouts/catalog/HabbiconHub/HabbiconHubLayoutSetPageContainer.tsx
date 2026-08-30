@@ -42,16 +42,13 @@ export const HabbiconHubLayoutSetPageContainer = ({ captionRewardBuyDescription,
                     layout={{ width: 116, height: 152, flexShrink: 0 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 135, flexDirection: 'column', gap: 6 }}>
-                        <Region
+                        <ThemeText
+                            text={captionRewardTitle ?? t('habbicon_reward.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#2b2b2b', align: 'center' }}
                             name="reward_title"
-                            layout={{ width: 100, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionRewardTitle ?? t('habbicon_reward.title')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#2b2b2b', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ width: 100, height: 17, flexShrink: 0 }}
+                        />
                         <Border
                             variant="3"
                             name="reward_habbicon_frame"
@@ -65,15 +62,13 @@ export const HabbiconHubLayoutSetPageContainer = ({ captionRewardBuyDescription,
                                 layout={{ position: 'absolute', left: 3, width: 40, top: 3, height: 40 }}
                             />
                         </Border>
-                        <Region
+                        <ThemeText
+                            text={captionRewardDescription ?? t('habbicon_reward.description')}
+                            textOptions={{ fill: '#3b3b3b', wordWrap: true, wordWrapWidth: 100, align: 'center' }}
                             name="reward_description"
-                            layout={{ width: 100, height: 26, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionRewardDescription ?? t('habbicon_reward.description')}
-                                textOptions={{ fill: '#3b3b3b', wordWrap: true, wordWrapWidth: 100, align: 'center' }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 100, height: 26, flexShrink: 0 }}
+                        />
                         <Button
                             variant="5"
                             name="reward_action_button"
@@ -93,25 +88,20 @@ export const HabbiconHubLayoutSetPageContainer = ({ captionRewardBuyDescription,
                     layout={{ width: 116, height: 71, flexShrink: 0 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 53, flexDirection: 'column', gap: 8 }}>
-                        <Region
+                        <ThemeText
+                            text={captionRewardBuyDescription ?? t('habbicon_book.buy_set')}
+                            textOptions={{ fill: '#2b2b2b', wordWrap: true, wordWrapWidth: 100, align: 'center' }}
                             name="reward_buy_description"
-                            layout={{ width: 100, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionRewardBuyDescription ?? t('habbicon_book.buy_set')}
-                                textOptions={{ fill: '#2b2b2b', wordWrap: true, wordWrapWidth: 100, align: 'center' }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 100, height: 17, flexShrink: 0 }}
+                        />
                         <Region layout={{ width: 122, height: 28, flexShrink: 0, flexDirection: 'row', gap: 4 }}>
-                            <Region
+                            <ThemeText
+                                text={captionRewardBuyPrice ?? '0'}
+                                textStyle="text-style-u-bold"
                                 name="reward_buy_price"
-                                layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionRewardBuyPrice ?? '0'}
-                                    textStyle="text-style-u-bold"
-                                />
-                            </Region>
+                                layout={{ width: 10, height: 17, flexShrink: 0 }}
+                            />
                             <Icon
                                 variant="35"
                                 name="reward_buy_currency_icon"

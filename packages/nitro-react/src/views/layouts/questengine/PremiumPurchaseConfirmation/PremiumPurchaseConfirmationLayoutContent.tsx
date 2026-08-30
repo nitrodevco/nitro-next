@@ -32,12 +32,11 @@ export const PremiumPurchaseConfirmationLayoutContent = ({ itemsPrice, layout, t
                 tintColor="#f7e7ff"
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 10, height: 38 }}
             >
-                <Region layout={{ position: 'absolute', left: 10, width: 241, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('catalog.purchase.confirmation.dialog.cost')}
-                        textOptions={{ fill: '#57356b' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('catalog.purchase.confirmation.dialog.cost')}
+                    textOptions={{ fill: '#57356b' }}
+                    layout={{ position: 'absolute', left: 10, width: 241, top: 10, height: 17 }}
+                />
                 <Region
                     name="price"
                     layout={{ position: 'absolute', right: 15, width: 87, top: 8, height: 22, flexDirection: 'row', gap: 3 }}

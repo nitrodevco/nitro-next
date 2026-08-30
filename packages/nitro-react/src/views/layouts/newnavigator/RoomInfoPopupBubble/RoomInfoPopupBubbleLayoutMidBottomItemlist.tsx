@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { RoomInfoPopupBubbleLayoutReportContainerItem } from './RoomInfoPopupBubbleLayoutReportContainerItem';
@@ -44,9 +44,10 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ itemsMidBottomIteml
                         layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 20, width: 236, top: 0, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('navigator.room.popup.room.info.favorite')}
-                </Region>
+                <ThemeText
+                    text={t('navigator.room.popup.room.info.favorite')}
+                    layout={{ position: 'absolute', left: 20, width: 236, top: 0, bottom: 3 }}
+                />
             </Region>
             <Region layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0 }}>
                 <Region
@@ -61,9 +62,10 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ itemsMidBottomIteml
                         layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 20, width: 224, top: 0, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('navigator.room.popup.room.info.home')}
-                </Region>
+                <ThemeText
+                    text={t('navigator.room.popup.room.info.home')}
+                    layout={{ position: 'absolute', left: 20, width: 224, top: 0, bottom: 3 }}
+                />
             </Region>
         </Region>
     );

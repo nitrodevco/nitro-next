@@ -16,13 +16,12 @@ export const ChatterConfigurationLayoutMarkovContainerItem = ({ layout, onMarkov
             name="markov_container"
             layout={{ width: 248, height: 22, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 175, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('bot.skill.chatter.configuration.markov')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('bot.skill.chatter.configuration.markov')}
+                textStyle="text-style-u-small"
+                textOptions={{ fill: '#ffffff' }}
+                layout={{ position: 'absolute', left: 0, width: 175, top: 4, height: 15 }}
+            />
             {(visibleMarkovCheckbox ?? true) && (
                 <CheckBox
                     variant="100"

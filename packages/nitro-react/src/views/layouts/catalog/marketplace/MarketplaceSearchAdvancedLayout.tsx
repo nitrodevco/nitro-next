@@ -24,12 +24,11 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     name="text_search_container"
                     layout={{ position: 'absolute', left: 10, right: 10, top: 10, height: 20 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('catalog.marketplace.search_name')}
-                            textOptions={{ fill: '#666666' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('catalog.marketplace.search_name')}
+                        textOptions={{ fill: '#666666' }}
+                        layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 1 }}
+                    />
                     <Border
                         variant="0"
                         layout={{ position: 'absolute', right: 0, width: 220, top: 0, bottom: 0 }}
@@ -45,12 +44,11 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     name="price_container"
                     layout={{ position: 'absolute', left: 10, right: 10, top: 35, height: 20 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('catalog.marketplace.search_price')}
-                            textOptions={{ fill: '#666666' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('catalog.marketplace.search_price')}
+                        textOptions={{ fill: '#666666' }}
+                        layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 1 }}
+                    />
                     <Border
                         variant="0"
                         layout={{ position: 'absolute', left: 120, width: 70, top: 0, bottom: 0 }}
@@ -76,12 +74,11 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     name="sort_container"
                     layout={{ position: 'absolute', left: 10, right: 10, top: 60, height: 24 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('catalog.marketplace.sort_order')}
-                            textOptions={{ fill: '#666666' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('catalog.marketplace.sort_order')}
+                        textOptions={{ fill: '#666666' }}
+                        layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 5 }}
+                    />
                     <Dropmenu
                         variant="3"
                         name="sort_dropmenu"
@@ -95,12 +92,11 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     onPointerTap={onCombineUniquesCheckbox}
                     layout={{ position: 'absolute', left: 10, width: 16, top: 92, height: 15 }}
                 />
-                <Region layout={{ position: 'absolute', left: 29, width: 218, bottom: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('catalog.marketplace.combine_uniques')}
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('catalog.marketplace.combine_uniques')}
+                    textOptions={{ fill: '#666666' }}
+                    layout={{ position: 'absolute', left: 29, width: 218, bottom: 12, height: 17 }}
+                />
                 <Button
                     variant="3"
                     name="search_button"

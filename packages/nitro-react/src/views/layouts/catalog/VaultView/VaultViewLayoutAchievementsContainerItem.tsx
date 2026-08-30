@@ -44,15 +44,12 @@ export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCr
                         />
                     )}
                     {(visibleAchievementsDucketValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionAchievementsDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="achievementsDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAchievementsDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCr
                         />
                     )}
                     {(visibleAchievementsCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionAchievementsCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="achievementsCreditValue"
-                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAchievementsCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCr
                         />
                     )}
                     {(visibleAchievementsLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionAchievementsLabel ?? t('earnings.achievements.label')}
+                            textStyle="text-style-u-bold"
                             name="achievements_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAchievementsLabel ?? t('earnings.achievements.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

@@ -20,15 +20,12 @@ export const SuggestionListItemNewLayout = ({ captionNameText, layout, onSuggest
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 150, maxWidth: 262, minHeight: 20, maxHeight: 20 }}
             >
-                <Region
+                <ThemeText
+                    text={captionNameText ?? t('001_lorem_ipsum_title')}
+                    textStyle="text-style-u-regular"
                     name="name_text"
-                    layout={{ position: 'absolute', left: 0, top: 0, minWidth: 150, maxWidth: 261, minHeight: 20, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNameText ?? t('001_lorem_ipsum_title')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, top: 0, minWidth: 150, maxWidth: 261, minHeight: 20, maxHeight: 20 }}
+                />
             </Region>
         </Region>
     );

@@ -17,16 +17,14 @@ export const ElementRewardbadgeLayout = ({ captionBadgeDesc, colorableTextColor,
                     src={srcBadgeImage}
                     layout={{ position: 'absolute', left: 9, width: 38, top: 3, height: 38 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionBadgeDesc ?? 'klj hklj hlkj hlkj hkljh lkjh kljh lkjh klj hlkj hlkjh kljh'}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 188 }}
                     name="badge_desc"
-                    layout={{ position: 'absolute', right: 12, width: 188, top: 7, bottom: 6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBadgeDesc ?? 'klj hklj hlkj hlkj hkljh lkjh kljh lkjh klj hlkj hlkjh kljh'}
-                        textStyle="text-style-il-heading-3"
-                        textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 188 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 12, width: 188, top: 7, bottom: 6 }}
+                />
             </Region>
         </Region>
     );

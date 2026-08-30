@@ -22,19 +22,18 @@ export const BullyReportLayoutUserPanel = ({ itemsUserPanel, layout }: BullyRepo
             {itemsUserPanel ?? (
                 <BullyReportLayoutUserListItem />
             )}
-            <Region layout={{ width: 122, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.bully.subtitle')}
-                    textStyle="text-style-il-heading-1"
-                    textOptions={{ fill: '#555555' }}
-                />
-            </Region>
-            <Region layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.bully.description')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('help.bully.subtitle')}
+                textStyle="text-style-il-heading-1"
+                textOptions={{ fill: '#555555' }}
+                layout={{ width: 122, height: 19, flexShrink: 0 }}
+            />
+            <ThemeText
+                text={t('help.bully.description')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
+                verticalAlign="top"
+                layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270 }}
+            />
         </Region>
     );
 };

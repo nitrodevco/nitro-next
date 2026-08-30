@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Button, Frame, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Button, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `907_pet_commands_xml` (layout "pet_commands", 195x462) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -46,12 +46,11 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                         layout={{ position: 'absolute', left: 0, width: 71, top: 0, height: 90 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionPetName ?? t('widgets.pet.commands.title')}
                     name="pet_name"
-                    layout={{ position: 'absolute', left: 76, width: 159, top: 43, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionPetName ?? t('widgets.pet.commands.title')}
-                </Region>
+                    layout={{ position: 'absolute', left: 76, width: 159, top: 43, height: 17 }}
+                />
                 <Region
                     name="commands_container"
                     layout={{ position: 'absolute', left: 6, width: 170, top: 103, height: 279 }}
@@ -75,12 +74,11 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                         tint={tintStatusSkillBitmap}
                         layout={{ position: 'absolute', left: 6, width: 162, top: 1, height: 17 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionStatusSkillValueText ?? ''}
                         name="status_skill_value_text"
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 2, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionStatusSkillValueText ?? ''}
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 2, height: 4 }}
+                    />
                     <ThemeImage
                         name="status_skill_icon"
                         src={srcStatusSkillIcon ?? layoutImage('icon_pet_experience.png')}
@@ -88,12 +86,11 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                         layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
                     />
                     {(visibleStatusSkillText ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionStatusSkillText ?? t('infostand.pet.text.skill.next')}
                             name="status_skill_text"
-                            layout={{ position: 'absolute', width: 155, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionStatusSkillText ?? t('infostand.pet.text.skill.next')}
-                        </Region>
+                            layout={{ position: 'absolute', width: 155, top: 1, height: 17 }}
+                        />
                     )}
                 </Region>
             </Region>

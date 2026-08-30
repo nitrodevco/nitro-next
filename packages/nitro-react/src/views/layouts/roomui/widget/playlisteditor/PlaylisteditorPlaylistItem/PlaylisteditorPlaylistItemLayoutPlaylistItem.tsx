@@ -1,4 +1,4 @@
-import { Border, BoxLayout, ContainerButton, Region, ThemeImage } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Named region `playlist_item` of PlaylisteditorPlaylistItemLayout - configured through the parent's `playlistItem` prop. */
@@ -68,18 +68,16 @@ export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ captionSongAuthor
                     </ContainerButton>
                 </Border>
             </Region>
-            <Region
+            <ThemeText
+                text={captionSongTitleText ?? ''}
                 name="song_title_text"
-                layout={{ position: 'absolute', left: 70, width: 4, top: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionSongTitleText ?? ''}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 70, width: 4, top: 11, height: 4 }}
+            />
+            <ThemeText
+                text={captionSongAuthorText ?? ''}
                 name="song_author_text"
-                layout={{ position: 'absolute', left: 70, width: 4, top: 27, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionSongAuthorText ?? ''}
-            </Region>
+                layout={{ position: 'absolute', left: 70, width: 4, top: 27, height: 4 }}
+            />
             <ThemeImage
                 name="song_name_icon_bitmap"
                 src={srcSongNameIconBitmap ?? layoutImage('jb_icon_disc.png')}

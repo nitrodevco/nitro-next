@@ -136,15 +136,12 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ avatarImageWidget, badge
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                             name="preview_furni_name"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17 }}
+                        />
                     </Region>
                 )}
                 {(visibleProductInfoContainer ?? false) && (
@@ -170,29 +167,25 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ avatarImageWidget, badge
                         backgroundColor="#000000"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 200, height: 60, justifyContent: 'center' }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionPreviewScoreText ?? t('collectibles.preview.score')}
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 290, align: 'center' }}
                             name="preview_score_text"
-                            layout={{ position: 'absolute', width: 290, top: 3, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionPreviewScoreText ?? t('collectibles.preview.score')}
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 290, align: 'center' }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', width: 290, top: 3, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17 }}
+                        />
                         <Border
                             variant="3"
                             tintColor="#5a1003"
                             layout={{ position: 'absolute', left: 4, width: 282, top: 24, height: 32, justifyContent: 'center' }}
                         >
-                            <Region
+                            <ThemeText
+                                text={captionPreviewRewardText ?? t('collectibles.preview.reward')}
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
                                 name="preview_reward_text"
-                                layout={{ position: 'absolute', width: 274, alignSelf: 'center', height: 28, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionPreviewRewardText ?? t('collectibles.preview.reward')}
-                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
-                                />
-                            </Region>
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', width: 274, alignSelf: 'center', height: 28, minWidth: 274, maxWidth: 274 }}
+                            />
                         </Border>
                     </Region>
                 )}
@@ -206,15 +199,13 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ avatarImageWidget, badge
                         tintColor="#5a1003"
                         layout={{ position: 'absolute', left: 4, width: 282, top: 4, height: 32, justifyContent: 'center' }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionProcuctScoreText ?? t('collectibles.preview.product.incomplete')}
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
                             name="procuct_score_text"
-                            layout={{ position: 'absolute', width: 274, alignSelf: 'center', height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionProcuctScoreText ?? t('collectibles.preview.product.incomplete')}
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', width: 274, alignSelf: 'center', height: 16, minWidth: 274, maxWidth: 274 }}
+                        />
                     </Border>
                 </Region>
             </Border>

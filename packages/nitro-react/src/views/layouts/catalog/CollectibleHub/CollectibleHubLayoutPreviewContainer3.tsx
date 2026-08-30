@@ -132,15 +132,12 @@ export const CollectibleHubLayoutPreviewContainer3 = ({ avatarImageWidget, badge
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="preview_furni_name"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17 }}
+                    />
                 </Region>
                 {(visibleProductInfoContainer ?? false) && (
                     <Region
@@ -159,16 +156,13 @@ export const CollectibleHubLayoutPreviewContainer3 = ({ avatarImageWidget, badge
                     </Region>
                 )}
                 <Region layout={{ position: 'absolute', right: 10, top: 226, flexDirection: 'row', gap: 4 }}>
-                    <Region
+                    <ThemeText
+                        text={captionPriceText ?? '100'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff', align: 'right' }}
                         name="price_text"
-                        layout={{ width: 50, height: 25, flexShrink: 0, minHeight: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                    >
-                        <ThemeText
-                            text={captionPriceText ?? '100'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff', align: 'right' }}
-                        />
-                    </Region>
+                        layout={{ width: 50, height: 25, flexShrink: 0, minHeight: 25 }}
+                    />
                     <Icon
                         variant="70"
                         name="emerald_icon"

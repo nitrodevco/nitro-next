@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `roominfo_name` of RoomtoolsLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolsLayoutRoominfoNameItemProps {
@@ -8,14 +8,11 @@ export interface RoomtoolsLayoutRoominfoNameItemProps {
 
 export const RoomtoolsLayoutRoominfoNameItem = ({ captionRoominfoName, layout }: RoomtoolsLayoutRoominfoNameItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionRoominfoName ?? '...'}
+            textStyle="text-style-il-regular-white"
             name="roominfo_name"
-            layout={{ width: 12, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionRoominfoName ?? '...'}
-                textStyle="text-style-il-regular-white"
-            />
-        </Region>
+            layout={{ width: 12, alignSelf: 'stretch', flexShrink: 0, ...layout }}
+        />
     );
 };

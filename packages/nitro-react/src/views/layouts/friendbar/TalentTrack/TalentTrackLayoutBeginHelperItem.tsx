@@ -17,29 +17,28 @@ export const TalentTrackLayoutBeginHelperItem = ({ layout, onCitizenshipButton, 
             name="begin_helper"
             layout={{ width: 250, height: 280, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 20, width: 311, top: 20, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('talent.track.helper.guide.begin.title')}
-                    textStyle="text-style-il-heading-title"
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 20, width: 230, top: 49, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('talent.track.helper.guide.begin.description')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 230 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('talent.track.helper.guide.begin.title')}
+                textStyle="text-style-il-heading-title"
+                layout={{ position: 'absolute', left: 20, width: 311, top: 20, height: 24 }}
+            />
+            <ThemeText
+                text={t('talent.track.helper.guide.begin.description')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 230 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 20, width: 230, top: 49, height: 16 }}
+            />
             <ThemeImage
                 src={layoutImage('talent_citizenship_accomplished.png')}
                 layout={{ position: 'absolute', left: 203, width: 32, top: 182, height: 46 }}
             />
-            <Region layout={{ position: 'absolute', left: 124, width: 76, alignSelf: 'center', marginTop: 44.5, marginBottom: -44.5, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
-                <ThemeText
-                    text={t('talent.track.helper.begin.citizenship')}
-                    textStyle="text-style-il-button"
-                    textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 76, align: 'right' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('talent.track.helper.begin.citizenship')}
+                textStyle="text-style-il-button"
+                textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 76, align: 'right' }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 124, width: 76, alignSelf: 'center', marginTop: 44.5, marginBottom: -44.5, height: 37 }}
+            />
             {(visibleCitizenshipButton ?? true) && (
                 <Button
                     variant="100"

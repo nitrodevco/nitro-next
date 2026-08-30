@@ -42,62 +42,49 @@ export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, c
                     layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 155 }}
                 >
                     {(visibleUnlocked ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionUnlocked ?? t('talent.track.common.unlocked')}
+                            textStyle="text-style-il-small"
+                            textOptions={{ fill: '#ffffff' }}
                             name="unlocked"
-                            layout={{ position: 'absolute', left: 10, width: 127, top: 8, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionUnlocked ?? t('talent.track.common.unlocked')}
-                                textStyle="text-style-il-small"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 10, width: 127, top: 8, height: 14 }}
+                        />
                     )}
                     {(visibleTitleAchieved ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTitleAchieved ?? ''}
+                            textStyle="text-style-il-heading-2"
+                            textOptions={{ fill: '#ffffff' }}
                             name="title_achieved"
-                            layout={{ position: 'absolute', left: 10, width: 4, top: 22, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionTitleAchieved ?? ''}
-                                textStyle="text-style-il-heading-2"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 10, width: 4, top: 22, height: 4 }}
+                        />
                     )}
                     {(visibleTitleLocked ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTitleLocked ?? ''}
+                            textStyle="text-style-il-heading-2"
                             name="title_locked"
-                            layout={{ position: 'absolute', left: 10, width: 4, top: 22, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionTitleLocked ?? ''}
-                                textStyle="text-style-il-heading-2"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 10, width: 4, top: 22, height: 4 }}
+                        />
                     )}
                     {(visibleDescriptionAchieved ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionDescriptionAchieved ?? 'Reward description achieved'}
+                            textStyle="text-style-il-regular-white"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
                             name="description_achieved"
-                            layout={{ position: 'absolute', left: 10, width: 330, top: 38, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDescriptionAchieved ?? 'Reward description achieved'}
-                                textStyle="text-style-il-regular-white"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 10, width: 330, top: 38, height: 16 }}
+                        />
                     )}
                     {(visibleDescriptionLocked ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionDescriptionLocked ?? 'Reward description locked'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
                             name="description_locked"
-                            layout={{ position: 'absolute', left: 10, width: 330, top: 38, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDescriptionLocked ?? 'Reward description locked'}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 10, width: 330, top: 38, height: 16 }}
+                        />
                     )}
                     {(visibleRewardList ?? true) && (
                         <TalentTrackLayoutRewardList {...rewardList} />

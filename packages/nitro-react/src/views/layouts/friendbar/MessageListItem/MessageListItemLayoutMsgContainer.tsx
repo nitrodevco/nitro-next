@@ -23,15 +23,13 @@ export const MessageListItemLayoutMsgContainer = ({ avatarWidget, badgeWidget, c
                 name="message_text_container"
                 layout={{ position: 'absolute', left: 130, right: 0, top: 0, bottom: 0, minHeight: 100 }}
             >
-                <Region
+                <ThemeText
+                    text={captionMessageText ?? 'Message text'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 534 }}
                     name="message_text"
-                    layout={{ position: 'absolute', left: 6, right: 0, top: 2, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMessageText ?? 'Message text'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 534 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 6, right: 0, top: 2, height: 21 }}
+                />
             </Region>
             <Region
                 name="avatar_image"
@@ -40,15 +38,12 @@ export const MessageListItemLayoutMsgContainer = ({ avatarWidget, badgeWidget, c
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 130, top: 0, bottom: 0, minHeight: 100 }}
             >
-                <Region
+                <ThemeText
+                    text={captionAuthor ?? 'AuthorName'}
+                    textStyle="text-style-u-bold"
                     name="author"
-                    layout={{ position: 'absolute', left: 2, right: 2, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAuthor ?? 'AuthorName'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 5, height: 20 }}
+                />
                 <WidgetSlot
                     widgetType="avatar_image"
                     name="avatar_widget"
@@ -64,12 +59,11 @@ export const MessageListItemLayoutMsgContainer = ({ avatarWidget, badgeWidget, c
                 >
                     {badgeWidget}
                 </WidgetSlot>
-                <Region
+                <ThemeText
+                    text={captionAuthorPostCount ?? 'AuthorPosts'}
                     name="author_post_count"
-                    layout={{ position: 'absolute', left: 2, width: 126, top: 23, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionAuthorPostCount ?? 'AuthorPosts'}
-                </Region>
+                    layout={{ position: 'absolute', left: 2, width: 126, top: 23, height: 20 }}
+                />
             </Region>
         </Region>
     );

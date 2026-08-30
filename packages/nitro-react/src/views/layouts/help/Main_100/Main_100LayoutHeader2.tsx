@@ -23,18 +23,16 @@ export const Main_100LayoutHeader2 = ({ captionTasksCompletionTxt, layout, tabSe
                 src={layoutImage('reward_track_task_list.png')}
                 layout={{ position: 'absolute', left: 19, width: 19, top: 17, height: 25 }}
             />
-            <Region layout={{ position: 'absolute', left: 46, width: 83, top: 11, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                {t('reward_track.tasks')}
-            </Region>
-            <Region
+            <ThemeText
+                text={t('reward_track.tasks')}
+                layout={{ position: 'absolute', left: 46, width: 83, top: 11, height: 19 }}
+            />
+            <ThemeText
+                text={captionTasksCompletionTxt ?? t('reward_track.tasks.progress')}
+                textOptions={{ fill: '#3c3c3c' }}
                 name="tasks_completion_txt"
-                layout={{ position: 'absolute', left: 46, width: 186, top: 31, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTasksCompletionTxt ?? t('reward_track.tasks.progress')}
-                    textOptions={{ fill: '#3c3c3c' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 46, width: 186, top: 31, height: 17 }}
+            />
             <Main_100LayoutTabSelection {...tabSelection} />
         </Region>
     );

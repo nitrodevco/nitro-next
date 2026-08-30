@@ -33,36 +33,30 @@ export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionCl
                 tintColor="#dfdfdf"
                 layout={{ position: 'absolute', left: 0, width: 307, top: 300, height: 25 }}
             />
-            <Region
+            <ThemeText
+                text={captionClubHeader ?? t('catalog.club.buy.header')}
+                textStyle="text-style-u-headline-small"
+                textOptions={{ align: 'center' }}
                 name="club_header"
-                layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 307, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionClubHeader ?? t('catalog.club.buy.header')}
-                    textStyle="text-style-u-headline-small"
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 307, top: 2, height: 19 }}
+            />
+            <ThemeText
+                text={captionClubInfo ?? t('catalog.club.buy.info')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 307 }}
                 name="club_info"
-                layout={{ position: 'absolute', left: 7, right: 6, top: 30, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionClubInfo ?? t('catalog.club.buy.info')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 307 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 7, right: 6, top: 30, height: 17 }}
+            />
             <Icon
                 variant="18"
                 name="icon_vip"
                 layout={{ position: 'absolute', left: 40, width: 85, top: 104, height: 40 }}
             />
-            <Region
+            <ThemeText
+                text={captionClubRemaining ?? t('catalog.club.buy.remaining')}
                 name="club_remaining"
-                layout={{ position: 'absolute', left: 6, width: 151, top: 305, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionClubRemaining ?? t('catalog.club.buy.remaining')}
-            </Region>
+                layout={{ position: 'absolute', left: 6, width: 151, top: 305, height: 17 }}
+            />
             <Region
                 name="item_list_hc"
                 layout={{ position: 'absolute', left: 0, width: 151, top: 155, height: 140, flexDirection: 'column', gap: 4 }}
@@ -75,15 +69,12 @@ export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionCl
             >
                 {itemsItemListVip}
             </Region>
-            <Region
+            <ThemeText
+                text={captionClubLink ?? t('catalog.club.buy.link')}
+                textOptions={{ align: 'center' }}
                 name="club_link"
-                layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 307, bottom: -2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionClubLink ?? t('catalog.club.buy.link')}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 307, bottom: -2, height: 17 }}
+            />
         </Region>
     );
 };

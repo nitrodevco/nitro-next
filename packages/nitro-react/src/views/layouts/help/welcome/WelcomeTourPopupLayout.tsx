@@ -27,19 +27,19 @@ export const WelcomeTourPopupLayout = ({ layout, onClose, onRefuseTour, onTakeTo
                 layout={{ position: 'absolute', left: -4, width: 433, top: 5, height: 221 }}
             />
             <Region layout={{ position: 'absolute', left: 89, top: 15, flexDirection: 'column', gap: 4 }}>
-                <Region layout={{ width: 326, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.tour.popup.title')}
-                        textStyle="text-style-u-headline-medium"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 326 }}
-                    />
-                </Region>
-                <Region layout={{ width: 313, height: 44, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.tour.popup.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 313 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.tour.popup.title')}
+                    textStyle="text-style-u-headline-medium"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 326 }}
+                    verticalAlign="top"
+                    layout={{ width: 326, height: 21, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('help.tour.popup.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 313 }}
+                    verticalAlign="top"
+                    layout={{ width: 313, height: 44, flexShrink: 0 }}
+                />
             </Region>
             <Region layout={{ position: 'absolute', left: 83, width: 306, top: 80, height: 134, justifyContent: 'center' }}>
                 <Button

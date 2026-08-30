@@ -48,15 +48,12 @@ export const PhotoPurchaseConfirmationLayoutContentlist = ({ captionLoadingText,
                 >
                     {imageBg}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionLoadingText ?? t('camera.loading')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="loadingText"
-                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 255, top: 130, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionLoadingText ?? t('camera.loading')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 255, top: 130, height: 44 }}
+                />
                 <ThemeImage
                     name="product_image"
                     src={srcProductImage}

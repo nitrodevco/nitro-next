@@ -24,18 +24,17 @@ export const AchievementResolutionCompletedLayout = ({ achievementBadge, layout,
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, top: 10, bottom: 0, flexDirection: 'column', gap: 5 }}>
-                    <Region layout={{ width: 254, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('resolution.completed.header')}
-                            textStyle="text-style-il-heading-title"
-                        />
-                    </Region>
-                    <Region layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0, minHeight: 40, maxHeight: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('resolution.completed.description')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 294 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('resolution.completed.header')}
+                        textStyle="text-style-il-heading-title"
+                        layout={{ width: 254, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24 }}
+                    />
+                    <ThemeText
+                        text={t('resolution.completed.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 294 }}
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0, minHeight: 40, maxHeight: 40 }}
+                    />
                     <Region layout={{ width: 125, height: 120, flexShrink: 0, justifyContent: 'center' }}>
                         <ThemeImage
                             src={layoutImage('common_hilight_big.png')}
@@ -60,13 +59,13 @@ export const AchievementResolutionCompletedLayout = ({ achievementBadge, layout,
                         cursor="pointer"
                         layout={{ alignSelf: 'stretch', height: 23, flexShrink: 0 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 7, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                            <ThemeText
-                                text={t('resolution.completed.close')}
-                                textStyle="text-style-il-link-regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 294, align: 'center' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('resolution.completed.close')}
+                            textStyle="text-style-il-link-regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 294, align: 'center' }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 7 }}
+                        />
                     </Region>
                 </Region>
             </Region>

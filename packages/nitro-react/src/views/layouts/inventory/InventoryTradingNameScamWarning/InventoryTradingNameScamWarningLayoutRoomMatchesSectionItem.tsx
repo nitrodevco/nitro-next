@@ -19,23 +19,20 @@ export const InventoryTradingNameScamWarningLayoutRoomMatchesSectionItem = ({ ca
             layout={{ width: 330, height: 58, flexShrink: 0, ...layout }}
         >
             {(visibleRoomMatchesHeader ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomMatchesHeader ?? t('inventory.trading.namescam.similar_in_room')}
                     name="room_matches_header"
-                    layout={{ position: 'absolute', left: 0, width: 138, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionRoomMatchesHeader ?? t('inventory.trading.namescam.similar_in_room')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 138, top: 0, height: 17 }}
+                />
             )}
             {(visibleRoomMatchesText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomMatchesText ?? 'User 1'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
                     name="room_matches_text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRoomMatchesText ?? 'User 1'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 38 }}
+                />
             )}
         </Region>
     );

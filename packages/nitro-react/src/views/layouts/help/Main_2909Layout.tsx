@@ -35,44 +35,40 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', left: 0, width: 641, top: -33, height: 50 }}>
-                    <Region layout={{ position: 'absolute', left: 0, width: 82, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.subtitle')}
-                            textStyle="text-style-il-small-white"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 0, width: 184, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.title')}
-                            textStyle="text-style-il-frame-modal-title"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.subtitle')}
+                        textStyle="text-style-il-small-white"
+                        layout={{ position: 'absolute', left: 0, width: 82, top: 0, height: 14 }}
+                    />
+                    <ThemeText
+                        text={t('help.main2.title')}
+                        textStyle="text-style-il-frame-modal-title"
+                        layout={{ position: 'absolute', left: 0, width: 184, top: 10, height: 30 }}
+                    />
                 </Region>
                 <WidgetSlot
                     widgetType="separator"
                     layout={{ position: 'absolute', left: 33, width: 283, top: 32, height: 25 }}
                 >
                     {separatorWidget}
-                    <Region layout={{ position: 'absolute', left: 12, width: 112, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.bully.title')}
-                            textStyle="text-style-il-border"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.bully.title')}
+                        textStyle="text-style-il-border"
+                        textOptions={{ fill: '#333333' }}
+                        layout={{ position: 'absolute', left: 12, width: 112, alignSelf: 'center', height: 15 }}
+                    />
                 </WidgetSlot>
-                <Region layout={{ position: 'absolute', left: 30, width: 144, top: 60, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.main2.bully.subtitle')}
-                        textStyle="text-style-il-heading-2"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 30, width: 221, top: 80, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.main2.bully.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 221 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.main2.bully.subtitle')}
+                    textStyle="text-style-il-heading-2"
+                    layout={{ position: 'absolute', left: 30, width: 144, top: 60, height: 17 }}
+                />
+                <ThemeText
+                    text={t('help.main2.bully.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 221 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 30, width: 221, top: 80, height: 16 }}
+                />
                 <Button
                     variant="101"
                     name="bully_button"
@@ -91,26 +87,24 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     layout={{ position: 'absolute', left: 344, width: 263, top: 32, height: 25 }}
                 >
                     {separatorWidget2}
-                    <Region layout={{ position: 'absolute', left: 12, width: 131, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.question.title')}
-                            textStyle="text-style-il-border"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.question.title')}
+                        textStyle="text-style-il-border"
+                        textOptions={{ fill: '#333333' }}
+                        layout={{ position: 'absolute', left: 12, width: 131, alignSelf: 'center', height: 15 }}
+                    />
                 </WidgetSlot>
-                <Region layout={{ position: 'absolute', left: 340, width: 164, top: 60, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.main2.question.subtitle')}
-                        textStyle="text-style-il-heading-2"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 340, width: 191, top: 80, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.main2.question.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 191 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.main2.question.subtitle')}
+                    textStyle="text-style-il-heading-2"
+                    layout={{ position: 'absolute', left: 340, width: 164, top: 60, height: 17 }}
+                />
+                <ThemeText
+                    text={t('help.main2.question.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 191 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 340, width: 191, top: 80, height: 16 }}
+                />
                 <Button
                     variant="101"
                     name="question_button"
@@ -129,26 +123,24 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     layout={{ position: 'absolute', left: 33, width: 283, top: 197, height: 25 }}
                 >
                     {separatorWidget3}
-                    <Region layout={{ position: 'absolute', left: 12, width: 110, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.tour.title')}
-                            textStyle="text-style-il-border"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.tour.title')}
+                        textStyle="text-style-il-border"
+                        textOptions={{ fill: '#333333' }}
+                        layout={{ position: 'absolute', left: 12, width: 110, alignSelf: 'center', height: 15 }}
+                    />
                 </WidgetSlot>
-                <Region layout={{ position: 'absolute', left: 30, width: 140, top: 225, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.main2.tour.subtitle')}
-                        textStyle="text-style-il-heading-2"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 30, width: 201, top: 245, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.main2.tour.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 201 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.main2.tour.subtitle')}
+                    textStyle="text-style-il-heading-2"
+                    layout={{ position: 'absolute', left: 30, width: 140, top: 225, height: 17 }}
+                />
+                <ThemeText
+                    text={t('help.main2.tour.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 201 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 30, width: 201, top: 245, height: 16 }}
+                />
                 <Button
                     variant="101"
                     name="tour_button"
@@ -168,30 +160,28 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         tintColor="#bb0000"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 10, width: 182, top: 6, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('help.main2.emergency.title')}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
-                        <Region layout={{ position: 'absolute', left: 10, width: 129, top: 25, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('help.main2.emergency.subtitle')}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('help.main2.emergency.title')}
+                            textStyle="text-style-il-regular-white"
+                            layout={{ position: 'absolute', left: 10, width: 182, top: 6, height: 19 }}
+                        />
+                        <ThemeText
+                            text={t('help.main2.emergency.subtitle')}
+                            textStyle="text-style-il-regular-white"
+                            layout={{ position: 'absolute', left: 10, width: 129, top: 25, height: 14 }}
+                        />
                     </Border>
                     <Region layout={{ position: 'absolute', left: 0, right: 0, top: 42, bottom: 0 }}>
                         <Border
                             variant="105"
                             layout={{ position: 'absolute', left: 0, right: 0, top: -10, bottom: 0, justifyContent: 'center' }}
                         >
-                            <Region layout={{ position: 'absolute', left: 10, width: 251, top: 16, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('help.main2.emergency.description')}
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 251 }}
-                                />
-                            </Region>
+                            <ThemeText
+                                text={t('help.main2.emergency.description')}
+                                textOptions={{ wordWrap: true, wordWrapWidth: 251 }}
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 10, width: 251, top: 16, height: 16 }}
+                            />
                             <ContainerButton
                                 variant="103"
                                 name="emergency_button"
@@ -212,13 +202,12 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     layout={{ position: 'absolute', marginLeft: 4.5, marginRight: -4.5, width: 574, top: 367, height: 25 }}
                 >
                     {separatorWidget4}
-                    <Region layout={{ position: 'absolute', left: 12, width: 105, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.self.title')}
-                            textStyle="text-style-il-border"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.self.title')}
+                        textStyle="text-style-il-border"
+                        textOptions={{ fill: '#333333' }}
+                        layout={{ position: 'absolute', left: 12, width: 105, alignSelf: 'center', height: 15 }}
+                    />
                 </WidgetSlot>
                 <Border
                     variant="102"
@@ -230,12 +219,12 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 191, top: 0, bottom: 0, justifyContent: 'center' }}
                     >
-                        <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                            <ThemeText
-                                text={t('help.main2.self.safetypolicy')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('help.main2.self.safetypolicy')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20 }}
+                        />
                     </Region>
                     <WidgetSlot
                         widgetType="separator"
@@ -250,12 +239,12 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 191, width: 193, top: 0, bottom: 0, justifyContent: 'center' }}
                     >
-                        <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                            <ThemeText
-                                text={t('help.main2.self.habboway')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('help.main2.self.habboway')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20 }}
+                        />
                     </Region>
                     <WidgetSlot
                         widgetType="separator"
@@ -270,12 +259,12 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 385, width: 190, top: 0, bottom: 0, justifyContent: 'center' }}
                     >
-                        <Region layout={{ position: 'absolute', width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                            <ThemeText
-                                text={t('help.main2.self.faq')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('help.main2.self.faq')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', width: 170, alignSelf: 'center', height: 20 }}
+                        />
                     </Region>
                 </Border>
                 <Region
@@ -284,12 +273,11 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     cursor="pointer"
                     layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 541, top: 463, height: 23, justifyContent: 'center' }}
                 >
-                    <Region layout={{ position: 'absolute', width: 129, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.self.payment')}
-                            textStyle="text-style-il-link-regular"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.self.payment')}
+                        textStyle="text-style-il-link-regular"
+                        layout={{ position: 'absolute', width: 129, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
+                    />
                 </Region>
             </Region>
         </Frame>

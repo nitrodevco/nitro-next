@@ -29,12 +29,11 @@ export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem = ({ 
                 </>
             )}
             <Region layout={{ flexShrink: 0, flexDirection: 'row' }}>
-                <Region layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('catalog.purchase.confirmation.dialog.cost')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('catalog.purchase.confirmation.dialog.cost')}
+                    textStyle="text-style-u-regular"
+                    layout={{ width: 268, height: 19, flexShrink: 0 }}
+                />
                 {(visiblePurchaseCostBox ?? true) && (
                     <Region
                         name="purchase_cost_box"

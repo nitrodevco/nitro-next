@@ -53,16 +53,13 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                         src={srcProfileIcon ?? layoutImage('toolbar_memenu_profile_white.png')}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionProfileText ?? t('widget.memenu.profile')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="profile_text"
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 60, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionProfileText ?? t('widget.memenu.profile')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 60, top: 61, height: 17, maxWidth: 70 }}
+                    />
                 </Region>
                 <Region
                     name="minimail"
@@ -75,16 +72,13 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                         src={srcMinimailIcon ?? layoutImage('toolbar_memenu_minimail_white.png')}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionMinimailText ?? t('widget.memenu.minimail')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="minimail_text"
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionMinimailText ?? t('widget.memenu.minimail')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 61, height: 17, maxWidth: 70 }}
+                    />
                 </Region>
                 <Region
                     name="rooms"
@@ -97,16 +91,13 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                         src={srcRoomsIcon ?? layoutImage('toolbar_memenu_rooms_white.png')}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionRoomsText ?? t('widget.memenu.myrooms')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="rooms_text"
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 62, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRoomsText ?? t('widget.memenu.myrooms')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 62, top: 61, height: 17, maxWidth: 70 }}
+                    />
                 </Region>
                 <Region
                     name="settings"
@@ -119,16 +110,13 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                         src={srcSettingsIcon ?? layoutImage('toolbar_memenu_settings_white.png')}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionSettingsText ?? t('widget.memenu.settings')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="settings_text"
-                        layout={{ position: 'absolute', width: 49, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSettingsText ?? t('widget.memenu.settings')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 49, top: 61, height: 17, maxWidth: 70 }}
+                    />
                 </Region>
                 <Region
                     name="achievements"
@@ -141,16 +129,13 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                         src={srcAchievementsIcon ?? layoutImage('toolbar_memenu_achievements_white.png')}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionAchievementsText ?? t('widget.memenu.achievements')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="achievements_text"
-                        layout={{ position: 'absolute', width: 83, top: 61, height: 17, maxWidth: 89, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionAchievementsText ?? t('widget.memenu.achievements')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 83, top: 61, height: 17, maxWidth: 89 }}
+                    />
                 </Region>
                 <Region
                     name="talents"
@@ -163,16 +148,13 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                         src={srcTalentsIcon ?? layoutImage('toolbar_memenu_talents_white.png')}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionTalentsText ?? t('widget.memenu.talents')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="talents_text"
-                        layout={{ position: 'absolute', width: 43, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTalentsText ?? t('widget.memenu.talents')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 43, top: 61, height: 17, maxWidth: 70 }}
+                    />
                 </Region>
                 <Region
                     name="guide"
@@ -185,16 +167,13 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                         src={srcGuideIcon ?? layoutImage('toolbar_memenu_guide_white.png')}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionGuideText ?? t('widget.memenu.guide')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="guide_text"
-                        layout={{ position: 'absolute', width: 69, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionGuideText ?? t('widget.memenu.guide')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 69, top: 61, height: 17, maxWidth: 70 }}
+                    />
                 </Region>
                 <Region
                     name="clothes"
@@ -207,16 +186,13 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                         src={srcClothesIcon ?? layoutImage('toolbar_memenu_clothes_white.png')}
                         layout={{ position: 'absolute', left: 5, width: 70, top: 5, height: 55 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionClothesText ?? t('widget.memenu.editavatar')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                         name="clothes_text"
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 17, maxWidth: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionClothesText ?? t('widget.memenu.editavatar')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 70, top: 61, height: 17, maxWidth: 70 }}
+                    />
                 </Region>
             </Border>
         </Region>

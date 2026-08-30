@@ -20,15 +20,12 @@ export const MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem = ({ capti
             layout={{ width: 230, height: 65, flexShrink: 0, ...layout }}
         >
             {(visibleSectionTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionSectionTitle ?? 'Section'}
+                    textStyle="text-style-il-regular"
                     name="section_title"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSectionTitle ?? 'Section'}
-                        textStyle="text-style-il-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
+                />
             )}
             {(visibleHabbiconGrid ?? true) && (
                 <Region

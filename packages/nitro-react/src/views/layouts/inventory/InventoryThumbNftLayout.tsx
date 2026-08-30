@@ -44,15 +44,12 @@ export const InventoryThumbNftLayout = ({ captionNumber, layout, nftIcon, srcOut
                             backgroundColor="#2f6982"
                             layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15 }}
                         >
-                            <Region
+                            <ThemeText
+                                text={captionNumber ?? ''}
+                                textOptions={{ fill: '#2f6982' }}
                                 name="number"
-                                layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionNumber ?? ''}
-                                    textOptions={{ fill: '#2f6982' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4 }}
+                            />
                         </Region>
                     )}
                 </Border>

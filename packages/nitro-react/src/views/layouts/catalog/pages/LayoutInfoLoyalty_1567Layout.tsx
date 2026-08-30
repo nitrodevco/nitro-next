@@ -17,15 +17,13 @@ export const LayoutInfoLoyalty_1567Layout = ({ captionCtlgDescription, layout, s
                 name="ctlg_info_loyalty"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCtlgDescription ?? t('loremipsum.html')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 226 }}
                     name="ctlg_description"
-                    layout={{ position: 'absolute', left: 24, width: 226, top: 19, height: 322, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgDescription ?? t('loremipsum.html')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 226 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 24, width: 226, top: 19, height: 322 }}
+                />
                 <ThemeImage
                     name="loyalty_info_illustration"
                     src={srcLoyaltyInfoIllustration ?? '${image.library.url}catalogue/diamond_info_illustration.gif'}

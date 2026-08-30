@@ -67,34 +67,30 @@ export const SafetyBookletLayout = ({ finalPage, finalPageNoQuestions, layout, o
                                 src={layoutImage('common_info_icon_grey.png')}
                                 layout={{ position: 'absolute', left: 32, width: 23, top: 12, height: 24 }}
                             />
-                            <Region layout={{ position: 'absolute', left: 62, width: 153, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('safety.booklet.explanation.1')}
-                                    textOptions={{ fill: '#222222' }}
-                                />
-                            </Region>
-                            <Region layout={{ position: 'absolute', left: 62, width: 150, top: 22, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('safety.booklet.explanation.2')}
-                                    textOptions={{ fill: '#222222' }}
-                                />
-                            </Region>
+                            <ThemeText
+                                text={t('safety.booklet.explanation.1')}
+                                textOptions={{ fill: '#222222' }}
+                                layout={{ position: 'absolute', left: 62, width: 153, top: 9, height: 16 }}
+                            />
+                            <ThemeText
+                                text={t('safety.booklet.explanation.2')}
+                                textOptions={{ fill: '#222222' }}
+                                layout={{ position: 'absolute', left: 62, width: 150, top: 22, height: 16 }}
+                            />
                         </Border>
                     </Region>
                 </Frame>
                 <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}>
-                    <Region layout={{ position: 'absolute', left: 0, width: 166, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('safety.booklet.frame.subtitle')}
-                            textStyle="text-style-il-frame-modal-title"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 0, width: 304, top: 16, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('safety.booklet.frame.title')}
-                            textStyle="text-style-il-frame-modal-title"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('safety.booklet.frame.subtitle')}
+                        textStyle="text-style-il-frame-modal-title"
+                        layout={{ position: 'absolute', left: 0, width: 166, top: 0, height: 17 }}
+                    />
+                    <ThemeText
+                        text={t('safety.booklet.frame.title')}
+                        textStyle="text-style-il-frame-modal-title"
+                        layout={{ position: 'absolute', left: 0, width: 304, top: 16, height: 30 }}
+                    />
                 </Region>
             </Region>
         </Region>

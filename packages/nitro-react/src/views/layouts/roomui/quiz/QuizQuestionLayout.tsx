@@ -24,16 +24,14 @@ export const QuizQuestionLayout = ({ captionQuizTopic, layout, onButtonDislike, 
                         name="ui_container2"
                         layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 203, top: 3, height: 70, justifyContent: 'center' }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionQuizTopic ?? '1jjjjjjlllll'}
+                            textStyle="text-style-ubuntu-condensed-regular"
+                            textOptions={{ wordWrap: true }}
                             name="quiz_topic"
-                            layout={{ position: 'absolute', alignSelf: 'center', marginTop: 1, marginBottom: -1, height: 68, maxWidth: 660, maxHeight: 68, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionQuizTopic ?? '1jjjjjjlllll'}
-                                textStyle="text-style-ubuntu-condensed-regular"
-                                textOptions={{ wordWrap: true }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', alignSelf: 'center', marginTop: 1, marginBottom: -1, height: 68, maxWidth: 660, maxHeight: 68 }}
+                        />
                     </Region>
                     <Region
                         name="ui_container"

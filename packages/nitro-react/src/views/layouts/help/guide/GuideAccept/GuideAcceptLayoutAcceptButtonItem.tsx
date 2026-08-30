@@ -24,12 +24,11 @@ export const GuideAcceptLayoutAcceptButtonItem = ({ layout, onAcceptButton }: Gu
                     src={layoutImage('help_accept_icon.png')}
                     layout={{ width: 11, height: 12, flexShrink: 0 }}
                 />
-                <Region layout={{ width: 244, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.guide.accept.accept.button')}
-                        textStyle="text-style-il-button"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.help.request.guide.accept.accept.button')}
+                    textStyle="text-style-il-button"
+                    layout={{ width: 244, height: 15, flexShrink: 0 }}
+                />
             </Region>
         </ContainerButton>
     );

@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ScrollArea, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
+import { BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `recyclerPrizesWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutRecyclerPrizes_1537Layout); each passes its own placement through `layout`.
+ * (LayoutRecyclerPrizes_1543Layout); each passes its own placement through `layout`.
  */
 /** Named region `recyclerPrizesWidget` of RecyclerPrizesWidget2 - configured through the parent's `recyclerPrizesWidget` prop. */
 export interface RecyclerPrizesWidget2Props extends CatalogWidgetFlags {
@@ -16,13 +16,11 @@ export interface RecyclerPrizesWidget2Props extends CatalogWidgetFlags {
     itemsBundleGrid?: ReactNode;
     itemsItemList?: ReactNode;
     layout?: BoxLayout;
-    productViewer?: ReactNode;
     srcCtlgTeaserimg1?: string;
     tintCtlgTeaserimg1?: string;
-    visibleCtlgTeaserimg1?: boolean;
 }
 
-export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProductName, itemsBundleGrid, itemsItemList, layout, productViewer, srcCtlgTeaserimg1, tintCtlgTeaserimg1, visibleCtlgTeaserimg1 }: RecyclerPrizesWidget2Props) => {
+export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProductName, itemsBundleGrid, itemsItemList, layout, srcCtlgTeaserimg1, tintCtlgTeaserimg1 }: RecyclerPrizesWidget2Props) => {
     const t = useTranslation();
 
     return (
@@ -32,56 +30,42 @@ export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProdu
         >
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 237, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, width: 175, top: 0, bottom: 0 }}
             >
                 <Region
                     name="itemList"
-                    layout={{ flexDirection: 'column', gap: 11, width: '100%' }}
+                    layout={{ flexDirection: 'column', width: '100%' }}
                 >
                     {itemsItemList}
                 </Region>
             </ScrollArea>
             <Region
                 name="productView"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 240 }}
+                layout={{ position: 'absolute', right: 0, width: 180, top: 0, height: 277, justifyContent: 'center' }}
             >
-                <WidgetSlot
-                    widgetType="product_image"
-                    name="product_viewer"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                >
-                    {productViewer}
-                </WidgetSlot>
-                {(visibleCtlgTeaserimg1 ?? false) && (
-                    <ThemeImage
-                        name="ctlg_teaserimg_1"
-                        src={srcCtlgTeaserimg1}
-                        tint={tintCtlgTeaserimg1}
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
-                    />
-                )}
-                <Region
+                <ThemeImage
+                    name="ctlg_teaserimg_1"
+                    src={srcCtlgTeaserimg1}
+                    tint={tintCtlgTeaserimg1}
+                    layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 162 }}
+                />
+                <ThemeText
+                    text={captionCtlgProductName ?? t('lorem.title')}
+                    textStyle="text-style-u-bold"
                     name="ctlg_product_name"
-                    layout={{ position: 'absolute', left: 10, width: 74, top: 16, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgProductName ?? t('lorem.title')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 74, top: 166, height: 17 }}
+                />
+                <ThemeText
+                    text={captionCtlgDescription ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 162 }}
                     name="ctlg_description"
-                    layout={{ position: 'absolute', left: 10, width: 162, top: 33, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgDescription ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 162 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, width: 162, top: 183, height: 15 }}
+                />
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 18, width: 142, top: 147, height: 76 }}
+                    layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 142, top: 87, height: 76 }}
                 >
                     <Region
                         name="bundleGrid"

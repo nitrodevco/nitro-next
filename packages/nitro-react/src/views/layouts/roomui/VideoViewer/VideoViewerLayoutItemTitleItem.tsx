@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `item_title` of VideoViewerLayout - pass real rows through its `items…` slot. */
 export interface VideoViewerLayoutItemTitleItemProps {
@@ -8,14 +8,11 @@ export interface VideoViewerLayoutItemTitleItemProps {
 
 export const VideoViewerLayoutItemTitleItem = ({ captionItemTitle, layout }: VideoViewerLayoutItemTitleItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionItemTitle ?? 'Item Title'}
+            textStyle="text-style-u-bold"
             name="item_title"
-            layout={{ width: 57, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionItemTitle ?? 'Item Title'}
-                textStyle="text-style-u-bold"
-            />
-        </Region>
+            layout={{ width: 57, height: 20, flexShrink: 0, ...layout }}
+        />
     );
 };

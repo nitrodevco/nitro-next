@@ -24,15 +24,12 @@ export const HabbiconHubLayoutHabbiconPopupBottomBarItem = ({ captionHabbiconPop
         >
             <Region layout={{ position: 'absolute', right: 12, width: 91, top: 0, bottom: 0, flexDirection: 'row', gap: 4 }}>
                 {(visibleHabbiconPopupPrice ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionHabbiconPopupPrice ?? '0'}
+                        textStyle="text-style-u-bold"
                         name="habbicon_popup_price"
-                        layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHabbiconPopupPrice ?? '0'}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
+                        layout={{ width: 10, height: 17, flexShrink: 0 }}
+                    />
                 )}
                 {(visibleHabbiconPopupCurrencyIcon ?? true) && (
                     <Icon

@@ -44,15 +44,12 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                         />
                     )}
                     {(visibleMarketplaceDucketValue ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionMarketplaceDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="marketplaceDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMarketplaceDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                         />
                     )}
                     {(visibleMarketplaceCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionMarketplaceCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="marketplaceCreditValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMarketplaceCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                         />
                     )}
                     {(visibleMarketplaceLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionMarketplaceLabel ?? t('earnings.marketplace.label')}
+                            textStyle="text-style-u-bold"
                             name="marketplace_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMarketplaceLabel ?? t('earnings.marketplace.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

@@ -32,15 +32,12 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionTitleTxt ?? t('citizenship.promo.title')}
+                    textStyle="text-style-il-regular-white"
                     name="title_txt"
-                    layout={{ position: 'absolute', left: 10, width: 148, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitleTxt ?? t('citizenship.promo.title')}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 10, width: 148, top: 6, bottom: 7 }}
+                />
             </Region>
         </Region>
     );

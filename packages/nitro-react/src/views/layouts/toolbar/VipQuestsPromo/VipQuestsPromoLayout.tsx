@@ -49,15 +49,13 @@ export const VipQuestsPromoLayout = ({ captionTitleTxt, itemsContentItemlist, la
                         layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionTitleTxt ?? t('citizenship.vip.quests.title')}
+                    textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 150 }}
                     name="title_txt"
-                    layout={{ position: 'absolute', left: 13, width: 150, top: 10, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitleTxt ?? t('citizenship.vip.quests.title')}
-                        textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 150 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 13, width: 150, top: 10, height: 15 }}
+                />
                 <ThemeImage
                     name="promo_img"
                     src={srcPromoImg ?? '${image.library.url}talent/citizenship_vip_quest_promo.png'}

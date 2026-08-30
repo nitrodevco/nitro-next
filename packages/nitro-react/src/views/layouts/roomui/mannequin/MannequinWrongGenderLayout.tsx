@@ -30,16 +30,14 @@ export const MannequinWrongGenderLayout = ({ captionDescription, layout, onOkBut
                     tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionDescription ?? t('mannequin.widget.wronggender')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 245 }}
                     name="description"
-                    layout={{ position: 'absolute', left: 126, width: 245, top: 52, height: 86, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescription ?? t('mannequin.widget.wronggender')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 245 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 126, width: 245, top: 52, height: 86 }}
+                />
                 <Icon
                     variant="0"
                     name="club_icon"

@@ -40,15 +40,13 @@ export const CatalogPromoLayoutCatalogPromo = ({ captionCatalogPromoStatus, colo
                 name="picture_container"
                 layout={{ position: 'absolute', right: 0, width: 226, top: 11, bottom: 0, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionCatalogPromoStatus ?? t('landing.view.catalog.promo.picture.text')}
+                    textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 200, align: 'center' }}
                     name="catalog_promo_status"
-                    layout={{ position: 'absolute', left: 10, width: 200, bottom: 4, height: 28, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionCatalogPromoStatus ?? t('landing.view.catalog.promo.picture.text')}
-                        textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 200, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 200, bottom: 4, height: 28, minWidth: 200, maxWidth: 200 }}
+                />
                 <ThemeImage
                     name="picture"
                     src={srcPicture ?? '${image.library.url}reception/meter_level_0.png'}

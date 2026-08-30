@@ -37,15 +37,13 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, infoBox, layo
                     variant="4"
                     layout={{ position: 'absolute', left: 0, width: 228, top: 0, bottom: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionInfoText ?? 'Do not use this tool for users who are currently in the room/using the changed variable in another room.'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 218, align: 'center' }}
                         name="info_text"
-                        layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 6, minWidth: 218, maxWidth: 218, minHeight: 46, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionInfoText ?? 'Do not use this tool for users who are currently in the room/using the changed variable in another room.'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 218, align: 'center' }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 6, minWidth: 218, maxWidth: 218, minHeight: 46, maxHeight: 46 }}
+                    />
                 </Border>
                 <Button
                     variant="3"

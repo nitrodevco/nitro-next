@@ -31,16 +31,13 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, nftImage, srcArro
                     tint={tintItemImage}
                     layout={{ position: 'absolute', left: 8, width: 190, top: 22, height: 55 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionItemNameText ?? 'PH Item name'}
+                    textStyle="text-style-u-headline-small"
+                    textOptions={{ align: 'center' }}
                     name="item_name_text"
-                    layout={{ position: 'absolute', left: 5, right: 8, top: 5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionItemNameText ?? 'PH Item name'}
-                        textStyle="text-style-u-headline-small"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 5, right: 8, top: 5, height: 19 }}
+                />
                 <ThemeImage
                     name="arrow_pointer"
                     src={srcArrowPointer}

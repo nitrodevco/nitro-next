@@ -20,16 +20,14 @@ export const BackgroundColorUiLayoutHeaderContainerItem = ({ captionDimmerInfo, 
             layout={{ alignSelf: 'stretch', height: 29, flexShrink: 0, ...layout }}
         >
             {(visibleDimmerInfo ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionDimmerInfo ?? t('widget.backgroundcolor.info')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 218 }}
                     name="dimmer_info"
-                    layout={{ position: 'absolute', left: 4, width: 218, top: 0, bottom: -2, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDimmerInfo ?? t('widget.backgroundcolor.info')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 218 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 4, width: 218, top: 0, bottom: -2 }}
+                />
             )}
             <Border
                 variant="100"

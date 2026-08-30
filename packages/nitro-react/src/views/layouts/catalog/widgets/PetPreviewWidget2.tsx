@@ -39,24 +39,19 @@ export const PetPreviewWidget2 = ({ captionCtlgDescription, captionCtlgProductNa
                 tint={tintCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 275 }}
             />
-            <Region
+            <ThemeText
+                text={captionCtlgProductName ?? t('lorem.title')}
+                textStyle="text-style-u-bold"
                 name="ctlg_product_name"
-                layout={{ position: 'absolute', left: 8, width: 74, top: 172, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgProductName ?? t('lorem.title')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 8, width: 74, top: 172, height: 17 }}
+            />
+            <ThemeText
+                text={captionCtlgDescription ?? t('lorem.title')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 162 }}
                 name="ctlg_description"
-                layout={{ position: 'absolute', left: 8, right: 5, top: 189, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgDescription ?? t('lorem.title')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 162 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 8, right: 5, top: 189, height: 17 }}
+            />
         </Region>
     );
 };

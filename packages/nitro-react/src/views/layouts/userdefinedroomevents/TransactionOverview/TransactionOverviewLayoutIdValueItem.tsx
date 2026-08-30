@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `id_value` of TransactionOverviewLayout - pass real rows through its `items…` slot. */
 export interface TransactionOverviewLayoutIdValueItemProps {
@@ -8,11 +8,10 @@ export interface TransactionOverviewLayoutIdValueItemProps {
 
 export const TransactionOverviewLayoutIdValueItem = ({ captionIdValue, layout }: TransactionOverviewLayoutIdValueItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionIdValue ?? '12345'}
             name="id_value"
-            layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionIdValue ?? '12345'}
-        </Region>
+            layout={{ width: 38, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

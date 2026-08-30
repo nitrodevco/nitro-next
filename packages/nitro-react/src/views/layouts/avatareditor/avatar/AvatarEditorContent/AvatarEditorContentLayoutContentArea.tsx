@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ScrollArea, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { AvatarEditorContentLayoutHeadContent, AvatarEditorContentLayoutHeadContentProps } from './AvatarEditorContentLayoutHeadContent';
@@ -73,12 +73,11 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                             layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
                         />
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionTabBoyTitle ?? t('avatareditor.generic.boy')}
                         name="tab_boy_title"
-                        layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 143, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTabBoyTitle ?? t('avatareditor.generic.boy')}
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 143, top: 10, height: 17 }}
+                    />
                     <Region
                         name="tab_girl"
                         onPointerTap={onTabGirl}
@@ -91,12 +90,11 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                             layout={{ position: 'absolute', left: 0, width: 48, top: 0, height: 35 }}
                         />
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionTabGirlTitle ?? t('avatareditor.generic.girl')}
                         name="tab_girl_title"
-                        layout={{ position: 'absolute', left: 150, width: 141, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionTabGirlTitle ?? t('avatareditor.generic.girl')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 150, width: 141, top: 10, height: 17 }}
+                    />
                 </Region>
             )}
             {(visibleHeadContent ?? false) && (
@@ -153,18 +151,16 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                     name="hotlooks_content"
                     layout={{ position: 'absolute', left: 20, width: 310, top: 10, height: 290 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionHotlooksTitle ?? t('avatareditor.hotlooks.title')}
                         name="hotlooksTitle"
-                        layout={{ position: 'absolute', left: 0, width: 262, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionHotlooksTitle ?? t('avatareditor.hotlooks.title')}
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, width: 262, top: 0, height: 26 }}
+                    />
+                    <ThemeText
+                        text={captionHotlooksChoose ?? t('avatareditor.hotlooks.choose')}
                         name="hotlooksChoose"
-                        layout={{ position: 'absolute', left: 0, width: 168, top: 28, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionHotlooksChoose ?? t('avatareditor.hotlooks.choose')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 168, top: 28, height: 17 }}
+                    />
                     <Region
                         name="hotlooks"
                         layout={{ position: 'absolute', left: 4, right: 7, bottom: 5, height: 220, flexDirection: 'row', flexWrap: 'wrap', gap: 7 }}
@@ -178,18 +174,16 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                     name="nfts_content"
                     layout={{ position: 'absolute', left: 20, width: 310, top: 10, height: 290 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionNftsTitle ?? t('avatareditor.nfts.title')}
                         name="nftsTitle"
-                        layout={{ position: 'absolute', left: 0, width: 217, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionNftsTitle ?? t('avatareditor.nfts.title')}
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, width: 217, top: 0, height: 26 }}
+                    />
+                    <ThemeText
+                        text={captionNftsChoose ?? t('avatareditor.nfts.choose')}
                         name="nftsChoose"
-                        layout={{ position: 'absolute', left: 0, width: 140, top: 28, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionNftsChoose ?? t('avatareditor.nfts.choose')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 140, top: 28, height: 17 }}
+                    />
                     <ScrollArea
                         orientation="vertical"
                         layout={{ position: 'absolute', left: 4, right: 7, bottom: 5, height: 220 }}
@@ -213,12 +207,11 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         src={srcTabEffects ?? layoutImage('avatar_editor_tabs_effects_fx.png')}
                         layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionEffectsTitle ?? t('inventory.effects')}
                         name="effectsTitle"
-                        layout={{ position: 'absolute', left: 40, width: 169, top: 4, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionEffectsTitle ?? t('inventory.effects')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 40, width: 169, top: 4, bottom: 5 }}
+                    />
                     <Region
                         name="tab_effects"
                         onPointerTap={onTabEffects}

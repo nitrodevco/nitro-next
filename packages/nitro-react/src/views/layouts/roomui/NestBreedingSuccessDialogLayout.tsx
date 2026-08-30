@@ -24,31 +24,24 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
             layout={{ width: 323, height: 221, minWidth: 323, minHeight: 221, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', left: 39, width: 252, top: 15, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('breedpets.nestbreeding.success.title')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Region
+                <ThemeText
+                    text={t('breedpets.nestbreeding.success.title')}
+                    textOptions={{ align: 'center' }}
+                    layout={{ position: 'absolute', left: 39, width: 252, top: 15, height: 16 }}
+                />
+                <ThemeText
+                    text={captionPetName ?? t('breedpets.nestbreeding.success.name')}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ align: 'center' }}
                     name="pet.name"
-                    layout={{ position: 'absolute', left: 42, width: 252, top: 116, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionPetName ?? t('breedpets.nestbreeding.success.name')}
-                        textStyle="text-style-il-heading-3"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 42, width: 252, top: 116, height: 15 }}
+                />
+                <ThemeText
+                    text={captionPetRaritycategory ?? t('breedpets.nestbreeding.success.raritycategory.0')}
+                    textOptions={{ align: 'center' }}
                     name="pet.raritycategory"
-                    layout={{ position: 'absolute', left: 42, width: 252, top: 127, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionPetRaritycategory ?? t('breedpets.nestbreeding.success.raritycategory.0')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 42, width: 252, top: 127, height: 16 }}
+                />
                 <Button
                     variant="102"
                     name="button.ok"

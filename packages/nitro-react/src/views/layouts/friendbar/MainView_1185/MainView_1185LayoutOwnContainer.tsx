@@ -39,15 +39,12 @@ export const MainView_1185LayoutOwnContainer = ({ captionRankOwn, captionUsernam
                     tintColor="#6382aa"
                     layout={{ position: 'absolute', width: 27, top: 7, height: 25 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionRankOwn ?? '--'}
+                        textOptions={{ fill: '#ffffff' }}
                         name="rank_own"
-                        layout={{ position: 'absolute', left: 6, top: 2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRankOwn ?? '--'}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 6, top: 2, height: 20 }}
+                    />
                 </Border>
             </Region>
             <Region
@@ -65,12 +62,11 @@ export const MainView_1185LayoutOwnContainer = ({ captionRankOwn, captionUsernam
                     />
                 </Region>
             </Region>
-            <Region
+            <ThemeText
+                text={captionUsernameTxt ?? 'sirjonasxx-XIVXXI'}
                 name="username_txt"
-                layout={{ position: 'absolute', left: 97, width: 99, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionUsernameTxt ?? 'sirjonasxx-XIVXXI'}
-            </Region>
+                layout={{ position: 'absolute', left: 97, width: 99, alignSelf: 'center', height: 17 }}
+            />
             <Region
                 name="right_aligned"
                 layout={{ position: 'absolute', right: 11, width: 64, top: 7, height: 26, flexDirection: 'row', gap: 8 }}

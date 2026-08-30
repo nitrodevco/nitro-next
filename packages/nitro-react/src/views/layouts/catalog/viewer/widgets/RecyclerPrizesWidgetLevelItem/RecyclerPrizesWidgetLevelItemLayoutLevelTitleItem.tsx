@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `level_title` of RecyclerPrizesWidgetLevelItemLayout - pass real rows through its `items…` slot. */
 export interface RecyclerPrizesWidgetLevelItemLayoutLevelTitleItemProps {
@@ -8,11 +8,10 @@ export interface RecyclerPrizesWidgetLevelItemLayoutLevelTitleItemProps {
 
 export const RecyclerPrizesWidgetLevelItemLayoutLevelTitleItem = ({ captionLevelTitle, layout }: RecyclerPrizesWidgetLevelItemLayoutLevelTitleItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionLevelTitle ?? 'Title'}
             name="level_title"
-            layout={{ width: 28, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionLevelTitle ?? 'Title'}
-        </Region>
+            layout={{ width: 28, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

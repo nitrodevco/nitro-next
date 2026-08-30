@@ -15,15 +15,13 @@ export const LayoutBuildersClubFrontpageLayout = ({ builderSubscriptionWidget, c
                 name="ctlg_builders_club_frontpage"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCtlgDescription ?? 'Formatted text'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
                     name="ctlg_description"
-                    layout={{ position: 'absolute', left: 15, width: 330, top: 10, height: 380, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgDescription ?? 'Formatted text'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 15, width: 330, top: 10, height: 380 }}
+                />
                 <BuilderSubscriptionWidget
                     layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 100 }}
                     {...builderSubscriptionWidget}

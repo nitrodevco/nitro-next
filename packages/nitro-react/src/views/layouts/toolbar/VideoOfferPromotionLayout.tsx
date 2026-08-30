@@ -25,24 +25,20 @@ export const VideoOfferPromotionLayout = ({ captionPromoText, captionPromoTextSh
                     cursor="pointer"
                     layout={{ position: 'absolute', marginLeft: 2.5, marginRight: -2.5, width: 145, top: 6, bottom: 4 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPromoTextShadow ?? 'video offer promo text'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 136 }}
                         name="promo_text_shadow"
-                        layout={{ position: 'absolute', left: 1, right: 8, top: 1, bottom: 12, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPromoTextShadow ?? 'video offer promo text'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 136 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 1, right: 8, top: 1, bottom: 12, minWidth: 136, maxWidth: 136 }}
+                    />
+                    <ThemeText
+                        text={captionPromoText ?? 'video offer promo text'}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 136 }}
                         name="promo_text"
-                        layout={{ position: 'absolute', left: 0, right: 9, top: 0, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPromoText ?? 'video offer promo text'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 136 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, right: 9, top: 0, minWidth: 136, maxWidth: 136 }}
+                    />
                 </Region>
                 <ThemeImage
                     name="promo_icon"

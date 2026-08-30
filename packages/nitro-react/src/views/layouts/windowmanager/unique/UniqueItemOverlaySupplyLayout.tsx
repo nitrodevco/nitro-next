@@ -28,44 +28,32 @@ export const UniqueItemOverlaySupplyLayout = ({ captionItemsLeft, captionItemsLe
                     src={srcPlaque ?? layoutImage('unique_item_large_background_wide.png')}
                     layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 29 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionItemsLeft ?? t('unique.items.left')}
+                    textStyle="text-style-regular"
                     name="items_left"
-                    layout={{ position: 'absolute', left: 40, width: 44, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemsLeft ?? t('unique.items.left')}
-                        textStyle="text-style-regular"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 40, width: 44, top: 2, height: 14 }}
+                />
+                <ThemeText
+                    text={captionItemsLeftCount ?? '1234'}
+                    textStyle="text-style-regular"
+                    textOptions={{ align: 'right' }}
                     name="items_left_count"
-                    layout={{ position: 'absolute', left: 108, width: 35, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionItemsLeftCount ?? '1234'}
-                        textStyle="text-style-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 108, width: 35, top: 0, height: 17 }}
+                />
+                <ThemeText
+                    text={captionItemsTotal ?? t('unique.items.number.sold')}
+                    textStyle="text-style-regular"
                     name="items_total"
-                    layout={{ position: 'absolute', left: 40, width: 58, bottom: 11, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemsTotal ?? t('unique.items.number.sold')}
-                        textStyle="text-style-regular"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 40, width: 58, bottom: 11, height: 14 }}
+                />
+                <ThemeText
+                    text={captionItemsTotalCount ?? '9999'}
+                    textStyle="text-style-regular"
+                    textOptions={{ align: 'right' }}
                     name="items_total_count"
-                    layout={{ position: 'absolute', left: 120, width: 23, bottom: 11, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionItemsTotalCount ?? '9999'}
-                        textStyle="text-style-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 120, width: 23, bottom: 11, height: 14 }}
+                />
                 {(visibleUniqueItemSoldOutBitmap ?? false) && (
                     <ThemeImage
                         name="unique_item_sold_out_bitmap"

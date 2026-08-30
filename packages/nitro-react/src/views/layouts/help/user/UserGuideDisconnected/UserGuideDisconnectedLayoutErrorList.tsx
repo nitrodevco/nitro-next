@@ -24,20 +24,20 @@ export const UserGuideDisconnectedLayoutErrorList = ({ itemsErrorList, layout, s
             {itemsErrorList ?? (
                 <UserGuideDisconnectedLayoutResubmitButtonItem />
             )}
-            <Region layout={{ alignSelf: 'stretch', height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('guide.help.request.user.guide.disconnected.error.heading')}
-                    textStyle="text-style-il-heading-1"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('guide.help.request.user.guide.disconnected.error.heading')}
+                textStyle="text-style-il-heading-1"
+                textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                verticalAlign="top"
+                layout={{ alignSelf: 'stretch', height: 35, flexShrink: 0 }}
+            />
             <Region layout={{ alignSelf: 'stretch', height: 10, flexShrink: 0 }} />
-            <Region layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('guide.help.request.user.guide.disconnected.error.desc')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('guide.help.request.user.guide.disconnected.error.desc')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                verticalAlign="top"
+                layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0 }}
+            />
             <Region layout={{ alignSelf: 'stretch', height: 10, flexShrink: 0 }} />
             <WidgetSlot
                 widgetType="separator"

@@ -20,30 +20,22 @@ export const CalendarLayoutCalendarItemlist = ({ itemsCalendarItemlist, layout }
             {itemsCalendarItemlist ?? (
                 <CalendarLayoutBtnSlotItem />
             )}
-            <Region layout={{ width: 202, height: 447, flexShrink: 0 }}>
-                <ThemeImage
-                    src={layoutImage('campaign_calendar_day_generic_bg.png')}
-                    layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
-                />
-            </Region>
-            <Region layout={{ width: 202, height: 447, flexShrink: 0 }}>
-                <ThemeImage
-                    src={layoutImage('campaign_calendar_day_generic_bg.png')}
-                    layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
-                />
-            </Region>
-            <Region layout={{ width: 202, height: 447, flexShrink: 0 }}>
-                <ThemeImage
-                    src={layoutImage('campaign_calendar_day_generic_bg.png')}
-                    layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
-                />
-            </Region>
-            <Region layout={{ width: 202, height: 447, flexShrink: 0 }}>
-                <ThemeImage
-                    src={layoutImage('campaign_calendar_day_generic_bg.png')}
-                    layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
-                />
-            </Region>
+            <ThemeImage
+                src={layoutImage('campaign_calendar_day_generic_bg.png')}
+                layout={{ width: 202, height: 447, flexShrink: 0 }}
+            />
+            <ThemeImage
+                src={layoutImage('campaign_calendar_day_generic_bg.png')}
+                layout={{ width: 202, height: 447, flexShrink: 0 }}
+            />
+            <ThemeImage
+                src={layoutImage('campaign_calendar_day_generic_bg.png')}
+                layout={{ width: 202, height: 447, flexShrink: 0 }}
+            />
+            <ThemeImage
+                src={layoutImage('campaign_calendar_day_generic_bg.png')}
+                layout={{ width: 202, height: 447, flexShrink: 0 }}
+            />
         </Region>
     );
 };

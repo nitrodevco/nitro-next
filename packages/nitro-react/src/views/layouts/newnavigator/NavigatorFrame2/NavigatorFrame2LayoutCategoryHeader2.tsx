@@ -43,15 +43,12 @@ export const NavigatorFrame2LayoutCategoryHeader2 = ({ captionCategoryName, item
                         layout={{ position: 'absolute', left: 0, width: 11, top: 0, height: 19 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionCategoryName ?? 'Collapsed Category Name PH'}
+                    textOptions={{ fill: '#0f557b' }}
                     name="category_name"
-                    layout={{ position: 'absolute', left: 20, width: 189, top: 5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCategoryName ?? 'Collapsed Category Name PH'}
-                        textOptions={{ fill: '#0f557b' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 20, width: 189, top: 5, height: 19 }}
+                />
             </Region>
             <Region
                 name="category_controls_itemlist"

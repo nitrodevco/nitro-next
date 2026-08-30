@@ -40,15 +40,13 @@ export const UseProductControllerFertilizeMonsterplantLayoutPreviewListItem = ({
                     </Region>
                 )}
                 {(visibleDescription ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionDescription ?? t('useproduct.widget.text.fertilize_monsterplant')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
                         name="description"
-                        layout={{ alignSelf: 'stretch', height: 44, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionDescription ?? t('useproduct.widget.text.fertilize_monsterplant')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 44, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                    />
                 )}
                 {(visibleSeparator2 ?? true) && (
                     <Region
@@ -59,16 +57,14 @@ export const UseProductControllerFertilizeMonsterplantLayoutPreviewListItem = ({
                     </Region>
                 )}
                 {(visibleInfo ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionInfo ?? t('useproduct.widget.info.fertilize_monsterplant')}
+                        textStyle="text-style-u-italic"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
                         name="info"
-                        layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfo ?? t('useproduct.widget.info.fertilize_monsterplant')}
-                            textStyle="text-style-u-italic"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                    />
                 )}
             </Region>
         </Region>

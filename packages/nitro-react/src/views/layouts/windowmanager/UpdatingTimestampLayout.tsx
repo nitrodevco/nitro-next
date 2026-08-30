@@ -8,12 +8,11 @@ export interface UpdatingTimestampLayoutProps {
 export const UpdatingTimestampLayout = ({ layout }: UpdatingTimestampLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 100, height: 16, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <ThemeText
-                    text="Just now."
-                    textOptions={{ fill: '#555555', align: 'right' }}
-                />
-            </Region>
+            <ThemeText
+                text="Just now."
+                textOptions={{ fill: '#555555', align: 'right' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            />
         </Region>
     );
 };

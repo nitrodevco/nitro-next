@@ -32,16 +32,13 @@ export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, contentArea,
             >
                 {titlebar}
             </Region>
-            <Region
+            <ThemeText
+                text={captionHeaderTitleText ?? ''}
+                textStyle="text-style-il-frame-title"
+                textOptions={{ fill: '#ffffff' }}
                 name="header_title_text"
-                layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeaderTitleText ?? ''}
-                    textStyle="text-style-il-frame-title"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20 }}
+            />
             <CloseButton
                 variant="103"
                 name="header_button_close"

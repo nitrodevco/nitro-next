@@ -34,38 +34,29 @@ export const NewExtendedProfileLayoutBadgeCountRegionItem = ({ captionBadgeCount
                     layout={{ width: 25, height: 25, flexShrink: 0 }}
                 />
                 {(visibleBadgeCountLabel ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionBadgeCountLabel ?? t('inventory.badges')}
+                        textStyle="text-style-u-regular"
                         name="badgeCountLabel"
-                        layout={{ width: 42, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBadgeCountLabel ?? t('inventory.badges')}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
+                        layout={{ width: 42, height: 16, flexShrink: 0 }}
+                    />
                 )}
                 <Region layout={{ width: 48, height: 30, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
                     {(visibleBadgeCount ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionBadgeCount ?? '0'}
+                            textStyle="text-style-u-regular"
                             name="badgeCount"
-                            layout={{ width: 10, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBadgeCount ?? '0'}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ width: 10, height: 16, flexShrink: 0 }}
+                        />
                     )}
                     {(visibleBadgeRank ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionBadgeRank ?? '(#123)'}
+                            textStyle="text-style-u-regular"
                             name="badgeRank"
-                            layout={{ width: 36, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBadgeRank ?? '(#123)'}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ width: 36, height: 16, flexShrink: 0 }}
+                        />
                     )}
                 </Region>
             </Region>

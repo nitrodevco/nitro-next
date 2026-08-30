@@ -30,12 +30,11 @@ export const FeedDisplayLayoutPaneSettings = ({ layout, visiblePaneSettings }: F
                         name="settings_all"
                         layout={{ width: 260, height: 50, flexShrink: 0 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text="_show_all"
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                        <ThemeText
+                            text="_show_all"
+                            textStyle="text-style-u-regular"
+                            layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 17 }}
+                        />
                         <Icon
                             variant="8"
                             name="selected"
@@ -46,12 +45,11 @@ export const FeedDisplayLayoutPaneSettings = ({ layout, visiblePaneSettings }: F
                         name="settings_friends"
                         layout={{ width: 260, height: 50, flexShrink: 0 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text="_show_friends"
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                        <ThemeText
+                            text="_show_friends"
+                            textStyle="text-style-u-regular"
+                            layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25 }}
+                        />
                         <Icon
                             variant="8"
                             name="selected"
@@ -62,12 +60,11 @@ export const FeedDisplayLayoutPaneSettings = ({ layout, visiblePaneSettings }: F
                         name="settings_me"
                         layout={{ width: 260, height: 50, flexShrink: 0 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text="_show_me"
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                        <ThemeText
+                            text="_show_me"
+                            textStyle="text-style-u-regular"
+                            layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25 }}
+                        />
                         <Icon
                             variant="8"
                             name="selected"
@@ -78,12 +75,11 @@ export const FeedDisplayLayoutPaneSettings = ({ layout, visiblePaneSettings }: F
                         name="settings_hotel"
                         layout={{ width: 260, height: 50, flexShrink: 0 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text="_show_hotel"
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                        <ThemeText
+                            text="_show_hotel"
+                            textStyle="text-style-u-regular"
+                            layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25 }}
+                        />
                         <Icon
                             variant="8"
                             name="selected"

@@ -19,16 +19,13 @@ export const DynamicWidgetGridSeparatorLayout = ({ captionSeparatorTitle, colora
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ width: 12, height: 4, flexShrink: 0, minHeight: 4, maxHeight: 4 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionSeparatorTitle ?? 'Title PH'}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ fill: colorableTextColor }}
                     name="separator_title"
-                    layout={{ width: 40, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSeparatorTitle ?? 'Title PH'}
-                        textStyle="text-style-il-heading-3"
-                        textOptions={{ fill: colorableTextColor }}
-                    />
-                </Region>
+                    layout={{ width: 40, alignSelf: 'stretch', flexShrink: 0 }}
+                />
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}

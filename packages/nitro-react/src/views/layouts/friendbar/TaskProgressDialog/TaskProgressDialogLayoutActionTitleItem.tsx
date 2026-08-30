@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `action_title` of TaskProgressDialogLayout - pass real rows through its `items…` slot. */
 export interface TaskProgressDialogLayoutActionTitleItemProps {
@@ -11,15 +11,13 @@ export const TaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle, la
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionActionTitle ?? t('talent.track.task.action.title')}
+            textStyle="text-style-il-heading-2"
+            textOptions={{ wordWrap: true, wordWrapWidth: 325 }}
             name="action_title"
-            layout={{ width: 325, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionActionTitle ?? t('talent.track.task.action.title')}
-                textStyle="text-style-il-heading-2"
-                textOptions={{ wordWrap: true, wordWrapWidth: 325 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 325, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

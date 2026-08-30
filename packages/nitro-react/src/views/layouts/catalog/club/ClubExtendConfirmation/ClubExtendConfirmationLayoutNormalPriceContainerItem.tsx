@@ -24,27 +24,21 @@ export const ClubExtendConfirmationLayoutNormalPriceContainerItem = ({ captionNo
             layout={{ width: 285, height: 30, flexShrink: 0, ...layout }}
         >
             {(visibleNormalPriceLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionNormalPriceLabel ?? ''}
+                    textStyle="text-style-u-regular"
                     name="normal_price_label"
-                    layout={{ position: 'absolute', left: 0, width: 4, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNormalPriceLabel ?? ''}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 4, bottom: 11, height: 4 }}
+                />
             )}
             {(visibleNormalPricePriceLeft ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionNormalPricePriceLeft ?? ''}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ align: 'right' }}
                     name="normal_price_price_left"
-                    layout={{ position: 'absolute', left: 150, width: 30, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionNormalPricePriceLeft ?? ''}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 150, width: 30, bottom: 11, height: 4 }}
+                />
             )}
             {(visibleNormalPriceIconLeft ?? true) && (
                 <ThemeImage
@@ -55,28 +49,22 @@ export const ClubExtendConfirmationLayoutNormalPriceContainerItem = ({ captionNo
                 />
             )}
             {(visiblePlus ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionPlus ?? ' '}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ align: 'right' }}
                     name="plus"
-                    layout={{ position: 'absolute', left: 212, width: 10, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionPlus ?? ' '}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 212, width: 10, top: 0, height: 4 }}
+                />
             )}
             {(visibleNormalPricePriceRight ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionNormalPricePriceRight ?? ''}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ align: 'right' }}
                     name="normal_price_price_right"
-                    layout={{ position: 'absolute', left: 220, width: 30, bottom: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionNormalPricePriceRight ?? ''}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 220, width: 30, bottom: 11, height: 4 }}
+                />
             )}
             {(visibleNormalPriceIconRight ?? true) && (
                 <Icon

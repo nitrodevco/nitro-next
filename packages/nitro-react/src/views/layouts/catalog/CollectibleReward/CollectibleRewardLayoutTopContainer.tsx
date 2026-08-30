@@ -44,25 +44,19 @@ export const CollectibleRewardLayoutTopContainer = ({ captionProductName, captio
                 name="text_container"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 58 }}
             >
-                <Region
+                <ThemeText
+                    text={captionTitleText ?? t('collectibles.reward_box.contains')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="title_text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionTitleText ?? t('collectibles.reward_box.contains')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 24 }}
+                />
+                <ThemeText
+                    text={captionProductName ?? 'Product Name'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#f3cd03', align: 'center' }}
                     name="product_name"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 32, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionProductName ?? 'Product Name'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#f3cd03', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 32, height: 26 }}
+                />
             </Region>
             <Region
                 name="product_container"

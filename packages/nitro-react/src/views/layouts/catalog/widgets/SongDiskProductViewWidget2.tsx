@@ -33,34 +33,26 @@ export const SongDiskProductViewWidget2 = ({ captionCtlgDescription, captionCtlg
                 tint={tintCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
             />
-            <Region
+            <ThemeText
+                text={captionCtlgProductName ?? t('lorem.title')}
+                textStyle="text-style-u-bold"
+                textOptions={{ wordWrap: true, wordWrapWidth: 175 }}
                 name="ctlg_product_name"
-                layout={{ position: 'absolute', left: 10, width: 175, top: 16, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgProductName ?? t('lorem.title')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 175 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, width: 175, top: 16, height: 17 }}
+            />
+            <ThemeText
+                text={captionCtlgDescription ?? t('lorem.title')}
+                textStyle="text-style-u-small"
                 name="ctlg_description"
-                layout={{ position: 'absolute', left: 10, width: 62, top: 34, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgDescription ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 10, width: 62, top: 34, height: 15 }}
+            />
+            <ThemeText
+                text={captionCtlgSongLength ?? '00:00'}
+                textStyle="text-style-u-small"
                 name="ctlg_song_length"
-                layout={{ position: 'absolute', left: 10, width: 31, top: 53, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSongLength ?? '00:00'}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 10, width: 31, top: 53, height: 15 }}
+            />
             <Region
                 name="playPreviewContainer"
                 layout={{ position: 'absolute', left: 7, width: 175, top: 195, height: 36 }}
@@ -79,15 +71,12 @@ export const SongDiskProductViewWidget2 = ({ captionCtlgDescription, captionCtlg
                 >
                     {t('play_preview_button')}
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionPlayPreviewText ?? t('play_preview')}
+                    textStyle="text-style-u-small"
                     name="play_preview_text"
-                    layout={{ position: 'absolute', left: 9, width: 64, top: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPlayPreviewText ?? t('play_preview')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 9, width: 64, top: 11, height: 15 }}
+                />
             </Region>
         </Region>
     );

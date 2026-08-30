@@ -33,24 +33,20 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
                 name="step_cont_4"
                 layout={{ position: 'absolute', left: 0, right: -9, top: 111, height: 360, ...layout }}
             >
-                <Region
+                <ThemeText
+                    text={captionConfirmationCaption ?? 'Group Name Here DIPPA DAPPA DII'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 256 }}
                     name="confirmation_caption"
-                    layout={{ position: 'absolute', left: 126, width: 256, top: 8, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionConfirmationCaption ?? 'Group Name Here DIPPA DAPPA DII'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 256 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 126, width: 256, top: 8, height: 45 }}
+                />
+                <ThemeText
+                    text={captionConfirmationDesc ?? t('group.create.confirm.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
                     name="confirmation_desc"
-                    layout={{ position: 'absolute', left: 126, width: 260, top: 46, height: 215, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionConfirmationDesc ?? t('group.create.confirm.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 126, width: 260, top: 46, height: 215 }}
+                />
                 <Border
                     variant="0"
                     name="badge_border"
@@ -68,26 +64,20 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
                         layout={{ position: 'absolute', left: 26, width: 39, top: 26, height: 39 }}
                     />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionGuildBadgeTxt ?? t('group.create.confirm.guildbadge')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
                     name="guild_badge_txt"
-                    layout={{ position: 'absolute', left: 15, width: 92, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionGuildBadgeTxt ?? t('group.create.confirm.guildbadge')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 15, width: 92, top: 33, height: 17 }}
+                />
+                <ThemeText
+                    text={captionGuildColorsTxt ?? t('group.create.confirm.guildcolors')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
                     name="guild_colors_txt"
-                    layout={{ position: 'absolute', left: 15, width: 92, top: 155, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionGuildColorsTxt ?? t('group.create.confirm.guildcolors')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 15, width: 92, top: 155, height: 17 }}
+                />
                 <Border
                     variant="5"
                     layout={{ position: 'absolute', left: 15, width: 92, top: 172, height: 46 }}
@@ -138,24 +128,18 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
                         name="vip_icon"
                         layout={{ position: 'absolute', left: 14, width: 16, top: 11, height: 17 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionVipRequiredTxt ?? t('group.create.confirm.viprequired')}
+                        textOptions={{ fill: '#ffffff' }}
                         name="vip_required_txt"
-                        layout={{ position: 'absolute', left: 38, width: 192, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionVipRequiredTxt ?? t('group.create.confirm.viprequired')}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 38, width: 192, top: 4, height: 17 }}
+                    />
+                    <ThemeText
+                        text={captionGetVipTxt ?? t('group.create.confirm.getvip')}
+                        textOptions={{ fill: '#ffffff' }}
                         name="get_vip_txt"
-                        layout={{ position: 'absolute', left: 38, width: 160, top: 20, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionGetVipTxt ?? t('group.create.confirm.getvip')}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 38, width: 160, top: 20, height: 17 }}
+                    />
                 </Border>
             </Region>
         )

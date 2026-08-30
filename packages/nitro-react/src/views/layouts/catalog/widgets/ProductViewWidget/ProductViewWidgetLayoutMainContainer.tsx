@@ -118,26 +118,22 @@ export const ProductViewWidgetLayoutMainContainer = ({ captionCtlgDescription, c
                 {productImageWidget}
             </WidgetSlot>
             <Region layout={{ position: 'absolute', left: 5, width: 280, top: 12, height: 64, flexDirection: 'column' }}>
-                <Region
+                <ThemeText
+                    text={captionCtlgProductName ?? 'product'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 280 }}
                     name="ctlg_product_name"
-                    layout={{ width: 280, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgProductName ?? 'product'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 280 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ width: 280, height: 17, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={captionCtlgDescription ?? 'description'}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 280 }}
                     name="ctlg_description"
-                    layout={{ width: 280, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgDescription ?? 'description'}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 280 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ width: 280, height: 15, flexShrink: 0 }}
+                />
                 {(visibleTradeableIcon ?? false) && (
                     <ThemeImage
                         name="tradeable_icon"

@@ -22,16 +22,14 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
     return (
         <Region layout={{ position: 'relative', width: 303, height: 193, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
-                <Region
+                <ThemeText
+                    text={captionStaticInfoText ?? t('tutorial.name_change.info.select')}
+                    textStyle="text-style-il-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 284 }}
                     name="static_info_text"
-                    layout={{ position: 'absolute', left: 10, right: 9, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStaticInfoText ?? t('tutorial.name_change.info.select')}
-                        textStyle="text-style-il-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 284 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, right: 9, top: 9, height: 29 }}
+                />
                 <Border
                     variant="105"
                     name="input_border"
@@ -53,16 +51,14 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                 >
                     {t('tutorial.name_change.check')}
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? ''}
+                    textStyle="text-style-il-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
                     name="info_text"
-                    layout={{ position: 'absolute', left: 10, width: 280, top: 76, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? ''}
-                        textStyle="text-style-il-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 280, top: 76, height: 4 }}
+                />
                 <Region
                     name="suggestions"
                     onPointerTap={onSuggestions}

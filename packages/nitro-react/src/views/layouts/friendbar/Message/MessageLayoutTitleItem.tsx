@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `title` of MessageLayout - pass real rows through its `items…` slot. */
 export interface MessageLayoutTitleItemProps {
@@ -8,15 +8,13 @@ export interface MessageLayoutTitleItemProps {
 
 export const MessageLayoutTitleItem = ({ captionTitle, layout }: MessageLayoutTitleItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionTitle ?? 'Title'}
+            textStyle="text-style-u-italic"
+            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 120 }}
             name="title"
-            layout={{ width: 120, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionTitle ?? 'Title'}
-                textStyle="text-style-u-italic"
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 120 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 120, height: 16, flexShrink: 0, ...layout }}
+        />
     );
 };

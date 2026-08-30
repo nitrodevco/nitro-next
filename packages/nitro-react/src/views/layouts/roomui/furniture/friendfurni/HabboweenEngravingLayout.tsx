@@ -30,16 +30,13 @@ export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNa
                     src={srcBackground ?? '${image.library.url}furniextras/loveLock_hween14.png'}
                     layout={{ position: 'absolute', left: 0, width: 375, top: 0, height: 210 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionHeader ?? t('habboween.engraving.caption')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#2a2420', align: 'center' }}
                     name="header"
-                    layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 217, top: 130, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionHeader ?? t('habboween.engraving.caption')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#2a2420', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 217, top: 130, height: 17 }}
+                />
                 <ThemeImage
                     name="avatar_left"
                     src={srcAvatarLeft}
@@ -52,36 +49,27 @@ export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNa
                     tint={tintAvatarRight}
                     layout={{ position: 'absolute', left: 186, width: 70, top: 7, height: 115 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionNameLeft ?? t('habboween.engraving.left')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#6b115c', align: 'right' }}
                     name="name_left"
-                    layout={{ position: 'absolute', left: 20, width: 150, top: 175, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionNameLeft ?? t('habboween.engraving.left')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#6b115c', align: 'right' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 20, width: 150, top: 175, height: 17 }}
+                />
+                <ThemeText
+                    text={captionNameRight ?? t('habboween.engraving.right')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#6b115c' }}
                     name="name_right"
-                    layout={{ position: 'absolute', left: 190, width: 161, top: 175, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNameRight ?? t('habboween.engraving.right')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#6b115c' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 190, width: 161, top: 175, height: 17 }}
+                />
+                <ThemeText
+                    text={captionDate ?? ''}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#2a2420', align: 'center' }}
                     name="date"
-                    layout={{ position: 'absolute', marginLeft: 4, marginRight: -4, width: 97, top: 154, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionDate ?? ''}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#2a2420', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 4, marginRight: -4, width: 97, top: 154, height: 4 }}
+                />
                 <Region
                     name="header_button_close"
                     onPointerTap={onHeaderButtonClose}

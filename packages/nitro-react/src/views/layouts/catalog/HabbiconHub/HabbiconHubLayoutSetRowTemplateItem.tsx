@@ -50,16 +50,13 @@ export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText,
                 />
             )}
             {(visibleSetRowTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionSetRowTitle ?? t('habbicon_set_name')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#2b2b2b' }}
                     name="set_row_title"
-                    layout={{ position: 'absolute', left: 50, width: 115, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSetRowTitle ?? t('habbicon_set_name')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#2b2b2b' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 50, width: 115, top: 7, height: 17 }}
+                />
             )}
             {(visibleSetRowProgressBar ?? true) && (
                 <Region
@@ -105,15 +102,12 @@ export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText,
                 </Region>
             )}
             {(visibleSetRowProgressText ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionSetRowProgressText ?? '0/0'}
+                    textOptions={{ fill: '#2b2b2b', align: 'right' }}
                     name="set_row_progress_text"
-                    layout={{ position: 'absolute', left: 104, width: 34, top: 27, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionSetRowProgressText ?? '0/0'}
-                        textOptions={{ fill: '#2b2b2b', align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 104, width: 34, top: 27, height: 15 }}
+                />
             )}
         </Region>
     );

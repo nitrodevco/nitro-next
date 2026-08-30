@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1699_guild_selector_widget_item_xml` (layout "guild_selector_widget_item", 133x22) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GuildSelectorWidgetItemLayoutProps {
@@ -15,12 +15,11 @@ export const GuildSelectorWidgetItemLayout = ({ captionGuildName, layout, srcGui
                 name="guild_item"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionGuildName ?? 'lorem ipsum'}
                     name="guild_name"
-                    layout={{ position: 'absolute', left: 0, width: 72, top: 4, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionGuildName ?? 'lorem ipsum'}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 72, top: 4, bottom: 1 }}
+                />
                 <ThemeImage
                     name="guild_colors"
                     src={srcGuildColors}

@@ -56,15 +56,13 @@ export const GrsOfficialRoomRowLayoutCont = ({ captionArrowLabel, captionEntryCa
                     blend={0.8}
                     layout={{ position: 'absolute', left: 5, width: 263, top: 5, height: 24 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionFolderNameText ?? ''}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 246 }}
                         name="folder_name_text"
-                        layout={{ position: 'absolute', left: 8, width: 246, top: 5, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionFolderNameText ?? ''}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 246 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 8, width: 246, top: 5, height: 14 }}
+                    />
                 </Border>
                 <Border
                     variant="2"
@@ -73,15 +71,12 @@ export const GrsOfficialRoomRowLayoutCont = ({ captionArrowLabel, captionEntryCa
                     blend={0.8}
                     layout={{ position: 'absolute', right: 2, width: 50, top: 5, height: 24 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionArrowLabel ?? 'show'}
+                        textOptions={{ fill: '#ffffff' }}
                         name="arrow_label"
-                        layout={{ position: 'absolute', left: 5, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionArrowLabel ?? 'show'}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 5, top: 4, height: 13 }}
+                    />
                     <ThemeImage
                         name="arrow_down_white"
                         src={srcArrowDownWhite}
@@ -131,21 +126,18 @@ export const GrsOfficialRoomRowLayoutCont = ({ captionArrowLabel, captionEntryCa
                 name="details_container"
                 layout={{ position: 'absolute', left: 75, right: 1, top: 0, height: 66 }}
             >
-                <Region
+                <ThemeText
+                    text={captionEntryCaption ?? 'PH Room Name: Neque porro quisquam est que'}
                     name="entry_caption"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionEntryCaption ?? 'PH Room Name: Neque porro quisquam est que'}
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 15 }}
+                />
+                <ThemeText
+                    text={captionEntryDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
+                    textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 195 }}
                     name="entry_desc"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEntryDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
-                        textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 195 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 57 }}
+                />
             </Region>
         </Region>
     );

@@ -14,15 +14,12 @@ export interface Dropmenu3LayoutProps {
 export const Dropmenu3Layout = ({ captionDROPLISTTITLETEXT, dROPLISTREGION, itemsDROPLISTITEMLIST, layout, onDROPLISTREGION }: Dropmenu3LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 20, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionDROPLISTTITLETEXT ?? ''}
+                textStyle="text-style-u-regular"
                 name="_DROPLIST_TITLETEXT"
-                layout={{ position: 'absolute', left: 6, right: 24, top: 4, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDROPLISTTITLETEXT ?? ''}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 6, right: 24, top: 4, height: 12 }}
+            />
             <ScrollArea
                 orientation="vertical"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 14 }}

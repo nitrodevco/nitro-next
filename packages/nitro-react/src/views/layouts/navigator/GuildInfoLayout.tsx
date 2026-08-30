@@ -30,16 +30,14 @@ export const GuildInfoLayout = ({ captionGuildBaseTxt, guildBadge, layout, onGui
                 >
                     {guildBadge}
                 </WidgetSlot>
-                <Region
+                <ThemeText
+                    text={captionGuildBaseTxt ?? t('navigator.guildbase')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 170 }}
                     name="guild_base_txt"
-                    layout={{ position: 'absolute', left: 45, width: 170, top: 1, bottom: 2, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionGuildBaseTxt ?? t('navigator.guildbase')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 170 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 45, width: 170, top: 1, bottom: 2 }}
+                />
             </Region>
         </Region>
     );

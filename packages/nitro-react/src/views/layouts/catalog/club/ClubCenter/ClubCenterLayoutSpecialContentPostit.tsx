@@ -29,44 +29,32 @@ export const ClubCenterLayoutSpecialContentPostit = ({ captionSpecialAmountConte
                 src={srcHcPostitBg ?? layoutImage('hc_center_hc_postit_bg.png')}
                 layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 150 }}
             />
-            <Region
+            <ThemeText
+                text={captionSpecialTimeTitle ?? t('hccenter.special.time.title')}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#683203' }}
                 name="special_time_title"
-                layout={{ position: 'absolute', left: 13, width: 190, top: 16, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionSpecialTimeTitle ?? t('hccenter.special.time.title')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#683203' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 13, width: 190, top: 16, height: 22 }}
+            />
+            <ThemeText
+                text={captionSpecialTimeContent ?? ''}
+                textOptions={{ fill: '#683203' }}
                 name="special_time_content"
-                layout={{ position: 'absolute', left: 47, width: 153, top: 41, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionSpecialTimeContent ?? ''}
-                    textOptions={{ fill: '#683203' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 47, width: 153, top: 41, height: 22 }}
+            />
+            <ThemeText
+                text={captionSpecialAmountTitle ?? t('hccenter.special.amount.title')}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#683203' }}
                 name="special_amount_title"
-                layout={{ position: 'absolute', left: 13, width: 190, top: 68, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionSpecialAmountTitle ?? t('hccenter.special.amount.title')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#683203' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 13, width: 190, top: 68, height: 22 }}
+            />
+            <ThemeText
+                text={captionSpecialAmountContent ?? ''}
+                textOptions={{ fill: '#683203' }}
                 name="special_amount_content"
-                layout={{ position: 'absolute', left: 47, width: 153, top: 95, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionSpecialAmountContent ?? ''}
-                    textOptions={{ fill: '#683203' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 47, width: 153, top: 95, height: 22 }}
+            />
             <Region
                 name="special_breakdown_link"
                 layout={{ position: 'absolute', right: 15, width: 190, top: 120, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}

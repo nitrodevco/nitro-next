@@ -32,25 +32,25 @@ export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layou
                     <ReportWindowLayoutCancelLinkItem />
                 </>
             )}
-            <Region layout={{ width: 264, height: 38, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('guide.help.request.emergency.desc')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 264 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('guide.help.request.emergency.desc')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 264 }}
+                verticalAlign="top"
+                layout={{ width: 264, height: 38, flexShrink: 0 }}
+            />
             <Region layout={{ width: 30, height: 20, flexShrink: 0 }} />
             <Border
                 variant="104"
                 tintColor="#ac1d19"
                 layout={{ width: 270, height: 108, flexShrink: 0, justifyContent: 'center' }}
             >
-                <Region layout={{ position: 'absolute', left: 10, width: 250, top: 10, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('guide.help.request.emergency.help.title')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 250, align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.help.request.emergency.help.title')}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 250, align: 'center' }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 250, top: 10, height: 30 }}
+                />
                 {(visibleUrgentHelpLink ?? false) && (
                     <Region
                         name="urgent_help_link"

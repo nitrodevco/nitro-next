@@ -38,19 +38,19 @@ export const TourTaskProgressDialogLayout = ({ actionSeparator, itemsTopList, la
                         layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 160 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 60, width: 285, top: 10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('talent.track.progress.tour.header.caption')}
-                        textStyle="text-style-il-heading-2"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 60, width: 285, top: 27, height: 30, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('talent.track.progress.tour.header.body')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('talent.track.progress.tour.header.caption')}
+                    textStyle="text-style-il-heading-2"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 60, width: 285, top: 10, height: 17 }}
+                />
+                <ThemeText
+                    text={t('talent.track.progress.tour.header.body')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 60, width: 285, top: 27, height: 30, minHeight: 30 }}
+                />
                 <WidgetSlot
                     widgetType="separator"
                     name="action_separator"
@@ -77,9 +77,10 @@ export const TourTaskProgressDialogLayout = ({ actionSeparator, itemsTopList, la
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 16, width: 347, top: 211, height: 33, justifyContent: 'center' }}
             >
-                <Region layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('talent.track.progress.tour.decline')}
-                </Region>
+                <ThemeText
+                    text={t('talent.track.progress.tour.decline')}
+                    layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 144, top: 7, height: 16 }}
+                />
             </Region>
         </Frame>
     );

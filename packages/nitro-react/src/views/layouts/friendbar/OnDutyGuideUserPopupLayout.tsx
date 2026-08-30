@@ -22,24 +22,18 @@ export const OnDutyGuideUserPopupLayout = ({ captionRankDescTxt, captionUserName
                         src="${image.library.url}reception/reception_helper_icon.png"
                         layout={{ position: 'absolute', left: 15, width: 13, top: 12, height: 23 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionRankDescTxt ?? t('landing.view.helperonduty')}
+                        textOptions={{ fill: '#666666' }}
                         name="rank_desc_txt"
-                        layout={{ position: 'absolute', left: 37, width: 108, top: 24, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRankDescTxt ?? t('landing.view.helperonduty')}
-                            textOptions={{ fill: '#666666' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 37, width: 108, top: 24, height: 14 }}
+                    />
+                    <ThemeText
+                        text={captionUserNameTxt ?? 'Ibuxal'}
+                        textStyle="text-style-il-heading-3"
                         name="user_name_txt"
-                        layout={{ position: 'absolute', left: 37, width: 35, top: 10, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionUserNameTxt ?? 'Ibuxal'}
-                            textStyle="text-style-il-heading-3"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 37, width: 35, top: 10, height: 16 }}
+                    />
                 </Border>
                 <ThemeImage
                     src="${image.library.url}reception/sakara.png"

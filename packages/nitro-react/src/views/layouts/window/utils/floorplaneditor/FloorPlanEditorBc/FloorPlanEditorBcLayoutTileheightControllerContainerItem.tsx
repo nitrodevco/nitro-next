@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `tileheight_controller_container` of FloorPlanEditorBcLayout - pass real rows through its `items…` slot. */
@@ -23,12 +23,11 @@ export const FloorPlanEditorBcLayoutTileheightControllerContainerItem = ({ capti
             layout={{ width: 317, height: 48, flexShrink: 0, ...layout }}
         >
             {(visibleTileHeightText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTileHeightText ?? t('floor.plan.editor.tile.height')}
                     name="tile_height_text"
-                    layout={{ position: 'absolute', left: 0, width: 156, top: 4, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionTileHeightText ?? t('floor.plan.editor.tile.height')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 156, top: 4, height: 16 }}
+                />
             )}
             {(visibleTileHeightColormap ?? true) && (
                 <ThemeImage

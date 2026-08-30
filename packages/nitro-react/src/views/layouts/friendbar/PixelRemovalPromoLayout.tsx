@@ -35,15 +35,12 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     />
                 </Region>
                 <Region layout={{ position: 'absolute', right: 0, width: 270, top: 30, height: 111, flexDirection: 'column' }}>
-                    <Region
+                    <ThemeText
+                        text={captionCaptionTxt ?? t('landing.view.pixelremovalpromo.caption')}
+                        textStyle="text-style-il-heading-1"
                         name="caption_txt"
-                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCaptionTxt ?? t('landing.view.pixelremovalpromo.caption')}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0 }}
+                    />
                     <Region
                         name="spacing"
                         backgroundColor="#000000"
@@ -51,25 +48,21 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     >
                         {spacing}
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionTitleTxt ?? t('landing.view.pixelremovalpromo.title')}
+                        textStyle="text-style-il-heading-3"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
                         name="title_txt"
-                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTitleTxt ?? t('landing.view.pixelremovalpromo.title')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionInfoTxt ?? t('landing.view.pixelremovalpromo.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
                         name="info_txt"
-                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfoTxt ?? t('landing.view.pixelremovalpromo.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0 }}
+                    />
                     <Button
                         variant="100"
                         name="go_button"

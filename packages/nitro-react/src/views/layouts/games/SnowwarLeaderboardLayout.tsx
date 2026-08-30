@@ -63,15 +63,12 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                         tint={tintThisWeekImage}
                         layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionThisWeekText ?? t('snowwar.leaderboard.this_week')}
+                        textOptions={{ align: 'center' }}
                         name="this_week_text"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionThisWeekText ?? t('snowwar.leaderboard.this_week')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6 }}
+                    />
                 </Region>
                 <Region
                     name="all_time_region"
@@ -86,15 +83,12 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                         tint={tintAllTimeImage}
                         layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionAllTimeText ?? t('snowwar.leaderboard.all_time')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="all_time_text"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionAllTimeText ?? t('snowwar.leaderboard.all_time')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6 }}
+                    />
                 </Region>
                 <Region
                     name="borderContainer"
@@ -168,24 +162,18 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                         layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 18 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionResetTextStroke ?? 'Reset: '}
+                    textOptions={{ fill: '#1077ac' }}
                     name="reset_text_stroke"
-                    layout={{ position: 'absolute', left: 251, width: 49, top: 397, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionResetTextStroke ?? 'Reset: '}
-                        textOptions={{ fill: '#1077ac' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 251, width: 49, top: 397, height: 19 }}
+                />
+                <ThemeText
+                    text={captionResetText ?? 'Reset: '}
+                    textOptions={{ fill: '#ffffff' }}
                     name="reset_text"
-                    layout={{ position: 'absolute', left: 251, width: 49, top: 397, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionResetText ?? 'Reset: '}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 251, width: 49, top: 397, height: 19 }}
+                />
                 <Region
                     name="changeGroupView"
                     layout={{ position: 'absolute', left: 280, width: 150, top: 445, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

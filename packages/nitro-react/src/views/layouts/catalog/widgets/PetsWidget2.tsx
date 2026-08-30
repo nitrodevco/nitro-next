@@ -41,33 +41,24 @@ export const PetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtl
                 tint={tintCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 30, height: 127 }}
             />
-            <Region
+            <ThemeText
+                text={captionCtlgText1 ?? t('lorem.title')}
+                textStyle="text-style-u-small"
                 name="ctlg_text_1"
-                layout={{ position: 'absolute', left: 10, width: 62, top: 270, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgText1 ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 10, width: 62, top: 270, height: 15 }}
+            />
+            <ThemeText
+                text={captionCtlgText2 ?? t('lorem.title')}
+                textStyle="text-style-u-small"
                 name="ctlg_text_2"
-                layout={{ position: 'absolute', left: 10, width: 62, top: 135, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgText2 ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 10, width: 62, top: 135, height: 15 }}
+            />
+            <ThemeText
+                text={captionCtlgText3 ?? t('lorem.title')}
+                textStyle="text-style-u-small"
                 name="ctlg_text_3"
-                layout={{ position: 'absolute', left: 10, width: 62, top: 226, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgText3 ?? t('lorem.title')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 10, width: 62, top: 226, height: 15 }}
+            />
             <Dropmenu
                 variant="3"
                 name="type_drop_menu"

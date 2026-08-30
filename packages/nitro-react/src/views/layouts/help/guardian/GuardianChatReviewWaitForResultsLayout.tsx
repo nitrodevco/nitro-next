@@ -28,27 +28,25 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
             layout={{ width: 248, height: 280, minWidth: 248, minHeight: 280, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', marginLeft: 36, marginRight: -36, width: 308, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.bully.request.guide.results.waiting.title')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ fill: '#888888' }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 170, top: 37, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('guide.bully.request.guide.results.waiting.description')}
-                        textStyle="text-style-il-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 5, width: 191, top: 77, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.bully.request.guide.results.votes')}
-                        textStyle="text-style-il-heading-3"
-                        textOptions={{ fill: '#444444' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.bully.request.guide.results.waiting.title')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#888888' }}
+                    layout={{ position: 'absolute', marginLeft: 36, marginRight: -36, width: 308, top: 12, height: 19 }}
+                />
+                <ThemeText
+                    text={t('guide.bully.request.guide.results.waiting.description')}
+                    textStyle="text-style-il-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 170, top: 37, height: 24 }}
+                />
+                <ThemeText
+                    text={t('guide.bully.request.guide.results.votes')}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ fill: '#444444' }}
+                    layout={{ position: 'absolute', left: 5, width: 191, top: 77, height: 15 }}
+                />
                 <Border
                     variant="102"
                     layout={{ position: 'absolute', left: 7, width: 232, top: 96, height: 46 }}
@@ -58,15 +56,12 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                     >
                         <Region layout={{ width: 232, height: 46, flexShrink: 0 }}>
-                            <Region
+                            <ThemeText
+                                text={captionVoteText ?? 'User behaved well'}
+                                textStyle="text-style-il-heading-3"
                                 name="vote_text"
-                                layout={{ position: 'absolute', left: 20, width: 91, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionVoteText ?? 'User behaved well'}
-                                    textStyle="text-style-il-heading-3"
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 20, width: 91, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 15 }}
+                            />
                             <ThemeImage
                                 name="vote_image"
                                 src={srcVoteImage ?? layoutImage('help_chat_review_decision_waiting_1.png')}
@@ -81,12 +76,12 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
                     </Region>
                 </Border>
                 <Region layout={{ position: 'absolute', left: 0, width: 246, bottom: -10, height: 99, justifyContent: 'center' }}>
-                    <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 179, alignSelf: 'center', marginTop: -23.5, marginBottom: 23.5, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('guide.bully.request.guide.results.wait')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 179, align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('guide.bully.request.guide.results.wait')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 179, align: 'center' }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 179, alignSelf: 'center', marginTop: -23.5, marginBottom: 23.5, height: 28 }}
+                    />
                     <Button
                         variant="101"
                         name="close_button"
@@ -103,12 +98,11 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
                     layout={{ position: 'absolute', left: 229, width: 238, top: 105, height: 25 }}
                 >
                     {balloonWidget}
-                    <Region layout={{ position: 'absolute', left: 0, width: 233, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.bully.request.guide.results.your_vote')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('guide.bully.request.guide.results.your_vote')}
+                        textStyle="text-style-il-regular-white"
+                        layout={{ position: 'absolute', left: 0, width: 233, top: 0, bottom: 0 }}
+                    />
                 </WidgetSlot>
             </Region>
         </Frame>

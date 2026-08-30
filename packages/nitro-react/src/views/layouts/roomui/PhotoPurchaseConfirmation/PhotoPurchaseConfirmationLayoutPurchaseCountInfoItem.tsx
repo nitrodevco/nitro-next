@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `purchase_count_info` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PhotoPurchaseConfirmationLayoutPurchaseCountInfoItemProps {
@@ -11,14 +11,11 @@ export const PhotoPurchaseConfirmationLayoutPurchaseCountInfoItem = ({ captionPu
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionPurchaseCountInfo ?? t('camera.purchase.count.info')}
+            textStyle="text-style-u-bold"
             name="purchase_count_info"
-            layout={{ width: 188, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionPurchaseCountInfo ?? t('camera.purchase.count.info')}
-                textStyle="text-style-u-bold"
-            />
-        </Region>
+            layout={{ width: 188, height: 19, flexShrink: 0, ...layout }}
+        />
     );
 };

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, ButtonThick, Frame, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Button, ButtonThick, Frame, ThemeText } from '#base/theme';
 
 /** Generated from `1516_friend_remove_confirm_xml` (layout "friend_remove_confirm", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface FriendRemoveConfirmLayoutProps {
@@ -27,15 +27,13 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
                 name="border"
                 layout={{ position: 'absolute', left: 0, right: -2, top: 0, height: 143 }}
             >
-                <Region
+                <ThemeText
+                    text={captionRemoveInfo ?? t('friendlist.removefriendconfirm.userlist')}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 130 }}
                     name="remove_info"
-                    layout={{ position: 'absolute', left: 10, right: 10, top: 10, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRemoveInfo ?? t('friendlist.removefriendconfirm.userlist')}
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 130 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 10, height: 120 }}
+                />
             </Border>
             <Button
                 variant="0"

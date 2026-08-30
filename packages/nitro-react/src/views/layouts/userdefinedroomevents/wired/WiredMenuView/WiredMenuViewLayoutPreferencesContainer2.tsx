@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, CheckBox, Region } from '#base/theme';
+import { BoxLayout, CheckBox, Region, ThemeText } from '#base/theme';
 
 /** Named region `preferences_container` of WiredMenuViewLayout - configured through the parent's `preferencesContainer` prop. */
 export interface WiredMenuViewLayoutPreferencesContainer2Props {
@@ -18,9 +18,10 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
             name="preferences_container"
             layout={{ position: 'absolute', left: 10, right: 4, top: 8, bottom: 2, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                {t('wiredmenu.settings.preferences.general')}
-            </Region>
+            <ThemeText
+                text={t('wiredmenu.settings.preferences.general')}
+                layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20 }}
+            />
             <Region
                 name="option_container"
                 layout={{ position: 'absolute', left: 0, width: 450, top: 20, height: 20 }}
@@ -31,9 +32,10 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
                     onPointerTap={onPreferenceToolbarCheckbox}
                     layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
                 />
-                <Region layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredmenu.settings.preferences.toolbar')}
-                </Region>
+                <ThemeText
+                    text={t('wiredmenu.settings.preferences.toolbar')}
+                    layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17 }}
+                />
             </Region>
             <Region
                 name="option_container"
@@ -45,9 +47,10 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
                     onPointerTap={onPreferenceInspectButtonCheckbox}
                     layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
                 />
-                <Region layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredmenu.settings.preferences.inspect_button')}
-                </Region>
+                <ThemeText
+                    text={t('wiredmenu.settings.preferences.inspect_button')}
+                    layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17 }}
+                />
             </Region>
             <Region
                 name="option_container"
@@ -59,9 +62,10 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
                     onPointerTap={onPreferencePlaytestCheckbox}
                     layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
                 />
-                <Region layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredmenu.settings.preferences.playtest')}
-                </Region>
+                <ThemeText
+                    text={t('wiredmenu.settings.preferences.playtest')}
+                    layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17 }}
+                />
             </Region>
             <Region
                 name="option_container"
@@ -73,9 +77,10 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
                     onPointerTap={onPreferenceAllNotificationsCheckbox}
                     layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
                 />
-                <Region layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredmenu.settings.preferences.show_all_errors')}
-                </Region>
+                <ThemeText
+                    text={t('wiredmenu.settings.preferences.show_all_errors')}
+                    layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17 }}
+                />
             </Region>
         </Region>
     );

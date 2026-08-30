@@ -36,15 +36,12 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, image, layout, onRegi
                 >
                     {region}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionLoadingText ?? t('room.loading')}
+                    textOptions={{ fill: '#000000', align: 'center' }}
                     name="loading_text"
-                    layout={{ position: 'absolute', width: 220, bottom: 20, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionLoadingText ?? t('room.loading')}
-                        textOptions={{ fill: '#000000', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 220, bottom: 20, height: 15 }}
+                />
             </Border>
         </Region>
     );

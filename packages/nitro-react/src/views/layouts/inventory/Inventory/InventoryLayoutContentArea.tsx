@@ -64,30 +64,25 @@ export const InventoryLayoutContentArea = ({ badges, captionBotDescription, capt
                         name="preview_container"
                         layout={{ position: 'absolute', right: -2, width: 190, top: 0, bottom: 0 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionBotName ?? 'bot name'}
+                            textStyle="text-style-u-headline-small"
                             name="bot_name"
-                            layout={{ position: 'absolute', left: 0, width: 67, alignSelf: 'center', marginTop: -121, marginBottom: 121, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBotName ?? 'bot name'}
-                                textStyle="text-style-u-headline-small"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, width: 67, alignSelf: 'center', marginTop: -121, marginBottom: 121, height: 19 }}
+                        />
                         <ThemeImage
                             name="preview_image"
                             src={srcPreviewImage}
                             tint={tintPreviewImage}
                             layout={{ position: 'absolute', left: 43, width: 100, top: 24, height: 150 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionBotDescription ?? ''}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                             name="bot_description"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 174, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBotDescription ?? ''}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 174, height: 45 }}
+                        />
                         <Button
                             variant="3"
                             name="place_button"

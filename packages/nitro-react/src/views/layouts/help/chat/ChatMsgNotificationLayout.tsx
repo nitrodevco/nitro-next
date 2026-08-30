@@ -19,15 +19,13 @@ export const ChatMsgNotificationLayout = ({ captionContent, layout }: ChatMsgNot
                     src={layoutImage('help_notification.png')}
                     layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionContent ?? ''}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                     name="content"
-                    layout={{ position: 'absolute', right: 0, width: 210, top: 10, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionContent ?? ''}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 0, width: 210, top: 10, height: 14 }}
+                />
             </Border>
         </Region>
     );

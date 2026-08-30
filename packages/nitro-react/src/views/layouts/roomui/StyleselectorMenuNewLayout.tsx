@@ -45,15 +45,12 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, item
                     blend={0.3}
                     layout={{ position: 'absolute', left: 6, right: 5, bottom: 0, height: 26 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionFontSizeTitle ?? t('widgets.chatinput.text_size')}
+                    textOptions={{ fill: '#999999' }}
                     name="font_size_title"
-                    layout={{ position: 'absolute', left: 15, width: 51, bottom: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFontSizeTitle ?? t('widgets.chatinput.text_size')}
-                        textOptions={{ fill: '#999999' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 15, width: 51, bottom: 5, height: 16 }}
+                />
                 <Region
                     name="font_size_list"
                     layout={{ position: 'absolute', right: 31, width: 85, bottom: 4, height: 18, flexDirection: 'row', gap: 2 }}

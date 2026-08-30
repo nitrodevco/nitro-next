@@ -32,12 +32,12 @@ export const GuildSelectorWidget2 = ({ layout, onFindGroupsButton }: GuildSelect
                 tintColor="#5ea1ab"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
-                <Region layout={{ position: 'absolute', left: 7, width: 147, top: 7, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('catalog.guild_selector.members_only')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 147 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('catalog.guild_selector.members_only')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 147 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 7, width: 147, top: 7, height: 46 }}
+                />
                 <Button
                     variant="3"
                     name="find_groups_button"

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, ContainerButton, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, ContainerButton, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `quick_link` of NavigatorFrame2Layout - pass real rows through its `items…` slot. */
@@ -24,12 +24,11 @@ export const NavigatorFrame2LayoutQuickLinkItem = ({ captionQuickLinkText, layou
             layout={{ width: 132, height: 17, flexShrink: 0, ...layout }}
         >
             {(visibleQuickLinkText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionQuickLinkText ?? 'quick link ph oijasdf oaijs dfodisjf'}
                     name="quick_link_text"
-                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionQuickLinkText ?? 'quick link ph oijasdf oaijs dfodisjf'}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, bottom: 0 }}
+                />
             )}
             {(visibleRemoveQuickLink ?? false) && (
                 <ContainerButton

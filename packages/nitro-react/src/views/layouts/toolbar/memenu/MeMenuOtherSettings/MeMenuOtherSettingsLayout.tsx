@@ -30,16 +30,13 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                 tintColor="#79756e"
                 layout={{ position: 'absolute', left: 1, width: 242, top: 1, height: 184, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionSettingsTitle ?? t('widget.memenu.other.settings.title')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="settings_title"
-                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 153, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionSettingsTitle ?? t('widget.memenu.other.settings.title')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 153, top: 5, height: 17 }}
+                />
                 <Region
                     name="line"
                     backgroundColor="#2f2f2f"
@@ -55,13 +52,12 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                         {itemsIgnoreRoomInvites ?? (
                             <MeMenuOtherSettingsLayoutIgnoreRoomInvitesCheckboxItem />
                         )}
-                        <Region layout={{ width: 247, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('memenu.settings.other.ignore.room.invites')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('memenu.settings.other.ignore.room.invites')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff' }}
+                            layout={{ width: 247, height: 17, flexShrink: 0 }}
+                        />
                     </Region>
                     <Region
                         name="disable_room_camera_follow"
@@ -70,13 +66,12 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                         {itemsDisableRoomCameraFollow ?? (
                             <MeMenuOtherSettingsLayoutDisableRoomCameraFollowCheckboxItem />
                         )}
-                        <Region layout={{ width: 293, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('memenu.settings.other.disable.room.camera.follow')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('memenu.settings.other.disable.room.camera.follow')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff' }}
+                            layout={{ width: 293, height: 17, flexShrink: 0 }}
+                        />
                     </Region>
                     <Region
                         name="disable_wired_whisper"
@@ -85,13 +80,12 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, itemsDisableRo
                         {itemsDisableWiredWhisper ?? (
                             <MeMenuOtherSettingsLayoutDisableWiredWhisperCheckboxItem />
                         )}
-                        <Region layout={{ width: 159, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('memenu.settings.wired_whisper_read_disable')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('memenu.settings.wired_whisper_read_disable')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff' }}
+                            layout={{ width: 159, height: 17, flexShrink: 0 }}
+                        />
                     </Region>
                     <Button
                         variant="3"

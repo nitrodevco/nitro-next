@@ -39,16 +39,13 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                     cursor="pointer"
                     layout={{ position: 'absolute', left: -5, width: 380, top: 8, height: 60 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPollQuestionHeadline ?? t('poll_question_headline')}
+                        textStyle="text-style-u-headline-big"
+                        textOptions={{ fill: '#ffffff' }}
                         name="poll_question_headline"
-                        layout={{ position: 'absolute', left: 80, right: 10, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPollQuestionHeadline ?? t('poll_question_headline')}
-                            textStyle="text-style-u-headline-big"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 80, right: 10, top: 15, height: 25 }}
+                    />
                     <ThemeImage
                         name="poll_prompt_image"
                         src={srcPollPromptImage ?? layoutImage('poll_poll_prompt_question.png')}
@@ -65,16 +62,14 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                             layout={{ width: 365, height: 414, flexShrink: 0 }}
                         >
                             <Region layout={{ flexDirection: 'column', width: '100%' }}>
-                                <Region
+                                <ThemeText
+                                    text={captionPollQuestionText ?? ''}
+                                    textStyle="text-style-u-regular"
+                                    textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
                                     name="poll_question_text"
-                                    layout={{ width: 360, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionPollQuestionText ?? ''}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
-                                    />
-                                </Region>
+                                    verticalAlign="top"
+                                    layout={{ width: 360, flexShrink: 0 }}
+                                />
                                 <Region layout={{ width: 1, height: 10, flexShrink: 0 }} />
                                 <Region
                                     name="poll_question_answer_container"
@@ -91,26 +86,20 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                     name="footer_container"
                     layout={{ position: 'absolute', marginLeft: 11.5, marginRight: -11.5, width: 383, bottom: -11, height: 45 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPollQuestionNumber ?? t('poll_question_number')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#333333' }}
                         name="poll_question_number"
-                        layout={{ position: 'absolute', left: 0, right: 254, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPollQuestionNumber ?? t('poll_question_number')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, right: 254, top: 10, height: 17 }}
+                    />
+                    <ThemeText
+                        text={captionPollQuestionCancel ?? t('cancel')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#333333' }}
                         name="poll_question_cancel"
-                        layout={{ position: 'absolute', right: 119, width: 74, top: 10, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPollQuestionCancel ?? t('cancel')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', right: 119, width: 74, top: 10, height: 17, minWidth: 74, maxWidth: 74 }}
+                    />
                     <ButtonThick
                         variant="5"
                         name="poll_question_button_ok"

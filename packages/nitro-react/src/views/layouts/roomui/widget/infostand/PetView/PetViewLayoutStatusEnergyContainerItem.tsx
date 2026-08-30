@@ -26,15 +26,12 @@ export const PetViewLayoutStatusEnergyContainerItem = ({ captionStatusEnergyText
             layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             {(visibleStatusEnergyText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionStatusEnergyText ?? t('infostand.pet.text.energy')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="status_energy_text"
-                    layout={{ position: 'absolute', width: 135, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusEnergyText ?? t('infostand.pet.text.energy')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 135, top: 1, height: 13 }}
+                />
             )}
             {(visibleStatusEnergyBitmap ?? true) && (
                 <ThemeImage
@@ -45,15 +42,12 @@ export const PetViewLayoutStatusEnergyContainerItem = ({ captionStatusEnergyText
                 />
             )}
             {(visibleStatusEnergyValueText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionStatusEnergyValueText ?? ''}
+                    textOptions={{ fill: '#ffffff' }}
                     name="status_energy_value_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusEnergyValueText ?? ''}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4 }}
+                />
             )}
             {(visibleStatusEnergyIcon ?? true) && (
                 <ThemeImage

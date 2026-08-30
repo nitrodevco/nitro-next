@@ -34,27 +34,22 @@ export const LayoutGuildForumLayoutCtlgDefault3x3 = ({ captionCtlgDescription, c
                 {...firstProductAutoSelectorWidget}
             />
             {(visibleCtlgSelectproduct ?? false) && (
-                <Region
-                    name="ctlg_selectproduct"
-                    layout={{ position: 'absolute', left: 5, width: 107, top: 134, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
-            )}
-            <Region
-                name="ctlg_description"
-                layout={{ position: 'absolute', left: 0, width: 260, top: 10, bottom: 124, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
                 <ThemeText
-                    text={captionCtlgDescription ?? t('loremipsum.html')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                    text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#666666' }}
+                    name="ctlg_selectproduct"
+                    layout={{ position: 'absolute', left: 5, width: 107, top: 134, height: 15 }}
                 />
-            </Region>
+            )}
+            <ThemeText
+                text={captionCtlgDescription ?? t('loremipsum.html')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                name="ctlg_description"
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, width: 260, top: 10, bottom: 124 }}
+            />
             <ThemeImage
                 src="${image.library.url}catalogue/guild_forums_teaser.gif"
                 layout={{ position: 'absolute', left: 254, width: 106, top: 35, height: 200 }}

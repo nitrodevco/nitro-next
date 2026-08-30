@@ -24,18 +24,19 @@ export const PlaylisteditorInventorySubwindowGetMoreMusicLayout = ({ layout, onO
                     tint={tintGetMoreMusicBackgroundImage}
                     layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110 }}
                 />
-                <Region layout={{ position: 'absolute', left: 15, width: 236, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('playlist.editor.text.get.more.music')}
-                        textStyle="text-style-bold"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 15, width: 285, top: 35, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('playlist.editor.text.you.have.no.songdisks.available')}
-                </Region>
-                <Region layout={{ position: 'absolute', left: 15, width: 319, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('playlist.editor.text.you.can.buy.some.from.the.catalogue')}
-                </Region>
+                <ThemeText
+                    text={t('playlist.editor.text.get.more.music')}
+                    textStyle="text-style-bold"
+                    layout={{ position: 'absolute', left: 15, width: 236, top: 12, height: 19 }}
+                />
+                <ThemeText
+                    text={t('playlist.editor.text.you.have.no.songdisks.available')}
+                    layout={{ position: 'absolute', left: 15, width: 285, top: 35, height: 17 }}
+                />
+                <ThemeText
+                    text={t('playlist.editor.text.you.can.buy.some.from.the.catalogue')}
+                    layout={{ position: 'absolute', left: 15, width: 319, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 17 }}
+                />
                 <ButtonThick
                     variant="3"
                     name="open_catalog_button"

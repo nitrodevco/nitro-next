@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, ButtonThick, Frame, Region, TextInput, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Button, ButtonThick, Frame, TextInput, ThemeText } from '#base/theme';
 
 /** Generated from `1513_room_invite_confirm_xml` (layout "room_invite_confirm", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomInviteConfirmLayoutProps {
@@ -31,30 +31,24 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
                 name="border"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 118 }}
             >
-                <Region
+                <ThemeText
+                    text={captionInviteSummary ?? t('friendlist.invite.summary')}
+                    textOptions={{ fill: '#000000' }}
                     name="invite_summary"
-                    layout={{ position: 'absolute', left: 10, right: 9, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInviteSummary ?? t('friendlist.invite.summary')}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 10, right: 9, top: 5, height: 20 }}
+                />
                 <TextInput
                     value={messageInputValue}
                     onChange={setMessageInputValue}
                     textColor="#000000"
                     layout={{ position: 'absolute', left: 10, right: 9, alignSelf: 'center', height: 70 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionInviteNote ?? t('friendlist.invite.note')}
+                    textOptions={{ fill: '#000000' }}
                     name="invite_note"
-                    layout={{ position: 'absolute', left: 10, right: 9, bottom: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInviteNote ?? t('friendlist.invite.note')}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 10, right: 9, bottom: 0, height: 20 }}
+                />
             </Border>
             <Button
                 variant="0"

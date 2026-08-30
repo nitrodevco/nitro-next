@@ -18,34 +18,28 @@ export const EvidenceFrameLayoutChatlineItem = ({ captionChatterTxt, captionMsgT
             layout={{ width: 420, height: 41, flexShrink: 0, ...layout }}
         >
             {(visibleTimeTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTimeTxt ?? '18:30'}
+                    textStyle="text-style-u-bold"
                     name="time_txt"
-                    layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTimeTxt ?? '18:30'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 17 }}
+                />
             )}
             {(visibleChatterTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionChatterTxt ?? 'ROBIN_WAN_PERSI'}
                     name="chatter_txt"
-                    layout={{ position: 'absolute', left: 40, width: 95, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionChatterTxt ?? 'ROBIN_WAN_PERSI'}
-                </Region>
+                    layout={{ position: 'absolute', left: 40, width: 95, top: 0, height: 15 }}
+                />
             )}
             {(visibleMsgTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionMsgTxt ?? 'Sharing your password or personal details online is dangerous. The moderators might monitor these conversations for your safety.'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                     name="msg_txt"
-                    layout={{ position: 'absolute', left: 140, width: 210, top: 0, height: 65, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMsgTxt ?? 'Sharing your password or personal details online is dangerous. The moderators might monitor these conversations for your safety.'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 140, width: 210, top: 0, height: 65 }}
+                />
             )}
         </Region>
     );

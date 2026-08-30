@@ -54,18 +54,18 @@ export const ChestGenericLayoutLockInfoBubbleTexts = ({ itemsLockInfoBubbleTexts
                     <ChestGenericLayoutCrule4Item />
                 </>
             )}
-            <Region layout={{ width: 353, height: 17, flexShrink: 0, minWidth: 353, maxWidth: 353, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('wiredchests.lock_info.desc')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 353 }}
-                />
-            </Region>
-            <Region layout={{ width: 353, height: 17, flexShrink: 0, minWidth: 353, maxWidth: 353, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('wiredchests.capacity_info.desc')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 353 }}
-                />
-            </Region>
+            <ThemeText
+                text={t('wiredchests.lock_info.desc')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 353 }}
+                verticalAlign="top"
+                layout={{ width: 353, height: 17, flexShrink: 0, minWidth: 353, maxWidth: 353 }}
+            />
+            <ThemeText
+                text={t('wiredchests.capacity_info.desc')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 353 }}
+                verticalAlign="top"
+                layout={{ width: 353, height: 17, flexShrink: 0, minWidth: 353, maxWidth: 353 }}
+            />
         </Region>
     );
 };

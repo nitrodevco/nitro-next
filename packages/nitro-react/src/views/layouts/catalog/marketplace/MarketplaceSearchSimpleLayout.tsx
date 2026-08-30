@@ -14,12 +14,11 @@ export const MarketplaceSearchSimpleLayout = ({ layout, onCombineUniquesCheckbox
     return (
         <Region layout={{ position: 'relative', width: 360, height: 120, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 23, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('catalog.marketplace.sort_order')}
-                        textOptions={{ fill: '#666666', align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('catalog.marketplace.sort_order')}
+                    textOptions={{ fill: '#666666', align: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 23, height: 17 }}
+                />
                 <Dropmenu
                     variant="3"
                     name="sort_dropmenu"
@@ -32,12 +31,11 @@ export const MarketplaceSearchSimpleLayout = ({ layout, onCombineUniquesCheckbox
                     onPointerTap={onCombineUniquesCheckbox}
                     layout={{ position: 'absolute', left: 10, width: 16, top: 92, height: 15 }}
                 />
-                <Region layout={{ position: 'absolute', left: 29, width: 218, bottom: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('catalog.marketplace.combine_uniques')}
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('catalog.marketplace.combine_uniques')}
+                    textOptions={{ fill: '#666666' }}
+                    layout={{ position: 'absolute', left: 29, width: 218, bottom: 12, height: 17 }}
+                />
             </Region>
         </Region>
     );

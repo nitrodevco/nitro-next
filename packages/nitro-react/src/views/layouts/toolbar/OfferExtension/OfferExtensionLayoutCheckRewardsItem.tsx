@@ -19,12 +19,11 @@ export const OfferExtensionLayoutCheckRewardsItem = ({ layout, onCheckRewards, v
                 cursor="pointer"
                 layout={{ width: 180, height: 19, flexShrink: 0, justifyContent: 'center', ...layout }}
             >
-                <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 167, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('offers.extension.check_rewards')}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('offers.extension.check_rewards')}
+                    textStyle="text-style-il-regular-white"
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 167, top: 0, height: 17 }}
+                />
             </Region>
         )
     );

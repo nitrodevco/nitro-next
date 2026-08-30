@@ -46,15 +46,12 @@ export const ChatinputWindowNewLayoutChatInputContainer = ({ captionBlockText, h
                     {helpbuttonShowHoverRegion}
                 </Region>
                 {(visibleBlockText ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionBlockText ?? t('chat.input.alert.flood')}
+                        textOptions={{ fill: '#ff0000' }}
                         name="block_text"
-                        layout={{ position: 'absolute', left: 10, width: 325, top: 9, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBlockText ?? t('chat.input.alert.flood')}
-                            textOptions={{ fill: '#ff0000' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 10, width: 325, top: 9, bottom: 6 }}
+                    />
                 )}
                 <TextInput
                     value={chatInputValue}

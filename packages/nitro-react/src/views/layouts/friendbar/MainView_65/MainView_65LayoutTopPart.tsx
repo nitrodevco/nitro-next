@@ -53,25 +53,20 @@ export const MainView_65LayoutTopPart = ({ captionTopHeaderText, captionTopText,
                     layout={{ position: 'absolute', left: 18, width: 44, top: 18, height: 43 }}
                 />
             </Region>
-            <Region
+            <ThemeText
+                text={captionTopHeaderText ?? 'Super-duper long group title'}
+                textStyle="text-style-u-headline-big"
+                textOptions={{ fill: '#ffffff' }}
                 name="top_header_text"
-                layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTopHeaderText ?? 'Super-duper long group title'}
-                    textStyle="text-style-u-headline-big"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30 }}
+            />
+            <ThemeText
+                text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 456 }}
                 name="top_text"
-                layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 456 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40 }}
+            />
             <Border
                 variant="1"
                 name="settings_button"
@@ -82,13 +77,12 @@ export const MainView_65LayoutTopPart = ({ captionTopHeaderText, captionTopText,
                     src={layoutImage('pursearea_settings_icon.png')}
                     layout={{ position: 'absolute', left: 3, width: 15, top: 2, height: 15 }}
                 />
-                <Region layout={{ position: 'absolute', left: 17, width: 48, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('groupforum.view.settings.header')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('groupforum.view.settings.header')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                    layout={{ position: 'absolute', left: 17, width: 48, alignSelf: 'center', height: 16 }}
+                />
             </Border>
         </Region>
     );

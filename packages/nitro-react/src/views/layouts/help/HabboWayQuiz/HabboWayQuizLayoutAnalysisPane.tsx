@@ -25,16 +25,14 @@ export const HabboWayQuizLayoutAnalysisPane = ({ captionAnswer, captionExplanati
                     layout={{ flexDirection: 'column', width: '100%' }}
                 >
                     <Region layout={{ flexShrink: 0, flexDirection: 'column', gap: 10 }}>
-                        <Region
+                        <ThemeText
+                            text={captionQuestion ?? 'Lorem ipsum question text, not quite as long as it gets. Lorem ipsum question text, not quite as long as it gets.'}
+                            textStyle="text-style-il-heading-1"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 455 }}
                             name="question"
-                            layout={{ width: 455, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionQuestion ?? 'Lorem ipsum question text, not quite as long as it gets. Lorem ipsum question text, not quite as long as it gets.'}
-                                textStyle="text-style-il-heading-1"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 455 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 455, height: 35, flexShrink: 0 }}
+                        />
                         <Region
                             name="answer_container"
                             layout={{ width: 448, height: 28, flexShrink: 0 }}
@@ -44,15 +42,13 @@ export const HabboWayQuizLayoutAnalysisPane = ({ captionAnswer, captionExplanati
                                 src={srcAnswerIllustration ?? layoutImage('help_decline_icon.png')}
                                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 16 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionAnswer ?? 'Lorem ipsum answer text, not quite as long as it gets. Lorem ipsum answer text, not quite as long as it gets.'}
+                                textOptions={{ fill: '#555555', wordWrap: true, wordWrapWidth: 433 }}
                                 name="answer"
-                                layout={{ position: 'absolute', left: 15, width: 433, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionAnswer ?? 'Lorem ipsum answer text, not quite as long as it gets. Lorem ipsum answer text, not quite as long as it gets.'}
-                                    textOptions={{ fill: '#555555', wordWrap: true, wordWrapWidth: 433 }}
-                                />
-                            </Region>
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 15, width: 433, top: 0, bottom: 0 }}
+                            />
                         </Region>
                         <Border
                             variant="102"
@@ -64,15 +60,13 @@ export const HabboWayQuizLayoutAnalysisPane = ({ captionAnswer, captionExplanati
                                 src={srcExplanationIllustration ?? layoutImage('help_habboway_dove_quizz.png')}
                                 layout={{ position: 'absolute', left: 10, width: 30, top: 10, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionExplanation ?? 'Lorem ipsum explanation text, not quite as long as it gets. Lorem ipsum explanation text, not quite as long as it gets.'}
+                                textOptions={{ wordWrap: true, wordWrapWidth: 393 }}
                                 name="explanation"
-                                layout={{ position: 'absolute', left: 42, width: 393, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionExplanation ?? 'Lorem ipsum explanation text, not quite as long as it gets. Lorem ipsum explanation text, not quite as long as it gets.'}
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 393 }}
-                                />
-                            </Region>
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 42, width: 393, top: 0, bottom: 0 }}
+                            />
                         </Border>
                         <ThemeImage
                             name="separator"

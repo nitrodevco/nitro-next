@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `mintlimit_text` of CollectibleHubLayout - pass real rows through its `items…` slot. */
 export interface CollectibleHubLayoutMintlimitTextItemProps {
@@ -8,15 +8,12 @@ export interface CollectibleHubLayoutMintlimitTextItemProps {
 
 export const CollectibleHubLayoutMintlimitTextItem = ({ captionMintlimitText, layout }: CollectibleHubLayoutMintlimitTextItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionMintlimitText ?? '100/1000'}
+            textStyle="text-style-u-bold"
+            textOptions={{ fill: '#ffffff', align: 'right' }}
             name="mintlimit_text"
-            layout={{ width: 80, height: 25, flexShrink: 0, minHeight: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', ...layout }}
-        >
-            <ThemeText
-                text={captionMintlimitText ?? '100/1000'}
-                textStyle="text-style-u-bold"
-                textOptions={{ fill: '#ffffff', align: 'right' }}
-            />
-        </Region>
+            layout={{ width: 80, height: 25, flexShrink: 0, minHeight: 25, ...layout }}
+        />
     );
 };

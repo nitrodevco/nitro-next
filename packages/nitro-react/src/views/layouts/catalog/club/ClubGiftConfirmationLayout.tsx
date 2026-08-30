@@ -38,38 +38,31 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
                         tint={tintImage}
                         layout={{ position: 'absolute', left: 1, width: 46, top: 1, height: 46 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionBundleCounter ?? ''}
+                        textOptions={{ fill: '#cccc66' }}
                         name="bundleCounter"
-                        layout={{ position: 'absolute', left: 18, right: 26, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBundleCounter ?? ''}
-                            textOptions={{ fill: '#cccc66' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 18, right: 26, top: 18, height: 4 }}
+                    />
                     <Border
                         variant="2"
                         name="multiContainer"
                         tintColor="#ff3300"
                         layout={{ position: 'absolute', left: 10, width: 17, top: 2, height: 13 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionMultiCounter ?? ''}
+                            textOptions={{ fill: '#cccc66' }}
                             name="multiCounter"
-                            layout={{ position: 'absolute', left: 3, width: 4, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMultiCounter ?? ''}
-                                textOptions={{ fill: '#cccc66' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 3, width: 4, top: 0, height: 4 }}
+                        />
                     </Border>
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionItemName ?? ''}
                     name="item_name"
-                    layout={{ position: 'absolute', left: 69, width: 184, top: 29, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionItemName ?? ''}
-                </Region>
+                    layout={{ position: 'absolute', left: 69, width: 184, top: 29, height: 17 }}
+                />
                 <Button
                     variant="3"
                     name="select_button"

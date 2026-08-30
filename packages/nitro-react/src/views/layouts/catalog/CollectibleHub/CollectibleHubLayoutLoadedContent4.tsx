@@ -27,12 +27,12 @@ export const CollectibleHubLayoutLoadedContent4 = ({ captionTransferFeeText, lay
                 name="headercontainer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, justifyContent: 'center' }}
             >
-                <Region layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, alignSelf: 'center', height: 30, minWidth: 450, maxWidth: 450, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('collectibles.transfer.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 450, align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('collectibles.transfer.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 450, align: 'center' }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, alignSelf: 'center', height: 30, minWidth: 450, maxWidth: 450 }}
+                />
             </Region>
             <Border
                 variant="3"
@@ -53,15 +53,12 @@ export const CollectibleHubLayoutLoadedContent4 = ({ captionTransferFeeText, lay
                     layout={{ position: 'absolute', left: 315, width: 170, top: 5, height: 40 }}
                 >
                     <Region layout={{ position: 'absolute', right: 13, top: 5, flexDirection: 'row' }}>
-                        <Region
+                        <ThemeText
+                            text={captionTransferFeeText ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="transfer_fee_text"
-                            layout={{ width: 12, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionTransferFeeText ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ width: 12, height: 21, flexShrink: 0 }}
+                        />
                         <Region
                             name="spacing"
                             layout={{ width: 4, height: 30, flexShrink: 0 }}

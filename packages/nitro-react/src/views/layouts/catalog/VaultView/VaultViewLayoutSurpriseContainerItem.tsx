@@ -44,15 +44,12 @@ export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValu
                         />
                     )}
                     {(visibleSurpriseDucketValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionSurpriseDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="surpriseDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSurpriseDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValu
                         />
                     )}
                     {(visibleSurpriseCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionSurpriseCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="surpriseCreditValue"
-                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSurpriseCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValu
                         />
                     )}
                     {(visibleSurpriseLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionSurpriseLabel ?? t('earnings.surpriseboxes.label')}
+                            textStyle="text-style-u-bold"
                             name="surprise_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSurpriseLabel ?? t('earnings.surpriseboxes.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

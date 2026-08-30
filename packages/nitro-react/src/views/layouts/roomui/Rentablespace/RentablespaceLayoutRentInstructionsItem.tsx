@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `rent_instructions` of RentablespaceLayout - pass real rows through its `items…` slot. */
 export interface RentablespaceLayoutRentInstructionsItemProps {
@@ -11,14 +11,12 @@ export const RentablespaceLayoutRentInstructionsItem = ({ captionRentInstruction
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionRentInstructions ?? t('rentablespace.widget.instructions')}
+            textOptions={{ wordWrap: true, wordWrapWidth: 241 }}
             name="rent_instructions"
-            layout={{ width: 241, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionRentInstructions ?? t('rentablespace.widget.instructions')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 241 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 241, flexShrink: 0, ...layout }}
+        />
     );
 };

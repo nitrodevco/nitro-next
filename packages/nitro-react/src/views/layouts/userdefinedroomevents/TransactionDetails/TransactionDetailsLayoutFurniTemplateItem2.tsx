@@ -79,16 +79,13 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
                                     layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14 }}
                                 >
                                     {(visibleFurniQuantity ?? true) && (
-                                        <Region
+                                        <ThemeText
+                                            text={captionFurniQuantity ?? '0'}
+                                            textStyle="text-style-regular"
+                                            textOptions={{ fill: '#2f6982' }}
                                             name="furni_quantity"
-                                            layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                        >
-                                            <ThemeText
-                                                text={captionFurniQuantity ?? '0'}
-                                                textStyle="text-style-regular"
-                                                textOptions={{ fill: '#2f6982' }}
-                                            />
-                                        </Region>
+                                            layout={{ position: 'absolute', left: 1, top: 1, height: 13 }}
+                                        />
                                     )}
                                 </Region>
                             )}
@@ -113,15 +110,12 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
                         </WidgetSlot>
                     )}
                     {(visibleIncompleteText ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionIncompleteText ?? ' 5'}
+                            textOptions={{ fill: '#666666', align: 'center' }}
                             name="incomplete_text"
-                            layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionIncompleteText ?? ' 5'}
-                                textOptions={{ fill: '#666666', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21 }}
+                        />
                     )}
                 </Border>
             )}

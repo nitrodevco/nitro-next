@@ -51,52 +51,40 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                 tint={tintFurnitureIcon}
                 layout={{ position: 'absolute', left: 398, width: 131, top: 198, height: 101 }}
             />
-            <Region
+            <ThemeText
+                text={captionHeaderRecipes ?? t('crafting.title.products')}
+                textOptions={{ fill: '#cec7b6', align: 'center' }}
                 name="header_recipes"
-                layout={{ position: 'absolute', left: 26, width: 219, top: 32, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionHeaderRecipes ?? t('crafting.title.products')}
-                    textOptions={{ fill: '#cec7b6', align: 'center' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 26, width: 219, top: 32, height: 21 }}
+            />
+            <ThemeText
+                text={captionHeaderInventory ?? t('crafting.title.mixer')}
+                textOptions={{ fill: '#cec7b6', align: 'center' }}
                 name="header_inventory"
-                layout={{ position: 'absolute', left: 26, width: 219, top: 200, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionHeaderInventory ?? t('crafting.title.mixer')}
-                    textOptions={{ fill: '#cec7b6', align: 'center' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 26, width: 219, top: 200, height: 21 }}
+            />
+            <ThemeText
+                text={captionHeaderMixer ?? 'Spellbook wdfsdf ef ewfwe fwfe wef ewf wefwe'}
+                textOptions={{ fill: '#9ca1a2', wordWrap: true, wordWrapWidth: 215 }}
                 name="header_mixer"
-                layout={{ position: 'absolute', left: 292, width: 215, bottom: 305, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHeaderMixer ?? 'Spellbook wdfsdf ef ewfwe fwfe wef ewf wefwe'}
-                    textOptions={{ fill: '#9ca1a2', wordWrap: true, wordWrapWidth: 215 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 292, width: 215, bottom: 305, height: 28 }}
+            />
             <Region layout={{ position: 'absolute', left: 304, width: 134, top: 180, height: 79, maxHeight: 120, flexDirection: 'column', gap: 8 }}>
-                <Region
+                <ThemeText
+                    text={captionInfoText1 ?? 'This spell will produce yy yy yyyyyyyy yyyyyy yy yyy xxxxxx xxx xxxxx'}
+                    textOptions={{ fill: '#93999a', wordWrap: true, wordWrapWidth: 134 }}
                     name="info_text1"
-                    layout={{ width: 134, flexShrink: 0, maxWidth: 134, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText1 ?? 'This spell will produce yy yy yyyyyyyy yyyyyy yy yyy xxxxxx xxx xxxxx'}
-                        textOptions={{ fill: '#93999a', wordWrap: true, wordWrapWidth: 134 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ width: 134, flexShrink: 0, maxWidth: 134 }}
+                />
+                <ThemeText
+                    text={captionInfoText2 ?? 'This spell will produce xxxxxx xxx xxxxx'}
+                    textOptions={{ fill: '#697577', wordWrap: true, wordWrapWidth: 134 }}
                     name="info_text2"
-                    layout={{ width: 134, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText2 ?? 'This spell will produce xxxxxx xxx xxxxx'}
-                        textOptions={{ fill: '#697577', wordWrap: true, wordWrapWidth: 134 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ width: 134, flexShrink: 0 }}
+                />
             </Region>
             <Button
                 variant="6"
@@ -168,15 +156,12 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                                 cursor="pointer"
                                 layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15 }}
                             >
-                                <Region
+                                <ThemeText
+                                    text={captionNumber ?? ''}
+                                    textOptions={{ fill: '#2f6982' }}
                                     name="number"
-                                    layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionNumber ?? ''}
-                                        textOptions={{ fill: '#2f6982' }}
-                                    />
-                                </Region>
+                                    layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4 }}
+                                />
                             </Region>
                         )}
                     </Region>

@@ -23,15 +23,12 @@ export const MemenuSettingsMenu_1079Layout = ({ captionIdentityText, captionSett
                 name="dance_container"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionSettingsTitle ?? t('widget.memenu.settings')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="settings_title"
-                    layout={{ position: 'absolute', width: 144, top: 5, height: 13, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSettingsTitle ?? t('widget.memenu.settings')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 144, top: 5, height: 13, maxWidth: 150 }}
+                />
                 <Region
                     name="line"
                     backgroundColor="#2f2f2f"
@@ -55,15 +52,13 @@ export const MemenuSettingsMenu_1079Layout = ({ captionIdentityText, captionSett
                 >
                     {t('widget.memenu.settings.audio')}
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionIdentityText ?? t('widget.memenu.settings.no_identity')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 159 }}
                     name="identity_text"
-                    layout={{ position: 'absolute', left: 6, width: 159, top: 81, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionIdentityText ?? t('widget.memenu.settings.no_identity')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 159 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 6, width: 159, top: 81, height: 20 }}
+                />
                 <Button
                     variant="1"
                     name="back"

@@ -21,18 +21,17 @@ export const TopicsFlowHelpLayoutChatContainer = ({ itemsChatList, layout, visib
                 name="chat_container"
                 layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 330, ...layout }}
             >
-                <Region layout={{ position: 'absolute', left: 30, width: 287, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.chat_report.subtitle')}
-                        textStyle="text-style-u-headline-medium"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 30, width: 380, top: 40, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.chat_report.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.emergency.chat_report.subtitle')}
+                    textStyle="text-style-u-headline-medium"
+                    layout={{ position: 'absolute', left: 30, width: 287, top: 20, height: 21 }}
+                />
+                <ThemeText
+                    text={t('help.emergency.chat_report.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 30, width: 380, top: 40, height: 57 }}
+                />
                 <Border
                     variant="105"
                     layout={{ position: 'absolute', left: 30, width: 390, top: 100, height: 220 }}

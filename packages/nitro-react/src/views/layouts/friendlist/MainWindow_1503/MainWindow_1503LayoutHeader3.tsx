@@ -42,15 +42,12 @@ export const MainWindow_1503LayoutHeader3 = ({ captionCaptionText, layout, onHea
                 tint={tintHdrSearch}
                 layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17 }}
             />
-            <Region
+            <ThemeText
+                text={captionCaptionText ?? `${t('generic.search')} (5)`}
+                textOptions={{ fill: '#efefef' }}
                 name="caption_text"
-                layout={{ position: 'absolute', left: 4, width: 190, top: 2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCaptionText ?? `${t('generic.search')} (5)`}
-                    textOptions={{ fill: '#efefef' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 4, width: 190, top: 2, height: 20 }}
+            />
             <ThemeImage
                 name="arrow_down_black"
                 src={srcArrowDownBlack}

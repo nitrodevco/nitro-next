@@ -53,27 +53,23 @@ export const TalentTrackLayoutTaskOngoingItem = ({ badge, captionDescription, ca
                         </WidgetSlot>
                     )}
                     {(visibleTitle ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTitle ?? 'TASK NAME'}
+                            textStyle="text-style-il-heading-3"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 145 }}
                             name="title"
-                            layout={{ position: 'absolute', left: 60, width: 145, top: 10, height: 15, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionTitle ?? 'TASK NAME'}
-                                textStyle="text-style-il-heading-3"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 145 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 60, width: 145, top: 10, height: 15, maxHeight: 28 }}
+                        />
                     )}
                     {(visibleDescription ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionDescription ?? 'Task description!'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 145 }}
                             name="description"
-                            layout={{ position: 'absolute', left: 60, width: 145, top: 25, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDescription ?? 'Task description!'}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 145 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 60, width: 145, top: 25, height: 16 }}
+                        />
                     )}
                     {(visibleTaskProgress ?? true) && (
                         <Region

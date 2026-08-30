@@ -28,27 +28,26 @@ export const ClubDirectBuySuccessLayout = ({ layout, onButtonOk, onClose, srcTea
                     src={srcTeaserImage ?? '${image.library.url}directVipBuy/success_teaser_image_HC.png'}
                     layout={{ position: 'absolute', left: 12, width: 105, bottom: 11, height: 111 }}
                 />
-                <Region layout={{ position: 'absolute', right: 6, width: 289, top: 15, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('direct.club.buy.success.congratulations')}
-                        textStyle="text-style-u-headline-big"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', right: 3, width: 292, alignSelf: 'center', marginTop: -2.5, marginBottom: 2.5, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('direct.club.buy.success.text.line.1')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 292 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', right: 8, width: 287, bottom: 7, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('direct.club.buy.success.text.line.2')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 287 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('direct.club.buy.success.congratulations')}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ fill: '#ffffff' }}
+                    layout={{ position: 'absolute', right: 6, width: 289, top: 15, height: 24 }}
+                />
+                <ThemeText
+                    text={t('direct.club.buy.success.text.line.1')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 292 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 3, width: 292, alignSelf: 'center', marginTop: -2.5, marginBottom: 2.5, height: 28 }}
+                />
+                <ThemeText
+                    text={t('direct.club.buy.success.text.line.2')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 287 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 8, width: 287, bottom: 7, height: 50 }}
+                />
             </Region>
             <ButtonThick
                 variant="3"

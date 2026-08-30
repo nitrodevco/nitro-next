@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `description` of BreedPetsResultLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsResultLayoutDescriptionItemProps {
@@ -8,14 +8,12 @@ export interface BreedPetsResultLayoutDescriptionItemProps {
 
 export const BreedPetsResultLayoutDescriptionItem = ({ captionDescription, layout }: BreedPetsResultLayoutDescriptionItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionDescription ?? '${breedpetsresult.widget.text '}
+            textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
             name="description"
-            layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionDescription ?? '${breedpetsresult.widget.text '}
-                textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 254, height: 18, flexShrink: 0, ...layout }}
+        />
     );
 };

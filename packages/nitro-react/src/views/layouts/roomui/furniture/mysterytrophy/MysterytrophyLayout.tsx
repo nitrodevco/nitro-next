@@ -52,25 +52,20 @@ export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderD
                     name="mysterytrophy.header"
                     layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionMysterytrophyHeaderTitle ?? t('mysterytrophy.header.title')}
+                        textStyle="text-style-u-headline-big"
+                        textOptions={{ fill: '#ffffff' }}
                         name="mysterytrophy.header.title"
-                        layout={{ position: 'absolute', left: 95, width: 317, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionMysterytrophyHeaderTitle ?? t('mysterytrophy.header.title')}
-                            textStyle="text-style-u-headline-big"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 95, width: 317, top: 11, height: 30 }}
+                    />
+                    <ThemeText
+                        text={captionMysterytrophyHeaderDescription ?? t('mysterytrophy.header.description')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 354 }}
                         name="mysterytrophy.header.description"
-                        layout={{ position: 'absolute', left: 95, width: 354, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionMysterytrophyHeaderDescription ?? t('mysterytrophy.header.description')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 354 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 95, width: 354, top: 41, height: 19 }}
+                    />
                 </Region>
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 475, top: 100, height: 90 }}>
@@ -99,16 +94,13 @@ export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderD
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32, justifyContent: 'center' }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCancel ?? t('generic.cancel')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#333333' }}
                         name="cancel"
-                        layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCancel ?? t('generic.cancel')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#333333' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17 }}
+                    />
                 </Region>
                 <ButtonThick
                     variant="5"

@@ -23,12 +23,11 @@ export const MemenuEffectsLayout = ({ captionInfoText, effectsCnvs, layout, line
                 name="effects_brdr"
                 layout={{ position: 'absolute', left: 1, width: 175, top: 1, height: 114, justifyContent: 'center' }}
             >
-                <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 176, top: 5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('widget.memenu.activeeffects')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('widget.memenu.activeeffects')}
+                    textOptions={{ fill: '#ffffff' }}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 176, top: 5, height: 13 }}
+                />
                 <Region
                     name="line"
                     backgroundColor="#2f2f2f"
@@ -52,15 +51,13 @@ export const MemenuEffectsLayout = ({ captionInfoText, effectsCnvs, layout, line
                 >
                     {t('generic.back')}
                 </Button>
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? t('widget.memenu.effects.info')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 137 }}
                     name="info_text"
-                    layout={{ position: 'absolute', left: 10, width: 137, top: 26, height: 51, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? t('widget.memenu.effects.info')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 137 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 137, top: 26, height: 51 }}
+                />
             </Border>
         </Region>
     );

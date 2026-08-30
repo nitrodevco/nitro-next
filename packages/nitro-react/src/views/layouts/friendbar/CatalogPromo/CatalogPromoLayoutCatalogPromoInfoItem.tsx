@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `catalog_promo_info` of CatalogPromoLayout - pass real rows through its `items…` slot. */
 export interface CatalogPromoLayoutCatalogPromoInfoItemProps {
@@ -12,14 +12,12 @@ export const CatalogPromoLayoutCatalogPromoInfoItem = ({ captionCatalogPromoInfo
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionCatalogPromoInfo ?? t('landing.view.catalogpromo.info')}
+            textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 300 }}
             name="catalog_promo_info"
-            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionCatalogPromoInfo ?? t('landing.view.catalogpromo.info')}
-                textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 300 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, ...layout }}
+        />
     );
 };

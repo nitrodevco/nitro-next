@@ -35,30 +35,24 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 0, width: 12, top: 10, height: 4 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTitleTxt ?? t('landing.view.moderationpromo.title')}
+                    textStyle="text-style-il-heading-3"
                     name="title_txt"
-                    layout={{ position: 'absolute', left: 18, width: 162, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitleTxt ?? t('landing.view.moderationpromo.title')}
-                        textStyle="text-style-il-heading-3"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 162, top: 4, height: 14 }}
+                />
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', right: 0, width: 100, top: 10, height: 4 }}
                 />
                 <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 163, flexDirection: 'column' }}>
-                    <Region
+                    <ThemeText
+                        text={captionCaptionTxt ?? t('landing.view.moderationpromo.caption')}
+                        textStyle="text-style-il-heading-1"
                         name="caption_txt"
-                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCaptionTxt ?? t('landing.view.moderationpromo.caption')}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0 }}
+                    />
                     <Region
                         name="spacing"
                         backgroundColor="#000000"
@@ -66,15 +60,13 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     >
                         {spacing}
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionInfoTxt ?? t('landing.view.moderationpromo.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                         name="info_txt"
-                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfoTxt ?? t('landing.view.moderationpromo.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0 }}
+                    />
                     <Region
                         name="spacing"
                         backgroundColor="#000000"
@@ -82,25 +74,21 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     >
                         {spacing2}
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionCursingCaptionTxt ?? t('landing.view.moderationpromo.cursing.caption')}
+                        textStyle="text-style-il-heading-3"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 237 }}
                         name="cursing_caption_txt"
-                        layout={{ width: 237, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCursingCaptionTxt ?? t('landing.view.moderationpromo.cursing.caption')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 237 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ width: 237, height: 15, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionCursingInfoTxt ?? t('landing.view.moderationpromo.cursing.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                         name="cursing_info_txt"
-                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCursingInfoTxt ?? t('landing.view.moderationpromo.cursing.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0 }}
+                    />
                     <Region
                         name="spacing"
                         backgroundColor="#000000"
@@ -108,25 +96,21 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     >
                         {spacing3}
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionWrongdoersCaptionTxt ?? t('landing.view.moderationpromo.wrongdoers.caption')}
+                        textStyle="text-style-il-heading-3"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
                         name="wrongdoers_caption_txt"
-                        layout={{ width: 150, height: 26, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionWrongdoersCaptionTxt ?? t('landing.view.moderationpromo.wrongdoers.caption')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ width: 150, height: 26, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionWrongdoersInfoTxt ?? t('landing.view.moderationpromo.wrongdoers.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                         name="wrongdoers_info_txt"
-                        layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionWrongdoersInfoTxt ?? t('landing.view.moderationpromo.wrongdoers.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0 }}
+                    />
                 </Region>
             </Region>
         </Region>

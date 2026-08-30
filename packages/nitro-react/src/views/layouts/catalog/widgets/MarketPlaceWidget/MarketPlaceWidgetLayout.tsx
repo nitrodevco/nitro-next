@@ -53,15 +53,12 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, 
                     name="search_container"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 120 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionStatusText ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
                     name="status_text"
-                    layout={{ position: 'absolute', left: 2, width: 62, top: 155, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusText ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 2, width: 62, top: 155, height: 15 }}
+                />
                 <MarketPlaceWidgetLayoutOfferList {...offerList} />
             </Region>
         </Region>

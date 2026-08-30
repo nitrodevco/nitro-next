@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `age_text` of PetViewLayout - pass real rows through its `items…` slot. */
 export interface PetViewLayoutAgeTextItemProps {
@@ -11,14 +11,11 @@ export const PetViewLayoutAgeTextItem = ({ captionAgeText, layout }: PetViewLayo
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionAgeText ?? t('pet.age')}
+            textOptions={{ fill: '#ffffff' }}
             name="age_text"
-            layout={{ width: 42, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionAgeText ?? t('pet.age')}
-                textOptions={{ fill: '#ffffff' }}
-            />
-        </Region>
+            layout={{ width: 42, height: 13, flexShrink: 0, ...layout }}
+        />
     );
 };

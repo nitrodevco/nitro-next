@@ -29,15 +29,12 @@ export const HabboTalentsPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 0, width: 12, top: 10, height: 4 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTitleTxt ?? t('landing.view.talentspromo.title')}
+                    textStyle="text-style-il-heading-3"
                     name="title_txt"
-                    layout={{ position: 'absolute', left: 18, width: 145, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitleTxt ?? t('landing.view.talentspromo.title')}
-                        textStyle="text-style-il-heading-3"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 145, top: 4, height: 14 }}
+                />
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
@@ -49,34 +46,27 @@ export const HabboTalentsPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     layout={{ position: 'absolute', left: 21, width: 192, bottom: -12, height: 101 }}
                 />
                 <Region layout={{ position: 'absolute', right: 0, width: 270, bottom: 0, height: 120, flexDirection: 'column', gap: 5 }}>
-                    <Region
+                    <ThemeText
+                        text={captionCaptionTxt ?? t('landing.view.talentspromo.caption')}
+                        textStyle="text-style-il-heading-1"
                         name="caption_txt"
-                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCaptionTxt ?? t('landing.view.talentspromo.caption')}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
-                    <Region
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionSubcaptionTxt ?? t('landing.view.talentspromo.subcaption')}
+                        textStyle="text-style-il-heading-3"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
                         name="subcaption_txt"
-                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSubcaptionTxt ?? t('landing.view.talentspromo.subcaption')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionInfoTxt ?? t('landing.view.talentspromo.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
                         name="info_txt"
-                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfoTxt ?? t('landing.view.talentspromo.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0 }}
+                    />
                     <Button
                         variant="100"
                         name="go_button"

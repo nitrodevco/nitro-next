@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `amount_text_left` of TotalPriceWidgetLayout - pass real rows through its `items…` slot. */
 export interface TotalPriceWidgetLayoutAmountTextLeftItemProps {
@@ -8,11 +8,10 @@ export interface TotalPriceWidgetLayoutAmountTextLeftItemProps {
 
 export const TotalPriceWidgetLayoutAmountTextLeftItem = ({ captionAmountTextLeft, layout }: TotalPriceWidgetLayoutAmountTextLeftItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionAmountTextLeft ?? '00000'}
             name="amount_text_left"
-            layout={{ width: 38, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionAmountTextLeft ?? '00000'}
-        </Region>
+            layout={{ width: 38, alignSelf: 'stretch', flexShrink: 0, ...layout }}
+        />
     );
 };

@@ -66,15 +66,13 @@ export const GamesMainLayoutInstructionsContainer = ({ captionInstructionsBack, 
                         layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionInstructionText ?? 'lorem ipsum'}
+                    textOptions={{ fill: '#1077ac', wordWrap: true, wordWrapWidth: 280, align: 'center' }}
                     name="instruction_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 280, top: 269, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionInstructionText ?? 'lorem ipsum'}
-                        textOptions={{ fill: '#1077ac', wordWrap: true, wordWrapWidth: 280, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 280, top: 269, height: 21 }}
+                />
                 <GamesMainLayoutPageList {...pageList} />
             </Region>
         )

@@ -32,12 +32,11 @@ export const DiscordSettingsLayoutOurServers = ({ captionTitle, layout, onCollec
                 onPointerTap={onCollectiblesServer}
                 layout={{ position: 'absolute', left: 5, width: 186, top: 30, height: 98 }}
             >
-                <Region layout={{ position: 'absolute', left: 77, width: 79, top: 40, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text="Collectibles"
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                <ThemeText
+                    text="Collectibles"
+                    textStyle="text-style-il-regular-white"
+                    layout={{ position: 'absolute', left: 77, width: 79, top: 40, height: 18 }}
+                />
                 <ThemeImage
                     src={layoutImage('collectables_icon_curator_stamp_large.png')}
                     layout={{ position: 'absolute', left: 22, width: 48, top: 26, height: 48 }}
@@ -54,12 +53,11 @@ export const DiscordSettingsLayoutOurServers = ({ captionTitle, layout, onCollec
                     src={layoutImage('discord_wired_logo.png')}
                     layout={{ position: 'absolute', left: 19, width: 155, top: 18, height: 67 }}
                 />
-                <Region layout={{ position: 'absolute', left: 77, width: 66, top: 32, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text="The WiredFaculty"
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                <ThemeText
+                    text="The WiredFaculty"
+                    textStyle="text-style-il-regular-white"
+                    layout={{ position: 'absolute', left: 77, width: 66, top: 32, height: 33 }}
+                />
             </ContainerButton>
             <ContainerButton
                 variant="107"
@@ -68,12 +66,11 @@ export const DiscordSettingsLayoutOurServers = ({ captionTitle, layout, onCollec
                 onPointerTap={onOriginsServer}
                 layout={{ position: 'absolute', left: 5, width: 186, top: 116, height: 98 }}
             >
-                <Region layout={{ position: 'absolute', left: 77, width: 86, top: 31, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text="Habbo Hotel:Origins"
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                <ThemeText
+                    text="Habbo Hotel:Origins"
+                    textStyle="text-style-il-regular-white"
+                    layout={{ position: 'absolute', left: 77, width: 86, top: 31, height: 33 }}
+                />
                 <ThemeImage
                     src={layoutImage('discord_origins_logo.png')}
                     layout={{ position: 'absolute', left: 27, width: 38, top: 26, height: 47 }}

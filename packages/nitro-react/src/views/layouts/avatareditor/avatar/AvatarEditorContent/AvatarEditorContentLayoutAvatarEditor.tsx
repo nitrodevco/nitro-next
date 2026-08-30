@@ -54,16 +54,14 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
                 name="effectParamsContainer"
                 layout={{ position: 'absolute', left: 11, right: 10, top: 46, height: 352 }}
             >
-                <Region
+                <ThemeText
+                    text={captionEffectName ?? 'xxx'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#666666', wordWrap: true, wordWrapWidth: 120, align: 'center' }}
                     name="effect_name"
-                    layout={{ position: 'absolute', right: 9, width: 120, top: 284, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionEffectName ?? 'xxx'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#666666', wordWrap: true, wordWrapWidth: 120, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 9, width: 120, top: 284, height: 17 }}
+                />
                 <Region
                     name="time_left_bg"
                     layout={{ position: 'absolute', right: 3, width: 120, top: 301, height: 18 }}
@@ -74,25 +72,20 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
                         tint={tintProgressBarBitmap}
                         layout={{ position: 'absolute', left: 1, width: 120, top: 1, height: 16 }}
                     />
-                    <Region
-                        name="effect_time_left"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionEffectTimeLeft ?? '00:00 left'}
-                            textOptions={{ fill: '#666666', align: 'center' }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="save_to_activate"
-                    layout={{ position: 'absolute', left: 9, width: 300, bottom: 8, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
                     <ThemeText
-                        text={captionSaveToActivate ?? t('avatareditor.save.to.activate')}
-                        textOptions={{ fill: '#666666', wordWrap: true, wordWrapWidth: 300, align: 'center' }}
+                        text={captionEffectTimeLeft ?? '00:00 left'}
+                        textOptions={{ fill: '#666666', align: 'center' }}
+                        name="effect_time_left"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 1 }}
                     />
                 </Region>
+                <ThemeText
+                    text={captionSaveToActivate ?? t('avatareditor.save.to.activate')}
+                    textOptions={{ fill: '#666666', wordWrap: true, wordWrapWidth: 300, align: 'center' }}
+                    name="save_to_activate"
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 9, width: 300, bottom: 8, height: 17 }}
+                />
                 <ButtonThick
                     variant="6"
                     name="get_more_button"
@@ -117,15 +110,12 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
                     >
                         {collectibleAvatarInfoBackground}
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionAvatarInfoText ?? 'Habbo Avatar'}
+                        textOptions={{ fill: '#ff8823', align: 'center' }}
                         name="avatar_info_text"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 3, bottom: -3, minHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionAvatarInfoText ?? 'Habbo Avatar'}
-                            textOptions={{ fill: '#ff8823', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 3, bottom: -3, minHeight: 20 }}
+                    />
                 </Region>
             )}
             <Region

@@ -44,24 +44,18 @@ export const GamesMainLayout = ({ captionCancelLink, captionWaitText, captionWai
                     name="snowwar_lobby_cont"
                     layout={{ position: 'absolute', left: 0, right: -6, top: 0, height: 436 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionWaitTextStroke ?? 'Waiting for players...'}
+                        textOptions={{ fill: '#1077ac', align: 'center' }}
                         name="wait_text_stroke"
-                        layout={{ position: 'absolute', left: 40, width: 335, top: 118, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionWaitTextStroke ?? 'Waiting for players...'}
-                            textOptions={{ fill: '#1077ac', align: 'center' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 40, width: 335, top: 118, height: 24 }}
+                    />
+                    <ThemeText
+                        text={captionWaitText ?? 'Waiting for players...'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="wait_text"
-                        layout={{ position: 'absolute', left: 40, width: 335, top: 118, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionWaitText ?? 'Waiting for players...'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 40, width: 335, top: 118, height: 24 }}
+                    />
                     <Region
                         name="players_grid"
                         layout={{ position: 'absolute', left: 40, width: 335, top: 178, height: 130, flexDirection: 'row', flexWrap: 'wrap', gap: 3 }}
@@ -74,12 +68,11 @@ export const GamesMainLayout = ({ captionCancelLink, captionWaitText, captionWai
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 178, width: 63, top: 385, height: 23 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionCancelLink ?? t('generic.cancel')}
                             name="cancel_link"
-                            layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionCancelLink ?? t('generic.cancel')}
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17 }}
+                        />
                     </Region>
                 </Region>
             )}

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `time_label` of RentablespaceLayout - pass real rows through its `items…` slot. */
 export interface RentablespaceLayoutTimeLabelItemProps {
@@ -11,14 +11,11 @@ export const RentablespaceLayoutTimeLabelItem = ({ captionTimeLabel, layout }: R
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionTimeLabel ?? t('rentablespace.widget.expires_label')}
+            textStyle="text-style-u-headline-small"
             name="time_label"
-            layout={{ width: 249, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionTimeLabel ?? t('rentablespace.widget.expires_label')}
-                textStyle="text-style-u-headline-small"
-            />
-        </Region>
+            layout={{ width: 249, height: 19, flexShrink: 0, ...layout }}
+        />
     );
 };

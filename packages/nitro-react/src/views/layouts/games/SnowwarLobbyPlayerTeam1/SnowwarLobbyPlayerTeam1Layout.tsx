@@ -50,24 +50,18 @@ export const SnowwarLobbyPlayerTeam1Layout = ({ captionPlayerScore, captionPlaye
                         tint={tintPlayerScoreBackground}
                         layout={{ position: 'absolute', left: 0, width: 61, top: 0, height: 62 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionPlayerScoreStroke ?? '102'}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
                         name="playerScore_stroke"
-                        layout={{ position: 'absolute', left: 13, width: 40, top: 17, height: 24, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPlayerScoreStroke ?? '102'}
-                            textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 13, width: 40, top: 17, height: 24, minWidth: 40 }}
+                    />
+                    <ThemeText
+                        text={captionPlayerScore ?? '102'}
+                        textOptions={{ fill: '#ffffff' }}
                         name="playerScore"
-                        layout={{ position: 'absolute', left: 13, width: 34, top: 17, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPlayerScore ?? '102'}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 13, width: 34, top: 17, height: 24 }}
+                    />
                 </Region>
             </Region>
         </Region>

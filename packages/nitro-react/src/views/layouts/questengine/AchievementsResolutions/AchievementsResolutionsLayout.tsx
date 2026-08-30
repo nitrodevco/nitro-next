@@ -42,16 +42,14 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, countdown
                     {t('resolution.button.ok')}
                 </Button>
                 {(visibleDisabledReason ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionDisabledReason ?? 'Disabled for reason.'}
+                        textStyle="text-style-il-border"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 300, align: 'center' }}
                         name="disabled.reason"
-                        layout={{ position: 'absolute', left: 5, right: -5, top: 403, height: 15, minWidth: 0, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionDisabledReason ?? 'Disabled for reason.'}
-                            textStyle="text-style-il-border"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 300, align: 'center' }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 5, right: -5, top: 403, height: 15, minWidth: 0, maxWidth: 300 }}
+                    />
                 )}
                 <WidgetSlot
                     widgetType="countdown"

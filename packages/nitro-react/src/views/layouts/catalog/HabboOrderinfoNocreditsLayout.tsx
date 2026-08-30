@@ -19,24 +19,20 @@ export const HabboOrderinfoNocreditsLayout = ({ captionHabboMessageTextA, captio
                 name="habbo_orderinfo_nocredits"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionHabboMessageTextA ?? t('shopping_costs')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                     name="habbo_message_text_a"
-                    layout={{ position: 'absolute', left: 16, width: 250, top: 14, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHabboMessageTextA ?? t('shopping_costs')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 16, width: 250, top: 14, height: 17 }}
+                />
+                <ThemeText
+                    text={captionHabboMessageTextB ?? t('shopping_nocash')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                     name="habbo_message_text_b"
-                    layout={{ position: 'absolute', left: 16, width: 250, top: 34, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHabboMessageTextB ?? t('shopping_nocash')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 16, width: 250, top: 34, height: 17 }}
+                />
                 <Button
                     variant="3"
                     name="nobalance_ok"

@@ -92,26 +92,20 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionChangeUser, cap
                     >
                         {reportedUserAvatar}
                     </WidgetSlot>
-                    <Region
+                    <ThemeText
+                        text={captionUserInfoTitle ?? t('help.cfh.selected_user.title')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#efefef' }}
                         name="user_info_title"
-                        layout={{ position: 'absolute', left: 110, width: 160, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionUserInfoTitle ?? t('help.cfh.selected_user.title')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#efefef' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 110, width: 160, top: 10, height: 17 }}
+                    />
+                    <ThemeText
+                        text={captionReportedUserName ?? 'UserName'}
+                        textStyle="text-style-u-headline-big"
+                        textOptions={{ fill: '#ffffff' }}
                         name="reported_user_name"
-                        layout={{ position: 'absolute', left: 110, width: 93, top: 30, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionReportedUserName ?? 'UserName'}
-                            textStyle="text-style-u-headline-big"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 110, width: 93, top: 30, height: 24 }}
+                    />
                     <Region
                         name="change_user"
                         layout={{ position: 'absolute', left: 110, width: 256, top: 60, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -131,12 +125,12 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionChangeUser, cap
                     name="reason_container"
                     layout={{ position: 'absolute', left: 0, width: 445, top: 90, height: 340 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 30, width: 405, top: 12, height: 59, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.cfh.pick.topic')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 405 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.cfh.pick.topic')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 405 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 30, width: 405, top: 12, height: 59 }}
+                    />
                     <ScrollArea
                         orientation="vertical"
                         layout={{ position: 'absolute', left: 30, width: 385, top: 70, height: 270 }}
@@ -178,18 +172,17 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionChangeUser, cap
                     name="summary_container"
                     layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 380 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 30, width: 164, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.cfh.button.send')}
-                            textStyle="text-style-u-headline-medium"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 30, width: 390, top: 50, height: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main.summary')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 390 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.cfh.button.send')}
+                        textStyle="text-style-u-headline-medium"
+                        layout={{ position: 'absolute', left: 30, width: 164, top: 20, height: 21 }}
+                    />
+                    <ThemeText
+                        text={t('help.main.summary')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 390 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 30, width: 390, top: 50, height: 107 }}
+                    />
                     <ContainerButton
                         variant="5"
                         name="submit_button"

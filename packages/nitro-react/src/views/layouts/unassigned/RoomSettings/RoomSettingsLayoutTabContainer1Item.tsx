@@ -39,15 +39,12 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionDescriptionLabel, c
             layout={{ width: 321, height: 360, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             {(visibleRoomNameLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomNameLabel ?? t('navigator.roomname')}
+                    textStyle="text-style-u-bold"
                     name="room_name_label"
-                    layout={{ position: 'absolute', left: 0, width: 119, top: -3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRoomNameLabel ?? t('navigator.roomname')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 119, top: -3, height: 17 }}
+                />
             )}
             {(visibleRoomName ?? true) && (
                 <TextInput
@@ -58,15 +55,12 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionDescriptionLabel, c
                 />
             )}
             {(visibleDescriptionLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionDescriptionLabel ?? t('navigator.roomsettings.desc')}
+                    textStyle="text-style-u-bold"
                     name="description_label"
-                    layout={{ position: 'absolute', left: 0, width: 163, top: 35, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescriptionLabel ?? t('navigator.roomsettings.desc')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 163, top: 35, height: 17 }}
+                />
             )}
             {(visibleDescription ?? true) && (
                 <TextInput
@@ -93,15 +87,12 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionDescriptionLabel, c
                         />
                     )}
                     {(visibleWalkThroughText ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionWalkThroughText ?? t('navigator.roomsettings.allow_walk_through')}
+                            textStyle="text-style-u-regular"
                             name="walk_through_text"
-                            layout={{ position: 'absolute', left: 18, width: 249, top: 58, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionWalkThroughText ?? t('navigator.roomsettings.allow_walk_through')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 18, width: 249, top: 58, height: 17 }}
+                        />
                     )}
                 </Region>
             )}
@@ -113,16 +104,13 @@ export const RoomSettingsLayoutTabContainer1Item = ({ captionDescriptionLabel, c
                     layout={{ position: 'absolute', width: 189, top: 334, height: 22 }}
                 >
                     {(visibleRemoveLink ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#bb2200' }}
                             name="remove_link"
-                            layout={{ position: 'absolute', left: 15, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#bb2200' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 15, top: 0, height: 17 }}
+                        />
                     )}
                     {(visibleRemoveIcon ?? true) && (
                         <Icon

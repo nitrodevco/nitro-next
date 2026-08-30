@@ -45,16 +45,14 @@ export const SearchTreeDropdownLayoutSearchTreeDropdown = ({ captionInputPlaceho
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionInputPlaceholderText ?? t('wiredfurni.variable_picker.search')}
+                        textStyle="text-style-regular"
+                        textOptions={{ fill: '#808080', wordWrap: true }}
                         name="input_placeholder_text"
-                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInputPlaceholderText ?? t('wiredfurni.variable_picker.search')}
-                            textStyle="text-style-regular"
-                            textOptions={{ fill: '#808080', wordWrap: true }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, top: 0 }}
+                    />
                     <TextInput
                         value={inputFieldValue}
                         onChange={setInputFieldValue}

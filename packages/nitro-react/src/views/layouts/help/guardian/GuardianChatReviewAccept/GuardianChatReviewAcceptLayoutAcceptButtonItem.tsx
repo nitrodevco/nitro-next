@@ -24,12 +24,11 @@ export const GuardianChatReviewAcceptLayoutAcceptButtonItem = ({ layout, onAccep
                     src={layoutImage('help_accept_icon.png')}
                     layout={{ width: 11, height: 12, flexShrink: 0 }}
                 />
-                <Region layout={{ width: 247, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.bully.request.guide.accept.accept.button')}
-                        textStyle="text-style-il-button"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.bully.request.guide.accept.accept.button')}
+                    textStyle="text-style-il-button"
+                    layout={{ width: 247, alignSelf: 'stretch', flexShrink: 0 }}
+                />
             </Region>
         </ContainerButton>
     );

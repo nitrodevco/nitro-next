@@ -42,15 +42,12 @@ export const ToolbarViewLayoutSTORIESItem = ({ captionText, context, layout, onS
                     </Border>
                 )}
                 {(visibleText ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.stories')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="text"
-                        layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionText ?? t('toolbar.icon.label.stories')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17 }}
+                    />
                 )}
             </Region>
         )

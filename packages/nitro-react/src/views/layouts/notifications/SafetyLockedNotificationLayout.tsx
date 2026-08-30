@@ -19,30 +19,25 @@ export const SafetyLockedNotificationLayout = ({ captionInfoText, captionUnlockL
                 tintColor="#6f6f6f"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 1 }}
             >
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? t('notifications.text.safety_locked')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174 }}
                     name="info_text"
-                    layout={{ position: 'absolute', left: 8, right: 10, top: 6, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? t('notifications.text.safety_locked')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 8, right: 10, top: 6, height: 36 }}
+                />
                 <Region
                     name="unlock_link_region"
                     onPointerTap={onUnlockLinkRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 8, width: 35, bottom: 10, height: 18 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionUnlockLink ?? t('notifications.button.safety_locked_unlock')}
+                        textOptions={{ fill: '#ffffff' }}
                         name="unlock_link"
-                        layout={{ position: 'absolute', left: 0, width: 147, top: 2, bottom: -1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionUnlockLink ?? t('notifications.button.safety_locked_unlock')}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 147, top: 2, bottom: -1 }}
+                    />
                 </Region>
             </Border>
         </Region>

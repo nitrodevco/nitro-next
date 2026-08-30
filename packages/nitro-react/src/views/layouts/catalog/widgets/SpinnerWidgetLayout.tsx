@@ -20,15 +20,12 @@ export const SpinnerWidgetLayout = ({ captionTextHeader, captionTextValue, layou
                 name="border_spinner_widget"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionTextHeader ?? t('catalog.bundlewidget.spinner.select.amount')}
+                    textStyle="text-style-u-small"
                     name="text_header"
-                    layout={{ position: 'absolute', left: 7, width: 226, top: 5, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextHeader ?? t('catalog.bundlewidget.spinner.select.amount')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, width: 226, top: 5, bottom: 5 }}
+                />
                 <ContainerButton
                     variant="3"
                     name="button_less"
@@ -55,16 +52,13 @@ export const SpinnerWidgetLayout = ({ captionTextHeader, captionTextValue, layou
                         layout={{ position: 'absolute', left: 2, width: 11, top: 4, height: 11 }}
                     />
                 </ContainerButton>
-                <Region
+                <ThemeText
+                    text={captionTextValue ?? '1'}
+                    textStyle="text-style-u-small"
+                    textOptions={{ align: 'center' }}
                     name="text_value"
-                    layout={{ position: 'absolute', right: 4, width: 24, top: 5, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionTextValue ?? '1'}
-                        textStyle="text-style-u-small"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 4, width: 24, top: 5, bottom: 5 }}
+                />
             </Border>
         </Region>
     );

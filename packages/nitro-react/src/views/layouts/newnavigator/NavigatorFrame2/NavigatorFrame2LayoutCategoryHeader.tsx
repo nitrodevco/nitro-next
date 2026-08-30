@@ -40,15 +40,12 @@ export const NavigatorFrame2LayoutCategoryHeader = ({ captionCategoryName, categ
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 142, top: 0, height: 27 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCategoryName ?? 'Category Name PH'}
+                    textOptions={{ fill: '#0f557b' }}
                     name="category_name"
-                    layout={{ position: 'absolute', left: 20, width: 122, top: 5, height: 19, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCategoryName ?? 'Category Name PH'}
-                        textOptions={{ fill: '#0f557b' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 20, width: 122, top: 5, height: 19, minWidth: 2, maxWidth: 270 }}
+                />
             </Region>
             <NavigatorFrame2LayoutCategoryControlsItemlist {...categoryControlsItemlist} />
         </Region>

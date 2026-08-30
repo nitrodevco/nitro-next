@@ -27,15 +27,13 @@ export const SimpleAlert_1492Layout = ({ captionBodyText, layout, onClose, onOk 
                     name="border"
                     layout={{ position: 'absolute', left: 0, right: -1, top: 0, height: 100 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
+                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 140 }}
                         name="body_text"
-                        layout={{ position: 'absolute', left: 5, right: 5, top: 0, height: 140, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
-                            textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 140 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 0, height: 140 }}
+                    />
                 </Border>
                 <Button
                     variant="0"

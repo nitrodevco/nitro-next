@@ -41,15 +41,12 @@ export const GiftWrappingLayoutBoxPickerContainer = ({ captionPickBoxTitle, capt
                     layout={{ position: 'absolute', left: 1, width: 80, top: 1, height: 80 }}
                 />
             </Border>
-            <Region
+            <ThemeText
+                text={captionPickBoxTitle ?? t('catalog.gift_wrapping.pick_box')}
+                textStyle="text-style-u-bold"
                 name="pick_box_title"
-                layout={{ position: 'absolute', left: 154, width: 152, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPickBoxTitle ?? t('catalog.gift_wrapping.pick_box')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 154, width: 152, top: 5, height: 20 }}
+            />
             <Region
                 name="price_box_container"
                 layout={{ position: 'absolute', left: 154, top: 20, flexDirection: 'row' }}
@@ -85,15 +82,12 @@ export const GiftWrappingLayoutBoxPickerContainer = ({ captionPickBoxTitle, capt
                     layout={{ position: 'absolute', left: 8, width: 17, top: 8, height: 16 }}
                 />
             </ContainerButton>
-            <Region
+            <ThemeText
+                text={captionPickRibbonTitle ?? t('catalog.gift_wrapping.pick_ribbon.title')}
+                textStyle="text-style-u-bold"
                 name="pick_ribbon_title"
-                layout={{ position: 'absolute', left: 154, width: 152, top: 50, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPickRibbonTitle ?? t('catalog.gift_wrapping.pick_ribbon.title')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 154, width: 152, top: 50, height: 22 }}
+            />
             <ContainerButton
                 variant="0"
                 name="ribbon_prev"

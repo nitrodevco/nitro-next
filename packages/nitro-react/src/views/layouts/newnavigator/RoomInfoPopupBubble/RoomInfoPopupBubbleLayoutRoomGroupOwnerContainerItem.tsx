@@ -36,16 +36,14 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ captionGr
                         layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
                     />
                     {(visibleGroupName ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionGroupName ?? 'The Bubblers'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 170 }}
                             name="group_name"
-                            layout={{ position: 'absolute', left: 20, width: 170, top: 0, bottom: -3, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionGroupName ?? 'The Bubblers'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 170 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 20, width: 170, top: 0, bottom: -3 }}
+                        />
                     )}
                 </Region>
             )}
@@ -62,16 +60,14 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ captionGr
                         layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
                     />
                     {(visibleOwnerName ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionOwnerName ?? 'Macklebee'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
                             name="owner_name"
-                            layout={{ position: 'absolute', right: 0, width: 130, top: -2, bottom: -1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionOwnerName ?? 'Macklebee'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', right: 0, width: 130, top: -2, bottom: -1 }}
+                        />
                     )}
                 </Region>
             )}

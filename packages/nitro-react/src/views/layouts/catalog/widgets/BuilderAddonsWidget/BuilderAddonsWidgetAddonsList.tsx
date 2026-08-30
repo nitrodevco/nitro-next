@@ -40,41 +40,32 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
                             src="${image.library.url}/catalogue/icon_193.png"
                             layout={{ position: 'absolute', left: 8, width: 15, top: 5, height: 15 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionItemHeader ?? 'item name'}
+                            textStyle="text-style-u-headline-medium"
+                            textOptions={{ fill: '#ffffff' }}
                             name="item_header"
-                            layout={{ position: 'absolute', left: 33, width: 88, top: 2, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionItemHeader ?? 'item name'}
-                                textStyle="text-style-u-headline-medium"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 33, width: 88, top: 2, height: 21 }}
+                        />
                     </Border>
                     <Region layout={{ position: 'absolute', left: 9, width: 105, top: 45, height: 24, flexDirection: 'row', gap: 3 }}>
-                        <Region
+                        <ThemeText
+                            text={captionItemPrice ?? '999'}
+                            textStyle="text-style-u-headline-small"
                             name="item_price"
-                            layout={{ width: 28, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionItemPrice ?? '999'}
-                                textStyle="text-style-u-headline-small"
-                            />
-                        </Region>
+                            layout={{ width: 28, height: 19, flexShrink: 0 }}
+                        />
                         <ThemeImage
                             src={layoutImage('pursearea_credits_icon.png')}
                             layout={{ width: 15, height: 15, flexShrink: 0 }}
                         />
                         {(visibleDiamondsPrice ?? false) && (
-                            <Region
+                            <ThemeText
+                                text={captionDiamondsPrice ?? '999'}
+                                textStyle="text-style-u-headline-small"
                                 name="diamonds_price"
-                                layout={{ width: 28, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionDiamondsPrice ?? '999'}
-                                    textStyle="text-style-u-headline-small"
-                                />
-                            </Region>
+                                layout={{ width: 28, height: 19, flexShrink: 0 }}
+                            />
                         )}
                         {(visibleDiamondsIcon ?? false) && (
                             <ThemeImage

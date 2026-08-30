@@ -16,16 +16,13 @@ export const InitializationErrorLayout = ({ captionError, layout, srcKittycat }:
                     src={srcKittycat ?? '${image.library.url}reception/confused.png'}
                     layout={{ position: 'absolute', right: 62, width: 78, bottom: 23, height: 59 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionError ?? 'Landing view initialization error.'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
                     name="error"
-                    layout={{ position: 'absolute', right: 10, width: 185, bottom: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionError ?? 'Landing view initialization error.'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 10, width: 185, bottom: 4, height: 17 }}
+                />
             </Region>
         </Region>
     );

@@ -40,12 +40,11 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
                 />
             )}
             {(visibleElementText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionElementText ?? 'elem1'}
                     name="element_text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionElementText ?? 'elem1'}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, minHeight: 17 }}
+                />
             )}
             {(visibleElementInput ?? false) && (
                 <TextInput

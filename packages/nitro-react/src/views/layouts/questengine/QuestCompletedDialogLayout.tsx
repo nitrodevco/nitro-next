@@ -55,33 +55,27 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
                 tint={tintTwinkleBitmap}
                 layout={{ position: 'absolute', left: 35, width: 70, top: 30, height: 70 }}
             />
-            <Region
+            <ThemeText
+                text={captionCongratsTxt ?? t('quests.completed.congrats')}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 283 }}
                 name="congrats_txt"
-                layout={{ position: 'absolute', left: 138, right: -7, top: 22, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCongratsTxt ?? t('quests.completed.congrats')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 283 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 138, right: -7, top: 22, height: 24 }}
+            />
+            <ThemeText
+                text={captionDescTxt ?? 'desc_txt jhg kjh gjkhg kjh gjkh gkjh gkjh gkjh gkjhg kjhg kjh'}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 282 }}
                 name="desc_txt"
-                layout={{ position: 'absolute', left: 139, right: -7, top: 48, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDescTxt ?? 'desc_txt jhg kjh gjkhg kjh gjkh gkjh gkjh gkjh gkjhg kjhg kjh'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 282 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 139, right: -7, top: 48, height: 31 }}
+            />
+            <ThemeText
+                text={captionRewardTxt ?? 'reward_txt'}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 291 }}
                 name="reward_txt"
-                layout={{ position: 'absolute', left: 138, right: -15, bottom: 63, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRewardTxt ?? 'reward_txt'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 291 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 138, right: -15, bottom: 63, height: 37 }}
+            />
             <ButtonThick
                 variant="3"
                 name="next_quest_button"
@@ -96,12 +90,11 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 19, width: 91, bottom: 11, height: 18 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCatalogLinkTxt ?? 'catalog_link_txt'}
                     name="catalog_link_txt"
-                    layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionCatalogLinkTxt ?? 'catalog_link_txt'}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
+                />
             </Region>
             <ButtonThick
                 variant="3"

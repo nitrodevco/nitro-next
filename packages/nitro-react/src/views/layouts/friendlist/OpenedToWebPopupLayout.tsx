@@ -29,15 +29,13 @@ export const OpenedToWebPopupLayout = ({ captionInfoText, cont, layout, srcOpene
                 >
                     {cont}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? t('friendlist.weblinkinfo')}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 100 }}
                     name="info_text"
-                    layout={{ position: 'absolute', left: 50, width: 100, top: 10, bottom: 5, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? t('friendlist.weblinkinfo')}
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 100 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 50, width: 100, top: 10, bottom: 5 }}
+                />
                 <ThemeImage
                     name="opened_to_web"
                     src={srcOpenedToWeb}

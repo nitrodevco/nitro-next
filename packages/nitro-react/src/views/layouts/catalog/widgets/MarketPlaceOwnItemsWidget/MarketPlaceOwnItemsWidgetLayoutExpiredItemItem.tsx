@@ -76,37 +76,28 @@ export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc
                 </Region>
             )}
             {(visibleItemName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemName ?? t('lorem.title')}
+                    textStyle="text-style-u-bold"
                     name="item_name"
-                    layout={{ position: 'absolute', left: 58, width: 74, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemName ?? t('lorem.title')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 58, width: 74, top: 5, height: 17 }}
+                />
             )}
             {(visibleItemDesc ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemDesc ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
                     name="item_desc"
-                    layout={{ position: 'absolute', left: 58, width: 61, top: 17, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemDesc ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 58, width: 61, top: 17, height: 15 }}
+                />
             )}
             {(visibleItemExpired ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemExpired ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
                     name="item_expired"
-                    layout={{ position: 'absolute', left: 58, width: 62, bottom: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemExpired ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 58, width: 62, bottom: 2, height: 15 }}
+                />
             )}
         </Border>
     );

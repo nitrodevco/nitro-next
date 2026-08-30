@@ -9,15 +9,13 @@ export interface ChatMsgReminderLayoutProps {
 export const ChatMsgReminderLayout = ({ captionContent, layout }: ChatMsgReminderLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 270, height: 24, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionContent ?? ''}
+                textOptions={{ wordWrap: true, wordWrapWidth: 270, align: 'center' }}
                 name="chat_msg_reminder"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionContent ?? ''}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 270, align: 'center' }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            />
         </Region>
     );
 };

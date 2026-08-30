@@ -34,26 +34,20 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
                 />
             )}
             {(visibleUserName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionUserName ?? 'user123'}
+                    textStyle="text-style-il-border"
                     name="user_name"
-                    layout={{ position: 'absolute', left: 61, width: 42, top: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionUserName ?? 'user123'}
-                        textStyle="text-style-il-border"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 61, width: 42, top: 11, height: 15 }}
+                />
             )}
             {(visibleRoomName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomName ?? t('help.emergency.main.step.two.room.name')}
+                    textOptions={{ fill: '#444444' }}
                     name="room_name"
-                    layout={{ position: 'absolute', left: 61, width: 218, top: 24, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRoomName ?? t('help.emergency.main.step.two.room.name')}
-                        textOptions={{ fill: '#444444' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 61, width: 218, top: 24, height: 16 }}
+                />
             )}
             {(visibleUserAvatar ?? true) && (
                 <WidgetSlot

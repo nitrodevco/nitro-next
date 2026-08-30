@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `badgeName` of InventoryLayout - pass real rows through its `items…` slot. */
 export interface InventoryLayoutBadgeNameItemProps {
@@ -11,14 +11,11 @@ export const InventoryLayoutBadgeNameItem = ({ captionBadgeName, layout }: Inven
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionBadgeName ?? t('inventory.badges.defaultdescription')}
+            textStyle="text-style-u-headline-small"
             name="badgeName"
-            layout={{ width: 211, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionBadgeName ?? t('inventory.badges.defaultdescription')}
-                textStyle="text-style-u-headline-small"
-            />
-        </Region>
+            layout={{ width: 211, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

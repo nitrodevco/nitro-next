@@ -35,16 +35,13 @@ export const VipBuyItemLayout = ({ captionItemHeader, itemPrice, layout, onItemB
                     tintColor="#969696"
                     layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 25, minWidth: 310, maxWidth: 310, justifyContent: 'center' }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionItemHeader ?? 'catalog.club.item.header'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
                         name="item_header"
-                        layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 187, top: 2, bottom: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionItemHeader ?? 'catalog.club.item.header'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 187, top: 2, bottom: 4 }}
+                    />
                     <ThemeImage
                         name="vip_icon"
                         src={srcVipIcon ?? layoutImage('vip_icon_medium.gif')}

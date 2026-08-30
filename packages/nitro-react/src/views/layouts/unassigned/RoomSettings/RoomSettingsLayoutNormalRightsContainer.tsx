@@ -32,42 +32,35 @@ export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, cap
                 tintColor="#e9e9e1"
                 layout={{ position: 'absolute', left: 0, width: 312, top: 1, height: 42 }}
             >
-                <Region
+                <ThemeText
+                    text={captionSearchTxt ?? t('navigator.flatctrls.filter')}
+                    textStyle="text-style-u-bold"
                     name="search_txt"
-                    layout={{ position: 'absolute', left: 6, width: 138, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSearchTxt ?? t('navigator.flatctrls.filter')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 6, width: 138, top: 12, height: 17 }}
+                />
                 <TextInput
                     value={filterUsersInputValue}
                     onChange={setFilterUsersInputValue}
                     layout={{ position: 'absolute', left: 97, right: 9, top: 8, height: 23, overflow: 'hidden' }}
                 />
             </Border>
-            <Region
+            <ThemeText
+                text={captionUsersWithRightsTxt ?? t('navigator.flatctrls.userswithrights')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
                 name="users_with_rights_txt"
-                layout={{ position: 'absolute', marginLeft: -121, marginRight: 121, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
+                verticalAlign="top"
+                layout={{ position: 'absolute', marginLeft: -121, marginRight: 121, width: 150, top: 44, height: 34 }}
+            />
+            {(visibleFriendsTxt ?? false) && (
                 <ThemeText
-                    text={captionUsersWithRightsTxt ?? t('navigator.flatctrls.userswithrights')}
+                    text={captionFriendsTxt ?? t('navigator.flatctrls.friends')}
                     textStyle="text-style-u-regular"
                     textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
-                />
-            </Region>
-            {(visibleFriendsTxt ?? false) && (
-                <Region
                     name="friends_txt"
-                    layout={{ position: 'absolute', marginLeft: 54, marginRight: -54, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFriendsTxt ?? t('navigator.flatctrls.friends')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', marginLeft: 54, marginRight: -54, width: 150, top: 44, height: 34 }}
+                />
             )}
             {(visibleUsersWithRightsCont ?? false) && (
                 <Border

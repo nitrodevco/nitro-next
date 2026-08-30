@@ -24,16 +24,14 @@ export const PollAnswerRadiobuttonInputLayoutPollAnswerEntityItem = ({ captionPo
                 />
             )}
             {(visiblePollAnswerEntityText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionPollAnswerEntityText ?? 'yksi%20kaksi%20kolme%20nelj%E4%20viisi%20kuu%20usi%20seit%20sem%E4n%20kahde%20ksan%20yhde%20ks%E4n%20yksi%20toi'}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 341 }}
                     name="poll_answer_entity_text"
-                    layout={{ position: 'absolute', left: 18, width: 341, top: 2, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPollAnswerEntityText ?? 'yksi%20kaksi%20kolme%20nelj%E4%20viisi%20kuu%20usi%20seit%20sem%E4n%20kahde%20ksan%20yhde%20ks%E4n%20yksi%20toi'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 341 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 18, width: 341, top: 2, height: 30 }}
+                />
             )}
         </Region>
     );

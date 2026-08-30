@@ -24,19 +24,18 @@ export const SafetyBookletLayoutFinalPage = ({ layout, onBackButton, onQuizButto
                 name="final_page"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
             >
-                <Region layout={{ position: 'absolute', left: 10, width: 480, top: 48, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('safety.booklet.end.title')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 100, width: 300, top: 275, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('safety.booklet.end.content')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('safety.booklet.end.title')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ align: 'center' }}
+                    layout={{ position: 'absolute', left: 10, width: 480, top: 48, height: 19 }}
+                />
+                <ThemeText
+                    text={t('safety.booklet.end.content')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 100, width: 300, top: 275, height: 16 }}
+                />
                 <WidgetSlot
                     widgetType="separator"
                     layout={{ position: 'absolute', left: 10, width: 480, top: 320, height: 30 }}
@@ -64,12 +63,11 @@ export const SafetyBookletLayoutFinalPage = ({ layout, onBackButton, onQuizButto
                         >
                             {separatorWidget2}
                         </WidgetSlot>
-                        <Region layout={{ width: 120, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('habbo.way.back.button')}
-                                textStyle="text-style-il-button"
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('habbo.way.back.button')}
+                            textStyle="text-style-il-button"
+                            layout={{ width: 120, height: 15, flexShrink: 0 }}
+                        />
                         <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
                     </Region>
                 </ContainerButton>

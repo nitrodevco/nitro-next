@@ -50,26 +50,22 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionC
                 name="hover_container"
                 layout={{ position: 'absolute', left: 1, width: 115, top: 1, height: 104, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionHeaderTxt ?? 'Decoration'}
                     name="header_txt"
-                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 65, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionHeaderTxt ?? 'Decoration'}
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 65, top: 7, height: 17 }}
+                />
                 <ThemeImage
                     name="category_pic_bitmap"
                     src={srcCategoryPicBitmap}
                     layout={{ position: 'absolute', left: 12, width: 86, top: 27, height: 72 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionCompletionTxt ?? '1/10'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="completion_txt"
-                    layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 30, top: 70, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCompletionTxt ?? '1/10'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 30, top: 70, height: 14 }}
+                />
             </Region>
             <Region
                 name="category_region"
@@ -85,16 +81,13 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionC
                 tintColor="#de4537"
                 layout={{ position: 'absolute', right: 23, width: 18, top: 27, height: 20 }}
             >
-                <Region
+                <ThemeText
+                    text={captionUnseenCount ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
                     name="unseen_count"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionUnseenCount ?? '0'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                />
             </Border>
         </Region>
     );

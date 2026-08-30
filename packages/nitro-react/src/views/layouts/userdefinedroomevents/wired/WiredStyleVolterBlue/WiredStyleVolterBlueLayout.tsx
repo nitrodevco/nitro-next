@@ -97,40 +97,31 @@ export const WiredStyleVolterBlueLayout = ({ captionTextBoldView, captionTextHtm
                     </Region>
                 )}
                 {(visibleTextView ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextView ?? 'some text'}
+                        textStyle="text-style-regular"
+                        textOptions={{ fill: '#222222' }}
                         name="text_view"
-                        layout={{ position: 'absolute', left: 0, width: 56, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTextView ?? 'some text'}
-                            textStyle="text-style-regular"
-                            textOptions={{ fill: '#222222' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 56, top: 0, height: 13 }}
+                    />
                 )}
                 {(visibleTextBoldView ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextBoldView ?? 'some bold text'}
+                        textStyle="text-style-bold"
+                        textOptions={{ fill: '#222222' }}
                         name="text_bold_view"
-                        layout={{ position: 'absolute', left: 0, width: 92, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTextBoldView ?? 'some bold text'}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#222222' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 92, top: 0, height: 13 }}
+                    />
                 )}
                 {(visibleTextHtml ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionTextHtml ?? 'Use this by typing'}
+                        textStyle="text-style-regular"
+                        textOptions={{ fill: '#222222' }}
                         name="text_html"
-                        layout={{ position: 'absolute', left: 0, width: 96, top: 0, height: 13, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTextHtml ?? 'Use this by typing'}
-                            textStyle="text-style-regular"
-                            textOptions={{ fill: '#222222' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 96, top: 0, height: 13, overflow: 'hidden' }}
+                    />
                 )}
                 {(visibleInputTemplate ?? false) && (
                     <Region

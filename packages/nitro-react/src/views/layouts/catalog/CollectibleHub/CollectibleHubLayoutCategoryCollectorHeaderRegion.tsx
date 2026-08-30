@@ -30,15 +30,12 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ captionCateg
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCollectorCollectionsHeader ?? t('collectibles.info.title')}
+                    textStyle="text-style-u-regular"
                     name="collector_collections_header"
-                    layout={{ position: 'absolute', left: 0, width: 27, top: 0, bottom: 0, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCollectorCollectionsHeader ?? t('collectibles.info.title')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 27, top: 0, bottom: 0, minWidth: 2, maxWidth: 270 }}
+                />
             </Region>
             <Region
                 name="category_info_description_region"
@@ -47,26 +44,22 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ captionCateg
                 layout={{ position: 'absolute', left: 0, width: 480, top: 22, height: 50 }}
             >
                 {(visibleCollectorProfileDescription ?? false) && (
-                    <Region
-                        name="collector_profile_description"
-                        layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCollectorProfileDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                        />
-                    </Region>
-                )}
-                <Region
-                    name="info_desc"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
                     <ThemeText
-                        text={captionInfoDesc ?? t('collectibles.info.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
+                        text={captionCollectorProfileDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                        name="collector_profile_description"
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17 }}
                     />
-                </Region>
+                )}
+                <ThemeText
+                    text={captionInfoDesc ?? t('collectibles.info.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
+                    name="info_desc"
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 480 }}
+                />
             </Region>
             <Region
                 name="category_info_transfer_region"
@@ -75,26 +68,22 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ captionCateg
                 layout={{ position: 'absolute', left: 0, width: 480, top: 75, height: 60 }}
             >
                 {(visibleCategoryInfoTransferRegionCollectorProfileDescription ?? false) && (
-                    <Region
-                        name="collector_profile_description"
-                        layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCategoryInfoTransferRegionCollectorProfileDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                        />
-                    </Region>
-                )}
-                <Region
-                    name="transfer_desc"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
                     <ThemeText
-                        text={captionTransferDesc ?? t('collectibles.info.trading')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
+                        text={captionCategoryInfoTransferRegionCollectorProfileDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                        name="collector_profile_description"
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17 }}
                     />
-                </Region>
+                )}
+                <ThemeText
+                    text={captionTransferDesc ?? t('collectibles.info.trading')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
+                    name="transfer_desc"
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 480 }}
+                />
             </Region>
         </Region>
     );

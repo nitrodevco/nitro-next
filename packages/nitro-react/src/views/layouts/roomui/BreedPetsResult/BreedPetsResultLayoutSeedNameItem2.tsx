@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `seed_name` of BreedPetsResultLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsResultLayoutSeedNameItem2Props {
@@ -11,14 +11,11 @@ export const BreedPetsResultLayoutSeedNameItem2 = ({ captionSeedName, layout }: 
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionSeedName ?? t('breedpetsresult.widget.seed2.name')}
+            textOptions={{ align: 'center' }}
             name="seed_name"
-            layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
-        >
-            <ThemeText
-                text={captionSeedName ?? t('breedpetsresult.widget.seed2.name')}
-                textOptions={{ align: 'center' }}
-            />
-        </Region>
+            layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

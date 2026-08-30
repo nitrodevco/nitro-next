@@ -9,16 +9,13 @@ export interface ButtonShinyLarge5LayoutProps {
 export const ButtonShinyLarge5Layout = ({ captionBTNTEXT, layout }: ButtonShinyLarge5LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 28, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionBTNTEXT ?? ''}
+                textStyle="text-style-button-shiny-bold"
+                textOptions={{ fill: '#ffffff' }}
                 name="_BTN_TEXT"
-                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBTNTEXT ?? ''}
-                    textStyle="text-style-button-shiny-bold"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 28 }}
+            />
         </Region>
     );
 };

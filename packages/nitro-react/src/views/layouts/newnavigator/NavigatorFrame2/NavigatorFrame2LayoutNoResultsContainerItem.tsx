@@ -14,12 +14,11 @@ export const NavigatorFrame2LayoutNoResultsContainerItem = ({ layout }: Navigato
             name="no_results_container"
             layout={{ width: 388, height: 53, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', right: 51, width: 286, alignSelf: 'center', marginTop: -16, marginBottom: 16, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('navigator.search.returned.no.results')}
-                    textStyle="text-style-u-headline-medium"
-                />
-            </Region>
+            <ThemeText
+                text={t('navigator.search.returned.no.results')}
+                textStyle="text-style-u-headline-medium"
+                layout={{ position: 'absolute', right: 51, width: 286, alignSelf: 'center', marginTop: -16, marginBottom: 16, height: 21 }}
+            />
         </Region>
     );
 };

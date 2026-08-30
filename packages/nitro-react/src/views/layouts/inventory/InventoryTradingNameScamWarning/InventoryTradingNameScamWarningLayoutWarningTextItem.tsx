@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `warning_text` of InventoryTradingNameScamWarningLayout - pass real rows through its `items…` slot. */
 export interface InventoryTradingNameScamWarningLayoutWarningTextItemProps {
@@ -11,14 +11,12 @@ export const InventoryTradingNameScamWarningLayoutWarningTextItem = ({ captionWa
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionWarningText ?? t('inventory.trading.namescam.warning')}
+            textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
             name="warning_text"
-            layout={{ width: 330, height: 44, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionWarningText ?? t('inventory.trading.namescam.warning')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 330, height: 44, flexShrink: 0, ...layout }}
+        />
     );
 };

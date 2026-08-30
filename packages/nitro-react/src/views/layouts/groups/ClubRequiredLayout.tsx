@@ -34,32 +34,27 @@ export const ClubRequiredLayout = ({ captionCancelLink, captionInfoTxt, captionM
                 variant="18"
                 layout={{ position: 'absolute', left: 23, width: 92, top: 19, height: 44 }}
             />
-            <Region
+            <ThemeText
+                text={captionInfoTxt ?? 'Dippa dappa duppa'}
+                textStyle="text-style-u-regular"
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 265 }}
                 name="info_txt"
-                layout={{ position: 'absolute', left: 131, width: 265, top: 28, height: 62, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionInfoTxt ?? 'Dippa dappa duppa'}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 265 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 131, width: 265, top: 28, height: 62 }}
+            />
             <Region
                 name="more_info_link_region"
                 onPointerTap={onMoreInfoLinkRegion}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 131, width: 282, top: 83, height: 18 }}
             >
-                <Region
+                <ThemeText
+                    text={captionMoreInfoLink ?? t('group.hcrequired.moreinfo')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#0078ff' }}
                     name="more_info_link"
-                    layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMoreInfoLink ?? t('group.hcrequired.moreinfo')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#0078ff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 17 }}
+                />
             </Region>
             <Region
                 name="cancel_link_region"
@@ -67,12 +62,11 @@ export const ClubRequiredLayout = ({ captionCancelLink, captionInfoTxt, captionM
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 35, width: 152, top: 145, height: 18 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCancelLink ?? t('generic.cancel')}
                     name="cancel_link"
-                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionCancelLink ?? t('generic.cancel')}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17 }}
+                />
             </Region>
             <ButtonThick
                 variant="3"

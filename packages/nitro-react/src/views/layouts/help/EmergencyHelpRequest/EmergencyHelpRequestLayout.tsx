@@ -43,19 +43,18 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, helpMessage,
             layout={{ width: 593, height: 491, minWidth: 593, minHeight: 491, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 9, minWidth: 280, top: 8, minHeight: 563, flexDirection: 'column', gap: 8 }}>
-                <Region layout={{ width: 236, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.main.step.one.title')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ fill: '#555555' }}
-                    />
-                </Region>
-                <Region layout={{ width: 280, height: 16, flexShrink: 0, minWidth: 280, maxWidth: 280, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.main.step.one.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.emergency.main.step.one.title')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#555555' }}
+                    layout={{ width: 236, height: 19, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('help.emergency.main.step.one.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
+                    verticalAlign="top"
+                    layout={{ width: 280, height: 16, flexShrink: 0, minWidth: 280, maxWidth: 280 }}
+                />
                 <WidgetSlot
                     widgetType="illumina_input"
                     name="help_message"
@@ -100,12 +99,11 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, helpMessage,
                 tintColor="#ca0c07"
                 layout={{ position: 'absolute', left: 9, width: 573, top: 387, height: 58 }}
             >
-                <Region layout={{ position: 'absolute', left: 17, width: 397, top: 13, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('help.emergency.main.submit.description')}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.emergency.main.submit.description')}
+                    textStyle="text-style-il-regular-white"
+                    layout={{ position: 'absolute', left: 17, width: 397, top: 13, height: 16 }}
+                />
                 {/* `link` is hidden and has no name to show it by */}
                 <Button
                     variant="100"
@@ -122,13 +120,13 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, helpMessage,
                 tintColor="#ca0c07"
                 layout={{ position: 'absolute', left: 9, width: 280, top: 336, height: 108, justifyContent: 'center' }}
             >
-                <Region layout={{ position: 'absolute', left: 10, width: 250, top: 10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('guide.help.request.emergency.help.title')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 250, align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.help.request.emergency.help.title')}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 250, align: 'center' }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 250, top: 10, height: 17 }}
+                />
                 {(visibleUrgentHelpLink ?? false) && (
                     <Region
                         name="urgent_help_link"

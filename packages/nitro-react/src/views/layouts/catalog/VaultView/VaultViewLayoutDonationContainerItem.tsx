@@ -44,15 +44,12 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
                         />
                     )}
                     {(visibleDonationDucketValue ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionDonationDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="donationDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDonationDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
                         />
                     )}
                     {(visibleDonationCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionDonationCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="donationCreditValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDonationCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
                         />
                     )}
                     {(visibleDonationLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionDonationLabel ?? t('earnings.donations.label')}
+                            textStyle="text-style-u-bold"
                             name="donation_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDonationLabel ?? t('earnings.donations.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

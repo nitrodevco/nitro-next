@@ -35,15 +35,13 @@ export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, capti
             </Region>
             <InventoryTradingWiredLayoutItemGridBorder0 {...itemGridBorder0} />
             {(visibleInfoText0 ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionInfoText0 ?? t('inventory.trading.warning.own_account_disabled')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
                     name="info_text_0"
-                    layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText0 ?? t('inventory.trading.warning.own_account_disabled')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132 }}
+                />
             )}
             <Region
                 name="content_text_1_a"

@@ -53,15 +53,13 @@ export const ProgressBarLayoutProgressBarCont = ({ barABkg, captionProgressTxt, 
                 src={srcBarAR ?? layoutImage('achievement_ach_progressbar5.png')}
                 layout={{ position: 'absolute', left: 5, width: 1, top: 3, height: 17 }}
             />
-            <Region
+            <ThemeText
+                text={captionProgressTxt ?? 'Progress text'}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 82 }}
                 name="progress_txt"
-                layout={{ position: 'absolute', left: 7, right: 211, top: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionProgressTxt ?? 'Progress text'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 82 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 7, right: 211, top: 3, height: 17 }}
+            />
         </Region>
     );
 };

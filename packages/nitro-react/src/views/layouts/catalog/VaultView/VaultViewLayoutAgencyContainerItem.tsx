@@ -44,15 +44,12 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
                         />
                     )}
                     {(visibleAgencyDucketValue ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionAgencyDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="agencyDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAgencyDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? true) && (
                         <Icon
@@ -62,15 +59,12 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
                         />
                     )}
                     {(visibleAgencyCreditValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionAgencyCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="agencyCreditValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAgencyCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -88,15 +82,12 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
                         />
                     )}
                     {(visibleAgencyLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionAgencyLabel ?? t('earnings.agency.label')}
+                            textStyle="text-style-u-bold"
                             name="agency_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAgencyLabel ?? t('earnings.agency.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

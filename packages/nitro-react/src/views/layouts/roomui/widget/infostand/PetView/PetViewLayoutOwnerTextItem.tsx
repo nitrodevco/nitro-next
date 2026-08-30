@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `owner_text` of PetViewLayout - pass real rows through its `items…` slot. */
 export interface PetViewLayoutOwnerTextItemProps {
@@ -11,14 +11,11 @@ export const PetViewLayoutOwnerTextItem = ({ captionOwnerText, layout }: PetView
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionOwnerText ?? t('infostand.text.petowner')}
+            textOptions={{ fill: '#ffffff' }}
             name="owner_text"
-            layout={{ width: 128, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionOwnerText ?? t('infostand.text.petowner')}
-                textOptions={{ fill: '#ffffff' }}
-            />
-        </Region>
+            layout={{ width: 128, height: 13, flexShrink: 0, ...layout }}
+        />
     );
 };

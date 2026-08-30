@@ -28,15 +28,13 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
                     layout={{ width: 1, height: 1, flexShrink: 0 }}
                 />
                 <Region layout={{ flexShrink: 0, flexDirection: 'column' }}>
-                    <Region
+                    <ThemeText
+                        text={captionMessage ?? ''}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 293 }}
                         name="message"
-                        layout={{ width: 293, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionMessage ?? ''}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 293 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ width: 293, height: 12, flexShrink: 0 }}
+                    />
                     {(visibleLink ?? false) && (
                         <Region
                             name="link"

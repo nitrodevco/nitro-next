@@ -15,16 +15,13 @@ export const Header3Layout = ({ captionHeaderTitleText, layout, onHeaderButtonCl
                 name="header_container"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionHeaderTitleText ?? ''}
+                    textStyle="text-style-u-frame-title"
+                    textOptions={{ fill: '#ffffff' }}
                     name="header_title_text"
-                    layout={{ position: 'absolute', marginLeft: -22, marginRight: 22, width: 12, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHeaderTitleText ?? ''}
-                        textStyle="text-style-u-frame-title"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -22, marginRight: 22, width: 12, top: 2, height: 15 }}
+                />
                 <Region layout={{ position: 'absolute', right: -1, width: 45, top: 2, height: 20, flexDirection: 'row', gap: 5 }}>
                     <CloseButton
                         variant="4"

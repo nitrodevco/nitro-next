@@ -38,21 +38,17 @@ export const GrsGuestRoomDetailsPhaseOneLayoutDetails = ({ captionRoomname, capt
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionRoomNumber ?? '10.'}
+                textOptions={{ align: 'right' }}
                 name="room_number"
-                layout={{ position: 'absolute', left: 3, width: 21, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
-                <ThemeText
-                    text={captionRoomNumber ?? '10.'}
-                    textOptions={{ align: 'right' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 3, width: 21, top: 2, height: 13 }}
+            />
+            <ThemeText
+                text={captionRoomname ?? 'PH Room Name: Neque porro quisquam est que'}
                 name="roomname"
-                layout={{ position: 'absolute', left: 6, width: 285, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionRoomname ?? 'PH Room Name: Neque porro quisquam est que'}
-            </Region>
+                layout={{ position: 'absolute', left: 6, width: 285, top: 2, height: 13 }}
+            />
             <ThemeImage
                 name="group_base_icon"
                 src={srcGroupBaseIcon}

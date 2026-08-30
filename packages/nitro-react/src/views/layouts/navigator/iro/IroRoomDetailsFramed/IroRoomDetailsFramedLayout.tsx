@@ -49,22 +49,19 @@ export const IroRoomDetailsFramedLayout = ({ buttonsCont, captionEmbedInfoTxt, c
                         tint={tintIconWeblink}
                         layout={{ position: 'absolute', left: 11, width: 17, top: 5, height: 15 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 29, width: 143, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('navigator.embed.caption')}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
-                    <Region
+                    <ThemeText
+                        text={t('navigator.embed.caption')}
+                        textStyle="text-style-u-regular"
+                        layout={{ position: 'absolute', left: 29, width: 143, top: 3, height: 17 }}
+                    />
+                    <ThemeText
+                        text={captionEmbedInfoTxt ?? t('navigator.embed.info')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 216 }}
                         name="embed_info_txt"
-                        layout={{ position: 'absolute', left: 9, width: 216, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionEmbedInfoTxt ?? t('navigator.embed.info')}
-                            textStyle="text-style-u-small"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 216 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 9, width: 216, top: 20, height: 38 }}
+                    />
                     <TextInput
                         value={embedSrcTxtValue}
                         onChange={setEmbedSrcTxtValue}
@@ -87,26 +84,22 @@ export const IroRoomDetailsFramedLayout = ({ buttonsCont, captionEmbedInfoTxt, c
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 100 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPublicSpaceName ?? 'Public space name placeholder Diipa Daapa Zaapa'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
                         name="public_space_name"
-                        layout={{ position: 'absolute', left: 5, width: 220, top: 3, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPublicSpaceName ?? 'Public space name placeholder Diipa Daapa Zaapa'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 5, width: 220, top: 3, height: 37 }}
+                    />
+                    <ThemeText
+                        text={captionPublicSpaceDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
                         name="public_space_desc"
-                        layout={{ position: 'absolute', left: 5, width: 220, top: 31, height: 53, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPublicSpaceDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 5, width: 220, top: 31, height: 53 }}
+                    />
                 </Region>
             )}
             <IroRoomDetailsFramedLayoutRoomDetails {...roomDetails} />

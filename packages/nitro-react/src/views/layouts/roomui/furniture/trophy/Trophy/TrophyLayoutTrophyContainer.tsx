@@ -30,30 +30,25 @@ export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, capt
                 tint={tintTrophyBg}
                 layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 173 }}
             />
-            <Region
+            <ThemeText
+                text={captionGreeting ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet justo sagittis orci dapibus semper sagittis id neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper  semper  semper  semper  semper  semper  semper  sempeaaaaaa'}
+                textOptions={{ wordWrap: true, wordWrapWidth: 297 }}
                 name="greeting"
-                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 297, alignSelf: 'center', marginTop: -3.5, marginBottom: 3.5, height: 116, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionGreeting ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet justo sagittis orci dapibus semper sagittis id neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper  semper  semper  semper  semper  semper  semper  sempeaaaaaa'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 297 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 297, alignSelf: 'center', marginTop: -3.5, marginBottom: 3.5, height: 116 }}
+            />
+            <ThemeText
+                text={captionDate ?? 'da.te.'}
+                textOptions={{ wordWrap: true, wordWrapWidth: 83 }}
                 name="date"
-                layout={{ position: 'absolute', left: 21, width: 83, top: 142, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDate ?? 'da.te.'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 83 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 21, width: 83, top: 142, height: 18 }}
+            />
+            <ThemeText
+                text={captionName ?? 'kateislonger'}
                 name="name"
-                layout={{ position: 'absolute', right: 20, width: 74, top: 142, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionName ?? 'kateislonger'}
-            </Region>
+                layout={{ position: 'absolute', right: 20, width: 74, top: 142, height: 17 }}
+            />
             <Region
                 name="close"
                 onPointerTap={onClose}
@@ -67,15 +62,12 @@ export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, capt
                 backgroundColor="#ff0000"
                 layout={{ position: 'absolute', width: 120, top: 4, height: 18, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionTitle ?? 'Trophy'}
+                    textOptions={{ align: 'center' }}
                     name="title"
-                    layout={{ position: 'absolute', width: 120, top: 1, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? 'Trophy'}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', width: 120, top: 1, bottom: 0 }}
+                />
             </Region>
         </Region>
     );

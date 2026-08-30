@@ -48,47 +48,37 @@ export const HabboWayLayoutPageContainer = ({ captionCorrectDescription, caption
                     src={srcCorrectTitleIcon ?? layoutImage('help_habboway_correct.png')}
                     layout={{ position: 'absolute', left: 30, width: 20, top: 255, height: 30 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionCorrectTitle ?? 'Playing'}
+                    textStyle="text-style-il-heading-1"
                     name="correct_title"
-                    layout={{ position: 'absolute', left: 50, width: 53, top: 265, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCorrectTitle ?? 'Playing'}
-                        textStyle="text-style-il-heading-1"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 50, width: 53, top: 265, height: 19 }}
+                />
+                <ThemeText
+                    text={captionCorrectDescription ?? 'In Habbo you can play many games, be who you want to be and have fun...'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                     name="correct_description"
-                    layout={{ position: 'absolute', left: 30, width: 210, top: 290, height: 70, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCorrectDescription ?? 'In Habbo you can play many games, be who you want to be and have fun...'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 30, width: 210, top: 290, height: 70 }}
+                />
                 <ThemeImage
                     name="wrong_title_icon"
                     src={srcWrongTitleIcon ?? layoutImage('help_habboway_wrong.png')}
                     layout={{ position: 'absolute', left: 270, width: 20, top: 255, height: 30 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionWrongTitle ?? 'Bullying'}
+                    textStyle="text-style-il-heading-1"
                     name="wrong_title"
-                    layout={{ position: 'absolute', left: 290, width: 57, top: 265, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionWrongTitle ?? 'Bullying'}
-                        textStyle="text-style-il-heading-1"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 290, width: 57, top: 265, height: 19 }}
+                />
+                <ThemeText
+                    text={captionWrongDescription ?? 'as%20long%20as%20you%20don%u2019t%20hurt%20anyone%u2019s%20beliefs.%20Respect%20each%20and%20every%20other%20user.'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                     name="wrong_description"
-                    layout={{ position: 'absolute', left: 270, width: 210, top: 290, height: 70, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionWrongDescription ?? 'as%20long%20as%20you%20don%u2019t%20hurt%20anyone%u2019s%20beliefs.%20Respect%20each%20and%20every%20other%20user.'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 270, width: 210, top: 290, height: 70 }}
+                />
                 <ContainerButton
                     variant="101"
                     name="previous_button"
@@ -109,12 +99,11 @@ export const HabboWayLayoutPageContainer = ({ captionCorrectDescription, caption
                         >
                             {separatorWidget2}
                         </WidgetSlot>
-                        <Region layout={{ width: 140, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('habbo.way.previous.button')}
-                                textStyle="text-style-il-button"
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('habbo.way.previous.button')}
+                            textStyle="text-style-il-button"
+                            layout={{ width: 140, height: 15, flexShrink: 0 }}
+                        />
                         <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
                     </Region>
                 </ContainerButton>
@@ -127,12 +116,11 @@ export const HabboWayLayoutPageContainer = ({ captionCorrectDescription, caption
                 >
                     <Region layout={{ position: 'absolute', left: 0, right: 0, top: 15, flexDirection: 'row' }}>
                         <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
-                        <Region layout={{ width: 121, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('habbo.way.next.button')}
-                                textStyle="text-style-il-button"
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('habbo.way.next.button')}
+                            textStyle="text-style-il-button"
+                            layout={{ width: 121, height: 15, flexShrink: 0 }}
+                        />
                         <WidgetSlot
                             widgetType="separator"
                             options={{ 'separator:vertical': 'true' }}

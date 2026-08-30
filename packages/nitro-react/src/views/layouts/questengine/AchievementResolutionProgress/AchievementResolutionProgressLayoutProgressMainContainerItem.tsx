@@ -80,16 +80,13 @@ export const AchievementResolutionProgressLayoutProgressMainContainerItem = ({ c
                 </Region>
             )}
             {(visibleProgressText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionProgressText ?? t('resolution.progress.progress')}
+                    textStyle="text-style-il-heading-2"
+                    textOptions={{ align: 'center' }}
                     name="progress_text"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionProgressText ?? t('resolution.progress.progress')}
-                        textStyle="text-style-il-heading-2"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 17 }}
+                />
             )}
         </Region>
     );

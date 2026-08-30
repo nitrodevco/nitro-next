@@ -42,46 +42,38 @@ export const ShareRoomLayout = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdl
                 name="embed_info"
                 layout={{ position: 'absolute', right: 10, width: 285, top: 10, height: 240 }}
             >
-                <Region
+                <ThemeText
+                    text={captionEmbedInfoHdln ?? t('navigator.embed.headline')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 281 }}
                     name="embed_info_hdln"
-                    layout={{ position: 'absolute', left: 0, right: 4, top: 0, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEmbedInfoHdln ?? t('navigator.embed.headline')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 281 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 4, top: 0, height: 26 }}
+                />
+                <ThemeText
+                    text={captionEmbedInfoTxt ?? t('navigator.embed.info')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
                     name="embed_info_txt"
-                    layout={{ position: 'absolute', left: 0, right: -1, top: 28, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEmbedInfoTxt ?? t('navigator.embed.info')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: -1, top: 28, height: 75 }}
+                />
+                <ThemeText
+                    text={captionEmbedSrcTxt ?? `${t('url.prefix')}/room/%roomId%`}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
                     name="embed_src_txt"
-                    layout={{ position: 'absolute', left: 0, right: -1, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEmbedSrcTxt ?? `${t('url.prefix')}/room/%roomId%`}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: -1, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 75 }}
+                />
+                <ThemeText
+                    text={captionEmbedInfoDirectTxt ?? t('navigator.embed.direct.info')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
                     name="embed_info_direct_txt"
-                    layout={{ position: 'absolute', left: 0, right: -1, top: 107, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEmbedInfoDirectTxt ?? t('navigator.embed.direct.info')}
-                        textStyle="text-style-u-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: -1, top: 107, height: 75 }}
+                />
                 <TextInput
                     value={embedSrcDirectTxtValue}
                     onChange={setEmbedSrcDirectTxtValue}

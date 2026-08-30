@@ -32,16 +32,14 @@ export const FriendRequestsTabLayoutHeaderItem = ({ captionLabel, layout, onHead
                 />
             )}
             {(visibleLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionLabel ?? t('friendbar.requests.title')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 77 }}
                     name="label"
-                    layout={{ position: 'absolute', left: 29, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionLabel ?? t('friendbar.requests.title')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 77 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 29, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30 }}
+                />
             )}
         </Region>
     );

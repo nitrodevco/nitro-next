@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Frame, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Button, Frame, ThemeText } from '#base/theme';
 
 /** Generated from `953_boygirl_xml` (layout "boygirl", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BoygirlLayoutProps {
@@ -41,12 +41,11 @@ export const BoygirlLayout = ({ layout, onBoy, onClose, onGirl }: BoygirlLayoutP
                 >
                     {t('widget.furni.clothingchange.gender.female')}
                 </Button>
-                <Region layout={{ position: 'absolute', left: 20, width: 254, top: 16, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('widget.furni.clothingchange.gender.info')}
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('widget.furni.clothingchange.gender.info')}
+                    textOptions={{ fill: '#000000' }}
+                    layout={{ position: 'absolute', left: 20, width: 254, top: 16, height: 42 }}
+                />
             </Border>
         </Frame>
     );

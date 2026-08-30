@@ -23,12 +23,11 @@ export const TotalPriceWidget = ({ layout, totalpriceContainer }: TotalPriceWidg
             name="totalPriceWidget"
             layout={{ position: 'absolute', ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 20, width: 158, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('catalog.bundlewidget.price')}
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('catalog.bundlewidget.price')}
+                textOptions={{ fill: '#666666' }}
+                layout={{ position: 'absolute', left: 20, width: 158, top: 3, height: 17 }}
+            />
             <TotalPriceWidgetTotalpriceContainer {...totalpriceContainer} />
         </Region>
     );

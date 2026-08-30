@@ -25,15 +25,12 @@ export const IlluminaInputLayout = ({ captionEmptyMessage, layout, onSubmit }: I
                     onPointerTap={onSubmit}
                     layout={{ position: 'absolute', right: -7, width: 86, bottom: -7, height: 42, maxHeight: 42 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionEmptyMessage ?? ''}
+                    textOptions={{ fill: '#888888' }}
                     name="empty_message"
-                    layout={{ position: 'absolute', left: 6, width: 66, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionEmptyMessage ?? ''}
-                        textOptions={{ fill: '#888888' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 6, width: 66, top: 5, height: 16 }}
+                />
                 <TextInput
                     value={inputValue}
                     onChange={setInputValue}

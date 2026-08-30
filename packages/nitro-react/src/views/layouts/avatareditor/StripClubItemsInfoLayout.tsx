@@ -27,15 +27,13 @@ export const StripClubItemsInfoLayout = ({ captionStripDescription, layout, onCl
                 name="_border"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionStripDescription ?? t('avatareditor.invalidclubitems.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                     name="_strip_description"
-                    layout={{ position: 'absolute', left: 27, width: 210, top: 10, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStripDescription ?? t('avatareditor.invalidclubitems.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 27, width: 210, top: 10 }}
+                />
                 <ButtonThick
                     variant="3"
                     name="strip_button_club_info"

@@ -31,16 +31,13 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                 tintColor="#79756e"
                 layout={{ position: 'absolute', left: 1, width: 257, top: 1, height: 269, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionSettingsTitle ?? t('toolbar.chat.settings.title')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="settings_title"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 144, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionSettingsTitle ?? t('toolbar.chat.settings.title')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 144, top: 5, height: 17 }}
+                />
                 <Region
                     name="line"
                     backgroundColor="#2f2f2f"
@@ -48,16 +45,13 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                 >
                     {line}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionChatSettingsInfo ?? t('toolbar.chat.settings.info')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff' }}
                     name="chat_settings_info"
-                    layout={{ position: 'absolute', left: 10, right: 10, top: 33, height: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionChatSettingsInfo ?? t('toolbar.chat.settings.info')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 33, height: 32 }}
+                />
                 <Region
                     name="chat_settings_list"
                     layout={{ position: 'absolute', left: 10, right: 10, top: 70, height: 143, flexDirection: 'column', gap: 4 }}

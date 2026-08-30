@@ -1,4 +1,4 @@
-import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `reward_locked` of TalentTrackLayout - pass real rows through its `items…` slot. */
@@ -29,28 +29,23 @@ export const TalentTrackLayoutRewardLockedItem = ({ captionDescription, captionT
                 />
             )}
             {(visibleTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTitle ?? 'Reward name'}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ fill: '#ffffff' }}
                     name="title"
-                    layout={{ position: 'absolute', left: 60, width: 68, top: 10, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? 'Reward name'}
-                        textStyle="text-style-il-heading-3"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 60, width: 68, top: 10, height: 15 }}
+                />
             )}
             {(visibleDescription ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionDescription ?? 'Reward description'}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 135 }}
                     name="description"
-                    layout={{ position: 'absolute', left: 60, width: 135, top: 25, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescription ?? 'Reward description'}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 135 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 60, width: 135, top: 25, height: 16 }}
+                />
             )}
         </Border>
     );

@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `0` of EffectSelectorLayout - pass real rows through its `items…` slot. */
 export interface EffectSelectorLayout_0ItemProps {
@@ -8,14 +8,11 @@ export interface EffectSelectorLayout_0ItemProps {
 
 export const EffectSelectorLayout_0Item = ({ caption_0, layout }: EffectSelectorLayout_0ItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={caption_0 ?? 'None'}
+            textStyle="text-style-u-regular"
             name="0"
-            layout={{ width: 256, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={caption_0 ?? 'None'}
-                textStyle="text-style-u-regular"
-            />
-        </Region>
+            layout={{ width: 256, height: 18, flexShrink: 0, ...layout }}
+        />
     );
 };

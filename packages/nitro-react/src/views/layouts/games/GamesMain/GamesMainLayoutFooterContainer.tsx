@@ -37,15 +37,13 @@ export const GamesMainLayoutFooterContainer = ({ captionGamesLobbyGetVip, captio
                     tint={tintHcIcon}
                     layout={{ position: 'absolute', left: 0, width: 24, top: 6, height: 24 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionGamesLobbyGetVip ?? t('snowwar.get_more_games')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 158 }}
                     name="games.lobby.get.vip"
-                    layout={{ position: 'absolute', left: 31, width: 158, top: 2, height: 35, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionGamesLobbyGetVip ?? t('snowwar.get_more_games')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 158 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 31, width: 158, top: 2, height: 35, maxWidth: 200 }}
+                />
             </Region>
             <ContainerButton
                 variant="3"

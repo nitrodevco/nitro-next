@@ -143,15 +143,12 @@ export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviou
                         tintColor="#ee2924"
                         layout={{ position: 'absolute', right: 756, width: 17, top: 77, height: 18 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionPreviousUnclaimedCount ?? '2'}
+                            textStyle="text-style-il-regular-white"
                             name="previous_unclaimed_count"
-                            layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionPreviousUnclaimedCount ?? '2'}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 3, top: 0, height: 16 }}
+                        />
                     </Border>
                 )}
                 {(visibleNextUnclaimedIndicator ?? false) && (
@@ -161,15 +158,12 @@ export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviou
                         tintColor="#ee2924"
                         layout={{ position: 'absolute', right: 3, width: 17, top: 77, height: 18 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionNextUnclaimedCount ?? '2'}
+                            textStyle="text-style-il-regular-white"
                             name="next_unclaimed_count"
-                            layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNextUnclaimedCount ?? '2'}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 3, top: 0, height: 16 }}
+                        />
                     </Border>
                 )}
             </Border>

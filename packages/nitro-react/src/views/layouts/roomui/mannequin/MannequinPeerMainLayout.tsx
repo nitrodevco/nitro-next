@@ -31,25 +31,20 @@ export const MannequinPeerMainLayout = ({ captionDescription, captionOutfitNameS
                     tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionOutfitNameShow ?? ''}
+                    textStyle="text-style-u-italic"
                     name="outfit_name_show"
-                    layout={{ position: 'absolute', left: 126, width: 244, top: 30, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOutfitNameShow ?? ''}
-                        textStyle="text-style-u-italic"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 126, width: 244, top: 30, height: 25 }}
+                />
+                <ThemeText
+                    text={captionDescription ?? t('mannequin.widget.weartext')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 242 }}
                     name="description"
-                    layout={{ position: 'absolute', left: 126, width: 242, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescription ?? t('mannequin.widget.weartext')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 242 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 126, width: 242, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 61 }}
+                />
                 <Icon
                     variant="0"
                     name="club_icon"

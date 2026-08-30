@@ -9,16 +9,13 @@ export interface IlluminaPurpleButtonPlainLayoutProps {
 export const IlluminaPurpleButtonPlainLayout = ({ captionBTNTEXT, layout }: IlluminaPurpleButtonPlainLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 28, height: 28, ...layout }}>
-            <Region
+            <ThemeText
+                text={captionBTNTEXT ?? ''}
+                textStyle="text-style-il-button"
+                textOptions={{ fill: '#ffffff' }}
                 name="_BTN_TEXT"
-                layout={{ position: 'absolute', width: 28, alignSelf: 'center', height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBTNTEXT ?? ''}
-                    textStyle="text-style-il-button"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 28, alignSelf: 'center', height: 28 }}
+            />
         </Region>
     );
 };

@@ -34,15 +34,12 @@ export const SpinnerWidget = ({ captionPromoInfo, captionQuantityLabel, captionT
             layout={{ position: 'absolute', ...layout }}
         >
             {(visibleTextHeader ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionTextHeader ?? t('catalog.bundlewidget.spinner.select.amount')}
+                    textOptions={{ fill: '#666666' }}
                     name="text_header"
-                    layout={{ position: 'absolute', left: 7, width: 100, top: 5, height: 15, maxWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextHeader ?? t('catalog.bundlewidget.spinner.select.amount')}
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, width: 100, top: 5, height: 15, maxWidth: 100 }}
+                />
             )}
             {(visibleButtonLess ?? false) && (
                 <ContainerButton
@@ -78,15 +75,12 @@ export const SpinnerWidget = ({ captionPromoInfo, captionQuantityLabel, captionT
                 name="quantitySelection"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionQuantityLabel ?? t('catalog.bundlewidget.quantity')}
+                    textOptions={{ fill: '#666666' }}
                     name="quantityLabel"
-                    layout={{ position: 'absolute', left: 0, width: 100, top: 3, height: 17, maxWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionQuantityLabel ?? t('catalog.bundlewidget.quantity')}
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 100, top: 3, height: 17, maxWidth: 100 }}
+                />
                 {(visibleDiscountContainer ?? false) && (
                     <Border
                         variant="3"
@@ -99,12 +93,11 @@ export const SpinnerWidget = ({ captionPromoInfo, captionQuantityLabel, captionT
                             src={srcThumbStar ?? layoutImage('catalogue_bundle_star.png')}
                             layout={{ position: 'absolute', left: 108, width: 30, top: -2, height: 30 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionPromoInfo ?? t('shop.bonus.items.count')}
                             name="promo.info"
-                            layout={{ position: 'absolute', left: 28, width: 82, top: 5, height: 15, maxWidth: 82, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionPromoInfo ?? t('shop.bonus.items.count')}
-                        </Region>
+                            layout={{ position: 'absolute', left: 28, width: 82, top: 5, height: 15, maxWidth: 82 }}
+                        />
                     </Border>
                 )}
                 <Border

@@ -67,12 +67,11 @@ export const IroRoomDetailsFramedLayoutButtonsCont = ({ layout, onFloorPlanEdito
                     src={layoutImage('illumina_light_border_center_left.png')}
                     layout={{ position: 'absolute', left: 47, width: 7, top: 17, height: 20 }}
                 />
-                <Region layout={{ position: 'absolute', left: 56, width: 151, top: 18, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('create.room.report')}
-                        textStyle="text-style-il-heading-1"
-                    />
-                </Region>
+                <ThemeText
+                    text={t('create.room.report')}
+                    textStyle="text-style-il-heading-1"
+                    layout={{ position: 'absolute', left: 56, width: 151, top: 18, height: 24 }}
+                />
             </ContainerButton>
             <Button
                 variant="3"

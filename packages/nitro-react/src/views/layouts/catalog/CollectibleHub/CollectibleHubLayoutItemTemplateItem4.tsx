@@ -44,16 +44,13 @@ export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, itemHi
                 )}
             </Region>
             {(visibleItemTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemTitle ?? 'item'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#666666' }}
                     name="item_title"
-                    layout={{ position: 'absolute', left: 7, right: 146, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemTitle ?? 'item'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, right: 146, top: 2, height: 17 }}
+                />
             )}
         </Region>
     );

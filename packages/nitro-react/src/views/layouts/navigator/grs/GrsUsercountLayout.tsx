@@ -24,15 +24,12 @@ export const GrsUsercountLayout = ({ captionTxt, layout, onUsercount, srcUsercou
                     tint={tintUsercountBg}
                     layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 13 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTxt ?? '0'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="txt"
-                    layout={{ position: 'absolute', marginLeft: 7.5, marginRight: -7.5, width: 9, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTxt ?? '0'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: 7.5, marginRight: -7.5, width: 9, top: 1, height: 13 }}
+                />
             </Region>
         </Region>
     );

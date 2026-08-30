@@ -28,25 +28,20 @@ export const ClubBuyInfoItemLayout = ({ captionInfoContent, captionItemHeader, l
                     tintColor="#9b9448"
                     layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 25, justifyContent: 'center' }}
                 >
-                    <Region
-                        name="item_header"
-                        layout={{ position: 'absolute', width: 141, top: 5, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionItemHeader ?? t('catalog.club.info.header')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                </Border>
-                <Region
-                    name="info_content"
-                    layout={{ position: 'absolute', left: 9, right: 8, top: 44, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
                     <ThemeText
-                        text={captionInfoContent ?? t('catalog.club.info.content')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 134 }}
+                        text={captionItemHeader ?? t('catalog.club.info.header')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                        name="item_header"
+                        layout={{ position: 'absolute', width: 141, top: 5, bottom: 3 }}
                     />
-                </Region>
+                </Border>
+                <ThemeText
+                    text={captionInfoContent ?? t('catalog.club.info.content')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 134 }}
+                    name="info_content"
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 9, right: 8, top: 44, height: 30 }}
+                />
             </Border>
         </Region>
     );

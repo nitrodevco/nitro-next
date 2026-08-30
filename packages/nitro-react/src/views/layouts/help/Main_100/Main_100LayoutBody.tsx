@@ -47,12 +47,12 @@ export const Main_100LayoutBody = ({ captionTaskHintText, captionTaskInfoDescrip
                         src={layoutImage('reward_track_reward_gift.png')}
                         layout={{ position: 'absolute', left: 8, width: 41, top: 7, height: 36 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 57, width: 265, alignSelf: 'center', height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('reward_track.tasks.tip')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 265 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('reward_track.tasks.tip')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 265 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 57, width: 265, alignSelf: 'center', height: 30 }}
+                    />
                     <ThemeImage
                         src={layoutImage('reward_track_frank_and_piccolo.png')}
                         layout={{ position: 'absolute', left: 329, width: 88, top: 7, height: 39 }}
@@ -68,12 +68,12 @@ export const Main_100LayoutBody = ({ captionTaskHintText, captionTaskInfoDescrip
                         src={layoutImage('reward_track_reward_gift_premium.png')}
                         layout={{ position: 'absolute', left: 8, width: 41, top: 7, height: 36 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 57, width: 227, alignSelf: 'center', height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('reward_track.tasks.tip_upgrade')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 227 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('reward_track.tasks.tip_upgrade')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 227 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 57, width: 227, alignSelf: 'center', height: 30 }}
+                    />
                     <Button
                         variant="3"
                         name="get_premium_btn"
@@ -109,15 +109,13 @@ export const Main_100LayoutBody = ({ captionTaskHintText, captionTaskInfoDescrip
                     >
                         {captionTaskInfoName ?? 'Visit Rooms'}
                     </Region>
-                    <Region
+                    <ThemeText
+                        text={captionTaskInfoDescription ?? 'Explore the hotel and visit rooms created by other players!'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 469 }}
                         name="task_info_description"
-                        layout={{ position: 'absolute', left: 137, right: 22, top: 59, height: 63, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTaskInfoDescription ?? 'Explore the hotel and visit rooms created by other players!'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 469 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 137, right: 22, top: 59, height: 63 }}
+                    />
                 </Region>
                 <Main_100LayoutTaskLevels {...taskLevels} />
                 <Border
@@ -126,21 +124,18 @@ export const Main_100LayoutBody = ({ captionTaskHintText, captionTaskInfoDescrip
                     tintColor="#e9e9e9"
                     layout={{ position: 'absolute', left: 16, width: 596, bottom: 13, height: 74 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 76, width: 27, top: 10, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('reward_track.levels.tip')}
-                            textOptions={{ fill: '#124b8b' }}
-                        />
-                    </Region>
-                    <Region
+                    <ThemeText
+                        text={t('reward_track.levels.tip')}
+                        textOptions={{ fill: '#124b8b' }}
+                        layout={{ position: 'absolute', left: 76, width: 27, top: 10, height: 18 }}
+                    />
+                    <ThemeText
+                        text={captionTaskHintText ?? 'Use the navigator to find cool rooms!'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 333 }}
                         name="task_hint_text"
-                        layout={{ position: 'absolute', left: 76, width: 333, top: 29, height: 42, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTaskHintText ?? 'Use the navigator to find cool rooms!'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 333 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 76, width: 333, top: 29, height: 42 }}
+                    />
                     <Button
                         variant="3"
                         name="hint_redirect_btn"

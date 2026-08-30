@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Button, Icon, Region } from '#base/theme';
+import { BoxLayout, Button, Icon, Region, ThemeText } from '#base/theme';
 
 import { RecyclerWidgetLayoutIndicatorWrapper, RecyclerWidgetLayoutIndicatorWrapperProps } from './RecyclerWidgetLayoutIndicatorWrapper';
 import { RecyclerWidgetLayoutSlotsWrapper, RecyclerWidgetLayoutSlotsWrapperProps } from './RecyclerWidgetLayoutSlotsWrapper';
@@ -27,12 +27,11 @@ export const RecyclerWidgetLayoutNormal = ({ captionDucketCost, indicatorWrapper
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', marginLeft: -140, marginRight: 140, width: 42, top: 7, height: 30, flexDirection: 'row' }}>
-                <Region
+                <ThemeText
+                    text={captionDucketCost ?? '50'}
                     name="ducket_cost"
-                    layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionDucketCost ?? '50'}
-                </Region>
+                    layout={{ width: 17, height: 17, flexShrink: 0 }}
+                />
                 <Region
                     name="spacer"
                     layout={{ width: 2, height: 30, flexShrink: 0 }}

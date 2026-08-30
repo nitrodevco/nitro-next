@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Border, BoxLayout, Region } from '#base/theme';
+import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 
 import { TotalPriceWidgetLayoutAmountTextLeftItem } from './TotalPriceWidgetLayoutAmountTextLeftItem';
 import { TotalPriceWidgetLayoutAmountTextRightItem } from './TotalPriceWidgetLayoutAmountTextRightItem';
@@ -23,12 +23,11 @@ export const TotalPriceWidgetLayout = ({ captionHeaderText, itemsTotalpriceConta
                 name="totalprice_widget_border"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionHeaderText ?? '='}
                     name="header_text"
-                    layout={{ position: 'absolute', left: 10, width: 14, top: 3, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionHeaderText ?? '='}
-                </Region>
+                    layout={{ position: 'absolute', left: 10, width: 14, top: 3, bottom: 5 }}
+                />
                 <Region
                     name="totalprice_container"
                     layout={{ position: 'absolute', right: 3, top: 1, bottom: 0, flexDirection: 'row' }}

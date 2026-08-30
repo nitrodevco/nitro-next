@@ -25,15 +25,13 @@ export const JukeboxViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onO
                 />
             )}
             {(visibleOwnerName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionOwnerName ?? ''}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 150 }}
                     name="owner_name"
-                    layout={{ position: 'absolute', left: 20, width: 150, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOwnerName ?? ''}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 150 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 20, width: 150, top: 0, height: 15 }}
+                />
             )}
         </Region>
     );

@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `ingress` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutIngressItemProps {
@@ -8,15 +8,13 @@ export interface FeedDisplayLayoutIngressItemProps {
 
 export const FeedDisplayLayoutIngressItem = ({ captionIngress, layout }: FeedDisplayLayoutIngressItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionIngress ?? '_info_ingress'}
+            textStyle="text-style-u-regular"
+            textOptions={{ fill: '#222222', wordWrap: true, wordWrapWidth: 200 }}
             name="ingress"
-            layout={{ width: 200, flexShrink: 0, minWidth: 220, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionIngress ?? '_info_ingress'}
-                textStyle="text-style-u-regular"
-                textOptions={{ fill: '#222222', wordWrap: true, wordWrapWidth: 200 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 200, flexShrink: 0, minWidth: 220, maxWidth: 200, ...layout }}
+        />
     );
 };

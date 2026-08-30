@@ -63,15 +63,12 @@ export const DailytasksLayoutRightCont = ({ captionClaimTxt, captionRewardTitleT
                         onPointerTap={onClaimButton}
                         layout={{ position: 'absolute', width: 110, top: 0, bottom: 0, minWidth: 110, maxWidth: 110 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionClaimTxt ?? t('dailytasks.claim')}
+                        textOptions={{ fill: '#ffffff' }}
                         name="claim_txt"
-                        layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 91, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionClaimTxt ?? t('dailytasks.claim')}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 91, top: 3, height: 17 }}
+                    />
                 </Region>
                 {(visibleProgressBarWrapper ?? false) && (
                     <Region

@@ -48,15 +48,12 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
                         />
                     )}
                     {(visibleSnowstormDucketValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionSnowstormDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="snowstormDucketValue"
-                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSnowstormDucketValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleCreditIcon ?? false) && (
                         <Icon
@@ -66,15 +63,12 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
                         />
                     )}
                     {(visibleSnowstormCreditValue ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionSnowstormCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="snowstormCreditValue"
-                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSnowstormCreditValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                     {(visibleProductIcon ?? true) && (
                         <ThemeImage
@@ -84,15 +78,12 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
                         />
                     )}
                     {(visibleSnowstormProductValue ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionSnowstormProductValue ?? '0'}
+                            textStyle="text-style-u-bold"
                             name="snowstormProductValue"
-                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSnowstormProductValue ?? '0'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30 }}
+                        />
                     )}
                 </Border>
             )}
@@ -110,15 +101,12 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
                         />
                     )}
                     {(visibleSnowstormLabel ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionSnowstormLabel ?? t('earnings.snowstorm.label')}
+                            textStyle="text-style-u-bold"
                             name="snowstorm_label"
-                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSnowstormLabel ?? t('earnings.snowstorm.label')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 34, width: 160, top: 8, height: 30 }}
+                        />
                     )}
                 </Border>
             )}

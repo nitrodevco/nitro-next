@@ -19,15 +19,13 @@ export const FurniViewBrandingElementLayout = ({ captionElementName, layout }: F
                     name="element_border"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionElementName ?? 'element name'}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 160 }}
                         name="element_name"
-                        layout={{ position: 'absolute', left: 0, right: 20, top: 0, height: 12, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionElementName ?? 'element name'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 160 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, right: 20, top: 0, height: 12 }}
+                    />
                     <TextInput
                         value={elementValueValue}
                         onChange={setElementValueValue}

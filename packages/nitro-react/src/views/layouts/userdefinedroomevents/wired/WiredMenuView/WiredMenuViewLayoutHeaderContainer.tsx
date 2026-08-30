@@ -37,15 +37,12 @@ export const WiredMenuViewLayoutHeaderContainer = ({ captionHeaderTitle, headerD
                 </Region>
             </Region>
             <WiredMenuViewLayoutHeaderDetail {...headerDetail} />
-            <Region
+            <ThemeText
+                text={captionHeaderTitle ?? 'Header Title'}
+                textOptions={{ fill: '#ffffff', align: 'center' }}
                 name="header_title"
-                layout={{ position: 'absolute', left: 0, width: 500, top: 14, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionHeaderTitle ?? 'Header Title'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 500, top: 14, height: 21 }}
+            />
             <Region
                 name="discord_region"
                 tooltip={t('wiredmenu.discord_region.tooltip')}

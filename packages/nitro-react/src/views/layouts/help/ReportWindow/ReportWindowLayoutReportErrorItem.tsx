@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `report_error` of ReportWindowLayout - pass real rows through its `items…` slot. */
 export interface ReportWindowLayoutReportErrorItemProps {
@@ -13,15 +13,13 @@ export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout, 
 
     return (
         (visibleReportError ?? false) && (
-            <Region
+            <ThemeText
+                text={captionReportError ?? t('guide.help.request.emergency.desc.error')}
+                textOptions={{ fill: '#ff0000', wordWrap: true, wordWrapWidth: 264 }}
                 name="report_error"
-                layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-            >
-                <ThemeText
-                    text={captionReportError ?? t('guide.help.request.emergency.desc.error')}
-                    textOptions={{ fill: '#ff0000', wordWrap: true, wordWrapWidth: 264 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ width: 264, height: 16, flexShrink: 0, ...layout }}
+            />
         )
     );
 };

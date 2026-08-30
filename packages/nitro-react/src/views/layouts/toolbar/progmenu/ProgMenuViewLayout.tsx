@@ -54,16 +54,13 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                                 src={srcDailytasksIconColor ?? layoutImage('prog_menu_daily_tasks.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionFieldText ?? t('widget.progmenu.dailytasks')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionFieldText ?? t('widget.progmenu.dailytasks')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="dailytasks_icon_grey"
                                 src={srcDailytasksIconGrey ?? layoutImage('prog_menu_daily_tasks.png')}
@@ -81,16 +78,13 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                                 src={srcQuestsIconColor ?? layoutImage('prog_menu_quests.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionQuestsFieldText ?? t('widget.progmenu.quests')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionQuestsFieldText ?? t('widget.progmenu.quests')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="quests_icon_grey"
                                 src={srcQuestsIconGrey ?? layoutImage('prog_menu_quests.png')}
@@ -108,16 +102,13 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                                 src={srcAchievementsIconColor ?? layoutImage('me_menu_me_achv.png')}
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionAchievementsFieldText ?? t('widget.progmenu.achievements')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionAchievementsFieldText ?? t('widget.progmenu.achievements')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="achievements_icon_grey"
                                 src={srcAchievementsIconGrey ?? layoutImage('me_menu_me_achv.png')}
@@ -135,16 +126,13 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                                 src={srcLeaderboardsIconColor ?? layoutImage('prog_menu_leaderboards.png')}
                                 layout={{ position: 'absolute', left: 17, width: 25, top: 4, height: 25 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionLeaderboardsFieldText ?? t('widget.progmenu.leaderboards')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionLeaderboardsFieldText ?? t('widget.progmenu.leaderboards')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="leaderboards_icon_grey"
                                 src={srcLeaderboardsIconGrey ?? layoutImage('prog_menu_leaderboards.png')}
@@ -162,16 +150,13 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                                 src={srcIntroductionIconColor ?? layoutImage('prog_menu_introduction.png')}
                                 layout={{ position: 'absolute', left: 14, width: 33, top: 0, height: 32 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionIntroductionFieldText ?? t('widget.progmenu.introduction')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#ffffff' }}
                                 name="field_text"
-                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionIntroductionFieldText ?? t('widget.progmenu.introduction')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60 }}
+                            />
                             <ThemeImage
                                 name="introduction_icon_grey"
                                 src={srcIntroductionIconGrey ?? layoutImage('prog_menu_introduction.png')}

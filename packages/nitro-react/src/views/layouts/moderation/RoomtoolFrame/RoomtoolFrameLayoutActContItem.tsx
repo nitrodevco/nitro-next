@@ -1,4 +1,4 @@
-import { Border, BoxLayout, CheckBox, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, CheckBox, ThemeText } from '#base/theme';
 
 /** Row template `act_cont` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutActContItemProps {
@@ -48,21 +48,22 @@ export const RoomtoolFrameLayoutActContItem = ({ layout, onChangenameCheck, onKi
                     Room Info
                 </CheckBox>
             )}
-            <Region layout={{ position: 'absolute', left: 24, width: 199, top: 5, height: 25, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="Kick users out of the room (automatically stops the event)"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 199 }}
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 24, width: 199, top: 31, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                Change room lock to doorbell
-            </Region>
-            <Region layout={{ position: 'absolute', left: 24, width: 199, top: 48, height: 25, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="Change room name to 'Inappropriate to hotel management'"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 199 }}
-                />
-            </Region>
+            <ThemeText
+                text="Kick users out of the room (automatically stops the event)"
+                textOptions={{ wordWrap: true, wordWrapWidth: 199 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 24, width: 199, top: 5, height: 25 }}
+            />
+            <ThemeText
+                text="Change room lock to doorbell"
+                layout={{ position: 'absolute', left: 24, width: 199, top: 31, height: 16 }}
+            />
+            <ThemeText
+                text="Change room name to 'Inappropriate to hotel management'"
+                textOptions={{ wordWrap: true, wordWrapWidth: 199 }}
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 24, width: 199, top: 48, height: 25 }}
+            />
         </Border>
     );
 };

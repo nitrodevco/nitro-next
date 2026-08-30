@@ -26,15 +26,12 @@ export const PetViewLayoutStatusHappinessContainerItem = ({ captionStatusHappine
             layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             {(visibleStatusHappinessText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionStatusHappinessText ?? t('infostand.pet.text.happiness')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="status_happiness_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 150, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusHappinessText ?? t('infostand.pet.text.happiness')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 150, top: 1, height: 13 }}
+                />
             )}
             {(visibleStatusHappinessBitmap ?? true) && (
                 <ThemeImage
@@ -45,15 +42,12 @@ export const PetViewLayoutStatusHappinessContainerItem = ({ captionStatusHappine
                 />
             )}
             {(visibleStatusHappinessValueText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionStatusHappinessValueText ?? ''}
+                    textOptions={{ fill: '#ffffff' }}
                     name="status_happiness_value_text"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusHappinessValueText ?? ''}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 18, height: 4 }}
+                />
             )}
             {(visibleStatusHappinessIcon ?? true) && (
                 <ThemeImage

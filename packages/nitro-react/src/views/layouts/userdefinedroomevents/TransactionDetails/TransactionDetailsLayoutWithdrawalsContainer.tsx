@@ -18,12 +18,11 @@ export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText,
             name="withdrawals_container"
             layout={{ width: 165, height: 161, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('wiredchests.log_details.transactions.withdrawn')}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('wiredchests.log_details.transactions.withdrawn')}
+                textOptions={{ align: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17 }}
+            />
             <Border
                 variant="4"
                 tintColor="#e2e2e2"

@@ -42,15 +42,12 @@ export const MainWindow_1503LayoutHeader = ({ captionCaptionText, layout, onHead
                 tint={tintHdrFriends}
                 layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17 }}
             />
-            <Region
+            <ThemeText
+                text={captionCaptionText ?? `${t('friendlist.friends')} (0)`}
+                textOptions={{ fill: '#626262' }}
                 name="caption_text"
-                layout={{ position: 'absolute', left: 4, width: 219, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCaptionText ?? `${t('friendlist.friends')} (0)`}
-                    textOptions={{ fill: '#626262' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 4, width: 219, top: 2, height: 15 }}
+            />
             <ThemeImage
                 name="arrow_down_black"
                 src={srcArrowDownBlack}

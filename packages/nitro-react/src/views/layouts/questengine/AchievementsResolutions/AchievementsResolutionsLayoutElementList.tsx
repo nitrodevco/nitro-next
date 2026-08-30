@@ -47,38 +47,32 @@ export const AchievementsResolutionsLayoutElementList = ({ achievementBadge, cap
                     </WidgetSlot>
                 </Region>
                 <Region layout={{ flexShrink: 0, maxWidth: 220, flexDirection: 'column', gap: 5 }}>
-                    <Region
+                    <ThemeText
+                        text={captionAchievementName ?? 'Achievement name '}
+                        textStyle="text-style-il-heading-2"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
                         name="achievement.name"
-                        layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionAchievementName ?? 'Achievement name '}
-                            textStyle="text-style-il-heading-2"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, maxWidth: 220 }}
+                    />
+                    <ThemeText
+                        text={captionAchievementDescription ?? 'Achievement description'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
                         name="achievement.description"
-                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, minWidth: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionAchievementDescription ?? 'Achievement description'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, minWidth: 0, maxWidth: 220 }}
+                    />
                     <Region layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
-                        <Region layout={{ width: 153, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            {t('resolution.achievement.level')}
-                        </Region>
-                        <Region
+                        <ThemeText
+                            text={t('resolution.achievement.level')}
+                            layout={{ width: 153, alignSelf: 'stretch', flexShrink: 0 }}
+                        />
+                        <ThemeText
+                            text={captionAchievementLevel ?? '0'}
+                            textStyle="text-style-il-heading-3"
                             name="achievement.level"
-                            layout={{ width: 173, alignSelf: 'stretch', flexShrink: 0, minWidth: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionAchievementLevel ?? '0'}
-                                textStyle="text-style-il-heading-3"
-                            />
-                        </Region>
+                            layout={{ width: 173, alignSelf: 'stretch', flexShrink: 0, minWidth: 0 }}
+                        />
                     </Region>
                 </Region>
             </Region>

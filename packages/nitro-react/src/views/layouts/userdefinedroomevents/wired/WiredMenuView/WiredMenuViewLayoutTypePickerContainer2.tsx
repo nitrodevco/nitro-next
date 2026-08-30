@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region } from '#base/theme';
+import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 
 import { WiredMenuViewLayoutButtons2, WiredMenuViewLayoutButtons2Props } from './WiredMenuViewLayoutButtons2';
 
@@ -18,12 +18,11 @@ export const WiredMenuViewLayoutTypePickerContainer2 = ({ buttons, captionTitle,
             name="type_picker_container"
             layout={{ position: 'absolute', left: 14, width: 150, top: 18, height: 70, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTitle ?? t('wiredmenu.inspection.type')}
                 name="title"
-                layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionTitle ?? t('wiredmenu.inspection.type')}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19 }}
+            />
             <Border
                 variant="3"
                 name="type_options"

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `plain_text` of InventoryTradingLayout - pass real rows through its `items…` slot. */
 export interface InventoryTradingLayoutPlainTextItemProps {
@@ -11,11 +11,10 @@ export const InventoryTradingLayoutPlainTextItem = ({ captionPlainText, layout }
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionPlainText ?? t('inventory.trading.areoffering')}
             name="plain_text"
-            layout={{ width: 167, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionPlainText ?? t('inventory.trading.areoffering')}
-        </Region>
+            layout={{ width: 167, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

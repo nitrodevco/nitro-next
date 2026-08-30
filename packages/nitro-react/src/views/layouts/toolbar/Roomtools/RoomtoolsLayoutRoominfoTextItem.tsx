@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `roominfo_text` of RoomtoolsLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolsLayoutRoominfoTextItemProps {
@@ -11,15 +11,12 @@ export const RoomtoolsLayoutRoominfoTextItem = ({ captionRoominfoText, layout }:
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionRoominfoText ?? t('navigator.roomsettings.roomname')}
+            textStyle="text-style-il-regular-white"
+            textOptions={{ fill: '#989898' }}
             name="roominfo_text"
-            layout={{ width: 175, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionRoominfoText ?? t('navigator.roomsettings.roomname')}
-                textStyle="text-style-il-regular-white"
-                textOptions={{ fill: '#989898' }}
-            />
-        </Region>
+            layout={{ width: 175, alignSelf: 'stretch', flexShrink: 0, ...layout }}
+        />
     );
 };

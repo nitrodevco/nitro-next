@@ -4,8 +4,8 @@ import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
-/** Row template `search_input_border` of MarketPlaceOwnItemsWidget2 - pass real rows through its `items…` slot. */
-export interface MarketPlaceOwnItemsWidget2SearchInputBorderItemProps {
+/** Row template `search_input_border` of MarketPlaceOwnItemsWidget - pass real rows through its `items…` slot. */
+export interface MarketPlaceOwnItemsWidgetSearchInputBorderItemProps {
     captionSearchPlaceholder?: string;
     layout?: BoxLayout;
     onCancelSearchBtn?: () => void;
@@ -14,7 +14,7 @@ export interface MarketPlaceOwnItemsWidget2SearchInputBorderItemProps {
     visibleSearchPlaceholder?: boolean;
 }
 
-export const MarketPlaceOwnItemsWidget2SearchInputBorderItem = ({ captionSearchPlaceholder, layout, onCancelSearchBtn, visibleCancelSearchBtn, visibleSearchInput, visibleSearchPlaceholder }: MarketPlaceOwnItemsWidget2SearchInputBorderItemProps) => {
+export const MarketPlaceOwnItemsWidgetSearchInputBorderItem = ({ captionSearchPlaceholder, layout, onCancelSearchBtn, visibleCancelSearchBtn, visibleSearchInput, visibleSearchPlaceholder }: MarketPlaceOwnItemsWidgetSearchInputBorderItemProps) => {
     const t = useTranslation();
     const [ searchInputValue, setSearchInputValue ] = useState('');
 

@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Row template `visitrow` of RoomvisitsFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomvisitsFrameLayoutVisitrowItemProps {
@@ -18,28 +18,25 @@ export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionT
             layout={{ width: 263, height: 14, flexShrink: 0, ...layout }}
         >
             {(visibleTimeTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTimeTxt ?? '15:14'}
                     name="time_txt"
-                    layout={{ position: 'absolute', right: 44, width: 30, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionTimeTxt ?? '15:14'}
-                </Region>
+                    layout={{ position: 'absolute', right: 44, width: 30, top: 0, bottom: 0 }}
+                />
             )}
             {(visibleRoomNameTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomNameTxt ?? 'Funky room'}
                     name="room_name_txt"
-                    layout={{ position: 'absolute', left: 5, right: 73, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionRoomNameTxt ?? 'Funky room'}
-                </Region>
+                    layout={{ position: 'absolute', left: 5, right: 73, top: 0, bottom: 0 }}
+                />
             )}
             {(visibleViewRoomTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionViewRoomTxt ?? 'Enter'}
                     name="view_room_txt"
-                    layout={{ position: 'absolute', right: 1, width: 39, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionViewRoomTxt ?? 'Enter'}
-                </Region>
+                    layout={{ position: 'absolute', right: 1, width: 39, top: 0, bottom: 0 }}
+                />
             )}
         </Region>
     );

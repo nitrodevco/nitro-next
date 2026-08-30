@@ -39,18 +39,17 @@ export const PremiumPurchaseConfirmationLayoutTopBody = ({ benefits, layout, src
                 </Border>
                 <Region layout={{ position: 'absolute', left: 0, right: 0, top: 115, bottom: 12 }}>
                     <Region layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 35, flexDirection: 'column' }}>
-                        <Region layout={{ width: 116, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <ThemeText
-                                text={t('reward_track.rewards.premium')}
-                                textOptions={{ fill: '#5d2c82', align: 'center' }}
-                            />
-                        </Region>
-                        <Region layout={{ width: 116, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                            <ThemeText
-                                text={t('reward_track.rewards.premium.info')}
-                                textOptions={{ fill: '#4d3559', wordWrap: true, wordWrapWidth: 116, align: 'center' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('reward_track.rewards.premium')}
+                            textOptions={{ fill: '#5d2c82', align: 'center' }}
+                            layout={{ width: 116, height: 19, flexShrink: 0 }}
+                        />
+                        <ThemeText
+                            text={t('reward_track.rewards.premium.info')}
+                            textOptions={{ fill: '#4d3559', wordWrap: true, wordWrapWidth: 116, align: 'center' }}
+                            verticalAlign="top"
+                            layout={{ width: 116, height: 16, flexShrink: 0 }}
+                        />
                     </Region>
                 </Region>
             </Border>

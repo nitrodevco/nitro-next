@@ -20,24 +20,18 @@ export const SnowwarTimerLayout = ({ captionTimeLeft, captionTimeLeftStroke, lay
                         layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
                     />
                 )}
-                <Region
+                <ThemeText
+                    text={captionTimeLeftStroke ?? '01:23'}
+                    textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
                     name="time_left_stroke"
-                    layout={{ position: 'absolute', left: 16, width: 80, top: 6, height: 31, minWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTimeLeftStroke ?? '01:23'}
-                        textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 16, width: 80, top: 6, height: 31, minWidth: 80 }}
+                />
+                <ThemeText
+                    text={captionTimeLeft ?? '01:23'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="time_left"
-                    layout={{ position: 'absolute', left: 16, width: 80, top: 6, height: 31, minWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTimeLeft ?? '01:23'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 16, width: 80, top: 6, height: 31, minWidth: 80 }}
+                />
             </Region>
         </Region>
     );

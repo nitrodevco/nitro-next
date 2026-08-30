@@ -20,15 +20,12 @@ export const HabbiconselectorMenuLayoutHabbiconSectionTemplateItem = ({ captionS
             layout={{ width: 217, height: 62, flexShrink: 0, ...layout }}
         >
             {(visibleSectionTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionSectionTitle ?? 'Section'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="section_title"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSectionTitle ?? 'Section'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
+                />
             )}
             {(visibleHabbiconGrid ?? true) && (
                 <Region

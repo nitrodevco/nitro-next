@@ -83,40 +83,33 @@ export const InventoryLayoutPets = ({ captionPreviewDescription, captionPreviewI
                     name="preview_container"
                     layout={{ position: 'absolute', right: -2, width: 190, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPreviewText ?? 'PetName'}
+                        textStyle="text-style-u-headline-small"
                         name="preview_text"
-                        layout={{ position: 'absolute', left: 0, right: 124, top: 32, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPreviewText ?? 'PetName'}
-                            textStyle="text-style-u-headline-small"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 124, top: 32, height: 19 }}
+                    />
                     <ThemeImage
                         name="preview_image"
                         src={srcPreviewImage}
                         tint={tintPreviewImage}
                         layout={{ position: 'absolute', left: 5, width: 150, top: 53, height: 152 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionPreviewDescription ?? 'Lorem ipsumlkj lj'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 180 }}
                         name="preview_description"
-                        layout={{ position: 'absolute', left: 4, right: 6, top: 205, height: 17, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPreviewDescription ?? 'Lorem ipsumlkj lj'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 180 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 4, right: 6, top: 205, height: 17, maxWidth: 220 }}
+                    />
                     {(visiblePreviewInfo ?? false) && (
-                        <Region
+                        <ThemeText
+                            text={captionPreviewInfo ?? '...'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 154 }}
                             name="preview_info"
-                            layout={{ position: 'absolute', marginLeft: -13, marginRight: 13, width: 154, top: 200, bottom: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionPreviewInfo ?? '...'}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 154 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', marginLeft: -13, marginRight: 13, width: 154, top: 200, bottom: 32 }}
+                        />
                     )}
                     <Button
                         variant="3"

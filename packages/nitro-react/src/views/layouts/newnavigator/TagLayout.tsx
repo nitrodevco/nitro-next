@@ -21,16 +21,13 @@ export const TagLayout = ({ captionTagText, layout, onTagRegion }: TagLayoutProp
                     cursor="pointer"
                     layout={{ position: 'absolute', right: 0, width: 32, top: 0, bottom: 0 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionTagText ?? '#tag'}
+                        textStyle="text-style-u-small"
+                        textOptions={{ fill: '#ffffff' }}
                         name="tag_text"
-                        layout={{ position: 'absolute', left: 3, top: 2, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTagText ?? '#tag'}
-                            textStyle="text-style-u-small"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 3, top: 2, bottom: 2 }}
+                    />
                 </Region>
             </Region>
         </Region>

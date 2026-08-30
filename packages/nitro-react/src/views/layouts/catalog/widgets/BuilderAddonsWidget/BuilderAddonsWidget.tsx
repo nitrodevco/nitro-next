@@ -25,16 +25,13 @@ export const BuilderAddonsWidget = ({ addonsList, captionTrialWarning, layout }:
             layout={{ position: 'absolute', ...layout }}
         >
             <BuilderAddonsWidgetAddonsList {...addonsList} />
-            <Region
+            <ThemeText
+                text={captionTrialWarning ?? t('builder.addon_page.warning.trial')}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#cc0000' }}
                 name="trial_warning"
-                layout={{ position: 'absolute', left: 0, width: 193, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTrialWarning ?? t('builder.addon_page.warning.trial')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#cc0000' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 193, bottom: 3, height: 17 }}
+            />
         </Region>
     );
 };

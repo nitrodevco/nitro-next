@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ContainerButton, Frame, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Frame, ThemeText } from '#base/theme';
 
 /** Generated from `957_notification_gift_alert_xml` (layout "teaser_general", 433x260) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationGiftAlertLayoutProps {
@@ -35,24 +35,19 @@ export const NotificationGiftAlertLayout = ({ captionAlertDesc, captionAlertTitl
                     name="white_bg"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 160 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionAlertTitle ?? t('widget.furni.teaser.gift.title')}
+                    textOptions={{ fill: '#444444' }}
                     name="alert_title"
-                    layout={{ position: 'absolute', left: 10, right: 10, top: 12, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAlertTitle ?? t('widget.furni.teaser.gift.title')}
-                        textOptions={{ fill: '#444444' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 12, height: 21 }}
+                />
+                <ThemeText
+                    text={captionAlertDesc ?? t('widget.furni.teaser.gift.title')}
+                    textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 400 }}
                     name="alert_desc"
-                    layout={{ position: 'absolute', left: 10, right: 10, top: 31, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAlertDesc ?? t('widget.furni.teaser.gift.title')}
-                        textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 400 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 31, height: 120 }}
+                />
                 <ContainerButton
                     variant="0"
                     name="no_fb_btn"
@@ -71,16 +66,13 @@ export const NotificationGiftAlertLayout = ({ captionAlertDesc, captionAlertTitl
                         tintColor="#309d00"
                         layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 17, minWidth: 294, maxWidth: 294, minHeight: 17, maxHeight: 17 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionOpenTxt ?? t('generic.ok')}
+                        textStyle="text-style-bold"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="open_txt"
-                        layout={{ position: 'absolute', width: 294, alignSelf: 'center', marginTop: 4.5, marginBottom: -4.5, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionOpenTxt ?? t('generic.ok')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 294, alignSelf: 'center', marginTop: 4.5, marginBottom: -4.5, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33 }}
+                    />
                 </ContainerButton>
             </Border>
         </Frame>

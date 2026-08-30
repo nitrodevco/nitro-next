@@ -21,15 +21,12 @@ export const AreaHideUiLayoutSaturationContainerItem = ({ captionOptionsTitle, l
             layout={{ alignSelf: 'stretch', height: 143, flexShrink: 0, ...layout }}
         >
             {(visibleOptionsTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionOptionsTitle ?? t('widget.areahide.options')}
+                    textStyle="text-style-u-small"
                     name="options_title"
-                    layout={{ position: 'absolute', left: 0, width: 123, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOptionsTitle ?? t('widget.areahide.options')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 123, top: 0, height: 15 }}
+                />
             )}
             {(visibleOptionsContainer ?? true) && (
                 <AreaHideUiLayoutOptionsContainer {...optionsContainer} />

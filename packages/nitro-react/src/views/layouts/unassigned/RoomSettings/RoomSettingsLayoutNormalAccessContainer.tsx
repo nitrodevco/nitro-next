@@ -27,54 +27,43 @@ export const RoomSettingsLayoutNormalAccessContainer = ({ captionPasswordConfirm
             name="normal_access_container"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 354, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionRoomAccessTabCaption ?? t('navigator.roomsettings.roomaccess.caption')}
+                textStyle="text-style-u-headline-small"
                 name="room_access_tab_caption"
-                layout={{ position: 'absolute', left: 0, width: 295, top: 3, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRoomAccessTabCaption ?? t('navigator.roomsettings.roomaccess.caption')}
-                    textStyle="text-style-u-headline-small"
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 0, width: 295, top: 3, height: 19 }}
+            />
+            <ThemeText
+                text={captionRoomAccessTabInfo ?? t('navigator.roomsettings.roomaccess.info')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
                 name="room_access_tab_info"
-                layout={{ position: 'absolute', left: 0, width: 300, top: 19, height: 69, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRoomAccessTabInfo ?? t('navigator.roomsettings.roomaccess.info')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, width: 300, top: 19, height: 69 }}
+            />
             <RoomSettingsLayoutDoormodeContainer {...doormodeContainer} />
             <Region
                 name="password_container"
                 layout={{ position: 'absolute', left: 41, width: 195, top: 188, height: 68 }}
             >
-                <Region
+                <ThemeText
+                    text={captionPasswordLabel ?? t('navigator.roomsettings.password')}
+                    textStyle="text-style-u-regular"
                     name="password_label"
-                    layout={{ position: 'absolute', left: 0, width: 189, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPasswordLabel ?? t('navigator.roomsettings.password')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 189, top: 0, height: 17 }}
+                />
                 <TextInput
                     value={passwordValue}
                     onChange={setPasswordValue}
                     backgroundColor="#fbfbf9"
                     layout={{ position: 'absolute', left: 1, width: 193, top: 15, height: 15, overflow: 'hidden' }}
                 />
-                <Region
+                <ThemeText
+                    text={captionPasswordConfirmLabel ?? t('navigator.roomsettings.passwordconfirm')}
+                    textStyle="text-style-u-regular"
                     name="password__confirm_label"
-                    layout={{ position: 'absolute', left: 0, width: 234, top: 32, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPasswordConfirmLabel ?? t('navigator.roomsettings.passwordconfirm')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 234, top: 32, height: 17 }}
+                />
                 <TextInput
                     value={passwordConfirmValue}
                     onChange={setPasswordConfirmValue}
@@ -88,18 +77,17 @@ export const RoomSettingsLayoutNormalAccessContainer = ({ captionPasswordConfirm
                     name="doormode_override_info"
                     layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166, justifyContent: 'center' }}
                 >
-                    <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('notification.builders_club.room_locked.title')}
-                            textStyle="text-style-u-headline-small"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('notification.builders_club.room_locked.message')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('notification.builders_club.room_locked.title')}
+                        textStyle="text-style-u-headline-small"
+                        layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19 }}
+                    />
+                    <ThemeText
+                        text={t('notification.builders_club.room_locked.message')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79 }}
+                    />
                     <Button
                         variant="3"
                         name="builders_faq_button"

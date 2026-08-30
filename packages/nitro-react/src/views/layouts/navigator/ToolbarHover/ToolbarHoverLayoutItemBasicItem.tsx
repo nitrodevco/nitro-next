@@ -26,16 +26,13 @@ export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBas
                 />
             )}
             {(visibleText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionText ?? 'Sample item'}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#ffffff' }}
                     name="text"
-                    layout={{ position: 'absolute', left: 7, width: 75, top: 2, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? 'Sample item'}
-                        textStyle="text-style-regular"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, width: 75, top: 2, bottom: 6 }}
+                />
             )}
         </Region>
     );

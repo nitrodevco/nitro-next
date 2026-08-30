@@ -19,15 +19,13 @@ export const PhotoPurchaseConfirmationLayoutDisclaimerItem = ({ captionSpendingD
             layout={{ width: 311, height: 17, flexShrink: 0, ...layout }}
         >
             {(visibleSpendingDisclaimerText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionSpendingDisclaimerText ?? t('disclaimer.credit_spending')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 278 }}
                     name="spending_disclaimer_text"
-                    layout={{ position: 'absolute', left: 33, width: 278, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSpendingDisclaimerText ?? t('disclaimer.credit_spending')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 278 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 33, width: 278, top: 0, bottom: 0 }}
+                />
             )}
             {(visibleSpendingDisclaimer ?? true) && (
                 <CheckBox

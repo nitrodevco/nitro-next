@@ -38,26 +38,20 @@ export const AvatarEditorContentLayoutAvatarEditorContent = ({ avatarEditor, cap
                 >
                     {nameBackground}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionAvatarName ?? t('avatareditor.title')}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="avatar_name"
-                    layout={{ position: 'absolute', marginLeft: -4.5, marginRight: 4.5, width: 400, top: 15, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionAvatarName ?? t('avatareditor.title')}
-                        textStyle="text-style-u-headline-big"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -4.5, marginRight: 4.5, width: 400, top: 15, height: 35 }}
+                />
                 {(visibleAvatarNameChange ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionAvatarNameChange ?? t('avatareditor.name.change')}
+                        textOptions={{ fill: '#1b79ab' }}
                         name="avatar_name_change"
-                        layout={{ position: 'absolute', left: 170, width: 137, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionAvatarNameChange ?? t('avatareditor.name.change')}
-                            textOptions={{ fill: '#1b79ab' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 170, width: 137, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 16 }}
+                    />
                 )}
             </Region>
             <Region

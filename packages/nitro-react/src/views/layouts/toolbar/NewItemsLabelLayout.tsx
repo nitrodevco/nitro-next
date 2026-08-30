@@ -14,16 +14,13 @@ export const NewItemsLabelLayout = ({ captionNewTextfield, layout }: NewItemsLab
                 tintColor="#ee2924"
                 layout={{ position: 'absolute', left: 1, right: -1, top: 1, bottom: -1 }}
             >
-                <Region
+                <ThemeText
+                    text={captionNewTextfield ?? 'new'}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#ffffff' }}
                     name="new_textfield"
-                    layout={{ position: 'absolute', left: 1, top: 2, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNewTextfield ?? 'new'}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 1, top: 2, bottom: 3 }}
+                />
             </Border>
         </Region>
     );

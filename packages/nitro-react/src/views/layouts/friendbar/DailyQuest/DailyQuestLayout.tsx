@@ -33,15 +33,12 @@ export const DailyQuestLayout = ({ captionHardRegionLabelTxt, captionLabelTxt, c
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 7, width: 12, top: 10, height: 4 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTitleTxt ?? 'TITLE PH'}
+                    textStyle="text-style-il-heading-3"
                     name="title_txt"
-                    layout={{ position: 'absolute', left: 18, width: 43, top: 3, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitleTxt ?? 'TITLE PH'}
-                        textStyle="text-style-il-heading-3"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 18, width: 43, top: 3, height: 14 }}
+                />
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
@@ -63,12 +60,11 @@ export const DailyQuestLayout = ({ captionHardRegionLabelTxt, captionLabelTxt, c
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 18 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionLabelTxt ?? t('landing.view.quest.easy')}
                             name="label_txt"
-                            layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionLabelTxt ?? t('landing.view.quest.easy')}
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14 }}
+                        />
                     </Region>
                     <ThemeImage
                         name="divider"
@@ -81,12 +77,11 @@ export const DailyQuestLayout = ({ captionHardRegionLabelTxt, captionLabelTxt, c
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 112, width: 99, top: 0, height: 18 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionHardRegionLabelTxt ?? t('landing.view.quest.hard')}
                             name="label_txt"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionHardRegionLabelTxt ?? t('landing.view.quest.hard')}
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 14 }}
+                        />
                     </Region>
                 </Region>
             </Region>

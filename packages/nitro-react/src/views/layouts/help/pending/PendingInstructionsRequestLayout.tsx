@@ -26,40 +26,36 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
             layout={{ width: 369, height: 201, minWidth: 369, minHeight: 201, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}>
-                <Region layout={{ width: 236, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.pending.instructions.subtitle')}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ fill: '#c30000' }}
-                    />
-                </Region>
-                <Region layout={{ width: 295, height: 24, flexShrink: 0, minWidth: 295, maxWidth: 295, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.pending.instructions.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('guide.pending.instructions.subtitle')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#c30000' }}
+                    layout={{ width: 236, height: 19, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('guide.pending.instructions.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
+                    verticalAlign="top"
+                    layout={{ width: 295, height: 24, flexShrink: 0, minWidth: 295, maxWidth: 295 }}
+                />
                 <Border
                     variant="102"
                     layout={{ width: 295, height: 61, flexShrink: 0, minWidth: 295, maxWidth: 295 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 13, width: 169, top: 12, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.pending.instructions.report')}
-                            textStyle="text-style-il-border"
-                            textOptions={{ fill: '#444444' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('guide.pending.instructions.report')}
+                        textStyle="text-style-il-border"
+                        textOptions={{ fill: '#444444' }}
+                        layout={{ position: 'absolute', left: 13, width: 169, top: 12, height: 15 }}
+                    />
                     <Region layout={{ position: 'absolute', left: 13, top: 30, flexDirection: 'column', gap: 3 }}>
-                        <Region
+                        <ThemeText
+                            text={captionDescription ?? ''}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 269 }}
                             name="description"
-                            layout={{ width: 269, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDescription ?? ''}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 269 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 269, height: 14, flexShrink: 0 }}
+                        />
                         <WidgetSlot
                             widgetType="updating_timestamp"
                             name="timestamp"

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `bobba_others` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutBobbaOthersItemProps {
@@ -11,15 +11,12 @@ export const UserViewLayoutBobbaOthersItem = ({ captionBobbaOthers, layout }: Us
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionBobbaOthers ?? t('infostand.relstatus.bobba.others')}
+            textStyle="text-style-regular"
+            textOptions={{ fill: '#ffffff' }}
             name="bobba_others"
-            layout={{ width: 172, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionBobbaOthers ?? t('infostand.relstatus.bobba.others')}
-                textStyle="text-style-regular"
-                textOptions={{ fill: '#ffffff' }}
-            />
-        </Region>
+            layout={{ width: 172, height: 13, flexShrink: 0, ...layout }}
+        />
     );
 };

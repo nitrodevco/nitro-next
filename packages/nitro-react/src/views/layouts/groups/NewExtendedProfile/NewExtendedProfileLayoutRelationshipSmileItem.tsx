@@ -41,12 +41,11 @@ export const NewExtendedProfileLayoutRelationshipSmileItem = ({ captionSmileFrie
                         layout={{ position: 'absolute', left: 7, width: 160, top: 3, height: 16, maxWidth: 160 }}
                     >
                         {(visibleSmileFriendNameLinkText ?? true) && (
-                            <Region
+                            <ThemeText
+                                text={captionSmileFriendNameLinkText ?? t('extendedprofile.add.friends')}
                                 name="smile_friend_name_link_text"
-                                layout={{ position: 'absolute', left: 0, width: 151, top: 0, bottom: 0, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionSmileFriendNameLinkText ?? t('extendedprofile.add.friends')}
-                            </Region>
+                                layout={{ position: 'absolute', left: 0, width: 151, top: 0, bottom: 0, maxWidth: 160 }}
+                            />
                         )}
                     </Region>
                 )}
@@ -62,15 +61,12 @@ export const NewExtendedProfileLayoutRelationshipSmileItem = ({ captionSmileFrie
                 </WidgetSlot>
             )}
             {(visibleSmileTxt ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionSmileTxt ?? t('extendedprofile.no.friends.in.this.category')}
+                    textOptions={{ fill: '#7f7f7f' }}
                     name="smile_txt"
-                    layout={{ position: 'absolute', left: 31, width: 210, top: 33, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSmileTxt ?? t('extendedprofile.no.friends.in.this.category')}
-                        textOptions={{ fill: '#7f7f7f' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 31, width: 210, top: 33, height: 16 }}
+                />
             )}
         </Region>
     );

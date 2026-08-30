@@ -36,15 +36,13 @@ export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCan
                         layout={{ position: 'absolute', left: 7, right: 8, top: 4, bottom: 4 }}
                     />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionInfoText ?? t('widgets.petpackage.name.select')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 174 }}
                     name="info_text"
-                    layout={{ position: 'absolute', right: 9, width: 174, top: 16, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoText ?? t('widgets.petpackage.name.select')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 174 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 9, width: 174, top: 16, height: 30 }}
+                />
                 <ButtonThick
                     variant="3"
                     name="pick_name"
@@ -59,15 +57,12 @@ export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCan
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 10, width: 68, bottom: 9, height: 29 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCancel ?? t('generic.cancel')}
+                        textOptions={{ align: 'center' }}
                         name="cancel"
-                        layout={{ position: 'absolute', left: 1, right: 3, top: 6, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionCancel ?? t('generic.cancel')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 1, right: 3, top: 6, bottom: 6 }}
+                    />
                 </Region>
                 <Border
                     variant="0"

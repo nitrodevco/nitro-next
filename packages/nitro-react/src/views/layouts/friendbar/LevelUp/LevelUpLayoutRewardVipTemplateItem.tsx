@@ -19,16 +19,13 @@ export const LevelUpLayoutRewardVipTemplateItem = ({ captionVipLength, layout, v
                 layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 33 }}
             />
             {(visibleVipLength ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionVipLength ?? 'x 10 days'}
+                    textStyle="text-style-il-heading-2"
+                    textOptions={{ fill: '#222222' }}
                     name="vip_length"
-                    layout={{ position: 'absolute', left: 37, width: 56, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionVipLength ?? 'x 10 days'}
-                        textStyle="text-style-il-heading-2"
-                        textOptions={{ fill: '#222222' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 37, width: 56, alignSelf: 'center', height: 17 }}
+                />
             )}
         </Region>
     );

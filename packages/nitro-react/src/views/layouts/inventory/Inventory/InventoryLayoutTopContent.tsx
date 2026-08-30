@@ -103,25 +103,21 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
                         layout={{ position: 'absolute', left: 46, width: 180, top: 42, height: 180 }}
                     />
                     <Region layout={{ position: 'absolute', left: 287, width: 176, top: 64, height: 154, flexDirection: 'column', gap: 5 }}>
-                        <Region
+                        <ThemeText
+                            text={captionInventoryEmptyTitle ?? t('inventory.empty.title')}
+                            textStyle="text-style-il-heading-2"
+                            textOptions={{ fill: '#dd0000', wordWrap: true, wordWrapWidth: 176 }}
                             name="inventory_empty_title"
-                            layout={{ width: 176, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionInventoryEmptyTitle ?? t('inventory.empty.title')}
-                                textStyle="text-style-il-heading-2"
-                                textOptions={{ fill: '#dd0000', wordWrap: true, wordWrapWidth: 176 }}
-                            />
-                        </Region>
-                        <Region
+                            verticalAlign="top"
+                            layout={{ width: 176, height: 17, flexShrink: 0 }}
+                        />
+                        <ThemeText
+                            text={captionInventoryEmptyDescription ?? t('inventory.empty.desc')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 176 }}
                             name="inventory_empty_description"
-                            layout={{ width: 176, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionInventoryEmptyDescription ?? t('inventory.empty.desc')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 176 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ width: 176, height: 17, flexShrink: 0 }}
+                        />
                     </Region>
                     <Button
                         variant="3"
@@ -135,16 +131,11 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
                 </Region>
             )}
             {(visibleLoadingContainer ?? false) && (
-                <Region
+                <ThemeImage
                     name="loading_container"
+                    src={srcDownloadImage ?? layoutImage('inventory_download_icon.png')}
                     layout={{ position: 'absolute', left: 6, width: 264, top: 27, bottom: 6 }}
-                >
-                    <ThemeImage
-                        name="download_image"
-                        src={srcDownloadImage ?? layoutImage('inventory_download_icon.png')}
-                        layout={{ position: 'absolute', left: 0, width: 264, top: 0, height: 268 }}
-                    />
-                </Region>
+                />
             )}
             <InventoryLayoutContentArea {...contentArea} />
         </Region>

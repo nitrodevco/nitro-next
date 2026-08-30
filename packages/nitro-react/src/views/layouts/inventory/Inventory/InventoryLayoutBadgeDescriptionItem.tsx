@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `badgeDescription` of InventoryLayout - pass real rows through its `items…` slot. */
 export interface InventoryLayoutBadgeDescriptionItemProps {
@@ -10,15 +10,13 @@ export interface InventoryLayoutBadgeDescriptionItemProps {
 export const InventoryLayoutBadgeDescriptionItem = ({ captionBadgeDescription, layout, visibleBadgeDescription }: InventoryLayoutBadgeDescriptionItemProps) => {
     return (
         (visibleBadgeDescription ?? false) && (
-            <Region
+            <ThemeText
+                text={captionBadgeDescription ?? ''}
+                textOptions={{ wordWrap: true, wordWrapWidth: 271 }}
                 name="badgeDescription"
-                layout={{ width: 271, height: 4, flexShrink: 0, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-            >
-                <ThemeText
-                    text={captionBadgeDescription ?? ''}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 271 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ width: 271, height: 4, flexShrink: 0, maxHeight: 28, ...layout }}
+            />
         )
     );
 };

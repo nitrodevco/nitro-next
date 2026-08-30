@@ -21,12 +21,12 @@ export const BuyMarketplaceTokensLayout = ({ layout, onBuyTokensButton, onCancel
             layout={{ width: 283, height: 175, minWidth: 283, minHeight: 175, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -5 }}>
-                <Region layout={{ position: 'absolute', left: 6, width: 255, top: 6, height: 69, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('inventory.marketplace.buy_tokens.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('inventory.marketplace.buy_tokens.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 6, width: 255, top: 6, height: 69 }}
+                />
                 <Button
                     variant="6"
                     name="buy_tokens_button"

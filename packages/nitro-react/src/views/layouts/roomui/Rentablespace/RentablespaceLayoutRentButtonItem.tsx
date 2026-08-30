@@ -23,30 +23,24 @@ export const RentablespaceLayoutRentButtonItem = ({ captionPriceLabel, captionRe
         >
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', gap: 5 }}>
                 {(visiblePriceLabel ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionPriceLabel ?? '100 x'}
+                        textStyle="text-style-u-headline-medium"
                         name="price_label"
-                        layout={{ width: 56, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPriceLabel ?? '100 x'}
-                            textStyle="text-style-u-headline-medium"
-                        />
-                    </Region>
+                        layout={{ width: 56, height: 21, flexShrink: 0 }}
+                    />
                 )}
                 <Icon
                     variant="10"
                     layout={{ width: 28, height: 24, flexShrink: 0 }}
                 />
                 {(visibleRentLabel ?? true) && (
-                    <Region
+                    <ThemeText
+                        text={captionRentLabel ?? t('rentablespace.widget.rent')}
+                        textStyle="text-style-u-headline-medium"
                         name="rent_label"
-                        layout={{ width: 176, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRentLabel ?? t('rentablespace.widget.rent')}
-                            textStyle="text-style-u-headline-medium"
-                        />
-                    </Region>
+                        layout={{ width: 176, height: 21, flexShrink: 0 }}
+                    />
                 )}
             </Region>
         </ContainerButton>

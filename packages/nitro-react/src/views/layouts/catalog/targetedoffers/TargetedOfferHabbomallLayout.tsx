@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ButtonThick, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ButtonThick, Frame, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1562_targeted_offer_habbomall_xml` (layout "targeted_offer_habbomall", 268x362) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TargetedOfferHabbomallLayoutProps {
@@ -31,21 +31,18 @@ export const TargetedOfferHabbomallLayout = ({ captionTxtDescription, captionTxt
                 tintColor="#ffde5a"
                 layout={{ position: 'absolute', left: 10, right: 6, top: 153, height: 122 }}
             >
-                <Region
+                <ThemeText
+                    text={captionTxtTitle ?? ''}
                     name="txt_title"
-                    layout={{ position: 'absolute', left: 8, right: 7, top: 8, height: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionTxtTitle ?? ''}
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 8, right: 7, top: 8, height: 32 }}
+                />
+                <ThemeText
+                    text={captionTxtDescription ?? t('targeted.offer.habbomall.notification')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 224 }}
                     name="txt_description"
-                    layout={{ position: 'absolute', left: 8, right: 8, bottom: 7, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTxtDescription ?? t('targeted.offer.habbomall.notification')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 224 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 8, right: 8, bottom: 7, height: 75 }}
+                />
             </Border>
             <ButtonThick
                 variant="6"

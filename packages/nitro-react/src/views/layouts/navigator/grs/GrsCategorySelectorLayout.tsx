@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, ContainerButton, Icon, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, ContainerButton, Icon, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `2996_grs_category_selector_xml` (layout "grs_category_selector", 345x55) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GrsCategorySelectorLayoutProps {
@@ -27,12 +27,11 @@ export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenT
                     onPointerTap={onEnterCategoryButton}
                     layout={{ position: 'absolute', left: 1, right: 0, top: 0, height: 53 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCategoryNameTxt ?? 'Dippa daa'}
                         name="category_name_txt"
-                        layout={{ position: 'absolute', left: 10, width: 250, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionCategoryNameTxt ?? 'Dippa daa'}
-                    </Region>
+                        layout={{ position: 'absolute', left: 10, width: 250, top: 8, height: 13 }}
+                    />
                     <ThemeImage
                         name="navi_room_icon"
                         src={srcNaviRoomIcon}
@@ -45,12 +44,11 @@ export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenT
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 10, width: 328, top: 30, height: 17 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionOpenTxt ?? t('navigator.categories.viewmore')}
                             name="open_txt"
-                            layout={{ position: 'absolute', left: -1, width: 157, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionOpenTxt ?? t('navigator.categories.viewmore')}
-                        </Region>
+                            layout={{ position: 'absolute', left: -1, width: 157, top: 2, height: 13 }}
+                        />
                         <Icon
                             variant="5"
                             name="arrow_right_icon"

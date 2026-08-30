@@ -57,38 +57,30 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
             layout={{ width: 322, height: 395, flexShrink: 0, ...layout }}
         >
             {(visibleVipTabCaption ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionVipTabCaption ?? t('navigator.roomsettings.vip.caption')}
+                    textStyle="text-style-u-headline-small"
                     name="vip_tab_caption"
-                    layout={{ position: 'absolute', left: 0, width: 237, top: 3, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionVipTabCaption ?? t('navigator.roomsettings.vip.caption')}
-                        textStyle="text-style-u-headline-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 237, top: 3, height: 19 }}
+                />
             )}
             {(visibleVipTabInfo ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionVipTabInfo ?? t('navigator.roomsettings.vip.info')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 310 }}
                     name="vip_tab_info"
-                    layout={{ position: 'absolute', left: 0, width: 310, top: 19, height: 70, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionVipTabInfo ?? t('navigator.roomsettings.vip.info')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 310 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, width: 310, top: 19, height: 70 }}
+                />
             )}
             {(visibleVipSettingsText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionVipSettingsText ?? t('navigator.roomsettings.vip_settings')}
+                    textStyle="text-style-u-bold"
                     name="vip_settings_text"
-                    layout={{ position: 'absolute', left: 0, width: 206, top: 90, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionVipSettingsText ?? t('navigator.roomsettings.vip_settings')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 206, top: 90, height: 17 }}
+                />
             )}
             {(visibleHideWallsCheckbox ?? true) && (
                 <CheckBox
@@ -99,15 +91,12 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 />
             )}
             {(visibleHideWallsText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionHideWallsText ?? t('navigator.roomsettings.hide_walls')}
+                    textStyle="text-style-u-regular"
                     name="hide_walls_text"
-                    layout={{ position: 'absolute', left: 20, width: 194, top: 109, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHideWallsText ?? t('navigator.roomsettings.hide_walls')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 20, width: 194, top: 109, height: 17 }}
+                />
             )}
             {(visibleWallThickness ?? true) && (
                 <Dropmenu
@@ -126,15 +115,12 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 />
             )}
             {(visibleRoomBehaviorText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionRoomBehaviorText ?? t('navigator.roomsettings.room_behavior')}
+                    textStyle="text-style-u-bold"
                     name="room_behavior_text"
-                    layout={{ position: 'absolute', left: 0, width: 148, top: 193, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRoomBehaviorText ?? t('navigator.roomsettings.room_behavior')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 148, top: 193, height: 17 }}
+                />
             )}
             {(visibleDoNotLeaveOnDoorTileCheckbox ?? true) && (
                 <CheckBox
@@ -145,15 +131,12 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 />
             )}
             {(visibleDoNotLeaveOnDoorTileText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionDoNotLeaveOnDoorTileText ?? t('navigator.roomsettings.do_not_leave_on_door_tile')}
+                    textStyle="text-style-u-regular"
                     name="do_not_leave_on_door_tile_text"
-                    layout={{ position: 'absolute', left: 20, width: 290, top: 213, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDoNotLeaveOnDoorTileText ?? t('navigator.roomsettings.do_not_leave_on_door_tile')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 20, width: 290, top: 213, height: 17 }}
+                />
             )}
             {(visibleIdleSleepCheckbox ?? true) && (
                 <CheckBox
@@ -164,15 +147,12 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 />
             )}
             {(visibleIdleSleepText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionIdleSleepText ?? t('navigator.roomsettings.idle_sleep')}
+                    textStyle="text-style-u-regular"
                     name="idle_sleep_text"
-                    layout={{ position: 'absolute', left: 20, width: 185, top: 235, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionIdleSleepText ?? t('navigator.roomsettings.idle_sleep')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 20, width: 185, top: 235, height: 17 }}
+                />
             )}
             {(visibleIdleSleepTimeout ?? true) && (
                 <TextInput
@@ -183,15 +163,12 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 />
             )}
             {(visibleIdleSleepTimeoutLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionIdleSleepTimeoutLabel ?? t('navigator.roomsettings.timeout.seconds')}
+                    textStyle="text-style-u-regular"
                     name="idle_sleep_timeout_label"
-                    layout={{ position: 'absolute', left: 98, width: 57, top: 259, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionIdleSleepTimeoutLabel ?? t('navigator.roomsettings.timeout.seconds')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 98, width: 57, top: 259, height: 17 }}
+                />
             )}
             {(visibleIdleAutokickCheckbox ?? true) && (
                 <CheckBox
@@ -202,15 +179,12 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 />
             )}
             {(visibleIdleAutokickText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionIdleAutokickText ?? t('navigator.roomsettings.idle_autokick')}
+                    textStyle="text-style-u-regular"
                     name="idle_autokick_text"
-                    layout={{ position: 'absolute', left: 20, width: 210, top: 281, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionIdleAutokickText ?? t('navigator.roomsettings.idle_autokick')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 20, width: 210, top: 281, height: 17 }}
+                />
             )}
             {(visibleIdleAutokickTimeout ?? true) && (
                 <TextInput
@@ -221,26 +195,20 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
                 />
             )}
             {(visibleIdleAutokickTimeoutLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionIdleAutokickTimeoutLabel ?? t('navigator.roomsettings.timeout.seconds')}
+                    textStyle="text-style-u-regular"
                     name="idle_autokick_timeout_label"
-                    layout={{ position: 'absolute', left: 98, width: 57, top: 305, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionIdleAutokickTimeoutLabel ?? t('navigator.roomsettings.timeout.seconds')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 98, width: 57, top: 305, height: 17 }}
+                />
             )}
             {(visibleChatSettingsText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionChatSettingsText ?? t('navigator.roomsettings.chat.flood_sensitivity')}
+                    textStyle="text-style-u-bold"
                     name="chat_settings_text"
-                    layout={{ position: 'absolute', left: 0, width: 97, top: 333, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionChatSettingsText ?? t('navigator.roomsettings.chat.flood_sensitivity')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 97, top: 333, height: 17 }}
+                />
             )}
             {(visibleChatFloodSensitivity ?? true) && (
                 <Dropmenu

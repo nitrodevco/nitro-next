@@ -29,15 +29,12 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                     tint={tintHighlight}
                     layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionRank ?? '12345'}
+                    textOptions={{ fill: '#1077ac', align: 'center' }}
                     name="rank"
-                    layout={{ position: 'absolute', left: 7, width: 50, top: 9, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionRank ?? '12345'}
-                        textOptions={{ fill: '#1077ac', align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, width: 50, top: 9, height: 20 }}
+                />
                 <Region
                     name="imageRegion"
                     onPointerTap={onImageRegion}
@@ -52,24 +49,18 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                     tint={tintAvatarImage}
                     layout={{ position: 'absolute', left: 50, width: 44, top: 1, bottom: 1 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionName ?? 'PlayerName'}
+                    textOptions={{ fill: '#1077ac' }}
                     name="name"
-                    layout={{ position: 'absolute', left: 98, width: 88, top: 9, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionName ?? 'PlayerName'}
-                        textOptions={{ fill: '#1077ac' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 98, width: 88, top: 9, height: 20 }}
+                />
+                <ThemeText
+                    text={captionScore ?? '999999'}
+                    textOptions={{ fill: '#1077ac' }}
                     name="score"
-                    layout={{ position: 'absolute', right: 14, width: 58, top: 9, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionScore ?? '999999'}
-                        textOptions={{ fill: '#1077ac' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 14, width: 58, top: 9, height: 20 }}
+                />
                 <ThemeImage
                     name="divider"
                     src={srcDivider ?? layoutImage('leaderboard_divider.png')}

@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ScrollArea } from '#base/theme';
+import { BoxLayout, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Row template `issues_item_list` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutIssuesItemListItemProps {
@@ -26,36 +26,32 @@ export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionR
             >
                 <Region layout={{ width: 280, height: 16, flexShrink: 0 }}>
                     {(visibleReporter ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionReporter ?? 'reporter'}
                             name="reporter"
-                            layout={{ position: 'absolute', left: 0, width: 78, top: 0, height: 13, maxWidth: 78, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionReporter ?? 'reporter'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, width: 78, top: 0, height: 13, maxWidth: 78 }}
+                        />
                     )}
                     {(visibleCategory ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionCategory ?? 'category'}
                             name="category"
-                            layout={{ position: 'absolute', left: 78, width: 110, top: 0, height: 13, maxWidth: 110, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionCategory ?? 'category'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 78, width: 110, top: 0, height: 13, maxWidth: 110 }}
+                        />
                     )}
                     {(visibleType ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionType ?? 'type'}
                             name="type"
-                            layout={{ position: 'absolute', left: 188, width: 60, top: 0, height: 13, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionType ?? 'type'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 188, width: 60, top: 0, height: 13, maxWidth: 60 }}
+                        />
                     )}
                     {(visibleTimeOpen ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTimeOpen ?? '00:00'}
                             name="time_open"
-                            layout={{ position: 'absolute', left: 248, width: 32, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionTimeOpen ?? '00:00'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 248, width: 32, top: 0, height: 13 }}
+                        />
                     )}
                 </Region>
             </Region>

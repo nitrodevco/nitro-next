@@ -45,20 +45,19 @@ export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, l
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 3, width: 319, top: 28, height: 21 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 156, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        {t('talent.track.progress.setemail')}
-                    </Region>
-                </Region>
-                <Region
-                    name="error_txt"
-                    layout={{ position: 'absolute', left: 2, width: 318, top: 28, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
                     <ThemeText
-                        text={captionErrorTxt ?? 'jkhgjk hgk jhg kjhg jkh lkjh lkjh lkjh lkjh lkj hlkjh lkj hlkjh lkj'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#cc0000', wordWrap: true, wordWrapWidth: 318 }}
+                        text={t('talent.track.progress.setemail')}
+                        layout={{ position: 'absolute', left: 0, width: 156, top: 0, height: 16 }}
                     />
                 </Region>
+                <ThemeText
+                    text={captionErrorTxt ?? 'jkhgjk hgk jhg kjhg jkh lkjh lkjh lkjh lkjh lkj hlkjh lkj hlkjh lkj'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#cc0000', wordWrap: true, wordWrapWidth: 318 }}
+                    name="error_txt"
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 2, width: 318, top: 28, height: 33 }}
+                />
                 <Region
                     name="changed_container"
                     layout={{ position: 'absolute', left: 2, width: 328, top: 29, height: 36 }}
@@ -67,13 +66,13 @@ export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, l
                         src={layoutImage('help_accept_icon.png')}
                         layout={{ position: 'absolute', left: 0, width: 11, top: 6, height: 10 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 16, width: 306, top: 2, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('talent.track.progress.emailchanged')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 306 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('talent.track.progress.emailchanged')}
+                        textStyle="text-style-il-heading-3"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 306 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 16, width: 306, top: 2, height: 30 }}
+                    />
                 </Region>
             </Region>
         )

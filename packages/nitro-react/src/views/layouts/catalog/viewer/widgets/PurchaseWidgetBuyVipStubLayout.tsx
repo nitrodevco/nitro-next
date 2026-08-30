@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ButtonThick, Icon, Region } from '#base/theme';
+import { Border, BoxLayout, ButtonThick, Icon, Region, ThemeText } from '#base/theme';
 
 /** Generated from `1642_purchaseWidgetBuyVipStub_xml` (layout "purchaseWidgetBuyVipStub", 360x30) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PurchaseWidgetBuyVipStubLayoutProps {
@@ -26,12 +26,11 @@ export const PurchaseWidgetBuyVipStubLayout = ({ captionCtlgWidgetGetClubText, l
                     variant="12"
                     layout={{ position: 'absolute', left: 4, width: 20, top: 10, height: 10 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionCtlgWidgetGetClubText ?? t('catalog.buy.widget.get.vip.to.unlock.this.product')}
                     name="ctlg_widget_get_club_text"
-                    layout={{ position: 'absolute', left: 23, width: 275, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionCtlgWidgetGetClubText ?? t('catalog.buy.widget.get.vip.to.unlock.this.product')}
-                </Region>
+                    layout={{ position: 'absolute', left: 23, width: 275, top: 6, height: 17 }}
+                />
                 <ButtonThick
                     variant="3"
                     name="ctlg_buy_club_button"

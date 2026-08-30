@@ -19,15 +19,13 @@ export const DailytasksLayoutHcInfoContItem = ({ captionHcInfoText, layout, onGe
             layout={{ width: 428, height: 35, flexShrink: 0, ...layout }}
         >
             {(visibleHcInfoText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionHcInfoText ?? 'You get double duckets as you are an HC member!'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 289, align: 'center' }}
                     name="hc_info_text"
-                    layout={{ position: 'absolute', left: 12, width: 289, alignSelf: 'center', marginTop: -2, marginBottom: 2, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionHcInfoText ?? 'You get double duckets as you are an HC member!'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 289, align: 'center' }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 12, width: 289, alignSelf: 'center', marginTop: -2, marginBottom: 2, height: 17 }}
+                />
             )}
             {(visibleGetHcBtn ?? true) && (
                 <ButtonThick

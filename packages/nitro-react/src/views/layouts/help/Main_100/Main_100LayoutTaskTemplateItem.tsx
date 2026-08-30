@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Border, BoxLayout, Region, Shape, ThemeImage } from '#base/theme';
+import { Border, BoxLayout, Region, Shape, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `task_template` of Main_100Layout - pass real rows through its `items…` slot. */
@@ -44,20 +44,18 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {(visibleTaskName ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTaskName ?? 'Visit Rooms'}
                             name="task_name"
-                            layout={{ position: 'absolute', left: 67, width: 202, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionTaskName ?? 'Visit Rooms'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 67, width: 202, top: 7, height: 17 }}
+                        />
                     )}
                     {(visibleTaskDescription ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTaskDescription ?? 'Explore rooms made by other players'}
                             name="task_description"
-                            layout={{ position: 'absolute', left: 67, width: 202, top: 23, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionTaskDescription ?? 'Explore rooms made by other players'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 67, width: 202, top: 23, height: 16 }}
+                        />
                     )}
                     {(visibleLoadingBar ?? true) && (
                         <Region
@@ -104,12 +102,11 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                         </Region>
                     )}
                     {(visibleTaskProgressTxt ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionTaskProgressTxt ?? '3 / 5'}
                             name="task_progress_txt"
-                            layout={{ position: 'absolute', left: 280, width: 25, top: 38, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionTaskProgressTxt ?? '3 / 5'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 280, width: 25, top: 38, height: 16 }}
+                        />
                     )}
                     <Border
                         variant="15"
@@ -118,12 +115,11 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                     >
                         <Region layout={{ position: 'absolute', left: 8, width: 44, top: 4, height: 23, flexDirection: 'row', gap: 5 }}>
                             {(visibleTrackRewardTxt ?? true) && (
-                                <Region
+                                <ThemeText
+                                    text={captionTrackRewardTxt ?? '30'}
                                     name="track_reward_txt"
-                                    layout={{ width: 20, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    {captionTrackRewardTxt ?? '30'}
-                                </Region>
+                                    layout={{ width: 20, height: 19, flexShrink: 0 }}
+                                />
                             )}
                             {(visibleTrackRewardIcon ?? true) && (
                                 <ThemeImage

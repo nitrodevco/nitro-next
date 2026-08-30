@@ -28,16 +28,13 @@ export const RoomToolsToolbarLayoutButtonLikeItem = ({ captionTextLike, layout, 
                 layout={{ position: 'absolute', left: 2, width: 27, top: 0, height: 25 }}
             />
             {(visibleTextLike ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionTextLike ?? t('room.like.button.text')}
+                    textStyle="text-style-u-button-tab"
+                    textOptions={{ fill: '#bbbbbb' }}
                     name="text_like"
-                    layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextLike ?? t('room.like.button.text')}
-                        textStyle="text-style-u-button-tab"
-                        textOptions={{ fill: '#bbbbbb' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 36, width: 90, top: 3, height: 14, maxWidth: 90 }}
+                />
             )}
         </Region>
     );

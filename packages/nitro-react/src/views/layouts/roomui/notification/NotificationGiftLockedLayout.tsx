@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ContainerButton, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Frame, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1018_notification_gift_locked_xml` (layout "teaser_general", 433x260) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationGiftLockedLayoutProps {
@@ -48,25 +48,20 @@ export const NotificationGiftLockedLayout = ({ captionHeader, captionShareTxt, c
                         layout={{ position: 'absolute', left: 1, width: 419, bottom: 1, height: 159 }}
                     />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionHeader ?? t('widget.furni.teaser.gift.locked.title')}
+                    textStyle="text-style-bold"
+                    textOptions={{ fill: '#444444' }}
                     name="header"
-                    layout={{ position: 'absolute', right: 8, width: 282, top: 12, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHeader ?? t('widget.furni.teaser.gift.locked.title')}
-                        textStyle="text-style-bold"
-                        textOptions={{ fill: '#444444' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', right: 8, width: 282, top: 12, height: 21 }}
+                />
+                <ThemeText
+                    text={captionText ?? t('widget.furni.teaser.gift.locked.desc')}
+                    textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 282 }}
                     name="text"
-                    layout={{ position: 'absolute', right: 8, width: 282, top: 31, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionText ?? t('widget.furni.teaser.gift.locked.desc')}
-                        textOptions={{ fill: '#888888', wordWrap: true, wordWrapWidth: 282 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', right: 8, width: 282, top: 31, height: 120 }}
+                />
                 <ContainerButton
                     variant="0"
                     name="post_btn"
@@ -85,16 +80,13 @@ export const NotificationGiftLockedLayout = ({ captionHeader, captionShareTxt, c
                         tintColor="#309d00"
                         layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 17, minWidth: 294, maxWidth: 294, minHeight: 17, maxHeight: 17 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionShareTxt ?? t('widget.furni.teaser.gift.locked.share')}
+                        textStyle="text-style-bold"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="share_txt"
-                        layout={{ position: 'absolute', width: 294, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionShareTxt ?? t('widget.furni.teaser.gift.locked.share')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 294, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 33, minWidth: 294, maxWidth: 294, minHeight: 33, maxHeight: 33 }}
+                    />
                 </ContainerButton>
                 <ContainerButton
                     variant="0"
@@ -115,15 +107,12 @@ export const NotificationGiftLockedLayout = ({ captionHeader, captionShareTxt, c
                         tintColor="#666666"
                         layout={{ position: 'absolute', left: 4, right: 4, top: 4, height: 11, minWidth: 72, maxWidth: 72, minHeight: 11, maxHeight: 11 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionSkip ?? t('widget.furni.teaser.gift.locked.skip')}
+                        textOptions={{ fill: '#cccccc', align: 'center' }}
                         name="skip"
-                        layout={{ position: 'absolute', left: 4, right: 3, top: 6, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionSkip ?? t('widget.furni.teaser.gift.locked.skip')}
-                            textOptions={{ fill: '#cccccc', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 4, right: 3, top: 6, bottom: 1 }}
+                    />
                 </ContainerButton>
                 <ThemeImage
                     name="deco_img"

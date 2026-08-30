@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `name_text` of JukeboxViewLayout - pass real rows through its `items…` slot. */
 export interface JukeboxViewLayoutNameTextItemProps {
@@ -8,14 +8,12 @@ export interface JukeboxViewLayoutNameTextItemProps {
 
 export const JukeboxViewLayoutNameTextItem = ({ captionNameText, layout }: JukeboxViewLayoutNameTextItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionNameText ?? 'Furni name'}
+            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 158 }}
             name="name_text"
-            layout={{ width: 158, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionNameText ?? 'Furni name'}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 158 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 158, height: 12, flexShrink: 0, ...layout }}
+        />
     );
 };

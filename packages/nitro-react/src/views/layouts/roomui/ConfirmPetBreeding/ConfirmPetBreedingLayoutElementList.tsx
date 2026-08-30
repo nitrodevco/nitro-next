@@ -39,24 +39,20 @@ export const ConfirmPetBreedingLayoutElementList = ({ captionInfo, captionText, 
                 layout={{ width: 295, height: 209, flexShrink: 0 }}
             >
                 <Region layout={{ position: 'absolute', left: 10, right: -2, top: 10, bottom: 0, flexDirection: 'column', gap: 5 }}>
-                    <Region
+                    <ThemeText
+                        text={captionText ?? t('breedpets.confirmation.widget.text')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
                         name="text"
-                        layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionText ?? t('breedpets.confirmation.widget.text')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
-                        />
-                    </Region>
-                    <Region
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={captionInfo ?? t('breedpets.confirmation.widget.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 290 }}
                         name="info"
-                        layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0, minWidth: 290, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfo ?? t('breedpets.confirmation.widget.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 290 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0, minWidth: 290 }}
+                    />
                     <ConfirmPetBreedingLayoutCategoryList {...categoryList} />
                 </Region>
             </Border>

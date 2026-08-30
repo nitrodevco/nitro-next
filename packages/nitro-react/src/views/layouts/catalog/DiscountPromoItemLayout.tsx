@@ -40,15 +40,12 @@ export const DiscountPromoItemLayout = ({ background, captionPromoText, captionP
                 >
                     {captionPromoTextEffect ?? 'test 1 get 2 tests for free!'}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionPromoText ?? 'test 1 get 2 tests for free!'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="promo_text"
-                    layout={{ position: 'absolute', left: 32, width: 151, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPromoText ?? 'test 1 get 2 tests for free!'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 32, width: 151, top: 1, height: 17 }}
+                />
                 <Region
                     name="click_region"
                     onPointerTap={onClickRegion}

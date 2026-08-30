@@ -31,13 +31,13 @@ export const NuxOfferOldUserLayout = ({ captionBtnSkip, captionTxtBody, layout, 
                     backgroundColor="#0f4052"
                     layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 75, width: 360, top: 11, height: 28, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('nux.offer.old.user.title')}
-                            textStyle="text-style-u-headline-big"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 360 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('nux.offer.old.user.title')}
+                        textStyle="text-style-u-headline-big"
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 360 }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 75, width: 360, top: 11, height: 28, maxHeight: 84 }}
+                    />
                 </Region>
                 <ThemeImage
                     name="club_icon"
@@ -46,16 +46,14 @@ export const NuxOfferOldUserLayout = ({ captionBtnSkip, captionTxtBody, layout, 
                 />
             </Region>
             <Region layout={{ position: 'absolute', left: 4, width: 446, top: 89, height: 118 }}>
-                <Region
+                <ThemeText
+                    text={captionTxtBody ?? t('nux.offer.old.user.summary')}
+                    textStyle="text-style-u-tool-tip"
+                    textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 434 }}
                     name="txtBody"
-                    layout={{ position: 'absolute', left: 6, width: 434, top: 3, height: 16, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTxtBody ?? t('nux.offer.old.user.summary')}
-                        textStyle="text-style-u-tool-tip"
-                        textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 434 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 6, width: 434, top: 3, height: 16, maxHeight: 84 }}
+                />
                 <Region
                     name="user_input_buttons"
                     layout={{ position: 'absolute', left: 138, right: 10, bottom: 6, height: 30 }}

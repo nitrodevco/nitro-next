@@ -22,16 +22,14 @@ export const ElementConcurrentusersinfoLayout = ({ captionBadgeDesc, captionUser
                     name="state.active"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionUsersDesc ?? t('landing.view.concurrentusers.info')}
+                        textStyle="text-style-il-heading-3"
+                        textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 185 }}
                         name="users_desc"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionUsersDesc ?? t('landing.view.concurrentusers.info')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 185 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 33 }}
+                    />
                 </Region>
                 {(visibleStateAchieved ?? false) && (
                     <Region
@@ -43,16 +41,14 @@ export const ElementConcurrentusersinfoLayout = ({ captionBadgeDesc, captionUser
                             src={srcBadgeImage}
                             layout={{ position: 'absolute', left: 9, width: 38, top: 3, height: 38 }}
                         />
-                        <Region
+                        <ThemeText
+                            text={captionBadgeDesc ?? t('landing.view.concurrentusers.reward')}
+                            textStyle="text-style-il-heading-3"
+                            textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 130 }}
                             name="badge_desc"
-                            layout={{ position: 'absolute', left: 50, width: 130, top: 7, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBadgeDesc ?? t('landing.view.concurrentusers.reward')}
-                                textStyle="text-style-il-heading-3"
-                                textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 130 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 50, width: 130, top: 7, height: 33 }}
+                        />
                         <Button
                             variant="100"
                             name="action_button"

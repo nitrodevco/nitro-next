@@ -55,15 +55,12 @@ export const MemberEntryLayout = ({ avatarImage, bgRegion, captionActionLink, ca
                 >
                     {avatarImage}
                 </WidgetSlot>
-                <Region
+                <ThemeText
+                    text={captionUserNameTxt ?? 'User name PH'}
+                    textStyle="text-style-u-bold"
                     name="user_name_txt"
-                    layout={{ position: 'absolute', left: 33, width: 77, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionUserNameTxt ?? 'User name PH'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 33, width: 77, top: 1, height: 16 }}
+                />
                 {(visibleActionLinkRegion ?? false) && (
                     <Region
                         name="action_link_region"
@@ -71,12 +68,11 @@ export const MemberEntryLayout = ({ avatarImage, bgRegion, captionActionLink, ca
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 51, width: 110, top: 14, height: 18 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionActionLink ?? 'Action Name PH'}
                             name="action_link"
-                            layout={{ position: 'absolute', left: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionActionLink ?? 'Action Name PH'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, top: 0, height: 16 }}
+                        />
                     </Region>
                 )}
                 <Region
@@ -143,16 +139,13 @@ export const MemberEntryLayout = ({ avatarImage, bgRegion, captionActionLink, ca
                         layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionMemberSinceTxt ?? 'Since Txt PH'}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#666666' }}
                     name="member_since_txt"
-                    layout={{ position: 'absolute', left: 50, width: 61, top: 15, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMemberSinceTxt ?? 'Since Txt PH'}
-                        textStyle="text-style-u-small"
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 50, width: 61, top: 15, height: 15 }}
+                />
             </Border>
         </Region>
     );

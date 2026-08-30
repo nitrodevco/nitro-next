@@ -27,25 +27,20 @@ export const HabbiconHubLayoutTrayContainer = ({ captionTraySummary, captionTray
                     tintColor="#f6ebd7"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionTrayTitle ?? t('habbicon_book.tab.owned')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#2b2b2b' }}
                     name="tray_title"
-                    layout={{ position: 'absolute', left: 12, width: 60, top: 10, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTrayTitle ?? t('habbicon_book.tab.owned')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#2b2b2b' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 12, width: 60, top: 10, height: 22 }}
+                />
+                <ThemeText
+                    text={captionTraySummary ?? t('habbicon_book.tray.summary')}
+                    textOptions={{ fill: '#3b3b3b', wordWrap: true, wordWrapWidth: 510 }}
                     name="tray_summary"
-                    layout={{ position: 'absolute', left: 12, width: 510, top: 34, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTraySummary ?? t('habbicon_book.tray.summary')}
-                        textOptions={{ fill: '#3b3b3b', wordWrap: true, wordWrapWidth: 510 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 12, width: 510, top: 34, height: 30 }}
+                />
                 <HabbiconHubLayoutTrayGroupList {...trayGroupList} />
             </Region>
         )

@@ -31,29 +31,23 @@ export const IroEventSettingsLayout = ({ buttons, captionDescLabel, captionNameL
                 name="inputs_cont"
                 layout={{ position: 'absolute', left: 11, right: 0, top: 4, height: 192 }}
             >
-                <Region
+                <ThemeText
+                    text={captionNameLabel ?? t('navigator.eventsettings.name')}
+                    textStyle="text-style-u-bold"
                     name="name_label"
-                    layout={{ position: 'absolute', left: 0, width: 173, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNameLabel ?? t('navigator.eventsettings.name')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 173, top: 0, height: 17 }}
+                />
                 <TextInput
                     value={eventNameValue}
                     onChange={setEventNameValue}
                     layout={{ position: 'absolute', left: 0, width: 217, top: 16, height: 15 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionDescLabel ?? t('navigator.eventsettings.desc')}
+                    textStyle="text-style-u-bold"
                     name="desc_label"
-                    layout={{ position: 'absolute', left: 0, width: 169, top: 36, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescLabel ?? t('navigator.eventsettings.desc')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 169, top: 36, height: 17 }}
+                />
                 <TextInput
                     value={eventDescValue}
                     onChange={setEventDescValue}

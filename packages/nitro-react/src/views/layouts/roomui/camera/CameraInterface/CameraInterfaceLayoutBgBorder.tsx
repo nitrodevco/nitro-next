@@ -176,26 +176,20 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                 layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 462 }}
             />
             {(visiblePhotoDate ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionPhotoDate ?? '6/4/2014 14:02'}
+                    textOptions={{ fill: '#ffffff' }}
                     name="photo_date"
-                    layout={{ position: 'absolute', right: 10, width: 88, top: 55, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPhotoDate ?? '6/4/2014 14:02'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 10, width: 88, top: 55, height: 17 }}
+                />
             )}
             {(visiblePhotoRoomname ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionPhotoRoomname ?? 'My awesome room'}
+                    textOptions={{ fill: '#ffffff', align: 'right' }}
                     name="photo_roomname"
-                    layout={{ position: 'absolute', right: 10, width: 110, top: 69, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionPhotoRoomname ?? 'My awesome room'}
-                        textOptions={{ fill: '#ffffff', align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 10, width: 110, top: 69, height: 17 }}
+                />
             )}
             <ThemeImage
                 name="camera_crosshair"

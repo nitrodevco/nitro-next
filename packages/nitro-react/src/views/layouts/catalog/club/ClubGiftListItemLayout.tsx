@@ -24,33 +24,24 @@ export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, 
                 tintColor="#e3e3e3"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionGiftName ?? 'lorem ipsum'}
+                    textStyle="text-style-u-bold"
                     name="gift_name"
-                    layout={{ position: 'absolute', left: 58, width: 71, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionGiftName ?? 'lorem ipsum'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 58, width: 71, top: 8, height: 17 }}
+                />
+                <ThemeText
+                    text={captionGiftDesc ?? 'lorem ipsum'}
+                    textStyle="text-style-u-small"
                     name="gift_desc"
-                    layout={{ position: 'absolute', left: 58, width: 60, top: 22, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionGiftDesc ?? 'lorem ipsum'}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 58, width: 60, top: 22, height: 15 }}
+                />
+                <ThemeText
+                    text={captionMonthsRequired ?? ''}
+                    textStyle="text-style-u-small"
                     name="months_required"
-                    layout={{ position: 'absolute', left: 58, width: 236, top: 36, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMonthsRequired ?? ''}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 58, width: 236, top: 36, height: 15 }}
+                />
                 <Button
                     variant="3"
                     name="select_button"
@@ -69,30 +60,24 @@ export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, 
                         tint={tintImage}
                         layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 46 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionBundleCounter ?? '0'}
+                        textOptions={{ fill: '#cccc66' }}
                         name="bundleCounter"
-                        layout={{ position: 'absolute', left: 18, right: 24, top: 18, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBundleCounter ?? '0'}
-                            textOptions={{ fill: '#cccc66' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 18, right: 24, top: 18, height: 15 }}
+                    />
                     <Border
                         variant="2"
                         name="multiContainer"
                         tintColor="#ff3300"
                         layout={{ position: 'absolute', left: 10, width: 17, top: 2, height: 17 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionMultiCounter ?? '0'}
+                            textOptions={{ fill: '#cccc66' }}
                             name="multiCounter"
-                            layout={{ position: 'absolute', left: 3, width: 10, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMultiCounter ?? '0'}
-                                textOptions={{ fill: '#cccc66' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 3, width: 10, top: 0, height: 16 }}
+                        />
                     </Border>
                 </Region>
                 <Icon

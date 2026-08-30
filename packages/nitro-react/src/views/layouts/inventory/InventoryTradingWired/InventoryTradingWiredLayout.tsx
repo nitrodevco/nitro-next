@@ -112,15 +112,12 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, captionInfoText, c
                         >
                             {t('inventory.trading.accept')}
                         </Button>
-                        <Region
+                        <ThemeText
+                            text={captionSecondsLeftText ?? t('inventory.wired_trading.seconds_left')}
+                            textOptions={{ fill: '#bf272a' }}
                             name="seconds_left_text"
-                            layout={{ width: 136, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSecondsLeftText ?? t('inventory.wired_trading.seconds_left')}
-                                textOptions={{ fill: '#bf272a' }}
-                            />
-                        </Region>
+                            layout={{ width: 136, height: 17, flexShrink: 0 }}
+                        />
                     </Region>
                     <Button
                         variant="3"

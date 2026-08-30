@@ -33,12 +33,11 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
             name="preview_container"
             layout={{ position: 'absolute', left: 14, width: 150, top: 94, height: 274, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionTitle ?? t('wiredmenu.inspection.preview')}
                 name="title"
-                layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionTitle ?? t('wiredmenu.inspection.preview')}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19 }}
+            />
             <Border
                 variant="3"
                 name="preview_border"
@@ -124,9 +123,10 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
                     onPointerTap={onPinCheckbox}
                     layout={{ position: 'absolute', left: 0, width: 17, top: 1, height: 17 }}
                 />
-                <Region layout={{ position: 'absolute', left: 20, width: 82, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('wiredmenu.inspection.pin')}
-                </Region>
+                <ThemeText
+                    text={t('wiredmenu.inspection.pin')}
+                    layout={{ position: 'absolute', left: 20, width: 82, top: 0, height: 17, minHeight: 17 }}
+                />
             </Region>
         </Region>
     );

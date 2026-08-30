@@ -32,12 +32,11 @@ export const MiniviewLayout = ({ countdown, layout }: MiniviewLayoutProps) => {
                     >
                         {countdown}
                     </WidgetSlot>
-                    <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('next.gift.in')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('next.gift.in')}
+                        textStyle="text-style-il-regular-white"
+                        layout={{ position: 'absolute', left: 10, width: 154, top: 6, bottom: 7 }}
+                    />
                 </Border>
             </Region>
         </Region>

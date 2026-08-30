@@ -28,16 +28,13 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
                 name="step_cont_3"
                 layout={{ position: 'absolute', left: 0, right: -12, top: 110, height: 305, ...layout }}
             >
-                <Region
+                <ThemeText
+                    text={captionLabelGuildColor ?? t('group.edit.color.guild.color')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
                     name="label_guild_color"
-                    layout={{ position: 'absolute', left: 13, width: 92, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionLabelGuildColor ?? t('group.edit.color.guild.color')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 13, width: 92, bottom: 280, height: 17 }}
+                />
                 <Border
                     variant="5"
                     layout={{ position: 'absolute', left: 13, width: 92, top: 29, height: 46 }}
@@ -69,26 +66,20 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
                         />
                     </Border>
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionLabelPrimary ?? t('group.edit.color.primary.color')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
                     name="label_primary"
-                    layout={{ position: 'absolute', left: 128, width: 142, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionLabelPrimary ?? t('group.edit.color.primary.color')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 128, width: 142, bottom: 280, height: 17 }}
+                />
+                <ThemeText
+                    text={captionLabelSecondary ?? t('group.edit.color.secondary.color')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
                     name="label_secondary"
-                    layout={{ position: 'absolute', left: 280, width: 100, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionLabelSecondary ?? t('group.edit.color.secondary.color')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 280, width: 100, bottom: 280, height: 17 }}
+                />
                 <Border
                     variant="3"
                     name="border"

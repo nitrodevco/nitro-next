@@ -43,12 +43,11 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0 }}
                 >
                     {separatorWidget}
-                    <Region layout={{ position: 'absolute', left: 170, width: 157, top: 2, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main.help.section.title')}
-                            textStyle="text-style-il-border"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main.help.section.title')}
+                        textStyle="text-style-il-border"
+                        layout={{ position: 'absolute', left: 170, width: 157, top: 2, bottom: 3 }}
+                    />
                 </WidgetSlot>
                 <Region layout={{ alignSelf: 'stretch', height: 140, flexShrink: 0 }}>
                     <ThemeImage
@@ -56,19 +55,19 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                         layout={{ position: 'absolute', left: 17, width: 153, top: 5, height: 128 }}
                     />
                     <Region layout={{ position: 'absolute', right: 8, width: 220, alignSelf: 'center', marginTop: -2.5, marginBottom: 2.5, height: 135, minWidth: 220, maxWidth: 220, flexDirection: 'column', gap: 5 }}>
-                        <Region layout={{ alignSelf: 'stretch', height: 27, flexShrink: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('help.main.help.title')}
-                                textStyle="text-style-il-heading-2"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                            />
-                        </Region>
-                        <Region layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, minWidth: 220, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('help.main.help.content')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('help.main.help.title')}
+                            textStyle="text-style-il-heading-2"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                            verticalAlign="top"
+                            layout={{ alignSelf: 'stretch', height: 27, flexShrink: 0, maxWidth: 220 }}
+                        />
+                        <ThemeText
+                            text={t('help.main.help.content')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                            verticalAlign="top"
+                            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, minWidth: 220, maxWidth: 220 }}
+                        />
                         <Button
                             variant="101"
                             name="instructions_button"
@@ -85,12 +84,11 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0 }}
                 >
                     {separatorWidget2}
-                    <Region layout={{ position: 'absolute', left: 170, width: 127, top: 2, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.bully.title')}
-                            textStyle="text-style-il-border"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.bully.title')}
+                        textStyle="text-style-il-border"
+                        layout={{ position: 'absolute', left: 170, width: 127, top: 2, bottom: 3 }}
+                    />
                 </WidgetSlot>
                 <Region layout={{ alignSelf: 'stretch', height: 155, flexShrink: 0 }}>
                     <ThemeImage
@@ -102,19 +100,19 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                         layout={{ position: 'absolute', left: -1, width: 154, bottom: -3, height: 125 }}
                     />
                     <Region layout={{ position: 'absolute', right: 0, width: 220, alignSelf: 'center', marginTop: -10, marginBottom: 10, height: 135, minWidth: 220, maxWidth: 220, flexDirection: 'column', gap: 5 }}>
-                        <Region layout={{ alignSelf: 'stretch', height: 27, flexShrink: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('help.main2.bully.subtitle')}
-                                textStyle="text-style-il-heading-2"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                            />
-                        </Region>
-                        <Region layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, minWidth: 220, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('help.main2.bully.description')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('help.main2.bully.subtitle')}
+                            textStyle="text-style-il-heading-2"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                            verticalAlign="top"
+                            layout={{ alignSelf: 'stretch', height: 27, flexShrink: 0, maxWidth: 220 }}
+                        />
+                        <ThemeText
+                            text={t('help.main2.bully.description')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                            verticalAlign="top"
+                            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, minWidth: 220, maxWidth: 220 }}
+                        />
                         <Button
                             variant="101"
                             name="bully_button"
@@ -131,12 +129,11 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0 }}
                 >
                     {separatorWidget3}
-                    <Region layout={{ position: 'absolute', left: 0, width: 144, top: 2, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main.self.section.title')}
-                            textStyle="text-style-il-border"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main.self.section.title')}
+                        textStyle="text-style-il-border"
+                        layout={{ position: 'absolute', left: 0, width: 144, top: 2, bottom: 3 }}
+                    />
                 </WidgetSlot>
                 <Border
                     variant="102"
@@ -212,18 +209,16 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     tintColor="#ac1d19"
                     layout={{ alignSelf: 'stretch', height: 70, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 20, width: 182, top: 17, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.emergency.title')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 20, width: 162, top: 36, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.emergency.subtitle')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.emergency.title')}
+                        textStyle="text-style-il-regular-white"
+                        layout={{ position: 'absolute', left: 20, width: 182, top: 17, height: 19 }}
+                    />
+                    <ThemeText
+                        text={t('help.main2.emergency.subtitle')}
+                        textStyle="text-style-il-regular-white"
+                        layout={{ position: 'absolute', left: 20, width: 162, top: 36, height: 16 }}
+                    />
                     <Button
                         variant="100"
                         name="emergency_button"
@@ -232,12 +227,11 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     >
                         {t('help.main2.emergency.button')}
                     </Button>
-                    <Region layout={{ position: 'absolute', left: 235, width: 149, bottom: 10, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.main2.emergency.leave')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.emergency.leave')}
+                        textStyle="text-style-il-regular-white"
+                        layout={{ position: 'absolute', left: 235, width: 149, bottom: 10, height: 16 }}
+                    />
                     <CheckBox
                         variant="101"
                         name="leave_room"

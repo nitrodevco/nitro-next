@@ -26,43 +26,36 @@ export const ClubSpecialInfoPopupBubbleLayoutMainContent = ({ caption_247Bhccent
                 tintColor="#eeeeee"
                 layout={{ alignSelf: 'stretch', height: 120, flexShrink: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={caption_247BhccenterBreakdownTitle7D ?? t('hccenter.breakdown.title')}
+                    textStyle="text-style-u-bold"
                     name="%24%7Bhccenter.breakdown.title%7D"
-                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={caption_247BhccenterBreakdownTitle7D ?? t('hccenter.breakdown.title')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 30 }}
+                />
+                <ThemeText
+                    text={captionInfoCreditsspent ?? 'Lorem ipsum'}
                     name="info_creditsspent"
-                    layout={{ position: 'absolute', left: 0, right: 6, top: 20, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionInfoCreditsspent ?? 'Lorem ipsum'}
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 20, height: 30 }}
+                />
+                <ThemeText
+                    text={captionInfoFactor ?? 'Lorem ipsum'}
                     name="info_factor"
-                    layout={{ position: 'absolute', left: 0, right: 6, top: 40, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionInfoFactor ?? 'Lorem ipsum'}
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 40, height: 30 }}
+                />
+                <ThemeText
+                    text={captionInfoStreakbonus ?? 'Lorem ipsum'}
                     name="info_streakbonus"
-                    layout={{ position: 'absolute', left: 0, right: 6, top: 60, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionInfoStreakbonus ?? 'Lorem ipsum'}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 60, height: 30 }}
+                />
                 <Border
                     variant="1"
                     layout={{ position: 'absolute', left: 0, right: 6, top: 79, height: 1 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionInfoTotal ?? 'Lorem ipsum'}
                     name="info_total"
-                    layout={{ position: 'absolute', left: 0, right: 6, bottom: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionInfoTotal ?? 'Lorem ipsum'}
-                </Region>
+                    layout={{ position: 'absolute', left: 0, right: 6, bottom: 10, height: 30 }}
+                />
                 <Region
                     name="special_infolink"
                     layout={{ position: 'absolute', right: 11, width: 190, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}

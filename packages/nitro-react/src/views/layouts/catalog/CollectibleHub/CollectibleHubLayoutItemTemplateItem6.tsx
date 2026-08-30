@@ -86,16 +86,13 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ badgeImageWidget, captio
                     layout={{ position: 'absolute', left: 54, width: 408, top: 4, height: 16 }}
                 >
                     {(visibleItemName ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionItemName ?? 'Item name'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff' }}
                             name="item_name"
-                            layout={{ position: 'absolute', left: 1, width: 405, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionItemName ?? 'Item name'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 1, width: 405, top: 0, height: 14 }}
+                        />
                     )}
                 </Border>
             )}
@@ -135,32 +132,27 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ badgeImageWidget, captio
                 </WidgetSlot>
             )}
             {(visibleWalletText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionWalletText ?? '0x123123123123123'}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#8f9db1', align: 'right' }}
                     name="wallet_text"
-                    layout={{ position: 'absolute', left: 204, width: 260, top: 34, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionWalletText ?? '0x123123123123123'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#8f9db1', align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 204, width: 260, top: 34, height: 15 }}
+                />
             )}
             {(visibleCollectionText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionCollectionText ?? '<b>Collection:</b> test'}
                     name="collection_text"
-                    layout={{ position: 'absolute', left: 52, width: 340, top: 20, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionCollectionText ?? '<b>Collection:</b> test'}
-                </Region>
+                    layout={{ position: 'absolute', left: 52, width: 340, top: 20, height: 14 }}
+                />
             )}
             {(visibleExpiresText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionExpiresText ?? '<b>Expires:</b> test'}
                     name="expires_text"
-                    layout={{ position: 'absolute', left: 52, width: 340, top: 33, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionExpiresText ?? '<b>Expires:</b> test'}
-                </Region>
+                    layout={{ position: 'absolute', left: 52, width: 340, top: 33, height: 14 }}
+                />
             )}
             {(visibleAmountContainer ?? true) && (
                 <Region
@@ -173,16 +165,13 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ badgeImageWidget, captio
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 14 }}
                     />
                     {(visibleAmountText ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionAmountText ?? 'x0'}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                             name="amount_text"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionAmountText ?? 'x0'}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15 }}
+                        />
                     )}
                 </Region>
             )}

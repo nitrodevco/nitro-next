@@ -136,15 +136,12 @@ export const CameraEditorLayout = ({ buttonSeparator, captionSaveText, captionZo
                         src={srcMagnifier ?? layoutImage('roomtools_magnifier.png')}
                         layout={{ position: 'absolute', left: 0, width: 13, top: 1, height: 22 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionZoomText ?? t('room.zoom.button.text')}
+                        textStyle="text-style-u-button-tab"
                         name="zoom_text"
-                        layout={{ position: 'absolute', left: 16, width: 90, top: 4, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionZoomText ?? t('room.zoom.button.text')}
-                            textStyle="text-style-u-button-tab"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 16, width: 90, top: 4, height: 14, maxWidth: 90 }}
+                    />
                 </Border>
             </Region>
             <Region
@@ -171,15 +168,12 @@ export const CameraEditorLayout = ({ buttonSeparator, captionSaveText, captionZo
                         src={srcDownloadImage ?? layoutImage('tools_tools_download_icon.png')}
                         layout={{ position: 'absolute', left: 0, width: 16, top: 4, height: 16 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionSaveText ?? t('floor.plan.editor.save')}
+                        textStyle="text-style-u-button-tab"
                         name="save_text"
-                        layout={{ position: 'absolute', left: 19, width: 90, top: 4, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSaveText ?? t('floor.plan.editor.save')}
-                            textStyle="text-style-u-button-tab"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 19, width: 90, top: 4, height: 14, maxWidth: 90 }}
+                    />
                 </Border>
             </Region>
             <Region

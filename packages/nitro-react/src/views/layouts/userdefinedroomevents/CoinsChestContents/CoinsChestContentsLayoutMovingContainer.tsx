@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { CoinsChestContentsLayoutCoinIconItem } from './CoinsChestContentsLayoutCoinIconItem';
@@ -35,12 +35,11 @@ export const CoinsChestContentsLayoutMovingContainer = ({ captionBalanceTxt, ite
                 name="balance_cont"
                 layout={{ position: 'absolute', left: 9, width: 54, top: 68, height: 47, justifyContent: 'center' }}
             >
-                <Region
+                <ThemeText
+                    text={captionBalanceTxt ?? t('wiredchests.coin_chest.balance')}
                     name="balance_txt"
-                    layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionBalanceTxt ?? t('wiredchests.coin_chest.balance')}
-                </Region>
+                    layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 45, top: 7, height: 16 }}
+                />
                 <Region
                     name="balance_container"
                     layout={{ position: 'absolute', width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1 }}

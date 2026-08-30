@@ -61,9 +61,10 @@ export const ChestUpgradeLayoutContent = ({ captionPlus, captionPriceCredits, ca
                         </>
                     )}
                     <Region layout={{ width: 276, height: 25, flexShrink: 0, flexDirection: 'row', gap: 5 }}>
-                        <Region layout={{ width: 213, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            {t('wiredchests.upgrade.capacity.amount')}
-                        </Region>
+                        <ThemeText
+                            text={t('wiredchests.upgrade.capacity.amount')}
+                            layout={{ width: 213, height: 17, flexShrink: 0 }}
+                        />
                         <Dropmenu
                             variant="3"
                             name="amount_selection_dropmenu"
@@ -73,39 +74,35 @@ export const ChestUpgradeLayoutContent = ({ captionPlus, captionPriceCredits, ca
                     </Region>
                 </Region>
                 <Region layout={{ position: 'absolute', left: 142, width: 356, top: 137, height: 22, flexDirection: 'row' }}>
-                    <Region layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('catalog.purchase.confirmation.dialog.cost')}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('catalog.purchase.confirmation.dialog.cost')}
+                        textStyle="text-style-u-regular"
+                        layout={{ width: 268, height: 19, flexShrink: 0 }}
+                    />
                     <Region
                         name="purchase_cost_box"
                         layout={{ width: 88, height: 25, flexShrink: 0 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', gap: 2 }}>
-                            <Region
+                            <ThemeText
+                                text={captionPriceCredits ?? '0'}
                                 name="price_credits"
-                                layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionPriceCredits ?? '0'}
-                            </Region>
+                                layout={{ width: 12, height: 19, flexShrink: 0 }}
+                            />
                             <Icon
                                 variant="34"
                                 layout={{ width: 22, height: 22, flexShrink: 0 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionPlus ?? ' '}
                                 name="plus"
-                                layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionPlus ?? ' '}
-                            </Region>
-                            <Region
+                                layout={{ width: 12, height: 19, flexShrink: 0 }}
+                            />
+                            <ThemeText
+                                text={captionPriceDiamonds ?? '0'}
                                 name="price_diamonds"
-                                layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                {captionPriceDiamonds ?? '0'}
-                            </Region>
+                                layout={{ width: 12, height: 19, flexShrink: 0 }}
+                            />
                             <Icon
                                 variant="41"
                                 layout={{ width: 22, height: 22, flexShrink: 0 }}

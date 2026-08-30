@@ -37,12 +37,11 @@ export const HabboWayQuizLayoutPrevNextButtons = ({ layout, nextDimmer, onNextBu
                         src={layoutImage('illumina_light_separator_vertical.png')}
                         layout={{ width: 2, height: 20, flexShrink: 0 }}
                     />
-                    <Region layout={{ width: 170, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('habbo.way.previous.button')}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('habbo.way.previous.button')}
+                        textStyle="text-style-il-button"
+                        layout={{ width: 170, height: 30, flexShrink: 0 }}
+                    />
                 </Region>
             </ContainerButton>
             <ContainerButton
@@ -53,12 +52,11 @@ export const HabboWayQuizLayoutPrevNextButtons = ({ layout, nextDimmer, onNextBu
                 layout={{ position: 'absolute', right: 17, width: 185, top: 0, height: 53 }}
             >
                 <Region layout={{ position: 'absolute', left: 11, top: 11, flexDirection: 'row' }}>
-                    <Region layout={{ width: 136, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('habbo.way.next.button')}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('habbo.way.next.button')}
+                        textStyle="text-style-il-button"
+                        layout={{ width: 136, height: 30, flexShrink: 0 }}
+                    />
                     <ThemeImage
                         src={layoutImage('illumina_light_separator_vertical.png')}
                         layout={{ width: 2, height: 20, flexShrink: 0 }}

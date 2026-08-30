@@ -35,15 +35,13 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
                         src={srcStaticBitmap}
                         layout={{ position: 'absolute', left: 8, width: 20, top: 7, height: 20 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionDesc ?? 'some text here'}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 148 }}
                         name="desc"
-                        layout={{ position: 'absolute', left: 30, width: 148, top: 7, maxWidth: 148, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionDesc ?? 'some text here'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 148 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 30, width: 148, top: 7, maxWidth: 148 }}
+                    />
                     {(visibleCancelLinkRegion ?? false) && (
                         <Region
                             name="cancel_link_region"

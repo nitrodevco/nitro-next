@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Bubble, Region, ThemeImage } from '#base/theme';
+import { BoxLayout, Bubble, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { TransactionDetailsLayoutDesc1Item } from './TransactionDetailsLayoutDesc1Item';
@@ -34,12 +34,14 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbl
                     name="extra_pair"
                     layout={{ position: 'absolute', left: 0, width: 47, top: 0, bottom: 0, flexDirection: 'row', gap: 2 }}
                 >
-                    <Region layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        {t('wiredchests.log_details.extra')}
-                    </Region>
-                    <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        -
-                    </Region>
+                    <ThemeText
+                        text={t('wiredchests.log_details.extra')}
+                        layout={{ width: 37, height: 17, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text="-"
+                        layout={{ width: 8, height: 17, flexShrink: 0 }}
+                    />
                 </Region>
             )}
             {(visibleExtraInfoButton ?? true) && (

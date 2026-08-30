@@ -45,15 +45,12 @@ export const ChatinputWindowLayoutInputBorderItem = ({ captionBlockText, helpbut
                 />
             )}
             {(visibleBlockText ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionBlockText ?? t('chat.input.alert.flood')}
+                    textOptions={{ fill: '#ff0000' }}
                     name="block_text"
-                    layout={{ position: 'absolute', left: 10, width: 325, top: 9, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBlockText ?? t('chat.input.alert.flood')}
-                        textOptions={{ fill: '#ff0000' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 10, width: 325, top: 9, height: 23 }}
+                />
             )}
             {(visibleHelpbutton ?? true) && (
                 <CloseButton

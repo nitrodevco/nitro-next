@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { BoxLayout, Button, Dropmenu, Frame, Region, TextInput, ThemeText } from '#base/theme';
+import { BoxLayout, Button, Dropmenu, Frame, TextInput, ThemeText } from '#base/theme';
 
 /** Generated from `1121_modact_summary_xml` (layout "start_panel", 383x295) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ModactSummaryLayoutProps {
@@ -41,15 +41,12 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
             >
                 Sanction type:
             </Dropmenu>
-            <Region
+            <ThemeText
+                text={captionMessageInfo ?? 'Optional message to user, overrides default text:'}
+                textOptions={{ fill: '#ffffff' }}
                 name="message_info"
-                layout={{ position: 'absolute', left: 20, width: 320, top: 80, height: 20, maxWidth: 320, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMessageInfo ?? 'Optional message to user, overrides default text:'}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 20, width: 320, top: 80, height: 20, maxWidth: 320, maxHeight: 20 }}
+            />
             <TextInput
                 value={messageInputValue}
                 onChange={setMessageInputValue}
@@ -64,15 +61,12 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
             >
                 Default sanction
             </Button>
-            <Region
+            <ThemeText
+                text={captionDefaultSanctionLabel ?? '(not available)'}
+                textOptions={{ fill: '#ffffff' }}
                 name="default_sanction_label"
-                layout={{ position: 'absolute', left: 125, width: 240, top: 167, height: 20, maxWidth: 240, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDefaultSanctionLabel ?? '(not available)'}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', left: 125, width: 240, top: 167, height: 20, maxWidth: 240, maxHeight: 20 }}
+            />
             <Button
                 variant="0"
                 name="custom_sanction_button"

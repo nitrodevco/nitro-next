@@ -1,4 +1,4 @@
-import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Row template `reward_vip` of TalentTrackLayout - pass real rows through its `items…` slot. */
@@ -21,15 +21,12 @@ export const TalentTrackLayoutRewardVipItem = ({ captionVipLength, layout, visib
                 layout={{ position: 'absolute', left: 14, width: 33, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 33 }}
             />
             {(visibleVipLength ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionVipLength ?? ''}
+                    textStyle="text-style-il-regular-white"
                     name="vip_length"
-                    layout={{ position: 'absolute', left: 53, width: 16, alignSelf: 'center', height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionVipLength ?? ''}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 53, width: 16, alignSelf: 'center', height: 4 }}
+                />
             )}
         </Border>
     );

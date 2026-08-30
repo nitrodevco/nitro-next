@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `receive_row` of HabbiconPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface HabbiconPurchaseConfirmationLayoutReceiveRowItemProps {
@@ -19,15 +19,12 @@ export const HabbiconPurchaseConfirmationLayoutReceiveRowItem = ({ captionReceiv
             layout={{ width: 197, height: 28, flexShrink: 0, ...layout }}
         >
             {(visibleReceiveText ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionReceiveText ?? t('habbicon_purchase.confirm.habbicon.progress')}
+                    textStyle="text-style-u-bold"
                     name="receive_text"
-                    layout={{ position: 'absolute', left: 8, width: 246, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionReceiveText ?? t('habbicon_purchase.confirm.habbicon.progress')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 8, width: 246, top: 5, height: 17 }}
+                />
             )}
         </Border>
     );

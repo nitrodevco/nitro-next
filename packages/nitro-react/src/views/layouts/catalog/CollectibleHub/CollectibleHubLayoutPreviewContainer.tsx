@@ -137,30 +137,24 @@ export const CollectibleHubLayoutPreviewContainer = ({ avatarImageWidget, badgeI
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="preview_furni_name"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17 }}
+                    />
                 </Region>
                 <Region
                     name="collect_container"
                     layout={{ position: 'absolute', left: 82, width: 200, top: 180, height: 30 }}
                 >
                     <Region layout={{ position: 'absolute', right: 0, top: 0, bottom: 0, flexDirection: 'row' }}>
-                        <Region
+                        <ThemeText
+                            text={captionStampPricing ?? '1'}
+                            textOptions={{ fill: '#ffffff' }}
                             name="stamp_pricing"
-                            layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStampPricing ?? '1'}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                            layout={{ width: 10, height: 17, flexShrink: 0 }}
+                        />
                         <Region
                             name="spacing"
                             layout={{ width: 3, height: 30, flexShrink: 0 }}
@@ -195,12 +189,12 @@ export const CollectibleHubLayoutPreviewContainer = ({ avatarImageWidget, badgeI
                     blend={0.82}
                     layout={{ position: 'absolute', left: 4, width: 282, top: 30, height: 50, justifyContent: 'center' }}
                 >
-                    <Region layout={{ position: 'absolute', width: 274, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('shop.minting.no_furni')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('shop.minting.no_furni')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', width: 274, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 16, minWidth: 274, maxWidth: 274 }}
+                    />
                 </Border>
                 <CollectibleHubLayoutMintInfoContainer {...mintInfoContainer} />
                 <ThemeImage

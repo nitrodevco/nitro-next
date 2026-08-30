@@ -26,15 +26,12 @@ export const RosBadwordLayout = ({ bgRegion, captionBadwordTxt, layout, onBgRegi
                 >
                     {bgRegion}
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionBadwordTxt ?? 'PH Badword'}
+                    textStyle="text-style-u-regular"
                     name="badword_txt"
-                    layout={{ position: 'absolute', left: 4, right: -4, top: 1, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBadwordTxt ?? 'PH Badword'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 4, right: -4, top: 1, bottom: 2 }}
+                />
             </Region>
         </Region>
     );

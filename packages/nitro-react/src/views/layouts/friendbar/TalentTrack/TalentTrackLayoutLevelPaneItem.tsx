@@ -48,26 +48,21 @@ export const TalentTrackLayoutLevelPaneItem = ({ captionLevelDescription, captio
                 />
             )}
             {(visibleLevelTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionLevelTitle ?? 'Level title'}
+                    textStyle="text-style-il-heading-1"
                     name="level_title"
-                    layout={{ position: 'absolute', left: 50, width: 71, top: 30, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionLevelTitle ?? 'Level title'}
-                        textStyle="text-style-il-heading-1"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 50, width: 71, top: 30, height: 19 }}
+                />
             )}
             {(visibleLevelDescription ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionLevelDescription ?? 'Level description'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
                     name="level_description"
-                    layout={{ position: 'absolute', left: 50, width: 320, top: 55, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionLevelDescription ?? 'Level description'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 50, width: 320, top: 55, height: 16 }}
+                />
             )}
             {(visibleStatusList ?? true) && (
                 <TalentTrackLayoutStatusList {...statusList} />
@@ -81,12 +76,11 @@ export const TalentTrackLayoutLevelPaneItem = ({ captionLevelDescription, captio
                         src={layoutImage('talent_action_overlay.png')}
                         layout={{ position: 'absolute', left: 0, width: 214, top: 0, height: 84 }}
                     />
-                    <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 133, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('talent.track.action.overlay')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('talent.track.action.overlay')}
+                        textStyle="text-style-il-regular-white"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 133, top: 4, height: 15 }}
+                    />
                 </Region>
             )}
         </Region>

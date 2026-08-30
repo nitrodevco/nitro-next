@@ -19,16 +19,14 @@ export const AreaHideUiLayoutHeaderContainerItem = ({ captionHideareaInfo, layou
                 layout={{ alignSelf: 'stretch', height: 0, flexShrink: 0, ...layout }}
             >
                 {(visibleHideareaInfo ?? false) && (
-                    <Region
+                    <ThemeText
+                        text={captionHideareaInfo ?? t('widget.areahide.info')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 262 }}
                         name="hidearea_info"
-                        layout={{ position: 'absolute', left: 4, right: 4, top: 4, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHideareaInfo ?? t('widget.areahide.info')}
-                            textStyle="text-style-u-small"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 262 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 4, right: 4, top: 4, height: 31 }}
+                    />
                 )}
             </Region>
         )

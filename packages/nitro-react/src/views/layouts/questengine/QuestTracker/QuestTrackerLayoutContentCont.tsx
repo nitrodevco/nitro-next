@@ -33,33 +33,25 @@ export const QuestTrackerLayoutContentCont = ({ captionDescTxt, captionMoreInfoT
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionQuestHeaderTxt ?? t('quests.tracker.caption')}
+                textOptions={{ fill: '#ffffff' }}
                 name="quest_header_txt"
-                layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, width: 134, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionQuestHeaderTxt ?? t('quests.tracker.caption')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
+                layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, width: 134, top: 2, height: 18 }}
+            />
+            <ThemeText
+                text={captionDescTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 115 }}
                 name="desc_txt"
-                layout={{ position: 'absolute', left: 71, right: 6, top: 27, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDescTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 115 }}
-                />
-            </Region>
-            <Region
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 71, right: 6, top: 27, height: 61 }}
+            />
+            <ThemeText
+                text={captionMoreInfoTxt ?? t('quests.tracker.moreinfo')}
+                textOptions={{ fill: '#23c5ff' }}
                 name="more_info_txt"
-                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 139, top: 109, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMoreInfoTxt ?? t('quests.tracker.moreinfo')}
-                    textOptions={{ fill: '#23c5ff' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 139, top: 109, height: 17 }}
+            />
             <Region
                 name="more_info_region"
                 onPointerTap={onMoreInfoRegion}

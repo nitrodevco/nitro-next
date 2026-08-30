@@ -54,32 +54,28 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
                         src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_frank.png'}
                         layout={{ position: 'absolute', left: 6, width: 71, top: 0, height: 89 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionCollectSummary ?? t('phone.number.collect.summary')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 360 }}
                         name="collect_summary"
-                        layout={{ position: 'absolute', left: 90, width: 360, top: 0, height: 178, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCollectSummary ?? t('phone.number.collect.summary')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 360 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 90, width: 360, top: 0, height: 178 }}
+                    />
                 </Region>
                 <Region
                     name="phone_number_input_border"
                     layout={{ position: 'absolute', left: 8, right: -1, top: 200, height: 61 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 167, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('phone.number.collect.select.country')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 213, width: 165, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('phone.number.collect.input.number')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('phone.number.collect.select.country')}
+                        textStyle="text-style-u-bold"
+                        layout={{ position: 'absolute', left: 0, width: 167, top: 2, height: 14 }}
+                    />
+                    <ThemeText
+                        text={t('phone.number.collect.input.number')}
+                        textStyle="text-style-u-bold"
+                        layout={{ position: 'absolute', left: 213, width: 165, top: 2, height: 14 }}
+                    />
                     <Region layout={{ position: 'absolute', left: 213, width: 244, top: 18, height: 42 }}>
                         <Border
                             variant="4"

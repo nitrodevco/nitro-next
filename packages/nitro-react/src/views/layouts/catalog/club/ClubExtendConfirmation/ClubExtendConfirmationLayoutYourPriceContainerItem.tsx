@@ -24,27 +24,21 @@ export const ClubExtendConfirmationLayoutYourPriceContainerItem = ({ captionPlus
             layout={{ width: 285, height: 31, flexShrink: 0, ...layout }}
         >
             {(visibleYourPriceLabel ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionYourPriceLabel ?? ''}
+                    textStyle="text-style-u-bold"
                     name="your_price_label"
-                    layout={{ position: 'absolute', left: 0, width: 4, bottom: 12, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionYourPriceLabel ?? ''}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 4, bottom: 12, height: 4 }}
+                />
             )}
             {(visibleYourPricePriceLeft ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionYourPricePriceLeft ?? ''}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'right' }}
                     name="your_price_price_left"
-                    layout={{ position: 'absolute', left: 150, width: 30, bottom: 12, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionYourPricePriceLeft ?? ''}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 150, width: 30, bottom: 12, height: 4 }}
+                />
             )}
             {(visibleYourPriceIconLeft ?? true) && (
                 <ThemeImage
@@ -55,28 +49,22 @@ export const ClubExtendConfirmationLayoutYourPriceContainerItem = ({ captionPlus
                 />
             )}
             {(visiblePlus ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionPlus ?? ' '}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'right' }}
                     name="plus"
-                    layout={{ position: 'absolute', left: 212, width: 10, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionPlus ?? ' '}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 212, width: 10, top: 0, height: 4 }}
+                />
             )}
             {(visibleYourPricePriceRight ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionYourPricePriceRight ?? ''}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'right' }}
                     name="your_price_price_right"
-                    layout={{ position: 'absolute', left: 220, width: 30, bottom: 12, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionYourPricePriceRight ?? ''}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 220, width: 30, bottom: 12, height: 4 }}
+                />
             )}
             {(visibleYourPriceIconRight ?? true) && (
                 <Icon

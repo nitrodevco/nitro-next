@@ -84,59 +84,44 @@ export const MarketPlaceWidget2OfferItemItem = ({ captionItemDesc, captionItemNa
                 </Region>
             )}
             {(visibleItemName ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemName ?? t('lorem.title')}
+                    textStyle="text-style-u-bold"
                     name="item_name"
-                    layout={{ position: 'absolute', left: 57, width: 74, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemName ?? t('lorem.title')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 57, width: 74, top: 6, height: 17 }}
+                />
             )}
             {(visibleItemDesc ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionItemDesc ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
                     name="item_desc"
-                    layout={{ position: 'absolute', left: 57, width: 65, top: 18, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemDesc ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 57, width: 65, top: 18, height: 15 }}
+                />
             )}
             {(visibleItemUsageState ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionItemUsageState ?? 'unused'}
+                    textStyle="text-style-u-small"
                     name="item_usage_state"
-                    layout={{ position: 'absolute', left: 57, width: 40, top: 18, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemUsageState ?? 'unused'}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 57, width: 40, top: 18, height: 15 }}
+                />
             )}
             {(visibleItemPrice ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemPrice ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
                     name="item_price"
-                    layout={{ position: 'absolute', left: 57, width: 62, top: 30, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemPrice ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 57, width: 62, top: 30, height: 15 }}
+                />
             )}
             {(visibleOfferCount ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionOfferCount ?? t('lorem.title')}
+                    textStyle="text-style-u-small"
                     name="offer_count"
-                    layout={{ position: 'absolute', left: 57, width: 62, top: 42, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOfferCount ?? t('lorem.title')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 57, width: 62, top: 42, height: 15 }}
+                />
             )}
             {(visibleBuyButton ?? true) && (
                 <Button

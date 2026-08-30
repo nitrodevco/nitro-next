@@ -37,12 +37,11 @@ export const NewExtendedProfileLayoutBottomContainer = ({ itemsBottom, layout }:
                 tintColor="#cccccc"
                 layout={{ position: 'absolute', left: 0, width: 498, top: 5, height: 226, justifyContent: 'center' }}
             >
-                <Region layout={{ position: 'absolute', marginLeft: -10.5, marginRight: 10.5, width: 215, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('profile.full_profile_hidden')}
-                        textOptions={{ fill: '#555555' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('profile.full_profile_hidden')}
+                    textOptions={{ fill: '#555555' }}
+                    layout={{ position: 'absolute', marginLeft: -10.5, marginRight: 10.5, width: 215, top: 104, height: 17 }}
+                />
             </Border>
         </Region>
     );

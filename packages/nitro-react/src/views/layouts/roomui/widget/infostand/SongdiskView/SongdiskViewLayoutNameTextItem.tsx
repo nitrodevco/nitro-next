@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `name_text` of SongdiskViewLayout - pass real rows through its `items…` slot. */
 export interface SongdiskViewLayoutNameTextItemProps {
@@ -8,14 +8,12 @@ export interface SongdiskViewLayoutNameTextItemProps {
 
 export const SongdiskViewLayoutNameTextItem = ({ captionNameText, layout }: SongdiskViewLayoutNameTextItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionNameText ?? 'Furni name'}
+            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 154 }}
             name="name_text"
-            layout={{ width: 154, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionNameText ?? 'Furni name'}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 154 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 154, height: 12, flexShrink: 0, ...layout }}
+        />
     );
 };

@@ -85,16 +85,13 @@ export const InventoryThumbCreditsLayout = ({ badge, captionNumber, layout, rari
                         name="number_container"
                         layout={{ position: 'absolute', left: 0, right: 2, top: 1, height: 20 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionNumber ?? '66'}
+                            textStyle="text-style-u-headline-small"
+                            textOptions={{ align: 'center' }}
                             name="number"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, maxWidth: 38, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionNumber ?? '66'}
-                                textStyle="text-style-u-headline-small"
-                                textOptions={{ align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, maxWidth: 38 }}
+                        />
                     </Region>
                     {(visibleRentState ?? false) && (
                         <ThemeImage

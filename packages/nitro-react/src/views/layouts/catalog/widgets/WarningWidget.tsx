@@ -21,15 +21,13 @@ export const WarningWidget = ({ captionWarningText, layout }: WarningWidgetProps
             name="warningWidget"
             layout={{ position: 'absolute', ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionWarningText ?? t('catalog.alert.group_has_forum')}
+                textOptions={{ fill: '#6f0000', wordWrap: true, wordWrapWidth: 360 }}
                 name="warning_text"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionWarningText ?? t('catalog.alert.group_has_forum')}
-                    textOptions={{ fill: '#6f0000', wordWrap: true, wordWrapWidth: 360 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 38 }}
+            />
         </Region>
     );
 };

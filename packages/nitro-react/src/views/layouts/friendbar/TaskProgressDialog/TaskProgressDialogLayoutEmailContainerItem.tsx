@@ -24,16 +24,14 @@ export const TaskProgressDialogLayoutEmailContainerItem = ({ captionVerifiedTxt,
                 <TaskProgressDialogLayoutUnverifiedContainer {...unverifiedContainer} />
             )}
             {(visibleVerifiedTxt ?? false) && (
-                <Region
+                <ThemeText
+                    text={captionVerifiedTxt ?? t('talent.track.progress.emailverified')}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
                     name="verified_txt"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionVerifiedTxt ?? t('talent.track.progress.emailverified')}
-                        textStyle="text-style-il-heading-3"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                />
             )}
         </Region>
     );

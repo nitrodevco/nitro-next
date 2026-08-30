@@ -1,10 +1,10 @@
 import { BoxLayout, Region } from '#base/theme';
-import { VipBuyWidget2, VipBuyWidget2Props } from '#base/views/layouts/catalog/widgets/VipBuyWidget2';
+import { VipBuyWidget, VipBuyWidgetProps } from '#base/views/layouts/catalog/widgets/VipBuyWidget';
 
 /** Named region `ctlg_vip_buy` of LayoutVipBuy_1547Layout - configured through the parent's `ctlgVipBuy` prop. */
 export interface LayoutVipBuy_1547LayoutCtlgVipBuyProps {
     layout?: BoxLayout;
-    vipBuyWidget?: VipBuyWidget2Props;
+    vipBuyWidget?: VipBuyWidgetProps;
 }
 
 export const LayoutVipBuy_1547LayoutCtlgVipBuy = ({ layout, vipBuyWidget }: LayoutVipBuy_1547LayoutCtlgVipBuyProps) => {
@@ -14,7 +14,7 @@ export const LayoutVipBuy_1547LayoutCtlgVipBuy = ({ layout, vipBuyWidget }: Layo
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <VipBuyWidget2
+            <VipBuyWidget
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 {...vipBuyWidget}
             />

@@ -47,16 +47,14 @@ export const FriendRequestTabLayout = ({ captionButtonProfileCaption, captionCap
                         tintColor="#fac919"
                         layout={{ position: 'absolute', left: -6, width: 139, top: -133, height: 140, justifyContent: 'center' }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionMessage ?? t('friendbar.request.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 93 }}
                             name="message"
-                            layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMessage ?? t('friendbar.request.title')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 93 }}
-                            />
-                        </Region>
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 5, right: 41, top: 4 }}
+                        />
                         <CloseButton
                             variant="3"
                             name="button_close"
@@ -75,16 +73,13 @@ export const FriendRequestTabLayout = ({ captionButtonProfileCaption, captionCap
                                 tintColor="#00a900"
                                 layout={{ position: 'absolute', left: 7, width: 17, top: 6, height: 16 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionCaption ?? t('friendbar.request.accept')}
+                                textStyle="text-style-button-shiny-bold"
+                                textOptions={{ align: 'center' }}
                                 name="caption"
-                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionCaption ?? t('friendbar.request.accept')}
-                                    textStyle="text-style-button-shiny-bold"
-                                    textOptions={{ align: 'center' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17 }}
+                            />
                         </ContainerButton>
                         <ContainerButton
                             variant="3"
@@ -98,16 +93,13 @@ export const FriendRequestTabLayout = ({ captionButtonProfileCaption, captionCap
                                 tintColor="#00a900"
                                 layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
                             />
-                            <Region
+                            <ThemeText
+                                text={captionButtonProfileCaption ?? t('friendbar.request.profile')}
+                                textStyle="text-style-button-shiny-bold"
+                                textOptions={{ align: 'center' }}
                                 name="caption"
-                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionButtonProfileCaption ?? t('friendbar.request.profile')}
-                                    textStyle="text-style-button-shiny-bold"
-                                    textOptions={{ align: 'center' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17 }}
+                            />
                         </ContainerButton>
                         <Region
                             name="click_region_reject"
@@ -115,16 +107,13 @@ export const FriendRequestTabLayout = ({ captionButtonProfileCaption, captionCap
                             cursor="pointer"
                             layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15 }}
                         >
-                            <Region
+                            <ThemeText
+                                text={captionLinkReject ?? t('friendbar.request.decline')}
+                                textStyle="text-style-u-small"
+                                textOptions={{ fill: '#ffffff', align: 'center' }}
                                 name="link_reject"
-                                layout={{ position: 'absolute', left: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionLinkReject ?? t('friendbar.request.decline')}
-                                    textStyle="text-style-u-small"
-                                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                                />
-                            </Region>
+                                layout={{ position: 'absolute', left: 0, top: 0, bottom: 0 }}
+                            />
                         </Region>
                     </Bubble>
                 )}

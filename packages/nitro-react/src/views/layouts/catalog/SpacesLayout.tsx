@@ -21,15 +21,13 @@ export const SpacesLayout = ({ captionPageText, layout, srcHeadline, tintHeadlin
                     tint={tintHeadline}
                     layout={{ position: 'absolute', left: 0, width: 339, top: 0, height: 68 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionPageText ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae est id tellus laoreet molestie. Integer quis dui eget erat dapibus dignissim. Curabitur lorem. Vestibulum id elit. Nulla eget sem malesuada magna iaculis ultrices. Duis aute irure dolor in reprehenderit in voluptate'}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 315 }}
                     name="pageText"
-                    layout={{ position: 'absolute', left: 12, right: 12, top: 73, height: 52, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPageText ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae est id tellus laoreet molestie. Integer quis dui eget erat dapibus dignissim. Curabitur lorem. Vestibulum id elit. Nulla eget sem malesuada magna iaculis ultrices. Duis aute irure dolor in reprehenderit in voluptate'}
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 315 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 12, right: 12, top: 73, height: 52 }}
+                />
             </Region>
         </Region>
     );

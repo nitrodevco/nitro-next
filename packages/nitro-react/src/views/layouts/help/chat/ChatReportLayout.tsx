@@ -26,19 +26,18 @@ export const ChatReportLayout = ({ captionRoomName, itemsChatItems, layout, onCl
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', left: 9, minWidth: 360, top: 8, minHeight: 1423, flexDirection: 'column', gap: 8 }}>
-                    <Region layout={{ width: 179, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.emergency.chat_report.subtitle')}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ fill: '#555555' }}
-                        />
-                    </Region>
-                    <Region layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.emergency.chat_report.description')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.emergency.chat_report.subtitle')}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ fill: '#555555' }}
+                        layout={{ width: 179, height: 19, flexShrink: 0 }}
+                    />
+                    <ThemeText
+                        text={t('help.emergency.chat_report.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
+                        verticalAlign="top"
+                        layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270 }}
+                    />
                     <ScrollArea
                         orientation="vertical"
                         layout={{ width: 332, height: 350, flexShrink: 0 }}
@@ -48,15 +47,12 @@ export const ChatReportLayout = ({ captionRoomName, itemsChatItems, layout, onCl
                             layout={{ flexDirection: 'column', width: '100%' }}
                         >
                             <Region layout={{ width: 317, height: 24, flexShrink: 0 }}>
-                                <Region
+                                <ThemeText
+                                    text={captionRoomName ?? ''}
+                                    textStyle="text-style-il-border"
                                     name="room_name"
-                                    layout={{ position: 'absolute', left: 0, width: 280, top: 8, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionRoomName ?? ''}
-                                        textStyle="text-style-il-border"
-                                    />
-                                </Region>
+                                    layout={{ position: 'absolute', left: 0, width: 280, top: 8, height: 15 }}
+                                />
                                 <Region
                                     name="chat_items"
                                     layout={{ position: 'absolute', left: 9, right: 1, top: 23, bottom: 0, flexDirection: 'column' }}

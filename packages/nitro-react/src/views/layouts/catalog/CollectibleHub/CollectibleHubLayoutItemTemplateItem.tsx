@@ -106,15 +106,12 @@ export const CollectibleHubLayoutItemTemplateItem = ({ badgeImageWidget, caption
                         />
                     )}
                     {(visibleNumber ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionNumber ?? 'x10'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                             name="number"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionNumber ?? 'x10'}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15 }}
+                        />
                     )}
                 </Region>
             )}

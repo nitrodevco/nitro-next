@@ -64,38 +64,29 @@ export const DiscountValueItemLayoutDiscountValueContainer = ({ captionDiscountC
                 name="discount_value_container"
                 layout={{ position: 'absolute', right: -3, width: 155, top: 17, height: 15 }}
             >
-                <Region
+                <ThemeText
+                    text={captionDiscountText ?? t('catalog.bundlewidget.discount.save')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="discount_text"
-                    layout={{ position: 'absolute', left: -3, width: 147, top: 1, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDiscountText ?? t('catalog.bundlewidget.discount.save')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: -3, width: 147, top: 1, height: 14 }}
+                />
+                <ThemeText
+                    text={captionDiscountCurrencyValueLeft ?? '00000'}
+                    textOptions={{ fill: '#ffffff', align: 'right' }}
                     name="discount_currency_value_left"
-                    layout={{ position: 'absolute', left: 24, width: 39, top: -1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionDiscountCurrencyValueLeft ?? '00000'}
-                        textOptions={{ fill: '#ffffff', align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 24, width: 39, top: -1, height: 17 }}
+                />
                 <Icon
                     variant="0"
                     name="discount_currency_icon_left"
                     layout={{ position: 'absolute', left: 65, width: 14, top: 1, height: 14 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionDiscountCurrencyValueRight ?? '00000'}
+                    textOptions={{ fill: '#ffffff', align: 'right' }}
                     name="discount_currency_value_right"
-                    layout={{ position: 'absolute', left: 92, width: 38, top: -1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionDiscountCurrencyValueRight ?? '00000'}
-                        textOptions={{ fill: '#ffffff', align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 92, width: 38, top: -1, height: 17 }}
+                />
                 <Icon
                     variant="0"
                     name="discount_currency_icon_right"

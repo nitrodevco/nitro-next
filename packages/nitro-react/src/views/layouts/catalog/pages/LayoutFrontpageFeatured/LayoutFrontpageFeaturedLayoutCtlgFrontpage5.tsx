@@ -29,15 +29,13 @@ export const LayoutFrontpageFeaturedLayoutCtlgFrontpage5 = ({ captionCtlgTxt2, f
                 tintColor="#51bbee"
                 layout={{ position: 'absolute', left: 200, width: 345, bottom: 0, height: 61 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCtlgTxt2 ?? t('lorem.title')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 272 }}
                     name="ctlg_txt2"
-                    layout={{ position: 'absolute', left: 10, width: 272, top: 6, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgTxt2 ?? t('lorem.title')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 272 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, width: 272, top: 6, height: 17 }}
+                />
                 <RedeemItemCodeWidget
                     layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 34 }}
                     {...redeemItemCodeWidget}

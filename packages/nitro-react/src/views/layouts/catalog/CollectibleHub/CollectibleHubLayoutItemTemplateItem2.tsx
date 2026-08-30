@@ -50,16 +50,13 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, captio
                 )}
             </Region>
             {(visibleItemTitle ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionItemTitle ?? 'item'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#666666' }}
                     name="item_title"
-                    layout={{ position: 'absolute', left: 7, right: 146, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemTitle ?? 'item'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#666666' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 7, right: 146, top: 2, height: 17 }}
+                />
             )}
             {(visibleProgressContainer ?? true) && (
                 <Region
@@ -75,15 +72,12 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, captio
                         />
                     )}
                     {(visibleProgressText ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionProgressText ?? '100%'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                             name="progress_text"
-                            layout={{ position: 'absolute', left: 2, width: 32, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionProgressText ?? '100%'}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 2, width: 32, top: 0, bottom: 0 }}
+                        />
                     )}
                 </Region>
             )}

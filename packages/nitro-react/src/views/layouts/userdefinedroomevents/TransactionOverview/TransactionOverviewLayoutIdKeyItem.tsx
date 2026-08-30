@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `id_key` of TransactionOverviewLayout - pass real rows through its `items…` slot. */
 export interface TransactionOverviewLayoutIdKeyItemProps {
@@ -11,11 +11,10 @@ export const TransactionOverviewLayoutIdKeyItem = ({ captionIdKey, layout }: Tra
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionIdKey ?? t('wiredchests.logs.chest_id')}
             name="id_key"
-            layout={{ width: 53, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionIdKey ?? t('wiredchests.logs.chest_id')}
-        </Region>
+            layout={{ width: 53, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

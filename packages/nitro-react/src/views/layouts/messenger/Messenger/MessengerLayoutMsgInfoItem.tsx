@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `msg_info` of MessengerLayout - pass real rows through its `items…` slot. */
 export interface MessengerLayoutMsgInfoItemProps {
@@ -8,14 +8,12 @@ export interface MessengerLayoutMsgInfoItemProps {
 
 export const MessengerLayoutMsgInfoItem = ({ captionContent, layout }: MessengerLayoutMsgInfoItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionContent ?? ''}
+            textOptions={{ wordWrap: true, wordWrapWidth: 255, align: 'center' }}
             name="msg_info"
-            layout={{ width: 255, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
-        >
-            <ThemeText
-                text={captionContent ?? ''}
-                textOptions={{ wordWrap: true, wordWrapWidth: 255, align: 'center' }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 255, height: 24, flexShrink: 0, ...layout }}
+        />
     );
 };

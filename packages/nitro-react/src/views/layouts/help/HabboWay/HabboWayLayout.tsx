@@ -55,18 +55,16 @@ export const HabboWayLayout = ({ finalPage, layout, onFrameClose, pageContainer,
                     </Region>
                 </Frame>
                 <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}>
-                    <Region layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('habbo.way.frame.subtitle')}
-                            textStyle="text-style-il-frame-modal-title"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 0, width: 258, top: 16, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('habbo.way.frame.title')}
-                            textStyle="text-style-il-frame-modal-title"
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('habbo.way.frame.subtitle')}
+                        textStyle="text-style-il-frame-modal-title"
+                        layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 17 }}
+                    />
+                    <ThemeText
+                        text={t('habbo.way.frame.title')}
+                        textStyle="text-style-il-frame-modal-title"
+                        layout={{ position: 'absolute', left: 0, width: 258, top: 16, height: 30 }}
+                    />
                 </Region>
             </Region>
         </Region>

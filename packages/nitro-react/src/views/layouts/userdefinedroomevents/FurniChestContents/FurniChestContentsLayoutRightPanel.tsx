@@ -32,15 +32,13 @@ export const FurniChestContentsLayoutRightPanel = ({ captionFurniName, itemsWith
                 tintColor="#d8d8d8"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 31 }}
             >
-                <Region
+                <ThemeText
+                    text={captionFurniName ?? 'furni_name'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                     name="furni_name"
-                    layout={{ position: 'absolute', left: 5, right: -20, top: 5, height: 17, minWidth: 190, maxWidth: 190, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionFurniName ?? 'furni_name'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 5, right: -20, top: 5, height: 17, minWidth: 190, maxWidth: 190 }}
+                />
                 <Region
                     name="stretching_preview_image_container"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 26, bottom: 0 }}

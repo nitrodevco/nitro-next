@@ -27,13 +27,12 @@ export const NameConfigurationLayout = ({ itemsConfigurationItems, layout, onCan
                     backgroundColor="#000000"
                     layout={{ position: 'absolute', left: 1, right: 17, top: 1, height: 20, justifyContent: 'center' }}
                 >
-                    <Region layout={{ position: 'absolute', width: 189, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('bot.skill.name.configuration.title')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('bot.skill.name.configuration.title')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
+                        layout={{ position: 'absolute', width: 189, top: 2, height: 17 }}
+                    />
                 </Region>
                 <Region
                     name="configuration_items"
@@ -42,13 +41,12 @@ export const NameConfigurationLayout = ({ itemsConfigurationItems, layout, onCan
                     {itemsConfigurationItems ?? (
                         <NameConfigurationLayoutNameInputItem />
                     )}
-                    <Region layout={{ width: 181, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('bot.skill.name.configuration.new.name')}
-                            textStyle="text-style-u-small"
-                            textOptions={{ fill: '#eeeeee' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('bot.skill.name.configuration.new.name')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ fill: '#eeeeee' }}
+                        layout={{ width: 181, height: 15, flexShrink: 0 }}
+                    />
                     <Region layout={{ width: 181, height: 36, flexShrink: 0 }}>
                         <Region layout={{ position: 'absolute', right: -1, width: 124, top: 7, height: 35, flexDirection: 'row', gap: 4 }}>
                             <ButtonThick

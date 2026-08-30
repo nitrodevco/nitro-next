@@ -29,22 +29,18 @@ export const ClubBuyVipUpgradeItemLayout = ({ captionItemHeader, captionItemPric
                     tintColor="#969696"
                     layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 25, justifyContent: 'center' }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionItemHeader ?? 'catalog.club.item.header'}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
                         name="item_header"
-                        layout={{ position: 'absolute', width: 141, top: 5, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionItemHeader ?? 'catalog.club.item.header'}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', width: 141, top: 5, bottom: 3 }}
+                    />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionItemPrice ?? 'catalog.club.price'}
                     name="item_price"
-                    layout={{ position: 'absolute', left: 9, width: 101, bottom: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    {captionItemPrice ?? 'catalog.club.price'}
-                </Region>
+                    layout={{ position: 'absolute', left: 9, width: 101, bottom: 6, height: 17 }}
+                />
                 <Button
                     variant="3"
                     name="item_buy"

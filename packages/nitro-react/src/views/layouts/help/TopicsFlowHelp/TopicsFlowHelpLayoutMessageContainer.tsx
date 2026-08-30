@@ -25,24 +25,19 @@ export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDe
                 name="message_container"
                 layout={{ position: 'absolute', left: 0, width: 445, top: 100, height: 330, ...layout }}
             >
-                <Region
+                <ThemeText
+                    text={captionMessagePhaseTitle ?? t('help.emergency.main.step.one.title')}
+                    textStyle="text-style-u-headline-medium"
                     name="message_phase_title"
-                    layout={{ position: 'absolute', left: 30, width: 278, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMessagePhaseTitle ?? t('help.emergency.main.step.one.title')}
-                        textStyle="text-style-u-headline-medium"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 30, width: 278, top: 20, height: 21 }}
+                />
+                <ThemeText
+                    text={captionMessageContainerDescription ?? t('help.emergency.main.step.one.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
                     name="message_container_description"
-                    layout={{ position: 'absolute', left: 30, width: 380, top: 50, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMessageContainerDescription ?? t('help.emergency.main.step.one.description')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 30, width: 380, top: 50, height: 57 }}
+                />
                 <WidgetSlot
                     widgetType="illumina_input"
                     name="help_message"
@@ -77,15 +72,13 @@ export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDe
                         onPointerTap={onUnlawfulMessageConfirm}
                         layout={{ position: 'absolute', left: 0, width: 30, top: 40, height: 30 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionUnlawfulMessageConfirmLabel ?? t('help.cfh.unlawful_activity.confirm_label')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 370 }}
                         name="unlawful_message_confirm_label"
-                        layout={{ position: 'absolute', left: 20, width: 370, top: 40, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionUnlawfulMessageConfirmLabel ?? t('help.cfh.unlawful_activity.confirm_label')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 370 }}
-                        />
-                    </Region>
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 20, width: 370, top: 40, bottom: 0 }}
+                    />
                 </Region>
             </Region>
         )

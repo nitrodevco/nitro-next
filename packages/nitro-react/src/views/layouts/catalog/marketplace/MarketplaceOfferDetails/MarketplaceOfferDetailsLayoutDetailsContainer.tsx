@@ -72,51 +72,36 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
                 name="text_container"
                 layout={{ position: 'absolute', right: 0, width: 267, top: 28, height: 80 }}
             >
-                <Region
+                <ThemeText
+                    text={captionItemName ?? t('lorem.title')}
+                    textStyle="text-style-u-bold"
                     name="item_name"
-                    layout={{ position: 'absolute', left: 0, width: 74, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemName ?? t('lorem.title')}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 74, top: 5, height: 17 }}
+                />
+                <ThemeText
+                    text={captionItemDescription ?? t('lorem.title')}
+                    textStyle="text-style-u-italic"
                     name="item_description"
-                    layout={{ position: 'absolute', left: 0, width: 73, top: 18, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemDescription ?? t('lorem.title')}
-                        textStyle="text-style-u-italic"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 73, top: 18, height: 17 }}
+                />
+                <ThemeText
+                    text={captionItemPrice ?? t('catalog.marketplace.offer_details.price')}
+                    textStyle="text-style-u-small"
                     name="item_price"
-                    layout={{ position: 'absolute', left: 0, width: 186, top: 41, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionItemPrice ?? t('catalog.marketplace.offer_details.price')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 186, top: 41, height: 15 }}
+                />
+                <ThemeText
+                    text={captionOfferCount ?? t('catalog.marketplace.offer_details.offer_count')}
+                    textStyle="text-style-u-small"
                     name="offer_count"
-                    layout={{ position: 'absolute', left: 0, width: 216, bottom: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionOfferCount ?? t('catalog.marketplace.offer_details.offer_count')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 0, width: 216, bottom: 11, height: 15 }}
+                />
+                <ThemeText
+                    text={captionAveragePrice ?? t('catalog.marketplace.offer_details.average_price')}
+                    textStyle="text-style-u-small"
                     name="average_price"
-                    layout={{ position: 'absolute', left: 0, width: 228, bottom: -2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAveragePrice ?? t('catalog.marketplace.offer_details.average_price')}
-                        textStyle="text-style-u-small"
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 0, width: 228, bottom: -2, height: 15 }}
+                />
             </Region>
             <Button
                 variant="3"
@@ -147,12 +132,11 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
                     {t('catalog.marketplace.offer_details.trade_volume')}
                 </ButtonGroupRight>
             </Region>
-            <Region
+            <ThemeText
+                text={captionChartTitle ?? t('lorem.title')}
                 name="chart_title"
-                layout={{ position: 'absolute', left: 0, width: 76, top: 145, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionChartTitle ?? t('lorem.title')}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 76, top: 145, height: 17 }}
+            />
             <Border
                 variant="0"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 165, height: 220 }}

@@ -35,26 +35,20 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                         layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                     />
                 </Border>
-                <Region
+                <ThemeText
+                    text={captionSeasonalName ?? ''}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ fill: '#bb7dc3' }}
                     name="seasonal_name"
-                    layout={{ position: 'absolute', left: 5, width: 105, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSeasonalName ?? ''}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ fill: '#bb7dc3' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 5, width: 105, top: 6, height: 16 }}
+                />
+                <ThemeText
+                    text={captionAmount ?? '0'}
+                    textStyle="text-style-il-regular-white"
+                    textOptions={{ align: 'right' }}
                     name="amount"
-                    layout={{ position: 'absolute', right: 42, width: 60, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionAmount ?? '0'}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 42, width: 60, top: 6, height: 16 }}
+                />
                 {(visibleChangeOverlay ?? false) && (
                     <Border
                         variant="6"
@@ -62,15 +56,12 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                         tintColor="#bb7dc3"
                         layout={{ position: 'absolute', left: 44, width: 33, top: 0, bottom: 0 }}
                     >
-                        <Region
+                        <ThemeText
+                            text={captionChange ?? ' 50'}
+                            textStyle="text-style-il-regular-white"
                             name="change"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionChange ?? ' 50'}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                        />
                     </Border>
                 )}
             </Region>

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `help.description` of QuestHelpLayout - pass real rows through its `items…` slot. */
 export interface QuestHelpLayoutHelpDescriptionItemProps {
@@ -11,14 +11,12 @@ export const QuestHelpLayoutHelpDescriptionItem = ({ captionHelpDescription, lay
     const t = useTranslation();
 
     return (
-        <Region
+        <ThemeText
+            text={captionHelpDescription ?? t('quest.help.description')}
+            textOptions={{ wordWrap: true, wordWrapWidth: 208 }}
             name="help.description"
-            layout={{ width: 208, height: 330, flexShrink: 0, minHeight: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionHelpDescription ?? t('quest.help.description')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 208 }}
-            />
-        </Region>
+            verticalAlign="top"
+            layout={{ width: 208, height: 330, flexShrink: 0, minHeight: 50, ...layout }}
+        />
     );
 };

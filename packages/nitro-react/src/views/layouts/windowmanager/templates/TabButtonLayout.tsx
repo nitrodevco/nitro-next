@@ -10,16 +10,13 @@ export const TabButtonLayout = ({ captionTitle, layout }: TabButtonLayoutProps) 
     return (
         <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 10, top: 0, bottom: 0 }} />
-            <Region
+            <ThemeText
+                text={captionTitle ?? ''}
+                textStyle="text-style-button-tab"
+                textOptions={{ fill: '#000000' }}
                 name="title"
-                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTitle ?? ''}
-                    textStyle="text-style-button-tab"
-                    textOptions={{ fill: '#000000' }}
-                />
-            </Region>
+                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 22 }}
+            />
         </Region>
     );
 };

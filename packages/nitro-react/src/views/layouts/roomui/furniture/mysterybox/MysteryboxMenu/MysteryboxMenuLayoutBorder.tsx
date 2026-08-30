@@ -21,13 +21,12 @@ export const MysteryboxMenuLayoutBorder = ({ itemsButtons, layout, onMinimize }:
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16, justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', marginLeft: 14, marginRight: -14, width: 135, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('mysterybox.context.title')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('mysterybox.context.title')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                    layout={{ position: 'absolute', marginLeft: 14, marginRight: -14, width: 135, top: 0, bottom: 0 }}
+                />
             </Region>
             <Region
                 backgroundColor="#000000"

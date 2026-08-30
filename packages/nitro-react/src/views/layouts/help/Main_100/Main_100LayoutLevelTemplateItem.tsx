@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region, Shape, ThemeImage } from '#base/theme';
+import { Border, BoxLayout, Region, Shape, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { Main_100LayoutLevelRewardIconItem } from './Main_100LayoutLevelRewardIconItem';
@@ -48,12 +48,11 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {(visibleLevelName ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionLevelName ?? t('reward_track.levels.level')}
                             name="level_name"
-                            layout={{ position: 'absolute', left: 18, width: 85, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionLevelName ?? t('reward_track.levels.level')}
-                        </Region>
+                            layout={{ position: 'absolute', left: 18, width: 85, top: 14, height: 17 }}
+                        />
                     )}
                     {(visibleLoadingBar ?? true) && (
                         <Region
@@ -100,12 +99,11 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                         </Region>
                     )}
                     {(visibleLevelProgressTxt ?? true) && (
-                        <Region
+                        <ThemeText
+                            text={captionLevelProgressTxt ?? '3 / 5'}
                             name="level_progress_txt"
-                            layout={{ position: 'absolute', left: 377, width: 25, top: 14, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            {captionLevelProgressTxt ?? '3 / 5'}
-                        </Region>
+                            layout={{ position: 'absolute', left: 377, width: 25, top: 14, height: 16 }}
+                        />
                     )}
                     <Region layout={{ position: 'absolute', right: 18, width: 94, top: 7, height: 30, flexDirection: 'row', gap: 10 }}>
                         {(visibleCompletedIcon ?? true) && (

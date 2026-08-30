@@ -66,25 +66,20 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                         {groupIcon}
                     </WidgetSlot>
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionTopHeaderText ?? 'Super-duper long group title'}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ fill: '#ffffff' }}
                     name="top_header_text"
-                    layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTopHeaderText ?? 'Super-duper long group title'}
-                        textStyle="text-style-u-headline-big"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30 }}
+                />
+                <ThemeText
+                    text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 359 }}
                     name="top_text"
-                    layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 359 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40 }}
+                />
             </Region>
             <Region
                 name="thread_subject_container"
@@ -94,15 +89,12 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                     backgroundColor="#227aad"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionThreadSubjectHeader ?? t('groupforum.compose.subject')}
+                    textOptions={{ fill: '#eeeeee' }}
                     name="thread_subject_header"
-                    layout={{ position: 'absolute', left: 1, right: -9, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionThreadSubjectHeader ?? t('groupforum.compose.subject')}
-                        textOptions={{ fill: '#eeeeee' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 1, right: -9, top: 1, height: 16 }}
+                />
                 <TextInput
                     value={threadSubjectValue}
                     onChange={setThreadSubjectValue}
@@ -119,16 +111,13 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                     backgroundColor="#227aad"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionMessageTextHeader ?? t('groupforum.compose.message')}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#eeeeee' }}
                     name="message_text_header"
-                    layout={{ position: 'absolute', left: 1, right: 0, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMessageTextHeader ?? t('groupforum.compose.message')}
-                        textStyle="text-style-regular"
-                        textOptions={{ fill: '#eeeeee' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 1, right: 0, top: 1, height: 16 }}
+                />
                 <TextInput
                     value={messageTextValue}
                     onChange={setMessageTextValue}
@@ -136,16 +125,13 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                     backgroundColor="#ffffff"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionFormattingHelp ?? t('groupforum.compose.formatting_help')}
+                    textStyle="text-style-id-link-regular"
+                    textOptions={{ align: 'right' }}
                     name="formatting_help"
-                    layout={{ position: 'absolute', right: 4, width: 197, top: 4, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                    <ThemeText
-                        text={captionFormattingHelp ?? t('groupforum.compose.formatting_help')}
-                        textStyle="text-style-id-link-regular"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 4, width: 197, top: 4, height: 16 }}
+                />
             </Region>
             <ContainerButton
                 variant="3"
@@ -172,15 +158,13 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                     textOptions={{ fill: '#ffffff' }}
                 />
             </ContainerButton>
-            <Region
+            <ThemeText
+                text={captionStatusText ?? 'Thread subject should not be empty!'}
+                textOptions={{ wordWrap: true, wordWrapWidth: 424 }}
                 name="status_text"
-                layout={{ position: 'absolute', left: 10, right: 9, bottom: -10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionStatusText ?? 'Thread subject should not be empty!'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 424 }}
-                />
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, right: 9, bottom: -10, height: 17 }}
+            />
         </Frame>
     );
 };

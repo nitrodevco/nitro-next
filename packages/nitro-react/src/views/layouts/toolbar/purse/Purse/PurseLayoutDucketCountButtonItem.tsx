@@ -23,16 +23,13 @@ export const PurseLayoutDucketCountButtonItem = ({ captionDucketCount, layout, o
             layout={{ width: 52, height: 17, flexShrink: 0, ...layout }}
         >
             {(visibleDucketCount ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionDucketCount ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#d787d7' }}
                     name="ducket_count"
-                    layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDucketCount ?? '0'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#d787d7' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17 }}
+                />
             )}
             <ThemeImage
                 src={layoutImage('pursearea_duckets_icon.png')}

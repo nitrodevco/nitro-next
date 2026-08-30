@@ -34,15 +34,12 @@ export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionH
                 />
             )}
             {(visibleHabbiconSearchPlaceholder ?? true) && (
-                <Region
+                <ThemeText
+                    text={captionHabbiconSearchPlaceholder ?? t('generic.search')}
+                    textOptions={{ fill: '#888888' }}
                     name="habbicon_search_placeholder"
-                    layout={{ position: 'absolute', left: 6, right: 26, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHabbiconSearchPlaceholder ?? t('generic.search')}
-                        textOptions={{ fill: '#888888' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 6, right: 26, top: 4, height: 17 }}
+                />
             )}
             {(visibleHabbiconSearchClearButton ?? true) && (
                 <Region

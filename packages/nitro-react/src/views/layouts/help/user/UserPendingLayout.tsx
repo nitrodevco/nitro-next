@@ -37,15 +37,12 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
                         src={layoutImage('help_user_pending.png')}
                         layout={{ position: 'absolute', left: 10, width: 60, bottom: 0, height: 85 }}
                     />
-                    <Region
+                    <ThemeText
+                        text={captionRequestType ?? 'Request type'}
+                        textStyle="text-style-il-heading-1"
                         name="request_type"
-                        layout={{ position: 'absolute', left: 70, width: 94, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRequestType ?? 'Request type'}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 70, width: 94, top: 10, height: 19 }}
+                    />
                     <WidgetSlot
                         widgetType="updating_timestamp"
                         name="request_timestamp"
@@ -58,39 +55,34 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
                         layout={{ position: 'absolute', left: 70, width: 200, top: 42, height: 80 }}
                     >
                         <Region layout={{ flexDirection: 'column', width: '100%' }}>
-                            <Region
+                            <ThemeText
+                                text={captionRequestDescription ?? 'Request description'}
+                                textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                                 name="request_description"
-                                layout={{ width: 190, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionRequestDescription ?? 'Request description'}
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-                                />
-                            </Region>
+                                verticalAlign="top"
+                                layout={{ width: 190, height: 16, flexShrink: 0 }}
+                            />
                         </Region>
                     </ScrollArea>
                 </Border>
-                <Region layout={{ width: 279, height: 29, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.user.pending.info.title')}
-                        textStyle="text-style-il-heading-1"
-                    />
-                </Region>
-                <Region layout={{ width: 260, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.request.user.pending.info.message')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                    />
-                </Region>
-                <Region
+                <ThemeText
+                    text={t('guide.help.request.user.pending.info.title')}
+                    textStyle="text-style-il-heading-1"
+                    layout={{ width: 279, height: 29, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={t('guide.help.request.user.pending.info.message')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                    verticalAlign="top"
+                    layout={{ width: 260, height: 16, flexShrink: 0 }}
+                />
+                <ThemeText
+                    text={captionWaitingTime ?? t('guide.help.request.user.pending.info.waiting')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
                     name="waiting_time"
-                    layout={{ width: 260, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionWaitingTime ?? t('guide.help.request.user.pending.info.waiting')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ width: 260, height: 16, flexShrink: 0 }}
+                />
                 <ThemeImage
                     src={layoutImage('illumina_horizontal_separator.png')}
                     layout={{ width: 270, height: 2, flexShrink: 0 }}
@@ -107,13 +99,12 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
                             src={layoutImage('help_decline_icon.png')}
                             layout={{ width: 11, height: 12, flexShrink: 0 }}
                         />
-                        <Region layout={{ width: 231, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('guide.help.request.user.pending.cancel.button')}
-                                textStyle="text-style-il-button"
-                                textOptions={{ fill: '#000000' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('guide.help.request.user.pending.cancel.button')}
+                            textStyle="text-style-il-button"
+                            textOptions={{ fill: '#000000' }}
+                            layout={{ width: 231, height: 15, flexShrink: 0 }}
+                        />
                         <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
                     </Region>
                 </ContainerButton>

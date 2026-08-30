@@ -74,42 +74,30 @@ export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, 
                     src={srcGcreateIconCredit ?? '${image.library.url}guilds/gcreate_icon_credit.png'}
                     layout={{ position: 'absolute', left: 335, width: 21, top: 0, height: 20 }}
                 />
-                <Region
+                <ThemeText
+                    text={captionStepTitle1 ?? t('group.create.steplabel.1')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="step_title_1"
-                    layout={{ position: 'absolute', left: -38, right: 242, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStepTitle1 ?? t('group.create.steplabel.1')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: -38, right: 242, top: 7, height: 18 }}
+                />
+                <ThemeText
+                    text={captionStepTitle2 ?? t('group.create.steplabel.2')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="step_title_2"
-                    layout={{ position: 'absolute', left: 40, right: 164, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStepTitle2 ?? t('group.create.steplabel.2')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 40, right: 164, top: 7, height: 18 }}
+                />
+                <ThemeText
+                    text={captionStepTitle3 ?? t('group.create.steplabel.3')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="step_title_3"
-                    layout={{ position: 'absolute', left: 115, right: 89, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStepTitle3 ?? t('group.create.steplabel.3')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
+                    layout={{ position: 'absolute', left: 115, right: 89, top: 7, height: 18 }}
+                />
+                <ThemeText
+                    text={captionStepTitle4 ?? t('group.create.steplabel.4')}
+                    textOptions={{ fill: '#ffffff' }}
                     name="step_title_4"
-                    layout={{ position: 'absolute', left: 210, right: -6, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStepTitle4 ?? t('group.create.steplabel.4')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                    layout={{ position: 'absolute', left: 210, right: -6, top: 7, height: 18 }}
+                />
             </Region>
         )
     );

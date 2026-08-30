@@ -34,13 +34,12 @@ export const ChatterConfigurationLayoutConfigurationItems = ({ itemsConfiguratio
                     <ChatterConfigurationLayoutHelpLinkItem />
                 </>
             )}
-            <Region layout={{ width: 183, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('bot.skill.chatter.configuration.chat.text')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('bot.skill.chatter.configuration.chat.text')}
+                textStyle="text-style-u-small"
+                textOptions={{ fill: '#ffffff' }}
+                layout={{ width: 183, height: 15, flexShrink: 0 }}
+            />
             <Region layout={{ width: 246, height: 36, flexShrink: 0 }}>
                 <Region layout={{ position: 'absolute', right: -1, width: 124, top: 7, height: 35, flexDirection: 'row', gap: 4 }}>
                     <ButtonThick

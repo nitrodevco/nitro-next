@@ -31,36 +31,30 @@ export const GamesMainLayoutGamesLeftRegion = ({ captionGamesLeft, captionGamesL
                 backgroundColor="#b9e2ec"
                 layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 28, flexDirection: 'row', gap: 5 }}
             >
-                <Region layout={{ width: 135, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    {t('snowwar.games_left')}
-                </Region>
+                <ThemeText
+                    text={t('snowwar.games_left')}
+                    layout={{ width: 135, height: 19, flexShrink: 0 }}
+                />
                 <Region layout={{ width: 60, height: 30, flexShrink: 0 }}>
-                    <Region
+                    <ThemeText
+                        text={captionGamesLeftStroke ?? '0'}
+                        textOptions={{ fill: '#1077ac' }}
                         name="games_left_stroke"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionGamesLeftStroke ?? '0'}
-                            textOptions={{ fill: '#1077ac' }}
-                        />
-                    </Region>
-                    <Region
+                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 26 }}
+                    />
+                    <ThemeText
+                        text={captionGamesLeft ?? '0'}
+                        textOptions={{ fill: '#ffffff' }}
                         name="games_left"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionGamesLeft ?? '0'}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 26 }}
+                    />
                 </Region>
             </Region>
-            <Region
+            <ThemeText
+                text={captionGamesLobbyGetGames ?? t('snowwar.buy_more_games')}
                 name="games.lobby.get.games"
-                layout={{ position: 'absolute', left: 0, width: 175, top: 31, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionGamesLobbyGetGames ?? t('snowwar.buy_more_games')}
-            </Region>
+                layout={{ position: 'absolute', left: 0, width: 175, top: 31, height: 19 }}
+            />
             <Region layout={{ position: 'absolute', left: 0, width: 220, top: 52, height: 70, flexDirection: 'row', gap: 8 }}>
                 <ThemeImage
                     name="btn_more_games_10"

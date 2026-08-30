@@ -1,4 +1,4 @@
-import { BoxLayout, Region } from '#base/theme';
+import { BoxLayout, ThemeText } from '#base/theme';
 
 /** Row template `and_text` of InventoryTradingWiredLayout - pass real rows through its `items…` slot. */
 export interface InventoryTradingWiredLayoutAndTextItemProps {
@@ -8,11 +8,10 @@ export interface InventoryTradingWiredLayoutAndTextItemProps {
 
 export const InventoryTradingWiredLayoutAndTextItem = ({ captionAndText, layout }: InventoryTradingWiredLayoutAndTextItemProps) => {
     return (
-        <Region
+        <ThemeText
+            text={captionAndText ?? '&'}
             name="and_text"
-            layout={{ width: 12, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-        >
-            {captionAndText ?? '&'}
-        </Region>
+            layout={{ width: 12, height: 17, flexShrink: 0, ...layout }}
+        />
     );
 };

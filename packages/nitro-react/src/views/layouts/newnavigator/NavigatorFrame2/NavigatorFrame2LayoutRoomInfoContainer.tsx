@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Border, BoxLayout, Region, ThemeImage } from '#base/theme';
+import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 import { NavigatorFrame2LayoutRoomUsercountIconItem2 } from './NavigatorFrame2LayoutRoomUsercountIconItem2';
@@ -40,12 +40,11 @@ export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, itemsU
                     )}
                 </Region>
             </Border>
-            <Region
+            <ThemeText
+                text={captionRoomName ?? 'Room Name PH'}
                 name="room_name"
-                layout={{ position: 'absolute', left: 44, right: 55, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionRoomName ?? 'Room Name PH'}
-            </Region>
+                layout={{ position: 'absolute', left: 44, right: 55, top: 1, height: 16 }}
+            />
             <Region
                 name="info_popup_click_region"
                 onPointerTap={onInfoPopupClickRegion}

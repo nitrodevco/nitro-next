@@ -45,15 +45,13 @@ export const GrsOfficialRoomRowLayoutImageCont = ({ captionPicText, layout, srcE
                 blend={0.8}
                 layout={{ position: 'absolute', left: 5, width: 263, top: 36, height: 24 }}
             >
-                <Region
+                <ThemeText
+                    text={captionPicText ?? 'Lorengdf def fd df df df df dfdf d'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 246 }}
                     name="picText"
-                    layout={{ position: 'absolute', left: 8, width: 246, top: 5, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPicText ?? 'Lorengdf def fd df df df df dfdf d'}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 246 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 8, width: 246, top: 5, height: 14 }}
+                />
             </Border>
             <ThemeImage
                 name="rico_rnd_l"

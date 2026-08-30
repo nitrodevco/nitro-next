@@ -19,15 +19,13 @@ export const CampaignCompletedLayout = ({ captionCompletedTxt, layout, srcComple
                 tintColor="#c9c9c9"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region
+                <ThemeText
+                    text={captionCompletedTxt ?? t('quests.list.completed')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 230 }}
                     name="completed_txt"
-                    layout={{ position: 'absolute', left: 40, right: 92, top: 41, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCompletedTxt ?? t('quests.list.completed')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 230 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 40, right: 92, top: 41, height: 33 }}
+                />
                 <ThemeImage
                     name="completed_pic_bitmap"
                     src={srcCompletedPicBitmap ?? '${image.library.questing.url}category_completed.png'}

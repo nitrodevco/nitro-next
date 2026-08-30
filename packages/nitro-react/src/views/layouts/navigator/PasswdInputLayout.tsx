@@ -26,24 +26,22 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
             onClose={onClose}
             layout={{ width: 237, height: 217, minWidth: 237, minHeight: 217, ...layout }}
         >
-            <Region
+            <ThemeText
+                text={captionRoomName ?? 'Room name'}
                 name="room_name"
-                layout={{ position: 'absolute', left: 10, width: 176, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                {captionRoomName ?? 'Room name'}
-            </Region>
-            <Region
+                layout={{ position: 'absolute', left: 10, width: 176, top: 16, height: 16 }}
+            />
+            <ThemeText
+                text={captionInfo ?? t('navigator.password.info')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
                 name="info"
-                layout={{ position: 'absolute', left: 10, width: 205, top: 35, height: 68, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionInfo ?? t('navigator.password.info')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                {t('navigator.password.enter')}
-            </Region>
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 10, width: 205, top: 35, height: 68 }}
+            />
+            <ThemeText
+                text={t('navigator.password.enter')}
+                layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21 }}
+            />
             <TextInput
                 value={passwordInputValue}
                 onChange={setPasswordInputValue}
@@ -59,12 +57,11 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, right: 124, top: 5, height: 26 }}
                 >
-                    <Region
+                    <ThemeText
+                        text={captionCancel ?? t('generic.cancel')}
                         name="cancel"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        {captionCancel ?? t('generic.cancel')}
-                    </Region>
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 17 }}
+                    />
                 </Region>
                 <Button
                     variant="3"

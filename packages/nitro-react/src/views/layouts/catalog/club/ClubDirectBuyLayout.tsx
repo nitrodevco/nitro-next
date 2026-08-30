@@ -43,26 +43,22 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
                         layout={{ position: 'absolute', marginLeft: 2.5, marginRight: -2.5, width: 349, bottom: 11, height: 43 }}
                     />
                 </Region>
-                <Region
+                <ThemeText
+                    text={captionBoldText ?? t('direct.club.buy.header.bold.text')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 261 }}
                     name="bold_text"
-                    layout={{ position: 'absolute', left: 99, width: 261, top: 108, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBoldText ?? t('direct.club.buy.header.bold.text')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 261 }}
-                    />
-                </Region>
-                <Region
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 99, width: 261, top: 108, height: 17 }}
+                />
+                <ThemeText
+                    text={captionStandardText ?? t('direct.club.buy.header.standard.text')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 261 }}
                     name="standard_text"
-                    layout={{ position: 'absolute', left: 99, width: 261, top: 139, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStandardText ?? t('direct.club.buy.header.standard.text')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 261 }}
-                    />
-                </Region>
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 99, width: 261, top: 139, height: 17 }}
+                />
                 <ThemeImage
                     name="teaser_image_1"
                     src={srcTeaserImage1}
@@ -89,13 +85,12 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
                             variant="14"
                             layout={{ position: 'absolute', left: 4, width: 35, top: 4, height: 17 }}
                         />
-                        <Region layout={{ position: 'absolute', left: 44, width: 168, top: 4, bottom: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('direct.club.buy.period.length')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('direct.club.buy.period.length')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff' }}
+                            layout={{ position: 'absolute', left: 44, width: 168, top: 4, bottom: 4 }}
+                        />
                     </Border>
                     <ContainerButton
                         variant="3"
@@ -108,12 +103,11 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
                             textStyle="text-style-u-bold"
                         />
                     </ContainerButton>
-                    <Region layout={{ position: 'absolute', left: 5, width: 108, top: 43, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text="$PRICE Offer text long"
-                            textStyle="text-style-u-small"
-                        />
-                    </Region>
+                    <ThemeText
+                        text="$PRICE Offer text long"
+                        textStyle="text-style-u-small"
+                        layout={{ position: 'absolute', left: 5, width: 108, top: 43, height: 15 }}
+                    />
                 </Border>
                 <ThemeImage
                     name="partner_image"
