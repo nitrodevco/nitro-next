@@ -43,7 +43,6 @@ export const CHECK_BOX_VARIANTS: ThemeVariants<CheckBoxVariant> = {
             paddingBottom: 4,
         },
         textStyle: 'text-style-il-button',
-        textColor: '#000000',
     },
     101: {
         states: {
@@ -58,6 +57,5 @@ export const CHECK_BOX_VARIANTS: ThemeVariants<CheckBoxVariant> = {
             paddingBottom: 4,
         },
         textStyle: 'text-style-il-button',
-        textColor: '#000000',
     },
 };

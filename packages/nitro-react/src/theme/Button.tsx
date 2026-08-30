@@ -2,12 +2,12 @@ import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 import { Box } from './Box';
-import { ButtonVariant } from './buttonVariants';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer } from './layer';
 import { ThemeProps, wrapTextChildren } from './utils';
 import { BUTTON_VARIANTS } from './variants/button';
+import { ButtonVariant } from './variants/buttonVariants';
 
 export interface ButtonProps extends ThemeProps<ButtonVariant> {
     disabled?: boolean;

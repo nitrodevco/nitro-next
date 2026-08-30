@@ -1,71 +1,53 @@
-import { BUTTON_3_VARIANT, BUTTON_100_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, ButtonVariant } from '../buttonVariants';
 import { NineSlice } from '../layer';
-import { BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, ThemeVariants } from '../utils';
+import { ThemeVariants } from '../utils';
+import { BUTTON_100_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, buttonPlainVariant, ButtonVariant, classicButtonVariant, shinyButtonVariant } from './buttonVariants';
+
+const BUTTON_3_VARIANT: ButtonVariant = {
+    ...shinyButtonVariant('button-3'),
+    layout: {
+        paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
+        minWidth: 20, minHeight: 22,
+    },
+};
 
 /** `Button` variants - the Flash `style` ids it draws. */
 export const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
     // habbo_skin - white
     0: {
-        states: {
-            default: NineSlice('button-0-default-src', 3, 3, 3, 3),
-            hovering: NineSlice('button-0-hovering-src', 3, 3, 3, 3),
-            pressed: NineSlice('button-0-pressed-src', 3, 3, 3, 3),
-            disabled: NineSlice('button-0-disabled-src', 3, 3, 3, 3),
-        },
+        ...classicButtonVariant('button-0'),
         layout: {
             padding: 8,
         },
-        textStyle: 'text-style-button-regular', textColor: '#000000',
     },
     // Habbo_skin black
     1: {
-        states: {
-            default: NineSlice('button-1-default-src', 3, 3, 3, 3),
-            hovering: NineSlice('button-1-hovering-src', 3, 3, 3, 3),
-            pressed: NineSlice('border-3-default-src', 3, 3, 3, 3),
-            disabled: NineSlice('button-1-disabled-src', 3, 3, 3, 3),
-        },
+        ...classicButtonVariant('button-1', '#ffffff'),
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22,
         },
-        textStyle: 'text-style-button-regular', textColor: '#ffffff',
     },
     // habbo_skin - white (button_default_white)
     2: {
-        states: {
-            default: NineSlice('button-2-default-src', 3, 3, 3, 3),
-            hovering: NineSlice('button-2-hovering-src', 3, 3, 3, 3),
-            pressed: NineSlice('button-2-pressed-src', 3, 3, 3, 3),
-            disabled: NineSlice('button-2-disabled-src', 3, 3, 3, 3),
-        },
+        ...classicButtonVariant('button-2'),
         layout: {
             paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22,
         },
-        textStyle: 'text-style-button-regular', textColor: '#000000',
     },
     // ubuntu_skin - white
-    3: {
-        ...BUTTON_3_VARIANT, textColor: '#000000',
-    },
+    3: BUTTON_3_VARIANT,
     // ubuntu_skin - shiny art with the black window layout (white caption)
     5: {
         ...BUTTON_3_VARIANT, textColor: '#ffffff',
     },
     // ubuntu_skin - black
     4: {
-        states: {
-            default: NineSlice('button-4-default-src', 5, 5, 5, 5),
-            hovering: NineSlice('button-4-hovering-src', 5, 5, 5, 5),
-            pressed: NineSlice('button-4-pressed-src', 5, 5, 5, 5),
-            disabled: NineSlice('button-4-disabled-src', 5, 5, 5, 5),
-        },
+        ...shinyButtonVariant('button-4', '#ffffff'),
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
             minWidth: 20, minHeight: 28,
         },
-        textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff',
     },
     // green
     6: {
@@ -74,40 +56,16 @@ export const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
         textColor: '#ffffff',
     },
     // landing view
-    100: {
-        ...BUTTON_100_VARIANT,
-    },
+    100: BUTTON_100_VARIANT,
     // window
     101: {
         ...BUTTON_100_VARIANT,
         tintColor: '#bbbbbb',
     },
     // plain
-    102: {
-        states: {
-            default: NineSlice('button-102-default-src', 6, 8, 4, 8),
-            pressed: NineSlice('button-102-pressed-src', 6, 8, 4, 8),
-        },
-        overlays: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
-        layout: {
-            paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-            minWidth: 28, minHeight: 28,
-        },
-        textStyle: 'text-style-il-button', textColor: '#000000',
-    },
+    102: buttonPlainVariant('button-102', false, '#000000'),
     // unetched
-    103: {
-        states: {
-            default: NineSlice('button-103-default-src', 6, 8, 4, 8),
-            pressed: NineSlice('button-103-pressed-src', 6, 8, 4, 8),
-        },
-        overlays: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
-        layout: {
-            paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-            minWidth: 28, minHeight: 28,
-        },
-        textStyle: 'text-style-il-button', textColor: '#000000',
-    },
+    103: buttonPlainVariant('button-103', false, '#000000'),
     // illumina purple window / purple plain / dark recolorable
     104: BUTTON_104_VARIANT,
     105: BUTTON_105_VARIANT,
@@ -121,20 +79,15 @@ export const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
             minWidth: 28, minHeight: 28,
         },
-        textStyle: 'text-style-id-button', textColor: '#000000',
+        textStyle: 'text-style-id-button',
     },
-    // borderless
+    // borderless / CUSTOM
     300: {
-        states: {
-            default: NineSlice('button-300-default-src', 3, 3, 3, 3),
-            hovering: NineSlice('button-300-hovering-src', 3, 3, 3, 3),
-            pressed: NineSlice('button-300-pressed-src', 3, 3, 3, 3),
-            disabled: NineSlice('button-300-disabled-src', 3, 3, 3, 3),
-        },
+        ...classicButtonVariant('button-300', '#000000'),
         layout: {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
             minWidth: 20, minHeight: 22,
         },
-        textStyle: 'text-style-button-shiny-regular', textColor: '#000000',
+        textStyle: 'text-style-button-shiny-regular',
     },
 };

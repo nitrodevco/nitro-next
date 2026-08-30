@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 
 import { useTintedImageUrl } from '../hooks';
-import { BackgroundLayerConfig, CompositePiece } from '../layer';
+import { BackgroundLayerConfig, CompositeLayerPieceProps } from '../layer';
 import { THEME_URLS } from '../utils';
 
 export interface BackgroundLayerDomProps {
@@ -12,7 +12,7 @@ export interface BackgroundLayerDomProps {
 
 const FILL_STYLE: CSSProperties = { position: 'absolute', inset: 0 };
 
-const CompositePieceDom = ({ piece, tintColor }: { piece: CompositePiece; tintColor?: string }) => {
+const CompositePieceDom = ({ piece, tintColor }: { piece: CompositeLayerPieceProps; tintColor?: string }) => {
     const url = THEME_URLS[piece.textureKey];
     const tintedUrl = useTintedImageUrl(tintColor ? url : undefined, tintColor);
 

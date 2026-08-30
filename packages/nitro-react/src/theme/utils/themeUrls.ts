@@ -103,7 +103,6 @@ export const THEME_URLS: Record<string, string> = {
     'button-4-hovering-src': './assets/images/button/4-hovering.png',
     'button-4-pressed-src': './assets/images/button/4-pressed.png',
     'button-4-disabled-src': './assets/images/button/4-disabled.png',
-    'button-100-default-src': './assets/images/button/100-default.png',
     'button-100-default-button-top-left-src': './assets/images/button/100-default-button-top-left.png',
     'button-100-default-button-top-center-src': './assets/images/button/100-default-button-top-center.png',
     'button-100-default-button-top-right-src': './assets/images/button/100-default-button-top-right.png',

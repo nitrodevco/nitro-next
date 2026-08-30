@@ -1,5 +1,4 @@
 export * from './buttonGroupFactory';
-export * from './buttonOverlayPieces';
 export * from './FillLayout';
 export * from './getGlobalRect';
 export * from './iconAssets';
@@ -9,6 +8,7 @@ export * from './renderMode';
 export * from './ScrollViewport';
 export * from './spriteFrame';
 export * from './textStyles';
+export * from './themeAssetBundle';
 export * from './themeUrls';
 export * from './ThemeVariant';
 export * from './VariantConfig';

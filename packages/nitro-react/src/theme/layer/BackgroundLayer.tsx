@@ -1,7 +1,7 @@
 import { BoxLayout } from '../Box';
 import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
 import { getRenderMode, SpriteFrame, spriteLayoutFromFrame } from '../utils';
-import { CompositeLayer, CompositePiece } from './CompositeLayer';
+import { CompositeLayer, CompositeLayerPieceProps } from './CompositeLayer';
 import { NineSliceBorderWidth, NineSliceLayer, NineSliceRepeatAxis } from './NineSliceLayer';
 import { SpriteLayer } from './SpriteLayer';
 import { TileLayer } from './TileLayer';
@@ -10,7 +10,7 @@ export type BackgroundLayerConfig
     = | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; borderWidth?: NineSliceBorderWidth; repeat?: NineSliceRepeatAxis }
         | { kind: 'sprite'; textureKey: string; frame?: SpriteFrame }
         | { kind: 'tile'; textureKey: string; left?: number; top?: number; bottom?: number; width?: number }
-        | { kind: 'composite'; pieces: CompositePiece[] };
+        | { kind: 'composite'; pieces: CompositeLayerPieceProps[] };
 
 export const BackgroundLayer = ({ layer, tintColor, layout }: {
     layer: BackgroundLayerConfig | undefined;

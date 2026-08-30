@@ -1,18 +1,18 @@
-import { Composite, NineSlice } from '../layer';
+import { Composite, CompositePiece, NineSlice } from '../layer';
 import { ThemeVariant, ThemeVariants } from '../utils';
 
 /** `Frame` variants - the Flash `style` ids it draws. */
 export type FrameVariant = ThemeVariant;
 
 const BLUE_FRAME_SHINE = Composite([
-    { textureKey: 'frame-0-default-shine-top-left-src', left: 1, top: 1, width: 7, height: 7 },
-    { textureKey: 'frame-0-default-shine-top-center-src', left: 8, right: 8, top: 2, height: 1 },
-    { textureKey: 'frame-0-default-shine-top-right-src', right: 1, top: 1, width: 7, height: 7 },
-    { textureKey: 'frame-0-default-shine-top-center-src', left: 2, top: 8, bottom: 8, width: 1 },
-    { textureKey: 'frame-0-default-shine-top-center-src', right: 2, top: 8, bottom: 7, width: 1 },
-    { textureKey: 'frame-0-default-shine-bottom-left-src', left: 1, bottom: 1, width: 7, height: 7 },
-    { textureKey: 'frame-0-default-shine-top-center-src', left: 8, right: 7, bottom: 2, height: 1 },
-    { textureKey: 'frame-0-default-shine-bottom-right-src', right: 1, bottom: 1, width: 6, height: 6 },
+    CompositePiece('frame-0-default-shine-top-left-src', 1, 1, undefined, undefined, 7, 7),
+    CompositePiece('frame-0-default-shine-top-center-src', 2, 8, 8, undefined, undefined, 1),
+    CompositePiece('frame-0-default-shine-top-right-src', 1, undefined, 1, undefined, 7, 7),
+    CompositePiece('frame-0-default-shine-top-center-src', 8, 2, undefined, 8, 1),
+    CompositePiece('frame-0-default-shine-top-center-src', 8, undefined, 2, 7, 1),
+    CompositePiece('frame-0-default-shine-bottom-left-src', undefined, 1, undefined, 1, 7, 7),
+    CompositePiece('frame-0-default-shine-top-center-src', undefined, 8, 7, 2, undefined, 1),
+    CompositePiece('frame-0-default-shine-bottom-right-src', undefined, undefined, 1, 1, 6, 6),
 ]);
 
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
@@ -26,29 +26,29 @@ export const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
     7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 73 } },
     100: {
         layer: Composite([
-            { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
-            { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
-            { textureKey: 'border-101-default-top-right-src', top: 0, right: 0, width: 4, height: 4 },
-            { textureKey: 'border-101-default-center-left-src', left: 0, top: 4, bottom: 7, width: 1 },
-            { textureKey: 'border-101-default-center-center-src', left: 1, right: 1, top: 4, bottom: 7 },
-            { textureKey: 'border-101-default-center-left-src', right: 0, top: 4, bottom: 7, width: 1 },
-            { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
-            { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
-            { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
+            CompositePiece('border-101-default-top-left-src', 0, 0, undefined, undefined, 4, 4),
+            CompositePiece('border-101-default-top-center-src', 0, 4, 4, undefined, undefined, 4),
+            CompositePiece('border-101-default-top-right-src', 0, undefined, 0, undefined, 4, 4),
+            CompositePiece('border-101-default-center-left-src', 4, 0, undefined, 7, 1),
+            CompositePiece('border-101-default-center-center-src', 4, 1, 1, 7),
+            CompositePiece('border-101-default-center-left-src', 4, undefined, 0, 7, 1),
+            CompositePiece('border-101-default-bottom-left-src', undefined, 0, undefined, 0, 4, 7),
+            CompositePiece('border-101-default-bottom-center-src', undefined, 4, 4, 0, undefined, 7),
+            CompositePiece('border-101-default-bottom-right-src', undefined, undefined, 0, 0, 4, 7),
         ]), layout: { minWidth: 50, minHeight: 50 },
     },
     // illumina "wired" - the light frame art with the wired window layout
     102: {
         layer: Composite([
-            { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
-            { textureKey: 'border-101-default-top-center-src', top: 0, left: 4, right: 4, height: 4 },
-            { textureKey: 'border-101-default-top-right-src', top: 0, right: 0, width: 4, height: 4 },
-            { textureKey: 'border-101-default-center-left-src', left: 0, top: 4, bottom: 7, width: 1 },
-            { textureKey: 'border-101-default-center-center-src', left: 1, right: 1, top: 4, bottom: 7 },
-            { textureKey: 'border-101-default-center-left-src', right: 0, top: 4, bottom: 7, width: 1 },
-            { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
-            { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
-            { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
+            CompositePiece('border-101-default-top-left-src', 0, 0, undefined, undefined, 4, 4),
+            CompositePiece('border-101-default-top-center-src', 0, 4, 4, undefined, undefined, 4),
+            CompositePiece('border-101-default-top-right-src', 0, undefined, 0, undefined, 4, 4),
+            CompositePiece('border-101-default-center-left-src', 4, 0, undefined, 7, 1),
+            CompositePiece('border-101-default-center-center-src', 4, 1, 1, 7),
+            CompositePiece('border-101-default-center-left-src', 4, undefined, 0, 7, 1),
+            CompositePiece('border-101-default-bottom-left-src', undefined, 0, undefined, 0, 4, 7),
+            CompositePiece('border-101-default-bottom-center-src', undefined, 4, 4, 0, undefined, 7),
+            CompositePiece('border-101-default-bottom-right-src', undefined, undefined, 0, 0, 4, 7),
         ]), layout: { minWidth: 50, minHeight: 50 },
     },
     // illumina purple

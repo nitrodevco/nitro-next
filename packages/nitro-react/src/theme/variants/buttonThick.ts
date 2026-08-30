@@ -1,20 +1,15 @@
-import { NineSlice, Stretch } from '../layer';
+import { Stretch } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
+import { makeTextStyleBold, roundedButtonVariant, shinyButtonBoldVariant } from './buttonVariants';
 
 /** `ButtonThick` variants - the Flash `style` ids it draws. */
 export type ButtonThickVariant = ThemeWithStatesVariant;
 
 const BUTTON_THICK_3_VARIANT: ButtonThickVariant = {
-    states: {
-        default: NineSlice('buttonthick-3-default-src', 5, 5, 5, 5),
-        hovering: NineSlice('buttonthick-3-hovering-src', 5, 5, 5, 5),
-        pressed: NineSlice('buttonthick-3-pressed-src', 5, 5, 5, 5),
-        disabled: NineSlice('buttonthick-3-disabled-src', 5, 5, 5, 5),
-    },
+    ...shinyButtonBoldVariant('buttonthick-3', '#000000'),
     layout: {
         paddingLeft: 10, paddingTop: 2, paddingRight: 10, paddingBottom: 3, minWidth: 20, minHeight: 22,
     },
-    textStyle: 'text-style-button-shiny-bold',
 };
 
 export const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
@@ -51,29 +46,17 @@ export const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
     },
     // ubuntu_skin - black
     4: {
-        states: {
-            default: NineSlice('buttonthick-4-default-src', 5, 5, 5, 5),
-            hovering: NineSlice('buttonthick-4-hovering-src', 5, 5, 5, 5),
-            pressed: NineSlice('buttonthick-4-pressed-src', 5, 5, 5, 5),
-            disabled: NineSlice('buttonthick-4-disabled-src', 5, 5, 5, 5),
-        },
+        ...shinyButtonBoldVariant('buttonthick-4', '#ffffff'),
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28,
         },
-        textStyle: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
     },
     // ubuntu_skin - default rounded
     5: {
-        states: {
-            default: NineSlice('containerbutton-4-default-src', 6, 6, 6, 7),
-            hovering: NineSlice('containerbutton-4-hovering-src', 6, 6, 6, 7),
-            pressed: NineSlice('containerbutton-4-pressed-src', 6, 6, 6, 7),
-            disabled: NineSlice('containerbutton-4-disabled-src', 6, 6, 6, 7),
-        },
+        ...makeTextStyleBold(roundedButtonVariant('containerbutton-4', '#ffffff')),
         layout: {
             paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28,
         },
-        textStyle: 'text-style-button-shiny-bold', textColor: '#FFFFFF',
     },
     // ubuntu_skin - green
     6: {
