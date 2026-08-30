@@ -1,4 +1,5 @@
 export * from './buttonGroupFactory';
+export * from './buttonVariants';
 export * from './FillLayout';
 export * from './getGlobalRect';
 export * from './iconAssets';

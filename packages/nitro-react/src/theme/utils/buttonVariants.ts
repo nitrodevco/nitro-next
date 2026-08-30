@@ -1,5 +1,5 @@
 import { Composite, CompositeLayerPieceProps, CompositePiece, NineSlice } from '../layer';
-import { ThemeBase, ThemeWithStatesVariant } from '../utils';
+import { ThemeBase, ThemeWithStatesVariant } from '.';
 
 export type ButtonVariant = ThemeWithStatesVariant;
 

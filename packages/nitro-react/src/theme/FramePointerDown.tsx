@@ -3,9 +3,14 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box } from './Box';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer } from './layer';
-import { ThemeProps } from './utils';
-import { FRAME_POINTER_DOWN_VARIANTS, FramePointerDownVariant } from './variants/framePointerDown';
+import { BackgroundLayer, Stretch } from './layer';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+
+export type FramePointerDownVariant = ThemeVariant;
+
+const FRAME_POINTER_DOWN_VARIANTS: ThemeVariants<FramePointerDownVariant> = {
+    7: { layer: Stretch('framepointerdown-src'), layout: { width: 16, height: 12 } },
+};
 
 export type FramePointerDownProps = ThemeProps<FramePointerDownVariant>;
 

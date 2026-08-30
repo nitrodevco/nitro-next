@@ -5,8 +5,14 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer } from './layer';
-import { ThemeProps, wrapTextChildren } from './utils';
-import { TAB_CONTEXT_VARIANTS, TabContextVariant } from './variants/tabContext';
+import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+
+export type TabContextVariant = ThemeVariant;
+
+const TAB_CONTEXT_VARIANTS: ThemeVariants<TabContextVariant> = {
+    0: { layout: { minHeight: 22, maxHeight: 22 } },
+    3: {},
+};
 
 export interface TabContextProps extends ThemeProps<TabContextVariant> {
     children?: ReactNode;

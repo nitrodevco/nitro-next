@@ -5,8 +5,15 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer } from './layer';
-import { ThemeProps, wrapTextChildren } from './utils';
-import { CONTENT_AREA_VARIANTS, ContentAreaVariant } from './variants/contentArea';
+import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+
+/** `ContentArea` variants - the Flash `style` ids it draws. */
+export type ContentAreaVariant = ThemeVariant;
+
+const CONTENT_AREA_VARIANTS: ThemeVariants<ContentAreaVariant> = {
+    0: { layout: { paddingBottom: 3, paddingLeft: 6, paddingRight: 6 } },
+    3: { layout: { position: 'relative', paddingLeft: 3, paddingRight: 3, paddingTop: 0, paddingBottom: 4 } },
+};
 
 export interface ContentAreaProps extends ThemeProps<ContentAreaVariant> {
     children?: ReactNode;

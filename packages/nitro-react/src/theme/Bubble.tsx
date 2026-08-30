@@ -5,15 +5,24 @@ import { Box } from './Box';
 import { BubblePointer } from './BubblePointer';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer } from './layer';
-import { ThemeProps, wrapTextChildren } from './utils';
-import { BUBBLE_VARIANTS, BubbleVariant, PointerDirection } from './variants/bubble';
+import { BackgroundLayer, NineSlice, Stretch } from './layer';
+import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+
+export type PointerDirection = 'up' | 'down' | 'left' | 'right';
+
+export type BubbleVariant = ThemeVariant;
 
 const POINTER_FLEX_DIRECTION: Record<PointerDirection, 'row' | 'row-reverse' | 'column' | 'column-reverse'> = {
     down: 'column',
     up: 'column-reverse',
     left: 'row-reverse',
     right: 'row',
+};
+
+const BUBBLE_VARIANTS: ThemeVariants<BubbleVariant> = {
+    0: { layer: NineSlice('bubble-0-default-src', 5, 5, 5, 6), layout: { minWidth: 21, minHeight: 21 } },
+    // ubuntu/habbo-style: plain stretch sprite, no nine-slice, no overlay.
+    7: { layer: Stretch('bubble-7-default-src'), layout: { minWidth: 27, minHeight: 38 } },
 };
 
 export interface BubbleProps extends ThemeProps<BubbleVariant> {

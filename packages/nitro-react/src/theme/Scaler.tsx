@@ -3,15 +3,42 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box } from './Box';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer } from './layer';
-import { ThemeProps } from './utils';
-import { SCALER_VARIANTS, ScalerVariant } from './variants/scaler';
+import { BackgroundLayer, Stretch } from './layer';
+import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+
+export type ScalerVariant = ThemeVariant;
 
 const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
     x: 'ew-resize',
     y: 'ns-resize',
     all: 'nwse-resize',
     none: 'default',
+};
+
+const SCALER_VARIANTS: ThemeVariants<ScalerVariant> = {
+    0: {
+        layer: Stretch('scaler-0-default-src'),
+        overlay: Stretch('scaler-0-default-shine-src'),
+        zIndex: 20,
+        layout: {
+            right: 0,
+            bottom: 0,
+        },
+    },
+    1: {
+        layer: Stretch('scaler-0-default-src'),
+        overlay: Stretch('scaler-0-default-shine-src'),
+    },
+    2: {
+        layer: Stretch('scaler-0-default-src'),
+        overlay: Stretch('scaler-0-default-shine-src'),
+    },
+    3: {
+        layer: Stretch('scaler-src'),
+    },
+    4: {
+        layer: Stretch('scaler-src'),
+    },
 };
 
 export type ScalerDirection = 'x' | 'y' | 'all' | 'none';

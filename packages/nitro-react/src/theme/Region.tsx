@@ -8,8 +8,13 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { ColorLayer } from './layer';
-import { DropShadowConfig, ThemeProps, wrapTextChildren } from './utils';
-import { REGION_VARIANTS, RegionVariant } from './variants/region';
+import { DropShadowConfig, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+
+export type RegionVariant = ThemeVariant;
+
+const REGION_VARIANTS: ThemeVariants<RegionVariant> = {
+    0: {},
+};
 
 /** Flash's `DropShadowFilter(distance, angle°, color, alpha, blurX, blurY)` -> pixi-filters' offset/blur form. */
 const createDropShadow = ({ distance = 4, angle = 45, color = '#000000', alpha = 0.35, blur = 4 }: DropShadowConfig) => {
