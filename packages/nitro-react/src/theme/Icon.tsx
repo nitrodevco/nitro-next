@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 
 import { BoxLayout } from './Box';
 import { ThemeImage } from './ThemeImage';
-import { ICON_SET_FRAMES, THEME_URLS, ThemeLayoutMeta } from './utils';
+import { ICON_SET_FRAMES, ThemeLayoutMeta } from './utils';
 
 export interface IconProps extends ThemeLayoutMeta {
     /** The `icon_set` template number (`<icon style="N">`). */
@@ -20,7 +20,7 @@ export const Icon = forwardRef<PixiContainer, IconProps>(({ variant, tintColor, 
     return (
         <ThemeImage
             ref={ref}
-            src={THEME_URLS['icon-set-src']}
+            textureKey="icon-set-src\"
             frame={frame}
             tint={tintColor}
             layout={layout ?? {}}

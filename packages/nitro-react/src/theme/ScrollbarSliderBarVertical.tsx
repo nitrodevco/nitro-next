@@ -21,8 +21,8 @@ const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderBarVe
         // the bar's own left edge via background-position (`bg-position-[left_5px_top_0px]
         // bg-size-[7px_10px] bg-repeat-y` on a `inset-x-0 top-1 bottom-1` wrapper).
         overlays: {
-            default: Tiled('scrollbarsliderbarvertical-0-default-grd-src', 5, 4, 4, 7),
-            pressed: Tiled('scrollbarsliderbarvertical-0-pressed-grd-src', 5, 4, 4, 7),
+            default: Tiled('scrollbarsliderbarvertical-0-default-grd-src', { left: 5, top: 4, bottom: 4, width: 7 }),
+            pressed: Tiled('scrollbarsliderbarvertical-0-pressed-grd-src', { left: 5, top: 4, bottom: 4, width: 7 }),
         },
     },
     1: {
@@ -32,8 +32,8 @@ const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderBarVe
             pressed: NineSlice('scrollbarsliderbarvertical-1-default-src', 0, 2, 0, 2),
         },
         overlays: {
-            default: Tiled('scrollbarsliderbarvertical-1-default-grd-src', 5, 4, 4, 7),
-            pressed: Tiled('scrollbarsliderbarvertical-1-pressed-grd-src', 5, 4, 4, 7),
+            default: Tiled('scrollbarsliderbarvertical-1-default-grd-src', { left: 5, top: 4, bottom: 4, width: 7 }),
+            pressed: Tiled('scrollbarsliderbarvertical-1-pressed-grd-src', { left: 5, top: 4, bottom: 4, width: 7 }),
         },
     },
     3: {
@@ -67,7 +67,7 @@ export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSlid
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'border', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tintColor,
+            cascadeKey: 'scrollbarSliderBarVertical', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tintColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

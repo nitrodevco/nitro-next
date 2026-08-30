@@ -10,6 +10,5 @@ export * from './usePixiTexture';
 export * from './useResolvedVariant';
 export * from './useRowVirtualizer';
 export * from './useScrollController';
-export * from './useSilhouetteImageUrl';
+export * from './useThemeImageUrl';
 export * from './useThemeVariant';
-export * from './useTintedImageUrl';

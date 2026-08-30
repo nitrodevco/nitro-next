@@ -1,10 +1,10 @@
-import { Rectangle, Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 import { useMemo } from 'react';
 
 import { BoxLayout } from '../Box';
 import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
-import { usePixiSilhouetteTexture, usePixiTexture, useSilhouetteImageUrl } from '../hooks';
-import { FillLayout, getRenderMode, THEME_URLS } from '../utils';
+import { getCroppedTexture, usePixiSilhouetteTexture, usePixiTexture, useThemeImageUrl } from '../hooks';
+import { FillLayout, getRenderMode } from '../utils';
 import { BackgroundLayerConfig } from './BackgroundLayer';
 
 export type NineSliceRepeatAxis = 'x' | 'y';
@@ -27,7 +27,7 @@ export interface NineSliceLayerProps {
     repeat?: NineSliceRepeatAxis;
 }
 
-const cropTexture = (base: Texture, x: number, y: number, w: number, h: number): Texture => new Texture({ source: base.source, frame: new Rectangle(x, y, Math.max(1, w), Math.max(1, h)) });
+const cropTexture = (base: Texture, x: number, y: number, w: number, h: number): Texture => getCroppedTexture(base, { x, y, width: Math.max(1, w), height: Math.max(1, h) });
 
 const TiledNineSlicePixi = ({ texture, leftWidth, topHeight, rightWidth, bottomHeight, repeat, tintColor }: { texture: Texture; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; repeat: NineSliceRepeatAxis; tintColor?: string }) => {
     const { width, height } = texture;
@@ -98,7 +98,10 @@ const TiledNineSlicePixi = ({ texture, leftWidth, topHeight, rightWidth, bottomH
 };
 
 const NineSliceLayerPixi = ({ textureKey, leftWidth, topHeight, rightWidth, bottomHeight, tintColor, layout, repeat }: NineSliceLayerProps) => {
-    const texture = usePixiTexture(textureKey);
+    // A repeating middle piece goes through `TilingSprite`, which needs a texture that is its
+    // own source (see `getStandaloneThemeTexture`); the plain `NineSliceSprite` is happy with
+    // the atlas-backed region.
+    const texture = usePixiTexture(textureKey, { standalone: !!repeat });
 
     if (!texture) return null;
 
@@ -195,16 +198,14 @@ const NineSliceBlendOverlayPixi = ({ textureKey, leftWidth, topHeight, rightWidt
  * the border texture's own nine-slice-rendered alpha shape (so the wash follows rounded/cut
  * corners instead of blanketing the whole rectangular box); DOM has no standard nine-slice mask
  * primitive, so it recolors the SAME source texture to a solid white silhouette (preserving that
- * exact alpha shape - see `useSilhouetteImageUrl`'s docblock on why the existing multiply-based
- * `useTintedImageUrl` can't do this) and renders that silhouette through the identical
+ * exact alpha shape - a multiply tint can't do this) and renders that silhouette through the identical
  * `border-image` technique `BackgroundLayerDom`'s `nineSlice` case uses, at `opacity: blend`.
  * This was previously unconditionally skipped in DOM (`getRenderMode() === 'dom'` bailed out
  * before ever reaching here), which made every `blend`-using `Border` variant render at its
  * flat, unlit base color in DOM - noticeably darker than Pixi's actual (lightened) result.
  */
 const NineSliceBlendOverlayDom = ({ textureKey, leftWidth, topHeight, rightWidth, bottomHeight, blend, layout }: NineSliceBlendOverlayProps) => {
-    const baseUrl = textureKey ? THEME_URLS[textureKey] : undefined;
-    const silhouetteUrl = useSilhouetteImageUrl(baseUrl, '#ffffff');
+    const silhouetteUrl = useThemeImageUrl(textureKey, { kind: 'silhouette', color: '#ffffff' });
 
     if (!silhouetteUrl || !blend || blend <= 0) return null;
 

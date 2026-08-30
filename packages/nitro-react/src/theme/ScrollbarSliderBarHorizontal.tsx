@@ -1,152 +1,98 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { Box, BoxLayout } from './Box';
-import { useInteractionState, useResolvedVariant } from './hooks';
-import { NineSliceLayer, NineSliceRepeatAxis, SpriteLayer, TileLayer } from './layer';
-import { PointerHandlerProps } from './utils';
+import { Box } from './Box';
+import { useThemeVariant } from './hooks';
+import { BackgroundLayer, NineSlice, Tiled } from './layer';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 
-interface BarBorder {
-    textureKey: string;
-    leftWidth: number;
-    topHeight: number;
-    rightWidth: number;
-    bottomHeight: number;
-    repeat?: NineSliceRepeatAxis;
-}
-
-interface ScrollbarSliderBarHorizontalVariant {
-    default: BarBorder;
-    hovering: BarBorder;
-    pressed: BarBorder;
-}
-
-const border = (textureKey: string, leftWidth: number, rightWidth: number, repeat?: NineSliceRepeatAxis): BarBorder => ({ textureKey, leftWidth, topHeight: 0, rightWidth, bottomHeight: 0, repeat });
+export type ScrollbarSliderBarHorizontalVariant = ThemeWithStatesVariant;
 
 /**
- * Full port of theme/ScrollbarSliderBarHorizontal.tsx's 5-variant border half: a nine-slice
- * border-image sliced left/right only (mirrors ScrollbarSliderBarVertical.tsx's top/bottom
- * slice, rotated). '0' has a distinct `-pressed-src` art; '1' ("black") reuses its
- * `-default-src` for the `active:` state too (no visual press feedback, same DOM quirk as the
- * vertical bar's '1'); '3' has a distinct hover art plus `pixel-art`/
- * `border-image-repeat: repeat_stretch` (fill tiles horizontally rather than stretching - see
- * `NineSliceRepeatAxis`'s docblock); '100'/'200' reuse one texture for all three states.
+ * The horizontal scrollbar thumb - the same shape as `ScrollbarSliderBarVertical`: the bar's
+ * body as a state-driven nine-slice (`states`), and for the classic skins a "grip" pattern
+ * tiled along the bar's middle (`overlays`, a `Tiled` strip inset from the bar's ends), untinted
+ * like the vertical grip.
  */
-const SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS: Record<string, ScrollbarSliderBarHorizontalVariant> = {
+const SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS: ThemeVariants<ScrollbarSliderBarHorizontalVariant> = {
     0: {
-        default: border('scrollbarsliderbarhorizontal-0-default-src', 2, 2),
-        hovering: border('scrollbarsliderbarhorizontal-0-default-src', 2, 2),
-        pressed: border('scrollbarsliderbarhorizontal-0-pressed-src', 2, 2),
+        states: {
+            default: NineSlice('scrollbarsliderbarhorizontal-0-default-src', 2, 0, 2, 0),
+            hovering: NineSlice('scrollbarsliderbarhorizontal-0-default-src', 2, 0, 2, 0),
+            pressed: NineSlice('scrollbarsliderbarhorizontal-0-pressed-src', 2, 0, 2, 0),
+        },
+        overlays: {
+            default: Tiled('scrollbarsliderbarhorizontal-0-default-grd-src', { left: 2, right: 2, top: 5, height: 7 }),
+            pressed: Tiled('scrollbarsliderbarhorizontal-0-pressed-grd-src', { left: 2, right: 2, top: 5, height: 7 }),
+        },
     },
     1: {
-        default: border('scrollbarsliderbarhorizontal-1-default-src', 2, 2),
-        hovering: border('scrollbarsliderbarhorizontal-1-default-src', 2, 2),
-        pressed: border('scrollbarsliderbarhorizontal-1-default-src', 2, 2),
+        states: {
+            default: NineSlice('scrollbarsliderbarhorizontal-1-default-src', 2, 0, 2, 0),
+            hovering: NineSlice('scrollbarsliderbarhorizontal-1-default-src', 2, 0, 2, 0),
+            pressed: NineSlice('scrollbarsliderbarhorizontal-1-default-src', 2, 0, 2, 0),
+        },
+        overlays: {
+            default: Tiled('scrollbarsliderbarhorizontal-1-default-grd-src', { left: 0, right: 0, top: 5, height: 7 }),
+            pressed: Tiled('scrollbarsliderbarhorizontal-1-default-grd-src', { left: 0, right: 0, top: 5, height: 7 }),
+        },
     },
     3: {
-        default: border('scrollbarsliderbarhorizontal-3-default-src', 5, 5, 'x'),
-        hovering: border('scrollbarsliderbarhorizontal-3-hovering-src', 5, 5, 'x'),
-        pressed: border('scrollbarsliderbarhorizontal-3-pressed-src', 5, 5, 'x'),
+        states: {
+            default: NineSlice('scrollbarsliderbarhorizontal-3-default-src', 5, 0, 5, 0, undefined, 'x'),
+            hovering: NineSlice('scrollbarsliderbarhorizontal-3-hovering-src', 5, 0, 5, 0, undefined, 'x'),
+            pressed: NineSlice('scrollbarsliderbarhorizontal-3-pressed-src', 5, 0, 5, 0, undefined, 'x'),
+        },
     },
     100: {
-        default: border('scrollbarsliderbarhorizontal-100-default-src', 4, 4),
-        hovering: border('scrollbarsliderbarhorizontal-100-default-src', 4, 4),
-        pressed: border('scrollbarsliderbarhorizontal-100-default-src', 4, 4),
+        states: {
+            default: NineSlice('scrollbarsliderbarhorizontal-100-default-src', 4, 0, 4, 0),
+            hovering: NineSlice('scrollbarsliderbarhorizontal-100-default-src', 4, 0, 4, 0),
+            pressed: NineSlice('scrollbarsliderbarhorizontal-100-default-src', 4, 0, 4, 0),
+        },
     },
     200: {
-        default: border('scrollbarsliderbarhorizontal-200-default-src', 4, 4),
-        hovering: border('scrollbarsliderbarhorizontal-200-default-src', 4, 4),
-        pressed: border('scrollbarsliderbarhorizontal-200-default-src', 4, 4),
+        states: {
+            default: NineSlice('scrollbarsliderbarhorizontal-200-default-src', 4, 0, 4, 0),
+            hovering: NineSlice('scrollbarsliderbarhorizontal-200-default-src', 4, 0, 4, 0),
+            pressed: NineSlice('scrollbarsliderbarhorizontal-200-default-src', 4, 0, 4, 0),
+        },
     },
 };
 
-interface BarOverlay {
-    defaultTextureKey: string;
-    pressedTextureKey: string;
-    insetLeft: number;
-    insetRight: number;
-}
+export type ScrollbarSliderBarHorizontalProps = ThemeProps<ScrollbarSliderBarHorizontalVariant>;
 
-/**
- * Overlay gradient half - only '0'/'1' have one. Unlike ScrollbarSliderBarVertical.tsx's
- * overlay (which tiles in BOTH its default and pressed states), DOM's horizontal overlay is a
- * single static 10x7 sprite (`bg-no-repeat`) at `bg-position-[left_0px_top_5px]` while default,
- * and only switches to a horizontally-repeating tile (`background-repeat: repeat_no-repeat`)
- * while pressed - a genuine default-vs-pressed asymmetry confirmed from the exact DOM class
- * strings, not assumed symmetric with the vertical bar. The inset wrapper is also asymmetric:
- * only '0' insets left/right by `left-0.5 right-0.5` (2px); '1' has no entry in DOM's
- * `scrollbarSliderBarHorizontalOverlayInsetConfig` and falls back to its `inset-0` default
- * (full fill, no inset) - preserved as-is rather than "fixed" to match '0'.
- */
-const SCROLLBAR_SLIDER_BAR_HORIZONTAL_OVERLAY: Partial<Record<string, BarOverlay>> = {
-    0: { defaultTextureKey: 'scrollbarsliderbarhorizontal-0-default-grd-src', pressedTextureKey: 'scrollbarsliderbarhorizontal-0-pressed-grd-src', insetLeft: 2, insetRight: 2 },
-    1: { defaultTextureKey: 'scrollbarsliderbarhorizontal-1-default-grd-src', pressedTextureKey: 'scrollbarsliderbarhorizontal-1-default-grd-src', insetLeft: 0, insetRight: 0 },
-};
-
-export interface ScrollbarSliderBarHorizontalProps extends PointerHandlerProps {
-    variant?: string;
-    defaultVariant?: string;
-    tintColor?: string;
-    layout?: BoxLayout;
-}
-
-/** Pixi port of theme/ScrollbarSliderBarHorizontal.tsx - the draggable scroll thumb. */
 export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSliderBarHorizontalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarHorizontalProps>(
-    ({ variant, defaultVariant, tintColor, layout, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
-        const { resolvedVariant } = useResolvedVariant('scrollbarSliderBarHorizontal', variant, defaultVariant);
-        const config = SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS[resolvedVariant] ?? SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS['0'];
-        const overlay = SCROLLBAR_SLIDER_BAR_HORIZONTAL_OVERLAY[resolvedVariant];
-        const { state, handlers } = useInteractionState({ onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
-        const isPressed = state === 'pressed';
-        const layer = isPressed ? config.pressed : state === 'hovering' ? config.hovering : config.default;
-
-        const mergedLayout = { position: 'absolute' as const, ...layout };
-
-        // The pressed overlay positions itself from `left`/`right` (no `width`) - the DOM
-        // reference lets CSS resolve that naturally (`position:absolute` + both offsets set),
-        // but `@pixi/layout` defaults a leaf's unspecified axis to its own texture's intrinsic
-        // size rather than inferring it the same way (see `BackgroundLayer.tsx`'s
-        // `containerHeight` docblock for the vertical bar's identical top/bottom trap - this is
-        // the same thing rotated onto the width axis). Computed from the real bar width
-        // (`mergedLayout.width`, the one thing that knows it) instead of trusting Yoga to infer
-        // it from the insets, so this is Pixi-only compensation - it changes nothing else.
-        const overlayWidth = overlay && typeof mergedLayout.width === 'number'
-            ? mergedLayout.width - overlay.insetLeft - overlay.insetRight
-            : undefined;
+    ({
+        variant, defaultVariant, layout, tintColor,
+        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
+        const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
+            cascadeKey: 'scrollbarSliderBarHorizontal', variants: SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS, variant, defaultVariant, tintColor,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        });
+        const mergedLayout = { position: 'absolute' as const, ...config.layout, ...layout };
 
         return (
             <Box
                 ref={ref}
+                cursor={state === 'pressed' ? 'grabbing' : 'grab'}
                 layout={mergedLayout}
                 {...handlers}
             >
-                <NineSliceLayer
-                    textureKey={layer.textureKey}
-                    leftWidth={layer.leftWidth}
-                    topHeight={layer.topHeight}
-                    rightWidth={layer.rightWidth}
-                    bottomHeight={layer.bottomHeight}
-                    tintColor={tintColor}
-                    repeat={layer.repeat}
-                />
-                {overlay && (
-                    isPressed
-                        ? (
-                                <TileLayer
-                                    textureKey={overlay.pressedTextureKey}
-                                    tintColor={tintColor}
-                                    layout={overlayWidth !== undefined
-                                        ? { position: 'absolute', left: overlay.insetLeft, top: 5, width: overlayWidth, height: 7 }
-                                        : { position: 'absolute', left: overlay.insetLeft, right: overlay.insetRight, top: 5, height: 7 }}
-                                />
-                            )
-                        : (
-                                <SpriteLayer
-                                    textureKey={overlay.defaultTextureKey}
-                                    tintColor={tintColor}
-                                    layout={{ position: 'absolute', left: overlay.insetLeft, top: 5, width: 10, height: 7 }}
-                                />
-                            )
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                )}
+                {/* `layout` lets the grip strip's insets resolve against the thumb's real size -
+                    see `BackgroundLayer.tsx` on `containerWidth`/`containerHeight`. */}
+                {resolvedOverlay && (
+                    <BackgroundLayer
+                        layer={resolvedOverlay}
+                        layout={mergedLayout}
+                    />
                 )}
             </Box>
         );

@@ -10,6 +10,7 @@ export * from './ScrollViewport';
 export * from './spriteFrame';
 export * from './textStyles';
 export * from './themeAssetBundle';
+export * from './themeSprites';
 export * from './themeUrls';
 export * from './ThemeVariant';
 export * from './VariantConfig';

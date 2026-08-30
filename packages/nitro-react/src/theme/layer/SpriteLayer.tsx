@@ -1,9 +1,6 @@
-import { Rectangle, Texture } from 'pixi.js';
-import { useMemo } from 'react';
-
 import { BoxLayout } from '../Box';
 import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
-import { usePixiTexture } from '../hooks';
+import { getCroppedTexture, usePixiTexture } from '../hooks';
 import { FillLayout, getRenderMode, SpriteFrame, spriteLayoutFromFrame } from '../utils';
 import { BackgroundLayerConfig } from './BackgroundLayer';
 
@@ -20,17 +17,9 @@ export interface SpriteLayerProps {
 
 const SpriteLayerPixi = ({ textureKey, frame, tintColor, layout }: SpriteLayerProps) => {
     const baseTexture = usePixiTexture(textureKey);
-
-    const croppedTexture = useMemo(() => {
-        if (!baseTexture || !frame) return undefined;
-
-        return new Texture({
-            source: baseTexture.source,
-            frame: new Rectangle(baseTexture.frame.x + frame.x, baseTexture.frame.y + frame.y, frame.width, frame.height),
-        });
-    }, [ baseTexture, frame?.x, frame?.y, frame?.width, frame?.height ]);
-
-    const texture = frame ? croppedTexture : baseTexture;
+    // A sub-frame shares the base's source; `getCroppedTexture` hands back the same Texture
+    // object for the same rect every time, so remounts allocate nothing.
+    const texture = baseTexture && frame ? getCroppedTexture(baseTexture, frame) : baseTexture;
 
     if (!texture) return null;
 

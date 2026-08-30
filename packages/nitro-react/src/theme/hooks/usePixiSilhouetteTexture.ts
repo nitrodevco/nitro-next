@@ -1,91 +1,113 @@
 import { Texture } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
-import { THEME_URLS } from '../utils';
+import { getThemeSliceCanvas } from '../utils/themeSprites';
+import { THEME_URLS } from '../utils/themeUrls';
 
-const silhouetteCache = new Map<string, Promise<Texture | undefined>>();
+const silhouetteTextures = new Map<string, Texture>();
+const silhouetteLoads = new Map<string, Promise<Texture | undefined>>();
+
+const textureFromCanvas = (canvas: HTMLCanvasElement, label: string): Texture => {
+    const texture = Texture.from(canvas);
+
+    texture.source.scaleMode = 'nearest';
+    texture.label = label;
+
+    return texture;
+};
 
 /**
- * Loads `url`'s image and recolors it to a solid `color` silhouette that keeps the source's
- * own alpha shape (`source-in`: paint `color` everywhere the source has any alpha, at that
- * alpha), producing a fresh `Texture` - the Pixi-side twin of `useSilhouetteImageUrl` (which
- * does the identical canvas pass for DOM's `border-image`-based blend overlay). Loaded via a
- * plain `Image`/canvas rather than reusing the already-decoded Pixi `Texture` for this URL,
- * since extracting pixel data back out of an uploaded GPU texture is far more involved than
- * just re-fetching the (already browser-cached) image.
+ * A solid-colour silhouette of a theme sprite (the same alpha shape, every opaque pixel
+ * `color`) - the `blend` highlight a nine-slice draws over itself. Cut out of the atlas
+ * synchronously when it has loaded; otherwise built from the per-file URL once it decodes.
+ * One texture per key + colour for the session.
  */
-const buildSilhouetteTexture = (url: string, color: string): Promise<Texture | undefined> => new Promise((resolve) => {
-    const image = new Image();
+const getSilhouetteTexture = (key: string, color: string): Texture | undefined => {
+    const cacheKey = `${key}|${color}`;
+    const cached = silhouetteTextures.get(cacheKey);
 
-    image.onload = () => {
-        const canvas = document.createElement('canvas');
+    if (cached) return cached;
 
-        canvas.width = image.naturalWidth;
-        canvas.height = image.naturalHeight;
+    const canvas = getThemeSliceCanvas(key, { kind: 'silhouette', color });
 
-        const ctx = canvas.getContext('2d');
+    if (!canvas) return undefined;
 
-        if (!ctx) {
+    const texture = textureFromCanvas(canvas, `${key} (silhouette ${color})`);
+
+    silhouetteTextures.set(cacheKey, texture);
+
+    return texture;
+};
+
+const loadSilhouetteTexture = (key: string, color: string): Promise<Texture | undefined> => {
+    const cacheKey = `${key}|${color}`;
+    const pending = silhouetteLoads.get(cacheKey);
+
+    if (pending) return pending;
+
+    const url = THEME_URLS[key];
+    const promise = new Promise<Texture | undefined>((resolve) => {
+        if (!url) {
             resolve(undefined);
 
             return;
         }
 
-        ctx.drawImage(image, 0, 0);
-        ctx.globalCompositeOperation = 'source-in';
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const image = new Image();
 
-        const texture = Texture.from(canvas);
+        image.onload = () => {
+            const canvas = document.createElement('canvas');
 
-        texture.source.scaleMode = 'nearest';
+            canvas.width = image.naturalWidth;
+            canvas.height = image.naturalHeight;
 
-        resolve(texture);
-    };
-    image.onerror = () => resolve(undefined);
-    image.src = url;
-});
+            const ctx = canvas.getContext('2d');
 
-const getSilhouetteTexture = (url: string, color: string): Promise<Texture | undefined> => {
-    const key = `${url} ${color}`;
-    const cached = silhouetteCache.get(key);
+            if (!ctx) {
+                resolve(undefined);
 
-    if (cached) return cached;
+                return;
+            }
 
-    const promise = buildSilhouetteTexture(url, color);
+            ctx.drawImage(image, 0, 0);
+            ctx.globalCompositeOperation = 'source-in';
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    silhouetteCache.set(key, promise);
+            const texture = textureFromCanvas(canvas, `${key} (silhouette ${color})`);
+
+            silhouetteTextures.set(cacheKey, texture);
+            resolve(texture);
+        };
+        image.onerror = () => {
+            silhouetteLoads.delete(cacheKey);
+            resolve(undefined);
+        };
+        image.src = url;
+    });
+
+    silhouetteLoads.set(cacheKey, promise);
 
     return promise;
 };
 
-/**
- * Resolves a theme asset key to a solid-`color` silhouette `Texture` (see
- * `buildSilhouetteTexture` above), or `undefined` while it's still loading/on failure.
- */
 export const usePixiSilhouetteTexture = (textureKey: string | undefined, color: string | undefined): Texture | undefined => {
-    const [ texture, setTexture ] = useState<Texture | undefined>(undefined);
+    const immediate = textureKey && color ? getSilhouetteTexture(textureKey, color) : undefined;
+    const [ loaded, setLoaded ] = useState<Texture | undefined>(undefined);
 
     useEffect(() => {
-        const url = textureKey ? THEME_URLS[textureKey] : undefined;
-
-        if (!url || !color) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setTexture(undefined);
-
-            return;
-        }
+        if (!textureKey || !color || immediate) return;
 
         let cancelled = false;
 
-        void getSilhouetteTexture(url, color).then((result) => {
-            if (!cancelled) setTexture(result);
+        void loadSilhouetteTexture(textureKey, color).then((result) => {
+            if (!cancelled) setLoaded(result);
         });
 
         return () => {
             cancelled = true;
         };
-    }, [ textureKey, color ]);
+    }, [ textureKey, color, immediate ]);
 
-    return texture;
+    return immediate ?? loaded;
 };

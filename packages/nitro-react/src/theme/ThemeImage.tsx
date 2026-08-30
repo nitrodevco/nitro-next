@@ -1,14 +1,17 @@
-import { BLEND_MODES, Container as PixiContainer, EventMode, FederatedPointerEvent, Rectangle, Texture } from 'pixi.js';
-import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler, useMemo } from 'react';
+import { BLEND_MODES, Container as PixiContainer, EventMode, FederatedPointerEvent } from 'pixi.js';
+import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler } from 'react';
 
 import { useConfigValue } from '#base/context';
 
 import { Box, BoxLayout } from './Box';
-import { useTextureFromUrl } from './hooks';
-import { getRenderMode, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta } from './utils';
+import { getCroppedTexture, usePixiTexture, useTextureFromUrl, useThemeImageUrl } from './hooks';
+import { getRenderMode, getThemeSprite, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta, themeSpriteNativeStyle } from './utils';
 
 export interface ImageProps extends ThemeLayoutMeta {
-    src: string | undefined;
+    /** An arbitrary image URL (a layout bitmap, an avatar render). Ignored when `textureKey` is set. */
+    src?: string | undefined;
+    /** A theme asset key (`'icon-set-src'`) - drawn from the shared atlas, no image of its own. */
+    textureKey?: string;
     /** Crop a sub-region out of `src` (a shared spritesheet) instead of showing it whole. */
     frame?: SpriteFrame;
     /** Explicit render size - omit to use `frame`'s own size, or the resolved image's native size. */
@@ -62,27 +65,21 @@ export interface ImageProps extends ThemeLayoutMeta {
  * unless a caller actually asks for one.
  */
 const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
-    src, frame, width, height, tint, alpha, blendMode, eventMode, cursor,
+    src, textureKey, frame, width, height, tint, alpha, blendMode, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     showLoadingPlaceholder, layout, visible,
 }, ref) => {
-    const baseTexture = useTextureFromUrl(src);
+    const themeTexture = usePixiTexture(textureKey);
+    const urlTexture = useTextureFromUrl(textureKey ? undefined : src);
+    const baseTexture = themeTexture ?? urlTexture;
 
     const loadingIconUrl = useConfigValue<string>('loading.icon.url') ?? '';
     const loadingTexture = useTextureFromUrl(showLoadingPlaceholder && !frame && !baseTexture ? (loadingIconUrl || undefined) : undefined);
 
     const resolvedBaseTexture = baseTexture ?? loadingTexture;
-
-    const croppedTexture = useMemo(() => {
-        if (!resolvedBaseTexture || !frame) return undefined;
-
-        return new Texture({
-            source: resolvedBaseTexture.source,
-            frame: new Rectangle(resolvedBaseTexture.frame.x + frame.x, resolvedBaseTexture.frame.y + frame.y, frame.width, frame.height),
-        });
-    }, [ resolvedBaseTexture, frame?.x, frame?.y, frame?.width, frame?.height ]);
-
-    const resolvedTexture = frame ? croppedTexture : resolvedBaseTexture;
+    // Sub-frames are cached per source + rect (`getCroppedTexture`), so an icon remounting
+    // never allocates a new Texture.
+    const resolvedTexture = resolvedBaseTexture && frame ? getCroppedTexture(resolvedBaseTexture, frame) : resolvedBaseTexture;
     const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
     if (!resolvedTexture) return null;
@@ -125,14 +122,25 @@ ImagePixi.displayName = 'ImagePixi';
  * established, sized/positioned to match whichever of the two the base render is.
  */
 const ImageDom = forwardRef<PixiContainer, ImageProps>(({
-    src, frame, width, height, tint, alpha, blendMode, eventMode, cursor,
+    src, textureKey, frame, width, height, tint, alpha, blendMode, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     layout, visible,
 }, ref) => {
-    if (!src) return null;
+    // A theme key draws out of the shared atlas: untinted straight from the atlas image, tinted
+    // from a standalone recoloured slice (made once per key + colour). Either way the frame is
+    // picked with `background-position`, and no `<img>` of its own is created.
+    const sprite = getThemeSprite(textureKey);
+    const tintedUrl = useThemeImageUrl(textureKey && tint ? textureKey : undefined, { kind: 'tint', color: tint ?? '' });
+    const themeBackground: CSSProperties | undefined = textureKey
+        ? (tint
+                ? (tintedUrl ? { backgroundImage: `url(${tintedUrl})`, backgroundPosition: frame ? `-${frame.x}px -${frame.y}px` : '0 0', backgroundRepeat: 'no-repeat' } : undefined)
+                : (sprite ? themeSpriteNativeStyle(sprite, frame) : undefined))
+        : undefined;
 
-    const resolvedWidth = frame?.width ?? width;
-    const resolvedHeight = frame?.height ?? height;
+    if (textureKey ? !themeBackground : !src) return null;
+
+    const resolvedWidth = frame?.width ?? width ?? sprite?.width;
+    const resolvedHeight = frame?.height ?? height ?? sprite?.height;
     const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
     // See Box.tsx's BoxDom for why 'static'/'dynamic' need an explicit 'auto' here (CSS
@@ -157,16 +165,18 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
             visible={visible}
             layout={{ alignItems: 'center', justifyContent: 'center', ...layout }}
         >
-            {frame
+            {themeBackground || frame
                 ? (
                         <div
                             style={{
                                 ...sharedStyle,
                                 width: resolvedWidth,
                                 height: resolvedHeight,
-                                backgroundImage: `url(${src})`,
-                                backgroundPosition: `-${frame.x}px -${frame.y}px`,
-                                backgroundRepeat: 'no-repeat',
+                                ...(themeBackground ?? {
+                                    backgroundImage: `url(${src})`,
+                                    backgroundPosition: `-${frame!.x}px -${frame!.y}px`,
+                                    backgroundRepeat: 'no-repeat',
+                                }),
                                 imageRendering: 'pixelated',
                             }}
                             {...sharedHandlers}
@@ -181,7 +191,7 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
                             {...sharedHandlers}
                         />
                     )}
-            {tint && (
+            {tint && !textureKey && (
                 <div style={{
                     position: 'absolute', top: 0, left: 0,
                     width: resolvedWidth ?? '100%',

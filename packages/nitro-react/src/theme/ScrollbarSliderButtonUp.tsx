@@ -4,16 +4,15 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { useThemeVariant } from './hooks';
 import { Stretch } from './layer';
 import { ThemeImage } from './ThemeImage';
-import { THEME_URLS, ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
+import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 
 export type ScrollbarSliderButtonUpVariant = ThemeWithStatesVariant;
 
 /**
- * Full port of theme/ScrollbarSliderButtonUp.tsx's 3-variant table: a single 170x16
- * spritesheet packing default/active/aria-disabled frames per variant, 17x16px each.
- * Variants '0'/'1' have no `hover:` rule in DOM (hovering renders identically to default) -
- * modeled as static, repeating the default frame for the hovering state, same pattern as
- * CloseButton.tsx's variant '1'/'2'.
+ * The scrollbar's "up" step button: one 170x16 sheet packing the default / pressed /
+ * disabled frames of every variant, 17x16 each, selected by state through `Stretch(key, frame)`
+ * like every other state-driven skin. Variants 0/1 have no distinct hover art (hovering repeats
+ * the default frame, the same pattern as `CloseButton`'s 1/2).
  */
 const SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS: ThemeVariants<ScrollbarSliderButtonUpVariant> = {
     0: {
@@ -23,10 +22,7 @@ const SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS: ThemeVariants<ScrollbarSliderButtonUp
             pressed: Stretch('scrollbarsliderbuttonup-src', { x: 17, y: 0, width: 17, height: 16 }),
             disabled: Stretch('scrollbarsliderbuttonup-src', { x: 34, y: 0, width: 17, height: 16 }),
         },
-        layout: {
-            width: 17,
-            height: 16,
-        },
+        layout: { width: 17, height: 16 },
     },
     1: {
         states: {
@@ -35,10 +31,7 @@ const SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS: ThemeVariants<ScrollbarSliderButtonUp
             pressed: Stretch('scrollbarsliderbuttonup-src', { x: 68, y: 0, width: 17, height: 16 }),
             disabled: Stretch('scrollbarsliderbuttonup-src', { x: 85, y: 0, width: 17, height: 16 }),
         },
-        layout: {
-            width: 17,
-            height: 16,
-        },
+        layout: { width: 17, height: 16 },
     },
     3: {
         states: {
@@ -47,10 +40,7 @@ const SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS: ThemeVariants<ScrollbarSliderButtonUp
             pressed: Stretch('scrollbarsliderbuttonup-src', { x: 136, y: 0, width: 17, height: 16 }),
             disabled: Stretch('scrollbarsliderbuttonup-src', { x: 153, y: 0, width: 17, height: 16 }),
         },
-        layout: {
-            width: 17,
-            height: 16,
-        },
+        layout: { width: 17, height: 16 },
     },
 };
 
@@ -59,13 +49,12 @@ export interface ScrollbarSliderButtonUpProps extends ThemeProps<ScrollbarSlider
 }
 
 /**
- * Pixi port of theme/ScrollbarSliderButtonUp.tsx. Purely a themed button skin - the
- * press-and-hold repeat-scroll behavior lives in the caller's `useHoldToRepeat`
- * (see ScrollbarVertical.tsx), spread in as `onPointerDown`/`onPointerUp`/`onPointerUpOutside`.
+ * Purely the themed skin - the press-and-hold repeat-scroll behaviour lives in the caller's
+ * `useHoldToRepeat` (see ScrollbarVertical.tsx), spread in as the pointer handlers.
  */
 export const ScrollbarSliderButtonUp: ForwardRefExoticComponent<ScrollbarSliderButtonUpProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderButtonUpProps>(
     ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
-        const { config, handlers, resolvedLayer } = useThemeVariant({
+        const { config, handlers, resolvedLayer, resolvedTint } = useThemeVariant({
             cascadeKey: 'scrollbarSliderButtonUp', variants: SCROLLBAR_SLIDER_BUTTON_UP_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
@@ -75,8 +64,9 @@ export const ScrollbarSliderButtonUp: ForwardRefExoticComponent<ScrollbarSliderB
         return (
             <ThemeImage
                 ref={ref}
-                src={THEME_URLS[resolvedLayer.textureKey]}
+                textureKey={resolvedLayer.textureKey}
                 frame={resolvedLayer.frame}
+                tint={resolvedTint}
                 cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
                 {...handlers}
                 layout={{ ...config.layout, ...layout }}

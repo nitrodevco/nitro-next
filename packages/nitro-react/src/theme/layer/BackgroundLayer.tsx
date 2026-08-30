@@ -4,12 +4,12 @@ import { getRenderMode, SpriteFrame, spriteLayoutFromFrame } from '../utils';
 import { CompositeLayer, CompositeLayerPieceProps } from './CompositeLayer';
 import { NineSliceBorderWidth, NineSliceLayer, NineSliceRepeatAxis } from './NineSliceLayer';
 import { SpriteLayer } from './SpriteLayer';
-import { TileLayer } from './TileLayer';
+import { TileInsets, TileLayer } from './TileLayer';
 
 export type BackgroundLayerConfig
     = | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; borderWidth?: NineSliceBorderWidth; repeat?: NineSliceRepeatAxis }
         | { kind: 'sprite'; textureKey: string; frame?: SpriteFrame }
-        | { kind: 'tile'; textureKey: string; left?: number; top?: number; bottom?: number; width?: number }
+        | ({ kind: 'tile'; textureKey: string } & TileInsets)
         | { kind: 'composite'; pieces: CompositeLayerPieceProps[] };
 
 export const BackgroundLayer = ({ layer, tintColor, layout }: {
@@ -38,16 +38,24 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
     // caller's own `layout.height`, when it's a plain number - the caller is the one component
     // that actually knows the real container size) sidesteps the Yoga default entirely, on both
     // backends, rather than depending on it.
+    const containerWidth = typeof layout?.width === 'number' ? layout.width : undefined;
     const containerHeight = typeof layout?.height === 'number' ? layout.height : undefined;
-    const tileInsetLayout = layer.kind === 'tile' && layer.width !== undefined
+    const isStrip = layer.kind === 'tile' && (layer.width !== undefined || layer.height !== undefined || layer.left !== undefined || layer.top !== undefined);
+    const tileInsetLayout = layer.kind === 'tile' && isStrip
         ? {
                 position: 'absolute' as const,
                 left: layer.left ?? 0,
                 top: layer.top ?? 0,
-                width: layer.width,
-                ...(containerHeight !== undefined
-                    ? { height: containerHeight - (layer.top ?? 0) - (layer.bottom ?? 0) }
-                    : { bottom: layer.bottom ?? 0 }),
+                ...(layer.width !== undefined
+                    ? { width: layer.width }
+                    : containerWidth !== undefined
+                        ? { width: containerWidth - (layer.left ?? 0) - (layer.right ?? 0) }
+                        : { right: layer.right ?? 0 }),
+                ...(layer.height !== undefined
+                    ? { height: layer.height }
+                    : containerHeight !== undefined
+                        ? { height: containerHeight - (layer.top ?? 0) - (layer.bottom ?? 0) }
+                        : { bottom: layer.bottom ?? 0 }),
             }
         : undefined;
 
