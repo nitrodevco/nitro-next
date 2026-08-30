@@ -1,5 +1,5 @@
 import { Color, TextDropShadow } from 'pixi.js';
-import { useLayoutEffect, useMemo, useRef } from 'react';
+import { CSSProperties, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { BoxLayout } from '../Box';
 import { colorStringToNumber, drawBufferToCanvas, HabboStyleKey, renderTruffleText } from '../font/truffle';
@@ -13,6 +13,9 @@ export interface TruffleTextDomProps {
     layout?: BoxLayout;
     wordWrap?: boolean;
     wordWrapWidth?: number;
+    visible?: boolean;
+    /** Where the rendered text sits inside a box larger than it (`object-position` keywords). */
+    objectPosition?: string;
 }
 
 /**
@@ -34,7 +37,22 @@ export interface TruffleTextDomProps {
  * and alpha-blended underneath the real pass - `TruffleTextPixi` gets the same effect for free
  * via Pixi's GPU `DropShadowFilter`, which has no DOM equivalent this cheap.
  */
-export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth }: TruffleTextDomProps) => {
+/**
+ * A `<canvas>` is a replaced element: with both insets set and no width it keeps its intrinsic
+ * size instead of stretching, so a `left`+`right` (or `top`+`bottom`) box is sized explicitly.
+ */
+const replacedBoxSize = (style: CSSProperties, buffer: { width: number; height: number }): { width: string | number; height: string | number } => {
+    const span = (size: CSSProperties['width'], start: CSSProperties['left'], end: CSSProperties['right'], intrinsic: number): string | number => {
+        if (size !== undefined) return size;
+        if (typeof start === 'number' && typeof end === 'number') return `calc(100% - ${start + end}px)`;
+
+        return intrinsic;
+    };
+
+    return { width: span(style.width, style.left, style.right, buffer.width), height: span(style.height, style.top, style.bottom, buffer.height) };
+};
+
+export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth, visible, objectPosition }: TruffleTextDomProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const options = useMemo(() => ({
         wordWrap,
@@ -78,16 +96,21 @@ export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, word
 
     if (!buffer) return null;
 
+    const layoutStyle = boxLayoutToStyle(layout);
+
     return (
         <canvas
             ref={canvasRef}
             width={buffer.width}
             height={buffer.height}
             style={{
-                ...boxLayoutToStyle(layout),
-                width: `${buffer.width}px`,
-                height: `${buffer.height}px`,
+                ...layoutStyle,
+                ...replacedBoxSize(layoutStyle, buffer),
+                display: visible === false ? 'none' : 'block',
+                flexShrink: 0,
                 maxWidth: 'none',
+                objectFit: 'none',
+                objectPosition: objectPosition ?? 'left center',
                 imageRendering: 'pixelated',
             }}
         />

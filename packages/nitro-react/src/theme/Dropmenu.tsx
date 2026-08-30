@@ -47,7 +47,6 @@ export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<P
                 visible={visible}
                 layout={{ position: 'relative', paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}
                 {...handlers}
-                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

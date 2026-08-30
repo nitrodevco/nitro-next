@@ -71,7 +71,6 @@ export const ScrollbarSliderTrackVertical: ForwardRefExoticComponent<ScrollbarSl
         return (
             <Box
                 ref={ref}
-                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
                 layout={{ flex: 1, ...config.layout, ...layout }}
                 {...handlers}
             >

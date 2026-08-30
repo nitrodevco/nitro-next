@@ -85,7 +85,6 @@ export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & R
                 visible={visible}
                 layout={{ ...config.layout, ...layout }}
                 {...handlers}
-                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

@@ -6,6 +6,16 @@ export type { HabboStyleKey };
 
 /** Default drop-shadow shape a bare `dropShadow: true` (no explicit config) resolves to -
  *  see `ThemeText.tsx`'s `resolveDropShadow`. */
+export type TextVerticalAlign = 'top' | 'middle' | 'bottom';
+
+/** `objectPosition` (Pixi) / `object-position` (DOM canvas) for a text sitting inside a box larger than it. */
+export const textObjectPosition = (align: TextStyleOptions['align'] | undefined, verticalAlign: TextVerticalAlign | undefined): `${'left' | 'center' | 'right'} ${'top' | 'center' | 'bottom'}` => {
+    const horizontal = align === 'center' ? 'center' : align === 'right' ? 'right' : 'left';
+    const vertical = verticalAlign === 'top' ? 'top' : verticalAlign === 'bottom' ? 'bottom' : 'center';
+
+    return `${horizontal} ${vertical}`;
+};
+
 export const TEXT_DROP_SHADOW: TextDropShadow = {
     alpha: 0.3,
     angle: Math.PI / 4,

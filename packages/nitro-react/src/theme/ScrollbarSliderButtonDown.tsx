@@ -67,7 +67,6 @@ export const ScrollbarSliderButtonDown: ForwardRefExoticComponent<ScrollbarSlide
                 textureKey={resolvedLayer.textureKey}
                 frame={resolvedLayer.frame}
                 tint={resolvedTint}
-                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
                 {...handlers}
                 layout={{ ...config.layout, ...layout }}
             />

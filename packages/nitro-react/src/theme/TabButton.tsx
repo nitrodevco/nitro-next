@@ -97,7 +97,6 @@ export const TabButton: ForwardRefExoticComponent<TabButtonProps & RefAttributes
                     ...layout,
                 }}
                 {...handlers}
-                cursor="pointer"
             >
                 {resolvedLayer && (
                     <BackgroundLayer

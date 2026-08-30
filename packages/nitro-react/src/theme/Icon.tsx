@@ -20,7 +20,7 @@ export const Icon = forwardRef<PixiContainer, IconProps>(({ variant, tintColor, 
     return (
         <ThemeImage
             ref={ref}
-            textureKey="icon-set-src\"
+            textureKey="icon-set-src"
             frame={frame}
             tint={tintColor}
             layout={layout ?? {}}

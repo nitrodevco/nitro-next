@@ -12,6 +12,7 @@ export interface TruffleTextPixiProps {
     layout?: BoxLayout;
     wordWrap?: boolean;
     wordWrapWidth?: number;
+    visible?: boolean;
 }
 
 /**
@@ -20,7 +21,7 @@ export interface TruffleTextPixiProps {
  * rather than applied as a `DropShadowFilter` - a filter routes every shadowed label through
  * offscreen render textures each frame, for a sprite a few dozen pixels wide.
  */
-export const TruffleTextPixi = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth }: TruffleTextPixiProps) => {
+export const TruffleTextPixi = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth, visible }: TruffleTextPixiProps) => {
     const texture = useMemo(() => {
         if (!text?.length) return undefined;
 
@@ -45,6 +46,7 @@ export const TruffleTextPixi = ({ habboKey, text, color, dropShadow, layout, wor
     return (
         <pixiSprite
             texture={texture}
+            visible={visible}
             roundPixels
             layout={{
                 width: texture.width,

@@ -90,7 +90,6 @@ export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttr
                 ref={ref}
                 layout={{ minWidth: 5, minHeight: 19, ...config.layout, ...layout }}
                 {...handlers}
-                cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

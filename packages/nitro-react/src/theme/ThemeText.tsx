@@ -1,19 +1,25 @@
 import { CanvasTextMetrics, TextDropShadow, TextStyleOptions } from 'pixi.js';
-import { useMemo } from 'react';
+import { CSSProperties, useMemo } from 'react';
 
 import { GetPixelRatio } from '#base/utils';
 
 import { BoxLayout } from './Box';
 import { boxLayoutToStyle, getDomTextStyle, TruffleTextDom } from './dom';
 import { TruffleTextPixi } from './font/TruffleTextPixi';
-import { getHabboKey, getPixiTextStyle, getRenderMode, TEXT_DROP_SHADOW, TextStyleKey } from './utils';
+import { getHabboKey, getPixiTextStyle, getRenderMode, TEXT_DROP_SHADOW, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta } from './utils';
 
 export type TextConfig = {
     text: string;
     textStyle?: TextStyleKey;
     textOptions?: TextStyleOptions;
+    /**
+     * The text's own box. When it is larger than the rendered text (a ported layout's text
+     * element box), the text keeps its size and sits inside it: horizontally per
+     * `textOptions.align`, vertically per `verticalAlign` - no wrapping container needed.
+     */
     layout?: BoxLayout;
-};
+    verticalAlign?: TextVerticalAlign;
+} & ThemeLayoutMeta;
 
 /** A raw `fontFamily`/`fontSize` override means the caller wants something other than the
  *  named style's own truffle preset - falls straight through to native rendering, same as a
@@ -66,7 +72,7 @@ const resolveDropShadow = (dropShadow: TextStyleOptions['dropShadow']): TextDrop
  * natural size on both axes is what makes it overflow a too-small container instead - matching
  * a `<span>`'s real floor, and matching what the DOM target already does with no extra code.
  */
-const TextPixiNative = ({ text, textStyle, textOptions, layout, ...props }: TextConfig) => {
+const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, visible }: TextConfig) => {
     const style = useMemo(() => getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions), [ textStyle, textOptions ]);
     const metrics = useMemo(() => (text?.length ? CanvasTextMetrics.measureText(text, style) : undefined), [ text, style ]);
 
@@ -77,14 +83,15 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, ...props }: Text
             text={text}
             style={style}
             resolution={GetPixelRatio()}
+            visible={visible}
             layout={{
                 width: Math.ceil(metrics.width),
                 height: Math.ceil(metrics.height),
                 objectFit: 'none',
+                objectPosition: textObjectPosition(textOptions?.align, verticalAlign),
                 flexShrink: 0,
                 ...layout,
             }}
-            {...props}
         />
     );
 };
@@ -94,7 +101,7 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, ...props }: Text
  *  wired in - for a raw `fontFamily`/`fontSize` override, so no call site can ever go blank
  *  because of this. */
 const TextPixi = (props: TextConfig) => {
-    const { text, textStyle, textOptions, layout } = props;
+    const { text, textStyle, textOptions, layout, verticalAlign, visible } = props;
     const habboKey = resolveHabboKey(textStyle, textOptions);
 
     if (habboKey) {
@@ -104,7 +111,8 @@ const TextPixi = (props: TextConfig) => {
                 text={text}
                 color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
                 dropShadow={resolveDropShadow(textOptions?.dropShadow)}
-                layout={layout}
+                visible={visible}
+                layout={{ objectPosition: textObjectPosition(textOptions?.align, verticalAlign), ...layout }}
                 wordWrap={textOptions?.wordWrap}
                 wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}
             />
@@ -117,14 +125,18 @@ const TextPixi = (props: TextConfig) => {
 /** `textOptions` is Pixi's own `TextStyleOptions` - only the handful of fields views actually
  *  pass (`fill`, `fontSize`, and the word-wrap trio) are translated; anything else Pixi-specific
  *  in there has no DOM equivalent and is left unused. */
-const TextDomNative = ({ text, textStyle, textOptions, layout }: TextConfig) => {
+const TextDomNative = ({ text, textStyle, textOptions, layout, verticalAlign, visible }: TextConfig) => {
     const fill = typeof textOptions?.fill === 'string' ? textOptions.fill : undefined;
     const fontSize = typeof textOptions?.fontSize === 'number' ? textOptions.fontSize : undefined;
-
-    const style = {
+    const align = textOptions?.align;
+    // A flex span aligns its own text inside a box larger than the text, like `objectPosition` does for the Pixi sprite.
+    const style: CSSProperties = {
         ...boxLayoutToStyle(layout),
         ...getDomTextStyle(textStyle ?? 'text-style-regular', { fill, fontSize }),
-        display: 'inline-block',
+        display: visible === false ? 'none' : 'inline-flex',
+        alignItems: verticalAlign === 'top' ? 'flex-start' : verticalAlign === 'bottom' ? 'flex-end' : 'center',
+        justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start',
+        textAlign: align === 'center' ? 'center' : align === 'right' ? 'right' : 'left',
     };
 
     if (textOptions?.wordWrap) {
@@ -138,7 +150,7 @@ const TextDomNative = ({ text, textStyle, textOptions, layout }: TextConfig) => 
 };
 
 const TextDom = (props: TextConfig) => {
-    const { text, textStyle, textOptions, layout } = props;
+    const { text, textStyle, textOptions, layout, verticalAlign, visible } = props;
     const habboKey = resolveHabboKey(textStyle, textOptions);
 
     if (habboKey) {
@@ -148,6 +160,8 @@ const TextDom = (props: TextConfig) => {
                 text={text}
                 color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
                 dropShadow={resolveDropShadow(textOptions?.dropShadow)}
+                visible={visible}
+                objectPosition={textObjectPosition(textOptions?.align, verticalAlign)}
                 layout={layout}
                 wordWrap={textOptions?.wordWrap}
                 wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}

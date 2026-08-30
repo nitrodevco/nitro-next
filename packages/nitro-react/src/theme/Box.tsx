@@ -50,7 +50,7 @@ const attachDefaultHitArea = (node: Container) => {
 };
 
 const BoxPixi = forwardRef<Container, BoxProps>(
-    ({ children, eventMode, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap, ...props }, ref) => {
+    ({ children, eventMode, cursor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap, ...props }, ref) => {
         const setRef = useCallback((node: Container | null) => {
             if (node) attachDefaultHitArea(node);
 
@@ -59,11 +59,15 @@ const BoxPixi = forwardRef<Container, BoxProps>(
         }, [ ref ]);
 
         const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
+        // Same rule as BoxDom below: a box that handles pointer events reads as clickable unless
+        // the caller sets its own cursor.
+        const resolvedCursor = cursor ?? (resolvedEventMode === 'static' ? 'pointer' : undefined);
 
         return (
             <pixiContainer
                 ref={setRef}
                 eventMode={resolvedEventMode}
+                cursor={resolvedCursor}
                 onPointerOver={onPointerOver}
                 onPointerOut={onPointerOut}
                 onPointerDown={onPointerDown}
@@ -107,6 +111,7 @@ const BoxDom = forwardRef<Container, BoxProps>(
         // silently inherit `none` and never receive a click).
         style.pointerEvents = pointerEventsFromEventMode(resolvedEventMode);
         if (typeof cursor === 'string') style.cursor = cursor;
+        else if (resolvedEventMode === 'static') style.cursor = 'pointer';
         if (typeof zIndex === 'number') style.zIndex = zIndex;
         if (typeof alpha === 'number') style.opacity = alpha;
         if (visible === false) style.display = 'none';
