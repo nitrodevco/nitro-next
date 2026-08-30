@@ -1,14 +1,10 @@
 import { NineSlice, Tiled } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `ScrollbarSliderBarVertical` variants - the Flash `style` ids of `scrollbar_slider_bar_vertical` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `ScrollbarSliderBarVertical` variants - the Flash `style` ids it draws. */
 export type ScrollbarSliderBarVerticalVariant = ThemeWithStatesVariant;
 
-export const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderBarVerticalVariant> = defineVariants<ScrollbarSliderBarVerticalVariant>('scrollbar_slider_bar_vertical', {
+export const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderBarVerticalVariant> = {
     0: {
         states: {
             default: NineSlice('scrollbarsliderbarvertical-0-default-src', 0, 2, 0, 2),
@@ -57,4 +53,4 @@ export const SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSlid
             pressed: NineSlice('scrollbarsliderbarvertical-200-default-src', 0, 4, 0, 4),
         },
     },
-});
+};

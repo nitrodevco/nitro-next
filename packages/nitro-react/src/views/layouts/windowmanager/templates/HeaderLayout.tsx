@@ -2,15 +2,15 @@ import { BoxLayout, CloseButton, Region, ThemeText } from '#base/theme';
 
 /** Generated from `2664_header_xml` (layout "habbo_window_layout_header", 100x15) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface HeaderLayoutProps {
-    caption?: string;
+    captionHeaderTitleText?: string;
     layout?: BoxLayout;
-    onClose?: () => void;
+    onHeaderButtonClose?: () => void;
     onHeaderButtonMenu?: () => void;
 }
 
-export const HeaderLayout = ({ caption, layout, onClose, onHeaderButtonMenu }: HeaderLayoutProps) => {
+export const HeaderLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onHeaderButtonMenu }: HeaderLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', minWidth: 100, minHeight: 15, ...layout }}>
+        <Region layout={{ position: 'relative', width: 100, height: 15, ...layout }}>
             <Region
                 name="header_container"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
@@ -20,7 +20,7 @@ export const HeaderLayout = ({ caption, layout, onClose, onHeaderButtonMenu }: H
                     layout={{ position: 'absolute', marginLeft: -40, marginRight: 40, width: 12, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
-                        text={caption ?? ''}
+                        text={captionHeaderTitleText ?? ''}
                         textStyle="text-style-frame-title"
                     />
                 </Region>
@@ -36,7 +36,7 @@ export const HeaderLayout = ({ caption, layout, onClose, onHeaderButtonMenu }: H
                 >
                     <CloseButton
                         name="header_button_close"
-                        onPointerTap={onClose}
+                        onPointerTap={onHeaderButtonClose}
                         layout={{ width: 15, height: 15, flexShrink: 0 }}
                     />
                 </Region>

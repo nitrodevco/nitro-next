@@ -1,14 +1,10 @@
 import { Stretch } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `RadioButton` variants - the Flash `style` ids of `radiobutton` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `RadioButton` variants - the Flash `style` ids it draws. */
 export type RadioButtonVariant = ThemeWithStatesVariant;
 
-export const RADIO_BUTTON_VARIANTS: ThemeVariants<RadioButtonVariant> = defineVariants<RadioButtonVariant>('radiobutton', {
+export const RADIO_BUTTON_VARIANTS: ThemeVariants<RadioButtonVariant> = {
     0: {
         states: {
             default: Stretch('radiobutton-src', { x: 0, y: 0, width: 16, height: 16 }),
@@ -55,4 +51,4 @@ export const RADIO_BUTTON_VARIANTS: ThemeVariants<RadioButtonVariant> = defineVa
         textStyle: 'text-style-il-regular',
         textColor: '#000000',
     },
-});
+};

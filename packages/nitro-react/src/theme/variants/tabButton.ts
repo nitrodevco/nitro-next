@@ -1,16 +1,12 @@
 import { NineSlice } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `TabButton` variants - the Flash `style` ids of `tab_button` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `TabButton` variants - the Flash `style` ids it draws. */
 export type TabButtonVariant = ThemeWithStatesVariant;
 
 const TRIM_BOTTOM_BORDER = { bottom: 0 };
 
-export const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = defineVariants<TabButtonVariant>('tab_button', {
+export const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
     // default
     0: {
         states: {
@@ -67,4 +63,4 @@ export const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = defineVarian
         textStyle: 'text-style-button-shiny-regular',
         textColor: '#000000',
     },
-});
+};

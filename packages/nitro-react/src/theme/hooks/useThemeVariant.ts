@@ -23,7 +23,6 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
     const resolvedTint = tintColor ?? config.tintColor;
     const resolvedTextStyle = textStyle ?? config.textStyle;
     const resolvedTextColor = textColor ?? config.textColor;
-    const view = config.view;
 
-    return { resolvedVariant, ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor, view };
+    return { resolvedVariant, ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor };
 };

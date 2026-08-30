@@ -1,11 +1,7 @@
 import { NineSlice, Stretch } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `ButtonThick` variants - the Flash `style` ids of `button_thick` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `ButtonThick` variants - the Flash `style` ids it draws. */
 export type ButtonThickVariant = ThemeWithStatesVariant;
 
 const BUTTON_THICK_3_VARIANT: ButtonThickVariant = {
@@ -21,7 +17,7 @@ const BUTTON_THICK_3_VARIANT: ButtonThickVariant = {
     textStyle: 'text-style-button-shiny-bold',
 };
 
-export const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = defineVariants<ButtonThickVariant>('button_thick', {
+export const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
     // habbo_skin - default / white
     0: {
         states: {
@@ -85,4 +81,4 @@ export const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = defineVa
         tintColor: '#00aa00',
         textColor: '#FFFFFF',
     },
-});
+};

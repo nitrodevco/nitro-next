@@ -1,56 +1,56 @@
 import { ReactNode } from 'react';
 
-import { BoxLayout, CloseButton, ContentArea, HeaderProps, Region, Scaler, ScalerDirection, ScalerProps, ThemeText } from '#base/theme';
+import { BoxLayout, CloseButton, Region, Scaler, ThemeText } from '#base/theme';
 
 /** Generated from `1803_illumina_dark_frame_xml` (layout "illumina_dark_frame", 50x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaDarkFrameLayoutProps {
-    caption?: string;
-    children?: ReactNode;
+    captionHeaderTitleText?: string;
+    contentArea?: ReactNode;
     layout?: BoxLayout;
-    onClose?: () => void;
-    onHeaderPointerDown?: HeaderProps['onPointerDown'];
-    onScalerPointerDown?: ScalerProps['onPointerDown'];
-    resizeDirection?: ScalerDirection;
+    onHeaderButtonClose?: () => void;
+    onTitlebar?: () => void;
+    titlebar?: ReactNode;
     visibleFRAMESCALER?: boolean;
 }
 
-export const IlluminaDarkFrameLayout = ({ caption, children, layout, onClose, onHeaderPointerDown, onScalerPointerDown, resizeDirection, visibleFRAMESCALER }: IlluminaDarkFrameLayoutProps) => {
+export const IlluminaDarkFrameLayout = ({ captionHeaderTitleText, contentArea, layout, onHeaderButtonClose, onTitlebar, titlebar, visibleFRAMESCALER }: IlluminaDarkFrameLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
-            layout={{ position: 'relative', minWidth: 50, minHeight: 50, ...layout }}
+            layout={{ position: 'relative', width: 50, height: 50, ...layout }}
         >
-            <ContentArea
+            <Region
                 name="content_area"
                 layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1 }}
             >
-                {children}
-            </ContentArea>
+                {contentArea}
+            </Region>
             <Region
                 name="titlebar"
-                onPointerDown={onHeaderPointerDown}
+                onPointerTap={onTitlebar}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
-            />
+            >
+                {titlebar}
+            </Region>
             <Region
                 name="header_title_text"
                 layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
-                    text={caption ?? ''}
+                    text={captionHeaderTitleText ?? ''}
                     textStyle="text-style-id-frame-title"
                 />
             </Region>
             <CloseButton
                 variant="100"
                 name="header_button_close"
-                onPointerTap={onClose}
+                onPointerTap={onHeaderButtonClose}
                 layout={{ position: 'absolute', right: 8, width: 20, top: 9, height: 20 }}
             />
             {(visibleFRAMESCALER ?? false) && (
                 <Scaler
                     name="_FRAME_SCALER"
-                    direction={resizeDirection}
-                    onPointerDown={onScalerPointerDown}
                     layout={{ position: 'absolute', right: -5, width: 20, bottom: 5, height: 10 }}
                 />
             )}

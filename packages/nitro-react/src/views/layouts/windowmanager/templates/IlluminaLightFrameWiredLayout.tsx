@@ -1,27 +1,26 @@
 import { ReactNode } from 'react';
 
-import { Border, BoxLayout, CloseButton, ContentArea, HeaderProps, Region, Scaler, ScalerDirection, ScalerProps, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, CloseButton, Region, Scaler, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2363_illumina_light_frame_wired_xml` (layout "illumina_light_frame_wired", 50x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaLightFrameWiredLayoutProps {
-    caption?: string;
-    children?: ReactNode;
+    captionHeaderTitleText?: string;
+    contentArea?: ReactNode;
     layout?: BoxLayout;
-    onClose?: () => void;
+    onHeaderButtonClose?: () => void;
     onHeaderButtonMenu?: () => void;
-    onHeaderPointerDown?: HeaderProps['onPointerDown'];
-    onScalerPointerDown?: ScalerProps['onPointerDown'];
-    resizeDirection?: ScalerDirection;
+    onTitlebar?: () => void;
     srcBannerLeft?: string;
     srcBannerRight?: string;
+    titlebar?: ReactNode;
 }
 
-export const IlluminaLightFrameWiredLayout = ({ caption, children, layout, onClose, onHeaderButtonMenu, onHeaderPointerDown, onScalerPointerDown, resizeDirection, srcBannerLeft, srcBannerRight }: IlluminaLightFrameWiredLayoutProps) => {
+export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, contentArea, layout, onHeaderButtonClose, onHeaderButtonMenu, onTitlebar, srcBannerLeft, srcBannerRight, titlebar }: IlluminaLightFrameWiredLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
-            layout={{ position: 'relative', minWidth: 50, minHeight: 50, ...layout }}
+            layout={{ position: 'relative', width: 50, height: 50, ...layout }}
         >
             <Region
                 name="wired_banner"
@@ -45,23 +44,26 @@ export const IlluminaLightFrameWiredLayout = ({ caption, children, layout, onClo
                     layout={{ position: 'absolute', right: 0, width: 240, top: -19, height: 160 }}
                 />
             </Region>
-            <ContentArea
+            <Region
                 name="content_area"
                 layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1 }}
             >
-                {children}
-            </ContentArea>
+                {contentArea}
+            </Region>
             <Region
                 name="titlebar"
-                onPointerDown={onHeaderPointerDown}
+                onPointerTap={onTitlebar}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
-            />
+            >
+                {titlebar}
+            </Region>
             <Region
                 name="header_title_text"
                 layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
-                    text={caption ?? ''}
+                    text={captionHeaderTitleText ?? ''}
                     textStyle="text-style-il-frame-title"
                 />
             </Region>
@@ -74,13 +76,11 @@ export const IlluminaLightFrameWiredLayout = ({ caption, children, layout, onClo
             <CloseButton
                 variant="100"
                 name="header_button_close"
-                onPointerTap={onClose}
+                onPointerTap={onHeaderButtonClose}
                 layout={{ position: 'absolute', right: 8, width: 20, top: 9, height: 20 }}
             />
             <Scaler
                 name="_FRAME_SCALER"
-                direction={resizeDirection}
-                onPointerDown={onScalerPointerDown}
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 10 }}
             />
         </Region>

@@ -1,14 +1,10 @@
 import { Stretch } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `DroplistItem` variants - the Flash `style` ids of `droplist_item` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `DroplistItem` variants - the Flash `style` ids it draws. */
 export type DroplistItemVariant = ThemeWithStatesVariant;
 
-export const DROPLIST_ITEM_VARIANTS: ThemeVariants<DroplistItemVariant> = defineVariants<DroplistItemVariant>('droplist_item', {
+export const DROPLIST_ITEM_VARIANTS: ThemeVariants<DroplistItemVariant> = {
     0: {
         states: {
             default: Stretch('dropmenuitem-0-default-src'),
@@ -20,4 +16,4 @@ export const DROPLIST_ITEM_VARIANTS: ThemeVariants<DroplistItemVariant> = define
             minHeight: 19,
         },
     },
-});
+};

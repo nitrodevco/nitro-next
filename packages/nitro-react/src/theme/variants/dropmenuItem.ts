@@ -1,14 +1,10 @@
 import { Stretch } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `DropmenuItem` variants - the Flash `style` ids of `dropmenu_item` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `DropmenuItem` variants - the Flash `style` ids it draws. */
 export type DropmenuItemVariant = ThemeWithStatesVariant;
 
-export const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = defineVariants<DropmenuItemVariant>('dropmenu_item', {
+export const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
     0: {
         states: {
             default: Stretch('dropmenuitem-0-default-src'),
@@ -69,4 +65,4 @@ export const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = define
         textStyle: 'text-style-il-regular',
         textColor: '#000000',
     },
-});
+};

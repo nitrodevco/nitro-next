@@ -1,14 +1,10 @@
 import { Stretch } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `CloseButton` variants - the Flash `style` ids of `closebutton` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `CloseButton` variants - the Flash `style` ids it draws. */
 export type CloseButtonVariant = ThemeWithStatesVariant;
 
-export const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = defineVariants<CloseButtonVariant>('closebutton', {
+export const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = {
     0: {
         states: {
             default: Stretch('closebutton-src', { x: 114, y: 0, width: 15, height: 15 }),
@@ -84,4 +80,4 @@ export const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = defineVa
             pressed: Stretch('closebutton-10000-pressed-src'),
         },
     },
-});
+};

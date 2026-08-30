@@ -1,14 +1,10 @@
 import { Composite, NineSlice } from '../layer';
 import { ThemeVariant, ThemeVariants } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `Border` variants - the Flash `style` ids of `border` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `Border` variants - the Flash `style` ids it draws. */
 export type BorderVariant = ThemeVariant;
 
-export const BORDER_VARIANTS: ThemeVariants<BorderVariant> = defineVariants<BorderVariant>('border', {
+export const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
     0: { layer: NineSlice('border-0-default-src', 6, 6, 6, 6) },
     1: { layer: NineSlice('border-1-default-src', 6, 6, 6, 6) },
     2: { layer: NineSlice('border-2-default-src', 6, 6, 6, 6) },
@@ -111,4 +107,4 @@ export const BORDER_VARIANTS: ThemeVariants<BorderVariant> = defineVariants<Bord
     },
     108: { layer: NineSlice('border-108-default-src', 3, 3, 3, 3), tintColor: '#676767' },
     200: { layer: NineSlice('border-200-default-src', 3, 3, 3, 3) },
-});
+};

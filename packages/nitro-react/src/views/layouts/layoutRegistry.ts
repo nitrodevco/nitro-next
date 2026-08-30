@@ -2019,7 +2019,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'frame', id: 2754, component: 'FrameLayout', size: '40x40', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderPointerDown', 'onScalerPointerDown', 'resizeDirection', 'tintColor' ],
+        props: [ 'contentArea', 'layout' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2029,7 +2029,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'frame_3', id: 1991, component: 'Frame3Layout', size: '64x64', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderPointerDown', 'onScalerPointerDown', 'resizeDirection', 'tintColor' ],
+        props: [ 'contentArea', 'layout' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2039,7 +2039,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'frame_7', id: 2814, component: 'Frame7Layout', size: '64x73', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderPointerDown', 'onScalerPointerDown', 'resizeDirection', 'tintColor' ],
+        props: [ 'contentArea', 'layout' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2049,7 +2049,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'frame_leaderboard', id: 2461, component: 'FrameLeaderboardLayout', size: '193x130', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderPointerDown', 'tintColor' ],
+        props: [ 'contentArea', 'layout' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2859,7 +2859,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'header', id: 2664, component: 'HeaderLayout', size: '100x15', rootIsFrame: false,
-        props: [ 'caption', 'layout', 'onClose', 'onHeaderButtonMenu' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onHeaderButtonMenu' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2869,7 +2869,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'header_3', id: 2611, component: 'Header3Layout', size: '64x33', rootIsFrame: false,
-        props: [ 'caption', 'layout', 'onClose', 'onHeaderButtonHelp' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onHeaderButtonHelp' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2879,7 +2879,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'header_7', id: 1743, component: 'Header7Layout', size: '64x33', rootIsFrame: false,
-        props: [ 'caption', 'layout', 'onClose', 'onHeaderButtonHelp' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose', 'onHeaderButtonHelp' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2889,7 +2889,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'header_black', id: 2833, component: 'HeaderBlackLayout', size: '100x15', rootIsFrame: false,
-        props: [ 'caption', 'layout', 'onClose' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2899,7 +2899,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'header_leaderboard', id: 1933, component: 'HeaderLeaderboardLayout', size: '41x32', rootIsFrame: false,
-        props: [ 'caption', 'layout', 'onClose' ],
+        props: [ 'captionHeaderTitleText', 'layout', 'onHeaderButtonClose' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -2979,7 +2979,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_dark_frame', id: 1803, component: 'IlluminaDarkFrameLayout', size: '50x50', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderPointerDown', 'onScalerPointerDown', 'resizeDirection', 'visibleFRAMESCALER' ],
+        props: [ 'captionHeaderTitleText', 'contentArea', 'layout', 'onHeaderButtonClose', 'onTitlebar', 'titlebar', 'visibleFRAMESCALER' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -3079,7 +3079,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_light_frame', id: 2541, component: 'IlluminaLightFrameLayout', size: '50x50', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderPointerDown', 'onScalerPointerDown', 'resizeDirection' ],
+        props: [ 'captionHeaderTitleText', 'contentArea', 'layout', 'onHeaderButtonClose', 'onTitlebar', 'titlebar' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -3089,7 +3089,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_light_frame_modal', id: 2792, component: 'IlluminaLightFrameModalLayout', size: '50x80', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderPointerDown', 'onScalerPointerDown', 'resizeDirection' ],
+        props: [ 'captionHeaderTitleText', 'contentArea', 'layout', 'onHeaderButtonClose', 'onTitlebar', 'titlebar' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -3099,7 +3099,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_light_frame_wired', id: 2363, component: 'IlluminaLightFrameWiredLayout', size: '50x50', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderButtonMenu', 'onHeaderPointerDown', 'onScalerPointerDown', 'resizeDirection', 'srcBannerLeft', 'srcBannerRight' ],
+        props: [ 'captionHeaderTitleText', 'contentArea', 'layout', 'onHeaderButtonClose', 'onHeaderButtonMenu', 'onTitlebar', 'srcBannerLeft', 'srcBannerRight', 'titlebar' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},
@@ -3179,7 +3179,7 @@ export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [
     },
     {
         name: 'illumina_purple_frame', id: 2638, component: 'IlluminaPurpleFrameLayout', size: '50x50', rootIsFrame: false,
-        props: [ 'caption', 'children', 'layout', 'onClose', 'onHeaderPointerDown', 'onScalerPointerDown', 'resizeDirection' ],
+        props: [ 'captionHeaderTitleText', 'contentArea', 'layout', 'onHeaderButtonClose', 'onTitlebar', 'titlebar' ],
         nested: {},
         subComponents: [],
         subComponentProps: {},

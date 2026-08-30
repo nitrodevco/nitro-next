@@ -1,14 +1,10 @@
 import { NineSlice } from '../layer';
 import { ThemeVariant, ThemeVariants } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `TabContent` variants - the Flash `style` ids of `tab_content` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `TabContent` variants - the Flash `style` ids it draws. */
 export type TabContentVariant = ThemeVariant;
 
-export const TAB_CONTENT_VARIANTS: ThemeVariants<TabContentVariant> = defineVariants<TabContentVariant>('tab_content', {
+export const TAB_CONTENT_VARIANTS: ThemeVariants<TabContentVariant> = {
     // default
     0: {
         layer: NineSlice('border-0-default-src', 6, 6, 6, 6),
@@ -29,4 +25,4 @@ export const TAB_CONTENT_VARIANTS: ThemeVariants<TabContentVariant> = defineVari
         layer: NineSlice('tabcontent-3-default-src', 0, 15, 0, 2, { bottom: 0 }),
         layout: { paddingTop: 6, paddingLeft: 5, paddingRight: 5, paddingBottom: 2, marginTop: 2 },
     },
-});
+};

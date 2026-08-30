@@ -1,11 +1,7 @@
 import { Stretch } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `CheckBox` variants - the Flash `style` ids of `checkbox` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `CheckBox` variants - the Flash `style` ids it draws. */
 export type CheckBoxVariant = ThemeWithStatesVariant;
 
 const CHECK_BOX_0_VARIANT: CheckBoxVariant = {
@@ -20,7 +16,7 @@ const CHECK_BOX_0_VARIANT: CheckBoxVariant = {
     },
 };
 
-export const CHECK_BOX_VARIANTS: ThemeVariants<CheckBoxVariant> = defineVariants<CheckBoxVariant>('checkbox', {
+export const CHECK_BOX_VARIANTS: ThemeVariants<CheckBoxVariant> = {
     0: CHECK_BOX_0_VARIANT,
     1: {
         states: {
@@ -64,4 +60,4 @@ export const CHECK_BOX_VARIANTS: ThemeVariants<CheckBoxVariant> = defineVariants
         textStyle: 'text-style-il-button',
         textColor: '#000000',
     },
-});
+};

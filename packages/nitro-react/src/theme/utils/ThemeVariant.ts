@@ -1,5 +1,3 @@
-import { ComponentType } from 'react';
-
 import { BoxLayout } from '../Box';
 import { VariantCascadeMap } from '../cascade';
 import { InteractionHandlers, InteractionState, InteractionStates } from '../hooks';
@@ -43,28 +41,15 @@ export type ThemeBase = {
     zIndex?: number;
 } & ThemeLayoutMeta;
 
-/**
- * A skin template rendered as a component's view (see variants/elements.ts, generated from the
- * client's `habbo_element_description_xml`). Each component casts it to its own view contract
- * (`FrameViewProps`, `HeaderViewProps`, ...).
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ElementView = ComponentType<any>;
-
-/** The view a variant renders through - filled in from the element description by `defineVariants`, or written by hand. */
-export type ThemeViewConfig = {
-    view?: ElementView;
-};
-
 export type ThemeVariant = {
     layer?: BackgroundLayerConfig;
     overlay?: BackgroundLayerConfig;
-} & ThemeBase & ThemeViewConfig;
+} & ThemeBase;
 
 export type ThemeWithStatesVariant = {
     states?: InteractionStates<BackgroundLayerConfig>;
     overlays?: InteractionStates<BackgroundLayerConfig>;
-} & ThemeBase & ThemeViewConfig;
+} & ThemeBase;
 
 export type AnyThemeVariant = ThemeVariant | ThemeWithStatesVariant;
 
@@ -98,6 +83,4 @@ export type ThemeResult<T extends AnyThemeVariant = AnyThemeVariant> = {
     resolvedTint: string | undefined;
     resolvedTextStyle: TextStyleKey | undefined;
     resolvedTextColor: string | undefined;
-    /** The resolved variant's view, if it has one (else the component renders its default). */
-    view: ElementView | undefined;
 };

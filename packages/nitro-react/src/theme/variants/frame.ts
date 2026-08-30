@@ -1,11 +1,7 @@
 import { Composite, NineSlice } from '../layer';
 import { ThemeVariant, ThemeVariants } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `Frame` variants - the Flash `style` ids of `frame` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `Frame` variants - the Flash `style` ids it draws. */
 export type FrameVariant = ThemeVariant;
 
 const BLUE_FRAME_SHINE = Composite([
@@ -21,13 +17,13 @@ const BLUE_FRAME_SHINE = Composite([
 
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
-export const FRAME_VARIANTS: ThemeVariants<FrameVariant> = defineVariants<FrameVariant>('frame', {
-    0: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, tintColor: '#418db0' },
-    1: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, tintColor: '#4c4c4c' },
-    2: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, tintColor: '#fac200' },
-    3: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, tintColor: '#418db0' },
-    4: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, tintColor: '#67a3bf' },
-    7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE },
+export const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
+    0: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 50, paddingTop: 2, paddingBottom: 2 }, tintColor: '#418db0' },
+    1: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 40 }, tintColor: '#4c4c4c' },
+    2: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 40 }, tintColor: '#fac200' },
+    3: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 64 }, tintColor: '#418db0' },
+    4: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 64 }, tintColor: '#67a3bf' },
+    7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 73 } },
     100: {
         layer: Composite([
             { textureKey: 'border-101-default-top-left-src', top: 0, left: 0, width: 4, height: 4 },
@@ -39,7 +35,7 @@ export const FRAME_VARIANTS: ThemeVariants<FrameVariant> = defineVariants<FrameV
             { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
             { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
             { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
-        ]),
+        ]), layout: { minWidth: 50, minHeight: 50 },
     },
     // illumina "wired" - the light frame art with the wired window layout
     102: {
@@ -53,11 +49,11 @@ export const FRAME_VARIANTS: ThemeVariants<FrameVariant> = defineVariants<FrameV
             { textureKey: 'border-101-default-bottom-left-src', left: 0, bottom: 0, width: 4, height: 7 },
             { textureKey: 'border-101-default-bottom-center-src', left: 4, right: 4, bottom: 0, height: 7 },
             { textureKey: 'border-101-default-bottom-right-src', right: 0, bottom: 0, width: 4, height: 7 },
-        ]),
+        ]), layout: { minWidth: 50, minHeight: 50 },
     },
     // illumina purple
-    103: { layer: NineSlice('frame-103-default-src', 4, 4, 4, 7) },
-    200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5) },
+    103: { layer: NineSlice('frame-103-default-src', 4, 4, 4, 7), layout: { minWidth: 50, minHeight: 50 } },
+    200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), layout: { minWidth: 50, minHeight: 50 } },
     // leaderboard "total badges" - a huge fixed-art frame (193x130 sheet, 96/87/96/42 slices)
-    10000: { layer: NineSlice('frame-10000-default-src', 96, 87, 96, 42) },
-});
+    10000: { layer: NineSlice('frame-10000-default-src', 96, 87, 96, 42), layout: { minWidth: 200, minHeight: 140 } },
+};

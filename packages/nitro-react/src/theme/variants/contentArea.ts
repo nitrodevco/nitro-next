@@ -1,14 +1,9 @@
 import { ThemeVariant, ThemeVariants } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `ContentArea` variants - the frame styles whose content area it is. The element description
- * has no entries of its own for it: the frame's view template positions the content area, so
- * the variants only exist for the cascade to resolve (no art, no layout).
- */
+/** `ContentArea` variants - the Flash `style` ids it draws. */
 export type ContentAreaVariant = ThemeVariant;
 
-export const CONTENT_AREA_VARIANTS: ThemeVariants<ContentAreaVariant> = defineVariants<ContentAreaVariant>(undefined, {
-    0: {},
-    3: {},
-});
+export const CONTENT_AREA_VARIANTS: ThemeVariants<ContentAreaVariant> = {
+    0: { layout: { paddingBottom: 3, paddingLeft: 6, paddingRight: 6 } },
+    3: { layout: { position: 'relative', paddingLeft: 3, paddingRight: 3, paddingTop: 1, paddingBottom: 4 } },
+};

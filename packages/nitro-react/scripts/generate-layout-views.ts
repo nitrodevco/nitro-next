@@ -418,13 +418,6 @@ interface FileContext {
     subComponentNames: string[];
     /** Each sub-component's own props / nested sub-components, for the registry. */
     subComponentProps: Record<string, { props: string[]; nested: Record<string, string> }>;
-    /**
-     * A window-chrome skin template (`frame_3`, `illumina_light_frame`, ...): emitted against the
-     * theme's `FrameViewProps` contract so `Frame` can render it as the variant's view - its
-     * header/close button take `caption`/`tintColor`/`onClose`/`onHeaderPointerDown`, its scaler
-     * `resizeDirection`/`onScalerPointerDown`, and `content_area` renders `children`.
-     */
-    frameView: boolean;
 }
 
 interface EmitContext {
@@ -466,46 +459,6 @@ interface ParentBox {
 }
 
 const INDENT = '    ';
-
-const findElement = (elements: Element[], test: (el: Element) => boolean): Element | undefined => {
-    for (const el of elements) {
-        const found = test(el) ? el : findElement(el.children, test);
-
-        if (found) return found;
-    }
-
-    return undefined;
-};
-
-/**
- * A window-chrome skin template: a frame (`content_area` plus header/scaler/close button) or a
- * header (`header_title_text` plus its close button). Both are emitted against the theme's
- * view contracts (`FrameViewProps` / `HeaderViewProps`).
- */
-const isFrameView = (elements: Element[]): boolean => !!findElement(elements, el => el.attrs.name === 'content_area' || el.attrs.name === 'header_title_text')
-    && !!findElement(elements, el => el.tag === 'header' || el.tag === 'scaler' || el.tag === 'closebutton');
-
-/** The `FrameViewProps` members, registered on demand as a frame template uses them. */
-const FRAME_VIEW_PROPS: Record<string, string> = {
-    caption: 'string',
-    tintColor: 'string',
-    resizeDirection: 'ScalerDirection',
-    onClose: '() => void',
-    onHeaderPointerDown: 'HeaderProps[\'onPointerDown\']',
-    onScalerPointerDown: 'ScalerProps[\'onPointerDown\']',
-    children: 'ReactNode',
-};
-
-const frameViewProp = (ctx: EmitContext, name: keyof typeof FRAME_VIEW_PROPS): string => {
-    const type = FRAME_VIEW_PROPS[name];
-
-    ctx.props.set(name, type);
-
-    if (type === 'ReactNode') ctx.imports.add('ReactNode');
-    else if (/^[A-Z]\w*/.test(type)) ctx.imports.add(/^(\w+)/.exec(type)![1]);
-
-    return name;
-};
 
 /** Did the designer configure any anchoring in this tree (scale bits or a non-`fixed` `<scale>`)? */
 const hasConfiguredAnchors = (el: Element): boolean => (el.params & (PARAM.H_MASK | PARAM.V_MASK)) !== 0
@@ -1028,7 +981,7 @@ const textElement = (ctx: EmitContext, el: Element, parentName?: string): { prop
         align: autoSize !== 'left' ? quote(autoSize) : undefined,
     };
     const props: string[] = [];
-    const override = ctx.file.frameView && el.attrs.name === 'header_title_text' ? frameViewProp(ctx, 'caption') : overrideProp(ctx, el, 'caption', 'string', parentName);
+    const override = overrideProp(ctx, el, 'caption', 'string', parentName);
     const hasText = !!(caption || override);
 
     if (override && caption) props.push(`text={${override} ?? ${caption}}`);
@@ -1505,21 +1458,9 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         // Not every chrome component takes the full ThemeProps surface (the horizontal slider
         // pieces and the buttons are plain PointerHandlerProps + variant/layout) - `meta` marks
         // the ones that do, so name/tags/params are only passed where they type-check.
-        let props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el), ...tintProp(ctx, el) ] : []), ...(chromeProps ?? []) ];
+        const props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el), ...tintProp(ctx, el) ] : []), ...(chromeProps ?? []) ];
 
-        if (ctx.file.frameView && tag === 'header') {
-            props = props.filter(prop => !prop.startsWith('tintColor='));
-            props.push(
-                `caption={${frameViewProp(ctx, 'caption')}}`,
-                `tintColor={${frameViewProp(ctx, 'tintColor')}}`,
-                `onClose={${frameViewProp(ctx, 'onClose')}}`,
-                `onPointerDown={${frameViewProp(ctx, 'onHeaderPointerDown')}}`,
-            );
-        } else if (ctx.file.frameView && tag === 'scaler') {
-            props.push(`direction={${frameViewProp(ctx, 'resizeDirection')}}`, `onPointerDown={${frameViewProp(ctx, 'onScalerPointerDown')}}`);
-        } else if (tag === 'header' && el.attrs.caption) {
-            props.push(`caption=${jsxStr(decode(el.attrs.caption))}`);
-        }
+        if (tag === 'header' && el.attrs.caption) props.push(`caption=${jsxStr(decode(el.attrs.caption))}`);
 
         props.push(`layout={${boxLayout(el, parent)}}`);
 
@@ -1561,21 +1502,11 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
                 return emitText(ctx, el.children[0], parent, indent, el);
             }
 
-            // A frame template's `content_area` is where `Frame` puts its children; its Illumina
-            // `titlebar` region is the drag handle.
-            if (ctx.file.frameView && el.attrs.name === 'content_area') {
-                ctx.imports.add('ContentArea');
-
-                return wrap('ContentArea', [ ...metaProps(ctx, el), `layout={${boxLayout(el, parent)}}` ], indent, [ `${childIndent}{${frameViewProp(ctx, 'children')}}` ]);
-            }
-
-            const dragHandle = ctx.file.frameView && el.attrs.name === 'titlebar';
-
             // An empty named container was a runtime mount point (`maincontent`, `sideContainer`,
             // `figureContainer`) - expose it as a children slot named after it.
             let slotChild: string[] = [];
 
-            if (el.attrs.name && el.children.length === 0 && !dragHandle) {
+            if (el.attrs.name && el.children.length === 0) {
                 const slot = uniqueProp(ctx, camel(el.attrs.name));
 
                 ctx.props.set(slot, 'ReactNode');
@@ -1592,9 +1523,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             // A named `region` with the low `params` bit set is a click target in the Flash client
             // (the me-menu tiles, `click_area_discard`, `region_profile`, ...) - see e.g.
             // MeMenuMainView.as/FriendRequestsTab.as listening for WME_CLICK on them by name.
-            if (dragHandle) {
-                props.push(`onPointerDown={${frameViewProp(ctx, 'onHeaderPointerDown')}}`);
-            } else if ((tag === 'region' || tag === 'container') && el.attrs.name && (el.params & PARAM.INPUT)) {
+            if ((tag === 'region' || tag === 'container') && el.attrs.name && (el.params & PARAM.INPUT)) {
                 props.push(`onPointerTap={${handlerProp(ctx, el, 'region')}}`);
                 props.push('cursor="pointer"');
             }
@@ -1623,7 +1552,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         case 'iconbutton':
             return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], buttonChildren);
         case 'closebutton':
-            return emitThemed(ctx, 'CloseButton', el, parent, indent, [ `onPointerTap={${ctx.file.frameView && /close|^$/.test(el.attrs.name ?? '') ? frameViewProp(ctx, 'onClose') : handlerProp(ctx, el, 'close')}}` ], none);
+            return emitThemed(ctx, 'CloseButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'close')}}` ], none);
         case 'checkbox':
         case 'radiobutton':
             return emitThemed(ctx, tag === 'checkbox' ? 'CheckBox' : 'RadioButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], captionOnly);
@@ -1726,8 +1655,8 @@ const collectScrollTargets = (el: Element, targets: Map<string, 'vertical' | 'ho
 
 const THEME_IMPORTS = new Set([
     'Border', 'BoxLayout', 'Bubble', 'BubblePointer', 'Button', 'ButtonGroupCenter', 'ButtonGroupLeft', 'ButtonGroupRight', 'ButtonThick', 'CheckBox', 'CloseButton',
-    'ContainerButton', 'ContentArea', 'Droplist', 'Dropmenu', 'Frame', 'FramePointerDown', 'Header', 'HeaderProps', 'Icon', 'RadioButton', 'Region', 'Scaler', 'ScrollArea',
-    'ScalerDirection', 'ScalerProps', 'ScrollbarSliderBarHorizontal', 'ScrollbarSliderBarVertical', 'ScrollbarSliderButtonDown', 'ScrollbarSliderButtonLeft', 'ScrollbarSliderButtonRight',
+    'ContainerButton', 'Droplist', 'Dropmenu', 'Frame', 'FramePointerDown', 'Header', 'Icon', 'RadioButton', 'Region', 'Scaler', 'ScrollArea',
+    'ScrollbarSliderBarHorizontal', 'ScrollbarSliderBarVertical', 'ScrollbarSliderButtonDown', 'ScrollbarSliderButtonLeft', 'ScrollbarSliderButtonRight',
     'ScrollbarSliderButtonUp', 'ScrollbarSliderTrackHorizontal', 'ScrollbarSliderTrackVertical', 'Shape', 'TabButton', 'TabContent', 'TabContext',
     'TextInput', 'ThemeImage', 'ThemeText', 'WidgetSlot',
 ]);
@@ -1836,11 +1765,6 @@ const assembleImports = (imports: Set<string>, sharedImports: Set<string>): stri
 };
 
 const generateComponent = (componentName: string, sourceFile: string, root: XmlNode, folder: string): GeneratedComponent => {
-    const sourceBase = sourceFile.replace(/^\d+_/, '').replace(/_xml$/, '');
-
-    if (!layoutComponents.has(sourceBase)) layoutComponents.set(sourceBase, componentName);
-    if (root.attrs.name && !layoutComponents.has(root.attrs.name)) layoutComponents.set(root.attrs.name, componentName);
-
     const windows = root.children.filter(child => child.tag === 'window');
     const elements = windows.flatMap(window => window.children.flatMap((child) => {
         if (child.tag === 'children') return child.children.map(toElement);
@@ -1848,12 +1772,11 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
         return [ toElement(child) ];
     }));
-    const file: FileContext = { componentName, folder, imports: new Set(), sharedImports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {}, frameView: false };
+    const file: FileContext = { componentName, folder, imports: new Set(), sharedImports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {} };
     const ctx = createEmitContext(file);
 
     for (const el of elements) collectScrollTargets(el, ctx.scrollTargets);
     markAnchorInference(elements);
-    file.frameView = isFrameView(elements);
 
     const width = num(root.attrs.width);
     const height = num(root.attrs.height);
@@ -1873,9 +1796,7 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
         body = wrap(
             'Region',
-            [ ...rootProps, `layout={${layoutLiteral(file.frameView
-                ? { position: '\'relative\'', minWidth: width, minHeight: height }
-                : { position: '\'relative\'', width, height, minWidth: root.attrs.width_min ? num(root.attrs.width_min) : undefined, maxWidth: root.attrs.width_max ? num(root.attrs.width_max) : undefined, minHeight: root.attrs.height_min ? num(root.attrs.height_min) : undefined, maxHeight: root.attrs.height_max ? num(root.attrs.height_max) : undefined }).replace(/ \}$/, ', ...layout }')}}` ],
+            [ ...rootProps, `layout={${layoutLiteral({ position: '\'relative\'', width, height, minWidth: root.attrs.width_min ? num(root.attrs.width_min) : undefined, maxWidth: root.attrs.width_max ? num(root.attrs.width_max) : undefined, minHeight: root.attrs.height_min ? num(root.attrs.height_min) : undefined, maxHeight: root.attrs.height_max ? num(root.attrs.height_max) : undefined }).replace(/ \}$/, ', ...layout }')}}` ],
             bodyIndent,
             elements.flatMap(el => emit(ctx, el, { width, height, flow: false }, bodyIndent + INDENT)),
         );
@@ -2010,8 +1931,6 @@ const warningCounts = new Map<string, number>();
 const pendingFiles: { path: string; code: string }[] = [];
 /** Import path (under views/layouts, no extension) of every written component, for cross-file imports. */
 const componentPath = new Map<string, string>();
-/** Component generated for each layout `name` (`habbo_window_layout_frame_3` -> `Frame3Layout`), for the element-view registry. */
-const layoutComponents = new Map<string, string>();
 /** Final name of each shared-widget placeholder token, filled in once every page has been generated. */
 const tokenNames = new Map<string, string>();
 /** Import path of each widget token (`catalog/widgets/PurchaseWidget`, or `.../PurchaseWidget2/PurchaseWidget2` when it has sub-components). */
@@ -2289,86 +2208,6 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
 // turned the entire lazily-registered catalogue into ~800 eagerly-fetched entry chunks
 // (794 modulepreload links in the built index.html). Import a layout by its own path;
 // everything else goes through `layoutRegistry`'s per-entry dynamic `load()`.
-
-// ---------------------------------------------------------------------------------------------
-// Element views - the client's `habbo_element_description_xml` names, per element type and
-// style, the window layout (skin template) that draws it. Emitted as a registry the theme
-// components consult through `useThemeVariant` (`elementType` + resolved variant); a variant
-// with no entry falls back to the component's own default rendering.
-// ---------------------------------------------------------------------------------------------
-
-const descriptionFile = readdirSync(XML_DIR).find(file => /habbo_element_description_xml/.test(file));
-
-if (descriptionFile) {
-    const source = readFileSync(join(XML_DIR, descriptionFile), 'utf8');
-    const views = new Map<string, Map<string, string>>();
-    const viewImports = new Map<string, string>();
-    const unmapped: string[] = [];
-
-    for (const match of source.matchAll(/<window\b([^>]*)>/g)) {
-        const attrs = Object.fromEntries([ ...match[1].matchAll(/(\w+)="([^"]*)"/g) ].map(pair => [ pair[1], pair[2] ]));
-
-        if (!attrs.type || attrs.style === undefined || !attrs.window_layout) continue;
-
-        const layoutName = attrs.window_layout.replace(/_xml$/, '');
-        // `habbo_window_layout_frame_3_xml` is the file `frame_3_xml`; the illumina ones are named in full.
-        const component = layoutComponents.get(layoutName.replace(/^habbo_window_layout_/, '')) ?? layoutComponents.get(layoutName);
-
-        if (!component || !componentPath.has(component)) {
-            unmapped.push(`${attrs.type}/${attrs.style} -> ${layoutName}`);
-            continue;
-        }
-
-        const fields = [ `view: ${component}` ];
-        const color = hexColor(attrs.color);
-
-        if (color) fields.push(`tintColor: ${quote(color)}`);
-        if (attrs.intent) fields.push(`intent: ${quote(attrs.intent)}`);
-        if (attrs.asset) fields.push(`skin: ${quote(attrs.asset.replace(/_xml$/, ''))}`);
-
-        if (!views.has(attrs.type)) views.set(attrs.type, new Map());
-        views.get(attrs.type)!.set(attrs.style, `{ ${fields.join(', ')} }`);
-        viewImports.set(component, componentPath.get(component)!);
-    }
-
-    const byStyle = (a: string, b: string) => Number(a) - Number(b);
-    const registryLines = [ ...views.keys() ].sort().flatMap(type => [
-        `${INDENT}${/^[a-z_]\w*$/i.test(type) ? type : quote(type)}: {`,
-        ...[ ...views.get(type)!.entries() ].sort(([ a ], [ b ]) => byStyle(a, b)).map(([ style, entry ]) => `${INDENT}${INDENT}${quote(style)}: ${entry},`),
-        `${INDENT}},`,
-    ]);
-
-    const elementsFile = join(__dirname, '../src/theme/variants/elements.ts');
-
-    writeFileSync(elementsFile, [
-        ...[ ...viewImports.entries() ].sort(([ , a ], [ , b ]) => importSort(a, b)).map(([ component, path ]) => `import { ${component} } from '#base/views/layouts/${path}';`),
-        '',
-        'import { ElementView } from \'../utils/ThemeVariant\';',
-        '',
-        `/** Generated from \`${descriptionFile.replace(/\$.*$/, '')}\` by scripts/generate-layout-views.ts - do not edit by hand. */`,
-        '',
-        '/** What the client\'s element description says about one Flash element type + style. */',
-        'export interface ElementVariant {',
-        `${INDENT}/** The window layout (skin template) that draws it - rendered as the theme component's view. */`,
-        `${INDENT}view: ElementView;`,
-        `${INDENT}/** The element's default colour. */`,
-        `${INDENT}tintColor?: string;`,
-        `${INDENT}/** The design intent the style was authored for (\`default\`, \`black\`, \`bubble\`, \`modal\`, ...). */`,
-        `${INDENT}intent?: string;`,
-        `${INDENT}/** The skin (art sheet definition) the client rendered it with. */`,
-        `${INDENT}skin?: string;`,
-        '}',
-        '',
-        '/** Every element type + style the client described with a window layout - the base each component\'s variant table is built on (see ./defineVariants.ts). */',
-        'export const ELEMENT_VARIANTS: Record<string, Record<string, ElementVariant>> = {',
-        ...registryLines,
-        '};',
-        '',
-    ].join('\n'));
-
-    console.log(`Element views: ${[ ...views.values() ].reduce((total, styles) => total + styles.size, 0)} type/style entries across ${views.size} types (${unmapped.length} window layouts with no generated template)`);
-    for (const entry of unmapped) console.log(`  no template: ${entry}`);
-}
 
 console.log(`Generated ${exports.length} layout components into ${OUT_DIR}`);
 for (const job of cropJobs) {

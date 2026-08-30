@@ -1,12 +1,8 @@
 import { NineSlice } from '../layer';
 import { ButtonGroupVariant, ThemeVariants } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `ButtonGroupLeft` variants - the Flash `style` ids of `button_group_left` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
-export const BUTTON_GROUP_LEFT_VARIANTS: ThemeVariants<ButtonGroupVariant> = defineVariants<ButtonGroupVariant>('button_group_left', {
+/** `ButtonGroupLeft` variants - the Flash `style` ids it draws. */
+export const BUTTON_GROUP_LEFT_VARIANTS: ThemeVariants<ButtonGroupVariant> = {
     // default
     0: {
         states: {
@@ -63,4 +59,4 @@ export const BUTTON_GROUP_LEFT_VARIANTS: ThemeVariants<ButtonGroupVariant> = def
         },
         textStyle: 'text-style-il-button', textColor: '#000000',
     },
-});
+};

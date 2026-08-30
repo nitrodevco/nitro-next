@@ -1,12 +1,8 @@
 import { BUTTON_100_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT } from '../buttonVariants';
 import { NineSlice } from '../layer';
 import { BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, ThemeVariant, ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `ContainerButton` variants - the Flash `style` ids of `container_button` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `ContainerButton` variants - the Flash `style` ids it draws. */
 export type ContainerButtonVariant = ThemeVariant | ThemeWithStatesVariant;
 
 /** habbo_skin default/black/white buttons - the same sheets Button's 0/1/2 use. */
@@ -70,7 +66,7 @@ const withoutPadding = ({ layout: _layout, ...variant }: ThemeWithStatesVariant)
  * Keyed by the same `style` ids the client's `habbo_element_description_xml` gives
  * `type="container_button"`; most share a sheet with a `Button` style of a different number.
  */
-export const CONTAINER_BUTTON_VARIANTS: ThemeVariants<ContainerButtonVariant> = defineVariants<ContainerButtonVariant>('container_button', {
+export const CONTAINER_BUTTON_VARIANTS: ThemeVariants<ContainerButtonVariant> = {
     // habbo_skin default (button_default) - the same art as Button 0
     0: classicVariant('button-0', '#000000'),
     // habbo_skin black
@@ -101,4 +97,4 @@ export const CONTAINER_BUTTON_VARIANTS: ThemeVariants<ContainerButtonVariant> = 
     107: withoutPadding(BUTTON_104_VARIANT),
     108: withoutPadding(BUTTON_105_VARIANT),
     109: withoutPadding(BUTTON_106_VARIANT),
-});
+};

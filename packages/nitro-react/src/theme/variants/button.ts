@@ -1,13 +1,9 @@
 import { BUTTON_3_VARIANT, BUTTON_100_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, ButtonVariant } from '../buttonVariants';
 import { NineSlice } from '../layer';
 import { BUTTON_CURVE_OVERLAY, BUTTON_CURVE_PRESSED_OVERLAY, ThemeVariants } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `Button` variants - the Flash `style` ids of `button` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
-export const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = defineVariants<ButtonVariant>('button', {
+/** `Button` variants - the Flash `style` ids it draws. */
+export const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
     // habbo_skin - white
     0: {
         states: {
@@ -141,4 +137,4 @@ export const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = defineVariants<Butt
         },
         textStyle: 'text-style-button-shiny-regular', textColor: '#000000',
     },
-});
+};

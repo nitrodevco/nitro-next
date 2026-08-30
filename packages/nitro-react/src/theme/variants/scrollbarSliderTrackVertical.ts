@@ -1,14 +1,10 @@
 import { NineSlice, Stretch } from '../layer';
 import { ThemeVariants, ThemeWithStatesVariant } from '../utils';
-import { defineVariants } from './defineVariants';
 
-/**
- * `ScrollbarSliderTrackVertical` variants - the Flash `style` ids of `scrollbar_slider_track_vertical` elements: the element description's view/colour
- * (see ./elements.ts) merged with the art layers drawn here.
- */
+/** `ScrollbarSliderTrackVertical` variants - the Flash `style` ids it draws. */
 export type ScrollbarSliderTrackVerticalVariant = ThemeWithStatesVariant;
 
-export const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderTrackVerticalVariant> = defineVariants<ScrollbarSliderTrackVerticalVariant>('scrollbar_slider_track_vertical', {
+export const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderTrackVerticalVariant> = {
     0: {
         states: {
             default: Stretch('scrollbarslidertrackvertical-0-default-src'),
@@ -50,4 +46,4 @@ export const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSl
             minWidth: 8, minHeight: 1,
         },
     },
-});
+};
