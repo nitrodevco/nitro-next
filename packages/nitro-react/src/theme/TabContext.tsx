@@ -22,6 +22,7 @@ export const TabContext: ForwardRefExoticComponent<TabContextProps & RefAttribut
             <Box
                 ref={ref}
                 visible={visible}
+                zIndex={10}
                 layout={{
                     flexDirection: 'row',
                     width: '100%',

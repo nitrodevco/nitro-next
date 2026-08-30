@@ -21,5 +21,4 @@ export * from './room/widgets/object-menu/RoomObjectMenuBubblePixi';
 export * from './room/widgets/object-menu/RoomObjectMenuNameBubble';
 export * from './room/widgets/object-menu/RoomObjectMenuWidget';
 export * from './room/widgets/RoomWidgets';
-export * from './room/widgets/RoomWidgetsPixi';
 export * from './wallet/WalletComponent';

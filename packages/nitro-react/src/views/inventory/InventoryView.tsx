@@ -1,7 +1,6 @@
 import { useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context';
 import { Frame, TabButton, TabContent, TabContext } from '#base/theme';
 
-import { InventoryLayout } from '../layouts/inventory/Inventory/InventoryLayout';
 import { InventoryBadgesView } from './InventoryBadgesView';
 import { InventoryBotsView } from './InventoryBotsView';
 import { InventoryFurniView } from './InventoryFurniView';
@@ -19,14 +18,14 @@ export const InventoryView = () => {
         updateWindowParams('inventory', { tab });
     };
 
-    return <InventoryLayout />;
+    // return <InventoryLayout />;
 
     return (
         <Frame
             id="inventory"
             variant="3"
             resizeDirection="y"
-            layout={{ position: 'absolute', top: 20, left: 20, width: 490, height: 342 }}
+            layout={{ position: 'absolute', width: 490, height: 342, minWidth: 490, maxWidth: 490, minHeight: 300, top: 20, left: 20 }}
             caption={t('inventory.title')}
             onClose={() => toggleWindow('inventory')}
         >

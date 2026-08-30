@@ -5,4 +5,3 @@ export * from './object-menu/RoomObjectMenuBubblePixi';
 export * from './object-menu/RoomObjectMenuNameBubble';
 export * from './object-menu/RoomObjectMenuWidget';
 export * from './RoomWidgets';
-export * from './RoomWidgetsPixi';

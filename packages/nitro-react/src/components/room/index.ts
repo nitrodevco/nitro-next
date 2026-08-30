@@ -9,4 +9,3 @@ export * from './widgets/object-menu/RoomObjectMenuBubblePixi';
 export * from './widgets/object-menu/RoomObjectMenuNameBubble';
 export * from './widgets/object-menu/RoomObjectMenuWidget';
 export * from './widgets/RoomWidgets';
-export * from './widgets/RoomWidgetsPixi';

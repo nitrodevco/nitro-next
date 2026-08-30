@@ -22,7 +22,6 @@ export const TabContent: ForwardRefExoticComponent<TabContentProps & RefAttribut
             <Box
                 ref={ref}
                 visible={visible}
-                zIndex={10}
                 layout={{
                     height: '100%',
                     overflow: 'hidden',

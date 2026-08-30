@@ -6,7 +6,7 @@ import { useRoomEventDispatcher } from '#base/hooks';
 
 import { RoomCanvas } from './RoomCanvas';
 import { RoomEventHandler } from './RoomEventHandler';
-import { RoomWidgetsPixi } from './widgets';
+import { RoomWidgets } from './widgets';
 
 export const RoomContainer = () => {
     const [ isReady, setIsReady ] = useState<boolean>(false);
@@ -36,7 +36,7 @@ export const RoomContainer = () => {
     return (
         <>
             <RoomEventHandler />
-            <RoomWidgetsPixi />
+            <RoomWidgets />
             <RoomCanvas />
         </>
     );
