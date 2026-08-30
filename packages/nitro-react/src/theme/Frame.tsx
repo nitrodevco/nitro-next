@@ -1,15 +1,12 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { DropShadowFilter } from 'pixi-filters';
 import { ReactNode, Ref } from 'react';
-
-import { GetPixelRatio } from '#base/utils';
 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
 import { useFrameDrag, useFrameResize, useThemeVariant } from './hooks';
-import { BackgroundLayer, Composite, CompositePiece, NineSlice } from './layer';
+import { BackgroundLayer, Composite, CompositePiece, NineSlice, ShadowLayer } from './layer';
 import { Scaler, ScalerDirection } from './Scaler';
 import { compose, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
@@ -77,7 +74,8 @@ export interface FrameProps extends ThemeProps<FrameVariant> {
     children?: ReactNode;
 }
 
-const dropShadow = new DropShadowFilter({ offset: { x: 2.83, y: 2.83 }, blur: 4, color: 0x000000, alpha: 0.349, resolution: GetPixelRatio() });
+/** The window shadow every Flash frame skin carried (`DropShadowFilter` distance 4, 45deg, 35%, blur 4). */
+const FRAME_SHADOW = { distance: 4, angle: 45, color: '#000000', alpha: 0.35, blur: 4 };
 
 export const Frame = ({
     id, variant, defaultVariant = '3', caption, tintColor, layout, resizeDirection = 'all', onClose, children,
@@ -106,7 +104,6 @@ export const Frame = ({
             x={offset.dx}
             y={offset.dy}
             zIndex={zIndex}
-            filters={[ dropShadow ]}
             {...handlers}
             layout={{
                 flexDirection: 'column',
@@ -119,6 +116,7 @@ export const Frame = ({
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
+            <ShadowLayer {...FRAME_SHADOW} />
             { resolvedLayer && (
                 <BackgroundLayer
                     layer={resolvedLayer}

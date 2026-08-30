@@ -79,14 +79,57 @@ export const drawBufferToCanvas = (canvas: HTMLCanvasElement, buffer: RenderBuff
     }
 };
 
-/** Fresh offscreen canvas sized exactly to `buffer`, for `TruffleTextPixi`'s `Texture.from(...)`. */
-export const bufferToCanvas = (buffer: RenderBuffer): HTMLCanvasElement => {
+export interface BakedShadow {
+    /** The same text rasterised in the shadow colour. */
+    buffer: RenderBuffer;
+    angle: number;
+    distance: number;
+    alpha: number;
+}
+
+/**
+ * Fresh offscreen canvas sized exactly to `buffer`, for `TruffleTextPixi`'s `Texture.from(...)`.
+ * With `shadow`, the shadow rasterisation is drawn first, offset by the shadow's distance/angle
+ * at its alpha, and the text over it - the same composition `TruffleTextDom` does on its own
+ * canvas, so both targets bake identical pixels.
+ */
+export const bufferToCanvas = (buffer: RenderBuffer, shadow?: BakedShadow): HTMLCanvasElement => {
     const canvas = document.createElement('canvas');
 
     canvas.width = Math.max(1, buffer.width);
     canvas.height = Math.max(1, buffer.height);
 
-    drawBufferToCanvas(canvas, buffer);
+    if (shadow) {
+        const ctx = canvas.getContext('2d');
+
+        if (ctx) {
+            // `putImageData` ignores alpha/compositing, so stage the shadow on its own canvas
+            // and composite that at the shadow's alpha.
+            const layer = document.createElement('canvas');
+
+            layer.width = Math.max(1, shadow.buffer.width);
+            layer.height = Math.max(1, shadow.buffer.height);
+            drawBufferToCanvas(layer, shadow.buffer);
+
+            ctx.globalAlpha = shadow.alpha;
+            ctx.drawImage(layer, Math.round(Math.cos(shadow.angle) * shadow.distance), Math.round(Math.sin(shadow.angle) * shadow.distance));
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    if (shadow) {
+        // Same staging for the text itself: `putImageData` would replace the shadow pixels
+        // instead of compositing over them.
+        const ctx = canvas.getContext('2d');
+        const layer = document.createElement('canvas');
+
+        layer.width = canvas.width;
+        layer.height = canvas.height;
+        drawBufferToCanvas(layer, buffer);
+        ctx?.drawImage(layer, 0, 0);
+    } else {
+        drawBufferToCanvas(canvas, buffer);
+    }
 
     return canvas;
 };

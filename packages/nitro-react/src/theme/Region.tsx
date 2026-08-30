@@ -1,26 +1,16 @@
 import { BLEND_MODES, Container as PixiContainer } from 'pixi.js';
-import { DropShadowFilter } from 'pixi-filters';
-import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes, useMemo } from 'react';
-
-import { GetPixelRatio } from '#base/utils';
+import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { ColorLayer } from './layer';
-import { DropShadowConfig, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+import { ColorLayer, ShadowLayer } from './layer';
+import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
 
 export type RegionVariant = ThemeVariant;
 
 const REGION_VARIANTS: ThemeVariants<RegionVariant> = {
     0: {},
-};
-
-/** Flash's `DropShadowFilter(distance, angle°, color, alpha, blurX, blurY)` -> pixi-filters' offset/blur form. */
-const createDropShadow = ({ distance = 4, angle = 45, color = '#000000', alpha = 0.35, blur = 4 }: DropShadowConfig) => {
-    const radians = angle * Math.PI / 180;
-
-    return new DropShadowFilter({ offset: { x: Math.cos(radians) * distance, y: Math.sin(radians) * distance }, blur, color, alpha, resolution: GetPixelRatio() });
 };
 
 export interface RegionProps extends ThemeProps<RegionVariant> {
@@ -50,7 +40,6 @@ export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiC
             cascadeKey: 'region', variants: REGION_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
-        const filters = useMemo(() => (dropShadow ? [ createDropShadow(dropShadow) ] : undefined), [ dropShadow ]);
 
         return (
             <Box
@@ -59,10 +48,10 @@ export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiC
                 visible={visible}
                 cursor={cursor}
                 blendMode={blendMode}
-                filters={filters}
                 layout={{ ...config.layout, ...layout }}
                 {...handlers}
             >
+                {dropShadow && <ShadowLayer {...dropShadow} />}
                 {backgroundColor && <ColorLayer color={backgroundColor} />}
                 <VariantCascadeProvider map={ownCascade}>
                     {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}

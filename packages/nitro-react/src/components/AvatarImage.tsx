@@ -1,8 +1,9 @@
 import { AvatarGenderType, AvatarScaleType, AvatarSetType } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
+import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 
-import { ThemeImage } from '#base/theme';
+import { Box, getRenderMode, ThemeImage, useAvatarImageTexture } from '#base/theme';
 
 type AvatarImageProps = {
     figure: string;
@@ -12,65 +13,97 @@ type AvatarImageProps = {
     scale?: number;
 };
 
-export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>(
-    (props, ref) => {
-        const { figure, gender, headOnly = false, direction = 0, scale = 1 } = props;
-        const [ randomValue, setRandomValue ] = useState<number>(-1);
-        const [ imageData, setImageData ] = useState<{
-            width: number;
-            height: number;
-            url: string;
-        }>({ width: 0, height: 0, url: '' });
-        const disposed = useRef<boolean>(false);
+/** Pixi: the avatar's own render texture, straight from the render manager (see `useAvatarImageTexture`). */
+const AvatarImagePixi = forwardRef<PixiContainer, AvatarImageProps>(({ figure, gender, headOnly = false, direction = 0 }, ref) => {
+    const { texture, width, height } = useAvatarImageTexture(figure, gender, { headOnly, direction });
 
-        useEffect(() => {
-            if (!figure) return;
+    if (!texture) return null;
 
-            const avatarImage = GetAvatarRenderManager().createAvatarImage(
-                figure,
-                AvatarScaleType.Large,
-                gender,
-                { resetFigure: () => { if (!disposed.current) setRandomValue(Math.random()); } },
-                { resetEffect: () => { if (!disposed.current) setRandomValue(Math.random()); } },
-            );
-
-            if (!avatarImage) return;
-
-            let setType = AvatarSetType.Full;
-
-            if (headOnly) setType = AvatarSetType.Head;
-
-            avatarImage?.setDirection(setType, direction);
-
-            const load = async () => {
-                const image = await avatarImage.getCroppedImageAsync(setType, false, 1);
-
-                if (!image) return;
-
-                setImageData({
-                    width: image.width,
-                    height: image.height,
-                    url: image.src,
-                });
-            };
-
-            void load();
-        }, [ figure, direction, randomValue ]);
-
-        useEffect(() => {
-            return () => {
-                disposed.current = true;
-            };
-        }, []);
-
-        // backgroundPosition: 'center -8px',
-
-        return (
-            <ThemeImage
-                src={imageData.url}
-                width={imageData.width}
-                height={imageData.height}
+    return (
+        <Box
+            ref={ref}
+            layout={{ width, height }}
+        >
+            <pixiSprite
+                texture={texture}
+                eventMode="none"
+                layout={{ width, height }}
             />
+        </Box>
+    );
+});
+
+AvatarImagePixi.displayName = 'AvatarImagePixi';
+
+/**
+ * DOM: an `<img>` needs a URL, so this is the one place the render is read back off the GPU
+ * (`getCroppedImageAsync`). The `AvatarImage` instance is disposed as soon as the read-back
+ * completes - it isn't needed once the URL exists - and again on figure change/unmount.
+ */
+const AvatarImageDom = forwardRef<PixiContainer, AvatarImageProps>(({ figure, gender, headOnly = false, direction = 0 }, ref) => {
+    const [ randomValue, setRandomValue ] = useState<number>(-1);
+    const [ imageData, setImageData ] = useState<{ width: number; height: number; url: string }>({ width: 0, height: 0, url: '' });
+    const disposed = useRef<boolean>(false);
+
+    useEffect(() => {
+        if (!figure) return;
+
+        const avatarImage = GetAvatarRenderManager().createAvatarImage(
+            figure,
+            AvatarScaleType.Large,
+            gender,
+            { resetFigure: () => { if (!disposed.current) setRandomValue(Math.random()); } },
+            { resetEffect: () => { if (!disposed.current) setRandomValue(Math.random()); } },
         );
-    },
-);
+
+        if (!avatarImage) return;
+
+        const setType = headOnly ? AvatarSetType.Head : AvatarSetType.Full;
+        let cancelled = false;
+
+        avatarImage.setDirection(setType, direction);
+
+        void avatarImage.getCroppedImageAsync(setType, false, 1).then((image) => {
+            avatarImage.dispose();
+
+            if (!image || cancelled) return;
+
+            setImageData({ width: image.width, height: image.height, url: image.src });
+        });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [ figure, gender, headOnly, direction, randomValue ]);
+
+    useEffect(() => () => {
+        disposed.current = true;
+    }, []);
+
+    return (
+        <ThemeImage
+            ref={ref}
+            src={imageData.url || undefined}
+            width={imageData.width}
+            height={imageData.height}
+        />
+    );
+});
+
+AvatarImageDom.displayName = 'AvatarImageDom';
+
+export const AvatarImage = forwardRef<PixiContainer, AvatarImageProps>((props, ref) => (getRenderMode() === 'dom'
+    ? (
+            <AvatarImageDom
+                ref={ref}
+                {...props}
+            />
+        )
+    : (
+            <AvatarImagePixi
+                ref={ref}
+                {...props}
+            />
+        )));
+
+AvatarImage.displayName = 'AvatarImage';
