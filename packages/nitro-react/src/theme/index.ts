@@ -91,6 +91,7 @@ export * from './utils/getGlobalRect';
 export * from './utils/iconAssets';
 export * from './utils/iconSetFrames';
 export * from './utils/interaction';
+export * from './utils/layoutInsetStretch';
 export * from './utils/renderMode';
 export * from './utils/ScrollViewport';
 export * from './utils/spriteFrame';

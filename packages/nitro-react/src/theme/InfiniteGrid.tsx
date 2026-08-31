@@ -75,14 +75,16 @@ const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, i
             <ScrollArea
                 variant="3"
                 layout={{ flex: 1 }}
-                viewportLayout={{ padding: 2 }}
             >
                 <div
                     ref={setViewportNode}
                     style={gridStyle}
                 >
                     {items.map((item, i) => (
-                        <div key={getKey(item)}>
+                        <div
+                            key={getKey(item)}
+                            style={{ width: itemWidth }}
+                        >
                             {itemRender(item, i)}
                         </div>
                     ))}
@@ -148,7 +150,7 @@ const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, 
                 onWheel={scroll.onWheel}
                 scrollOffset={scroll.scrollOffset}
                 orientation="vertical"
-                layout={{ flex: 1, height: '100%', padding: 2 }}
+                layout={{ flex: 1, height: '100%' }}
                 contentLayout={{ position: 'relative', width: '100%', height: totalSize }}
             >
                 {virtualItems.map(row => (

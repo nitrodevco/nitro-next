@@ -6,7 +6,7 @@ import { GetPixelRatio } from '#base/utils';
 import { BoxLayout } from './Box';
 import { boxLayoutToStyle, getDomTextStyle, TruffleTextDom } from './dom';
 import { TruffleTextPixi } from './font/TruffleTextPixi';
-import { getHabboKey, getPixiTextStyle, getRenderMode, TEXT_DROP_SHADOW, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta } from './utils';
+import { getHabboKey, getPixiTextStyle, getRenderMode, insetStretchAxes, TEXT_DROP_SHADOW, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta } from './utils';
 
 export type TextConfig = {
     text: string;
@@ -78,7 +78,9 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, v
 
     if (!text?.length || !metrics) return null;
 
-    return (
+    const stretchAxes = insetStretchAxes(layout);
+    const objectPosition = textObjectPosition(textOptions?.align, verticalAlign);
+    const label = (labelLayout: BoxLayout | undefined) => (
         <pixiText
             text={text}
             style={style}
@@ -88,12 +90,27 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, v
                 width: Math.ceil(metrics.width),
                 height: Math.ceil(metrics.height),
                 objectFit: 'none',
-                objectPosition: textObjectPosition(textOptions?.align, verticalAlign),
+                objectPosition,
                 flexShrink: 0,
-                ...layout,
+                ...labelLayout,
             }}
         />
     );
+
+    // Same leaf/inset rule as `TruffleTextPixi`: a leaf keeps its intrinsic size between two
+    // insets, so a container host does the spanning and the text fills it.
+    if (stretchAxes.x || stretchAxes.y) {
+        return (
+            <pixiContainer
+                eventMode="none"
+                layout={layout}
+            >
+                {label({ objectPosition, width: stretchAxes.x ? '100%' : undefined, height: stretchAxes.y ? '100%' : undefined })}
+            </pixiContainer>
+        );
+    }
+
+    return label(layout);
 };
 
 /** Prefers truffle's pixel-perfect rendering for this named style (see `theme/font/truffle.ts`);
@@ -112,6 +129,7 @@ const TextPixi = (props: TextConfig) => {
                 color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
                 dropShadow={resolveDropShadow(textOptions?.dropShadow)}
                 visible={visible}
+                lineHeight={typeof textOptions?.lineHeight === 'number' ? textOptions.lineHeight : undefined}
                 layout={{ objectPosition: textObjectPosition(textOptions?.align, verticalAlign), ...layout }}
                 wordWrap={textOptions?.wordWrap}
                 wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}
@@ -128,11 +146,12 @@ const TextPixi = (props: TextConfig) => {
 const TextDomNative = ({ text, textStyle, textOptions, layout, verticalAlign, visible }: TextConfig) => {
     const fill = typeof textOptions?.fill === 'string' ? textOptions.fill : undefined;
     const fontSize = typeof textOptions?.fontSize === 'number' ? textOptions.fontSize : undefined;
+    const lineHeight = typeof textOptions?.lineHeight === 'number' ? textOptions.lineHeight : undefined;
     const align = textOptions?.align;
     // A flex span aligns its own text inside a box larger than the text, like `objectPosition` does for the Pixi sprite.
     const style: CSSProperties = {
         ...boxLayoutToStyle(layout),
-        ...getDomTextStyle(textStyle ?? 'text-style-regular', { fill, fontSize }),
+        ...getDomTextStyle(textStyle ?? 'text-style-regular', { fill, fontSize, lineHeight }),
         display: visible === false ? 'none' : 'inline-flex',
         alignItems: verticalAlign === 'top' ? 'flex-start' : verticalAlign === 'bottom' ? 'flex-end' : 'center',
         justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start',
@@ -162,6 +181,7 @@ const TextDom = (props: TextConfig) => {
                 dropShadow={resolveDropShadow(textOptions?.dropShadow)}
                 visible={visible}
                 objectPosition={textObjectPosition(textOptions?.align, verticalAlign)}
+                lineHeight={typeof textOptions?.lineHeight === 'number' ? textOptions.lineHeight : undefined}
                 layout={layout}
                 wordWrap={textOptions?.wordWrap}
                 wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}

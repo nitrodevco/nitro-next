@@ -12,7 +12,15 @@ export type ContentAreaVariant = ThemeVariant;
 
 const CONTENT_AREA_VARIANTS: ThemeVariants<ContentAreaVariant> = {
     0: { layout: { paddingBottom: 3, paddingLeft: 6, paddingRight: 6 } },
-    3: { layout: { position: 'relative', paddingLeft: 3, paddingRight: 3, paddingTop: 0, paddingBottom: 4 } },
+    3: {
+        layout: {
+            position: 'relative',
+            paddingLeft: 5,
+            paddingRight: 5,
+            marginBottom: 9,
+            overflow: 'hidden',
+        },
+    },
 };
 
 export interface ContentAreaProps extends ThemeProps<ContentAreaVariant> {
@@ -31,7 +39,6 @@ export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttrib
                 zIndex={20}
                 layout={{
                     flexDirection: 'column',
-                    width: '100%',
                     flex: 1,
                     overflow: 'hidden',
                     ...config.layout,

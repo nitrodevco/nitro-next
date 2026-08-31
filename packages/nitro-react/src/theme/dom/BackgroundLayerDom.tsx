@@ -135,18 +135,20 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
             );
         }
 
-        case 'composite':
-            return (
-                <div style={box}>
-                    {layer.pieces.map((piece, i) => (
-                        <CompositePieceDom
-                            key={i}
-                            piece={piece}
-                            tintColor={tintColor}
-                        />
-                    ))}
-                </div>
-            );
+        case 'composite': {
+            const pieces = layer.pieces.map((piece, i) => (
+                <CompositePieceDom
+                    key={i}
+                    piece={piece}
+                    tintColor={tintColor}
+                />
+            ));
+
+            // Every piece positions itself absolutely; with no custom box they anchor to the
+            // host component's own (relative-by-default) element directly - the wrapper div
+            // only earns its keep when the layer is given a box of its own.
+            return style ? <div style={box}>{pieces}</div> : <>{pieces}</>;
+        }
 
         default:
             return null;

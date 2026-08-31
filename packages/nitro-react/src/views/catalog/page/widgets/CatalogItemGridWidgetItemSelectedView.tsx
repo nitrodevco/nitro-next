@@ -1,7 +1,7 @@
 import { IPurchasableOffer } from '@nitrodevco/nitro-api';
 
 import { useCatalogOfferProduct, useProductIconUrl } from '#base/hooks';
-import { Border, ThemeImage } from '#base/theme';
+import { Border, Box, ThemeImage } from '#base/theme';
 
 import { CatalogItemGridWidgetItemPriceView } from './CatalogItemGridWidgetItemPriceView';
 
@@ -20,17 +20,18 @@ export const CatalogItemGridWidgetItemSelectedView = ({ offer }: CatalogItemGrid
         <Border
             variant="3"
             tintColor="#63c5e9"
-            layout={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', padding: 2 }}
+            layout={{ width: '100%', justifyContent: 'center', alignItems: 'center', padding: 2 }}
         >
             <Border
                 variant="3"
                 layout={{ width: '100%', height: '100%', flexDirection: 'column', alignItems: 'center', gap: 3, paddingTop: 3, paddingBottom: 3 }}
             >
-                <ThemeImage
-                    src={iconUrl}
-                    showLoadingPlaceholder
-                    layout={{ minWidth: 32, minHeight: 32, maxWidth: 32, maxHeight: 32 }}
-                />
+                <Box layout={{ width: 32, height: 32, overflow: 'hidden', justifyContent: 'center', alignItems: 'center' }}>
+                    <ThemeImage
+                        src={iconUrl}
+                        showLoadingPlaceholder
+                    />
+                </Box>
                 <CatalogItemGridWidgetItemPriceView offer={offer} />
             </Border>
         </Border>

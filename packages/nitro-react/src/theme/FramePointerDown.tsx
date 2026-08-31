@@ -4,6 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { Box } from './Box';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
+import { ThemeImage } from './ThemeImage';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 export type FramePointerDownVariant = ThemeVariant;
@@ -20,6 +21,21 @@ export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps &
             cascadeKey: 'framePointerDown', variants: FRAME_POINTER_DOWN_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+
+        // A plain sprite skin with nothing layered over it is the sprite itself - one node, no Box.
+        if (resolvedLayer?.kind === 'sprite' && !resolvedOverlay) {
+            return (
+                <ThemeImage
+                    ref={ref}
+                    textureKey={resolvedLayer.textureKey}
+                    frame={resolvedLayer.frame}
+                    tint={resolvedTint}
+                    stretch
+                    {...handlers}
+                    layout={{ ...config.layout, ...layout }}
+                />
+            );
+        }
 
         return (
             <Box

@@ -29,7 +29,7 @@ export interface NineSliceLayerProps {
 
 const cropTexture = (base: Texture, x: number, y: number, w: number, h: number): Texture => getCroppedTexture(base, { x, y, width: Math.max(1, w), height: Math.max(1, h) });
 
-const TiledNineSlicePixi = ({ texture, leftWidth, topHeight, rightWidth, bottomHeight, repeat, tintColor }: { texture: Texture; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; repeat: NineSliceRepeatAxis; tintColor?: string }) => {
+const TiledNineSlicePixi = ({ texture, leftWidth, topHeight, rightWidth, bottomHeight, repeat, tintColor, layout }: { texture: Texture; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; repeat: NineSliceRepeatAxis; tintColor?: string; layout?: BoxLayout }) => {
     const { width, height } = texture;
 
     const pieces = useMemo(() => {
@@ -48,9 +48,11 @@ const TiledNineSlicePixi = ({ texture, leftWidth, topHeight, rightWidth, bottomH
         };
     }, [ texture, width, height, leftWidth, topHeight, rightWidth, bottomHeight, repeat ]);
 
+    // The start/fill/end row (or column) IS the layer's own box - the flex direction lives on
+    // the same container the caller's layout sizes, not a nested one.
     if (repeat === 'y') {
         return (
-            <pixiContainer layout={{ flexDirection: 'column', width: '100%', height: '100%' }}>
+            <pixiContainer layout={{ flexDirection: 'column', ...(layout ?? FillLayout) }}>
                 <pixiSprite
                     texture={pieces.start}
                     tint={tintColor}
@@ -74,7 +76,7 @@ const TiledNineSlicePixi = ({ texture, leftWidth, topHeight, rightWidth, bottomH
     }
 
     return (
-        <pixiContainer layout={{ flexDirection: 'row', width: '100%', height: '100%' }}>
+        <pixiContainer layout={{ flexDirection: 'row', ...(layout ?? FillLayout) }}>
             <pixiSprite
                 texture={pieces.start}
                 tint={tintColor}
@@ -107,17 +109,16 @@ const NineSliceLayerPixi = ({ textureKey, leftWidth, topHeight, rightWidth, bott
 
     if (repeat) {
         return (
-            <pixiContainer layout={layout ?? FillLayout}>
-                <TiledNineSlicePixi
-                    texture={texture}
-                    leftWidth={leftWidth}
-                    topHeight={topHeight}
-                    rightWidth={rightWidth}
-                    bottomHeight={bottomHeight}
-                    repeat={repeat}
-                    tintColor={tintColor}
-                />
-            </pixiContainer>
+            <TiledNineSlicePixi
+                texture={texture}
+                leftWidth={leftWidth}
+                topHeight={topHeight}
+                rightWidth={rightWidth}
+                bottomHeight={bottomHeight}
+                repeat={repeat}
+                tintColor={tintColor}
+                layout={layout}
+            />
         );
     }
 

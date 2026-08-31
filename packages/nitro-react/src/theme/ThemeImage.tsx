@@ -6,7 +6,7 @@ import { useConfigValue } from '#base/context';
 import { BoxLayout } from './Box';
 import { boxLayoutToStyle } from './dom/boxStyle';
 import { getCroppedTexture, usePixiTexture, useTextureFromUrl, useThemeImageUrl } from './hooks';
-import { getRenderMode, getThemeAtlas, getThemeSprite, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta } from './utils';
+import { getRenderMode, getThemeAtlas, getThemeSprite, insetStretchAxes, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta, themeSpriteFillStyle } from './utils';
 
 export interface ImageProps extends ThemeLayoutMeta {
     /** An arbitrary image URL (a layout bitmap, an avatar render). Ignored when `textureKey` is set. */
@@ -18,6 +18,11 @@ export interface ImageProps extends ThemeLayoutMeta {
     /** Explicit render size - the image is stretched to it. Omit to render at `frame`'s size or the image's native size. */
     width?: number;
     height?: number;
+    /** Fill whatever box `layout` resolves to (a chrome sprite skin) instead of keeping the image's own size. */
+    stretch?: boolean;
+    /** Zoom factor on the render size: `(width ?? native) * scale` - `scale={2}` doubles it, layout box included. */
+    scale?: number;
+    zIndex?: number;
     tint?: string;
     alpha?: number;
     /** The Flash `BLEND_<mode>` tag on a bitmap. */
@@ -60,7 +65,7 @@ export interface ImageProps extends ThemeLayoutMeta {
  * asked for".
  */
 const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
-    src, textureKey, frame, width, height, tint, alpha, blendMode, eventMode, cursor,
+    src, textureKey, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, blendMode, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     showLoadingPlaceholder, layout, visible,
 }, ref) => {
@@ -79,16 +84,19 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
 
     if (!texture) return null;
 
-    const explicitSize = width !== undefined || height !== undefined;
+    // A non-1 `scale` needs the texture stretched into the scaled box, exactly like an explicit size.
+    const explicitSize = width !== undefined || height !== undefined || !!stretch || scale !== 1;
     // Same rule as `Box`: an image that handles pointer events reads as clickable unless the
     // caller sets its own cursor.
     const resolvedCursor = cursor ?? (resolvedEventMode === 'static' ? 'pointer' : undefined);
-
-    return (
+    const stretchAxes = insetStretchAxes(layout, width, height);
+    const objectFit = explicitSize ? 'fill' : 'none';
+    const sprite = (spriteLayout: typeof layout) => (
         <pixiSprite
             ref={ref as Ref<never>}
             texture={texture}
             visible={visible}
+            zIndex={zIndex}
             tint={tint}
             alpha={alpha}
             blendMode={blendMode}
@@ -101,17 +109,31 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
             onPointerUpOutside={onPointerUpOutside}
             onPointerTap={onPointerTap}
             // `objectFit: 'none'` keeps the texture at its own scale inside whatever box
-            // `layout` sets (centred) - only an explicit `width`/`height` stretches it.
+            // `layout` sets (centred) - only an explicit `width`/`height`/`stretch` stretches it.
             layout={{
-                width: width ?? texture.width,
-                height: height ?? texture.height,
-                flexShrink: 0,
-                objectFit: explicitSize ? 'fill' : 'none',
+                width: (width ?? texture.width) * scale,
+                height: (height ?? texture.height) * scale,
+                objectFit,
                 objectPosition: 'center',
-                ...layout,
+                ...spriteLayout,
             }}
         />
     );
+
+    // A layout that spans between insets needs a container to do the spanning - a Yoga leaf
+    // keeps its intrinsic size (see `insetStretchAxes`). The sprite fills that host.
+    if (stretchAxes.x || stretchAxes.y) {
+        return (
+            <pixiContainer
+                eventMode="none"
+                layout={layout}
+            >
+                {sprite({ width: stretchAxes.x ? '100%' : (width ?? texture.width) * scale, height: stretchAxes.y ? '100%' : (height ?? texture.height) * scale })}
+            </pixiContainer>
+        );
+    }
+
+    return sprite(layout);
 });
 
 ImagePixi.displayName = 'ImagePixi';
@@ -124,7 +146,7 @@ ImagePixi.displayName = 'ImagePixi';
  * through a pre-recoloured atlas slice instead, staying one element.
  */
 const ImageDom = forwardRef<PixiContainer, ImageProps>(({
-    src, textureKey, frame, width, height, tint, alpha, blendMode, eventMode, cursor,
+    src, textureKey, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, blendMode, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     layout, visible,
 }, ref) => {
@@ -139,9 +161,16 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
     const nativeHeight = frame?.height ?? sprite?.height;
     const resolvedWidth = width ?? nativeWidth;
     const resolvedHeight = height ?? nativeHeight;
-    const explicitSize = width !== undefined || height !== undefined;
+    const explicitSize = width !== undefined || height !== undefined || !!stretch;
     const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
     const layoutStyle = boxLayoutToStyle(layout);
+    const stretchAxes = insetStretchAxes(layout, width, height);
+
+    // A replaced element (`<img>`) keeps its intrinsic size between two insets instead of
+    // stretching; span it explicitly. The background `<div>` path isn't replaced, but gets the
+    // same explicit span so both paths agree.
+    if (stretchAxes.x && typeof layout?.left === 'number' && typeof layout.right === 'number') layoutStyle.width = `calc(100% - ${layout.left + layout.right}px)`;
+    if (stretchAxes.y && typeof layout?.top === 'number' && typeof layout.bottom === 'number') layoutStyle.height = `calc(100% - ${layout.top + layout.bottom}px)`;
     // See Box.tsx's BoxDom for why 'static'/'dynamic' need an explicit 'auto' here (CSS
     // pointer-events is inherited, and #ui-container sets it to 'none' at its root).
     const style: CSSProperties = {
@@ -149,12 +178,20 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
         width: layoutStyle.width ?? resolvedWidth,
         height: layoutStyle.height ?? resolvedHeight,
         display: visible === false ? 'none' : 'block',
-        flexShrink: 0,
+        // CSS `zoom` scales the element's layout box AND its content/background together -
+        // the one DOM knob that scales a sheet-crop background and a plain <img> identically,
+        // natural size known or not.
+        zoom: scale !== 1 ? scale : undefined,
+        zIndex,
         cursor: cursor ?? (resolvedEventMode === 'static' ? 'pointer' : undefined),
         opacity: alpha,
         mixBlendMode: typeof blendMode === 'string' && blendMode !== 'normal' && blendMode !== 'inherit' ? (blendMode === 'add' ? 'screen' : blendMode) as CSSProperties['mixBlendMode'] : undefined,
         pointerEvents: pointerEventsFromEventMode(resolvedEventMode),
         imageRendering: 'pixelated',
+        // The global stylesheet caps `img` at `max-width: 100%`, which would shrink the image to
+        // its flex parent instead of keeping its own size - the image's size is authoritative.
+        maxWidth: 'none',
+        maxHeight: 'none',
     };
     const handlers = {
         onPointerEnter: onPointerOver as unknown as PointerEventHandler,
@@ -164,6 +201,23 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
         onClick: onPointerTap as unknown as MouseEventHandler,
     };
     const elementRef = ref as unknown as Ref<never>;
+
+    if (sheetUrl && stretch) {
+        // A skin sprite filling its box: out of the atlas with the percentage formula, or a
+        // standalone (tinted / fallback) slice scaled to the box.
+        const fill = textureKey && !tint && sprite ? themeSpriteFillStyle(sprite, frame) : undefined;
+
+        return (
+            <div
+                ref={elementRef}
+                style={{
+                    ...style,
+                    ...(fill ?? { backgroundImage: `url(${sheetUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }),
+                }}
+                {...handlers}
+            />
+        );
+    }
 
     if (sheetUrl) {
         // A sheet crop: the div is the box, the background is positioned so the frame sits

@@ -5,6 +5,7 @@ export * from './getGlobalRect';
 export * from './iconAssets';
 export * from './iconSetFrames';
 export * from './interaction';
+export * from './layoutInsetStretch';
 export * from './renderMode';
 export * from './ScrollViewport';
 export * from './spriteFrame';

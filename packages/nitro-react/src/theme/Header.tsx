@@ -43,11 +43,10 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
     },
     3: {
         layout: {
-            minHeight: 33,
-            paddingLeft: 6,
-            paddingTop: 0,
-            paddingRight: 6,
-            paddingBottom: 0,
+            position: 'relative',
+            height: 33,
+            marginLeft: 9,
+            marginRight: 9,
         },
         textStyle: 'text-style-u-frame-title',
         textColor: '#ffffff',
@@ -149,34 +148,24 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                     />
                 )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                <Box layout={{
-                    position: 'relative',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '100%',
-                    height: '100%',
-                }}
-                >
-                    <VariantCascadeProvider map={ownCascade}>
-                        <Box layout={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-                            {caption && (
-                                <Box layout={{ position: 'relative', alignItems: 'center', paddingLeft: 6, paddingRight: 6, height: '100%' }}>
-                                    { config.needsBgChip && <ColorLayer color={resolvedTint} /> }
-                                    <ThemeText
-                                        text={caption}
-                                        textStyle={resolvedTextStyle}
-                                        textOptions={{ fill: resolvedTextColor }}
-                                    />
-                                </Box>
-                            )}
-                        </Box>
-                        <Box layout={{ position: 'absolute', right: 0, paddingLeft: 2, flexDirection: 'row', alignItems: 'center' }}>
-                            { config.needsBgChip && <ColorLayer color={resolvedTint} /> }
-                            <CloseButton onPointerTap={onClose} />
-                        </Box>
-                    </VariantCascadeProvider>
-                </Box>
+                <VariantCascadeProvider map={ownCascade}>
+                    <Box layout={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                        {caption && (
+                            <Box layout={{ position: 'relative', alignItems: 'center', paddingLeft: 6, paddingRight: 6, height: '100%' }}>
+                                { config.needsBgChip && <ColorLayer color={resolvedTint} /> }
+                                <ThemeText
+                                    text={caption}
+                                    textStyle={resolvedTextStyle}
+                                    textOptions={{ fill: resolvedTextColor }}
+                                />
+                            </Box>
+                        )}
+                    </Box>
+                    <Box layout={{ position: 'absolute', right: 0, paddingLeft: 2, flexDirection: 'row', alignItems: 'center' }}>
+                        { config.needsBgChip && <ColorLayer color={resolvedTint} /> }
+                        <CloseButton onPointerTap={onClose} />
+                    </Box>
+                </VariantCascadeProvider>
             </Box>
         );
     },

@@ -5,6 +5,8 @@ import { TEXT_STYLES, TextStyleKey } from '../utils';
 export interface DomTextStyleOptions {
     fill?: string;
     fontSize?: number;
+    /** CSS line-height in px. */
+    lineHeight?: number;
 }
 
 export const getDomTextStyle = (key: TextStyleKey, overrides?: DomTextStyleOptions): CSSProperties => {
@@ -19,6 +21,7 @@ export const getDomTextStyle = (key: TextStyleKey, overrides?: DomTextStyleOptio
     const style: CSSProperties = {
         fontFamily,
         fontSize: overrides?.fontSize ?? fontSize,
+        lineHeight: overrides?.lineHeight !== undefined ? `${overrides.lineHeight}px` : undefined,
         color: overrides?.fill ?? color,
         fontStyle,
         margin: 0,

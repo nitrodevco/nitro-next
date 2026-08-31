@@ -18,6 +18,7 @@ export const CatalogItemGridWidgetItemPriceView = ({ offer }: CatalogItemGridWid
                         text={String(offer.priceInCredits)}
                         textStyle="text-style-u-bold"
                         textOptions={{ fill: '#000000' }}
+                        layout={{ height: 12 }}
                     />
                     <NitroCurrencyIcon
                         type="-1"
@@ -32,19 +33,19 @@ export const CatalogItemGridWidgetItemPriceView = ({ offer }: CatalogItemGridWid
                         text="+"
                         textStyle="text-style-u-bold"
                         textOptions={{ fill: '#000000' }}
+                        layout={{ height: 12 }}
                     />
-                    <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                        <ThemeText
-                            text={String(offer.priceInActivityPoints)}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#000000' }}
-                        />
-                        <NitroCurrencyIcon
-                            type={offer.activityPointType.toString()}
-                            mini
-                            layout={{}}
-                        />
-                    </Box>
+                    <ThemeText
+                        text={String(offer.priceInActivityPoints)}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#000000' }}
+                        layout={{ height: 12 }}
+                    />
+                    <NitroCurrencyIcon
+                        type={offer.activityPointType.toString()}
+                        mini
+                        layout={{}}
+                    />
                 </Box>
             )}
         </Box>

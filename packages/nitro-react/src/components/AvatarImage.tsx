@@ -3,7 +3,7 @@ import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 
-import { Box, getRenderMode, ThemeImage, useAvatarImageTexture } from '#base/theme';
+import { Box, BoxLayout, getRenderMode, ThemeImage, useAvatarImageTexture } from '#base/theme';
 
 type AvatarImageProps = {
     figure: string;
@@ -11,10 +11,12 @@ type AvatarImageProps = {
     headOnly?: boolean;
     direction?: number;
     scale?: number;
+    /** Positions the image box; its size is always the render's own size (never shrunk by a flex parent - crop with the parent's `overflow` instead). */
+    layout?: BoxLayout;
 };
 
 /** Pixi: the avatar's own render texture, straight from the render manager (see `useAvatarImageTexture`). */
-const AvatarImagePixi = forwardRef<PixiContainer, AvatarImageProps>(({ figure, gender, headOnly = false, direction = 0 }, ref) => {
+const AvatarImagePixi = forwardRef<PixiContainer, AvatarImageProps>(({ figure, gender, headOnly = false, direction = 0, scale = 1, layout }, ref) => {
     const { texture, width, height } = useAvatarImageTexture(figure, gender, { headOnly, direction });
 
     if (!texture) return null;
@@ -22,12 +24,12 @@ const AvatarImagePixi = forwardRef<PixiContainer, AvatarImageProps>(({ figure, g
     return (
         <Box
             ref={ref}
-            layout={{ width, height }}
+            layout={{ ...layout, width: width * scale, height: height * scale, flexShrink: 0 }}
         >
             <pixiSprite
                 texture={texture}
                 eventMode="none"
-                layout={{ width, height }}
+                layout={{ width: width * scale, height: height * scale }}
             />
         </Box>
     );
@@ -40,7 +42,7 @@ AvatarImagePixi.displayName = 'AvatarImagePixi';
  * (`getCroppedImageAsync`). The `AvatarImage` instance is disposed as soon as the read-back
  * completes - it isn't needed once the URL exists - and again on figure change/unmount.
  */
-const AvatarImageDom = forwardRef<PixiContainer, AvatarImageProps>(({ figure, gender, headOnly = false, direction = 0 }, ref) => {
+const AvatarImageDom = forwardRef<PixiContainer, AvatarImageProps>(({ figure, gender, headOnly = false, direction = 0, scale = 1, layout }, ref) => {
     const [ randomValue, setRandomValue ] = useState<number>(-1);
     const [ imageData, setImageData ] = useState<{ width: number; height: number; url: string }>({ width: 0, height: 0, url: '' });
     const disposed = useRef<boolean>(false);
@@ -86,6 +88,8 @@ const AvatarImageDom = forwardRef<PixiContainer, AvatarImageProps>(({ figure, ge
             src={imageData.url || undefined}
             width={imageData.width}
             height={imageData.height}
+            scale={scale}
+            layout={{ ...layout, flexShrink: 0 }}
         />
     );
 });

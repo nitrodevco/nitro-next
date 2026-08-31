@@ -50,7 +50,7 @@ export const CatalogView = () => {
                 <CatalogHeaderView />
                 <Region
                     name="layoutContainer"
-                    layout={{ position: 'absolute', flexDirection: 'row', width: '100%', top: 131 }}
+                    layout={{ position: 'relative', flex: 1, flexDirection: 'row', width: '100%', marginTop: 95, paddingLeft: 3, paddingRight: 3, paddingTop: 5, gap: 5, overflow: 'hidden' }}
                 >
                     <Box layout={{ flexDirection: 'column', flex: 4, height: '100%', gap: 2 }}>
                         <CatalogSearchView />

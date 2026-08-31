@@ -2,33 +2,12 @@ import { useState } from 'react';
 
 import { AvatarImage } from '#base/components';
 import { useOwnUserFigure, useOwnUserGender, useSystemActions } from '#base/context';
-import { Box, ColorLayer, Icon, NitroIcon, ThemeImage } from '#base/theme';
+import { Border, Box, Icon, NitroIcon, ThemeImage } from '#base/theme';
 
+import { layoutImage } from '../layouts/layoutAssets';
 import { ToolbarMeMenuPixi } from './ToolbarMeMenuPixi';
 import { ToolbarProgressionMenuPixi } from './ToolbarProgressionMenuPixi';
 
-const ICON_SPACING = 15;
-
-/**
- * Pixi port of theme/ToolbarView.tsx + ToolbarView.css. Deliberately skipped (no Pixi
- * equivalent without new filter/tween infrastructure this package doesn't otherwise use,
- * documented rather than silently dropped): the per-icon hover drop-shadow+translate
- * micro-interaction, the collapse's opacity/margin CSS transition (done here as an instant
- * toggle - simply not rendering the three affected icons when collapsed - matching the
- * established Accordion "no animation" precedent), and the outer bar's inset box-shadow
- * highlight/shade lines. `rightSideCollapsed` toggles only the collapse button's own art in
- * DOM too - `.toolbar-right` has no `.collapsed` CSS rule hiding any icons, unlike
- * `.toolbar-left` - preserved here as the same apparent no-op rather than "fixed" to mirror
- * the left side.
- *
- * The circular toolbar avatar diverges from DOM's mechanism, not just its result: DOM renders
- * the full-body `AvatarImage` and crops/zooms to the head via CSS negative margins + a
- * `clip-path: circle(...)` tuned to that render's exact pixel proportions. Reproducing that
- * math exactly isn't practical without reverse-engineering the renderer's internal crop
- * geometry, so this instead asks `useAvatarImageTexture` for a `headOnly` crop directly and
- * masks it to a circle with the same own-child mask technique ScrollViewport.tsx established -
- * same visual intent (a round headshot icon), simpler path to it.
- */
 export const ToolbarView = () => {
     const [ isMeExpanded, setMeExpanded ] = useState(false);
     const [ isProgressionExpanded, setProgressionExpanded ] = useState(false);
@@ -49,146 +28,121 @@ export const ToolbarView = () => {
             {isProgressionExpanded && <ToolbarProgressionMenuPixi />}
             <Box layout={{
                 position: 'absolute', bottom: 0, left: 0, right: 0, width: '100%', height: 54,
-                flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8,
             }}
             >
-                <ColorLayer color="rgba(46, 45, 44, 0.76)" />
-                <ColorLayer
-                    color="rgba(0, 0, 0, 0.3)"
-                    layout={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%', height: 1 }}
-                />
-                <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: ICON_SPACING, height: '100%', paddingRight: ICON_SPACING }}>
-                    <ColorLayer
-                        color="#525252"
-                        layout={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 1, height: '100%' }}
-                    />
-                    <ThemeImage
-                        src={leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png'}
-                        width={14}
-                        height={43}
-                        cursor="pointer"
-                        onPointerTap={() => setLeftSideCollapsed(prev => !prev)}
-                    />
-                    {!leftSideCollapsed && (
-                        <NitroIcon
-                            icon="icon-habbo"
-                            layout={{}}
+                <Border
+                    variant="9"
+                    tintColor="#686661"
+                    layout={{ position: 'absolute', left: -10, right: -10, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 10 }}
+                >
+                    <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
+                        <ThemeImage
+                            src={leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png'}
+                            width={14}
+                            height={43}
+                            cursor="pointer"
+                            onPointerTap={() => setLeftSideCollapsed(prev => !prev)}
                         />
-                    )}
-                    {!leftSideCollapsed && (
+                        {!leftSideCollapsed && (
+                            <ThemeImage src={layoutImage('bottom_bar_logo.png')} />
+                        )}
+                        {!leftSideCollapsed && (
+                            <ThemeImage src={layoutImage('bottom_bar_home.png')} />
+                        )}
+                        {!leftSideCollapsed && (
+                            <ThemeImage
+                                onPointerTap={() => toggleWindow('navigator')}
+                                src={layoutImage('bottom_bar_navigator.png')}
+                            />
+                        )}
+                        {!leftSideCollapsed && (
+                            <ThemeImage
+                                onPointerTap={() => toggleMenu('progression')}
+                                src={layoutImage('bottom_bar_progression.png')}
+                            />
+                        )}
+                        <ThemeImage
+                            onPointerTap={() => toggleWindow('catalog')}
+                            src={layoutImage('bottom_bar_shop.png')}
+                        />
+                        <ThemeImage src={layoutImage('bottom_bar_buildersclub.png')} />
+                        <ThemeImage
+                            onPointerTap={() => toggleWindow('inventory')}
+                            src={layoutImage('bottom_bar_inventory.png')}
+                        />
                         <Box
                             cursor="pointer"
-                            onPointerTap={() => toggleWindow('navigator')}
+                            onPointerTap={() => toggleMenu('me')}
+                            layout={{ width: 45, height: 45, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}
+                        >
+                            <ThemeImage
+                                src={layoutImage('bottom_bar_memenu_bg.png')}
+                                layout={{ position: 'absolute', left: 0, width: 45, height: 45 }}
+                            />
+                            <AvatarImage
+                                figure={ownFigure}
+                                gender={ownGender}
+                                direction={3}
+                                headOnly
+                                layout={{ marginTop: 20, marginLeft: -0.5 }}
+                            />
+                            {/* The head render keeps its own size; the 45x45 box centres it, shifts it up
+                                (the Flash `center -8px` background position) and clips the rest. */}
+                            <ThemeImage
+                                src={layoutImage('bottom_bar_memenu_circle.png')}
+                                layout={{ position: 'absolute', left: 0, width: 45, height: 45 }}
+                            />
+                        </Box>
+                        <ThemeImage src={layoutImage('bottom_bar_wired_menu.png')} />
+                        <ThemeImage src={layoutImage('bottom_bar_camera.png')} />
+                        <Box
+                            cursor="pointer"
+                            onPointerTap={() => toggleWindow('layout_browser')}
+                            layout={{}}
+                        >
+                            <Icon variant="30" />
+                        </Box>
+                        <ThemeImage
+                            name="line"
+                            src={layoutImage('bottom_bar_divider_1px.png')}
+                            layout={{ width: 1, height: 40 }}
+                        />
+                    </Box>
+                    <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
+                        <ThemeImage
+                            name="line"
+                            src={layoutImage('bottom_bar_divider_1px.png')}
+                            layout={{ width: 1, height: 40 }}
+                        />
+                        <Box
+                            cursor="pointer"
+                            onPointerTap={() => toggleWindow('friendlist')}
                             layout={{}}
                         >
                             <NitroIcon
-                                icon="icon-rooms"
+                                icon="icon-friendall"
                                 layout={{}}
                             />
                         </Box>
-                    )}
-                    {!leftSideCollapsed && (
                         <Box
                             cursor="pointer"
-                            onPointerTap={() => toggleMenu('progression')}
+                            onPointerTap={() => toggleWindow('friendlist', { tab: 'search' })}
                             layout={{}}
                         >
                             <NitroIcon
-                                icon="icon-progression"
+                                icon="icon-friendsearch"
                                 layout={{}}
                             />
                         </Box>
-                    )}
-                    <Box
-                        cursor="pointer"
-                        onPointerTap={() => toggleWindow('catalog')}
-                        layout={{}}
-                    >
-                        <NitroIcon
-                            icon="icon-catalog"
-                            layout={{}}
+                        <ThemeImage
+                            src={rightSideCollapsed ? '/assets/flash/toolbar/collapse_right_active.png' : '/assets/flash/toolbar/collapse_right.png'}
+                            width={14}
+                            height={43}
+                            cursor="pointer"
+                            onPointerTap={() => setRightSideCollapsed(prev => !prev)}
                         />
                     </Box>
-                    <NitroIcon
-                        icon="icon-builders-club"
-                        layout={{}}
-                    />
-                    <Box
-                        cursor="pointer"
-                        onPointerTap={() => toggleWindow('inventory')}
-                        layout={{}}
-                    >
-                        <NitroIcon
-                            icon="icon-inventory"
-                            layout={{}}
-                        />
-                    </Box>
-                    <Box
-                        cursor="pointer"
-                        onPointerTap={() => toggleMenu('me')}
-                        layout={{ width: 45, height: 45, justifyContent: 'center', alignItems: 'center' }}
-                    >
-                        <ColorLayer color="#262016" />
-                        <AvatarImage
-                            figure={ownFigure}
-                            gender={ownGender}
-                            direction={3}
-                            headOnly
-                        />
-                        <NitroIcon
-                            icon="icon-me-circle"
-                            layout={{ position: 'absolute', top: 0, left: 0 }}
-                        />
-                    </Box>
-                    <NitroIcon
-                        icon="icon-wired"
-                        layout={{}}
-                    />
-                    <NitroIcon
-                        icon="icon-camera"
-                        layout={{}}
-                    />
-                    <Box
-                        cursor="pointer"
-                        onPointerTap={() => toggleWindow('layout_browser')}
-                        layout={{}}
-                    >
-                        <Icon variant="30" />
-                    </Box>
-                </Box>
-                <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: ICON_SPACING, height: '100%', paddingLeft: ICON_SPACING }}>
-                    <ColorLayer
-                        color="#525252"
-                        layout={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 1, height: '100%' }}
-                    />
-                    <Box
-                        cursor="pointer"
-                        onPointerTap={() => toggleWindow('friendlist')}
-                        layout={{}}
-                    >
-                        <NitroIcon
-                            icon="icon-friendall"
-                            layout={{}}
-                        />
-                    </Box>
-                    <Box
-                        cursor="pointer"
-                        onPointerTap={() => toggleWindow('friendlist', { tab: 'search' })}
-                        layout={{}}
-                    >
-                        <NitroIcon
-                            icon="icon-friendsearch"
-                            layout={{}}
-                        />
-                    </Box>
-                    <ThemeImage
-                        src={rightSideCollapsed ? '/assets/flash/toolbar/collapse_right_active.png' : '/assets/flash/toolbar/collapse_right.png'}
-                        width={14}
-                        height={43}
-                        cursor="pointer"
-                        onPointerTap={() => setRightSideCollapsed(prev => !prev)}
-                    />
-                </Box>
+                </Border>
             </Box>
         </>
     );

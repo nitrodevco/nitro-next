@@ -4,6 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { Box } from './Box';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
+import { ThemeImage } from './ThemeImage';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 export type ScalerVariant = ThemeVariant;
@@ -35,6 +36,13 @@ const SCALER_VARIANTS: ThemeVariants<ScalerVariant> = {
     },
     3: {
         layer: Stretch('scaler-src'),
+        layout: {
+            position: 'absolute',
+            right: 3,
+            bottom: 4,
+            width: 20,
+            height: 20,
+        },
     },
     4: {
         layer: Stretch('scaler-src'),
@@ -58,6 +66,24 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
         });
 
         if (!config || direction === 'none') return null;
+
+        // A plain sprite skin with nothing layered over it is the sprite itself - one node, no Box.
+        if (resolvedLayer?.kind === 'sprite' && !resolvedOverlay) {
+            return (
+                <ThemeImage
+                    ref={ref}
+                    textureKey={resolvedLayer.textureKey}
+                    frame={resolvedLayer.frame}
+                    tint={resolvedTint}
+                    stretch
+                    visible={visible}
+                    zIndex={config.zIndex}
+                    cursor={CURSOR_BY_DIRECTION[direction]}
+                    {...handlers}
+                    layout={{ position: 'absolute', ...config.layout, ...layout }}
+                />
+            );
+        }
 
         // TODO - layer size to fit image
         return (

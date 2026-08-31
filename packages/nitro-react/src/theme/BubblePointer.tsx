@@ -4,6 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { Box } from './Box';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
+import { ThemeImage } from './ThemeImage';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
@@ -80,6 +81,21 @@ export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAt
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
             cascadeKey, variants, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+
+        // A plain sprite skin with nothing layered over it is the sprite itself - one node, no Box.
+        if (resolvedLayer?.kind === 'sprite' && !resolvedOverlay) {
+            return (
+                <ThemeImage
+                    ref={ref}
+                    textureKey={resolvedLayer.textureKey}
+                    frame={resolvedLayer.frame}
+                    tint={resolvedTint}
+                    stretch
+                    {...handlers}
+                    layout={{ ...config.layout, ...layout }}
+                />
+            );
+        }
 
         return (
             <Box

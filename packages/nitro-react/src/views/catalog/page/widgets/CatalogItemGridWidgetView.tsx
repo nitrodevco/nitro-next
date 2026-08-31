@@ -20,7 +20,8 @@ export const CatalogItemGridWidgetView = () => {
             <InfiniteGrid<IPurchasableOffer>
                 items={activePage.offers}
                 getKey={x => x.offerId}
-                itemWidth={55}
+                overrideColumnCount={6}
+                itemWidth={53}
                 itemRender={x => <CatalogItemGridWidgetItemView offer={x} />}
             />
         </Border>

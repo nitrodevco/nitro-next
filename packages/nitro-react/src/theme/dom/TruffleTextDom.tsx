@@ -2,7 +2,7 @@ import { Color, TextDropShadow } from 'pixi.js';
 import { CSSProperties, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { BoxLayout } from '../Box';
-import { colorStringToNumber, drawBufferToCanvas, HabboStyleKey, renderTruffleText } from '../font/truffle';
+import { colorStringToNumber, drawBufferToCanvas, HabboStyleKey, renderTruffleText, renderTruffleTextBlock } from '../font/truffle';
 import { boxLayoutToStyle } from './boxStyle';
 
 export interface TruffleTextDomProps {
@@ -14,6 +14,8 @@ export interface TruffleTextDomProps {
     wordWrap?: boolean;
     wordWrapWidth?: number;
     visible?: boolean;
+    /** Explicit line advance in px for multi-line text (composed per line, like `TruffleTextPixi`). */
+    lineHeight?: number;
     /** Where the rendered text sits inside a box larger than it (`object-position` keywords). */
     objectPosition?: string;
 }
@@ -52,18 +54,28 @@ const replacedBoxSize = (style: CSSProperties, buffer: { width: number; height: 
     return { width: span(style.width, style.left, style.right, buffer.width), height: span(style.height, style.top, style.bottom, buffer.height) };
 };
 
-export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth, visible, objectPosition }: TruffleTextDomProps) => {
+export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth, visible, objectPosition, lineHeight }: TruffleTextDomProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const options = useMemo(() => ({
         wordWrap,
         width: wordWrap ? wordWrapWidth : undefined,
     }), [ wordWrap, wordWrapWidth ]);
 
+    const useBlock = !!lineHeight && !wordWrap && text.includes('\n');
     const buffer = useMemo(() => {
         if (!text?.length) return undefined;
 
         return renderTruffleText(text, habboKey, { ...options, ...(color ? { color: colorStringToNumber(color) } : {}) });
     }, [ text, habboKey, color, options ]);
+
+    // The composed multi-line block (explicit `lineHeight`) - see `renderTruffleTextBlock`.
+    const blockCanvas = useMemo(() => {
+        if (!useBlock || !text?.length) return undefined;
+
+        const shadow = dropShadow ? { angle: dropShadow.angle, distance: dropShadow.distance, alpha: dropShadow.alpha, colorValue: new Color(dropShadow.color).toNumber() } : undefined;
+
+        return renderTruffleTextBlock(text, habboKey, { ...options, ...(color ? { color: colorStringToNumber(color) } : {}) }, lineHeight, shadow);
+    }, [ useBlock, text, habboKey, color, options, lineHeight, dropShadow ]);
 
     const shadowBuffer = useMemo(() => {
         if (!text?.length || !dropShadow) return undefined;
@@ -82,6 +94,12 @@ export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, word
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        if (blockCanvas) {
+            ctx.drawImage(blockCanvas, 0, 0);
+
+            return;
+        }
+
         if (dropShadow && shadowBuffer) {
             const dx = Math.cos(dropShadow.angle) * dropShadow.distance;
             const dy = Math.sin(dropShadow.angle) * dropShadow.distance;
@@ -92,20 +110,21 @@ export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, word
         }
 
         drawBufferToCanvas(canvas, buffer);
-    }, [ buffer, shadowBuffer, dropShadow ]);
+    }, [ buffer, shadowBuffer, dropShadow, blockCanvas ]);
 
     if (!buffer) return null;
 
     const layoutStyle = boxLayoutToStyle(layout);
+    const size = blockCanvas ?? buffer;
 
     return (
         <canvas
             ref={canvasRef}
-            width={buffer.width}
-            height={buffer.height}
+            width={size.width}
+            height={size.height}
             style={{
                 ...layoutStyle,
-                ...replacedBoxSize(layoutStyle, buffer),
+                ...replacedBoxSize(layoutStyle, size),
                 display: visible === false ? 'none' : 'block',
                 flexShrink: 0,
                 maxWidth: 'none',

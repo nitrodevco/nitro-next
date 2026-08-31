@@ -85,6 +85,8 @@ export interface BakedShadow {
     angle: number;
     distance: number;
     alpha: number;
+    /** The shadow colour as a number, for per-line re-rasterisation (`renderTruffleTextBlock`). */
+    colorValue?: number;
 }
 
 /**
@@ -130,6 +132,39 @@ export const bufferToCanvas = (buffer: RenderBuffer, shadow?: BakedShadow): HTML
     } else {
         drawBufferToCanvas(canvas, buffer);
     }
+
+    return canvas;
+};
+
+/**
+ * Renders `text` line by line and stacks the lines at an explicit `lineHeight` advance.
+ * Truffle's own renderer ignores per-call leading (`renderToBuffer` forwards only
+ * color/wordWrap/width/padding), so an explicit line height is composed here instead: each
+ * line rasterised on its own and drawn `lineHeight` apart, shadow included. Only for explicit
+ * newlines - word-wrapped text keeps truffle's own metrics.
+ */
+export const renderTruffleTextBlock = (text: string, habboKey: HabboStyleKey, options: RenderOptions, lineHeight: number, shadow?: Omit<BakedShadow, 'buffer'>): HTMLCanvasElement | undefined => {
+    const lines = text.split('\n');
+    const rendered = lines.map(line => renderTruffleText(line || ' ', habboKey, options));
+
+    if (rendered.some(buffer => !buffer)) return undefined;
+
+    const buffers = rendered as RenderBuffer[];
+    const canvas = document.createElement('canvas');
+
+    canvas.width = Math.max(1, ...buffers.map(buffer => buffer.width));
+    canvas.height = Math.max(1, lineHeight * (lines.length - 1) + (buffers[buffers.length - 1]?.height ?? lineHeight));
+
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) return undefined;
+
+    buffers.forEach((buffer, index) => {
+        const shadowBuffer = shadow?.colorValue !== undefined ? renderTruffleText(lines[index] || ' ', habboKey, { ...options, color: shadow.colorValue }) : undefined;
+        const line = bufferToCanvas(buffer, shadowBuffer && shadow ? { buffer: shadowBuffer, angle: shadow.angle, distance: shadow.distance, alpha: shadow.alpha } : undefined);
+
+        ctx.drawImage(line, 0, index * lineHeight);
+    });
 
     return canvas;
 };
