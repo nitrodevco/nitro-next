@@ -328,17 +328,24 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
         const tick = (ticker: Ticker) => {
             const node = containerRef.current;
 
-            if (!room?.canvas?.master || !node) return;
+            if (!node) return;
 
-            room.update(ticker.lastTime);
+            if (room.canvas?.master) {
+                room.update(ticker.lastTime);
 
-            updateRoomPreview();
+                updateRoomPreview();
 
-            if (mountedMasterRef.current !== room.canvas.master) {
-                node.parent?.removeChild(node);
+                // (Re)parent the room's master canvas under the preview node. The check is against
+                // the master's actual parent, not just the ref - React can remount the node while
+                // the ref still points at the old master.
+                const master = room.canvas.master;
 
-                node.addChild(room.canvas.master);
-                mountedMasterRef.current = room.canvas.master;
+                if (master.parent !== node) {
+                    if (mountedMasterRef.current && mountedMasterRef.current !== master) mountedMasterRef.current.parent?.removeChild(mountedMasterRef.current);
+
+                    node.addChild(master);
+                    mountedMasterRef.current = master;
+                }
             }
 
             const width = Math.floor(node.layout?.computedLayout?.width ?? node.width ?? 0);
@@ -402,6 +409,10 @@ export const useRoomPreviewerPixi = (roomId: number, containerRef: React.RefObje
 
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setRoom(inst);
+
+        return () => {
+            setRoom(undefined);
+        };
     }, [ roomId ]);
 
     return { room, addFloorItemIntoRoom, addWallItemIntoRoom, addAvatarIntoRoom, changeObjectDirection, changeObjectState };
