@@ -1,18 +1,18 @@
 import { CatalogTypeEnum, ICatalogNode, IFurnitureData, IPurchasableOffer } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useCatalogActions, useCatalogSelectors, useFurnitureDataSelector } from '#base/context';
+import { useCatalogActions, useCatalogSelectors, useFurnitureDataSelector, useTranslation } from '#base/context';
 import { useCatalogNavigation, useCatalogOfferActions } from '#base/hooks';
 import { Border, Box, NitroIcon, TextInput } from '#base/theme';
 
 /**
- * Pixi port of views/catalog/navigation/CatalogSearchView.tsx. DOM's `placeholder`/`title`
- * attributes on the input (`t('catalog.search')`/`t('navigator.tooltip.filter.input')`-style
- * hints) have no Pixi `TextInput` equivalent yet (no placeholder support) - dropped rather than
- * built out for this one call site.
+ * Pixi port of views/catalog/navigation/CatalogSearchView.tsx. DOM's `placeholder` hint on the
+ * input carries over via `TextInput`'s own `placeholder`; its `title` tooltip
+ * (`t('navigator.tooltip.filter.input')`) has no Pixi equivalent and is dropped.
  */
 export const CatalogSearchView = () => {
     const [ searchValue, setSearchValue ] = useState('');
+    const t = useTranslation();
     const { floorItems, wallItems } = useFurnitureDataSelector();
     const { catalogType, rootNode, offersToNodes } = useCatalogSelectors();
     const { setSearchResult } = useCatalogActions();
@@ -138,6 +138,7 @@ export const CatalogSearchView = () => {
             <TextInput
                 value={searchValue}
                 onChange={setSearchValue}
+                placeholder={t('catalog.search')}
                 fontSize={10}
                 layout={{ flex: 1, height: 22 }}
             />

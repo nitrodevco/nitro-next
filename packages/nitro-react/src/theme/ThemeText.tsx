@@ -6,7 +6,7 @@ import { GetPixelRatio } from '#base/utils';
 import { BoxLayout } from './Box';
 import { boxLayoutToStyle, getDomTextStyle, TruffleTextDom } from './dom';
 import { TruffleTextPixi } from './font/TruffleTextPixi';
-import { getHabboKey, getPixiTextStyle, getRenderMode, insetStretchAxes, TEXT_DROP_SHADOW, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta } from './utils';
+import { getPixiTextStyle, getRenderMode, insetStretchAxes, resolveHabboKey, TEXT_DROP_SHADOW, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta } from './utils';
 
 export type TextConfig = {
     text: string;
@@ -20,15 +20,6 @@ export type TextConfig = {
     layout?: BoxLayout;
     verticalAlign?: TextVerticalAlign;
 } & ThemeLayoutMeta;
-
-/** A raw `fontFamily`/`fontSize` override means the caller wants something other than the
- *  named style's own truffle preset - falls straight through to native rendering, same as a
- *  style with no `habboKey` at all (see `theme/utils/textStyles.ts`'s `TEXT_STYLES`). */
-const resolveHabboKey = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined) => {
-    if (textOptions?.fontFamily || typeof textOptions?.fontSize === 'number') return undefined;
-
-    return getHabboKey(textStyle ?? 'text-style-regular');
-};
 
 /** `TextStyleOptions.dropShadow` is `boolean | Partial<TextDropShadow>` (Pixi's own native
  *  `pixiText` fills in its defaults internally) - the truffle renderers need a complete config

@@ -108,6 +108,17 @@ export type TextStyleKey = keyof typeof TEXT_STYLES;
 export const getHabboKey = (key: TextStyleKey): HabboStyleKey | undefined =>
     (TEXT_STYLES[key] as { habboKey?: HabboStyleKey }).habboKey;
 
+/** A raw `fontFamily`/`fontSize` override means the caller wants something other than the
+ *  named style's own truffle preset - falls straight through to native rendering, same as a
+ *  style with no `habboKey` at all. Shared by `ThemeText` (which renderer draws the text) and
+ *  `theme/font/textGeometry.ts` (which renderer's metrics place a caret in it), so the two can
+ *  never disagree about which one a given style/options pair resolves to. */
+export const resolveHabboKey = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined): HabboStyleKey | undefined => {
+    if (textOptions?.fontFamily || typeof textOptions?.fontSize === 'number') return undefined;
+
+    return getHabboKey(textStyle ?? 'text-style-regular');
+};
+
 /** Every `habboKey` currently wired into `TEXT_STYLES` - passed to `preloadBitmapFonts`
  *  at boot so all of them are already warm before anything first renders (see that
  *  function's own docblock for why the alternative - loading on first use - risks a

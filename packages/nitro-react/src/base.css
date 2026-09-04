@@ -31,4 +31,13 @@
     .nitro-scroll-hide::-webkit-scrollbar {
         display: none;
     }
+
+    /* DOM render mode's TextInput (theme/TextInput.tsx): `::placeholder` is a pseudo-element
+     * with no inline-style hook, so the component publishes its `placeholderColor` prop as a
+     * CSS variable on the field and this rule applies it. `opacity: 1` undoes Firefox's own
+     * default placeholder fade so the colour lands as given. */
+    .theme-text-input::placeholder {
+        color: var(--theme-text-input-placeholder, #888888);
+        opacity: 1;
+    }
 }

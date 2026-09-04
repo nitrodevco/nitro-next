@@ -1260,6 +1260,9 @@ const emitInput = (ctx: EmitContext, el: Element, parent: ParentBox, indent: str
 
     if (el.vars.max_chars) props.push(`maxLength={${num(el.vars.max_chars)}}`);
     if (bool(el.vars.multiline)) props.push('multiline');
+    // A `<password>` element is an `<input>` that masks its characters - `TextInput`'s
+    // `password` prop (the `<input type="password">` equivalent).
+    if (el.tag === 'password') props.push('password');
 
     const textColor = hexColor(el.vars.text_color);
 

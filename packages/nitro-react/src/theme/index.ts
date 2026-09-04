@@ -28,6 +28,7 @@ export * from './Droplist';
 export * from './DroplistItem';
 export * from './Dropmenu';
 export * from './DropmenuItem';
+export * from './font/textGeometry';
 export * from './font/truffle';
 export * from './font/TruffleTextPixi';
 export * from './Frame';
