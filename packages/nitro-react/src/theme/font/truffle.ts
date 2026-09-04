@@ -31,11 +31,10 @@ let preloadPromise: ReturnType<typeof preloadTruffle> | undefined;
  *  style's calibration is still in flight - anything outside that known set still lazy-loads
  *  normally on first use (one extra fetch, cached thereafter). */
 export const preloadNitroTruffle = (warmStyles: readonly HabboStyleKey[] = []) => {
-    preloadPromise ??= preloadTruffle({ base: TRUFFLE_BASE, styles: null }).then(async (truffle) => {
-        if (warmStyles.length) await truffle.ensureStyles(warmStyles as HabboStyleKey[]);
-
-        return truffle;
-    });
+    // `styles` limits the boot download/decode to the raster chunks these styles resolve to -
+    // `styles: null` would eagerly decode EVERY packed chunk (~47MB of glyph tables) whether a
+    // style is wired into the theme or not.
+    preloadPromise ??= preloadTruffle({ base: TRUFFLE_BASE, styles: warmStyles.length ? (warmStyles as HabboStyleKey[]) : null });
 
     return preloadPromise;
 };

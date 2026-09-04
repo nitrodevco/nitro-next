@@ -16,7 +16,7 @@ export const CatalogNavigationSetItemView = ({ node }: CatalogNavigationSetItemV
     const iconUrl = catalogIconUrl.replace('%name%', node.icon.toString());
 
     return (
-        <Box layout={{ flexDirection: 'column' }}>
+        <>
             <Box
                 cursor="pointer"
                 onPointerTap={() => activateNode(node)}
@@ -47,6 +47,6 @@ export const CatalogNavigationSetItemView = ({ node }: CatalogNavigationSetItemV
                 </Box>
             </Box>
             {node.isOpen && node.children.length > 0 && <CatalogNavigationSetView node={node} />}
-        </Box>
+        </>
     );
 };

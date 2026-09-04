@@ -8,7 +8,11 @@ export class TexturePool {
     private static _texturePool: Record<number, Record<number, RenderTexture[]>> = {};
     private static _totalTextures: number = 0;
     private static _runCount: number = 0;
-    private static _maxIdle: number = 3600;
+    // Idle age is measured in cleanup RUNS, and a run happens every `_checkInterval`
+    // frames (~10s at 60fps) - so 6 runs destroys a pooled texture after ~1 minute unused.
+    // (The previous 3600 was meant as frames but counted runs: ~10 HOURS, i.e. pooled
+    // render textures were effectively never freed for the whole session.)
+    private static _maxIdle: number = 6;
     private static _checkInterval: number = 600;
     private static _framesSinceCheck: number = 0;
     private static _tickerFn: (() => void) | null = null;
