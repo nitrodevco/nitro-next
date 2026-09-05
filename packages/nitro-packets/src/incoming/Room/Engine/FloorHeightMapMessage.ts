@@ -8,6 +8,9 @@ export type FloorHeightMapMessageType = {
     fixedWallsHeight: number;
     modelData: string;
     areaHideData: IAreaHide[];
+    cameraInitX: number;
+    cameraInitY: number;
+    cameraInitZ: number;
 };
 
 export class FloorHeightMapMessage implements IIncomingPacket<FloorHeightMapMessageType> {
@@ -17,6 +20,9 @@ export class FloorHeightMapMessage implements IIncomingPacket<FloorHeightMapMess
             fixedWallsHeight: wrapper.readInt(),
             modelData: wrapper.readString(),
             areaHideData: AreaHideParser(wrapper),
+            cameraInitX: wrapper.readInt(),
+            cameraInitY: wrapper.readInt(),
+            cameraInitZ: wrapper.readFloat(),
         };
 
         return packet;

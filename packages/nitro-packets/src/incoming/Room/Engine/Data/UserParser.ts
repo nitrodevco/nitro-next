@@ -16,7 +16,8 @@ export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
         y: wrapper.readInt(),
         z: parseFloat(wrapper.readString()),
         bodyRotation: wrapper.readInt(),
-        avatarType: wrapper.readInt(),
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+        avatarType: wrapper.readInt() as RoomObjectUserType,
     };
 
     switch (avatar.avatarType) {
@@ -29,6 +30,7 @@ export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
                 swimFigure: wrapper.readString(),
                 activityPoints: wrapper.readInt(),
                 isModerator: wrapper.readBoolean(),
+                badgesRank: wrapper.readInt(),
             };
 
             if (data.swimFigure !== '') avatar.figure = convertSwimFigure(data.swimFigure, avatar.figure, data.gender);

@@ -6,4 +6,5 @@ export interface IRoomAvatarUser {
     swimFigure: string;
     activityPoints: number;
     isModerator: boolean;
+    badgesRank: number;
 }
