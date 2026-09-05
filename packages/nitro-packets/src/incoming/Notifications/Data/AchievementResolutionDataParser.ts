@@ -1,12 +1,6 @@
 import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export interface IAchievementResolutionData {
-    achievementId: number;
-    level: number;
-    badgeId: string;
-    requiredLevel: number;
-    state: number;
-}
+import { IAchievementResolutionData } from './IAchievementResolutionData';
 
 export const AchievementResolutionDataParser = (wrapper: IMessageDataWrapper): IAchievementResolutionData => {
     return {
