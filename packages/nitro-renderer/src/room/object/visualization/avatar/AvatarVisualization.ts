@@ -177,6 +177,8 @@ export class AvatarVisualization
 
                 otherUpdate = true;
 
+                this._updatesUntilFrameUpdate = 0;
+
                 const sprite = this.getSprite(AvatarVisualization.AVATAR_LAYER_ID);
 
                 if (sprite && this._avatarImage && this._avatarImage.isPlaceholder()) {

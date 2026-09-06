@@ -68,6 +68,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _noSpriteVisibilityChecking: boolean = false;
     private _usesExclusionRectangles: boolean = false;
     private _usesMask: boolean = true;
+    private _backgroundVisible: boolean = true;
     private _zDirty: boolean = false;
 
     private static readonly _zComparator = (a: SortableSprite, b: SortableSprite): number => b.z - a.z;
@@ -169,6 +170,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._background.tint = 0;
             this._background.width = width;
             this._background.height = height;
+            this._background.visible = this._backgroundVisible;
 
             if (this._master) this._master.addChildAt(this._background, 0);
         } else {
@@ -210,6 +212,12 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this._width = width;
         this._height = height;
+    }
+
+    public setBackgroundVisible(flag: boolean): void {
+        this._backgroundVisible = flag;
+
+        if (this._background) this._background.visible = flag;
     }
 
     public setMask(flag: boolean): void {

@@ -18,6 +18,7 @@ export interface InfiniteGridProps<T> {
     overrideColumnCount?: number;
     itemRender: (item: T, index?: number) => ReactElement;
     getKey: (item: T) => Key;
+    scrollResetKey?: unknown;
 }
 
 /**
@@ -39,7 +40,7 @@ export interface InfiniteGridProps<T> {
 // The trailing comma below disambiguates a generic arrow function's `<T,>` from a JSX opening
 // tag in a .tsx file.
 // eslint-disable-next-line @stylistic/comma-dangle
-const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey }: InfiniteGridProps<T>) => {
+const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey, scrollResetKey }: InfiniteGridProps<T>) => {
     const [ viewportNode, setViewportNode ] = useState<HTMLDivElement | null>(null);
     const [ viewportWidth, setViewportWidth ] = useState(0);
 
@@ -74,6 +75,7 @@ const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, i
         <Box layout={{ flexDirection: 'row', flex: 1, gap: 2, padding: 4 }}>
             <ScrollArea
                 variant="3"
+                scrollResetKey={scrollResetKey}
                 layout={{ flex: 1 }}
             >
                 <div
@@ -105,7 +107,7 @@ const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, i
  * version's ~10ms debounce that no separate debounce is needed on top of it.
  */
 // eslint-disable-next-line @stylistic/comma-dangle -- see InfiniteGridDom's comment above.
-const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey }: InfiniteGridProps<T>) => {
+const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey, scrollResetKey }: InfiniteGridProps<T>) => {
     const [ viewportNode, setViewportNode ] = useState<PixiContainer | null>(null);
     const [ viewportWidth, setViewportWidth ] = useState(0);
     const [ viewportHeight, setViewportHeight ] = useState(0);
@@ -130,6 +132,12 @@ const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, 
     const rowCount = Math.ceil(items.length / (columnCount || 1)) || 1;
 
     const scroll = useScrollController({ orientation: 'vertical' });
+    const scrollTo = scroll.scrollTo;
+
+    useEffect(() => {
+        scrollTo(0);
+    }, [ scrollResetKey, scrollTo ]);
+
     const { virtualItems, totalSize, measureRow } = useRowVirtualizer({
         count: rowCount,
         estimateSize: itemWidth,
@@ -140,7 +148,7 @@ const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, 
     });
 
     return (
-        <Box layout={{ flexDirection: 'row', flex: 1, gap: 2, padding: 4 }}>
+        <Box layout={{ flexDirection: 'row', flex: 1, gap: 5 }}>
             <ScrollViewport
                 viewportRef={(node) => {
                     scroll.viewportRef(node);

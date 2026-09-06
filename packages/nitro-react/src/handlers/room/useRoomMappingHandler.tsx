@@ -1,4 +1,4 @@
-import { RoomGeometryScaleType, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType, RoomZoomEvent, SpecialRoomEffectType, Vector3d } from '@nitrodevco/nitro-api';
 import { FloorHeightMapMessage, HeightMapMessage, HeightMapMessageType, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from '@nitrodevco/nitro-packets';
 import { LegacyWallGeometry, RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
 import { useRef } from 'react';
@@ -187,6 +187,7 @@ export const useRoomMappingHandler = () => {
         if (!room) return;
 
         const { mapData, wallGeometry } = parseMapData(data.modelData, data.fixedWallsHeight);
+        const cameraInitPosition = new Vector3d(data.cameraInitX, data.cameraInitY, data.cameraInitZ);
 
         room.applyRoomMap(mapData);
         room.setLegacyGeometry(wallGeometry);

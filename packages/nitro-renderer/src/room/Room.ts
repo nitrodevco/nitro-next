@@ -362,8 +362,10 @@ export class Room implements IRoom {
         rectangle.x += screenPoint.x;
         rectangle.y += screenPoint.y;
 
-        rectangle.x += (Math.round(canvas.width / 2) + canvas.screenOffsetX);
-        rectangle.y += (Math.round(canvas.height / 2) + canvas.screenOffsetY);
+        // The sprite canvas draws at `screenOffset + (point + canvasSize / 2) * scale` - the
+        // half-size centring lives inside the scaled display, so it scales too.
+        rectangle.x += ((canvas.width >> 1) * canvas.scale) + canvas.screenOffsetX;
+        rectangle.y += ((canvas.height >> 1) * canvas.scale) + canvas.screenOffsetY;
 
         return rectangle;
     }
@@ -1351,8 +1353,8 @@ export class Room implements IRoom {
         screenPoint.x = screenPoint.x * this._canvas.scale;
         screenPoint.y = screenPoint.y * this._canvas.scale;
 
-        screenPoint.x += this._canvas.width / 2 + this._canvas.screenOffsetX;
-        screenPoint.y += this._canvas.height / 2 + this._canvas.screenOffsetY;
+        screenPoint.x += ((this._canvas.width >> 1) * this._canvas.scale) + this._canvas.screenOffsetX;
+        screenPoint.y += ((this._canvas.height >> 1) * this._canvas.scale) + this._canvas.screenOffsetY;
 
         screenPoint.x = Math.round(screenPoint.x);
         screenPoint.y = Math.round(screenPoint.y);

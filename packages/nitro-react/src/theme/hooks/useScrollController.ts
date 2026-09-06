@@ -18,6 +18,8 @@ export interface ScrollController {
     onThumbPointerDown: (event: FederatedPointerEvent) => void;
     stepBackward: () => void;
     stepForward: () => void;
+    /** Jumps to an absolute offset (clamped to the scrollable range); `scrollTo(0)` is "back to the start". */
+    scrollTo: (offset: number) => void;
 }
 
 const DEFAULT_STEP = 24;
@@ -202,6 +204,15 @@ export const useScrollController = ({
     const stepBackward = () => setScrollOffset(clamp(scrollOffsetRef.current - step, 0, metricsRef.current.scrollMax));
     const stepForward = () => setScrollOffset(clamp(scrollOffsetRef.current + step, 0, metricsRef.current.scrollMax));
 
+    const scrollTo = useCallback((offset: number) => {
+        const next = clamp(offset, 0, metricsRef.current.scrollMax);
+
+        // Written through to the ref as well so a wheel/step in the same frame builds on the new
+        // position rather than the one the effect hasn't synced yet.
+        scrollOffsetRef.current = next;
+        setScrollOffset(next);
+    }, []);
+
     return {
         viewportRef: setViewportNode,
         contentRef: setContentNode,
@@ -217,5 +228,6 @@ export const useScrollController = ({
         onThumbPointerDown,
         stepBackward,
         stepForward,
+        scrollTo,
     };
 };

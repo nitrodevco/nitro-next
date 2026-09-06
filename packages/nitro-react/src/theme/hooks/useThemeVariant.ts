@@ -20,9 +20,10 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
 
     const resolvedLayer = statesConfig.states ? resolveByState(statesConfig.states, state, selected) : layerConfig.layer;
     const resolvedOverlay = statesConfig.overlays ? resolveByState(statesConfig.overlays, state, selected) : layerConfig.overlay;
+    const resolvedShadow = config.dropShadow;
     const resolvedTint = tintColor ?? config.tintColor;
     const resolvedTextStyle = textStyle ?? config.textStyle;
     const resolvedTextColor = textColor ?? config.textColor;
 
-    return { resolvedVariant, ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor };
+    return { resolvedVariant, ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedShadow, resolvedTint, resolvedTextStyle, resolvedTextColor };
 };

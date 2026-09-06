@@ -8,6 +8,7 @@ export interface IRoomRenderingCanvas {
     dispose(): void;
     initialize(width: number, height: number): void;
     setMask(flag: boolean): void;
+    setBackgroundVisible(flag: boolean): void;
     setScale(scale: number, point?: Point, offsetPoint?: Point): void;
     render(time: number, update?: boolean): void;
     update(): void;

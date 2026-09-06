@@ -80,6 +80,7 @@ export type ThemeResult<T extends AnyThemeVariant = AnyThemeVariant> = {
     handlers: InteractionHandlers;
     resolvedLayer: BackgroundLayerConfig | undefined;
     resolvedOverlay: BackgroundLayerConfig | undefined;
+    resolvedShadow: DropShadowConfig | undefined;
     resolvedTint: string | undefined;
     resolvedTextStyle: TextStyleKey | undefined;
     resolvedTextColor: string | undefined;

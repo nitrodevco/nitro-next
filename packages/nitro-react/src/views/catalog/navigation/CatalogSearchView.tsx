@@ -139,7 +139,7 @@ export const CatalogSearchView = () => {
                 value={searchValue}
                 onChange={setSearchValue}
                 fontSize={10}
-                layout={{ flex: 1, height: 22 }}
+                layout={{ flex: 1, height: 22, width: '100%' }}
             />
             <Box
                 cursor="pointer"

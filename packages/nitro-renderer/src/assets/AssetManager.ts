@@ -103,16 +103,11 @@ export class AssetManager implements IAssetManager {
                     break;
                 }
                 case 'gif': {
-                    // AnimatedGIF paints its frames into its canvas texture lazily, from the
-                    // sprite's own `onRender` hook - which never fires here because only the
-                    // texture is kept and the sprite is discarded, so the stored texture stayed
-                    // a blank canvas (catalog header banners rendered as nothing). Paint the
-                    // first frame explicitly, copy it into a standalone texture, and free the
-                    // decoder (its `destroy(true)` releases the per-frame ImageData buffers).
-                    // The trade: gifs render as their first frame, not animated.
                     const animatedGif = AnimatedGIF.fromBuffer(responseData, { autoPlay: false });
+                    const paintable = animatedGif as unknown as { dirty: boolean; updateFrame(): void };
 
-                    (animatedGif as unknown as { updateFrame(): void }).updateFrame();
+                    paintable.dirty = true;
+                    paintable.updateFrame();
 
                     const source = animatedGif.texture.source.resource as HTMLCanvasElement;
                     const canvas = document.createElement('canvas');

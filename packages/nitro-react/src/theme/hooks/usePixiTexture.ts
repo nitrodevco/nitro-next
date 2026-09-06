@@ -1,5 +1,5 @@
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
-import { Rectangle, Texture } from 'pixi.js';
+import { Assets, Rectangle, Texture } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 import { SpriteFrame } from '../utils/spriteFrame';
@@ -91,6 +91,23 @@ const loadTexture = (url: string): Promise<Texture | undefined> => {
 
     const promise = (async () => {
         let texture = GetAssetManager().getTexture(url);
+
+        if (!texture && (url.startsWith('data:') || url.startsWith('blob:'))) {
+            // `AssetManager.downloadAsset` routes by file extension, which a data/blob URL
+            // doesn't have (a generated thumbnail, an extracted render) - Pixi's own loader
+            // detects those by mime type instead.
+            try {
+                texture = await Assets.load<Texture>(url);
+
+                if (texture) GetAssetManager().setTexture(url, texture);
+            } catch {
+                texture = undefined;
+            }
+
+            if (!texture) textureCache.delete(url);
+
+            return texture;
+        }
 
         if (!texture) {
             await GetAssetManager().downloadAsset(url);

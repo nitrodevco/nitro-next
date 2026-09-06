@@ -8,6 +8,7 @@ export class AvatarAssetDownloadLibrary implements IAvatarAssetDownloadLibrary {
     private _revision: number;
     private _assetUrl: string;
     private _onDownloaded: (library: IAvatarAssetDownloadLibrary) => void;
+    private _download: Promise<boolean> | undefined;
 
     constructor(libraryName: string, revision: number, assetUrl: string, onDownloaded: (library: IAvatarAssetDownloadLibrary) => void) {
         this._libraryName = libraryName;
@@ -22,39 +23,45 @@ export class AvatarAssetDownloadLibrary implements IAvatarAssetDownloadLibrary {
     }
 
     public downloadAsset(): void {
-        if (this._state === AvatarAssetDownloadStatus.Loading || this._state === AvatarAssetDownloadStatus.Loaded) return;
-
-        const asset = GetAssetManager().getCollection(this._libraryName);
-
-        if (asset) return;
-
-        this._state = AvatarAssetDownloadStatus.Loading;
-
-        const library = this as unknown as IAvatarAssetDownloadLibrary;
-
-        GetAssetManager().downloadAsset(this._assetUrl).then((flag) => {
-            if (!flag) return;
-
-            this._state = AvatarAssetDownloadStatus.Loaded;
-
-            void this._onDownloaded(library);
-        }).catch(err => NitroLogger.error(err));
+        void this.download().catch(err => NitroLogger.error(err));
     }
 
     public async downloadAssetAsync(): Promise<void> {
-        if (this._state === AvatarAssetDownloadStatus.Loading || this._state === AvatarAssetDownloadStatus.Loaded) return;
+        await this.download();
+    }
 
-        const asset = GetAssetManager().getCollection(this._libraryName);
+    private download(): Promise<boolean> {
+        if (this._state === AvatarAssetDownloadStatus.Loaded) return Promise.resolve(true);
 
-        if (!asset) {
-            this._state = AvatarAssetDownloadStatus.Loading;
+        if (this._download) return this._download;
 
-            if (!await GetAssetManager().downloadAsset(this._assetUrl)) return;
+        if (GetAssetManager().getCollection(this._libraryName)) {
+            this._state = AvatarAssetDownloadStatus.Loaded;
+
+            return Promise.resolve(true);
         }
 
-        this._state = AvatarAssetDownloadStatus.Loaded;
+        this._state = AvatarAssetDownloadStatus.Loading;
 
-        void this._onDownloaded(this);
+        this._download = GetAssetManager().downloadAsset(this._assetUrl).then((flag) => {
+            if (!flag) {
+                this._state = AvatarAssetDownloadStatus.NotLoaded;
+
+                return false;
+            }
+
+            this._state = AvatarAssetDownloadStatus.Loaded;
+
+            void this._onDownloaded(this);
+
+            return true;
+        }).finally(() => {
+            this._download = undefined;
+
+            if (this._state === AvatarAssetDownloadStatus.Loading) this._state = AvatarAssetDownloadStatus.NotLoaded;
+        });
+
+        return this._download;
     }
 
     public get libraryName(): string {

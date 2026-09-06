@@ -13,12 +13,12 @@ const TAB_CONTENT_VARIANTS: ThemeVariants<TabContentVariant> = {
     // default
     0: {
         layer: NineSlice('border-0-default-src', 6, 6, 6, 6),
-        layout: { padding: 6 },
+        layout: { padding: 6, marginTop: 2 },
     },
     // black
     1: {
         layer: NineSlice('border-1-default-src', 6, 6, 6, 6),
-        layout: { padding: 6 },
+        layout: { padding: 6, marginTop: 2 },
     },
     // white
     2: {

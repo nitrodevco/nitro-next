@@ -14,6 +14,8 @@ export interface DomScrollController {
     onThumbPointerDown: (event: ReactPointerEvent) => void;
     stepBackward: () => void;
     stepForward: () => void;
+    /** Jumps to an absolute offset (the browser clamps it); `scrollTo(0)` is "back to the start". */
+    scrollTo: (offset: number) => void;
 }
 
 const DEFAULT_STEP = 24;
@@ -221,6 +223,14 @@ export const useDomScrollController = ({
         else viewportNode.scrollLeft += step;
     };
 
+    const scrollTo = useCallback((offset: number) => {
+        if (!viewportNode) return;
+
+        // eslint-disable-next-line react-hooks/immutability
+        if (isVertical) viewportNode.scrollTop = offset;
+        else viewportNode.scrollLeft = offset;
+    }, [ viewportNode, isVertical ]);
+
     return {
         viewportRef: setViewportNode,
         trackRef: setTrackNode,
@@ -233,5 +243,6 @@ export const useDomScrollController = ({
         onThumbPointerDown,
         stepBackward,
         stepForward,
+        scrollTo,
     };
 };

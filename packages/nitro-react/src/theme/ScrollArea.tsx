@@ -1,5 +1,5 @@
 import { Container as PixiContainer, FederatedPointerEvent, Graphics as PixiGraphics } from 'pixi.js';
-import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes, useState } from 'react';
+import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes, useEffect, useState } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { boxLayoutToStyle } from './dom';
@@ -20,6 +20,8 @@ export interface ScrollAreaProps {
     reachThreshold?: number;
     onReachStart?: () => void;
     onReachEnd?: () => void;
+    /** Scrolls back to the start whenever this value changes - pass whatever identifies the content (a tab, a category, a page). */
+    scrollResetKey?: unknown;
     layout?: BoxLayout;
     viewportLayout?: BoxLayout;
     contentLayout?: BoxLayout;
@@ -36,7 +38,7 @@ export interface ScrollAreaProps {
  */
 const ScrollAreaPixi = forwardRef<PixiContainer, ScrollAreaProps>(
     (
-        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, layout, viewportLayout, contentLayout, children },
+        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, scrollResetKey, layout, viewportLayout, contentLayout, children },
         ref,
     ) => {
         const showVertical = orientation === 'vertical' || orientation === 'both';
@@ -63,6 +65,14 @@ const ScrollAreaPixi = forwardRef<PixiContainer, ScrollAreaProps>(
             onReachStart: isBoth ? undefined : onReachStart,
             onReachEnd: isBoth ? undefined : onReachEnd,
         });
+
+        const verticalScrollTo = vertical.scrollTo;
+        const horizontalScrollTo = horizontal.scrollTo;
+
+        useEffect(() => {
+            verticalScrollTo(0);
+            horizontalScrollTo(0);
+        }, [ scrollResetKey, verticalScrollTo, horizontalScrollTo ]);
 
         // Only used by the 'both' branch below - kept unconditional since hooks can't be
         // called conditionally.
@@ -181,7 +191,7 @@ ScrollAreaPixi.displayName = 'ScrollAreaPixi';
  */
 const ScrollAreaDom = forwardRef<PixiContainer, ScrollAreaProps>(
     (
-        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, layout, viewportLayout, contentLayout, children },
+        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, scrollResetKey, layout, viewportLayout, contentLayout, children },
         ref,
     ) => {
         const showVertical = orientation === 'vertical' || orientation === 'both';
@@ -204,6 +214,14 @@ const ScrollAreaDom = forwardRef<PixiContainer, ScrollAreaProps>(
             onReachStart: isBoth ? undefined : onReachStart,
             onReachEnd: isBoth ? undefined : onReachEnd,
         });
+
+        const verticalScrollTo = vertical.scrollTo;
+        const horizontalScrollTo = horizontal.scrollTo;
+
+        useEffect(() => {
+            verticalScrollTo(0);
+            horizontalScrollTo(0);
+        }, [ scrollResetKey, verticalScrollTo, horizontalScrollTo ]);
 
         const resolvedContentLayout: BoxLayout = contentLayout ?? { position: 'relative', width: '100%', flexDirection: 'column' };
 

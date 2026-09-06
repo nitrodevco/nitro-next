@@ -33,4 +33,4 @@ public/ui-config*
 public/config/*.json
 **/scripts/binaryData
 **/scripts/images
-**/scripts/scripts/*
+**/scripts/**/*

@@ -15,7 +15,7 @@ export const CatalogItemGridWidgetView = () => {
         <Border
             variant="6"
             blend={0.5}
-            layout={{ width: '100%', height: '100%' }}
+            layout={{ width: '100%', height: '100%', padding: 4 }}
         >
             <InfiniteGrid<IPurchasableOffer>
                 items={activePage.offers}
