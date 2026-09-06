@@ -14,10 +14,10 @@ import {
     RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
-import { ImageLike, Ticker, UPDATE_PRIORITY } from 'pixi.js';
+import { ImageLike, Texture, Ticker, UPDATE_PRIORITY } from 'pixi.js';
 
 import { PetFigureData } from '#renderer/session';
-import { GetTicker, NumberBank } from '#renderer/utils';
+import { GetTicker, NumberBank, TextureUtils } from '#renderer/utils';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { ObjectDataUpdateMessage } from './messages';
@@ -123,6 +123,29 @@ export class RoomEngine implements IRoomEngine {
         frameCount: number = -1,
         posture: string = '',
     ): Promise<ImageLike | undefined> {
+        const texture = await this.getGenericRoomObjectTexture(type, value, direction, scale, listener, extras, objectData, state, frameCount, posture);
+
+        if (!texture) return undefined;
+
+        const image = await TextureUtils.generateImage(texture);
+
+        texture.destroy(true);
+
+        return image;
+    }
+
+    public async getGenericRoomObjectTexture(
+        type: string,
+        value: string,
+        direction: IVector3D,
+        scale: RoomGeometryScaleType,
+        listener: IGetImageListener | undefined = undefined,
+        extras: number = NaN,
+        objectData: IObjectData | undefined = undefined,
+        state: number = -1,
+        frameCount: number = -1,
+        posture: string = '',
+    ): Promise<Texture | undefined> {
         const room = this.getTemporaryRoom();
 
         if (!room) return undefined;
@@ -206,7 +229,7 @@ export class RoomEngine implements IRoomEngine {
             }
         }
 
-        const image = await roomObject.visualization.getImage();
+        const texture = roomObject.visualization.getRenderTexture();
 
         if (!roomObject.isReady && listener) {
             let imageListeners = this._imageListeners[objectId];
@@ -228,7 +251,29 @@ export class RoomEngine implements IRoomEngine {
 
         geometry.dispose();
 
-        return image;
+        return texture;
+    }
+
+    /** Delivers a finished render to a listener in the form it asked for - texture (owned by it) or read-back image. */
+    private async notifyImageListener(listener: IGetImageListener, texture: Texture | undefined): Promise<void> {
+        if (!texture) {
+            listener.imageFailed();
+
+            return;
+        }
+
+        if (listener.textureReady) {
+            listener.textureReady(texture);
+
+            return;
+        }
+
+        const image = await TextureUtils.generateImage(texture);
+
+        texture.destroy(true);
+
+        if (image) listener.imageReady(image);
+        else listener.imageFailed();
     }
 
     public initalizeTemporaryObjectsByType(type: string, valid: boolean): void {
@@ -271,18 +316,10 @@ export class RoomEngine implements IRoomEngine {
             if (imageListeners) {
                 delete this._imageListeners[roomObject.id];
 
-                const notify = async () => {
-                    const image = await roomObject.visualization.getImage();
-
-                    for (const listener of imageListeners) {
-                        if (!listener) continue;
-
-                        if (image) listener.imageReady(image);
-                        else listener.imageFailed();
-                    }
-                };
-
-                void notify();
+                // Each listener gets its own render: a texture listener takes ownership of it.
+                for (const listener of imageListeners) {
+                    if (listener) void this.notifyImageListener(listener, roomObject.visualization.getRenderTexture());
+                }
             }
         }
 

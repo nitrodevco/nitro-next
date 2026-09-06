@@ -1363,11 +1363,18 @@ export class Room implements IRoom {
     }
 
     public async getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined> {
+        const args = this.getRoomObjectImageArgs(objectId, category);
+
+        if (!args) return undefined;
+
+        return await GetRoomEngine().getGenericRoomObjectImage(args.type, args.value, direction, scale, undefined, args.extras, args.data);
+    }
+
+    private getRoomObjectImageArgs(objectId: number, category: RoomObjectCategoryEnum): { type: string; value: string; extras: number | undefined; data: IObjectData | undefined } | undefined {
         const roomObject = this.getRoomObject(objectId, category);
 
         if (!roomObject) return undefined;
 
-        const id = roomObject.id;
         const type: string = roomObject.type;
 
         let value: string = '';
@@ -1396,10 +1403,18 @@ export class Room implements IRoom {
             }
         }
 
-        return await GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, undefined, extras, data);
+        return { type, value, extras, data };
     }
 
     public async getRoomObjectPetImage(typeId: number, paletteId: number, color: number, direction: IVector3D, scale: RoomGeometryScaleType, headOnly: boolean = false, customParts: IPetCustomPart[] = [], posture: string | undefined = undefined): Promise<ImageLike | undefined> {
+        const args = this.getRoomObjectPetImageArgs(typeId, paletteId, color, headOnly, customParts);
+
+        if (!args) return undefined;
+
+        return await GetRoomEngine().getGenericRoomObjectImage(args.type, args.value, direction, scale, undefined, 0, undefined, 0, 0, posture);
+    }
+
+    private getRoomObjectPetImageArgs(typeId: number, paletteId: number, color: number, headOnly: boolean, customParts: IPetCustomPart[]): { type: string; value: string } | undefined {
         const type = GetRoomContentLoader().getPetNameForType(typeId);
 
         if (!type) return undefined;
@@ -1414,7 +1429,7 @@ export class Room implements IRoom {
             for (const part of customParts) value = `${value} ${part.layerId} ${part.partId} ${part.paletteId}`;
         }
 
-        return await GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, undefined, 0, undefined, 0, 0, posture);
+        return { type, value };
     }
 
     public async setRoomOverlayIconSprite(objectId: number, category: RoomObjectCategoryEnum, realRoomObject: boolean, extra: string = '', posture: string = ''): Promise<void> {
@@ -1422,10 +1437,14 @@ export class Room implements IRoom {
         let type: string | undefined = undefined;
         let colorIndex = 0;
 
-        let image: ImageLike | undefined = undefined;
+        // The overlay icon is a sprite in this canvas: render straight to a texture, never through a base64 `<img>`.
+        const engine = GetRoomEngine();
+        let texture: Texture | undefined = undefined;
 
         if (realRoomObject) {
-            image = await this.getRoomObjectImage(objectId, category, new Vector3d(), RoomGeometryScaleType.Icon);
+            const args = this.getRoomObjectImageArgs(objectId, category);
+
+            if (args) texture = await engine.getGenericRoomObjectTexture(args.type, args.value, new Vector3d(), RoomGeometryScaleType.Icon, undefined, args.extras, args.data);
         } else {
             if (category === RoomObjectCategoryEnum.Floor) {
                 type = roomContentLoader.getFurnitureFloorNameForTypeId(objectId);
@@ -1440,20 +1459,21 @@ export class Room implements IRoom {
 
                 if (type === RoomObjectUserTypeName.Pet) {
                     const petFigureData = new PetFigureData(extra);
+                    const args = this.getRoomObjectPetImageArgs(petFigureData.typeId, petFigureData.paletteId, petFigureData.color, true, petFigureData.customParts);
 
-                    image = await this.getRoomObjectPetImage(petFigureData.typeId, petFigureData.paletteId, petFigureData.color, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, true, petFigureData.customParts, posture);
+                    if (args) texture = await engine.getGenericRoomObjectTexture(args.type, args.value, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, undefined, 0, undefined, 0, 0, posture);
                 } else {
-                    image = await GetRoomEngine().getGenericRoomObjectImage(type!, extra, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, undefined, 0, undefined, 0, 0, posture);
+                    texture = await engine.getGenericRoomObjectTexture(type!, extra, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, undefined, 0, undefined, 0, 0, posture);
                 }
             } else {
-                image = await GetRoomEngine().getGenericRoomObjectImage(type!, colorIndex.toString(), new Vector3d(), RoomGeometryScaleType.Icon, undefined, 0, undefined, 0, 0, posture);
+                texture = await engine.getGenericRoomObjectTexture(type!, colorIndex.toString(), new Vector3d(), RoomGeometryScaleType.Icon, undefined, 0, undefined, 0, 0, posture);
             }
         }
 
-        if (!image) return;
+        if (!texture) return;
 
         this.removeRoomOverlayIconSprite();
-        this.addRoomOverlayIconSprite(image, Room.OVERLAY_ICON_SPRITE);
+        this.addRoomOverlayIconSprite(texture, Room.OVERLAY_ICON_SPRITE);
     }
 
     public setRoomOverlayIconSpriteVisibility(flag: boolean): void {
@@ -1470,6 +1490,8 @@ export class Room implements IRoom {
         if (!sprite) return;
 
         sprite.parent?.removeChild(sprite);
+        // The icon's render texture belongs to this sprite alone.
+        sprite.destroy({ texture: true, textureSource: true });
     }
 
     public getGeometry(): IRoomGeometry | undefined {
@@ -1600,14 +1622,16 @@ export class Room implements IRoom {
         return new Vector3d(location.x, location.y, z);
     }
 
-    private addRoomOverlayIconSprite(image: ImageLike | undefined, label: string): void {
-        if (!image) return;
+    private addRoomOverlayIconSprite(texture: Texture | undefined, label: string): void {
+        if (!texture) return;
 
         let sprite = this.getRoomOverlayIconSprite();
 
-        if (sprite) return;
+        if (sprite) {
+            texture.destroy(true);
 
-        const texture = Texture.from(image);
+            return;
+        }
 
         sprite = new Sprite(texture);
 

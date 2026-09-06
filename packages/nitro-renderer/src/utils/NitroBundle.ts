@@ -1,6 +1,8 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import type JSZip from 'jszip';
-import { Assets, Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
+
+import { TextureUtils } from './TextureUtils';
 
 export class NitroBundle {
     private static TEXT_DECODER: TextDecoder = new TextDecoder('utf-8');
@@ -21,9 +23,7 @@ export class NitroBundle {
                         break;
                     }
                     case 'png': {
-                        const data = await file.async('base64');
-
-                        bundle.textures[name] = await Assets.load<Texture>(`data:image/png;base64,${data}`);
+                        bundle.textures[name] = await TextureUtils.textureFromEncodedBytes(await file.async('uint8array'), 'image/png', name);
                         break;
                     }
                 }

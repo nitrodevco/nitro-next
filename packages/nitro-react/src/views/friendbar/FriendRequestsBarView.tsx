@@ -5,15 +5,21 @@ import { useEffect, useState } from 'react';
 
 import { useWebSocketContext } from '#base/context';
 import { useFriendRequestsSelector, useUserMessengerActions } from '#base/context/user';
+import { getRenderMode, useAvatarImageTexture } from '#base/theme';
 import { FriendRequestsTabLayout } from '#base/views/layouts/friendbar/view/tabs/FriendRequestsTab/FriendRequestsTabLayout';
 import { FriendRequestsTabLayoutHeaderItem } from '#base/views/layouts/friendbar/view/tabs/FriendRequestsTab/FriendRequestsTabLayoutHeaderItem';
 import { FriendRequestsTabLayoutRequestEntityItem } from '#base/views/layouts/friendbar/view/tabs/FriendRequestsTab/FriendRequestsTabLayoutRequestEntityItem';
 
-/** The `VIEW.getAvatarFaceBitmap(figure)` the Flash tab painted into each row's `canvas` bitmap. */
-const useAvatarFaceUrl = (figure: string) => {
+/**
+ * DOM only: the face read back as a URL for an `<img>`. In Pixi mode the row draws the render
+ * texture itself (`useAvatarImageTexture`), so this never runs the GPU read-back there.
+ */
+const useAvatarFaceUrl = (figure: string | undefined) => {
     const [ url, setUrl ] = useState('');
 
     useEffect(() => {
+        if (!figure) return;
+
         const avatarImage = GetAvatarRenderManager().createAvatarImage(figure, AvatarScaleType.Large, AvatarGenderType.Unisex, { resetFigure: () => {} });
 
         if (!avatarImage) return;
@@ -34,12 +40,16 @@ const useAvatarFaceUrl = (figure: string) => {
     return url;
 };
 
+/** The `VIEW.getAvatarFaceBitmap(figure)` the Flash tab painted into each row's `canvas` bitmap. */
 const FriendRequestRow = ({ request, onAccept, onDecline }: { request: IFriendRequest; onAccept: () => void; onDecline: () => void }) => {
-    const faceUrl = useAvatarFaceUrl(request.figure);
+    const isDom = getRenderMode() === 'dom';
+    const faceUrl = useAvatarFaceUrl(isDom ? request.figure : undefined);
+    const { texture: faceTexture } = useAvatarImageTexture(isDom ? undefined : request.figure, AvatarGenderType.Unisex, { headOnly: true, direction: 2 });
 
     return (
         <FriendRequestsTabLayoutRequestEntityItem
             srcCanvas={faceUrl || undefined}
+            textureCanvas={faceTexture}
             captionName={request.name}
             onButtonAccept={onAccept}
             onClickAreaDiscard={onDecline}

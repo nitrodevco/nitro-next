@@ -28,6 +28,9 @@
             "#base/*": [
                 "./src/*"
             ],
+            "#api/*": [
+                "../nitro-api/src/*"
+            ],
         },
     },
     "references": [

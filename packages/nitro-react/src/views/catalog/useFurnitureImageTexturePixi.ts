@@ -12,11 +12,12 @@ export interface FurnitureImageTexture {
 const EMPTY: FurnitureImageTexture = { texture: undefined, width: 0, height: 0 };
 
 /**
- * Pixi port of components/FurnitureImage.tsx - same `GetRoomEngine().getGenericRoomObjectImage()`
- * engine call (not DOM-specific; returns an `ImageLike` the same shape AvatarImage's own engine
- * call resolves to), same divergence already established by useAvatarImageTexture.ts: skip
- * DOM's `background-image: url(...)` step and wrap the resolved image directly in a Pixi
- * `Texture.from()` instead.
+ * Pixi counterpart of components/FurnitureImage.tsx: the same engine render of a furni type,
+ * taken as a texture (`getGenericRoomObjectTexture`) instead of the DOM's base64 `<img>` -
+ * the render texture the engine drew into is the one the sprite shows, nothing is read back
+ * or re-uploaded. When the furni's asset is still downloading the engine calls back through
+ * `textureReady` once it can render, so the image fills in rather than staying blank. The
+ * hook owns each texture it receives and destroys it on change/unmount.
  */
 export const useFurnitureImageTexturePixi = (
     type: string | undefined,
@@ -33,27 +34,29 @@ export const useFurnitureImageTexturePixi = (
 
         let cancelled = false;
 
-        const load = async () => {
-            const image = await GetRoomEngine().getGenericRoomObjectImage(
-                type,
-                colorIndex.toString(),
-                new Vector3d(direction),
-                scale,
-                { imageReady: () => { }, imageFailed: () => { } },
-                extra,
-            );
+        const adopt = (texture: Texture | undefined) => {
+            if (!texture) return;
 
-            if (!image || cancelled) return;
+            if (cancelled) {
+                texture.destroy(true);
 
-            const texture = Texture.from(image, true);
+                return;
+            }
 
             textureRef.current?.destroy(true);
             textureRef.current = texture;
 
-            setResult({ texture, width: image.width, height: image.height });
+            setResult({ texture, width: texture.width, height: texture.height });
         };
 
-        void load();
+        void GetRoomEngine().getGenericRoomObjectTexture(
+            type,
+            colorIndex.toString(),
+            new Vector3d(direction),
+            scale,
+            { imageReady: () => { }, imageFailed: () => { }, textureReady: adopt },
+            extra,
+        ).then(adopt);
 
         return () => {
             cancelled = true;

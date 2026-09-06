@@ -1,4 +1,4 @@
-import { BLEND_MODES, Container as PixiContainer, EventMode, FederatedPointerEvent } from 'pixi.js';
+import { BLEND_MODES, Container as PixiContainer, EventMode, FederatedPointerEvent, Texture } from 'pixi.js';
 import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler, Ref } from 'react';
 
 import { useConfigValue } from '#base/context';
@@ -13,6 +13,12 @@ export interface ImageProps extends ThemeLayoutMeta {
     src?: string | undefined;
     /** A theme asset key (`'icon-set-src'`) - drawn from the shared atlas, no image of its own. */
     textureKey?: string;
+    /**
+     * A texture the caller already holds (an avatar or furni render) - Pixi draws it directly,
+     * so the render is never read back into a base64 URL. Takes precedence over `textureKey`
+     * and `src`. DOM has no way to show a texture and ignores it: pass `src` there.
+     */
+    texture?: Texture;
     /** Crop a sub-region out of the image (a shared spritesheet) instead of showing it whole. */
     frame?: SpriteFrame;
     /** Explicit render size - the image is stretched to it. Omit to render at `frame`'s size or the image's native size. */
@@ -65,13 +71,13 @@ export interface ImageProps extends ThemeLayoutMeta {
  * asked for".
  */
 const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
-    src, textureKey, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, blendMode, eventMode, cursor,
+    src, textureKey, texture: ownTexture, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, blendMode, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     showLoadingPlaceholder, layout, visible,
 }, ref) => {
-    const themeTexture = usePixiTexture(textureKey);
-    const urlTexture = useTextureFromUrl(textureKey ? undefined : src);
-    const baseTexture = themeTexture ?? urlTexture;
+    const themeTexture = usePixiTexture(ownTexture ? undefined : textureKey);
+    const urlTexture = useTextureFromUrl(ownTexture || textureKey ? undefined : src);
+    const baseTexture = ownTexture ?? themeTexture ?? urlTexture;
 
     const loadingIconUrl = useConfigValue<string>('loading.icon.url') ?? '';
     const loadingTexture = useTextureFromUrl(showLoadingPlaceholder && !frame && !baseTexture ? (loadingIconUrl || undefined) : undefined);

@@ -1,4 +1,4 @@
-import { Container, ExtractImageOptions, ExtractOptions, GenerateTextureOptions, Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
+import { Container, ExtractImageOptions, ExtractOptions, GenerateTextureOptions, ImageSource, Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
 
 import { GetRenderer } from './GetRenderer';
 
@@ -9,6 +9,15 @@ export class TextureUtils {
 
     public static generateTextureFromImage(image: HTMLImageElement): Texture {
         return Texture.from(image);
+    }
+
+    public static async textureFromEncodedBytes(bytes: ArrayBuffer | Uint8Array, mimeType: string = 'image/png', label?: string): Promise<Texture> {
+        const bitmap = await createImageBitmap(new Blob([ bytes as BlobPart ], { type: mimeType }));
+        const texture = new Texture({ source: new ImageSource({ resource: bitmap, label }) });
+
+        if (label) texture.label = label;
+
+        return texture;
     }
 
     public static async generateImage(options: ExtractImageOptions | Container | Texture) {

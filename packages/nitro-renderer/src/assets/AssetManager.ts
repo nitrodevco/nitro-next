@@ -1,9 +1,9 @@
 import { IAssetData, IAssetManager, IGraphicAsset, IGraphicAssetCollection, NitroLogger } from '@nitrodevco/nitro-api';
 import { AnimatedGIF } from '@pixi/gif';
 import JSZip from 'jszip';
-import { Assets, Spritesheet, SpritesheetData, Texture } from 'pixi.js';
+import { Spritesheet, SpritesheetData, Texture } from 'pixi.js';
 
-import { NitroBundle } from '../utils';
+import { NitroBundle, TextureUtils } from '../utils';
 import { GraphicAssetCollection } from './GraphicAssetCollection';
 
 export class AssetManager implements IAssetManager {
@@ -123,16 +123,7 @@ export class AssetManager implements IAssetManager {
                     break;
                 }
                 case 'png': {
-                    const bytes = new Uint8Array(responseData);
-
-                    let binary = '';
-
-                    for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-
-                    const base64 = btoa(binary);
-                    const texture = await Assets.load<Texture>(`data:image/png;base64,${base64}`);
-
-                    this.setTexture(url, texture);
+                    this.setTexture(url, await TextureUtils.textureFromEncodedBytes(responseData, 'image/png', url));
                     break;
                 }
                 default: {

@@ -1,3 +1,5 @@
+import { Texture } from 'pixi.js';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
 
@@ -11,6 +13,8 @@ export interface FriendRequestsTabLayoutRequestEntityItemProps {
     onRegionProfile?: () => void;
     onRegionProfileName?: () => void;
     srcCanvas?: string;
+    /** Pixi: the face render as a texture (no base64 read-back); DOM uses `srcCanvas`. */
+    textureCanvas?: Texture;
     tintCanvas?: string;
     visibleButtonAccept?: boolean;
     visibleCanvas?: boolean;
@@ -20,7 +24,7 @@ export interface FriendRequestsTabLayoutRequestEntityItemProps {
     visibleTextDiscard?: boolean;
 }
 
-export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionTextDiscard, layout, onButtonAccept, onClickAreaDiscard, onRegionProfile, onRegionProfileName, srcCanvas, tintCanvas, visibleButtonAccept, visibleCanvas, visibleClickAreaDiscard, visibleRegionProfile, visibleRegionProfileName, visibleTextDiscard }: FriendRequestsTabLayoutRequestEntityItemProps) => {
+export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionTextDiscard, layout, onButtonAccept, onClickAreaDiscard, onRegionProfile, onRegionProfileName, srcCanvas, textureCanvas, tintCanvas, visibleButtonAccept, visibleCanvas, visibleClickAreaDiscard, visibleRegionProfile, visibleRegionProfileName, visibleTextDiscard }: FriendRequestsTabLayoutRequestEntityItemProps) => {
     const t = useTranslation();
 
     return (
@@ -40,6 +44,7 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionT
                         <ThemeImage
                             name="canvas"
                             src={srcCanvas}
+                            texture={textureCanvas}
                             tint={tintCanvas}
                             layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 44 }}
                         />
