@@ -1,7 +1,7 @@
 import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
-import { PointData, Ticker } from 'pixi.js';
-import { RefObject, useEffect, useEffectEvent, useRef, useState } from 'react';
+import { GetAvatarRenderManager, GetRenderer, GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
+import { Container as PixiContainer, PointData } from 'pixi.js';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { useRoomMapping } from './useRoomMapping';
 
@@ -10,10 +10,72 @@ const PREVIEW_OBJECT_LOCATION_X: number = 2;
 const PREVIEW_OBJECT_LOCATION_Y: number = 2;
 const ALLOWED_IMAGE_CUT: number = 0.5;
 const AUTOMATIC_STATE_CHANGE_INTERVAL: number = 2500;
+const AVATAR_DIRECTIONS: number = 8;
+const AVATAR_DEFAULT_DIRECTION: number = 4;
 
-export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvasElement | null>) => {
+export interface RoomPreviewerOptions {
+    /** Drop the canvas's opaque black backdrop so the preview composites over the UI beneath it. */
+    transparent?: boolean;
+    /** A fixed canvas scale (`room.canvas.setScale`). Unset, the preview picks 1 or 0.5 itself to keep the object in frame. */
+    scale?: number;
+    /** Walls/floor are hidden by default so only the previewed object shows. */
+    showWalls?: boolean;
+    showFloor?: boolean;
+}
+
+/** The last object a consumer asked the preview to show - replayed into a room that arrives or is recreated later. */
+type PreviewRequest
+    = | { kind: 'avatar'; figure: string; gender?: string; effect: number }
+        | { kind: 'floor'; classId: number; direction: IVector3D; objectData?: IObjectData; extra: number }
+        | { kind: 'wall'; classId: number; direction: IVector3D; objectData: string };
+
+/** What `useRoomPreviewer` returns - also the `RoomPreviewer` component's ref handle. */
+export interface RoomPreviewerApi {
+    room: IRoom | undefined;
+    /** Places (or replaces) the avatar and returns its object id, -1 when the room isn't ready. */
+    addAvatar: (figure: string, effect?: number, gender?: string) => number;
+    /**
+     * Re-dresses the placed avatar in place (no re-add) - falls back to `addAvatar` if none is
+     * placed yet, waits for the room if it doesn't exist yet, and for the figure's libraries so
+     * the placeholder avatar never shows.
+     */
+    updateAvatar: (figure: string, gender?: string) => void;
+    /** Turns the placed avatar one step (45deg) clockwise, or counter-clockwise with `forward = false`. */
+    rotateAvatar: (forward?: boolean) => void;
+    addFloorItem: (classId: number, direction: IVector3D, objectData?: IObjectData, extra?: number) => number;
+    addWallItem: (classId: number, direction: IVector3D, objectData: string) => number;
+    /** Furniture controls: turn the floor item to its next allowed direction / advance its state. */
+    changeObjectDirection: () => void;
+    changeObjectState: () => void;
+}
+
+/**
+ * Where the preview draws: a Pixi container (the room's master canvas is parented into it and
+ * its Yoga-computed size drives the room canvas) or a DOM `<canvas>` (the room is rendered
+ * off-screen and blitted into it every frame, sized by its parent element).
+ */
+export type RoomPreviewerTarget = PixiContainer | HTMLCanvasElement;
+
+/**
+ * A temp room used as an object showcase (catalog products, the avatar editor's figure): one
+ * preview object at a fixed tile, auto-centred by nudging the canvas offset, auto-cycling its
+ * state, scaled to fit. The same logic serves both render targets - only how the frame reaches
+ * the screen differs, see `RoomPreviewerTarget`.
+ */
+export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPreviewerTarget | null>, { transparent = false, scale, showWalls = false, showFloor = false }: RoomPreviewerOptions = {}): RoomPreviewerApi => {
     const [ room, setRoom ] = useState<IRoom | undefined>(undefined);
+    const mountedMasterRef = useRef<PixiContainer | undefined>(undefined);
+    const avatarDirection = useRef(AVATAR_DEFAULT_DIRECTION);
+    // The object the consumer last asked for. Requests can arrive before the room exists (it's
+    // created in an effect, one render after mount) and a room can be recreated empty on a
+    // `roomId` change - either way, this is what gets (re)placed once a room is there.
+    const requested = useRef<PreviewRequest | null>(null);
+    // Bumped per `updateAvatar` so a slow library download can't apply a figure since replaced.
+    const avatarRequest = useRef(0);
     const { createMapForSize } = useRoomMapping();
+    // The first object to get a bounding box is centred in one jump; every move after that
+    // (a re-dressed avatar, the next catalog offer) glides at `maxDrag` per frame.
+    const snapToFirstObject = useRef(true);
     const previewData = useRef<IRoomPreviewerData>({
         objectType: 0,
         objectCategory: RoomObjectCategoryEnum.Minimum,
@@ -88,25 +150,6 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         updateRoomPreview();
     };
 
-    const onObjectEvent = useEffectEvent((event: RoomEngineObjectEvent) => {
-        if (!room || !event) return;
-
-        switch (event.type) {
-            case RoomEngineObjectEvent.ADDED: {
-                previewData.current.previewRectangle = undefined;
-
-                const roomObject = room.getRoomObject(event.objectId, event.category);
-
-                if (roomObject && event.category === RoomObjectCategoryEnum.Wall) {
-                    const sizeZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeZ);
-                    const centerZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureCenterZ);
-
-                    room.updateRoomObjectWallLocation(event.objectId, new Vector3d(0.5, 2.3, (((3.6 - sizeZ) / 2) + centerZ)));
-                }
-            }
-        }
-    });
-
     const checkAutomaticObjectStateChange = () => {
         const { autoStateChange, autoStateChangeTime, objectCategory } = previewData.current;
 
@@ -148,6 +191,12 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         const offsetX = (x - point.x);
         const offsetY = (y - point.y);
 
+        if (snapToFirstObject.current) {
+            snapToFirstObject.current = false;
+
+            return (offsetX !== 0 || offsetY !== 0) ? { x, y } : undefined;
+        }
+
         if (offsetX !== 0 || offsetY !== 0) {
             const sqrt = Math.sqrt(((offsetX * offsetX) + (offsetY * offsetY)));
             const maxDrag = 10 * previewScale;
@@ -163,8 +212,23 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         return undefined;
     };
 
+    const applyFixedScale = () => {
+        if (!room?.canvas || scale === undefined || room.canvas.scale === scale) return;
+
+        room.canvas.setScale(scale);
+
+        previewData.current.previewScale = scale;
+        previewData.current.previewRectangle = undefined;
+    };
+
     const validatePreviewSize = (point: PointData) => {
         const { previewRectangle, previewWidth, previewHeight } = previewData.current;
+
+        if (scale !== undefined) {
+            applyFixedScale();
+
+            return point;
+        }
 
         if (!room || !room.canvas || !previewRectangle || (previewRectangle.width < 1) || (previewRectangle.height < 1)) return point;
 
@@ -231,14 +295,19 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         if (!canvas) room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
         else canvas.initialize(width, height);
 
-        if (canvasRef.current) {
-            canvasRef.current.width = width;
-            canvasRef.current.height = height;
-            canvasRef.current.style.width = `${width}px`;
-            canvasRef.current.style.height = `${height}px`;
-        }
+        room.canvas?.setBackgroundVisible(!transparent);
+        applyFixedScale();
 
-        render();
+        const target = targetRef.current;
+
+        if (target instanceof HTMLCanvasElement) {
+            target.width = width;
+            target.height = height;
+            target.style.width = `${width}px`;
+            target.style.height = `${height}px`;
+
+            render();
+        }
     };
 
     const updateRoomPreview = () => {
@@ -277,7 +346,9 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         previewData.current.objectCategory = RoomObjectCategoryEnum.Minimum;
     };
 
-    const addFloorItemIntoRoom = (classId: number, direction: IVector3D, objectData?: IObjectData, extra: number = NaN) => {
+    const addFloorItem = (classId: number, direction: IVector3D, objectData?: IObjectData, extra: number = NaN) => {
+        requested.current = { kind: 'floor', classId, direction, objectData, extra };
+
         if (!room) return -1;
 
         if (!objectData) objectData = new LegacyDataType();
@@ -302,7 +373,9 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         return PREVIEW_OBJECT_ID;
     };
 
-    const addWallItemIntoRoom = (classId: number, direction: IVector3D, objectData: string) => {
+    const addWallItem = (classId: number, direction: IVector3D, objectData: string) => {
+        requested.current = { kind: 'wall', classId, direction, objectData };
+
         if (!room) return -1;
 
         if (previewData.current.objectCategory === RoomObjectCategoryEnum.Floor && previewData.current.objectType === classId && previewData.current.objectData === objectData) return PREVIEW_OBJECT_ID;
@@ -323,7 +396,9 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         return PREVIEW_OBJECT_ID;
     };
 
-    const addAvatarIntoRoom = (figure: string, effect: number) => {
+    const addAvatar = (figure: string, effect: number = 0, gender?: string) => {
+        requested.current = { kind: 'avatar', figure, gender, effect };
+
         if (!room) return -1;
 
         resetRoomPreview(false);
@@ -332,7 +407,9 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         previewData.current.objectCategory = RoomObjectCategoryEnum.Unit;
         previewData.current.objectData = figure;
 
-        if (!room.addRoomObjectUser(PREVIEW_OBJECT_ID, new Vector3d(PREVIEW_OBJECT_LOCATION_X, PREVIEW_OBJECT_LOCATION_Y), new Vector3d(90), 135, RoomObjectUserType.User, figure)) return -1;
+        const degrees = avatarDirection.current * 45;
+
+        if (!room.addRoomObjectUser(PREVIEW_OBJECT_ID, new Vector3d(PREVIEW_OBJECT_LOCATION_X, PREVIEW_OBJECT_LOCATION_Y), new Vector3d(degrees), degrees, RoomObjectUserType.User, figure)) return -1;
 
         previewData.current.autoStateChangeTime = GetTickerTime();
         previewData.current.autoStateChange = true;
@@ -346,15 +423,66 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         return PREVIEW_OBJECT_ID;
     };
 
-    const render = (time: number = -1) => {
-        if (!room || !room.canvas?.master || !canvasRef.current) return;
+    const placedAvatar = () => room?.getRoomObject(PREVIEW_OBJECT_ID, RoomObjectCategoryEnum.Unit);
 
-        room.update(time);
+    const applyAvatar = (figure: string, gender?: string, effect: number = 0) => {
+        if (!room) return;
+
+        if (!placedAvatar()) {
+            addAvatar(figure, effect, gender);
+
+            return;
+        }
+
+        requested.current = { kind: 'avatar', figure, gender, effect };
+
+        room.updateRoomObjectUserFigure(PREVIEW_OBJECT_ID, figure, gender);
+        room.updateRoomObjectUserEffect(PREVIEW_OBJECT_ID, effect);
+    };
+
+    const updateAvatar = (figure: string, gender?: string, effect: number = 0) => {
+        if (!room) {
+            requested.current = { kind: 'avatar', figure, gender, effect };
+
+            return;
+        }
+
+        const request = ++avatarRequest.current;
+        const renderManager = GetAvatarRenderManager();
+        const container = renderManager.createFigureContainer(figure);
+
+        if (renderManager.isFigureContainerReady(container)) {
+            applyAvatar(figure, gender, effect);
+
+            return;
+        }
+
+        // Re-dressing with a figure whose libraries aren't loaded swaps in the translucent
+        // placeholder avatar until they are - keep the current look on screen instead and
+        // switch once the new one can actually render.
+        void renderManager.downloadAvatarFigureAsync(container).then(() => {
+            if (request === avatarRequest.current) applyAvatar(figure, gender, effect);
+        });
+    };
+
+    const rotateAvatar = (forward: boolean = true) => {
+        if (!room || !placedAvatar()) return;
+
+        avatarDirection.current = (avatarDirection.current + (forward ? 1 : AVATAR_DIRECTIONS - 1)) % AVATAR_DIRECTIONS;
+
+        const degrees = avatarDirection.current * 45;
+
+        room.updateRoomObjectUserDirection(PREVIEW_OBJECT_ID, new Vector3d(degrees), degrees);
+    };
+
+    /** DOM target: blit the room's master container (advanced by the engine tick) into the `<canvas>`. */
+    const renderToCanvas = (canvas: HTMLCanvasElement) => {
+        if (!room?.canvas?.master) return;
 
         updateRoomPreview();
 
         const extracted = GetRenderer().extract.canvas({ target: room.canvas.master });
-        const ctx = canvasRef.current.getContext('2d');
+        const ctx = canvas.getContext('2d');
 
         if (!ctx) return;
 
@@ -363,41 +491,151 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
         ctx.drawImage(extracted as unknown as CanvasImageSource, 0, 0, room.canvas.master.width, room.canvas.master.height);
     };
 
+    /** Pixi target: keep the room's master container (advanced by the engine tick) parented under the node. */
+    const renderIntoContainer = (node: PixiContainer) => {
+        if (!room?.canvas?.master) return;
+
+        updateRoomPreview();
+
+        // The check is against the master's actual parent, not just the ref - React can remount
+        // the node while the ref still points at the old master.
+        const master = room.canvas.master;
+
+        if (master.parent !== node) {
+            if (mountedMasterRef.current && mountedMasterRef.current !== master) mountedMasterRef.current.parent?.removeChild(mountedMasterRef.current);
+
+            node.addChild(master);
+            mountedMasterRef.current = master;
+        }
+    };
+
+    const render = () => {
+        const target = targetRef.current;
+
+        if (!target) return;
+
+        if (target instanceof HTMLCanvasElement) renderToCanvas(target);
+        else renderIntoContainer(target);
+    };
+
+    useEffect(() => {
+        room?.canvas?.setBackgroundVisible(!transparent);
+        applyFixedScale();
+    }, [ room, transparent, scale ]);
+
+    useEffect(() => {
+        room?.updateRoomPlaneVisibilities(showWalls, showFloor);
+    }, [ room, showWalls, showFloor ]);
+
+    // The room outlives the hook (it's kept in the engine), so on mount it may still hold the
+    // object a previous previewer left in it: clear that, or place whatever this one asked for.
     useEffect(() => {
         if (!room) return;
-        const ticker = GetTicker();
 
-        const tick = (ticker: Ticker) => render(ticker.lastTime);
+        const request = requested.current;
 
-        ticker.add(tick);
+        if (!request) {
+            resetRoomPreview(true);
 
-        let timer: ReturnType<typeof setTimeout>;
-
-        const observer = new ResizeObserver((x) => {
-            const width = x[0]?.contentRect.width;
-            const height = x[0]?.contentRect.height;
-
-            clearTimeout(timer);
-
-            timer = setTimeout(() => resizeRoomPreview(Math.floor(width), Math.floor(height)), 5);
-        });
-
-        if (canvasRef && ('current' in canvasRef) && canvasRef.current) {
-            const rect = canvasRef.current.parentElement?.getBoundingClientRect();
-
-            if (rect) resizeRoomPreview(Math.floor(rect.width), Math.floor(rect.height));
-
-            observer.observe(canvasRef.current.parentElement as HTMLElement);
+            return;
         }
 
+        switch (request.kind) {
+            case 'avatar':
+                updateAvatar(request.figure, request.gender, request.effect);
+                break;
+            case 'floor':
+                addFloorItem(request.classId, request.direction, request.objectData, request.extra);
+                break;
+            case 'wall':
+                addWallItem(request.classId, request.direction, request.objectData);
+                break;
+        }
+    }, [ room ]);
+
+    useEffect(() => {
+        if (!room) return;
+
+        // Presentation runs after the engine's HIGH-priority room tick (default priority is NORMAL).
+        const tick = () => render();
+
+        GetTicker().add(tick);
+
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        let observer: ResizeObserver | undefined;
+        let layoutNode: PixiContainer | undefined;
+        const target = targetRef.current;
+
+        // Pixi: the node's Yoga size, from @pixi/layout's `layout` event rather than polling.
+        const onLayout = () => {
+            if (!layoutNode) return;
+
+            const width = Math.floor(layoutNode.layout?.computedLayout?.width ?? layoutNode.width ?? 0);
+            const height = Math.floor(layoutNode.layout?.computedLayout?.height ?? layoutNode.height ?? 0);
+
+            if (width > 0 && height > 0 && (width !== previewData.current.previewWidth || height !== previewData.current.previewHeight)) resizeRoomPreview(width, height);
+        };
+
+        if (target && !(target instanceof HTMLCanvasElement)) {
+            layoutNode = target;
+
+            layoutNode.on('layout', onLayout);
+            onLayout();
+        }
+
+        // DOM: the <canvas> follows its parent element's size.
+        if (target instanceof HTMLCanvasElement && target.parentElement) {
+            const parent = target.parentElement;
+            const rect = parent.getBoundingClientRect();
+
+            resizeRoomPreview(Math.floor(rect.width), Math.floor(rect.height));
+
+            observer = new ResizeObserver((entries) => {
+                const { width, height } = entries[0]?.contentRect ?? { width: 0, height: 0 };
+
+                clearTimeout(timer);
+
+                timer = setTimeout(() => resizeRoomPreview(Math.floor(width), Math.floor(height)), 5);
+            });
+
+            observer.observe(parent);
+        }
+
+        const onObjectEvent = (event: RoomEngineObjectEvent) => {
+            if (!event || event.type !== RoomEngineObjectEvent.ADDED) return;
+
+            previewData.current.previewRectangle = undefined;
+
+            const roomObject = room.getRoomObject(event.objectId, event.category);
+
+            if (roomObject && event.category === RoomObjectCategoryEnum.Wall) {
+                const sizeZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeZ);
+                const centerZ = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureCenterZ);
+
+                room.updateRoomObjectWallLocation(event.objectId, new Vector3d(0.5, 2.3, (((3.6 - sizeZ) / 2) + centerZ)));
+            }
+        };
+
+        const listeners = [
+            room.eventDispatcher.addEventListener(RoomEngineObjectEvent.ADDED, onObjectEvent),
+        ];
+
         return () => {
-            if (observer) observer.disconnect();
-            if (timer) clearTimeout(timer);
-            if (ticker) ticker.remove(tick);
+            GetTicker().remove(tick);
+            layoutNode?.off('layout', onLayout);
+            observer?.disconnect();
+            clearTimeout(timer);
+            listeners.map(x => x?.());
+
+            if (mountedMasterRef.current?.parent) mountedMasterRef.current.parent.removeChild(mountedMasterRef.current);
+
+            mountedMasterRef.current = undefined;
         };
     }, [ room ]);
 
     useEffect(() => {
+        snapToFirstObject.current = true;
+
         const inst = GetRoomEngine().createRoom(RoomId.makeRoomPreviewerId(roomId));
 
         if (!inst.isInitialized) {
@@ -410,17 +648,13 @@ export const useRoomPreviewer = (roomId: number, canvasRef: RefObject<HTMLCanvas
             inst.updateRoomPlaneType('110', '99999', undefined);
         }
 
-        const listeners = [
-            inst.eventDispatcher.addEventListener(RoomEngineObjectEvent.ADDED, onObjectEvent),
-        ];
-
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setRoom(inst);
 
         return () => {
-            listeners.map(x => x?.());
+            setRoom(undefined);
         };
     }, [ roomId ]);
 
-    return { room, addFloorItemIntoRoom, addWallItemIntoRoom, addAvatarIntoRoom, changeObjectDirection, changeObjectState };
+    return { room, addAvatar, updateAvatar, rotateAvatar, addFloorItem, addWallItem, changeObjectDirection, changeObjectState };
 };

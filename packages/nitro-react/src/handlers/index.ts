@@ -10,5 +10,6 @@ export * from './room/useRoomPetPackageHandler';
 export * from './room/useRoomPollHandler';
 export * from './room/useRoomUserHandler';
 export * from './useMessengerHandler';
-export * from './user/useUserInfoHandler';
 export * from './useWalletHandler';
+export * from './user/useAvatarEditorHandler';
+export * from './user/useUserInfoHandler';

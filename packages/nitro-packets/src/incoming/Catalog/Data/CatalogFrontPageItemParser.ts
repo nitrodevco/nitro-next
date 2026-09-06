@@ -10,13 +10,13 @@ export const CatalogFrontPageItemParser = (wrapper: IMessageDataWrapper) => {
     } as ICatalogFrontPageItem;
 
     switch (result.type) {
-        case CatalogFrontPageItemType.Default:
+        case CatalogFrontPageItemType.Page:
             result.value = wrapper.readString();
             break;
-        case CatalogFrontPageItemType.One:
+        case CatalogFrontPageItemType.ProductOffer:
             result.value = wrapper.readInt();
             break;
-        case CatalogFrontPageItemType.Two:
+        case CatalogFrontPageItemType.Iap:
             result.value = wrapper.readString();
             break;
     }

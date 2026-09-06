@@ -35,9 +35,9 @@ export interface RowVirtualizer {
  * (`estimateSize: () => 0` + `measureElement`). react-virtual's API is inherently shaped
  * around a real DOM scroll element (`getScrollElement`/`scrollTop`), which Pixi has none of -
  * this reimplements just the two things InfiniteGrid actually needs: a visible-range window
- * (current scroll position + overscan) and dynamic per-row size measurement, reusing the same
- * `requestAnimationFrame` polling + `.layout.computedLayout` read this package already relies
- * on for scroll metrics (see useScrollController.ts) since there's no ResizeObserver
+ * (current scroll position + overscan) and dynamic per-row size measurement, taken from
+ * @pixi/layout's per-container `layout` event (the same event-driven measurement
+ * useScrollController.ts uses, see useLayoutEvent.ts) since there's no ResizeObserver
  * equivalent for a Pixi container's yoga-computed size. Measured sizes live in real state
  * (not a ref read during render) so `eslint-plugin-react-hooks`'s `react-hooks/refs` rule -
  * which forbids reading `ref.current` during render - stays clean; the map of currently-
@@ -46,7 +46,8 @@ export interface RowVirtualizer {
  */
 export const useRowVirtualizer = ({ count, estimateSize, overscan = 1, viewportHeight, scrollOffset, gap = 0 }: RowVirtualizerOptions): RowVirtualizer => {
     const [ sizes, setSizes ] = useState<number[]>(() => new Array(count).fill(estimateSize));
-    const nodesRef = useRef<Map<number, PixiContainer>>(new Map());
+    // Each mounted row node with the `layout` listener that reports its height.
+    const nodesRef = useRef<Map<number, { node: PixiContainer; onLayout: () => void }>>(new Map());
 
     if (sizes.length !== count) {
         const next: number[] = new Array(count);
@@ -54,41 +55,45 @@ export const useRowVirtualizer = ({ count, estimateSize, overscan = 1, viewportH
         setSizes(next);
     }
 
+    const unwatch = (index: number) => {
+        const entry = nodesRef.current.get(index);
+
+        if (!entry) return;
+
+        entry.node.off('layout', entry.onLayout);
+        nodesRef.current.delete(index);
+    };
+
     useEffect(() => {
-        for (const index of nodesRef.current.keys()) {
-            if (index >= count) nodesRef.current.delete(index);
+        for (const index of [ ...nodesRef.current.keys() ]) {
+            if (index >= count) unwatch(index);
         }
     }, [ count ]);
 
-    useEffect(() => {
-        let raf = 0;
-        const tick = () => {
-            setSizes((prev) => {
-                let changed = false;
-                const next = [ ...prev ];
-
-                nodesRef.current.forEach((node, index) => {
-                    if (index >= next.length) return;
-
-                    const measured = node.layout?.computedLayout?.height ?? node.height ?? 0;
-                    if (measured > 0 && Math.abs(measured - next[index]) > 0.5) {
-                        changed = true;
-                        next[index] = measured;
-                    }
-                });
-
-                return changed ? next : prev;
-            });
-            raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-
-        return () => cancelAnimationFrame(raf);
+    useEffect(() => () => {
+        for (const index of [ ...nodesRef.current.keys() ]) unwatch(index);
     }, []);
 
+    // A row reports its height when Yoga lays it out (@pixi/layout's `layout` event) - the
+    // Pixi stand-in for react-virtual's `measureElement` ResizeObserver - instead of every
+    // mounted row being polled each frame.
     const measureRow = (index: number, node: PixiContainer | null) => {
-        if (node) nodesRef.current.set(index, node);
-        else nodesRef.current.delete(index);
+        unwatch(index);
+
+        if (!node) return;
+
+        const onLayout = () => {
+            const measured = node.layout?.computedLayout?.height ?? node.height ?? 0;
+
+            if (measured <= 0) return;
+
+            setSizes(prev => (index < prev.length && Math.abs(measured - prev[index]) > 0.5 ? prev.map((size, i) => (i === index ? measured : size)) : prev));
+        };
+
+        nodesRef.current.set(index, { node, onLayout });
+        node.on('layout', onLayout);
+
+        if (node.layout?.computedLayout) onLayout();
     };
 
     const offsets: number[] = new Array(count);

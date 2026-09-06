@@ -4,6 +4,7 @@ export * from './useFrameDrag';
 export * from './useFrameResize';
 export * from './useHoldToRepeat';
 export * from './useInteractionState';
+export * from './useLayoutEvent';
 export * from './useOutsideClick';
 export * from './usePixiSilhouetteTexture';
 export * from './usePixiTexture';

@@ -1,10 +1,14 @@
-import { useIsWindowVisible } from '#base/context';
-import { AvatarEditorView } from '#base/views/avatar-editor/AvatarEditorView';
+import { AvatarEditorContextProvider, useIsWindowVisible } from '#base/context';
+import { AvatarEditor } from '#base/views/avatar-editor/AvatarEditor';
 
 export const AvatarEditorComponent = () => {
     const isVisible = useIsWindowVisible('avatar_editor');
 
     // if (!isVisible) return null;
 
-    return <AvatarEditorView />;
+    return (
+        <AvatarEditorContextProvider>
+            <AvatarEditor />
+        </AvatarEditorContextProvider>
+    );
 };

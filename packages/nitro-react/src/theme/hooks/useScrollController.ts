@@ -2,6 +2,7 @@ import { Container as PixiContainer, FederatedPointerEvent, FederatedWheelEvent 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ScrollControllerOptions } from '../scroll';
+import { useLayoutEvent } from './useLayoutEvent';
 
 export interface ScrollController {
     viewportRef: (node: PixiContainer | null) => void;
@@ -39,10 +40,10 @@ const computedSize = (node: PixiContainer | null, axis: 'width' | 'height'): num
  * `ResizeObserver`/the native `scroll` event) driving a fully custom-skinned scrollbar UI -
  * Pixi has none of that, so this owns the scroll position itself (`scrollOffset`, applied by
  * the caller as the content container's own `y`/`x`, on top of its layout position - the same
- * composition technique useFrameDrag.ts's drag offset already relies on) and measures
- * viewport/content/track sizes every animation frame (there's no ResizeObserver equivalent for
- * a Pixi container's yoga-computed size) instead of a `scroll` event + observer, reading
- * `.layout.computedLayout` the same way useFrameDrag.ts/useFrameResize.ts already do. Thumb
+ * composition technique useFrameDrag.ts's drag offset already relies on) and re-measures
+ * viewport/content/track sizes from @pixi/layout's `layout` event (`useLayoutEvent`, the Pixi
+ * stand-in for a ResizeObserver) plus offset changes, instead of a `scroll` event + observer,
+ * reading `.layout.computedLayout` the same way useFrameDrag.ts/useFrameResize.ts do. Thumb
  * dragging uses window-level pointermove/pointerup (Pixi's FederatedPointerEvent has no
  * setPointerCapture, confirmed absent from pixi.js's event types), the same technique
  * useFrameDrag.ts uses for the identical reason.
@@ -126,20 +127,15 @@ export const useScrollController = ({
         wasAtEndRef.current = atEnd;
     }, [ viewportNode, contentNode, trackNode, sizeAxis, minThumbSize, reachThreshold ]);
 
+    // Re-measure when any of the three boxes gets a new layout, or the offset moves (its clamp
+    // and the thumb position depend on it) - not every frame.
+    useLayoutEvent(viewportNode, measure);
+    useLayoutEvent(contentNode, measure);
+    useLayoutEvent(trackNode, measure);
+
     useEffect(() => {
-        if (!viewportNode) return;
-
         measure();
-
-        let raf = 0;
-        const tick = () => {
-            measure();
-            raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-
-        return () => cancelAnimationFrame(raf);
-    }, [ viewportNode, measure ]);
+    }, [ measure, scrollOffset ]);
 
     const stopDragging = useCallback(() => {
         const listeners = activeListenersRef.current;

@@ -6,6 +6,8 @@ import { useConfigValue } from '#base/context';
 export const useProductIconUrl = (product: IProduct) => {
     const catalogAssetUrl = useConfigValue<string>('catalog.asset.url') ?? '';
 
+    if (!product) return '';
+
     switch (product.productType) {
         case FurnitureTypeEnum.Floor:
             return GetRoomEngine().getFurnitureFloorIconUrl(product.classId);

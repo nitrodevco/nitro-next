@@ -9,7 +9,7 @@ import {
     MouseEventType, RoomGeometryScaleType,
     RoomObjectSpriteData,
     RoomObjectSpriteTypeEnum, RoomSpriteMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
-import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
+import { Container, Graphics, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { ExtendedSprite, TextureUtils } from '../utils';
 import { RoomObjectCache, RoomObjectCacheItem } from './object';
@@ -29,7 +29,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
     private _master: Container | undefined = undefined;
     private _display: Container | undefined = undefined;
-    private _mask: Sprite | undefined = undefined;
+    // A Graphics rectangle rather than a Sprite: Pixi masks a Sprite through an alpha-mask
+    // filter (screen-sized render textures per masked object, and misrendering when several
+    // rooms are masked in one frame), while a rect Graphics is a plain stencil/scissor mask.
+    private _mask: Graphics | undefined = undefined;
     private _background: Sprite | undefined = undefined;
 
     private _sortableSprites: SortableSprite[] = [];
@@ -180,11 +183,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         if (this._usesMask) {
             if (!this._mask) {
-                this._mask = new Sprite(Texture.WHITE);
-
-                this._mask.tint = 0xff0000;
-                this._mask.width = width;
-                this._mask.height = height;
+                this._mask = new Graphics().rect(0, 0, width, height).fill(0xffffff);
 
                 if (this._master) {
                     this._master.addChild(this._mask);
@@ -192,8 +191,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                     if (this._display) this._display.mask = this._mask;
                 }
             } else {
-                this._mask.width = width;
-                this._mask.height = height;
+                this._mask.clear().rect(0, 0, width, height).fill(0xffffff);
             }
         }
 

@@ -1,7 +1,7 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { ReactNode, Ref } from 'react';
 
-import { Box } from './Box';
+import { Box, BoxLayout } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { ContentArea } from './ContentArea';
 import { Header } from './Header';
@@ -25,13 +25,56 @@ const BLUE_FRAME_SHINE = Composite([
 
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
+const FRAME_0_VARIANT: FrameVariant = {
+    layer: NineSlice('frame-0-default-src', 13, 13, 13, 13),
+    overlay: BLUE_FRAME_SHINE,
+    dropShadow: { distance: 4, angle: 45, color: '#000000', alpha: 0.35, blur: 4 },
+    layout: {
+        minWidth: 40,
+        minHeight: 50,
+        paddingTop: 2,
+        paddingBottom: 2,
+    },
+};
+
+const FRAME_UBUNTU_VARIANT: FrameVariant = {
+    layer: NineSlice('frame-3-default-src', 10, 33, 10, 10),
+    overlay: FRAME_3_SHINE,
+    dropShadow: { distance: 4, angle: 45, color: '#000000', alpha: 0.35, blur: 4 },
+    layout: {
+        minWidth: 64,
+        minHeight: 64,
+    },
+};
+
 const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
-    0: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 50, paddingTop: 2, paddingBottom: 2 }, tintColor: '#418db0' },
-    1: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 40 }, tintColor: '#4c4c4c' },
-    2: { layer: NineSlice('frame-0-default-src', 13, 13, 13, 13), overlay: BLUE_FRAME_SHINE, layout: { minWidth: 40, minHeight: 40 }, tintColor: '#fac200' },
-    3: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 64 }, tintColor: '#418db0' },
-    4: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 64 }, tintColor: '#67a3bf' },
-    7: { layer: NineSlice('frame-3-default-src', 10, 33, 10, 10), overlay: FRAME_3_SHINE, layout: { minWidth: 64, minHeight: 73 } },
+    // blue
+    0: {
+        ...FRAME_0_VARIANT,
+        tintColor: '#418db0',
+    },
+    // black
+    1: {
+        ...FRAME_0_VARIANT,
+        tintColor: '#4c4c4c',
+    },
+    // yellow
+    2: {
+        ...FRAME_0_VARIANT,
+        tintColor: '#fac200',
+    },
+    // ubuntu
+    3: {
+        ...FRAME_UBUNTU_VARIANT,
+        tintColor: '#418db0',
+    },
+    4: {
+        ...FRAME_UBUNTU_VARIANT,
+        tintColor: '#67a3bf',
+    },
+    7: {
+        ...FRAME_UBUNTU_VARIANT,
+    },
     100: {
         layer: Composite([
             CompositePiece('border-101-default-top-left-src', 0, 0, undefined, undefined, 4, 4),
@@ -43,7 +86,11 @@ const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
             CompositePiece('border-101-default-bottom-left-src', undefined, 0, undefined, 0, 4, 7),
             CompositePiece('border-101-default-bottom-center-src', undefined, 4, 4, 0, undefined, 7),
             CompositePiece('border-101-default-bottom-right-src', undefined, undefined, 0, 0, 4, 7),
-        ]), layout: { minWidth: 50, minHeight: 50 },
+        ]),
+        layout: {
+            minWidth: 50,
+            minHeight: 50,
+        },
     },
     // illumina "wired" - the light frame art with the wired window layout
     102: {
@@ -57,34 +104,53 @@ const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
             CompositePiece('border-101-default-bottom-left-src', undefined, 0, undefined, 0, 4, 7),
             CompositePiece('border-101-default-bottom-center-src', undefined, 4, 4, 0, undefined, 7),
             CompositePiece('border-101-default-bottom-right-src', undefined, undefined, 0, 0, 4, 7),
-        ]), layout: { minWidth: 50, minHeight: 50 },
+        ]),
+        layout: {
+            minWidth: 50,
+            minHeight: 50,
+        },
     },
     // illumina purple
-    103: { layer: NineSlice('frame-103-default-src', 4, 4, 4, 7), layout: { minWidth: 50, minHeight: 50 } },
-    200: { layer: NineSlice('frame-200-default-src', 4, 4, 4, 5), layout: { minWidth: 50, minHeight: 50 } },
+    103: {
+        layer: NineSlice('frame-103-default-src', 4, 4, 4, 7),
+        layout: {
+            minWidth: 50,
+            minHeight: 50,
+        },
+    },
+    200: {
+        layer: NineSlice('frame-200-default-src', 4, 4, 4, 5),
+        layout: {
+            minWidth: 50,
+            minHeight: 50,
+        },
+    },
     // leaderboard "total badges" - a huge fixed-art frame (193x130 sheet, 96/87/96/42 slices)
-    10000: { layer: NineSlice('frame-10000-default-src', 96, 87, 96, 42), layout: { minWidth: 200, minHeight: 140 } },
+    10000: {
+        layer: NineSlice('frame-10000-default-src', 96, 87, 96, 42),
+        layout: {
+            minWidth: 200,
+            minHeight: 140,
+        },
+    },
 };
 
 export interface FrameProps extends ThemeProps<FrameVariant> {
     id?: string;
     caption?: string;
     resizeDirection?: ScalerDirection;
+    contentLayout?: BoxLayout;
     onClose?: () => void;
     children?: ReactNode;
 }
 
-/** The window shadow every Flash frame skin carried (`DropShadowFilter` distance 4, 45deg, 35%, blur 4). */
-const FRAME_SHADOW = { distance: 4, angle: 45, color: '#000000', alpha: 0.35, blur: 4 };
-
 export const Frame = ({
-    id, variant, defaultVariant = '3', caption, tintColor, layout, resizeDirection = 'all', onClose, children,
+    variant, defaultVariant, layout, tintColor, textStyle, textColor, id, caption, resizeDirection = 'all', contentLayout, onClose, children,
     onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
 }: FrameProps) => {
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
-    const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor,
-        onPointerOver, onPointerOut, onPointerDown: compose(onPointerDown, onPointerDownProp), onPointerUp, onPointerUpOutside, onPointerTap,
+    const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedShadow, resolvedTint } = useThemeVariant({
+        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown: compose(onPointerDown, onPointerDownProp), onPointerUp, onPointerUpOutside, onPointerTap,
     });
     const minWidth = layout?.minWidth ?? config.layout?.minWidth ?? 20;
     const minHeight = layout?.minHeight ?? config.layout?.minHeight ?? 20;
@@ -116,7 +182,7 @@ export const Frame = ({
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            <ShadowLayer {...FRAME_SHADOW} />
+            { resolvedShadow && <ShadowLayer {...resolvedShadow} /> }
             { resolvedLayer && (
                 <BackgroundLayer
                     layer={resolvedLayer}
@@ -131,7 +197,7 @@ export const Frame = ({
                     onClose={onClose}
                     onPointerDown={onHeaderPointerDown}
                 />
-                <ContentArea>
+                <ContentArea layout={contentLayout}>
                     {children}
                 </ContentArea>
                 <Scaler

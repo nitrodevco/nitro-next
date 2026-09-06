@@ -85,12 +85,6 @@ const DEFAULT_SET_TYPE: Partial<Record<AvatarEditorCategory, AvatarEditorSetType
 
 const tabIcon = (base: string, active: boolean) => layoutImage(`${base}${active ? '' : '_off'}.png`);
 
-/** `AvatarEditorContent` is 490x490; the frame template adds its header (33px) and bottom edge (2px). */
-const CONTENT_SIZE = 490;
-const FRAME_CHROME = { width: 6, height: 35 };
-/** `AvatarEditorView.as` DEFAULT_LOCATION */
-const DEFAULT_LOCATION = { left: 100, top: 30 };
-
 export interface AvatarEditorViewProps {
     /** Shown in the name banner - defaults to the session user. */
     name?: string;
@@ -222,7 +216,7 @@ export const AvatarEditorView = ({
     return (
         <AvatarEditorFrameLayout
             onClose={close}
-            layout={{ position: 'absolute', ...DEFAULT_LOCATION, width: CONTENT_SIZE + FRAME_CHROME.width, height: CONTENT_SIZE + FRAME_CHROME.height, ...layout }}
+            layout={{ position: 'absolute', width: 490, height: 490, minWidth: 490, maxWidth: 490, top: 30, left: 100 }}
             maincontent={(
                 <AvatarEditorContentLayout avatarEditorContent={{
                     captionAvatarName: name ?? ownInfo.name,

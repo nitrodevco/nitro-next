@@ -2,7 +2,7 @@ import { Container as PixiContainer } from 'pixi.js';
 import { CSSProperties, Key, ReactElement, useEffect, useState } from 'react';
 
 import { Box } from './Box';
-import { useRowVirtualizer, useScrollController } from './hooks';
+import { useLayoutSize, useRowVirtualizer, useScrollController } from './hooks';
 import { ScrollArea } from './ScrollArea';
 import { ScrollbarVertical } from './ScrollbarVertical';
 import { getRenderMode, ScrollViewport } from './utils';
@@ -101,32 +101,14 @@ const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, i
  * `ResizeObserver` (debounced 10ms, forced on first measurement) to pick a column count, then
  * virtualizes ROWS (not individual items) with `@tanstack/react-virtual` in measured-height
  * mode. Pixi has neither a DOM element for `ResizeObserver`/react-virtual's `getScrollElement`
- * to target nor a `ResizeObserver` equivalent, so both are replaced with the same
- * `requestAnimationFrame` + `.layout.computedLayout` polling this package already uses
- * elsewhere (see useScrollController.ts, useRowVirtualizer.ts) - close enough to the DOM
- * version's ~10ms debounce that no separate debounce is needed on top of it.
+ * to target nor a `ResizeObserver` equivalent, so both are replaced with @pixi/layout's
+ * `layout` event (`useLayoutSize`/`useLayoutEvent`, shared with useScrollController.ts and
+ * useRowVirtualizer.ts), which fires only when Yoga hands the node a new layout.
  */
 // eslint-disable-next-line @stylistic/comma-dangle -- see InfiniteGridDom's comment above.
 const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, itemRender, getKey, scrollResetKey }: InfiniteGridProps<T>) => {
     const [ viewportNode, setViewportNode ] = useState<PixiContainer | null>(null);
-    const [ viewportWidth, setViewportWidth ] = useState(0);
-    const [ viewportHeight, setViewportHeight ] = useState(0);
-
-    useEffect(() => {
-        if (!viewportNode) return;
-
-        let raf = 0;
-        const tick = () => {
-            const width = viewportNode.layout?.computedLayout?.width ?? viewportNode.width ?? 0;
-            const height = viewportNode.layout?.computedLayout?.height ?? viewportNode.height ?? 0;
-            setViewportWidth(prev => (Math.abs(prev - width) > 0.5 ? width : prev));
-            setViewportHeight(prev => (Math.abs(prev - height) > 0.5 ? height : prev));
-            raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-
-        return () => cancelAnimationFrame(raf);
-    }, [ viewportNode ]);
+    const { width: viewportWidth, height: viewportHeight } = useLayoutSize(viewportNode);
 
     const columnCount = overrideColumnCount || Math.max(MIN_COLUMNS, Math.min(MAX_COLUMNS, Math.ceil(viewportWidth / (itemWidth + 4)))) || MIN_COLUMNS;
     const rowCount = Math.ceil(items.length / (columnCount || 1)) || 1;

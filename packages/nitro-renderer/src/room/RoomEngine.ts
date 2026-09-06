@@ -14,10 +14,10 @@ import {
     RoomObjectVariableEnum,
     Vector3d,
 } from '@nitrodevco/nitro-api';
-import { ImageLike } from 'pixi.js';
+import { ImageLike, Ticker, UPDATE_PRIORITY } from 'pixi.js';
 
 import { PetFigureData } from '#renderer/session';
-import { NumberBank } from '#renderer/utils';
+import { GetTicker, NumberBank } from '#renderer/utils';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { ObjectDataUpdateMessage } from './messages';
@@ -30,9 +30,44 @@ export class RoomEngine implements IRoomEngine {
     private _rooms: Map<number, IRoom> = new Map();
     private _imageObjectIdBank = new NumberBank(1000);
     private _imageListeners: Record<number, IGetImageListener[]> = {};
+    private _tick = (ticker: Ticker) => this.update(ticker.lastTime);
+    private _ticking: boolean = false;
 
     public async init(): Promise<void> {
         await GetRoomContentLoader().init();
+
+        this.start();
+    }
+
+    /**
+     * Registers the single room tick on the shared ticker. It runs at HIGH priority so every
+     * room's objects and sprite canvas are advanced before the NORMAL-priority presentation
+     * work registered by the UI (camera, preview centring, DOM blits) and before Pixi's own
+     * LOW-priority render of the frame.
+     */
+    public start(): void {
+        if (this._ticking) return;
+
+        this._ticking = true;
+
+        GetTicker().add(this._tick, undefined, UPDATE_PRIORITY.HIGH);
+    }
+
+    public stop(): void {
+        if (!this._ticking) return;
+
+        this._ticking = false;
+
+        GetTicker().remove(this._tick);
+    }
+
+    /** Advances every room that is being drawn (has a canvas): the main room and any previewers alike. */
+    public update(time: number): void {
+        for (const room of this._rooms.values()) {
+            if (!room.canvas) continue;
+
+            room.update(time);
+        }
     }
 
     public createRoom(roomId: number): IRoom {

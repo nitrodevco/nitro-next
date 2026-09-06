@@ -11,5 +11,5 @@ export interface ICatalogPage {
     readonly offers: ICatalogOffer[];
     readonly offerId: number;
     readonly acceptSeasonCurrencyAsCredits: boolean;
-    readonly frontPageItems: ICatalogFrontPageItem[];
+    frontPageItems: ICatalogFrontPageItem[];
 }

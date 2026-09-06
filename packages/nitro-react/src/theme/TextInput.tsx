@@ -35,9 +35,9 @@ export interface TextInputProps {
  * always appended/removed from the end, which covers every real call site (search-as-you-type,
  * a short message box) without building full glyph-metrics-based caret placement. Focus is
  * signaled with a background tint swap instead, a cheaper affordance than a blinking caret. For
- * `multiline`, the wrap width is measured the same `requestAnimationFrame` + `.layout.
- * computedLayout` way InfiniteGrid.tsx measures its own viewport (no ResizeObserver equivalent
- * for a Pixi container's yoga-computed size), since `pixiText`'s `wordWrap` needs an explicit
+ * `multiline`, the wrap width follows the box's Yoga layout through @pixi/layout's `layout`
+ * event, the same way InfiniteGrid.tsx measures its viewport (no ResizeObserver equivalent for
+ * a Pixi container's yoga-computed size), since `pixiText`'s `wordWrap` needs an explicit
  * pixel width.
  */
 export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TextInputProps>(
@@ -54,15 +54,19 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             const node = boxRef.current;
             if (!node) return;
 
-            let raf = 0;
-            const tick = () => {
+            // Wrap width follows the box's Yoga layout via @pixi/layout's `layout` event.
+            const onLayout = () => {
                 const width = node.layout?.computedLayout?.width ?? node.width ?? 0;
                 setWrapWidth(prev => (Math.abs(prev - width) > 0.5 ? width : prev));
-                raf = requestAnimationFrame(tick);
             };
-            raf = requestAnimationFrame(tick);
 
-            return () => cancelAnimationFrame(raf);
+            node.on('layout', onLayout);
+
+            if (node.layout?.computedLayout) onLayout();
+
+            return () => {
+                node.off('layout', onLayout);
+            };
         }, [ multiline ]);
 
         useEffect(() => {

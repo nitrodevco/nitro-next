@@ -188,13 +188,13 @@ export const RoomCanvas = () => {
 
         renderer.on('resize', resizeCanvas);
 
+        // The room itself is advanced by the engine's HIGH-priority tick; this NORMAL-priority
+        // one only does the presentation that follows it (camera, drag, cursor, DOM blit).
         const tick = (ticker: Ticker) => {
             if (!room || !canvas || !container) return;
 
             const mouseData = mouseDataRef.current;
             const time = ticker.lastTime;
-
-            room.update(time, false);
 
             if (!mouseData.isDragged) updateRoomCamera(time);
 

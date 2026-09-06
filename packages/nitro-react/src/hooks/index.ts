@@ -35,3 +35,4 @@ export * from './room/useRoomObjectSelected';
 export * from './room/useRoomObjectValidation';
 export * from './room/useRoomPreviewer';
 export * from './room/useRoomUserData';
+export * from './avatar-editor';

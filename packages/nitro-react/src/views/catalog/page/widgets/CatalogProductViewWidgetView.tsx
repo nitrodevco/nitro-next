@@ -1,33 +1,34 @@
-import { FurnitureSpecialType, FurnitureTypeEnum, RoomId, Vector3d } from '@nitrodevco/nitro-api';
+import { FurnitureSpecialType, FurnitureTypeEnum, IRoom, RoomId, Vector3d } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager, GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { useEffect, useRef } from 'react';
+import { FederatedPointerEvent } from 'pixi.js';
+import { useEffect, useRef, useState } from 'react';
 
+import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
 import { useCatalogSelectors, useOwnUserLook, useTranslation } from '#base/context';
 import { useCatalogOfferActions } from '#base/hooks';
 import { Box, ColorLayer, ThemeText } from '#base/theme';
-
-import { useRoomPreviewerPixi } from '../../useRoomPreviewerPixi';
 
 /** Pixi port of views/catalog/page/widgets/CatalogProductViewWidgetView.tsx. */
 export const CatalogProductViewWidgetView = () => {
     const { activeOffer } = useCatalogSelectors();
     const { getOfferProduct } = useCatalogOfferActions();
-    const previewRef = useRef<PixiContainer | null>(null);
-    const { room, addFloorItemIntoRoom, addWallItemIntoRoom, addAvatarIntoRoom, changeObjectDirection, changeObjectState } = useRoomPreviewerPixi(RoomId.TEMP_ROOM_CATALOG, previewRef);
+    const previewerRef = useRef<RoomPreviewerHandle>(null);
+    // The previewer mounts with the offer, and its room only exists a render later - this is
+    // what re-runs the offer effect at that point.
+    const [ room, setRoom ] = useState<IRoom | undefined>(undefined);
     const { ownFigure, ownGender } = useOwnUserLook();
     const t = useTranslation();
     const product = activeOffer ? getOfferProduct(activeOffer) : undefined;
 
     const onClick = (event: FederatedPointerEvent) => {
-        if (!room) return;
+        if (!previewerRef?.current) return;
 
-        if (event.shiftKey) changeObjectDirection();
-        else changeObjectState();
+        if (event.shiftKey) previewerRef.current.changeObjectDirection();
+        else previewerRef.current.changeObjectState();
     };
 
     useEffect(() => {
-        if (!room || !activeOffer || !product) return;
+        if (!activeOffer || !product || !room || !previewerRef.current) return;
 
         switch (product.productType) {
             case FurnitureTypeEnum.Floor: {
@@ -43,9 +44,9 @@ export const CatalogProductViewWidgetView = () => {
 
                     const figureString = GetAvatarRenderManager().getFigureStringWithFigureIds(ownFigure, ownGender, figureSets);
 
-                    addAvatarIntoRoom(figureString, product.classId);
+                    previewerRef.current.addAvatar(figureString, product.classId);
                 } else {
-                    addFloorItemIntoRoom(product.classId, new Vector3d(90));
+                    previewerRef.current.addFloorItem(product.classId, new Vector3d(90));
                 }
                 return;
             }
@@ -64,32 +65,35 @@ export const CatalogProductViewWidgetView = () => {
 
                         const typeId = GetRoomContentLoader().getFurnitureWallTypeIdForName('window_double_default');
 
-                        if (typeId > -1) addWallItemIntoRoom(typeId, new Vector3d(90), '');
+                        if (typeId > -1) previewerRef.current.addWallItem(typeId, new Vector3d(90), '');
                         return;
                     }
                     default:
                         room.updateRoomPlaneType('default', 'default', 'default');
-                        addWallItemIntoRoom(product.classId, new Vector3d(90), product.extraParam);
+                        previewerRef.current.addWallItem(product.classId, new Vector3d(90), product.extraParam);
                         return;
                 }
             }
             case FurnitureTypeEnum.Robot:
-                addAvatarIntoRoom(product.extraParam, 0);
+                previewerRef.current.addAvatar(product.extraParam, 0);
                 return;
             case FurnitureTypeEnum.Effect:
-                addAvatarIntoRoom(ownFigure, product.classId);
+                previewerRef.current.addAvatar(ownFigure, product.classId);
                 return;
         }
-    }, [ activeOffer ]);
+    }, [ activeOffer, room ]);
 
     return (
         <Box layout={{ position: 'relative', width: '100%', height: '100%' }}>
             <ColorLayer color="#000000" />
             {activeOffer && (
-                <Box
-                    ref={previewRef}
-                    cursor="pointer"
+                <RoomPreviewer
+                    ref={previewerRef}
+                    roomId={RoomId.TEMP_ROOM_CATALOG}
+                    showFloor={true}
+                    showWalls={true}
                     onPointerTap={onClick}
+                    onReady={api => setRoom(api.room)}
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                 />
             )}

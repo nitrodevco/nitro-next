@@ -2,7 +2,7 @@ import { Container as PixiContainer } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, Dropmenu, ThemeText } from '#base/theme';
+import { Border, Box, Button, Dropmenu, ThemeText, useLayoutSize } from '#base/theme';
 import { useRowVirtualizer } from '#base/theme/hooks/useRowVirtualizer';
 import { useScrollController } from '#base/theme/hooks/useScrollController';
 
@@ -29,24 +29,10 @@ const ROW_GAP = 4;
 export const InventoryFurniView = ({ scrollVariant }: { scrollVariant: string }) => {
     const [ itemCount, setItemCount ] = useState(PAGE_SIZE);
     const [ viewportNode, setViewportNode ] = useState<PixiContainer | null>(null);
-    const [ viewportHeight, setViewportHeight ] = useState(0);
+    const { height: viewportHeight } = useLayoutSize(viewportNode);
     const t = useTranslation();
 
     const scroll = useScrollController({ orientation: 'vertical' });
-
-    useEffect(() => {
-        if (!viewportNode) return;
-
-        let raf = 0;
-        const tick = () => {
-            const height = viewportNode.layout?.computedLayout?.height ?? viewportNode.height ?? 0;
-            setViewportHeight(prev => (Math.abs(prev - height) > 0.5 ? height : prev));
-            raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-
-        return () => cancelAnimationFrame(raf);
-    }, [ viewportNode ]);
 
     const rowCount = Math.ceil(itemCount / COLUMNS);
 
