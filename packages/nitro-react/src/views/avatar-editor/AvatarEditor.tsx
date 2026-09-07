@@ -60,8 +60,6 @@ export const AvatarEditor = () => {
 
     useAvatarEditorHandler(maxWardrobeSlots);
 
-    console.log(palettes);
-
     const changeGender = (next: AvatarGenderType) => {
         if (next === gender) return;
 

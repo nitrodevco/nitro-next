@@ -39,7 +39,7 @@ export const CatalogHeaderView = () => {
                 src={headerImageUrl}
                 layout={{ position: 'absolute', top: 0, left: 0 }}
                 alpha={0.1}
-                scale={1}
+                scale={2}
             />
             <Region layout={{ position: 'relative', width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', marginLeft: 24, gap: 8 }}>
                 <ThemeImage

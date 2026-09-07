@@ -3,10 +3,10 @@ import { boxLayoutToStyle } from '../dom';
 import { FillLayout, getRenderMode } from '../utils';
 
 export const ColorLayer = ({ color, layout }: {
-    color: string | undefined;
+    color?: string;
     layout?: BoxLayout;
 }) => {
-    if (!color) return null;
+    if (!color?.length) return null;
 
     if (getRenderMode() === 'dom') {
         return <div style={{ ...boxLayoutToStyle(layout ?? FillLayout), backgroundColor: color }} />;
@@ -16,7 +16,9 @@ export const ColorLayer = ({ color, layout }: {
         <pixiGraphics
             eventMode="none"
             layout={layout ?? FillLayout}
-            draw={(g) => { g.clear().rect(0, 0, 1, 1).fill(color); }}
+            draw={(g) => {
+                g.clear().rect(0, 0, 1, 1).fill(color);
+            }}
         />
     );
 };

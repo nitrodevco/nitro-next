@@ -1,5 +1,6 @@
 import { AvatarActionStateType, AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActiveActionData, IAnimationLayerData, IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, ISpriteDataContainer } from '@nitrodevco/nitro-api';
-import { ColorMatrixFilter, Container, Filter, ImageLike, RenderTexture, Sprite } from 'pixi.js';
+import { ColorMatrixFilter, Container, Filter, ImageLike, RenderTexture, Sprite, Texture } from 'pixi.js';
+import { ConvolutionFilter } from 'pixi-filters';
 
 import { GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
 
@@ -21,6 +22,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     private static DEFAULT_DIRECTION: number = 2;
     private static DEFAULT_AVATAR_SET: string = AvatarSetType.Full;
     private static MAX_IMAGE_CACHE: number = 5;
+    /** The strength (`k = 8`) of the Flash `AvatarImage` sharpen applied to reduced-size renders. */
+    private static REDUCED_IMAGE_SHARPEN: number = 8;
 
     protected _structure: AvatarStructure;
     protected _assets: AssetAliasCollection;
@@ -234,6 +237,124 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         }
 
         return this._image;
+    }
+
+    public getCroppedImage(setType: AvatarSetType, hightlight: boolean, scale: number = 1): RenderTexture | undefined {
+        if (!this._mainAction?.definition) return undefined;
+
+        if (!this._actionsSorted) this.endActionAppends();
+
+        const avatarCanvas = this._structure.getCanvas(this._scale, this._mainAction.definition.geometryType);
+
+        if (!avatarCanvas) return undefined;
+
+        const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
+        const container = new Container();
+
+        for (let i = parts.length - 1; i >= 0; i--) {
+            const set = parts[i];
+            const part = this._cache.getImageContainer(set, this._frameCounter);
+
+            if (!part || !part.image) continue;
+
+            const point = part.regPoint.clone();
+
+            point.x += avatarCanvas.offset.x;
+            point.y += avatarCanvas.offset.y;
+
+            point.x += avatarCanvas.regPoint.x;
+            point.y += avatarCanvas.regPoint.y;
+
+            const partContainer = new Container();
+
+            partContainer.addChild(part.image);
+            partContainer.position.set(point.x, point.y);
+
+            container.addChild(partContainer);
+        }
+
+        // The Flash `getImage(setType, scale)` blitted every part of the set onto the avatar canvas,
+        // then copied out the union of the parts' bounds - a head set comes back as just the
+        // head, not the head floating at the top of a full-body canvas. Only the drawn sprites
+        // count: every part container also holds a `Texture.EMPTY` placeholder sized to the
+        // part's full union box, which can reach far outside the canvas (a layer with a large
+        // negative offset) and would otherwise push the head into a corner of the crop.
+        const placeholders: Sprite[] = [];
+
+        const hidePlaceholders = (node: Container) => {
+            for (const child of node.children) {
+                if ((child instanceof Sprite) && (child.texture === Texture.EMPTY)) {
+                    child.measurable = false;
+                    placeholders.push(child);
+                }
+
+                hidePlaceholders(child);
+            }
+        };
+
+        hidePlaceholders(container);
+
+        const bounds = container.getLocalBounds().rectangle.clone();
+
+        for (const placeholder of placeholders) placeholder.measurable = true;
+
+        if ((bounds.width <= 0) || (bounds.height <= 0)) return undefined;
+
+        if (this._avatarSpriteData?.colorTransform) container.filters = [ this._avatarSpriteData.colorTransform ];
+
+        const fullWidth = Math.max(1, Math.ceil(bounds.width));
+        const fullHeight = Math.max(1, Math.ceil(bounds.height));
+        const fullTexture = TexturePool.createRenderTexture(fullWidth, fullHeight);
+
+        if (!fullTexture) return undefined;
+
+        container.position.set(-bounds.x, -bounds.y);
+
+        TextureUtils.getRenderer().render({
+            target: fullTexture,
+            container,
+            clear: true,
+        });
+
+        if (scale === 1) return fullTexture;
+
+        // Flash drew the reduced copy with `smoothing = true` and then ran a 3x3 sharpen over it
+        // (`ConvolutionFilter(3, 3, [-0.08 x 8, 1.64], 1)`) - a plain nearest-neighbour half-size
+        // render drops every other row of a pixel-art head and looks squashed.
+        const width = Math.max(1, Math.ceil(fullWidth * scale));
+        const height = Math.max(1, Math.ceil(fullHeight * scale));
+        const texture = TexturePool.createRenderTexture(width, height);
+
+        if (!texture) {
+            TexturePool.releaseTexture(fullTexture);
+
+            return undefined;
+        }
+
+        fullTexture.source.scaleMode = 'linear';
+
+        const edge = AvatarImage.REDUCED_IMAGE_SHARPEN / -100;
+        const sharpen = new ConvolutionFilter({
+            matrix: [ edge, edge, edge, edge, (edge * -8) + 1, edge, edge, edge, edge ],
+            width,
+            height,
+        });
+        const reduced = new Sprite(fullTexture);
+
+        reduced.scale.set(scale);
+        reduced.filters = [ sharpen ];
+
+        TextureUtils.getRenderer().render({
+            target: texture,
+            container: reduced,
+            clear: true,
+        });
+
+        reduced.destroy();
+        sharpen.destroy();
+        TexturePool.releaseTexture(fullTexture);
+
+        return texture;
     }
 
     public async getCroppedImageAsync(setType: AvatarSetType, hightlight: boolean, _scale: number = 1): Promise<ImageLike | undefined> {
