@@ -2,6 +2,7 @@ import { IRoom } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
 import { createRoomCameraSlice, RoomCameraSlice, RoomCameraSliceInitialState } from './RoomCameraSlice';
+import { createRoomChatSlice, RoomChatSlice, RoomChatSliceInitialState } from './RoomChatSlice';
 import { createRoomMouseSlice, RoomMouseSlice, RoomMouseSliceInitialState } from './RoomMouseSlice';
 import { createRoomSelectedObjectSlice, RoomSelectedObjectSlice, RoomSelectedObjectSliceInitialState } from './RoomSelectedObjectSlice';
 import { createRoomSessionSlice, RoomSessionSlice, RoomSessionSliceInitialState } from './RoomSessionSlice';
@@ -18,7 +19,7 @@ type Actions = {
     setOwnUserId: (ownUserId: number) => void;
 };
 
-export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice;
+export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomChatSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice;
 
 export const createRoomStore = () => createStore<RoomStore>()((set, get, store) => ({
     room: undefined,
@@ -32,6 +33,7 @@ export const createRoomStore = () => createStore<RoomStore>()((set, get, store) 
             ...RoomMouseSliceInitialState,
             ...RoomSessionSliceInitialState,
             ...RoomCameraSliceInitialState,
+            ...RoomChatSliceInitialState,
             ...RoomSelectedObjectSliceInitialState,
             ...RoomStackingHeightMapSliceInitialState,
             ...RoomUsersSliceInitialState,
@@ -42,6 +44,7 @@ export const createRoomStore = () => createStore<RoomStore>()((set, get, store) 
     ...createRoomMouseSlice(set, get, store),
     ...createRoomSessionSlice(set, get, store),
     ...createRoomCameraSlice(set, get, store),
+    ...createRoomChatSlice(set, get, store),
     ...createRoomSelectedObjectSlice(set, get, store),
     ...createRoomStackingHeightMapSlice(set, get, store),
     ...createRoomUsersSlice(set, get, store),

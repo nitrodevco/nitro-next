@@ -8,4 +8,7 @@ export const useUserActions = () => useUserContext(useShallow(x => ({
     setNoobnessLevel: x.setNoobnessLevel,
     increasePetRespects: x.increasePetRespects,
     decreasePetRespects: x.decreasePetRespects,
+    setChatPreferences: x.setChatPreferences,
+    setPreferredChatStyle: x.setPreferredChatStyle,
+    setFreeFlowChatDisabled: x.setFreeFlowChatDisabled,
 })));

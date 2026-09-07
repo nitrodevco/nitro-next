@@ -1,12 +1,12 @@
 import { ChangeUserNameResultMessageCode } from '@nitrodevco/nitro-api';
-import { ChangeUserNameResultMessage, EmailStatusResultEventMessage, FigureUpdateEventMessage, NoobnessLevelMessage, PetRespectFailedMessage, UserNameChangedMessage, UserObjectMessage, UserRightsMessage } from '@nitrodevco/nitro-packets';
+import { AccountPreferencesEventMessage, ChangeUserNameResultMessage, EmailStatusResultEventMessage, FigureUpdateEventMessage, NoobnessLevelMessage, PetRespectFailedMessage, UserNameChangedMessage, UserObjectMessage, UserRightsMessage } from '@nitrodevco/nitro-packets';
 
 import { useOwnUserId, useUserActions, useUserInfoActions } from '#base/context';
 import { useMessageListener } from '#base/hooks';
 
 export const useUserInfoHandler = () => {
     const userId = useOwnUserId();
-    const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects } = useUserActions();
+    const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects, setChatPreferences } = useUserActions();
     const { setUserInfo, setName, setFigure, setEmailVerified } = useUserInfoActions();
 
     useMessageListener(FigureUpdateEventMessage, (data) => {
@@ -43,5 +43,16 @@ export const useUserInfoHandler = () => {
 
     useMessageListener(EmailStatusResultEventMessage, (data) => {
         setEmailVerified(data.isVerified);
+    });
+
+    useMessageListener(AccountPreferencesEventMessage, (data) => {
+        setChatPreferences({
+            preferredChatStyle: data.preferedChatStyle,
+            freeFlowChatDisabled: data.freeFlowChatDisabled,
+            chatSizePreference: data.chatSizePreference,
+            chatMode: data.chatMode,
+            chatBubbleWidth: data.chatBubbleWidth,
+            chatScrollSpeed: data.chatScrollSpeed,
+        });
     });
 };

@@ -1,3 +1,4 @@
+export * from './avatar-editor';
 export * from './catalog/useCatalogMessages';
 export * from './catalog/useCatalogNavigation';
 export * from './catalog/useCatalogNodeActions';
@@ -15,6 +16,7 @@ export * from './logic/useFurnitureDataLoader';
 export * from './logic/useLocalizationLoader';
 export * from './logic/useProductDataLoader';
 export * from './navigator/useNavigatorVisibility';
+export * from './room/chat';
 export * from './room/useRoomCamera';
 export * from './room/useRoomCursorUpdate';
 export * from './room/useRoomEventDispatcher';
@@ -35,4 +37,3 @@ export * from './room/useRoomObjectSelected';
 export * from './room/useRoomObjectValidation';
 export * from './room/useRoomPreviewer';
 export * from './room/useRoomUserData';
-export * from './avatar-editor';

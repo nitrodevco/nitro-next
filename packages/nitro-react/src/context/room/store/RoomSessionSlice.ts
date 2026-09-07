@@ -1,4 +1,4 @@
-import { IRoomChatSettings, IRoomModerationSettings, RoomChatBubbleWidthType, RoomChatFloodSensitivityType, RoomChatModeType, RoomChatScrollSpeedType, RoomControllerLevelEnum, RoomDoorModeEnum, RoomModerationType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
+import { IRoomChatSettings, IRoomModerationSettings, RoomChatFloodSensitivityType, RoomControllerLevelEnum, RoomDoorModeEnum, RoomModerationType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 import { StateCreator } from 'zustand';
 
 type State = {
@@ -53,10 +53,6 @@ export const RoomSessionSliceInitialState: State = {
         whoCanBan: RoomModerationType.None,
     },
     chatSettings: {
-        mode: RoomChatModeType.FreeFlow,
-        bubbleSize: RoomChatBubbleWidthType.Normal,
-        scrollUpFrequency: RoomChatScrollSpeedType.Normal,
-        fullHearRange: 0,
         floodSensitivity: RoomChatFloodSensitivityType.Normal,
     },
 };

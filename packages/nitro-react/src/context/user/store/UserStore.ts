@@ -1,4 +1,4 @@
-import { ClubLevelEnum, NoobnessLevelEnum, SecurityLevelEnum } from '@nitrodevco/nitro-api';
+import { ClubLevelEnum, NoobnessLevelEnum, RoomChatBubbleWidthType, RoomChatModeType, RoomChatScrollSpeedType, SecurityLevelEnum } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
 import { createUserFriendsSlice, UserFriendsSlice } from './UserFriendsSlice';
@@ -17,7 +17,25 @@ type State = {
     isAuthenticHabbo: boolean;
     isRoomCameraFollowDisabled: boolean;
     uiFlags: number;
+    /** `AccountPreferencesEventMessage.preferedChatStyle` - the bubble style the user's own messages are sent with. */
+    preferredChatStyle: number;
+    /** `AccountPreferencesEventMessage.freeFlowChatDisabled` - hides the in-room bubbles entirely. */
+    freeFlowChatDisabled: boolean;
+    chatSizePreference: number;
+    /** The account-level FreeFlow settings the newer client moved out of the room settings: `chatMode` / `chatBubbleWidth` / `chatScrollSpeed`. */
+    chatMode: RoomChatModeType;
+    chatBubbleWidth: RoomChatBubbleWidthType;
+    chatScrollSpeed: RoomChatScrollSpeedType;
 };
+
+export interface UserChatPreferences {
+    preferredChatStyle: number;
+    freeFlowChatDisabled: boolean;
+    chatSizePreference: number;
+    chatMode: RoomChatModeType;
+    chatBubbleWidth: RoomChatBubbleWidthType;
+    chatScrollSpeed: RoomChatScrollSpeedType;
+}
 
 type Actions = {
     setTags: (tags: string[]) => void;
@@ -25,6 +43,9 @@ type Actions = {
     setNoobnessLevel: (noobnessLevel: NoobnessLevelEnum) => void;
     increasePetRespects: () => void;
     decreasePetRespects: () => void;
+    setChatPreferences: (preferences: UserChatPreferences) => void;
+    setPreferredChatStyle: (preferredChatStyle: number) => void;
+    setFreeFlowChatDisabled: (freeFlowChatDisabled: boolean) => void;
 };
 
 const initialState: State = {
@@ -39,6 +60,12 @@ const initialState: State = {
     isAuthenticHabbo: false,
     isRoomCameraFollowDisabled: false,
     uiFlags: 0,
+    preferredChatStyle: 0,
+    freeFlowChatDisabled: false,
+    chatSizePreference: 0,
+    chatMode: RoomChatModeType.FreeFlow,
+    chatBubbleWidth: RoomChatBubbleWidthType.Normal,
+    chatScrollSpeed: RoomChatScrollSpeedType.Normal,
 };
 
 export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice;
@@ -50,6 +77,9 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
     increasePetRespects: () => set(state => ({ petRespectLeft: state.petRespectLeft + 1 })),
     decreasePetRespects: () => set(state => ({ petRespectLeft: state.petRespectLeft - 1 })),
     setTags: (tags: string[]) => set({ tags }),
+    setChatPreferences: (preferences: UserChatPreferences) => set({ ...preferences }),
+    setPreferredChatStyle: (preferredChatStyle: number) => set({ preferredChatStyle }),
+    setFreeFlowChatDisabled: (freeFlowChatDisabled: boolean) => set({ freeFlowChatDisabled }),
     ...createUserInfoSlice(set, get, store),
     ...createUserFriendsSlice(set, get, store),
     ...createUserWalletSlice(set, get, store),

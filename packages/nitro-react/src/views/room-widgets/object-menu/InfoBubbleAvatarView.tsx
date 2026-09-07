@@ -2,7 +2,7 @@ import { ISimpleRoomObjectData, RoomControllerLevelEnum } from '@nitrodevco/nitr
 import { AmbassadorAlertComposer, AssignRightsComposer, BanUserWithDurationComposer, IgnoreUserComposer, KickUserComposer, MuteUserComposer, RemoveRightsComposer, SetRelationshipStatusComposer, UnignoreUserComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useOwnIsAmbassador, useOwnRespectData, useOwnRoomObjectId, useRoomPermissionsSelector, useRoomSelector, useRoomSettingsSelector, useTranslation, useWebSocketContext } from '#base/context';
+import { useOwnIsAmbassador, useOwnRespectData, useOwnRoomObjectId, useRoomChatActions, useRoomPermissionsSelector, useRoomSelector, useRoomSettingsSelector, useTranslation, useWebSocketContext } from '#base/context';
 import { useRoomUserData } from '#base/hooks';
 import { Box, Bubble, Button, NitroIcon, ThemeText } from '#base/theme';
 
@@ -46,6 +46,7 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
     const isAmbassador = useOwnIsAmbassador();
     const t = useTranslation();
     const { send } = useWebSocketContext();
+    const { setChatInputContent } = useRoomChatActions();
 
     if (!room || !userData) return null;
 
@@ -82,6 +83,7 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
             case 'trade':
                 break;
             case 'whisper':
+                setChatInputContent('whisper', userData.name);
                 break;
             case 'ignore':
                 send(new IgnoreUserComposer({ userId: userData.webId }));

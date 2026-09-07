@@ -15,6 +15,7 @@ export * from './room/RoomContainer';
 export * from './room/RoomEventHandler';
 export * from './room/RoomPreviewer';
 export * from './room/RoomWrapper';
+export * from './room/widgets/chat/RoomChatWidget';
 export * from './room/widgets/object-infostand/InfostandFurni';
 export * from './room/widgets/object-infostand/RoomObjectInfostandWidget';
 export * from './room/widgets/object-menu/RoomObjectMenuBubble';

@@ -5,6 +5,7 @@ import {
 } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
+import { preloadChatStyles } from '#base/chat';
 import { PixiApplicationRoot, preloadNitroTruffle, preloadThemeAssets, WIRED_HABBO_KEYS } from '#base/theme';
 
 import { useWebSocketContext } from './context';
@@ -30,6 +31,7 @@ export const NitroPixiView = () => {
                 await Promise.all([
                     preloadNitroTruffle(WIRED_HABBO_KEYS),
                     preloadThemeAssets(),
+                    preloadChatStyles(),
                     GetRoomEngine().init(),
                 ]);
 

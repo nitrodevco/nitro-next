@@ -1,4 +1,5 @@
 export * from './actions/useRoomActions';
+export * from './actions/useRoomChatActions';
 export * from './actions/useRoomMouseActions';
 export * from './actions/useRoomPermissionActions';
 export * from './actions/useRoomSelectedObjectActions';
@@ -23,9 +24,11 @@ export * from './selectors/session/useRoomIsPlayingGame';
 export * from './selectors/session/useRoomPermissionsSelector';
 export * from './selectors/session/useRoomSettingsSelector';
 export * from './selectors/useRoomCameraSelector';
+export * from './selectors/useRoomChatSelector';
 export * from './selectors/useRoomSelector';
 export * from './selectors/useRoomStackingHeightMapSelector';
 export * from './store/RoomCameraSlice';
+export * from './store/RoomChatSlice';
 export * from './store/RoomMouseSlice';
 export * from './store/RoomSelectedObjectSlice';
 export * from './store/RoomSessionSlice';

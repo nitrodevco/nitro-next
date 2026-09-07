@@ -7,6 +7,7 @@ export * from './selectors/friends/useFriendsSelector';
 export * from './selectors/friends/useOfflineFriendsSelector';
 export * from './selectors/friends/useOnlineFriendsSelector';
 export * from './selectors/useIsSystemShutdown';
+export * from './selectors/useOwnChatPreferences';
 export * from './selectors/useOwnClubLevel';
 export * from './selectors/useOwnHasClub';
 export * from './selectors/useOwnIsAmbassador';

@@ -3,6 +3,7 @@ export * from './friends/useFriendsSelector';
 export * from './friends/useOfflineFriendsSelector';
 export * from './friends/useOnlineFriendsSelector';
 export * from './useIsSystemShutdown';
+export * from './useOwnChatPreferences';
 export * from './useOwnClubLevel';
 export * from './useOwnHasClub';
 export * from './useOwnIsAmbassador';

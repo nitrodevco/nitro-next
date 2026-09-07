@@ -23,7 +23,7 @@ export const InventoryView = () => {
     return (
         <Frame
             id="inventory"
-            variant="3"
+            variant="2"
             resizeDirection="y"
             layout={{ position: 'absolute', width: 490, height: 342, minWidth: 490, maxWidth: 490, minHeight: 300, top: 20, left: 20 }}
             caption={t('inventory.title')}

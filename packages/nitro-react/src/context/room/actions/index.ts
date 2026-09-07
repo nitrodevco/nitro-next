@@ -1,4 +1,5 @@
 export * from './useRoomActions';
+export * from './useRoomChatActions';
 export * from './useRoomMouseActions';
 export * from './useRoomPermissionActions';
 export * from './useRoomSelectedObjectActions';
