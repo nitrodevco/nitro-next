@@ -1,4 +1,4 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper, ParseStrings } from '@nitrodevco/nitro-api';
 
 export type RoomFilterSettingsMessageType = {
     badWords: string[];
@@ -7,14 +7,8 @@ export type RoomFilterSettingsMessageType = {
 export class RoomFilterSettingsMessage implements IIncomingPacket<RoomFilterSettingsMessageType> {
     public parse(wrapper: IMessageDataWrapper): RoomFilterSettingsMessageType {
         const packet: RoomFilterSettingsMessageType = {
-            badWords: [],
+            badWords: ParseStrings(wrapper),
         };
-
-        let v1 = wrapper.readInt();
-        while (v1 > 0) {
-            packet.badWords.push(wrapper.readString());
-            v1--;
-        }
 
         return packet;
     }

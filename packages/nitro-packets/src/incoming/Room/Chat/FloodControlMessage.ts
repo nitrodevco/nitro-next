@@ -7,10 +7,8 @@ export type FloodControlMessageType = {
 export class FloodControlMessage implements IIncomingPacket<FloodControlMessageType> {
     public parse(wrapper: IMessageDataWrapper): FloodControlMessageType {
         const packet: FloodControlMessageType = {
-            seconds: 0,
+            seconds: wrapper.readInt(),
         };
-
-        packet.seconds = wrapper.readInt();
 
         return packet;
     }

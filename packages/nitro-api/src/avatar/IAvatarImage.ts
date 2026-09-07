@@ -15,6 +15,8 @@ export interface IAvatarImage {
     updateAnimationByFrames(frame?: number): void;
     resetAnimationFrameCounter(): void;
     getImage(setType: AvatarSetType, hightlight: boolean, scale?: number): RenderTexture | undefined;
+    /** The set's parts rendered into a texture cropped to their union bounds (the Flash `getImage(setType, scale)` behaviour), optionally scaled - the caller owns the returned texture. */
+    getCroppedImage(setType: AvatarSetType, hightlight: boolean, scale?: number): RenderTexture | undefined;
     getCroppedImageAsync(setType: AvatarSetType, hightlight: boolean, scale?: number): Promise<ImageLike | undefined>;
     getCroppedBase64Async(setType: AvatarSetType, hightlight: boolean, scale?: number): Promise<string | undefined>;
     initActionAppends(): void;

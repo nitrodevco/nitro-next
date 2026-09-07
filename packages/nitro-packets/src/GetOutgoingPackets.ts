@@ -293,7 +293,7 @@ export const GetOutgoingPackets = () => {
         [OutgoingHeader.PollRejectComposer]: PollRejectComposer,
         [OutgoingHeader.PollStartComposer]: PollStartComposer,
         [OutgoingHeader.SetChatPreferencesComposer]: SetChatPreferencesComposer,
-        [OutgoingHeader.SetChatPreferencesComposer]: SetChatStylePreferenceComposer,
+        [OutgoingHeader.SetChatStylePreferenceComposer]: SetChatStylePreferenceComposer,
         [OutgoingHeader.SetIgnoreRoomInvitesComposer]: SetIgnoreRoomInvitesComposer,
         [OutgoingHeader.SetNewNavigatorWindowPreferencesComposer]: SetNewNavigatorWindowPreferencesComposer,
         [OutgoingHeader.SetRoomCameraPreferencesComposer]: SetRoomCameraPreferencesComposer,

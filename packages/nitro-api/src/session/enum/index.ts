@@ -7,6 +7,7 @@ export * from './RoomChatBubbleWidthType';
 export * from './RoomChatFloodSensitivityType';
 export * from './RoomChatModeType';
 export * from './RoomChatScrollSpeedType';
+export * from './RoomChatTypeEnum';
 export * from './RoomDoorModeEnum';
 export * from './RoomModerationType';
 export * from './RoomTradeModeEnum';

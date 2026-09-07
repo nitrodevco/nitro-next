@@ -442,6 +442,7 @@ export * from './incoming/Room/Bots/BotForceOpenContextMenuMessage';
 export * from './incoming/Room/Bots/BotSkillListUpdateMessage';
 export * from './incoming/Room/Camera/class_1476Message';
 export * from './incoming/Room/Chat/ChatMessage';
+export * from './incoming/Room/Chat/Data/ChatLinkParser';
 export * from './incoming/Room/Chat/FloodControlMessage';
 export * from './incoming/Room/Chat/RemainingMutePeriodMessage';
 export * from './incoming/Room/Chat/RoomChatSettingsMessage';

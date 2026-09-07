@@ -440,6 +440,7 @@ export * from './Room/Bots/BotForceOpenContextMenuMessage';
 export * from './Room/Bots/BotSkillListUpdateMessage';
 export * from './Room/Camera/class_1476Message';
 export * from './Room/Chat/ChatMessage';
+export * from './Room/Chat/Data/ChatLinkParser';
 export * from './Room/Chat/FloodControlMessage';
 export * from './Room/Chat/RemainingMutePeriodMessage';
 export * from './Room/Chat/RoomChatSettingsMessage';

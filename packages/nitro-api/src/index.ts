@@ -320,6 +320,7 @@ export * from './session/enum/RoomChatBubbleWidthType';
 export * from './session/enum/RoomChatFloodSensitivityType';
 export * from './session/enum/RoomChatModeType';
 export * from './session/enum/RoomChatScrollSpeedType';
+export * from './session/enum/RoomChatTypeEnum';
 export * from './session/enum/RoomDoorModeEnum';
 export * from './session/enum/RoomModerationType';
 export * from './session/enum/RoomTradeModeEnum';
