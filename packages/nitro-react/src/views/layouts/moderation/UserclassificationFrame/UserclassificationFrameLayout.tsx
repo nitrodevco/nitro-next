@@ -17,6 +17,7 @@ export const UserclassificationFrameLayout = ({ itemsUserclassificationList, lay
             variant="0"
             caption="User Classifications"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 292, height: 224, minWidth: 150, minHeight: 100, ...layout }}
         >

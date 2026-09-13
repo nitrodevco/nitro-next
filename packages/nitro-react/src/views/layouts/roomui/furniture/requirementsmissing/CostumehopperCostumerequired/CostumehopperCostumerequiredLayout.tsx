@@ -18,6 +18,7 @@ export const CostumehopperCostumerequiredLayout = ({ layout, list, onClose, srcI
         <Frame
             variant="100"
             caption={t('costumehopper.costumerequired.header')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 310, height: 149, minWidth: 310, minHeight: 149, ...layout }}
         >

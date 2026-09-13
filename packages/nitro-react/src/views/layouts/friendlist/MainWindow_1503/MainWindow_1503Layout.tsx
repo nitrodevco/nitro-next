@@ -24,6 +24,7 @@ export const MainWindow_1503Layout = ({ captionInfoText, layout, mainContent, on
             name="friendlist_window"
             caption={t('friendlist.friends')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 275, height: 105, minWidth: 220, minHeight: 105, ...layout }}
         >

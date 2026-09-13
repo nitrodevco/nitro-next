@@ -22,6 +22,7 @@ export const LayoutInfoPets3_1581Layout = ({ captionCtlgText1, captionCtlgText2,
                 <Border
                     variant="2"
                     tintColor="#8899a2"
+                    backgroundColor="#8899a2"
                     layout={{ position: 'absolute', left: 10, width: 340, top: 10, bottom: 10 }}
                 >
                     <ThemeImage

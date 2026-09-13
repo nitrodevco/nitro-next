@@ -35,6 +35,7 @@ export const MarketPlaceOwnItemsWidgetSearchInputBorderItem = ({ captionSearchPl
             {(visibleSearchPlaceholder ?? true) && (
                 <Region
                     name="search_placeholder"
+                    alpha={0.5}
                     layout={{ position: 'absolute', left: 6, width: 82, top: 3, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

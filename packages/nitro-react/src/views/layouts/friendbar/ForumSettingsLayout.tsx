@@ -51,6 +51,7 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
             variant="3"
             caption={t('groupforum.settings.window_title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 350, height: 545, minWidth: 350, maxWidth: 350, minHeight: 455, ...layout }}

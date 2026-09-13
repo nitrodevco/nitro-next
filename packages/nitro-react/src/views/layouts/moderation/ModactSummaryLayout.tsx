@@ -22,6 +22,7 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
             variant="0"
             caption="Mod action on:"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 383, height: 295, minWidth: 383, minHeight: 295, ...layout }}
         >

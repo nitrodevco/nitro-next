@@ -12,6 +12,7 @@ export const SettingsLayout = ({ layout }: SettingsLayoutProps) => {
                 <Border
                     variant="6"
                     tintColor="#55534e"
+                    backgroundColor="#55534e"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Border

@@ -85,6 +85,7 @@ export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavig
                 variant="0"
                 name="search_header"
                 tintColor="#cccccc"
+                backgroundColor="#cccccc"
                 layout={{ position: 'absolute', left: 9, width: 294, top: 26, height: 30 }}
             >
                 <TextInput

@@ -18,6 +18,7 @@ export const UserThanksLayout = ({ layout, onClose, onCloseButton }: UserThanksL
             id="user_thanks"
             name="user_thanks"
             caption={t('guide.help.request.user.thanks.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 192, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}

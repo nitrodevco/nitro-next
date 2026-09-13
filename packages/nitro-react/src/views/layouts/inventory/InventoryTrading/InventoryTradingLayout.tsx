@@ -42,6 +42,7 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                 >
                     <Region
                         name="help_text"
+                        alpha={0.6}
                         layout={{ position: 'absolute', left: 8, width: 461, top: 7, height: 4, maxWidth: 461, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -81,11 +82,13 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                     <ThemeImage
                         name="arrow_right"
                         src={srcArrowRight ?? layoutImage('inventory_trading_trading_silver_arrow_right.png')}
+                        alpha={0.45}
                         layout={{ position: 'absolute', left: 30, width: 156, top: 27, height: 28 }}
                     />
                     <ThemeImage
                         name="arrow_left"
                         src={srcArrowLeft ?? layoutImage('inventory_trading_trading_silver_arrow_left.png')}
+                        alpha={0.45}
                         layout={{ position: 'absolute', left: 292, width: 156, top: 27, height: 28 }}
                     />
                     <ThemeText

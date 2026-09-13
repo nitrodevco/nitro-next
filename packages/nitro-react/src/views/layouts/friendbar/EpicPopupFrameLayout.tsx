@@ -16,6 +16,7 @@ export const EpicPopupFrameLayout = ({ layout, onClose, onCloseButton, srcConten
     return (
         <Frame
             variant="100"
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 215, height: 275, minWidth: 215, minHeight: 275, ...layout }}
         >

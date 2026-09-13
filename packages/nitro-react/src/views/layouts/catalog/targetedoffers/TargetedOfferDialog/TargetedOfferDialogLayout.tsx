@@ -35,6 +35,7 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
         <Frame
             variant="3"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 575, height: 430, minWidth: 575, minHeight: 430, ...layout }}
         >

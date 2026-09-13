@@ -19,6 +19,7 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
             variant="3"
             caption={t('navigator.thumbnail.camera.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 148, height: 217, minWidth: 148, minHeight: 217, ...layout }}
         >

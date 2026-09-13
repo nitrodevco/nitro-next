@@ -20,6 +20,8 @@ export const PhotoPurchaseConfirmationLayoutPurchaseWrapperItem = ({ layout, onB
             variant="2"
             name="purchase_wrapper"
             tintColor="#c7c6bf"
+            backgroundColor="#c7c6bf"
+            backgroundAlpha={0.04}
             layout={{ width: 316, height: 55, flexShrink: 0, minWidth: 316, maxWidth: 316, minHeight: 55, ...layout }}
         >
             {(visiblePropertiesItemlist ?? true) && (

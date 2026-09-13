@@ -16,6 +16,8 @@ export const HabbiconPurchaseConfirmationLayoutReceiveRowItem = ({ captionReceiv
             variant="0"
             name="receive_row"
             tintColor="#f0e8cf"
+            backgroundColor="#f0e8cf"
+            backgroundAlpha={0.06}
             layout={{ width: 197, height: 28, flexShrink: 0, ...layout }}
         >
             {(visibleReceiveText ?? true) && (

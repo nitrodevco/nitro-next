@@ -45,6 +45,7 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
             variant="3"
             caption={t('floor.plan.editor.title')}
             tintColor="#ff8d00"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 662, height: 600, minWidth: 662, maxWidth: 1380, minHeight: 600, maxHeight: 900, ...layout }}
         >
@@ -118,7 +119,10 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
                         layout={{ position: 'absolute', left: -4, width: 30, top: -3, height: 30 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 1034, width: 30, top: 108, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region
+                    alpha={0.2}
+                    layout={{ position: 'absolute', left: 1034, width: 30, top: 108, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
                     hi :)
                 </Region>
             </Border>

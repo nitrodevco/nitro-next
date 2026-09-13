@@ -45,6 +45,7 @@ export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, capti
             )}
             <Region
                 name="content_text_2_a"
+                alpha={0.6}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -54,6 +55,7 @@ export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, capti
             </Region>
             <Region
                 name="content_text_2_b"
+                alpha={0.6}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 180, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText

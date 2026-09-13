@@ -23,6 +23,7 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
             variant="3"
             caption={t('catalog.club.buy.confirm')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 369, height: 210, minWidth: 369, minHeight: 210, ...layout }}
         >

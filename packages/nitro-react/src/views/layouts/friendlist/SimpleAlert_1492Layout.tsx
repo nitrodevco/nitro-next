@@ -18,6 +18,7 @@ export const SimpleAlert_1492Layout = ({ captionBodyText, layout, onClose, onOk 
             id="alert_%203"
             name="alert_%203"
             caption="PH Caption"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 161, height: 157, minWidth: 161, minHeight: 157, ...layout }}
         >

@@ -50,6 +50,7 @@ export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionH
                 >
                     <ThemeImage
                         src={layoutImage('common_promo_arrow_close.png')}
+                        alpha={0.7}
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                 </Region>

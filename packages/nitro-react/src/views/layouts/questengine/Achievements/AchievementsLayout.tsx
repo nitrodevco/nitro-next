@@ -32,6 +32,7 @@ export const AchievementsLayout = ({ achievementPicBitmap, achievementsHeaderCon
             name="quest_main_window"
             caption={t('inventory.achievements')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 389, height: 297, minWidth: 389, minHeight: 297, ...layout }}
         >

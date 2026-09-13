@@ -17,6 +17,7 @@ export const EffectSelectorLayout = ({ itemsEffectList, layout, onClose }: Effec
             variant="3"
             caption="Show effect on avatar"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 280, height: 270, minWidth: 280, minHeight: 270, ...layout }}
         >

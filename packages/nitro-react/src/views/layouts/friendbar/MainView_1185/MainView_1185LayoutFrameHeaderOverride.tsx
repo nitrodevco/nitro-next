@@ -54,7 +54,6 @@ export const MainView_1185LayoutFrameHeaderOverride = ({ captionTitleTxt, captio
                 </Region>
                 <Region
                     name="dropdown_region"
-                    dynamicStyle="button"
                     onPointerTap={onDropdownRegion}
                     cursor="pointer"
                     layout={{ width: 13, height: 9, flexShrink: 0 }}
@@ -62,6 +61,7 @@ export const MainView_1185LayoutFrameHeaderOverride = ({ captionTitleTxt, captio
                     <ThemeImage
                         name="dropdown_opener"
                         src={srcDropdownOpener ?? layoutImage('badge_leaderboard_dropdown_opener.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 0, width: 13, top: 0, height: 8 }}
                     />
                     <Dropmenu

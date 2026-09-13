@@ -18,6 +18,7 @@ export const Main_100Layout = ({ body, header, layout, onClose, recolorDark }: M
             variant="3"
             caption="Reward Track"
             tintColor={recolorDark ?? '#3576b9'}
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 1103, height: 722, minWidth: 1103, minHeight: 722, ...layout }}
         >

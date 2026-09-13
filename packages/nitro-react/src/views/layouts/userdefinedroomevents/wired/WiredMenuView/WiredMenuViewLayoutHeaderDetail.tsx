@@ -14,30 +14,37 @@ export const WiredMenuViewLayoutHeaderDetail = ({ layout }: WiredMenuViewLayoutH
         >
             <ThemeImage
                 src={layoutImage('wired_box_lines.png')}
+                alpha={0.3}
                 layout={{ position: 'absolute', left: 8, width: 64, top: 20, height: 51 }}
             />
             <ThemeImage
                 src={layoutImage('wired_box_lines.png')}
+                alpha={0.3}
                 layout={{ position: 'absolute', left: 78, width: 64, top: -20, height: 51 }}
             />
             <ThemeImage
                 src={layoutImage('wired_box_lines.png')}
+                alpha={0.3}
                 layout={{ position: 'absolute', left: 148, width: 64, top: 20, height: 51 }}
             />
             <ThemeImage
                 src={layoutImage('wired_box_lines.png')}
+                alpha={0.3}
                 layout={{ position: 'absolute', left: 218, width: 64, top: -20, height: 51 }}
             />
             <ThemeImage
                 src={layoutImage('wired_box_lines.png')}
+                alpha={0.3}
                 layout={{ position: 'absolute', left: 288, width: 64, top: 20, height: 51 }}
             />
             <ThemeImage
                 src={layoutImage('wired_box_lines.png')}
+                alpha={0.3}
                 layout={{ position: 'absolute', left: 358, width: 64, top: -20, height: 51 }}
             />
             <ThemeImage
                 src={layoutImage('wired_box_lines.png')}
+                alpha={0.3}
                 layout={{ position: 'absolute', left: 428, width: 64, top: 20, height: 51 }}
             />
         </Region>

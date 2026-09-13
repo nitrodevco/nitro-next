@@ -54,6 +54,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_reception"
                         src={srcIconsToolbarReception ?? layoutImage('bottom_bar_logo.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 28, top: 5, height: 28 }}
                     />
                 </Region>
@@ -70,6 +71,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_home"
                         src={srcIconsToolbarHome ?? layoutImage('bottom_bar_home.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 32, top: 5, height: 30 }}
                     />
                 </Region>
@@ -86,6 +88,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_navigator"
                         src={srcIconsToolbarNavigator ?? layoutImage('bottom_bar_navigator.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 5, height: 30 }}
                     />
                 </Region>
@@ -102,6 +105,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_progression"
                         src={srcIconsToolbarProgression ?? layoutImage('bottom_bar_progression.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 0, height: 37 }}
                     />
                 </Region>
@@ -118,6 +122,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_games"
                         src={srcIconsToolbarGames ?? layoutImage('bottom_bar_games.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', width: 33, top: 0, height: 43 }}
                     />
                 </Region>
@@ -134,6 +139,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_stories"
                         src={srcIconsToolbarStories ?? layoutImage('bottom_bar_stories.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', width: 35, top: 1, height: 37 }}
                     />
                 </Region>
@@ -150,6 +156,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_catalogue"
                         src={srcIconsToolbarCatalogue ?? layoutImage('bottom_bar_shop.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', width: 37, top: 1, height: 37 }}
                     />
                 </Region>
@@ -166,6 +173,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_builder"
                         src={srcIconsToolbarBuilder ?? layoutImage('bottom_bar_buildersclub.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', width: 35, top: 1, height: 37 }}
                     />
                 </Region>
@@ -182,6 +190,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_inventory"
                         src={srcIconsToolbarInventory ?? layoutImage('bottom_bar_inventory.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 0, height: 41 }}
                     />
                 </Region>
@@ -197,12 +206,14 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                 >
                     <ThemeImage
                         src={layoutImage('bottom_bar_memenu_bg.png')}
+                        alpha={0.9}
                         layout={{ position: 'absolute', left: 0, width: 45, top: -1, height: 45 }}
                     />
                     <ThemeImage
                         name="icon_me_menu"
                         src={srcIconMeMenu}
                         tint={tintIconMeMenu}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 44, top: -1, height: 41 }}
                     />
                     <ThemeImage
@@ -223,6 +234,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_wired_menu"
                         src={srcIconsToolbarWiredMenu ?? layoutImage('bottom_bar_wired_menu.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 0, height: 45 }}
                     />
                 </Region>
@@ -239,6 +251,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
                     <ThemeImage
                         name="icons_toolbar_camera"
                         src={srcIconsToolbarCamera ?? layoutImage('bottom_bar_camera.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 38, top: 0, height: 45 }}
                     />
                 </Region>

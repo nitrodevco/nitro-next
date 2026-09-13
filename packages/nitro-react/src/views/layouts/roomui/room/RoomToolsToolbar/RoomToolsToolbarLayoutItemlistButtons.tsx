@@ -56,26 +56,26 @@ export const RoomToolsToolbarLayoutItemlistButtons = ({ captionZoomText, itemsIt
                 <Region
                     name="zoom_in_btn"
                     tooltip={t('room.zoom.zoom_in.tooltip')}
-                    dynamicStyle="button"
                     onPointerTap={onZoomInBtn}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 87, width: 18, top: 3, height: 19 }}
                 >
                     <ThemeImage
                         src={layoutImage('roomtools_zoom_in.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
                     />
                 </Region>
                 <Region
                     name="zoom_out_btn"
                     tooltip={t('room.zoom.zoom_out.tooltip')}
-                    dynamicStyle="button"
                     onPointerTap={onZoomOutBtn}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 107, width: 18, top: 3, height: 19 }}
                 >
                     <ThemeImage
                         src={layoutImage('roomtools_zoom_out.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
                     />
                 </Region>

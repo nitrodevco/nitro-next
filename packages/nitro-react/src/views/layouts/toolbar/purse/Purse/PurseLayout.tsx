@@ -55,6 +55,7 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, layout,
                             text={captionJoin ?? 'join'}
                             textStyle="text-style-u-bold"
                             textOptions={{ fill: '#00c1c4' }}
+                            dynamicRole="icon"
                             name="join"
                             layout={{ position: 'absolute', width: 25, top: 4, height: 17 }}
                         />
@@ -63,12 +64,14 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, layout,
                         text={captionDays ?? '23 d.'}
                         textStyle="text-style-u-bold"
                         textOptions={{ fill: '#00c1c4', wordWrap: true, wordWrapWidth: 50 }}
+                        dynamicRole="icon"
                         name="days"
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 25, width: 50, top: 4, height: 28, maxWidth: 50, minHeight: 28, maxHeight: 28 }}
                     />
                     <ThemeImage
                         src={layoutImage('pursearea_hc_icon.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
                     />
                 </Region>
@@ -90,17 +93,20 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, layout,
                         text={captionEarnings ?? t('earnings.title')}
                         textStyle="text-style-u-bold"
                         textOptions={{ fill: '#00c1c4' }}
+                        dynamicRole="icon"
                         name="earnings"
                         layout={{ position: 'absolute', left: 25, width: 79, top: 4, height: 17 }}
                     />
                     <ThemeImage
                         src={layoutImage('pursearea_icon_earnings.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
                     />
                     {(visibleEarningsUnseenIndicator ?? false) && (
                         <ThemeImage
                             name="earnings_unseen_indicator"
                             src={srcEarningsUnseenIndicator ?? layoutImage('pursearea_unseen_indicator.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 10, top: 0, height: 11 }}
                         />
                     )}

@@ -18,6 +18,7 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, itemsList, 
         <Frame
             variant="100"
             caption="Profiler"
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 470, height: 182, minWidth: 470, minHeight: 182, ...layout }}
         >

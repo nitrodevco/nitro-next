@@ -5,7 +5,7 @@ import { LimitedItemWidget, LimitedItemWidgetProps } from '#base/views/layouts/c
 import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/ProductViewWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { UserBadgeSelectorWidget, UserBadgeSelectorWidgetProps } from '#base/views/layouts/catalog/widgets/UserBadgeSelectorWidget';
+import { UserBadgeSelectorWidget2, UserBadgeSelectorWidget2Props } from '#base/views/layouts/catalog/widgets/UserBadgeSelectorWidget2';
 
 /** Named region `ctlg_badgedisplay` of LayoutBadgeDisplay_1669Layout - configured through the parent's `ctlgBadgedisplay` prop. */
 export interface LayoutBadgeDisplay_1669LayoutCtlgBadgedisplayProps {
@@ -17,7 +17,7 @@ export interface LayoutBadgeDisplay_1669LayoutCtlgBadgedisplayProps {
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    userBadgeSelectorWidget?: UserBadgeSelectorWidgetProps;
+    userBadgeSelectorWidget?: UserBadgeSelectorWidget2Props;
     visibleCtlgSelectbadge?: boolean;
     visibleCtlgSelectproduct?: boolean;
 }
@@ -66,7 +66,7 @@ export const LayoutBadgeDisplay_1669LayoutCtlgBadgedisplay = ({ captionCtlgSelec
                     layout={{ position: 'absolute', left: 190, width: 100, bottom: 44, height: 15 }}
                 />
             )}
-            <UserBadgeSelectorWidget
+            <UserBadgeSelectorWidget2
                 layout={{ position: 'absolute', left: 105, width: 255, top: 245, bottom: 40 }}
                 {...userBadgeSelectorWidget}
             />

@@ -28,6 +28,7 @@ export const PetpackageNewLayout = ({ captionCancel, captionPetpackageHeaderDesc
             name="petpackage_main_container"
             caption={t('widgets.petpackage.name.title')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 475, height: 250, minWidth: 475, minHeight: 250, ...layout }}
         >

@@ -27,6 +27,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
             variant="3"
             caption={t('quests.completed.caption')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 426, height: 215, minWidth: 426, minHeight: 215, ...layout }}
         >

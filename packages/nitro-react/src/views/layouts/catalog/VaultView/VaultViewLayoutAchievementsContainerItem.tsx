@@ -78,6 +78,7 @@ export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCr
                         <ThemeImage
                             name="achievements_bitmap"
                             src={srcAchievementsBitmap ?? layoutImage('vault_earnings_icon_achievements.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                         />
                     )}

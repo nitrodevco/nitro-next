@@ -17,6 +17,7 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
         <Frame
             variant="100"
             caption="Habbopedia Editor"
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 385, height: 355, minWidth: 385, minHeight: 355, ...layout }}
         >

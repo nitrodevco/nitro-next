@@ -20,6 +20,7 @@ export const AvatarEditorFrameLayout = ({ layout, maincontent, onClose }: Avatar
             name="clothes_frame"
             caption={t('avatareditor.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 210, height: 155, minWidth: 210, minHeight: 155, ...layout }}
         >

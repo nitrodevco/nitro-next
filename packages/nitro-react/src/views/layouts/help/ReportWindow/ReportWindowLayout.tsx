@@ -19,6 +19,7 @@ export const ReportWindowLayout = ({ layout, list, onClose }: ReportWindowLayout
             id="report_user"
             name="report_user"
             caption={t('guide.help.request.emergency.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 347, minWidth: 282, maxWidth: 282, minHeight: 50, ...layout }}

@@ -18,6 +18,7 @@ export const RespectGivingFailedNotificationLayout = ({ captionBodyTxt, captionC
         <Frame
             variant="100"
             caption={t('respect.giving.failed.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 369, height: 220, minWidth: 369, minHeight: 220, ...layout }}
         >

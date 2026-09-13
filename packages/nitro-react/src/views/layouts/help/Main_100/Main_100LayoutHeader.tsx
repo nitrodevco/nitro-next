@@ -41,6 +41,7 @@ export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviou
                 <ThemeImage
                     src={layoutImage('reward_track_prizes_background.png')}
                     tint={recolorDark ?? '#3576b9'}
+                    alpha={0.05}
                     layout={{ position: 'absolute', left: 2, right: 2, top: -2, height: 243 }}
                 />
                 <Region layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }} />
@@ -114,25 +115,25 @@ export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviou
                 </Border>
                 <Region
                     name="previous_btn"
-                    dynamicStyle="button"
                     onPointerTap={onPreviousBtn}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 54, width: 33, top: 84, height: 34 }}
                 >
                     <ThemeImage
                         src={layoutImage('icons_back.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
                     />
                 </Region>
                 <Region
                     name="next_btn"
-                    dynamicStyle="button"
                     onPointerTap={onNextBtn}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 805, width: 33, top: 84, height: 34 }}
                 >
                     <ThemeImage
                         src={layoutImage('icons_forward.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
                     />
                 </Region>

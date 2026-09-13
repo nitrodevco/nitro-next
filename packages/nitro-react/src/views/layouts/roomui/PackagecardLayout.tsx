@@ -23,6 +23,7 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
             variant="0"
             caption={t('widget.furni.present.window.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 374, height: 243, minWidth: 374, minHeight: 243, ...layout }}
         >

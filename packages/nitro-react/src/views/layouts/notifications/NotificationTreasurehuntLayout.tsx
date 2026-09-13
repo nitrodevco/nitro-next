@@ -31,7 +31,10 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, layout }: N
                         backgroundColor="#382b0c"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 7, width: 115, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region
+                        alpha={0.95}
+                        layout={{ position: 'absolute', left: 7, width: 115, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
                         <ThemeText
                             text={t('treasure_hunt.title')}
                             textOptions={{ fill: '#ffffff' }}

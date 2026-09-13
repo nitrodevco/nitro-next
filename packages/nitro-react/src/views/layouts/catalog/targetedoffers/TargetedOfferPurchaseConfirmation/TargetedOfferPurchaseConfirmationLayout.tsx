@@ -18,6 +18,7 @@ export const TargetedOfferPurchaseConfirmationLayout = ({ content, layout, onClo
             variant="3"
             caption={t('catalog.purchase_confirmation.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 325, height: 291, minWidth: 275, minHeight: 150, ...layout }}
         >

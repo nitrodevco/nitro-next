@@ -27,12 +27,14 @@ export const PurseLayoutDucketCountButtonItem = ({ captionDucketCount, layout, o
                     text={captionDucketCount ?? '0'}
                     textStyle="text-style-u-bold"
                     textOptions={{ fill: '#d787d7' }}
+                    dynamicRole="icon"
                     name="ducket_count"
                     layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17 }}
                 />
             )}
             <ThemeImage
                 src={layoutImage('pursearea_duckets_icon.png')}
+                dynamicRole="icon"
                 layout={{ position: 'absolute', left: 36, width: 15, top: 2, height: 15 }}
             />
         </Region>

@@ -97,6 +97,7 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
                         <ThemeImage
                             name="bonusbag_bitmap"
                             src={srcBonusbagBitmap ?? layoutImage('vault_earnings_icon_bonusbag.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                         />
                     )}

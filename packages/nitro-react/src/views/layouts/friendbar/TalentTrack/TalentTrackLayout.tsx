@@ -31,6 +31,7 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, lay
                     variant="101"
                     id="frame"
                     name="frame"
+                    dropShadow={{ angle: 0, alpha: 0.75, blur: 80 }}
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 22, height: 445, minWidth: 100 }}
                 >

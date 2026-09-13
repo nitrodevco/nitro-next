@@ -19,6 +19,7 @@ export const AchievementResolutionCompletedLayout = ({ achievementBadge, layout,
         <Frame
             variant="100"
             caption={t('resolution.completed.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 340, height: 273, minWidth: 340, minHeight: 273, maxHeight: 525, ...layout }}
         >

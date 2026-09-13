@@ -23,6 +23,7 @@ export const GuardianChatReviewAcceptLayout = ({ countdown, itemlist, layout, on
             id="guardian_chat_review_accept"
             name="guardian_chat_review_accept"
             caption={t('guide.bully.request.guide.accept.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 276, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}

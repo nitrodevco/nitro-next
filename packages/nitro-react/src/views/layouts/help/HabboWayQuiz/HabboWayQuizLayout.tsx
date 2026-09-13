@@ -45,6 +45,7 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
         <Frame
             variant="101"
             caption={t('habbo.way.quiz.title')}
+            dropShadow={{ angle: 0, alpha: 0.75, blur: 80 }}
             onClose={onClose}
             layout={{ width: 499, height: 470, minWidth: 499, minHeight: 470, ...layout }}
         >

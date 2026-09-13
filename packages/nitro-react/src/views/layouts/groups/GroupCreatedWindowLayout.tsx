@@ -19,6 +19,7 @@ export const GroupCreatedWindowLayout = ({ layout, onClose, onOkButton, srcGroup
             name="groups_info_window"
             caption={t('group.created.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 358, height: 381, minWidth: 358, minHeight: 381, ...layout }}
         >

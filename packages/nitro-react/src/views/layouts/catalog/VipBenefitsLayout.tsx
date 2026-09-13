@@ -15,6 +15,7 @@ export const VipBenefitsLayout = ({ layout, onClose }: VipBenefitsLayoutProps) =
             variant="3"
             caption={t('vip.benefits.caption')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 457, height: 450, minWidth: 457, minHeight: 450, ...layout }}
         >

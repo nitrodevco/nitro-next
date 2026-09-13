@@ -21,6 +21,7 @@ export const HabbiconHubLayoutEmptyTileTemplateItem = ({ layout, onEmptyTileTemp
                     name="tile_border"
                     tintColor="#c8be8d"
                     blend={0.2}
+                    backgroundColor="#c8be8d"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             )}

@@ -24,6 +24,7 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, layout, onClose, right
             id="video_viewer"
             name="video_viewer"
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 738, height: 356, minWidth: 400, minHeight: 350, ...layout }}
         >

@@ -22,6 +22,7 @@ export const QuestsLayout = ({ captionHcInfoText, itemsQuestList, layout, onClos
             name="quest_main_window"
             caption={t('quests.list.caption')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 512, height: 448, minWidth: 512, minHeight: 448, ...layout }}
         >

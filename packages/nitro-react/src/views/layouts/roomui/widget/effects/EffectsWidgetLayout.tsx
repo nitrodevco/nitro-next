@@ -24,6 +24,7 @@ export const EffectsWidgetLayout = ({ captionTitle, itemsList, layout, onClose }
                 <Border
                     variant="3"
                     tintColor="#292929"
+                    backgroundColor="#292929"
                     layout={{ position: 'absolute', left: 5, width: 157, top: 5, height: 22 }}
                 />
                 <ThemeText

@@ -50,6 +50,7 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
             {(visibleDesc ?? true) && (
                 <Region
                     name="desc"
+                    alpha={0.6}
                     layout={{ position: 'absolute', left: 10, right: 70, top: 10, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -72,12 +73,12 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
                     variant="7"
                     name="notification_settings_button"
                     tooltip={t('tooltip.notification_settings')}
-                    dynamicStyle="button"
                     onPointerTap={onNotificationSettingsButton}
                     layout={{ position: 'absolute', right: 39, width: 24, top: 7, height: 24 }}
                 >
                     <ThemeImage
                         src={layoutImage('wired_chests_bell_icon.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 6, width: 12, top: 4, height: 15 }}
                     />
                 </ContainerButton>
@@ -87,12 +88,12 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
                     variant="7"
                     name="settings_button"
                     tooltip={t('tooltip.settings')}
-                    dynamicStyle="button"
                     onPointerTap={onSettingsButton}
                     layout={{ position: 'absolute', right: 10, width: 24, top: 7, height: 24 }}
                 >
                     <ThemeImage
                         src={layoutImage('wired_chests_gear_icon.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 5, width: 14, top: 5, height: 14 }}
                     />
                 </ContainerButton>

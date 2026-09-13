@@ -138,6 +138,7 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                                     <ThemeImage
                                         name="facebookIcon"
                                         src={srcFacebookIcon ?? layoutImage('icons_facebook.png')}
+                                        dynamicRole="icon"
                                         layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32 }}
                                     />
                                 </Region>
@@ -150,6 +151,7 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                                     <ThemeImage
                                         name="twitterIcon"
                                         src={srcTwitterIcon ?? layoutImage('icons_twitter.png')}
+                                        dynamicRole="icon"
                                         layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32 }}
                                     />
                                 </Region>

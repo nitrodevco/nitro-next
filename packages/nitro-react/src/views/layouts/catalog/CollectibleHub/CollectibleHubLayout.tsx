@@ -60,6 +60,7 @@ export const CollectibleHubLayout = ({ captionCollectorLevelDescription, caption
             name="CollectorHub"
             caption={t('collectibles.title')}
             tintColor="#2a2a2a"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 500, height: 600, minWidth: 500, maxWidth: 500, minHeight: 600, ...layout }}

@@ -26,6 +26,7 @@ export const GuardianChatReviewResultsLayout = ({ balloonWidget, captionResultTe
             id="guardian_chat_review_results"
             name="guardian_chat_review_results"
             caption={t('guide.bully.request.guide.results.final.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 248, height: 280, minWidth: 248, minHeight: 280, ...layout }}
         >

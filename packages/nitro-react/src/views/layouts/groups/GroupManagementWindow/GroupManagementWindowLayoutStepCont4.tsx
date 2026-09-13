@@ -113,6 +113,7 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
                     variant="0"
                     name="vip_required_border"
                     tintColor="#cc0000"
+                    backgroundColor="#cc0000"
                     layout={{ position: 'absolute', left: 126, width: 248, top: 253, height: 39 }}
                 >
                     <Region

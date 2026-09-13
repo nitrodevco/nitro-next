@@ -24,6 +24,7 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
         <Frame
             variant="100"
             caption={t('widget.custom.stack.height.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 320, height: 210, minWidth: 320, minHeight: 185, maxHeight: 210, ...layout }}
         >
@@ -93,13 +94,13 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                 variant="102"
                 name="button_move_down"
                 tooltip={t('widget.custom.height.move_down')}
-                dynamicStyle="button"
                 onPointerTap={onButtonMoveDown}
                 layout={{ position: 'absolute', left: 9, width: 19, top: 84, height: 20 }}
             >
                 <Icon
                     variant="0"
                     tintColor="#7f7f7f"
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 5, width: 12, top: 5, height: 12 }}
                 />
             </ContainerButton>
@@ -107,13 +108,13 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                 variant="102"
                 name="button_move_up"
                 tooltip={t('widget.custom.height.move_up')}
-                dynamicStyle="button"
                 onPointerTap={onButtonMoveUp}
                 layout={{ position: 'absolute', left: 9, width: 19, top: 62, height: 20 }}
             >
                 <Icon
                     variant="1"
                     tintColor="#7f7f7f"
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 5, width: 12, top: 4, height: 12 }}
                 />
             </ContainerButton>

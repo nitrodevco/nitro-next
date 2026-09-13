@@ -33,6 +33,7 @@ export const SpecialItemsDisplayLayout = ({ bg1, bg2, bg3, bottom, captionClaimT
             name="main"
             caption={t('special_items.title')}
             tintColor="#2a2a2a"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 420, height: 495, minWidth: 420, minHeight: 495, ...layout }}
         >

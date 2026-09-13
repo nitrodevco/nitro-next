@@ -49,6 +49,7 @@ export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPagi
             <Region layout={{ position: 'absolute', width: 210, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region
                     name="pagina_text_start"
+                    alpha={0.7}
                     layout={{ width: 159, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionPaginaTextStart ?? 'X logs found. Showing page '}
@@ -60,6 +61,7 @@ export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPagi
                 />
                 <Region
                     name="pagina_text_end"
+                    alpha={0.7}
                     layout={{ width: 26, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionPaginaTextEnd ?? 'of Y'}

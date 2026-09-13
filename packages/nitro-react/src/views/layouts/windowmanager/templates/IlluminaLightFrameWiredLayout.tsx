@@ -29,6 +29,7 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, contentA
                 <ThemeImage
                     name="banner_left"
                     src={srcBannerLeft ?? layoutImage('illumina_wired_bg_left.png')}
+                    alpha={0.1}
                     layout={{ position: 'absolute', left: 0, width: 240, top: 0, height: 160 }}
                 />
                 <Border
@@ -41,6 +42,7 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, contentA
                 <ThemeImage
                     name="banner_right"
                     src={srcBannerRight ?? layoutImage('illumina_wired_bg_right.png')}
+                    alpha={0.12}
                     layout={{ position: 'absolute', right: 0, width: 240, top: -19, height: 160 }}
                 />
             </Region>

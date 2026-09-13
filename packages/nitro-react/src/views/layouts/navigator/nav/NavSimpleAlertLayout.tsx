@@ -19,6 +19,7 @@ export const NavSimpleAlertLayout = ({ captionBodyText, layout, onClose, onOk }:
             name="alert_%203"
             caption="PH Caption"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 193, height: 157, minWidth: 193, minHeight: 157, ...layout }}
         >

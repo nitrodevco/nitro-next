@@ -23,6 +23,7 @@ export const ClubRequiredLayout = ({ captionCancelLink, captionInfoTxt, captionM
             name="hc_required_window"
             caption={t('group.hcrequired.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 428, height: 215, minWidth: 428, minHeight: 215, ...layout }}
         >

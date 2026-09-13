@@ -15,6 +15,7 @@ export const EvidenceFrameLayout = ({ chatCont, layout, onClose }: EvidenceFrame
             variant="0"
             caption="Chatlog"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 480, height: 565, minWidth: 150, minHeight: 100, ...layout }}
         >

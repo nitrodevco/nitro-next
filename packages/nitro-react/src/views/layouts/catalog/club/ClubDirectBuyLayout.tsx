@@ -28,6 +28,7 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
             variant="3"
             caption={t('direct.club.buy.dialog.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 454, height: 442, minWidth: 454, minHeight: 442, ...layout }}
         >

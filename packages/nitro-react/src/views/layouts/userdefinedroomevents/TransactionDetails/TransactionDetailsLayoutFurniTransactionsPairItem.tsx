@@ -18,7 +18,10 @@ export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout }: Tr
                 text={t('wiredchests.log_details.transactions')}
                 layout={{ width: 79, height: 17, flexShrink: 0 }}
             />
-            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region
+                alpha={0}
+                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
                 -
             </Region>
         </Region>

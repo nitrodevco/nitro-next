@@ -58,6 +58,7 @@ export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, capti
             <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 178, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region
                     name="pagina_text_start"
+                    alpha={0.7}
                     layout={{ width: 135, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionPaginaTextStart ?? 'X matching users. Page '}
@@ -69,6 +70,7 @@ export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, capti
                 />
                 <Region
                     name="pagina_text_end"
+                    alpha={0.7}
                     layout={{ width: 18, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionPaginaTextEnd ?? '/ Y'}

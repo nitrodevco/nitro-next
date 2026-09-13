@@ -35,6 +35,7 @@ export const QuizUnlikeLayout = ({ layout, onButtonLike }: QuizUnlikeLayoutProps
                 >
                     <ThemeImage
                         src={layoutImage('word_quiz_thum_down.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 5, width: 22, top: 8, height: 22 }}
                     />
                 </Region>

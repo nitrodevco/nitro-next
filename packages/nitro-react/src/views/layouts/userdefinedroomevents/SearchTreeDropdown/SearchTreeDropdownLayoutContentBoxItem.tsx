@@ -34,7 +34,10 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, itemsN
                     name="empty_container"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, top: 19, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Region
+                        alpha={0.5}
+                        layout={{ position: 'absolute', left: 0, top: 19, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
                         <ThemeText
                             text={t('wiredfurni.variable_picker.empty')}
                             textStyle="text-style-regular"

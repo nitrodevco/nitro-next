@@ -41,6 +41,7 @@ export const RoomToolsToolbarLayout = ({ itemlistButtons, layout, onButtonCollap
                         <ThemeImage
                             name="arrow_collapse"
                             src={srcArrowCollapse ?? layoutImage('roomtools_minimizebutton.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 9, width: 6, alignSelf: 'center', marginTop: 17, marginBottom: -17, height: 8 }}
                         />
                     </Region>

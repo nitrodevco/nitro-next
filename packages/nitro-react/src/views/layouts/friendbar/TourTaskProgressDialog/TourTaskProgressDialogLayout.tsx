@@ -24,6 +24,7 @@ export const TourTaskProgressDialogLayout = ({ actionSeparator, itemsTopList, la
         <Frame
             variant="100"
             caption={t('talent.track.task.progress.dialog.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 378, height: 289, minWidth: 378, minHeight: 289, ...layout }}
         >

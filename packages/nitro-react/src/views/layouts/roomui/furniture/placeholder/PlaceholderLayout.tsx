@@ -14,6 +14,7 @@ export const PlaceholderLayout = ({ captionPhMsg, layout, onClose }: Placeholder
             id="ph_frame"
             name="ph_frame"
             caption="This feature is not yet available!"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 250, height: 150, minWidth: 250, minHeight: 150, ...layout }}
         >

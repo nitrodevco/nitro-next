@@ -32,7 +32,7 @@ export const MarketPlaceOwnItemsWidgetExpiredItemItem = ({ captionItemDesc, capt
         <Border
             variant="100"
             name="expired_item"
-            tintColor="#f5d5d3"
+            backgroundColor="#f5d5d3"
             layout={{ width: 340, height: 58, flexShrink: 0, ...layout }}
         >
             {(visibleImageContainer ?? true) && (

@@ -27,6 +27,7 @@ export const RoomToolsToolbarLayoutButtonZoomItem = ({ captionTextZoom, layout, 
                 <Region layout={{ position: 'absolute', left: 0, width: 28, top: 0, bottom: 0 }} />
                 <ThemeImage
                     src={layoutImage('roomtools_magnifier.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
                 />
                 {(visibleTextZoom ?? true) && (

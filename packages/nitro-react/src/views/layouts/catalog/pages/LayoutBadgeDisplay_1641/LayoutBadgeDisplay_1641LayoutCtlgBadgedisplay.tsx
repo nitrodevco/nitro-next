@@ -5,7 +5,7 @@ import { LimitedItemWidget3, LimitedItemWidget3Props } from '#base/views/layouts
 import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/ProductViewWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { UserBadgeSelectorWidget2, UserBadgeSelectorWidget2Props } from '#base/views/layouts/catalog/widgets/UserBadgeSelectorWidget2';
+import { UserBadgeSelectorWidget, UserBadgeSelectorWidgetProps } from '#base/views/layouts/catalog/widgets/UserBadgeSelectorWidget';
 
 /** Named region `ctlg_badgedisplay` of LayoutBadgeDisplay_1641Layout - configured through the parent's `ctlgBadgedisplay` prop. */
 export interface LayoutBadgeDisplay_1641LayoutCtlgBadgedisplayProps {
@@ -17,7 +17,7 @@ export interface LayoutBadgeDisplay_1641LayoutCtlgBadgedisplayProps {
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    userBadgeSelectorWidget?: UserBadgeSelectorWidget2Props;
+    userBadgeSelectorWidget?: UserBadgeSelectorWidgetProps;
 }
 
 export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelectbadge, captionCtlgSelectproduct, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, specialInfoWidget, userBadgeSelectorWidget }: LayoutBadgeDisplay_1641LayoutCtlgBadgedisplayProps) => {
@@ -60,7 +60,7 @@ export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelec
                 name="ctlg_selectbadge"
                 layout={{ position: 'absolute', left: 5, width: 100, top: 227, height: 15 }}
             />
-            <UserBadgeSelectorWidget2
+            <UserBadgeSelectorWidget
                 layout={{ position: 'absolute', left: 4, width: 170, top: 242, height: 175 }}
                 {...userBadgeSelectorWidget}
             />

@@ -17,6 +17,7 @@ export const ErrorWindowLayout = ({ layout, onClose, onCloseButton }: ErrorWindo
             id="error_window"
             name="error_window"
             caption={t('guide.help.request.error.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 242, height: 147, minWidth: 242, maxWidth: 242, minHeight: 50, ...layout }}

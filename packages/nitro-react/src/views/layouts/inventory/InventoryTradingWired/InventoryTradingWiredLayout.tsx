@@ -38,6 +38,7 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, captionInfoText, c
                 >
                     <Region
                         name="info_text"
+                        alpha={0.6}
                         layout={{ position: 'absolute', left: 38, width: 401, top: 7, height: 17, maxWidth: 461, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText

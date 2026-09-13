@@ -41,6 +41,7 @@ export const FurniChestContentsLayoutFurniChest = ({ captionNoItemsText, caption
                     >
                         <Region
                             name="search_placeholder"
+                            alpha={0.5}
                             layout={{ position: 'absolute', left: 4, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -69,6 +70,7 @@ export const FurniChestContentsLayoutFurniChest = ({ captionNoItemsText, caption
                 )}
                 <Region
                     name="no_items_text"
+                    alpha={0.5}
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 108, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionNoItemsText ?? t('wiredchests.furni_chest.no_items')}

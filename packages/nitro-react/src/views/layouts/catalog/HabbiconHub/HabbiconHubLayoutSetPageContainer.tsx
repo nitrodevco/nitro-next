@@ -39,6 +39,7 @@ export const HabbiconHubLayoutSetPageContainer = ({ captionRewardBuyDescription,
                     variant="3"
                     name="reward_panel"
                     tintColor="#e7d5b2"
+                    backgroundColor="#e7d5b2"
                     layout={{ width: 116, height: 152, flexShrink: 0 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 135, flexDirection: 'column', gap: 6 }}>
@@ -53,6 +54,7 @@ export const HabbiconHubLayoutSetPageContainer = ({ captionRewardBuyDescription,
                             variant="3"
                             name="reward_habbicon_frame"
                             tintColor="#f8ebd6"
+                            backgroundColor="#f8ebd6"
                             layout={{ width: 46, height: 46, flexShrink: 0 }}
                         >
                             <ThemeImage

@@ -25,6 +25,7 @@ export const HabbiconHubLayoutTrayContainer = ({ captionTraySummary, captionTray
                     variant="3"
                     name="tray_background"
                     tintColor="#f6ebd7"
+                    backgroundColor="#f6ebd7"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeText

@@ -22,12 +22,13 @@ export const AreaHideUiLayout = ({ layout, onApplyButton, onClose, onOnOffButton
             name="areahide_ui"
             caption={t('widget.areahide.title')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 292, height: 334, minWidth: 292, minHeight: 0, ...layout }}
         >
             <Border
                 variant="100"
-                tintColor="#ffffff"
+                backgroundColor="#ffffff"
                 layout={{ position: 'absolute', left: 3, right: 2, top: 16, height: 250 }}
             >
                 <AreaHideUiLayoutTabContent {...tabContent} />

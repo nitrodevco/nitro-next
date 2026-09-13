@@ -18,6 +18,7 @@ export const Doorbell_889Layout = ({ itemsUserList, layout, onClose }: Doorbell_
             variant="3"
             caption={t('widgets.doorbell.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 249, height: 165, minWidth: 249, minHeight: 165, ...layout }}
         >

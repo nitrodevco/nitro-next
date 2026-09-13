@@ -27,6 +27,7 @@ export const DiscordSettingsLayout = ({ captionDescTxt, captionTitle, layout, on
             name="discord_settings"
             caption={t('discord_activity.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 377, height: 551, minWidth: 377, minHeight: 551, ...layout }}
         >
@@ -36,6 +37,7 @@ export const DiscordSettingsLayout = ({ captionDescTxt, captionTitle, layout, on
             >
                 <Region
                     name="title"
+                    alpha={0.9}
                     layout={{ position: 'absolute', left: 110, width: 171, top: 14, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -45,6 +47,7 @@ export const DiscordSettingsLayout = ({ captionDescTxt, captionTitle, layout, on
                 </Region>
                 <Region
                     name="desc_txt"
+                    alpha={0.8}
                     layout={{ position: 'absolute', left: 110, width: 245, top: 35, height: 71, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -56,6 +59,7 @@ export const DiscordSettingsLayout = ({ captionDescTxt, captionTitle, layout, on
                 <ThemeImage
                     name="discord_box"
                     src={srcDiscordBox ?? layoutImage('discord_discord_box.png')}
+                    alpha={0.95}
                     layout={{ position: 'absolute', left: 16, width: 77, top: 11, height: 96 }}
                 />
             </Region>

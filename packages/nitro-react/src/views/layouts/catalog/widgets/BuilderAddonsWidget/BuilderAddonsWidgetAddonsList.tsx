@@ -29,11 +29,13 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
                 <Border
                     variant="2"
                     tintColor="#d7d7cf"
+                    backgroundColor="#d7d7cf"
                     layout={{ width: 269, height: 77, flexShrink: 0 }}
                 >
                     <Border
                         variant="3"
                         tintColor="#afafa9"
+                        backgroundColor="#afafa9"
                         layout={{ position: 'absolute', left: 5, width: 260, top: 5, height: 25 }}
                     >
                         <ThemeImage

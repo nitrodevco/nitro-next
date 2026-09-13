@@ -38,6 +38,8 @@ export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLa
                     variant="0"
                     name="preview_panel"
                     tintColor="#f6f1df"
+                    backgroundColor="#f6f1df"
+                    backgroundAlpha={0.06}
                     layout={{ position: 'absolute', left: 10, width: 126, top: 12, height: 152 }}
                 >
                     {(visiblePreviewFrame ?? true) && (

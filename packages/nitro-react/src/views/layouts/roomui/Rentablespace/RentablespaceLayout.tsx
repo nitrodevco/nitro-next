@@ -31,6 +31,7 @@ export const RentablespaceLayout = ({ itemsErrorView, itemsRentedView, layout, o
             variant="3"
             caption={t('rentablespace.widget.title')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 256, height: 224, minWidth: 256, minHeight: 224, ...layout }}
         >

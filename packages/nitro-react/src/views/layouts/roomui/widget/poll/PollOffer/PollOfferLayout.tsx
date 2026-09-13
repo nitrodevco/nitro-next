@@ -30,6 +30,7 @@ export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOffer
             name="poll_offer_frame"
             caption={t('poll_offer_window')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 382, height: 250, minWidth: 382, minHeight: 250, ...layout }}
         >

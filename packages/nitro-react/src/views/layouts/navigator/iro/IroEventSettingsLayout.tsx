@@ -24,6 +24,7 @@ export const IroEventSettingsLayout = ({ buttons, captionDescLabel, captionNameL
             id="event_window"
             name="event_window"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 241, height: 191, minWidth: 241, minHeight: 191, ...layout }}
         >

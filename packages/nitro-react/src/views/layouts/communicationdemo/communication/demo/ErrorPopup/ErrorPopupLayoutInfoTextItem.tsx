@@ -13,6 +13,7 @@ export const ErrorPopupLayoutInfoTextItem = ({ captionInfoText, layout }: ErrorP
     return (
         <Region
             name="info_text"
+            alpha={0.65}
             layout={{ width: 265, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText

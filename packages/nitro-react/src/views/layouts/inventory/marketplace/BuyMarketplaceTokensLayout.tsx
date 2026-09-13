@@ -17,6 +17,7 @@ export const BuyMarketplaceTokensLayout = ({ layout, onBuyTokensButton, onCancel
             variant="3"
             caption={t('inventory.marketplace.buy_tokens.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 283, height: 175, minWidth: 283, minHeight: 175, ...layout }}
         >

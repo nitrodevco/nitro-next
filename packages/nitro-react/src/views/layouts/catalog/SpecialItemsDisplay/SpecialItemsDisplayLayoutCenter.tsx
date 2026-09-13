@@ -59,25 +59,25 @@ export const SpecialItemsDisplayLayoutCenter = ({ layout, onNextButton, onPrevio
             </Region>
             <Region
                 name="previous_button"
-                dynamicStyle="brightness_and_shadow_under_gentle"
                 onPointerTap={onPreviousButton}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 8, width: 33, top: 97, height: 38 }}
             >
                 <ThemeImage
                     src={layoutImage('icons_back.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 0, width: 33, top: 4, height: 34 }}
                 />
             </Region>
             <Region
                 name="next_button"
-                dynamicStyle="brightness_and_shadow_under_gentle"
                 onPointerTap={onNextButton}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 379, width: 33, top: 97, height: 38 }}
             >
                 <ThemeImage
                     src={layoutImage('icons_forward.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 0, width: 33, top: 4, height: 34 }}
                 />
             </Region>

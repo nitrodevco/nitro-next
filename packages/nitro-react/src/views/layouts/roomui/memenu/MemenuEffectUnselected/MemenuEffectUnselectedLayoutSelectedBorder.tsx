@@ -79,6 +79,7 @@ export const MemenuEffectUnselectedLayoutSelectedBorder = ({ captionEffectAmount
                 </Region>
                 <Region
                     name="time_left"
+                    alpha={0.8}
                     layout={{ position: 'absolute', right: 4, width: 98, bottom: 11, height: 13, minWidth: 98, maxWidth: 98, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText

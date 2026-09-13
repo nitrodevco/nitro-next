@@ -22,6 +22,7 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
             variant="3"
             caption={t('catalog.club_gift.confirm')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 280, height: 142, minWidth: 280, minHeight: 142, ...layout }}
         >

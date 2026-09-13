@@ -16,6 +16,7 @@ export const ListTesterLayout = ({ itemsListHorizontal, itemsListVertical, layou
             variant="0"
             caption="Tester"
             tintColor="#418db0"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 240, height: 245, minWidth: 240, minHeight: 245, ...layout }}
         >

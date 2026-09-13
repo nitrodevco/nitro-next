@@ -78,6 +78,7 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
                         <ThemeImage
                             name="games_bitmap"
                             src={srcGamesBitmap ?? layoutImage('vault_earnings_icon_games.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                         />
                     )}

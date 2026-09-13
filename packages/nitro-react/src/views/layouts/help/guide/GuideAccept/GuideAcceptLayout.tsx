@@ -25,6 +25,7 @@ export const GuideAcceptLayout = ({ countdown, itemlist, layout, onClose, srcFra
             id="guide_accept"
             name="guide_accept"
             caption={t('guide.help.request.guide.accept.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 276, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}

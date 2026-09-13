@@ -21,6 +21,7 @@ export const HabboWindowConfirmLayout = ({ captionAlertButtonCancel, captionAler
             name="_alert_frame"
             caption="Alert"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 300, height: 165, minWidth: 300, minHeight: 165, ...layout }}
         >

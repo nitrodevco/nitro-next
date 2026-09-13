@@ -23,6 +23,7 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
             variant="3"
             caption={t('navigator.password.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 237, height: 217, minWidth: 237, minHeight: 217, ...layout }}
         >

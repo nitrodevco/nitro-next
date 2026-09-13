@@ -19,6 +19,7 @@ export const RosConfirmLayout = ({ captionMessage, layout, onClose, onOk }: RosC
             name="event_window"
             caption="title"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 215, height: 203, minWidth: 215, minHeight: 203, ...layout }}
         >

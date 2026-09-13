@@ -22,6 +22,7 @@ export const HabboWindowAlertLayout = ({ captionAlertSummary, itemsAlertButtonLi
             name="_alert_frame"
             caption="Alert"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 278, height: 141, minWidth: 278, minHeight: 141, ...layout }}
         >

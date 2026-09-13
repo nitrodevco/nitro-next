@@ -206,6 +206,7 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                 <ThemeImage
                     name="release_bitmap"
                     src={srcReleaseBitmap ?? layoutImage('camera_camera_btn.png')}
+                    dynamicRole="bg"
                     layout={{ position: 'absolute', left: 3, width: 94, top: 1, height: 94 }}
                 />
             </Region>
@@ -213,6 +214,7 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                 name="buyButtonBg"
                 src={srcBuyButtonBg ?? layoutImage('tools_black_pixel.png')}
                 tint="#ff0000"
+                alpha={0.5}
                 layout={{ position: 'absolute', left: 11, width: 318, top: 298, height: 58 }}
             />
             <ButtonThick

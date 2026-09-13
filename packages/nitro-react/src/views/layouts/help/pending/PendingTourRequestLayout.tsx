@@ -18,6 +18,7 @@ export const PendingTourRequestLayout = ({ layout, onClose, onCloseButton }: Pen
             id="pending_request"
             name="pending_request"
             caption={t('guide.pending.tour.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 369, height: 137, minWidth: 369, minHeight: 137, ...layout }}
         >

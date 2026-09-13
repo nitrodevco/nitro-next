@@ -20,6 +20,7 @@ export const BullyReportLayout = ({ layout, onClose, onSubmitButton, userPanel }
             id="emergency_help_request"
             name="emergency_help_request"
             caption={t('help.bully.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 289, height: 491, minWidth: 289, minHeight: 491, ...layout }}
         >

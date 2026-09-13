@@ -18,6 +18,7 @@ export const TargetedOfferHabbomallLayout = ({ captionTxtDescription, captionTxt
         <Frame
             variant="3"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 268, height: 362, minWidth: 268, minHeight: 362, ...layout }}
         >

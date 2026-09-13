@@ -26,6 +26,7 @@ export const SoldLtdItemsWidgetLayout = ({ captionCheckMarkeplaceLink, captionNo
                 />
                 <Region
                     name="not_available_text"
+                    alpha={0.7}
                     layout={{ position: 'absolute', left: 204, width: 137, top: 8, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText

@@ -99,6 +99,7 @@ export const NewExtendedProfileLayoutTopLeftItem = ({ avatarImage, badge0, badge
                     variant="2"
                     name="badges"
                     tintColor="#afafaf"
+                    backgroundColor="#afafaf"
                     layout={{ position: 'absolute', left: 1, width: 256, top: 136, height: 55 }}
                 >
                     {(visibleBadge0 ?? true) && (

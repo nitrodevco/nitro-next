@@ -26,6 +26,7 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, inputW
             id="guide_ongoing"
             name="guide_ongoing"
             caption="Helping out"
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 340, minWidth: 282, maxWidth: 282, minHeight: 320, ...layout }}

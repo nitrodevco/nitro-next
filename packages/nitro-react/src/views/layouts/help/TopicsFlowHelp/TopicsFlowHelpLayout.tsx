@@ -48,6 +48,7 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionChangeUser, cap
             variant="3"
             caption={t('help.button.cfh')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 448, height: 522, minWidth: 448, minHeight: 522, ...layout }}
         >

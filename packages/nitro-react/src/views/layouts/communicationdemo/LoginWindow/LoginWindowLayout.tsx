@@ -28,6 +28,7 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
             id="habbo_login_dialog"
             name="habbo_login_dialog"
             caption="Habbo Login"
+            dropShadow={{ angle: 0, alpha: 0.75, blur: 80 }}
             onClose={onClose}
             layout={{ width: 305, height: 444, minWidth: 305, minHeight: 444, ...layout }}
         >

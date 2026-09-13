@@ -23,6 +23,7 @@ export const InventoryLayout = ({ layout, onClose, subContentArea, topContent }:
             name="inventoryBase"
             caption={t('inventory.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 490, height: 342, minWidth: 490, maxWidth: 490, minHeight: 300, ...layout }}

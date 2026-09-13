@@ -29,6 +29,7 @@ export const NavigatorFrame2Layout = ({ itemsQuicklinksList, layout, leftPaneHid
             variant="3"
             caption={t('navigator.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 578, height: 628, minWidth: 578, maxWidth: 578, minHeight: 500, ...layout }}

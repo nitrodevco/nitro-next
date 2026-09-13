@@ -16,6 +16,7 @@ export const SimpleAlert_2678Layout = ({ layout, list, onClose, srcIllustration 
             variant="3"
             caption="caption"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 310, height: 163, minWidth: 310, minHeight: 163, ...layout }}
         >

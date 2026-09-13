@@ -41,6 +41,7 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
                 {(visibleCustomText ?? false) && (
                     <Region
                         name="custom_text"
+                        alpha={0.6}
                         layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -52,6 +53,7 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
                 {(visibleAnyFurniText ?? false) && (
                     <Region
                         name="any_furni_text"
+                        alpha={0.6}
                         layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -63,6 +65,7 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
                 {(visibleAnyCoinsText ?? false) && (
                     <Region
                         name="any_coins_text"
+                        alpha={0.6}
                         layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -74,6 +77,7 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
                 {(visibleAnyAllText ?? false) && (
                     <Region
                         name="any_all_text"
+                        alpha={0.6}
                         layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText

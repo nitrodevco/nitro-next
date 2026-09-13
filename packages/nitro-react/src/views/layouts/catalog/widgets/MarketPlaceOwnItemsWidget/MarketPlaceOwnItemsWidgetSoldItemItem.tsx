@@ -34,7 +34,7 @@ export const MarketPlaceOwnItemsWidgetSoldItemItem = ({ captionItemDesc, caption
         <Border
             variant="100"
             name="sold_item"
-            tintColor="#e2f5d8"
+            backgroundColor="#e2f5d8"
             layout={{ width: 340, height: 58, flexShrink: 0, ...layout }}
         >
             {(visibleImageContainer ?? true) && (

@@ -24,6 +24,7 @@ export const NewModerationToolLayout = ({ layout, onBanUserBtn, onClose, onGiveC
             variant="100"
             caption={t('moderation.title')}
             tintColor="#418db0"
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 238, height: 206, minWidth: 238, minHeight: 206, ...layout }}
         >

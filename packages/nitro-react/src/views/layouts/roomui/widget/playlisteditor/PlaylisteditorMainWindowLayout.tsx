@@ -27,6 +27,7 @@ export const PlaylisteditorMainWindowLayout = ({ itemsMusicInventoryItemgrid, it
             name="playlist.editor"
             caption={t('playlist.editor.title')}
             tintColor="#418caf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 582, height: 437, minWidth: 582, minHeight: 437, ...layout }}
         >

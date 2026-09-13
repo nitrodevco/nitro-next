@@ -23,6 +23,7 @@ export const InventoryTradingWiredLayoutRuleTemplateItem = ({ captionOrText, lay
             {(visibleOrText ?? true) && (
                 <Region
                     name="or_text"
+                    alpha={0.5}
                     layout={{ position: 'absolute', left: 0, width: 32, top: 11, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText

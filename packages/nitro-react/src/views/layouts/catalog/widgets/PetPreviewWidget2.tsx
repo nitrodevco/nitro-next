@@ -29,7 +29,6 @@ export const PetPreviewWidget2 = ({ captionCtlgDescription, captionCtlgProductNa
                 <Border
                     variant="4"
                     name="petPreviewBackground"
-                    tintColor="#cccccc"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             )}

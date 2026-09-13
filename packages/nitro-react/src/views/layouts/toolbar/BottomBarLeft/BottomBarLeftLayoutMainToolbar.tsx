@@ -35,6 +35,7 @@ export const BottomBarLeftLayoutMainToolbar = ({ context, layout, onCollapseLeft
                         <ThemeImage
                             name="icons_toolbar_collapse_left"
                             src={srcIconsToolbarCollapseLeft ?? layoutImage('roomtools_minimizebutton.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
                         />
                     </Region>
@@ -54,6 +55,7 @@ export const BottomBarLeftLayoutMainToolbar = ({ context, layout, onCollapseLeft
                         <ThemeImage
                             name="icons_toolbar_collapse_right"
                             src={srcIconsToolbarCollapseRight ?? layoutImage('roomtools_minimizebutton.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
                         />
                     </Region>

@@ -20,6 +20,7 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
         <Frame
             variant="100"
             caption={t('breedpets.nestbreeding.success.header')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 323, height: 221, minWidth: 323, minHeight: 221, ...layout }}
         >

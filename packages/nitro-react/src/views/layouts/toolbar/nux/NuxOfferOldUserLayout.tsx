@@ -20,6 +20,7 @@ export const NuxOfferOldUserLayout = ({ captionBtnSkip, captionTxtBody, layout, 
             variant="3"
             caption={t('notification.notification.nux.popup.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 456, height: 220, minWidth: 456, minHeight: 220, ...layout }}
         >

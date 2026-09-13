@@ -23,6 +23,7 @@ export const VariablesManagementOverviewLayout = ({ footer, header, layout, onCl
             variant="3"
             caption={t('wiredmenu.variable_management.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 700, height: 508, minWidth: 700, maxWidth: 700, minHeight: 380, maxHeight: 700, ...layout }}

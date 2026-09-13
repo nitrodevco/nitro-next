@@ -38,6 +38,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
             variant="3"
             caption={t('crafting.title')}
             tintColor="#2d4f64"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 543, height: 407, minWidth: 543, minHeight: 407, ...layout }}
         >
@@ -112,6 +113,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                         variant="3"
                         name="bar"
                         tintColor="#299f3a"
+                        backgroundColor="#299f3a"
                         layout={{ position: 'absolute', left: 9, width: 14, top: 2, height: 27 }}
                     >
                         <Region

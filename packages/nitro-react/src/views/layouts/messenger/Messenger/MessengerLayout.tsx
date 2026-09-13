@@ -43,6 +43,7 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                     id="frame"
                     name="frame"
                     caption={t('messenger.window.title')}
+                    dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 0, width: 282, top: 0, bottom: 0, minWidth: 282, minHeight: 275 }}
                 >

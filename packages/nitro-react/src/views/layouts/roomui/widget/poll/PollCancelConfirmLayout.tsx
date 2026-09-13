@@ -19,6 +19,7 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
             name="poll_confirm_cancel_frame"
             caption={t('poll_cancel_confirm_title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 221, height: 153, minWidth: 221, minHeight: 153, ...layout }}
         >

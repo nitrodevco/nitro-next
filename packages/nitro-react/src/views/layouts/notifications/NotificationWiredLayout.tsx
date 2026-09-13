@@ -25,6 +25,7 @@ export const NotificationWiredLayout = ({ captionDescription, itemsSpacing, layo
             >
                 <ThemeImage
                     src={layoutImage('illumina_wired_bg_right.png')}
+                    alpha={0.3}
                     layout={{ position: 'absolute', left: 0, width: 240, bottom: -81, height: 160 }}
                 />
                 <Region
@@ -40,7 +41,10 @@ export const NotificationWiredLayout = ({ captionDescription, itemsSpacing, layo
                         backgroundColor="#1e3044"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 7, width: 177, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Region
+                        alpha={0.95}
+                        layout={{ position: 'absolute', left: 7, width: 177, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
                         <ThemeText
                             text={t('product.type.wired')}
                             textOptions={{ fill: '#ffffff', align: 'center' }}

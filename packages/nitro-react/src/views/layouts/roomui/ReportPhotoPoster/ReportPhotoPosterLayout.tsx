@@ -20,6 +20,7 @@ export const ReportPhotoPosterLayout = ({ captionPhotoCaption, layout, onClose, 
     return (
         <Frame
             variant="101"
+            dropShadow={{ angle: 0, alpha: 0.75, blur: 80 }}
             onClose={onClose}
             layout={{ width: 595, height: 698, minWidth: 50, minHeight: 50, ...layout }}
         >

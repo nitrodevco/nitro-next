@@ -15,6 +15,7 @@ export const RoomtoolFrameLayout = ({ layout, listCont, onClose }: RoomtoolFrame
             variant="0"
             caption="Room Info"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 240, height: 437, minWidth: 240, minHeight: 437, ...layout }}
         >

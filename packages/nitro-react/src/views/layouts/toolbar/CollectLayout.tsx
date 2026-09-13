@@ -26,6 +26,7 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
             variant="3"
             caption={t('phone.number.collect.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 477, height: 440, minWidth: 477, minHeight: 440, ...layout }}
         >

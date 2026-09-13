@@ -20,6 +20,7 @@ export const DailytasksLayout = ({ layout, mainCont, onClose }: DailytasksLayout
             name="dailytasks_frame"
             caption={t('dailytasks.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 428, height: 553, minWidth: 428, maxWidth: 452, minHeight: 553, ...layout }}
         >

@@ -78,6 +78,7 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
                         <ThemeImage
                             name="habboclub_bitmap"
                             src={srcHabboclubBitmap ?? layoutImage('vault_earnings_icon_hcpayday.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                         />
                     )}

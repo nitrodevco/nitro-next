@@ -75,6 +75,7 @@ export const ChatinputWindowNewLayoutChatInputContainer = ({ captionBlockText, h
                 <ThemeImage
                     name="style_icon"
                     src={srcStyleIcon ?? layoutImage('common_chat_styles.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 17, top: 10, height: 19 }}
                 />
                 <Icon
@@ -91,7 +92,10 @@ export const ChatinputWindowNewLayoutChatInputContainer = ({ captionBlockText, h
                 cursor="pointer"
                 layout={{ position: 'absolute', right: 3, width: 41, top: 0, height: 38 }}
             >
-                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
+                <Region
+                    dynamicRole="icon"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                >
                     <ThemeImage
                         name="chat_extra_bg"
                         src={srcChatExtraBg ?? layoutImage('habbicons_sticky_note.png')}

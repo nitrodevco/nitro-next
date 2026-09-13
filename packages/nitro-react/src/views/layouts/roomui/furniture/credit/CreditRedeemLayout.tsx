@@ -21,6 +21,7 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, onCancel, onCl
             name="creditExchangeTitle"
             caption={t('catalog.redeem.dialog.title')}
             tintColor="#418db0"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 315, height: 165, minWidth: 315, minHeight: 165, ...layout }}
         >

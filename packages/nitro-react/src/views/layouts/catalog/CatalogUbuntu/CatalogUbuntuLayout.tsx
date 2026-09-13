@@ -30,6 +30,7 @@ export const CatalogUbuntuLayout = ({ captionSearchHelper, catalogHeaderBackgrou
             name="catalog_main_container"
             caption={t('catalog.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 570, height: 640, minWidth: 570, maxWidth: 570, minHeight: 540, ...layout }}
@@ -41,6 +42,7 @@ export const CatalogUbuntuLayout = ({ captionSearchHelper, catalogHeaderBackgrou
             >
                 <Region
                     name="search.helper"
+                    alpha={0.5}
                     layout={{ position: 'absolute', left: 4, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

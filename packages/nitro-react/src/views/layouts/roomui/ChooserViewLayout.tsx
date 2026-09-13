@@ -18,6 +18,7 @@ export const ChooserViewLayout = ({ itemsItemList, layout, onClose }: ChooserVie
             variant="3"
             caption={t('widget.chooser.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 203, height: 168, minWidth: 150, minHeight: 90, ...layout }}
         >

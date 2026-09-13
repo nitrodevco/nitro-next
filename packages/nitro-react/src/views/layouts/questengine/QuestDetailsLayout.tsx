@@ -15,6 +15,7 @@ export const QuestDetailsLayout = ({ layout, onClose }: QuestDetailsLayoutProps)
             variant="3"
             caption={t('quests.details.caption')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 493, height: 253, minWidth: 493, minHeight: 253, ...layout }}
         />

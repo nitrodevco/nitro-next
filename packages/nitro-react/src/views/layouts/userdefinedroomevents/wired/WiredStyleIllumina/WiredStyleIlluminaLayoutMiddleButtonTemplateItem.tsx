@@ -14,7 +14,6 @@ export const WiredStyleIlluminaLayoutMiddleButtonTemplateItem = ({ layout, onMid
         <ContainerButton
             variant="106"
             name="middle_button_template"
-            dynamicStyle="button"
             onPointerTap={onMiddleButtonTemplate}
             layout={{ width: 14, height: 19, flexShrink: 0, ...layout }}
         >
@@ -22,6 +21,7 @@ export const WiredStyleIlluminaLayoutMiddleButtonTemplateItem = ({ layout, onMid
                 <ThemeImage
                     name="type_image"
                     src={srcTypeImage ?? layoutImage('wired_styles_illumina_icon_source_users.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 3, top: 5, height: 10 }}
                 />
             )}

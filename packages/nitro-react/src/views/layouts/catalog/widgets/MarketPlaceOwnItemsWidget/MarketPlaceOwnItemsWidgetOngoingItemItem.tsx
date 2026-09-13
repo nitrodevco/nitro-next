@@ -36,7 +36,7 @@ export const MarketPlaceOwnItemsWidgetOngoingItemItem = ({ captionItemDesc, capt
         <Border
             variant="100"
             name="ongoing_item"
-            tintColor="#f6f6f3"
+            backgroundColor="#f6f6f3"
             layout={{ width: 340, height: 58, flexShrink: 0, ...layout }}
         >
             {(visibleImageContainer ?? true) && (

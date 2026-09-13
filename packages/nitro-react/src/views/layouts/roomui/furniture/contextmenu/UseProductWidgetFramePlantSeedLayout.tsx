@@ -15,6 +15,7 @@ export const UseProductWidgetFramePlantSeedLayout = ({ layout, onClose }: UsePro
             variant="3"
             caption={t('useproduct.widget.title.plant_seed')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 388, height: 220, minWidth: 388, minHeight: 220, ...layout }}
         />

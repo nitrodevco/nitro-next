@@ -42,6 +42,7 @@ export const GiftWrappingLayout = ({ boxPickerContainer, captionBoxColorTitle, c
             variant="3"
             caption={t('catalog.gift_wrapping.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 342, height: 482, minWidth: 342, minHeight: 482, ...layout }}
         >

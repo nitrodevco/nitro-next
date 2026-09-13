@@ -19,6 +19,7 @@ export const MotdNotificationLayout = ({ itemsMessageList, layout, onClose, onCl
             variant="1"
             caption={t('notifications.motd.title')}
             tintColor="#4c4c4c"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 436, height: 227, minWidth: 436, minHeight: 227, ...layout }}
         >

@@ -18,6 +18,7 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
         <Frame
             variant="3"
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 306, height: 92, minWidth: 306, minHeight: 92, ...layout }}
         >

@@ -17,6 +17,7 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
             variant="3"
             caption={t('snowwar.exit.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 270, height: 163, minWidth: 270, minHeight: 163, ...layout }}
         >

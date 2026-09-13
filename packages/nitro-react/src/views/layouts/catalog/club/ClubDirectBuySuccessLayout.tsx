@@ -16,6 +16,7 @@ export const ClubDirectBuySuccessLayout = ({ layout, onButtonOk, onClose, srcTea
         <Frame
             variant="3"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 428, height: 227, minWidth: 428, minHeight: 227, ...layout }}
         >

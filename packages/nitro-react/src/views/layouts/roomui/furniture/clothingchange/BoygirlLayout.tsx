@@ -17,6 +17,7 @@ export const BoygirlLayout = ({ layout, onBoy, onClose, onGirl }: BoygirlLayoutP
             variant="0"
             caption={t('widget.furni.clothingchange.gender.title')}
             tintColor="#3d3d3d"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 308, height: 151, minWidth: 308, minHeight: 151, ...layout }}
         >

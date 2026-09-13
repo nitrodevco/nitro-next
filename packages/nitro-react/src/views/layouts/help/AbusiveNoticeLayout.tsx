@@ -18,6 +18,7 @@ export const AbusiveNoticeLayout = ({ layout, onClose, onCloseButton }: AbusiveN
             id="abusive_notice"
             name="abusive_notice"
             caption={t('help.emergency.abusive.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 309, height: 153, minWidth: 309, minHeight: 153, ...layout }}
         >

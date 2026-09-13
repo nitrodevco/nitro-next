@@ -17,6 +17,7 @@ export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewa
         <Frame
             variant="100"
             caption={t('mysterybox.reward.text')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 430, height: 234, minWidth: 430, minHeight: 234, ...layout }}
         >

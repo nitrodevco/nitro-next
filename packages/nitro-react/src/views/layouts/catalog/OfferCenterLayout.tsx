@@ -19,6 +19,7 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
             variant="3"
             caption={t('offers.center.title')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 377, height: 412, minWidth: 377, maxWidth: 377, minHeight: 412, ...layout }}

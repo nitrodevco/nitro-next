@@ -19,6 +19,7 @@ export const RejectedWindowLayout = ({ captionHeading, captionMessage, layout, o
             id="rejected_window"
             name="rejected_window"
             caption={t('guide.help.request.rejected.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 242, height: 147, minWidth: 242, maxWidth: 242, minHeight: 50, ...layout }}

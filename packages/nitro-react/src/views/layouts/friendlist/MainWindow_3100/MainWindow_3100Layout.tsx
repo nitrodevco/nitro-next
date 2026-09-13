@@ -22,6 +22,7 @@ export const MainWindow_3100Layout = ({ content, layout, onClose }: MainWindow_3
             id="messenger_window"
             name="messenger_window"
             caption={t('messenger.title')}
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 212, height: 405, minWidth: 102, minHeight: 200, ...layout }}
         >

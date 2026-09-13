@@ -18,6 +18,7 @@ export const ChestGenericLayout = ({ layout, mainList, onClose }: ChestGenericLa
             variant="3"
             caption={t('wiredchests.furni_chest')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 460, height: 463, minWidth: 415, maxWidth: 595, minHeight: 390, maxHeight: 730, ...layout }}
         >

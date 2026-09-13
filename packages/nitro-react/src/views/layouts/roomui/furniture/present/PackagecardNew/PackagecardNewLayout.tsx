@@ -18,6 +18,7 @@ export const PackagecardNewLayout = ({ elementList, layout, onClose }: Packageca
             variant="3"
             caption={t('widget.furni.present.window.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 334, height: 355, minWidth: 275, minHeight: 150, maxHeight: 360, ...layout }}
         >

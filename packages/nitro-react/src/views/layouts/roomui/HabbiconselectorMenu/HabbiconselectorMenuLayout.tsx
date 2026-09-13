@@ -57,6 +57,7 @@ export const HabbiconselectorMenuLayout = ({ captionEmptyText, itemsHabbiconSect
                 >
                     <Region
                         name="empty_text"
+                        alpha={0.83}
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 200, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText

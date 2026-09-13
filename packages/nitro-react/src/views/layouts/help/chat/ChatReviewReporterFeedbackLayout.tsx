@@ -21,6 +21,7 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
             id="pending_request"
             name="pending_request"
             caption={t('guide.bully.request.reporter.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 369, height: 304, minWidth: 369, minHeight: 304, ...layout }}
         >

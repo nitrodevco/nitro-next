@@ -18,6 +18,7 @@ export const PhotoPurchaseConfirmationLayout = ({ contentlist, layout, onClose }
             variant="3"
             caption={t('camera.confirm_phase.title')}
             tintColor="#555555"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 340, height: 686, minWidth: 340, minHeight: 686, ...layout }}
         >

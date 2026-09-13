@@ -18,6 +18,7 @@ export const BreedPetsResultLayout = ({ elementList, layout, onClose }: BreedPet
             variant="3"
             caption={t('breedpetsresult.widget.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 275, height: 300, minWidth: 275, minHeight: 300, ...layout }}
         >

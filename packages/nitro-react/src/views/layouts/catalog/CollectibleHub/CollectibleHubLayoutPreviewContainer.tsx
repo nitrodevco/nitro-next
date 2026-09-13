@@ -53,20 +53,24 @@ export const CollectibleHubLayoutPreviewContainer = ({ avatarImageWidget, badgeI
             >
                 <ThemeImage
                     src={layoutImage('collectables_score_background.png')}
+                    alpha={0.3}
                     layout={{ position: 'absolute', left: -15, width: 166, top: -8, height: 286 }}
                 />
                 <ThemeImage
                     src={layoutImage('collectables_score_background_right.png')}
+                    alpha={0.3}
                     layout={{ position: 'absolute', left: 139, width: 166, top: -18, height: 286 }}
                 />
                 <ThemeImage
                     src={layoutImage('collectables_score_background_gradient2.png')}
                     tint="#45ace2"
+                    alpha={0.7}
                     layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260 }}
                 />
                 <ThemeImage
                     name="bg_star"
                     src={srcBgStar ?? layoutImage('bg_star_300x300.png')}
+                    alpha={0.35}
                     layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
                 />
                 {(visiblePlaceholderImage ?? false) && (

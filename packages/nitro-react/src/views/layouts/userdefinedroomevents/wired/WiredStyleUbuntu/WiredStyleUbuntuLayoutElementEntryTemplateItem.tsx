@@ -23,7 +23,6 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
     return (
         <Region
             name="element_entry_template"
-            dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onElementEntryTemplate}
             cursor="pointer"
             layout={{ width: 42, height: 42, flexShrink: 0, ...layout }}
@@ -85,6 +84,7 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                                 <ThemeImage
                                     src={layoutImage('common_close_x.png')}
                                     tint="#777777"
+                                    dynamicRole="bg"
                                     layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
                                 />
                             </Border>

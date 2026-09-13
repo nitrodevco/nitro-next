@@ -21,6 +21,7 @@ export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, layout, on
         <Frame
             variant="3"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 1033, height: 607, minWidth: 1033, minHeight: 607, ...layout }}
         >

@@ -18,6 +18,7 @@ export const HabbiconPurchaseConfirmationLayout = ({ content, layout, onClose }:
             variant="3"
             caption={t('habbicon_purchase.confirm.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 353, height: 296, minWidth: 353, maxWidth: 353, minHeight: 296, ...layout }}

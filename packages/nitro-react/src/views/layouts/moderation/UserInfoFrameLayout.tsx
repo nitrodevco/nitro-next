@@ -12,6 +12,7 @@ export const UserInfoFrameLayout = ({ layout, onClose }: UserInfoFrameLayoutProp
             variant="0"
             caption="User info"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 292, height: 225, minWidth: 292, minHeight: 225, ...layout }}
         />

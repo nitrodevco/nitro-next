@@ -29,6 +29,7 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                 variant="6"
                 name="frame"
                 tintColor="#a5cd5d"
+                backgroundColor="#a5cd5d"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 101, height: 36 }}
             >
                 <Region

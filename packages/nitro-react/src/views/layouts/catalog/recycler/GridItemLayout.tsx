@@ -35,6 +35,7 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                 <Border
                     variant="2"
                     tintColor="#a1a19b"
+                    backgroundColor="#a1a19b"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Border

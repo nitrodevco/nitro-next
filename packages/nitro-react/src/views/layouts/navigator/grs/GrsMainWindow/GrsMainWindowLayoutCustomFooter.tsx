@@ -41,6 +41,7 @@ export const GrsMainWindowLayoutCustomFooter = ({ adCont, captionAdCaption, capt
                     variant="0"
                     name="more_rooms_container"
                     tintColor="#cccccc"
+                    backgroundColor="#cccccc"
                     layout={{ position: 'absolute', left: 0, width: 294, top: 8, height: 29 }}
                 >
                     <ThemeImage
@@ -95,6 +96,7 @@ export const GrsMainWindowLayoutCustomFooter = ({ adCont, captionAdCaption, capt
                     variant="0"
                     name="link_to_navigator_container"
                     tintColor="#cccccc"
+                    backgroundColor="#cccccc"
                     layout={{ position: 'absolute', left: 0, width: 294, top: 8, height: 29 }}
                 >
                     <ThemeText

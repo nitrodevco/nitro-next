@@ -39,6 +39,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, helpMessage,
             id="emergency_help_request"
             name="emergency_help_request"
             caption={t('help.emergency.main.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 593, height: 491, minWidth: 593, minHeight: 491, ...layout }}
         >

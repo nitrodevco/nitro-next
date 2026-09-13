@@ -25,6 +25,7 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
             id="user_guide_disconnected"
             name="user_guide_disconnected"
             caption={t('guide.help.request.user.guide.disconnected.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 294, minWidth: 282, maxWidth: 282, minHeight: 50, ...layout }}

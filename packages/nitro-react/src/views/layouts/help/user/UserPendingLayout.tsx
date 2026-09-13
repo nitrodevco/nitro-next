@@ -24,6 +24,7 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
             id="user_pending"
             name="user_pending"
             caption={t('guide.help.request.user.pending.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 320, minWidth: 282, maxWidth: 282, minHeight: 290, ...layout }}

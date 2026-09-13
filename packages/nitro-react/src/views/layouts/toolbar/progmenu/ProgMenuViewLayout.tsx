@@ -64,6 +64,7 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                             <ThemeImage
                                 name="dailytasks_icon_grey"
                                 src={srcDailytasksIconGrey ?? layoutImage('prog_menu_daily_tasks.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -88,6 +89,7 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                             <ThemeImage
                                 name="quests_icon_grey"
                                 src={srcQuestsIconGrey ?? layoutImage('prog_menu_quests.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -112,6 +114,7 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                             <ThemeImage
                                 name="achievements_icon_grey"
                                 src={srcAchievementsIconGrey ?? layoutImage('me_menu_me_achv.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -136,6 +139,7 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                             <ThemeImage
                                 name="leaderboards_icon_grey"
                                 src={srcLeaderboardsIconGrey ?? layoutImage('prog_menu_leaderboards.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 17, width: 25, top: 4, height: 25 }}
                             />
                         </Region>
@@ -160,6 +164,7 @@ export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldT
                             <ThemeImage
                                 name="introduction_icon_grey"
                                 src={srcIntroductionIconGrey ?? layoutImage('prog_menu_introduction.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 33, top: 0, height: 32 }}
                             />
                         </Region>

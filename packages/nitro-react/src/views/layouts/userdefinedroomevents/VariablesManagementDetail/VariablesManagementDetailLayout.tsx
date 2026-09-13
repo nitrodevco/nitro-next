@@ -25,6 +25,7 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, infoBox, layo
             name="variablemanagement_detail"
             caption={t('wiredmenu.variable_management_detail.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 339, height: 512, minWidth: 339, maxWidth: 339, minHeight: 400, maxHeight: 650, ...layout }}

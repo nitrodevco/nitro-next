@@ -41,6 +41,7 @@ export const LandingViewGenericReceptionLayoutContentBackground = ({ captionDail
             <ThemeImage
                 name="reception_divider"
                 src={srcReceptionDivider ?? layoutImage('landing_view_reception_horizontal.png')}
+                alpha={0.8}
                 layout={{ position: 'absolute', right: 288, width: 2, top: 0, bottom: 0 }}
             />
             <Region layout={{ position: 'absolute', left: 310, width: 299, top: 74, height: 30, flexDirection: 'row', gap: 5 }}>

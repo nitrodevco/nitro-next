@@ -50,12 +50,14 @@ export const CollectibleHubLayoutCollectorHubHeader = ({ captionCaptionAllTimeHi
                     name="collectable_bg_left"
                     src={srcCollectableBgLeft ?? layoutImage('collectables_score_background.png')}
                     tint="#fc7c5a"
+                    alpha={0.25}
                     layout={{ position: 'absolute', left: 0, width: 166, top: 0, height: 121 }}
                 />
                 <ThemeImage
                     name="collectable_bg_right"
                     src={srcCollectableBgRight ?? layoutImage('collectables_score_background_right.png')}
                     tint="#fc7c5a"
+                    alpha={0.25}
                     layout={{ position: 'absolute', left: 332, width: 166, top: -160, height: 286 }}
                 />
                 <ThemeImage
@@ -142,6 +144,7 @@ export const CollectibleHubLayoutCollectorHubHeader = ({ captionCaptionAllTimeHi
                     />
                     <Region
                         name="level_title"
+                        alpha={0.41}
                         layout={{ position: 'absolute', left: 3, width: 41, top: 22, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText

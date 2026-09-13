@@ -20,6 +20,7 @@ export const IssueBrowserLayout = ({ layout, onAutoPick, onClose, onMyIssues, on
             variant="0"
             caption="Issue browser"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 585, height: 273, minWidth: 585, minHeight: 273, ...layout }}
         >

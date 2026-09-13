@@ -13,6 +13,7 @@ export const AlertLayout = ({ captionAlertText, captionAlertTitle, layout, onClo
         <Frame
             id="frame"
             name="frame"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 200, height: 400, minWidth: 200, minHeight: 400, ...layout }}
         >

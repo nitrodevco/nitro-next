@@ -20,6 +20,7 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
             variant="3"
             caption={t('navigator.doorbell.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 270, height: 182, minWidth: 270, minHeight: 182, ...layout }}
         >

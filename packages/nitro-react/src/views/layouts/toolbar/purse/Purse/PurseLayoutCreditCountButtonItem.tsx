@@ -27,12 +27,14 @@ export const PurseLayoutCreditCountButtonItem = ({ captionCreditCount, layout, o
                     text={captionCreditCount ?? '0'}
                     textStyle="text-style-u-bold"
                     textOptions={{ fill: '#d5af22' }}
+                    dynamicRole="icon"
                     name="credit_count"
                     layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17 }}
                 />
             )}
             <ThemeImage
                 src={layoutImage('pursearea_credits_icon.png')}
+                dynamicRole="icon"
                 layout={{ position: 'absolute', left: 36, width: 15, top: 2, height: 15 }}
             />
         </Region>

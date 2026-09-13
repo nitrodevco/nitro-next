@@ -30,6 +30,7 @@ export const CollectibleRewardLayoutTopContainer = ({ captionProductName, captio
                     name="gradient"
                     src={srcGradient ?? layoutImage('collectables_score_background_gradient.png')}
                     tint="#000000"
+                    alpha={0.5}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 348 }}
                 />
                 <Border
@@ -66,6 +67,7 @@ export const CollectibleRewardLayoutTopContainer = ({ captionProductName, captio
                     name="rotating_star"
                     src={srcRotatingStar ?? layoutImage('bg_star_300x300.png')}
                     tint="#ffecac"
+                    alpha={0.75}
                     layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 300 }}
                 />
                 <WidgetSlot

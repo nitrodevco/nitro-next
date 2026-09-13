@@ -37,6 +37,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
             variant="3"
             caption={t('groupforum.view.window_title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 552, height: 565, minWidth: 400, minHeight: 525, ...layout }}
         >

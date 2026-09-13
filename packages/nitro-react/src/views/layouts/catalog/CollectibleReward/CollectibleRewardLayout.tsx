@@ -25,6 +25,7 @@ export const CollectibleRewardLayout = ({ captionRarityText, captionRarityTitle,
             name="CollectibleReward"
             caption={t('collectibles.reward_box.notif.title')}
             tintColor="#5e696d"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 424, height: 570, minWidth: 424, minHeight: 570, ...layout }}
         >
@@ -42,7 +43,6 @@ export const CollectibleRewardLayout = ({ captionRarityText, captionRarityTitle,
                 <Border
                     variant="3"
                     name="highlight"
-                    tintColor="#000fff"
                     blend={0.1}
                     layout={{ position: 'absolute', left: 0, right: 0, top: -2, height: 50 }}
                 />

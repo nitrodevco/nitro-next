@@ -34,6 +34,7 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
             variant="3"
             caption={t('catalog.marketplace.confirm_title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 279, height: 255, minWidth: 279, minHeight: 255, ...layout }}
         >

@@ -23,6 +23,7 @@ export const LogsOverviewLayout = ({ footer, header, layout, onClose, tableView 
             variant="3"
             caption={t('wiredmenu.logs_overview.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 700, height: 508, minWidth: 700, maxWidth: 700, minHeight: 380, maxHeight: 700, ...layout }}

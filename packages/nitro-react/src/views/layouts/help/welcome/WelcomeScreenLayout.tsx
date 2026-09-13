@@ -25,6 +25,7 @@ export const WelcomeScreenLayout = ({ captionText, layout, onClick, onClose, onF
                     name="frame"
                     caption="title"
                     tintColor="#418db0"
+                    dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 9, right: 12, top: 0, bottom: 0 }}
                 >

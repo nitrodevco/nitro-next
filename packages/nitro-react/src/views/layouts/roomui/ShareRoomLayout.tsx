@@ -24,6 +24,7 @@ export const ShareRoomLayout = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdl
             variant="3"
             caption={t('navigator.embed.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 457, height: 250, minWidth: 457, minHeight: 250, ...layout }}
         >

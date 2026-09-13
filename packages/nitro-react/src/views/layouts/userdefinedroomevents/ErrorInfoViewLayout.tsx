@@ -20,6 +20,7 @@ export const ErrorInfoViewLayout = ({ captionErrorName, captionErrorText, layout
             name="error_info_frame"
             caption={t('wiredmenu.error_info.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 337, height: 148, minWidth: 300, minHeight: 148, ...layout }}
         >

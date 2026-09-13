@@ -20,12 +20,13 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
             variant="3"
             caption={t('floor.plan.editor.import.export')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 379, height: 374, minWidth: 379, minHeight: 374, ...layout }}
         >
             <Border
                 variant="105"
-                tintColor="#ffffff"
+                backgroundColor="#ffffff"
                 layout={{ position: 'absolute', left: 8, right: 11, top: 12, bottom: 52 }}
             >
                 <TextInput

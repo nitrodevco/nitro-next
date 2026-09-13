@@ -22,6 +22,7 @@ export const ConfirmPetBreedingLayout = ({ elementList, itemsButtonList, layout,
         <Frame
             variant="100"
             caption={t('breedpets.confirmation.widget.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 320, height: 623, minWidth: 320, maxWidth: 320, minHeight: 623, ...layout }}

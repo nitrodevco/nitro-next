@@ -15,6 +15,7 @@ export const MannequinWidgetFrameLayout = ({ layout, onClose }: MannequinWidgetF
             variant="3"
             caption={t('mannequin.widget.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 388, height: 220, minWidth: 388, minHeight: 220, ...layout }}
         />

@@ -20,6 +20,7 @@ export const StripClubItemsInfoLayout = ({ captionStripDescription, layout, onCl
             name="_frame"
             caption={t('avatareditor.invalidclubitems.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 278, height: 154, minWidth: 278, minHeight: 154, ...layout }}
         >

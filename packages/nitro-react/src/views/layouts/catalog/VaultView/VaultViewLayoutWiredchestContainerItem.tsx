@@ -78,6 +78,7 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
                         <ThemeImage
                             name="wiredchest_bitmap"
                             src={srcWiredchestBitmap ?? layoutImage('vault_earnings_icon_chests.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 2, height: 32 }}
                         />
                     )}

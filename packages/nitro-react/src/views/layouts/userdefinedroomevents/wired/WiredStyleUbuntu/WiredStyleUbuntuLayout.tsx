@@ -100,6 +100,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                                 <ThemeImage
                                     src={layoutImage('common_close_x.png')}
                                     tint="#777777"
+                                    dynamicRole="bg"
                                     layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
                                 />
                             </Border>
@@ -296,6 +297,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         name="frame"
                         caption={t('wiredfurni.title')}
                         tintColor="#418db0"
+                        dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                         onClose={onFrame}
                         layout={{ position: 'absolute', left: 0, width: 240, top: 0, bottom: 0, minWidth: 100 }}
                     />

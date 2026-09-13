@@ -18,6 +18,7 @@ export const SendMsgsLayout = ({ layout, onClose, onMsgTemplatesSelect, onSendMe
             variant="0"
             caption="Msg to:"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 212, height: 168, minWidth: 212, minHeight: 168, ...layout }}
         >

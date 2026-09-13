@@ -19,6 +19,7 @@ export const UserCreateLayout = ({ layout, list, onClose }: UserCreateLayoutProp
             id="user_create"
             name="user_create"
             caption={t('guide.help.request.user.create.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 295, minWidth: 282, maxWidth: 282, minHeight: 50, ...layout }}

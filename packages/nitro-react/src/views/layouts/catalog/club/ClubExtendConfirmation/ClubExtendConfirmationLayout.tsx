@@ -21,6 +21,7 @@ export const ClubExtendConfirmationLayout = ({ backgroundContainer, itemlistVert
             id="frame_title"
             name="frame_title"
             tintColor="#007a98"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 450, height: 235, minWidth: 450, minHeight: 235, ...layout }}
         >

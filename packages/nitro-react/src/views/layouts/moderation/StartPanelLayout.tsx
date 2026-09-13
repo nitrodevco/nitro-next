@@ -27,6 +27,7 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
             name="mod_start_panel"
             caption="Mod Tools"
             tintColor="#418db0"
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 170, height: 170, minWidth: 170, minHeight: 170, ...layout }}
         >

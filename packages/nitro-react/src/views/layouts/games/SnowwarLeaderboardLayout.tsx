@@ -40,6 +40,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
         <Frame
             variant="3"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.34, blur: 4 }}
             onClose={onClose}
             layout={{ width: 437, height: 511, minWidth: 437, minHeight: 511, ...layout }}
         >

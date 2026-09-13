@@ -27,6 +27,7 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
             id="user_ongoing"
             name="user_ongoing"
             caption="Getting helped by"
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 345, minWidth: 282, maxWidth: 282, minHeight: 345, ...layout }}

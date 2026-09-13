@@ -46,13 +46,13 @@ export const WiredMenuViewLayoutHeaderContainer = ({ captionHeaderTitle, headerD
             <Region
                 name="discord_region"
                 tooltip={t('wiredmenu.discord_region.tooltip')}
-                dynamicStyle="brightness_and_shadow_under_gentle"
                 onPointerTap={onDiscordRegion}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 473, width: 22, top: 3, height: 25 }}
             >
                 <ThemeImage
                     src={layoutImage('icon_discord.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 0, width: 22, top: 1, height: 23 }}
                 />
             </Region>

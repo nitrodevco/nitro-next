@@ -27,6 +27,7 @@ export const HabboWayLayout = ({ finalPage, layout, onFrameClose, pageContainer,
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 50 }}>
                 <Frame
                     variant="101"
+                    dropShadow={{ angle: 0, alpha: 0.75, blur: 80 }}
                     onClose={onFrameClose}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 10, height: 470 }}
                 >

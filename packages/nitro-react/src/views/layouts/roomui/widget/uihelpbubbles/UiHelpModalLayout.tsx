@@ -18,6 +18,7 @@ export const UiHelpModalLayout = ({ layout, srcBitmap, tintBitmap, uiContainer }
                     name="bitmap"
                     src={srcBitmap}
                     tint={tintBitmap ?? '#24231e'}
+                    alpha={0.6}
                     layout={{ position: 'absolute', left: 0, right: 1, top: 0, bottom: 1 }}
                 />
                 <Region

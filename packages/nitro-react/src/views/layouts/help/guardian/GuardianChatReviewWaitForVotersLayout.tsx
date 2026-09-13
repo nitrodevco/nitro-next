@@ -26,6 +26,7 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, cou
             id="guardian_chat_review_vote"
             name="guardian_chat_review_vote"
             caption={t('guide.bully.request.guide.vote.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 279, height: 499, minWidth: 279, maxWidth: 279, minHeight: 499, ...layout }}

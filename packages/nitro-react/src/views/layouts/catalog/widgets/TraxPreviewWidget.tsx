@@ -24,7 +24,6 @@ export const TraxPreviewWidget = ({ captionPlayPreviewText, layout, onListen }: 
         >
             <Border
                 variant="4"
-                tintColor="#cccccc"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <Button

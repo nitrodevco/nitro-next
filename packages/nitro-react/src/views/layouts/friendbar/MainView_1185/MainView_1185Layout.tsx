@@ -15,6 +15,7 @@ export const MainView_1185Layout = ({ body, frameHeaderOverride, layout, onClose
     return (
         <Frame
             variant="10000"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="none"
             layout={{ width: 412, height: 650, minWidth: 412, maxWidth: 412, minHeight: 650, maxHeight: 650, ...layout }}

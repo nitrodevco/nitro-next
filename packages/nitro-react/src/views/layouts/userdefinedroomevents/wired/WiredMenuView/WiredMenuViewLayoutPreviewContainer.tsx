@@ -47,6 +47,7 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
                 {(visiblePreviewInstructionFurni ?? false) && (
                     <Region
                         name="preview_instruction_furni"
+                        alpha={0.6}
                         layout={{ position: 'absolute', left: 0, right: 0, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -58,6 +59,7 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
                 {(visiblePreviewInstructionUser ?? false) && (
                     <Region
                         name="preview_instruction_user"
+                        alpha={0.6}
                         layout={{ position: 'absolute', left: 0, right: 0, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText

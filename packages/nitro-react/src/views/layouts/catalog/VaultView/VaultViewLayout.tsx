@@ -20,6 +20,7 @@ export const VaultViewLayout = ({ earningsContentArea, layout, onClose }: VaultV
             name="VaultBase"
             caption={t('earnings.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 422, height: 536, minWidth: 422, minHeight: 536, ...layout }}
         >

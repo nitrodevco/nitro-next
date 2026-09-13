@@ -31,6 +31,7 @@ export const ChestOverlayGriditemLayout = ({ layout, srcChestOverlayGlazeBitmap,
                 <ThemeImage
                     name="chest_overlay_glaze_bitmap"
                     src={srcChestOverlayGlazeBitmap ?? layoutImage('chest_overlay_shine.png')}
+                    alpha={0.6}
                     layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                 />
             </Region>

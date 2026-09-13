@@ -76,6 +76,7 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                             <ThemeImage
                                 name="guide_icon_grey"
                                 src={srcGuideIconGrey ?? layoutImage('me_menu_me_guide.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -100,6 +101,7 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                             <ThemeImage
                                 name="talents_icon_grey"
                                 src={srcTalentsIconGrey ?? layoutImage('me_menu_me_talents.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -124,6 +126,7 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                             <ThemeImage
                                 name="minimail_icon_grey"
                                 src={srcMinimailIconGrey ?? layoutImage('me_menu_me_mail.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -148,6 +151,7 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                             <ThemeImage
                                 name="profile_icon_grey"
                                 src={srcProfileIconGrey ?? layoutImage('me_menu_me_profile.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -172,6 +176,7 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                             <ThemeImage
                                 name="rooms_icon_grey"
                                 src={srcRoomsIconGrey ?? layoutImage('me_menu_me_rooms.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -196,6 +201,7 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                             <ThemeImage
                                 name="clothes_icon_grey"
                                 src={srcClothesIconGrey ?? layoutImage('me_menu_me_clothing.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -220,6 +226,7 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                             <ThemeImage
                                 name="forums_icon_grey"
                                 src={srcForumsIconGrey ?? layoutImage('me_menu_me_forums.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>
@@ -244,6 +251,7 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                             <ThemeImage
                                 name="collectibles_icon_grey"
                                 src={srcCollectiblesIconGrey ?? layoutImage('me_menu_me_cabinet.png')}
+                                greyscale
                                 layout={{ position: 'absolute', left: 14, width: 32, top: 0, height: 30 }}
                             />
                         </Region>

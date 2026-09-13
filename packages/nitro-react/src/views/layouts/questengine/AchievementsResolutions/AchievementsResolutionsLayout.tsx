@@ -23,6 +23,7 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, countdown
         <Frame
             variant="100"
             caption={t('resolution.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="none"
             layout={{ width: 312, height: 525, minWidth: 312, maxWidth: 312, minHeight: 525, maxHeight: 525, ...layout }}

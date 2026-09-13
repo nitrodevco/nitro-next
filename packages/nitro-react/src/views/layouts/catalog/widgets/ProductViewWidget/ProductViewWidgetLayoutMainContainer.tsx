@@ -76,25 +76,25 @@ export const ProductViewWidgetLayoutMainContainer = ({ captionCtlgDescription, c
             </ContainerButton>
             <Region
                 name="toggle_preview_zoom"
-                dynamicStyle="button"
                 onPointerTap={onTogglePreviewZoom}
                 cursor="pointer"
                 layout={{ position: 'absolute', right: 9, width: 20, top: 37, height: 22 }}
             >
                 <ThemeImage
                     src={layoutImage('roomtools_magnifier.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 3, width: 13, top: 0, height: 22 }}
                 />
             </Region>
             <Region
                 name="toggle_preview_magic"
-                dynamicStyle="button"
                 onPointerTap={onTogglePreviewMagic}
                 cursor="pointer"
                 layout={{ position: 'absolute', right: 7, width: 22, top: 63, height: 22 }}
             >
                 <ThemeImage
                     src={layoutImage('avatar_editor_tabs_ae_tabs_generic.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: -10, width: 41, top: 0, height: 22 }}
                 />
             </Region>

@@ -23,6 +23,7 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
             id="guide_closed"
             name="guide_closed"
             caption={t('guide.help.request.guide.closed.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 204, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}

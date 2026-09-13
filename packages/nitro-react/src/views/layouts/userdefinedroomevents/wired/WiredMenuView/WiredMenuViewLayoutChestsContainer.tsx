@@ -37,6 +37,7 @@ export const WiredMenuViewLayoutChestsContainer = ({ captionTitle, captionTitleE
                     />
                     <Region
                         name="title_extra"
+                        alpha={0.5}
                         layout={{ position: 'absolute', right: 3, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         {captionTitleExtra ?? t('wiredmenu.chests.room_logs.extra')}

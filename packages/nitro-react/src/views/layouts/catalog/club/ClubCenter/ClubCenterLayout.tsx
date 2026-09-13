@@ -43,6 +43,7 @@ export const ClubCenterLayout = ({ avatar, captionGeneralInfo, captionGeneralInf
             name="hc_center"
             caption={t('generic.hccenter')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 460, height: 597, minWidth: 460, minHeight: 597, ...layout }}
         >

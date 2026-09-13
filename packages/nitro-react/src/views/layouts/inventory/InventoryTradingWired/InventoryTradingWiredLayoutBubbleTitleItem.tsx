@@ -13,6 +13,7 @@ export const InventoryTradingWiredLayoutBubbleTitleItem = ({ captionBubbleTitle,
     return (
         <Region
             name="bubble_title"
+            alpha={0.5}
             layout={{ width: 390, height: 17, flexShrink: 0, minWidth: 220, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText

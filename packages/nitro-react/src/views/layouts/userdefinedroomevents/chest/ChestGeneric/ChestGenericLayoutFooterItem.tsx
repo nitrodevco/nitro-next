@@ -127,6 +127,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, foote
                     {(visibleItemCountTextBottom ?? false) && (
                         <Region
                             name="item_count_text_bottom"
+                            alpha={0.6}
                             layout={{ position: 'absolute', right: 15, width: 184, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             {captionItemCountTextBottom ?? t('wiredchests.space_used')}

@@ -25,6 +25,7 @@ export const RoomToolsToolbarLayoutButtonChatHistoryItem = ({ captionTextChatHis
             {/* `container` is hidden and has no name to show it by */}
             <ThemeImage
                 src={layoutImage('roomtools_chat_history.png')}
+                dynamicRole="icon"
                 layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
             />
             {(visibleTextChatHistory ?? true) && (

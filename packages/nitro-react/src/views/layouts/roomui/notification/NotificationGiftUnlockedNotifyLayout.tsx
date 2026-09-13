@@ -25,6 +25,7 @@ export const NotificationGiftUnlockedNotifyLayout = ({ captionHeader, captionOpe
             name="widget_teaser_frame"
             caption={t('widget.furni.teaser.gift.title')}
             tintColor="#4c4c4c"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 433, height: 260, minWidth: 433, minHeight: 260, ...layout }}
         >

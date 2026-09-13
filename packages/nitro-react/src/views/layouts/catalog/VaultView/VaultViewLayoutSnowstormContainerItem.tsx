@@ -97,6 +97,7 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
                         <ThemeImage
                             name="snowstorm_bitmap"
                             src={srcSnowstormBitmap ?? layoutImage('vault_earnings_icon_snowstorm.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                         />
                     )}

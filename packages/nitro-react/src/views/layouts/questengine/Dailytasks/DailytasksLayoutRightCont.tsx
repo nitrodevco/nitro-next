@@ -32,6 +32,7 @@ export const DailytasksLayoutRightCont = ({ captionClaimTxt, captionRewardTitleT
             >
                 <Region
                     name="reward_title_text"
+                    alpha={0.65}
                     layout={{ position: 'absolute', left: 0, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText

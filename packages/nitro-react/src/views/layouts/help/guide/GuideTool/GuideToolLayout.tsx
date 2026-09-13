@@ -19,6 +19,7 @@ export const GuideToolLayout = ({ layout, list, onClose }: GuideToolLayoutProps)
             id="guide_tool"
             name="guide_tool"
             caption={t('guide.help.guide.tool.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 242, height: 306, minWidth: 242, maxWidth: 242, minHeight: 50, ...layout }}

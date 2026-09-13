@@ -265,6 +265,7 @@ export const WiredStyleVolterLayout = ({ captionTextBoldView, captionTextHtml, c
                         name="frame"
                         caption={t('wiredfurni.title')}
                         tintColor="#3e3e3e"
+                        dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                         onClose={onFrame}
                         layout={{ position: 'absolute', left: 0, width: 240, top: 0, bottom: 0, minWidth: 100 }}
                     />
@@ -307,13 +308,13 @@ export const WiredStyleVolterLayout = ({ captionTextBoldView, captionTextHtml, c
                 <ContainerButton
                     variant="1"
                     name="asset_button"
-                    dynamicStyle="button"
                     onPointerTap={onAssetButton}
                     layout={{ position: 'absolute', left: 0, width: 25, top: 0, height: 25 }}
                 >
                     <ThemeImage
                         name="asset"
                         src={srcAsset}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 5, top: 5 }}
                     />
                 </ContainerButton>

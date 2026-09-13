@@ -23,6 +23,7 @@ export const PremiumPurchaseConfirmationLayout = ({ content, itemsButtons, layou
             variant="3"
             caption={t('reward_track.premium.confirm.title')}
             tintColor="#7b3fa1"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 390, height: 352, minWidth: 390, minHeight: 352, ...layout }}
         >

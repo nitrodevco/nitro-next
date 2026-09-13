@@ -35,11 +35,13 @@ export const DiscountValueItemLayoutTotalValueContainer = ({ captionTotalCurrenc
             <Icon
                 variant="0"
                 name="total_currency_icon_left"
+                alpha={0.5}
                 layout={{ position: 'absolute', left: 65, width: 14, top: 1, height: 14 }}
             />
             <Region
                 name="striketrough_total_currency_left"
                 backgroundColor="#000000"
+                alpha={0.5}
                 layout={{ position: 'absolute', left: 25, width: 55, top: 7, height: 2 }}
             >
                 {striketroughTotalCurrencyLeft}
@@ -53,11 +55,13 @@ export const DiscountValueItemLayoutTotalValueContainer = ({ captionTotalCurrenc
             <Icon
                 variant="0"
                 name="total_currency_icon_right"
+                alpha={0.5}
                 layout={{ position: 'absolute', left: 133, width: 14, top: 1, height: 14 }}
             />
             <Region
                 name="striketrough_total_currency_right"
                 backgroundColor="#000000"
+                alpha={0.5}
                 layout={{ position: 'absolute', left: 92, width: 55, top: 7, height: 2 }}
             >
                 {striketroughTotalCurrencyRight}

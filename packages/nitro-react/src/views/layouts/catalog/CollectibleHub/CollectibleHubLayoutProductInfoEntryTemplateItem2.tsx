@@ -27,6 +27,7 @@ export const CollectibleHubLayoutProductInfoEntryTemplateItem2 = ({ captionProdu
             {(visibleProductInfoValue ?? true) && (
                 <Region
                     name="product_info_value"
+                    alpha={0.8}
                     layout={{ position: 'absolute', left: 140, width: 102, top: 1, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

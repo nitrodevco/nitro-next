@@ -18,6 +18,7 @@ export const TransactionDetailsLayout = ({ keyValuePairs, layout, onClose }: Tra
             variant="3"
             caption={t('wiredchests.log_details.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 400, height: 394, minWidth: 400, maxWidth: 400, minHeight: 394, ...layout }}

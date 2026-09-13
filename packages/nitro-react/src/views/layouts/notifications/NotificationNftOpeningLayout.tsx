@@ -34,7 +34,10 @@ export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, iconW
                         backgroundColor="#012723"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 7, width: 194, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region
+                        alpha={0.95}
+                        layout={{ position: 'absolute', left: 7, width: 194, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
                         <ThemeText
                             text={t('collectibles.reward_box.notif.title')}
                             textOptions={{ fill: '#ffffff' }}

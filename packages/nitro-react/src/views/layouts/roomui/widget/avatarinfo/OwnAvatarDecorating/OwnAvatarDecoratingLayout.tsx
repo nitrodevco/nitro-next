@@ -16,6 +16,7 @@ export const OwnAvatarDecoratingLayout = ({ itemsButtons, layout }: OwnAvatarDec
             <Bubble
                 variant="0"
                 tintColor="#6e6b67"
+                alpha={0.5}
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: -376, height: 49 }}
             >
                 <Region

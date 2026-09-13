@@ -21,6 +21,7 @@ export const NavPromoAlertLayout = ({ captionBodyText, captionPromoText, layout,
             name="alert_%203"
             caption="PH Caption"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 224, height: 182, minWidth: 224, minHeight: 182, ...layout }}
         >

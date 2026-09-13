@@ -78,6 +78,7 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
                         <ThemeImage
                             name="dailygift_bitmap"
                             src={srcDailygiftBitmap ?? layoutImage('vault_earnings_icon_dailygift.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                         />
                     )}

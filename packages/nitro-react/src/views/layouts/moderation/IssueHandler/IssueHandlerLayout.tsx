@@ -26,6 +26,7 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
             variant="0"
             caption="Issue handling"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 750, height: 650, minWidth: 750, maxWidth: 750, minHeight: 390, ...layout }}

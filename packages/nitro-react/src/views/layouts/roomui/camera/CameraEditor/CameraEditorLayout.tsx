@@ -39,6 +39,7 @@ export const CameraEditorLayout = ({ buttonSeparator, captionSaveText, captionZo
             name="bgBorder"
             caption={t('camera.editor.button.text')}
             tintColor="#555555"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 586, height: 517, minWidth: 586, minHeight: 517, ...layout }}
         >

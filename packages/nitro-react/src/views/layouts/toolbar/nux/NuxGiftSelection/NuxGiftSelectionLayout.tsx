@@ -20,6 +20,7 @@ export const NuxGiftSelectionLayout = ({ captionNuxGiftSelectionChooseOne, layou
             variant="3"
             caption={t('nux.gift.selection.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 487, height: 287, minWidth: 487, minHeight: 287, ...layout }}
         >

@@ -34,6 +34,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
         <Frame
             variant="101"
             caption={t('help.main.frame.title')}
+            dropShadow={{ angle: 0, alpha: 0.75, blur: 80 }}
             onClose={onClose}
             layout={{ width: 420, height: 600, minWidth: 50, minHeight: 50, ...layout }}
         >

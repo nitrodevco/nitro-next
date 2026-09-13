@@ -29,6 +29,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
             variant="3"
             caption={t('widgets.pet.commands.title')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 195, height: 462, minWidth: 195, minHeight: 462, ...layout }}
         >

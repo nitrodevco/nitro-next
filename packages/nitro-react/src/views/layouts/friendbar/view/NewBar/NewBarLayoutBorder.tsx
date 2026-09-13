@@ -36,11 +36,13 @@ export const NewBarLayoutBorder = ({ friendtools, itemsList, layout, onBorder, o
                 <ThemeImage
                     src={layoutImage('friend_bar_friends_browse_bg.png')}
                     tint="#3b3933"
+                    dynamicRole="bg"
                     layout={{ position: 'absolute', left: 0, width: 29, top: 4, height: 31 }}
                 />
                 <Icon
                     variant="4"
                     tintColor="#9c9791"
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 12, width: 10, top: 15, height: 10 }}
                 />
             </Region>
@@ -60,11 +62,13 @@ export const NewBarLayoutBorder = ({ friendtools, itemsList, layout, onBorder, o
                 <ThemeImage
                     src={layoutImage('friend_bar_friends_browse_bg.png')}
                     tint="#3b3933"
+                    dynamicRole="bg"
                     layout={{ position: 'absolute', left: 0, width: 29, top: 5, height: 31 }}
                 />
                 <Icon
                     variant="5"
                     tintColor="#9c9791"
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 11, width: 10, top: 15, height: 10 }}
                 />
             </Region>
@@ -82,6 +86,7 @@ export const NewBarLayoutBorder = ({ friendtools, itemsList, layout, onBorder, o
                 <ThemeImage
                     name="icons_toolbar_collapse_right"
                     src={srcIconsToolbarCollapseRight ?? layoutImage('roomtools_minimizebutton.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
                 />
             </Region>

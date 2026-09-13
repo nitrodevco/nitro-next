@@ -42,6 +42,7 @@ export const GroupManagementWindowLayout = ({ footerCont, headerCont, layout, on
             name="groups_main_window"
             caption={t('group.window.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 392, height: 497, minWidth: 392, minHeight: 497, ...layout }}
         >

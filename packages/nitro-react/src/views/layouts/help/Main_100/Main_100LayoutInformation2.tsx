@@ -43,6 +43,7 @@ export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, layout }
             <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: 3, height: 30, flexDirection: 'column', gap: -3 }}>
                 <Region
                     name="title"
+                    alpha={0.7}
                     layout={{ width: 90, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
@@ -52,6 +53,7 @@ export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, layout }
                 </Region>
                 <Region
                     name="desc"
+                    alpha={0.7}
                     layout={{ width: 90, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText

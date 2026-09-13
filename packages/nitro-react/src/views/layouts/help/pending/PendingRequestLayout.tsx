@@ -20,6 +20,7 @@ export const PendingRequestLayout = ({ captionRequestMessage, layout, onClose, o
             id="pending_request"
             name="pending_request"
             caption={t('help.emergency.pending.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 369, height: 211, minWidth: 369, minHeight: 211, ...layout }}
         >

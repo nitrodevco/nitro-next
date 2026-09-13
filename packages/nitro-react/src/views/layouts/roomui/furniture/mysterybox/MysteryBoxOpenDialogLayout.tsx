@@ -21,6 +21,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
             id="title_text"
             name="title_text"
             caption="Mystery Box"
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 361, height: 271, minWidth: 361, minHeight: 271, ...layout }}
         >

@@ -78,6 +78,7 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
                         <ThemeImage
                             name="agency_bitmap"
                             src={srcAgencyBitmap ?? layoutImage('vault_earnings_icon_rpgs.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 3, height: 32 }}
                         />
                     )}

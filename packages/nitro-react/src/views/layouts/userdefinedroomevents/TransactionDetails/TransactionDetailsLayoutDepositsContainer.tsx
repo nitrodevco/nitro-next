@@ -33,6 +33,7 @@ export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, it
                 {(visibleEmptyText ?? false) && (
                     <Region
                         name="empty_text"
+                        alpha={0.5}
                         layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText

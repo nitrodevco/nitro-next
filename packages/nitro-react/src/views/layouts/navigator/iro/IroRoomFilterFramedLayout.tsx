@@ -23,6 +23,7 @@ export const IroRoomFilterFramedLayout = ({ itemsBadwordsItemlist, layout, onBad
             name="event_window"
             caption={t('navigator.roomsettings.roomfilter')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 250, height: 230, minWidth: 250, minHeight: 230, ...layout }}
         >

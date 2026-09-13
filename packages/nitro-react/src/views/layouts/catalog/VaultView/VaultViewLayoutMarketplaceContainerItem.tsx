@@ -78,6 +78,7 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                         <ThemeImage
                             name="marketplace_bitmap"
                             src={srcMarketplaceBitmap ?? layoutImage('vault_earnings_icon_marketplace.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                         />
                     )}

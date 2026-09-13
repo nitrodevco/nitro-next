@@ -25,6 +25,7 @@ export const RoomToolsToolbarLayoutButtonCameraItem = ({ captionTextCamera, layo
             <Region layout={{ position: 'absolute', left: 0, width: 28, top: 5, height: 2 }} />
             <ThemeImage
                 src={layoutImage('roomtools_camera.png')}
+                dynamicRole="icon"
                 layout={{ position: 'absolute', left: 2, width: 27, top: 0, height: 25 }}
             />
             {(visibleTextCamera ?? true) && (

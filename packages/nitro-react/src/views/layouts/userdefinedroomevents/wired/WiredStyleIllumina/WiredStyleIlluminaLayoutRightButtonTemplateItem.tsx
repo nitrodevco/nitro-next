@@ -14,7 +14,6 @@ export const WiredStyleIlluminaLayoutRightButtonTemplateItem = ({ layout, onRigh
         <ContainerButton
             variant="105"
             name="right_button_template"
-            dynamicStyle="button"
             onPointerTap={onRightButtonTemplate}
             layout={{ width: 17, height: 19, flexShrink: 0, ...layout }}
         >
@@ -22,6 +21,7 @@ export const WiredStyleIlluminaLayoutRightButtonTemplateItem = ({ layout, onRigh
                 <ThemeImage
                     name="type_image"
                     src={srcTypeImage ?? layoutImage('wired_styles_illumina_icon_source_global.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 4, top: 6, height: 7 }}
                 />
             )}

@@ -16,6 +16,7 @@ export const HabbopediaLayout = ({ captionContent, layout, onClose }: Habbopedia
             variant="3"
             caption={t('habbopedia.title')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 420, height: 400, minWidth: 300, minHeight: 300, ...layout }}
         >

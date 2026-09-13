@@ -27,6 +27,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
             id="user_feedback"
             name="user_feedback"
             caption={t('guide.help.request.user.feedback.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 282, height: 306, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}

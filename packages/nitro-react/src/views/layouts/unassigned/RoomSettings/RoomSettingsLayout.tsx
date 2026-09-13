@@ -20,6 +20,7 @@ export const RoomSettingsLayout = ({ contents, layout, onClose }: RoomSettingsLa
             name="event_window"
             caption={t('navigator.roomsettings')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 341, height: 584, minWidth: 341, maxWidth: 341, minHeight: 584, ...layout }}

@@ -43,6 +43,7 @@ export const HabbiconHubLayoutTileTemplateItem = ({ layout, lockedOverlay, onTil
                     variant="2"
                     name="tile_border"
                     tintColor="#c8be8d"
+                    backgroundColor="#c8be8d"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             )}

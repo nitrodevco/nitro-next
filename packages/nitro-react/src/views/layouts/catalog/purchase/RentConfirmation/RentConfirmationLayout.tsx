@@ -28,6 +28,7 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
             variant="3"
             caption={t('rent.confirmation.title.extend')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 370, height: 300, minWidth: 370, minHeight: 300, ...layout }}
         >

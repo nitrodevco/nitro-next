@@ -23,6 +23,7 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
             id="alert_%202"
             name="alert_%202"
             caption={t('friendlist.invite.title')}
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 211, height: 175, minWidth: 211, minHeight: 175, ...layout }}
         >

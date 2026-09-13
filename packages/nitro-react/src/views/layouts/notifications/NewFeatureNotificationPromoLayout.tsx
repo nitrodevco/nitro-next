@@ -19,7 +19,6 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
         <Region layout={{ position: 'relative', width: 192, height: 34, ...layout }}>
             <Region
                 name="main_region"
-                dynamicStyle="brightness_and_shadow_under_gentle"
                 onPointerTap={onMainRegion}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
@@ -33,11 +32,13 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
                     <ThemeImage
                         name="static_bitmap"
                         src={srcStaticBitmap}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 8, width: 20, top: 7, height: 20 }}
                     />
                     <ThemeText
                         text={captionDesc ?? 'some text here'}
                         textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 148 }}
+                        dynamicRole="icon"
                         name="desc"
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 30, width: 148, top: 7, maxWidth: 148 }}
@@ -52,6 +53,7 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
                             <ThemeImage
                                 name="cancel_img"
                                 src={srcCancelImg ?? layoutImage('common_close_x.png')}
+                                alpha={0.55}
                                 layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
                             />
                             {(visibleCancelImg ?? false) && (
@@ -59,6 +61,7 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
                                     name="cancel_img"
                                     src={srcCancelLinkRegionCancelImg ?? layoutImage('common_close_x.png')}
                                     tint="#000000"
+                                    alpha={0.5}
                                     layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
                                 />
                             )}

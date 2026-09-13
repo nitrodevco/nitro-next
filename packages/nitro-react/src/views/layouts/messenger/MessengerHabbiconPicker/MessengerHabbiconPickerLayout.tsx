@@ -55,6 +55,7 @@ export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconS
                 >
                     <Region
                         name="empty_text"
+                        alpha={0.83}
                         layout={{ position: 'absolute', width: 200, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText

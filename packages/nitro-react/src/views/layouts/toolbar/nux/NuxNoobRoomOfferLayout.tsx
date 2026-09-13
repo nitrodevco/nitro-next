@@ -17,6 +17,7 @@ export const NuxNoobRoomOfferLayout = ({ captionTxtBody, layout, onBtnGo, onClos
             variant="3"
             caption={t('notification.notification.nux.popup.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 382, height: 222, minWidth: 382, minHeight: 222, ...layout }}
         >

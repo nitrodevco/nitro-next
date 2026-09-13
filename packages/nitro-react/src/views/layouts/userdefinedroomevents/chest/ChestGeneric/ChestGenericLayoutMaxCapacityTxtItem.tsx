@@ -13,6 +13,7 @@ export const ChestGenericLayoutMaxCapacityTxtItem = ({ captionMaxCapacityTxt, la
     return (
         <Region
             name="max_capacity_txt"
+            alpha={0.6}
             layout={{ width: 172, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             {captionMaxCapacityTxt ?? t('wiredchests.max_capacity')}

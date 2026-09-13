@@ -25,6 +25,7 @@ export const RoomToolsToolbarLayoutButtonLikeItem = ({ captionTextLike, layout, 
             <Region layout={{ position: 'absolute', left: 0, width: 28, top: 0, bottom: 0 }} />
             <ThemeImage
                 src={layoutImage('roomtools_like.png')}
+                dynamicRole="icon"
                 layout={{ position: 'absolute', left: 2, width: 27, top: 0, height: 25 }}
             />
             {(visibleTextLike ?? true) && (

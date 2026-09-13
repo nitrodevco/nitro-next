@@ -16,6 +16,7 @@ export const RoomToolsHistoryItemLayout = ({ captionRoomName, layout }: RoomTool
                 <ThemeText
                     text={captionRoomName ?? 'the greatest room on earth'}
                     textOptions={{ fill: '#ffffff' }}
+                    dynamicRole="icon"
                     name="room_name"
                     layout={{ position: 'absolute', left: 3, width: 145, top: 3, bottom: 4 }}
                 />

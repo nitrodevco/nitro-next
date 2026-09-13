@@ -24,6 +24,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
             id="guardian_chat_review_wait_for_results"
             name="guardian_chat_review_wait_for_results"
             caption={t('guide.bully.request.guide.results.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 248, height: 280, minWidth: 248, minHeight: 280, ...layout }}
         >

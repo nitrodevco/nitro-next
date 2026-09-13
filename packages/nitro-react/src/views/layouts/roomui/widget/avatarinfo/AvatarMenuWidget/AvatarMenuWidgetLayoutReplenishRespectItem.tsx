@@ -40,6 +40,7 @@ export const AvatarMenuWidgetLayoutReplenishRespectItem = ({ captionLabel, layou
                         )}
                         <ThemeImage
                             src={layoutImage('pursearea_duckets_icon.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 110, width: 15, top: 10, height: 15 }}
                         />
                     </ContainerButton>

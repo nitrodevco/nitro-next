@@ -18,6 +18,7 @@ export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onPostponeCitiz
                 <Frame
                     variant="101"
                     caption={t('citizenship.promo.popup.title')}
+                    dropShadow={{ angle: 0, alpha: 0.75, blur: 80 }}
                     onClose={onFrameClose}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 282 }}
                 >

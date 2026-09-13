@@ -34,6 +34,7 @@ export const HabbiconHubLayout = ({ albumHeader, allSetsContainer, habbiconPopup
             name="HabbiconHub"
             caption={t('habbicon_book.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 560, height: 570, minWidth: 560, maxWidth: 560, minHeight: 570, ...layout }}
@@ -42,6 +43,7 @@ export const HabbiconHubLayout = ({ albumHeader, allSetsContainer, habbiconPopup
                 variant="3"
                 name="album_background"
                 tintColor="#d7d1be"
+                backgroundColor="#d7d1be"
                 layout={{ position: 'absolute', left: 0, right: -6, top: 0, bottom: -1 }}
             />
             <HabbiconHubLayoutAlbumHeader {...albumHeader} />

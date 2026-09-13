@@ -44,6 +44,7 @@ export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton,
                 />
                 <ThemeImage
                     src={layoutImage('common_trashcan_small.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 3, width: 14, top: 4, height: 11 }}
                 />
             </Region>

@@ -21,6 +21,7 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
             variant="3"
             caption={t('room.queue.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 229, height: 118, minWidth: 229, minHeight: 118, ...layout }}
         >

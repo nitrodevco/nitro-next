@@ -26,6 +26,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
             variant="3"
             caption={t('phone.number.verify.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 477, height: 248, minWidth: 477, minHeight: 248, ...layout }}
         >

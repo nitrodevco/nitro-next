@@ -19,6 +19,7 @@ export const WelcomeTourPopupLayout = ({ layout, onClose, onRefuseTour, onTakeTo
             variant="3"
             caption={t('help.tour.popup.action.accept')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 435, height: 222, minWidth: 435, minHeight: 222, ...layout }}
         >

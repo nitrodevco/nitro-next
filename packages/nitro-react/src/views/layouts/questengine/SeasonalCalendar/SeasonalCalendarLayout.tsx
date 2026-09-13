@@ -17,6 +17,7 @@ export const SeasonalCalendarLayout = ({ calendarCont, footerCont, layout, onClo
             variant="3"
             caption="TBD"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 642, height: 465, minWidth: 642, minHeight: 465, ...layout }}
         >

@@ -29,6 +29,7 @@ export const WiredMenuViewLayout = ({ bodyContainer, headerContainer, layout, on
             name="wiredmenu_frame"
             caption={t('wiredmenu.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 500, height: 500, minWidth: 500, minHeight: 500, ...layout }}
         >

@@ -31,6 +31,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
             variant="3"
             caption={t('report.status.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="none"
             layout={{ width: 538, height: 220, minWidth: 538, maxWidth: 538, minHeight: 220, maxHeight: 220, ...layout }}

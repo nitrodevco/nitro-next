@@ -25,6 +25,7 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
             variant="3"
             caption={t('widget.chooser.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 413, height: 354, minWidth: 413, maxWidth: 413, minHeight: 270, ...layout }}
@@ -35,6 +36,7 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
             >
                 <Region
                     name="search_placeholder"
+                    alpha={0.5}
                     layout={{ position: 'absolute', left: 6, width: 116, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -76,6 +78,7 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
             </Region>
             <Region
                 name="amount_indicator"
+                alpha={0.5}
                 layout={{ position: 'absolute', left: 6, width: 215, bottom: -4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 {captionAmountIndicator ?? t('new_furni_chooser.amount_indicator')}

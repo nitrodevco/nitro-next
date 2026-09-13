@@ -30,6 +30,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
     return (
         <Frame
             variant="101"
+            dropShadow={{ angle: 0, alpha: 0.75, blur: 80 }}
             onClose={onClose}
             layout={{ width: 643, height: 532, minWidth: 643, minHeight: 532, ...layout }}
         >

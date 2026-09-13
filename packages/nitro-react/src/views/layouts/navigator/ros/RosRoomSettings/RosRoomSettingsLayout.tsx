@@ -26,6 +26,7 @@ export const RosRoomSettingsLayout = ({ contentContainer, layout, onClose, onTab
             name="event_window"
             caption={t('navigator.roomsettings')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 341, height: 477, minWidth: 341, minHeight: 477, ...layout }}
         >

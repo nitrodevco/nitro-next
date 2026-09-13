@@ -23,6 +23,7 @@ export const TransactionOverviewLayout = ({ footer, header, layout, onClose, tab
             variant="3"
             caption={t('wiredchests.logs.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 880, height: 391, minWidth: 880, maxWidth: 880, minHeight: 391, maxHeight: 700, ...layout }}

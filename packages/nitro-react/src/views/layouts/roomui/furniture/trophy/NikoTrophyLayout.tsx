@@ -27,6 +27,7 @@ export const NikoTrophyLayout = ({ captionDate, captionHtmlTextbox, captionStore
             name="niko.trophy"
             caption={t('niko.trophy.title')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 428, height: 325, minWidth: 428, minHeight: 325, ...layout }}
         >

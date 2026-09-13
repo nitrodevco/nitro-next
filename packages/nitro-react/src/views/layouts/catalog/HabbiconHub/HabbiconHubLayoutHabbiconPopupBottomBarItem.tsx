@@ -18,7 +18,6 @@ export const HabbiconHubLayoutHabbiconPopupBottomBarItem = ({ captionHabbiconPop
         <Border
             variant="3"
             name="habbicon_popup_bottom_bar"
-            tintColor="#efefef"
             blend={0}
             layout={{ width: 180, height: 28, flexShrink: 0, ...layout }}
         >

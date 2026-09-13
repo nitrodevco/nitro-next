@@ -24,6 +24,7 @@ export const DimmerUiLayout = ({ captionOffText, layout, onApplyButton, onClose,
             id="dimmer_ui"
             name="dimmer_ui"
             caption={t('widget.dimmer.title')}
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 277, height: 225, minWidth: 277, minHeight: 0, ...layout }}
         >

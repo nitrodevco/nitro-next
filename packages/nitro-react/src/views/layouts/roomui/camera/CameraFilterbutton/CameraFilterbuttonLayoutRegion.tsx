@@ -68,6 +68,7 @@ export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, onRemoveEffec
                 >
                     <ThemeImage
                         src={layoutImage('camera_cam_close_x.png')}
+                        dynamicRole="bg"
                         layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19 }}
                     />
                 </Region>

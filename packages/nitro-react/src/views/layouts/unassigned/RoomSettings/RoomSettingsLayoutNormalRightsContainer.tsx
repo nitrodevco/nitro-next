@@ -66,7 +66,7 @@ export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, cap
                 <Border
                     variant="0"
                     name="users_with_rights_cont"
-                    tintColor="#ffffff"
+                    backgroundColor="#ffffff"
                     layout={{ position: 'absolute', left: 0, width: 150, top: 74, bottom: 4 }}
                 >
                     <ScrollArea
@@ -96,7 +96,7 @@ export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, cap
                 <Border
                     variant="0"
                     name="friends_cont"
-                    tintColor="#ffffff"
+                    backgroundColor="#ffffff"
                     layout={{ position: 'absolute', left: 173, width: 150, top: 74, bottom: 4 }}
                 >
                     <ScrollArea

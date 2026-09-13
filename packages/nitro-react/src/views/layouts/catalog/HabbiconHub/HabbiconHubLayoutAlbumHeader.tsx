@@ -32,11 +32,13 @@ export const HabbiconHubLayoutAlbumHeader = ({ captionAlbumProgressText, caption
                 variant="3"
                 name="album_header_background"
                 tintColor="#1f5d78"
+                backgroundColor="#1f5d78"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 106 }}
             >
                 <ThemeImage
                     name="album_header_pattern"
                     src={srcAlbumHeaderPattern ?? layoutImage('bg_pattern_001.png')}
+                    alpha={0.16}
                     layout={{ position: 'absolute', left: -1, right: 1, top: 2, height: 110 }}
                 />
                 <ThemeImage

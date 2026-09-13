@@ -31,6 +31,7 @@ export const NewExtendedProfileLayout = ({ blockedContainer, bottomContainer, la
             variant="3"
             caption={t('extendedprofile.caption')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 521, height: 537, minWidth: 521, minHeight: 537, ...layout }}
         >
@@ -56,12 +57,12 @@ export const NewExtendedProfileLayout = ({ blockedContainer, bottomContainer, la
             <ContainerButton
                 variant="7"
                 name="block_button"
-                dynamicStyle="button"
                 onPointerTap={onBlockButton}
                 layout={{ position: 'absolute', left: 481, width: 24, top: 4, height: 24 }}
             >
                 <ThemeImage
                     src={layoutImage('extended_profile_block_icon.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 4, width: 16, top: 4, height: 16 }}
                 />
             </ContainerButton>

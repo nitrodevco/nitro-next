@@ -26,6 +26,7 @@ export const SanctionInfoLayout = ({ captionFaqLink, captionSanctionInfoDisclaim
             variant="3"
             caption={t('help.sanction.info.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 450, height: 359, minWidth: 450, minHeight: 350, maxHeight: 360, ...layout }}
         >

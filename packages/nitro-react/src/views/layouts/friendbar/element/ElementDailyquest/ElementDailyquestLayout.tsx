@@ -48,6 +48,7 @@ export const ElementDailyquestLayout = ({ captionHardRegionLabelTxt, captionLabe
                         <ThemeImage
                             name="divider"
                             src={srcDivider ?? layoutImage('landing_view_reception_horizontal.png')}
+                            alpha={0.8}
                             layout={{ position: 'absolute', right: 106, width: 2, top: 0, bottom: -3 }}
                         />
                         <Region

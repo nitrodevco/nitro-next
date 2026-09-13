@@ -25,7 +25,6 @@ export const Main_100LayoutPrizeTemplatePremium = ({ connector, layout, onClickR
             <Region
                 name="click_region"
                 tooltip={t('reward_track.rewards.reward_tooltip.premium')}
-                dynamicStyle="reward_track_item"
                 onPointerTap={onClickRegion}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 12, width: 56, top: 34, height: 60 }}
@@ -70,6 +69,7 @@ export const Main_100LayoutPrizeTemplatePremium = ({ connector, layout, onClickR
             <ThemeImage
                 name="locked_icon"
                 src={srcLockedIcon ?? layoutImage('reward_track_locked_reward.png')}
+                alpha={0.7}
                 layout={{ position: 'absolute', left: 53, width: 18, top: 78, height: 22 }}
             />
             <ThemeImage

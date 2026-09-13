@@ -28,6 +28,7 @@ export const NewControlsLayout = ({ layout, onBtnChat, onBtnVisit, onButtonProfi
                 >
                     <ThemeImage
                         src={layoutImage('friend_bar_friendlist_chat.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
                     />
                 </Region>
@@ -40,12 +41,14 @@ export const NewControlsLayout = ({ layout, onBtnChat, onBtnVisit, onButtonProfi
                 >
                     <ThemeImage
                         src={layoutImage('friend_bar_friendlist_eye.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
                     />
                 </Region>
                 <Region
                     name="btn_visit"
                     dynamicStyle="lifted_hover"
+                    dynamicRole="icon"
                     onPointerTap={onBtnVisit}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 29, width: 25, top: 0, height: 25 }}

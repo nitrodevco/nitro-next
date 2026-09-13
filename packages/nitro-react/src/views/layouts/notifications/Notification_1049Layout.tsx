@@ -22,6 +22,7 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
             name="widget_notification_frame"
             caption="widget.notification.header"
             tintColor="#4c4c4c"
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 315, height: 191, minWidth: 315, minHeight: 191, ...layout }}
         >

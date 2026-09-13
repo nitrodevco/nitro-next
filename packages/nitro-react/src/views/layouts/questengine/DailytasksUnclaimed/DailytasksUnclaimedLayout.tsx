@@ -23,6 +23,7 @@ export const DailytasksUnclaimedLayout = ({ itemsMainCont, layout, onClose }: Da
             name="dailytasks_frame"
             caption={t('dailytasks.unclaimed')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 452, height: 426, minWidth: 452, maxWidth: 452, minHeight: 426, ...layout }}

@@ -30,6 +30,7 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
             id="avatar_name_change_frame"
             name="avatar_name_change_frame"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 350, height: 270, minWidth: 350, minHeight: 270, ...layout }}
         >

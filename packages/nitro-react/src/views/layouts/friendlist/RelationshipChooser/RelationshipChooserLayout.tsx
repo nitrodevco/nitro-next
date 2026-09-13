@@ -13,7 +13,7 @@ export const RelationshipChooserLayout = ({ items, layout }: RelationshipChooser
         <Region layout={{ position: 'relative', width: 30, height: 68, ...layout }}>
             <Border
                 variant="100"
-                tintColor="#ffffff"
+                backgroundColor="#ffffff"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <RelationshipChooserLayoutItems {...items} />

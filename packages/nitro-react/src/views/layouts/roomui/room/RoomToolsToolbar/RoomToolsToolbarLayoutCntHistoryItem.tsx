@@ -33,10 +33,12 @@ export const RoomToolsToolbarLayoutCntHistoryItem = ({ layout, onButtonHistory, 
                     <ThemeImage
                         src={layoutImage('roomtools_history_forward_bg.png')}
                         tint="#44a88d"
+                        dynamicRole="bg"
                         layout={{ position: 'absolute', left: 3, width: 34, top: 2, height: 31 }}
                     />
                     <ThemeImage
                         src={layoutImage('roomtools_history_back_icon.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 4, width: 30, top: 3, height: 30 }}
                     />
                 </Region>
@@ -53,10 +55,12 @@ export const RoomToolsToolbarLayoutCntHistoryItem = ({ layout, onButtonHistory, 
                     <ThemeImage
                         src={layoutImage('roomtools_history_open_bg.png')}
                         tint="#44a88d"
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 1, width: 33, top: 1, height: 35 }}
                     />
                     <ThemeImage
                         src={layoutImage('roomtools_history_open_icon.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 2, width: 32, top: 3, height: 35 }}
                     />
                 </Region>
@@ -73,10 +77,12 @@ export const RoomToolsToolbarLayoutCntHistoryItem = ({ layout, onButtonHistory, 
                     <ThemeImage
                         src={layoutImage('roomtools_history_forward_bg.png')}
                         tint="#44a88d"
+                        dynamicRole="bg"
                         layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 31 }}
                     />
                     <ThemeImage
                         src={layoutImage('roomtools_history_back_icon.png')}
+                        dynamicRole="icon"
                         layout={{ position: 'absolute', left: 3, width: 30, top: 1, height: 30 }}
                     />
                 </Region>

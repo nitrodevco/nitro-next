@@ -19,6 +19,7 @@ export const MarketplaceNoCreditsLayout = ({ layout, onCancelNoCreditsButton, on
             name="out%20of%20credits"
             caption={t('inventory.marketplace.no_credits.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 252, height: 153, minWidth: 252, minHeight: 153, ...layout }}
         >

@@ -35,6 +35,7 @@ export const IroRoomDetailsFramedLayout = ({ buttonsCont, captionEmbedInfoTxt, c
             name="event_window"
             caption={t('navigator.roomsettings.roominfo')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 236, height: 411, minWidth: 236, minHeight: 411, ...layout }}
         >

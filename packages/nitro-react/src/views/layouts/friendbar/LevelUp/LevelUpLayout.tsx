@@ -22,6 +22,7 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
         <Frame
             variant="100"
             caption={t('talent.track.common.levelup.caption')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 430, height: 362, minWidth: 430, minHeight: 362, ...layout }}
         >

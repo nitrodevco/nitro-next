@@ -16,6 +16,7 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
             name="crasher_frame"
             caption="Client Crasher Tool"
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 201, height: 123, minWidth: 201, minHeight: 123, ...layout }}
         >

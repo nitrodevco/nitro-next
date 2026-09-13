@@ -31,6 +31,7 @@ export const ChestGenericLayoutCapacityOptionsItem = ({ captionItemCountText, it
             {(visibleItemCountText ?? false) && (
                 <Region
                     name="item_count_text"
+                    alpha={0.6}
                     layout={{ position: 'absolute', left: 0, width: 184, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionItemCountText ?? t('wiredchests.space_used')}

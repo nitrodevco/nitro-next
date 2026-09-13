@@ -80,6 +80,7 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
                         name="frame"
                         caption={t('wiredfurni.title')}
                         tintColor="#fac200"
+                        dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                         onClose={onFrame}
                         layout={{ position: 'absolute', left: 0, width: 256, top: 0, bottom: 0, minWidth: 100 }}
                     />

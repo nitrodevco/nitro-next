@@ -34,6 +34,7 @@ export const CatalogVolterLayoutCatalogMainContainer = ({ captionCatalogHeaderDe
                 name="navigatorMain"
                 caption={t('catalog.title')}
                 tintColor="#418db0"
+                dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                 onClose={onNavigatorMain}
                 layout={{ position: 'absolute', left: 370, width: 175, top: 24, height: 466 }}
             >

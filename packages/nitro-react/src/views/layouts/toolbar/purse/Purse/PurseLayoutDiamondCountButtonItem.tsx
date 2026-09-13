@@ -27,12 +27,14 @@ export const PurseLayoutDiamondCountButtonItem = ({ captionDiamondCount, layout,
                     text={captionDiamondCount ?? '0'}
                     textStyle="text-style-u-bold"
                     textOptions={{ fill: '#38caeb' }}
+                    dynamicRole="icon"
                     name="diamond_count"
                     layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17 }}
                 />
             )}
             <ThemeImage
                 src={layoutImage('pursearea_diamond_icon.png')}
+                dynamicRole="icon"
                 layout={{ position: 'absolute', left: 36, width: 15, top: 2, height: 15 }}
             />
         </Region>

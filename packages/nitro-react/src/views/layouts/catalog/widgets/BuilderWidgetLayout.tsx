@@ -47,6 +47,7 @@ export const BuilderWidgetLayout = ({ captionErrorMessage, layout, onPlaceMany, 
                     <Border
                         variant="2"
                         tintColor="#f2d193"
+                        backgroundColor="#f2d193"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 1 }}
                     />
                     <ThemeImage

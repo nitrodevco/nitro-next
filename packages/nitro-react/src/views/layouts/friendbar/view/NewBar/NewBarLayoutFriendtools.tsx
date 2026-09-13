@@ -43,6 +43,7 @@ export const NewBarLayoutFriendtools = ({ layout, onCollapseLeft, onIconAllFrien
                 <ThemeImage
                     name="icons_toolbar_collapse_left"
                     src={srcIconsToolbarCollapseLeft ?? layoutImage('roomtools_minimizebutton.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
                 />
             </Region>
@@ -56,6 +57,7 @@ export const NewBarLayoutFriendtools = ({ layout, onCollapseLeft, onIconAllFrien
             >
                 <ThemeImage
                     src={layoutImage('friend_bar_all_friends.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 33 }}
                 />
             </Region>
@@ -69,6 +71,7 @@ export const NewBarLayoutFriendtools = ({ layout, onCollapseLeft, onIconAllFrien
             >
                 <ThemeImage
                     src={layoutImage('friend_bar_search_habbos.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 33 }}
                 />
             </Region>
@@ -82,6 +85,7 @@ export const NewBarLayoutFriendtools = ({ layout, onCollapseLeft, onIconAllFrien
                 <ThemeImage
                     name="icon"
                     src={srcIcon ?? layoutImage('friend_bar_friendlist_messenger.png')}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 0, width: 26, top: 0, height: 32 }}
                 />
                 <ThemeImage

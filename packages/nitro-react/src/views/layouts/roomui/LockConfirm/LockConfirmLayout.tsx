@@ -17,6 +17,7 @@ export const LockConfirmLayout = ({ layout, onClose, topList }: LockConfirmLayou
         <Frame
             variant="100"
             caption={t('friend.furniture.confirm.lock.caption')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
             layout={{ width: 309, height: 198, minWidth: 309, minHeight: 198, ...layout }}
         >

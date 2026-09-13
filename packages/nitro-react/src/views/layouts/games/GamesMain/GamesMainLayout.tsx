@@ -29,6 +29,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionWaitText, captionWai
             variant="3"
             caption={t('games.main.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.34, blur: 4 }}
             onClose={onClose}
             layout={{ width: 413, height: 530, minWidth: 413, minHeight: 530, ...layout }}
         >

@@ -28,6 +28,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
             name="poll_question_frame"
             caption={t('poll_question_title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 382, height: 561, minWidth: 382, minHeight: 561, ...layout }}
         >

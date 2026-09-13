@@ -26,6 +26,7 @@ export const GuildMembersWindowLayout = ({ footerCont, groupLogo, layout, member
             name="groups_info_window"
             caption={t('group.members.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 352, height: 431, minWidth: 352, minHeight: 431, ...layout }}
         >

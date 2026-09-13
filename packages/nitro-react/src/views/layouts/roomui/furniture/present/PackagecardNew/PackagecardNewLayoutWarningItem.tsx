@@ -32,7 +32,6 @@ export const PackagecardNewLayoutWarningItem = ({ bottomSpacer, captionWarningTe
                 <Border
                     variant="3"
                     name="warning_background_border"
-                    tintColor="#000000"
                     layout={{ position: 'absolute', width: 306, alignSelf: 'center', height: 56, justifyContent: 'center' }}
                 >
                     <Region layout={{ position: 'absolute', alignSelf: 'center', flexDirection: 'column' }}>

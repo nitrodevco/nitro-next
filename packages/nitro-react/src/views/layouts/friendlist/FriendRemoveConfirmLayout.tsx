@@ -19,6 +19,7 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
             id="alert_%200"
             name="alert_%200"
             caption={t('friendlist.removefriendconfirm.title')}
+            dropShadow={false}
             onClose={onClose}
             layout={{ width: 160, height: 200, minWidth: 160, minHeight: 200, ...layout }}
         >

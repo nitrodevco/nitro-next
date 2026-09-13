@@ -22,6 +22,7 @@ export const GrsMainWindowLayout = ({ captionLoadingText, layout, onClose, tabbe
             name="grs_main_window"
             caption={t('navigator.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 325, height: 474, minWidth: 325, minHeight: 215, ...layout }}
         >

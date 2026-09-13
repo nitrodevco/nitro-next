@@ -20,6 +20,7 @@ export const GroupInfoWindowLayout = ({ groupCont, layout, onClose }: GroupInfoW
             name="groups_info_window"
             caption={t('group.window.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 363, height: 268, minWidth: 363, minHeight: 268, ...layout }}
         >

@@ -18,6 +18,7 @@ export const BreedPetsConfirmationLayout = ({ elementList, layout, onClose }: Br
             variant="3"
             caption={t('breedpets.widget.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="y"
             layout={{ width: 274, height: 387, minWidth: 274, maxWidth: 274, minHeight: 387, ...layout }}

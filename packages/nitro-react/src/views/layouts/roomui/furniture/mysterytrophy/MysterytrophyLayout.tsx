@@ -28,6 +28,7 @@ export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderD
             name="mysterytrophy_main_container"
             caption={t('mysterytrophy.name.title')}
             tintColor="#67a3bf"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 475, height: 270, minWidth: 475, minHeight: 270, ...layout }}
         >

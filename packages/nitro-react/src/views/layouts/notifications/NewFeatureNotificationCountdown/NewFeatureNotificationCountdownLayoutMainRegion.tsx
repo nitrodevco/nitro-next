@@ -21,7 +21,6 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ captionDesc, c
     return (
         <Region
             name="main_region"
-            dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onMainRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
@@ -35,11 +34,13 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ captionDesc, c
                 <ThemeImage
                     name="static_bitmap"
                     src={srcStaticBitmap}
+                    dynamicRole="icon"
                     layout={{ position: 'absolute', left: 8, width: 20, top: 7, height: 20 }}
                 />
                 <ThemeText
                     text={captionDesc ?? 'some text here'}
                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 154 }}
+                    dynamicRole="icon"
                     name="desc"
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 14, width: 154, top: 7, minWidth: 154, maxWidth: 154 }}
@@ -62,6 +63,7 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ captionDesc, c
                         <ThemeImage
                             name="cancel_img"
                             src={srcCancelImg ?? layoutImage('common_close_x.png')}
+                            alpha={0.55}
                             layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
                         />
                         {(visibleCancelImg ?? false) && (
@@ -69,6 +71,7 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ captionDesc, c
                                 name="cancel_img"
                                 src={srcCancelLinkRegionCancelImg ?? layoutImage('common_close_x.png')}
                                 tint="#000000"
+                                alpha={0.5}
                                 layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
                             />
                         )}

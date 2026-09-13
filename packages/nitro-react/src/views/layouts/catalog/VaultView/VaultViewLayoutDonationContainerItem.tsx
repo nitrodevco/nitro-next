@@ -78,6 +78,7 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
                         <ThemeImage
                             name="donation_bitmap"
                             src={srcDonationBitmap ?? layoutImage('vault_earnings_icon_donations.png')}
+                            dynamicRole="icon"
                             layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                         />
                     )}

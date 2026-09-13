@@ -34,6 +34,7 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
             variant="3"
             caption={t('groupforum.compose.window_title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 455, height: 470, minWidth: 455, minHeight: 455, ...layout }}
         >

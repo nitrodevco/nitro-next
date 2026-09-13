@@ -36,6 +36,8 @@ export const CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorder = ({ capti
             <ThemeImage
                 name="catalog.header.image"
                 src={srcCatalogHeaderImage ?? '${image.library.url}catalogue/catalog_header_roombuilder.gif'}
+                greyscale
+                alpha={0.1}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 90 }}
             />
             <ThemeImage

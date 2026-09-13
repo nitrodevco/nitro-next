@@ -17,6 +17,7 @@ export const WelcomeNameChangeLayout = ({ layout, onChangeNameButton, onClose, o
             variant="3"
             caption={t('tutorial.name_change.title.main')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 315, height: 225, minWidth: 50, minHeight: 50, ...layout }}
         >

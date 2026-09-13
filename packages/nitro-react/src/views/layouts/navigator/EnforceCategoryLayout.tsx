@@ -18,6 +18,7 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
             variant="3"
             caption={t('enforce.category.title')}
             tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             layout={{ width: 310, height: 240, minWidth: 310, minHeight: 240, ...layout }}
         >

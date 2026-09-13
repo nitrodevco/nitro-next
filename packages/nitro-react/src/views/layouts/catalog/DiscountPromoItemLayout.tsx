@@ -24,6 +24,7 @@ export const DiscountPromoItemLayout = ({ background, captionPromoText, captionP
                 <Region
                     name="background"
                     backgroundColor="#009100"
+                    alpha={0.7}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {background}
@@ -36,6 +37,7 @@ export const DiscountPromoItemLayout = ({ background, captionPromoText, captionP
                 />
                 <Region
                     name="promo_text_effect"
+                    alpha={0}
                     layout={{ position: 'absolute', left: 33, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionPromoTextEffect ?? 'test 1 get 2 tests for free!'}

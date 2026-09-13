@@ -28,6 +28,7 @@ export const DiscordSettingsLayoutSettings = ({ captionTitle, itemsSettingContai
         >
             <Region
                 name="title"
+                alpha={0.9}
                 layout={{ position: 'absolute', left: 15, width: 61, top: 14, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
