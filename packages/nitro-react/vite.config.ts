@@ -24,7 +24,34 @@ const tailwindAutoReference = (): Plugin => {
     };
 };
 
-export default defineConfig({
+/**
+ * Dev-server speed. The workspace packages resolve to their TypeScript sources, so by default
+ * the unbundled dev server sends every one of their modules to the browser individually -
+ * roughly 2,400 requests before the first frame (nitro-packets alone is 1,100 files behind one
+ * barrel). Two opt-in modes trade hot reload of those packages for a fast first load:
+ *
+ * - `yarn dev:prebundle` (`--mode prebundle`): pre-bundle `@nitrodevco/*` with the dependency
+ *   optimizer, the way node_modules packages are. The app keeps full HMR; a change inside
+ *   nitro-renderer / nitro-packets / nitro-api needs a restart (`--force` re-optimizes).
+ * - `yarn dev:bundled` (`--mode bundled`): Vite 8's experimental full-bundle dev mode - the
+ *   whole app is bundled by rolldown and served from memory, with HMR. Fastest cold load.
+ *
+ * Either way the React Compiler only runs on this package's sources: the others have no
+ * components, and compiling them was pure transform cost on every file.
+ */
+const WORKSPACE_PACKAGES = [ '@nitrodevco/nitro-api', '@nitrodevco/nitro-packets', '@nitrodevco/nitro-renderer' ];
+
+export default defineConfig(({ mode }) => {
+    const prebundleWorkspace = mode === 'prebundle';
+    const bundledDev = mode === 'bundled';
+
+    return {
+    experimental: {
+        bundledDev,
+    },
+    optimizeDeps: {
+        include: prebundleWorkspace ? WORKSPACE_PACKAGES : [],
+    },
     build: {
         target: 'baseline-widely-available',
         sourcemap: false,
@@ -69,6 +96,9 @@ export default defineConfig({
         react(),
         babel({
             plugins: ['babel-plugin-react-compiler'],
+            // Replaces the plugin's default (every script file anywhere), so it has to keep
+            // the script-extension part of that default - without it babel is handed CSS too.
+            include: [ /[\\/]packages[\\/]nitro-react[\\/]src[\\/].*\.(?:[jt]sx?|[cm][jt]s)(?:$|\?)/ ],
         }),
         tailwindcss(),
     ],
@@ -78,12 +108,15 @@ export default defineConfig({
         alias: [
             { find: /^#base\/(.*)/, replacement: r('src/$1') },
             { find: /^#themes\/(.*)/, replacement: r('themes/$1') },
-            { find: '@nitrodevco/nitro-api', replacement: r('../nitro-api/src') },
-            {
-                find: '@nitrodevco/nitro-renderer',
-                replacement: r('../nitro-renderer/src'),
-            },
-            { find: '@nitrodevco/nitro-packets', replacement: r('../nitro-packets/src') }
+            // Pre-bundling needs the packages reached as bare imports (their `exports` already
+            // point at the sources); the aliases are for the plain source-served mode.
+            ...(prebundleWorkspace
+                ? []
+                : [
+                        { find: '@nitrodevco/nitro-api', replacement: r('../nitro-api/src') },
+                        { find: '@nitrodevco/nitro-renderer', replacement: r('../nitro-renderer/src') },
+                        { find: '@nitrodevco/nitro-packets', replacement: r('../nitro-packets/src') },
+                    ]),
         ],
     },
     server: {
@@ -92,5 +125,10 @@ export default defineConfig({
         fs: {
             allow: [r('.'), r('..'), r('../..')],
         },
+        // Transform the app's import graph while the server starts instead of on first request.
+        warmup: {
+            clientFiles: [ './src/index.tsx' ],
+        },
     },
+    };
 });

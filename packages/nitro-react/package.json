@@ -4,6 +4,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite --host --port 3000",
+        "dev:prebundle": "vite --host --port 3000 --mode prebundle",
+        "dev:bundled": "vite --host --port 3000 --mode bundled",
         "build": "vite build",
         "eslint": "eslint",
         "truffle:setup": "truffle-setup --out public/assets/truffle",

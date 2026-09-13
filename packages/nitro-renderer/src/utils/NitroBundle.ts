@@ -23,7 +23,8 @@ export class NitroBundle {
                         break;
                     }
                     case 'png': {
-                        bundle.textures[name] = await TextureUtils.textureFromEncodedBytes(await file.async('uint8array'), 'image/png', name);
+                        // A blob goes to the image decoder directly - one fewer copy of the sheet at the load peak.
+                        bundle.textures[name] = await TextureUtils.textureFromEncodedBytes(await file.async('blob'), 'image/png', name);
                         break;
                     }
                 }

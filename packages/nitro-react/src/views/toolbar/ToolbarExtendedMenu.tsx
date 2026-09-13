@@ -1,14 +1,47 @@
+import { useState } from 'react';
+
 import { Border, Region, ThemeImage, ThemeText } from '#base/theme';
 
 import { layoutImage } from '../layouts/layoutAssets';
 
+interface ToolbarExtendedMenuButton {
+    icon: string;
+    caption: string;
+    tooltip?: string;
+    action?: () => void;
+}
+
 interface ToolbarExtendedMenuProps {
-    buttons: { icon: string; caption: string; action?: () => void }[];
+    buttons: ToolbarExtendedMenuButton[];
     onSelect?: () => void;
 }
 
+const ToolbarExtendedMenuItem = ({ button, onSelect }: { button: ToolbarExtendedMenuButton; onSelect?: () => void }) => {
+    const [ hovering, setHovering ] = useState(false);
+
+    return (
+        <Region
+            onPointerOver={() => setHovering(true)}
+            onPointerOut={() => setHovering(false)}
+            onPointerTap={onSelect}
+            layout={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 1 }}
+            tooltip={button.tooltip?.length ? button.tooltip : undefined}
+        >
+            <ThemeImage
+                src={layoutImage(`${button.icon}.png`)}
+                greyscale={!hovering}
+            />
+            <ThemeText
+                textStyle="text-style-il-small"
+                textOptions={{ fill: hovering ? '#21cff4' : '#ffffff' }}
+                text={button.caption}
+            />
+        </Region>
+    );
+};
+
 export const ToolbarExtendedMenu = ({ buttons, onSelect }: ToolbarExtendedMenuProps) => {
-    const choose = (action?: () => void) => () => {
+    const choose = (action: () => void) => () => {
         action?.();
         onSelect?.();
     };
@@ -17,24 +50,15 @@ export const ToolbarExtendedMenu = ({ buttons, onSelect }: ToolbarExtendedMenuPr
         <Border
             variant="6"
             tintColor="#3b3933"
-            layout={{ position: 'absolute', left: 5, bottom: 50, gap: 15, paddingLeft: 15, paddingTop: 5, paddingRight: 15, paddingBottom: 5 }}
+            layout={{ position: 'absolute', left: 5, bottom: 50, gap: 20, paddingLeft: 15, paddingTop: 5, paddingRight: 15, paddingBottom: 5 }}
         >
-            {buttons.map((x) => {
-                return (
-                    <Region
-                        key={x.icon}
-                        onPointerTap={x.action ? choose(x.action) : undefined}
-                        layout={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 1 }}
-                    >
-                        <ThemeImage src={layoutImage(`${x.icon}.png`)} />
-                        <ThemeText
-                            textStyle="text-style-il-small"
-                            textOptions={{ fill: '#ffffff' }}
-                            text={x.caption}
-                        />
-                    </Region>
-                );
-            })}
+            {buttons.map(button => (
+                <ToolbarExtendedMenuItem
+                    key={button.icon}
+                    button={button}
+                    onSelect={button.action ? choose(button.action) : undefined}
+                />
+            ))}
         </Border>
     );
 };

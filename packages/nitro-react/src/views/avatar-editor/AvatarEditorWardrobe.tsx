@@ -6,9 +6,7 @@ import { Border, Icon, Region, ThemeText } from '#base/theme';
 import { AvatarEditorWardrobeSlot } from './AvatarEditorWardrobeSlot';
 
 export interface AvatarEditorWardrobeProps {
-    /** The saved looks, 0-based (`null` = empty); shorter than `slotCount` is fine - the rest render empty. */
     slots: AvatarEditorWardrobeOutfit[];
-    /** How many slots to show (`avatar.wardrobe.max.slots`). */
     slotCount: number;
     clubLevel: ClubLevelEnum;
     onSave: (index: number) => void;

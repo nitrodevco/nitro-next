@@ -52,7 +52,7 @@ export const AvatarEditor = () => {
     const activeSetType = activeSubType[activeCategory];
     const { setActiveCategory, setActiveSubType, setWardrobeVisible, setWardrobeSlot, loadFigure, setPart, removePart, setColors, setGender } = useAvatarEditorActions();
     const { parts, palettes } = useAvatarEditorData(activeSetType);
-    const {} = useAvatarEditorVisibility
+    const { hide } = useAvatarEditorVisibility();
 
     usePartThumbnailLifetime();
 
@@ -117,7 +117,7 @@ export const AvatarEditor = () => {
             variant="3"
             id="avatarEditor"
             caption={t('avatareditor.title')}
-            onClose={undefined}
+            onClose={hide}
             layout={{ position: 'absolute', width: 'auto', height: 500, top: 30, left: 100 }}
             contentLayout={{ paddingLeft: 0, paddingRight: 0, marginBottom: 0 }}
         >

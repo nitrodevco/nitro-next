@@ -10,7 +10,7 @@ export const RoomWrapper = () => {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        const roomId = parseInt(params.get('roomId') ?? '-1');
+        const roomId = parseInt(params.get('room.id') ?? '-1');
 
         if (roomId > 0) send(new OpenFlatConnectionComposer({
             roomId,

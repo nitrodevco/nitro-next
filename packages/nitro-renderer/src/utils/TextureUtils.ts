@@ -15,8 +15,9 @@ export class TextureUtils {
         return Texture.from(image);
     }
 
-    public static async textureFromEncodedBytes(bytes: ArrayBuffer | Uint8Array, mimeType: string = 'image/png', label?: string): Promise<Texture> {
-        const bitmap = await createImageBitmap(new Blob([ bytes as BlobPart ], { type: mimeType }));
+    /** Decodes an encoded image straight into a texture. A `Blob` is handed to the decoder as is - no intermediate byte copy. */
+    public static async textureFromEncodedBytes(bytes: ArrayBuffer | Uint8Array | Blob, mimeType: string = 'image/png', label?: string): Promise<Texture> {
+        const bitmap = await createImageBitmap(bytes instanceof Blob ? bytes : new Blob([ bytes as BlobPart ], { type: mimeType }));
         const texture = new Texture({ source: new ImageSource({ resource: bitmap, label }) });
 
         if (label) texture.label = label;
