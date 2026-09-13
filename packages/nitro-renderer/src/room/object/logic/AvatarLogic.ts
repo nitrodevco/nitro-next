@@ -289,6 +289,7 @@ export class AvatarLogic extends MovingObjectLogic {
                 eventType = RoomObjectMouseEvent.MOUSE_ENTER;
 
                 this.object.model.setValue(RoomObjectVariableEnum.FigureHighlight, 1);
+                this.setVariableFxHolderHovered(true);
 
                 this.handleRoomObjectEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_BUTTON, this.object), // this is used to change cursor
@@ -298,6 +299,7 @@ export class AvatarLogic extends MovingObjectLogic {
                 eventType = RoomObjectMouseEvent.MOUSE_LEAVE;
 
                 this.object.model.setValue(RoomObjectVariableEnum.FigureHighlight, 0);
+                this.setVariableFxHolderHovered(false);
 
                 this.handleRoomObjectEvent(
                     new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_ARROW, this.object), // this is used to change cursor

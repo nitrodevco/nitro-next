@@ -6,3 +6,4 @@ export * from './RoomLogic';
 export * from './RoomObjectLogicBase';
 export * from './SelectionArrowLogic';
 export * from './TileCursorLogic';
+export * from './variablefx';

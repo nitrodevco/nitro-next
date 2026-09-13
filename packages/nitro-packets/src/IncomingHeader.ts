@@ -486,6 +486,10 @@ export class IncomingHeader {
     public static FurniListRemoveMessage = 1156;
     public static PostItPlacedMessage = 2145;
     public static OpenMessage = 2635;
+    public static VariableFxConfigsMessage = 267;
+    public static VariableFxConfigsRemovedMessage = 1200;
+    public static VariableFxStatusMessage = 3389;
+    public static VariableFxStatusRemovedMessage = 3388;
     public static WiredFurniActionMessage = 2552;
     public static WiredFurniAddonMessage = 2574;
     public static WiredFurniConditionMessage = 2250;

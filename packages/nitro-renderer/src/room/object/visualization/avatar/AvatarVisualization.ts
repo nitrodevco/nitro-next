@@ -10,6 +10,7 @@ import {
     type IObjectVisualizationData,
     type IRoomGeometry,
     IRoomObject, IRoomObjectModel,
+    IVariableFxStatusModelData,
     RoomObjectSpriteTypeEnum,
     RoomObjectVariableEnum,
 } from '@nitrodevco/nitro-api';
@@ -17,8 +18,11 @@ import { AdvancedMap, AvatarActionStateType, AvatarActionStateTypeUtilities, Ava
 import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
+import { GetTickerTime } from '#renderer/utils';
 
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
+import { IVariableFxVisualizationHost, IVariableFxVisualizationRoomData } from '../variablefx/IVariableFxVisualizationRoomData';
+import { VariableFxStatusReconciler } from '../variablefx/VariableFxStatusReconciler';
 import { ExpressionAdditionFactory,
     FloatingIdleZAddition,
     GameClickTargetAddition,
@@ -26,13 +30,14 @@ import { ExpressionAdditionFactory,
     IAvatarAddition,
     MutedBubbleAddition,
     NumberBubbleAddition,
+    StackedAdditions,
     TypingBubbleAddition,
 } from './additions';
 import { AvatarVisualizationData } from './AvatarVisualizationData';
 
 export class AvatarVisualization
     extends RoomObjectSpriteVisualization
-    implements IAvatarImageListener, IAvatarEffectListener {
+    implements IAvatarImageListener, IAvatarEffectListener, IVariableFxVisualizationHost {
     private static AVATAR: string = 'avatar';
     private static FLOATING_IDLE_Z_ID: number = 1;
     private static TYPING_BUBBLE_ID: number = 2;
@@ -41,6 +46,7 @@ export class AvatarVisualization
     private static GAME_CLICK_TARGET_ID: number = 5;
     private static MUTED_BUBBLE_ID: number = 6;
     private static GUIDE_BUBBLE_ID: number = 7;
+    private static STACKED_ADDITIONS_ID: number = 9;
     private static OWN_USER_ID: number = 4;
     private static AVATAR_LAYER_ID: number = 0;
     private static SHADOW_LAYER_ID: number = 1;
@@ -102,6 +108,10 @@ export class AvatarVisualization
 
     private _additions: Map<number, IAvatarAddition> = new Map();
 
+    private _variableFxRoomData: IVariableFxVisualizationRoomData | undefined = undefined;
+    private _variableFxReconciler: VariableFxStatusReconciler = new VariableFxStatusReconciler();
+    private _variableFxManagerUpdateId: number = -1;
+
     public override initialize(data: IObjectVisualizationData): boolean {
         if (!(data instanceof AvatarVisualizationData)) return false;
 
@@ -121,8 +131,22 @@ export class AvatarVisualization
 
         if (this._avatarImage) this._avatarImage.dispose();
 
+        for (const addition of this._additions.values()) addition.dispose();
+
+        this._additions.clear();
+        this._variableFxRoomData = undefined;
         this._shadow = undefined;
         this._disposed = true;
+    }
+
+    /** The room's Variable FX tables for users; set by the room when the visualization is created. */
+    public get variableFxRoomData(): IVariableFxVisualizationRoomData | undefined {
+        return this._variableFxRoomData;
+    }
+
+    public set variableFxRoomData(data: IVariableFxVisualizationRoomData | undefined) {
+        this._variableFxRoomData = data;
+        this._variableFxManagerUpdateId = -1;
     }
 
     public override update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void {
@@ -219,6 +243,8 @@ export class AvatarVisualization
                 const sprite = this.getSprite(index++);
                 if (sprite && addition.animate(sprite)) this.updateSpriteCounter++;
             }
+
+            if (this.removeEmptyStackedAdditions()) this.updateSpriteCounter++;
         }
 
         const update1 = objectUpdated || modelUpdated || didScaleUpdate;
@@ -487,9 +513,15 @@ export class AvatarVisualization
     protected updateModel(model: IRoomObjectModel, scale: RoomGeometryScaleType, update: boolean): boolean {
         if (!model) return false;
 
-        if (this.updateModelCounter === model.updateCounter) return false;
+        const variableFxManagerUpdateId = this._variableFxRoomData?.variableFxVisualizationManager.updateId ?? -1;
+
+        if (this.updateModelCounter === model.updateCounter && variableFxManagerUpdateId === this._variableFxManagerUpdateId) return false;
+
+        this._variableFxManagerUpdateId = variableFxManagerUpdateId;
 
         let needsUpdate = false;
+
+        if (this.reconcileVariableFxStatuses(model.getValue<IVariableFxStatusModelData | undefined>(RoomObjectVariableEnum.VariableFxStatuses))) needsUpdate = true;
 
         const talk = model.getValue<number>(RoomObjectVariableEnum.FigureTalk) > 0 && update;
 
@@ -907,6 +939,36 @@ export class AvatarVisualization
         this._additions.delete(addition.id);
 
         addition.dispose();
+    }
+
+    private reconcileVariableFxStatuses(data: IVariableFxStatusModelData | undefined): boolean {
+        const hasStatuses = !!data && data.statusesByConfig.size > 0 && !!this._variableFxRoomData;
+        const stackedAdditions = this.getStackedAdditions(hasStatuses);
+
+        if (!stackedAdditions) return false;
+
+        return this._variableFxReconciler.reconcile(data, this._variableFxRoomData?.variableFxVisualizationManager, this._variableFxRoomData?.variableFxAssetProvider, this._variableFxRoomData?.variableFxRendererRegistry, stackedAdditions.stack, StackedAdditions.LAYER_VARIABLE_FX, GetTickerTime());
+    }
+
+    private getStackedAdditions(create: boolean): StackedAdditions | undefined {
+        let stackedAdditions = this.getAddition(AvatarVisualization.STACKED_ADDITIONS_ID) as StackedAdditions | undefined;
+
+        if (!stackedAdditions && create) stackedAdditions = this.addAddition(new StackedAdditions(AvatarVisualization.STACKED_ADDITIONS_ID, this)) as StackedAdditions;
+
+        return stackedAdditions;
+    }
+
+    /** Once every stacked addition has faded out the stack sprite goes away and the sprite list is rebuilt. */
+    private removeEmptyStackedAdditions(): boolean {
+        const stackedAdditions = this.getStackedAdditions(false);
+
+        if (!stackedAdditions || !stackedAdditions.isEmpty) return false;
+
+        this.removeAddition(AvatarVisualization.STACKED_ADDITIONS_ID);
+
+        this._forceUpdate = true;
+
+        return true;
     }
 
     private updateShadow(scale: RoomGeometryScaleType): void {

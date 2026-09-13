@@ -13,6 +13,9 @@ import {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IVariableFxConfigUpdateData,
+    IVariableFxStatusRemoveData,
+    IVariableFxStatusUpdateData,
     RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectVariableEnum,
@@ -167,6 +170,12 @@ export interface IRoom {
     getRoomOverlay(): Container | undefined;
     getRoomOverlayIconSprite(): Container | undefined;
     getPetTypeId(figure: string): number;
+    /** Registers/replaces Variable FX configs for this room (logic visibility rules + visualization renderer settings). */
+    updateVariableFxConfigs(configs: IVariableFxConfigUpdateData[]): void;
+    removeVariableFxConfigs(configIds: number[]): void;
+    /** Applies Variable FX statuses to the user/furniture objects they target. */
+    updateVariableFxStatuses(statuses: IVariableFxStatusUpdateData[]): void;
+    removeVariableFxStatuses(statuses: IVariableFxStatusRemoveData[]): void;
     dispatchEvent(event: INitroEvent): void;
     readonly disposed: boolean;
     readonly roomId: number;

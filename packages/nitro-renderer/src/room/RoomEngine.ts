@@ -21,6 +21,8 @@ import { GetTicker, NumberBank, TextureUtils } from '#renderer/utils';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { ObjectDataUpdateMessage } from './messages';
+import { RefreshVariableFxRendererMappings } from './object/variablefx/VariableFxRoomData';
+import { GetVariableFxAssetLibrary } from './object/visualization/variablefx/VariableFxAssetLibrary';
 import { Room } from './Room';
 import { RoomGeometry } from './utils';
 
@@ -35,6 +37,12 @@ export class RoomEngine implements IRoomEngine {
 
     public async init(): Promise<void> {
         await GetRoomContentLoader().init();
+
+        // The Variable FX atlas is not needed for the first frame; statuses that arrive before it
+        // has loaded are kept by their stack additions and drawn once it is ready.
+        void GetVariableFxAssetLibrary().load().then((loaded) => {
+            if (loaded) RefreshVariableFxRendererMappings();
+        });
 
         this.start();
     }

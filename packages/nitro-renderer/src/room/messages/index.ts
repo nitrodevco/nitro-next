@@ -40,3 +40,5 @@ export * from './ObjectStateUpdateMessage';
 export * from './ObjectTileCursorUpdateMessage';
 export * from './ObjectVisibilityUpdateMessage';
 export * from './RoomObjectUpdateMessage';
+export * from './RoomObjectVariableFxStatusRemoveMessage';
+export * from './RoomObjectVariableFxStatusUpdateMessage';

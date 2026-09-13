@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<variableFxRenderers>
+    <renderer id="0" name="classic_progress" rendererClass="ClassicProgressBarRenderer" />
+    <renderer id="1" name="classic_mini_progress" rendererClass="ClassicMiniProgressBarRenderer" />
+    <renderer id="2" name="block_progress" rendererClass="BlockProgressBarRenderer" />
+    <renderer id="3" name="striped_progress" rendererClass="StripedProgressBarRenderer" />
+    <renderer id="4" name="arrow_progress" rendererClass="ArrowProgressBarRenderer" />
+    <renderer id="10" name="health_progress" rendererClass="HealthProgressBarRenderer" />
+    <renderer id="11" name="masked_heart_fill" rendererClass="MaskedHeartFillRenderer" />
+    <renderer id="12" name="stacked_health_points" rendererClass="StackedHealthPointsRenderer" />
+    <renderer id="13" name="thermometer_health_points" rendererClass="ThermometerHealthPointsRenderer" />
+    <renderer id="20" name="level_with_progress" rendererClass="LevelWithProgressRenderer" />
+    <renderer id="21" name="level_with_bar_and_numerical_progress" rendererClass="LevelDetailsRenderer" />
+    <renderer id="100" name="boss_health_bar" rendererClass="BossHealthBarRenderer" />
+    <renderer id="200" name="number_recolorable" rendererClass="RecolorableNumberDisplayRenderer" />
+    <renderer id="201" name="number_baked_colors" rendererClass="BakedColorNumberDisplayRenderer" />
+</variableFxRenderers>

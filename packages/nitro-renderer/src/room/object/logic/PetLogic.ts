@@ -175,6 +175,12 @@ export class PetLogic extends MovingObjectLogic {
                 break;
             case MouseEventType.DOUBLE_CLICK:
                 break;
+            case MouseEventType.ROLL_OVER:
+                this.setVariableFxHolderHovered(true);
+                break;
+            case MouseEventType.ROLL_OUT:
+                this.setVariableFxHolderHovered(false);
+                break;
             case MouseEventType.MOUSE_DOWN: {
                 const petType = this.object.model.getValue<number>(RoomObjectVariableEnum.PetType);
 

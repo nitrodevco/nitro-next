@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<icons>
+    <icon name="energy" x="2" y="1" />
+    <icon name="food" x="2" y="0" />
+    <icon name="poison" x="-1" y="1" />
+    <icon name="health" x="2" y="-1" />
+    <icon name="honor" x="2" y="0" />
+    <icon name="reputation" x="-1" y="0" />
+    <icon name="cooldown" x="0" y="1" />
+    <icon name="timeleft" x="0" y="1" />
+    <icon name="burning" x="-1" y="0" />
+    <icon name="droplet" x="-1" y="0" />
+    <icon name="battery" x="-2" y="0" />
+    <icon name="repairing" x="4" y="-1" />
+    <icon name="stealth" x="1" y="0" />
+    <icon name="gems" x="1" y="1" />
+    <icon name="star_power" x="0" y="-1" />
+    <icon name="magic" x="0" y="1" />
+    <icon name="mana" x="0" y="1" />
+    <icon name="cash" x="0" y="0" />
+    <icon name="fish" x="0" y="0" />
+    <icon name="wooden_logs" x="0" y="0" />
+    <icon name="misc_heart" x="0" y="0" />
+    <icon name="misc_skull" x="3" y="0" />
+</icons>

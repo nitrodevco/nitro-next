@@ -18,9 +18,14 @@ import {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IRoomObjectEventHandler,
     IRoomObjectManager,
     IRoomObjectModel,
+    IRoomObjectVisualization,
     IRoomRenderingCanvas,
+    IVariableFxConfigUpdateData,
+    IVariableFxStatusRemoveData,
+    IVariableFxStatusUpdateData,
     IVector3D, LegacyDataType,
     ObjectDataFlagsEnum,
     RoomContentLoadedEvent,
@@ -75,8 +80,12 @@ import {
     ObjectRoomPlaneVisibilityUpdateMessage,
     ObjectRoomUpdateMessage,
     ObjectStateUpdateMessage,
-    RoomObjectUpdateMessage } from './messages';
-import { RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
+    RoomObjectUpdateMessage,
+    RoomObjectVariableFxStatusRemoveMessage,
+    RoomObjectVariableFxStatusUpdateMessage } from './messages';
+import { MovingObjectLogic, RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
+import { VariableFxRoomData } from './object/variablefx/VariableFxRoomData';
+import { isVariableFxVisualizationHost } from './object/visualization/variablefx/IVariableFxVisualizationRoomData';
 import { RoomEventHandler } from './RoomEventHandler';
 import { RoomSpriteCanvas } from './RoomSpriteCanvas';
 import { RoomAreaSelectionManager } from './utils';
@@ -116,6 +125,7 @@ export class Room implements IRoom {
 
     private _floorStack: Map<number, IRoomFurnitureData> = new Map();
     private _wallStack: Map<number, IRoomFurnitureData> = new Map();
+    private _variableFx: VariableFxRoomData = new VariableFxRoomData();
 
     constructor(roomId: number) {
         this._roomId = roomId;
@@ -139,6 +149,7 @@ export class Room implements IRoom {
             this._canvas = undefined;
         }
 
+        this._variableFx.dispose();
         this._model.dispose();
 
         this._disposed = true;
@@ -564,6 +575,8 @@ export class Room implements IRoom {
 
         object.setVisualization(visualization);
 
+        this.assignVariableFxRoomData(visualization, category);
+
         const logic = GetRoomObjectLogicFactory().getLogic(logicType);
 
         if (logic) {
@@ -571,6 +584,8 @@ export class Room implements IRoom {
 
             object.setLogic(logic);
             object.logic.initialize(asset?.data ?? undefined);
+
+            this.assignVariableFxLogicManager(logic, category);
         }
 
         if (!isLoading) {
@@ -631,6 +646,8 @@ export class Room implements IRoom {
                     if (visualizationData && visualization.initialize(visualizationData)) {
                         object.setVisualization(visualization);
 
+                        this.assignVariableFxRoomData(visualization, category);
+
                         const logic = GetRoomObjectLogicFactory().getLogic(asset.data.logicType);
 
                         if (logic) {
@@ -638,6 +655,8 @@ export class Room implements IRoom {
 
                             object.setLogic(logic);
                             logic.initialize(asset.data);
+
+                            this.assignVariableFxLogicManager(logic, category);
                         }
 
                         this.objectInitialized(object.id, category);
@@ -655,6 +674,53 @@ export class Room implements IRoom {
 
     public initializeTemporaryObjectsByType(type: string) {
 
+    }
+
+    /** Users (avatars, pets, bots) draw from the user Variable FX tables; floor/wall items from the furniture ones. */
+    private assignVariableFxRoomData(visualization: IRoomObjectVisualization, category: RoomObjectCategoryEnum): void {
+        if (!isVariableFxVisualizationHost(visualization)) return;
+
+        visualization.variableFxRoomData = category === RoomObjectCategoryEnum.Unit ? this._variableFx.avatarVisualizationData : this._variableFx.furnitureVisualizationData;
+    }
+
+    private assignVariableFxLogicManager(logic: IRoomObjectEventHandler, category: RoomObjectCategoryEnum): void {
+        if (!(logic instanceof MovingObjectLogic)) return;
+
+        logic.variableFxLogicManager = category === RoomObjectCategoryEnum.Unit ? this._variableFx.avatarLogicManager : this._variableFx.furnitureLogicManager;
+    }
+
+    public updateVariableFxConfigs(configs: IVariableFxConfigUpdateData[]): void {
+        this._variableFx.updateConfigs(configs);
+    }
+
+    public removeVariableFxConfigs(configIds: number[]): void {
+        this._variableFx.removeConfigs(configIds);
+    }
+
+    public updateVariableFxStatuses(statuses: IVariableFxStatusUpdateData[]): void {
+        for (const status of statuses) {
+            const object = this.getVariableFxTarget(status.isUserEntity, status.entityId);
+
+            if (!object) continue;
+
+            object.processUpdateMessage(new RoomObjectVariableFxStatusUpdateMessage(status.configId, status.variableId, status.value, status.overrideMinValue, status.overrideMaxValue, new Map(status.extra), status.isInitialize));
+        }
+    }
+
+    public removeVariableFxStatuses(statuses: IVariableFxStatusRemoveData[]): void {
+        for (const status of statuses) {
+            const object = this.getVariableFxTarget(status.isUserEntity, status.entityId);
+
+            if (!object) continue;
+
+            object.processUpdateMessage(new RoomObjectVariableFxStatusRemoveMessage(status.configId, status.variableId));
+        }
+    }
+
+    private getVariableFxTarget(isUserEntity: boolean, entityId: number): IRoomObjectController | undefined {
+        if (isUserEntity) return this.getRoomObjectManager(RoomObjectCategoryEnum.Unit).getObject(entityId);
+
+        return this.getRoomObject(entityId, RoomObjectCategoryEnum.Floor) ?? this.getRoomObject(entityId, RoomObjectCategoryEnum.Wall);
     }
 
     public createRoomObjectFloor(id: number, type: string): IRoomObject | undefined {

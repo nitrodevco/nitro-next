@@ -8,4 +8,5 @@ export * from './IAvatarAddition';
 export * from './IExpressionAddition';
 export * from './MutedBubbleAddition';
 export * from './NumberBubbleAddition';
+export * from './StackedAdditions';
 export * from './TypingBubbleAddition';

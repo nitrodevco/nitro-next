@@ -136,6 +136,8 @@ export class FurnitureLogic extends MovingObjectLogic {
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         if (!message) return;
 
+        if (this.processVariableFxStatusMessage(message)) return;
+
         if (message instanceof ObjectDataUpdateMessage) {
             this.object.setState(message.state, 0);
 
@@ -160,6 +162,8 @@ export class FurnitureLogic extends MovingObjectLogic {
         }
 
         this._mouseOver = false;
+
+        this.setVariableFxHolderHovered(false);
 
         if (message.location && message.direction) {
             if (!(message instanceof ObjectMoveUpdateMessage)) {
@@ -225,6 +229,8 @@ export class FurnitureLogic extends MovingObjectLogic {
                 return;
             }
             case MouseEventType.ROLL_OVER: {
+                this.setVariableFxHolderHovered(true);
+
                 if (!this._mouseOver) {
                     if (adUrl && adUrl.indexOf('http') === 0)
                         this.handleRoomObjectEvent(
@@ -254,6 +260,8 @@ export class FurnitureLogic extends MovingObjectLogic {
                 return;
             }
             case MouseEventType.ROLL_OUT: {
+                this.setVariableFxHolderHovered(false);
+
                 if (this._mouseOver) {
                     if (adUrl && adUrl.indexOf('http') === 0)
                         this.handleRoomObjectEvent(

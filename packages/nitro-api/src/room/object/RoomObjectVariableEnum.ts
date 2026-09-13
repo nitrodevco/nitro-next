@@ -158,4 +158,5 @@ export enum RoomObjectVariableEnum {
     RoomZScale = 'room_z_scale',
     AdDisplayDelay = 'ad_display_delay',
     IsPlayingGame = 'is_playing_game',
+    VariableFxStatuses = 'variable_fx_statuses',
 }

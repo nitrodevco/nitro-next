@@ -291,12 +291,11 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
 
         if (this._isRiding && this._parser3(layerId)) return '';
 
-        const totalSprites = this.totalSprites;
-
-        if (layerId < totalSprites - PetVisualization.ADDITIONAL_SPRITE_COUNT) {
+        // Body layers sit below the shadow; the Variable FX overlay and the experience bubble come after it.
+        if (layerId < this._shadowLayerIndex + 1) {
             const validScale = this.getValidSize(scale);
 
-            if (layerId < totalSprites - (1 + PetVisualization.ADDITIONAL_SPRITE_COUNT)) {
+            if (layerId < this._shadowLayerIndex) {
                 if (layerId >= FurnitureVisualizationData.LAYER_LETTERS.length) return '';
 
                 const layerLetter = FurnitureVisualizationData.LAYER_LETTERS[layerId];
@@ -323,7 +322,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
     }
 
     protected override getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
-        if (layerId < this.totalSprites - PetVisualization.ADDITIONAL_SPRITE_COUNT) return this._color;
+        if (layerId < this._shadowLayerIndex + 1) return this._color;
 
         return 0xffffff;
     }
@@ -414,7 +413,7 @@ export class PetVisualization extends FurnitureAnimatedVisualization {
 
     private isNonHeadSprite(layerId: number): boolean {
         if (this._nonHeadSprites[layerId] === undefined) {
-            if (layerId < this.totalSprites - (1 + PetVisualization.ADDITIONAL_SPRITE_COUNT)) {
+            if (layerId < this._shadowLayerIndex) {
                 const tag = this.data.getLayerTag(this._scale, DirectionData.USE_DEFAULT_DIRECTION, layerId);
 
                 if (tag && tag.length > 0 && tag !== PetVisualization.HEAD && tag !== PetVisualization.HAIR) {

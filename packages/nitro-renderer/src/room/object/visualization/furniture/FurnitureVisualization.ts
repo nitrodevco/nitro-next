@@ -1,14 +1,25 @@
-import { AlphaTolerance, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite, RoomGeometryScaleType, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+import { AlphaTolerance, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite, IVariableFxStatusModelData, RoomGeometryScaleType, RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 import { BLEND_MODES, Filter, Texture } from 'pixi.js';
+
+import { GetTickerTime } from '#renderer/utils';
 
 import { ColorData, LayerData } from '../data';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
+import { StackedAdditionStack } from '../stacked/StackedAdditionStack';
+import { IVariableFxVisualizationHost, IVariableFxVisualizationRoomData } from '../variablefx/IVariableFxVisualizationRoomData';
+import { VariableFxStatusReconciler } from '../variablefx/VariableFxStatusReconciler';
 import { FurnitureVisualizationData } from './FurnitureVisualizationData';
 
-export class FurnitureVisualization extends RoomObjectSpriteVisualization {
+export class FurnitureVisualization extends RoomObjectSpriteVisualization implements IVariableFxVisualizationHost {
     protected static DEPTH_MULTIPLIER: number = Math.sqrt(0.5);
 
     public static TYPE: string = RoomObjectVisualizationType.FURNITURE_STATIC;
+
+    private static VARIABLE_FX_SPRITE_TAG: string = 'variable_fx';
+    private static VARIABLE_FX_ASSET_NAME: string = 'variable_fx_stack';
+    private static VARIABLE_FX_STACK_LAYER: number = 0;
+    private static VARIABLE_FX_STACK_GAP: number = 4;
+    private static VARIABLE_FX_MANAGER_UPDATE_ID_UNSET: number = -2;
 
     protected _data: FurnitureVisualizationData | undefined = undefined;
     protected _type: string | undefined = undefined;
@@ -44,6 +55,14 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     private _needsLookThroughUpdate: boolean = false;
     private _lastUpdateTime: number = -1000;
 
+    private _variableFxRoomData: IVariableFxVisualizationRoomData | undefined = undefined;
+    private _variableFxStack: StackedAdditionStack | undefined = new StackedAdditionStack();
+    private _variableFxReconciler: VariableFxStatusReconciler = new VariableFxStatusReconciler();
+    private _variableFxManagerUpdateId: number = FurnitureVisualization.VARIABLE_FX_MANAGER_UPDATE_ID_UNSET;
+    private _variableFxSpriteIndex: number = -1;
+    private _variableFxAnchorY: number = 0;
+    private _variableFxAnchorX: number = 0;
+
     public override initialize(data: IObjectVisualizationData): boolean {
         this.reset();
 
@@ -56,10 +75,26 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     }
 
     public override dispose(): void {
+        if (this._variableFxStack) {
+            this._variableFxStack.dispose();
+            this._variableFxStack = undefined;
+        }
+
         super.dispose();
 
         this._data = undefined;
+        this._variableFxRoomData = undefined;
         this.resetSpriteData();
+    }
+
+    /** The room's Variable FX tables for this object's kind; set by the room when the visualization is created. */
+    public get variableFxRoomData(): IVariableFxVisualizationRoomData | undefined {
+        return this._variableFxRoomData;
+    }
+
+    public set variableFxRoomData(data: IVariableFxVisualizationRoomData | undefined) {
+        this._variableFxRoomData = data;
+        this._variableFxManagerUpdateId = FurnitureVisualization.VARIABLE_FX_MANAGER_UPDATE_ID_UNSET;
     }
 
     protected resetSpriteData(): void {
@@ -82,6 +117,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         this._data = undefined;
 
         this.setDirection(-1);
+        this.resetVariableFxStack();
         this.resetSpriteData();
         this.createSprites(0);
     }
@@ -134,6 +170,8 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
 
             this.updateSpriteCounter++;
         }
+
+        if (this.updateVariableFxOverlay(scale, updateSprites || animation !== 0)) this.updateSpriteCounter++;
     }
 
     protected updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
@@ -167,27 +205,36 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
 
         if (!model) return false;
 
-        if (this.updateModelCounter === model.updateCounter) return false;
+        const variableFxManagerUpdateId = this.getVariableFxVisualizationManagerUpdateId();
+        const modelChanged = this.updateModelCounter !== model.updateCounter;
+        const variableFxManagerChanged = variableFxManagerUpdateId !== this._variableFxManagerUpdateId;
 
-        this._selectedColor = model.getValue<number>(RoomObjectVariableEnum.FurnitureColor);
-        this._clickUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
-        this._clickHandling
-            = (this._clickUrl && this._clickUrl !== '' && this._clickUrl.indexOf('http') === 0) || false;
-        this._furnitureLift = model.getValue<number>(RoomObjectVariableEnum.FurnitureLiftAmount) || 0;
+        if (!modelChanged && !variableFxManagerChanged) return false;
 
-        let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FurnitureAlphaMultiplier);
+        if (modelChanged) {
+            this._selectedColor = model.getValue<number>(RoomObjectVariableEnum.FurnitureColor);
+            this._clickUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
+            this._clickHandling
+                = (this._clickUrl && this._clickUrl !== '' && this._clickUrl.indexOf('http') === 0) || false;
+            this._furnitureLift = model.getValue<number>(RoomObjectVariableEnum.FurnitureLiftAmount) || 0;
 
-        if (isNaN(alphaMultiplier)) alphaMultiplier = 1;
+            let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FurnitureAlphaMultiplier);
 
-        if (this._alphaMultiplier !== alphaMultiplier) {
-            this._alphaMultiplier = alphaMultiplier;
+            if (isNaN(alphaMultiplier)) alphaMultiplier = 1;
 
-            this._alphaChanged = true;
+            if (this._alphaMultiplier !== alphaMultiplier) {
+                this._alphaMultiplier = alphaMultiplier;
+
+                this._alphaChanged = true;
+            }
         }
 
-        this.updateModelCounter = model.updateCounter;
+        const variableFxChanged = this.reconcileVariableFxStatuses(model.getValue<IVariableFxStatusModelData | undefined>(RoomObjectVariableEnum.VariableFxStatuses));
 
-        return true;
+        this.updateModelCounter = model.updateCounter;
+        this._variableFxManagerUpdateId = variableFxManagerUpdateId;
+
+        return modelChanged || variableFxChanged;
     }
 
     protected updateSprites(scale: RoomGeometryScaleType, update: boolean, animation: number): void {
@@ -216,6 +263,12 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     }
 
     protected updateSprite(scale: RoomGeometryScaleType, layerId: number): void {
+        if (layerId === this._variableFxSpriteIndex) {
+            this.clearVariableFxOverlaySprite(this.getSprite(layerId));
+
+            return;
+        }
+
         const assetName = this.getSpriteAssetName(scale, layerId);
         const sprite = this.getSprite(layerId);
 
@@ -461,6 +514,148 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     protected setLayerCount(count: number): void {
         this._layerCount = count;
         this._shadowLayerIndex = count - this.getAdditionalLayerCount();
+
+        this.reserveVariableFxOverlaySprite();
+    }
+
+    /** One extra sprite, right after the shadow, carries the composed Variable FX stack. */
+    protected reserveVariableFxOverlaySprite(): void {
+        this._variableFxSpriteIndex = this._shadowLayerIndex >= 0 ? this._shadowLayerIndex + 1 : this._layerCount;
+        this._layerCount++;
+    }
+
+    private updateVariableFxOverlay(scale: RoomGeometryScaleType, update: boolean): boolean {
+        const stack = this._variableFxStack;
+
+        if (!stack) return false;
+        if (!update && stack.isCachedIdle) return false;
+
+        const sprite = this.getVariableFxSprite();
+
+        if (!sprite) return false;
+        if (stack.isEmpty && !sprite.visible) return false;
+        if (!update && stack.isIdleInvisible && !sprite.visible) return false;
+
+        const updateCounter = sprite.updateCounter;
+
+        this.applyVariableFxOverlaySpriteDefaults(sprite);
+
+        if (!this.resolveVariableFxAnchor()) {
+            const animated = stack.animate(sprite, 0);
+
+            this.clearVariableFxOverlaySprite(sprite);
+
+            return animated || sprite.updateCounter !== updateCounter;
+        }
+
+        const changed = update ? stack.update(sprite, scale, this._variableFxAnchorY) : stack.animate(sprite, this._variableFxAnchorY);
+        const positioned = update || changed || sprite.updateCounter !== updateCounter;
+
+        this.applyVariableFxOverlaySpriteDefaults(sprite);
+
+        if (sprite.visible && stack.texture && positioned) {
+            sprite.offsetX += this._variableFxAnchorX;
+        } else if (!sprite.visible) {
+            sprite.texture = Texture.EMPTY;
+        }
+
+        return changed || sprite.updateCounter !== updateCounter;
+    }
+
+    /** The stack sits above the furni: centred on the union of its visible layers, 4px above the topmost one. */
+    private resolveVariableFxAnchor(): boolean {
+        const limit = this._shadowLayerIndex >= 0 ? this._shadowLayerIndex : this._variableFxSpriteIndex;
+
+        let found = false;
+        let minX = 0;
+        let maxX = 0;
+        let minY = 0;
+
+        for (let index = 0; index < limit; index++) {
+            const sprite = this.getSprite(index);
+
+            if (!sprite || !sprite.visible || !sprite.texture || sprite.texture === Texture.EMPTY || sprite.alpha <= 0 || sprite.width <= 0 || sprite.height <= 0) continue;
+
+            const left = sprite.offsetX;
+            const right = left + sprite.width;
+
+            if (!found) {
+                minX = left;
+                maxX = right;
+                minY = sprite.offsetY;
+                found = true;
+            } else {
+                if (left < minX) minX = left;
+                if (right > maxX) maxX = right;
+                if (sprite.offsetY < minY) minY = sprite.offsetY;
+            }
+        }
+
+        if (!found) return false;
+
+        this._variableFxAnchorX = Math.round((minX + maxX) / 2);
+        this._variableFxAnchorY = minY - FurnitureVisualization.VARIABLE_FX_STACK_GAP;
+
+        return true;
+    }
+
+    private applyVariableFxOverlaySpriteDefaults(sprite: IRoomObjectSprite | undefined): void {
+        if (!sprite) return;
+
+        sprite.type = this._type ?? '';
+        sprite.name = FurnitureVisualization.VARIABLE_FX_ASSET_NAME;
+        sprite.libraryAssetName = FurnitureVisualization.VARIABLE_FX_ASSET_NAME;
+        sprite.posture = undefined;
+        sprite.tag = FurnitureVisualization.VARIABLE_FX_SPRITE_TAG;
+        sprite.color = 0xffffff;
+        sprite.blendMode = 'normal';
+        sprite.flipH = false;
+        sprite.flipV = false;
+        sprite.direction = this._direction;
+        sprite.alphaTolerance = AlphaTolerance.MATCH_NOTHING;
+        sprite.clickHandling = false;
+        sprite.skipMouseHandling = true;
+        sprite.filters = [];
+        sprite.spriteType = RoomObjectSpriteTypeEnum.Default;
+        sprite.varyingDepth = false;
+    }
+
+    private clearVariableFxOverlaySprite(sprite: IRoomObjectSprite | undefined): void {
+        if (!sprite) return;
+
+        this.applyVariableFxOverlaySpriteDefaults(sprite);
+
+        sprite.texture = Texture.EMPTY;
+        sprite.visible = false;
+        sprite.alpha = 0;
+        sprite.offsetX = 0;
+        sprite.offsetY = 0;
+        sprite.relativeDepth = 0;
+    }
+
+    private getVariableFxSprite(): IRoomObjectSprite | undefined {
+        return this._variableFxSpriteIndex < 0 ? undefined : this.getSprite(this._variableFxSpriteIndex);
+    }
+
+    private getVariableFxVisualizationManagerUpdateId(): number {
+        return this._variableFxRoomData?.variableFxVisualizationManager.updateId ?? -1;
+    }
+
+    private reconcileVariableFxStatuses(data: IVariableFxStatusModelData | undefined): boolean {
+        if (!this._variableFxStack) this._variableFxStack = new StackedAdditionStack();
+
+        return this._variableFxReconciler.reconcile(data, this._variableFxRoomData?.variableFxVisualizationManager, this._variableFxRoomData?.variableFxAssetProvider, this._variableFxRoomData?.variableFxRendererRegistry, this._variableFxStack, FurnitureVisualization.VARIABLE_FX_STACK_LAYER, GetTickerTime());
+    }
+
+    private resetVariableFxStack(): void {
+        if (this._variableFxStack) this._variableFxStack.dispose();
+
+        this._variableFxStack = new StackedAdditionStack();
+        this._variableFxReconciler = new VariableFxStatusReconciler();
+        this._variableFxManagerUpdateId = FurnitureVisualization.VARIABLE_FX_MANAGER_UPDATE_ID_UNSET;
+        this._variableFxSpriteIndex = -1;
+        this._variableFxAnchorY = 0;
+        this._variableFxAnchorX = 0;
     }
 
     protected setDirection(direction: number): void {
