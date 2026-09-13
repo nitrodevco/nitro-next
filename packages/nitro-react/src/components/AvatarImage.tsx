@@ -15,21 +15,21 @@ type AvatarImageProps = {
     layout?: BoxLayout;
 };
 
-/** Pixi: the avatar's own render texture, straight from the render manager (see `useAvatarImageTexture`). */
+/** Pixi: the avatar's own render texture, straight from the render manager (see `useAvatarImageTexture`). A `scale` other than 1 is rendered as a smoothed, sharpened copy at that size rather than by stretching the sprite, which would mangle the pixel art. */
 const AvatarImagePixi = forwardRef<PixiContainer, AvatarImageProps>(({ figure, gender, headOnly = false, direction = 0, scale = 1, layout }, ref) => {
-    const { texture, width, height } = useAvatarImageTexture(figure, gender, { headOnly, direction });
+    const { texture, width, height } = useAvatarImageTexture(figure, gender, { headOnly, direction, scale });
 
     if (!texture) return null;
 
     return (
         <Box
             ref={ref}
-            layout={{ ...layout, width: width * scale, height: height * scale, flexShrink: 0 }}
+            layout={{ ...layout, width, height, flexShrink: 0 }}
         >
             <pixiSprite
                 texture={texture}
                 eventMode="none"
-                layout={{ width: width * scale, height: height * scale }}
+                layout={{ width, height }}
             />
         </Box>
     );

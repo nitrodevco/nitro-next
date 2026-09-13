@@ -1,16 +1,17 @@
 import { AvatarEditorCategory, AvatarEditorColor, AvatarFigurePartType, AvatarGenderType, RoomId, SubTab } from '@nitrodevco/nitro-api';
-import { GetWardrobeComposer, UpdateFigureDataComposer } from '@nitrodevco/nitro-packets';
+import { GetWardrobeComposer, SaveWardrobeOutfitComposer, UpdateFigureDataComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef } from 'react';
 
 import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
 import { useAvatarEditorActions, useAvatarEditorSelectors, useConfigValue, useOwnClubLevel, useOwnUserInfo, useTranslation, useWebSocketContext } from '#base/context';
 import { useAvatarEditorHandler } from '#base/handlers';
-import { AvatarEditorPartData, firstSelectableColorId, useAvatarEditorData, usePartThumbnails } from '#base/hooks';
-import { Border, Button, ButtonThick, Frame, InfiniteGrid, Region, ScrollArea, TabButton, TabContext, ThemeImage, ThemeText } from '#base/theme';
+import { AvatarEditorPartData, firstSelectableColorId, useAvatarEditorData, useAvatarEditorVisibility, usePartThumbnailLifetime } from '#base/hooks';
+import { Button, ButtonThick, Frame, InfiniteGrid, Region, ScrollArea, TabButton, TabContext, ThemeImage, ThemeText } from '#base/theme';
 
 import { layoutImage } from '../layouts/layoutAssets';
 import { AvatarEditorPaletteThumb } from './AvatarEditorPaletteThumb';
 import { AvatarEditorPartThumb } from './AvatarEditorPartThumb';
+import { AvatarEditorWardrobe } from './AvatarEditorWardrobe';
 
 const availableCategories: AvatarEditorCategory[] = [ AvatarEditorCategory.Generic, AvatarEditorCategory.Head, AvatarEditorCategory.Torso, AvatarEditorCategory.Legs, AvatarEditorCategory.Misc, AvatarEditorCategory.HotLooks, AvatarEditorCategory.Effects ];
 
@@ -47,11 +48,13 @@ const CATEGORY_TABS: Partial<Record<AvatarEditorCategory, SubTab[]>> = {
 export const AvatarEditor = () => {
     const { name, figure: ownFigure, sex: ownGender } = useOwnUserInfo();
     const clubLevel = useOwnClubLevel();
-    const { activeCategory, activeSubType, wardrobeVisible, figure, parts: figureParts, gender } = useAvatarEditorSelectors();
+    const { activeCategory, activeSubType, wardrobeVisible, wardrobe, figure, parts: figureParts, gender } = useAvatarEditorSelectors();
     const activeSetType = activeSubType[activeCategory];
-    const { setActiveCategory, setActiveSubType, setWardrobeVisible, loadFigure, setPart, removePart, setColors, setGender } = useAvatarEditorActions();
+    const { setActiveCategory, setActiveSubType, setWardrobeVisible, setWardrobeSlot, loadFigure, setPart, removePart, setColors, setGender } = useAvatarEditorActions();
     const { parts, palettes } = useAvatarEditorData(activeSetType);
-    const thumbnails = usePartThumbnails(parts, activeSetType);
+    const {} = useAvatarEditorVisibility
+
+    usePartThumbnailLifetime();
 
     const previewerRef = useRef<RoomPreviewerHandle>(null);
     const maxWardrobeSlots = useConfigValue<number>('avatar.wardrobe.max.slots') ?? 10;
@@ -75,6 +78,14 @@ export const AvatarEditor = () => {
         }
 
         setPart(activeSetType, part.id, figureParts[activeSetType]?.colorIds ?? [ firstSelectableColorId(activeSetType, clubLevel) ]);
+    };
+
+    /** `WardrobeSlot` set button: the current look goes into the slot (server slots are 1-based). */
+    const saveWardrobeSlot = (index: number) => {
+        if (!figure) return;
+
+        send(new SaveWardrobeOutfitComposer({ slotId: index + 1, figure, gender }));
+        setWardrobeSlot(index, { figure, gender });
     };
 
     const selectColor = (color: AvatarEditorColor, layer: number) => {
@@ -107,7 +118,7 @@ export const AvatarEditor = () => {
             id="avatarEditor"
             caption={t('avatareditor.title')}
             onClose={undefined}
-            layout={{ position: 'absolute', width: 'auto', minWidth: 490, maxWidth: 670, height: 490, top: 30, left: 100 }}
+            layout={{ position: 'absolute', width: 'auto', height: 500, top: 30, left: 100 }}
             contentLayout={{ paddingLeft: 0, paddingRight: 0, marginBottom: 0 }}
         >
             <Region layout={{ flexDirection: 'row', flex: 1, height: '100%' }}>
@@ -200,7 +211,8 @@ export const AvatarEditor = () => {
                                 itemRender={x => (
                                     <AvatarEditorPartThumb
                                         selected={!!x.selected}
-                                        thumbnail={thumbnails[x.id]}
+                                        part={x}
+                                        setType={activeSetType}
                                         colors={x.partColors}
                                         usesColors={x.usesColors}
                                         disabled={x.disabled}
@@ -211,7 +223,7 @@ export const AvatarEditor = () => {
                                     />
                                 )}
                             />
-                            <Region layout={{ flexDirection: 'row', gap: 5, height: 93, overflow: 'hidden', width: '100%' }}>
+                            <Region layout={{ flexDirection: 'row', gap: 5, height: 95, overflow: 'hidden', width: '100%' }}>
                                 { palettes.map((x, index) => (
                                     /* One or two colour layers: each palette splits the row evenly and
                                wraps its swatches into a grid. */
@@ -271,27 +283,13 @@ export const AvatarEditor = () => {
                     </Region>
                 </Region>
                 { wardrobeVisible && (
-                    <Region layout={{ width: 180, height: '100%', flexDirection: 'column', overflow: 'hidden' }}>
-                        <Region
-                            name="splitter"
-                            backgroundColor="#000000"
-                            layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0 }}
-                        />
-                        <Region layout={{ padding: 10, justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', gap: 5, flexDirection: 'column' }}>
-                            <ThemeText
-                                text={t('avatareditor.wardrobe.title')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#83827e' }}
-                            />
-                            <Border
-                                variant="4"
-                                tintColor="#cbcbcb"
-                                layout={{ width: '100%', height: '100%' }}
-                            >
-                                test
-                            </Border>
-                        </Region>
-                    </Region>
+                    <AvatarEditorWardrobe
+                        slots={wardrobe}
+                        slotCount={maxWardrobeSlots}
+                        clubLevel={clubLevel}
+                        onSave={saveWardrobeSlot}
+                        onLoad={(_index, outfit) => loadFigure(outfit.figure, outfit.gender)}
+                    />
                 )}
             </Region>
         </Frame>

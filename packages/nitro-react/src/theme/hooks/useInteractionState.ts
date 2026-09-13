@@ -6,6 +6,8 @@ export type InteractionState = 'default' | 'hovering' | 'pressed' | 'disabled';
 
 export interface InteractionHandlers extends PointerHandlerProps {
     eventMode?: 'static' | 'none';
+    /** Set by `useThemeVariant` for a component hovered only for its tooltip - it is a hit target, but not a clickable one. */
+    cursor?: string;
 }
 
 export interface InteractionStates<T> {
@@ -19,6 +21,8 @@ export interface InteractionStates<T> {
 export interface UseInteractionStateOptions extends PointerHandlerProps {
     disabled?: boolean;
     stopsPropagation?: boolean;
+    /** Track hover/press even with no handler of any kind (a `dynamicStyle` host draws from the state alone). */
+    interactive?: boolean;
 }
 
 /**
@@ -39,10 +43,10 @@ export interface UseInteractionStateOptions extends PointerHandlerProps {
  * see - a component with no real interactivity stays `passive`, exactly like a plain `<Box>`.
  */
 export const useInteractionState = ({
-    disabled, stopsPropagation = false, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    disabled, stopsPropagation = false, interactive = false, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
 }: UseInteractionStateOptions = {}): { state: InteractionState; handlers: InteractionHandlers } => {
     const [ state, setState ] = useState<InteractionState>('default');
-    const isInteractive = hasAnyPointerHandler({ onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
+    const isInteractive = interactive || hasAnyPointerHandler({ onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
     const handlers = useMemo<InteractionHandlers>(() => {
         if (disabled) return { eventMode: 'none' };

@@ -12,7 +12,7 @@ export const useCatalogNavigation = () => {
     const { setActiveNodes, setIsBusy, setActivePageId, setActivePage, setActiveOffer, setRequestedPage, setPurchaseOptions } = useCatalogActions();
     const { getNodeByPageId, getNodeByPageName, getNodesByOfferId } = useCatalogNodeActions();
     const { getOfferProduct } = useCatalogOfferActions();
-    const { isCatalogVisible, showCatalog } = useCatalogVisibility();
+    const { isWindowVisible, show } = useCatalogVisibility();
     const { send } = useWebSocketContext();
 
     const loadCatalogPage = (pageId: number, offerId: number) => {
@@ -115,10 +115,10 @@ export const useCatalogNavigation = () => {
     };
 
     const openPageById = (pageId: number) => {
-        if (!isCatalogVisible) {
+        if (!isWindowVisible) {
             setRequestedPage(CatalogRequestedPageUtilities.getForPageId(pageId));
 
-            showCatalog();
+            show();
         } else {
             if (!rootNode) return;
 
@@ -129,10 +129,10 @@ export const useCatalogNavigation = () => {
     };
 
     const openPageByName = (pageName: string) => {
-        if (!isCatalogVisible) {
+        if (!isWindowVisible) {
             setRequestedPage(CatalogRequestedPageUtilities.getForPageName(pageName));
 
-            showCatalog();
+            show();
         } else {
             if (!rootNode) return;
 
@@ -143,10 +143,10 @@ export const useCatalogNavigation = () => {
     };
 
     const openPageByOfferId = (offerId: number) => {
-        if (!isCatalogVisible) {
+        if (!isWindowVisible) {
             setRequestedPage(CatalogRequestedPageUtilities.getForOfferId(offerId));
 
-            showCatalog();
+            show();
         } else {
             const nodes = getNodesByOfferId(offerId);
 

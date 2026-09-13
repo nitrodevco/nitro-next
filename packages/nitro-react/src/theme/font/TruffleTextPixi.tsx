@@ -16,6 +16,10 @@ export interface TruffleTextPixiProps {
     visible?: boolean;
     /** Explicit line advance in px for multi-line text (composed per line - see `renderTruffleTextBlock`). */
     lineHeight?: number;
+    alpha?: number;
+    /** A pixel nudge on top of the layout position (a dynamic style's `offsetX`/`offsetY`). */
+    x?: number;
+    y?: number;
 }
 
 /**
@@ -24,7 +28,7 @@ export interface TruffleTextPixiProps {
  * rather than applied as a `DropShadowFilter` - a filter routes every shadowed label through
  * offscreen render textures each frame, for a sprite a few dozen pixels wide.
  */
-export const TruffleTextPixi = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth, visible, lineHeight }: TruffleTextPixiProps) => {
+export const TruffleTextPixi = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth, visible, lineHeight, alpha, x, y }: TruffleTextPixiProps) => {
     const texture = useMemo(() => {
         if (!text?.length) return undefined;
 
@@ -46,22 +50,29 @@ export const TruffleTextPixi = ({ habboKey, text, color, dropShadow, layout, wor
 
         if (!canvas) return undefined;
 
-        const created = Texture.from(canvas);
+        // Owned here and destroyed on change - kept out of Pixi's global `Cache`, which would
+        // otherwise hold every label's canvas until that destroy.
+        const created = Texture.from(canvas, true);
 
         created.source.scaleMode = 'nearest';
 
         return created;
-    }, [ text, habboKey, color, wordWrap, wordWrapWidth, dropShadow, lineHeight ]);
+        // The shadow config is compared by value: `ThemeText` resolves it to a fresh object on
+        // every render, which by identity would re-rasterise every shadowed label each render.
+    }, [ text, habboKey, color, wordWrap, wordWrapWidth, dropShadow?.alpha, dropShadow?.angle, dropShadow?.blur, dropShadow?.color, dropShadow?.distance, lineHeight ]);
 
     useEffect(() => () => texture?.destroy(true), [ texture ]);
 
     if (!texture) return null;
 
     const stretchAxes = insetStretchAxes(layout);
-    const sprite = (spriteLayout: BoxLayout | undefined) => (
+    const sprite = (spriteLayout: BoxLayout | undefined, nudge: boolean) => (
         <pixiSprite
             texture={texture}
             visible={visible}
+            alpha={alpha}
+            x={nudge ? x : undefined}
+            y={nudge ? y : undefined}
             roundPixels
             layout={{
                 width: texture.width,
@@ -79,14 +90,16 @@ export const TruffleTextPixi = ({ habboKey, text, color, dropShadow, layout, wor
         return (
             <pixiContainer
                 eventMode="none"
+                x={x}
+                y={y}
                 layout={layout}
             >
-                {sprite({ objectPosition: layout?.objectPosition, width: stretchAxes.x ? '100%' : undefined, height: stretchAxes.y ? '100%' : undefined })}
+                {sprite({ objectPosition: layout?.objectPosition, width: stretchAxes.x ? '100%' : undefined, height: stretchAxes.y ? '100%' : undefined }, false)}
             </pixiContainer>
         );
     }
 
-    return sprite(layout);
+    return sprite(layout, true);
 };
 
 TruffleTextPixi.displayName = 'TruffleTextPixi';

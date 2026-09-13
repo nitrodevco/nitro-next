@@ -3,12 +3,12 @@ import { useNavigatorVisibility } from '#base/hooks';
 import { NavigatorView } from '#base/views/navigator/NavigatorView';
 
 export const NavigatorComponent = () => {
-    const { isNavigatorVisible } = useNavigatorVisibility();
+    const { isWindowVisible } = useNavigatorVisibility();
 
     // handler lives inside the provider so it can write to the navigator store
     useNavigatorHandler();
 
-    if (!isNavigatorVisible) return null;
+    if (!isWindowVisible) return null;
 
     return <NavigatorView />;
 };

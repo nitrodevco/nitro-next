@@ -1,6 +1,6 @@
-import { Color, Container } from 'pixi.js';
+import { Color, Container, Graphics } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
-import { CSSProperties, forwardRef, ForwardRefExoticComponent, JSX, MouseEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes, useCallback } from 'react';
+import { CSSProperties, forwardRef, ForwardRefExoticComponent, JSX, MouseEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes, useCallback, useState } from 'react';
 
 import { boxLayoutToStyle } from './dom';
 import { getRenderMode, pointerEventsFromEventMode, resolveEventMode, wrapTextChildren } from './utils';
@@ -49,8 +49,27 @@ const attachDefaultHitArea = (node: Container) => {
     };
 };
 
+/**
+ * @pixi/layout only implements `overflow: 'hidden'` / `'scroll'` clipping on its own specialised
+ * `LayoutContainer`, never on the plain `pixiContainer` a Box wraps (confirmed in its source -
+ * see utils/ScrollViewport.tsx, which worked around it for the scrollers). A CSS box clips, so
+ * the Pixi Box does too: a rectangle Graphics that fills the box through the same fill-stretch
+ * layout every background layer uses is added as the box's own child and assigned as its mask -
+ * the child (not sibling) relationship is what pixi.js's mask bounds walk requires.
+ */
+const clipsOverflow = (layout: BoxProps['layout']): boolean => {
+    if (!layout || typeof layout !== 'object') return false;
+
+    const overflow = layout.overflow;
+
+    return overflow === 'hidden' || overflow === 'scroll';
+};
+
 const BoxPixi = forwardRef<Container, BoxProps>(
-    ({ children, eventMode, cursor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap, ...props }, ref) => {
+    ({ children, eventMode, cursor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap, mask, ...props }, ref) => {
+        const [ overflowMask, setOverflowMask ] = useState<Graphics | null>(null);
+        const clips = clipsOverflow(props.layout);
+
         const setRef = useCallback((node: Container | null) => {
             if (node) attachDefaultHitArea(node);
 
@@ -74,8 +93,18 @@ const BoxPixi = forwardRef<Container, BoxProps>(
                 onPointerUp={onPointerUp}
                 onPointerUpOutside={onPointerUpOutside}
                 onPointerTap={onPointerTap}
+                mask={mask ?? (clips ? (overflowMask ?? undefined) : undefined)}
                 {...props}
             >
+                {clips && !mask && (
+                    <pixiGraphics
+                        ref={setOverflowMask}
+                        eventMode="none"
+                        roundPixels
+                        layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+                        draw={(g: Graphics) => { g.clear().rect(0, 0, 1, 1).fill(0xffffff); }}
+                    />
+                )}
                 {wrapTextChildren(children as ReactNode)}
             </pixiContainer>
         );

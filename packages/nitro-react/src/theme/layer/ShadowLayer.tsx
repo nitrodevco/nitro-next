@@ -1,20 +1,35 @@
 import { Texture } from 'pixi.js';
 
+import { getOrBuildTexture, usePixiEffectTexture } from '../hooks/usePixiTexture';
+import { useThemeImageUrl } from '../hooks/useThemeImageUrl';
+import { boxBlurAlpha } from '../utils/boxBlur';
 import { getRenderMode } from '../utils/renderMode';
+import { ThemeSliceEffect } from '../utils/themeSprites';
 import { DropShadowConfig } from '../utils/ThemeVariant';
+import { BackgroundLayerConfig } from './BackgroundLayer';
 
 /**
- * A baked drop shadow: a Gaussian falloff around a rectangle, rendered once per
- * `(blur, color, alpha)` into a small canvas and stretched as a nine-slice behind the host box.
- * Replaces the `DropShadowFilter` frames and regions used to carry - a filter re-renders its
- * whole subject into pooled offscreen textures (bounds-sized, plus blur passes) every frame,
- * which for a window-sized frame was the single largest GPU allocation the UI made. This is
- * one batched nine-slice draw. The trade: the shadow follows the box's rectangle (with soft,
- * rounded falloff at the corners) rather than the art's exact alpha shape.
+ * A layout's `<DropShadowFilter>` (`flash.filters.DropShadowFilter`), baked instead of
+ * filtered: a Pixi `DropShadowFilter` re-renders its whole subject into offscreen textures
+ * every frame, which for a window-sized frame was the single largest GPU allocation the UI
+ * made. Two bakes, one draw each:
  *
- * DOM draws the same shape with `box-shadow`.
+ * - Given the host's nine-slice skin (`layer`), the shadow is that skin's own silhouette,
+ *   blurred and offset, drawn as a nine-slice through the same slicing - so it follows the
+ *   art's rounded corners exactly like the filter did (the corners are in the corner slices,
+ *   the straight runs stretch). One recoloured slice per skin + shadow settings.
+ * - Without a skin (a region, a composite), the shadow is of the box's rectangle.
+ *
+ * Flash's defaults apply where the layout left an attribute out (`WindowParser`): no offset,
+ * 45 degrees, black, opaque, no blur. The blur is Flash's `quality = 1` box blur, `blur` px
+ * wide - see utils/boxBlur.ts.
  */
-const shadowTextures = new Map<string, { texture: Texture; pad: number }>();
+export type ShadowLayerProps = DropShadowConfig & {
+    /** The host's skin, when it has one - a nine-slice casts the shadow of its art. */
+    layer?: BackgroundLayerConfig;
+};
+
+const FLASH_DEFAULTS = { distance: 0, angle: 45, color: '#000000', alpha: 1, blur: 0 };
 
 const parseColor = (color: string): [number, number, number] => {
     const hex = color.replace('#', '');
@@ -23,88 +38,97 @@ const parseColor = (color: string): [number, number, number] => {
     return [ (value >> 16) & 255, (value >> 8) & 255, value & 255 ];
 };
 
-/**
- * The falloff is drawn pixel by pixel (no canvas `filter`, which isn't available everywhere):
- * every pixel's alpha is `alpha * exp(-d^2 / 2sigma^2)` with `d` its distance to the solid
- * 1px core in the middle, `sigma = blur`. The nine-slice's corners are the full `pad` so the
- * rounded falloff is preserved; the 1px core stretches into the shadow's body.
- */
-const shadowTexture = (blur: number, color: string, alpha: number): { texture: Texture; pad: number } | undefined => {
-    const key = `${blur}|${color}|${alpha}`;
-    const cached = shadowTextures.get(key);
-
-    if (cached) return cached;
-
-    const pad = Math.max(1, Math.ceil(blur * 2.5));
-    const size = pad * 2 + 1;
-    const canvas = document.createElement('canvas');
-
-    canvas.width = size;
-    canvas.height = size;
-
-    const ctx = canvas.getContext('2d');
-
-    if (!ctx) return undefined;
-
-    const [ r, g, b ] = parseColor(color);
-    const image = ctx.createImageData(size, size);
-    const sigma = Math.max(0.5, blur);
-
-    for (let y = 0; y < size; y++) {
-        for (let x = 0; x < size; x++) {
-            const dx = Math.max(0, pad - x, x - pad);
-            const dy = Math.max(0, pad - y, y - pad);
-            const falloff = blur > 0 ? Math.exp(-(dx * dx + dy * dy) / (2 * sigma * sigma)) : (dx === 0 && dy === 0 ? 1 : 0);
-            const index = (y * size + x) * 4;
-
-            image.data[index] = r;
-            image.data[index + 1] = g;
-            image.data[index + 2] = b;
-            image.data[index + 3] = Math.round(255 * alpha * falloff);
-        }
-    }
-
-    ctx.putImageData(image, 0, 0);
-
-    const texture = Texture.from(canvas);
-
-    texture.source.scaleMode = 'linear';
-    texture.label = `shadow ${key}`;
-
-    const entry = { texture, pad };
-
-    shadowTextures.set(key, entry);
-
-    return entry;
-};
-
-const offsetOf = ({ distance = 4, angle = 45 }: DropShadowConfig): { x: number; y: number } => {
+const offsetOf = (distance: number, angle: number): { x: number; y: number } => {
     const radians = (angle * Math.PI) / 180;
 
     return { x: Math.round(Math.cos(radians) * distance), y: Math.round(Math.sin(radians) * distance) };
 };
 
-const ShadowLayerPixi = ({ distance, angle, color = '#000000', alpha = 0.35, blur = 4 }: DropShadowConfig) => {
-    const shadow = shadowTexture(blur, color, alpha);
+/** How far the blur reaches past an edge: half the window, and at least a pixel of transparent margin. */
+const blurPad = (blur: number): number => Math.max(1, Math.ceil(blur / 2));
 
-    if (!shadow) return null;
+/**
+ * The shadow of a rectangle as a nine-slice: a solid core `2 * pad + 1` wide, blurred on a
+ * canvas padded `pad` more each side, so a `2 * pad` corner holds the whole edge falloff (the
+ * `pad` outside the rectangle and the `pad` inside it) and the 1px middle stretches. One per
+ * blur + colour + alpha, kept in the `AssetManager`.
+ */
+const rectShadowTexture = (blur: number, color: string, alpha: number): { texture: Texture; pad: number } | undefined => {
+    const pad = blurPad(blur);
+    const texture = getOrBuildTexture(`shadow:rect:${blur}|${color}|${alpha}`, () => {
+        const core = (pad * 2) + 1;
+        const size = core + (pad * 2);
+        const canvas = document.createElement('canvas');
 
-    const { x, y } = offsetOf({ distance, angle });
-    const { texture, pad } = shadow;
+        canvas.width = size;
+        canvas.height = size;
 
-    // The host container is what the insets size (a Yoga leaf keeps its intrinsic texture size
-    // when only insets are given); the nine-slice then fills it.
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) return undefined;
+
+        const [ r, g, b ] = parseColor(color);
+        const image = ctx.createImageData(size, size);
+
+        for (let y = pad; y < pad + core; y++) {
+            for (let x = pad; x < pad + core; x++) {
+                const index = ((y * size) + x) * 4;
+
+                image.data[index + 3] = Math.round(255 * alpha);
+            }
+        }
+
+        for (let i = 0; i < image.data.length; i += 4) {
+            image.data[i] = r;
+            image.data[i + 1] = g;
+            image.data[i + 2] = b;
+        }
+
+        boxBlurAlpha(image, blur, blur);
+        ctx.putImageData(image, 0, 0);
+
+        return canvas;
+    });
+
+    return texture ? { texture, pad } : undefined;
+};
+
+/** The box, grown by `pad` on every side and shifted by the offset - what both bakes fill. */
+const shadowBoxLayout = (x: number, y: number, pad: number) => ({ position: 'absolute' as const, left: x - pad, top: y - pad, right: -x - pad, bottom: -y - pad });
+
+interface ResolvedShadow {
+    x: number;
+    y: number;
+    color: string;
+    alpha: number;
+    blur: number;
+}
+
+const resolve = ({ distance = FLASH_DEFAULTS.distance, angle = FLASH_DEFAULTS.angle, color = FLASH_DEFAULTS.color, alpha = FLASH_DEFAULTS.alpha, blur = FLASH_DEFAULTS.blur }: DropShadowConfig): ResolvedShadow => (
+    { ...offsetOf(distance, angle), color, alpha, blur }
+);
+
+const skinEffect = ({ color, alpha, blur }: ResolvedShadow, pad: number): ThemeSliceEffect => ({ kind: 'shadow', color, alpha, blurX: blur, blurY: blur, pad });
+
+type NineSliceSkin = Extract<BackgroundLayerConfig, { kind: 'nineSlice' }>;
+
+const SkinShadowPixi = ({ skin, shadow }: { skin: NineSliceSkin; shadow: ResolvedShadow }) => {
+    const pad = Math.ceil(shadow.blur / 2);
+    const texture = usePixiEffectTexture(skin.textureKey, skinEffect(shadow, pad));
+
+    if (!texture) return null;
+
     return (
         <pixiContainer
             eventMode="none"
-            layout={{ position: 'absolute', left: x - pad, top: y - pad, right: -x - pad, bottom: -y - pad }}
+            layout={shadowBoxLayout(shadow.x, shadow.y, pad)}
         >
             <pixiNineSliceSprite
                 texture={texture}
-                leftWidth={pad}
-                topHeight={pad}
-                rightWidth={pad}
-                bottomHeight={pad}
+                leftWidth={skin.leftWidth + pad}
+                topHeight={skin.topHeight + pad}
+                rightWidth={skin.rightWidth + pad}
+                bottomHeight={skin.bottomHeight + pad}
                 eventMode="none"
                 layout={{ width: '100%', height: '100%' }}
             />
@@ -112,14 +136,91 @@ const ShadowLayerPixi = ({ distance, angle, color = '#000000', alpha = 0.35, blu
     );
 };
 
-const ShadowLayerDom = ({ distance, angle, color = '#000000', alpha = 0.35, blur = 4 }: DropShadowConfig) => {
-    const { x, y } = offsetOf({ distance, angle });
-    const [ r, g, b ] = parseColor(color);
+const SkinShadowDom = ({ skin, shadow }: { skin: NineSliceSkin; shadow: ResolvedShadow }) => {
+    const pad = Math.ceil(shadow.blur / 2);
+    const url = useThemeImageUrl(skin.textureKey, skinEffect(shadow, pad));
+
+    if (!url) return null;
+
+    const box = shadowBoxLayout(shadow.x, shadow.y, pad);
+    const width = `${skin.topHeight + pad}px ${skin.rightWidth + pad}px ${skin.bottomHeight + pad}px ${skin.leftWidth + pad}px`;
 
     return (
-        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', boxShadow: `${x}px ${y}px ${blur}px rgba(${r}, ${g}, ${b}, ${alpha})` }} />
+        <div style={{
+            position: 'absolute',
+            left: box.left,
+            top: box.top,
+            right: box.right,
+            bottom: box.bottom,
+            pointerEvents: 'none',
+            borderStyle: 'solid',
+            borderColor: 'transparent',
+            borderWidth: width,
+            borderImageSource: `url(${url})`,
+            borderImageSlice: `${skin.topHeight + pad} ${skin.rightWidth + pad} ${skin.bottomHeight + pad} ${skin.leftWidth + pad} fill`,
+            borderImageWidth: width,
+            imageRendering: 'pixelated',
+        }}
+        />
+    );
+};
+
+const RectShadowPixi = ({ shadow }: { shadow: ResolvedShadow }) => {
+    const baked = rectShadowTexture(shadow.blur, shadow.color, shadow.alpha);
+
+    if (!baked) return null;
+
+    const { texture, pad } = baked;
+
+    // The host container is what the insets size (a Yoga leaf keeps its intrinsic texture size
+    // when only insets are given); the nine-slice then fills it.
+    return (
+        <pixiContainer
+            eventMode="none"
+            layout={shadowBoxLayout(shadow.x, shadow.y, pad)}
+        >
+            <pixiNineSliceSprite
+                texture={texture}
+                leftWidth={pad * 2}
+                topHeight={pad * 2}
+                rightWidth={pad * 2}
+                bottomHeight={pad * 2}
+                eventMode="none"
+                layout={{ width: '100%', height: '100%' }}
+            />
+        </pixiContainer>
+    );
+};
+
+/** CSS `box-shadow`'s blur radius spreads about half as far as Flash's box window, hence the halving. */
+const RectShadowDom = ({ shadow }: { shadow: ResolvedShadow }) => {
+    const [ r, g, b ] = parseColor(shadow.color);
+
+    return (
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', boxShadow: `${shadow.x}px ${shadow.y}px ${shadow.blur / 2}px rgba(${r}, ${g}, ${b}, ${shadow.alpha})` }} />
     );
 };
 
 /** Render as the FIRST child of the box it shadows, so everything else draws over it. */
-export const ShadowLayer = (props: DropShadowConfig) => (getRenderMode() === 'dom' ? <ShadowLayerDom {...props} /> : <ShadowLayerPixi {...props} />);
+export const ShadowLayer = ({ layer, ...config }: ShadowLayerProps) => {
+    const shadow = resolve(config);
+    const dom = getRenderMode() === 'dom';
+
+    if (layer?.kind === 'nineSlice') {
+        return dom
+            ? (
+                    <SkinShadowDom
+                        skin={layer}
+                        shadow={shadow}
+                    />
+                )
+            : (
+                    <SkinShadowPixi
+                        skin={layer}
+                        shadow={shadow}
+                    />
+                );
+    }
+
+    return dom ? <RectShadowDom shadow={shadow} /> : <RectShadowPixi shadow={shadow} />;
+};

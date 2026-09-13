@@ -1,6 +1,10 @@
 import { Container, ExtractImageOptions, ExtractOptions, GenerateTextureOptions, ImageSource, Matrix, RenderTexture, Sprite, Texture } from 'pixi.js';
 
 import { GetRenderer } from './GetRenderer';
+import { TexturePool } from './TexturePool';
+
+/** The strength (`k = 8`) of the sharpen the Flash `AvatarImage` ran over a reduced-size render. */
+const REDUCED_TEXTURE_SHARPEN = 8;
 
 export class TextureUtils {
     public static generateTexture(options: GenerateTextureOptions | Container) {
@@ -164,6 +168,94 @@ export class TextureUtils {
         ctx.putImageData(imageData, 0, 0);
 
         return Texture.from(canvas);
+    }
+
+    /**
+     * A copy of `source` drawn at `scale`, the way the Flash `AvatarImage` reduced its renders:
+     * `BitmapData.draw` with smoothing (an area-averaged resample), then a 3x3 sharpen
+     * (`ConvolutionFilter(3, 3, [-0.08 x 8, 1.64], 1)`) with Flash's defaults - `preserveAlpha`
+     * (only RGB is sharpened, so a cut-out avatar gets no halo) and `clamp` (edge pixels sample
+     * themselves outward). Pixel art scaled down with nearest-neighbour sampling drops whole rows
+     * and columns and looks squashed; this keeps it legible and matches the SWF pixel for pixel.
+     *
+     * Done on a 2D canvas rather than as a GPU filter: a shader convolution runs on premultiplied
+     * RGBA (alpha gets sharpened too, fringing the edges) and its texel size drifts with the
+     * render target's resolution. The result is a pooled render texture the caller owns
+     * (`TexturePool.releaseTexture` when done).
+     */
+    public static createReducedTexture(source: Texture, scale: number): RenderTexture | undefined {
+        const width = Math.max(1, Math.ceil(source.width * scale));
+        const height = Math.max(1, Math.ceil(source.height * scale));
+        const sourceCanvas = this.generateCanvas(source) as HTMLCanvasElement;
+        const canvas = document.createElement('canvas');
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) return undefined;
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(sourceCanvas, 0, 0, width, height);
+
+        const image = ctx.getImageData(0, 0, width, height);
+
+        ctx.putImageData(this.sharpen(image), 0, 0);
+
+        const texture = TexturePool.createRenderTexture(width, height);
+
+        if (!texture) return undefined;
+
+        // A one-off upload: skip Pixi's global `Cache`, which would otherwise register the canvas.
+        const upload = new Sprite(Texture.from(canvas, true));
+
+        this.getRenderer().render({
+            target: texture,
+            container: upload,
+            clear: true,
+        });
+
+        upload.destroy({ texture: true, textureSource: true });
+
+        return texture;
+    }
+
+    /** The Flash `AvatarImage` sharpen: 3x3 kernel, divisor 1, alpha preserved, edges clamped. */
+    private static sharpen(image: ImageData): ImageData {
+        const { width, height, data } = image;
+        const edge = REDUCED_TEXTURE_SHARPEN / -100;
+        const center = (edge * -8) + 1;
+        const output = new ImageData(width, height);
+        const out = output.data;
+
+        const sample = (x: number, y: number, channel: number): number => {
+            const cx = x < 0 ? 0 : (x >= width ? width - 1 : x);
+            const cy = y < 0 ? 0 : (y >= height ? height - 1 : y);
+
+            return data[(((cy * width) + cx) * 4) + channel];
+        };
+
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                const index = ((y * width) + x) * 4;
+
+                for (let channel = 0; channel < 3; channel++) {
+                    let value = sample(x, y, channel) * center;
+
+                    value += (sample(x - 1, y - 1, channel) + sample(x, y - 1, channel) + sample(x + 1, y - 1, channel)) * edge;
+                    value += (sample(x - 1, y, channel) + sample(x + 1, y, channel)) * edge;
+                    value += (sample(x - 1, y + 1, channel) + sample(x, y + 1, channel) + sample(x + 1, y + 1, channel)) * edge;
+
+                    out[index + channel] = value < 0 ? 0 : (value > 255 ? 255 : Math.round(value));
+                }
+
+                out[index + 3] = data[index + 3];
+            }
+        }
+
+        return output;
     }
 
     public static getPixels(options: ExtractOptions | Container | Texture) {

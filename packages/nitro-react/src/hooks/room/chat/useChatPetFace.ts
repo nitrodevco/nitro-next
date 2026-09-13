@@ -1,5 +1,5 @@
 import { RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
-import { PetFigureData } from '@nitrodevco/nitro-renderer';
+import { GetAssetManager, GetRoomContentLoader, GetRoomEngine, PetFigureData } from '@nitrodevco/nitro-renderer';
 import { Texture } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
@@ -12,8 +12,57 @@ export interface ChatPetFace {
 }
 
 const EMPTY: ChatPetFace = { texture: undefined, color: undefined };
+
+/** Bounds the faces kept - the least recently shown pet is dropped past this many. */
+const MAX_CACHED_FACES = 64;
+
+/** Insertion order doubles as recency: a hit re-inserts, an insert past the cap evicts the first entry. */
 const cache = new Map<string, Texture>();
 const pending = new Map<string, Promise<Texture | undefined>>();
+
+const faceKey = (cacheKey: string): string => `chat:pet:${cacheKey}`;
+
+const evictFace = (cacheKey: string) => {
+    const texture = cache.get(cacheKey);
+
+    if (!texture) return;
+
+    cache.delete(cacheKey);
+    GetAssetManager().removeTexture(faceKey(cacheKey));
+    texture.destroy(true);
+};
+
+const storeFace = (cacheKey: string, texture: Texture) => {
+    GetAssetManager().setTexture(faceKey(cacheKey), texture);
+    cache.set(cacheKey, texture);
+
+    while (cache.size > MAX_CACHED_FACES) {
+        const oldest = cache.keys().next().value;
+
+        if (oldest === undefined) break;
+
+        evictFace(oldest);
+    }
+};
+
+/**
+ * The engine's pet render as the texture it drew into (`getGenericRoomObjectTexture`) - the
+ * `getRoomObjectPetImage` route would read that texture back as a base64 `<img>` and upload
+ * it a second time. The `type`/`value` pair is what `Room.getRoomObjectPetImageArgs` builds.
+ */
+const renderPetFace = (figureData: PetFigureData, posture: string | undefined): Promise<Texture | undefined> => {
+    const type = GetRoomContentLoader().getPetNameForType(figureData.typeId);
+
+    if (!type) return Promise.resolve(undefined);
+
+    let value = `${figureData.typeId} ${figureData.paletteId} ${figureData.color.toString(16)}`;
+
+    value = `${value} ${figureData.customParts.length}`;
+
+    for (const part of figureData.customParts) value = `${value} ${part.layerId} ${part.partId} ${part.paletteId}`;
+
+    return GetRoomEngine().getGenericRoomObjectTexture(type, value, new Vector3d(2 * 45), RoomGeometryScaleType.ZoomedOut, undefined, 0, undefined, 0, 0, posture ?? '');
+};
 
 /** `ChatBubbleFactory._Str_2641`: the whole pet at the zoomed-out (32px) scale, facing direction 2 - async through the room engine. */
 export const useChatPetFace = (figure: string | undefined, posture: string | undefined): ChatPetFace => {
@@ -33,6 +82,8 @@ export const useChatPetFace = (figure: string | undefined, posture: string | und
         const cached = cache.get(cacheKey);
 
         if (cached) {
+            cache.delete(cacheKey);
+            cache.set(cacheKey, cached);
             setFace({ texture: cached, color: figureData.color });
 
             return;
@@ -42,15 +93,13 @@ export const useChatPetFace = (figure: string | undefined, posture: string | und
         let promise = pending.get(cacheKey);
 
         if (!promise) {
-            promise = room.getRoomObjectPetImage(figureData.typeId, figureData.paletteId, figureData.color, new Vector3d(2 * 45), RoomGeometryScaleType.ZoomedOut, false, figureData.customParts, posture).then((image) => {
+            promise = renderPetFace(figureData, posture).then((texture) => {
                 pending.delete(cacheKey);
 
-                if (!image) return undefined;
-
-                const texture = Texture.from(image);
+                if (!texture) return undefined;
 
                 texture.source.scaleMode = 'nearest';
-                cache.set(cacheKey, texture);
+                storeFace(cacheKey, texture);
 
                 return texture;
             });

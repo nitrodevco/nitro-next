@@ -1,6 +1,5 @@
 import { AvatarActionStateType, AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActiveActionData, IAnimationLayerData, IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, ISpriteDataContainer } from '@nitrodevco/nitro-api';
 import { ColorMatrixFilter, Container, Filter, ImageLike, RenderTexture, Sprite, Texture } from 'pixi.js';
-import { ConvolutionFilter } from 'pixi-filters';
 
 import { GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
 
@@ -22,8 +21,6 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     private static DEFAULT_DIRECTION: number = 2;
     private static DEFAULT_AVATAR_SET: string = AvatarSetType.Full;
     private static MAX_IMAGE_CACHE: number = 5;
-    /** The strength (`k = 8`) of the Flash `AvatarImage` sharpen applied to reduced-size renders. */
-    private static REDUCED_IMAGE_SHARPEN: number = 8;
 
     protected _structure: AvatarStructure;
     protected _assets: AssetAliasCollection;
@@ -318,40 +315,10 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         if (scale === 1) return fullTexture;
 
-        // Flash drew the reduced copy with `smoothing = true` and then ran a 3x3 sharpen over it
-        // (`ConvolutionFilter(3, 3, [-0.08 x 8, 1.64], 1)`) - a plain nearest-neighbour half-size
-        // render drops every other row of a pixel-art head and looks squashed.
-        const width = Math.max(1, Math.ceil(fullWidth * scale));
-        const height = Math.max(1, Math.ceil(fullHeight * scale));
-        const texture = TexturePool.createRenderTexture(width, height);
+        // Flash drew the reduced copy with `smoothing = true` and then sharpened it - a plain
+        // nearest-neighbour half-size render drops every other row of a pixel-art head.
+        const texture = TextureUtils.createReducedTexture(fullTexture, scale);
 
-        if (!texture) {
-            TexturePool.releaseTexture(fullTexture);
-
-            return undefined;
-        }
-
-        fullTexture.source.scaleMode = 'linear';
-
-        const edge = AvatarImage.REDUCED_IMAGE_SHARPEN / -100;
-        const sharpen = new ConvolutionFilter({
-            matrix: [ edge, edge, edge, edge, (edge * -8) + 1, edge, edge, edge, edge ],
-            width,
-            height,
-        });
-        const reduced = new Sprite(fullTexture);
-
-        reduced.scale.set(scale);
-        reduced.filters = [ sharpen ];
-
-        TextureUtils.getRenderer().render({
-            target: texture,
-            container: reduced,
-            clear: true,
-        });
-
-        reduced.destroy();
-        sharpen.destroy();
         TexturePool.releaseTexture(fullTexture);
 
         return texture;

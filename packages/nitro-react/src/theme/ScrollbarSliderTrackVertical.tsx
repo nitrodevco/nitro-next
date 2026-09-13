@@ -60,11 +60,11 @@ export interface ScrollbarSliderTrackVerticalProps extends ThemeProps<ScrollbarS
 
 export const ScrollbarSliderTrackVertical: ForwardRefExoticComponent<ScrollbarSliderTrackVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderTrackVerticalProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, children,
+        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, disabled, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled,
+            cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

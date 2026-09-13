@@ -14,7 +14,7 @@ export type CatalogViewWindowParams = { pageId?: number; pageName?: string; offe
 export const CatalogView = () => {
     const { rootNode, activeNodes } = useCatalogSelectors();
     const { activateNode } = useCatalogNavigation();
-    const { hideCatalog } = useCatalogVisibility();
+    const { hide } = useCatalogVisibility();
     const t = useTranslation();
 
     if (!rootNode) return null;
@@ -27,7 +27,7 @@ export const CatalogView = () => {
                 variant="3"
                 layout={{ position: 'absolute', top: 20, left: 20, width: 570, height: 635 }}
                 caption={t('catalog.title')}
-                onClose={hideCatalog}
+                onClose={hide}
             >
                 <TabContext
                     variant="3"

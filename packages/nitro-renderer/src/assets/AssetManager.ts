@@ -22,6 +22,10 @@ export class AssetManager implements IAssetManager {
         this._textures.set(name, texture);
     }
 
+    public removeTexture(name: string): void {
+        this._textures.delete(name);
+    }
+
     public getAsset(name: string): IGraphicAsset | undefined {
         if (!name || !name.length) return undefined;
 

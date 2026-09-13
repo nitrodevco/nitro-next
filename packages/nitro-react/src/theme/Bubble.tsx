@@ -28,17 +28,20 @@ const BUBBLE_VARIANTS: ThemeVariants<BubbleVariant> = {
 export interface BubbleProps extends ThemeProps<BubbleVariant> {
     usePointer?: boolean;
     pointer?: PointerDirection;
+    /** The Flash window `blend`: a bubble draws into its own graphic context, so this is the opacity of the whole bubble, children included. */
+    alpha?: number;
     children?: ReactNode;
 }
 
 export const Bubble: ForwardRefExoticComponent<BubbleProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubbleProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, usePointer = true, pointer = 'down', children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, usePointer = true, pointer = 'down', alpha, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<BubbleVariant>({
-            cascadeKey: 'bubble', variants: BUBBLE_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'bubble', variants: BUBBLE_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         return (
             <Box
+                alpha={alpha}
                 layout={{ flexDirection: POINTER_FLEX_DIRECTION[pointer], alignItems: 'center' }}
                 {...handlers}
             >

@@ -13,11 +13,11 @@ export const useCatalogMessages = () => {
     const { showCatalogPage, selectOffer } = useCatalogNavigation();
     const { setRootNode, setOffersToNodes, setFrontPageItems, setIsBusy, resetCatalog } = useCatalogActions();
     const { processOffer } = useCatalogOfferActions();
-    const { hideCatalog } = useCatalogVisibility();
+    const { hide } = useCatalogVisibility();
 
     useMessageListener(CatalogPublishedMessage, (data) => {
         resetCatalog();
-        hideCatalog();
+        hide();
 
         // alert catalog.alert.published.description
     });

@@ -18,6 +18,10 @@ export interface TruffleTextDomProps {
     lineHeight?: number;
     /** Where the rendered text sits inside a box larger than it (`object-position` keywords). */
     objectPosition?: string;
+    alpha?: number;
+    /** A pixel nudge on top of the layout position (a dynamic style's `offsetX`/`offsetY`). */
+    x?: number;
+    y?: number;
 }
 
 /**
@@ -54,7 +58,7 @@ const replacedBoxSize = (style: CSSProperties, buffer: { width: number; height: 
     return { width: span(style.width, style.left, style.right, buffer.width), height: span(style.height, style.top, style.bottom, buffer.height) };
 };
 
-export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth, visible, objectPosition, lineHeight }: TruffleTextDomProps) => {
+export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, wordWrap, wordWrapWidth, visible, objectPosition, lineHeight, alpha, x, y }: TruffleTextDomProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const options = useMemo(() => ({
         wordWrap,
@@ -131,6 +135,8 @@ export const TruffleTextDom = ({ habboKey, text, color, dropShadow, layout, word
                 objectFit: 'none',
                 objectPosition: objectPosition ?? 'left center',
                 imageRendering: 'pixelated',
+                opacity: alpha,
+                transform: (x || y) ? `translate(${x ?? 0}px, ${y ?? 0}px)` : undefined,
             }}
         />
     );

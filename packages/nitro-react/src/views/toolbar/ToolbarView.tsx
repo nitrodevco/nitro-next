@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import { AvatarImage } from '#base/components';
-import { useOwnUserFigure, useOwnUserGender, useSystemActions } from '#base/context';
-import { Border, Box, Icon, NitroIcon, ThemeImage } from '#base/theme';
+import { useIsLandingViewVisible, useOwnUserFigure, useOwnUserGender, useSystemActions, useTranslation } from '#base/context';
+import { Border, Box, Icon, Region, ThemeImage } from '#base/theme';
 
 import { layoutImage } from '../layouts/layoutAssets';
-import { ToolbarMeMenuPixi } from './ToolbarMeMenuPixi';
+import { ToolbarExtendedMenu } from './ToolbarExtendedMenu';
 import { ToolbarProgressionMenuPixi } from './ToolbarProgressionMenuPixi';
 
 export const ToolbarView = () => {
@@ -16,6 +16,8 @@ export const ToolbarView = () => {
     const ownFigure = useOwnUserFigure();
     const ownGender = useOwnUserGender();
     const { toggleWindow } = useSystemActions();
+    const landingViewVisible = useIsLandingViewVisible();
+    const t = useTranslation();
 
     const toggleMenu = (menu: 'me' | 'progression') => {
         setMeExpanded(menu === 'me' && !isMeExpanded);
@@ -24,9 +26,7 @@ export const ToolbarView = () => {
 
     return (
         <>
-            {isMeExpanded && <ToolbarMeMenuPixi onSelect={() => setMeExpanded(false)} />}
-            {isProgressionExpanded && <ToolbarProgressionMenuPixi />}
-            <Box layout={{
+            <Region layout={{
                 position: 'absolute', bottom: 0, left: 0, right: 0, width: '100%', height: 54,
             }}
             >
@@ -35,66 +35,133 @@ export const ToolbarView = () => {
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: -10, right: -10, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 10 }}
                 >
-                    <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
+                    <Region layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
                         <ThemeImage
                             src={leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png'}
                             width={14}
                             height={43}
-                            cursor="pointer"
                             onPointerTap={() => setLeftSideCollapsed(prev => !prev)}
                         />
+                        {!leftSideCollapsed && !landingViewVisible && (
+                            <Region
+                                dynamicStyle="lifted_hover"
+                                tooltip={t('toolbar.icon.tooltip.exitroom.hotelview')}
+                            >
+                                <ThemeImage
+                                    dynamicRole="icon"
+                                    src={layoutImage('bottom_bar_logo.png')}
+                                />
+                            </Region>
+                        ) }
+                        {!leftSideCollapsed && landingViewVisible && (
+                            <Region
+                                dynamicStyle="lifted_hover"
+                                tooltip={t('toolbar.icon.tooltip.exitroom.home')}
+                            >
+                                <ThemeImage
+                                    dynamicRole="icon"
+                                    src={layoutImage('bottom_bar_home.png')}
+                                />
+                            </Region>
+                        ) }
                         {!leftSideCollapsed && (
-                            <ThemeImage src={layoutImage('bottom_bar_logo.png')} />
-                        )}
-                        {!leftSideCollapsed && (
-                            <ThemeImage src={layoutImage('bottom_bar_home.png')} />
-                        )}
-                        {!leftSideCollapsed && (
-                            <ThemeImage
+                            <Region
+                                dynamicStyle="lifted_hover"
                                 onPointerTap={() => toggleWindow('navigator')}
-                                src={layoutImage('bottom_bar_navigator.png')}
-                            />
+                                tooltip={t('toolbar.icon.label.navigator')}
+                            >
+                                <ThemeImage
+                                    dynamicRole="icon"
+                                    src={layoutImage('bottom_bar_navigator.png')}
+                                />
+                            </Region>
                         )}
                         {!leftSideCollapsed && (
-                            <ThemeImage
-                                onPointerTap={() => toggleMenu('progression')}
-                                src={layoutImage('bottom_bar_progression.png')}
-                            />
+                            <Region
+                                dynamicStyle="lifted_hover"
+                                tooltip={t('toolbar.icon.label.progression')}
+                            >
+                                <ThemeImage
+                                    dynamicRole="icon"
+                                    src={layoutImage('bottom_bar_progression.png')}
+                                />
+                            </Region>
                         )}
-                        <ThemeImage
+                        <Region
+                            dynamicStyle="lifted_hover"
                             onPointerTap={() => toggleWindow('catalog')}
-                            src={layoutImage('bottom_bar_shop.png')}
-                        />
-                        <ThemeImage src={layoutImage('bottom_bar_buildersclub.png')} />
-                        <ThemeImage
+                            tooltip={t('toolbar.icon.label.catalogue')}
+                        >
+                            <ThemeImage
+                                dynamicRole="icon"
+                                src={layoutImage('bottom_bar_shop.png')}
+                            />
+                        </Region>
+                        <Region
+                            dynamicStyle="lifted_hover"
+                            tooltip={t('toolbar.icon.label.builder')}
+                        >
+                            <ThemeImage
+                                dynamicRole="icon"
+                                src={layoutImage('bottom_bar_buildersclub.png')}
+                            />
+                        </Region>
+                        <Region
+                            dynamicStyle="lifted_hover"
                             onPointerTap={() => toggleWindow('inventory')}
-                            src={layoutImage('bottom_bar_inventory.png')}
-                        />
-                        <Box
-                            cursor="pointer"
+                            tooltip={t('toolbar.icon.label.inventory')}
+                        >
+                            <ThemeImage
+                                dynamicRole="icon"
+                                src={layoutImage('bottom_bar_inventory.png')}
+                            />
+                        </Region>
+                        <Region
+                            dynamicStyle="lifted_hover"
                             onPointerTap={() => toggleMenu('me')}
-                            layout={{ width: 45, height: 45, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}
+                            tooltip={t('toolbar.icon.label.memenu')}
+                            layout={{ width: 45, height: 45, justifyContent: 'center', alignItems: 'center' }}
                         >
                             <ThemeImage
                                 src={layoutImage('bottom_bar_memenu_bg.png')}
                                 layout={{ position: 'absolute', left: 0, width: 45, height: 45 }}
                             />
-                            <AvatarImage
-                                figure={ownFigure}
-                                gender={ownGender}
-                                direction={3}
-                                headOnly
-                                layout={{ marginTop: 20, marginLeft: -0.5 }}
-                            />
-                            {/* The head render keeps its own size; the 45x45 box centres it, shifts it up
-                                (the Flash `center -8px` background position) and clips the rest. */}
+                            <Region
+                                dynamicRole="icon"
+                                layout={{ position: 'absolute', width: 44, height: 41, justifyContent: 'center', overflow: 'hidden' }}
+                            >
+                                <AvatarImage
+                                    figure={ownFigure}
+                                    gender={ownGender}
+                                    direction={3}
+                                    headOnly
+                                    layout={{ marginTop: -34, marginLeft: -1 }}
+                                />
+                            </Region>
                             <ThemeImage
                                 src={layoutImage('bottom_bar_memenu_circle.png')}
                                 layout={{ position: 'absolute', left: 0, width: 45, height: 45 }}
                             />
-                        </Box>
-                        <ThemeImage src={layoutImage('bottom_bar_wired_menu.png')} />
-                        <ThemeImage src={layoutImage('bottom_bar_camera.png')} />
+                        </Region>
+                        <Region
+                            dynamicStyle="lifted_hover"
+                            tooltip={t('toolbar.icon.label.wired_menu')}
+                        >
+                            <ThemeImage
+                                dynamicRole="icon"
+                                src={layoutImage('bottom_bar_wired_menu.png')}
+                            />
+                        </Region>
+                        <Region
+                            dynamicStyle="lifted_hover"
+                            tooltip={t('camera.interface.title')}
+                        >
+                            <ThemeImage
+                                dynamicRole="icon"
+                                src={layoutImage('bottom_bar_camera.png')}
+                            />
+                        </Region>
+
                         <Box
                             cursor="pointer"
                             onPointerTap={() => toggleWindow('layout_browser')}
@@ -107,33 +174,33 @@ export const ToolbarView = () => {
                             src={layoutImage('bottom_bar_divider_1px.png')}
                             layout={{ width: 1, height: 40 }}
                         />
-                    </Box>
-                    <Box layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
+                    </Region>
+                    <Region layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
                         <ThemeImage
                             name="line"
                             src={layoutImage('bottom_bar_divider_1px.png')}
                             layout={{ width: 1, height: 40 }}
                         />
-                        <Box
-                            cursor="pointer"
+                        <Region
+                            dynamicStyle="lifted_hover"
                             onPointerTap={() => toggleWindow('friendlist')}
-                            layout={{}}
+                            tooltip={t('friend.bar.friends.title')}
                         >
-                            <NitroIcon
-                                icon="icon-friendall"
-                                layout={{}}
+                            <ThemeImage
+                                dynamicRole="icon"
+                                src={layoutImage('friend_bar_all_friends.png')}
                             />
-                        </Box>
-                        <Box
-                            cursor="pointer"
+                        </Region>
+                        <Region
+                            dynamicStyle="lifted_hover"
                             onPointerTap={() => toggleWindow('friendlist', { tab: 'search' })}
-                            layout={{}}
+                            tooltip={t('friend.bar.search.title')}
                         >
-                            <NitroIcon
-                                icon="icon-friendsearch"
-                                layout={{}}
+                            <ThemeImage
+                                dynamicRole="icon"
+                                src={layoutImage('friend_bar_search_habbos.png')}
                             />
-                        </Box>
+                        </Region>
                         <ThemeImage
                             src={rightSideCollapsed ? '/assets/flash/toolbar/collapse_right_active.png' : '/assets/flash/toolbar/collapse_right.png'}
                             width={14}
@@ -141,9 +208,22 @@ export const ToolbarView = () => {
                             cursor="pointer"
                             onPointerTap={() => setRightSideCollapsed(prev => !prev)}
                         />
-                    </Box>
+                    </Region>
                 </Border>
-            </Box>
+            </Region>
+            {isMeExpanded && (
+                <ToolbarExtendedMenu
+                    buttons={[
+                        { icon: 'me_menu_me_profile', caption: t('widget.memenu.profile') },
+                        { icon: 'me_menu_me_rooms', caption: t('widget.memenu.myrooms') },
+                        { icon: 'me_menu_me_clothing', caption: t('widget.memenu.editavatar'), action: () => toggleWindow('avatar_editor') },
+                        { icon: 'me_menu_me_forums', caption: t('widget.memenu.forums') },
+                        { icon: 'me_menu_me_cabinet', caption: t('memenu.collectibles') },
+                    ]}
+                    onSelect={() => setMeExpanded(false)}
+                />
+            )}
+            {isProgressionExpanded && <ToolbarProgressionMenuPixi />}
         </>
     );
 };

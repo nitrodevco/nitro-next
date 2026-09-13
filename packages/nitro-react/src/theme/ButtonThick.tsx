@@ -3,6 +3,7 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
+import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
@@ -79,13 +80,14 @@ export interface ButtonThickProps extends ThemeProps<ButtonThickVariant> {
 
 export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonThickProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
+        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'buttonThick', variants: BUTTON_THICK_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
+        const { ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'buttonThick', variants: BUTTON_THICK_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled, selected, interactive: !!dynamicStyle,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+        const hostEffect = useHostDynamicStyleEffect(dynamicStyle, state);
 
         return (
             <Box
@@ -98,6 +100,7 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
                     ...config.layout,
                     ...layout,
                 }}
+                {...dynamicStyleBoxProps(hostEffect)}
                 {...handlers}
             >
                 {resolvedLayer && (
@@ -107,9 +110,14 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
                     />
                 )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                <VariantCascadeProvider map={ownCascade}>
-                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
-                </VariantCascadeProvider>
+                <DynamicStyleProvider
+                    name={dynamicStyle}
+                    state={state}
+                >
+                    <VariantCascadeProvider map={ownCascade}>
+                        {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                    </VariantCascadeProvider>
+                </DynamicStyleProvider>
             </Box>
         );
     },

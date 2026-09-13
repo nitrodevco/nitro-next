@@ -12,16 +12,7 @@ export interface ToolbarMenuProps {
     items: ToolbarMenuItem[];
 }
 
-/**
- * Shared shape behind theme/ToolbarMeMenu.tsx and theme/ToolbarProgressionMenu.tsx - both are
- * otherwise-identical DOM components (same `.toolbar-menu`/`.toolbar-menu-button` CSS, same
- * `border-image` popup chrome) that differ only in which icons/labels they list, so their Pixi
- * ports share this one render implementation. DOM's per-button grayscale-filter hover
- * transition (icons render grayscale by default, hover restores full color) and the menu's own
- * pop-in animation have no direct Pixi equivalent without a tween/filter system this package
- * doesn't otherwise use - dropped rather than half-built, flagged here rather than silently
- * skipped.
- */
+
 export const ToolbarMenu: ForwardRefExoticComponent<ToolbarMenuProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ToolbarMenuProps>(
     ({ items }, ref) => {
         const bgTexture = useTextureFromUrl('/assets/flash/toolbar/menu_bg.png');

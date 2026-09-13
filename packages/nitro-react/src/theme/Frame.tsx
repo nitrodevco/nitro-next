@@ -8,7 +8,7 @@ import { Header } from './Header';
 import { useFrameDrag, useFrameResize, useThemeVariant } from './hooks';
 import { BackgroundLayer, Composite, CompositePiece, NineSlice, ShadowLayer } from './layer';
 import { Scaler, ScalerDirection } from './Scaler';
-import { compose, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+import { compose, DropShadowConfig, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 export type FrameVariant = ThemeVariant;
 
@@ -135,22 +135,29 @@ const FRAME_VARIANTS: ThemeVariants<FrameVariant> = {
     },
 };
 
-export interface FrameProps extends ThemeProps<FrameVariant> {
+export interface FrameProps extends Omit<ThemeProps<FrameVariant>, 'dropShadow'> {
     id?: string;
     caption?: string;
     resizeDirection?: ScalerDirection;
     contentLayout?: BoxLayout;
+    /**
+     * The window's shadow. A Flash frame only has one when its layout gives it a
+     * `<DropShadowFilter>` (about half of them do, always `distance 4, alpha 0.35, blur 4`) -
+     * a layout port passes that filter, or `false` for a layout without one; a hand-written
+     * frame gets the variant's default.
+     */
+    dropShadow?: DropShadowConfig | false;
     onClose?: () => void;
     children?: ReactNode;
 }
 
 export const Frame = ({
-    variant, defaultVariant, layout, tintColor, textStyle, textColor, id, caption, resizeDirection = 'all', contentLayout, onClose, children,
+    variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, dropShadow, id, caption, resizeDirection = 'all', contentLayout, onClose, children,
     onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
 }: FrameProps) => {
     const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
     const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedShadow, resolvedTint } = useThemeVariant({
-        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown: compose(onPointerDown, onPointerDownProp), onPointerUp, onPointerUpOutside, onPointerTap,
+        cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, dropShadow, onPointerOver, onPointerOut, onPointerDown: compose(onPointerDown, onPointerDownProp), onPointerUp, onPointerUpOutside, onPointerTap,
     });
     const minWidth = layout?.minWidth ?? config.layout?.minWidth ?? 20;
     const minHeight = layout?.minHeight ?? config.layout?.minHeight ?? 20;
@@ -182,7 +189,12 @@ export const Frame = ({
                 ...(size && { width: size.width, height: size.height }),
             }}
         >
-            { resolvedShadow && <ShadowLayer {...resolvedShadow} /> }
+            { resolvedShadow && (
+                <ShadowLayer
+                    {...resolvedShadow}
+                    layer={resolvedLayer}
+                />
+            ) }
             { resolvedLayer && (
                 <BackgroundLayer
                     layer={resolvedLayer}

@@ -1,14 +1,15 @@
 import { IPartColor } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
-import { PartThumbnail } from '#base/hooks';
+import { PartThumbnailRequest, usePartThumbnail } from '#base/hooks';
 import { Box, getRenderMode, Region, ThemeImage } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 export interface AvatarEditorPartThumbProps {
     selected: boolean;
-    /** The part's sprite stack (see `usePartThumbnails`); undefined while its library loads. */
-    thumbnail?: PartThumbnail;
+    /** The part this cell shows - its thumbnail is requested (and its library downloaded) when the cell mounts. */
+    part: PartThumbnailRequest;
+    setType: string;
     /** The figure's selected colours - layer `n` of the thumbnail is tinted by `colors[n - 1]`. */
     colors: (IPartColor | undefined)[];
     usesColors: boolean;
@@ -21,8 +22,9 @@ export interface AvatarEditorPartThumbProps {
 
 const CELL = 50;
 
-export const AvatarEditorPartThumb = ({ selected, thumbnail, colors, usesColors, isClub, isSellable, isClear, disabled, selectPart }: AvatarEditorPartThumbProps) => {
+export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesColors, isClub, isSellable, isClear, disabled, selectPart }: AvatarEditorPartThumbProps) => {
     const [ isHovering, setIsHovering ] = useState<boolean>(false);
+    const thumbnail = usePartThumbnail(isClear ? undefined : part, setType);
     const isPixi = getRenderMode() !== 'dom';
 
     return (

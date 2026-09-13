@@ -3,6 +3,7 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
+import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
 import { BUTTON_100_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, buttonPlainVariant, ButtonVariant, classicButtonVariant, shinyButtonVariant, ThemeProps, ThemeVariants, wrapTextChildren } from './utils';
@@ -105,13 +106,15 @@ export interface ButtonProps extends ThemeProps<ButtonVariant> {
 
 export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
+        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
+        const { ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled, selected, interactive: !!dynamicStyle,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+        // A few layouts put a `dynamic_style` on a button too: its own rule (only the disabled fade) and its tagged children's.
+        const hostEffect = useHostDynamicStyleEffect(dynamicStyle, state);
 
         return (
             <Box
@@ -124,6 +127,7 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                     ...config.layout,
                     ...layout,
                 }}
+                {...dynamicStyleBoxProps(hostEffect)}
                 {...handlers}
             >
                 {resolvedLayer && (
@@ -133,9 +137,14 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                     />
                 )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                <VariantCascadeProvider map={ownCascade}>
-                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
-                </VariantCascadeProvider>
+                <DynamicStyleProvider
+                    name={dynamicStyle}
+                    state={state}
+                >
+                    <VariantCascadeProvider map={ownCascade}>
+                        {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                    </VariantCascadeProvider>
+                </DynamicStyleProvider>
             </Box>
         );
     },

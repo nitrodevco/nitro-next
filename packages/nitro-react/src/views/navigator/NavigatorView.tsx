@@ -2,8 +2,9 @@ import { ForwardToARandomPromotedRoomComposer, IRoomInfo, NavigatorAddCollapsedC
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
 import { useNavigatorVisibility } from '#base/hooks';
-import { Border, Box, Frame, NitroIcon, ScrollArea, TabButton, TabContent, TabContext, ThemeText } from '#base/theme';
+import { Border, Box, Frame, ScrollArea, TabButton, TabContent, TabContext, ThemeImage, ThemeText } from '#base/theme';
 
+import { layoutImage } from '../layouts/layoutAssets';
 import { NavigatorCategoryView } from './NavigatorCategoryView';
 import { NavigatorQuickLinksView } from './NavigatorQuickLinksView';
 import { NavigatorSearchView } from './NavigatorSearchView';
@@ -30,7 +31,7 @@ const PROMOTE_SEARCH_CODES = [ 'roomads_view', 'myworld_view' ];
 export const NavigatorView = () => {
     const { topLevelContexts, topLevelContext, searchResult, isSearching, leftPaneHidden, collapsedCategories, preferences } = useNavigatorSelectors();
     const { setTopLevelContext, setIsSearching, setLeftPaneHidden, toggleCollapsedCategory, setViewMode } = useNavigatorActions();
-    const { hideNavigator } = useNavigatorVisibility();
+    const { hide } = useNavigatorVisibility();
     const { send } = useWebSocketContext();
     const t = useTranslation();
 
@@ -48,7 +49,7 @@ export const NavigatorView = () => {
     const enterRoom = (room: IRoomInfo) => {
         send(new OpenFlatConnectionComposer({ roomId: room.roomId, password: '', unknown1: -1 }));
 
-        hideNavigator();
+        hide();
     };
 
     const addQuickLink = (searchCode: string) => {
@@ -84,7 +85,7 @@ export const NavigatorView = () => {
             layout={{ position: 'absolute', top: 20, left: 20, width: leftPaneHidden ? FRAME_WIDTH_COLLAPSED : FRAME_WIDTH_EXPANDED, height: preferences?.windowHeight ?? 628 }}
             resizeDirection="y"
             variant="3"
-            onClose={hideNavigator}
+            onClose={hide}
         >
             <Box layout={{ flexDirection: 'row', alignItems: 'center', flexShrink: 0 }}>
                 <Box
@@ -92,10 +93,7 @@ export const NavigatorView = () => {
                     onPointerTap={() => setLeftPaneHidden(!leftPaneHidden)}
                     layout={{ flexShrink: 0, marginLeft: 4 }}
                 >
-                    <NitroIcon
-                        icon="icon-nav-quicklink-add"
-                        layout={{}}
-                    />
+                    <ThemeImage src={layoutImage('newnavigator_button_quicklink_add.png')} />
                 </Box>
                 <TabContext
                     variant="3"
@@ -177,10 +175,7 @@ export const NavigatorView = () => {
                                 layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                             />
                             <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                <NitroIcon
-                                    icon="icon-nav-create-room"
-                                    layout={{}}
-                                />
+                                <ThemeImage src={layoutImage('newnavigator_create_room.png')} />
                             </Box>
                             <ThemeText
                                 layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
@@ -201,10 +196,7 @@ export const NavigatorView = () => {
                                             layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                                         />
                                         <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                            <NitroIcon
-                                                icon="icon-nav-promote-room"
-                                                layout={{}}
-                                            />
+                                            <ThemeImage src={layoutImage('newnavigator_promote_room.png')} />
                                         </Box>
                                         <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
@@ -219,7 +211,7 @@ export const NavigatorView = () => {
                                         cursor="pointer"
                                         onPointerTap={() => {
                                             send(new ForwardToARandomPromotedRoomComposer({ category: '' }));
-                                            hideNavigator();
+                                            hide();
                                         }}
                                         layout={{ position: 'relative', width: 189, height: 60 }}
                                     >
@@ -228,10 +220,7 @@ export const NavigatorView = () => {
                                             layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                                         />
                                         <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                            <NitroIcon
-                                                icon="icon-nav-random-room"
-                                                layout={{}}
-                                            />
+                                            <ThemeImage src={layoutImage('newnavigator_random_room.png')} />
                                         </Box>
                                         <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}

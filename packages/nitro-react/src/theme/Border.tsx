@@ -4,10 +4,15 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, Composite, CompositePiece, NineSlice, NineSliceBlendOverlay } from './layer';
-import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+import { BackgroundLayer, ColorLayer, Composite, CompositePiece, HsvNineSlice, NineSlice } from './layer';
+import { FillLayout, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
 
-export type BorderVariant = ThemeVariant;
+/**
+ * A border skin. `colorize: false` marks a skin whose every entity is `colorize="false"` in
+ * the client's skin XML - `BitmapSkinRenderer.draw` copies such pieces untinted, so the
+ * window's `color` has no effect on it and `tintColor` is ignored here too.
+ */
+export type BorderVariant = ThemeVariant & { colorize?: boolean };
 
 const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
     0: { layer: NineSlice('border-0-default-src', 6, 6, 6, 6) },
@@ -31,10 +36,14 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
     14: { layer: NineSlice('border-14-default-src', 10, 10, 10, 10) },
     // "recolorable round border" - the dark/mid/light HSV layers are pre-composed (see
     // scripts/extract-skin-assets.ts), the element's `color` tints the result.
-    15: { layer: NineSlice('border-15-default-src', 5, 5, 5, 5) },
-    16: { layer: NineSlice('border-16-default-src', 6, 6, 6, 6) },
-    100: { layer: NineSlice('border-100-default-src', 3, 3, 3, 3) },
+    // Recolourable (`hsv_layer`) borders: shade layers stacked and tinted per layer like the client.
+    15: { layer: HsvNineSlice('border-15-default', [ 0.2, 0.12, 0 ], 5, 5, 5, 5) },
+    16: { layer: HsvNineSlice('border-16-default', [ 0.5, 0.16, 0 ], 6, 6, 6, 6) },
+    // Illumina (`habbo_element_description`): `illumina_light_border` - every piece `colorize="false"`.
+    100: { layer: NineSlice('border-100-default-src', 3, 3, 3, 3), colorize: false },
+    // `illumina_light_frame` - every piece `colorize="false"`.
     101: {
+        colorize: false,
         layer: Composite([
             CompositePiece('border-101-default-top-left-src', 0, 0, undefined, undefined, 4, 4),
             CompositePiece('border-101-default-top-center-src', 0, 4, 4, undefined, undefined, 4),
@@ -47,7 +56,9 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             CompositePiece('border-101-default-bottom-right-src', undefined, undefined, 0, 0, 4, 7),
         ]),
     },
+    // `illumina_light_border_sunk` - every piece `colorize="false"`.
     102: {
+        colorize: false,
         layer: Composite([
             CompositePiece('border-102-default-top-left-src', 0, 0, undefined, undefined, 12, 14),
             CompositePiece('border-102-default-top-center-src', 0, 12, 6, undefined, undefined, 14),
@@ -69,6 +80,8 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             CompositePiece('border-103-default-bottom-right-src', undefined, undefined, 0, 0, 4, 12),
         ]),
     },
+    // `illumina_light_border_raised` / `_input` (104/105): the `background_*` pieces colorize,
+    // the `border_*` ring is `colorize="false"` - which is why the ring is an untinted overlay.
     104: {
         layer: NineSlice('border-104-default-src', 7, 7, 7, 7),
         overlay: Composite([
@@ -86,7 +99,9 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
         layer: NineSlice('border-105-default-src', 5, 5, 5, 5),
         overlay: NineSlice('border-105-default-shine-src', 5, 5, 5, 5),
     },
+    // `illumina_light_border_chat_bubble` - every piece `colorize="false"`.
     106: {
+        colorize: false,
         layer: Composite([
             CompositePiece('border-106-default-top-left-src', 0, 0, undefined, undefined, 4, 5),
             CompositePiece('border-106-default-top-center-src', 0, 4, 4, undefined, undefined, 5),
@@ -110,20 +125,67 @@ const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
             CompositePiece('border-107-default-background-bottom-right-src', undefined, undefined, 0, 0, 5, 5),
         ]),
     },
+    // `illumina_light_border_infobox` colorizes, with the element description's default `color="0x676767"`.
     108: { layer: NineSlice('border-108-default-src', 3, 3, 3, 3), tintColor: '#676767' },
-    200: { layer: NineSlice('border-200-default-src', 3, 3, 3, 3) },
+    // `illumina_dark_border` - every piece `colorize="false"`.
+    200: { layer: NineSlice('border-200-default-src', 3, 3, 3, 3), colorize: false },
 };
 
 export interface BorderProps extends ThemeProps<BorderVariant> {
+    /**
+     * The Flash window `blend`: the opacity the skin is composited at, over whatever lies
+     * behind the border. `WindowRendererItem.render` draws the skin buffer into the parent's
+     * bitmap with `ColorTransform.alphaMultiplier = blend` - a border at `blend="0.3"` is 30%
+     * skin, 70% of the parent's own background, which is why it reads lighter than the skin's
+     * colour on a light window. Children are not dimmed: nearly every layout border uses the
+     * parent graphic context (`params` bit 16), where each child window composites itself with
+     * its own blend.
+     */
     blend?: number;
+    /**
+     * A fill behind the skin. `WindowRendererItem` creates the skin buffer filled with the
+     * window's `color` *including its alpha byte* - most layout colours have none
+     * (`0x0666666`) and the fill is invisible, but a `0xffa1a19b` (the catalogue's item
+     * highlight borders) paints an opaque square under the skin that shows through its
+     * transparent corners. `backgroundAlpha` is that byte, when it isn't `ff`.
+     */
+    backgroundColor?: string;
+    backgroundAlpha?: number;
     children?: ReactNode;
 }
 
+/**
+ * Tint and blend follow `BitmapSkinRenderer.draw` / `WindowRendererItem.render`: `tintColor`
+ * is the window `color`, a straight RGB multiply applied to each `colorize` skin entity (a
+ * sprite `tint`); `blend` is the alpha the finished skin is composited at (see `BorderProps`).
+ * Neither pre-darkens or washes the artwork - what shows through a translucent border is the
+ * parent, not white.
+ */
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, blend, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, blend, backgroundColor, backgroundAlpha, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+        const skinTint = (config.colorize === false) ? undefined : resolvedTint;
+
+        // The fill is part of the skin buffer, so it blends with it.
+        const skin = (
+            <>
+                {backgroundColor && (
+                    <ColorLayer
+                        color={backgroundColor}
+                        alpha={backgroundAlpha}
+                    />
+                )}
+                {resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={skinTint}
+                    />
+                )}
+                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
+            </>
+        );
 
         return (
             <Box
@@ -132,23 +194,19 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                 layout={{ ...config.layout, ...layout }}
                 {...handlers}
             >
-                {resolvedLayer && (
-                    <BackgroundLayer
-                        layer={resolvedLayer}
-                        tintColor={resolvedTint}
-                    />
-                )}
-                {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                {resolvedLayer && resolvedLayer.kind === 'nineSlice' && (
-                    <NineSliceBlendOverlay
-                        textureKey={resolvedLayer.textureKey}
-                        leftWidth={resolvedLayer.leftWidth}
-                        topHeight={resolvedLayer.topHeight}
-                        rightWidth={resolvedLayer.rightWidth}
-                        bottomHeight={resolvedLayer.bottomHeight}
-                        blend={blend}
-                    />
-                )}
+                {(blend === undefined)
+                    ? skin
+                    : (
+                            // The skin alone at `blend` (a group alpha in DOM; per-sprite in Pixi, identical for
+                            // the single-sprite and non-overlapping composite skins). Children stay outside it.
+                            <Box
+                                layout={FillLayout}
+                                alpha={blend}
+                                eventMode="none"
+                            >
+                                {skin}
+                            </Box>
+                        )}
                 <VariantCascadeProvider map={ownCascade}>
                     {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
                 </VariantCascadeProvider>

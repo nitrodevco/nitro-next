@@ -72,10 +72,10 @@ export interface CheckBoxProps extends ThemeProps<CheckBoxVariant> {
 }
 
 export const CheckBox: ForwardRefExoticComponent<CheckBoxProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, CheckBoxProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
+    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'checkBox', variants: CHECK_BOX_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
+            cascadeKey: 'checkBox', variants: CHECK_BOX_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled, selected,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

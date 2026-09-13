@@ -534,6 +534,8 @@ const layoutLiteral = (fields: Record<string, string | number | undefined>): str
 // client's com/sulake/core/window/utils `fillTables()`.
 const PARAM = {
     INPUT: 1,
+    /** `use_parent_graphic_context`: the window draws into its parent's bitmap (its `blend` then only applies to a skin). */
+    PARENT_GC: 16,
     H_MOVE: 64, H_STRECH: 128, H_CENTER: 192, H_MASK: 192,
     V_MOVE: 1024, V_STRECH: 2048, V_CENTER: 3072, V_MASK: 3072,
     SHRINK_TO_CHILDREN: 16384, EXPAND_TO_CHILDREN: 131072,
@@ -804,10 +806,14 @@ const metaProps = (ctx: EmitContext, el: Element): string[] => {
     const tooltip = captionExpr(ctx, el.vars.tool_tip_caption);
 
     if (tooltip) props.push(jsxAttr('tooltip', tooltip));
-    if (el.attrs.dynamic_style) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
+    // Only the two styles `DynamicStyleManager` defines do anything; any other name (`button`,
+    // `reward_track_item`, `..._gentle`) resolves to a bare `DynamicStyle` with no rules.
+    if (el.attrs.dynamic_style && DYNAMIC_STYLE_NAMES.has(el.attrs.dynamic_style)) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
 
     return props;
 };
+
+const DYNAMIC_STYLE_NAMES = new Set([ 'lifted_hover', 'brightness_and_shadow_under' ]);
 
 // ---------------------------------------------------------------------------------------------
 // Tags. The Flash `tags` attribute was mostly a lookup handle (`findChildByTag("close")`) or a
@@ -889,6 +895,36 @@ const blendProp = (el: Element): string[] => {
     const mode = [ ...tagSet(el) ].find(tag => tag.startsWith('BLEND_'))?.slice(6).toLowerCase();
 
     return mode ? [ `blendMode="${mode}"` ] : [];
+};
+
+/**
+ * The Flash window `blend` (`WindowRendererItem.render`) as an `alpha` prop: a bitmap, icon or
+ * text field composites itself at that opacity, and so does a container/bubble with its own
+ * graphic context - the caller checks that (`PARAM.PARENT_GC`), since a container drawing
+ * into its parent's context ignores `blend` altogether. Borders take `blend` themselves.
+ */
+const alphaProp = (el: Element): string[] => (el.attrs.blend !== undefined ? [ `alpha={${num(el.attrs.blend)}}` ] : []);
+
+/** A `#icon` / `#bg` tag: the child role under a `dynamic_style` host (`DynamicStyle.getChildStyle`) -> `dynamicRole` prop. */
+const dynamicRoleProp = (el: Element): string[] => {
+    const role = [ ...tagSet(el) ].find(tag => tag === '#icon' || tag === '#bg');
+
+    return role ? [ `dynamicRole="${role.slice(1)}"` ] : [];
+};
+
+/**
+ * The alpha byte of a Flash colour attribute (`0xffa1a19b` -> 255; `0x0666666`, `0x666666` ->
+ * 0). The client fills a skinned window's buffer with the *whole* colour, so a set byte paints
+ * an opaque fill under the skin. More than eight digits wrap like its `uint()` cast does.
+ */
+const colorAlphaByte = (value: string | undefined): number => {
+    if (!value) return 0;
+
+    const digits = value.replace(/^0x/i, '').replace(/[^0-9a-f]/gi, '');
+
+    if (digits.length <= 6) return 0;
+
+    return parseInt(digits.slice(-8).padStart(8, '0').slice(0, 2), 16);
 };
 
 /** Boolean configuration flags a page puts on a catalog widget slot. */
@@ -990,6 +1026,7 @@ const textElement = (ctx: EmitContext, el: Element, parentName?: string): { prop
 
     if (textStyle) props.push(`textStyle="${textStyle}"`);
     if (Object.values(textOptions).some(value => value !== undefined)) props.push(`textOptions={${layoutLiteral(textOptions)}}`);
+    props.push(...dynamicRoleProp(el));
     if (hasText) ctx.imports.add('ThemeText');
 
     return { props, hasText, wordWrap, autoSize };
@@ -1062,10 +1099,13 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 
     ctx.imports.add('Region');
 
+    // A text field has its own graphic context, so its `blend` always applies; a host
+    // container's only when it has its own too.
     const regionProps = [
         ...metaProps(ctx, box),
         ...dropShadowProp(box),
         ...(host ? blendProp(host) : []),
+        ...((!host || !(host.params & PARAM.PARENT_GC)) ? alphaProp(box) : []),
         `layout={${boxLayout(box, parent, { flexDirection: '\'row\'', alignItems: wordWrap ? '\'flex-start\'' : '\'center\'', justifyContent: AUTO_SIZE_JUSTIFY[autoSize] }, { autoSize: !host })}}`,
     ];
 
@@ -1116,6 +1156,8 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
 
     if (bool(el.vars.stretched_x) || bool(el.vars.fit_size_to_contents) === false) props.push(`width={${num(el.attrs.width)}}`);
     if (bool(el.vars.stretched_y) || bool(el.vars.fit_size_to_contents) === false) props.push(`height={${num(el.attrs.height)}}`);
+    // `BitmapDataRenderer`: the bitmap drawn as luminance, then multiplied by the window colour.
+    if (bool(el.vars.greyscale)) props.push('greyscale');
 
     const tint = hexColor(el.attrs.color);
 
@@ -1125,7 +1167,7 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     if (tintOverride && tintExpr) props.push(`tint={${tintOverride} ?? ${tintExpr}}`);
     else if (tintOverride) props.push(`tint={${tintOverride}}`);
     else if (tintExpr) props.push(jsxAttr('tint', tintExpr));
-    props.push(...blendProp(el));
+    props.push(...blendProp(el), ...alphaProp(el), ...dynamicRoleProp(el));
 
     ctx.imports.add('ThemeImage');
     props.push(`layout={${boxLayout(host ?? el, parent, {}, { autoSize: !host })}}`);
@@ -1220,6 +1262,8 @@ const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined,
     if (caption) props.push(`caption=${caption.startsWith('\'') ? jsxStr(decode(el.attrs.caption ?? '')) : `{${caption}}`}`);
 
     props.push(...tintProp(ctx, el));
+    // A frame only has a shadow when its layout gives it a `<DropShadowFilter>` - about half do.
+    props.push(...(el.dropShadow ? dropShadowProp(el) : [ 'dropShadow={false}' ]));
 
     if (!parent) {
         ctx.props.set('onClose', '() => void');
@@ -1274,10 +1318,10 @@ const emitInput = (ctx: EmitContext, el: Element, parent: ParentBox, indent: str
 /** Components whose root Box takes `visible` directly (kept for hand-written views; generated code renders conditionally instead). */
 export const VISIBLE_AWARE = new Set([ 'Border', 'Button', 'ButtonThick', 'CheckBox', 'RadioButton', 'TabButton', 'TabContent', 'TabContext', 'Dropmenu', 'Droplist', 'Bubble', 'CloseButton', 'ContainerButton', 'Scaler', 'Header', 'Tooltip' ]);
 
-const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: ParentBox, indent: string, extraProps: string[], children: (childIndent: string) => string[]): string[] => {
+const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: ParentBox, indent: string, extraProps: string[], children: (childIndent: string) => string[], options: { tint?: boolean } = {}): string[] => {
     ctx.imports.add(component);
 
-    const props = [ ...variantProp(el), ...metaProps(ctx, el), ...tintProp(ctx, el), ...extraProps ];
+    const props = [ ...variantProp(el), ...metaProps(ctx, el), ...(options.tint === false ? [] : tintProp(ctx, el)), ...extraProps ];
     const blend = blendProp(el);
 
     if (!el.dropShadow && !blend.length) return wrap(component, [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, children(indent + INDENT));
@@ -1547,9 +1591,11 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
 
             ctx.imports.add('Region');
 
-            const props = [ ...metaProps(ctx, el), ...dropShadowProp(el), ...blendProp(el) ];
+            const props = [ ...metaProps(ctx, el), ...dropShadowProp(el), ...blendProp(el), ...dynamicRoleProp(el) ];
             const color = hexColor(el.attrs.color);
             if (color && (el.attrs.background === 'true' || tag === 'background' || tag === 'gradient')) props.push(jsxAttr('backgroundColor', recolorExpr(ctx, el, color)!));
+            // Only a container with its own graphic context composites at its `blend`.
+            if (!(el.params & PARAM.PARENT_GC)) props.push(...alphaProp(el));
 
             // A named `region` with the low `params` bit set is a click target in the Flash client
             // (the me-menu tiles, `click_area_discard`, `region_profile`, ...) - see e.g.
@@ -1562,9 +1608,16 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             return wrap('Region', [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, [ ...slotChild, ...emitChildren(ctx, el, selfBox(el), childIndent) ]);
         }
         case 'border': {
-            const blend = el.attrs.blend ? [ `blend={${num(el.attrs.blend)}}` ] : [];
+            const alphaByte = colorAlphaByte(el.attrs.color);
+            const fill = hexColor(el.attrs.color);
+            const extra = [
+                ...(el.attrs.blend ? [ `blend={${num(el.attrs.blend)}}` ] : []),
+                ...(alphaByte > 0 && fill ? [ `backgroundColor="${fill}"` ] : []),
+                ...(alphaByte > 0 && alphaByte < 255 && fill ? [ `backgroundAlpha={${Math.round((alphaByte / 255) * 100) / 100}}` ] : []),
+            ];
 
-            return emitThemed(ctx, 'Border', el, parent, indent, blend, childrenOnly);
+            // `background="true"` turns the client's skin colourising off (`BitmapSkinRenderer.draw`): the colour then only fills.
+            return emitThemed(ctx, 'Border', el, parent, indent, extra, childrenOnly, { tint: el.attrs.background !== 'true' });
         }
         case 'button':
         case 'button_thick':
@@ -1621,10 +1674,11 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             const direction = el.vars.direction?.split('_')[0];
             const pointer = direction && [ 'up', 'down', 'left', 'right' ].includes(direction) ? [ `pointer="${direction}"` ] : [];
 
-            return emitThemed(ctx, 'Bubble', el, parent, indent, pointer, childrenOnly);
+            // A bubble has its own graphic context: its `blend` fades the whole bubble.
+            return emitThemed(ctx, 'Bubble', el, parent, indent, [ ...pointer, ...alphaProp(el) ], childrenOnly);
         }
         case 'icon':
-            return emitThemed(ctx, 'Icon', el, parent, indent, [], none);
+            return emitThemed(ctx, 'Icon', el, parent, indent, [ ...alphaProp(el), ...dynamicRoleProp(el) ], none);
         case 'widget': {
             ctx.imports.add('WidgetSlot');
 

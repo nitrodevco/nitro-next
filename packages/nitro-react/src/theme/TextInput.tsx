@@ -3,7 +3,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes, useCallback, useE
 import { getTruffle } from 'truffle-text/react';
 
 import { Box, BoxLayout } from './Box';
-import { useLayoutEvent, useOutsideClick } from './hooks';
+import { useLayoutSize, useOutsideClick } from './hooks';
 import { ColorLayer } from './layer';
 import { ThemeText } from './ThemeText';
 import { getHabboKey, getPixiTextStyle, TextStyleKey } from './utils';
@@ -94,7 +94,6 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
     ({ value, onChange, onEnter, onKeyDown, focused: controlledFocused, onFocusChange, placeholder, placeholderColor = '#999999', maxLength, multiline = false, fontSize = 12, textStyle, fontFamily, textColor = '#000000', backgroundColor = '#ffffff', focusedBackgroundColor = '#eef6ff', selectionColor = '#b4d5fe', caretColor, layout }, ref) => {
         const [ internalFocused, setInternalFocused ] = useState(false);
         const [ boxNode, setBoxNode ] = useState<PixiContainer | null>(null);
-        const [ innerWidth, setInnerWidth ] = useState(0);
         const [ selection, setSelection ] = useState({ start: value.length, end: value.length });
         const [ caretVisible, setCaretVisible ] = useState(true);
         const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
@@ -127,12 +126,9 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
 
         useOutsideClick(boxRef, () => setFocused(false), focused);
 
-        // The inner text area follows the box's yoga width (the box may be inset-sized).
-        useLayoutEvent(boxNode, () => {
-            const width = (boxNode?.layout?.computedLayout?.width ?? boxNode?.width ?? 0) - (PADDING_X * 2);
-
-            setInnerWidth(prev => (Math.abs(prev - width) > 0.5 ? Math.max(0, width) : prev));
-        });
+        // The inner text area follows the box's laid-out width (the box may be inset-sized); works on both render targets.
+        const { width: boxWidth } = useLayoutSize(boxNode);
+        const innerWidth = Math.max(0, boxWidth - (PADDING_X * 2));
 
         const readSelection = useCallback(() => {
             const input = inputRef.current;

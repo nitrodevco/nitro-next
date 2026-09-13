@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { getThemeSliceUrl, ThemeSliceEffect } from '../utils/themeSprites';
+import { getThemeSliceUrl, renderSliceEffect, ThemeSliceEffect, themeSliceEffectId } from '../utils/themeSprites';
 import { THEME_URLS } from '../utils/themeUrls';
-
-const effectId = (effect: ThemeSliceEffect): string => (effect.kind === 'plain' ? 'plain' : `${effect.kind}:${effect.color}`);
 
 const fallbackUrls = new Map<string, Promise<string | undefined>>();
 
@@ -12,7 +10,7 @@ const fallbackUrls = new Map<string, Promise<string | undefined>>();
  * the atlas failed to load; cached per key + effect like the atlas slices are.
  */
 const loadFallbackUrl = (key: string, effect: ThemeSliceEffect): Promise<string | undefined> => {
-    const cacheKey = `${key}|${effectId(effect)}`;
+    const cacheKey = `${key}|${themeSliceEffectId(effect)}`;
     const pending = fallbackUrls.get(cacheKey);
 
     if (pending) return pending;
@@ -34,34 +32,7 @@ const loadFallbackUrl = (key: string, effect: ThemeSliceEffect): Promise<string 
         const image = new Image();
 
         image.onload = () => {
-            const canvas = document.createElement('canvas');
-
-            canvas.width = image.naturalWidth;
-            canvas.height = image.naturalHeight;
-
-            const ctx = canvas.getContext('2d');
-
-            if (!ctx) {
-                resolve(undefined);
-
-                return;
-            }
-
-            ctx.drawImage(image, 0, 0);
-
-            if (effect.kind === 'tint') {
-                ctx.globalCompositeOperation = 'multiply';
-                ctx.fillStyle = effect.color;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.globalCompositeOperation = 'destination-in';
-                ctx.drawImage(image, 0, 0);
-            } else {
-                ctx.globalCompositeOperation = 'source-in';
-                ctx.fillStyle = effect.color;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-            }
-
-            resolve(canvas.toDataURL());
+            resolve(renderSliceEffect(image, 0, 0, image.naturalWidth, image.naturalHeight, effect)?.toDataURL());
         };
         image.onerror = () => {
             fallbackUrls.delete(cacheKey);
@@ -77,24 +48,29 @@ const loadFallbackUrl = (key: string, effect: ThemeSliceEffect): Promise<string 
 
 /**
  * A theme sprite as a standalone image URL for CSS - plain, tinted (`multiply` + alpha clip,
- * the DOM stand-in for a sprite `tint`) or as a solid-colour silhouette (the `blend`
- * highlight). Sliced out of the decoded atlas synchronously (so the first render already has
- * it) and cached once per key + effect; falls back to the per-file URL when the atlas isn't
- * available. For untinted sprites that fill or size to a box, prefer drawing straight from the
- * atlas with `themeSpriteFillStyle`/`themeSpriteNativeStyle` - no standalone copy at all.
+ * the DOM stand-in for a sprite `tint`), as a solid-colour silhouette (the sprite's alpha
+ * shape in one colour) or as its drop shadow. Sliced out of the decoded atlas synchronously
+ * (so the first render already has it) and cached once per key + effect; falls back to the
+ * per-file URL when the atlas isn't available. For untinted sprites that fill or size to a
+ * box, prefer drawing straight from the atlas with `themeSpriteFillStyle`/
+ * `themeSpriteNativeStyle` - no standalone copy at all.
  */
 export const useThemeImageUrl = (textureKey: string | undefined, effect: ThemeSliceEffect = { kind: 'plain' }): string | undefined => {
     const immediate = textureKey ? getThemeSliceUrl(textureKey, effect) : undefined;
-    const effectKey = effectId(effect);
+    const effectKey = themeSliceEffectId(effect);
+    const effectRef = useRef(effect);
     const [ fallback, setFallback ] = useState<string | undefined>(undefined);
+
+    useEffect(() => {
+        effectRef.current = effect;
+    });
 
     useEffect(() => {
         if (!textureKey || immediate) return;
 
         let cancelled = false;
-        const parsed: ThemeSliceEffect = effectKey === 'plain' ? { kind: 'plain' } : { kind: effectKey.split(':')[0] as 'tint' | 'silhouette', color: effectKey.slice(effectKey.indexOf(':') + 1) };
 
-        void loadFallbackUrl(textureKey, parsed).then((result) => {
+        void loadFallbackUrl(textureKey, effectRef.current).then((result) => {
             if (!cancelled) setFallback(result);
         });
 

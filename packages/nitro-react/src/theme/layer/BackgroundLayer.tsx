@@ -1,6 +1,6 @@
 import { BoxLayout } from '../Box';
 import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
-import { getRenderMode, SpriteFrame, spriteLayoutFromFrame } from '../utils';
+import { deriveHsvLayerColor, getRenderMode, SpriteFrame, spriteLayoutFromFrame } from '../utils';
 import { CompositeLayer, CompositeLayerPieceProps } from './CompositeLayer';
 import { NineSliceBorderWidth, NineSliceLayer, NineSliceRepeatAxis } from './NineSliceLayer';
 import { SpriteLayer } from './SpriteLayer';
@@ -10,7 +10,9 @@ export type BackgroundLayerConfig
     = | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; borderWidth?: NineSliceBorderWidth; repeat?: NineSliceRepeatAxis }
         | { kind: 'sprite'; textureKey: string; frame?: SpriteFrame }
         | ({ kind: 'tile'; textureKey: string } & TileInsets)
-        | { kind: 'composite'; pieces: CompositeLayerPieceProps[] };
+        | { kind: 'composite'; pieces: CompositeLayerPieceProps[] }
+        /** A recolourable skin (`colorizeMethod="hsv_layer"`): one nine-slice sheet per shade, stacked in order, each tinted with the client's derived colour for its shade. */
+        | { kind: 'hsvNineSlice'; layers: { textureKey: string; shade: number }[]; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number };
 
 export const BackgroundLayer = ({ layer, tintColor, layout }: {
     layer: BackgroundLayerConfig | undefined;
@@ -18,6 +20,22 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
     layout?: BoxLayout;
 }) => {
     if (!layer) return null;
+
+    // Each shade layer is an ordinary nine-slice with its own derived tint - on both targets.
+    if (layer.kind === 'hsvNineSlice') {
+        return (
+            <>
+                {layer.layers.map(shadeLayer => (
+                    <BackgroundLayer
+                        key={shadeLayer.textureKey}
+                        layer={{ kind: 'nineSlice', textureKey: shadeLayer.textureKey, leftWidth: layer.leftWidth, topHeight: layer.topHeight, rightWidth: layer.rightWidth, bottomHeight: layer.bottomHeight }}
+                        tintColor={deriveHsvLayerColor(tintColor, shadeLayer.shade)}
+                        layout={layout}
+                    />
+                ))}
+            </>
+        );
+    }
 
     // A `tile` layer with an explicit `width` (set by `Tiled(...)`, e.g. `ScrollbarSliderBarVertical`'s
     // grip overlay) positions itself from its own `left`/`top`/`bottom`/`width` inset fields as a

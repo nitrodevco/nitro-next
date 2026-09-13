@@ -1,6 +1,6 @@
 import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType } from '@nitrodevco/nitro-api';
-import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
-import { Texture } from 'pixi.js';
+import { GetAssetManager, GetAvatarRenderManager, TexturePool } from '@nitrodevco/nitro-renderer';
+import { RenderTexture, Texture } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 export interface ChatAvatarHead {
@@ -20,8 +20,17 @@ const MAX_CACHED_HEADS = 64;
 const cache = new Map<string, ChatAvatarHead>();
 const listeners = new Map<string, Set<() => void>>();
 
+const headKey = (figure: string): string => `chat:head:${figure}`;
+
 const notify = (figure: string) => {
     for (const listener of listeners.get(figure) ?? []) listener();
+};
+
+/** The head is a pooled render texture (`getCroppedImage`): it goes back to the pool and out of the asset manager. */
+const releaseHead = (figure: string, entry: ChatAvatarHead) => {
+    GetAssetManager().removeTexture(headKey(figure));
+
+    if (entry.texture) TexturePool.releaseTexture(entry.texture as RenderTexture);
 };
 
 const evictAvatarHead = (figure: string) => {
@@ -29,7 +38,7 @@ const evictAvatarHead = (figure: string) => {
 
     if (entry) {
         cache.delete(figure);
-        entry.texture?.destroy(true);
+        releaseHead(figure, entry);
     }
 
     notify(figure);
@@ -66,17 +75,26 @@ const renderAvatarHead = (figure: string, gender: AvatarGenderType): ChatAvatarH
 
     // A placeholder means the figure's libraries are still downloading - `resetFigure` fires
     // when they land and every bubble showing this figure re-renders with the real head.
-    if (!isPlaceholder) {
-        cache.set(figure, entry);
+    if (isPlaceholder) {
+        if (entry.texture) TexturePool.releaseTexture(entry.texture as RenderTexture);
 
-        while (cache.size > MAX_CACHED_HEADS) {
-            const oldest = cache.keys().next().value;
+        return { texture: undefined, chestColor: entry.chestColor };
+    }
 
-            if (oldest === undefined) break;
+    if (entry.texture) GetAssetManager().setTexture(headKey(figure), entry.texture);
 
-            cache.get(oldest)?.texture?.destroy(true);
-            cache.delete(oldest);
-        }
+    cache.set(figure, entry);
+
+    while (cache.size > MAX_CACHED_HEADS) {
+        const oldest = cache.keys().next().value;
+
+        if (oldest === undefined) break;
+
+        const evicted = cache.get(oldest);
+
+        cache.delete(oldest);
+
+        if (evicted) releaseHead(oldest, evicted);
     }
 
     return entry;

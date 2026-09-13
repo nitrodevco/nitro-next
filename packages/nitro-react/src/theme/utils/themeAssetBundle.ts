@@ -48,18 +48,20 @@ const loadImageElement = (src: string): Promise<HTMLImageElement> => new Promise
 });
 
 const preloadForPixi = async (image: HTMLImageElement, manifest: SpritesheetData): Promise<void> => {
-    const base = Texture.from(image);
+    // The one upload of the atlas: owned by the asset manager, not Pixi's global `Cache`.
+    const base = Texture.from(image, true);
 
     // `GetRenderer.ts` sets `TextureSource.defaultOptions.scaleMode = 'nearest'` when the
     // renderer is created - this runs at boot, before that, so set it explicitly.
     base.source.scaleMode = 'nearest';
-    base.label = 'theme-atlas';
 
     const sheet = new Spritesheet(base, manifest);
 
     await sheet.parse();
 
     const assetManager = GetAssetManager();
+
+    assetManager.setTexture('theme:atlas', base);
 
     for (const [ key, url ] of Object.entries(THEME_URLS)) {
         const texture = sheet.textures[url.replace(/^\.\//, '')];

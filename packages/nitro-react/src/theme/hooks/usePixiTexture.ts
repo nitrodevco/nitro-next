@@ -3,17 +3,23 @@ import { Assets, Rectangle, Texture } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 import { SpriteFrame } from '../utils/spriteFrame';
-import { getThemeSliceCanvas } from '../utils/themeSprites';
+import { getThemeSliceCanvas, ThemeSliceEffect, themeSliceEffectId } from '../utils/themeSprites';
 import { THEME_URLS } from '../utils/themeUrls';
+import { useThemeImageUrl } from './useThemeImageUrl';
 
 // ---------------------------------------------------------------------------------------------
 // Theme textures - every chrome sprite the atlas holds, as a `Texture` sharing the one atlas
 // base texture (see utils/themeAssetBundle.ts). Filled once at boot; every lookup after that
 // is a synchronous Map read, so no component ever creates a texture of its own for chrome.
+//
+// Every texture derived from one (a standalone copy, a silhouette, a shadow, a greyscale) is
+// stored in the shared `AssetManager` under a namespaced key, so there is one registry of what
+// the UI holds and nothing is built twice. Pixi's own global `Cache` is skipped for those
+// (`Texture.from(canvas, true)`): it would otherwise keep a second strong reference to every
+// canvas, released only by an explicit `destroy`.
 // ---------------------------------------------------------------------------------------------
 
 const themeTextures = new Map<string, Texture>();
-const standaloneTextures = new Map<string, Texture>();
 const croppedTextures = new Map<string, Texture>();
 
 export const registerThemeTexture = (key: string, texture: Texture): void => {
@@ -23,6 +29,37 @@ export const registerThemeTexture = (key: string, texture: Texture): void => {
 /** The atlas-backed texture of a theme key, if the atlas has loaded. */
 export const getThemeTexture = (key: string | undefined): Texture | undefined => (key ? themeTextures.get(key) : undefined);
 
+/** A canvas as a texture the UI owns: pixel art, and outside Pixi's global `Cache` (see the module docblock). */
+export const textureFromCanvas = (canvas: HTMLCanvasElement, label: string): Texture => {
+    const texture = Texture.from(canvas, true);
+
+    texture.source.scaleMode = 'nearest';
+    texture.label = label;
+
+    return texture;
+};
+
+/**
+ * A texture built from a canvas once and kept in the `AssetManager` under `key` - the one
+ * path every derived UI texture takes, so a second request for the same key finds the first.
+ */
+export const getOrBuildTexture = (key: string, build: () => HTMLCanvasElement | undefined): Texture | undefined => {
+    const assetManager = GetAssetManager();
+    const cached = assetManager.getTexture(key);
+
+    if (cached) return cached;
+
+    const canvas = build();
+
+    if (!canvas) return undefined;
+
+    const texture = textureFromCanvas(canvas, key);
+
+    assetManager.setTexture(key, texture);
+
+    return texture;
+};
+
 /**
  * A theme sprite as its own texture (its own source, `frame` = its full size) rather than a
  * region of the atlas. Only `TilingSprite` needs this: it can't repeat a sub-rect of a larger
@@ -30,30 +67,133 @@ export const getThemeTexture = (key: string | undefined): Texture | undefined =>
  * "not simple" and samples it flat instead of wrapping). Cut out of the decoded atlas image
  * once per key and kept.
  */
-export const getStandaloneThemeTexture = (key: string | undefined): Texture | undefined => {
-    if (!key) return undefined;
+export const getStandaloneThemeTexture = (key: string | undefined): Texture | undefined => (key
+    ? getOrBuildTexture(`theme:standalone:${key}`, () => getThemeSliceCanvas(key))
+    : undefined);
 
-    const cached = standaloneTextures.get(key);
+/**
+ * A theme sprite with a `ThemeSliceEffect` applied (a silhouette, a drop shadow) as its own
+ * texture, cut out of the decoded atlas once per key + effect and kept.
+ */
+export const getThemeEffectTexture = (key: string | undefined, effect: ThemeSliceEffect): Texture | undefined => (key
+    ? getOrBuildTexture(`theme:effect:${key}|${themeSliceEffectId(effect)}`, () => getThemeSliceCanvas(key, effect))
+    : undefined);
+
+/**
+ * A copy of any loaded texture's frame on a 2D canvas, for a per-pixel derivation. Needs a
+ * source a canvas can read (an image, bitmap or canvas; a render texture yields nothing).
+ */
+const textureToCanvas = (texture: Texture): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } | undefined => {
+    const resource = texture.source.resource as CanvasImageSource | undefined;
+
+    if (!resource || typeof resource !== 'object') return undefined;
+
+    const { x, y, width, height } = texture.frame;
+    const canvas = document.createElement('canvas');
+
+    canvas.width = Math.max(1, Math.ceil(width));
+    canvas.height = Math.max(1, Math.ceil(height));
+
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) return undefined;
+
+    try {
+        ctx.drawImage(resource, x, y, width, height, 0, 0, width, height);
+    } catch {
+        return undefined;
+    }
+
+    return { canvas, ctx };
+};
+
+/** Derived textures of sources the `AssetManager` doesn't hold (a caller's own render), kept only as long as the source is. */
+const transientDerived = new WeakMap<Texture, Map<string, Texture>>();
+
+/**
+ * One derived texture per source texture + variant, built by `derive` on first use. A source
+ * the `AssetManager` holds (a layout bitmap, an atlas sprite, a crop of one) gets its derivation
+ * registered there under `derived:<source>|<variant>`; any other source keeps its derivations
+ * in a `WeakMap`, so they go when it does.
+ */
+const getDerivedTexture = (texture: Texture, variant: string, derive: (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => void): Texture | undefined => {
+    const build = () => {
+        const drawn = textureToCanvas(texture);
+
+        if (!drawn) return undefined;
+
+        derive(drawn.ctx, drawn.canvas);
+
+        return drawn.canvas;
+    };
+    const label = texture.label;
+
+    if (label && GetAssetManager().getTexture(label) === texture) return getOrBuildTexture(`derived:${label}|${variant}`, build);
+
+    let byVariant = transientDerived.get(texture);
+    const cached = byVariant?.get(variant);
 
     if (cached) return cached;
 
-    const canvas = getThemeSliceCanvas(key);
+    const canvas = build();
 
     if (!canvas) return undefined;
 
-    const texture = Texture.from(canvas);
+    const derived = textureFromCanvas(canvas, `${label ?? 'texture'} (${variant})`);
 
-    texture.source.scaleMode = 'nearest';
-    texture.label = `${key} (standalone)`;
-    standaloneTextures.set(key, texture);
+    if (!byVariant) {
+        byVariant = new Map();
+        transientDerived.set(texture, byVariant);
+    }
 
-    return texture;
+    byVariant.set(variant, derived);
+
+    return derived;
 };
+
+/**
+ * A solid-colour silhouette of any loaded texture (a layout bitmap, an icon-sheet frame) - the
+ * copy a dynamic style's etching draws under a bitmap, or the white the `+77` brightening adds
+ * over it. One per texture + colour.
+ */
+export const getTextureSilhouette = (texture: Texture, color: string): Texture | undefined => getDerivedTexture(texture, `silhouette:${color}`, (ctx, canvas) => {
+    ctx.globalCompositeOperation = 'source-in';
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+});
+
+/** The client's `BitmapDataRenderer` greyscale weights (Rec. 709 luminance). */
+const GREY_R = 0.212671;
+const GREY_G = 0.71516;
+const GREY_B = 0.072169;
+
+/**
+ * A loaded texture reduced to luminance - a bitmap's `greyscale` variable. The client's
+ * `ColorMatrixFilter` rows are the window colour's multipliers times these weights, so the
+ * grey copy still takes the sprite's ordinary multiply `tint` to match it exactly. Alpha is
+ * kept as is.
+ */
+export const getTextureGreyscale = (texture: Texture): Texture | undefined => getDerivedTexture(texture, 'greyscale', (ctx, canvas) => {
+    const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const { data } = image;
+
+    for (let i = 0; i < data.length; i += 4) {
+        const grey = Math.round((data[i] * GREY_R) + (data[i + 1] * GREY_G) + (data[i + 2] * GREY_B));
+
+        data[i] = grey;
+        data[i + 1] = grey;
+        data[i + 2] = grey;
+    }
+
+    ctx.putImageData(image, 0, 0);
+});
 
 /**
  * A sub-frame of a texture (an icon out of the icon sheet, a slice of a nine-slice for tiling),
  * sharing its source. Cached per source + rect so repeated mounts of the same icon reuse one
- * `Texture` object instead of allocating a new one each time.
+ * `Texture` object instead of allocating a new one each time, and registered with the
+ * `AssetManager` under the source's name plus the rect so a derivation of the crop has a
+ * stable key too.
  */
 export const getCroppedTexture = (base: Texture, frame: SpriteFrame): Texture => {
     const x = base.frame.x + frame.x;
@@ -64,6 +204,9 @@ export const getCroppedTexture = (base: Texture, frame: SpriteFrame): Texture =>
     if (cached) return cached;
 
     const texture = new Texture({ source: base.source, frame: new Rectangle(x, y, frame.width, frame.height) });
+    const assetManager = GetAssetManager();
+
+    if (base.label && assetManager.getTexture(base.label) === base) assetManager.setTexture(`${base.label}@${frame.x},${frame.y},${frame.width},${frame.height}`, texture);
 
     croppedTextures.set(cacheKey, texture);
 
@@ -196,4 +339,16 @@ export const usePixiTexture = (themeKey: string | undefined, options?: PixiTextu
     const fallback = useTextureFromUrl(atlasTexture ? undefined : (themeKey ? THEME_URLS[themeKey] : undefined));
 
     return atlasTexture ?? fallback;
+};
+
+/**
+ * A theme key with an effect applied, as a texture: synchronously out of the atlas, else
+ * (atlas not loaded) through the per-file recoloured URL `useThemeImageUrl` builds.
+ */
+export const usePixiEffectTexture = (themeKey: string | undefined, effect: ThemeSliceEffect): Texture | undefined => {
+    const immediate = getThemeEffectTexture(themeKey, effect);
+    const url = useThemeImageUrl(immediate ? undefined : themeKey, effect);
+    const fallback = useTextureFromUrl(url);
+
+    return immediate ?? fallback;
 };

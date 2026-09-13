@@ -7,7 +7,7 @@ import { useCatalogNavigation } from './useCatalogNavigation';
 import { useCatalogVisibility } from './useCatalogVisibility';
 
 export const useCatalogPageRequest = () => {
-    const { isCatalogVisible } = useCatalogVisibility();
+    const { isWindowVisible } = useCatalogVisibility();
     const { rootNode, activePage, requestedPage } = useCatalogSelectors();
     const { activateNode, openPageById, openPageByName, openPageByOfferId } = useCatalogNavigation();
     const { setRequestedPage } = useCatalogActions();
@@ -35,7 +35,7 @@ export const useCatalogPageRequest = () => {
     }, [ params ]);
 
     useEffect(() => {
-        if (!isCatalogVisible || !rootNode || !requestedPage) return;
+        if (!isWindowVisible || !rootNode || !requestedPage) return;
 
         switch (requestedPage.type) {
             case CatalogPageRequestType.None: {
@@ -67,5 +67,5 @@ export const useCatalogPageRequest = () => {
                 return;
             }
         }
-    }, [ isCatalogVisible, rootNode, requestedPage ]);
+    }, [ isWindowVisible, rootNode, requestedPage ]);
 };

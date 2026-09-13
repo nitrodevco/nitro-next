@@ -77,11 +77,11 @@ export interface TabButtonProps extends ThemeProps<TabButtonVariant> {
 
 export const TabButton: ForwardRefExoticComponent<TabButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabButtonProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, selected, children,
+        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'tabButton', variants: TAB_BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled: false, selected,
+            cascadeKey: 'tabButton', variants: TAB_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled: false, selected,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

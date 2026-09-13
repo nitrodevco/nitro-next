@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, LayoutBrowserComponent, MessengerComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from './components';
 import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './context';
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
-import { Box } from './theme';
+import { Box, TooltipLayer } from './theme';
 import { FriendRequestsBarView } from './views/friendbar/FriendRequestsBarView';
 import { HotelView } from './views/hotel-view/HotelView';
 import { ActivityPointsView } from './views/purse/ActivityPointsView';
@@ -88,6 +88,7 @@ export const MainView = () => {
                 <LayoutBrowserComponent />
                 <FriendRequestsBarView />
                 <ToolbarView />
+                <TooltipLayer />
             </Box>
         </>
     );

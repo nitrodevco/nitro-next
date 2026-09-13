@@ -3,16 +3,20 @@ import { forwardRef } from 'react';
 
 import { BoxLayout } from './Box';
 import { ThemeImage } from './ThemeImage';
-import { ICON_SET_FRAMES, ThemeLayoutMeta } from './utils';
+import { DynamicStyleRole, ICON_SET_FRAMES, ThemeLayoutMeta } from './utils';
 
 export interface IconProps extends ThemeLayoutMeta {
     /** The `icon_set` template number (`<icon style="N">`). */
     variant: string | number;
     tintColor?: string;
+    /** The Flash window `blend` - the icon's opacity. */
+    alpha?: number;
+    /** A `#icon` / `#bg` tag under a `dynamicStyle` host. */
+    dynamicRole?: DynamicStyleRole;
     layout?: BoxLayout;
 }
 
-export const Icon = forwardRef<PixiContainer, IconProps>(({ variant, tintColor, layout }, ref) => {
+export const Icon = forwardRef<PixiContainer, IconProps>(({ variant, tintColor, alpha, dynamicRole, tooltip, layout }, ref) => {
     const frame = ICON_SET_FRAMES[String(variant)];
 
     if (!frame) return null;
@@ -23,6 +27,9 @@ export const Icon = forwardRef<PixiContainer, IconProps>(({ variant, tintColor, 
             textureKey="icon-set-src"
             frame={frame}
             tint={tintColor}
+            alpha={alpha}
+            dynamicRole={dynamicRole}
+            tooltip={tooltip}
             layout={layout ?? {}}
         />
     );

@@ -119,11 +119,11 @@ export interface HeaderProps extends ThemeProps<HeaderVariant> {
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, caption, onClose,
+        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, caption, onClose,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor,
+            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

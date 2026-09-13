@@ -147,7 +147,7 @@ const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, 
                     <Box
                         key={row.index}
                         ref={node => measureRow(row.index, node)}
-                        layout={{ position: 'absolute', top: row.start, left: 0, width: '100%', flexDirection: 'row', gap: 4 }}
+                        layout={{ position: 'absolute', top: row.start, left: 0, width: '100%', flexDirection: 'row', gap: 2 }}
                     >
                         {Array.from({ length: columnCount }).map((_, i) => {
                             const index = i + (row.index * columnCount);

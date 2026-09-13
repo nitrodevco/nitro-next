@@ -8,8 +8,11 @@
  * the way the client's `BitmapSkinRenderer` would draw it at its natural size, so the result
  * is a nine-slice sheet the theme's `NineSlice(...)` layers can use directly. `hsv_layer`
  * entities (the recolorable borders 15/16 stack dark/mid/light copies with a `shade`) are
- * pre-darkened by `1 - shade` and composited in order, which is what the client's
- * value-shading amounts to once a uniform tint is applied on top.
+ * pre-darkened by `1 - shade` and composited in order into `<style>-<state>.png` (only exact for
+ * a white tint). Because the client's `HsvLayerColor` derives a *different* tint per layer from
+ * the window colour (grey tints: `v -= shade`; coloured tints: `s += shade`, `v -= shade / 2`),
+ * those skins additionally get one raw PNG per shade - `<style>-<state>-shade-<shade>.png` -
+ * which the theme stacks and tints per layer at runtime (`HsvNineSlice` in NineSliceLayer.tsx).
  *
  * Prints the nine-slice metrics (left/top/right/bottom, from the corner entities) for each
  * output so the matching `ThemeVariants` entry can be written by hand.
@@ -193,6 +196,32 @@ for (const job of JOBS) {
         const file = join(outDir, `${job.style}-${state.attrs.name}.png`);
 
         writeFileSync(file, canvas.toBuffer('image/png'));
+
+        // hsv_layer skins: one raw (un-shaded) sheet per shade group, drawn in layout order, so
+        // the theme can apply the client's per-layer derived tint at runtime.
+        const shades = [ ...new Set(placements.filter(e => e.attrs.colorizeMethod === 'hsv_layer').map(e => Number(e.attrs.shade ?? 0))) ];
+
+        for (const shade of shades) {
+            const layerCanvas = createCanvas(width, height);
+            const layerCtx = layerCanvas.getContext('2d');
+
+            layerCtx.imageSmoothingEnabled = false;
+
+            for (const entity of placements) {
+                if (entity.attrs.colorizeMethod !== 'hsv_layer' || Number(entity.attrs.shade ?? 0) !== shade) continue;
+
+                const at = rectOf(entity);
+                const from = regions[entity.attrs.name];
+
+                if (!at || !from) continue;
+
+                layerCtx.drawImage(sheet, from.x, from.y, from.width, from.height, at.x, at.y, at.width, at.height);
+            }
+
+            writeFileSync(join(outDir, `${job.style}-${state.attrs.name}-shade-${shade}.png`), layerCanvas.toBuffer('image/png'));
+        }
+
+        if (shades.length) console.log(`  hsv_layer shades (layout order): ${shades.join(', ')}`);
 
         // Nine-slice metrics from whichever corner/edge entities the layout has.
         const byName = (suffix: string) => placements.map(e => ({ name: e.attrs.name, at: rectOf(e) })).find(e => e.name.endsWith(suffix) && e.at)?.at;

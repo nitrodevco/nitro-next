@@ -64,7 +64,7 @@ const initialState: State = {
     figureSetIds: [],
     boundFurnitureNames: [],
     wardrobe: [],
-    wardrobeVisible: false,
+    wardrobeVisible: true,
 };
 
 export type AvatarEditorStore = State & Actions & {

@@ -38,7 +38,8 @@ export const renderChatBubbleText = (markup: string, fontFace: string, fontSize:
         const baseStyle = truffle.resolveStyle('u_chat_speak', { fontFamily: fontFace, size: fontSize, color });
         const buffer = truffle.renderRichText(markup, baseStyle, { wordWrap: true, width: Math.max(1, Math.floor(wrapWidth)), color });
         const canvas = bufferToCanvas(buffer);
-        const texture = Texture.from(canvas);
+        // Owned by the bubble and destroyed with it - kept out of Pixi's global `Cache`.
+        const texture = Texture.from(canvas, true);
 
         texture.source.scaleMode = 'nearest';
 

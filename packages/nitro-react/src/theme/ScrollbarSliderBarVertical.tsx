@@ -63,11 +63,11 @@ export type ScrollbarSliderBarVerticalProps = ThemeProps<ScrollbarSliderBarVerti
 
 export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSliderBarVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarVerticalProps>(
     ({
-        variant, defaultVariant, layout, tintColor,
+        variant, defaultVariant, tooltip, layout, tintColor,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderBarVertical', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tintColor,
+            cascadeKey: 'scrollbarSliderBarVertical', variants: SCROLLBAR_SLIDER_BAR_VERTICAL_VARIANTS, variant, defaultVariant, tooltip, tintColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

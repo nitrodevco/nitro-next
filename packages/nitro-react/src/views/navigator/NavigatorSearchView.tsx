@@ -2,7 +2,9 @@ import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { NavigatorFilterType, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, Dropmenu, DropmenuItem, NitroIcon, TextInput, ThemeText } from '#base/theme';
+import { Border, Box, Dropmenu, DropmenuItem, TextInput, ThemeImage, ThemeText } from '#base/theme';
+
+import { layoutImage } from '../layouts/layoutAssets';
 
 const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
     { type: 'anything', prefix: '' },
@@ -88,10 +90,7 @@ export const NavigatorSearchView = () => {
                     onPointerTap={() => { if (searchFilter.length > 0) { setSearchFilter(''); search(''); } }}
                     layout={{ flexShrink: 0 }}
                 >
-                    <NitroIcon
-                        icon={searchFilter.length > 0 ? 'icon-nav-close' : 'icon-nav-small-pen'}
-                        layout={{}}
-                    />
+                    <ThemeImage src={layoutImage(searchFilter.length > 0 ? 'icons_close.png' : 'common_small_pen.png')} />
                 </Box>
             </Border>
         </Box>

@@ -57,9 +57,9 @@ export interface ScrollbarSliderTrackHorizontalProps extends ThemeProps<Scrollba
 
 /** Pixi port of theme/ScrollbarSliderTrackHorizontal.tsx - the clickable track behind the thumb. */
 export const ScrollbarSliderTrackHorizontal: ForwardRefExoticComponent<ScrollbarSliderTrackHorizontalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderTrackHorizontalProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, disabled, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderTrackHorizontal', variants: SCROLLBAR_SLIDER_TRACK_HORIZONTAL_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled,
+            cascadeKey: 'scrollbarSliderTrackHorizontal', variants: SCROLLBAR_SLIDER_TRACK_HORIZONTAL_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

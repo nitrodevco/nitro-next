@@ -1,6 +1,10 @@
+import { GetAssetManager } from '@nitrodevco/nitro-renderer';
 import { Point, Rectangle, Texture } from 'pixi.js';
 
 import { ChatStyleDefinition } from './ChatStyleDefinitions';
+
+/** Tinted backgrounds kept per style - past this the least recently used colour is rebuilt on demand. */
+const MAX_TINTED_BACKGROUNDS = 32;
 
 /** What a chat bubble needs from its style - the Flash `IChatStyleInternal` + `IChatStyle` pair. */
 export interface IChatStyle {
@@ -70,8 +74,10 @@ const toCanvasImageSource = (texture: Texture): CanvasImageSource | undefined =>
  * they fit together. `getBackgroundTexture` reproduces `ChatStyle.createBackground(color)`: with a
  * `chat_bubble_color` layer, that bitmap is colour-transformed to the speaker's chest colour and
  * DARKEN-blended onto a copy of the base at `colorXY`; `nineSliceBorders` says how the result is
- * nine-sliced along the one-pixel `9slice` grid. Tinted results are cached per colour - a room full of people wearing
- * the same shirt composes the bitmap once.
+ * nine-sliced along the one-pixel `9slice` grid. Tinted results are kept per colour in the
+ * `AssetManager` (`chat:style:<asset>|<colour>`), most recent `MAX_TINTED_BACKGROUNDS` colours
+ * - a room full of people wearing the same shirt composes the bitmap once, and a parade of
+ * colours doesn't accumulate a texture each.
  */
 export class ChatStyle implements IChatStyle {
     private readonly _definition: ChatStyleDefinition;
@@ -90,9 +96,21 @@ export class ChatStyle implements IChatStyle {
     }
 
     public dispose(): void {
-        for (const texture of this._tintedBackgrounds.values()) texture.destroy(true);
+        for (const key of this._tintedBackgrounds.keys()) this.evictTintedBackground(key);
+    }
 
-        this._tintedBackgrounds.clear();
+    private tintedBackgroundKey(color: number): string {
+        return `chat:style:${this._definition.assetId}|${color.toString(16).padStart(6, '0')}`;
+    }
+
+    private evictTintedBackground(color: number): void {
+        const texture = this._tintedBackgrounds.get(color);
+
+        if (!texture) return;
+
+        this._tintedBackgrounds.delete(color);
+        GetAssetManager().removeTexture(this.tintedBackgroundKey(color));
+        texture.destroy(true);
     }
 
     public get id(): number {
@@ -203,7 +221,13 @@ export class ChatStyle implements IChatStyle {
         const key = color & 0xffffff;
         const cached = this._tintedBackgrounds.get(key);
 
-        if (cached) return cached;
+        if (cached) {
+            // Insertion order doubles as recency.
+            this._tintedBackgrounds.delete(key);
+            this._tintedBackgrounds.set(key, cached);
+
+            return cached;
+        }
 
         const base = toCanvasImageSource(this._textures.base);
         const overlay = toCanvasImageSource(colorLayer);
@@ -249,12 +273,20 @@ export class ChatStyle implements IChatStyle {
         ctx.drawImage(tinted, at.x, at.y);
         ctx.globalCompositeOperation = 'source-over';
 
-        const texture = Texture.from(canvas);
+        // Owned here (not by Pixi's global `Cache`), registered with the asset manager.
+        const texture = Texture.from(canvas, true);
 
         texture.source.scaleMode = 'nearest';
-        texture.label = `chat style ${this._definition.assetId} #${key.toString(16)}`;
-
+        GetAssetManager().setTexture(this.tintedBackgroundKey(key), texture);
         this._tintedBackgrounds.set(key, texture);
+
+        while (this._tintedBackgrounds.size > MAX_TINTED_BACKGROUNDS) {
+            const oldest = this._tintedBackgrounds.keys().next().value;
+
+            if (oldest === undefined) break;
+
+            this.evictTintedBackground(oldest);
+        }
 
         return texture;
     }

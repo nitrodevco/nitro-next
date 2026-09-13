@@ -1,68 +1,79 @@
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
+import { ClubLevelEnum } from '@nitrodevco/nitro-api';
 
-import { AvatareditorWardrobeBaseLayout } from '#base/views/layouts/avatareditor/avatar/wardrobe/AvatareditorWardrobeBase/AvatareditorWardrobeBaseLayout';
-import { AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItem } from '#base/views/layouts/avatareditor/avatar/wardrobe/AvatareditorWardrobeBase/AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItem';
-import { AvatareditorWardrobeBaseLayoutSlotTemplateItem } from '#base/views/layouts/avatareditor/avatar/wardrobe/AvatareditorWardrobeBase/AvatareditorWardrobeBaseLayoutSlotTemplateItem';
-import { layoutImage } from '#base/views/layouts/layoutAssets';
+import { AvatarEditorWardrobeOutfit, useTranslation } from '#base/context';
+import { Border, Icon, Region, ThemeText } from '#base/theme';
 
-/** One wardrobe slot (`WardrobeSlot`): empty, or a saved figure. */
-export interface AvatarEditorWardrobeSlot {
-    figure?: string;
-    gender?: AvatarGenderType;
-    /** Rendered figure for the slot, when available. */
-    imageUrl?: string;
-    /** `WardrobeSlot.updateView`: set/get buttons only show on slots the user may use (club level). */
-    usable?: boolean;
-}
+import { AvatarEditorWardrobeSlot } from './AvatarEditorWardrobeSlot';
 
 export interface AvatarEditorWardrobeProps {
-    slots: AvatarEditorWardrobeSlot[];
-    onSave?: (slot: number) => void;
-    onLoad?: (slot: number, outfit: AvatarEditorWardrobeSlot) => void;
+    /** The saved looks, 0-based (`null` = empty); shorter than `slotCount` is fine - the rest render empty. */
+    slots: AvatarEditorWardrobeOutfit[];
+    /** How many slots to show (`avatar.wardrobe.max.slots`). */
+    slotCount: number;
+    clubLevel: ClubLevelEnum;
+    onSave: (index: number) => void;
+    onLoad: (index: number, outfit: NonNullable<AvatarEditorWardrobeOutfit>) => void;
 }
 
-/** `WardrobeView` lays the slots out in columns of seven. */
-const SLOTS_PER_COLUMN = 7;
+/** `slots_columns_list` of `avatareditor_wardrobe`: two 64px columns 4px apart, slots 3px apart down each. */
+const COLUMNS = 2;
+const COLUMN_WIDTH = 64;
+const COLUMN_GAP = 4;
+const ROW_GAP = 3;
+/** `WardrobeModel`: the first five slots need Habbo Club, the ones after need VIP. */
+const CLUB_SLOTS = 5;
 
 /**
- * The wardrobe side panel (`avatareditor_wardrobe_base`), driven like
- * com/sulake/habbo/avatar/wardrobe/WardrobeView.as: one `slots_column_template` per seven
- * slots, each slot a `slot_template` whose `set_button` saves the current look into it and
- * `get_button`/`get_figure` load it; an empty slot shows the empty-slot art.
+ * The wardrobe side panel - the Flash `WardrobeView` on the `avatareditor_wardrobe` layout: a
+ * 1px splitter, the HC icon and title, and the grey frame holding the slots two to a row. The
+ * Flash view split its slots into a club list and a VIP list; here the same gating decides
+ * which slots are usable, and the grid simply wraps every `COLUMNS` slots.
  */
-export const AvatarEditorWardrobe = ({ slots, onSave, onLoad }: AvatarEditorWardrobeProps) => {
-    const columns: AvatarEditorWardrobeSlot[][] = [];
+export const AvatarEditorWardrobe = ({ slots, slotCount, clubLevel, onSave, onLoad }: AvatarEditorWardrobeProps) => {
+    const t = useTranslation();
+    const count = Math.max(slotCount, slots.length);
 
-    slots.forEach((slot, index) => {
-        (columns[Math.floor(index / SLOTS_PER_COLUMN)] ??= []).push(slot);
-    });
+    const isUsable = (index: number): boolean => ((index < CLUB_SLOTS) ? (clubLevel >= ClubLevelEnum.Club) : (clubLevel >= ClubLevelEnum.Vip));
 
     return (
-        <AvatareditorWardrobeBaseLayout mainContainer={{
-            slotsColumnsList: {
-                itemsSlotsColumnsList: columns.map((column, columnIndex) => (
-                    <AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItem
-                        key={columnIndex}
-                        itemsSlotsColumnTemplate={column.map((slot, slotIndex) => {
-                            const index = columnIndex * SLOTS_PER_COLUMN + slotIndex;
-                            const usable = slot.usable ?? true;
+        <Region layout={{ width: 182, height: '100%', flexShrink: 0, flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 15, padding: 15 }}>
+            <Region
+                name="splitter"
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: -1, width: 1, top: 0, bottom: 0 }}
+            />
+            <Region
+                name="header"
+                layout={{ height: 40, alignItems: 'center', justifyContent: 'center', gap: 10 }}
+            >
+                <ThemeText
+                    text={t('avatareditor.wardrobe.title')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#83827e' }}
+                />
+                <Icon variant="13" />
+            </Region>
+            <Border
+                variant="4"
+                tintColor="#cbcbcb"
+                layout={{ width: 139, height: '100%', overflow: 'hidden', flexDirection: 'row', flexWrap: 'wrap', columnGap: 4, rowGap: 4, justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5 }}
+            >
+                {Array.from({ length: count }, (_, index) => {
+                    const outfit = slots[index] ?? null;
+                    const usable = isUsable(index);
 
-                            return (
-                                <AvatareditorWardrobeBaseLayoutSlotTemplateItem
-                                    key={index}
-                                    srcImage={slot.imageUrl ?? (slot.figure ? undefined : layoutImage('avatar_editor_wardrobe_empty_slot.png'))}
-                                    visibleSetButton={usable}
-                                    visibleGetButton={usable && !!slot.figure}
-                                    onSetButton={() => onSave?.(index)}
-                                    onGetButton={() => slot.figure && onLoad?.(index, slot)}
-                                    onGetFigure={() => slot.figure && onLoad?.(index, slot)}
-                                />
-                            );
-                        })}
-                    />
-                )),
-            },
-        }}
-        />
+                    return (
+                        <AvatarEditorWardrobeSlot
+                            key={index}
+                            figure={outfit?.figure}
+                            gender={outfit?.gender}
+                            usable={usable}
+                            onSet={() => onSave(index)}
+                            onGet={() => outfit && onLoad(index, outfit)}
+                        />
+                    );
+                })}
+            </Border>
+        </Region>
     );
 };

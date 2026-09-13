@@ -64,11 +64,11 @@ export type ScrollbarSliderBarHorizontalProps = ThemeProps<ScrollbarSliderBarHor
 
 export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSliderBarHorizontalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarHorizontalProps>(
     ({
-        variant, defaultVariant, layout, tintColor,
+        variant, defaultVariant, tooltip, layout, tintColor,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderBarHorizontal', variants: SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS, variant, defaultVariant, tintColor,
+            cascadeKey: 'scrollbarSliderBarHorizontal', variants: SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS, variant, defaultVariant, tooltip, tintColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
         const mergedLayout = { position: 'absolute' as const, ...config.layout, ...layout };

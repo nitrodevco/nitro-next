@@ -135,6 +135,9 @@ export const BackgroundLayerDom = ({ layer, tintColor, style }: BackgroundLayerD
             );
         }
 
+        // Expanded into per-shade nine-slices by `BackgroundLayer` before reaching here.
+        case 'hsvNineSlice': return null;
+
         case 'composite': {
             const pieces = layer.pieces.map((piece, i) => (
                 <CompositePieceDom

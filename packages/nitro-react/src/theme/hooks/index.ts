@@ -6,7 +6,6 @@ export * from './useHoldToRepeat';
 export * from './useInteractionState';
 export * from './useLayoutEvent';
 export * from './useOutsideClick';
-export * from './usePixiSilhouetteTexture';
 export * from './usePixiTexture';
 export * from './useResolvedVariant';
 export * from './useRowVirtualizer';

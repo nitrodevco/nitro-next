@@ -16,6 +16,10 @@ import { useAvatarEditorSelectors } from '#base/context';
  * each face is rendered through the avatar imager as a head-only avatar (`hd-<id>-<colours>`,
  * the old `getFigureStringWithFace`), trimmed to its opaque pixels and kept as one small render
  * texture. The imager instance itself is disposed immediately - only the trimmed texture stays.
+ *
+ * Thumbnails are requested per grid cell (`usePartThumbnail`), not per set type: the grid is
+ * virtualised, so a part's libraries only start downloading once its cell has actually been
+ * rendered into view - opening a tab with hundreds of parts no longer fetches all of them.
  */
 
 const HEAD_SET_TYPE = 'hd';
@@ -100,6 +104,10 @@ interface HeadThumbnail {
     texture: RenderTexture;
 }
 
+/** Faces are per skin colour; a colour change makes a whole new set, so the cache is capped and the least recently shown face is released first. */
+const MAX_HEAD_THUMBNAILS = 200;
+
+/** Insertion order doubles as recency: a hit re-inserts, an insert past the cap evicts the first entry. */
 const headThumbnails = new Map<string, HeadThumbnail>();
 const headPending = new Map<string, Promise<PartThumbnail | undefined>>();
 
@@ -157,10 +165,31 @@ const captureHead = (avatarImage: IAvatarImage): HeadThumbnail | undefined => {
     }
 };
 
+const storeHeadThumbnail = (figure: string, entry: HeadThumbnail) => {
+    headThumbnails.set(figure, entry);
+
+    while (headThumbnails.size > MAX_HEAD_THUMBNAILS) {
+        const oldest = headThumbnails.keys().next().value;
+
+        if (oldest === undefined) break;
+
+        const evicted = headThumbnails.get(oldest);
+
+        if (evicted) TexturePool.releaseTexture(evicted.texture);
+
+        headThumbnails.delete(oldest);
+    }
+};
+
 const getHeadThumbnail = (figure: string, gender: AvatarGenderType): PartThumbnail | Promise<PartThumbnail | undefined> => {
     const cached = headThumbnails.get(figure);
 
-    if (cached) return cached.thumbnail;
+    if (cached) {
+        headThumbnails.delete(figure);
+        headThumbnails.set(figure, cached);
+
+        return cached.thumbnail;
+    }
 
     const inFlight = headPending.get(figure);
 
@@ -174,7 +203,7 @@ const getHeadThumbnail = (figure: string, gender: AvatarGenderType): PartThumbna
     const rendered = immediate && captureHead(immediate);
 
     if (rendered) {
-        headThumbnails.set(figure, rendered);
+        storeHeadThumbnail(figure, rendered);
 
         return rendered.thumbnail;
     }
@@ -185,7 +214,7 @@ const getHeadThumbnail = (figure: string, gender: AvatarGenderType): PartThumbna
         .then((avatarImage) => {
             const built = avatarImage && captureHead(avatarImage);
 
-            if (built) headThumbnails.set(figure, built);
+            if (built) storeHeadThumbnail(figure, built);
 
             return built?.thumbnail;
         })
@@ -197,14 +226,11 @@ const getHeadThumbnail = (figure: string, gender: AvatarGenderType): PartThumbna
     return promise;
 };
 
-/** Drops every face texture not in `keep` - faces are per skin colour, so a colour change (or leaving the tab) frees the old set. */
-const pruneHeadThumbnails = (keep: Set<string>) => {
-    for (const [ figure, entry ] of headThumbnails) {
-        if (keep.has(figure)) continue;
+/** Releases every cached face texture - faces are only useful while an editor is open. */
+const releaseHeadThumbnails = () => {
+    for (const entry of headThumbnails.values()) TexturePool.releaseTexture(entry.texture);
 
-        TexturePool.releaseTexture(entry.texture);
-        headThumbnails.delete(figure);
-    }
+    headThumbnails.clear();
 };
 
 const getThumbnail = (partSet: IFigurePartSet): PartThumbnail | Promise<PartThumbnail | undefined> => {
@@ -268,61 +294,67 @@ export interface PartThumbnailRequest {
     partColors: (IPartColor | undefined)[];
 }
 
+const requestThumbnail = (part: PartThumbnailRequest, setType: string, gender: AvatarGenderType): PartThumbnail | Promise<PartThumbnail | undefined> | undefined => {
+    if (setType === HEAD_SET_TYPE) return part.id >= 0 ? getHeadThumbnail(headFigureOf(part.id, part.partColors), gender) : undefined;
+
+    return part.partSet ? getThumbnail(part.partSet) : undefined;
+};
+
 /**
- * Thumbnails for a whole part grid, keyed by part id. Parts whose library is already loaded
- * are present on the first render; the rest fill in as their libraries download (show a
- * placeholder meanwhile). Colours aren't part of a clothing thumbnail - the grid tints at draw
- * time - but they are part of a face's (`hd`), which is re-rendered when the skin tone changes.
+ * One grid cell's thumbnail. A part whose library is already loaded is present on the first
+ * render; otherwise the cell shows a placeholder while the library downloads and fills in when
+ * it lands. Because the grid virtualises its rows, mounting the cell is what triggers the
+ * download - nothing is fetched for parts that haven't scrolled into view. Colours aren't part
+ * of a clothing thumbnail (the grid tints at draw time) but are part of a face's (`hd`), which
+ * is re-rendered when the skin tone changes.
  */
-export const usePartThumbnails = (parts: PartThumbnailRequest[], setType: string): Record<number, PartThumbnail | undefined> => {
+export const usePartThumbnail = (part: PartThumbnailRequest | undefined, setType: string): PartThumbnail | undefined => {
     const { gender } = useAvatarEditorSelectors();
-    const isHead = setType === HEAD_SET_TYPE;
+    const partId = part?.id ?? -1;
+    const partSet = part?.partSet;
+    const colorKey = part?.partColors.map(color => color?.id ?? '').join(',') ?? '';
 
-    const request = (part: PartThumbnailRequest): PartThumbnail | Promise<PartThumbnail | undefined> | undefined => {
-        if (isHead) return part.id >= 0 ? getHeadThumbnail(headFigureOf(part.id, part.partColors), gender) : undefined;
+    const resolve = (): PartThumbnail | undefined => {
+        if (!part) return undefined;
 
-        return part.partSet ? getThumbnail(part.partSet) : undefined;
+        const thumbnail = requestThumbnail(part, setType, gender);
+
+        return (thumbnail && !(thumbnail instanceof Promise)) ? thumbnail : undefined;
     };
 
-    const seed = () => {
-        const result: Record<number, PartThumbnail | undefined> = {};
-
-        for (const part of parts) {
-            const thumbnail = request(part);
-
-            if (thumbnail && !(thumbnail instanceof Promise)) result[part.id] = thumbnail;
-        }
-
-        return result;
-    };
-
-    const [ ready, setReady ] = useState<Record<number, PartThumbnail | undefined>>(seed);
+    const [ ready, setReady ] = useState<PartThumbnail | undefined>(resolve);
 
     useEffect(() => {
+        if (!part) return;
+
+        const thumbnail = requestThumbnail(part, setType, gender);
+
+        if (!(thumbnail instanceof Promise)) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setReady(thumbnail);
+
+            return;
+        }
+
         let cancelled = false;
 
-        pruneHeadThumbnails(new Set(isHead ? parts.filter(part => part.id >= 0).map(part => headFigureOf(part.id, part.partColors)) : []));
+        setReady(undefined);
 
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setReady(seed());
-
-        for (const part of parts) {
-            const thumbnail = request(part);
-
-            if (!(thumbnail instanceof Promise)) continue;
-
-            void thumbnail.then((built) => {
-                if (!cancelled && built) setReady(current => (current[part.id] === built ? current : { ...current, [part.id]: built }));
-            });
-        }
+        void thumbnail.then((built) => {
+            if (!cancelled) setReady(built);
+        });
 
         return () => {
             cancelled = true;
         };
-    }, [ parts, setType, gender ]);
-
-    // Face textures are only useful while an editor is open.
-    useEffect(() => () => pruneHeadThumbnails(new Set()), []);
+        // The request is fully described by the part id / set, the set type, the gender and the skin colours.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ partId, partSet, setType, gender, colorKey ]);
 
     return ready;
+};
+
+/** Mount once per editor: the face textures are released when it closes. */
+export const usePartThumbnailLifetime = (): void => {
+    useEffect(() => () => releaseHeadThumbnails(), []);
 };

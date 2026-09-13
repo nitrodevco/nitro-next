@@ -5,8 +5,9 @@ import { GetPixelRatio } from '#base/utils';
 
 import { BoxLayout } from './Box';
 import { boxLayoutToStyle, getDomTextStyle, TruffleTextDom } from './dom';
+import { useDynamicStyleEffect } from './dynamicstyle';
 import { TruffleTextPixi } from './font/TruffleTextPixi';
-import { getHabboKey, getPixiTextStyle, getRenderMode, insetStretchAxes, TEXT_DROP_SHADOW, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta } from './utils';
+import { DynamicStyleRole, getHabboKey, getPixiTextStyle, getRenderMode, insetStretchAxes, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
 
 export type TextConfig = {
     text: string;
@@ -19,7 +20,14 @@ export type TextConfig = {
      */
     layout?: BoxLayout;
     verticalAlign?: TextVerticalAlign;
+    /** The Flash window `blend` of a text field (its own graphic context): the text's opacity. */
+    alpha?: number;
+    /** A `#icon` tag under a `dynamicStyle` host: the host's child rule recolours and nudges the text. */
+    dynamicRole?: DynamicStyleRole;
 } & ThemeLayoutMeta;
+
+/** The resolved config the renderers take: the effect already folded into colour, opacity and offset. */
+type TextRenderConfig = TextConfig & { x?: number; y?: number };
 
 /** A raw `fontFamily`/`fontSize` override means the caller wants something other than the
  *  named style's own truffle preset - falls straight through to native rendering, same as a
@@ -38,6 +46,15 @@ const resolveDropShadow = (dropShadow: TextStyleOptions['dropShadow']): TextDrop
     if (!dropShadow) return undefined;
 
     return dropShadow === true ? TEXT_DROP_SHADOW : { ...TEXT_DROP_SHADOW, ...dropShadow };
+};
+
+/** The colour a text renders in before any effect: its own `fill`, else its style's, else the client's black default. */
+const baseFill = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined): string => {
+    if (typeof textOptions?.fill === 'string') return textOptions.fill;
+
+    const styleColor = (TEXT_STYLES[textStyle ?? 'text-style-regular'] as { color?: string }).color;
+
+    return styleColor ?? '#000000';
 };
 
 /**
@@ -72,7 +89,7 @@ const resolveDropShadow = (dropShadow: TextStyleOptions['dropShadow']): TextDrop
  * natural size on both axes is what makes it overflow a too-small container instead - matching
  * a `<span>`'s real floor, and matching what the DOM target already does with no extra code.
  */
-const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, visible }: TextConfig) => {
+const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, visible, alpha, x, y }: TextRenderConfig) => {
     const style = useMemo(() => getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions), [ textStyle, textOptions ]);
     const metrics = useMemo(() => (text?.length ? CanvasTextMetrics.measureText(text, style) : undefined), [ text, style ]);
 
@@ -80,12 +97,15 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, v
 
     const stretchAxes = insetStretchAxes(layout);
     const objectPosition = textObjectPosition(textOptions?.align, verticalAlign);
-    const label = (labelLayout: BoxLayout | undefined) => (
+    const label = (labelLayout: BoxLayout | undefined, nudge: boolean) => (
         <pixiText
             text={text}
             style={style}
             resolution={GetPixelRatio()}
             visible={visible}
+            alpha={alpha}
+            x={nudge ? x : undefined}
+            y={nudge ? y : undefined}
             layout={{
                 width: Math.ceil(metrics.width),
                 height: Math.ceil(metrics.height),
@@ -103,22 +123,24 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, v
         return (
             <pixiContainer
                 eventMode="none"
+                x={x}
+                y={y}
                 layout={layout}
             >
-                {label({ objectPosition, width: stretchAxes.x ? '100%' : undefined, height: stretchAxes.y ? '100%' : undefined })}
+                {label({ objectPosition, width: stretchAxes.x ? '100%' : undefined, height: stretchAxes.y ? '100%' : undefined }, false)}
             </pixiContainer>
         );
     }
 
-    return label(layout);
+    return label(layout, true);
 };
 
 /** Prefers truffle's pixel-perfect rendering for this named style (see `theme/font/truffle.ts`);
  *  falls back to `TextPixiNative`'s native canvas text - unchanged from before truffle was
  *  wired in - for a raw `fontFamily`/`fontSize` override, so no call site can ever go blank
  *  because of this. */
-const TextPixi = (props: TextConfig) => {
-    const { text, textStyle, textOptions, layout, verticalAlign, visible } = props;
+const TextPixi = (props: TextRenderConfig) => {
+    const { text, textStyle, textOptions, layout, verticalAlign, visible, alpha, x, y } = props;
     const habboKey = resolveHabboKey(textStyle, textOptions);
 
     if (habboKey) {
@@ -129,6 +151,9 @@ const TextPixi = (props: TextConfig) => {
                 color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
                 dropShadow={resolveDropShadow(textOptions?.dropShadow)}
                 visible={visible}
+                alpha={alpha}
+                x={x}
+                y={y}
                 lineHeight={typeof textOptions?.lineHeight === 'number' ? textOptions.lineHeight : undefined}
                 layout={{ objectPosition: textObjectPosition(textOptions?.align, verticalAlign), ...layout }}
                 wordWrap={textOptions?.wordWrap}
@@ -143,7 +168,7 @@ const TextPixi = (props: TextConfig) => {
 /** `textOptions` is Pixi's own `TextStyleOptions` - only the handful of fields views actually
  *  pass (`fill`, `fontSize`, and the word-wrap trio) are translated; anything else Pixi-specific
  *  in there has no DOM equivalent and is left unused. */
-const TextDomNative = ({ text, textStyle, textOptions, layout, verticalAlign, visible }: TextConfig) => {
+const TextDomNative = ({ text, textStyle, textOptions, layout, verticalAlign, visible, alpha, x, y }: TextRenderConfig) => {
     const fill = typeof textOptions?.fill === 'string' ? textOptions.fill : undefined;
     const fontSize = typeof textOptions?.fontSize === 'number' ? textOptions.fontSize : undefined;
     const lineHeight = typeof textOptions?.lineHeight === 'number' ? textOptions.lineHeight : undefined;
@@ -156,6 +181,8 @@ const TextDomNative = ({ text, textStyle, textOptions, layout, verticalAlign, vi
         alignItems: verticalAlign === 'top' ? 'flex-start' : verticalAlign === 'bottom' ? 'flex-end' : 'center',
         justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start',
         textAlign: align === 'center' ? 'center' : align === 'right' ? 'right' : 'left',
+        opacity: alpha,
+        transform: (x || y) ? `translate(${x ?? 0}px, ${y ?? 0}px)` : undefined,
     };
 
     if (textOptions?.wordWrap) {
@@ -168,8 +195,8 @@ const TextDomNative = ({ text, textStyle, textOptions, layout, verticalAlign, vi
     return <span style={style}>{text}</span>;
 };
 
-const TextDom = (props: TextConfig) => {
-    const { text, textStyle, textOptions, layout, verticalAlign, visible } = props;
+const TextDom = (props: TextRenderConfig) => {
+    const { text, textStyle, textOptions, layout, verticalAlign, visible, alpha, x, y } = props;
     const habboKey = resolveHabboKey(textStyle, textOptions);
 
     if (habboKey) {
@@ -180,6 +207,9 @@ const TextDom = (props: TextConfig) => {
                 color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
                 dropShadow={resolveDropShadow(textOptions?.dropShadow)}
                 visible={visible}
+                alpha={alpha}
+                x={x}
+                y={y}
                 objectPosition={textObjectPosition(textOptions?.align, verticalAlign)}
                 lineHeight={typeof textOptions?.lineHeight === 'number' ? textOptions.lineHeight : undefined}
                 layout={layout}
@@ -192,8 +222,25 @@ const TextDom = (props: TextConfig) => {
     return <TextDomNative {...props} />;
 };
 
+/**
+ * A text field. Under a `dynamicStyle` host, a `dynamicRole` text takes the host's child rule
+ * the way the client's `TextFieldController` did - it has its own graphic context, so the
+ * rule's `ColorTransform` lands on the whole field (its colour brightened or darkened, its
+ * alpha scaled) and the `offsetX`/`offsetY` nudge moves it.
+ */
 export const ThemeText = (props: TextConfig) => {
+    const { textStyle, textOptions, alpha, dynamicRole } = props;
+    const effect = useDynamicStyleEffect(dynamicRole);
+    const resolved = useMemo<TextRenderConfig>(() => {
+        if (!effect) return props;
+
+        const fill = transformColor(baseFill(textStyle, textOptions), effect);
+        const effectAlpha = (alpha === undefined) ? effect.alpha : (alpha * (effect.alpha ?? 1));
+
+        return { ...props, textOptions: { ...textOptions, fill }, alpha: effectAlpha, x: effect.x, y: effect.y };
+    }, [ props, effect, textStyle, textOptions, alpha ]);
+
     if (!props.text?.length) return null;
 
-    return getRenderMode() === 'dom' ? <TextDom {...props} /> : <TextPixi {...props} />;
+    return getRenderMode() === 'dom' ? <TextDom {...resolved} /> : <TextPixi {...resolved} />;
 };

@@ -1,5 +1,5 @@
 import { AvatarGenderType, AvatarScaleType, AvatarSetType } from '@nitrodevco/nitro-api';
-import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
+import { GetAvatarRenderManager, TexturePool, TextureUtils } from '@nitrodevco/nitro-renderer';
 import { Texture } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
@@ -22,11 +22,15 @@ const EMPTY: AvatarImageTexture = { texture: undefined, width: 0, height: 0 };
  * disposed whenever the figure changes or the component unmounts - before this, every figure
  * change created a new instance and never released the old one, which is what made the avatar
  * editor's memory climb with every part clicked.
+ *
+ * A `scale` other than 1 hands back a reduced copy instead (`TextureUtils.createReducedTexture`:
+ * smoothed and sharpened the way the Flash client shrank its renders) - stretching the sprite
+ * would drop pixel rows of the pixel art and look squashed. That copy is owned here too.
  */
 export const useAvatarImageTexture = (
     figure: string | undefined,
     gender: AvatarGenderType,
-    { headOnly = false, direction = 0 }: { headOnly?: boolean; direction?: number } = {},
+    { headOnly = false, direction = 0, scale = 1 }: { headOnly?: boolean; direction?: number; scale?: number } = {},
 ): AvatarImageTexture => {
     const [ result, setResult ] = useState<AvatarImageTexture>(EMPTY);
     const [ randomValue, setRandomValue ] = useState(-1);
@@ -54,14 +58,18 @@ export const useAvatarImageTexture = (
 
         avatarImage.setDirection(setType, direction);
 
-        const texture = avatarImage.getImage(setType, false, 1);
+        const full = avatarImage.getImage(setType, false, 1);
+        const reduced = (full && scale !== 1) ? TextureUtils.createReducedTexture(full, scale) : undefined;
+        const texture = (scale !== 1) ? reduced : full;
 
         setResult(texture ? { texture, width: texture.width, height: texture.height } : EMPTY);
 
         return () => {
+            if (reduced) TexturePool.releaseTexture(reduced);
+
             avatarImage.dispose();
         };
-    }, [ figure, gender, headOnly, direction, randomValue ]);
+    }, [ figure, gender, headOnly, direction, scale, randomValue ]);
 
     useEffect(() => () => {
         disposed.current = true;

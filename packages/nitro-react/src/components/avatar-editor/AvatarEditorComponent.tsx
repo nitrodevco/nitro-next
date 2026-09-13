@@ -1,10 +1,11 @@
-import { AvatarEditorContextProvider, useIsWindowVisible } from '#base/context';
+import { AvatarEditorContextProvider } from '#base/context';
+import { useAvatarEditorVisibility } from '#base/hooks';
 import { AvatarEditor } from '#base/views/avatar-editor/AvatarEditor';
 
 export const AvatarEditorComponent = () => {
-    const isVisible = useIsWindowVisible('avatar_editor');
+    const { isWindowVisible } = useAvatarEditorVisibility();
 
-    // if (!isVisible) return null;
+    if (!isWindowVisible) return null;
 
     return (
         <AvatarEditorContextProvider>
