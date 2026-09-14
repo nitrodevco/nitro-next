@@ -20,5 +20,8 @@ export const useNavigatorActions = () => useNavigatorContext(useShallow(x => ({
     setSearchFilter: x.setSearchFilter,
     setIsSearching: x.setIsSearching,
     setCurrentRoom: x.setCurrentRoom,
+    setRoomEntryDialog: x.setRoomEntryDialog,
+    setRoomEntryDialogMode: x.setRoomEntryDialogMode,
+    setAlert: x.setAlert,
     resetNavigator: x.resetNavigator,
 })));

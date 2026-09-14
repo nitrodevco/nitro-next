@@ -20,4 +20,6 @@ export const useNavigatorSelectors = () => useNavigatorContext(useShallow(x => (
     isSearching: x.isSearching,
     currentRoom: x.currentRoom,
     currentRoomIsOwner: x.currentRoomIsOwner,
+    roomEntryDialog: x.roomEntryDialog,
+    alert: x.alert,
 })));

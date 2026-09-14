@@ -1,6 +1,28 @@
 import { IEventCategory, IFlatCategory, IPerk, IRoomInfo, ISavedSearch, ISearchResultList, ISearchResultSet, ITopLevelContext } from '@nitrodevco/nitro-packets';
 import { createStore } from 'zustand';
 
+/**
+ * The room-entry popup the navigator shows while a locked/password room is being entered
+ * (the Flash `GuestRoomDoorbell` / `GuestRoomPasswordInput` windows):
+ * - `doorbell`: ask to ring; `doorbell_rung`: rung, window hidden until the server answers; `doorbell_waiting`:
+ *   the server acknowledged the ring; `doorbell_no_answer`: nobody let us in.
+ * - `password`: ask for the password; `password_sent`: window hidden while the server checks it; `password_retry`: rejected.
+ * The `_rung`/`_sent` modes are the Flash windows' hidden-but-not-disposed state: a later
+ * server reply re-shows the same window instead of creating a new one.
+ */
+export type NavigatorRoomEntryDialogMode = 'doorbell' | 'doorbell_rung' | 'doorbell_waiting' | 'doorbell_no_answer' | 'password' | 'password_sent' | 'password_retry';
+
+export interface NavigatorRoomEntryDialog {
+    room: IRoomInfo;
+    mode: NavigatorRoomEntryDialogMode;
+}
+
+/** A modal message (the Flash `SimpleAlertView`): localization keys for the title and body. */
+export interface NavigatorAlert {
+    titleKey: string;
+    messageKey: string;
+}
+
 /** filter_type_drop_menu options from navigator_frame_2 */
 export type NavigatorFilterType = 'anything' | 'room.name' | 'owner' | 'tag' | 'group';
 
@@ -23,6 +45,8 @@ type State = {
     isSearching: boolean;
     currentRoom: IRoomInfo | undefined;
     currentRoomIsOwner: boolean;
+    roomEntryDialog: NavigatorRoomEntryDialog | undefined;
+    alert: NavigatorAlert | undefined;
 };
 
 type Actions = {
@@ -43,6 +67,10 @@ type Actions = {
     setSearchFilter: (searchFilter: string) => void;
     setIsSearching: (isSearching: boolean) => void;
     setCurrentRoom: (currentRoom: IRoomInfo | undefined, currentRoomIsOwner: boolean) => void;
+    setRoomEntryDialog: (dialog: NavigatorRoomEntryDialog | undefined) => void;
+    /** Changes the mode of the open room-entry dialog; a no-op when none is open (the Flash windows ignore state changes once disposed). */
+    setRoomEntryDialogMode: (mode: NavigatorRoomEntryDialogMode) => void;
+    setAlert: (alert: NavigatorAlert | undefined) => void;
     resetNavigator: () => void;
 };
 
@@ -64,6 +92,8 @@ const initialState: State = {
     isSearching: false,
     currentRoom: undefined,
     currentRoomIsOwner: false,
+    roomEntryDialog: undefined,
+    alert: undefined,
 };
 
 export type NavigatorContextStore = State & Actions;
@@ -100,6 +130,9 @@ export const createNavigatorContextStore = () => createStore<NavigatorContextSto
     setSearchFilter: searchFilter => set({ searchFilter }),
     setIsSearching: isSearching => set({ isSearching }),
     setCurrentRoom: (currentRoom, currentRoomIsOwner) => set({ currentRoom, currentRoomIsOwner }),
+    setRoomEntryDialog: roomEntryDialog => set({ roomEntryDialog }),
+    setRoomEntryDialogMode: mode => set(x => (x.roomEntryDialog ? { roomEntryDialog: { ...x.roomEntryDialog, mode } } : {})),
+    setAlert: alert => set({ alert }),
     resetNavigator: () => set({ ...initialState }),
 }));
 

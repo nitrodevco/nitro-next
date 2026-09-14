@@ -1,5 +1,6 @@
 import { useNavigatorHandler } from '#base/handlers';
 import { useNavigatorVisibility } from '#base/hooks';
+import { NavigatorRoomEntryDialogs } from '#base/views/navigator/NavigatorRoomEntryDialogs';
 import { NavigatorView } from '#base/views/navigator/NavigatorView';
 
 export const NavigatorComponent = () => {
@@ -8,7 +9,11 @@ export const NavigatorComponent = () => {
     // handler lives inside the provider so it can write to the navigator store
     useNavigatorHandler();
 
-    if (!isWindowVisible) return null;
-
-    return <NavigatorView />;
+    return (
+        <>
+            {isWindowVisible && <NavigatorView />}
+            {/* doorbell / password / cant-connect popups outlive the navigator window */}
+            <NavigatorRoomEntryDialogs />
+        </>
+    );
 };
