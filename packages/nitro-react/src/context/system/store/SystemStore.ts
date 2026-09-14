@@ -15,7 +15,23 @@ type State = {
     topId: string | undefined;
     zIndexById: Record<string, number>;
     landingViewVisible: boolean;
+    /** From `NavigatorSettingsMessage`; 0 until it arrives or when no home room is set. */
+    homeRoomId: number;
+    /**
+     * The Flash room session lifecycle, driven from outside the room context: `start` is
+     * RSE_STARTED (a session was created and its OpenFlatConnection sent, or skipped for a
+     * server-opened connection) - the room instance is created and the hotel view hidden right
+     * away; `end` is RSE_ENDED (the session was disposed client-side). `sequence` makes a
+     * repeated request for the same room id observable.
+     */
+    roomSessionRequest: RoomSessionRequest | undefined;
 };
+
+export interface RoomSessionRequest {
+    type: 'start' | 'end';
+    roomId: number;
+    sequence: number;
+}
 
 type Actions = {
     setConfig: (config: Record<string, unknown>) => void;
@@ -33,6 +49,9 @@ type Actions = {
     updateWindowParams: <T extends WindowName>(name: T, params: Partial<WindowRegistry[T]>) => void;
     bringWindowToFront: (id: string) => void;
     setLandingViewVisible: (landingViewVisible: boolean) => void;
+    setHomeRoomId: (homeRoomId: number) => void;
+    startRoomSession: (roomId: number) => void;
+    endRoomSession: () => void;
 };
 
 const BASE_FRAME_Z_INDEX = 100;
@@ -57,6 +76,8 @@ const initialState: State = {
     topId: undefined,
     zIndexById: {},
     landingViewVisible: true,
+    homeRoomId: 0,
+    roomSessionRequest: undefined,
 };
 
 export type SystemStore = State & Actions;
@@ -309,4 +330,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
         });
     },
     setLandingViewVisible: (landingViewVisible: boolean) => set({ landingViewVisible }),
+    setHomeRoomId: (homeRoomId: number) => set({ homeRoomId }),
+    startRoomSession: (roomId: number) => set(x => ({ roomSessionRequest: { type: 'start', roomId, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
+    endRoomSession: () => set(x => ({ roomSessionRequest: { type: 'end', roomId: 0, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
 }));

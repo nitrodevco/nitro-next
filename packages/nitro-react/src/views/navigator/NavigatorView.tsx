@@ -1,4 +1,4 @@
-import { ForwardToARandomPromotedRoomComposer, IRoomInfo, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer, OpenFlatConnectionComposer } from '@nitrodevco/nitro-packets';
+import { ForwardToARandomPromotedRoomComposer, GetGuestRoomComposer, IRoomInfo, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
 import { useNavigatorVisibility } from '#base/hooks';
@@ -46,8 +46,13 @@ export const NavigatorView = () => {
         send(new NewNavigatorSearchComposer({ searchCodeOriginal: searchCode, filteringData: '' }));
     };
 
+    /*
+     * HabboNewNavigator.goToRoom: ask for the room info with roomForward set and close the
+     * navigator; useNavigatorHandler's GetGuestRoomResult handler then opens the flat
+     * connection, or shows the doorbell / password popup first for a locked room.
+     */
     const enterRoom = (room: IRoomInfo) => {
-        send(new OpenFlatConnectionComposer({ roomId: room.roomId, password: '', unknown1: -1 }));
+        send(new GetGuestRoomComposer({ roomId: room.roomId, enterRoom: false, roomForward: true }));
 
         hide();
     };

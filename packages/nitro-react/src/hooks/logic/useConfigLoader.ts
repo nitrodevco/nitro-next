@@ -11,6 +11,13 @@ export const useConfigLoader = () => {
 
     useEffect(() => {
         window.NitroParsedConfig = { ...config };
+
+        NitroLogger.LOG_DEBUG = config['log.debug'] as boolean ?? false;
+        NitroLogger.LOG_WARN = config['log.warn'] as boolean ?? false;
+        NitroLogger.LOG_ERROR = config['log.error'] as boolean ?? false;
+        NitroLogger.LOG_EVENTS = config['log.events'] as boolean ?? false;
+        NitroLogger.LOG_PACKETS = config['log.packets'] as boolean ?? false;
+
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsReady(true);
     }, [ config ]);

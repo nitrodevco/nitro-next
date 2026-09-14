@@ -11,4 +11,7 @@ export const useSystemActions = () => useSystemContext(useShallow(x => ({
     setLocalization: x.setLocalization,
     setLocalizationForFurniture: x.setLocalizationForFurniture,
     setLandingViewVisible: x.setLandingViewVisible,
+    setHomeRoomId: x.setHomeRoomId,
+    startRoomSession: x.startRoomSession,
+    endRoomSession: x.endRoomSession,
 })));

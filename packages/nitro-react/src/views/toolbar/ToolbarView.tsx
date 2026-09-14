@@ -1,7 +1,9 @@
+import { QuitComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { AvatarImage } from '#base/components';
-import { useIsLandingViewVisible, useOwnUserFigure, useOwnUserGender, useSystemActions, useTranslation } from '#base/context';
+import { useIsLandingViewVisible, useOwnUserFigure, useOwnUserGender, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
+import { useGoToHomeRoom } from '#base/hooks';
 import { Border, Box, Icon, Region, ThemeImage } from '#base/theme';
 
 import { layoutImage } from '../layouts/layoutAssets';
@@ -15,9 +17,18 @@ export const ToolbarView = () => {
     const [ rightSideCollapsed, setRightSideCollapsed ] = useState(false);
     const ownFigure = useOwnUserFigure();
     const ownGender = useOwnUserGender();
-    const { toggleWindow } = useSystemActions();
+    const { toggleWindow, endRoomSession } = useSystemActions();
     const landingViewVisible = useIsLandingViewVisible();
+    const { send } = useWebSocketContext();
+    // HTIE_ICON_HOME -> goToHomeRoom(): a room forward to the home room (its GetGuestRoomResult starts the session)
+    const goToHomeRoom = useGoToHomeRoom();
     const t = useTranslation();
+
+    // HabboLandingView.onToolbarClick HTIE_ICON_RECEPTION: quit and dispose the room session right away (RSE_ENDED shows the hotel view)
+    const goToHotelView = () => {
+        send(new QuitComposer({}));
+        endRoomSession();
+    };
 
     const toggleMenu = (menu: 'me' | 'progression') => {
         setMeExpanded(menu === 'me' && !isMeExpanded);
@@ -45,6 +56,7 @@ export const ToolbarView = () => {
                         {!leftSideCollapsed && !landingViewVisible && (
                             <Region
                                 dynamicStyle="lifted_hover"
+                                onPointerTap={goToHotelView}
                                 tooltip={t('toolbar.icon.tooltip.exitroom.hotelview')}
                             >
                                 <ThemeImage
@@ -56,6 +68,7 @@ export const ToolbarView = () => {
                         {!leftSideCollapsed && landingViewVisible && (
                             <Region
                                 dynamicStyle="lifted_hover"
+                                onPointerTap={() => goToHomeRoom()}
                                 tooltip={t('toolbar.icon.tooltip.exitroom.home')}
                             >
                                 <ThemeImage

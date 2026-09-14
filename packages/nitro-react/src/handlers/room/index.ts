@@ -8,3 +8,4 @@ export * from './useRoomPermissionsHandler';
 export * from './useRoomPetPackageHandler';
 export * from './useRoomPollHandler';
 export * from './useRoomUserHandler';
+export * from './useRoomVariableFxHandler';

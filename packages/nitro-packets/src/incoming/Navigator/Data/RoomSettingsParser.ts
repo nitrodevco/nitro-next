@@ -1,11 +1,11 @@
-import { IMessageDataWrapper, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
+import { IMessageDataWrapper, RoomDoorModeEnum, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
 export interface IRoomInfo {
     roomId: number;
     name: string;
     ownerId: number;
     ownerName: string;
-    doorMode: number;
+    doorMode: RoomDoorModeEnum;
     population: number;
     playersMax: number;
     description: string;

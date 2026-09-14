@@ -27,6 +27,8 @@ export interface TextInputProps {
     placeholderColor?: string;
     maxLength?: number;
     multiline?: boolean;
+    /** Masks the value with bullets (the Flash `display_as_password` text field). */
+    password?: boolean;
     fontSize?: number;
     /** A theme text style (truffle-rendered) for the value; `fontSize`/`fontFamily` override it with native canvas text. */
     textStyle?: TextStyleKey;
@@ -91,7 +93,7 @@ const hiddenInputStyle: Partial<CSSStyleDeclaration> = {
  * to someone - and a caller can intercept keys (`onKeyDown`) before the browser edits.
  */
 export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TextInputProps>(
-    ({ value, onChange, onEnter, onKeyDown, focused: controlledFocused, onFocusChange, placeholder, placeholderColor = '#999999', maxLength, multiline = false, fontSize = 12, textStyle, fontFamily, textColor = '#000000', backgroundColor = '#ffffff', focusedBackgroundColor = '#eef6ff', selectionColor = '#b4d5fe', caretColor, layout }, ref) => {
+    ({ value, onChange, onEnter, onKeyDown, focused: controlledFocused, onFocusChange, placeholder, placeholderColor = '#999999', maxLength, multiline = false, password = false, fontSize = 12, textStyle, fontFamily, textColor = '#000000', backgroundColor = '#ffffff', focusedBackgroundColor = '#eef6ff', selectionColor = '#b4d5fe', caretColor, layout }, ref) => {
         const [ internalFocused, setInternalFocused ] = useState(false);
         const [ boxNode, setBoxNode ] = useState<PixiContainer | null>(null);
         const [ selection, setSelection ] = useState({ start: value.length, end: value.length });
@@ -145,7 +147,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
         useEffect(() => {
             const input = document.createElement(multiline ? 'textarea' : 'input');
 
-            if (input instanceof HTMLInputElement) input.type = 'text';
+            if (input instanceof HTMLInputElement) input.type = password ? 'password' : 'text';
 
             Object.assign(input.style, hiddenInputStyle);
             input.setAttribute('aria-hidden', 'true');
@@ -218,7 +220,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
 
                 if (inputRef.current === input) inputRef.current = null;
             };
-        }, [ multiline, readSelection, setFocused ]);
+        }, [ multiline, password, readSelection, setFocused ]);
 
         useEffect(() => {
             const input = inputRef.current;
@@ -359,11 +361,12 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             return rects;
         }, [ habboKey, measureCaret, multiline, wrapWidth ]);
 
+        const displayValue = password ? '•'.repeat(value.length) : value;
         const showPlaceholder = !value.length && !focused && !!placeholder;
         const selectionStart = Math.min(selection.start, value.length);
         const selectionEnd = Math.min(selection.end, value.length);
-        const caret = useMemo(() => measureCaret(value, selectionEnd), [ measureCaret, value, selectionEnd ]);
-        const selectionRects = useMemo(() => (focused ? measureSelection(value, Math.min(selectionStart, selectionEnd), Math.max(selectionStart, selectionEnd)) : []), [ focused, measureSelection, value, selectionStart, selectionEnd ]);
+        const caret = useMemo(() => measureCaret(displayValue, selectionEnd), [ measureCaret, displayValue, selectionEnd ]);
+        const selectionRects = useMemo(() => (focused ? measureSelection(displayValue, Math.min(selectionStart, selectionEnd), Math.max(selectionStart, selectionEnd)) : []), [ focused, measureSelection, displayValue, selectionStart, selectionEnd ]);
 
         // Single-line: slide the text left so the caret stays inside the box.
         const scrollX = (!multiline && innerWidth > 0 && caret.x > (innerWidth - 1)) ? (caret.x - (innerWidth - 1)) : 0;
@@ -385,7 +388,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             let bestDistance = Number.POSITIVE_INFINITY;
 
             for (let i = 0; i <= limit; i++) {
-                const geometry = measureCaret(value, i);
+                const geometry = measureCaret(displayValue, i);
 
                 if (multiline && (local.y < geometry.y || local.y > geometry.y + geometry.height)) continue;
 
@@ -430,7 +433,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                         />
                     ))}
                     <ThemeText
-                        text={showPlaceholder ? placeholder : value}
+                        text={showPlaceholder ? placeholder : displayValue}
                         textStyle={textStyle ?? 'text-style-regular'}
                         textOptions={showPlaceholder ? { ...textOptions, fill: placeholderColor } : textOptions}
                     />
