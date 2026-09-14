@@ -7,7 +7,6 @@ import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComp
 import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './context';
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
 import { Box, TooltipLayer } from './theme';
-import { FriendRequestsBarView } from './views/friendbar/FriendRequestsBarView';
 import { HotelView } from './views/hotel-view/HotelView';
 import { ActivityPointsView } from './views/purse/ActivityPointsView';
 import { PurseView } from './views/purse/PurseView';
@@ -86,7 +85,6 @@ export const MainView = () => {
                 <NavigatorWrapper />
                 <WalletComponent />
                 <LayoutBrowserComponent />
-                <FriendRequestsBarView />
                 <ToolbarView />
                 <TooltipLayer />
             </Box>
