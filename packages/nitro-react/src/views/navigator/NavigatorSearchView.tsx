@@ -2,9 +2,7 @@ import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { NavigatorFilterType, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Border, Box, Dropmenu, DropmenuItem, TextInput, ThemeImage, ThemeText } from '#base/theme';
-
-import { layoutImage } from '../layouts/layoutAssets';
+import { Border, Box, Dropmenu, DropmenuItem, LayoutImage, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
 const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
     { type: 'anything', prefix: '' },
@@ -65,7 +63,11 @@ export const NavigatorSearchView = () => {
                         {FILTER_TYPES.map(({ type }) => (
                             <DropmenuItem
                                 key={type}
-                                onPointerTap={() => { setFilterType(type); setFilterOpen(false); search(searchFilter, type); }}
+                                onPointerTap={() => {
+                                    setFilterType(type);
+                                    setFilterOpen(false);
+                                    search(searchFilter, type);
+                                }}
                                 layout={{ width: '100%' }}
                             >
                                 {t(`navigator.filter.${type}`)}
@@ -87,10 +89,15 @@ export const NavigatorSearchView = () => {
                 />
                 <Box
                     cursor="pointer"
-                    onPointerTap={() => { if (searchFilter.length > 0) { setSearchFilter(''); search(''); } }}
+                    onPointerTap={() => {
+                        if (searchFilter.length > 0) {
+                            setSearchFilter('');
+                            search('');
+                        }
+                    }}
                     layout={{ flexShrink: 0 }}
                 >
-                    <ThemeImage src={layoutImage(searchFilter.length > 0 ? 'icons_close.png' : 'common_small_pen.png')} />
+                    <ThemeImage src={LayoutImage(searchFilter.length > 0 ? 'icons_close.png' : 'common_small_pen.png')} />
                 </Box>
             </Border>
         </Box>

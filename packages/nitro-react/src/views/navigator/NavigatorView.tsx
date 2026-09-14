@@ -2,9 +2,8 @@ import { ForwardToARandomPromotedRoomComposer, GetGuestRoomComposer, IRoomInfo, 
 
 import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
 import { useNavigatorVisibility } from '#base/hooks';
-import { Border, Box, Frame, ScrollArea, TabButton, TabContent, TabContext, ThemeImage, ThemeText } from '#base/theme';
+import { Border, Box, Frame, LayoutImage, ScrollArea, TabButton, TabContent, TabContext, ThemeImage, ThemeText } from '#base/theme';
 
-import { layoutImage } from '../layouts/layoutAssets';
 import { NavigatorCategoryView } from './NavigatorCategoryView';
 import { NavigatorQuickLinksView } from './NavigatorQuickLinksView';
 import { NavigatorSearchView } from './NavigatorSearchView';
@@ -98,7 +97,7 @@ export const NavigatorView = () => {
                     onPointerTap={() => setLeftPaneHidden(!leftPaneHidden)}
                     layout={{ flexShrink: 0, marginLeft: 4 }}
                 >
-                    <ThemeImage src={layoutImage('newnavigator_button_quicklink_add.png')} />
+                    <ThemeImage src={LayoutImage('newnavigator_button_quicklink_add.png')} />
                 </Box>
                 <TabContext
                     variant="3"
@@ -180,7 +179,7 @@ export const NavigatorView = () => {
                                 layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                             />
                             <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                <ThemeImage src={layoutImage('newnavigator_create_room.png')} />
+                                <ThemeImage src={LayoutImage('newnavigator_create_room.png')} />
                             </Box>
                             <ThemeText
                                 layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
@@ -201,7 +200,7 @@ export const NavigatorView = () => {
                                             layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                                         />
                                         <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                            <ThemeImage src={layoutImage('newnavigator_promote_room.png')} />
+                                            <ThemeImage src={LayoutImage('newnavigator_promote_room.png')} />
                                         </Box>
                                         <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
@@ -225,7 +224,7 @@ export const NavigatorView = () => {
                                             layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                                         />
                                         <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                            <ThemeImage src={layoutImage('newnavigator_random_room.png')} />
+                                            <ThemeImage src={LayoutImage('newnavigator_random_room.png')} />
                                         </Box>
                                         <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}

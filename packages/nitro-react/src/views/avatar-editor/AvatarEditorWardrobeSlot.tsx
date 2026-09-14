@@ -1,8 +1,7 @@
 import { AvatarGenderType } from '@nitrodevco/nitro-api';
 
 import { AvatarImage } from '#base/components';
-import { Border, Region, ThemeImage } from '#base/theme';
-import { layoutImage } from '#base/views/layouts/layoutAssets';
+import { Border, LayoutImage, Region, ThemeImage } from '#base/theme';
 
 export interface AvatarEditorWardrobeSlotProps {
     figure?: string;
@@ -21,11 +20,11 @@ export const AvatarEditorWardrobeSlot = ({ figure, gender = AvatarGenderType.Mal
             <Region layout={{ flexDirection: 'column', justifyContent: 'center', gap: 5 }}>
                 <ThemeImage
                     onPointerTap={usable ? onSet : undefined}
-                    src={layoutImage('icons_forward_small.png')}
+                    src={LayoutImage('icons_forward_small.png')}
                 />
                 <ThemeImage
                     onPointerTap={canGet ? onGet : undefined}
-                    src={layoutImage('icons_back_small.png')}
+                    src={LayoutImage('icons_back_small.png')}
                 />
             </Region>
             <Border

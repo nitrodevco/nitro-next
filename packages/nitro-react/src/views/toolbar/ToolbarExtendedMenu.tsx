@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-import { Border, Region, ThemeImage, ThemeText } from '#base/theme';
-
-import { layoutImage } from '../layouts/layoutAssets';
+import { Border, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
 
 interface ToolbarExtendedMenuButton {
     icon: string;
@@ -28,7 +26,7 @@ const ToolbarExtendedMenuItem = ({ button, onSelect }: { button: ToolbarExtended
             tooltip={button.tooltip?.length ? button.tooltip : undefined}
         >
             <ThemeImage
-                src={layoutImage(`${button.icon}.png`)}
+                src={LayoutImage(`${button.icon}.png`)}
                 greyscale={!hovering}
             />
             <ThemeText

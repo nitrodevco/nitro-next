@@ -4,11 +4,9 @@ import { useState } from 'react';
 import { AvatarImage } from '#base/components';
 import { useIsLandingViewVisible, useOwnUserFigure, useOwnUserGender, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
 import { useGoToHomeRoom } from '#base/hooks';
-import { Border, Box, Icon, Region, ThemeImage } from '#base/theme';
+import { Border, Box, Icon, LayoutImage, Region, ThemeImage } from '#base/theme';
 
-import { layoutImage } from '../layouts/layoutAssets';
 import { ToolbarExtendedMenu } from './ToolbarExtendedMenu';
-import { ToolbarProgressionMenuPixi } from './ToolbarProgressionMenuPixi';
 
 export const ToolbarView = () => {
     const [ isMeExpanded, setMeExpanded ] = useState(false);
@@ -61,7 +59,7 @@ export const ToolbarView = () => {
                             >
                                 <ThemeImage
                                     dynamicRole="icon"
-                                    src={layoutImage('bottom_bar_logo.png')}
+                                    src={LayoutImage('bottom_bar_logo.png')}
                                 />
                             </Region>
                         ) }
@@ -73,7 +71,7 @@ export const ToolbarView = () => {
                             >
                                 <ThemeImage
                                     dynamicRole="icon"
-                                    src={layoutImage('bottom_bar_home.png')}
+                                    src={LayoutImage('bottom_bar_home.png')}
                                 />
                             </Region>
                         ) }
@@ -85,18 +83,19 @@ export const ToolbarView = () => {
                             >
                                 <ThemeImage
                                     dynamicRole="icon"
-                                    src={layoutImage('bottom_bar_navigator.png')}
+                                    src={LayoutImage('bottom_bar_navigator.png')}
                                 />
                             </Region>
                         )}
                         {!leftSideCollapsed && (
                             <Region
                                 dynamicStyle="lifted_hover"
+                                onPointerTap={() => toggleMenu('progression')}
                                 tooltip={t('toolbar.icon.label.progression')}
                             >
                                 <ThemeImage
                                     dynamicRole="icon"
-                                    src={layoutImage('bottom_bar_progression.png')}
+                                    src={LayoutImage('bottom_bar_progression.png')}
                                 />
                             </Region>
                         )}
@@ -107,7 +106,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={layoutImage('bottom_bar_shop.png')}
+                                src={LayoutImage('bottom_bar_shop.png')}
                             />
                         </Region>
                         <Region
@@ -116,7 +115,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={layoutImage('bottom_bar_buildersclub.png')}
+                                src={LayoutImage('bottom_bar_buildersclub.png')}
                             />
                         </Region>
                         <Region
@@ -126,7 +125,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={layoutImage('bottom_bar_inventory.png')}
+                                src={LayoutImage('bottom_bar_inventory.png')}
                             />
                         </Region>
                         <Region
@@ -136,7 +135,7 @@ export const ToolbarView = () => {
                             layout={{ width: 45, height: 45, justifyContent: 'center', alignItems: 'center' }}
                         >
                             <ThemeImage
-                                src={layoutImage('bottom_bar_memenu_bg.png')}
+                                src={LayoutImage('bottom_bar_memenu_bg.png')}
                                 layout={{ position: 'absolute', left: 0, width: 45, height: 45 }}
                             />
                             <Region
@@ -152,7 +151,7 @@ export const ToolbarView = () => {
                                 />
                             </Region>
                             <ThemeImage
-                                src={layoutImage('bottom_bar_memenu_circle.png')}
+                                src={LayoutImage('bottom_bar_memenu_circle.png')}
                                 layout={{ position: 'absolute', left: 0, width: 45, height: 45 }}
                             />
                         </Region>
@@ -162,7 +161,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={layoutImage('bottom_bar_wired_menu.png')}
+                                src={LayoutImage('bottom_bar_wired_menu.png')}
                             />
                         </Region>
                         <Region
@@ -171,7 +170,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={layoutImage('bottom_bar_camera.png')}
+                                src={LayoutImage('bottom_bar_camera.png')}
                             />
                         </Region>
 
@@ -184,14 +183,14 @@ export const ToolbarView = () => {
                         </Box>
                         <ThemeImage
                             name="line"
-                            src={layoutImage('bottom_bar_divider_1px.png')}
+                            src={LayoutImage('bottom_bar_divider_1px.png')}
                             layout={{ width: 1, height: 40 }}
                         />
                     </Region>
                     <Region layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
                         <ThemeImage
                             name="line"
-                            src={layoutImage('bottom_bar_divider_1px.png')}
+                            src={LayoutImage('bottom_bar_divider_1px.png')}
                             layout={{ width: 1, height: 40 }}
                         />
                         <Region
@@ -201,7 +200,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={layoutImage('friend_bar_all_friends.png')}
+                                src={LayoutImage('friend_bar_all_friends.png')}
                             />
                         </Region>
                         <Region
@@ -211,7 +210,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={layoutImage('friend_bar_search_habbos.png')}
+                                src={LayoutImage('friend_bar_search_habbos.png')}
                             />
                         </Region>
                         <ThemeImage
@@ -236,7 +235,18 @@ export const ToolbarView = () => {
                     onSelect={() => setMeExpanded(false)}
                 />
             )}
-            {isProgressionExpanded && <ToolbarProgressionMenuPixi />}
+            {isProgressionExpanded && (
+                <ToolbarExtendedMenu
+                    buttons={[
+                        { icon: 'prog_menu_daily_tasks', caption: t('widget.progmenu.dailytasks') },
+                        { icon: 'prog_menu_quests', caption: t('widget.progmenu.quests') },
+                        { icon: 'icons_toolbar_achievements_normal', caption: t('widget.progmenu.achievements') },
+                        { icon: 'prog_menu_leaderboards', caption: t('widget.progmenu.leaderboards') },
+                        { icon: 'prog_menu_introduction', caption: t('widget.progmenu.introduction') },
+                    ]}
+                    onSelect={() => setProgressionExpanded(false)}
+                />
+            )}
         </>
     );
 };

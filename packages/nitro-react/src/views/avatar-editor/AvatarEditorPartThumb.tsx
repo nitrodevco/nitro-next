@@ -2,8 +2,7 @@ import { IPartColor } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
 import { PartThumbnailRequest, usePartThumbnail } from '#base/hooks';
-import { Box, getRenderMode, Region, ThemeImage } from '#base/theme';
-import { layoutImage } from '#base/views/layouts/layoutAssets';
+import { Box, getRenderMode, LayoutImage, Region, ThemeImage } from '#base/theme';
 
 export interface AvatarEditorPartThumbProps {
     selected: boolean;
@@ -36,18 +35,18 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
         >
             { (selected || isHovering) && (
                 <ThemeImage
-                    src={layoutImage('avatar_editor_parts_hilite.png')}
+                    src={LayoutImage('avatar_editor_parts_hilite.png')}
                     alpha={selected ? 1 : 0.5}
                     layout={{ position: 'absolute', left: 0, top: 0 }}
                 />
             )}
             { isClear && (
-                <ThemeImage src={layoutImage('avatar_editor_generic_remove_selection.png')} />
+                <ThemeImage src={LayoutImage('avatar_editor_generic_remove_selection.png')} />
             )}
             { !isClear && !thumbnail && (
                 <ThemeImage
                     name="loading"
-                    src={layoutImage('avatar_editor_avatar_editor_download_icon.png')}
+                    src={LayoutImage('avatar_editor_avatar_editor_download_icon.png')}
                 />
             )}
             {thumbnail && isPixi && (
@@ -68,13 +67,13 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
             )}
             {isClub && (
                 <ThemeImage
-                    src={layoutImage('icons_hc_icon_small.png')}
+                    src={LayoutImage('icons_hc_icon_small.png')}
                     layout={{ position: 'absolute', right: 0, width: 10, bottom: 1, height: 9 }}
                 />
             )}
             {isSellable && (
                 <ThemeImage
-                    src={layoutImage('icons_wearable.png')}
+                    src={LayoutImage('icons_wearable.png')}
                     layout={{ position: 'absolute', left: 0, width: 17, bottom: 0, height: 20 }}
                 />
             )}

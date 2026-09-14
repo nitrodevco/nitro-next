@@ -5,8 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { IChatStyle } from '#base/chat';
 import { useConfigValue, useOwnChatPreferences, useOwnClubLevel, useOwnIsAmbassador, useOwnSecurityLevel, useRoomChatActions, useRoomChatSelector, useRoomContext, useRoomSelectedObjectDetails, useRoomSelector, useTranslation, useUserActions, useWebSocketContext } from '#base/context';
 import { useChatStyles } from '#base/hooks';
-import { Border, Box, Icon, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
-import { layoutImage } from '#base/views/layouts/layoutAssets';
+import { Border, Box, Icon, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
 import { ChatStyleSelectorView } from './ChatStyleSelectorView';
 
@@ -342,12 +341,12 @@ export const RoomChatInputView = () => {
                 >
                     <ThemeImage
                         name="style_bg"
-                        src={layoutImage('common_chat_style_block.png')}
+                        src={LayoutImage('common_chat_style_block.png')}
                         layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 38 }}
                     />
                     <ThemeImage
                         name="style_icon"
-                        src={layoutImage('common_chat_styles.png')}
+                        src={LayoutImage('common_chat_styles.png')}
                         layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 17, top: 10, height: 19 }}
                     />
                     <Icon
@@ -403,7 +402,7 @@ export const RoomChatInputView = () => {
                 <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                     <ThemeImage
                         name="chat_extra_bg"
-                        src={layoutImage('habbicons_sticky_note.png')}
+                        src={LayoutImage('habbicons_sticky_note.png')}
                         layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 38 }}
                     />
                     {/* <ThemeImage
@@ -414,12 +413,12 @@ export const RoomChatInputView = () => {
                     /> */}
                     <ThemeImage
                         name="chat_extra_icon"
-                        src={layoutImage('habbicons_clip.png')}
+                        src={LayoutImage('habbicons_clip.png')}
                         layout={{ position: 'absolute', right: 0, width: 18, top: 2, height: 15 }}
                     />
                     <ThemeImage
                         name="chat_extra_bg"
-                        src={layoutImage('habbicons_sticky_note2.png')}
+                        src={LayoutImage('habbicons_sticky_note2.png')}
                         layout={{ position: 'absolute', right: 5, width: 12, bottom: 0, height: 12 }}
                     />
                 </Region>
