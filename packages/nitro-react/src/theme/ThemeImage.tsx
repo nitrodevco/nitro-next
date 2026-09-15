@@ -8,7 +8,7 @@ import { boxLayoutToStyle } from './dom/boxStyle';
 import { useDynamicStyleEffect } from './dynamicstyle';
 import { getCroppedTexture, getTextureGreyscale, getTextureSilhouette, usePixiTexture, useTextureFromUrl, useThemeImageUrl } from './hooks';
 import { useTooltipHandlers } from './tooltip/useTooltipHandlers';
-import { compose, DynamicStyleRole, getRenderMode, getThemeAtlas, getThemeSprite, insetStretchAxes, multiplyAlphas, multiplyTints, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta, themeSpriteFillStyle } from './utils';
+import { compose, cursorForHandlers, DynamicStyleRole, getRenderMode, getThemeAtlas, getThemeSprite, insetStretchAxes, multiplyAlphas, multiplyTints, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta, themeSpriteFillStyle } from './utils';
 
 export interface ImageProps extends ThemeLayoutMeta {
     /** An arbitrary image URL (a layout bitmap, an avatar render). Ignored when `textureKey` is set. */
@@ -99,7 +99,6 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
 }, ref) => {
     // A tooltip hovers like any handler would, but on its own it doesn't make the image read as clickable.
     const tooltipHandlers = useTooltipHandlers(tooltip);
-    const clickable = !!(onPointerOverProp || onPointerOutProp || onPointerDown || onPointerUp || onPointerUpOutside || onPointerTap);
     const onPointerOver = compose(tooltipHandlers.onPointerOver, onPointerOverProp);
     const onPointerOut = compose(tooltipHandlers.onPointerOut, onPointerOutProp);
     const themeTexture = usePixiTexture(ownTexture ? undefined : textureKey);
@@ -131,9 +130,9 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
 
     // A non-1 `scale` needs the texture stretched into the scaled box, exactly like an explicit size.
     const explicitSize = width !== undefined || height !== undefined || !!stretch || scale !== 1;
-    // Same rule as `Box`: an image that handles pointer events reads as clickable unless the
-    // caller sets its own cursor.
-    const resolvedCursor = cursor ?? (resolvedEventMode === 'static' ? (clickable ? 'pointer' : 'default') : undefined);
+    // Same rule as `Box`: the pointer follows the click handlers, never the event mode, unless
+    // the caller names a cursor of its own.
+    const resolvedCursor = cursor ?? cursorForHandlers(resolvedEventMode, { onPointerTap });
     const stretchAxes = insetStretchAxes(layout, width, height);
     const objectFit = explicitSize ? 'fill' : 'none';
     const renderWidth = (width ?? texture.width) * scale;
@@ -222,7 +221,6 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
     layout, visible,
 }, ref) => {
     const tooltipHandlers = useTooltipHandlers(tooltip);
-    const clickable = !!(onPointerOverProp || onPointerOutProp || onPointerDown || onPointerUp || onPointerUpOutside || onPointerTap);
     const onPointerOver = compose(tooltipHandlers.onPointerOver, onPointerOverProp);
     const onPointerOut = compose(tooltipHandlers.onPointerOut, onPointerOutProp);
     const effect = useDynamicStyleEffect(dynamicRole);
@@ -264,7 +262,7 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
         // natural size known or not.
         zoom: scale !== 1 ? scale : undefined,
         zIndex,
-        cursor: cursor ?? (resolvedEventMode === 'static' ? (clickable ? 'pointer' : 'default') : undefined),
+        cursor: cursor ?? cursorForHandlers(resolvedEventMode, { onPointerTap }),
         opacity: resolvedAlpha,
         mixBlendMode: typeof blendMode === 'string' && blendMode !== 'normal' && blendMode !== 'inherit' ? (blendMode === 'add' ? 'screen' : blendMode) as CSSProperties['mixBlendMode'] : undefined,
         pointerEvents: pointerEventsFromEventMode(resolvedEventMode),

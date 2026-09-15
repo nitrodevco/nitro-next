@@ -64,11 +64,11 @@ export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiC
                 ref={ref}
                 zIndex={zIndex}
                 visible={visible}
-                cursor={cursor}
                 blendMode={blendMode}
                 layout={{ ...config.layout, ...layout }}
                 {...dynamicStyleBoxProps(hostEffect ?? childEffect, alpha)}
                 {...handlers}
+                cursor={cursor ?? handlers.cursor}
             >
                 {dropShadow && <ShadowLayer {...dropShadow} />}
                 {backgroundColor && <ColorLayer color={backgroundColor} />}

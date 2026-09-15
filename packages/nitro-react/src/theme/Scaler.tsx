@@ -78,8 +78,8 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
                     stretch
                     visible={visible}
                     zIndex={config.zIndex}
-                    cursor={CURSOR_BY_DIRECTION[direction]}
                     {...handlers}
+                    cursor={CURSOR_BY_DIRECTION[direction]}
                     layout={{ position: 'absolute', ...config.layout, ...layout }}
                 />
             );

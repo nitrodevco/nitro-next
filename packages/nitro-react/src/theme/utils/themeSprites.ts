@@ -73,6 +73,47 @@ export const themeSliceEffectId = (effect: ThemeSliceEffect): string => {
 };
 
 /**
+ * Closes a partly painted skin downwards: every empty row below the last painted one repeats
+ * that row.
+ *
+ * A window skin does not have to paint its whole sheet. The ubuntu frames' `3-default.png` is
+ * 26x55 sliced 10/33/10/10, and only its top 33 rows - the title bar - carry any pixels: the
+ * nine-slice's middle and bottom bands are empty, because the window's body and its outline
+ * are drawn by the content area underneath. Shadowing that silhouette as-is gives a shadow
+ * beside the title bar that stops dead where the window carries on, while Flash filtered the
+ * whole window and cast one down its full height. A fully painted sheet (`0-default.png`, and
+ * every rounded-all-round skin) has no empty rows and is left exactly as it was.
+ */
+const extendLastPaintedRow = (ctx: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number, pad: number): void => {
+    const image = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+    const { data } = image;
+    const rowIsEmpty = (y: number): boolean => {
+        for (let x = 0; x < canvasWidth; x++) {
+            if (data[(((y * canvasWidth) + x) * 4) + 3]) return false;
+        }
+
+        return true;
+    };
+
+    // The art sits inside the padding the blur needs, so only its own rows are candidates.
+    const bottom = canvasHeight - pad;
+
+    let last = bottom - 1;
+
+    while ((last >= pad) && rowIsEmpty(last)) last--;
+
+    // Painted to the bottom already, or nothing painted at all.
+    if ((last < pad) || (last === (bottom - 1))) return;
+
+    const start = last * canvasWidth * 4;
+    const stride = canvasWidth * 4;
+
+    for (let y = last + 1; y < bottom; y++) data.copyWithin(y * stride, start, start + stride);
+
+    ctx.putImageData(image, 0, 0);
+};
+
+/**
  * Draws the rect `(sx, sy, width, height)` of `source` onto a fresh canvas with `effect`
  * applied - the one recolour routine the atlas slices, the per-file fallback and the Pixi
  * effect textures all share.
@@ -89,6 +130,9 @@ export const renderSliceEffect = (source: CanvasImageSource, sx: number, sy: num
     if (!ctx) return undefined;
 
     ctx.drawImage(source, sx, sy, width, height, pad, pad, width, height);
+
+    // Before the silhouette is taken, so the window's body casts a shadow too.
+    if (effect.kind === 'shadow') extendLastPaintedRow(ctx, canvas.width, canvas.height, pad);
 
     if (effect.kind === 'tint') {
         // Multiply the colour in, then clip back to the art's own alpha shape.

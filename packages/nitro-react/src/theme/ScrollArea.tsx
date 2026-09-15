@@ -85,12 +85,12 @@ const ScrollAreaPixi = forwardRef<PixiContainer, ScrollAreaProps>(
         // behavior - callers scrolling a single wide row (horizontal orientation) override via
         // `contentLayout`, the same way DOM callers would give their children their own
         // `flex flex-row` wrapper.
-        const resolvedContentLayout: BoxLayout = contentLayout ?? { position: 'relative', width: '100%', flexDirection: 'column' };
+        const resolvedContentLayout: BoxLayout = contentLayout ?? { position: 'relative', width: '100%', gap: 2 };
 
         return (
             <Box
                 ref={ref}
-                layout={{ flexDirection: 'row', width: '100%', height: '100%', minWidth: 0, minHeight: 0, gap: 1, ...layout }}
+                layout={{ flex: 1, flexDirection: 'row', width: '100%', height: '100%', minWidth: 0, minHeight: 0, gap: 2, ...layout }}
             >
                 {isBoth
                     ? (
@@ -228,7 +228,7 @@ const ScrollAreaDom = forwardRef<PixiContainer, ScrollAreaProps>(
         return (
             <Box
                 ref={ref}
-                layout={{ flexDirection: 'row', width: '100%', height: '100%', minWidth: 0, minHeight: 0, gap: 1, ...layout }}
+                layout={{ flexDirection: 'row', width: '100%', height: '100%', minWidth: 0, minHeight: 0, gap: 2, ...layout }}
             >
                 <div
                     ref={(node) => {

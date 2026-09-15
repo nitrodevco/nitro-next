@@ -672,10 +672,6 @@ export class Room implements IRoom {
         }
     }
 
-    public initializeTemporaryObjectsByType(type: string) {
-
-    }
-
     /** Users (avatars, pets, bots) draw from the user Variable FX tables; floor/wall items from the furniture ones. */
     private assignVariableFxRoomData(visualization: IRoomObjectVisualization, category: RoomObjectCategoryEnum): void {
         if (!isVariableFxVisualizationHost(visualization)) return;

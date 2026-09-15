@@ -76,9 +76,9 @@ export const ScrollbarSliderBarVertical: ForwardRefExoticComponent<ScrollbarSlid
         return (
             <Box
                 ref={ref}
-                cursor={state === 'pressed' ? 'grabbing' : 'grab'}
                 layout={mergedLayout}
                 {...handlers}
+                cursor={state === 'pressed' ? 'grabbing' : 'grab'}
             >
                 { resolvedLayer && (
                     <BackgroundLayer

@@ -3,7 +3,7 @@ import { DropShadowFilter } from 'pixi-filters';
 import { CSSProperties, forwardRef, ForwardRefExoticComponent, JSX, MouseEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes, useCallback, useState } from 'react';
 
 import { boxLayoutToStyle } from './dom';
-import { getRenderMode, pointerEventsFromEventMode, resolveEventMode, wrapTextChildren } from './utils';
+import { cursorForHandlers, getRenderMode, pointerEventsFromEventMode, resolveEventMode, wrapTextChildren } from './utils';
 
 /**
  * The flex/positioning primitive: a thin typed wrapper around pixiContainer + @pixi/layout's
@@ -78,15 +78,12 @@ const BoxPixi = forwardRef<Container, BoxProps>(
         }, [ ref ]);
 
         const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
-        // Same rule as BoxDom below: a box that handles pointer events reads as clickable unless
-        // the caller sets its own cursor.
-        const resolvedCursor = cursor ?? (resolvedEventMode === 'static' ? 'pointer' : undefined);
 
         return (
             <pixiContainer
                 ref={setRef}
                 eventMode={resolvedEventMode}
-                cursor={resolvedCursor}
+                cursor={cursor ?? cursorForHandlers(resolvedEventMode, { onPointerTap })}
                 onPointerOver={onPointerOver}
                 onPointerOut={onPointerOut}
                 onPointerDown={onPointerDown}
@@ -139,8 +136,11 @@ const BoxDom = forwardRef<Container, BoxProps>(
         // `pointer-events` is inherited, so without this every button under that root would
         // silently inherit `none` and never receive a click).
         style.pointerEvents = pointerEventsFromEventMode(resolvedEventMode);
-        if (typeof cursor === 'string') style.cursor = cursor;
-        else if (resolvedEventMode === 'static') style.cursor = 'pointer';
+        // Same rule as BoxPixi above: the pointer follows the click handlers, never the event
+        // mode, and a caller's own cursor always wins.
+        const resolvedCursor = (typeof cursor === 'string' && cursor.length) ? cursor : cursorForHandlers(resolvedEventMode, { onPointerTap });
+
+        if (resolvedCursor) style.cursor = resolvedCursor;
         if (typeof zIndex === 'number') style.zIndex = zIndex;
         if (typeof alpha === 'number') style.opacity = alpha;
         if (visible === false) style.display = 'none';

@@ -1,12 +1,18 @@
 import { useMemo, useState } from 'react';
 
-import { compose, hasAnyPointerHandler, PointerHandlerProps } from '../utils/interaction';
+import { compose, hasAnyPointerHandler, hasClickHandler, PointerHandlerProps } from '../utils/interaction';
 
 export type InteractionState = 'default' | 'hovering' | 'pressed' | 'disabled';
 
 export interface InteractionHandlers extends PointerHandlerProps {
     eventMode?: 'static' | 'none';
-    /** Set by `useThemeVariant` for a component hovered only for its tooltip - it is a hit target, but not a clickable one. */
+    /**
+     * `'pointer'` only where the component's own caller gave it something to do on a click;
+     * `'default'` for one that is a hit target for hovering alone (a tooltip host, a row that
+     * highlights, a `dynamicStyle` host drawing from its state). A component that names its
+     * own cursor - the scrollbar bars' `grab`, the scaler's resize arrows - keeps that one:
+     * it spreads these handlers first and sets `cursor` after.
+     */
     cursor?: string;
 }
 
@@ -55,6 +61,10 @@ export const useInteractionState = ({
 
         return {
             eventMode: 'static',
+            // The caller's own tap handler decides this, never the composed handlers below: the
+            // hover and press tracking this hook adds is what draws the component's states, and
+            // says nothing about whether clicking it does anything.
+            cursor: hasClickHandler({ onPointerTap }) ? 'pointer' : 'default',
             onPointerOver: compose(() => setState('hovering'), onPointerOver),
             onPointerOut: compose(() => setState('default'), onPointerOut),
             onPointerDown: stopsPropagation ? compose(compose(() => setState('pressed'), onPointerDown), e => e.stopPropagation()) : compose(() => setState('pressed'), onPointerDown),

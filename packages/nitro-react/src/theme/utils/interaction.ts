@@ -88,6 +88,39 @@ export const resolveEventMode = (explicit: EventMode | undefined, handlers: Poin
     explicit ?? (hasPointerHandler(handlers) ? 'static' : undefined);
 
 /**
+ * True once the element is given the one handler that means "clicking here does something":
+ * `onPointerTap`, a press and release on the same element. Nothing else in the six counts.
+ * Hovering (`onPointerOver`/`onPointerOut`) makes a tooltip host or a row that highlights into
+ * a hit target without making it actionable; `onPointerUpOutside` only ever completes a press
+ * begun elsewhere; and a press alone is how this package drives the things you hold rather
+ * than click - a window brought to the front and dragged by its chrome, a scrollbar thumb, a
+ * scaler, a scroll arrow repeating while held - none of which the Flash client pointed at
+ * either. A component that holds to act and still wants the hand says so with its own
+ * `cursor`, the way the scrollbar bars ask for `grab`.
+ */
+export const hasClickHandler = (handlers: PointerHandlerDetection): boolean => !!handlers.onPointerTap;
+
+/** A hit target in either renderer: the modes Pixi tests against, and the ones DOM maps to `pointer-events: auto`. */
+const isHitTarget = (eventMode: EventMode | undefined): boolean => eventMode === 'static' || eventMode === 'dynamic';
+
+/**
+ * The cursor an element shows when its caller hasn't named one of its own. The pointer is the
+ * client's one signal that clicking here does something, so it follows the handlers actually
+ * attached, never the `eventMode`: an element is routinely `static` only to catch hovers (a
+ * tooltip host, a row that highlights under the pointer) or a wheel, and pointing at those
+ * promises a click that does nothing.
+ *
+ * A hit target that isn't actionable still names its cursor rather than leaving it unset, so
+ * that the DOM renderer doesn't let it inherit a clickable ancestor's pointer - Pixi reads the
+ * hit target's own cursor and has no inheritance to undo, and the two targets should agree.
+ */
+export const cursorForHandlers = (eventMode: EventMode | undefined, handlers: PointerHandlerDetection): string | undefined => {
+    if (hasClickHandler(handlers)) return 'pointer';
+
+    return isHitTarget(eventMode) ? 'default' : undefined;
+};
+
+/**
  * DOM has no equivalent to Pixi's `passive`/`static`/`dynamic` split - only "never a hit
  * target" (`none`) and "always one" (`auto`, `pointer-events`'s own default). Every
  * interactive `eventMode` maps to `auto` here; anything else (including unset/`passive`) is

@@ -1,5 +1,5 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { CSSProperties, Key, ReactElement, useEffect, useState } from 'react';
+import { Key, ReactElement, useEffect, useState } from 'react';
 
 import { Box } from './Box';
 import { useLayoutSize, useRowVirtualizer, useScrollController } from './hooks';
@@ -64,15 +64,8 @@ const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, i
 
     const columnCount = overrideColumnCount || Math.max(MIN_COLUMNS, Math.min(MAX_COLUMNS, Math.ceil(viewportWidth / (itemWidth + 4)))) || MIN_COLUMNS;
 
-    const gridStyle: CSSProperties = {
-        display: 'grid',
-        width: '100%',
-        gap: 4,
-        gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-    };
-
     return (
-        <Box layout={{ flexDirection: 'row', flex: 1, gap: 2, padding: 4 }}>
+        <Box layout={{ flexDirection: 'row', flex: 1, gap: 2 }}>
             <ScrollArea
                 variant="3"
                 scrollResetKey={scrollResetKey}
@@ -80,7 +73,12 @@ const InfiniteGridDom = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, i
             >
                 <div
                     ref={setViewportNode}
-                    style={gridStyle}
+                    style={{
+                        display: 'grid',
+                        width: '100%',
+                        gap: 2,
+                        gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+                    }}
                 >
                     {items.map((item, i) => (
                         <div
@@ -126,11 +124,11 @@ const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, 
         overscan: OVERSCAN,
         viewportHeight,
         scrollOffset: scroll.scrollOffset,
-        gap: ROW_GAP,
+        gap: 2,
     });
 
     return (
-        <Box layout={{ flexDirection: 'row', flex: 1, gap: 5 }}>
+        <Box layout={{ flexDirection: 'row', flex: 1, gap: 2 }}>
             <ScrollViewport
                 viewportRef={(node) => {
                     scroll.viewportRef(node);
@@ -147,7 +145,7 @@ const InfiniteGridPixi = <T,>({ items, itemWidth = 45, overrideColumnCount = 0, 
                     <Box
                         key={row.index}
                         ref={node => measureRow(row.index, node)}
-                        layout={{ position: 'absolute', top: row.start, left: 0, width: '100%', flexDirection: 'row', gap: 2 }}
+                        layout={{ position: 'absolute', top: row.start, left: 0, width: '100%', flexDirection: 'row' }}
                     >
                         {Array.from({ length: columnCount }).map((_, i) => {
                             const index = i + (row.index * columnCount);
