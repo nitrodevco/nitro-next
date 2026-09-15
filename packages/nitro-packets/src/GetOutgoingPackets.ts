@@ -187,7 +187,7 @@ export const GetOutgoingPackets = () => {
         [OutgoingHeader.GetBotInventoryComposer]: GetBotInventoryComposer,
         [OutgoingHeader.RequestFurniInventoryComposer]: RequestFurniInventoryComposer,
         [OutgoingHeader.RequestFurniInventoryWhenNotInRoomComposer]: RequestFurniInventoryWhenNotInRoomComposer,
-        [OutgoingHeader.RequestRoomPropertySet]: RequestRoomPropertySetComposer,
+        [OutgoingHeader.RequestRoomPropertySetComposer]: RequestRoomPropertySetComposer,
         [OutgoingHeader.CancelPetBreedingComposer]: CancelPetBreedingComposer,
         [OutgoingHeader.ConfirmPetBreedingComposer]: ConfirmPetBreedingComposer,
         [OutgoingHeader.GetPetInventoryComposer]: GetPetInventoryComposer,
