@@ -7,6 +7,8 @@ export enum AvatarActionStateType {
     // Expressions
     Expression = 'expression',
     BlowAKiss = 'blow',
+    /** The "67" meme gesture (expression id 67); the room renders it as the built-in `dance.sixseven` animation. */
+    Expression67 = '67',
     Cry = 'cry',
     Idle = 'idle',
     Laugh = 'laugh',
@@ -79,6 +81,8 @@ export class AvatarActionStateTypeUtilities {
         AvatarActionStateType.PetPuzzled,
     ];
 
+    public static EXPRESSION_67_ID = 67;
+
     public static EXPRESSION_MAP = [
         AvatarActionStateType.None,
         AvatarActionStateType.Wave,
@@ -93,11 +97,16 @@ export class AvatarActionStateTypeUtilities {
         AvatarActionStateType.RideJump,
     ];
 
+    /** `AvatarAction.getExpression`: 67 is not in the map, it is its own id. */
     public static getExpression(expressionId: number): AvatarActionStateType | undefined {
+        if (expressionId === AvatarActionStateTypeUtilities.EXPRESSION_67_ID) return AvatarActionStateType.Expression67;
+
         return AvatarActionStateTypeUtilities.EXPRESSION_MAP[expressionId];
     }
 
     public static getExpressionId(expression: AvatarActionStateType): number {
+        if (expression === AvatarActionStateType.Expression67) return AvatarActionStateTypeUtilities.EXPRESSION_67_ID;
+
         return AvatarActionStateTypeUtilities.EXPRESSION_MAP.indexOf(expression);
     }
 
@@ -107,6 +116,8 @@ export class AvatarActionStateTypeUtilities {
                 return 5000;
             case 2:
                 return 1400;
+            case AvatarActionStateTypeUtilities.EXPRESSION_67_ID:
+                return 990;
             case 3:
                 return 2000;
             case 4:

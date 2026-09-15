@@ -29,6 +29,11 @@ export enum AvatarActionType {
     GestureSurprised = 'GestureSurprised',
     Sleep = 'Sleep',
     Move = 'Move',
+    SnowWarRun = 'SnowWarRun',
+    SnowWarDieFront = 'SnowWarDieFront',
+    SnowWarDieBack = 'SnowWarDieBack',
+    SnowWarPick = 'SnowWarPick',
+    SnowWarThrow = 'SnowWarThrow',
 }
 
 export class AvatarActionTypeUtilities {
@@ -61,6 +66,11 @@ export class AvatarActionTypeUtilities {
             case AvatarActionType.GestureSurprised: return AvatarActionStateType.Surprised;
             case AvatarActionType.Sleep: return AvatarActionStateType.Sleep;
             case AvatarActionType.Move: return AvatarActionStateType.Walk;
+            case AvatarActionType.SnowWarRun: return AvatarActionStateType.SnowwarRun;
+            case AvatarActionType.SnowWarDieFront: return AvatarActionStateType.SnowwarDieFront;
+            case AvatarActionType.SnowWarDieBack: return AvatarActionStateType.SnowwarDieBack;
+            case AvatarActionType.SnowWarPick: return AvatarActionStateType.SnowwarPick;
+            case AvatarActionType.SnowWarThrow: return AvatarActionStateType.SnowwarThrow;
             default: return AvatarActionStateType.Stand;
         }
     }

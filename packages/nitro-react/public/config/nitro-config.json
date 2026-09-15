@@ -25,7 +25,7 @@
     "log.warn": false,
     "log.error": false,
     "log.events": false,
-    "log.packets": true,
+    "log.packets": false,
     "renderer.petTypes": [
         "dog",
         "cat",

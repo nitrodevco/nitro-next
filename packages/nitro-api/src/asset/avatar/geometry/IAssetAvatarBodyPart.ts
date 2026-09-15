@@ -8,5 +8,9 @@ export interface IAssetAvatarBodyPart {
     y?: number;
     z?: number;
     radius?: number;
+    /** Draw this body part before the named one when they sit at the same distance (the pet body parts share the arm geometry). */
+    orderBefore?: AvatarBodyPartType;
+    /** Draw this body part right after the named one, whatever the distance sort says. */
+    orderAfter?: AvatarBodyPartType;
     items?: IAssetAvatarBodyPartItem[];
 }

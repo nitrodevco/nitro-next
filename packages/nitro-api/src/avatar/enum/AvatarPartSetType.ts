@@ -7,6 +7,8 @@ export enum AvatarPartSetType {
     HandRight = 'handRight',
     HandRightAndHead = 'handRightAndHead',
     HandLeft = 'handLeft',
+    Pet = 'pet',
+    Misc = 'misc',
     Walk = 'walk',
     Sit = 'sit',
     ItemRight = 'itemRight',

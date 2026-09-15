@@ -30,22 +30,10 @@
     Ss = 'ss',
     Standard = 'std',
     WaistAccessory = 'wa',
+    Misc = 'mc',
+    MiscRight = 'mcr',
+    MiscLeft = 'mcl',
+    Pet = 'pt',
+    PetRight = 'ptr',
+    PetLeft = 'ptl',
 }
-
-const DEFAULT_FRAME = 0;
-
-const FIGURE_SETS: string[] = [
-    AvatarFigurePartType.Shoes,
-    AvatarFigurePartType.Legs,
-    AvatarFigurePartType.Chest,
-    AvatarFigurePartType.WaistAccessory,
-    AvatarFigurePartType.ChestAccessory,
-    AvatarFigurePartType.Head,
-    AvatarFigurePartType.Hair,
-    AvatarFigurePartType.FaceAccessory,
-    AvatarFigurePartType.EyeAccessory,
-    AvatarFigurePartType.HeadAccessory,
-    AvatarFigurePartType.HeadAccessoryExtra,
-    AvatarFigurePartType.CoatChest,
-    AvatarFigurePartType.ChestPrint,
-];
