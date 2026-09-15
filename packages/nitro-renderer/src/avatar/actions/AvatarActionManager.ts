@@ -1,10 +1,11 @@
-import { AvatarActionStateType, AvatarScaleType, IActiveActionData, IAssetAvatarActionData, IAssetAvatarActionOffset } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, AvatarGeometryType, AvatarScaleType, IActiveActionData, IAssetAvatarActionData, IAssetAvatarActionOffset } from '@nitrodevco/nitro-api';
 
 import { ActionDefinition } from './ActionDefinition';
 
 export class AvatarActionManager {
     private _actions: Map<string, ActionDefinition> = new Map();
     private _defaultAction: ActionDefinition | undefined = undefined;
+    private _defaultLayAction: ActionDefinition | undefined = undefined;
 
     public updateActions(data: IAssetAvatarActionData): void {
         if (data.actions) {
@@ -66,6 +67,22 @@ export class AvatarActionManager {
         return undefined;
     }
 
+    /** The default action re-targeted at the horizontal geometry: what a part outside the active set uses while the avatar lies down. */
+    public getDefaultLayAction(): ActionDefinition | undefined {
+        if (this._defaultLayAction) return this._defaultLayAction;
+
+        const defaultAction = this.getDefaultAction();
+
+        if (!defaultAction) return undefined;
+
+        this._defaultLayAction = defaultAction.copy();
+        this._defaultLayAction.setGeometryType(AvatarGeometryType.Horizontal);
+        this._defaultLayAction.setState(AvatarActionStateType.Lay);
+        this._defaultLayAction.setAssetPartDefinition('lay');
+
+        return this._defaultLayAction;
+    }
+
     public getCanvasOffsets(actions: IActiveActionData[], size: AvatarScaleType, direction: number): number[] {
         let canvasOffsets: number[] = [];
 
@@ -98,7 +115,8 @@ export class AvatarActionManager {
             validatedActions.push(action);
         }
 
-        validatedActions.sort(void this.sortByPrecedence);
+        // highest precedence first: the main action wins the geometry, the rest layer on top
+        validatedActions.sort((a, b) => AvatarActionManager.sortByPrecedence(a, b));
 
         return validatedActions;
     }
@@ -120,9 +138,9 @@ export class AvatarActionManager {
 
             let actionType = action.type as string;
 
-            if (action.type as string === 'fx') actionType = `${action.type}.${action.actionParameter}`;
+            if (action.type === AvatarActionStateType.Effect) actionType = `${action.type}.${action.actionParameter}`;
 
-            if (preventions.indexOf(actionType as unknown as AvatarActionStateType) >= 0) continue;
+            if (preventions.indexOf(actionType as AvatarActionStateType) >= 0) continue;
 
             activeActions.push(action);
         }
@@ -130,7 +148,7 @@ export class AvatarActionManager {
         return activeActions;
     }
 
-    private sortByPrecedence(a: IActiveActionData, b: IActiveActionData): number {
+    private static sortByPrecedence(a: IActiveActionData, b: IActiveActionData): number {
         if (!a || !a.definition || !b || !b.definition) return 0;
 
         if (a.definition.precedence < b.definition.precedence) return 1;

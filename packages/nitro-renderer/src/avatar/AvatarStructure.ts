@@ -1,4 +1,4 @@
-import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGenderType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActionDefinition, IActiveActionData, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAvatarAnimation, IAssetAvatarBodyPartItem, IAssetAvatarGeometryConfig, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IAvatarCanvas, IAvatarFigureContainer, IAvatarImage, IAvatarStructure, IFigureData, IFigurePartSet, IPartColor, IStructureData } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGenderType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActionDefinition, IActiveActionData, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAvatarActionData, IAssetAvatarAnimation, IAssetAvatarBodyPartItem, IAssetAvatarGeometryConfig, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IAvatarCanvas, IAvatarFigureContainer, IAvatarImage, IAvatarStructure, IFigureData, IFigurePartSet, IPartColor, IStructureData } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 import { ActionDefinition, AvatarActionManager } from './actions';
@@ -15,10 +15,24 @@ export class AvatarStructure implements IAvatarStructure {
     private _animationManager: AnimationManager = new AnimationManager();
     private _actionManager: AvatarActionManager = new AvatarActionManager();
     private _mandatorySetTypeIds: Map<AvatarGenderType, Record<number, AvatarFigurePartType[]>> = new Map();
-    private _defaultAction: IActionDefinition | undefined = undefined;
+    private _defaultAction: ActionDefinition | undefined = undefined;
+    private _defaultLayAction: ActionDefinition | undefined = undefined;
+
+    /** Flash `init()`: called once the figure data has been downloaded, so the mandatory-set cache is rebuilt from it. */
+    public init(): void {
+        this._mandatorySetTypeIds = new Map();
+    }
 
     public initGeometry(data: IAssetAvatarGeometryConfig): void {
         this._geometry = new AvatarModelGeometry(data);
+    }
+
+    /** `initActions` / `updateActions`: (re)loads the action definitions and picks up the default and default-lay actions. */
+    public updateActions(data: IAssetAvatarActionData): void {
+        this._actionManager.updateActions(data);
+
+        this._defaultAction = this._actionManager.getDefaultAction();
+        this._defaultLayAction = this._actionManager.getDefaultLayAction();
     }
 
     public initPartSets(data: IAssetAvatarPartSets): boolean {
@@ -51,6 +65,10 @@ export class AvatarStructure implements IAvatarStructure {
         this._animationManager.registerAnimations(this, data);
     }
 
+    public registerAnimation(data: IAssetAnimation): void {
+        this._animationManager.registerAnimations(this, [ data ]);
+    }
+
     public getPartColor(container: IAvatarFigureContainer, partType: AvatarFigurePartType, layerId: number = 0): IPartColor | undefined {
         const colorIds = container.getPartColorIds(partType);
 
@@ -73,6 +91,14 @@ export class AvatarStructure implements IAvatarStructure {
 
     public getActionDefinition(id: string): ActionDefinition | undefined {
         return this._actionManager.getActionDefinition(id);
+    }
+
+    public getDefaultActionDefinition(): ActionDefinition | undefined {
+        return this._defaultAction;
+    }
+
+    public getDefaultLayActionDefinition(): ActionDefinition | undefined {
+        return this._defaultLayAction;
     }
 
     public getActionDefinitionWithState(state: string): ActionDefinition | undefined {
@@ -135,6 +161,11 @@ export class AvatarStructure implements IAvatarStructure {
         this._geometry?.removeDynamicItems(avatar);
     }
 
+    /*
+     * The body parts an action touches: for an animation, the parts its frames move, the
+     * parts of anything it removes, and the parts its adds attach to (registering those adds
+     * as dynamic geometry items); otherwise the parts holding the action's active part set.
+     */
     public getActiveBodyPartIds(k: IActiveActionData, avatar: IAvatarImage): AvatarBodyPartType[] {
         if (!k?.definition || !this._geometry) return [];
 
@@ -147,23 +178,13 @@ export class AvatarStructure implements IAvatarStructure {
             if (animation) {
                 const animatedPartIds = animation.getAnimatedBodyPartIds(0, k.overridingAction);
 
+                for (const remove of animation.removeData) {
+                    const bodyPart = this._geometry.getBodyPartOfItem(geometryType, remove, avatar);
+
+                    if (bodyPart && (partIds.indexOf(bodyPart.id) === -1)) partIds.push(bodyPart.id);
+                }
+
                 if (animation.hasAddData()) {
-                    const partItem = {
-                        id: AvatarFigurePartType.None,
-                        x: 0,
-                        y: 0,
-                        z: 0,
-                        radius: 0.01,
-                        nx: 0,
-                        ny: 0,
-                        nz: -1,
-                        double: true,
-                    } as IAssetAvatarBodyPartItem;
-
-                    const partSetItem = {
-                        setType: '',
-                    } as IAssetAvatarPartSetItem;
-
                     for (const add of animation.addData) {
                         if (!add.align) continue;
 
@@ -171,15 +192,21 @@ export class AvatarStructure implements IAvatarStructure {
 
                         if (!bodyPart) continue;
 
-                        // @ts-expect-error typing issue
-                        partItem.id = add.id;
+                        const partItem = {
+                            id: add.id,
+                            x: 0,
+                            y: 0,
+                            z: 0,
+                            radius: 0.01,
+                            nx: 0,
+                            ny: 0,
+                            nz: -1,
+                            double: true,
+                        } as IAssetAvatarBodyPartItem;
 
                         bodyPart.addPart(partItem, avatar);
 
-                        // @ts-expect-error typing issue
-                        partSetItem.setType = add.id;
-
-                        const partDefinition = this._partSetsData.addPartDefinition(partSetItem);
+                        const partDefinition = this._partSetsData.addPartDefinition({ setType: add.id } as IAssetAvatarPartSetItem);
 
                         partDefinition.appendToFigure = true;
 
@@ -222,7 +249,7 @@ export class AvatarStructure implements IAvatarStructure {
         return AnimationAction.DEFAULT_OFFSET;
     }
 
-    public getParts(setType: AvatarBodyPartType, container: IAvatarFigureContainer, activeAction: IActiveActionData, geometryType: AvatarGeometryType, direction: number, removes: string[], avatar: IAvatarImage, layerItems: Map<AvatarFigurePartType, number> = new Map()): AvatarImagePartContainer[] {
+    public getParts(setType: AvatarBodyPartType, container: IAvatarFigureContainer, activeAction: IActiveActionData, geometryType: AvatarGeometryType, direction: number, removes: string[], avatar: IAvatarImage, layerItems: Map<AvatarFigurePartType, string> = new Map()): AvatarImagePartContainer[] {
         if (!activeAction?.definition || !this._geometry) return [];
 
         const activeParts = this._partSetsData.getActiveParts(activeAction.definition);
@@ -250,8 +277,11 @@ export class AvatarStructure implements IAvatarStructure {
         const requiredPartTypes = this._geometry.getParts(geometryType, setType, direction, activeParts, avatar);
         const baseContainers: AvatarImagePartContainer[] = [];
 
+        // a part outside the action's active set is drawn in its rest pose: the default action, or its lying-down twin
+        const restAction: IActionDefinition = ((activeAction.definition.geometryType === AvatarGeometryType.Horizontal) ? this._defaultLayAction : this._defaultAction) ?? activeAction.definition;
+
         for (const figurePartType of container.getPartTypeIds()) {
-            if (layerItems && layerItems.get(figurePartType)) continue;
+            if (layerItems && layerItems.get(figurePartType) !== undefined) continue;
 
             const partSetType = this._figureData.getSetType(figurePartType);
             const partSetId = container.getPartSetId(figurePartType);
@@ -270,11 +300,7 @@ export class AvatarStructure implements IAvatarStructure {
                 if (requiredPartTypes.indexOf(part.type) === -1) continue;
 
                 const animationFrames = animationAction?.getPart(part.type)?.frames ?? emptyFrames;
-
-                let actionDefinition = activeAction.definition;
-
-                if (activeParts.indexOf(part.type) === -1 && this._defaultAction) actionDefinition = this._defaultAction;
-
+                const actionDefinition = (activeParts.indexOf(part.type) === -1) ? restAction : activeAction.definition;
                 const partDefinition = this._partSetsData.getPartDefinition(part.type);
 
                 let flippedPartType = !partDefinition ? part.type : partDefinition.flippedSetType;
@@ -285,7 +311,7 @@ export class AvatarStructure implements IAvatarStructure {
 
                 if (partColorIds && (partColorIds.length > (part.colorLayerIndex - 1))) partColor = palette.getColor(partColorIds[(part.colorLayerIndex - 1)]);
 
-                baseContainers.push(new AvatarImagePartContainer(setType, part.type, part.id, partColor, animationFrames, actionDefinition, (part.colorLayerIndex > 0), part.paletteMap, flippedPartType));
+                baseContainers.push(new AvatarImagePartContainer(setType, part.type, part.id.toString(), partColor, animationFrames, actionDefinition, (part.colorLayerIndex > 0), part.paletteMap, flippedPartType));
             }
         }
 
@@ -293,53 +319,55 @@ export class AvatarStructure implements IAvatarStructure {
 
         for (const partType of requiredPartTypes) {
             let partColor: IPartColor | undefined = undefined;
-            let _local_38 = false;
+            let hasFigurePart = false;
 
-            const hasLayerItems = layerItems.get(partType);
+            const layerItem = layerItems.get(partType);
+            const hasLayerItem = (layerItem !== undefined);
 
             for (const partContainer of baseContainers) {
                 if (partContainer.partType !== partType) continue;
 
-                if (hasLayerItems) {
+                if (hasLayerItem) {
                     partColor = partContainer.color;
                 } else {
-                    _local_38 = true;
+                    hasFigurePart = true;
 
                     if (removes.indexOf(partType) === -1) partContainers.push(partContainer);
                 }
             }
 
-            if (!_local_38) {
-                if (hasLayerItems) {
-                    partContainers.push(new AvatarImagePartContainer(setType, partType, layerItems.get(partType) ?? 0, partColor, (animationAction && animationAction.getPart(partType)?.frames) ?? emptyFrames, activeAction.definition, !!partColor, -1, partType, false, 1));
-                } else if (activeParts.indexOf(partType) > -1) {
-                    const bodyPart = this._geometry.getBodyPartOfItem(geometryType, partType, avatar);
+            if (hasFigurePart) continue;
 
-                    if (bodyPart && (setType !== bodyPart.id)) continue;
+            if (hasLayerItem) {
+                // an animation item replaces the figure's part with the asset named by its base
+                partContainers.push(new AvatarImagePartContainer(setType, partType, layerItem, partColor, animationAction?.getPart(partType)?.frames ?? emptyFrames, activeAction.definition, !!partColor, -1, partType, false, 1));
+            } else if (activeParts.indexOf(partType) > -1) {
+                const bodyPart = this._geometry.getBodyPartOfItem(geometryType, partType, avatar);
 
-                    const partDefinition = this._partSetsData.getPartDefinition(partType);
+                if (bodyPart && (setType !== bodyPart.id)) continue;
 
-                    if (!partDefinition || !partDefinition.appendToFigure) continue;
+                const partDefinition = this._partSetsData.getPartDefinition(partType);
 
-                    let isBlended = false;
-                    let blend = 1;
-                    let partId = 1;
+                if (!partDefinition || !partDefinition.appendToFigure) continue;
 
-                    if (activeAction.actionParameter !== undefined) partId = activeAction.actionParameter;
+                let isBlended = false;
+                let blend = 1;
+                let partId = '1';
 
-                    if (partDefinition.hasStaticId()) partId = partDefinition.staticId;
+                if (activeAction.actionParameter !== '') partId = activeAction.actionParameter;
 
-                    if (animation) {
-                        const addData = animation.getAddData(partType);
+                if (partDefinition.hasStaticId()) partId = partDefinition.staticId.toString();
 
-                        if (addData) {
-                            isBlended = addData.isBlended;
-                            blend = addData.blend;
-                        }
+                if (animation) {
+                    const addData = animation.getAddData(partType);
+
+                    if (addData) {
+                        isBlended = addData.isBlended;
+                        blend = addData.blend;
                     }
-
-                    partContainers.push(new AvatarImagePartContainer(setType, partType, partId, undefined, animationAction?.getPart(partType)?.frames ?? emptyFrames, activeAction.definition, false, -1, partType, isBlended, blend));
                 }
+
+                partContainers.push(new AvatarImagePartContainer(setType, partType, partId, undefined, animationAction?.getPart(partType)?.frames ?? emptyFrames, activeAction.definition, false, -1, partType, isBlended, blend));
             }
         }
 
@@ -360,14 +388,13 @@ export class AvatarStructure implements IAvatarStructure {
         return arr;
     }
 
+    /** The CarryItem parameter ids: every item id the client can hold. */
     public getItemIds(): string[] {
         const definition = this._actionManager.getActionDefinition('CarryItem');
 
         if (!definition) return [];
 
-        const params = definition.params;
-
-        return params.values().toArray();
+        return definition.params.keys().toArray();
     }
 
     public get actionManager(): AvatarActionManager {

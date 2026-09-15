@@ -16,12 +16,35 @@ export class ActionDefinition implements IActionDefinition {
     private _startFromFrameZero: boolean;
     private _prevents: AvatarActionStateType[];
     private _preventHeadTurn: boolean;
-    private _types: Map<number, ActionType>;
+    // the Flash parameter is a string (an item / effect id, a dance name); the types are keyed by it
+    private _types: Map<string, ActionType>;
     private _params: Map<string, string>;
     private _defaultParameterValue: string;
     private _canvasOffsets: Map<AvatarScaleType, Map<number, [number, number, number]>>;
 
-    constructor(data: IAssetAvatarAction) {
+    constructor(data: IAssetAvatarAction | undefined = undefined) {
+        this._id = AvatarActionType.Default;
+        this._state = AvatarActionStateType.None;
+        this._precedence = 0;
+        this._activePartSet = undefined;
+        this._assetPartDefinition = '';
+        this._lay = undefined;
+        this._geometryType = AvatarGeometryType.Vertical;
+        this._isMain = false;
+        this._isDefault = false;
+        this._isAnimation = false;
+        this._startFromFrameZero = false;
+        this._prevents = [];
+        this._preventHeadTurn = false;
+        this._types = new Map();
+        this._params = new Map();
+        this._defaultParameterValue = '';
+        this._canvasOffsets = new Map();
+
+        if (data) this.createFromData(data);
+    }
+
+    private createFromData(data: IAssetAvatarAction): void {
         this._id = data.id;
         this._state = data.state;
         this._precedence = data.precedence;
@@ -35,10 +58,6 @@ export class ActionDefinition implements IActionDefinition {
         this._startFromFrameZero = data.startFromFrameZero ?? false;
         this._prevents = data.prevents as unknown as AvatarActionStateType[] ?? [];
         this._preventHeadTurn = data.preventHeadTurn ?? false;
-        this._types = new Map();
-        this._params = new Map();
-        this._defaultParameterValue = '';
-        this._canvasOffsets = new Map();
 
         if (data.params && (data.params.length > 0)) {
             for (const param of data.params) {
@@ -55,7 +74,7 @@ export class ActionDefinition implements IActionDefinition {
 
                 const action = new ActionType(type);
 
-                this._types.set(action.id, action);
+                this._types.set(action.id.toString(), action);
             }
         }
     }
@@ -76,32 +95,75 @@ export class ActionDefinition implements IActionDefinition {
         existing.set(direction, offset);
     }
 
-    public getType(id: number): ActionType | undefined {
+    public getType(id: string): ActionType | undefined {
         return this._types.get(id);
     }
 
+    /** An empty parameter stays empty; an unknown one falls back to the `default` param. */
     public getParameterValue(id: string): string {
+        if (!id) return '';
+
         return this._params.get(id) ?? this._defaultParameterValue;
     }
 
-    public getPrevents(typeId: number): AvatarActionStateType[] {
-        return this._prevents.concat(this.getTypePrevents(typeId));
+    public getPrevents(parameter: string = ''): AvatarActionStateType[] {
+        return this._prevents.concat(this.getTypePrevents(parameter));
     }
 
-    private getTypePrevents(typeId: number): AvatarActionStateType[] {
-        return this._types.get(typeId)?.prevents ?? [];
+    private getTypePrevents(parameter: string): AvatarActionStateType[] {
+        if (!parameter) return [];
+
+        return this._types.get(parameter)?.prevents ?? [];
     }
 
-    public getPreventHeadTurn(typeId: number): boolean {
-        return this._types.get(typeId)?.preventHeadTurn ?? false;
+    /** The type's flag when the parameter names one, otherwise the action's own. */
+    public getPreventHeadTurn(parameter: string = ''): boolean {
+        if (!parameter) return this._preventHeadTurn;
+
+        return this._types.get(parameter)?.preventHeadTurn ?? this._preventHeadTurn;
     }
 
-    public isAnimated(typeId: number): boolean {
-        const type = this._types.get(typeId);
+    public isAnimated(parameter: string = ''): boolean {
+        if (!parameter) return true;
 
-        if (type === undefined) return true;
+        return this._types.get(parameter)?.isAnimated ?? true;
+    }
 
-        return type.isAnimated ?? false;
+    public setGeometryType(type: AvatarGeometryType): void {
+        this._geometryType = type;
+    }
+
+    public setState(state: AvatarActionStateType): void {
+        this._state = state;
+    }
+
+    public setAssetPartDefinition(definition: string): void {
+        this._assetPartDefinition = definition;
+    }
+
+    /** A shallow copy sharing types, params and offsets - what `AvatarActionManager.getDefaultLayAction` starts from. */
+    public copy(): ActionDefinition {
+        const definition = new ActionDefinition();
+
+        definition._id = this._id;
+        definition._state = this._state;
+        definition._precedence = this._precedence;
+        definition._activePartSet = this._activePartSet;
+        definition._assetPartDefinition = this._assetPartDefinition;
+        definition._lay = this._lay;
+        definition._geometryType = this._geometryType;
+        definition._isMain = this._isMain;
+        definition._isDefault = this._isDefault;
+        definition._isAnimation = this._isAnimation;
+        definition._startFromFrameZero = this._startFromFrameZero;
+        definition._prevents = this._prevents;
+        definition._preventHeadTurn = this._preventHeadTurn;
+        definition._canvasOffsets = this._canvasOffsets;
+        definition._types = this._types;
+        definition._params = this._params;
+        definition._defaultParameterValue = this._defaultParameterValue;
+
+        return definition;
     }
 
     public get id(): AvatarActionType {

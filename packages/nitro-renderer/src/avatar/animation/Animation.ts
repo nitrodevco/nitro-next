@@ -123,7 +123,7 @@ export class Animation implements IAnimation {
     }
 
     public hasAddData(): boolean {
-        return !!this._addData;
+        return this._addData.length > 0;
     }
 
     public get id(): string {
@@ -187,9 +187,9 @@ export class Animation implements IAnimation {
             while (index < repeats) {
                 const layers: AvatarAnimationLayerData[] = [];
 
-                if (frame.bodyparts && frame.bodyparts.length) layers.push(...this.parseFramePartsToLayers(frame.bodyparts, structure));
+                if (frame.bodyparts && frame.bodyparts.length) layers.push(...this.parseFramePartsToLayers(frame.bodyparts, AvatarAnimationLayerData.BODYPART, structure));
 
-                if (frame.fxs && frame.fxs.length) layers.push(...this.parseFramePartsToLayers(frame.fxs, structure));
+                if (frame.fxs && frame.fxs.length) layers.push(...this.parseFramePartsToLayers(frame.fxs, AvatarAnimationLayerData.FX, structure));
 
                 frames.push(layers);
 
@@ -198,17 +198,15 @@ export class Animation implements IAnimation {
         }
     }
 
-    private parseFramePartsToLayers(parts: IAssetAnimationFramePart[], structure: AvatarStructure): AvatarAnimationLayerData[] {
+    // a layer without an action still positions its body part / effect sprite; only its action stays undefined
+    private parseFramePartsToLayers(parts: IAssetAnimationFramePart[], type: string, structure: AvatarStructure): AvatarAnimationLayerData[] {
         const layers: AvatarAnimationLayerData[] = [];
 
         if (parts && parts.length) {
             for (const part of parts) {
-                if (!part.action) continue;
+                const definition = part.action ? structure.getActionDefinition(part.action) : undefined;
 
-                const definition = structure.getActionDefinition(part.action);
-                const layer = new AvatarAnimationLayerData(part, AvatarAnimationLayerData.BODYPART, definition);
-
-                layers.push(layer);
+                layers.push(new AvatarAnimationLayerData(part, type, definition));
             }
         }
 

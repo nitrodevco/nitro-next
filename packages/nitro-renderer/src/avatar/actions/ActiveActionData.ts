@@ -2,16 +2,16 @@ import { AvatarActionStateType, IActionDefinition, IActiveActionData } from '@ni
 
 export class ActiveActionData implements IActiveActionData {
     private _type: AvatarActionStateType;
-    private _parameter: number;
+    private _parameter: string;
     private _definition: IActionDefinition | undefined = undefined;
     private _startFrame: number;
-    private _overridingAction: string;
+    private _overridingAction: string | undefined;
 
-    constructor(type: AvatarActionStateType, parameter: number = 1, startFrame: number = 0) {
+    constructor(type: AvatarActionStateType, parameter: string = '', startFrame: number = 0) {
         this._type = type;
         this._parameter = parameter;
         this._startFrame = startFrame;
-        this._overridingAction = '';
+        this._overridingAction = undefined;
     }
 
     public dispose(): void {
@@ -27,11 +27,11 @@ export class ActiveActionData implements IActiveActionData {
         return this._type;
     }
 
-    public get actionParameter(): number {
+    public get actionParameter(): string {
         return this._parameter;
     }
 
-    public set actionParameter(parameter: number) {
+    public set actionParameter(parameter: string) {
         this._parameter = parameter;
     }
 
@@ -47,11 +47,15 @@ export class ActiveActionData implements IActiveActionData {
         return this._startFrame;
     }
 
-    public get overridingAction(): string {
+    public get overridingAction(): string | undefined {
         return this._overridingAction;
     }
 
-    public set overridingAction(action: string) {
+    public set overridingAction(action: string | undefined) {
         this._overridingAction = action;
+    }
+
+    public toString(): string {
+        return `Action: ${this._type}  param: ${this._parameter}`;
     }
 }

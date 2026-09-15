@@ -73,6 +73,18 @@ export class AssetManager implements IAssetManager {
         return collection;
     }
 
+    public removeCollection(name: string): void {
+        const collection = this._collections.get(name);
+
+        if (!collection) return;
+
+        collection.dispose();
+
+        this._collections.delete(name);
+
+        collection.dispose();
+    }
+
     public async downloadAssets(urls: string[]): Promise<boolean> {
         if (!urls || !urls.length) return true;
 

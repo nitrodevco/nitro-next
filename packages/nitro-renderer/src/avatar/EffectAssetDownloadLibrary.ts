@@ -8,63 +8,70 @@ export class EffectAssetDownloadLibrary implements IEffectAssetDownloadLibrary {
     private _revision: number;
     private _assetUrl: string;
     private _animations: IAssetAnimation[];
-    private _onDownloaded: (library: IEffectAssetDownloadLibrary) => void;
+    /** Fires when a download finishes, loaded or failed, so the manager can move on either way. */
+    private _onComplete: (library: EffectAssetDownloadLibrary) => void;
+    private _download: Promise<boolean> | undefined;
 
-    constructor(libraryName: string, revision: number, assetUrl: string, onDownloaded: (library: IEffectAssetDownloadLibrary) => void) {
+    constructor(libraryName: string, revision: number, assetUrl: string, onComplete: (library: EffectAssetDownloadLibrary) => void) {
         this._libraryName = libraryName;
         this._revision = revision;
         this._assetUrl = assetUrl;
         this._animations = [];
-        this._onDownloaded = onDownloaded;
+        this._onComplete = onComplete;
 
         this._assetUrl = this._assetUrl.replace(/%libname%/gi, this._libraryName);
         this._assetUrl = this._assetUrl.replace(/%revision%/gi, this._revision.toString());
 
-        if (GetAssetManager().getCollection(this._libraryName)) this._state = AvatarAssetDownloadStatus.Loaded;
+        if (GetAssetManager().getCollection(this._libraryName)) this.markLoaded();
     }
 
     public downloadAsset(): void {
-        if (this._state === AvatarAssetDownloadStatus.Loading || this._state === AvatarAssetDownloadStatus.Loaded) return;
-
-        const asset = GetAssetManager().getCollection(this._libraryName);
-
-        if (asset) return;
-
-        this._state = AvatarAssetDownloadStatus.Loading;
-
-        const library = this as unknown as IEffectAssetDownloadLibrary;
-
-        GetAssetManager().downloadAsset(this._assetUrl).then((flag) => {
-            if (!flag) return;
-
-            this._state = AvatarAssetDownloadStatus.Loaded;
-
-            const collection = GetAssetManager().getCollection(this._libraryName);
-
-            if (collection) this._animations = collection.data?.animations ?? [];
-
-            void this._onDownloaded(library);
-        }).catch(err => NitroLogger.error(err));
+        void this.download().catch(err => NitroLogger.error(err));
     }
 
     public async downloadAssetAsync(): Promise<void> {
-        if (this._state === AvatarAssetDownloadStatus.Loading || this._state === AvatarAssetDownloadStatus.Loaded) return;
+        await this.download();
+    }
 
-        const asset = GetAssetManager().getCollection(this._libraryName);
+    private download(): Promise<boolean> {
+        if (this._state === AvatarAssetDownloadStatus.Loaded) return Promise.resolve(true);
 
-        if (!asset) {
-            this._state = AvatarAssetDownloadStatus.Loading;
+        if (this._download) return this._download;
 
-            if (!await GetAssetManager().downloadAsset(this._assetUrl)) return;
+        if (GetAssetManager().getCollection(this._libraryName)) {
+            this.markLoaded();
+
+            return Promise.resolve(true);
         }
 
+        this._state = AvatarAssetDownloadStatus.Loading;
+
+        this._download = GetAssetManager().downloadAsset(this._assetUrl).then((flag) => {
+            if (flag) this.markLoaded();
+            else {
+                this._state = AvatarAssetDownloadStatus.Failed;
+
+                NitroLogger.error(`Could not load effect asset library ${this._libraryName} from ${this._assetUrl}`);
+            }
+
+            this._onComplete(this);
+
+            return flag;
+        }).finally(() => {
+            this._download = undefined;
+
+            if (this._state === AvatarAssetDownloadStatus.Loading) this._state = AvatarAssetDownloadStatus.NotLoaded;
+        });
+
+        return this._download;
+    }
+
+    private markLoaded(): void {
         this._state = AvatarAssetDownloadStatus.Loaded;
 
         const collection = GetAssetManager().getCollection(this._libraryName);
 
         if (collection) this._animations = collection.data?.animations ?? [];
-
-        void this._onDownloaded(this);
     }
 
     public get libraryName(): string {
@@ -77,5 +84,13 @@ export class EffectAssetDownloadLibrary implements IEffectAssetDownloadLibrary {
 
     public get isLoaded(): boolean {
         return (this._state === AvatarAssetDownloadStatus.Loaded);
+    }
+
+    public get isReady(): boolean {
+        return (this._state === AvatarAssetDownloadStatus.Loaded) || (this._state === AvatarAssetDownloadStatus.Failed);
+    }
+
+    public toString(): string {
+        return `${this._libraryName}${this.isReady ? '[x]' : '[ ]'}`;
     }
 }

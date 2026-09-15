@@ -13,6 +13,7 @@ export interface IAssetManager {
     addAssetToCollection(collectionName: string, assetName: string, texture: Texture): IGraphicAsset | undefined;
     getCollection(name: string): IGraphicAssetCollection | undefined;
     createCollection(data: IAssetData, spritesheet: Spritesheet): IGraphicAssetCollection | undefined;
+    removeCollection(name: string): void;
     downloadAssets(urls: string[]): Promise<boolean>;
     downloadAsset(url: string): Promise<boolean>;
     readonly collections: Map<string, IGraphicAssetCollection>;

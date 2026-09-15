@@ -116,7 +116,7 @@ export class FigurePartSet implements IFigurePartSet {
 
             if (!existingPart) continue;
 
-            if (existingPart.type !== part.type || existingPart.index > part.index) continue;
+            if (existingPart.type !== part.type || existingPart.index >= part.index) continue;
 
             return i;
         }

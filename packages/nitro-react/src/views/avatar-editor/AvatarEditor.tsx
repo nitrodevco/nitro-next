@@ -39,8 +39,8 @@ const CATEGORY_TABS: Partial<Record<AvatarEditorCategory, SubTab[]>> = {
         { setType: AvatarFigurePartType.WaistAccessory, icon: 'avatar_editor_tabs_bottom_accessories' },
     ],
     misc: [
-        { setType: 'pt', icon: 'avatar_editor_tabs_icon_misc_pets' },
-        { setType: 'mc', icon: 'avatar_editor_tabs_icon_misc_misc' },
+        { setType: AvatarFigurePartType.Pet, icon: 'avatar_editor_tabs_icon_misc_pets' },
+        { setType: AvatarFigurePartType.Misc, icon: 'avatar_editor_tabs_icon_misc_misc' },
     ],
 };
 
@@ -56,7 +56,7 @@ export const AvatarEditor = () => {
     usePartThumbnailLifetime();
 
     const previewerRef = useRef<RoomPreviewerHandle>(null);
-    const maxWardrobeSlots = useConfigValue<number>('avatar.wardrobe.max.slots') ?? 10;
+    const maxWardrobeSlots = useConfigValue<number>('avatar.wardrobe.max.slots') ?? 14;
     const t = useTranslation();
     const { send } = useWebSocketContext();
 
@@ -194,7 +194,6 @@ export const AvatarEditor = () => {
                                         layout={{ alignItems: 'center', justifyContent: 'center', width: 50, height: 50 }}
                                     >
                                         <ThemeImage
-                                            key={x.setType}
                                             onPointerTap={_ => setActiveSubType(x.setType)}
                                             src={LayoutImage(`${x.icon}${activeSetType !== x.setType ? '_off' : ''}.png`)}
                                         />
@@ -222,13 +221,13 @@ export const AvatarEditor = () => {
                                     />
                                 )}
                             />
-                            <Region layout={{ flexDirection: 'row', gap: 5, height: 95, overflow: 'hidden', width: '100%' }}>
+                            <Region layout={{ flexDirection: 'row', gap: 5, height: 95, width: '100%' }}>
                                 { palettes.map((x, index) => (
                                     /* One or two colour layers: each palette splits the row evenly and
                                wraps its swatches into a grid. */
                                     <Region
                                         key={index}
-                                        layout={{ flex: 1, minWidth: 0, height: '100%', overflow: 'hidden' }}
+                                        layout={{ flex: 1, minWidth: 0, height: '100%' }}
                                     >
                                         <ScrollArea
                                             variant="3"

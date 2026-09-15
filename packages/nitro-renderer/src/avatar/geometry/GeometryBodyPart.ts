@@ -8,6 +8,8 @@ import { Vector3D } from './Vector3D';
 export class GeometryBodyPart extends Node3D {
     private _id: AvatarBodyPartType;
     private _radius: number;
+    private _orderBefore: AvatarBodyPartType | undefined;
+    private _orderAfter: AvatarBodyPartType | undefined;
     private _parts: Map<string, GeometryItem> = new Map();
     private _dynamicParts: Map<IAvatarImage, Record<string, GeometryItem>> = new Map();
 
@@ -16,6 +18,8 @@ export class GeometryBodyPart extends Node3D {
 
         this._id = part.id;
         this._radius = part.radius ?? 0;
+        this._orderBefore = part.orderBefore;
+        this._orderAfter = part.orderAfter;
 
         if (part.items && (part.items.length > 0)) {
             for (const item of part.items) {
@@ -150,5 +154,13 @@ export class GeometryBodyPart extends Node3D {
 
     public get radius(): number {
         return this._radius;
+    }
+
+    public get orderBefore(): AvatarBodyPartType | undefined {
+        return this._orderBefore;
+    }
+
+    public get orderAfter(): AvatarBodyPartType | undefined {
+        return this._orderAfter;
     }
 }

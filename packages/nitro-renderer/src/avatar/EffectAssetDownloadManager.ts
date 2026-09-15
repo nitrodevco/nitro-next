@@ -5,6 +5,7 @@ import { EffectAssetDownloadLibrary } from './EffectAssetDownloadLibrary';
 
 export class EffectAssetDownloadManager {
     private static MANDATORY_LIBRARIES: string[] = [ 'dance.1', 'dance.2', 'dance.3', 'dance.4' ];
+    private static MAX_SIMULTANEOUS_DOWNLOADS: number = 2;
 
     private _structure: AvatarStructure;
     private _missingMandatoryLibs: string[] = EffectAssetDownloadManager.MANDATORY_LIBRARIES;
@@ -29,7 +30,7 @@ export class EffectAssetDownloadManager {
 
             this._libraryNames.push(library.lib);
 
-            const downloadLibrary = new EffectAssetDownloadLibrary(library.lib, library.revision ?? 0, assetUrl, lib => this.onLibraryLoaded(lib));
+            const downloadLibrary = new EffectAssetDownloadLibrary(library.lib, library.revision ?? 0, assetUrl, lib => this.onLibraryComplete(lib));
 
             let existing = this._effectMap.get(library.id);
 
@@ -58,6 +59,8 @@ export class EffectAssetDownloadManager {
     }
 
     public isAvatarEffectReady(effect: number): boolean {
+        if (!this._isReady) return false;
+
         return !this.getAvatarEffectPendingLibraries(effect)?.length;
     }
 
@@ -99,6 +102,11 @@ export class EffectAssetDownloadManager {
         this._isReady = true;
     }
 
+    /** Effect id -> the libraries holding it (Flash `effectMap`). */
+    public get map(): Map<string, IEffectAssetDownloadLibrary[]> {
+        return this._effectMap;
+    }
+
     private getAvatarEffectPendingLibraries(id: number): EffectAssetDownloadLibrary[] {
         const pendingLibraries: EffectAssetDownloadLibrary[] = [];
 
@@ -108,7 +116,7 @@ export class EffectAssetDownloadManager {
 
         if (libraries) {
             for (const library of libraries) {
-                if (!library || library.isLoaded) continue;
+                if (!library || library.isReady) continue;
 
                 if (pendingLibraries.indexOf(library) === -1) pendingLibraries.push(library);
             }
@@ -118,7 +126,7 @@ export class EffectAssetDownloadManager {
     }
 
     private downloadLibrary(library: EffectAssetDownloadLibrary): void {
-        if (!library || library.isLoaded) return;
+        if (!library || library.isReady) return;
 
         if ((this._pendingDownloadQueue.indexOf(library) >= 0) || (this._currentDownloads.indexOf(library) >= 0)) return;
 
@@ -128,35 +136,36 @@ export class EffectAssetDownloadManager {
     }
 
     private async downloadLibraryAsync(library: EffectAssetDownloadLibrary): Promise<void> {
-        if (!library || library.isLoaded) return;
+        if (!library || library.isReady) return;
 
         await library.downloadAssetAsync();
     }
 
+    /** Flash allows two effect libraries in flight at once. */
     private processDownloadQueue(): void {
-        while (this._pendingDownloadQueue.length) {
+        while (this._pendingDownloadQueue.length && (this._currentDownloads.length < EffectAssetDownloadManager.MAX_SIMULTANEOUS_DOWNLOADS)) {
             const library = this._pendingDownloadQueue.shift();
 
             if (!library) continue;
 
             this._currentDownloads.push(library);
 
-            void library.downloadAsset();
+            library.downloadAsset();
         }
     }
 
-    private onLibraryLoaded(library: IEffectAssetDownloadLibrary): void {
+    private onLibraryComplete(library: EffectAssetDownloadLibrary): void {
         if (!library) return;
 
         const loadedEffects: number[] = [];
 
-        this._structure.registerAnimations(library.animations);
+        if (library.isLoaded) this._structure.registerAnimations(library.animations);
 
         for (const [ id, libraries ] of this._incompleteEffects.entries()) {
             let isReady = true;
 
-            for (const library of libraries) {
-                if (!library || library.isLoaded) continue;
+            for (const pending of libraries) {
+                if (!pending || pending.isReady) continue;
 
                 isReady = false;
 
@@ -169,9 +178,7 @@ export class EffectAssetDownloadManager {
 
             const listeners = this._effectListeners.get(id);
 
-            if (listeners) {
-                for (const listener of listeners) listener.resetEffect(id);
-            }
+            if (listeners) for (const listener of listeners) listener.resetEffect(id);
 
             this._effectListeners.delete(id);
         }
@@ -183,9 +190,15 @@ export class EffectAssetDownloadManager {
         while (index < this._currentDownloads.length) {
             const download = this._currentDownloads[index];
 
-            if (download && download.libraryName === library.libraryName) this._currentDownloads.splice(index, 1);
+            if (download && download.libraryName === library.libraryName) {
+                this._currentDownloads.splice(index, 1);
+
+                continue;
+            }
 
             index++;
         }
+
+        this.processDownloadQueue();
     }
 }

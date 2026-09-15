@@ -5,15 +5,11 @@ import { TexturePool } from '#renderer/utils';
 
 import { AvatarImage, AvatarImageCachedFullImage } from './AvatarImage';
 
-/**
- * The grey stand-in drawn while a figure's libraries download. Every placeholder shares one
- * full-image cache (they all render the same figure) and only honours the restricted action
- * set.
- */
-export class PlaceHolderAvatarImage extends AvatarImage {
+/** The generic figure drawn for an ignored user: the placeholder's rules, with its own shared full-image cache. */
+export class BlockedAvatarImage extends AvatarImage {
     private static _sharedFullImageCache: Map<string, AvatarImageCachedFullImage> = new Map();
 
-    public override isPlaceholder(): boolean {
+    public override isBlocked(): boolean {
         return true;
     }
 
@@ -22,22 +18,21 @@ export class PlaceHolderAvatarImage extends AvatarImage {
     }
 
     protected override getFullImage(key: string): AvatarImageCachedFullImage | undefined {
-        return PlaceHolderAvatarImage._sharedFullImageCache.get(key);
+        return BlockedAvatarImage._sharedFullImageCache.get(key);
     }
 
     protected override cacheFullImage(key: string, texture: RenderTexture, topCropY: number): void {
-        const existing = PlaceHolderAvatarImage._sharedFullImageCache.get(key);
+        const existing = BlockedAvatarImage._sharedFullImageCache.get(key);
 
         if (existing) {
-            PlaceHolderAvatarImage._sharedFullImageCache.delete(key);
+            BlockedAvatarImage._sharedFullImageCache.delete(key);
 
             TexturePool.releaseTexture(existing.texture);
         }
 
-        PlaceHolderAvatarImage._sharedFullImageCache.set(key, { texture, topCropY });
+        BlockedAvatarImage._sharedFullImageCache.set(key, { texture, topCropY });
     }
 
-    // the cache outlives any one placeholder
     protected override disposeFullImageCache(): void {
     }
 }

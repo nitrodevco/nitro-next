@@ -1,4 +1,4 @@
-﻿import { Container, Point, Rectangle, Texture } from 'pixi.js';
+import { Container, Point, Rectangle, Texture } from 'pixi.js';
 
 export class ImageData {
     private _texture: Texture | undefined;
@@ -6,14 +6,16 @@ export class ImageData {
     private _regPoint: Point;
     private _flipH: boolean;
     private _colorTransform: number;
+    private _alpha: number;
     private _container: Container | undefined;
 
-    constructor(texture: Texture | undefined, rectangle: Rectangle, regPoint: Point, flipH: boolean, color: number, container: Container | undefined = undefined) {
+    constructor(texture: Texture | undefined, rectangle: Rectangle, regPoint: Point, flipH: boolean, color: number, container: Container | undefined = undefined, alpha: number = 1) {
         this._texture = texture;
         this._rect = rectangle;
         this._regPoint = regPoint;
         this._flipH = flipH;
         this._colorTransform = color;
+        this._alpha = alpha;
         this._container = container;
 
         if (flipH) this._regPoint.x = (-(this._regPoint.x) + rectangle.width);
@@ -41,6 +43,11 @@ export class ImageData {
 
     public get colorTransform(): number {
         return this._colorTransform;
+    }
+
+    /** The blend alpha of an effect-added part (Flash `ColorTransform.alphaMultiplier`). */
+    public get alpha(): number {
+        return this._alpha;
     }
 
     public get container(): Container | undefined {

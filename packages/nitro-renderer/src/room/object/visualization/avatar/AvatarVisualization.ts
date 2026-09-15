@@ -205,7 +205,7 @@ export class AvatarVisualization
 
                 const sprite = this.getSprite(AvatarVisualization.AVATAR_LAYER_ID);
 
-                if (sprite && this._avatarImage && this._avatarImage.isPlaceholder()) {
+                if (sprite && this._avatarImage && (this._avatarImage.isPlaceholder() || this._avatarImage.isBlocked())) {
                     sprite.alpha = 150;
                 } else if (sprite) {
                     sprite.alpha = 255;
@@ -277,7 +277,7 @@ export class AvatarVisualization
                     = this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlightEnable) === 1
                         && this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlight) === 1;
 
-                const avatarImage = this._avatarImage.getImage(AvatarSetType.Full, highlightEnabled);
+                const avatarImage = this._avatarImage.getImageWithCroppedTop(AvatarSetType.Full, highlightEnabled);
 
                 if (avatarImage) {
                     sprite.texture = avatarImage;
@@ -327,6 +327,8 @@ export class AvatarVisualization
 
             let _local_21 = AvatarVisualization.INITIAL_RESERVED_SPRITES;
             const direction = this._avatarImage.getDirection();
+            const avatarSpriteData = this._avatarImage.avatarSpriteData;
+            const grayscaleColor = (avatarSpriteData && avatarSpriteData.paletteIsGrayscale && avatarSpriteData.reds) ? (avatarSpriteData.reds[0] & 0xFFFFFF) : undefined;
 
             for (const spriteData of this._avatarImage.getSprites()) {
                 if (spriteData.id === AvatarVisualization.AVATAR) {
@@ -394,6 +396,8 @@ export class AvatarVisualization
                         sprite.offsetX = asset.offsetX - scale / 2 + offsetX;
                         sprite.offsetY = asset.offsetY + offsetY;
                         sprite.flipH = asset.flipH;
+                        // Flash leaves the `h_std_fx` / `h_std_sd` (shadow) sprites out of the palette tint
+                        sprite.color = (grayscaleColor !== undefined && !assetName.includes('h_std_fx') && !assetName.includes('h_std_sd')) ? grayscaleColor : 0xFFFFFF;
 
                         if (spriteData.hasStaticY) {
                             sprite.offsetY += this._verticalOffset * scale / (2 * AvatarVisualization.BASE_Y_SCALE);
@@ -854,6 +858,9 @@ export class AvatarVisualization
                 switch (expression) {
                     case AvatarActionStateType.Dance:
                         this._avatarImage.appendAction(AvatarActionStateType.Dance, 2);
+                        break;
+                    case AvatarActionStateType.Expression67:
+                        this._avatarImage.appendAction(AvatarActionStateType.Dance, 'sixseven');
                         break;
                     default:
                         this._avatarImage.appendAction(expression);

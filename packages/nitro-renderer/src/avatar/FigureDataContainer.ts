@@ -77,7 +77,7 @@ export class FigureDataContainer {
 
             if (part === AvatarFigurePartType.Head) setId = k;
 
-            let set = `${part}=${setId}`;
+            let set = `${part}-${setId}`;
 
             if (setId >= 0) for (const color of colors) set = `${set}-${color}`;
 
@@ -148,6 +148,8 @@ export class FigureDataContainer {
             case AvatarFigurePartType.Legs:
             case AvatarFigurePartType.Shoes:
             case AvatarFigurePartType.WaistAccessory:
+            case AvatarFigurePartType.Misc:
+            case AvatarFigurePartType.Pet:
                 if (setId >= 0) {
                     this._data.set(partType, setId);
                 } else {
@@ -172,6 +174,8 @@ export class FigureDataContainer {
             case AvatarFigurePartType.Legs:
             case AvatarFigurePartType.Shoes:
             case AvatarFigurePartType.WaistAccessory:
+            case AvatarFigurePartType.Misc:
+            case AvatarFigurePartType.Pet:
                 this._colors.set(partType, colorIds);
                 return;
         }

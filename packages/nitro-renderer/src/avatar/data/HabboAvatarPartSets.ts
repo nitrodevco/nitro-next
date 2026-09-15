@@ -25,6 +25,14 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
             flippedSetType: AvatarFigurePartType.LeftCoatSleeve,
         },
         {
+            setType: AvatarFigurePartType.MiscRight,
+            flippedSetType: AvatarFigurePartType.MiscLeft,
+        },
+        {
+            setType: AvatarFigurePartType.PetRight,
+            flippedSetType: AvatarFigurePartType.PetLeft,
+        },
+        {
             setType: AvatarFigurePartType.Body,
         },
         {
@@ -49,6 +57,12 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
         },
         {
             setType: AvatarFigurePartType.CoatChest,
+        },
+        {
+            setType: AvatarFigurePartType.Pet,
+        },
+        {
+            setType: AvatarFigurePartType.Misc,
         },
         {
             setType: AvatarFigurePartType.Head,
@@ -89,6 +103,14 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
             flippedSetType: AvatarFigurePartType.RightCoatSleeve,
         },
         {
+            setType: AvatarFigurePartType.MiscLeft,
+            flippedSetType: AvatarFigurePartType.MiscRight,
+        },
+        {
+            setType: AvatarFigurePartType.PetLeft,
+            flippedSetType: AvatarFigurePartType.PetRight,
+        },
+        {
             setType: AvatarFigurePartType.WaistAccessory,
             swim: '0',
         },
@@ -126,6 +148,12 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                     setType: AvatarFigurePartType.RightCoatSleeve,
                 },
                 {
+                    setType: AvatarFigurePartType.MiscRight,
+                },
+                {
+                    setType: AvatarFigurePartType.PetRight,
+                },
+                {
                     setType: AvatarFigurePartType.Body,
                 },
                 {
@@ -148,6 +176,12 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                 },
                 {
                     setType: AvatarFigurePartType.CoatChest,
+                },
+                {
+                    setType: AvatarFigurePartType.Pet,
+                },
+                {
+                    setType: AvatarFigurePartType.Misc,
                 },
                 {
                     setType: AvatarFigurePartType.WaistAccessory,
@@ -178,6 +212,12 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                 },
                 {
                     setType: AvatarFigurePartType.LeftCoatSleeve,
+                },
+                {
+                    setType: AvatarFigurePartType.MiscLeft,
+                },
+                {
+                    setType: AvatarFigurePartType.PetLeft,
                 },
                 {
                     setType: AvatarFigurePartType.EyeAccessory,
@@ -286,6 +326,9 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                     setType: AvatarFigurePartType.RightCoatSleeve,
                 },
                 {
+                    setType: AvatarFigurePartType.MiscRight,
+                },
+                {
                     setType: AvatarFigurePartType.RightHandItem,
                 },
             ],
@@ -304,6 +347,9 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                 },
                 {
                     setType: AvatarFigurePartType.RightCoatSleeve,
+                },
+                {
+                    setType: AvatarFigurePartType.MiscRight,
                 },
                 {
                     setType: AvatarFigurePartType.RightHandItem,
@@ -335,7 +381,38 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                     setType: AvatarFigurePartType.LeftCoatSleeve,
                 },
                 {
+                    setType: AvatarFigurePartType.MiscLeft,
+                },
+                {
                     setType: AvatarFigurePartType.LeftHandItem,
+                },
+            ],
+        },
+        {
+            id: AvatarPartSetType.Pet,
+            activeParts: [
+                {
+                    setType: AvatarFigurePartType.Pet,
+                },
+                {
+                    setType: AvatarFigurePartType.PetRight,
+                },
+                {
+                    setType: AvatarFigurePartType.PetLeft,
+                },
+            ],
+        },
+        {
+            id: AvatarPartSetType.Misc,
+            activeParts: [
+                {
+                    setType: AvatarFigurePartType.Misc,
+                },
+                {
+                    setType: AvatarFigurePartType.MiscRight,
+                },
+                {
+                    setType: AvatarFigurePartType.MiscLeft,
                 },
             ],
         },
@@ -373,13 +450,55 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                     setType: AvatarFigurePartType.LeftCoatSleeve,
                 },
                 {
+                    setType: AvatarFigurePartType.MiscLeft,
+                },
+                {
+                    setType: AvatarFigurePartType.PetLeft,
+                },
+                {
                     setType: AvatarFigurePartType.RightSleeve,
                 },
                 {
                     setType: AvatarFigurePartType.RightCoatSleeve,
                 },
                 {
+                    setType: AvatarFigurePartType.MiscRight,
+                },
+                {
+                    setType: AvatarFigurePartType.PetRight,
+                },
+                {
                     setType: AvatarFigurePartType.Shoes,
+                },
+                {
+                    setType: AvatarFigurePartType.CoatChest,
+                },
+                {
+                    setType: AvatarFigurePartType.Pet,
+                },
+                {
+                    setType: AvatarFigurePartType.HeadAccessory,
+                },
+                {
+                    setType: AvatarFigurePartType.HeadAccessoryExtra,
+                },
+                {
+                    setType: AvatarFigurePartType.ChestAccessory,
+                },
+                {
+                    setType: AvatarFigurePartType.WaistAccessory,
+                },
+                {
+                    setType: AvatarFigurePartType.Hair,
+                },
+                {
+                    setType: AvatarFigurePartType.EyeAccessory,
+                },
+                {
+                    setType: AvatarFigurePartType.FaceAccessory,
+                },
+                {
+                    setType: AvatarFigurePartType.Misc,
                 },
             ],
         },
@@ -403,6 +522,18 @@ export const HabboAvatarPartSets: IAssetAvatarPartSets = {
                 },
                 {
                     setType: AvatarFigurePartType.CoatChest,
+                },
+                {
+                    setType: AvatarFigurePartType.Pet,
+                },
+                {
+                    setType: AvatarFigurePartType.PetRight,
+                },
+                {
+                    setType: AvatarFigurePartType.PetLeft,
+                },
+                {
+                    setType: AvatarFigurePartType.Misc,
                 },
             ],
         },

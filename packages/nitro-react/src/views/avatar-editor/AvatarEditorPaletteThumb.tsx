@@ -25,7 +25,7 @@ export const AvatarEditorPaletteThumb = ({ color, isClub, selected, selectPalett
                 layout={{ position: 'absolute', left: 1, width: 13, top: 0, height: 21 }}
             />
             <ThemeImage
-                src={LayoutImage(selected ? 'avatar_editor_editor_clr_13x21_3.png' : 'avatar_editor_editor_clr_13x21_1.png')}
+                src={LayoutImage((selected || isHovering) ? 'avatar_editor_editor_clr_13x21_3.png' : 'avatar_editor_editor_clr_13x21_1.png')}
                 layout={{ position: 'absolute', left: 1, width: 13, top: 0, height: 21 }}
             />
             {isClub && (

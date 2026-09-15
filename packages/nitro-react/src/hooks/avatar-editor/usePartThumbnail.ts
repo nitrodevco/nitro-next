@@ -1,4 +1,4 @@
-import { AvatarGenderType, AvatarScaleType, AvatarSetType, IAvatarImage, IFigurePartSet, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType, IAvatarImage, IFigurePartSet, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager, TexturePool, TextureUtils } from '@nitrodevco/nitro-renderer';
 import { Rectangle, RenderTexture, Sprite, Texture } from 'pixi.js';
 import { useEffect, useState } from 'react';
@@ -30,8 +30,35 @@ const BUILD_RETRY_DELAY_MS = 100;
 
 /** `AvatarEditorGridPartItem.DRAW_ORDER` (AvatarFigurePartType values, back to front). */
 const DRAW_ORDER = [
-    'li', 'lh', 'ls', 'lc', 'bd', 'sh', 'lg', 'ch', 'ca', 'cc', 'cp', 'wa',
-    'rh', 'rs', 'rc', 'hd', 'fc', 'ey', 'hr', 'hrb', 'fa', 'ea', 'ha', 'he', 'ri',
+    AvatarFigurePartType.LeftHandItem,
+    AvatarFigurePartType.LeftHand,
+    AvatarFigurePartType.LeftSleeve,
+    AvatarFigurePartType.LeftCoatSleeve,
+    AvatarFigurePartType.MiscLeft,
+    AvatarFigurePartType.PetLeft,
+    AvatarFigurePartType.Body,
+    AvatarFigurePartType.Shoes,
+    AvatarFigurePartType.Legs,
+    AvatarFigurePartType.Chest,
+    AvatarFigurePartType.ChestAccessory,
+    AvatarFigurePartType.CoatChest,
+    AvatarFigurePartType.ChestPrint,
+    AvatarFigurePartType.WaistAccessory,
+    AvatarFigurePartType.RightHand,
+    AvatarFigurePartType.RightSleeve,
+    AvatarFigurePartType.RightCoatSleeve,
+    AvatarFigurePartType.MiscRight,
+    AvatarFigurePartType.PetRight,
+    AvatarFigurePartType.Head,
+    AvatarFigurePartType.Face,
+    AvatarFigurePartType.Eyes,
+    AvatarFigurePartType.Hair,
+    AvatarFigurePartType.HairBig,
+    AvatarFigurePartType.FaceAccessory,
+    AvatarFigurePartType.EyeAccessory,
+    AvatarFigurePartType.HeadAccessory,
+    AvatarFigurePartType.HeadAccessoryExtra,
+    AvatarFigurePartType.RightHandItem,
 ];
 
 /** One sprite of a thumbnail: a shared library texture, its position within the thumbnail, and which colour layer tints it (0 = none). */
@@ -348,7 +375,6 @@ export const usePartThumbnail = (part: PartThumbnailRequest | undefined, setType
             cancelled = true;
         };
         // The request is fully described by the part id / set, the set type, the gender and the skin colours.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ partId, partSet, setType, gender, colorKey ]);
 
     return ready;

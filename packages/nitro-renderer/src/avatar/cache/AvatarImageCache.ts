@@ -1,4 +1,4 @@
-import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActiveActionData, IAvatarCanvas, IAvatarImage } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActiveActionData, IAvatarCanvas, IAvatarImage, IGraphicAsset } from '@nitrodevco/nitro-api';
 import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { GetTickerTime } from '#renderer/utils';
@@ -15,24 +15,34 @@ import { ImageData } from './ImageData';
 
 export class AvatarImageCache {
     private static DEFAULT_MAX_CACHE_STORAGE_TIME_MS: number = 60000;
+    private static BASE_ACTION: string = 'std';
+    private static LAY_BASE_ACTION: string = 'lay';
+    private static ACTION_WAVE: string = 'wav';
+    private static ACTION_DRINK: string = 'drk';
+    private static ACTION_BLOW: string = 'blw';
+    private static ACTION_SIGN: string = 'sig';
+    private static ACTION_RESPECT: string = 'respect';
 
     private _structure: AvatarStructure;
     private _avatar: IAvatarImage;
     private _assets: AssetAliasCollection;
     private _scale: AvatarScaleType;
+    /** Flash `h_50`: the parts come from the large assets and the finished body part is halved. */
+    private _largeScaledSmall: boolean;
     private _geometryType: AvatarGeometryType;
     private _cache: Map<AvatarBodyPartType, AvatarImageBodyPartCache> = new Map();
     private _canvas: IAvatarCanvas | undefined = undefined;
-    private _defaultAction: string = 'std';
+    private _defaultAction: string = AvatarImageCache.BASE_ACTION;
     private _unionImages: ImageData[] = [];
     private _matrix: Matrix = new Matrix();
     private _disposed: boolean = false;
 
-    constructor(structure: AvatarStructure, avatar: IAvatarImage, assets: AssetAliasCollection, scale: AvatarScaleType) {
+    constructor(structure: AvatarStructure, avatar: IAvatarImage, assets: AssetAliasCollection, scale: AvatarScaleType, largeScaledSmall: boolean = false) {
         this._structure = structure;
         this._avatar = avatar;
         this._assets = assets;
         this._scale = scale;
+        this._largeScaledSmall = largeScaledSmall;
     }
 
     public dispose(): void {
@@ -54,7 +64,17 @@ export class AvatarImageCache {
         }
     }
 
-    public disposeInactiveActions(k: number = 60000): void {
+    /** Drops every rendered body part (assets changed) without disposing the cache itself. */
+    public reset(): void {
+        for (const cache of this._cache.values()) cache.dispose();
+
+        this._cache.clear();
+
+        this._canvas = undefined;
+        this._defaultAction = AvatarImageCache.BASE_ACTION;
+    }
+
+    public disposeInactiveActions(k: number = AvatarImageCache.DEFAULT_MAX_CACHE_STORAGE_TIME_MS): void {
         const time = GetTickerTime();
 
         for (const cache of this._cache.values()) cache.disposeActions(k, time);
@@ -79,23 +99,26 @@ export class AvatarImageCache {
     }
 
     public setAction(action: IActiveActionData, time: number): void {
-        for (const _local_4 of this._structure.getActiveBodyPartIds(action, this._avatar)) this.getBodyPartCache(_local_4)?.setAction(action, time);
+        for (const bodyPartId of this._structure.getActiveBodyPartIds(action, this._avatar)) this.getBodyPartCache(bodyPartId)?.setAction(action, time);
     }
 
+    /*
+     * Standing <-> sitting and anything involving the snowwar geometry keep the rendered
+     * parts; every other geometry change (lying down, swimming) throws them away, since the
+     * same part renders differently there.
+     */
     public setGeometryType(type: AvatarGeometryType): void {
         if (this._geometryType === type) return;
 
-        if ((this._geometryType === AvatarGeometryType.Sitting && type === AvatarGeometryType.Vertical) || (this._geometryType === AvatarGeometryType.Vertical && type === AvatarGeometryType.Sitting) || (this._geometryType === AvatarGeometryType.SnowwarsHorizontal && type === AvatarGeometryType.SnowwarsHorizontal)) {
-            this._geometryType = type;
-            this._canvas = undefined;
+        const keepsParts = (this._geometryType === AvatarGeometryType.Sitting && type === AvatarGeometryType.Vertical)
+            || (this._geometryType === AvatarGeometryType.Vertical && type === AvatarGeometryType.Sitting)
+            || (this._geometryType === AvatarGeometryType.SnowwarsHorizontal || type === AvatarGeometryType.SnowwarsHorizontal);
 
-            return;
-        }
-
-        this.disposeInactiveActions(0);
+        if (!keepsParts) this.disposeInactiveActions(0);
 
         this._geometryType = type;
         this._canvas = undefined;
+        this._defaultAction = AvatarImageCache.getDefaultActionFromGeometryType(type);
     }
 
     public getImageContainer(setType: AvatarBodyPartType, frameNumber: number): AvatarImageBodyPartContainer | undefined {
@@ -110,7 +133,7 @@ export class AvatarImageCache {
 
         let activeAction = action;
         let removes: string[] = [];
-        let layerItems: Map<AvatarFigurePartType, number> = new Map();
+        let layerItems: Map<AvatarFigurePartType, string> = new Map();
         const point = new Point();
 
         if (action.definition.isAnimation) {
@@ -206,41 +229,45 @@ export class AvatarImageCache {
     }
 
     private renderBodyPart(direction: number, containers: AvatarImagePartContainer[], frameCount: number, action: IActiveActionData): AvatarImageBodyPartContainer | undefined {
-        if (!containers || !action?.definition) return undefined;
+        if (!containers || !containers.length || !action?.definition) return undefined;
 
-        if (!this._canvas) this._canvas = this._structure.getCanvas(this._scale, this._geometryType);
-
-        if (!this._canvas) return undefined;
+        if (!this.ensureCanvas()) return undefined;
 
         const isFlipped = AvatarDirectionAngle.DIRECTION_IS_FLIPPED[direction] ?? false;
 
         let assetPartDefinition = action.definition.assetPartDefinition;
         let isCacheable = true;
+        let faceOffset: Point | undefined = undefined;
 
         for (let i = containers.length - 1; i >= 0; i--) {
             const container = containers[i];
 
-            let color = 16777215;
-
-            if ((direction === 7 && (container.partType === AvatarFigurePartType.Face || container.partType === AvatarFigurePartType.Eyes)) || (container.partType === AvatarFigurePartType.RightHandItem && container.partId === undefined)) continue;
+            // the back view has no face; a hand item slot with nothing in it draws nothing
+            if ((direction === 7 && (container.partType === AvatarFigurePartType.Face || container.partType === AvatarFigurePartType.Eyes)) || (container.partType === AvatarFigurePartType.RightHandItem && !container.partId)) continue;
 
             const partId = container.partId;
             const animationFrame = container.getFrameDefinition(frameCount);
 
             let partType = container.partType;
             let assetDirection = direction;
-
             let frameNumber = 0;
             let flipH = false;
 
             if (animationFrame) {
                 frameNumber = animationFrame.number;
 
-                if ((animationFrame.assetPartDefinition) && (animationFrame.assetPartDefinition !== '')) assetPartDefinition = animationFrame.assetPartDefinition;
+                if (animationFrame.assetPartDefinition && animationFrame.assetPartDefinition !== '') assetPartDefinition = animationFrame.assetPartDefinition;
             } else frameNumber = container.getFrameIndex(frameCount);
 
             if (isFlipped) {
-                if (((assetPartDefinition === 'wav') && ((partType === AvatarFigurePartType.LeftHand || partType === AvatarFigurePartType.LeftSleeve) || (partType === AvatarFigurePartType.LeftCoatSleeve))) || ((assetPartDefinition === 'drk') && (((partType === AvatarFigurePartType.RightHand) || (partType === AvatarFigurePartType.RightSleeve)) || (partType === AvatarFigurePartType.RightCoatSleeve))) || ((assetPartDefinition === 'blw') && (partType === AvatarFigurePartType.RightHand)) || ((assetPartDefinition === 'sig') && (partType === AvatarFigurePartType.LeftHand)) || ((assetPartDefinition === 'respect') && (partType === AvatarFigurePartType.LeftHand)) || (partType === AvatarFigurePartType.RightHandItem) || (partType === AvatarFigurePartType.LeftHandItem) || (partType === AvatarFigurePartType.ChestPrint)) {
+                if ((assetPartDefinition === AvatarImageCache.ACTION_WAVE && (partType === AvatarFigurePartType.LeftHand || partType === AvatarFigurePartType.LeftSleeve || partType === AvatarFigurePartType.LeftCoatSleeve || partType === AvatarFigurePartType.MiscLeft))
+                    || (assetPartDefinition === AvatarImageCache.ACTION_DRINK && (partType === AvatarFigurePartType.RightHand || partType === AvatarFigurePartType.RightSleeve || partType === AvatarFigurePartType.RightCoatSleeve || partType === AvatarFigurePartType.MiscRight))
+                    || (assetPartDefinition === AvatarImageCache.ACTION_BLOW && partType === AvatarFigurePartType.RightHand)
+                    || (assetPartDefinition === AvatarImageCache.ACTION_SIGN && partType === AvatarFigurePartType.LeftHand)
+                    || (assetPartDefinition === AvatarImageCache.ACTION_RESPECT && partType === AvatarFigurePartType.LeftHand)
+                    || partType === AvatarFigurePartType.RightHandItem
+                    || partType === AvatarFigurePartType.LeftHandItem
+                    || partType === AvatarFigurePartType.ChestPrint) {
                     flipH = true;
                 } else {
                     if (direction === 4) assetDirection = 2;
@@ -251,70 +278,86 @@ export class AvatarImageCache {
                 }
             }
 
-            let assetName = `${this._scale}_${assetPartDefinition}_${partType}_${partId}_${assetDirection}_${frameNumber}`;
-            let asset = this._assets.getAsset(assetName);
-
-            if (!asset) {
-                assetName = `${this._scale}_${assetPartDefinition}_${partType}_${partId}_${assetDirection}_0`;
-                asset = this._assets.getAsset(assetName);
-            }
-
-            if (!asset) {
-                assetName = `${this._scale}_${this._defaultAction}_${partType}_${partId}_${assetDirection}_${frameNumber}`;
-                asset = this._assets.getAsset(assetName);
-            }
-
-            if (!asset) {
-                assetName = `${this._scale}_${this._defaultAction}_${partType}_${partId}_${assetDirection}_0`;
-                asset = this._assets.getAsset(assetName);
-            }
+            const asset = this.tryResolveAsset(assetPartDefinition, partType, partId, assetDirection, frameNumber);
 
             if (!asset) continue;
 
             const texture = asset.texture;
 
-            if (!asset?.texture) {
+            if (!texture) {
                 isCacheable = false;
-            } else {
-                if (container.isColorable && container.color) color = container.color.rgb;
 
-                const offset = new Point(-(asset.x), -(asset.y));
-
-                if (flipH) offset.x = (offset.x + ((this._scale === AvatarScaleType.Large) ? 65 : 31));
-
-                this._unionImages.push(new ImageData(texture, asset.rectangle, offset, flipH, color));
+                continue;
             }
+
+            let color = 0xFFFFFF;
+
+            if (container.isColorable && container.color) color = container.color.rgb;
+
+            const alpha = container.isBlendable ? container.blendAlpha : 1;
+            const offset = new Point(-(asset.x), -(asset.y));
+
+            if (flipH) offset.x += ((this._scale === AvatarScaleType.Large) ? 65 : 31);
+
+            if (partType === AvatarFigurePartType.Face) faceOffset = offset.clone();
+
+            this._unionImages.push(new ImageData(texture, asset.rectangle, offset, flipH, color, undefined, alpha));
         }
 
         if (!this._unionImages.length) return undefined;
 
         const imageData = this.createUnionImage(this._unionImages, isFlipped);
-        const canvasOffset = (this._scale === AvatarScaleType.Large) ? (this._canvas.height - 16) : (this._canvas.height - 8);
-        const offset = new Point(-(imageData.regPoint.x), (canvasOffset - imageData.regPoint.y));
+        const canvasOffset = (this._scale === AvatarScaleType.Large) ? (this._canvas!.height - 16) : (this._canvas!.height - 8);
 
-        if (isFlipped && (assetPartDefinition !== 'lay')) offset.x = (offset.x + ((this._scale === AvatarScaleType.Large) ? 67 : 31));
+        let regPoint = imageData.regPoint;
+
+        if (this._largeScaledSmall) regPoint = new Point((regPoint.x / 2), (regPoint.y / 2));
+
+        const offset = new Point(-(regPoint.x), (canvasOffset - regPoint.y));
+
+        if (isFlipped && (assetPartDefinition !== AvatarImageCache.LAY_BASE_ACTION)) offset.x += ((this._scale === AvatarScaleType.Large) ? 67 : 31);
 
         let imageIndex = (this._unionImages.length - 1);
 
         while (imageIndex >= 0) {
-            const _local_17 = this._unionImages.pop();
+            const image = this._unionImages.pop();
 
-            if (_local_17) _local_17.dispose();
+            if (image) image.dispose();
 
             imageIndex--;
         }
 
-        if (!imageData.container) return undefined;
+        const image = imageData.container;
 
-        return new AvatarImageBodyPartContainer(imageData.container, offset, isCacheable);
+        if (!image) return undefined;
+
+        // Flash resampled the large render to half size here
+        if (this._largeScaledSmall) image.scale.set(0.5);
+
+        return new AvatarImageBodyPartContainer(image, offset, isCacheable, faceOffset);
     }
 
-    private convertColorToHex(k: number): string {
-        let _local_2: string = (k * 0xFF).toString(16);
-        if (_local_2.length < 2) {
-            _local_2 = ('0' + _local_2);
-        }
-        return _local_2;
+    private ensureCanvas(): boolean {
+        if (!this._canvas) this._canvas = this._structure.getCanvas(this._scale, this._geometryType);
+
+        return !!this._canvas;
+    }
+
+    /*
+     * The asset lookup order: the action's own frame, its frame 0, the geometry's default
+     * action (`std`, or `lay` when horizontal) at the frame, then that action's frame 0.
+     */
+    private tryResolveAsset(assetPartDefinition: string, partType: AvatarFigurePartType, partId: string, direction: number, frameNumber: number): IGraphicAsset | undefined {
+        const scale = this._largeScaledSmall ? AvatarScaleType.Large : this._scale;
+
+        return this._assets.getAsset(`${scale}_${assetPartDefinition}_${partType}_${partId}_${direction}_${frameNumber}`)
+            ?? this._assets.getAsset(`${scale}_${assetPartDefinition}_${partType}_${partId}_${direction}_0`)
+            ?? this._assets.getAsset(`${scale}_${this._defaultAction}_${partType}_${partId}_${direction}_${frameNumber}`)
+            ?? this._assets.getAsset(`${scale}_${this._defaultAction}_${partType}_${partId}_${direction}_0`);
+    }
+
+    private static getDefaultActionFromGeometryType(type: AvatarGeometryType): string {
+        return (type === AvatarGeometryType.Horizontal) ? AvatarImageCache.LAY_BASE_ACTION : AvatarImageCache.BASE_ACTION;
     }
 
     private createUnionImage(images: ImageData[], isFlipped: boolean): ImageData {
@@ -357,6 +400,7 @@ export class AvatarImageCache {
             const sprite = new Sprite(texture);
 
             sprite.tint = color;
+            sprite.alpha = data.alpha;
             sprite.setFromMatrix(this._matrix);
 
             container.addChild(sprite);

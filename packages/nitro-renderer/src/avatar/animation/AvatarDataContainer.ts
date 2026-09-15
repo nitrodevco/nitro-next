@@ -1,6 +1,8 @@
-﻿import { IAssetAnimationAvatar, IAvatarDataContainer } from '@nitrodevco/nitro-api';
+import { IAssetAnimationAvatar, IAvatarDataContainer } from '@nitrodevco/nitro-api';
 import { Filter } from 'pixi.js';
 import { AdjustmentFilter } from 'pixi-filters';
+
+import { PaletteMapFilter, PaletteMapFilterMode } from '#renderer/utils';
 
 export class AvatarDataContainer implements IAvatarDataContainer {
     private _ink: number;
@@ -14,6 +16,7 @@ export class AvatarDataContainer implements IAvatarDataContainer {
     private _colorMap: Map<string, number[]>;
     private _paletteIsGrayscale: boolean;
     private _colorTransform: Filter | undefined;
+    private _imageFilter: Filter | undefined = undefined;
 
     constructor(data: IAssetAnimationAvatar) {
         this._ink = data.ink ?? 0;
@@ -68,6 +71,17 @@ export class AvatarDataContainer implements IAvatarDataContainer {
 
     public get colorTransform(): Filter | undefined {
         return this._colorTransform;
+    }
+
+    /** Built once per effect: the lookup is a 256x1 texture, shared by every avatar wearing the effect. */
+    public get imageFilter(): Filter | undefined {
+        if (!this._imageFilter) {
+            this._imageFilter = this._paletteIsGrayscale
+                ? new PaletteMapFilter(PaletteMapFilterMode.GrayscaleMap, this.reds)
+                : new PaletteMapFilter(PaletteMapFilterMode.GreenToAlpha);
+        }
+
+        return this._imageFilter;
     }
 
     private generatePaletteMapForGrayscale(background: number, foreground: number): Map<string, number[]> {

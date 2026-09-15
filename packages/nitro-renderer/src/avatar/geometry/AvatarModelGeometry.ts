@@ -12,6 +12,9 @@ export class AvatarModelGeometry {
     private _geometryTypes: Map<AvatarGeometryType, Map<AvatarBodyPartType, GeometryBodyPart>> = new Map();
     private _itemIdToBodyPartMap: Map<AvatarGeometryType, Map<string, GeometryBodyPart>> = new Map();
     private _canvases: Map<AvatarScaleType, Map<AvatarGeometryType, IAvatarCanvas>> = new Map();
+    // body part id -> the part it must be drawn before / after (last geometry type to declare it wins, as in Flash)
+    private _orderBefore: Map<AvatarBodyPartType, AvatarBodyPartType> = new Map();
+    private _orderAfter: Map<AvatarBodyPartType, AvatarBodyPartType> = new Map();
 
     constructor(config: IAssetAvatarGeometryConfig) {
         this._camera = new Vector3D(0, 0, 10);
@@ -52,6 +55,9 @@ export class AvatarModelGeometry {
                         const geometryBodyPart = new GeometryBodyPart(bodyPart);
 
                         bodyParts.set(geometryBodyPart.id, geometryBodyPart);
+
+                        if (bodyPart.orderBefore) this._orderBefore.set(geometryBodyPart.id, bodyPart.orderBefore);
+                        if (bodyPart.orderAfter) this._orderAfter.set(geometryBodyPart.id, bodyPart.orderAfter);
 
                         for (const part of geometryBodyPart.getPartIds(undefined)) itemIds.set(part, geometryBodyPart);
                     }
@@ -140,7 +146,41 @@ export class AvatarModelGeometry {
             return 0;
         });
 
-        return sets.map(x => x[1].id);
+        const ids = sets.map(x => x[1].id);
+
+        // order-before / order-after: a body part sharing another's geometry (the held pet and the arm) is moved next to it after the sort
+        for (const [ id, target ] of this._orderBefore.entries()) AvatarModelGeometry.placeBodyPartBefore(ids, id, target);
+        for (const [ id, target ] of this._orderAfter.entries()) AvatarModelGeometry.placeBodyPartAfter(ids, id, target);
+
+        return ids;
+    }
+
+    private static placeBodyPartBefore(ids: AvatarBodyPartType[], id: AvatarBodyPartType, target: AvatarBodyPartType): void {
+        const index = ids.indexOf(id);
+
+        if (index === -1) return;
+
+        ids.splice(index, 1);
+
+        const targetIndex = ids.indexOf(target);
+
+        if (targetIndex === -1) return;
+
+        ids.splice(targetIndex, 0, id);
+    }
+
+    private static placeBodyPartAfter(ids: AvatarBodyPartType[], id: AvatarBodyPartType, target: AvatarBodyPartType): void {
+        const index = ids.indexOf(id);
+
+        if (index === -1) return;
+
+        ids.splice(index, 1);
+
+        const targetIndex = ids.indexOf(target);
+
+        if (targetIndex === -1) return;
+
+        ids.splice(targetIndex + 1, 0, id);
     }
 
     public getParts(geometryType: AvatarGeometryType, bodyPartId: AvatarBodyPartType, direction: number, activeParts: string[], avatar: IAvatarImage): AvatarFigurePartType[] {

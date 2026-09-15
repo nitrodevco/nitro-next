@@ -1,11 +1,12 @@
-import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IAvatarImageListener, IAvatarRenderManager, IAvatarStructure, IEffectMapLibrary, IFigureMapLibrary, IFigurePartSet, IGraphicAsset, IStructureData } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IAvatarImageListener, IAvatarRenderManager, IAvatarStructure, IEffectAssetDownloadLibrary, IEffectMapLibrary, IFigureData, IFigureMapLibrary, IFigurePartSet, IGraphicAsset, IStructureData } from '@nitrodevco/nitro-api';
 
 import { AssetAliasCollection } from './alias';
 import { AvatarAssetDownloadManager } from './AvatarAssetDownloadManager';
 import { AvatarFigureContainer } from './AvatarFigureContainer';
 import { AvatarImage } from './AvatarImage';
 import { AvatarStructure } from './AvatarStructure';
-import { HabboAvatarActions, HabboAvatarActionsDefault, HabboAvatarAnimations, HabboAvatarFigureDataDefault, HabboAvatarGeometry, HabboAvatarPartSets } from './data';
+import { BlockedAvatarImage } from './BlockedAvatarImage';
+import { HabboAvatarActions, HabboAvatarActionsDefault, HabboAvatarAnimations, HabboAvatarBuiltInAnimations, HabboAvatarFigureDataDefault, HabboAvatarGeometry, HabboAvatarPartSets } from './data';
 import { EffectAssetDownloadManager } from './EffectAssetDownloadManager';
 import { FigureDataContainer } from './FigureDataContainer';
 import { PlaceHolderAvatarImage } from './PlaceHolderAvatarImage';
@@ -18,7 +19,11 @@ export class AvatarRenderManager implements IAvatarRenderManager {
     private _avatarAssetDownloadManager: AvatarAssetDownloadManager;
     private _effectAssetDownloadManager: EffectAssetDownloadManager;
     private _placeHolderFigure: AvatarFigureContainer | undefined;
-    private _isReady: boolean;
+    private _blockedFigure: AvatarFigureContainer | undefined;
+    /** Every full avatar image alive, so `resetAllCaches` can reach them (they drop out on dispose). */
+    private _activeImages: Set<AvatarImage> = new Set();
+    private _figureMapReady: boolean = false;
+    private _effectMapReady: boolean = false;
 
     constructor() {
         this._structure = new AvatarStructure();
@@ -26,16 +31,19 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         this._avatarAssetDownloadManager = new AvatarAssetDownloadManager(this._structure);
         this._effectAssetDownloadManager = new EffectAssetDownloadManager(this._structure);
         this._placeHolderFigure = undefined;
-        this._isReady = false;
+        this._blockedFigure = undefined;
     }
 
     public init(): void {
         this._structure.initGeometry(HabboAvatarGeometry);
         this._structure.initPartSets(HabboAvatarPartSets);
-        this._structure.actionManager.updateActions(HabboAvatarActionsDefault);
-        this._structure.actionManager.updateActions(HabboAvatarActions);
+        // the baked-in actions (Default + snowwar) first, the downloaded set over them - as Flash `initActions` then `updateActions`
+        this._structure.updateActions(HabboAvatarActionsDefault);
+        this._structure.updateActions(HabboAvatarActions);
         this._structure.initAnimation(HabboAvatarAnimations);
         this._structure.initFigureData(HabboAvatarFigureDataDefault);
+        // Flash `registerBuiltInAnimations`: the animations embedded in the client rather than in an effect library
+        this._structure.registerAnimations(HabboAvatarBuiltInAnimations);
     }
 
     public processFigureMap(data: IFigureMapLibrary[], assetUrl: string) {
@@ -43,6 +51,8 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         this._avatarAssetDownloadManager.processMissingLibraries();
         this._avatarAssetDownloadManager.setReady();
         this._avatarAssetDownloadManager.processPendingContainers();
+
+        this._figureMapReady = true;
     }
 
     public processEffectMap(data: IEffectMapLibrary[], assetUrl: string) {
@@ -50,6 +60,8 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         this._effectAssetDownloadManager.processMissingLibraries();
         this._effectAssetDownloadManager.setReady();
         this._effectAssetDownloadManager.processPendingDownloads();
+
+        this._effectMapReady = true;
     }
 
     public createFigureContainer(figure: string): IAvatarFigureContainer {
@@ -65,7 +77,7 @@ export class AvatarRenderManager implements IAvatarRenderManager {
 
         if (gender) this.validateAvatarFigure(container, gender);
 
-        if (this._avatarAssetDownloadManager.isAvatarFigureContainerReady(container)) return new AvatarImage(this._structure, this._aliasCollection, container, size, this._effectAssetDownloadManager, effectListener);
+        if (this._avatarAssetDownloadManager.isAvatarFigureContainerReady(container)) return this.registerImage(new AvatarImage(this._structure, this._aliasCollection, container, size, this._effectAssetDownloadManager, effectListener, image => this.unregisterImage(image)));
 
         if (!this._placeHolderFigure) this._placeHolderFigure = new AvatarFigureContainer(AvatarRenderManager.DEFAULT_FIGURE);
 
@@ -81,7 +93,23 @@ export class AvatarRenderManager implements IAvatarRenderManager {
 
         if (!this._avatarAssetDownloadManager.isAvatarFigureContainerReady(container)) await this._avatarAssetDownloadManager.downloadAvatarFigureAsync(container);
 
-        return new AvatarImage(this._structure, this._aliasCollection, container, size, this._effectAssetDownloadManager, undefined);
+        return this.registerImage(new AvatarImage(this._structure, this._aliasCollection, container, size, this._effectAssetDownloadManager, undefined, image => this.unregisterImage(image)));
+    }
+
+    public createBlockedAvatarImage(figure: string, size: AvatarScaleType): IAvatarImage {
+        if (!this._blockedFigure) this._blockedFigure = new AvatarFigureContainer(AvatarRenderManager.DEFAULT_FIGURE);
+
+        return new BlockedAvatarImage(this._structure, this._aliasCollection, this._blockedFigure, size, this._effectAssetDownloadManager);
+    }
+
+    private registerImage(image: AvatarImage): AvatarImage {
+        this._activeImages.add(image);
+
+        return image;
+    }
+
+    private unregisterImage(image: AvatarImage): void {
+        this._activeImages.delete(image);
     }
 
     public downloadAvatarFigure(container: IAvatarFigureContainer, listener: IAvatarImageListener): void {
@@ -125,7 +153,8 @@ export class AvatarRenderManager implements IAvatarRenderManager {
             }
         }
 
-        if (!searchParts) searchParts = this._structure.getBodyPartsUnordered(AvatarSetType.Full);
+        // no explicit list: every body part of the full set, so a missing mandatory-for-free part counts too
+        if (!searchParts || !searchParts.length) searchParts = this._structure.getBodyPartsUnordered(AvatarSetType.Full);
 
         for (const part of searchParts) {
             const set = figureData.getSetType(part);
@@ -142,7 +171,9 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         const structure = this.structureData;
         const partSet = structure.getFigurePartSet(setId);
 
-        return !!(partSet && (partSet.gender === gender || partSet.gender === AvatarGenderType.Unisex));
+        const unisex: string = AvatarGenderType.Unisex;
+
+        return !!(partSet && (partSet.gender.toUpperCase() === gender.toUpperCase() || partSet.gender.toUpperCase() === unisex));
     }
 
     public getFigureStringWithFigureIds(figure: string, gender: AvatarGenderType, setIds: number[]): string {
@@ -167,8 +198,42 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         this._aliasCollection.init();
     }
 
+    public getItemIds(): string[] {
+        return this._structure.getItemIds();
+    }
+
+    public injectFigureData(data: IFigureData): void {
+        this._structure.injectFigureData(data);
+
+        // the mandatory-set cache was built from the previous figure data
+        this._structure.init();
+    }
+
+    /** Flash `resetAllCaches`: after an asset reset every live figure re-renders from scratch. */
+    public resetAllCaches(): void {
+        for (const image of [ ...this._activeImages ]) {
+            if (image.disposed) {
+                this._activeImages.delete(image);
+
+                continue;
+            }
+
+            image.resetCache();
+        }
+    }
+
+    public purgeAssets(): void {
+        this._avatarAssetDownloadManager.purge();
+    }
+
+    public get effectMap(): Map<string, IEffectAssetDownloadLibrary[]> | undefined {
+        if (!this._effectMapReady) return undefined;
+
+        return this._effectAssetDownloadManager.map;
+    }
+
     public get isReady(): boolean {
-        return this._isReady;
+        return this._figureMapReady && this._effectMapReady;
     }
 
     public get structure(): IAvatarStructure {

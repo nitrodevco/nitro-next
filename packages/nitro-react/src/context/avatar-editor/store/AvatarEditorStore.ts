@@ -55,7 +55,7 @@ const initialState: State = {
         [AvatarEditorCategory.Wardrobe]: AvatarFigurePartType.None,
         [AvatarEditorCategory.Nfts]: AvatarFigurePartType.None,
         [AvatarEditorCategory.Effects]: AvatarFigurePartType.None,
-        [AvatarEditorCategory.Misc]: 'pt',
+        [AvatarEditorCategory.Misc]: AvatarFigurePartType.Pet,
     },
     parts: {},
     gender: AvatarGenderType.Male,
