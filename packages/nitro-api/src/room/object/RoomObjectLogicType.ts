@@ -7,6 +7,8 @@ export class RoomObjectLogicType {
     public static FURNITURE_CREDIT = 'furniture_credit';
     public static FURNITURE_STICKIE = 'furniture_stickie';
     public static FURNITURE_PRESENT = 'furniture_present';
+    public static FURNITURE_FURNI_CHEST = 'furniture_furnichest';
+    public static FURNITURE_COINS_CHEST = 'furniture_coinschest';
     public static FURNITURE_TROPHY = 'furniture_trophy';
     public static FURNITURE_ECOTRON_BOX = 'furniture_ecotron_box';
     public static FURNITURE_DICE = 'furniture_dice';

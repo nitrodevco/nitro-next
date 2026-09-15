@@ -1,3 +1,5 @@
+export * from './chests/IChestItemType';
+export * from './chests/IChestStorage';
 export * from './enum/ChangeUserNameResultMessageCode';
 export * from './enum/ClubLevelEnum';
 export * from './enum/FurnitureSpecialType';

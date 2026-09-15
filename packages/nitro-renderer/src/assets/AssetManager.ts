@@ -58,6 +58,18 @@ export class AssetManager implements IAssetManager {
         return this._collections.get(name);
     }
 
+    public removeCollection(name: string): void {
+        const collection = this._collections.get(name);
+
+        if (!collection) return;
+
+        for (const textureName of collection.textures.keys()) this.removeTexture(textureName);
+
+        this._collections.delete(name);
+
+        collection.dispose();
+    }
+
     public createCollection(
         data: IAssetData,
         spritesheet: Spritesheet | undefined,
@@ -71,18 +83,6 @@ export class AssetManager implements IAssetManager {
         this._collections.set(collection.name, collection);
 
         return collection;
-    }
-
-    public removeCollection(name: string): void {
-        const collection = this._collections.get(name);
-
-        if (!collection) return;
-
-        collection.dispose();
-
-        this._collections.delete(name);
-
-        collection.dispose();
     }
 
     public async downloadAssets(urls: string[]): Promise<boolean> {

@@ -159,4 +159,6 @@ export enum RoomObjectVariableEnum {
     AdDisplayDelay = 'ad_display_delay',
     IsPlayingGame = 'is_playing_game',
     VariableFxStatuses = 'variable_fx_statuses',
+    FurnitureFurniChestShownAssetNames = 'furniture_furni_chest_shown_asset_names',
+    FurnitureChestIsWiredEnabled = 'furniture_chest_is_wired_enabled',
 }

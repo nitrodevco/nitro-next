@@ -9,6 +9,7 @@ import { ObjectDataFlagsEnum } from '../ObjectDataFlagsEnum';
 export class MapDataType extends ObjectDataBase {
     private static STATE = 'state';
     private static RARITY = 'rarity';
+    private static CHEST_NAME = 'chest_name';
 
     private _data: Record<string, string> = {};
 
@@ -63,6 +64,10 @@ export class MapDataType extends ObjectDataBase {
         if (state === undefined || state === null) return -1;
 
         return parseInt(state);
+    }
+
+    public get chestName(): string {
+        return this._data?.[MapDataType.CHEST_NAME] ?? '';
     }
 
     // TODO: How to get the keys?

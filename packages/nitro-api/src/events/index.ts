@@ -23,6 +23,7 @@ export * from './room/RoomObjectDataRequestEvent';
 export * from './room/RoomObjectDimmerStateUpdateEvent';
 export * from './room/RoomObjectEvent';
 export * from './room/RoomObjectFloorHoleEvent';
+export * from './room/RoomObjectFurniIconAssetEvent';
 export * from './room/RoomObjectFurnitureActionEvent';
 export * from './room/RoomObjectHSLColorEnabledEvent';
 export * from './room/RoomObjectHSLColorEnableEvent';

@@ -18,6 +18,7 @@ export * from './RoomObjectDataRequestEvent';
 export * from './RoomObjectDimmerStateUpdateEvent';
 export * from './RoomObjectEvent';
 export * from './RoomObjectFloorHoleEvent';
+export * from './RoomObjectFurniIconAssetEvent';
 export * from './RoomObjectFurnitureActionEvent';
 export * from './RoomObjectHSLColorEnabledEvent';
 export * from './RoomObjectHSLColorEnableEvent';
