@@ -227,7 +227,11 @@ const RETRY_DELAYS_MS = [ 500, 1500, 4000 ];
  * throws here either, it just resolves `undefined`. Evicting that entry lets the next call for
  * the same URL retry instead of reusing the cached `undefined` forever.
  */
-const loadTexture = (url: string): Promise<Texture | undefined> => {
+/**
+ * Resolves a url to a texture through the shared asset manager, once per url - the room's badge
+ * loader wants the same thing `useTextureFromUrl` does, without being a component.
+ */
+export const loadTexture = (url: string): Promise<Texture | undefined> => {
     const cached = textureCache.get(url);
 
     if (cached) return cached;

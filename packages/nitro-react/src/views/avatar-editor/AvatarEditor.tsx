@@ -1,9 +1,9 @@
 import { AvatarEditorCategory, AvatarEditorColor, AvatarFigurePartType, AvatarGenderType, RoomId, SubTab } from '@nitrodevco/nitro-api';
-import { GetWardrobeComposer, SaveWardrobeOutfitComposer, UpdateFigureDataComposer } from '@nitrodevco/nitro-packets';
+import { GetWardrobeComposer, SaveWardrobeOutfitComposer, SetClothingChangeDataComposer, UpdateFigureDataComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef } from 'react';
 
 import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
-import { useAvatarEditorActions, useAvatarEditorSelectors, useConfigValue, useOwnClubLevel, useOwnUserInfo, useTranslation, useWebSocketContext } from '#base/context';
+import { useAvatarEditorActions, useAvatarEditorSelectors, useConfigValue, useOwnClubLevel, useOwnUserInfo, useTranslation, useWebSocketContext, useWindowParams } from '#base/context';
 import { useAvatarEditorHandler } from '#base/handlers';
 import { AvatarEditorPartData, firstSelectableColorId, useAvatarEditorData, useAvatarEditorVisibility, usePartThumbnailLifetime } from '#base/hooks';
 import { Button, ButtonThick, Frame, InfiniteGrid, LayoutImage, Region, ScrollArea, TabButton, TabContext, ThemeImage, ThemeText } from '#base/theme';
@@ -11,6 +11,19 @@ import { Button, ButtonThick, Frame, InfiniteGrid, LayoutImage, Region, ScrollAr
 import { AvatarEditorPaletteThumb } from './AvatarEditorPaletteThumb';
 import { AvatarEditorPartThumb } from './AvatarEditorPartThumb';
 import { AvatarEditorWardrobe } from './AvatarEditorWardrobe';
+
+/**
+ * How the editor is opened. A clothing-change booth borrows it to dress itself: the outfit it
+ * already holds is loaded instead of the user's own look, and saving writes back to that furni.
+ * Anything else opens the editor on the user, which is the ordinary case and needs no params.
+ */
+export type AvatarEditorViewWindowParams = {
+    clothingChange?: {
+        objectId: number;
+        figure: string;
+        gender: AvatarGenderType;
+    };
+};
 
 const availableCategories: AvatarEditorCategory[] = [ AvatarEditorCategory.Generic, AvatarEditorCategory.Head, AvatarEditorCategory.Torso, AvatarEditorCategory.Legs, AvatarEditorCategory.Misc, AvatarEditorCategory.HotLooks, AvatarEditorCategory.Effects ];
 
@@ -47,6 +60,7 @@ const CATEGORY_TABS: Partial<Record<AvatarEditorCategory, SubTab[]>> = {
 export const AvatarEditor = () => {
     const { name, figure: ownFigure, sex: ownGender } = useOwnUserInfo();
     const clubLevel = useOwnClubLevel();
+    const { clothingChange } = useWindowParams('avatar_editor');
     const { activeCategory, activeSubType, wardrobeVisible, wardrobe, figure, parts: figureParts, gender } = useAvatarEditorSelectors();
     const activeSetType = activeSubType[activeCategory];
     const { setActiveCategory, setActiveSubType, setWardrobeVisible, setWardrobeSlot, loadFigure, setPart, removePart, setColors, setGender } = useAvatarEditorActions();
@@ -87,6 +101,23 @@ export const AvatarEditor = () => {
         setWardrobeSlot(index, { figure, gender });
     };
 
+    /*
+     * Saving usually means wearing the look yourself. While the editor is dressing a booth the
+     * look belongs to that furni instead: it keeps one outfit per gender, and the gender travels
+     * with the look so the server knows which of the two was dressed. The booth is done with the
+     * editor either way, so the window closes behind it.
+     */
+    const saveFigure = () => {
+        if (!clothingChange) {
+            send(new UpdateFigureDataComposer({ figure, gender }));
+
+            return;
+        }
+
+        send(new SetClothingChangeDataComposer({ objectId: clothingChange.objectId, gender, figure }));
+        hide();
+    };
+
     const selectColor = (color: AvatarEditorColor, layer: number) => {
         const colorIds = [ ...(figureParts[activeSetType]?.colorIds ?? []) ];
 
@@ -99,13 +130,23 @@ export const AvatarEditor = () => {
         if (figure) previewerRef.current?.updateAvatar(figure, gender);
     }, [ figure, gender ]);
 
+    // A booth brings its own outfit; loading it here rather than at the call site keeps the
+    // editing figure something only the editor ever sets.
+    useEffect(() => {
+        if (!clothingChange) return;
+
+        loadFigure(clothingChange.figure, clothingChange.gender, true);
+    }, [ clothingChange?.objectId, clothingChange?.figure, clothingChange?.gender ]);
+
     // The editor can mount before the user's info arrives; (re)load the editing figure whenever
     // the server-side look changes, so opening with an empty figure never sticks.
     useEffect(() => {
+        if (clothingChange) return;
+
         if (!ownFigure && !ownGender) return;
 
         loadFigure(ownFigure || DEFAULT_FIGURES[ownGender] || '', ownGender, true);
-    }, [ ownFigure, ownGender ]);
+    }, [ ownFigure, ownGender, !!clothingChange ]);
 
     useEffect(() => {
         send(new GetWardrobeComposer({}));
@@ -271,7 +312,7 @@ export const AvatarEditor = () => {
                             </Region>
                             <ButtonThick
                                 variant="3"
-                                onPointerTap={_ => send(new UpdateFigureDataComposer({ figure, gender }))}
+                                onPointerTap={_ => saveFigure()}
                                 textStyle="text-style-button-shiny-bold"
                                 layout={{ width: 100, height: 28 }}
                             >

@@ -25,7 +25,8 @@ export const CatalogView = () => {
                 id="catalog"
                 resizeDirection="y"
                 variant="3"
-                layout={{ position: 'absolute', top: 20, left: 20, width: 570, height: 635 }}
+                defaultPosition={{ x: 20, y: 20 }}
+                layout={{ position: 'absolute', width: 570, height: 635 }}
                 caption={t('catalog.title')}
                 onClose={hide}
             >

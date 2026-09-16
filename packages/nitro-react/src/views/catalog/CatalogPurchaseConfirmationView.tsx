@@ -52,7 +52,8 @@ export const CatalogPurchaseConfirmationView = () => {
         <Frame
             id="catalog-purchase-confirmation"
             variant="3"
-            layout={{ position: 'absolute', top: 20, left: 480, width: 325, height: 240 }}
+            defaultPosition={{ x: 480, y: 20 }}
+            layout={{ position: 'absolute', width: 325, height: 240 }}
             caption={t('catalog.purchase_confirmation.title')}
             onClose={cancelPurchase}
         >

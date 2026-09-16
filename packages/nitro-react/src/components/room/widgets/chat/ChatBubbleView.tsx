@@ -103,7 +103,6 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
 
         return () => removeBubble(motion);
         // Registration happens once per motion - a later layout change only updates the metrics above.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ motion, addBubble, removeBubble ]);
 
     if (!style || !layout || !backgroundTexture) return null;

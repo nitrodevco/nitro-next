@@ -66,6 +66,7 @@ export enum RoomObjectVariableEnum {
     FurnitureAdUrl = 'furniture_ad_url',
     FurnitureTypeId = 'furniture_type_id',
     FurnitureExtras = 'furniture_extras',
+    FurnitureExtra = 'furniture_extra',
     FurnitureExpiryTime = 'furniture_expiry_time',
     FurnitureExpirtyTimestamp = 'furniture_expiry_timestamp',
     FurnitureRealRoomObject = 'furniture_real_room_object',

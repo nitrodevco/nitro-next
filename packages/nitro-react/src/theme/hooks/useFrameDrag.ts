@@ -38,7 +38,25 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
  * started them, and Pixi's FederatedPointerEvent mirrors the native PointerEvent fields this
  * hook actually reads (`button`/`pointerId`/`clientX`/`clientY`), so one handler covers both.
  */
-export const useFrameDrag = (id: string | undefined) => {
+export interface FrameDragOptions {
+    /**
+     * Where the frame opens, in screen pixels. This is the drag offset's starting value rather
+     * than a layout position, and that distinction matters: the clamp below reads the frame's
+     * position off `getGlobalPosition`, which sees `.x`/`.y` but not the position yoga computed
+     * for it. A frame placed through `top`/`left` therefore looks like it is sitting at 0,0 to
+     * the drag, so the offset can never go negative and the window cannot be dragged above or
+     * left of wherever the layout put it.
+     */
+    defaultPosition?: { x: number; y: number };
+    /**
+     * Whether a window that has been dragged reopens where it was left. Windows a user works in
+     * keep their place; a dialog that belongs to a piece of furniture does not - it should open
+     * against the furni every time, not wherever a different one was dragged last.
+     */
+    remember?: boolean;
+}
+
+export const useFrameDrag = (id: string | undefined, { defaultPosition, remember = true }: FrameDragOptions = {}) => {
     const generatedId = useId();
     const stackId = id ?? generatedId;
 
@@ -46,7 +64,13 @@ export const useFrameDrag = (id: string | undefined) => {
     const dragStateRef = useRef<DragState | null>(null);
     const activeListenersRef = useRef<ActiveListeners | null>(null);
 
-    const [ offset, setOffset ] = useState(() => (id && getStoredFramePosition(id)) || { dx: 0, dy: 0 });
+    const [ offset, setOffset ] = useState(() => {
+        const opened = { dx: defaultPosition?.x ?? 0, dy: defaultPosition?.y ?? 0 };
+
+        if (!id || !remember) return opened;
+
+        return getStoredFramePosition(id) ?? opened;
+    });
 
     const zIndex = useWindowZIndex(stackId);
     const { bringWindowToFront } = useWindowActions();
@@ -125,7 +149,7 @@ export const useFrameDrag = (id: string | undefined) => {
 
             stopDragging();
 
-            if (!id) return;
+            if (!id || !remember) return;
 
             setOffset((current) => {
                 setStoredFramePosition(id, current);

@@ -16,3 +16,5 @@ export * from './useRoomCameraSelector';
 export * from './useRoomChatSelector';
 export * from './useRoomSelector';
 export * from './useRoomStackingHeightMapSelector';
+export * from './widget/useRoomFurnitureContextMenu';
+export * from './widget/useRoomWidget';

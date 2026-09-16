@@ -1,7 +1,7 @@
 import { IRoomInfo } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate } from '#base/context';
-import { Border, Box, ThemeImage, NitroIcon, ThemeText, useTextureFromUrl } from '#base/theme';
+import { Border, Box, NitroIcon, ThemeImage, ThemeText, useTextureFromUrl } from '#base/theme';
 
 import { RESULTS_MODE_TILES } from './NavigatorCategoryView';
 import { getUserCountColor } from './NavigatorRoomEntryUtils';

@@ -1,7 +1,7 @@
 import { RoomEngineEvent } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
-import { useRoomChatHandler, useRoomDataHandler, useRoomDirectoryHandler, useRoomFurnitureHandler, useRoomMappingHandler, useRoomModifications, useRoomPermissionsHandler, useRoomPetPackageHandler, useRoomPollHandler, useRoomUserHandler, useRoomVariableFxHandler } from '#base/handlers';
+import { useRoomAreaHideHandler, useRoomChatHandler, useRoomDataHandler, useRoomDirectoryHandler, useRoomFriendFurniHandler, useRoomFurnitureHandler, useRoomMappingHandler, useRoomModifications, useRoomPermissionsHandler, useRoomPetPackageHandler, useRoomPollHandler, useRoomUserHandler, useRoomVariableFxHandler } from '#base/handlers';
 import { useRoomEventDispatcher } from '#base/hooks';
 
 import { RoomCanvas } from './RoomCanvas';
@@ -11,6 +11,7 @@ import { RoomWidgets } from './widgets';
 export const RoomContainer = () => {
     const [ isReady, setIsReady ] = useState<boolean>(false);
 
+    useRoomAreaHideHandler();
     useRoomChatHandler();
     useRoomDataHandler();
     useRoomDirectoryHandler();
@@ -19,6 +20,7 @@ export const RoomContainer = () => {
     useRoomPermissionsHandler();
     useRoomPetPackageHandler();
     useRoomPollHandler();
+    useRoomFriendFurniHandler();
     useRoomUserHandler();
     useRoomVariableFxHandler();
 

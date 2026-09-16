@@ -58,6 +58,7 @@ const config = [
             '**/scripts/build-variablefx-atlas.ts',
             '**/scripts/generate-layout-views.ts',
             '**/scripts/extract-skin-assets.ts',
+            '**/scripts/sync-generated-packets.ts',
         ],
     },
     js.configs.recommended,

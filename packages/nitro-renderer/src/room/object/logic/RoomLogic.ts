@@ -171,15 +171,21 @@ export class RoomLogic extends RoomObjectLogicBase {
         if (message instanceof ObjectRoomFloorHoleUpdateMessage) {
             switch (message.type) {
                 case ObjectRoomFloorHoleUpdateMessage.ADD:
-                    this._planeParser.addFloorHole(message.id, message.x, message.y, message.width, message.height);
-                    this._needsMapUpdate = true;
-                    return;
+                    this._planeParser.addFloorHole(message.id, message.x, message.y, message.width, message.height, message.invert);
+                    break;
                 case ObjectRoomFloorHoleUpdateMessage.REMOVE:
                     this._planeParser.removeFloorHole(message.id);
-                    this._needsMapUpdate = true;
+                    break;
+                default:
                     return;
             }
 
+            this._needsMapUpdate = true;
+            /*
+             * Entering a room replays every area hide it has at once, and each of them would
+             * otherwise re-parse the whole floor. The timestamp holds the rebuild off for a
+             * frame so the room is parsed once however many holes arrived together.
+             */
             this._lastHoleUpdate = this.time;
 
             return;

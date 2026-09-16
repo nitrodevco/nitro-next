@@ -8,6 +8,7 @@ import { createRoomSelectedObjectSlice, RoomSelectedObjectSlice, RoomSelectedObj
 import { createRoomSessionSlice, RoomSessionSlice, RoomSessionSliceInitialState } from './RoomSessionSlice';
 import { createRoomStackingHeightMapSlice, RoomStackingHeightMapSlice, RoomStackingHeightMapSliceInitialState } from './RoomStackingHeightMapSlice';
 import { createRoomUsersSlice, RoomUsersSlice, RoomUsersSliceInitialState } from './RoomUsersSlice';
+import { createRoomWidgetSlice, RoomWidgetSlice, RoomWidgetSliceInitialState } from './RoomWidgetSlice';
 
 type State = {
     room: IRoom | undefined;
@@ -19,7 +20,7 @@ type Actions = {
     setOwnUserId: (ownUserId: number) => void;
 };
 
-export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomChatSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice;
+export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomChatSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice & RoomWidgetSlice;
 
 export const createRoomStore = () => createStore<RoomStore>()((set, get, store) => ({
     room: undefined,
@@ -37,6 +38,7 @@ export const createRoomStore = () => createStore<RoomStore>()((set, get, store) 
             ...RoomSelectedObjectSliceInitialState,
             ...RoomStackingHeightMapSliceInitialState,
             ...RoomUsersSliceInitialState,
+            ...RoomWidgetSliceInitialState,
             room,
         };
     }),
@@ -48,4 +50,5 @@ export const createRoomStore = () => createStore<RoomStore>()((set, get, store) 
     ...createRoomSelectedObjectSlice(set, get, store),
     ...createRoomStackingHeightMapSlice(set, get, store),
     ...createRoomUsersSlice(set, get, store),
+    ...createRoomWidgetSlice(set, get, store),
 }));

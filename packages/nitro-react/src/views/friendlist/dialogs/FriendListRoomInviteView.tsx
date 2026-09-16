@@ -29,7 +29,8 @@ export const FriendListRoomInviteView = () => {
         <Frame
             variant="0"
             id="friendlist-room-invite"
-            layout={{ position: 'absolute', top: 20, left: 260, width: 211, height: 175 }}
+            defaultPosition={{ x: 260, y: 20 }}
+            layout={{ position: 'absolute', width: 211, height: 175 }}
             caption={t('friendlist.invite.title')}
             onClose={() => toggleWindow('friendlist_invite')}
         >

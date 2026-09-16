@@ -1,9 +1,12 @@
-import { IRoomObject, MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomSpriteMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
+import { ColorConverter, IRoomObject, MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomEngineObjectEvent, RoomObjectBadgeAssetEvent, RoomObjectCategoryEnum, RoomObjectDataRequestEvent, RoomObjectDimmerStateUpdateEvent, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectHSLColorEnableEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
+import { GetItemDataComposer } from '@nitrodevco/nitro-packets';
 import { RoomObjectUpdateMessage } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';
 
-import { useOwnControllerLevel, useOwnIsModerator, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector } from '#base/context';
-import { useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction, useRoomObjectSelect } from '#base/hooks';
+import { useConfigValue, useOwnControllerLevel, useOwnIsModerator, useOwnUserId, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector, useWebSocketContext } from '#base/context';
+import { useRoomBadgeAssetHandler, useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction, useRoomObjectSelect, useRoomWidgetRequestHandler } from '#base/hooks';
+
+import { SetRoomBackgroundColor } from './roomBackgroundColor';
 
 export const RoomEventHandler = () => {
     const room = useRoomSelector();
@@ -14,12 +17,23 @@ export const RoomEventHandler = () => {
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
     const { changeItemState } = useRoomObjectInteraction();
     const { selectAvatar } = useRoomObjectSelect();
+    const { handleRoomWidgetRequestEvent } = useRoomWidgetRequestHandler();
+    const { handleBadgeAssetEvent } = useRoomBadgeAssetHandler();
+    const ownUserId = useOwnUserId();
+    const urlPrefix = useConfigValue<string>('url.prefix') ?? '';
+    const { send } = useWebSocketContext();
 
     const handleRoomObjectEvent = (event: RoomObjectEvent) => {
         if (!room) return;
 
         if (event instanceof RoomObjectMouseEvent) {
             handleRoomObjectMouseEvent(event);
+
+            return;
+        }
+
+        if (event instanceof RoomObjectWidgetRequestEvent) {
+            handleRoomWidgetRequestEvent(event);
 
             return;
         }
@@ -47,6 +61,55 @@ export const RoomEventHandler = () => {
             }
             case RoomObjectMoveEvent.SLIDE_ANIMATION: {
                 room.updateRoomObjectMask(event.objectId);
+                return;
+            }
+            case RoomObjectDimmerStateUpdateEvent.DIMMER_STATE: {
+                // The dimmer telling the room what mood it is in. Applied here rather than in the
+                // widget so the room is lit whether or not anyone has its dialog open.
+                const dimmer = event as RoomObjectDimmerStateUpdateEvent;
+
+                room.updateRoomObjectRoomColor(dimmer.color, dimmer.brightness, dimmer.effectId === 2);
+                return;
+            }
+            case RoomObjectHSLColorEnableEvent.ROOM_BACKGROUND_COLOR: {
+                // A background toner saying what the room should sit on. Like the dimmer, it is
+                // applied here rather than in the widget, so the room is coloured for everyone
+                // in it and not only for whoever has the dialog open.
+                const hsl = event as RoomObjectHSLColorEnableEvent;
+
+                SetRoomBackgroundColor(
+                    hsl.enable
+                        ? ColorConverter.hslToRGB(((hsl.hue & 0xFF) << 16) | ((hsl.saturation & 0xFF) << 8) | (hsl.lightness & 0xFF))
+                        : undefined,
+                );
+                return;
+            }
+            /*
+             * Two logics ask the client for something it alone knows, and keep asking on every
+             * tick until the answer lands on their model - a rentable space cannot tell whether
+             * you are its renter without your id, and a video display cannot build an asset url
+             * without the prefix. `RoomObjectEventHandler.handleObjectDataRequestEvent` answered
+             * both the same way.
+             */
+            case RoomObjectDataRequestEvent.RODRE_CURRENT_USER_ID: {
+                room.getRoomObject(event.objectId, room.getRoomObjectCategoryForType(event.objectType))
+                    ?.model.setValue(RoomObjectVariableEnum.SessionCurrentUserId, ownUserId);
+                return;
+            }
+            case RoomObjectDataRequestEvent.RODRE_URL_PREFIX: {
+                room.getRoomObject(event.objectId, room.getRoomObjectCategoryForType(event.objectType))
+                    ?.model.setValue(RoomObjectVariableEnum.SessionUrlPrefix, urlPrefix);
+                return;
+            }
+            // A badge a furni wears is fetched and registered on the furni's own assets.
+            case RoomObjectBadgeAssetEvent.LOAD_BADGE: {
+                handleBadgeAssetEvent(event as RoomObjectBadgeAssetEvent);
+                return;
+            }
+            case RoomObjectFurnitureActionEvent.STICKIE: {
+                // Using a post-it doesn't open anything by itself: the server is asked for the
+                // note, and the item-data update that comes back is what raises the widget.
+                send(new GetItemDataComposer({ objectId: event.objectId }));
                 return;
             }
             case RoomObjectFurnitureActionEvent.MOUSE_ARROW: {

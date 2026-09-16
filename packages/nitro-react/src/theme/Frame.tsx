@@ -147,15 +147,28 @@ export interface FrameProps extends Omit<ThemeProps<FrameVariant>, 'dropShadow'>
      * frame gets the variant's default.
      */
     dropShadow?: DropShadowConfig | false;
+    /**
+     * Where the window opens, in screen pixels. Prefer this over `top`/`left` in `layout`: the
+     * drag reads the frame's position from the container itself and cannot see what yoga did
+     * with it, so a frame positioned through the layout cannot be dragged back past that point.
+     */
+    defaultPosition?: { x: number; y: number };
+    /**
+     * Whether this window reopens where it was last dragged to. On by default, for the windows
+     * a user arranges to taste; pass `false` for a dialog that should come up in the same place
+     * every time.
+     */
+    rememberPosition?: boolean;
     onClose?: () => void;
     children?: ReactNode;
 }
 
 export const Frame = ({
-    variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, dropShadow, id, caption, resizeDirection = 'all', contentLayout, onClose, children,
+    variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, dropShadow, id, caption, resizeDirection = 'all', contentLayout,
+    defaultPosition, rememberPosition = true, onClose, children,
     onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
 }: FrameProps) => {
-    const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id);
+    const { frameRef, offset, zIndex, onPointerDown, onHeaderPointerDown } = useFrameDrag(id, { defaultPosition, remember: rememberPosition });
     const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedShadow, resolvedTint } = useThemeVariant({
         cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, dropShadow, onPointerOver, onPointerOut, onPointerDown: compose(onPointerDown, onPointerDownProp), onPointerUp, onPointerUpOutside, onPointerTap,
     });

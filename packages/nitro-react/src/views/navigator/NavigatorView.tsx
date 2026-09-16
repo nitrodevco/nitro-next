@@ -86,7 +86,8 @@ export const NavigatorView = () => {
         <Frame
             caption={t('navigator.title')}
             id="navigator"
-            layout={{ position: 'absolute', top: 20, left: 20, width: leftPaneHidden ? FRAME_WIDTH_COLLAPSED : FRAME_WIDTH_EXPANDED, height: preferences?.windowHeight ?? 628 }}
+            defaultPosition={{ x: 20, y: 20 }}
+            layout={{ position: 'absolute', width: leftPaneHidden ? FRAME_WIDTH_COLLAPSED : FRAME_WIDTH_EXPANDED, height: preferences?.windowHeight ?? 628 }}
             resizeDirection="y"
             variant="3"
             onClose={hide}

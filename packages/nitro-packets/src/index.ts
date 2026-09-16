@@ -509,6 +509,7 @@ export * from './incoming/Room/Engine/WiredMovementsMessage';
 export * from './incoming/Room/Furniture/AreaHideMessage';
 export * from './incoming/Room/Furniture/CustomStackingHeightUpdateMessage';
 export * from './incoming/Room/Furniture/CustomUserNotificationMessage';
+export * from './incoming/Room/Furniture/Data/IRoomDimmerPreset';
 export * from './incoming/Room/Furniture/DiceValueMessage';
 export * from './incoming/Room/Furniture/FurniRentOrBuyoutOfferMessage';
 export * from './incoming/Room/Furniture/GuildFurniContextMenuInfoMessage';

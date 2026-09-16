@@ -6,3 +6,4 @@ export * from './RoomSessionSlice';
 export * from './RoomStackingHeightMapSlice';
 export * from './RoomStore';
 export * from './RoomUsersSlice';
+export * from './RoomWidgetSlice';

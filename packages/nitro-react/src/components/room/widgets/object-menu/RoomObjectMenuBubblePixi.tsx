@@ -13,12 +13,13 @@ const FADE_DELAY = 5000;
 const FADE_LENGTH = 75;
 const SPACE_AROUND_EDGES = 10;
 
-let FIXED_STACK: FixedSizeStack | undefined = undefined;
-let MAX_STACK = -1000000;
+/** Where the drop smoothing starts from, before any real height has been seen. */
+const INITIAL_MAX_STACK = -1000000;
 
 type RoomObjectInfoBubblePixiProps = {
     objectData: ISimpleRoomObjectData;
-    userType: RoomObjectUserType;
+    /** Only humanoid units nudge the bubble's offset, so furniture simply leaves this out. */
+    userType?: RoomObjectUserType;
     fades?: boolean;
     children?: ReactNode;
     onClose?: () => void;
@@ -47,6 +48,13 @@ export const RoomObjectMenuBubblePixi = (props: RoomObjectInfoBubblePixiProps) =
     const isFading = useRef<boolean>(false);
     const fadeTime = useRef<number>(1);
     const bubbleRef = useRef<PixiContainer>(null);
+    /*
+     * The smoothing is this bubble's own: several of them can be up at once - a furniture menu,
+     * a scoreboard, a guild menu - and one sharing its stack with another would be dragged
+     * about by whatever that one is following.
+     */
+    const locationStack = useRef<FixedSizeStack>(new FixedSizeStack(LOCATION_STACK_SIZE));
+    const maxStack = useRef<number>(INITIAL_MAX_STACK);
 
     const updateFade = (time: number) => {
         if (!onClose || !isFading.current || !bubbleRef?.current) return;
@@ -65,7 +73,7 @@ export const RoomObjectMenuBubblePixi = (props: RoomObjectInfoBubblePixiProps) =
     };
 
     const updatePosition = (bounds: Rectangle, location: PointData) => {
-        if (!bounds || !location || !FIXED_STACK || !bubbleRef?.current) return;
+        if (!bounds || !location || !bubbleRef?.current) return;
 
         const node = bubbleRef.current;
         const nodeWidth = node.layout?.computedLayout.width ?? node.width;
@@ -76,15 +84,14 @@ export const RoomObjectMenuBubblePixi = (props: RoomObjectInfoBubblePixiProps) =
         if (userType === RoomObjectUserType.User || userType === RoomObjectUserType.Bot || userType === RoomObjectUserType.RentableBot) offset = (offset + ((bounds.height > 50) ? 15 : 0));
         else offset = (offset - 14);
 
-        FIXED_STACK.addValue((location.y - bounds.top));
+        locationStack.current.addValue((location.y - bounds.top));
 
-        let maxStack = FIXED_STACK.getMax();
+        // The bubble may rise as fast as the object does, but it only falls a few pixels a frame.
+        const highest = Math.max(locationStack.current.getMax(), (maxStack.current - BUBBLE_DROP_SPEED));
 
-        if (maxStack < (MAX_STACK - BUBBLE_DROP_SPEED)) maxStack = (MAX_STACK - BUBBLE_DROP_SPEED);
+        maxStack.current = highest;
 
-        MAX_STACK = maxStack;
-
-        const deltaY = (location.y - maxStack);
+        const deltaY = (location.y - highest);
 
         let x = (location.x - (nodeWidth / 2));
         let y = (deltaY + offset);
@@ -125,11 +132,12 @@ export const RoomObjectMenuBubblePixi = (props: RoomObjectInfoBubblePixiProps) =
         return () => clearTimeout(timeout);
     }, [ fades ]);
 
+    // A bubble moved to another object starts following it from scratch.
     useEffect(() => {
-        FIXED_STACK = new FixedSizeStack(LOCATION_STACK_SIZE);
-        MAX_STACK = -1000000;
+        locationStack.current = new FixedSizeStack(LOCATION_STACK_SIZE);
+        maxStack.current = INITIAL_MAX_STACK;
         fadeTime.current = 1;
-    }, []);
+    }, [ objectId, category ]);
 
     return (
         <Box

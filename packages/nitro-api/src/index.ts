@@ -315,6 +315,7 @@ export * from './room/utils/IFurnitureStackingHeightMap';
 export * from './room/utils/ILegacyWallGeometry';
 export * from './room/utils/IRoomAreaSelectionManager';
 export * from './room/utils/IRoomPreviewerData';
+export * from './room/utils/IRoomWidgetRequest';
 export * from './room/utils/ISelectedRoomObjectData';
 export * from './room/utils/ITileObjectMap';
 export * from './room/utils/RoomObjectSpriteData';

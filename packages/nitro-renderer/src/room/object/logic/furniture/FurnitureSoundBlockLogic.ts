@@ -25,7 +25,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
     public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (asset.logic && asset.logic.soundSample) {
+        if (asset?.logic?.soundSample) {
             this._sampleId = asset.logic.soundSample.id as number;
             this._noPitch = asset.logic.soundSample.noPitch as boolean;
         }

@@ -3,7 +3,7 @@ import { InfoRetrieveComposer } from '@nitrodevco/nitro-packets';
 import { GetTicker } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
-import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, LayoutBrowserComponent, MessengerComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from './components';
+import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from './components';
 import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './context';
 import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
 import { Box, TooltipLayer } from './theme';
@@ -84,7 +84,6 @@ export const MainView = () => {
                 <MessengerComponent />
                 <NavigatorWrapper />
                 <WalletComponent />
-                <LayoutBrowserComponent />
                 <ToolbarView />
                 <TooltipLayer />
             </Box>

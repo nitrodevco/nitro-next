@@ -85,6 +85,7 @@ export * from './utils/IFurnitureStackingHeightMap';
 export * from './utils/ILegacyWallGeometry';
 export * from './utils/IRoomAreaSelectionManager';
 export * from './utils/IRoomPreviewerData';
+export * from './utils/IRoomWidgetRequest';
 export * from './utils/ISelectedRoomObjectData';
 export * from './utils/ITileObjectMap';
 export * from './utils/RoomObjectSpriteData';

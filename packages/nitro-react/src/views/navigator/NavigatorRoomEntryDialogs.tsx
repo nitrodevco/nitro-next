@@ -173,7 +173,8 @@ export const NavigatorRoomEntryDialogs = () => {
                 id="navigator-alert"
                 caption={t(alert.titleKey)}
                 onClose={() => setAlert(undefined)}
-                layout={{ position: 'absolute', top: 160, left: 360, width: 240 }}
+                defaultPosition={{ x: 360, y: 160 }}
+                layout={{ position: 'absolute', width: 240 }}
             >
                 <Border layout={{ minHeight: 80, paddingLeft: 9, paddingRight: 9, paddingTop: 6, paddingBottom: 6 }}>
                     <ThemeText

@@ -24,6 +24,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const XML_DIR = join(__dirname, 'binaryData');
 const IMAGE_DIR = join(__dirname, 'images');
 const OUT_DIR = join(__dirname, '../src/views/layouts');
+/** Hand-written views live here, and they use `layoutImage()` too - see `protectHandWrittenImages`. */
+const HAND_WRITTEN_DIR = join(__dirname, '../src');
 const IMAGE_OUT_DIR = join(__dirname, '../public/assets/images/layouts');
 const TEXT_STYLES_FILE = join(__dirname, '../src/theme/utils/textStyles.ts');
 
@@ -2295,6 +2297,9 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
 // everything else goes through `layoutRegistry`'s per-entry dynamic `load()`.
 
 console.log(`Generated ${exports.length} layout components into ${OUT_DIR}`);
+
+protectHandWrittenImages(HAND_WRITTEN_DIR);
+
 for (const job of cropJobs) {
     const image = await loadImage(job.source);
     const canvas = createCanvas(job.region.width, job.region.height);
@@ -2302,6 +2307,44 @@ for (const job of cropJobs) {
     canvas.getContext('2d').drawImage(image, job.region.x, job.region.y, job.region.width, job.region.height, 0, 0, job.region.width, job.region.height);
     writeFileSync(job.out, canvas.toBuffer('image/png'));
 }
+
+/**
+ * Views written by hand reference this folder as well, through the same `LayoutImage()` helper,
+ * and no layout speaks for them - a room widget drawn against a Flash layout often needs a
+ * bitmap the generated version of that layout never asked for. Their images are resolved here
+ * like any other, so they are copied if they are missing and, either way, survive the prune
+ * below.
+ *
+ * Only literal names can be read this way. A reference built at runtime
+ * (`layoutImage(`mysterybox_${side}_base.png`)`) is invisible here, so those images have to be
+ * ones a generated layout names too.
+ */
+const protectHandWrittenImages = (dir: string): void => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        const path = join(dir, entry.name);
+
+        if (entry.isDirectory()) {
+            if (path !== OUT_DIR) protectHandWrittenImages(path);
+
+            continue;
+        }
+
+        if (!entry.name.endsWith('.tsx') && !entry.name.endsWith('.ts')) continue;
+
+        for (const match of readFileSync(path, 'utf8').matchAll(/LayoutImage\('([^']+)'\)/g)) {
+            const name = match[1].replace(/\.(png|gif|jpg)$/i, '');
+
+            if (resolveImage(name)) continue;
+
+            // Nothing in scripts/images answers to it, but the app asks for it by name, so it
+            // stays where it is rather than being swept away as unreferenced.
+            const existing = `${name}.png`;
+
+            if (existsSync(join(IMAGE_OUT_DIR, existing))) copiedImages.set(existing, '(hand-placed)');
+            else unresolvedImages.add(name);
+        }
+    }
+};
 
 // The folder is owned by this script - drop anything no layout references any more.
 const stale = readdirSync(IMAGE_OUT_DIR).filter(file => /\.(png|gif|jpg)$/i.test(file) && !copiedImages.has(file));

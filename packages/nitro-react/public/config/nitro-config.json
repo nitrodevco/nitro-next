@@ -13,6 +13,8 @@
     "asset.urls.avatar": "https://assets.nitrodev.co/bundled/figures/%libname%.nitro",
     "asset.urls.effect": "https://assets.nitrodev.co/bundled/effects/%libname%.nitro",
     "asset.urls.catalog": "https://assets.nitrodev.co/images/catalog/%name%.gif",
+    "badge.asset.url": "https://assets.nitrodev.co/c_images/album1584/%badgename%.gif",
+    "badge.asset.group.url": "https://assets.nitrodev.co/habbo-imaging/badge/%badgedata%.gif",
     "catalog.icons.url": "https://assets.nitrodev.co/images/catalog-icons/icon_%name%.png",
     "loading.icon.url": "/assets/icons/loading_icon.png",
     "variablefx.asset.url": "/assets/variablefx",

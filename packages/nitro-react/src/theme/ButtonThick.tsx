@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, Stretch } from './layer';
+import { BackgroundLayer, NineSlice } from './layer';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 import { makeTextStyleBold, roundedButtonVariant, shinyButtonBoldVariant } from './utils/buttonVariants';
 
@@ -18,33 +18,35 @@ const BUTTON_THICK_3_VARIANT: ButtonThickVariant = {
     },
 };
 
+/**
+ * `habbo_skin_button_thick` and its black twin, cut the way their templates describe: a 4px
+ * edge, a single stretchable column of face, another 4px edge, and the same again vertically.
+ * The middle row of the white skin reads
+ *
+ *   #000 #000 #fff #ccc | #fff | #888 #fff #000 #000
+ *
+ * - two columns of outline, a white highlight and a light bevel, then the white face, then the
+ * darker bevel and the outline mirrored back.
+ */
+const thickCapsuleVariant = (prefix: string, textColor: string): ThemeWithStatesVariant => ({
+    states: {
+        default: NineSlice(`${prefix}-default-src`, 4, 4, 4, 4),
+        hovering: NineSlice(`${prefix}-hovering-src`, 4, 4, 4, 4),
+        pressed: NineSlice(`${prefix}-pressed-src`, 4, 4, 4, 4),
+        disabled: NineSlice(`${prefix}-disabled-src`, 4, 4, 4, 4),
+    },
+    layout: {
+        paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23,
+    },
+    textStyle: 'text-style-button-bold',
+    textColor,
+});
+
 const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
     // habbo_skin - default / white
-    0: {
-        states: {
-            default: Stretch('buttonthick-0-default-src'),
-            hovering: Stretch('buttonthick-0-hovering-src'),
-            pressed: Stretch('buttonthick-0-pressed-src'),
-            disabled: Stretch('buttonthick-0-disabled-src'),
-        },
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23,
-        },
-        textStyle: 'text-style-button-bold', textColor: '#000000',
-    },
+    0: thickCapsuleVariant('buttonthick-0', '#000000'),
     // Habbo_skin black
-    1: {
-        states: {
-            default: Stretch('buttonthick-1-default-src'),
-            hovering: Stretch('buttonthick-1-hovering-src'),
-            pressed: Stretch('buttonthick-1-pressed-src'),
-            disabled: Stretch('buttonthick-1-disabled-src'),
-        },
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23,
-        },
-        textStyle: 'text-style-button-bold', textColor: '#FFFFFF',
-    },
+    1: thickCapsuleVariant('buttonthick-1', '#FFFFFF'),
     // ubuntu_skin - default
     3: {
         ...BUTTON_THICK_3_VARIANT,

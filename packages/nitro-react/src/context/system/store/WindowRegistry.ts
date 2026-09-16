@@ -1,10 +1,11 @@
+import { AvatarEditorViewWindowParams } from '#base/views/avatar-editor/AvatarEditor';
 import { CatalogViewWindowParams } from '#base/views/catalog/CatalogView';
 import { FriendListViewWindowParams } from '#base/views/friendlist/FriendListView';
 import { InventoryViewWindowParams } from '#base/views/inventory/InventoryView';
 import { NavigatorViewWindowParams } from '#base/views/navigator/NavigatorView';
 
 export type WindowRegistry = {
-    avatar_editor: NoWindowParams;
+    avatar_editor: AvatarEditorViewWindowParams;
     catalog: CatalogViewWindowParams;
 
     friendlist: FriendListViewWindowParams;

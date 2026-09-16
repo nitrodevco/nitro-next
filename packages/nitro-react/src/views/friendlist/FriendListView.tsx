@@ -40,7 +40,8 @@ export const FriendListView = () => {
         <Frame
             variant="0"
             id="friendlist"
-            layout={{ position: 'absolute', top: 20, left: 20, width: 230, height: activeTab ? 350 : undefined }}
+            defaultPosition={{ x: 20, y: 20 }}
+            layout={{ position: 'absolute', width: 230, height: activeTab ? 350 : undefined }}
             caption={t('friendlist.friends')}
             onClose={() => toggleWindow('friendlist')}
         >

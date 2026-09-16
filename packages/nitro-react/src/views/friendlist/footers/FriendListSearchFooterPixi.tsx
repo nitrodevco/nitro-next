@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, Box, Button, NitroIcon, ThemeText, TextInput } from '#base/theme';
+import { Border, Box, Button, NitroIcon, TextInput, ThemeText } from '#base/theme';
 
 /** Pixi port of views/friendlist/footers/FriendListSearchFooter.tsx. */
 export const FriendListSearchFooterPixi = () => {

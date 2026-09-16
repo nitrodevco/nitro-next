@@ -1,4 +1,5 @@
 export * from './chat';
+export * from './useRoomBadgeAssetHandler';
 export * from './useRoomCamera';
 export * from './useRoomCursorUpdate';
 export * from './useRoomEventDispatcher';
@@ -19,3 +20,4 @@ export * from './useRoomObjectSelected';
 export * from './useRoomObjectValidation';
 export * from './useRoomPreviewer';
 export * from './useRoomUserData';
+export * from './useRoomWidgetRequestHandler';

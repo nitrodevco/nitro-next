@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useCatalogActions, useCatalogSelectors, useTranslation } from '#base/context';
-import { Border, Box, ThemeText, TextInput } from '#base/theme';
+import { Border, Box, TextInput, ThemeText } from '#base/theme';
 
 const MIN_VALUE = 1;
 const MAX_VALUE = 100;

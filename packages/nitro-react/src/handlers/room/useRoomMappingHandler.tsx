@@ -191,6 +191,13 @@ export const useRoomMappingHandler = () => {
 
         room.applyRoomMap(mapData);
         room.setLegacyGeometry(wallGeometry);
+
+        /*
+         * The areas the room is already hiding when you walk into it. Flash handed the same list
+         * to `initializeRoom` and applied it once the room object existed; the map has to be in
+         * place first, so this stays here rather than moving to the area hide handler.
+         */
+        for (const areaHide of data.areaHideData) room.updateAreaHide(areaHide.furniId, areaHide.on, areaHide.rootX, areaHide.rootY, areaHide.width, areaHide.length, areaHide.invert);
     });
 
     useMessageListener(HeightMapMessage, (data) => {

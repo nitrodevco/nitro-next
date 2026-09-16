@@ -75,6 +75,8 @@ import {
     ObjectHeightUpdateMessage,
     ObjectItemDataUpdateMessage,
     ObjectMoveUpdateMessage,
+    ObjectRoomColorUpdateMessage,
+    ObjectRoomFloorHoleUpdateMessage,
     ObjectRoomMaskUpdateMessage,
     ObjectRoomPlanePropertyUpdateMessage,
     ObjectRoomPlaneVisibilityUpdateMessage,
@@ -123,6 +125,14 @@ export class Room implements IRoom {
     private _areaSelection: IRoomAreaSelectionManager;
     private _isInitialized: boolean = false;
 
+    /**
+     * The area hides in force, held as the very messages that applied them. `applyRoomMap`
+     * throws the room object away and builds a new one, taking the plane parser that owns the
+     * holes with it, so every one still in force has to be applied to its replacement - Flash
+     * replayed the server's list at the end of `initializeRoom` for the same reason.
+     */
+    private _areaHides: Map<number, ObjectRoomFloorHoleUpdateMessage> = new Map();
+
     private _floorStack: Map<number, IRoomFurnitureData> = new Map();
     private _wallStack: Map<number, IRoomFurnitureData> = new Map();
     private _variableFx: VariableFxRoomData = new VariableFxRoomData();
@@ -149,6 +159,7 @@ export class Room implements IRoom {
             this._canvas = undefined;
         }
 
+        this._areaHides.clear();
         this._variableFx.dispose();
         this._model.dispose();
 
@@ -324,7 +335,8 @@ export class Room implements IRoom {
             RoomObjectCategoryEnum.Cursor,
         );
 
-        // TODO update area hide
+        // Whatever the room was already hiding, put back onto the room object just built.
+        for (const areaHide of this._areaHides.values()) roomObject.processUpdateMessage(areaHide);
 
         this._isInitialized = true;
 
@@ -828,6 +840,7 @@ export class Room implements IRoom {
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureUsagePolicy, data.usagePolicy);
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerId, data.ownerId);
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, data.ownerName);
+            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExtra, data.extra);
         }
 
         if (!this.updateRoomObjectFloor(data.objectId, data.location, data.direction, data.state, data.objectData, data.extra)) return false;
@@ -902,6 +915,7 @@ export class Room implements IRoom {
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureUsagePolicy, data.usagePolicy);
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerId, data.ownerId);
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, data.ownerName);
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExtra, data.extra);
 
         if (!this.updateRoomObjectWall(data.objectId, data.location, data.direction, data.state, data.objectData.getLegacyString())) return false;
 
@@ -1100,6 +1114,41 @@ export class Room implements IRoom {
         data.initializeFromRoomObjectModel(roomObject.model);
 
         roomObject.logic.processUpdateMessage(new ObjectDataUpdateMessage(stateIndex, data));
+
+        return true;
+    }
+
+    public updateRoomObjectRoomColor(color: number, light: number, backgroundOnly: boolean): boolean {
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return false;
+
+        room.processUpdateMessage(new ObjectRoomColorUpdateMessage(ObjectRoomColorUpdateMessage.BACKGROUND_COLOR, color, light, backgroundOnly));
+
+        return true;
+    }
+
+    /**
+     * A furni hiding - or revealing - the area it covers. The area is a hole in the room's floor
+     * plane, so the work lands on the room object rather than on the furni that asked for it,
+     * exactly as `RoomEngine.updateAreaHide` did.
+     *
+     * An inverted area hides everything *outside* itself, which the plane parser keeps as a
+     * separate set of holes; that is the only thing `invert` decides here.
+     */
+    public updateAreaHide(furniId: number, on: boolean, rootX: number, rootY: number, width: number, length: number, invert: boolean): boolean {
+        const message = on
+            ? new ObjectRoomFloorHoleUpdateMessage(ObjectRoomFloorHoleUpdateMessage.ADD, furniId, rootX, rootY, width, length, invert)
+            : new ObjectRoomFloorHoleUpdateMessage(ObjectRoomFloorHoleUpdateMessage.REMOVE, furniId);
+
+        if (on) this._areaHides.set(furniId, message);
+        else this._areaHides.delete(furniId);
+
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return false;
+
+        room.processUpdateMessage(message);
 
         return true;
     }

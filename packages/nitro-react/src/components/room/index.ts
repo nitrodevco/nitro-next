@@ -1,3 +1,4 @@
+export * from './roomBackgroundColor';
 export * from './RoomCanvas';
 export * from './RoomContainer';
 export * from './RoomEventHandler';

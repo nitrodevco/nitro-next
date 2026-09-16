@@ -1,8 +1,9 @@
 import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
-import { useOwnRoomObjectId, useRoomSelector } from '#base/context';
+import { useOwnRoomObjectId, useRoomFurnitureContextMenu, useRoomSelector } from '#base/context';
 import { useRoomObjectDeselected, useRoomObjectRollOut, useRoomObjectRollOver, useRoomObjectSelected } from '#base/hooks';
+import { FurnitureContextMenuView } from '#base/views/room-widgets/furniture/FurnitureContextMenuView';
 import { InfoBubbleAvatarView } from '#base/views/room-widgets/object-menu/InfoBubbleAvatarView';
 import { InfoBubbleOwnAvatarView } from '#base/views/room-widgets/object-menu/InfoBubbleOwnAvatarView';
 
@@ -15,6 +16,7 @@ export const RoomObjectMenuWidget = () => {
     const [ hoverData, setHoverData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
     const room = useRoomSelector();
     const ownRoomObjectId = useOwnRoomObjectId();
+    const contextMenu = useRoomFurnitureContextMenu();
 
     const onClose = () => {
         setSelectedData(undefined);
@@ -56,7 +58,18 @@ export const RoomObjectMenuWidget = () => {
     switch (selectedData.category) {
         case RoomObjectCategoryEnum.Floor:
         case RoomObjectCategoryEnum.Wall: {
-            return null;
+            // Selecting furniture asks its logic for a context menu; only some kinds offer one.
+            if (!contextMenu || contextMenu.objectId !== selectedData.objectId || contextMenu.category !== selectedData.category) return null;
+
+            return (
+                <RoomObjectMenuBubblePixi objectData={selectedData}>
+                    <FurnitureContextMenuView
+                        objectData={selectedData}
+                        menu={contextMenu.menu}
+                        onClose={onClose}
+                    />
+                </RoomObjectMenuBubblePixi>
+            );
         }
         case RoomObjectCategoryEnum.Unit: {
             const roomObject = room.getRoomObject(selectedData.objectId, selectedData.category);
