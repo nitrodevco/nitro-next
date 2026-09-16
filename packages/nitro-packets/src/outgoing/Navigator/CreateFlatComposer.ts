@@ -1,4 +1,4 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import { IOutgoingPacket, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
 export type CreateFlatComposerType = {
     flatName: string;
@@ -6,7 +6,7 @@ export type CreateFlatComposerType = {
     flatModelName: string;
     categoryID: number;
     maxPlayers: number;
-    tradeSetting: RoomTradeModeType;
+    tradeSetting: RoomTradeModeEnum;
 };
 
 export class CreateFlatComposer implements IOutgoingPacket<CreateFlatComposerType> {

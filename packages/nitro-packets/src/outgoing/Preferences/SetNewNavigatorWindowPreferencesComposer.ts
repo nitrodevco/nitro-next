@@ -6,7 +6,7 @@ export type SetNewNavigatorWindowPreferencesComposerType = {
     width: number;
     height: number;
     openSavedSearches: boolean;
-    resultsMode: NavigatorViewModeType;
+    resultsMode: number;
 };
 
 export class SetNewNavigatorWindowPreferencesComposer implements IOutgoingPacket<SetNewNavigatorWindowPreferencesComposerType> {

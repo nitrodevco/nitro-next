@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type OpenFlatConnectionComposerType = {
-    roomId: RoomId;
+    roomId: number;
     password: string;
     unknown1: number;
 };

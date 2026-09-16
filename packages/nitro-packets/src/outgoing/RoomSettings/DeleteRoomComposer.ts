@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type DeleteRoomComposerType = {
-    roomId: RoomId;
+    roomId: number;
 };
 
 export class DeleteRoomComposer implements IOutgoingPacket<DeleteRoomComposerType> {

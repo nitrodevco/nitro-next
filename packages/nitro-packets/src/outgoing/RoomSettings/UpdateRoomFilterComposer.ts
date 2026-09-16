@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type UpdateRoomFilterComposerType = {
-    roomId: RoomId;
+    roomId: number;
     isAddingWord: boolean;
     word: string;
 };

@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetCustomRoomFilterComposerType = {
-    roomId: RoomId;
+    roomId: number;
 };
 
 export class GetCustomRoomFilterComposer implements IOutgoingPacket<GetCustomRoomFilterComposerType> {

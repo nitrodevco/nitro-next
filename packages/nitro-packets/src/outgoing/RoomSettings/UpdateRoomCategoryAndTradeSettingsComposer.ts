@@ -1,9 +1,9 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import { IOutgoingPacket, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
 export type UpdateRoomCategoryAndTradeSettingsComposerType = {
-    roomId: RoomId;
+    roomId: number;
     categoryId: number;
-    tradeType: RoomTradeModeType;
+    tradeType: RoomTradeModeEnum;
 };
 
 export class UpdateRoomCategoryAndTradeSettingsComposer implements IOutgoingPacket<UpdateRoomCategoryAndTradeSettingsComposerType> {

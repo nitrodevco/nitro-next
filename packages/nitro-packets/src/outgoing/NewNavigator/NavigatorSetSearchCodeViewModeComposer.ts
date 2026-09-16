@@ -2,7 +2,7 @@ import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type NavigatorSetSearchCodeViewModeComposerType = {
     categoryName: string;
-    viewMode: NavigatorViewModeType;
+    viewMode: number;
 };
 
 export class NavigatorSetSearchCodeViewModeComposer implements IOutgoingPacket<NavigatorSetSearchCodeViewModeComposerType> {

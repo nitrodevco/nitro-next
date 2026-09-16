@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type ToggleStaffPickComposerType = {
-    roomId: RoomId;
+    roomId: number;
     isStaffPicked: boolean;
 };
 
