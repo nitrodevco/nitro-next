@@ -1,10 +1,13 @@
 import { CatalogPricingModelEnum, CatalogPricingTypeEnum, CatalogTypeEnum, FurnitureTypeEnum, ICatalogOffer, IFurnitureData, IProduct, IPurchasableOffer } from '@nitrodevco/nitro-api';
 
-import { useCatalogSelectors, useFurnitureDataSelector } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
+import { useSystemStore } from '#base/context/system';
 
 export const useCatalogOfferActions = () => {
-    const { catalogType } = useCatalogSelectors();
-    const { floorItems, wallItems, productData } = useFurnitureDataSelector();
+    const catalogType = useCatalogStore(x => x.catalogType);
+    const floorItems = useSystemStore(x => x.floorItems);
+    const wallItems = useSystemStore(x => x.wallItems);
+    const productData = useSystemStore(x => x.productData);
 
     const getFurnitureData = (classId: number, productType: FurnitureTypeEnum) => {
         switch (productType) {

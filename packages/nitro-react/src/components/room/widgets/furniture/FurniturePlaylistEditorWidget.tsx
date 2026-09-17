@@ -1,19 +1,18 @@
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { AddJukeboxDiskComposer, RemoveJukeboxDiskComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomWidget, useRoomWidgetActions, useTranslation, useWebSocketContext } from '#base/context';
-import { JukeboxData, useRoomJukeboxHandler } from '#base/handlers';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useTranslation } from '#base/context/system';
+import { JukeboxData } from '#base/handlers';
 import { FurniturePlaylistEditorView, PlaylistEditorSong } from '#base/views/room-widgets/furniture/FurniturePlaylistEditorView';
 
 /**
- * The jukebox playlist editor. Everything on screen comes from `useRoomJukeboxHandler`, which
+ * The jukebox playlist editor. Everything on screen comes from `registerRoomJukeboxHandlers`, which
  * the request handler sets going as the furni is used; adding and removing a disk are the only
  * two things the editor itself sends.
  */
 export const FurniturePlaylistEditorWidget = () => {
-    // Only this dialog is told these things, and only while it is open.
-    useRoomJukeboxHandler();
-
     const request = useRoomWidget<JukeboxData>(RoomObjectWidgetRequestEvent.JUKEBOX_PLAYLIST_EDITOR);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();

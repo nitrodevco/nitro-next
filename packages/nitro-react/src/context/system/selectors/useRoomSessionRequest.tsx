@@ -1,3 +1,3 @@
-import { useSystemContext } from '../useSystemContext';
+import { useSystemStore } from '../useSystemStore';
 
-export const useRoomSessionRequest = () => useSystemContext(x => x.roomSessionRequest);
+export const useRoomSessionRequest = () => useSystemStore(x => x.roomSessionRequest);

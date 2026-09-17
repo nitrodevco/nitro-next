@@ -2,7 +2,7 @@ import { IEffectMapLibrary, IFigureMapLibrary, NitroLogger } from '@nitrodevco/n
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';
 
-import { useConfigValue } from '#base/context';
+import { useConfigValue } from '#base/context/system';
 
 export const useAvatarLoader = () => {
     const figureMapUrl = useConfigValue<string>('figuremap.url') ?? '';

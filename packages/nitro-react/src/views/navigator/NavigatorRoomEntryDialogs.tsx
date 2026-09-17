@@ -1,7 +1,9 @@
 import { QuitComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useInterpolate, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
+import { useInterpolate, useTranslation } from '#base/context/system';
 import { useGoToRoom } from '#base/hooks';
 import { Border, Box, Button, Frame, Region, TextInput, ThemeText } from '#base/theme';
 
@@ -14,7 +16,8 @@ const DIALOG_POSITION = { position: 'absolute', top: 120, left: 320 } as const;
  * navigator closes (Flash builds them on the desktop, not inside the navigator frame).
  */
 export const NavigatorRoomEntryDialogs = () => {
-    const { roomEntryDialog, alert } = useNavigatorSelectors();
+    const roomEntryDialog = useNavigatorStore(x => x.roomEntryDialog);
+    const alert = useNavigatorStore(x => x.alert);
     const { setRoomEntryDialog, setRoomEntryDialogMode, setAlert } = useNavigatorActions();
     const { send } = useWebSocketContext();
     const interpolate = useInterpolate();

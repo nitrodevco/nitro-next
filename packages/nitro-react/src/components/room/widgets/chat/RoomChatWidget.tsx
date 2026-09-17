@@ -1,4 +1,5 @@
-import { useOwnChatPreferences, useRoomSelector } from '#base/context';
+import { useRoom } from '#base/context/room';
+import { useUserStore } from '#base/context/user';
 import { getRenderMode } from '#base/theme';
 
 import { ChatFlowProvider } from './ChatFlowProvider';
@@ -12,8 +13,8 @@ import { RoomChatBubbles } from './RoomChatBubbles';
  * preferences, or in the DOM UI mode, which only renders the room canvas itself.
  */
 export const RoomChatWidget = () => {
-    const room = useRoomSelector();
-    const { freeFlowChatDisabled } = useOwnChatPreferences();
+    const room = useRoom();
+    const freeFlowChatDisabled = useUserStore(x => x.freeFlowChatDisabled);
 
     if (!room || freeFlowChatDisabled || (getRenderMode() !== 'pixi')) return null;
 

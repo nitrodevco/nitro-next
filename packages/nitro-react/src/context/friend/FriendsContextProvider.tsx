@@ -1,14 +1,14 @@
 import { ReactNode, useState } from 'react';
 
 import { FriendsContext } from './FriendsContext';
-import { createFriendsContextStore } from './store';
+import { createFriendsStore } from './store';
 
 type ProviderProps = {
     children: ReactNode;
 };
 
 export const FriendsContextProvider = ({ children }: ProviderProps) => {
-    const [ ctx ] = useState(() => createFriendsContextStore());
+    const [ ctx ] = useState(() => createFriendsStore());
 
     return (
         <FriendsContext value={ctx}>

@@ -1,12 +1,13 @@
 import { RoomObjectCategoryEnum, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
 import { MoveAvatarComposer, SetRandomStateComposer, UseFurnitureComposer, UseWallItemComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomIsMoveBlocked, useRoomSelector, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomIsMoveBlocked } from '#base/context/room';
 
 import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomObjectInteraction = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const isMoveBlocked = useRoomIsMoveBlocked();
     const { getActiveSurfaceLocation } = useRoomObjectValidation();
     const { send } = useWebSocketContext();

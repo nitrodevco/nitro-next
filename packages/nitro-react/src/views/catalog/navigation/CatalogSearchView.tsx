@@ -1,7 +1,8 @@
 import { CatalogTypeEnum, ICatalogNode, IFurnitureData, IPurchasableOffer } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useCatalogActions, useCatalogSelectors, useFurnitureDataSelector } from '#base/context';
+import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
+import { useSystemStore } from '#base/context/system';
 import { useCatalogNavigation, useCatalogOfferActions } from '#base/hooks';
 import { Border, Box, NitroIcon, TextInput } from '#base/theme';
 
@@ -13,8 +14,11 @@ import { Border, Box, NitroIcon, TextInput } from '#base/theme';
  */
 export const CatalogSearchView = () => {
     const [ searchValue, setSearchValue ] = useState('');
-    const { floorItems, wallItems } = useFurnitureDataSelector();
-    const { catalogType, rootNode, offersToNodes } = useCatalogSelectors();
+    const floorItems = useSystemStore(x => x.floorItems);
+    const wallItems = useSystemStore(x => x.wallItems);
+    const catalogType = useCatalogStore(x => x.catalogType);
+    const rootNode = useCatalogStore(x => x.rootNode);
+    const offersToNodes = useCatalogStore(x => x.offersToNodes);
     const { setSearchResult } = useCatalogActions();
     const { showCatalogPage } = useCatalogNavigation();
     const { processAsOffer } = useCatalogOfferActions();

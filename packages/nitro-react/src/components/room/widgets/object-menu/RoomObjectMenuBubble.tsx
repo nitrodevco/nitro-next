@@ -2,7 +2,7 @@ import { ISimpleRoomObjectData, RoomObjectUserType, RoomRenderedEvent } from '@n
 import { PointData, Rectangle } from 'pixi.js';
 import { ReactNode, useEffect, useRef } from 'react';
 
-import { useRoomSelector } from '#base/context';
+import { useRoom } from '#base/context/room';
 import { useRoomEventDispatcher } from '#base/hooks';
 import { FixedSizeStack } from '#base/utils';
 
@@ -26,7 +26,7 @@ type RoomObjectInfoBubbleProps = {
 export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
     const { objectData, userType, fades = false, children, onClose = undefined } = props;
     const { objectId, category } = objectData;
-    const room = useRoomSelector();
+    const room = useRoom();
     const isFading = useRef<boolean>(false);
     const fadeTime = useRef<number>(1);
     const elementRef = useRef<HTMLDivElement>(null);

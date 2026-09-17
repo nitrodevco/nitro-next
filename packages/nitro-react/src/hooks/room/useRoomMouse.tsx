@@ -1,15 +1,21 @@
 import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
 import { Room, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
-import { FederatedPointerEvent } from 'pixi.js';
+import { Container, FederatedPointerEvent } from 'pixi.js';
 import { useRef } from 'react';
 
-import { useRoomInteractionSelector, useRoomSelector } from '#base/context';
+import { useRoom, useRoomStore } from '#base/context/room';
+
+/** The room canvas is a Pixi object owned by the renderer, not by React - it is switched on here, outside the hook. */
+const enablePointerEvents = (container: Container) => {
+    container.eventMode = 'static';
+};
 
 const DRAG_THRESHOLD: number = 15;
 
 export const useRoomMouse = () => {
-    const room = useRoomSelector();
-    const { isDecorating, isPlayingGame } = useRoomInteractionSelector();
+    const room = useRoom();
+    const isDecorating = useRoomStore(x => x.isDecorating);
+    const isPlayingGame = useRoomStore(x => x.isPlayingGame);
     const mouseDataRef = useRef<{
         mouseXY: { x: number; y: number };
         dragStartXY: { x: number; y: number };
@@ -148,8 +154,7 @@ export const useRoomMouse = () => {
 
         const container = room.canvas.master;
 
-        // eslint-disable-next-line react-hooks/immutability
-        container.eventMode = 'static';
+        enablePointerEvents(container);
 
         let didMouseMove = false;
         let isMouseDown = false;

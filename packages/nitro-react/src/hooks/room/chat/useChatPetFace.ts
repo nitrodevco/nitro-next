@@ -1,9 +1,16 @@
 import { RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 import { GetAssetManager, GetRoomContentLoader, GetRoomEngine, PetFigureData } from '@nitrodevco/nitro-renderer';
 import { Texture } from 'pixi.js';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
-import { useRoomSelector } from '#base/context';
+import { useRoom } from '#base/context/room';
+
+/** How big and which way round a pet render is wanted. */
+export interface PetFaceOptions {
+    scale?: RoomGeometryScaleType;
+    /** In eighths of a turn, as the room counts directions. */
+    direction?: number;
+}
 
 export interface ChatPetFace {
     texture: Texture | undefined;
@@ -50,7 +57,7 @@ const storeFace = (cacheKey: string, texture: Texture) => {
  * `getRoomObjectPetImage` route would read that texture back as a base64 `<img>` and upload
  * it a second time. The `type`/`value` pair is what `Room.getRoomObjectPetImageArgs` builds.
  */
-const renderPetFace = (figureData: PetFigureData, posture: string | undefined): Promise<Texture | undefined> => {
+const renderPetFace = (figureData: PetFigureData, posture: string | undefined, scale: RoomGeometryScaleType, direction: number): Promise<Texture | undefined> => {
     const type = GetRoomContentLoader().getPetNameForType(figureData.typeId);
 
     if (!type) return Promise.resolve(undefined);
@@ -61,39 +68,47 @@ const renderPetFace = (figureData: PetFigureData, posture: string | undefined): 
 
     for (const part of figureData.customParts) value = `${value} ${part.layerId} ${part.partId} ${part.paletteId}`;
 
-    return GetRoomEngine().getGenericRoomObjectTexture(type, value, new Vector3d(2 * 45), RoomGeometryScaleType.ZoomedOut, undefined, 0, undefined, 0, 0, posture ?? '');
+    return GetRoomEngine().getGenericRoomObjectTexture(type, value, new Vector3d(direction * 45), scale, undefined, 0, undefined, 0, 0, posture ?? '');
 };
 
-/** `ChatBubbleFactory._Str_2641`: the whole pet at the zoomed-out (32px) scale, facing direction 2 - async through the room engine. */
-export const useChatPetFace = (figure: string | undefined, posture: string | undefined): ChatPetFace => {
-    const room = useRoomSelector();
-    const [ face, setFace ] = useState<ChatPetFace>(EMPTY);
+/** `ChatBubbleFactory._Str_2641`'s defaults: the whole pet at the zoomed-out (32px) scale, facing direction 2. */
+const DEFAULT_SCALE = RoomGeometryScaleType.ZoomedOut;
+const DEFAULT_DIRECTION = 2;
 
-    useEffect(() => {
-        if (!room || !figure) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setFace(EMPTY);
+/**
+ * A pet drawn by the room engine, cached across everything that shows one. The chat bubble takes
+ * the defaults; the infostand asks for a bigger render, which is a different cache entry.
+ */
+export const useChatPetFace = (figure: string | undefined, posture: string | undefined, options?: PetFaceOptions): ChatPetFace => {
+    const scale = options?.scale ?? DEFAULT_SCALE;
+    const direction = options?.direction ?? DEFAULT_DIRECTION;
+    const room = useRoom();
+    const cacheKey = `${figure}|${posture ?? ''}|${scale}|${direction}`;
+    const canRender = !!room && !!figure;
 
-            return;
-        }
+    // The shared face cache is the source of truth; a hit is moved to the back, the most recent end.
+    const getSnapshot = () => {
+        if (!canRender) return undefined;
 
-        const figureData = new PetFigureData(figure);
-        const cacheKey = `${figure}|${posture ?? ''}`;
         const cached = cache.get(cacheKey);
 
         if (cached) {
             cache.delete(cacheKey);
             cache.set(cacheKey, cached);
-            setFace({ texture: cached, color: figureData.color });
-
-            return;
         }
+
+        return cached;
+    };
+
+    // Subscribing is what starts the render; the face landing in the cache is the change to re-read.
+    const subscribe = (onChange: () => void) => {
+        if (!canRender || cache.has(cacheKey)) return () => {};
 
         let cancelled = false;
         let promise = pending.get(cacheKey);
 
         if (!promise) {
-            promise = renderPetFace(figureData, posture).then((texture) => {
+            promise = renderPetFace(new PetFigureData(figure), posture, scale, direction).then((texture) => {
                 pending.delete(cacheKey);
 
                 if (!texture) return undefined;
@@ -107,16 +122,18 @@ export const useChatPetFace = (figure: string | undefined, posture: string | und
             pending.set(cacheKey, promise);
         }
 
-        setFace({ texture: undefined, color: figureData.color });
-
-        void promise.then((texture) => {
-            if (!cancelled) setFace({ texture, color: figureData.color });
+        void promise.then(() => {
+            if (!cancelled) onChange();
         });
 
         return () => {
             cancelled = true;
         };
-    }, [ room, figure, posture ]);
+    };
 
-    return face;
+    const texture = useSyncExternalStore(subscribe, getSnapshot);
+
+    if (!canRender) return EMPTY;
+
+    return { texture, color: new PetFigureData(figure).color };
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, NitroIcon, TextInput, ThemeText } from '#base/theme';
 
 /** Pixi port of views/friendlist/footers/FriendListSearchFooter.tsx. */

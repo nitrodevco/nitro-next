@@ -1,7 +1,8 @@
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useRoomFurnitureData } from '#base/hooks';
 import { FurnitureEcotronBoxView } from '#base/views/room-widgets/furniture/FurnitureEcotronBoxView';
 

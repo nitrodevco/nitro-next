@@ -1,12 +1,18 @@
-import { useShallow } from 'zustand/shallow';
+import { roomStore } from '../store/RoomStore';
 
-import { useRoomContext } from '#base/context';
+const state = roomStore.getState();
 
-export const useRoomUsersActions = () => useRoomContext(useShallow(x => ({
-    getUserDataByIndex: x.getUserByRoomObjectId,
-    updateUsers: x.updateUsers,
-    updateUser: x.updateUser,
-    updateUserPartial: x.updateUserPartial,
-    removeUser: x.removeUser,
-    setBadges: x.setBadges,
-})));
+/**
+ * Zustand actions are created once and never change, so they are read off the store a single
+ * time here rather than subscribed to: a component using these re-renders for nothing.
+ */
+const actions = {
+    getUserDataByIndex: state.getUserByRoomObjectId,
+    updateUsers: state.updateUsers,
+    updateUser: state.updateUser,
+    updateUserPartial: state.updateUserPartial,
+    removeUser: state.removeUser,
+    setBadges: state.setBadges,
+};
+
+export const useRoomUsersActions = () => actions;

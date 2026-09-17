@@ -1,6 +1,6 @@
 import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
-import { useRoomSelector, useRoomWidget, useRoomWidgetActions } from '#base/context';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { FurnitureTrophyView } from '#base/views/room-widgets/furniture/FurnitureTrophyView';
 
 import { parseTrophyData } from './furnitureWidgetData';
@@ -12,7 +12,7 @@ import { parseTrophyData } from './furnitureWidgetData';
  */
 export const FurnitureTrophyWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.TROPHY);
-    const room = useRoomSelector();
+    const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
 
     const onClose = () => closeRoomWidget(RoomObjectWidgetRequestEvent.TROPHY);

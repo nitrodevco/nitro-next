@@ -1,9 +1,11 @@
-import { useCatalogSelectors, useConfigValue, useTranslation } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
+import { useConfigValue, useTranslation } from '#base/context/system';
 import { ColorLayer, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Pixi port of views/catalog/CatalogHeaderView.tsx. */
 export const CatalogHeaderView = () => {
-    const { activePage, activeNodes } = useCatalogSelectors();
+    const activePage = useCatalogStore(x => x.activePage);
+    const activeNodes = useCatalogStore(x => x.activeNodes);
     const activeNode = activeNodes.find(x => x.pageId === activePage?.pageId);
     const catalogIconUrl = useConfigValue<string>('catalog.icons.url') ?? '';
     const catalogImageUrl = useConfigValue<string>('asset.urls.catalog') ?? '';

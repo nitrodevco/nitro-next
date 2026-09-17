@@ -1,6 +1,6 @@
 import { CatalogTypeEnum } from '@nitrodevco/nitro-api';
 
-import { CatalogContextProvider } from '#base/context';
+import { CatalogContextProvider } from '#base/context/catalog';
 
 import { CatalogComponent } from './CatalogComponent';
 

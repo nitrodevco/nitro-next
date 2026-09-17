@@ -21,3 +21,4 @@ export * from './useRoomObjectValidation';
 export * from './useRoomPreviewer';
 export * from './useRoomUserData';
 export * from './useRoomWidgetRequestHandler';
+export * from './useRoomZoom';

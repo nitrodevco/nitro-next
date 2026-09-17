@@ -1,6 +1,6 @@
 import { IRoomDimmerPreset } from '@nitrodevco/nitro-packets';
 
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, CheckBox, Frame, Region, ThemeText } from '#base/theme';
 
 /** The seven moods the dimmer offers, as `DimmerFurniWidget.AVAILABLE_COLORS` lists them. */

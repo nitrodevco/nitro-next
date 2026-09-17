@@ -1,4 +1,4 @@
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Button, Frame, ThemeText } from '#base/theme';
 
 export interface FurnitureClothingChangeViewProps {

@@ -3,13 +3,17 @@ import { Room } from '@nitrodevco/nitro-renderer';
 import { Matrix, Point, Rectangle } from 'pixi.js';
 import { useRef } from 'react';
 
-import { useConfigValue, useRoomCameraSelector, useRoomSelector } from '#base/context';
+import { useRoom, useRoomStore } from '#base/context/room';
+import { useConfigValue } from '#base/context/system';
 
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
 
 export const useRoomCamera = () => {
-    const room = useRoomSelector();
-    const { targetId, targetCategory, cameraFollowDisabled, followDuration } = useRoomCameraSelector();
+    const room = useRoom();
+    const targetId = useRoomStore(x => x.targetId);
+    const targetCategory = useRoomStore(x => x.targetCategory);
+    const cameraFollowDisabled = useRoomStore(x => x.cameraFollowDisabled);
+    const followDuration = useRoomStore(x => x.followDuration);
     const moveSpeedDenominator = useConfigValue<number>('camera.move.speed') ?? 12;
     const cameraDataRef = useRef<{
         currentLocation: IVector3D | undefined;

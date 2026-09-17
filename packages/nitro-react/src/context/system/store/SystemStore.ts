@@ -334,3 +334,10 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
     startRoomSession: (roomId: number) => set(x => ({ roomSessionRequest: { type: 'start', roomId, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
     endRoomSession: () => set(x => ({ roomSessionRequest: { type: 'end', roomId: 0, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
 }));
+
+/**
+ * The one SystemStore for the whole client. It lives as long as the app does, so there is nothing a
+ * provider would add: components read it through their hooks, and code outside React - packet
+ * handlers, commands - reads and writes it through `getState()`, which is always current.
+ */
+export const systemStore = createSystemStore();

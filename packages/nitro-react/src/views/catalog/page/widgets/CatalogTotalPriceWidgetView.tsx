@@ -1,11 +1,12 @@
 import { CatalogPricingTypeEnum } from '@nitrodevco/nitro-api';
 
-import { useCatalogSelectors, useTranslation } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
+import { useTranslation } from '#base/context/system';
 import { Box, NitroCurrencyIcon, ThemeText } from '#base/theme';
 
 /** Pixi port of views/catalog/page/widgets/CatalogTotalPriceWidgetView.tsx. */
 export const CatalogTotalPriceWidgetView = () => {
-    const { activeOffer } = useCatalogSelectors();
+    const activeOffer = useCatalogStore(x => x.activeOffer);
     const t = useTranslation();
 
     if (!activeOffer) return null;

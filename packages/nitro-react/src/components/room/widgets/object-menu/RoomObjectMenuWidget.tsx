@@ -1,7 +1,7 @@
 import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
-import { useOwnRoomObjectId, useRoomFurnitureContextMenu, useRoomSelector } from '#base/context';
+import { useOwnRoomObjectId, useRoom, useRoomFurnitureContextMenu } from '#base/context/room';
 import { useRoomObjectDeselected, useRoomObjectRollOut, useRoomObjectRollOver, useRoomObjectSelected } from '#base/hooks';
 import { FurnitureContextMenuView } from '#base/views/room-widgets/furniture/FurnitureContextMenuView';
 import { InfoBubbleAvatarView } from '#base/views/room-widgets/object-menu/InfoBubbleAvatarView';
@@ -9,12 +9,13 @@ import { InfoBubbleOwnAvatarView } from '#base/views/room-widgets/object-menu/In
 
 import { RoomObjectMenuBubblePixi } from './RoomObjectMenuBubblePixi';
 import { RoomObjectMenuNameBubble } from './RoomObjectMenuNameBubble';
+import { RoomObjectMenuPet } from './RoomObjectMenuPet';
 
 export const RoomObjectMenuWidget = () => {
     const [ selectedData, setSelectedData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
 
     const [ hoverData, setHoverData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
-    const room = useRoomSelector();
+    const room = useRoom();
     const ownRoomObjectId = useOwnRoomObjectId();
     const contextMenu = useRoomFurnitureContextMenu();
 
@@ -82,7 +83,17 @@ export const RoomObjectMenuWidget = () => {
 
             switch (userType) {
                 case RoomObjectUserType.Pet: {
-                    return null;
+                    return (
+                        <RoomObjectMenuBubblePixi
+                            objectData={selectedData}
+                            userType={userType}
+                        >
+                            <RoomObjectMenuPet
+                                objectData={selectedData}
+                                onClose={onClose}
+                            />
+                        </RoomObjectMenuBubblePixi>
+                    );
                 }
                 case RoomObjectUserType.User: {
                     return (

@@ -1,11 +1,14 @@
 import { CatalogTypeEnum } from '@nitrodevco/nitro-api';
 import { InfoRetrieveComposer } from '@nitrodevco/nitro-packets';
 import { GetTicker } from '@nitrodevco/nitro-renderer';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorWrapper, RoomWrapper, WalletComponent } from './components';
-import { useConfigValue, useIsLandingViewVisible, useWebSocketContext } from './context';
-import { useMessengerHandler, useUserInfoHandler, useWalletHandler } from './handlers';
+import { useWebSocketContext } from '#base/context/communication';
+import { useConfigValue, useIsLandingViewVisible } from '#base/context/system';
+
+import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorComponent, RoomWrapper, WalletComponent } from './components';
+import { registerHandlers } from './handlers';
+import { useRegisterHandlers } from './hooks';
 import { Box, TooltipLayer } from './theme';
 import { HotelView } from './views/hotel-view/HotelView';
 import { ActivityPointsView } from './views/purse/ActivityPointsView';
@@ -13,32 +16,26 @@ import { PurseView } from './views/purse/PurseView';
 import { ToolbarView } from './views/toolbar/ToolbarView';
 
 export const MainView = () => {
-    const [ isReady, setIsReady ] = useState(false);
     const { setReady, send } = useWebSocketContext();
     const landingViewVisible = useIsLandingViewVisible();
     const maxFPS = useConfigValue<number>('fps.limit') ?? 60;
 
-    useUserInfoHandler();
-    useMessengerHandler();
-    useWalletHandler();
+    // Every connection-lifetime packet handler, attached before the effect below lets the queued packets through.
+    useRegisterHandlers(registerHandlers);
 
     useEffect(() => {
         GetTicker().maxFPS = maxFPS;
     }, [ maxFPS ]);
 
+    /*
+     * Effects run children first, so by the time this one runs every listener in the tree below -
+     * and the handlers registered above - is attached. Only then are the packets that arrived
+     * while the UI was mounting let through.
+     */
     useEffect(() => {
-        if (!isReady) return;
-
         send(new InfoRetrieveComposer({}));
         setReady();
-    }, [ isReady ]);
-
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setIsReady(true);
     }, []);
-
-    if (!isReady) return null;
 
     return (
         <>
@@ -82,7 +79,7 @@ export const MainView = () => {
                 <InventoryComponent />
                 <FriendListWrapper />
                 <MessengerComponent />
-                <NavigatorWrapper />
+                <NavigatorComponent />
                 <WalletComponent />
                 <ToolbarView />
                 <TooltipLayer />

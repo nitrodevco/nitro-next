@@ -3,7 +3,8 @@ import { Container as PixiContainer, FederatedPointerEvent, Graphics, Rectangle,
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { buildChatBubbleMarkup, ChatBubbleData, ChatBubbleMotion, computeChatBubbleLayout, resolveChatBubbleText } from '#base/chat';
-import { useRoomChatActions, useRoomContext, useRoomSelector, useTranslation } from '#base/context';
+import { useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
+import { useTranslation } from '#base/context/system';
 import { useChatAvatarHead, useChatBubbleText, useChatFlow, useChatPetFace, useChatStyle } from '#base/hooks';
 
 interface ChatBubbleViewProps {
@@ -23,9 +24,9 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
     const { host, addBubble, removeBubble, maxBubbleWidth: maxWidth, selectBubbleUser } = useChatFlow();
     const { removeChatBubble } = useRoomChatActions();
     const t = useTranslation();
-    const room = useRoomSelector();
+    const room = useRoom();
     const style = useChatStyle(data.styleId);
-    const userData = useRoomContext(x => x.usersByRoomObjectId[data.objectId]);
+    const userData = useRoomStore(x => x.usersByRoomObjectId[data.objectId]);
 
     const isPet = (userData?.userType === RoomObjectUserType.Pet);
     const userName = data.forcedUserName ?? userData?.name ?? '';

@@ -1,4 +1,4 @@
 import { WindowName } from '../store/WindowRegistry';
-import { useSystemContext } from '../useSystemContext';
+import { useSystemStore } from '../useSystemStore';
 
-export const useIsWindowVisible = (name: WindowName) => useSystemContext(x => !!x.visibleWindows[name]);
+export const useIsWindowVisible = (name: WindowName) => useSystemStore(x => !!x.visibleWindows[name]);

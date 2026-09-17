@@ -2,7 +2,9 @@ import { AvatarGenderType, IFigurePartSet, IPartColor } from '@nitrodevco/nitro-
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { useMemo } from 'react';
 
-import { useAvatarEditorSelectors, useConfigValue, useOwnClubLevel } from '#base/context';
+import { useAvatarEditorStore } from '#base/context/avatar-editor';
+import { useConfigValue } from '#base/context/system';
+import { useOwnClubLevel } from '#base/context/user';
 
 /**
  * Derives the part grid and colour palettes for one figure set type - the React-first port of
@@ -63,7 +65,9 @@ export const firstSelectableColorId = (setType: string, clubLevel: number): numb
 };
 
 export const useAvatarEditorData = (setType: string): { parts: AvatarEditorPartData[]; palettes: AvatarEditorColorData[][]; maxColorLayers: number } => {
-    const { parts: figureParts, gender, figureSetIds } = useAvatarEditorSelectors();
+    const figureParts = useAvatarEditorStore(x => x.parts);
+    const gender = useAvatarEditorStore(x => x.gender);
+    const figureSetIds = useAvatarEditorStore(x => x.figureSetIds);
     // Widened to a plain number: `ClubLevelEnum` values compare against the structure's numeric club levels.
     const clubLevel: number = useOwnClubLevel();
     const clubItemsFirst = useConfigValue<boolean>('avatareditor.show.clubitems.first') ?? true;

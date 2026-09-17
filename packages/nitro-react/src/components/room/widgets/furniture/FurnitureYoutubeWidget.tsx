@@ -1,8 +1,9 @@
 import { RoomControllerLevelEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { ControlYoutubeDisplayPlaybackComposer, SetYoutubeDisplayPlaylistComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomPermissionsSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
-import { useRoomYoutubeHandler, YoutubeData } from '#base/handlers';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomStore, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { YoutubeData } from '#base/handlers';
 import { FurnitureYoutubeView } from '#base/views/room-widgets/furniture/FurnitureYoutubeView';
 
 /**
@@ -11,11 +12,9 @@ import { FurnitureYoutubeView } from '#base/views/room-widgets/furniture/Furnitu
  * else only gets to see what is on.
  */
 export const FurnitureYoutubeWidget = () => {
-    // Only this dialog is told these things, and only while it is open.
-    useRoomYoutubeHandler();
-
     const request = useRoomWidget<YoutubeData>(RoomObjectWidgetRequestEvent.YOUTUBE);
-    const { isRoomOwner, controllerLevel } = useRoomPermissionsSelector();
+    const isRoomOwner = useRoomStore(x => x.isRoomOwner);
+    const controllerLevel = useRoomStore(x => x.controllerLevel);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
 

@@ -2,14 +2,15 @@ import { IRoomObjectController, NitroLogger, RoomEngineObjectEvent, RoomEngineOb
 import { PlaceObjectComposer } from '@nitrodevco/nitro-packets';
 import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 
-import { useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions } from '#base/context/room';
 
 import { useRoomObjectMove } from './useRoomObjectMove';
 import { useRoomObjectSelect } from './useRoomObjectSelect';
 import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomObjectPlace = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const selectedObject = useRoomSelectedObject();
     const objectPlacementSource = useRoomObjectPlacementSource();
     const { setSelectedObject, setPlacedObject } = useRoomSelectedObjectActions();

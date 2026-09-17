@@ -1,6 +1,6 @@
 import { AvatarGenderType } from '@nitrodevco/nitro-api';
 
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { CloseButton, Region, ThemeImage, ThemeText, useAvatarImageTexture } from '#base/theme';
 
 /**

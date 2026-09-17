@@ -1,6 +1,6 @@
 import { IPurchasableOffer } from '@nitrodevco/nitro-api';
 
-import { useCatalogSelectors } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
 import { useCatalogNavigation, useCatalogOfferProduct, useProductIconUrl } from '#base/hooks';
 import { Box, ThemeImage } from '#base/theme';
 
@@ -13,7 +13,7 @@ export interface CatalogItemGridWidgetItemViewProps {
 
 /** Pixi port of views/catalog/page/widgets/CatalogItemGridWidgetItemView.tsx. */
 export const CatalogItemGridWidgetItemView = ({ offer }: CatalogItemGridWidgetItemViewProps) => {
-    const { activeOffer } = useCatalogSelectors();
+    const activeOffer = useCatalogStore(x => x.activeOffer);
     const product = useCatalogOfferProduct(offer);
     const iconUrl = useProductIconUrl(product!);
     const { selectOffer } = useCatalogNavigation();

@@ -2,7 +2,10 @@ import { ISimpleRoomObjectData, RoomControllerLevelEnum } from '@nitrodevco/nitr
 import { AmbassadorAlertComposer, AssignRightsComposer, BanUserWithDurationComposer, IgnoreUserComposer, KickUserComposer, MuteUserComposer, RemoveRightsComposer, SetRelationshipStatusComposer, UnignoreUserComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useOwnIsAmbassador, useOwnRespectData, useOwnRoomObjectId, useRoomChatActions, useRoomPermissionsSelector, useRoomSelector, useRoomSettingsSelector, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useOwnRoomObjectId, useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
+import { useTranslation } from '#base/context/system';
+import { useOwnIsAmbassador, useUserStore } from '#base/context/user';
 import { useRoomUserData } from '#base/hooks';
 import { Box, Bubble, Button, NitroIcon, ThemeText } from '#base/theme';
 
@@ -34,15 +37,15 @@ const MODE_RELATIONSHIP = 6;
  */
 export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarViewProps) => {
     const { objectId } = objectData;
-    const room = useRoomSelector();
+    const room = useRoom();
     const ownObjectId = useOwnRoomObjectId();
     const userData = useRoomUserData(objectId);
     const ownUserData = useRoomUserData(ownObjectId);
     const [ mode, setMode ] = useState<number>(MODE_NORMAL);
     const [ collapsed, setCollapsed ] = useState<boolean>(false);
-    const { isRoomOwner } = useRoomPermissionsSelector();
-    const { isGuildRoom } = useRoomSettingsSelector();
-    const { respectLeft } = useOwnRespectData();
+    const isRoomOwner = useRoomStore(x => x.isRoomOwner);
+    const isGuildRoom = useRoomStore(x => x.isGuildRoom);
+    const respectLeft = useUserStore(x => x.respectLeft);
     const isAmbassador = useOwnIsAmbassador();
     const t = useTranslation();
     const { send } = useWebSocketContext();

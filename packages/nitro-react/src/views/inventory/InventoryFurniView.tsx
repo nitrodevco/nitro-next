@@ -1,7 +1,7 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, Dropmenu, ThemeText, useLayoutSize } from '#base/theme';
 import { useRowVirtualizer } from '#base/theme/hooks/useRowVirtualizer';
 import { useScrollController } from '#base/theme/hooks/useScrollController';
@@ -45,17 +45,14 @@ export const InventoryFurniView = ({ scrollVariant }: { scrollVariant: string })
         gap: ROW_GAP,
     });
 
-    useEffect(() => {
-        const lastRow = virtualItems[virtualItems.length - 1];
-        if (!lastRow) return;
+    /*
+     * The next page loads as soon as the last row is on screen. Adjusted during render rather than
+     * in an effect, so the extra rows are in the same frame; each pass adds rows, which moves the
+     * last row out of view or reaches the cap, so it settles.
+     */
+    const lastRow = virtualItems[virtualItems.length - 1];
 
-        if (lastRow.index >= rowCount - 1 && itemCount < MAX_ITEMS) {
-            // Mirrors DOM's own loadMore-in-effect (theme/InventoryFurniView.tsx) - pagination
-            // reacting to the virtualizer's own visible range, not derivable during render.
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setItemCount(count => Math.min(count + PAGE_SIZE, MAX_ITEMS));
-        }
-    }, [ virtualItems, rowCount, itemCount ]);
+    if (lastRow && (lastRow.index >= rowCount - 1) && (itemCount < MAX_ITEMS)) setItemCount(Math.min(itemCount + PAGE_SIZE, MAX_ITEMS));
 
     return (
         <Box layout={{ flexDirection: 'column', gap: 4, height: '100%' }}>

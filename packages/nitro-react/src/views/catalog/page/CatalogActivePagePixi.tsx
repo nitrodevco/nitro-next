@@ -1,10 +1,10 @@
-import { useCatalogSelectors } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
 
 import { CatalogLayoutDefaultView } from './layouts/CatalogLayoutDefaultView';
 
 /** Pixi port of views/catalog/page/CatalogActivePage.tsx. */
 export const CatalogActivePagePixi = () => {
-    const { activePage } = useCatalogSelectors();
+    const activePage = useCatalogStore(x => x.activePage);
 
     if (!activePage) return null;
 

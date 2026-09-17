@@ -2,7 +2,8 @@ import { NitroLogger, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, Room
 import { GetCraftableProductsComposer, GetGuestRoomComposer, GetGuildFurniContextMenuInfoComposer, GetJukeboxPlayListComposer, GetNowPlayingComposer, GetResolutionAchievementsComposer, GetUserSongDisksComposer, GetYoutubeDisplayStatusComposer, RentableSpaceStatusComposer, UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 
 import { readFurnitureLink } from '#base/components/room/widgets/furniture/furnitureWidgetData';
-import { useRoomSelector, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomWidgetActions } from '#base/context/room';
 
 /**
  * The bridge between a room object asking for its dialog and the UI opening it - the Flash
@@ -19,7 +20,7 @@ import { useRoomSelector, useRoomWidgetActions, useWebSocketContext } from '#bas
  * `logic.contextMenu` (a `ContextMenuEnum` value).
  */
 export const useRoomWidgetRequestHandler = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const { openRoomWidget, closeRoomWidget, closeRoomWidgetsForObject, setFurnitureContextMenu } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
 

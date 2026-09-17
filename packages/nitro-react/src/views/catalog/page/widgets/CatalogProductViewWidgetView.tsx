@@ -4,19 +4,22 @@ import { FederatedPointerEvent } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
 import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
-import { useCatalogSelectors, useOwnUserLook, useTranslation } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
+import { useTranslation } from '#base/context/system';
+import { useUserStore } from '#base/context/user';
 import { useCatalogOfferActions } from '#base/hooks';
 import { Box, ColorLayer, ThemeText } from '#base/theme';
 
 /** Pixi port of views/catalog/page/widgets/CatalogProductViewWidgetView.tsx. */
 export const CatalogProductViewWidgetView = () => {
-    const { activeOffer } = useCatalogSelectors();
+    const activeOffer = useCatalogStore(x => x.activeOffer);
     const { getOfferProduct } = useCatalogOfferActions();
     const previewerRef = useRef<RoomPreviewerHandle>(null);
     // The previewer mounts with the offer, and its room only exists a render later - this is
     // what re-runs the offer effect at that point.
     const [ room, setRoom ] = useState<IRoom | undefined>(undefined);
-    const { ownFigure, ownGender } = useOwnUserLook();
+    const ownFigure = useUserStore(x => x.figure);
+    const ownGender = useUserStore(x => x.sex);
     const t = useTranslation();
     const product = activeOffer ? getOfferProduct(activeOffer) : undefined;
 

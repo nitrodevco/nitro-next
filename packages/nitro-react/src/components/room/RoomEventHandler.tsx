@@ -3,13 +3,16 @@ import { GetItemDataComposer } from '@nitrodevco/nitro-packets';
 import { RoomObjectUpdateMessage } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';
 
-import { useConfigValue, useOwnControllerLevel, useOwnIsModerator, useOwnUserId, useRoomIsPlayingGame, useRoomMouseActions, useRoomSelector, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useOwnControllerLevel, useRoom, useRoomIsPlayingGame, useRoomMouseActions } from '#base/context/room';
+import { useConfigValue } from '#base/context/system';
+import { useOwnIsModerator, useOwnUserId } from '#base/context/user';
 import { useRoomBadgeAssetHandler, useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction, useRoomObjectSelect, useRoomWidgetRequestHandler } from '#base/hooks';
 
 import { SetRoomBackgroundColor } from './roomBackgroundColor';
 
 export const RoomEventHandler = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const isModerator = useOwnIsModerator();
     const controllerLevel = useOwnControllerLevel();
     const isPlayingGame = useRoomIsPlayingGame();

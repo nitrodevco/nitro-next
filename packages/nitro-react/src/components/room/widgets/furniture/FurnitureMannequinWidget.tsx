@@ -2,7 +2,9 @@ import { AvatarGenderType, RoomControllerLevelEnum, RoomObjectVariableEnum, Room
 import { SetMannequinFigureComposer, SetMannequinNameComposer, UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useOwnClubLevel, useOwnUserInfo, useRoomPermissionsSelector, useRoomSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomStore, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useOwnClubLevel, useUserStore } from '#base/context/user';
 import { FurnitureMannequinView, MannequinScreen } from '#base/views/room-widgets/furniture/FurnitureMannequinView';
 
 import { asMannequinFigure, getMannequinClubLevel, withMannequinOutfit } from './mannequinFigure';
@@ -17,10 +19,12 @@ import { asMannequinFigure, getMannequinClubLevel, withMannequinOutfit } from '.
  */
 export const FurnitureMannequinWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.MANNEQUIN);
-    const room = useRoomSelector();
-    const { figure: ownFigure, sex } = useOwnUserInfo();
+    const room = useRoom();
+    const ownFigure = useUserStore(x => x.figure);
+    const sex = useUserStore(x => x.sex);
     const clubLevel = useOwnClubLevel();
-    const { isRoomOwner, controllerLevel } = useRoomPermissionsSelector();
+    const isRoomOwner = useRoomStore(x => x.isRoomOwner);
+    const controllerLevel = useRoomStore(x => x.controllerLevel);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
     const [ screen, setScreen ] = useState<MannequinScreen | undefined>(undefined);

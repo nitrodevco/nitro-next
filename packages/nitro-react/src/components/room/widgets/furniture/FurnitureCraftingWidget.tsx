@@ -2,8 +2,10 @@ import { RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { CraftComposer, GetCraftingRecipeComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useRoomWidget, useRoomWidgetActions, useTranslation, useWebSocketContext } from '#base/context';
-import { CraftingData, useRoomCraftingHandler } from '#base/handlers';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useTranslation } from '#base/context/system';
+import { CraftingData } from '#base/handlers';
 import { FurnitureCraftingView } from '#base/views/room-widgets/furniture/FurnitureCraftingView';
 
 /**
@@ -12,9 +14,6 @@ import { FurnitureCraftingView } from '#base/views/room-widgets/furniture/Furnit
  * which is why picking one sends a packet of its own.
  */
 export const FurnitureCraftingWidget = () => {
-    // Only this dialog is told these things, and only while it is open.
-    useRoomCraftingHandler();
-
     const request = useRoomWidget<CraftingData>(RoomWidgetEnum.CRAFTING);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();

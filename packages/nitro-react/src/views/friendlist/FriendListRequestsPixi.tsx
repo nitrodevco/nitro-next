@@ -1,4 +1,4 @@
-import { useFriendRequestsSelector } from '#base/context/user';
+import { useFriendRequests } from '#base/context/user';
 import { ScrollArea } from '#base/theme';
 
 import { FriendListRequestsFooterPixi } from './footers/FriendListRequestsFooterPixi';
@@ -11,7 +11,7 @@ export interface FriendListRequestsPixiProps {
 
 /** Pixi port of views/friendlist/FriendListRequests.tsx. */
 export const FriendListRequestsPixi = ({ value }: FriendListRequestsPixiProps) => {
-    const requests = useFriendRequestsSelector();
+    const requests = useFriendRequests();
 
     if (!Object.keys(requests).length) return null;
 

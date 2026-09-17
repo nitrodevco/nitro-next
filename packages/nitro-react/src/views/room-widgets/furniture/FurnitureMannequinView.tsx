@@ -1,7 +1,8 @@
 import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
-import { useTranslation } from '#base/context';
+import { AvatarImage } from '#base/components';
+import { useTranslation } from '#base/context/system';
 import { Button, ButtonThick, Frame, Icon, LayoutImage, Region, TextInput, ThemeImage, ThemeText, useAvatarImageTexture } from '#base/theme';
 
 /**
@@ -62,18 +63,17 @@ export const FurnitureMannequinView = ({
                   * rather than scaled - so a figure too tall for 83x130 loses a little from
                   * every side instead of being squashed or hanging out of the frame.
                   */}
-                <Region layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <Region layout={{ width: 83, height: 130, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                     <ThemeImage
                         src={LayoutImage('mannequin_preview_bg.png')}
                         layout={{ position: 'absolute', left: 0, top: 0, width: 83, height: 130 }}
                     />
-                    {texture && (
-                        <ThemeImage
-                            texture={texture}
-                            width={width}
-                            height={height}
-                        />
-                    )}
+                    <AvatarImage
+                        figure={figure}
+                        gender={gender}
+                        direction={2}
+                        layout={{ marginBottom: 20 }}
+                    />
                 </Region>
                 {/* A club outfit wears its badge over the preview; a free one shows nothing. */}
                 {(clubLevel > 0) && (

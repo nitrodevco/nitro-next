@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { useCatalogActions, useCatalogSelectors, useTranslation } from '#base/context';
+import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, TextInput, ThemeText } from '#base/theme';
 
 const MIN_VALUE = 1;
@@ -8,7 +9,8 @@ const MAX_VALUE = 100;
 
 /** Pixi port of views/catalog/page/widgets/CatalogSpinnerWidgetView.tsx. */
 export const CatalogSpinnerWidgetView = () => {
-    const { activeOffer, purchaseOptions } = useCatalogSelectors();
+    const activeOffer = useCatalogStore(x => x.activeOffer);
+    const purchaseOptions = useCatalogStore(x => x.purchaseOptions);
     const [ quantityValue, setQuantityValue ] = useState<string>(purchaseOptions.quantity.toString());
     const { setPurchaseOptions } = useCatalogActions();
     const t = useTranslation();

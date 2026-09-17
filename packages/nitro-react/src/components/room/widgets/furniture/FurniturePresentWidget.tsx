@@ -1,23 +1,22 @@
 import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { PresentOpenComposer, PresentOpenedMessageType } from '@nitrodevco/nitro-packets';
 
-import { useFurnitureDataSelector, useOwnUserId, useRoomSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
-import { useRoomPresentHandler } from '#base/handlers';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useSystemStore } from '#base/context/system';
+import { useOwnUserId } from '#base/context/user';
 import { FurniturePresentView } from '#base/views/room-widgets/furniture/FurniturePresentView';
 
 /**
  * A wrapped gift. The note and the sender come off the object; what is inside only arrives when
- * the server answers the open, which `useRoomPresentHandler` deposits on this request. Only the
+ * the server answers the open, which `registerRoomPresentHandlers` deposits on this request. Only the
  * person it was placed for can open it, which is the owner check Flash made.
  */
 export const FurniturePresentWidget = () => {
-    // Only this dialog is told these things, and only while it is open.
-    useRoomPresentHandler();
-
     const request = useRoomWidget<PresentOpenedMessageType>(RoomObjectWidgetRequestEvent.PRESENT);
-    const room = useRoomSelector();
+    const room = useRoom();
     const ownUserId = useOwnUserId();
-    const { floorItems } = useFurnitureDataSelector();
+    const floorItems = useSystemStore(x => x.floorItems);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
 

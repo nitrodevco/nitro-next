@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Bubble, ContainerButton, Icon, Region, ThemeText } from '#base/theme';
 
 export interface FurnitureGuildMenuViewProps {

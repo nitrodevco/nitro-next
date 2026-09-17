@@ -1,7 +1,8 @@
 import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { CreditFurniRedeemComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { FurnitureCreditView } from '#base/views/room-widgets/furniture/FurnitureCreditView';
 
 /**
@@ -10,7 +11,7 @@ import { FurnitureCreditView } from '#base/views/room-widgets/furniture/Furnitur
  */
 export const FurnitureCreditWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.CREDITFURNI);
-    const room = useRoomSelector();
+    const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
 

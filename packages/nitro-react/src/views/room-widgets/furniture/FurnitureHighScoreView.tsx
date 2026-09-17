@@ -1,4 +1,4 @@
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Bubble, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 
 /**

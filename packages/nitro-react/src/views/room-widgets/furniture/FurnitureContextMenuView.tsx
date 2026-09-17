@@ -2,7 +2,9 @@ import { ContextMenuEnum, ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 import { UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useOwnUserId, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useTranslation } from '#base/context/system';
+import { useOwnUserId } from '#base/context/user';
 import { useRoomFurnitureData } from '#base/hooks';
 import { Bubble, ContainerButton, Icon, Region, ThemeText } from '#base/theme';
 

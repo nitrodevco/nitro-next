@@ -2,7 +2,8 @@ import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { OpenMysteryTrophyComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { Border, LayoutImage, TextInput, ThemeImage } from '#base/theme';
 import { FurnitureBannerDialogView } from '#base/views/room-widgets/furniture/FurnitureBannerDialogView';
 

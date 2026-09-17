@@ -1,9 +1,11 @@
 import { ICatalogNode } from '@nitrodevco/nitro-api';
 
-import { useCatalogSelectors } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
 
 export const useCatalogNodeActions = () => {
-    const { rootNode, offersToNodes, activeNodes } = useCatalogSelectors();
+    const rootNode = useCatalogStore(x => x.rootNode);
+    const offersToNodes = useCatalogStore(x => x.offersToNodes);
+    const activeNodes = useCatalogStore(x => x.activeNodes);
 
     const isNodeActive = (node: ICatalogNode) => activeNodes.indexOf(node) >= 0;
 

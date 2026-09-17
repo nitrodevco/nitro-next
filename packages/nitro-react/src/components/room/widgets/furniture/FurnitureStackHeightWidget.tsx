@@ -1,7 +1,8 @@
 import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { SetCustomStackingHeightComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useRoomFurnitureData } from '#base/hooks';
 import { FurnitureStackHeightView } from '#base/views/room-widgets/furniture/FurnitureStackHeightView';
 
@@ -15,7 +16,7 @@ const ABOVE_STACK = -100;
  */
 export const FurnitureStackHeightWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.STACK_HEIGHT);
-    const room = useRoomSelector();
+    const room = useRoom();
     const furnitureData = useRoomFurnitureData(request?.objectId ?? -1, request?.category ?? 0);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();

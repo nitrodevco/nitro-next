@@ -1,12 +1,14 @@
 import { ISelectedRoomObjectData, NitroLogger, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
 
-import { useRoomIsPlayingGame, useRoomSelectedObjectActions, useRoomSelectedObjectDetails, useRoomSelector } from '#base/context';
+import { useRoom, useRoomIsPlayingGame, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
 
 export const useRoomObjectSelect = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const isPlayingGame = useRoomIsPlayingGame();
-    const { selectedAvatarId, selectedObjectId, selectedObjectCategory } = useRoomSelectedObjectDetails();
+    const selectedAvatarId = useRoomStore(x => x.selectedAvatarId);
+    const selectedObjectId = useRoomStore(x => x.selectedObjectId);
+    const selectedObjectCategory = useRoomStore(x => x.selectedObjectCategory);
     const { setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject } = useRoomSelectedObjectActions();
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {

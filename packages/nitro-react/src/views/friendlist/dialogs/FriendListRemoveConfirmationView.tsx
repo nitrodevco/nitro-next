@@ -1,19 +1,22 @@
 import { RemoveFriendComposer } from '@nitrodevco/nitro-packets';
 
-import { useFriendsActions, useFriendsSelector, useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useFriendsActions, useFriendsStore } from '#base/context/friend';
+import { useIsWindowVisible, useSystemActions, useTranslation } from '#base/context/system';
+import { useFriends } from '#base/context/user';
 import { Border, Box, Button, Frame, ThemeText } from '#base/theme';
 
 /** Pixi port of views/friendlist/dialogs/FriendListRemoveConfirmationView.tsx. */
 export const FriendListRemoveConfirmationView = () => {
     const isVisible = useIsWindowVisible('friendlist_remove_confirmation');
     const { toggleWindow } = useSystemActions();
-    const { selectedFriendIds } = useFriendsSelectors();
+    const selectedFriendIds = useFriendsStore(x => x.selectedFriendIds);
     const { setSelectedFriendIds } = useFriendsActions();
     const { send } = useWebSocketContext();
 
     const t = useTranslation();
 
-    const friends = useFriendsSelector();
+    const friends = useFriends();
 
     const usernames = Object.values(friends)
         .filter(friend => selectedFriendIds.includes(friend.playerId))

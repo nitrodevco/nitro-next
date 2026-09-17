@@ -1,16 +1,17 @@
 import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
-import { useRoomSelector } from '#base/context';
+import { useRoom } from '#base/context/room';
 import { useRoomObjectDeselected, useRoomObjectSelected } from '#base/hooks';
-import { InfostandPetView } from '#base/views/room-widgets/object-infostand/InfostandPetView';
 import { InfostandUserView } from '#base/views/room-widgets/object-infostand/InfostandUserView';
 
+import { InfostandBot } from './InfostandBot';
 import { InfostandFurni } from './InfostandFurni';
+import { InfostandPet } from './InfostandPet';
 
 export const RoomObjectInfostandWidget = () => {
     const [ selectedData, setSelectedData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
-    const room = useRoomSelector();
+    const room = useRoom();
 
     const onClose = () => {
         setSelectedData(undefined);
@@ -51,7 +52,7 @@ export const RoomObjectInfostandWidget = () => {
             switch (userType) {
                 case RoomObjectUserType.Pet: {
                     return (
-                        <InfostandPetView
+                        <InfostandPet
                             objectData={selectedData}
                             onClose={onClose}
                         />
@@ -65,17 +66,11 @@ export const RoomObjectInfostandWidget = () => {
                         />
                     );
                 }
-                case RoomObjectUserType.Bot: {
-                    return (
-                        <InfostandUserView
-                            objectData={selectedData}
-                            onClose={onClose}
-                        />
-                    );
-                }
+                // A bot has no profile, motto or respect, so it gets its own panel.
+                case RoomObjectUserType.Bot:
                 case RoomObjectUserType.RentableBot: {
                     return (
-                        <InfostandUserView
+                        <InfostandBot
                             objectData={selectedData}
                             onClose={onClose}
                         />

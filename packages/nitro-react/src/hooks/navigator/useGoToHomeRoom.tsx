@@ -1,24 +1,9 @@
-import { useHomeRoomId } from '#base/context';
+import { goToHomeRoom } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
 
-import { useForwardToRoom } from './useForwardToRoom';
-
-/**
- * `HabboNavigator.goToHomeRoom` -> `HabboNewNavigator.goToHomeRoom`: the home room is entered
- * through a room forward (`goToRoom(homeRoomId, "external")`), so a locked or password
- * protected home room still shows its popup. Returns false when no home room is set.
- *
- * `homeRoomId` may be passed for callers that hold a fresher value than the store has
- * rendered yet (the NavigatorSettings handler that just received it).
- */
+/** `goToHomeRoom` bound to the socket, for components. Returns false when no home room is set. */
 export const useGoToHomeRoom = () => {
-    const storedHomeRoomId = useHomeRoomId();
-    const forwardToRoom = useForwardToRoom();
+    const { send } = useWebSocketContext();
 
-    return (homeRoomId: number = storedHomeRoomId) => {
-        if (homeRoomId < 1) return false;
-
-        forwardToRoom(homeRoomId);
-
-        return true;
-    };
+    return () => goToHomeRoom(send);
 };

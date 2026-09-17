@@ -1,6 +1,7 @@
 import { ClubLevelEnum, NoobnessLevelEnum, RoomChatBubbleWidthType, RoomChatModeType, RoomChatScrollSpeedType, SecurityLevelEnum } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
+import { createUserEffectsSlice, UserEffectsSlice } from './UserEffectsSlice';
 import { createUserFriendsSlice, UserFriendsSlice } from './UserFriendsSlice';
 import { createUserInfoSlice, UserInfoSlice } from './UserInfoSlice';
 import { createUserWalletSlice, UserWalletSlice } from './UserWalletSlice';
@@ -16,6 +17,10 @@ type State = {
     systemShutdown: boolean;
     isAuthenticHabbo: boolean;
     isRoomCameraFollowDisabled: boolean;
+    /**
+     * `AccountPreferencesEventMessage.uiFlags`: the account's remembered UI switches, one bit
+     * each, kept whole because `SetUIFlagsComposer` sends the whole word back.
+     */
     uiFlags: number;
     /** `AccountPreferencesEventMessage.preferedChatStyle` - the bubble style the user's own messages are sent with. */
     preferredChatStyle: number;
@@ -27,6 +32,12 @@ type State = {
     chatBubbleWidth: RoomChatBubbleWidthType;
     chatScrollSpeed: RoomChatScrollSpeedType;
 };
+
+/** The bits of `uiFlags` this client knows about (`SessionDataManager.setUIFlag`). */
+export enum UiFlagEnum {
+    /** Set while the room tools are expanded; cleared while they are collapsed. */
+    RoomToolsExpanded = 2,
+}
 
 export interface UserChatPreferences {
     preferredChatStyle: number;
@@ -46,6 +57,9 @@ type Actions = {
     setChatPreferences: (preferences: UserChatPreferences) => void;
     setPreferredChatStyle: (preferredChatStyle: number) => void;
     setFreeFlowChatDisabled: (freeFlowChatDisabled: boolean) => void;
+    setUiFlags: (uiFlags: number) => void;
+    /** Flips one bit and hands back the whole word, so the caller can send it on. */
+    setUiFlag: (flag: UiFlagEnum, on: boolean) => number;
 };
 
 const initialState: State = {
@@ -68,7 +82,7 @@ const initialState: State = {
     chatScrollSpeed: RoomChatScrollSpeedType.Normal,
 };
 
-export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice;
+export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice & UserEffectsSlice;
 
 export const createUserStore = () => createStore<UserStore>()((set, get, store) => ({
     ...initialState,
@@ -80,7 +94,23 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
     setChatPreferences: (preferences: UserChatPreferences) => set({ ...preferences }),
     setPreferredChatStyle: (preferredChatStyle: number) => set({ preferredChatStyle }),
     setFreeFlowChatDisabled: (freeFlowChatDisabled: boolean) => set({ freeFlowChatDisabled }),
+    setUiFlags: (uiFlags: number) => set({ uiFlags }),
+    setUiFlag: (flag: UiFlagEnum, on: boolean) => {
+        const uiFlags = on ? (get().uiFlags | flag) : (get().uiFlags & ~flag);
+
+        set({ uiFlags });
+
+        return uiFlags;
+    },
     ...createUserInfoSlice(set, get, store),
     ...createUserFriendsSlice(set, get, store),
     ...createUserWalletSlice(set, get, store),
+    ...createUserEffectsSlice(set, get, store),
 }));
+
+/**
+ * The one UserStore for the whole client. It lives as long as the app does, so there is nothing a
+ * provider would add: components read it through their hooks, and code outside React - packet
+ * handlers, commands - reads and writes it through `getState()`, which is always current.
+ */
+export const userStore = createUserStore();

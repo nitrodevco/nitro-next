@@ -1,4 +1,4 @@
-import { useSystemContext } from '../useSystemContext';
+import { useSystemStore } from '../useSystemStore';
 
 /** CoreLocalizationManager.interpolate — resolves ${key} placeholders in server text */
-export const useInterpolate = () => useSystemContext(x => x.interpolate);
+export const useInterpolate = () => useSystemStore(x => x.interpolate);

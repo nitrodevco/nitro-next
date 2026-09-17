@@ -1,7 +1,9 @@
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { CustomizeAvatarWithFurniComposer } from '@nitrodevco/nitro-packets';
 
-import { useOwnUserInfo, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useUserStore } from '#base/context/user';
 import { ThemeImage, useAvatarImageTexture } from '#base/theme';
 import { FurnitureUseProductView } from '#base/views/room-widgets/furniture/FurnitureUseProductView';
 
@@ -12,7 +14,8 @@ import { FurnitureUseProductView } from '#base/views/room-widgets/furniture/Furn
  */
 export const FurniturePurchasableClothingWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG);
-    const { figure, sex } = useOwnUserInfo();
+    const figure = useUserStore(x => x.figure);
+    const sex = useUserStore(x => x.sex);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
     const { texture, width, height } = useAvatarImageTexture(figure, sex, { direction: 4 });

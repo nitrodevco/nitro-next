@@ -1,10 +1,10 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useConfigActions, useConfigData } from '#base/context';
+import { useConfigActions, useConfigData } from '#base/context/system';
 
+/** Loads the client configuration once, and mirrors every change into the globals and logger flags that read it. */
 export const useConfigLoader = () => {
-    const [ isReady, setIsReady ] = useState(false);
     const [ needsUpdate, setNeedsUpdate ] = useState(true);
     const config = useConfigData();
     const { setConfig } = useConfigActions();
@@ -17,9 +17,6 @@ export const useConfigLoader = () => {
         NitroLogger.LOG_ERROR = config['log.error'] as boolean ?? false;
         NitroLogger.LOG_EVENTS = config['log.events'] as boolean ?? false;
         NitroLogger.LOG_PACKETS = config['log.packets'] as boolean ?? false;
-
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setIsReady(true);
     }, [ config ]);
 
     useEffect(() => {
@@ -59,6 +56,4 @@ export const useConfigLoader = () => {
 
         void load(urls);
     }, [ needsUpdate ]);
-
-    return { isConfigReady: isReady };
 };

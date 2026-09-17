@@ -1,14 +1,14 @@
 import { NitroEvent } from '@nitrodevco/nitro-api';
 import { useEffect, useRef } from 'react';
 
-import { useRoomSelector } from '#base/context';
+import { useRoom } from '#base/context/room';
 
 export const useRoomEventDispatcher = <T extends NitroEvent>(
     type: string | string[],
     handler: (event: T) => void,
     enabled: boolean = true,
 ) => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const handlerRef = useRef(handler);
 
     useEffect(() => {

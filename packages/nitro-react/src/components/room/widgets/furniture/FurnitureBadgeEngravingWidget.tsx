@@ -1,6 +1,7 @@
 import { RoomObjectWidgetRequestEvent, StringDataType } from '@nitrodevco/nitro-api';
 
-import { useRoomWidget, useRoomWidgetActions, useTranslation } from '#base/context';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useTranslation } from '#base/context/system';
 import { useRoomFurnitureData } from '#base/hooks';
 import { FurnitureTrophyView } from '#base/views/room-widgets/furniture/FurnitureTrophyView';
 

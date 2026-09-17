@@ -2,6 +2,19 @@ import { PointerEvent as ReactPointerEvent, useCallback, useEffect, useRef, useS
 
 import { ScrollControllerOptions } from '../scroll';
 
+/*
+ * `scrollTop`/`scrollLeft` are how the browser's own native scroll position is driven - unlike
+ * Pixi's virtual offset (plain React state the caller applies declaratively as an `x`/`y` prop),
+ * there is no non-imperative way to move it. Kept outside the hook: it writes to a DOM node, not
+ * to anything React owns.
+ */
+const getScrollPosition = (node: HTMLElement, isVertical: boolean) => (isVertical ? node.scrollTop : node.scrollLeft);
+
+const setScrollPosition = (node: HTMLElement, isVertical: boolean, value: number) => {
+    if (isVertical) node.scrollTop = value;
+    else node.scrollLeft = value;
+};
+
 export interface DomScrollController {
     viewportRef: (node: HTMLDivElement | null) => void;
     trackRef: (node: HTMLDivElement | null) => void;
@@ -116,13 +129,9 @@ export const useDomScrollController = ({
     useEffect(() => {
         if (!viewportNode) return;
 
-        // Matches the codebase's existing measure-on-mount idiom (usePixiTexture.ts,
-        // InventoryFurniView.tsx): sizes/scroll position must be read as soon as the real
-        // nodes exist, not deferred another render behind a state flag, so the scrollbar isn't
-        // visibly stale (wrong thumb size/hidden-when-scrollable) for one frame after mount.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        measure();
-
+        // No measure() here: a ResizeObserver reports every element it starts observing that has
+        // a size, after layout and before paint, so the first measurement still lands before the
+        // scrollbar is ever drawn - without setting state synchronously inside the effect.
         const observer = new ResizeObserver(measure);
 
         observer.observe(viewportNode);
@@ -147,9 +156,7 @@ export const useDomScrollController = ({
     useEffect(() => {
         if (!trackNode) return;
 
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        measure();
-
+        // The observer's first report measures the newly mounted track - see the effect above.
         const observer = new ResizeObserver(measure);
 
         observer.observe(trackNode);
@@ -199,36 +206,25 @@ export const useDomScrollController = ({
         const current = isVertical ? viewportNode.scrollTop : viewportNode.scrollLeft;
         const next = clamp(current + (direction * clientSize), 0, scrollMax);
 
-        // `scrollTop`/`scrollLeft` are how the browser's own native scroll position is driven -
-        // unlike Pixi's virtual offset (plain React state the caller applies declaratively as
-        // an `x`/`y` prop), there is no non-imperative way to move it.
-        // eslint-disable-next-line react-hooks/immutability
-        if (isVertical) viewportNode.scrollTop = next;
-        else viewportNode.scrollLeft = next;
+        setScrollPosition(viewportNode, isVertical, next);
     };
 
     const stepBackward = () => {
         if (!viewportNode) return;
 
-        // eslint-disable-next-line react-hooks/immutability
-        if (isVertical) viewportNode.scrollTop -= step;
-        else viewportNode.scrollLeft -= step;
+        setScrollPosition(viewportNode, isVertical, getScrollPosition(viewportNode, isVertical) - step);
     };
 
     const stepForward = () => {
         if (!viewportNode) return;
 
-        // eslint-disable-next-line react-hooks/immutability
-        if (isVertical) viewportNode.scrollTop += step;
-        else viewportNode.scrollLeft += step;
+        setScrollPosition(viewportNode, isVertical, getScrollPosition(viewportNode, isVertical) + step);
     };
 
     const scrollTo = useCallback((offset: number) => {
         if (!viewportNode) return;
 
-        // eslint-disable-next-line react-hooks/immutability
-        if (isVertical) viewportNode.scrollTop = offset;
-        else viewportNode.scrollLeft = offset;
+        setScrollPosition(viewportNode, isVertical, offset);
     }, [ viewportNode, isVertical ]);
 
     return {

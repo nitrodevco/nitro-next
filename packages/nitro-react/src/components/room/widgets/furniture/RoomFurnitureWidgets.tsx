@@ -1,7 +1,7 @@
 import { RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
 import { ComponentType, createElement } from 'react';
 
-import { useRoomContext, useRoomWidgetActions } from '#base/context';
+import { useRoomStore, useRoomWidgetActions } from '#base/context/room';
 import { useRoomEventDispatcher } from '#base/hooks';
 
 import { FURNITURE_WIDGETS } from './furnitureWidgetRegistry';
@@ -20,7 +20,7 @@ import { FURNITURE_WIDGETS } from './furnitureWidgetRegistry';
 export const RoomFurnitureWidgets = () => {
     // Which widgets are open, as a string, so the host re-renders when that set changes rather
     // than every time a widget is handed a packet.
-    const openTypes = useRoomContext(x => Object.keys(x.openWidgets).join(','));
+    const openTypes = useRoomStore(x => Object.keys(x.openWidgets).join(','));
     const { closeRoomWidgetsForObject } = useRoomWidgetActions();
 
     useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>([

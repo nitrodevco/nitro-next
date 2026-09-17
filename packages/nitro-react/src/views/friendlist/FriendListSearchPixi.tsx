@@ -1,6 +1,7 @@
 import { IMessengerSearchResult } from '@nitrodevco/nitro-packets';
 
-import { useFriendsSelector, useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
+import { useFriends } from '#base/context/user';
 import { Accordion, ScrollArea } from '#base/theme';
 
 import { FriendListGroupPixi } from './components/FriendListGroupPixi';
@@ -21,7 +22,7 @@ interface FriendListSearchGroupData {
 
 /** Pixi port of views/friendlist/FriendListSearch.tsx. */
 export const FriendListSearchPixi = ({ value }: FriendListSearchPixiProps) => {
-    const friends = useFriendsSelector();
+    const friends = useFriends();
     const t = useTranslation();
 
     const groups = [

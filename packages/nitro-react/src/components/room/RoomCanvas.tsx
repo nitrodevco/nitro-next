@@ -3,7 +3,7 @@ import { GetRenderer, GetRoomStage, GetTicker, RoomAreaSelectionManager } from '
 import { FederatedPointerEvent, Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 
-import { useRoomInteractionSelector, useRoomMouseActions, useRoomSelector } from '#base/context';
+import { useRoom, useRoomMouseActions, useRoomStore } from '#base/context/room';
 import { useRoomCamera } from '#base/hooks';
 import { getRenderMode } from '#base/theme';
 
@@ -18,8 +18,9 @@ type MouseData = {
 const DRAG_THRESHOLD: number = 15;
 
 export const RoomCanvas = () => {
-    const room = useRoomSelector();
-    const { isDecorating, isPlayingGame } = useRoomInteractionSelector();
+    const room = useRoom();
+    const isDecorating = useRoomStore(x => x.isDecorating);
+    const isPlayingGame = useRoomStore(x => x.isPlayingGame);
     const { updateRoomCamera } = useRoomCamera();
     const { hasAndResetCursorUpdate, hasCursorOwners } = useRoomMouseActions();
     const mouseDataRef = useRef<MouseData>({

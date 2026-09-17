@@ -1,7 +1,8 @@
 import { IMessengerFriend } from '@nitrodevco/nitro-packets';
 
-import { useFriendsSelectors, useTranslation } from '#base/context';
-import { useOfflineFriendsSelector, useOnlineFriendsSelector } from '#base/context/user';
+import { useFriendsStore } from '#base/context/friend';
+import { useTranslation } from '#base/context/system';
+import { useOfflineFriends, useOnlineFriends } from '#base/context/user';
 import { Accordion, ScrollArea } from '#base/theme';
 
 import { FriendListGroupPixi } from './components/FriendListGroupPixi';
@@ -15,9 +16,9 @@ export interface FriendListFriendsPixiProps {
 
 /** Pixi port of views/friendlist/FriendListFriends.tsx. */
 export const FriendListFriendsPixi = ({ value }: FriendListFriendsPixiProps) => {
-    const { filterValue } = useFriendsSelectors();
-    const onlineFriends = useOnlineFriendsSelector();
-    const offlineFriends = useOfflineFriendsSelector();
+    const filterValue = useFriendsStore(x => x.filterValue);
+    const onlineFriends = useOnlineFriends();
+    const offlineFriends = useOfflineFriends();
     const t = useTranslation();
 
     const groups = [

@@ -1,6 +1,6 @@
 import { ICatalogNode } from '@nitrodevco/nitro-api';
 
-import { useCatalogSelectors } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
 import { Border, ScrollArea } from '#base/theme';
 
 import { CatalogNavigationSetItemView } from './CatalogNavigationSetItemView';
@@ -12,7 +12,7 @@ export interface CatalogNavigationViewProps {
 
 /** Pixi port of views/catalog/navigation/CatalogNavigationView.tsx. */
 export const CatalogNavigationView = ({ node }: CatalogNavigationViewProps) => {
-    const { searchResult } = useCatalogSelectors();
+    const searchResult = useCatalogStore(x => x.searchResult);
 
     if (!node) return null;
 

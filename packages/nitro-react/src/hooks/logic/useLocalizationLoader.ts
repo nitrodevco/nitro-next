@@ -1,7 +1,7 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useConfigValue, useSystemActions } from '#base/context';
+import { useConfigValue, useSystemActions } from '#base/context/system';
 
 export const useLocalizationLoader = () => {
     const [ needsUpdate, setNeedsUpdate ] = useState<boolean>(true);

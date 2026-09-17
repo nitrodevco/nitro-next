@@ -1,7 +1,7 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useConfigValue, useFurnitureDataActions } from '#base/context';
+import { useConfigValue, useFurnitureDataActions } from '#base/context/system';
 
 export const useProductDataLoader = () => {
     const [ needsUpdate, setNeedsUpdate ] = useState(true);

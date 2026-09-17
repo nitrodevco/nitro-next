@@ -1,7 +1,7 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef } from 'react';
 
-import { useConfigValue } from '#base/context';
+import { useConfigValue } from '#base/context/system';
 
 import { BoxLayout } from './Box';
 import { ThemeImage } from './ThemeImage';

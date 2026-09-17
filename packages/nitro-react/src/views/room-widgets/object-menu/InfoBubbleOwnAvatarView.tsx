@@ -2,7 +2,10 @@ import { AvatarActionStateType, AvatarExpressionEnum, ISimpleRoomObjectData, Pos
 import { AvatarExpressionComposer, ChangePostureComposer, DanceComposer, DropCarryItemComposer, SignComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useOwnHasClub, useOwnIsDancing, useRoomCanDecorate, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useOwnIsDancing, useRoomCanDecorate } from '#base/context/room';
+import { useTranslation, useWindowActions } from '#base/context/system';
+import { useOwnHasClub } from '#base/context/user';
 import { useRoomUserData } from '#base/hooks';
 import { Box, Bubble, Button, NitroIcon, ThemeText } from '#base/theme';
 
@@ -48,6 +51,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
     const [ collapsed, setCollapsed ] = useState<boolean>(false);
     const t = useTranslation();
     const { send } = useWebSocketContext();
+    const { showWindow, toggleWindow } = useWindowActions();
 
     if (!userData) return null;
 
@@ -97,6 +101,9 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
                         break;
                     }
                     case 'drop_hand_item': send(new DropCarryItemComposer({})); break;
+                    // The effects wardrobe is its own window, as `EffectsWidget` was.
+                    case 'effects': toggleWindow('avatar_effects'); break;
+                    case 'clothes': showWindow('avatar_editor'); break;
                 }
             }
         }
@@ -106,8 +113,9 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
 
     const MODE_BUTTONS: Record<number, { visible: unknown; caption: string; action: () => void }[]> = {
         0: [
-            { visible: canDecorate, caption: 'widget.avatar.decorate', action: () => undefined },
-            { visible: true, caption: 'widget.memenu.myclothes', action: () => undefined },
+            { visible: canDecorate, caption: 'widget.avatar.decorate', action: () => showWindow('inventory') },
+            { visible: true, caption: 'widget.memenu.myclothes', action: () => processAction('clothes') },
+            { visible: !isOwnDancing, caption: 'widget.memenu.effects', action: () => processAction('effects') },
             { visible: hasHabboClub && !isRidingHorse, caption: 'widget.memenu.dance', action: () => processAction('dance_menu') },
             { visible: !isOwnDancing && !hasHabboClub && !isRidingHorse, caption: 'widget.avatar.dance', action: () => processAction('dance') },
             { visible: isOwnDancing && !hasHabboClub && !isRidingHorse, caption: 'widget.memenu.dance.stop', action: () => processAction('dance_stop') },

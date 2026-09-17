@@ -1,3 +1,3 @@
-import { useRoomContext } from '../../useRoomContext';
+import { useRoomStore } from '../../useRoomStore';
 
-export const useOwnControllerLevel = () => useRoomContext(x => x.controllerLevel);
+export const useOwnControllerLevel = () => useRoomStore(x => x.controllerLevel);

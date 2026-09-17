@@ -1,6 +1,8 @@
 import { FurniturePickupMode, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, RoomControllerLevelEnum, RoomObjectOperationType, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
-import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector, useSystemActions } from '#base/context';
+import { useRoomStore } from '#base/context/room';
+import { useSystemActions } from '#base/context/system';
+import { useOwnIsModerator, useOwnUserId } from '#base/context/user';
 import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify } from '#base/hooks';
 import { InfostandFurniView } from '#base/views/room-widgets/object-infostand/InfostandFurniView';
 
@@ -15,7 +17,8 @@ export const InfostandFurni = (props: InfostandFurniViewProps) => {
     const furniData = useRoomFurnitureData(objectId, category);
     const ownUserId = useOwnUserId();
     const isModerator = useOwnIsModerator();
-    const { controllerLevel, isRoomOwner } = useRoomPermissionsSelector();
+    const controllerLevel = useRoomStore(x => x.controllerLevel);
+    const isRoomOwner = useRoomStore(x => x.isRoomOwner);
     const { modifyRoomObject } = useRoomObjectModify();
     const { changeItemState } = useRoomObjectInteraction();
     const { toggleWindow } = useSystemActions();

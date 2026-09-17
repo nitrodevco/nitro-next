@@ -1,13 +1,13 @@
 import { IPurchasableOffer } from '@nitrodevco/nitro-api';
 
-import { useCatalogSelectors } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
 import { Border, InfiniteGrid } from '#base/theme';
 
 import { CatalogItemGridWidgetItemView } from './CatalogItemGridWidgetItemView';
 
 /** Pixi port of views/catalog/page/widgets/CatalogItemGridWidgetView.tsx. */
 export const CatalogItemGridWidgetView = () => {
-    const { activePage } = useCatalogSelectors();
+    const activePage = useCatalogStore(x => x.activePage);
 
     if (!activePage) return null;
 

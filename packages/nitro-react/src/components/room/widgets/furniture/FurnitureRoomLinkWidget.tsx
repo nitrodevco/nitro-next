@@ -1,7 +1,7 @@
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
-import { useRoomSelector, useRoomWidget, useRoomWidgetActions } from '#base/context';
-import { RoomLinkData, useRoomLinkHandler } from '#base/handlers';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { RoomLinkData } from '#base/handlers';
 import { useGoToRoom } from '#base/hooks';
 import { FurnitureRoomLinkView } from '#base/views/room-widgets/furniture/FurnitureRoomLinkView';
 
@@ -13,11 +13,8 @@ import { readFurnitureLink } from './furnitureWidgetData';
  * at - room info arrives for plenty of other reasons - before offering to take you there.
  */
 export const FurnitureRoomLinkWidget = () => {
-    // Only this dialog is told these things, and only while it is open.
-    useRoomLinkHandler();
-
     const request = useRoomWidget<RoomLinkData>(RoomObjectWidgetRequestEvent.ROOM_LINK);
-    const room = useRoomSelector();
+    const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
     const goToRoom = useGoToRoom();
 

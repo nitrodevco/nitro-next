@@ -1,3 +1,3 @@
-import { useSystemContext } from '../useSystemContext';
+import { useSystemStore } from '../useSystemStore';
 
-export const useConfigData = () => useSystemContext(x => x.config);
+export const useConfigData = () => useSystemStore(x => x.config);

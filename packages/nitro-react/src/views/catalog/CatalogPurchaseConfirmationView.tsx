@@ -2,7 +2,9 @@ import { CatalogPricingTypeEnum } from '@nitrodevco/nitro-api';
 import { PurchaseFromCatalogComposer, PurchaseOKMessage } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useCatalogActions, useCatalogSelectors, useTranslation, useWebSocketContext } from '#base/context';
+import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
+import { useWebSocketContext } from '#base/context/communication';
+import { useTranslation } from '#base/context/system';
 import { useCatalogOfferActions, useMessageListener } from '#base/hooks';
 import { Border, Box, Button, ButtonThick, Frame, NitroCurrencyIcon, ThemeText } from '#base/theme';
 
@@ -13,7 +15,7 @@ type PurchaseState = 'busy' | 'none';
 /** Pixi port of views/catalog/CatalogPurchaseConfirmationView.tsx. */
 export const CatalogPurchaseConfirmationView = () => {
     const [ purchaseState, setPurchaseState ] = useState<PurchaseState>('none');
-    const { activePurchase } = useCatalogSelectors();
+    const activePurchase = useCatalogStore(x => x.activePurchase);
     const { setActivePurchase } = useCatalogActions();
     const { getOfferProduct } = useCatalogOfferActions();
     const { send } = useWebSocketContext();

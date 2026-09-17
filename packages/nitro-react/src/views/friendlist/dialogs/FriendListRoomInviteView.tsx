@@ -1,7 +1,9 @@
 import { SendRoomInviteComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useFriendsStore } from '#base/context/friend';
+import { useIsWindowVisible, useSystemActions, useTranslation } from '#base/context/system';
 import { Border, Box, Button, Frame, TextInput, ThemeText } from '#base/theme';
 
 /** Pixi port of views/friendlist/dialogs/FriendListRoomInviteView.tsx. */
@@ -9,7 +11,7 @@ export const FriendListRoomInviteView = () => {
     const isVisible = useIsWindowVisible('friendlist_invite');
     const { toggleWindow } = useSystemActions();
     const { send } = useWebSocketContext();
-    const { selectedFriendIds } = useFriendsSelectors();
+    const selectedFriendIds = useFriendsStore(x => x.selectedFriendIds);
 
     const [ message, setMessage ] = useState<string>('');
 

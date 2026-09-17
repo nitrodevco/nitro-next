@@ -1,4 +1,4 @@
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, NitroIcon, ThemeText } from '#base/theme';
 
 /** Pixi port of views/friendlist/footers/FriendListRequestsFooter.tsx. */

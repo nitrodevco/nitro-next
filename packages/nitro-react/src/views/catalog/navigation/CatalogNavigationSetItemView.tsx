@@ -1,6 +1,6 @@
 import { ICatalogNode } from '@nitrodevco/nitro-api';
 
-import { useConfigValue } from '#base/context';
+import { useConfigValue } from '#base/context/system';
 import { useCatalogNavigation } from '#base/hooks';
 import { Box, ColorLayer, NitroIcon, ThemeImage, ThemeText } from '#base/theme';
 

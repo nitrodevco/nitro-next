@@ -1,12 +1,12 @@
 import { RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectTileMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
 import { ObjectTileCursorUpdateMessage } from '@nitrodevco/nitro-renderer';
 
-import { useRoomSelector } from '#base/context';
+import { useRoom } from '#base/context/room';
 
 import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomCursorUpdate = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const { getActiveSurfaceLocation } = useRoomObjectValidation();
 
     const handleMouseOverTile = (event: RoomObjectTileMouseEvent) =>

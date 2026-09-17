@@ -1,9 +1,11 @@
-import { useCatalogActions, useCatalogSelectors, useTranslation } from '#base/context';
+import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, ButtonThick, ThemeText } from '#base/theme';
 
 /** Pixi port of views/catalog/page/widgets/CatalogPurchaseWidgetView.tsx. */
 export const CatalogPurchaseWidgetView = () => {
-    const { activeOffer, purchaseOptions } = useCatalogSelectors();
+    const activeOffer = useCatalogStore(x => x.activeOffer);
+    const purchaseOptions = useCatalogStore(x => x.purchaseOptions);
     const { setActivePurchase } = useCatalogActions();
     const t = useTranslation();
 

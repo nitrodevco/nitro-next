@@ -1,4 +1,4 @@
-import { useIsWindowVisible } from '#base/context';
+import { useIsWindowVisible } from '#base/context/system';
 import { MessengerView } from '#base/views/messenger/MessengerView';
 
 export const MessengerComponent = () => {

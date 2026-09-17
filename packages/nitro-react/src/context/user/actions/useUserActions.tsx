@@ -1,14 +1,22 @@
-import { useShallow } from 'zustand/shallow';
+import { userStore } from '../store/UserStore';
 
-import { useUserContext } from '../useUserContext';
+const state = userStore.getState();
 
-export const useUserActions = () => useUserContext(useShallow(x => ({
-    setTags: x.setTags,
-    setRights: x.setRights,
-    setNoobnessLevel: x.setNoobnessLevel,
-    increasePetRespects: x.increasePetRespects,
-    decreasePetRespects: x.decreasePetRespects,
-    setChatPreferences: x.setChatPreferences,
-    setPreferredChatStyle: x.setPreferredChatStyle,
-    setFreeFlowChatDisabled: x.setFreeFlowChatDisabled,
-})));
+/**
+ * Zustand actions are created once and never change, so they are read off the store a single
+ * time here rather than subscribed to: a component using these re-renders for nothing.
+ */
+const actions = {
+    setTags: state.setTags,
+    setRights: state.setRights,
+    setNoobnessLevel: state.setNoobnessLevel,
+    increasePetRespects: state.increasePetRespects,
+    decreasePetRespects: state.decreasePetRespects,
+    setChatPreferences: state.setChatPreferences,
+    setPreferredChatStyle: state.setPreferredChatStyle,
+    setFreeFlowChatDisabled: state.setFreeFlowChatDisabled,
+    setUiFlags: state.setUiFlags,
+    setUiFlag: state.setUiFlag,
+};
+
+export const useUserActions = () => actions;

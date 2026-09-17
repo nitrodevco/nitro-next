@@ -1,13 +1,16 @@
 import { BuildersClubQueryFurniCountComposer, GetCatalogIndexComposer, GetClubGiftInfoComposer, GetGiftWrappingConfigurationComposer } from '@nitrodevco/nitro-packets';
 import { useEffect } from 'react';
 
-import { useCatalogSelectors, useIsWindowVisible, useWebSocketContext } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
+import { useWebSocketContext } from '#base/context/communication';
+import { useIsWindowVisible } from '#base/context/system';
 import { useCatalogMessages, useCatalogPageRequest } from '#base/hooks';
 import { CatalogView } from '#base/views/catalog/CatalogView';
 
 export const CatalogComponent = () => {
     const isVisible = useIsWindowVisible('catalog');
-    const { catalogType, rootNode } = useCatalogSelectors();
+    const catalogType = useCatalogStore(x => x.catalogType);
+    const rootNode = useCatalogStore(x => x.rootNode);
     const { send } = useWebSocketContext();
 
     useCatalogMessages();

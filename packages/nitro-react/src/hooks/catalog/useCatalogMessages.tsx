@@ -1,7 +1,7 @@
 import { ICatalogNode, IPurchasableOffer } from '@nitrodevco/nitro-api';
 import { CatalogIndexMessage, CatalogPageMessage, CatalogPublishedMessage, ProductOfferEventMessage } from '@nitrodevco/nitro-packets';
 
-import { useCatalogActions, useCatalogSelectors } from '#base/context';
+import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
 import { useMessageListener } from '#base/hooks';
 
 import { useCatalogNavigation } from './useCatalogNavigation';
@@ -9,7 +9,8 @@ import { useCatalogOfferActions } from './useCatalogOfferActions';
 import { useCatalogVisibility } from './useCatalogVisibility';
 
 export const useCatalogMessages = () => {
-    const { catalogType, activePageId } = useCatalogSelectors();
+    const catalogType = useCatalogStore(x => x.catalogType);
+    const activePageId = useCatalogStore(x => x.activePageId);
     const { showCatalogPage, selectOffer } = useCatalogNavigation();
     const { setRootNode, setOffersToNodes, setFrontPageItems, setIsBusy, resetCatalog } = useCatalogActions();
     const { processOffer } = useCatalogOfferActions();

@@ -1,4 +1,5 @@
-import { useFriendsActions, useFriendsSelectors, useSystemActions } from '#base/context';
+import { useFriendsActions, useFriendsStore } from '#base/context/friend';
+import { useSystemActions } from '#base/context/system';
 import { Border, Box, Button, NitroIcon, TextInput } from '#base/theme';
 
 const BUTTON_LAYOUT = { paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingBottom: 5 };
@@ -15,7 +16,9 @@ const BUTTON_LAYOUT = { paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingB
  * here rather than silently dropped.
  */
 export const FriendListFriendsFooterPixi = () => {
-    const { selectedFriendIds, showListSearchInput, listSearchValue } = useFriendsSelectors();
+    const selectedFriendIds = useFriendsStore(x => x.selectedFriendIds);
+    const showListSearchInput = useFriendsStore(x => x.showListSearchInput);
+    const listSearchValue = useFriendsStore(x => x.listSearchValue);
     const { setListSearchValue, toggleListSearchInput, tooltipHandlers, setFilterValue } = useFriendsActions();
     const { toggleWindow } = useSystemActions();
 

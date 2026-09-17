@@ -1,4 +1,5 @@
-import { useCatalogSelectors, useTranslation } from '#base/context';
+import { useCatalogStore } from '#base/context/catalog';
+import { useTranslation } from '#base/context/system';
 import { useCatalogNavigation, useCatalogVisibility } from '#base/hooks';
 import { Box, Frame, Region, TabButton, TabContext } from '#base/theme';
 
@@ -12,7 +13,8 @@ export type CatalogViewWindowParams = { pageId?: number; pageName?: string; offe
 
 /** Pixi port of views/catalog/CatalogView.tsx. */
 export const CatalogView = () => {
-    const { rootNode, activeNodes } = useCatalogSelectors();
+    const rootNode = useCatalogStore(x => x.rootNode);
+    const activeNodes = useCatalogStore(x => x.activeNodes);
     const { activateNode } = useCatalogNavigation();
     const { hide } = useCatalogVisibility();
     const t = useTranslation();

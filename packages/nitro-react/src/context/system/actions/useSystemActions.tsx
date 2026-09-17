@@ -1,17 +1,23 @@
-import { useShallow } from 'zustand/shallow';
+import { systemStore } from '../store/SystemStore';
 
-import { useSystemContext } from '../useSystemContext';
+const state = systemStore.getState();
 
-export const useSystemActions = () => useSystemContext(useShallow(x => ({
-    toggleWindow: x.toggleWindow,
-    showWindow: x.showWindow,
-    hideWindow: x.hideWindow,
-    updateWindowParams: x.updateWindowParams,
-    getLocalizationValue: x.getLocalizationValue,
-    setLocalization: x.setLocalization,
-    setLocalizationForFurniture: x.setLocalizationForFurniture,
-    setLandingViewVisible: x.setLandingViewVisible,
-    setHomeRoomId: x.setHomeRoomId,
-    startRoomSession: x.startRoomSession,
-    endRoomSession: x.endRoomSession,
-})));
+/**
+ * Zustand actions are created once and never change, so they are read off the store a single
+ * time here rather than subscribed to: a component using these re-renders for nothing.
+ */
+const actions = {
+    toggleWindow: state.toggleWindow,
+    showWindow: state.showWindow,
+    hideWindow: state.hideWindow,
+    updateWindowParams: state.updateWindowParams,
+    getLocalizationValue: state.getLocalizationValue,
+    setLocalization: state.setLocalization,
+    setLocalizationForFurniture: state.setLocalizationForFurniture,
+    setLandingViewVisible: state.setLandingViewVisible,
+    setHomeRoomId: state.setHomeRoomId,
+    startRoomSession: state.startRoomSession,
+    endRoomSession: state.endRoomSession,
+};
+
+export const useSystemActions = () => actions;

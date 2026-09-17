@@ -1,4 +1,4 @@
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Box, Button, Frame, ThemeText } from '#base/theme';
 
 export interface FurnitureMysteryBoxRewardViewProps {

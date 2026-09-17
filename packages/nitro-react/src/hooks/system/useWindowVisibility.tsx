@@ -1,4 +1,4 @@
-import { useIsWindowVisible, useSystemActions, WindowName } from '#base/context';
+import { useIsWindowVisible, useSystemActions, WindowName } from '#base/context/system';
 
 export const useWindowVisibility = (windowName: WindowName) => {
     const isWindowVisible = useIsWindowVisible(windowName);

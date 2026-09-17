@@ -1,4 +1,5 @@
-import { useTranslation, useWallet } from '#base/context';
+import { useTranslation } from '#base/context/system';
+import { useUserStore } from '#base/context/user';
 import { Border, Box, BoxLayout, ThemeText } from '#base/theme';
 
 export interface ActivityPointsViewProps {
@@ -15,7 +16,7 @@ export interface ActivityPointsViewProps {
  * built out as new interactivity Pixi has no direct filter-hover equivalent for anyway.
  */
 export const ActivityPointsView = ({ layout }: ActivityPointsViewProps) => {
-    const { activityPoints } = useWallet();
+    const activityPoints = useUserStore(x => x.activityPoints);
     const t = useTranslation();
 
     const kinds = [

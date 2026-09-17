@@ -3,9 +3,13 @@ import { CancelTypingComposer, ChatComposer, SetChatStylePreferenceComposer, Sho
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { IChatStyle } from '#base/chat';
-import { useConfigValue, useOwnChatPreferences, useOwnClubLevel, useOwnIsAmbassador, useOwnSecurityLevel, useRoomChatActions, useRoomChatSelector, useRoomContext, useRoomSelectedObjectDetails, useRoomSelector, useTranslation, useUserActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { roomStore, useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
+import { useConfigValue, useTranslation } from '#base/context/system';
+import { useOwnClubLevel, useOwnIsAmbassador, useOwnSecurityLevel, useRoomToolsCollapsed, useUserActions, useUserStore } from '#base/context/user';
 import { useChatStyles } from '#base/hooks';
 import { Border, Box, Icon, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { roomToolsRight } from '#base/views/room-widgets/room-tools/roomToolsGeometry';
 
 import { ChatStyleSelectorView } from './ChatStyleSelectorView';
 
@@ -31,20 +35,24 @@ const NO_STYLE_SELECTED = -1;
  */
 export const RoomChatInputView = () => {
     const t = useTranslation();
-    const room = useRoomSelector();
+    const room = useRoom();
     const { send } = useWebSocketContext();
-    const { floodBlockSeconds, floodBlockStamp, chatInputContent } = useRoomChatSelector();
+    const floodBlockSeconds = useRoomStore(x => x.floodBlockSeconds);
+    const floodBlockStamp = useRoomStore(x => x.floodBlockStamp);
     const allStyles = useChatStyles();
     const { clearChatInputContent } = useRoomChatActions();
-    const { preferredChatStyle, chatSizePreference } = useOwnChatPreferences();
+    const preferredChatStyle = useUserStore(x => x.preferredChatStyle);
+    const chatSizePreference = useUserStore(x => x.chatSizePreference);
     const { setPreferredChatStyle } = useUserActions();
     const clubLevel = useOwnClubLevel();
     const securityLevel = useOwnSecurityLevel();
     const isAmbassador = useOwnIsAmbassador();
-    const { selectedAvatarId } = useRoomSelectedObjectDetails();
-    const selectedAvatarName = useRoomContext(x => x.usersByRoomObjectId[selectedAvatarId]?.name ?? '');
+    const selectedAvatarId = useRoomStore(x => x.selectedAvatarId);
+    const selectedAvatarName = useRoomStore(x => x.usersByRoomObjectId[selectedAvatarId]?.name ?? '');
     const customStylesEnabled = useConfigValue<boolean>('custom.chat.styles.enabled') ?? true;
     const disabledStyles = useConfigValue<string>('disabled.custom.chat.styles') ?? '';
+    // The bar starts where the room tools end, as `RoomToolsWidget.getWidgetAreaWidth` told it to.
+    const roomToolsCollapsed = useRoomToolsCollapsed();
 
     const [ value, setValue ] = useState('');
     const [ focused, setFocused ] = useState(false);
@@ -284,19 +292,22 @@ export const RoomChatInputView = () => {
         return () => clearInterval(interval);
     }, [ floodBlockSeconds, floodBlockStamp ]);
 
-    // The avatar menu asked us to whisper to someone (`RoomWidgetUpdateChatInputContentEvent`).
-    useEffect(() => {
+    /*
+     * The avatar menu asked us to whisper to someone (`RoomWidgetUpdateChatInputContentEvent`).
+     * It is a one-off request rather than state to render, so it is taken as the store announces
+     * it and cleared straight away.
+     */
+    useEffect(() => roomStore.subscribe(({ chatInputContent }) => {
         if (!chatInputContent) return;
 
         const prefix = (chatInputContent.mode === 'whisper') ? whisperMode : shoutMode;
         const next = `${prefix} ${chatInputContent.userName.length ? `${chatInputContent.userName} ` : ''}`;
 
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setValue(next);
         lastContentRef.current = next;
         setFocused(true);
         clearChatInputContent();
-    }, [ chatInputContent, whisperMode, shoutMode, clearChatInputContent ]);
+    }), [ whisperMode, shoutMode, clearChatInputContent ]);
 
     // `focus_capturer`: typing anywhere while nothing else has the keyboard starts a message.
     useEffect(() => {
@@ -328,7 +339,7 @@ export const RoomChatInputView = () => {
     if (!room) return null;
 
     return (
-        <Box layout={{ position: 'absolute', left: LEFT_MARGIN, bottom: BOTTOM_OFFSET, width: 451, height: 39, flex: 1, gap: 5 }}>
+        <Box layout={{ position: 'absolute', left: roomToolsRight(roomToolsCollapsed) + LEFT_MARGIN, bottom: BOTTOM_OFFSET, width: 451, height: 39, flex: 1, gap: 5 }}>
             <Border
                 variant="8"
                 tintColor="#e5e5e5"

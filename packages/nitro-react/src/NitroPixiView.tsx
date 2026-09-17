@@ -6,9 +6,9 @@ import {
 import { useEffect, useState } from 'react';
 
 import { preloadChatStyles } from '#base/chat';
+import { useWebSocketContext } from '#base/context/communication';
 import { PixiApplicationRoot, preloadNitroTruffle, preloadThemeAssets, WIRED_HABBO_KEYS } from '#base/theme';
 
-import { useWebSocketContext } from './context';
 import { MainView } from './MainView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 

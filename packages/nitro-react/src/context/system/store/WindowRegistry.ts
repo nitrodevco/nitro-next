@@ -1,8 +1,8 @@
-import { AvatarEditorViewWindowParams } from '#base/views/avatar-editor/AvatarEditor';
-import { CatalogViewWindowParams } from '#base/views/catalog/CatalogView';
-import { FriendListViewWindowParams } from '#base/views/friendlist/FriendListView';
-import { InventoryViewWindowParams } from '#base/views/inventory/InventoryView';
-import { NavigatorViewWindowParams } from '#base/views/navigator/NavigatorView';
+import type { AvatarEditorViewWindowParams } from '#base/views/avatar-editor/AvatarEditor';
+import type { CatalogViewWindowParams } from '#base/views/catalog/CatalogView';
+import type { FriendListViewWindowParams } from '#base/views/friendlist/FriendListView';
+import type { InventoryViewWindowParams } from '#base/views/inventory/InventoryView';
+import type { NavigatorViewWindowParams } from '#base/views/navigator/NavigatorView';
 
 export type WindowRegistry = {
     avatar_editor: AvatarEditorViewWindowParams;
@@ -14,6 +14,13 @@ export type WindowRegistry = {
     messenger: NoWindowParams;
 
     inventory: InventoryViewWindowParams;
+
+    /** The avatar's effects wardrobe, opened from the avatar's own menu in the room. */
+    avatar_effects: NoWindowParams;
+
+    /** The room info panel and the room settings behind it, both opened from the room tools. */
+    room_info: NoWindowParams;
+    room_settings: NoWindowParams;
 
     navigator: NavigatorViewWindowParams;
 

@@ -1,3 +1,3 @@
-import { useUserContext } from '../useUserContext';
+import { useUserStore } from '../useUserStore';
 
-export const useOwnIsAmbassador = () => useUserContext(x => x.isAmbassador);
+export const useOwnIsAmbassador = () => useUserStore(x => x.isAmbassador);

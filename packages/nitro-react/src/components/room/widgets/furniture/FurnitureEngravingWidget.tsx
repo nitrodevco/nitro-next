@@ -1,6 +1,6 @@
 import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, StringDataType } from '@nitrodevco/nitro-api';
 
-import { useRoomSelector, useRoomWidget, useRoomWidgetActions } from '#base/context';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useRoomFurnitureData } from '#base/hooks';
 import { FurnitureEngravingView } from '#base/views/room-widgets/furniture/FurnitureEngravingView';
 
@@ -11,7 +11,7 @@ import { FurnitureEngravingView } from '#base/views/room-widgets/furniture/Furni
  */
 export const FurnitureEngravingWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.FRIEND_FURNITURE_ENGRAVING);
-    const room = useRoomSelector();
+    const room = useRoom();
     const furnitureData = useRoomFurnitureData(request?.objectId ?? -1, request?.category ?? 0);
     const { closeRoomWidget } = useRoomWidgetActions();
 

@@ -1,10 +1,16 @@
-import { useShallow } from 'zustand/shallow';
+import { roomStore } from '../store/RoomStore';
 
-import { useRoomContext } from '#base/context';
+const state = roomStore.getState();
 
-export const useRoomStackingHeightMapActions = () => useRoomContext(useShallow(x => ({
-    setHeightMap: x.setHeightMap,
-    setHeightMapUpdates: x.setHeightMapUpdates,
-    getTileHeight: x.getTileHeight,
-    validateLocation: x.validateLocation,
-})));
+/**
+ * Zustand actions are created once and never change, so they are read off the store a single
+ * time here rather than subscribed to: a component using these re-renders for nothing.
+ */
+const actions = {
+    setHeightMap: state.setHeightMap,
+    setHeightMapUpdates: state.setHeightMapUpdates,
+    getTileHeight: state.getTileHeight,
+    validateLocation: state.validateLocation,
+};
+
+export const useRoomStackingHeightMapActions = () => actions;

@@ -1,6 +1,8 @@
 import { ForwardToARandomPromotedRoomComposer, GetGuestRoomComposer, IRoomInfo, NavigatorAddCollapsedCategoryComposer, NavigatorAddSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 
-import { useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
+import { useTranslation } from '#base/context/system';
 import { useNavigatorVisibility } from '#base/hooks';
 import { Border, Box, Frame, LayoutImage, ScrollArea, TabButton, TabContent, TabContext, ThemeImage, ThemeText } from '#base/theme';
 
@@ -28,7 +30,13 @@ const PROMOTE_SEARCH_CODES = [ 'roomads_view', 'myworld_view' ];
  * worth it. Flagged rather than silently dropped.
  */
 export const NavigatorView = () => {
-    const { topLevelContexts, topLevelContext, searchResult, isSearching, leftPaneHidden, collapsedCategories, preferences } = useNavigatorSelectors();
+    const topLevelContexts = useNavigatorStore(x => x.topLevelContexts);
+    const topLevelContext = useNavigatorStore(x => x.topLevelContext);
+    const searchResult = useNavigatorStore(x => x.searchResult);
+    const isSearching = useNavigatorStore(x => x.isSearching);
+    const leftPaneHidden = useNavigatorStore(x => x.leftPaneHidden);
+    const collapsedCategories = useNavigatorStore(x => x.collapsedCategories);
+    const preferences = useNavigatorStore(x => x.preferences);
     const { setTopLevelContext, setIsSearching, setLeftPaneHidden, toggleCollapsedCategory, setViewMode } = useNavigatorActions();
     const { hide } = useNavigatorVisibility();
     const { send } = useWebSocketContext();
@@ -47,7 +55,7 @@ export const NavigatorView = () => {
 
     /*
      * HabboNewNavigator.goToRoom: ask for the room info with roomForward set and close the
-     * navigator; useNavigatorHandler's GetGuestRoomResult handler then opens the flat
+     * navigator; the GetGuestRoomResult handler in registerNavigatorHandlers then opens the flat
      * connection, or shows the doorbell / password popup first for a locked room.
      */
     const enterRoom = (room: IRoomInfo) => {

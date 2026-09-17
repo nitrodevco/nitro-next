@@ -1,3 +1,3 @@
-import { useUserContext } from '../useUserContext';
+import { useUserStore } from '../useUserStore';
 
-export const useOwnUserFigure = () => useUserContext(x => x.figure);
+export const useOwnUserFigure = () => useUserStore(x => x.figure);

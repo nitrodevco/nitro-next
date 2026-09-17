@@ -8,7 +8,7 @@ import { NitroPixiView } from './NitroPixiView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 
 export const Nitro: FC = () => {
-    const { isConfigReady } = useConfigLoader();
+    useConfigLoader();
     const { isLocalizationReady } = useLocalizationLoader();
     const { isFurnitureDataReady } = useFurnitureDataLoader();
     const { isProductDataReady } = useProductDataLoader();

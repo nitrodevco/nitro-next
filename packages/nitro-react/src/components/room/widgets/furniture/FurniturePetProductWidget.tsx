@@ -2,7 +2,9 @@ import { FurnitureSpecialType, IRoomUserData, RoomObjectUserType, RoomObjectWidg
 import { CustomizePetWithFurniComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useOwnUserId, useRoomContext, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomStore, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useOwnUserId } from '#base/context/user';
 import { useRoomFurnitureData } from '#base/hooks';
 import { FurniturePetPickerView } from '#base/views/room-widgets/furniture/FurniturePetPickerView';
 import { FurnitureUseProductView } from '#base/views/room-widgets/furniture/FurnitureUseProductView';
@@ -50,7 +52,7 @@ const petTypeId = (user: IRoomUserData): number => parseInt((user.figure ?? '').
 export const FurniturePetProductWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.PET_PRODUCT_MENU);
     const furnitureData = useRoomFurnitureData(request?.objectId ?? -1, request?.category ?? 0);
-    const users = useRoomContext(x => x.usersByRoomObjectId);
+    const users = useRoomStore(x => x.usersByRoomObjectId);
     const ownUserId = useOwnUserId();
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();

@@ -1,4 +1,4 @@
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Button, ButtonThick, Frame, Region, ThemeText } from '#base/theme';
 
 export interface FurnitureCreditViewProps {

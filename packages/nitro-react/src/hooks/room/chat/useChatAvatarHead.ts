@@ -1,7 +1,7 @@
 import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType } from '@nitrodevco/nitro-api';
 import { GetAssetManager, GetAvatarRenderManager, TexturePool } from '@nitrodevco/nitro-renderer';
 import { RenderTexture, Texture } from 'pixi.js';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 export interface ChatAvatarHead {
     texture: Texture | undefined;
@@ -18,6 +18,12 @@ const MAX_CACHED_HEADS = 64;
 
 /** Insertion order doubles as recency: a hit re-inserts, an insert past the cap evicts the first entry. */
 const cache = new Map<string, ChatAvatarHead>();
+/**
+ * The texture-less head a figure shows while its libraries download, one per figure. Kept so the
+ * same object comes back on every read until the real head replaces it - React compares
+ * snapshots by identity - and so the figure is not re-rendered on every read meanwhile.
+ */
+const placeholders = new Map<string, ChatAvatarHead>();
 const listeners = new Map<string, Set<() => void>>();
 
 const headKey = (figure: string): string => `chat:head:${figure}`;
@@ -34,6 +40,8 @@ const releaseHead = (figure: string, entry: ChatAvatarHead) => {
 };
 
 const evictAvatarHead = (figure: string) => {
+    placeholders.delete(figure);
+
     const entry = cache.get(figure);
 
     if (entry) {
@@ -54,6 +62,10 @@ const renderAvatarHead = (figure: string, gender: AvatarGenderType): ChatAvatarH
 
         return cached;
     }
+
+    const placeholder = placeholders.get(figure);
+
+    if (placeholder) return placeholder;
 
     const avatarImage = GetAvatarRenderManager().createAvatarImage(
         figure,
@@ -78,7 +90,11 @@ const renderAvatarHead = (figure: string, gender: AvatarGenderType): ChatAvatarH
     if (isPlaceholder) {
         if (entry.texture) TexturePool.releaseTexture(entry.texture as RenderTexture);
 
-        return { texture: undefined, chestColor: entry.chestColor };
+        const waiting: ChatAvatarHead = { texture: undefined, chestColor: entry.chestColor };
+
+        placeholders.set(figure, waiting);
+
+        return waiting;
     }
 
     if (entry.texture) GetAssetManager().setTexture(headKey(figure), entry.texture);
@@ -102,19 +118,8 @@ const renderAvatarHead = (figure: string, gender: AvatarGenderType): ChatAvatarH
 
 /** The speaker's head for a chat bubble; re-renders once a still-downloading figure arrives. */
 export const useChatAvatarHead = (figure: string | undefined, gender: AvatarGenderType): ChatAvatarHead => {
-    const [ head, setHead ] = useState<ChatAvatarHead>(() => (figure ? renderAvatarHead(figure, gender) : EMPTY));
-
-    useEffect(() => {
-        if (!figure) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setHead(EMPTY);
-
-            return;
-        }
-
-        const refresh = () => setHead(renderAvatarHead(figure, gender));
-
-        refresh();
+    const subscribe = (onChange: () => void) => {
+        if (!figure) return () => {};
 
         let set = listeners.get(figure);
 
@@ -123,14 +128,14 @@ export const useChatAvatarHead = (figure: string | undefined, gender: AvatarGend
             listeners.set(figure, set);
         }
 
-        set.add(refresh);
+        set.add(onChange);
 
         return () => {
-            set.delete(refresh);
+            set.delete(onChange);
 
             if (!set.size) listeners.delete(figure);
         };
-    }, [ figure, gender ]);
+    };
 
-    return head;
+    return useSyncExternalStore(subscribe, () => (figure ? renderAvatarHead(figure, gender) : EMPTY));
 };

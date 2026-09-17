@@ -1,4 +1,4 @@
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, Frame, Region, ThemeText } from '#base/theme';
 
 /** The three channels run the full byte range the server stores them in. */

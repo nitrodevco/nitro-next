@@ -1,7 +1,8 @@
 import { MouseEventType, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectOperationType, RoomObjectTileMouseEvent, RoomObjectUserTypeName, RoomObjectWallMouseEvent } from '@nitrodevco/nitro-api';
 import { ClickCharacterComposer, ClickFurniComposer, MoveAvatarComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomInteractionSelector, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelector, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomStore } from '#base/context/room';
 
 import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
@@ -12,10 +13,13 @@ import { useRoomObjectPlace } from './useRoomObjectPlace';
 import { useRoomObjectSelect } from './useRoomObjectSelect';
 
 export const useRoomEventHandler = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const selectedObject = useRoomSelectedObject();
     const placedObject = useRoomPlacedObject();
-    const { isSpectator, isDecorating, isPlayingGame, isMoveBlocked } = useRoomInteractionSelector();
+    const isSpectator = useRoomStore(x => x.isSpectator);
+    const isDecorating = useRoomStore(x => x.isDecorating);
+    const isPlayingGame = useRoomStore(x => x.isPlayingGame);
+    const isMoveBlocked = useRoomStore(x => x.isMoveBlocked);
     const { getMouseEventId, setMouseEventId } = useRoomMouseActions();
     const { selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();

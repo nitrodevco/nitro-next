@@ -2,8 +2,8 @@ import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { RoomDimmerChangeStateComposer, RoomDimmerGetPresetsComposer, RoomDimmerPresetsMessageType, RoomDimmerSavePresetComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useState } from 'react';
 
-import { useRoomSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
-import { useRoomDimmerHandler } from '#base/handlers';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { FurnitureDimmerView } from '#base/views/room-widgets/furniture/FurnitureDimmerView';
 
 /** `#RRGGBB`, upper case, the shape `RoomSession.sendRoomDimmerSavePresetMessage` puts on the wire. */
@@ -18,11 +18,8 @@ const colorHex = (color: number) => `#${color.toString(16).padStart(6, '0').toUp
  * when everyone else sees it and the dimmer's own state event lights the room for good.
  */
 export const FurnitureDimmerWidget = () => {
-    // Only this dialog is told these things, and only while it is open.
-    useRoomDimmerHandler();
-
     const request = useRoomWidget<RoomDimmerPresetsMessageType>(RoomObjectWidgetRequestEvent.DIMMER);
-    const room = useRoomSelector();
+    const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
 

@@ -1,11 +1,11 @@
 import { IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
 
-import { useRoomSelector } from '#base/context';
+import { useRoom } from '#base/context/room';
 
 import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomObjectMove = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const { setFurnitureAlphaMultiplier, validateFurnitureLocation, validateWallItemLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
 
     const handleFurnitureMove = (

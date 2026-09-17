@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { StoreApi } from 'zustand';
 
-import { CatalogContextStore } from './store';
+import { CatalogStore } from './store';
 
-export const CatalogContext = createContext<StoreApi<CatalogContextStore> | null>(null);
+export const CatalogContext = createContext<StoreApi<CatalogStore> | null>(null);

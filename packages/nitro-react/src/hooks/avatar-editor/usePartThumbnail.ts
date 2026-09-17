@@ -1,9 +1,9 @@
 import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType, IAvatarImage, IFigurePartSet, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager, TexturePool, TextureUtils } from '@nitrodevco/nitro-renderer';
 import { Rectangle, RenderTexture, Sprite, Texture } from 'pixi.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 
-import { useAvatarEditorSelectors } from '#base/context';
+import { useAvatarEditorStore } from '#base/context/avatar-editor';
 
 /**
  * Clothing-part grid thumbnails straight from the avatar asset library: each part set is a
@@ -336,48 +336,38 @@ const requestThumbnail = (part: PartThumbnailRequest, setType: string, gender: A
  * is re-rendered when the skin tone changes.
  */
 export const usePartThumbnail = (part: PartThumbnailRequest | undefined, setType: string): PartThumbnail | undefined => {
-    const { gender } = useAvatarEditorSelectors();
-    const partId = part?.id ?? -1;
-    const partSet = part?.partSet;
-    const colorKey = part?.partColors.map(color => color?.id ?? '').join(',') ?? '';
+    const gender = useAvatarEditorStore(x => x.gender);
 
-    const resolve = (): PartThumbnail | undefined => {
-        if (!part) return undefined;
+    /*
+     * The thumbnail caches are the source of truth. Each lookup hands back the cached thumbnail
+     * (the same object every time), or the one in-flight promise for it - which is what
+     * subscribing waits on before asking again.
+     */
+    const lookup = () => (part ? requestThumbnail(part, setType, gender) : undefined);
 
-        const thumbnail = requestThumbnail(part, setType, gender);
+    const getSnapshot = () => {
+        const thumbnail = lookup();
 
-        return (thumbnail && !(thumbnail instanceof Promise)) ? thumbnail : undefined;
+        return (thumbnail instanceof Promise) ? undefined : thumbnail;
     };
 
-    const [ ready, setReady ] = useState<PartThumbnail | undefined>(resolve);
+    const subscribe = (onChange: () => void) => {
+        const thumbnail = lookup();
 
-    useEffect(() => {
-        if (!part) return;
-
-        const thumbnail = requestThumbnail(part, setType, gender);
-
-        if (!(thumbnail instanceof Promise)) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setReady(thumbnail);
-
-            return;
-        }
+        if (!(thumbnail instanceof Promise)) return () => {};
 
         let cancelled = false;
 
-        setReady(undefined);
-
-        void thumbnail.then((built) => {
-            if (!cancelled) setReady(built);
+        void thumbnail.then(() => {
+            if (!cancelled) onChange();
         });
 
         return () => {
             cancelled = true;
         };
-        // The request is fully described by the part id / set, the set type, the gender and the skin colours.
-    }, [ partId, partSet, setType, gender, colorKey ]);
+    };
 
-    return ready;
+    return useSyncExternalStore(subscribe, getSnapshot);
 };
 
 /** Mount once per editor: the face textures are released when it closes. */

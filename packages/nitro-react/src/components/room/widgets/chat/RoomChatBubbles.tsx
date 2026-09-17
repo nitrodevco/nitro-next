@@ -1,4 +1,4 @@
-import { useRoomContext } from '#base/context';
+import { useRoomStore } from '#base/context/room';
 
 import { ChatBubbleView } from './ChatBubbleView';
 
@@ -8,7 +8,7 @@ import { ChatBubbleView } from './ChatBubbleView';
  * through their motion handles rather than through yoga.
  */
 export const RoomChatBubbles = () => {
-    const bubbles = useRoomContext(x => x.chatBubbles);
+    const bubbles = useRoomStore(x => x.chatBubbles);
 
     return (
         <pixiContainer

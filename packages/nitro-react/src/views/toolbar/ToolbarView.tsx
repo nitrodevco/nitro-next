@@ -2,9 +2,11 @@ import { QuitComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { AvatarImage } from '#base/components';
-import { useIsLandingViewVisible, useOwnUserFigure, useOwnUserGender, useSystemActions, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useIsLandingViewVisible, useSystemActions, useTranslation } from '#base/context/system';
+import { useOwnUserFigure, useOwnUserGender } from '#base/context/user';
 import { useGoToHomeRoom } from '#base/hooks';
-import { Border, Box, Icon, LayoutImage, Region, ThemeImage } from '#base/theme';
+import { Border, LayoutImage, Region, ThemeImage } from '#base/theme';
 
 import { ToolbarExtendedMenu } from './ToolbarExtendedMenu';
 
@@ -173,14 +175,6 @@ export const ToolbarView = () => {
                                 src={LayoutImage('bottom_bar_camera.png')}
                             />
                         </Region>
-
-                        <Box
-                            cursor="pointer"
-                            onPointerTap={() => toggleWindow('layout_browser')}
-                            layout={{}}
-                        >
-                            <Icon variant="30" />
-                        </Box>
                         <ThemeImage
                             name="line"
                             src={LayoutImage('bottom_bar_divider_1px.png')}

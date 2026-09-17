@@ -1,3 +1,3 @@
-import { useSystemContext } from '../useSystemContext';
+import { useSystemStore } from '../useSystemStore';
 
-export const useHomeRoomId = () => useSystemContext(x => x.homeRoomId);
+export const useHomeRoomId = () => useSystemStore(x => x.homeRoomId);

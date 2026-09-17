@@ -1,22 +1,32 @@
 import { IRoomObject, NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { MoveObjectComposer, MoveWallItemComposer, PickupObjectComposer } from '@nitrodevco/nitro-packets';
+import { MoveObjectComposer, MoveWallItemComposer, PickupObjectComposer, RemoveBotFromFlatComposer, RemovePetFromFlatComposer } from '@nitrodevco/nitro-packets';
 import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 
-import { useOwnIsModerator, useOwnUserId, useRoomPermissionsSelector, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomSelector, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { roomStore, useRoom, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
+import { useOwnIsModerator, useOwnUserId } from '#base/context/user';
 
 import { useRoomObjectSelect } from './useRoomObjectSelect';
 import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 export const useRoomObjectModify = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const ownUserId = useOwnUserId();
     const isModerator = useOwnIsModerator();
     const selectedObject = useRoomSelectedObject();
-    const { controllerLevel, isRoomOwner } = useRoomPermissionsSelector();
+    const controllerLevel = useRoomStore(x => x.controllerLevel);
+    const isRoomOwner = useRoomStore(x => x.isRoomOwner);
     const { setSelectedObject } = useRoomSelectedObjectActions();
     const { resetSelectedObject } = useRoomObjectSelect();
     const { setFurnitureAlphaMultiplier, isValidLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
     const { send } = useWebSocketContext();
+
+    /**
+     * A unit's own account id, which is what the pet and bot composers are addressed by. Read when
+     * the operation happens rather than subscribed to - every user update would otherwise
+     * re-render whatever mounts this.
+     */
+    const getUserWebId = (objectId: number) => roomStore.getState().usersByRoomObjectId[objectId]?.webID ?? 0;
 
     const isFurnitureOwner = (object: IRoomObject | undefined) => object && (ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId));
 
@@ -58,24 +68,20 @@ export const useRoomObjectModify = () => {
             case RoomObjectOperationType.OBJECT_PICKUP:
                 send(new PickupObjectComposer({ categoryId: category, objectId, confirm: true }));
                 break;
+            /*
+             * A pet and a bot are picked up by their own id rather than the room object's, which
+             * is why neither goes through `PickupObjectComposer`.
+             */
             case RoomObjectOperationType.OBJECT_PICKUP_PET: {
-                /* const session = GetRoomSessionManager().getSession(roomId);
+                const petId = getUserWebId(objectId);
 
-                    if (session) {
-                        const userData = session.userDataManager.getUserDataByIndex(objectId);
-
-                        session.pickupPet(userData.webID);
-                    } */
+                if (petId) send(new RemovePetFromFlatComposer({ petId }));
                 break;
             }
             case RoomObjectOperationType.OBJECT_PICKUP_BOT: {
-                /* const session = GetRoomSessionManager().getSession(roomId);
+                const botId = getUserWebId(objectId);
 
-                    if (session) {
-                        const userData = session.userDataManager.getUserDataByIndex(objectId);
-
-                        session.pickupBot(userData.webID);
-                    } */
+                if (botId) send(new RemoveBotFromFlatComposer({ botId }));
                 break;
             }
             case RoomObjectOperationType.OBJECT_MOVE:

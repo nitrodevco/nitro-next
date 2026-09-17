@@ -1,7 +1,7 @@
 import { BLEND_MODES, Container as PixiContainer, EventMode, FederatedPointerEvent, Texture } from 'pixi.js';
 import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler, ReactNode, Ref } from 'react';
 
-import { useConfigValue } from '#base/context';
+import { useConfigValue } from '#base/context/system';
 
 import { BoxLayout } from './Box';
 import { boxLayoutToStyle } from './dom/boxStyle';

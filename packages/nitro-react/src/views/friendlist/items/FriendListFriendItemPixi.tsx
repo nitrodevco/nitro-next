@@ -2,7 +2,7 @@ import { IMessengerFriend } from '@nitrodevco/nitro-packets';
 import { Container as PixiContainer } from 'pixi.js';
 import { memo, useRef } from 'react';
 
-import { useFriendsActions, useFriendsSelectors } from '#base/context';
+import { useFriendsActions, useFriendsStore } from '#base/context/friend';
 import { Border, Box, NitroIcon, useOutsideClick } from '#base/theme';
 
 import { FriendListItemPixi } from '../components/FriendListItemPixi';
@@ -19,7 +19,8 @@ export interface FriendListFriendItemPixiProps {
 export const FriendListFriendItemPixi = memo(({ friend, showRelationshipIcon = true, showFollowIcon = true, showMessageIcon = true, zebraColor }: FriendListFriendItemPixiProps) => {
     const dropdownRef = useRef<PixiContainer | null>(null);
 
-    const { relationshipDropdownId, selectedFriendIds } = useFriendsSelectors();
+    const relationshipDropdownId = useFriendsStore(x => x.relationshipDropdownId);
+    const selectedFriendIds = useFriendsStore(x => x.selectedFriendIds);
     const { setRelationshipDropdownId, toggleSelectedFriendId, tooltipHandlers } = useFriendsActions();
 
     const isSelected = selectedFriendIds.indexOf(friend.playerId) >= 0;

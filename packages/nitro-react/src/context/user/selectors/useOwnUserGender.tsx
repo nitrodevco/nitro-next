@@ -1,3 +1,3 @@
-import { useUserContext } from '../useUserContext';
+import { useUserStore } from '../useUserStore';
 
-export const useOwnUserGender = () => useUserContext(x => x.sex);
+export const useOwnUserGender = () => useUserStore(x => x.sex);

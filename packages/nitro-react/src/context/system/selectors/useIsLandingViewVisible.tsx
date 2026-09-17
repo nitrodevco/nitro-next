@@ -1,3 +1,3 @@
-import { useSystemContext } from '../useSystemContext';
+import { useSystemStore } from '../useSystemStore';
 
-export const useIsLandingViewVisible = () => useSystemContext(x => x.landingViewVisible);
+export const useIsLandingViewVisible = () => useSystemStore(x => x.landingViewVisible);

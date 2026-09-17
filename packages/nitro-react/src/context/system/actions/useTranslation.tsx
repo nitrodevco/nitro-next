@@ -1,3 +1,3 @@
-import { useSystemContext } from '../useSystemContext';
+import { useSystemStore } from '../useSystemStore';
 
-export const useTranslation = () => useSystemContext(x => x.getLocalizationValue);
+export const useTranslation = () => useSystemStore(x => x.getLocalizationValue);

@@ -1,3 +1,3 @@
-import { useRoomContext } from '../../useRoomContext';
+import { useRoomStore } from '../../useRoomStore';
 
-export const useRoomIsPlayingGame = () => useRoomContext(x => x.isPlayingGame);
+export const useRoomIsPlayingGame = () => useRoomStore(x => x.isPlayingGame);

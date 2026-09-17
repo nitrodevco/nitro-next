@@ -7,7 +7,8 @@ import {
 } from '@nitrodevco/nitro-renderer';
 import { useEffect, useRef, useState } from 'react';
 
-import { useWebSocketContext } from './context';
+import { useWebSocketContext } from '#base/context/communication';
+
 import { MainView } from './MainView';
 import { preloadNitroTruffle, preloadThemeAssets, WIRED_HABBO_KEYS } from './theme';
 import { GetPixelRatio } from './utils';

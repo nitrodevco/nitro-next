@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { ButtonThick, Frame, Region, ThemeText } from '#base/theme';
 
 export interface FurnitureUseProductViewProps {

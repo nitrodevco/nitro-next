@@ -1,3 +1,3 @@
-import { useSystemContext } from '../useSystemContext';
+import { useSystemStore } from '../useSystemStore';
 
-export const useWindowZIndex = (id: string) => useSystemContext(x => x.zIndexById)[id] ?? 100;
+export const useWindowZIndex = (id: string) => useSystemStore(x => x.zIndexById)[id] ?? 100;

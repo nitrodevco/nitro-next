@@ -1,4 +1,4 @@
-import { AvatarEditorContextProvider } from '#base/context';
+import { AvatarEditorContextProvider } from '#base/context/avatar-editor';
 import { useAvatarEditorVisibility } from '#base/hooks';
 import { AvatarEditor } from '#base/views/avatar-editor/AvatarEditor';
 

@@ -1,7 +1,7 @@
 import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager, GetRenderer, GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer, PointData } from 'pixi.js';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
 import { useRoomMapping } from './useRoomMapping';
 
@@ -57,22 +57,44 @@ export interface RoomPreviewerApi {
 export type RoomPreviewerTarget = PixiContainer | HTMLCanvasElement;
 
 /**
+ * The engine room a previewer draws into, created and given its small showcase floor on first
+ * use. `createRoom` hands back the existing room for an id, and the floor is only laid while the
+ * room is uninitialized, so reading this during render is idempotent - the room outlives any one
+ * previewer, which is why there is nothing to hold in state.
+ */
+const getPreviewerRoom = (roomId: number, createMapForSize: ReturnType<typeof useRoomMapping>['createMapForSize']): IRoom => {
+    const room = GetRoomEngine().createRoom(RoomId.makeRoomPreviewerId(roomId));
+
+    if (!room.isInitialized) {
+        const map = createMapForSize(7);
+
+        if (map.wallGeometry) room.setLegacyGeometry(map.wallGeometry);
+
+        if (map.mapData) room.applyRoomMap(map.mapData);
+
+        room.updateRoomPlaneType('110', '99999', undefined);
+    }
+
+    return room;
+};
+
+/**
  * A temp room used as an object showcase (catalog products, the avatar editor's figure): one
  * preview object at a fixed tile, auto-centred by nudging the canvas offset, auto-cycling its
  * state, scaled to fit. The same logic serves both render targets - only how the frame reaches
  * the screen differs, see `RoomPreviewerTarget`.
  */
 export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPreviewerTarget | null>, { transparent = false, scale, showWalls = false, showFloor = false }: RoomPreviewerOptions = {}): RoomPreviewerApi => {
-    const [ room, setRoom ] = useState<IRoom | undefined>(undefined);
+    const { createMapForSize } = useRoomMapping();
+    const room: IRoom | undefined = getPreviewerRoom(roomId, createMapForSize);
     const mountedMasterRef = useRef<PixiContainer | undefined>(undefined);
     const avatarDirection = useRef(AVATAR_DEFAULT_DIRECTION);
-    // The object the consumer last asked for. Requests can arrive before the room exists (it's
-    // created in an effect, one render after mount) and a room can be recreated empty on a
-    // `roomId` change - either way, this is what gets (re)placed once a room is there.
+    // The object the consumer last asked for. A room can be recreated empty on a `roomId` change,
+    // and a request can land before the room's effects have run - either way, this is what gets
+    // (re)placed once the room is set up.
     const requested = useRef<PreviewRequest | null>(null);
     // Bumped per `updateAvatar` so a slow library download can't apply a figure since replaced.
     const avatarRequest = useRef(0);
-    const { createMapForSize } = useRoomMapping();
     // The first object to get a bounding box is centred in one jump; every move after that
     // (a re-dressed avatar, the next catalog offer) glides at `maxDrag` per frame.
     const snapToFirstObject = useRef(true);
@@ -532,6 +554,9 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
     useEffect(() => {
         if (!room) return;
 
+        // A different room is a fresh showcase: its first object is centred in one jump.
+        snapToFirstObject.current = true;
+
         const request = requested.current;
 
         if (!request) {
@@ -632,29 +657,6 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
             mountedMasterRef.current = undefined;
         };
     }, [ room ]);
-
-    useEffect(() => {
-        snapToFirstObject.current = true;
-
-        const inst = GetRoomEngine().createRoom(RoomId.makeRoomPreviewerId(roomId));
-
-        if (!inst.isInitialized) {
-            const map = createMapForSize(7);
-
-            if (map.wallGeometry) inst.setLegacyGeometry(map.wallGeometry);
-
-            if (map.mapData) inst.applyRoomMap(map.mapData);
-
-            inst.updateRoomPlaneType('110', '99999', undefined);
-        }
-
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setRoom(inst);
-
-        return () => {
-            setRoom(undefined);
-        };
-    }, [ roomId ]);
 
     return { room, addAvatar, updateAvatar, rotateAvatar, addFloorItem, addWallItem, changeObjectDirection, changeObjectState };
 };

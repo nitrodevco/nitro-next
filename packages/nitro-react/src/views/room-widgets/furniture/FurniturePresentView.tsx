@@ -1,4 +1,4 @@
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { ButtonThick, Frame, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
 
 export interface FurniturePresentViewProps {

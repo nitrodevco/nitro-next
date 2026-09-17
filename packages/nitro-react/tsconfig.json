@@ -10,9 +10,6 @@
             "#base/components": [
                 "./src/components/index.ts"
             ],
-            "#base/context": [
-                "./src/context/index.ts"
-            ],
             "#base/handlers": [
                 "./src/handlers/index.ts"
             ],

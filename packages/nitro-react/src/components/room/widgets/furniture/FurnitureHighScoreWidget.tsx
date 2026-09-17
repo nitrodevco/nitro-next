@@ -1,6 +1,6 @@
 import { HighScoreDataType, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
-import { useRoomWidget } from '#base/context';
+import { useRoomWidget } from '#base/context/room';
 import { useRoomFurnitureData } from '#base/hooks';
 import { FurnitureHighScoreView } from '#base/views/room-widgets/furniture/FurnitureHighScoreView';
 

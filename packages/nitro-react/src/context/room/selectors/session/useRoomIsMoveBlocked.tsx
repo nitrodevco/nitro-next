@@ -1,3 +1,3 @@
-import { useRoomContext } from '../../useRoomContext';
+import { useRoomStore } from '../../useRoomStore';
 
-export const useRoomIsMoveBlocked = () => useRoomContext(x => x.isMoveBlocked);
+export const useRoomIsMoveBlocked = () => useRoomStore(x => x.isMoveBlocked);

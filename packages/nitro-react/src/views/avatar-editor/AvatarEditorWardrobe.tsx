@@ -1,6 +1,7 @@
 import { ClubLevelEnum } from '@nitrodevco/nitro-api';
 
-import { AvatarEditorWardrobeOutfit, useTranslation } from '#base/context';
+import { AvatarEditorWardrobeOutfit } from '#base/context/avatar-editor';
+import { useTranslation } from '#base/context/system';
 import { Border, Icon, Region, ThemeText } from '#base/theme';
 
 import { AvatarEditorWardrobeSlot } from './AvatarEditorWardrobeSlot';

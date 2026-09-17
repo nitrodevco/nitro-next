@@ -5,7 +5,8 @@ import { extend } from '@pixi/react';
 import { Container, Graphics, NineSliceSprite, Sprite, Text, TilingSprite } from 'pixi.js';
 import { createRoot } from 'react-dom/client';
 
-import { SystemContextProvider, UserContextProvider, WebSocketContextProvider } from './context';
+import { WebSocketContextProvider } from '#base/context/communication';
+
 import { Nitro } from './Nitro';
 import { setRenderMode } from './theme';
 
@@ -38,12 +39,9 @@ window.NitroConfig = window.NitroConfig || {};
 
 const element = document.getElementById('root');
 
+// The system, user and navigator stores are app-wide singletons, so only the socket needs a provider.
 if (element) createRoot(element).render(
-    <SystemContextProvider>
-        <WebSocketContextProvider>
-            <UserContextProvider>
-                <Nitro />
-            </UserContextProvider>
-        </WebSocketContextProvider>
-    </SystemContextProvider>,
+    <WebSocketContextProvider>
+        <Nitro />
+    </WebSocketContextProvider>,
 );

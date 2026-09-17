@@ -1,6 +1,7 @@
 import { IRoomInfo, ISearchResultList } from '@nitrodevco/nitro-packets';
 
-import { useInterpolate, useNavigatorSelectors } from '#base/context';
+import { useNavigatorStore } from '#base/context/navigator';
+import { useInterpolate } from '#base/context/system';
 import { Box, ColorLayer, NitroIcon, ThemeText } from '#base/theme';
 
 import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, ROW_BASE_COLOR, TILE_BASE_COLOR } from './NavigatorRoomEntryUtils';
@@ -26,7 +27,10 @@ export interface NavigatorCategoryViewProps {
  * equivalent and are dropped throughout this file - same for NavigatorRoomEntryView.tsx.
  */
 export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, onShowMore, onBack, onAddQuickLink, onToggleMode }: NavigatorCategoryViewProps) => {
-    const { collapsedCategories, searchResult, viewModes, perks } = useNavigatorSelectors();
+    const collapsedCategories = useNavigatorStore(x => x.collapsedCategories);
+    const searchResult = useNavigatorStore(x => x.searchResult);
+    const viewModes = useNavigatorStore(x => x.viewModes);
+    const perks = useNavigatorStore(x => x.perks);
     const interpolate = useInterpolate();
 
     const isSingleBlock = (searchResult?.blocks.length ?? 0) === 1;

@@ -1,5 +1,5 @@
-import { useFriendsSelectors, useTranslation } from '#base/context';
-import { useSystemActions, useWindowParams } from '#base/context/system';
+import { useFriendsStore } from '#base/context/friend';
+import { useSystemActions, useTranslation, useWindowParams } from '#base/context/system';
 import { Accordion, Box, ColorLayer, Frame, ThemeText } from '#base/theme';
 
 import { FriendListFriendsPixi } from './FriendListFriendsPixi';
@@ -28,7 +28,7 @@ export const FriendListView = () => {
     const { tab: activeTab = 'friends' } = useWindowParams('friendlist');
 
     const { toggleWindow, updateWindowParams } = useSystemActions();
-    const { tooltip } = useFriendsSelectors();
+    const tooltip = useFriendsStore(x => x.tooltip);
 
     const t = useTranslation();
 

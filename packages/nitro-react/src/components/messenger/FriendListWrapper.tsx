@@ -1,4 +1,4 @@
-import { FriendsContextProvider } from '#base/context';
+import { FriendsContextProvider } from '#base/context/friend';
 
 import { FriendListComponent } from './FriendListComponent';
 

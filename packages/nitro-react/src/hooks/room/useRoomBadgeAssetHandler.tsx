@@ -2,7 +2,8 @@ import { NitroLogger, RoomObjectBadgeAssetEvent } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetRoomContentLoader, ObjectGroupBadgeUpdateMessage } from '@nitrodevco/nitro-renderer';
 import { RenderTexture, Sprite, Texture } from 'pixi.js';
 
-import { useConfigValue, useRoomSelector } from '#base/context';
+import { useRoom } from '#base/context/room';
+import { useConfigValue } from '#base/context/system';
 import { loadTexture } from '#base/theme';
 
 /**
@@ -61,7 +62,7 @@ const createSmallTexture = (texture: Texture): Texture | undefined => {
  * registered anywhere.
  */
 export const useRoomBadgeAssetHandler = () => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const badgeUrl = useConfigValue<string>('badge.asset.url') ?? '';
     const groupBadgeUrl = useConfigValue<string>('badge.asset.group.url') ?? '';
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, CheckBox, Frame, TextInput, ThemeText } from '#base/theme';
 
 /** The helper tops out at ten tiles, the height Flash's slider could reach. */

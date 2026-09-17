@@ -3,9 +3,12 @@ import { GetWardrobeComposer, SaveWardrobeOutfitComposer, SetClothingChangeDataC
 import { useEffect, useRef } from 'react';
 
 import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
-import { useAvatarEditorActions, useAvatarEditorSelectors, useConfigValue, useOwnClubLevel, useOwnUserInfo, useTranslation, useWebSocketContext, useWindowParams } from '#base/context';
-import { useAvatarEditorHandler } from '#base/handlers';
-import { AvatarEditorPartData, firstSelectableColorId, useAvatarEditorData, useAvatarEditorVisibility, usePartThumbnailLifetime } from '#base/hooks';
+import { useAvatarEditorActions, useAvatarEditorStore, useAvatarEditorStoreApi } from '#base/context/avatar-editor';
+import { useWebSocketContext } from '#base/context/communication';
+import { useConfigValue, useTranslation, useWindowParams } from '#base/context/system';
+import { useOwnClubLevel, useUserStore } from '#base/context/user';
+import { registerAvatarEditorHandlers } from '#base/handlers';
+import { AvatarEditorPartData, firstSelectableColorId, useAvatarEditorData, useAvatarEditorVisibility, usePartThumbnailLifetime, useRegisterHandlers } from '#base/hooks';
 import { Button, ButtonThick, Frame, InfiniteGrid, LayoutImage, Region, ScrollArea, TabButton, TabContext, ThemeImage, ThemeText } from '#base/theme';
 
 import { AvatarEditorPaletteThumb } from './AvatarEditorPaletteThumb';
@@ -58,10 +61,18 @@ const CATEGORY_TABS: Partial<Record<AvatarEditorCategory, SubTab[]>> = {
 };
 
 export const AvatarEditor = () => {
-    const { name, figure: ownFigure, sex: ownGender } = useOwnUserInfo();
+    const name = useUserStore(x => x.name);
+    const ownFigure = useUserStore(x => x.figure);
+    const ownGender = useUserStore(x => x.sex);
     const clubLevel = useOwnClubLevel();
     const { clothingChange } = useWindowParams('avatar_editor');
-    const { activeCategory, activeSubType, wardrobeVisible, wardrobe, figure, parts: figureParts, gender } = useAvatarEditorSelectors();
+    const activeCategory = useAvatarEditorStore(x => x.activeCategory);
+    const activeSubType = useAvatarEditorStore(x => x.activeSubType);
+    const wardrobeVisible = useAvatarEditorStore(x => x.wardrobeVisible);
+    const wardrobe = useAvatarEditorStore(x => x.wardrobe);
+    const figure = useAvatarEditorStore(x => x.figure);
+    const figureParts = useAvatarEditorStore(x => x.parts);
+    const gender = useAvatarEditorStore(x => x.gender);
     const activeSetType = activeSubType[activeCategory];
     const { setActiveCategory, setActiveSubType, setWardrobeVisible, setWardrobeSlot, loadFigure, setPart, removePart, setColors, setGender } = useAvatarEditorActions();
     const { parts, palettes } = useAvatarEditorData(activeSetType);
@@ -74,7 +85,9 @@ export const AvatarEditor = () => {
     const t = useTranslation();
     const { send } = useWebSocketContext();
 
-    useAvatarEditorHandler(maxWardrobeSlots);
+    const editorStore = useAvatarEditorStoreApi();
+
+    useRegisterHandlers(socket => registerAvatarEditorHandlers(socket, editorStore, maxWardrobeSlots));
 
     const changeGender = (next: AvatarGenderType) => {
         if (next === gender) return;

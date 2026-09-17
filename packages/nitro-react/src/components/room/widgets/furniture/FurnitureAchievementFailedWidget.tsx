@@ -1,6 +1,6 @@
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
-import { useRoomWidget, useRoomWidgetActions } from '#base/context';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { FurnitureAlertView } from '#base/views/room-widgets/furniture/FurnitureAlertView';
 
 /**

@@ -1,12 +1,15 @@
 import { NavigatorDeleteSavedSearchComposer, NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useInterpolate, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
+import { useInterpolate, useTranslation } from '#base/context/system';
 import { Border, Box, ColorLayer, NitroIcon, ScrollArea, ThemeText } from '#base/theme';
 
 /** Pixi port of views/navigator/NavigatorQuickLinksView.tsx. */
 export const NavigatorQuickLinksView = () => {
-    const { savedSearches, leftPaneHidden } = useNavigatorSelectors();
+    const savedSearches = useNavigatorStore(x => x.savedSearches);
+    const leftPaneHidden = useNavigatorStore(x => x.leftPaneHidden);
     const { setIsSearching } = useNavigatorActions();
     const { send } = useWebSocketContext();
     const t = useTranslation();

@@ -1,4 +1,4 @@
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, CheckBox, Frame, ThemeText } from '#base/theme';
 
 /** Which of the area's switches is being flipped. */

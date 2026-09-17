@@ -1,1 +1,2 @@
-export * from './useNavigatorHandler';
+export * from './registerNavigatorHandlers';
+export * from './registerRoomQueueHandlers';

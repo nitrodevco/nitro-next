@@ -1,6 +1,7 @@
 import { AvatarActionStateType, IAvatarUserInfo, RoomControllerLevelEnum, RoomModerationType, RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
-import { useIsSystemShutdown, useOwnControllerLevel, useOwnUserId, useRoomContext, useRoomSelector, useRoomSettingsSelector } from '#base/context';
+import { useOwnControllerLevel, useRoom, useRoomStore } from '#base/context/room';
+import { useIsSystemShutdown, useOwnUserId } from '#base/context/user';
 
 const canModerate = (
     action: RoomModerationType,
@@ -22,11 +23,13 @@ const canModerate = (
 };
 
 export const useRoomUserData = (objectId: number) => {
-    const room = useRoomSelector();
+    const room = useRoom();
     const ownUserId = useOwnUserId();
-    const userData = useRoomContext(x => x.usersByRoomObjectId[objectId]);
+    const userData = useRoomStore(x => x.usersByRoomObjectId[objectId]);
     const ownControllerLevel = useOwnControllerLevel();
-    const { tradeMode, isGuildRoom, moderation } = useRoomSettingsSelector();
+    const tradeMode = useRoomStore(x => x.tradeMode);
+    const isGuildRoom = useRoomStore(x => x.isGuildRoom);
+    const moderation = useRoomStore(x => x.moderationSettings);
     const isSystemShutdown = useIsSystemShutdown();
 
     if (!room || !userData) return undefined;

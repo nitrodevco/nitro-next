@@ -1,27 +1,33 @@
-import { useShallow } from 'zustand/shallow';
+import { navigatorStore } from '../store/NavigatorStore';
 
-import { useNavigatorContext } from '../useNavigatorContext';
+const state = navigatorStore.getState();
 
-export const useNavigatorActions = () => useNavigatorContext(useShallow(x => ({
-    setTopLevelContexts: x.setTopLevelContexts,
-    setTopLevelContext: x.setTopLevelContext,
-    setSavedSearches: x.setSavedSearches,
-    setPerks: x.setPerks,
-    setPreferences: x.setPreferences,
-    setFlatCategories: x.setFlatCategories,
-    setEventCategories: x.setEventCategories,
-    setSearchResult: x.setSearchResult,
-    setCollapsedCategories: x.setCollapsedCategories,
-    toggleCollapsedCategory: x.toggleCollapsedCategory,
-    toggleExpandedCategory: x.toggleExpandedCategory,
-    setFilterType: x.setFilterType,
-    setLeftPaneHidden: x.setLeftPaneHidden,
-    setViewMode: x.setViewMode,
-    setSearchFilter: x.setSearchFilter,
-    setIsSearching: x.setIsSearching,
-    setCurrentRoom: x.setCurrentRoom,
-    setRoomEntryDialog: x.setRoomEntryDialog,
-    setRoomEntryDialogMode: x.setRoomEntryDialogMode,
-    setAlert: x.setAlert,
-    resetNavigator: x.resetNavigator,
-})));
+/**
+ * Zustand actions are created once and never change, so they are read off the store a single
+ * time here rather than subscribed to: a component using these re-renders for nothing.
+ */
+const actions = {
+    setTopLevelContexts: state.setTopLevelContexts,
+    setTopLevelContext: state.setTopLevelContext,
+    setSavedSearches: state.setSavedSearches,
+    setPerks: state.setPerks,
+    setPreferences: state.setPreferences,
+    setFlatCategories: state.setFlatCategories,
+    setEventCategories: state.setEventCategories,
+    setSearchResult: state.setSearchResult,
+    setCollapsedCategories: state.setCollapsedCategories,
+    toggleCollapsedCategory: state.toggleCollapsedCategory,
+    toggleExpandedCategory: state.toggleExpandedCategory,
+    setFilterType: state.setFilterType,
+    setLeftPaneHidden: state.setLeftPaneHidden,
+    setViewMode: state.setViewMode,
+    setSearchFilter: state.setSearchFilter,
+    setIsSearching: state.setIsSearching,
+    setRoomEntryDialog: state.setRoomEntryDialog,
+    setRoomEntryDialogMode: state.setRoomEntryDialogMode,
+    setAlert: state.setAlert,
+    setRoomQueue: state.setRoomQueue,
+    resetNavigator: state.resetNavigator,
+};
+
+export const useNavigatorActions = () => actions;

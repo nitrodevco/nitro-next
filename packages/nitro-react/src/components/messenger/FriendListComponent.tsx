@@ -1,7 +1,8 @@
 import { FriendListUpdateComposer, MessengerInitComposer } from '@nitrodevco/nitro-packets';
 import { useEffect } from 'react';
 
-import { useIsWindowVisible, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useIsWindowVisible } from '#base/context/system';
 import { FriendListRemoveConfirmationView } from '#base/views/friendlist/dialogs/FriendListRemoveConfirmationView';
 import { FriendListRoomInviteView } from '#base/views/friendlist/dialogs/FriendListRoomInviteView';
 import { FriendListView } from '#base/views/friendlist/FriendListView';

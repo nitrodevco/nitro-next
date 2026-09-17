@@ -3,7 +3,8 @@ import { SetAreaHideDataComposer, UseFurnitureComposer } from '@nitrodevco/nitro
 import { RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
-import { useRoomSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { AreaHideData } from '#base/handlers';
 import { AreaHideOption, FurnitureAreaHideView } from '#base/views/room-widgets/furniture/FurnitureAreaHideView';
 
@@ -37,7 +38,7 @@ const readArea = (roomObject: IRoomObjectController): AreaHideDraft => ({
  */
 export const FurnitureAreaHideWidget = () => {
     const request = useRoomWidget<AreaHideData>(RoomObjectWidgetRequestEvent.AREA_HIDE);
-    const room = useRoomSelector();
+    const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
     const [ draft, setDraft ] = useState<AreaHideDraft | undefined>(undefined);

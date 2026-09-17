@@ -1,7 +1,9 @@
 import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { NavigatorFilterType, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { NavigatorFilterType, useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Dropmenu, DropmenuItem, LayoutImage, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
 const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
@@ -26,7 +28,9 @@ const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
  */
 export const NavigatorSearchView = () => {
     const [ isFilterOpen, setFilterOpen ] = useState(false);
-    const { topLevelContext, searchFilter, filterType } = useNavigatorSelectors();
+    const topLevelContext = useNavigatorStore(x => x.topLevelContext);
+    const searchFilter = useNavigatorStore(x => x.searchFilter);
+    const filterType = useNavigatorStore(x => x.filterType);
     const { setSearchFilter, setFilterType, setIsSearching } = useNavigatorActions();
     const { send } = useWebSocketContext();
     const t = useTranslation();

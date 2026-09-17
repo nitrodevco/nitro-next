@@ -1,12 +1,18 @@
-import { useShallow } from 'zustand/shallow';
+import { roomStore } from '../store/RoomStore';
 
-import { useRoomContext } from '#base/context';
+const state = roomStore.getState();
 
-export const useRoomMouseActions = () => useRoomContext(useShallow(x => ({
-    getMouseEventId: x.getMouseEventId,
-    setMouseEventId: x.setMouseEventId,
-    addCursorOwner: x.addCursorOwner,
-    removeCursorOwner: x.removeCursorOwner,
-    hasAndResetCursorUpdate: x.hasAndResetCursorUpdate,
-    hasCursorOwners: x.hasCursorOwners,
-})));
+/**
+ * Zustand actions are created once and never change, so they are read off the store a single
+ * time here rather than subscribed to: a component using these re-renders for nothing.
+ */
+const actions = {
+    getMouseEventId: state.getMouseEventId,
+    setMouseEventId: state.setMouseEventId,
+    addCursorOwner: state.addCursorOwner,
+    removeCursorOwner: state.removeCursorOwner,
+    hasAndResetCursorUpdate: state.hasAndResetCursorUpdate,
+    hasCursorOwners: state.hasCursorOwners,
+};
+
+export const useRoomMouseActions = () => actions;

@@ -1,4 +1,4 @@
-import { useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context';
+import { useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context/system';
 import { Frame, TabButton, TabContent, TabContext } from '#base/theme';
 
 import { InventoryBadgesView } from './InventoryBadgesView';

@@ -1,3 +1,3 @@
-import { useUserContext } from '../useUserContext';
+import { useUserStore } from '../useUserStore';
 
-export const useOwnUserId = () => useUserContext(x => x.userId);
+export const useOwnUserId = () => useUserStore(x => x.userId);

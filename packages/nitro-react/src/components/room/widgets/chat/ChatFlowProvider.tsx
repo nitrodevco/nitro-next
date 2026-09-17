@@ -4,7 +4,8 @@ import { Point, PointData, Ticker } from 'pixi.js';
 import { ReactNode, useEffect, useMemo, useRef } from 'react';
 
 import { ChatBubbleMotion, chatBubbleWidthFromSetting, ChatFlowStage, IChatFlowHost, IChatFlowSettings } from '#base/chat';
-import { useOwnChatPreferences, useRoomChatActions, useRoomSelector } from '#base/context';
+import { useRoom, useRoomChatActions } from '#base/context/room';
+import { useUserStore } from '#base/context/user';
 import { ChatFlowContext, ChatFlowContextValue, useRoomObjectSelect } from '#base/hooks';
 
 /** `ChatFlowViewer._Str_22565` / `_chatAreaVsScreenSize` - new bubbles appear a quarter of the way down the screen. */
@@ -24,8 +25,10 @@ interface ChatFlowProviderProps {
  * done with them.
  */
 export const ChatFlowProvider = ({ children }: ChatFlowProviderProps) => {
-    const room = useRoomSelector();
-    const { chatMode, chatBubbleWidth, chatScrollSpeed } = useOwnChatPreferences();
+    const room = useRoom();
+    const chatMode = useUserStore(x => x.chatMode);
+    const chatBubbleWidth = useUserStore(x => x.chatBubbleWidth);
+    const chatScrollSpeed = useUserStore(x => x.chatScrollSpeed);
     const { removeChatBubble } = useRoomChatActions();
     const { selectObject } = useRoomObjectSelect();
     const selectObjectRef = useRef(selectObject);

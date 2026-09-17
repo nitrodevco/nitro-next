@@ -1,6 +1,6 @@
 import { FurniturePickupMode, IFurniData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import { useTranslation } from '#base/context';
+import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, CloseButton, ThemeText } from '#base/theme';
 
 import { useFurnitureImageTexturePixi } from '../../catalog/useFurnitureImageTexturePixi';

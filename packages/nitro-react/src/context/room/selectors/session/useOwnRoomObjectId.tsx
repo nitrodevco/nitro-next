@@ -1,3 +1,3 @@
-import { useRoomContext } from '../../useRoomContext';
+import { useRoomStore } from '../../useRoomStore';
 
-export const useOwnRoomObjectId = () => useRoomContext(x => x.ownRoomIndex);
+export const useOwnRoomObjectId = () => useRoomStore(x => x.ownRoomIndex);

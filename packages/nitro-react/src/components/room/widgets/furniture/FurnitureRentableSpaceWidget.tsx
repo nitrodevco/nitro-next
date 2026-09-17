@@ -1,8 +1,9 @@
 import { RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { RentableSpaceCancelRentComposer, RentableSpaceRentComposer, RentableSpaceStatusMessageType } from '@nitrodevco/nitro-packets';
 
-import { useOwnUserId, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
-import { useRoomRentableSpaceHandler } from '#base/handlers';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useOwnUserId } from '#base/context/user';
 import { FurnitureRentableSpaceView } from '#base/views/room-widgets/furniture/FurnitureRentableSpaceView';
 
 /**
@@ -11,9 +12,6 @@ import { FurnitureRentableSpaceView } from '#base/views/room-widgets/furniture/F
  * and nothing is drawn until that answer arrives.
  */
 export const FurnitureRentableSpaceWidget = () => {
-    // Only this dialog is told these things, and only while it is open.
-    useRoomRentableSpaceHandler();
-
     const request = useRoomWidget<RentableSpaceStatusMessageType>(RoomWidgetEnum.RENTABLESPACE);
     const ownUserId = useOwnUserId();
     const { closeRoomWidget } = useRoomWidgetActions();

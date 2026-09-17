@@ -1,9 +1,15 @@
-import { useShallow } from 'zustand/shallow';
+import { systemStore } from '../store/SystemStore';
 
-import { useSystemContext } from '../useSystemContext';
+const state = systemStore.getState();
 
-export const useFurnitureDataActions = () => useSystemContext(useShallow(x => ({
-    parseFloorItems: x.parseFloorItems,
-    parseWallItems: x.parseWallItems,
-    parseProductData: x.parseProductData,
-})));
+/**
+ * Zustand actions are created once and never change, so they are read off the store a single
+ * time here rather than subscribed to: a component using these re-renders for nothing.
+ */
+const actions = {
+    parseFloorItems: state.parseFloorItems,
+    parseWallItems: state.parseWallItems,
+    parseProductData: state.parseProductData,
+};
+
+export const useFurnitureDataActions = () => actions;

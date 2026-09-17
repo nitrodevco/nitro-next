@@ -1,6 +1,6 @@
 import { IFriendRequest } from '@nitrodevco/nitro-packets';
 
-import { useFriendsActions } from '#base/context';
+import { useFriendsActions } from '#base/context/friend';
 import { Box, NitroIcon } from '#base/theme';
 
 import { FriendListItemPixi } from '../components/FriendListItemPixi';

@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
-import { useFriendsActions, useTranslation } from '#base/context';
+import { useFriendsActions } from '#base/context/friend';
+import { useTranslation } from '#base/context/system';
 import { AccordionContent, AccordionItem, AccordionTrigger, Box, ColorLayer, NitroIcon, ThemeText } from '#base/theme';
 
 export interface FriendListTabPixiProps {

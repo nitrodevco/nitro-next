@@ -1,6 +1,6 @@
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
 import { Assets, Rectangle, Texture } from 'pixi.js';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 import { SpriteFrame } from '../utils/spriteFrame';
 import { getThemeSliceCanvas, ThemeSliceEffect, themeSliceEffectId } from '../utils/themeSprites';
@@ -280,35 +280,24 @@ export const loadTexture = (url: string): Promise<Texture | undefined> => {
  * than leaving an already-mounted component stuck blank forever.
  */
 export const useTextureFromUrl = (url: string | undefined): Texture | undefined => {
-    const [ texture, setTexture ] = useState<Texture | undefined>(() => (url ? GetAssetManager().getTexture(url) : undefined));
+    // The asset manager is the source of truth: whatever it holds for the url is what is shown,
+    // so an already-cached texture is there on the very first render with nothing to copy into
+    // state, and a change of url can never show the previous url's texture.
+    const getSnapshot = () => (url ? GetAssetManager().getTexture(url) : undefined);
 
-    useEffect(() => {
-        if (!url) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setTexture(undefined);
-
-            return;
-        }
-
-        // Already resolved (at mount, or downloaded elsewhere since) - no async attempt needed,
-        // and no blank frame when `url` changes to an already-cached one.
-        const cachedTexture = GetAssetManager().getTexture(url);
-
-        if (cachedTexture) {
-            setTexture(cachedTexture);
-
-            return;
-        }
+    // Subscribing is what starts the download; a finished load is the change to re-read.
+    const subscribe = (onChange: () => void) => {
+        if (!url || GetAssetManager().getTexture(url)) return () => {};
 
         let cancelled = false;
-        let timeoutId: ReturnType<typeof setTimeout>;
+        let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
         const attempt = (retriesLeft: number) => {
             void loadTexture(url).then((result) => {
                 if (cancelled) return;
 
                 if (result) {
-                    setTexture(result);
+                    onChange();
                 } else if (retriesLeft > 0) {
                     const delay = RETRY_DELAYS_MS[RETRY_DELAYS_MS.length - retriesLeft];
 
@@ -323,9 +312,9 @@ export const useTextureFromUrl = (url: string | undefined): Texture | undefined 
             cancelled = true;
             clearTimeout(timeoutId);
         };
-    }, [ url ]);
+    };
 
-    return texture;
+    return useSyncExternalStore(subscribe, getSnapshot);
 };
 
 export interface PixiTextureOptions {

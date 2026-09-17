@@ -54,7 +54,7 @@ export const createRoomMouseSlice: StateCreator<RoomMouseSlice, [], [], RoomMous
         set((x) => {
             const index = x.cursorOwners.indexOf(key);
 
-            if (index === 1) return x;
+            if (index === -1) return x;
 
             const cursorOwners = [ ...x.cursorOwners ];
 

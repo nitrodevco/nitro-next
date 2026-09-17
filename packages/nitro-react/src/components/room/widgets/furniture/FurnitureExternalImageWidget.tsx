@@ -1,6 +1,7 @@
 import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
-import { useConfigValue, useRoomSelector, useRoomWidget, useRoomWidgetActions } from '#base/context';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useConfigValue } from '#base/context/system';
 import { FurnitureExternalImageView } from '#base/views/room-widgets/furniture/FurnitureExternalImageView';
 
 import { parsePhotoData, resolvePhotoUrl } from './furnitureWidgetData';
@@ -16,7 +17,7 @@ const PHOTO_POSTER_TYPE = 'photo_poster';
  */
 export const FurnitureExternalImageWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE);
-    const room = useRoomSelector();
+    const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
     const imageUrlBase = useConfigValue<string>('stories.image_url_base') ?? '';
 

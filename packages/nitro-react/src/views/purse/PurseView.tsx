@@ -1,28 +1,30 @@
-import { useTranslation, useWallet } from '#base/context';
+import { useTranslation } from '#base/context/system';
+import { useUserStore } from '#base/context/user';
 import { Border, Box, Button, NitroCurrencyIcon, NitroIcon, ThemeText } from '#base/theme';
 
 export const PurseView = () => {
-    const currency = useWallet();
+    const credits = useUserStore(x => x.credits);
+    const activityPoints = useUserStore(x => x.activityPoints);
     const t = useTranslation();
 
     const kinds = [
         {
             type: '5',
-            amount: currency.activityPoints[5] ?? 0,
+            amount: activityPoints[5] ?? 0,
             color: '#38caeb',
             name: 'Diamonds',
             icon: 'diamonds',
         },
         {
             type: '-1',
-            amount: currency.credits ?? 0,
+            amount: credits ?? 0,
             color: '#d5af22',
             name: 'Credits',
             icon: 'credits',
         },
         {
             type: '0',
-            amount: currency.activityPoints[0] ?? 0,
+            amount: activityPoints[0] ?? 0,
             color: '#d787d7',
             name: 'Duckets',
             icon: 'duckets',

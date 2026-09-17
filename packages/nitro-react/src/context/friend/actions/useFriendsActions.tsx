@@ -1,14 +1,20 @@
-import { useShallow } from 'zustand/shallow';
+import { useFriendsStoreApi } from '../useFriendsStoreApi';
 
-import { useFriendsContext } from '../useFriendsContext';
+/**
+ * Zustand actions are created once and never change, so they are read off the store rather than
+ * subscribed to: a component using these re-renders for nothing.
+ */
+export const useFriendsActions = () => {
+    const state = useFriendsStoreApi().getState();
 
-export const useFriendsActions = () => useFriendsContext(useShallow(x => ({
-    setTooltip: x.setTooltip,
-    setListSearchValue: x.setListSearchValue,
-    setFilterValue: x.setFilterValue,
-    setSelectedFriendIds: x.setSelectedFriendIds,
-    setRelationshipDropdownId: x.setRelationshipDropdownId,
-    toggleListSearchInput: x.toggleListSearchInput,
-    toggleSelectedFriendId: x.toggleSelectedFriendId,
-    tooltipHandlers: x.tooltipHandlers,
-})));
+    return {
+        setTooltip: state.setTooltip,
+        setListSearchValue: state.setListSearchValue,
+        setFilterValue: state.setFilterValue,
+        setSelectedFriendIds: state.setSelectedFriendIds,
+        setRelationshipDropdownId: state.setRelationshipDropdownId,
+        toggleListSearchInput: state.toggleListSearchInput,
+        toggleSelectedFriendId: state.toggleSelectedFriendId,
+        tooltipHandlers: state.tooltipHandlers,
+    };
+};

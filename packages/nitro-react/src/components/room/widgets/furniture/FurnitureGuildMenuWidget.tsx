@@ -1,8 +1,8 @@
 import { NitroLogger, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { GuildFurniContextMenuInfoMessageType, JoinHabboGroupComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
-import { useRoomGuildFurniHandler } from '#base/handlers';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useGoToRoom } from '#base/hooks';
 import { FurnitureGuildMenuView } from '#base/views/room-widgets/furniture/FurnitureGuildMenuView';
 
@@ -14,9 +14,6 @@ import { RoomObjectMenuBubblePixi } from '../object-menu/RoomObjectMenuBubblePix
  * this furni, since another one in the same room would answer too.
  */
 export const FurnitureGuildMenuWidget = () => {
-    // Only this dialog is told these things, and only while it is open.
-    useRoomGuildFurniHandler();
-
     const request = useRoomWidget<GuildFurniContextMenuInfoMessageType>(RoomObjectWidgetRequestEvent.GUILD_FURNI_CONTEXT_MENU);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();

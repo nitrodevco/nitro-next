@@ -1,7 +1,7 @@
 import { FurnitureTypeEnum, IProduct } from '@nitrodevco/nitro-api';
 import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 
-import { useConfigValue } from '#base/context';
+import { useConfigValue } from '#base/context/system';
 
 export const useProductIconUrl = (product: IProduct) => {
     const catalogAssetUrl = useConfigValue<string>('catalog.asset.url') ?? '';

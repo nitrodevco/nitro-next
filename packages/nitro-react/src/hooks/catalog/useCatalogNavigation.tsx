@@ -1,14 +1,17 @@
 import { CatalogRequestedPageUtilities, FurnitureTypeEnum, IActivePage, ICatalogNode, ICatalogPageLocalization, IPurchasableOffer } from '@nitrodevco/nitro-api';
 import { GetCatalogPageComposer, GetProductOfferComposer } from '@nitrodevco/nitro-packets';
 
-import { useCatalogActions, useCatalogSelectors, useWebSocketContext } from '#base/context';
+import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
+import { useWebSocketContext } from '#base/context/communication';
 
 import { useCatalogNodeActions } from './useCatalogNodeActions';
 import { useCatalogOfferActions } from './useCatalogOfferActions';
 import { useCatalogVisibility } from './useCatalogVisibility';
 
 export const useCatalogNavigation = () => {
-    const { catalogType, activeNodes, rootNode } = useCatalogSelectors();
+    const catalogType = useCatalogStore(x => x.catalogType);
+    const activeNodes = useCatalogStore(x => x.activeNodes);
+    const rootNode = useCatalogStore(x => x.rootNode);
     const { setActiveNodes, setIsBusy, setActivePageId, setActivePage, setActiveOffer, setRequestedPage, setPurchaseOptions } = useCatalogActions();
     const { getNodeByPageId, getNodeByPageName, getNodesByOfferId } = useCatalogNodeActions();
     const { getOfferProduct } = useCatalogOfferActions();

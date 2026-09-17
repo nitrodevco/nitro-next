@@ -1,19 +1,25 @@
-import { useShallow } from 'zustand/shallow';
+import { useCatalogStoreApi } from '../useCatalogStoreApi';
 
-import { useCatalogContext } from '../useCatalogContext';
+/**
+ * Zustand actions are created once and never change, so they are read off the store rather than
+ * subscribed to: a component using these re-renders for nothing.
+ */
+export const useCatalogActions = () => {
+    const state = useCatalogStoreApi().getState();
 
-export const useCatalogActions = () => useCatalogContext(useShallow(x => ({
-    setRootNode: x.setRootNode,
-    setOffersToNodes: x.setOffersToNodes,
-    setActiveNodes: x.setActiveNodes,
-    setIsBusy: x.setIsBusy,
-    setActivePageId: x.setActivePageId,
-    setActivePage: x.setActivePage,
-    setActiveOffer: x.setActiveOffer,
-    setFrontPageItems: x.setFrontPageItems,
-    setRequestedPage: x.setRequestedPage,
-    setPurchaseOptions: x.setPurchaseOptions,
-    setActivePurchase: x.setActivePurchase,
-    setSearchResult: x.setSearchResult,
-    resetCatalog: x.resetCatalog,
-})));
+    return {
+        setRootNode: state.setRootNode,
+        setOffersToNodes: state.setOffersToNodes,
+        setActiveNodes: state.setActiveNodes,
+        setIsBusy: state.setIsBusy,
+        setActivePageId: state.setActivePageId,
+        setActivePage: state.setActivePage,
+        setActiveOffer: state.setActiveOffer,
+        setFrontPageItems: state.setFrontPageItems,
+        setRequestedPage: state.setRequestedPage,
+        setPurchaseOptions: state.setPurchaseOptions,
+        setActivePurchase: state.setActivePurchase,
+        setSearchResult: state.setSearchResult,
+        resetCatalog: state.resetCatalog,
+    };
+};

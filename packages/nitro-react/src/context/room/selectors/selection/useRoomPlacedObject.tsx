@@ -1,3 +1,3 @@
-import { useRoomContext } from '../../useRoomContext';
+import { useRoomStore } from '../../useRoomStore';
 
-export const useRoomPlacedObject = () => useRoomContext(x => x.placedObject);
+export const useRoomPlacedObject = () => useRoomStore(x => x.placedObject);

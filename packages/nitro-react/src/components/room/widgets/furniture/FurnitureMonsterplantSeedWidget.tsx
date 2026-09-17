@@ -1,7 +1,8 @@
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { LayoutImage, ThemeImage } from '#base/theme';
 import { FurnitureUseProductView } from '#base/views/room-widgets/furniture/FurnitureUseProductView';
 

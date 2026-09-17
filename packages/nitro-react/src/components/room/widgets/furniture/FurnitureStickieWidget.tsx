@@ -1,7 +1,8 @@
 import { RoomControllerLevelEnum, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { RemoveItemComposer, SetItemDataComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomPermissionsSelector, useRoomSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomStore, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { FurnitureStickieView } from '#base/views/room-widgets/furniture/FurnitureStickieView';
 
 import { parseStickieData } from './furnitureWidgetData';
@@ -18,8 +19,9 @@ import { parseStickieData } from './furnitureWidgetData';
  */
 export const FurnitureStickieWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.STICKIE);
-    const room = useRoomSelector();
-    const { isRoomOwner, controllerLevel } = useRoomPermissionsSelector();
+    const room = useRoom();
+    const isRoomOwner = useRoomStore(x => x.isRoomOwner);
+    const controllerLevel = useRoomStore(x => x.controllerLevel);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
 

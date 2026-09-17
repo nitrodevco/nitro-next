@@ -11,7 +11,8 @@
         "truffle:setup": "truffle-setup --out public/assets/truffle",
         "bundle-theme-assets": "node scripts/build-theme-atlas.ts",
         "bundle-variablefx-assets": "node scripts/build-variablefx-atlas.ts",
-        "generate-layout-views": "node scripts/generate-layout-views.ts"
+        "generate-layout-views": "node scripts/generate-layout-views.ts",
+        "generate-context-barrels": "node scripts/generate-context-barrels.ts"
     },
     "dependencies": {
         "@nitrodevco/nitro-api": "workspace:*",

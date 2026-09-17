@@ -1,7 +1,9 @@
 import { OpenPetPackageComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useRoomWidget, useRoomWidgetActions, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useTranslation } from '#base/context/system';
 import { PetPackageData } from '#base/handlers';
 import { Border, TextInput, ThemeText } from '#base/theme';
 import { FurnitureBannerDialogView } from '#base/views/room-widgets/furniture/FurnitureBannerDialogView';

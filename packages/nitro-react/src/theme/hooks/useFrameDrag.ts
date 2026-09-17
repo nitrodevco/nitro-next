@@ -1,7 +1,7 @@
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
-import { useWindowActions, useWindowZIndex } from '#base/context';
+import { useWindowActions, useWindowZIndex } from '#base/context/system';
 import { getStoredFramePosition, setStoredFramePosition } from '#base/utils';
 
 import { getGlobalRect } from '../utils';

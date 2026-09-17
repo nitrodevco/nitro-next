@@ -1,7 +1,8 @@
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { FriendFurniConfirmLockComposer } from '@nitrodevco/nitro-packets';
 
-import { useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { LockConfirmData } from '#base/handlers';
 import { FurnitureLockConfirmView } from '#base/views/room-widgets/furniture/FurnitureLockConfirmView';
 

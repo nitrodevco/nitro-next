@@ -2,7 +2,8 @@ import { ColorConverter, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } 
 import { SetRoomBackgroundColorDataComposer, UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useRoomSelector, useRoomWidget, useRoomWidgetActions, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { FurnitureBackgroundColorView } from '#base/views/room-widgets/furniture/FurnitureBackgroundColorView';
 
 /**
@@ -13,7 +14,7 @@ import { FurnitureBackgroundColorView } from '#base/views/room-widgets/furniture
  */
 export const FurnitureBackgroundColorWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.BACKGROUND_COLOR);
-    const room = useRoomSelector();
+    const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
     const [ draft, setDraft ] = useState<{ hue: number; saturation: number; lightness: number } | undefined>(undefined);

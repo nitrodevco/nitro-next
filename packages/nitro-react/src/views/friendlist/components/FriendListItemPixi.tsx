@@ -1,7 +1,7 @@
 import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import { ReactNode } from 'react';
 
-import { useFriendsActions } from '#base/context';
+import { useFriendsActions } from '#base/context/friend';
 import { Box, ColorLayer, NitroIcon, ThemeText, useAvatarImageTexture } from '#base/theme';
 
 interface FriendListItemPixiUser {

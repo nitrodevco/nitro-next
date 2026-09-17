@@ -1,3 +1,3 @@
-import { useUserContext } from '../useUserContext';
+import { useUserStore } from '../useUserStore';
 
-export const useOwnClubLevel = () => useUserContext(x => x.clubLevel);
+export const useOwnClubLevel = () => useUserStore(x => x.clubLevel);

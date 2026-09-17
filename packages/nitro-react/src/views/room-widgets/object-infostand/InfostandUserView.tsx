@@ -1,8 +1,9 @@
 import { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 import { ChangeMottoComposer } from '@nitrodevco/nitro-packets';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { useConfigValue, useTranslation, useWebSocketContext } from '#base/context';
+import { useWebSocketContext } from '#base/context/communication';
+import { useConfigValue, useTranslation } from '#base/context/system';
 import { useRoomUserData } from '#base/hooks';
 import { Border, Box, CloseButton, ColorLayer, NitroIcon, TextInput, ThemeText, useAvatarImageTexture } from '#base/theme';
 
@@ -14,7 +15,9 @@ export interface InfostandUserViewProps {
 /** Pixi port of views/room-widgets/object-infostand/InfostandUserView.tsx. */
 export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProps) => {
     const userData = useRoomUserData(objectData.objectId)!;
-    const [ isEditingMotto, setIsEditingMotto ] = useState<boolean>(false);
+    // Which object's motto is being edited: selecting someone else simply stops matching, so no effect has to close the editor.
+    const [ editingObjectId, setEditingObjectId ] = useState<number | undefined>(undefined);
+    const isEditingMotto = editingObjectId === objectData.objectId;
     const [ motto, setMotto ] = useState<string>(userData?.motto ?? '');
     const mottoMaxLength = useConfigValue<number>('motto.max.length') ?? 38;
     const t = useTranslation();
@@ -26,15 +29,8 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
 
         send(new ChangeMottoComposer({ text: motto }));
 
-        setIsEditingMotto(false);
+        setEditingObjectId(undefined);
     };
-
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setIsEditingMotto(false);
-
-        return () => setIsEditingMotto(false);
-    }, [ objectData ]);
 
     if (!userData) return null;
 
@@ -128,7 +124,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                         <>
                             <Box
                                 cursor="pointer"
-                                onPointerTap={() => setIsEditingMotto(true)}
+                                onPointerTap={() => setEditingObjectId(objectData.objectId)}
                                 layout={{ flexShrink: 0 }}
                             >
                                 <NitroIcon
