@@ -398,6 +398,7 @@ export * from './Room/Layout/UpdateFloorPropertiesComposer';
 export * from './Room/Pets/BreedPetsComposer';
 export * from './Room/Pets/CustomizePetWithFurniComposer';
 export * from './Room/Pets/GetPetInfoComposer';
+export * from './Room/Pets/HarvestPetComposer';
 export * from './Room/Pets/PetSelectedComposer';
 export * from './Room/Pets/RespectPetComposer';
 export * from './Room/Session/ChangeQueueComposer';

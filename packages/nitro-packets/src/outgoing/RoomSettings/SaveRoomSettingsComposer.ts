@@ -1,10 +1,12 @@
-import { IOutgoingPacket, RoomChatBubbleWidthType, RoomChatFloodSensitivityType, RoomChatModeType, RoomChatScrollSpeedType, RoomModerationType, RoomThicknessType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
+// Body filled by hand from the 2026 client's own composer - the generator has no preserve step, so re-apply after a regeneration.
+import { IOutgoingPacket, RoomChatFloodSensitivityType, RoomDoorModeEnum, RoomModerationType, RoomThicknessType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
 export type SaveRoomSettingsComposerType = {
     roomId: number;
     roomName: string;
     roomDescription: string;
-    doorMode: number;
+    doorMode: RoomDoorModeEnum;
+    /** Only read for a password door; sent empty otherwise. */
     password: string;
     maxVisitors: number;
     categoryId: number;
@@ -19,18 +21,23 @@ export type SaveRoomSettingsComposerType = {
     whoCanMute: RoomModerationType;
     whoCanKick: RoomModerationType;
     whoCanBan: RoomModerationType;
-    chatMode: RoomChatModeType;
-    chatBubbleSize: RoomChatBubbleWidthType;
-    chatScrollUpFrequency: RoomChatScrollSpeedType;
-    chatFullHearRange: number;
     chatFloodSensitivity: RoomChatFloodSensitivityType;
-    allowNavigatorDynCats: boolean;
+    /** Walking onto the door tile leaves the room. */
+    leaveOnDoorTileEnabled: boolean;
+    idleSleepEnabled: boolean;
+    idleSleepTimeoutSeconds: number;
+    idleAutokickEnabled: boolean;
+    idleAutokickTimeoutSeconds: number;
+    muteAllPets: boolean;
 };
 
 export class SaveRoomSettingsComposer implements IOutgoingPacket<SaveRoomSettingsComposerType> {
     public constructor(private params: SaveRoomSettingsComposerType) { }
 
     public compose(): (number | string | boolean)[] {
+        // `SaveRoomSettingsMessageComposer` drops blank tags rather than sending them.
+        const tags = this.params.tags.filter(tag => !!tag && (tag !== ''));
+
         return [
             this.params.roomId,
             this.params.roomName,
@@ -39,8 +46,8 @@ export class SaveRoomSettingsComposer implements IOutgoingPacket<SaveRoomSetting
             this.params.password,
             this.params.maxVisitors,
             this.params.categoryId,
-            this.params.tags.length,
-            ...this.params.tags,
+            tags.length,
+            ...tags,
             this.params.tradeMode,
             this.params.allowPets,
             this.params.allowFoodConsume,
@@ -51,12 +58,13 @@ export class SaveRoomSettingsComposer implements IOutgoingPacket<SaveRoomSetting
             this.params.whoCanMute,
             this.params.whoCanKick,
             this.params.whoCanBan,
-            this.params.chatMode,
-            this.params.chatBubbleSize,
-            this.params.chatScrollUpFrequency,
-            this.params.chatFullHearRange,
             this.params.chatFloodSensitivity,
-            this.params.allowNavigatorDynCats,
+            this.params.leaveOnDoorTileEnabled,
+            this.params.idleSleepEnabled,
+            this.params.idleSleepTimeoutSeconds,
+            this.params.idleAutokickEnabled,
+            this.params.idleAutokickTimeoutSeconds,
+            this.params.muteAllPets,
         ];
     }
 }

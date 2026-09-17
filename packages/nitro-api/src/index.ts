@@ -117,6 +117,7 @@ export * from './avatar/enum/AvatarFigurePartType';
 export * from './avatar/enum/AvatarGenderType';
 export * from './avatar/enum/AvatarGeometryType';
 export * from './avatar/enum/AvatarGestureStates';
+export * from './avatar/enum/AvatarGestureType';
 export * from './avatar/enum/AvatarGuideStatus';
 export * from './avatar/enum/AvatarPartSetType';
 export * from './avatar/enum/AvatarPostureStates';

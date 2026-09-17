@@ -17,6 +17,7 @@ export * from './enum/AvatarFigurePartType';
 export * from './enum/AvatarGenderType';
 export * from './enum/AvatarGeometryType';
 export * from './enum/AvatarGestureStates';
+export * from './enum/AvatarGestureType';
 export * from './enum/AvatarGuideStatus';
 export * from './enum/AvatarPartSetType';
 export * from './enum/AvatarPostureStates';

@@ -550,6 +550,8 @@ export * from './Room/Session/YouAreNotSpectatorMessage';
 export * from './Room/Session/YouArePlayingGameMessage';
 export * from './Room/Session/YouAreSpectatorMessage';
 export * from './Roomsettings/BannedUsersFromRoomEventMessage';
+export * from './Roomsettings/Data/FlatControllerParser';
+export * from './Roomsettings/Data/IFlatController';
 export * from './Roomsettings/FlatControllerAddedEventMessage';
 export * from './Roomsettings/FlatControllerRemovedEventMessage';
 export * from './Roomsettings/FlatControllersEventMessage';

@@ -1,16 +1,16 @@
 // Body filled by hand from the 2026 client's own composer - the generator has no preserve step, so re-apply after a regeneration.
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
-export type RemoveAllRightsComposerType = {
-    roomId: number;
+export type GetPetCommandsComposerType = {
+    petId: number;
 };
 
-export class RemoveAllRightsComposer implements IOutgoingPacket<RemoveAllRightsComposerType> {
-    public constructor(private params: RemoveAllRightsComposerType) { }
+export class GetPetCommandsComposer implements IOutgoingPacket<GetPetCommandsComposerType> {
+    public constructor(private params: GetPetCommandsComposerType) { }
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.roomId,
+            this.params.petId,
         ];
     }
 }
