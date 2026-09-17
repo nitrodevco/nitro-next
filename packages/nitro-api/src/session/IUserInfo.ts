@@ -15,4 +15,9 @@ export interface IUserInfo {
     lastAccessDate: string;
     nameChangeAllowed: boolean;
     accountSafetyLocked: boolean;
+    accountTradeLocked?: boolean;
+    nameColor?: string;
+    /** How many times today the respects may still be bought back. */
+    respectReplenishesLeft?: number;
+    maxRespectPerDay?: number;
 }

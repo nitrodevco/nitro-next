@@ -9,15 +9,18 @@ export interface FurnitureImageTexture {
     height: number;
 }
 
-const EMPTY: FurnitureImageTexture = { texture: undefined, width: 0, height: 0 };
-
 /**
  * Pixi counterpart of components/FurnitureImage.tsx: the same engine render of a furni type,
  * taken as a texture (`getGenericRoomObjectTexture`) instead of the DOM's base64 `<img>` -
  * the render texture the engine drew into is the one the sprite shows, nothing is read back
  * or re-uploaded. When the furni's asset is still downloading the engine calls back through
- * `textureReady` once it can render, so the image fills in rather than staying blank. The
- * hook owns each texture it receives and destroys it on change/unmount.
+ * `textureReady` once it can render, so the image fills in rather than staying blank.
+ *
+ * The hook owns every texture it receives, and destroys one only once no sprite can still be
+ * drawing it. A texture arrives outside React (a promise, an engine callback), and the sprite
+ * keeps drawing the previous texture until React has committed the next one - Pixi's ticker can
+ * render a frame in between. Destroying the previous texture on arrival, as this used to, left
+ * that frame drawing a texture with no source: Pixi's batcher then throws reading `alphaMode`.
  */
 export const useFurnitureImageTexturePixi = (
     type: string | undefined,
@@ -26,27 +29,29 @@ export const useFurnitureImageTexturePixi = (
     scale: RoomGeometryScaleType,
     extra: number = 0,
 ): FurnitureImageTexture => {
-    const [ result, setResult ] = useState<FurnitureImageTexture>(EMPTY);
-    const textureRef = useRef<Texture | undefined>(undefined);
+    const [ texture, setTexture ] = useState<Texture | undefined>(undefined);
+    // Every texture handed to state and not destroyed yet, and the most recent of them.
+    const ownedRef = useRef<Set<Texture>>(new Set());
+    const latestRef = useRef<Texture | undefined>(undefined);
 
     useEffect(() => {
         if (!type) return;
 
         let cancelled = false;
 
-        const adopt = (texture: Texture | undefined) => {
-            if (!texture) return;
+        const adopt = (next: Texture | undefined) => {
+            if (!next) return;
 
+            // Nothing ever showed a render for a request that has since been replaced.
             if (cancelled) {
-                texture.destroy(true);
+                next.destroy(true);
 
                 return;
             }
 
-            textureRef.current?.destroy(true);
-            textureRef.current = texture;
-
-            setResult({ texture, width: texture.width, height: texture.height });
+            ownedRef.current.add(next);
+            latestRef.current = next;
+            setTexture(next);
         };
 
         void GetRoomEngine().getGenericRoomObjectTexture(
@@ -63,9 +68,27 @@ export const useFurnitureImageTexturePixi = (
         };
     }, [ type, colorIndex, direction, scale, extra ]);
 
+    /*
+     * After each commit, `texture` is what the sprite shows. Everything else owned is either a
+     * texture that commit replaced or one that was superseded before it ever reached the screen -
+     * except the latest, which may still be on its way to the next commit.
+     */
+    useEffect(() => {
+        for (const owned of ownedRef.current) {
+            if ((owned === texture) || (owned === latestRef.current)) continue;
+
+            ownedRef.current.delete(owned);
+            owned.destroy(true);
+        }
+    });
+
+    // Unmounting removes the sprite in the same commit, before this runs.
     useEffect(() => () => {
-        textureRef.current?.destroy(true);
+        for (const owned of ownedRef.current) owned.destroy(true);
+
+        ownedRef.current.clear();
+        latestRef.current = undefined;
     }, []);
 
-    return result;
+    return { texture, width: texture?.width ?? 0, height: texture?.height ?? 0 };
 };

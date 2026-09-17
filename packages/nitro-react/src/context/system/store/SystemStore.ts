@@ -25,7 +25,20 @@ type State = {
      * repeated request for the same room id observable.
      */
     roomSessionRequest: RoomSessionRequest | undefined;
+    /** Alerts and confirmations up over everything - `IHabboWindowManager.alert` / `confirm`. */
+    dialogs: SystemDialog[];
 };
+
+/** One alert or confirmation. A confirmation runs `onConfirm` when accepted; closing it any other way does nothing. */
+export interface SystemDialog {
+    id: number;
+    kind: 'alert' | 'confirm';
+    title: string;
+    message: string;
+    onConfirm?: () => void;
+}
+
+let nextDialogId = 1;
 
 export interface RoomSessionRequest {
     type: 'start' | 'end';
@@ -51,6 +64,10 @@ type Actions = {
     setLandingViewVisible: (landingViewVisible: boolean) => void;
     setHomeRoomId: (homeRoomId: number) => void;
     startRoomSession: (roomId: number) => void;
+    /** Texts are shown as given: pass them translated. */
+    showAlert: (title: string, message: string) => void;
+    showConfirm: (title: string, message: string, onConfirm: () => void) => void;
+    closeDialog: (id: number) => void;
     endRoomSession: () => void;
 };
 
@@ -78,6 +95,7 @@ const initialState: State = {
     landingViewVisible: true,
     homeRoomId: 0,
     roomSessionRequest: undefined,
+    dialogs: [],
 };
 
 export type SystemStore = State & Actions;
@@ -333,6 +351,9 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
     setHomeRoomId: (homeRoomId: number) => set({ homeRoomId }),
     startRoomSession: (roomId: number) => set(x => ({ roomSessionRequest: { type: 'start', roomId, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
     endRoomSession: () => set(x => ({ roomSessionRequest: { type: 'end', roomId: 0, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
+    showAlert: (title: string, message: string) => set(x => ({ dialogs: [ ...x.dialogs, { id: nextDialogId++, kind: 'alert', title, message } ] })),
+    showConfirm: (title: string, message: string, onConfirm: () => void) => set(x => ({ dialogs: [ ...x.dialogs, { id: nextDialogId++, kind: 'confirm', title, message, onConfirm } ] })),
+    closeDialog: (id: number) => set(x => ({ dialogs: x.dialogs.filter(dialog => dialog.id !== id) })),
 }));
 
 /**

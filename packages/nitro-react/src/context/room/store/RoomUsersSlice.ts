@@ -1,4 +1,5 @@
 import { IRoomUserData, RoomObjectUserType } from '@nitrodevco/nitro-api';
+import { IHabboUserBadge, IRelationshipStatusInfo } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';
 
 type State = {
@@ -9,7 +10,10 @@ type State = {
      * and the room by object id; this saves scanning every user to translate one to the other.
      */
     objectIdsByWebId: Record<string, number>;
-    userBadges: Record<number, string[]>;
+    /** The badges each user wears, by server id - asked for when they are selected. */
+    userBadges: Record<number, IHabboUserBadge[]>;
+    /** How many friends of each relationship type a user has, by server id. */
+    relationshipsByUserId: Record<number, IRelationshipStatusInfo[]>;
 };
 
 type Actions = {
@@ -19,13 +23,15 @@ type Actions = {
     updateUser: (data: IRoomUserData) => void;
     updateUserPartial: (objectId: number, data: Partial<IRoomUserData>) => void;
     removeUser: (objectId: number) => void;
-    setBadges: (webId: number, badges: string[]) => void;
+    setBadges: (webId: number, badges: IHabboUserBadge[]) => void;
+    setRelationships: (webId: number, relationships: IRelationshipStatusInfo[]) => void;
 };
 
 export const RoomUsersSliceInitialState: State = {
     usersByRoomObjectId: {},
     objectIdsByWebId: {},
     userBadges: {},
+    relationshipsByUserId: {},
 };
 
 export type RoomUsersSlice = State & Actions;
@@ -79,7 +85,10 @@ export const createRoomUsersSlice: StateCreator<RoomUsersSlice, [], [], RoomUser
 
         return { usersByRoomObjectId, objectIdsByWebId };
     }),
-    setBadges: (webId: number, badges: string[]) => set(x => ({
+    setBadges: (webId: number, badges: IHabboUserBadge[]) => set(x => ({
         userBadges: { ...x.userBadges, [webId]: badges },
+    })),
+    setRelationships: (webId: number, relationships: IRelationshipStatusInfo[]) => set(x => ({
+        relationshipsByUserId: { ...x.relationshipsByUserId, [webId]: relationships },
     })),
 });

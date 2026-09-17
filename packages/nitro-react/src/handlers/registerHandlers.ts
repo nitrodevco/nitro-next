@@ -4,14 +4,14 @@ import { registerNavigatorHandlers, registerRoomQueueHandlers } from './navigato
 import { registerMessengerHandlers } from './registerMessengerHandlers';
 import { registerWalletHandlers } from './registerWalletHandlers';
 import {
-    registerRoomAreaHideHandlers, registerRoomChatHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
+    registerRoomAreaHideHandlers, registerRoomBotHandlers, registerRoomChatHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
     registerRoomDirectoryHandlers, registerRoomDoorbellHandlers, registerRoomFriendFurniHandlers, registerRoomFriendRequestHandlers,
-    registerRoomFurnitureHandlers, registerRoomGuildFurniHandlers, registerRoomJukeboxHandlers, registerRoomLinkHandlers, registerRoomMappingHandlers,
+    registerRoomFurnitureHandlers, registerRoomGuildFurniHandlers, registerRoomInfostandHandlers, registerRoomJukeboxHandlers, registerRoomLinkHandlers, registerRoomMappingHandlers,
     registerRoomMysteryBoxHandlers, registerRoomPermissionsHandlers, registerRoomPetHandlers, registerRoomPetPackageHandlers, registerRoomPollHandlers,
     registerRoomPresentHandlers, registerRoomQuizHandlers, registerRoomRentableSpaceHandlers, registerRoomSettingsHandlers, registerRoomTileHeights,
     registerRoomUserHandlers, registerRoomVariableFxHandlers, registerRoomYoutubeHandlers,
 } from './room';
-import { registerAvatarEffectsHandlers, registerUserInfoHandlers } from './user';
+import { registerAvatarEffectsHandlers, registerUserInfoHandlers, registerUserSocialHandlers } from './user';
 
 /**
  * Every packet handler that lives as long as the connection, registered once. The stores they
@@ -42,6 +42,8 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerRoomSettingsHandlers(socket),
         registerRoomFriendFurniHandlers(socket),
         registerRoomFriendRequestHandlers(socket),
+        registerRoomInfostandHandlers(socket),
+        registerRoomBotHandlers(socket),
         registerRoomUserHandlers(socket),
         registerRoomVariableFxHandlers(socket),
         // Furniture dialogs: a payload for a dialog that is not open is dropped by the store.
@@ -58,6 +60,7 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerNavigatorHandlers(socket),
         registerRoomQueueHandlers(socket),
         registerUserInfoHandlers(socket),
+        registerUserSocialHandlers(socket),
         registerAvatarEffectsHandlers(socket),
         registerMessengerHandlers(socket),
         registerWalletHandlers(socket),

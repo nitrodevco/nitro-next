@@ -12,6 +12,9 @@ const actions = {
     hideWindow: state.hideWindow,
     updateWindowParams: state.updateWindowParams,
     bringWindowToFront: state.bringWindowToFront,
+    showAlert: state.showAlert,
+    showConfirm: state.showConfirm,
+    closeDialog: state.closeDialog,
 };
 
 export const useWindowActions = () => actions;

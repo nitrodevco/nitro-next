@@ -1,6 +1,7 @@
 import { Box } from '#base/theme';
 import { RoomChatInputView } from '#base/views/room-widgets/chat-input/RoomChatInputView';
 
+import { RoomBotSkillConfigurationWidget } from './bot-skills/RoomBotSkillConfigurationWidget';
 import { RoomChatWidget } from './chat/RoomChatWidget';
 import { RoomDoorbellWidget } from './doorbell/RoomDoorbellWidget';
 import { RoomEffectsWidget } from './effects/RoomEffectsWidget';
@@ -28,6 +29,7 @@ export const RoomWidgets = () => {
             <RoomEffectsWidget />
             <RoomInfoWidget />
             <RoomSettingsWidget />
+            <RoomBotSkillConfigurationWidget />
             <Box layout={{ position: 'absolute', right: 4, bottom: 58 }}>
                 <RoomObjectInfostandWidget />
             </Box>

@@ -13,6 +13,7 @@ import { Box, TooltipLayer } from './theme';
 import { HotelView } from './views/hotel-view/HotelView';
 import { ActivityPointsView } from './views/purse/ActivityPointsView';
 import { PurseView } from './views/purse/PurseView';
+import { SystemDialogsView } from './views/system/SystemDialogsView';
 import { ToolbarView } from './views/toolbar/ToolbarView';
 
 export const MainView = () => {
@@ -82,6 +83,7 @@ export const MainView = () => {
                 <NavigatorComponent />
                 <WalletComponent />
                 <ToolbarView />
+                <SystemDialogsView />
                 <TooltipLayer />
             </Box>
         </>

@@ -611,6 +611,8 @@ export * from './Userdefinedroomevents/Wiredtrading/Chests/UpgradeChestResultMes
 export * from './Userdefinedroomevents/WiredValidationErrorEventMessage';
 export * from './Users/AccountSafetyLockStatusChangeMessage';
 export * from './Users/ApproveNameMessage';
+export * from './Users/BlockListMessage';
+export * from './Users/BlockUserUpdateMessage';
 export * from './Users/ChangeEmailResultEventMessage';
 export * from './Users/EmailStatusResultEventMessage';
 export * from './Users/ExtendedProfileChangedMessage';

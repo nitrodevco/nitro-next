@@ -1,4 +1,4 @@
-import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent } from '@nitrodevco/nitro-api';
+import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent, RoomRenderedEvent } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetRoomStage, GetTicker, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
 import { FederatedPointerEvent, Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
@@ -211,6 +211,13 @@ export const RoomCanvas = () => {
             if (hasAndResetCursorUpdate()) container.cursor = hasCursorOwners() ? 'pointer' : 'auto';
 
             if (renderMode === 'dom') renderer.render(container);
+
+            /*
+             * Everything that sits over the room - the name and menu bubbles, friend requests, quiz
+             * thumbs - repositions itself off this, once the camera and any drag have moved the
+             * canvas for the frame. The time is the frame delta, which is what their fades count in.
+             */
+            room.dispatchEvent(new RoomRenderedEvent(room.roomId, ticker.deltaTime));
         };
 
         GetTicker().add(tick);

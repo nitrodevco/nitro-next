@@ -1,6 +1,7 @@
 import { IRoom } from '@nitrodevco/nitro-api';
 import { createStore, StoreApi } from 'zustand';
 
+import { createRoomBotsSlice, RoomBotsSlice } from './RoomBotsSlice';
 import { createRoomCameraSlice, RoomCameraSlice } from './RoomCameraSlice';
 import { createRoomChatSlice, RoomChatSlice } from './RoomChatSlice';
 import { createRoomDoorbellSlice, RoomDoorbellSlice } from './RoomDoorbellSlice';
@@ -12,6 +13,7 @@ import { createRoomQuizSlice, RoomQuizSlice } from './RoomQuizSlice';
 import { createRoomSelectedObjectSlice, RoomSelectedObjectSlice } from './RoomSelectedObjectSlice';
 import { createRoomSessionSlice, RoomSessionSlice } from './RoomSessionSlice';
 import { createRoomSettingsFormSlice, RoomSettingsFormSlice } from './RoomSettingsFormSlice';
+import { createRoomSoundSlice, RoomSoundSlice } from './RoomSoundSlice';
 import { createRoomStackingHeightMapSlice, RoomStackingHeightMapSlice } from './RoomStackingHeightMapSlice';
 import { createRoomUsersSlice, RoomUsersSlice } from './RoomUsersSlice';
 import { createRoomWidgetSlice, RoomWidgetSlice } from './RoomWidgetSlice';
@@ -25,7 +27,7 @@ type Actions = {
     setRoom: (room: IRoom | undefined) => void;
 };
 
-export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomChatSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice & RoomWidgetSlice & RoomDoorbellSlice & RoomPollSlice & RoomQuizSlice & RoomFriendRequestSlice & RoomSettingsFormSlice & RoomPetsSlice;
+export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomChatSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice & RoomWidgetSlice & RoomDoorbellSlice & RoomPollSlice & RoomQuizSlice & RoomFriendRequestSlice & RoomSettingsFormSlice & RoomPetsSlice & RoomBotsSlice & RoomSoundSlice;
 
 /**
  * Everything a room starts with, as a fresh deep copy: the store's own initial state with the
@@ -60,6 +62,8 @@ export const createRoomStore = () => createStore<RoomStore>()((set, get, store) 
     ...createRoomFriendRequestSlice(set, get, store),
     ...createRoomSettingsFormSlice(set, get, store),
     ...createRoomPetsSlice(set, get, store),
+    ...createRoomBotsSlice(set, get, store),
+    ...createRoomSoundSlice(set, get, store),
 }));
 
 /**

@@ -49,6 +49,7 @@ export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => 
                             groupName: avatarUser.groupName,
                             groupStatus: avatarUser.groupStatus,
                             isModerator: avatarUser.isModerator,
+                            badgesRank: avatarUser.badgesRank,
                             ownerId: -1,
                             ownerName: '',
                             rarityLevel: -1,
@@ -191,7 +192,9 @@ export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => 
             const zScale = room.getRoomValue<number>(RoomObjectVariableEnum.RoomZScale) || 1;
 
             for (const update of data.updates) {
-                const height = (update.height / zScale);
+                let height = update.height;
+
+                if (zScale > 0) height = height / zScale;
 
                 const location = new Vector3d(update.sourceX, update.sourceY, (update.sourceZ + height));
                 const direction = new Vector3d(update.bodyRotation);
@@ -232,11 +235,15 @@ export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => 
                         case 'mv': {
                             something = true;
                             postureUpdate = true;
+                            postureType = action.key;
+                            parameter = action.value;
                             break;
                         }
                         case 'swim': {
                             somethingElse = true;
                             postureUpdate = true;
+                            postureType = action.key;
+                            parameter = action.value;
                             break;
                         }
                         case 'wf': {
@@ -247,18 +254,19 @@ export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => 
                         }
                         default: {
                             postureUpdate = true;
+                            postureType = action.key;
+                            parameter = action.value;
                             break;
                         }
                     }
-
-                    postureType = action.key;
-                    parameter = action.value;
                 }
 
                 if (!something && somethingElse) {
                     postureUpdate = true;
                     postureType = AvatarActionStateType.Float;
                 }
+
+                console.log(update.actions, postureType, parameter);
 
                 if (postureUpdate) room.updateRoomObjectUserPosture(update.objectId, postureType, parameter);
                 else if (isPosture) room.updateRoomObjectUserPosture(update.objectId, AvatarFigurePartType.Standard);

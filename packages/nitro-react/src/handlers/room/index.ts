@@ -1,4 +1,5 @@
 export * from './registerRoomAreaHideHandlers';
+export * from './registerRoomBotHandlers';
 export * from './registerRoomChatHandlers';
 export * from './registerRoomCraftingHandlers';
 export * from './registerRoomDataHandlers';
@@ -9,6 +10,7 @@ export * from './registerRoomFriendFurniHandlers';
 export * from './registerRoomFriendRequestHandlers';
 export * from './registerRoomFurnitureHandlers';
 export * from './registerRoomGuildFurniHandlers';
+export * from './registerRoomInfostandHandlers';
 export * from './registerRoomJukeboxHandlers';
 export * from './registerRoomLinkHandlers';
 export * from './registerRoomMappingHandlers';

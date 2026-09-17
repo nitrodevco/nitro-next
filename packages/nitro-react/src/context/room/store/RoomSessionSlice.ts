@@ -38,7 +38,8 @@ export const RoomSessionSliceInitialState: State = {
     doorMode: RoomDoorModeEnum.Open,
     tradeMode: RoomTradeModeEnum.Disabled,
     allowPets: false,
-    controllerLevel: RoomControllerLevelEnum.Moderator,
+    // Nobody has rights until the server says so - `YouAreControllerMessage` on entry.
+    controllerLevel: RoomControllerLevelEnum.None,
     ownRoomIndex: -1,
     isGuildRoom: false,
     isRoomOwner: false,

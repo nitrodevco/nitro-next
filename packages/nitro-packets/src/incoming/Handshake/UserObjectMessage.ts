@@ -25,6 +25,17 @@ export class UserObjectMessage implements IIncomingPacket<UserObjectMessageType>
             },
         };
 
+        // Newer servers append these; an older one simply stops here.
+        if (wrapper.bytesAvailable) {
+            packet.userInfo.accountTradeLocked = wrapper.readBoolean();
+            packet.userInfo.nameColor = wrapper.readString();
+        }
+
+        if (wrapper.bytesAvailable) {
+            packet.userInfo.respectReplenishesLeft = wrapper.readInt();
+            packet.userInfo.maxRespectPerDay = wrapper.readInt();
+        }
+
         return packet;
     }
 }

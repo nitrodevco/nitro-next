@@ -1,5 +1,5 @@
-import { IRoomObject, NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { MoveObjectComposer, MoveWallItemComposer, PickupObjectComposer, RemoveBotFromFlatComposer, RemovePetFromFlatComposer } from '@nitrodevco/nitro-packets';
+import { IRoomObject, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { MoveEntityInFlatComposer, MoveObjectComposer, MovePetComposer, MoveWallItemComposer, PickupObjectComposer, RemoveBotFromFlatComposer, RemovePetFromFlatComposer } from '@nitrodevco/nitro-packets';
 import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 
 import { useWebSocketContext } from '#base/context/communication';
@@ -28,6 +28,24 @@ export const useRoomObjectModify = () => {
      */
     const getUserWebId = (objectId: number) => roomStore.getState().usersByRoomObjectId[objectId]?.webID ?? 0;
 
+    /**
+     * `RoomObjectEventHandler.sendMoveUserObjectMessage`: of the units, a rentable bot moves by its
+     * room object id and a monsterplant by its pet id; anything else cannot be moved this way.
+     */
+    const moveUnit = (roomObject: IRoomObject, objectId: number, x: number, y: number, direction: number) => {
+        if (roomObject.type === RoomObjectUserTypeName.RentableBot) {
+            send(new MoveEntityInFlatComposer({ objectId, x, y, direction }));
+
+            return;
+        }
+
+        if (roomObject.type !== RoomObjectUserTypeName.MonsterPlant) return;
+
+        const petId = getUserWebId(objectId);
+
+        if (petId) send(new MovePetComposer({ petId, x, y, direction }));
+    };
+
     const isFurnitureOwner = (object: IRoomObject | undefined) => object && (ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId));
 
     const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => room && (isRoomOwner || isModerator || (controllerLevel >= RoomControllerLevelEnum.Guest) || isFurnitureOwner(room.getRoomObject(objectId, category)));
@@ -53,13 +71,8 @@ export const useRoomObjectModify = () => {
                     const x = roomObject.getLocation().x;
                     const y = roomObject.getLocation().y;
 
-                    if (roomObject.type === RoomObjectUserTypeName.MonsterPlant) {
-                        NitroLogger.sendPacket(`GetCommunication().connection.send(
-                                        new PetMoveComposer(userData.webID, Math.trunc(x), Math.trunc(y), Math.trunc(direction / 45)),
-                                    )`);
-                    } else {
-                        send(new MoveObjectComposer({ objectId, x, y, rotation: direction / 45 }));
-                    }
+                    if (category === RoomObjectCategoryEnum.Unit) moveUnit(roomObject, objectId, x, y, direction / 45);
+                    else send(new MoveObjectComposer({ objectId, x, y, rotation: direction / 45 }));
                 }
 
                 break;
@@ -128,14 +141,9 @@ export const useRoomObjectModify = () => {
 
                     send(new MoveWallItemComposer({ objectId, wallPosition: location ?? '' }));
                 } else if (category === RoomObjectCategoryEnum.Unit) {
-                    const _angle = roomObject.getDirection().x % 360;
-                    const _location = roomObject.getLocation();
-                    const _direction = _angle / 45;
-                    const _race = parseInt(roomObject.model.getValue<string>(RoomObjectVariableEnum.Race));
+                    const location = roomObject.getLocation();
 
-                    NitroLogger.sendPacket(
-                        'new PetMoveComposer(userData.webID, location.x, location.y, direction',
-                    );
+                    moveUnit(roomObject, objectId, Math.trunc(location.x), Math.trunc(location.y), (roomObject.getDirection().x % 360) / 45);
                 }
 
                 break;

@@ -71,3 +71,22 @@ export const searchRoomTag = (send: Send, tag: string) => {
 
     systemStore.getState().showWindow('navigator');
 };
+
+/**
+ * A free-text navigator search, as `navigator/search/<text>` links ask for - the rentable bots'
+ * search skill (14) uses one.
+ */
+export const searchNavigator = (send: Send, text: string) => {
+    const { topLevelContext, setFilterType, setSearchFilter, setIsSearching } = navigatorStore.getState();
+
+    setFilterType('anything');
+    setSearchFilter(text);
+
+    if (topLevelContext) {
+        setIsSearching(true);
+
+        send(new NewNavigatorSearchComposer({ searchCodeOriginal: topLevelContext.searchCode, filteringData: text }));
+    }
+
+    systemStore.getState().showWindow('navigator');
+};

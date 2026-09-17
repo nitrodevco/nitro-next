@@ -10,6 +10,8 @@ export const useRoomEventDispatcher = <T extends NitroEvent>(
 ) => {
     const room = useRoom();
     const handlerRef = useRef(handler);
+    // Callers pass array literals, a new array each render: the listeners follow the names, not the array.
+    const typeKey = Array.isArray(type) ? type.join('|') : type;
 
     useEffect(() => {
         handlerRef.current = handler;
@@ -18,18 +20,19 @@ export const useRoomEventDispatcher = <T extends NitroEvent>(
     useEffect(() => {
         if (!room || !enabled) return;
 
-        if (Array.isArray(type)) {
-            type.map(name => room.eventDispatcher.addEventListener(name, handlerRef.current));
-        } else {
-            room.eventDispatcher.addEventListener(type, handlerRef.current);
-        }
+        /*
+         * One stable listener that calls whatever handler the latest render passed. Registering
+         * the handler itself would pin the one from the render the effect ran in, so a listener
+         * would keep reading that render's props and state - a bubble would go on following the
+         * object it was first given.
+         */
+        const listener = (event: T) => handlerRef.current(event);
+        const types = typeKey.split('|');
+
+        for (const name of types) room.eventDispatcher.addEventListener(name, listener);
 
         return () => {
-            if (Array.isArray(type)) {
-                type.map(name => room.eventDispatcher.removeEventListener(name, handlerRef.current));
-            } else {
-                room.eventDispatcher.removeEventListener(type, handlerRef.current);
-            }
+            for (const name of types) room.eventDispatcher.removeEventListener(name, listener);
         };
-    }, [ room, type, enabled ]);
+    }, [ room, typeKey, enabled ]);
 };

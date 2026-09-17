@@ -3,5 +3,6 @@ export * from './UserEffectsSlice';
 export * from './UserFriendsSlice';
 export * from './UserInfoSlice';
 export * from './UserInventoryFurniSlice';
+export * from './UserSocialSlice';
 export * from './UserStore';
 export * from './UserWalletSlice';

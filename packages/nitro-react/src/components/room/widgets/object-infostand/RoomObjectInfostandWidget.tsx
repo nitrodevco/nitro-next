@@ -1,8 +1,8 @@
-import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
 import { useRoom } from '#base/context/room';
-import { useRoomObjectDeselected, useRoomObjectSelected } from '#base/hooks';
+import { useRoomEventDispatcher, useRoomObjectDeselected, useRoomObjectSelected } from '#base/hooks';
 import { InfostandUserView } from '#base/views/room-widgets/object-infostand/InfostandUserView';
 
 import { InfostandBot } from './InfostandBot';
@@ -19,6 +19,11 @@ export const RoomObjectInfostandWidget = () => {
 
     useRoomObjectDeselected((_e) => {
         setSelectedData(undefined);
+    });
+
+    // `InfoStandWidget`: whatever the stand shows leaving the room closes it.
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>([ RoomWidgetUpdateRoomObjectEvent.USER_REMOVED, RoomWidgetUpdateRoomObjectEvent.FURNI_REMOVED ], (event) => {
+        if (selectedData && (selectedData.objectId === event.objectId) && (selectedData.category === event.category)) setSelectedData(undefined);
     });
 
     useRoomObjectSelected((event) => {

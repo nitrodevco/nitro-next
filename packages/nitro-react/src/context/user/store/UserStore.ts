@@ -4,6 +4,7 @@ import { createStore } from 'zustand';
 import { createUserEffectsSlice, UserEffectsSlice } from './UserEffectsSlice';
 import { createUserFriendsSlice, UserFriendsSlice } from './UserFriendsSlice';
 import { createUserInfoSlice, UserInfoSlice } from './UserInfoSlice';
+import { createUserSocialSlice, UserSocialSlice } from './UserSocialSlice';
 import { createUserWalletSlice, UserWalletSlice } from './UserWalletSlice';
 
 type State = {
@@ -82,7 +83,7 @@ const initialState: State = {
     chatScrollSpeed: RoomChatScrollSpeedType.Normal,
 };
 
-export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice & UserEffectsSlice;
+export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice & UserEffectsSlice & UserSocialSlice;
 
 export const createUserStore = () => createStore<UserStore>()((set, get, store) => ({
     ...initialState,
@@ -106,6 +107,7 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
     ...createUserFriendsSlice(set, get, store),
     ...createUserWalletSlice(set, get, store),
     ...createUserEffectsSlice(set, get, store),
+    ...createUserSocialSlice(set, get, store),
 }));
 
 /**

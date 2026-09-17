@@ -26,6 +26,10 @@ export const UserInfoSlice: State = {
     lastAccessDate: '',
     nameChangeAllowed: false,
     accountSafetyLocked: false,
+    accountTradeLocked: false,
+    nameColor: '',
+    respectReplenishesLeft: 0,
+    maxRespectPerDay: 0,
 };
 
 export type UserInfoSlice = State & Actions;

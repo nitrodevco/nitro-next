@@ -1,209 +1,139 @@
 import { ISimpleRoomObjectData, RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
-import { AmbassadorAlertComposer, AssignRightsComposer, BanUserWithDurationComposer, IgnoreUserComposer, KickUserComposer, MuteUserComposer, RemoveRightsComposer, SetRelationshipStatusComposer, UnignoreUserComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
+import { ambassadorAlert, banUser, giveRights, ignoreUser, kickUser, muteUser, openProfile, passCarryItem, RELATIONSHIP_BOBBA, RELATIONSHIP_HEART, RELATIONSHIP_NONE, RELATIONSHIP_SMILE, replenishRespect, respectUser, sendFriendRequest, setRelationship, startTrading, takeRights, unignoreUser, unmuteUser, whisperUser } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { useOwnRoomObjectId, useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
-import { useTranslation } from '#base/context/system';
+import { useOwnRoomObjectId, useRoomStore } from '#base/context/room';
+import { useConfigValue, useTranslation } from '#base/context/system';
 import { useOwnIsAmbassador, useUserStore } from '#base/context/user';
 import { useRoomUserData } from '#base/hooks';
-import { Box, Bubble, Button, NitroIcon, ThemeText } from '#base/theme';
+import { Box, Bubble, Button, ContainerButton, LayoutImage, NitroIcon, ThemeImage, ThemeText } from '#base/theme';
 
 export interface InfoBubbleAvatarViewProps {
     objectData: ISimpleRoomObjectData;
     onClose: () => void;
 }
 
-const MODE_NORMAL = 0;
-const MODE_MODERATE = 1;
-const MODE_MODERATE_BAN = 2;
-const MODE_MODERATE_MUTE = 3;
-const MODE_AMBASSADOR = 4;
-// Declared but never referenced by name in DOM's own source either: MODE_BUTTONS[5]'s only
-// button (action 'ambassador_mute') isn't a handled processAction case, so nothing ever calls
-// setMode(MODE_AMBASSADOR_MUTE). Kept as dead code to match DOM exactly rather than removed.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MODE_AMBASSADOR_MUTE = 5;
+/** `AvatarMenuView` modes. */
+const MODE_ACTIONS = 1;
+const MODE_MODERATE = 2;
+const MODE_BAN = 4;
+const MODE_MUTE = 5;
 const MODE_RELATIONSHIP = 6;
+const MODE_AMBASSADOR = 7;
+
+/** A carried item id at or above this is not something that can be handed on. */
+const MAX_CARRY_ITEM = 999999;
+
+const RELATIONSHIP_ICONS: Record<number, string> = {
+    [RELATIONSHIP_HEART]: 'relationship_status_heart.png',
+    [RELATIONSHIP_SMILE]: 'relationship_status_smile.png',
+    [RELATIONSHIP_BOBBA]: 'relationship_status_bobba.png',
+};
+
+type MenuButton = {
+    key: string;
+    caption: string;
+    visible: boolean;
+    /** Keeps the menu up after the press; everything else closes it, as Flash did. */
+    staysOpen?: boolean;
+    onPress: () => void;
+};
 
 /**
- * Pixi port of views/room-widgets/object-menu/InfoBubbleAvatarView.tsx. DOM's own
- * `MODE_BUTTONS` table has no entry for `MODE_RELATIONSHIP` (6) - the one action that sets it
- * (`relationship`) is gated behind `!canRequestFriend`, which is always false since
- * `canRequestFriend` is hardcoded `true`, so that mode is unreachable in practice. Preserved
- * exactly (including the same `MODE_BUTTONS[6]` being missing) rather than "fixed" with an
- * entry DOM itself never defines. Similarly, mode 5 (`MODE_AMBASSADOR_MUTE`) has a
- * `MODE_BUTTONS[5]` entry but is never navigated into either - see the comment above.
+ * The menu over another user - `AvatarMenuView`, on the `avatar_menu_widget` layout. The name
+ * opens their profile; the buttons act on them through the same actions the infostand uses, and
+ * the moderation, ban, mute, relationship and ambassador sets are sub-pages of the one menu.
  */
 export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarViewProps) => {
     const { objectId } = objectData;
-    const room = useRoom();
-    const ownObjectId = useOwnRoomObjectId();
-    const userData = useRoomUserData(objectId);
-    const ownUserData = useRoomUserData(ownObjectId);
-    const [ mode, setMode ] = useState<number>(MODE_NORMAL);
-    const [ collapsed, setCollapsed ] = useState<boolean>(false);
-    const isRoomOwner = useRoomStore(x => x.isRoomOwner);
-    const isGuildRoom = useRoomStore(x => x.isGuildRoom);
+    const info = useRoomUserData(objectId);
+    const ownInfo = useRoomUserData(useOwnRoomObjectId());
+    const [ mode, setMode ] = useState(MODE_ACTIONS);
+    const [ collapsed, setCollapsed ] = useState(false);
     const respectLeft = useUserStore(x => x.respectLeft);
+    const respectReplenishesLeft = useUserStore(x => x.respectReplenishesLeft ?? 0);
+    const accountSafetyLocked = useUserStore(x => x.accountSafetyLocked);
     const isAmbassador = useOwnIsAmbassador();
+    const isPlayingGame = useRoomStore(x => x.isPlayingGame);
+    const citizenshipTrack = useConfigValue<boolean>('talent.track.citizenship.enabled') ?? false;
+    const handItemGiveEnabled = useConfigValue<boolean>('handitem.give.enabled') ?? true;
+    const relationshipsEnabled = useConfigValue<boolean>('relationship.status.enabled') ?? true;
+    const replenishCost = useConfigValue<number>('respect.replenish_cost_duckets') ?? 50;
     const t = useTranslation();
     const { send } = useWebSocketContext();
-    const { setChatInputContent } = useRoomChatActions();
 
-    if (!room || !userData) return null;
+    if (!info || isPlayingGame) return null;
 
-    const processAction = (action: string) => {
-        let hideMenu = true;
+    const { webId, isBlocked } = info;
+    const canGiveRights = info.amIOwner && (info.targetControllerLevel < RoomControllerLevelEnum.Guest);
+    const canRemoveRights = info.amIOwner && (info.targetControllerLevel === RoomControllerLevelEnum.Guest);
+    const canModerate = info.canBeKicked || info.canBeBanned || info.canBeMuted || canGiveRights || canRemoveRights;
+    const ownCarryItem = ownInfo?.carryItem ?? 0;
 
-        switch (action) {
-            case 'back':
-                hideMenu = false;
-                setMode(MODE_NORMAL);
-                break;
-            case 'moderate':
-                hideMenu = false;
-                setMode(MODE_MODERATE);
-                break;
-            case 'ban':
-                hideMenu = false;
-                setMode(MODE_MODERATE_BAN);
-                break;
-            case 'mute':
-                hideMenu = false;
-                setMode(MODE_MODERATE_MUTE);
-                break;
-            case 'ambassador':
-                hideMenu = false;
-                setMode(MODE_AMBASSADOR);
-                break;
-            case 'relationship':
-                hideMenu = false;
-                setMode(MODE_RELATIONSHIP);
-                break;
-            case 'friend':
-                break;
-            case 'trade':
-                break;
-            case 'whisper':
-                setChatInputContent('whisper', userData.name);
-                break;
-            case 'ignore':
-                send(new IgnoreUserComposer({ userId: userData.webId }));
-                break;
-            case 'unignore':
-                send(new UnignoreUserComposer({ name: userData.name }));
-                break;
-            case 'report':
-                break;
-            case 'kick':
-            case 'ambassador_kick':
-                send(new KickUserComposer({ userId: userData.webId }));
-                break;
-            case 'give_rights':
-                send(new AssignRightsComposer({ userId: userData.webId }));
-                break;
-            case 'remove_rights':
-                send(new RemoveRightsComposer({ userIds: [ userData.webId ] }));
-                break;
-            case 'ban_hour':
-                send(new BanUserWithDurationComposer({ userId: userData.webId, roomId: room.roomId, banType: 'RWUAM_BAN_USER_HOUR' }));
-                break;
-            case 'ban_day':
-                send(new BanUserWithDurationComposer({ userId: userData.webId, roomId: room.roomId, banType: 'RWUAM_BAN_USER_DAY' }));
-                break;
-            case 'perm_ban':
-                send(new BanUserWithDurationComposer({ userId: userData.webId, roomId: room.roomId, banType: 'RWUAM_BAN_USER_PERM' }));
-                break;
-            case 'mute_2min':
-            case 'ambassador_mute_2min':
-                send(new MuteUserComposer({ userId: userData.webId, roomId: room.roomId, durationInMinutes: 2 }));
-                break;
-            case 'mute_5min':
-                send(new MuteUserComposer({ userId: userData.webId, roomId: room.roomId, durationInMinutes: 5 }));
-                break;
-            case 'mute_10min':
-            case 'ambassador_mute_10min':
-                send(new MuteUserComposer({ userId: userData.webId, roomId: room.roomId, durationInMinutes: 10 }));
-                break;
-            case 'ambassador_mute_60min':
-                send(new MuteUserComposer({ userId: userData.webId, roomId: room.roomId, durationInMinutes: 60 }));
-                break;
-            case 'ambassador_mute_18hour':
-                send(new MuteUserComposer({ userId: userData.webId, roomId: room.roomId, durationInMinutes: 1080 }));
-                break;
-            case 'ambassador_alert':
-                send(new AmbassadorAlertComposer({ userId: userData.webId }));
-                break;
-            case 'rship_heart':
-                send(new SetRelationshipStatusComposer({ playerId: userData.webId, relationshipType: 1 }));
-                break;
-            case 'rship_smile':
-                send(new SetRelationshipStatusComposer({ playerId: userData.webId, relationshipType: 2 }));
-                break;
-            case 'rship_bobba':
-                send(new SetRelationshipStatusComposer({ playerId: userData.webId, relationshipType: 3 }));
-                break;
-            case 'rship_none':
-                send(new SetRelationshipStatusComposer({ playerId: userData.webId, relationshipType: 0 }));
-                break;
-        }
+    const action = (key: string, caption: string, visible: boolean, onPress: () => void, staysOpen = false): MenuButton => ({ key, caption, visible, onPress, staysOpen });
+    const toMode = (next: number) => () => setMode(next);
 
-        if (hideMenu && onClose) onClose();
-    };
-
-    const canRequestFriend = true;
-    const canGiveRights = isRoomOwner && userData.controllerLevel < RoomControllerLevelEnum.Guest && !isGuildRoom;
-    const canRemoveRights = isRoomOwner && userData.controllerLevel === RoomControllerLevelEnum.Guest && !isGuildRoom;
-    const canModerate = userData.canBeKicked || userData.canBeBanned || userData.canBeMuted || canGiveRights || canRemoveRights;
-
-    const MODE_BUTTONS: Record<number, { visible: unknown; caption: string; action: string }[]> = {
-        0: [
-            { visible: canRequestFriend, caption: 'infostand.button.friend', action: 'friend' },
-            { visible: true, caption: 'infostand.button.trade', action: 'trade' },
-            { visible: true, caption: 'infostand.button.whisper', action: 'whisper' },
-            { visible: respectLeft > 0, caption: t('infostand.button.respect', '', { count: respectLeft.toString() }), action: 'respect' },
-            { visible: !canRequestFriend, caption: 'infostand.link.relationship', action: 'relationship' },
-            { visible: !userData.isIgnored, caption: 'infostand.button.ignore', action: 'ignore' },
-            { visible: userData.isIgnored, caption: 'infostand.button.unignore', action: 'unignore' },
-            { visible: true, caption: 'infostand.button.report', action: 'report' },
-            { visible: canModerate, caption: 'infostand.link.moderate', action: 'moderate' },
-            { visible: isAmbassador, caption: 'infostand.link.ambassador', action: 'ambassador' },
-            { visible: ownUserData && ownUserData.carryItem > 0, caption: 'avatar.widget.pass_hand_item', action: 'pass_hand_item' },
+    const buttons: Record<number, MenuButton[]> = {
+        [MODE_ACTIONS]: [
+            action('open_profile', t('infostand.button.open_profile'), isBlocked, () => openProfile(send, webId)),
+            action('friend', t('infostand.button.friend'), info.canBeAskedAsFriend && !isBlocked, () => sendFriendRequest(send, webId, info.name)),
+            action('trade', t('infostand.button.trade'), citizenshipTrack || (!accountSafetyLocked && info.canTrade && !isBlocked), () => startTrading(send, objectId)),
+            action('whisper', t('infostand.button.whisper'), !isBlocked, () => whisperUser(info.name)),
+            // Each respect keeps the menu up while there is another to give.
+            action('respect', t('infostand.button.respect', '', { count: respectLeft.toString() }), (respectLeft > 0) && !isBlocked, () => respectUser(send, webId), respectLeft > 1),
+            action('replenish_respect', t('infostand.button.replenish_respect'), (respectLeft <= 0) && (respectReplenishesLeft > 0) && !isBlocked, () => replenishRespect(send, t, replenishCost)),
+            action('relationship', t('infostand.link.relationship'), relationshipsEnabled && info.isFriend && !isBlocked, toMode(MODE_RELATIONSHIP), true),
+            action('unignore', t('infostand.button.unignore'), info.isIgnored && !isBlocked, () => unignoreUser(send, webId)),
+            action('ignore', t('infostand.button.ignore'), !info.isIgnored && !isBlocked, () => ignoreUser(send, webId)),
+            action('moderate', t('infostand.link.moderate'), canModerate, toMode(MODE_MODERATE), true),
+            action('pass_handitem', t('avatar.widget.pass_hand_item'), handItemGiveEnabled && (ownCarryItem > 0) && (ownCarryItem < MAX_CARRY_ITEM), () => passCarryItem(send, webId)),
+            action('ambassador', t('infostand.link.ambassador'), isAmbassador, toMode(MODE_AMBASSADOR), true),
         ],
-        1: [
-            { visible: userData.canBeKicked, caption: 'infostand.button.kick', action: 'kick' },
-            { visible: userData.canBeMuted, caption: 'infostand.button.mute', action: 'mute' },
-            { visible: userData.canBeBanned, caption: 'infostand.button.ban', action: 'ban' },
-            { visible: canGiveRights, caption: 'infostand.button.giverights', action: 'give_rights' },
-            { visible: canRemoveRights, caption: 'infostand.button.removerights', action: 'remove_rights' },
-            { visible: true, caption: 'generic.back', action: 'back' },
+        [MODE_MODERATE]: [
+            action('kick', t('infostand.button.kick'), info.canBeKicked, () => kickUser(send, webId)),
+            action('mute', t('infostand.button.mute'), info.canBeMuted, toMode(MODE_MUTE), true),
+            action('ban_with_duration', t('infostand.button.ban'), info.canBeBanned, toMode(MODE_BAN), true),
+            action('give_rights', t('infostand.button.giverights'), canGiveRights, () => giveRights(send, webId)),
+            action('remove_rights', t('infostand.button.removerights'), canRemoveRights, () => takeRights(send, webId)),
+            action('actions', t('infostand.link.actions'), true, toMode(MODE_ACTIONS), true),
         ],
-        2: [
-            { visible: true, caption: 'infostand.button.ban_hour', action: 'ban_hour' },
-            { visible: true, caption: 'infostand.button.ban_day', action: 'ban_day' },
-            { visible: true, caption: 'infostand.button.perm_ban', action: 'perm_ban' },
-            { visible: true, caption: 'generic.back', action: 'moderate' },
+        [MODE_BAN]: [
+            action('ban_hour', t('infostand.button.ban_hour'), true, () => banUser(send, webId, 'RWUAM_BAN_USER_HOUR')),
+            action('ban_day', t('infostand.button.ban_day'), true, () => banUser(send, webId, 'RWUAM_BAN_USER_DAY')),
+            action('perm_ban', t('infostand.button.perm_ban'), true, () => banUser(send, webId, 'RWUAM_BAN_USER_PERM')),
+            action('actions', t('infostand.link.actions'), true, toMode(MODE_ACTIONS), true),
         ],
-        3: [
-            { visible: true, caption: 'infostand.button.mute_2min', action: 'mute_2min' },
-            { visible: true, caption: 'infostand.button.mute_5min', action: 'mute_5min' },
-            { visible: true, caption: 'infostand.button.mute_10min', action: 'mute_10min' },
-            { visible: true, caption: 'generic.back', action: 'moderate' },
+        [MODE_MUTE]: [
+            action('mute_2min', t('infostand.button.mute_2min'), true, () => muteUser(send, webId, 2)),
+            action('mute_5min', t('infostand.button.mute_5min'), true, () => muteUser(send, webId, 5)),
+            action('mute_10min', t('infostand.button.mute_10min'), true, () => muteUser(send, webId, 10)),
+            action('actions', t('infostand.link.actions'), true, toMode(MODE_ACTIONS), true),
         ],
-        4: [
-            { visible: true, caption: 'infostand.button.alert', action: 'ambassador_alert' },
-            { visible: true, caption: 'infostand.button.kick', action: 'ambassador_kick' },
-            { visible: true, caption: 'infostand.button.mute', action: 'ambassador_mute' },
-            { visible: true, caption: 'generic.back', action: 'back' },
+        [MODE_RELATIONSHIP]: [
+            action('no_relationship', t('avatar.widget.clear_relationship'), true, () => setRelationship(send, webId, RELATIONSHIP_NONE)),
+            action('actions', t('infostand.link.actions'), true, toMode(MODE_ACTIONS), true),
         ],
-        5: [
-            { visible: true, caption: 'infostand.button.mute_2min', action: 'ambassador_mute_2min' },
-            { visible: true, caption: 'infostand.button.mute_10min', action: 'ambassador_mute_10min' },
-            { visible: true, caption: 'infostand.button.mute_18hour', action: 'ambassador_mute_18hr' },
-            { visible: true, caption: 'generic.back', action: 'ambassador' },
+        [MODE_AMBASSADOR]: [
+            action('ambassador_alert', t('infostand.ambassador.alert'), true, () => ambassadorAlert(send, webId)),
+            action('ambassador_kick', t('infostand.button.kick'), true, () => kickUser(send, webId)),
+            action('ambassador_mute_15min', t('infostand.button.mute_15min'), true, () => muteUser(send, webId, 15)),
+            action('ambassador_mute_60min', t('infostand.button.mute_60min'), true, () => muteUser(send, webId, 60)),
+            action('ambassador_mute_18hour', t('infostand.button.mute_18hour'), true, () => muteUser(send, webId, 1080)),
+            action('ambassador_mute_36hour', t('infostand.button.mute_36hour'), true, () => muteUser(send, webId, 2160)),
+            action('ambassador_mute_72hour', t('infostand.button.mute_72hour'), true, () => muteUser(send, webId, 4320)),
+            action('ambassador_unmute', t('infostand.button.unmute'), true, () => unmuteUser(send, webId)),
+            action('actions', t('infostand.link.actions'), true, toMode(MODE_ACTIONS), true),
         ],
     };
+
+    const press = (button: MenuButton) => {
+        button.onPress();
+
+        if (!button.staysOpen) onClose();
+    };
+
+    const relationshipIcon = RELATIONSHIP_ICONS[info.relationshipStatus];
 
     return (
         <Bubble
@@ -212,30 +142,61 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
             layout={{ flexDirection: 'column' }}
         >
             {!collapsed && (
-                <Box layout={{ minWidth: 120, maxWidth: 120, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
-                    <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24 }}>
+                <Box layout={{ minWidth: 137, maxWidth: 137, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
+                    <Box
+                        cursor="pointer"
+                        onPointerTap={() => {
+                            openProfile(send, webId);
+                            onClose();
+                        }}
+                        layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, minHeight: 24, maxHeight: 24 }}
+                    >
+                        {relationshipIcon && (
+                            <ThemeImage
+                                src={LayoutImage(relationshipIcon)}
+                                layout={{ width: 16, height: 14 }}
+                            />
+                        )}
                         <ThemeText
-                            text={userData.name}
-                            textStyle="text-style-u-bold"
+                            text={isBlocked ? t('infostand.blocked_user') : info.name}
+                            textStyle={isBlocked ? 'text-style-u-regular' : 'text-style-u-bold'}
                             textOptions={{ fill: '#ffffff' }}
                         />
                     </Box>
+                    <Box layout={{ width: '100%', height: 1, marginBottom: 3 }} />
                     <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
-                        {MODE_BUTTONS[mode].map(({ visible, caption, action }) => (
-                            visible
-                                ? (
-                                        <Button
-                                            key={action}
-                                            variant="300"
-                                            tintColor="#2d2a27"
-                                            textColor="#ffffff"
-                                            onPointerTap={() => processAction(action)}
-                                            layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                                        >
-                                            {t(caption)}
-                                        </Button>
-                                    )
-                                : null
+                        {(mode === MODE_RELATIONSHIP) && (
+                            <Box layout={{ flexDirection: 'row', width: '100%', gap: 1 }}>
+                                {[ RELATIONSHIP_HEART, RELATIONSHIP_SMILE, RELATIONSHIP_BOBBA ].map(relationship => (
+                                    <ContainerButton
+                                        key={relationship}
+                                        variant="0"
+                                        tintColor="#2d2a27"
+                                        onPointerTap={() => {
+                                            setRelationship(send, webId, relationship);
+                                            onClose();
+                                        }}
+                                        layout={{ flex: 1, height: 25, alignItems: 'center', justifyContent: 'center' }}
+                                    >
+                                        <ThemeImage
+                                            src={LayoutImage(RELATIONSHIP_ICONS[relationship])}
+                                            layout={{ width: 16, height: 14 }}
+                                        />
+                                    </ContainerButton>
+                                ))}
+                            </Box>
+                        )}
+                        {buttons[mode].filter(button => button.visible).map(button => (
+                            <Button
+                                key={button.key}
+                                variant="300"
+                                tintColor="#2d2a27"
+                                textColor="#ffffff"
+                                onPointerTap={() => press(button)}
+                                layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
+                            >
+                                {button.caption}
+                            </Button>
                         ))}
                     </Box>
                 </Box>

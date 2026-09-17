@@ -1,93 +1,158 @@
-import { FurniturePickupMode, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, RoomControllerLevelEnum, RoomObjectOperationType, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import { CrackableDataType, FurniId, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, MapDataType, RoomControllerLevelEnum, RoomObjectOperationType, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import { GetHabboGroupDetailsComposer, GetSongInfoComposer, SetObjectDataComposer } from '@nitrodevco/nitro-packets';
+import { useEffect } from 'react';
 
-import { useRoomStore } from '#base/context/room';
-import { useSystemActions } from '#base/context/system';
-import { useOwnIsModerator, useOwnUserId } from '#base/context/user';
-import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify } from '#base/hooks';
-import { InfostandFurniView } from '#base/views/room-widgets/object-infostand/InfostandFurniView';
+import { openProfile } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useOwnControllerLevel, useRoom, useRoomStore } from '#base/context/room';
+import { useConfigValue, useSystemActions } from '#base/context/system';
+import { useOwnSecurityLevel, useOwnUserId, useUserStore } from '#base/context/user';
+import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify, useSecondsClock } from '#base/hooks';
+import { InfostandFurniDetails, InfostandFurniView } from '#base/views/room-widgets/object-infostand/InfostandFurniView';
 
-type InfostandFurniViewProps = {
+type InfostandFurniProps = {
     objectData: ISimpleRoomObjectData;
     onClose: () => void;
 };
 
-export const InfostandFurni = (props: InfostandFurniViewProps) => {
-    const { objectData, onClose } = props;
+/** `SecurityLevelEnum`: staff who count as a controller of every room, and who may save branding. */
+const ANY_ROOM_CONTROLLER_SECURITY = 5;
+const SAVE_BRANDING_SECURITY = 4;
+
+/** `PickupMode`: none, eject someone else's furni, pick up your own. */
+export const PICKUP_NONE = 0;
+export const PICKUP_EJECT = 1;
+export const PICKUP_FULL = 2;
+
+/**
+ * The infostand for furniture - `InfoStandFurniView`, with the crackable, jukebox and song disk
+ * variants folded in. It works out what you may do with the object - move, rotate, pick up or
+ * eject, use - the way `InfoStandFurniView.update` did, and gathers what the variants show.
+ */
+export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => {
     const { objectId, category } = objectData;
+    const room = useRoom();
     const furniData = useRoomFurnitureData(objectId, category);
     const ownUserId = useOwnUserId();
-    const isModerator = useOwnIsModerator();
-    const controllerLevel = useRoomStore(x => x.controllerLevel);
+    const securityLevel = useOwnSecurityLevel();
+    const controllerLevel = useOwnControllerLevel();
     const isRoomOwner = useRoomStore(x => x.isRoomOwner);
+    const nowPlayingSongId = useRoomStore(x => x.nowPlayingSongId);
+    const songInfoById = useRoomStore(x => x.songInfoById);
+    const groupDetails = useUserStore(x => (furniData?.groupId ? x.groupDetailsById[furniData.groupId] : undefined));
+    const useButtonEnabled = useConfigValue<boolean>('infostand.use.button.enabled') ?? true;
+    const clockMs = useSecondsClock();
     const { modifyRoomObject } = useRoomObjectModify();
     const { changeItemState } = useRoomObjectInteraction();
-    const { toggleWindow } = useSystemActions();
+    const { showWindow } = useSystemActions();
+    const { send } = useWebSocketContext();
 
-    if (!furniData?.furnitureData) return null;
+    const groupId = furniData?.groupId ?? 0;
+    const extraParam = furniData?.extraParam ?? '';
+    const songDiskId = extraParam.startsWith(RoomWidgetEnumItemExtradataParameter.SONGDISK) ? parseInt(extraParam.substring(RoomWidgetEnumItemExtradataParameter.SONGDISK.length), 10) : -1;
+    const songToName = (songDiskId >= 0) ? songDiskId : ((extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX) ? nowPlayingSongId : -1);
+    const songKnown = !!songInfoById[songToName];
 
-    let canMove = false;
-    let canRotate = false;
-    let canSeeFurniId = false;
+    // `handleGetFurniInfoMessage`: a guild furni asks who its guild is, without opening anything.
+    useEffect(() => {
+        if (groupId <= 0) return;
+
+        send(new GetHabboGroupDetailsComposer({ groupId, openDetails: false }));
+    }, [ groupId, send ]);
+
+    // A disk or a playing jukebox names its song; the names only come on request.
+    useEffect(() => {
+        if ((songToName <= 0) || songKnown) return;
+
+        send(new GetSongInfoComposer({ songIds: [ songToName ] }));
+    }, [ songToName, songKnown, send ]);
+
+    if (!room || !furniData || (!furniData.furnitureData && !furniData.name)) return null;
+
+    const roomObject = room.getRoomObject(objectId, category);
+
+    if (!roomObject) return null;
+
+    const isOwner = furniData.ownerId === ownUserId;
+    const isAnyRoomController = Number(securityLevel) >= ANY_ROOM_CONTROLLER_SECURITY;
+    const hasRights = controllerLevel >= RoomControllerLevelEnum.Guest;
+    const canMove = hasRights || isOwner || isRoomOwner || isAnyRoomController;
+    const isCrackable = extraParam.startsWith(RoomWidgetEnumItemExtradataParameter.CRACKABLE_FURNI);
+
     let canUse = false;
-    let pickupMode = FurniturePickupMode.None;
-    let godMode = false;
 
-    const isValidController = controllerLevel >= RoomControllerLevelEnum.Guest;
-
-    if (isValidController || furniData.ownerId === ownUserId || isRoomOwner || isModerator) {
-        canMove = true;
-        canRotate = !furniData.isWallItem;
-
-        if (controllerLevel >= RoomControllerLevelEnum.Moderator) godMode = true;
+    if (useButtonEnabled) {
+        if (furniData.usagePolicy === FurnitureUsagePolicyEnum.Everybody) canUse = true;
+        if (hasRights && ((furniData.usagePolicy === FurnitureUsagePolicyEnum.Controller) || (extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX) || (extraParam === RoomWidgetEnumItemExtradataParameter.USABLE_PRODUCT))) canUse = true;
     }
 
-    if (furniData.ownerId === ownUserId || isModerator) pickupMode = FurniturePickupMode.Full;
-    else if (isRoomOwner || controllerLevel >= RoomControllerLevelEnum.GuildAdmin) pickupMode = FurniturePickupMode.Eject;
+    // A crackable is there to be hit.
+    if (isCrackable) canUse = true;
 
-    if (furniData.isStickie) pickupMode = FurniturePickupMode.None;
+    let pickupMode = PICKUP_NONE;
 
-    if (isModerator) canSeeFurniId = true;
+    if (isOwner || isAnyRoomController) pickupMode = PICKUP_FULL;
+    else if (isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.GuildAdmin)) pickupMode = PICKUP_EJECT;
 
-    if (furniData.usagePolicy === FurnitureUsagePolicyEnum.Everybody || (furniData.usagePolicy === FurnitureUsagePolicyEnum.Controller && isValidController) || (furniData.extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX && isValidController) || (furniData.extraParam === RoomWidgetEnumItemExtradataParameter.USABLE_PRODUCT && isValidController)) canUse = true;
+    if (furniData.isStickie) pickupMode = PICKUP_NONE;
 
-    const hasButtons = canMove || canRotate || pickupMode !== FurniturePickupMode.None || canUse;
+    const expirySeconds = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExpiryTime) ?? -1;
+    const expiryStamp = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExpirtyTimestamp) ?? 0;
+    // Counted down against the clock the model stamped the expiry with.
+    const expiration = (expirySeconds < 0) ? expirySeconds : Math.max(0, expirySeconds - ((clockMs - expiryStamp) / 1000));
 
-    const processAction = (action: string) => {
-        switch (action) {
-            case 'move':
-                modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_MOVE);
-                break;
-            case 'rotate':
-                modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE);
-                break;
-            case 'eject':
-                modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_EJECT);
-                break;
-            case 'pickup':
-                modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_PICKUP);
-                break;
-            case 'use':
-                changeItemState(objectId, category, 0, false);
-                break;
-            case 'buy':
-                toggleWindow('catalog', { offerId: furniData.furnitureData?.purchaseOfferId });
-                break;
-            default:
-                break;
-        }
+    const brandingOptions = extraParam.startsWith(RoomWidgetEnumItemExtradataParameter.BRANDING_OPTIONS)
+        ? extraParam.substring(RoomWidgetEnumItemExtradataParameter.BRANDING_OPTIONS.length).split('\t').map(pair => pair.split('=')).filter(pair => pair.length >= 2).map(([ key, ...value ]) => ({ key, value: value.join('=') }))
+        : [];
+
+    const customVariableNames = roomObject.model.getValue<string[]>(RoomObjectVariableEnum.FurnitureCustomVariables) ?? [];
+    const furnitureDataMap = roomObject.model.getValue<Record<string, string>>(RoomObjectVariableEnum.FurnitureData) ?? {};
+    const stuffData = furniData.stuffData;
+    const mapData = (stuffData instanceof MapDataType) ? stuffData : undefined;
+    const song = songInfoById[songToName];
+
+    const details: InfostandFurniDetails = {
+        name: furniData.name,
+        description: furniData.description,
+        className: furniData.furnitureData?.className ?? roomObject.type,
+        colorIndex: furniData.furnitureData?.colorIndex ?? 0,
+        isNft: (furniData.furnitureData?.className ?? '').startsWith('nft_'),
+        ownerKind: FurniId.isBuilderClubId(objectId) ? 'builders_club' : (FurniId.isTempId(objectId) ? 'temporary' : 'user'),
+        ownerId: furniData.ownerId,
+        ownerName: furniData.ownerName,
+        expiration: (isOwner && (expiration >= 0)) ? expiration : -1,
+        group: (groupId > 0) ? { name: groupDetails?.groupName ?? '', badge: groupDetails?.badgeCode ?? '' } : undefined,
+        uniqueSerial: stuffData.isUnique ? { number: stuffData.uniqueNumber, series: stuffData.uniqueSeries } : undefined,
+        chest: (mapData && mapData.chestName.length) ? { name: mapData.chestName, contents: mapData.getValue('contents_count'), isCoins: furniData.furnitureData?.category === 'coin_chest', isLocked: (mapData.getValue('is_wired_enabled') === '1') && (mapData.getValue('locked') === '1') } : undefined,
+        customVariables: customVariableNames.map(name => ({ name, value: furnitureDataMap[name] ?? '' })),
+        staffDetails: isAnyRoomController ? { id: objectId, branding: brandingOptions } : undefined,
+        crackable: (isCrackable && (stuffData instanceof CrackableDataType)) ? { hits: stuffData.hits, target: stuffData.target } : undefined,
+        jukebox: (extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX) ? { playing: nowPlayingSongId >= 0, songName: song?.songName ?? '', creator: song?.creator ?? '' } : undefined,
+        songDisk: (songDiskId >= 0) ? { songName: song?.songName ?? '', creator: song?.creator ?? '' } : undefined,
+        canBuy: !((isOwner && (expiration >= 0))) && ((furniData.furnitureData?.purchaseOfferId ?? -1) >= 0),
+        canRent: !((isOwner && (expiration >= 0))) && ((furniData.furnitureData?.rentOfferId ?? -1) >= 0),
     };
 
     return (
         <InfostandFurniView
-            furniData={furniData}
+            details={details}
             canMove={canMove}
-            canRotate={canRotate}
+            canRotate={canMove && !furniData.isWallItem}
             canUse={canUse}
             pickupMode={pickupMode}
-            hasButtons={hasButtons}
-            canSeeFurniId={canSeeFurniId}
-            godMode={godMode}
-            processAction={processAction}
+            canSaveBranding={Number(securityLevel) >= SAVE_BRANDING_SECURITY}
+            onMove={() => modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_MOVE)}
+            onRotate={() => modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)}
+            onPickup={() => {
+                modifyRoomObject(objectId, category, (pickupMode === PICKUP_FULL) ? RoomObjectOperationType.OBJECT_PICKUP : RoomObjectOperationType.OBJECT_EJECT);
+                onClose();
+            }}
+            onUse={() => changeItemState(objectId, category, 0, false)}
+            onBuy={() => showWindow('catalog', { offerId: furniData.furnitureData?.purchaseOfferId })}
+            onRent={() => showWindow('catalog', { offerId: furniData.furnitureData?.rentOfferId })}
+            onOpenOwner={() => (furniData.ownerId > 0) && openProfile(send, furniData.ownerId)}
+            onOpenGroup={() => send(new GetHabboGroupDetailsComposer({ groupId, openDetails: true }))}
+            onSaveBranding={values => send(new SetObjectDataComposer({ objectId, data: new Map(values.map(({ key, value }) => [ key, value.split('\t').join('') ])) }))}
             onClose={onClose}
         />
     );

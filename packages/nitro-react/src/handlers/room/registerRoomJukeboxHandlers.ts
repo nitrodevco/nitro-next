@@ -35,7 +35,7 @@ export const registerRoomJukeboxHandlers = ({ send, subscribe }: WebSocketConnec
 
     /** Asks for whatever names are still missing, in one request rather than one each. */
     const requestMissingSongs = (songIds: number[]) => {
-        const known = getRequest()?.data?.songs ?? {};
+        const known = { ...roomStore.getState().songInfoById, ...(getRequest()?.data?.songs ?? {}) };
         const missing = songIds.filter(songId => !!songId && !known[songId]);
 
         if (!missing.length) return;
@@ -61,6 +61,9 @@ export const registerRoomJukeboxHandlers = ({ send, subscribe }: WebSocketConnec
         // Names arrive in batches, and two batches can land between renders, so the map is built
         // from what the store holds rather than from what this render happened to see.
         on(TraxSongInfoMessage, (message) => {
+            // The infostand names songs whether or not the editor is open.
+            roomStore.getState().addSongInfo(message.songs);
+
             merge((previous) => {
                 const songs = { ...previous.songs };
 
@@ -71,6 +74,7 @@ export const registerRoomJukeboxHandlers = ({ send, subscribe }: WebSocketConnec
         }),
 
         on(NowPlayingMessage, (message) => {
+            roomStore.getState().setNowPlayingSongId(message.currentSongId);
             merge({ nowPlayingSongId: message.currentSongId });
             requestMissingSongs([ message.currentSongId ]);
         }),

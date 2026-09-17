@@ -27,4 +27,6 @@ export interface IRoomUserData extends IRoomObjectData {
     petPosture: string;
     botSkills: number[];
     isModerator: boolean;
+    /** The user's place on the badge leaderboard, when they have one. */
+    badgesRank?: number;
 }
