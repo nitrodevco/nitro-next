@@ -34,6 +34,7 @@ export * from './furniture/FurnitureBBVisualization';
 export * from './furniture/FurnitureBottleVisualization';
 export * from './furniture/FurnitureBrandedImageVisualization';
 export * from './furniture/FurnitureBuilderPlaceholderVisualization';
+export * from './furniture/FurnitureChestVisualization';
 export * from './furniture/FurnitureCounterClockVisualization';
 export * from './furniture/FurnitureCuboidVisualization';
 export * from './furniture/FurnitureDynamicThumbnailVisualization';

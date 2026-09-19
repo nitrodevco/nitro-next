@@ -5,6 +5,7 @@ export * from './FurnitureBBVisualization';
 export * from './FurnitureBottleVisualization';
 export * from './FurnitureBrandedImageVisualization';
 export * from './FurnitureBuilderPlaceholderVisualization';
+export * from './FurnitureChestVisualization';
 export * from './FurnitureCounterClockVisualization';
 export * from './FurnitureCuboidVisualization';
 export * from './FurnitureDynamicThumbnailVisualization';

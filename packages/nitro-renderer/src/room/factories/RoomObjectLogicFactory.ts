@@ -8,6 +8,7 @@ import { AvatarLogic,
     FurnitureAreaHideLogic,
     FurnitureBadgeDisplayLogic,
     FurnitureChangeStateWhenStepOnLogic,
+    FurnitureChestLogic,
     FurnitureClothingChangeLogic,
     FurnitureCounterClockLogic,
     FurnitureCrackableLogic,
@@ -194,6 +195,10 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
             case RoomObjectLogicType.FURNITURE_BB:
                 logic = FurnitureRoomBillboardLogic;
                 break;
+            case RoomObjectLogicType.FURNITURE_FURNI_CHEST:
+            case RoomObjectLogicType.FURNITURE_COINS_CHEST:
+                logic = FurnitureChestLogic;
+                break;
             case RoomObjectLogicType.FURNITURE_ROOMDIMMER:
                 logic = FurnitureRoomDimmerLogic;
                 break;
@@ -293,6 +298,12 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
             case RoomObjectLogicType.FURNITURE_AREA_HIDE:
                 logic = FurnitureAreaHideLogic;
                 break;
+            // Flash builds six more types that deliberately land here on the basic logic:
+            // `furniture_nft_credit` / `furniture_nft_reward_box` (their redeem and open dialogs are
+            // not ported, and no server this client speaks to sends them), `furniture_vimeo` (video
+            // is out of scope), `furniture_wildwest_wanted` (cosmetic) and the snowwar
+            // `game_snowball` / `game_snowsplash` (they need the game engine). Run
+            // `scripts/drift/factories.py` after a revision bump to see whether that list grew.
             default:
                 logic = FurnitureLogic;
                 break;

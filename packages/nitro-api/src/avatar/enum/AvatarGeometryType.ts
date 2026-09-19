@@ -1,7 +1,7 @@
 ﻿export enum AvatarGeometryType {
     Vertical = 'vertical',
     Sitting = 'sitting',
-    Horizontal = 'hotizontal',
+    Horizontal = 'horizontal',
     Swim = 'swim',
     SnowwarsHorizontal = 'swhorizontal',
 }

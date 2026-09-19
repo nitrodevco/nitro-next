@@ -2,6 +2,7 @@ export * from './FurnitureAchievementResolutionLogic';
 export * from './FurnitureAreaHideLogic';
 export * from './FurnitureBadgeDisplayLogic';
 export * from './FurnitureChangeStateWhenStepOnLogic';
+export * from './FurnitureChestLogic';
 export * from './FurnitureClothingChangeLogic';
 export * from './FurnitureCounterClockLogic';
 export * from './FurnitureCrackableLogic';

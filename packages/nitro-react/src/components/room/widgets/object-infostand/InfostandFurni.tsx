@@ -97,7 +97,7 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
     if (furniData.isStickie) pickupMode = PICKUP_NONE;
 
     const expirySeconds = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExpiryTime) ?? -1;
-    const expiryStamp = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExpirtyTimestamp) ?? 0;
+    const expiryStamp = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExpiryTimestamp) ?? 0;
     // Counted down against the clock the model stamped the expiry with.
     const expiration = (expirySeconds < 0) ? expirySeconds : Math.max(0, expirySeconds - ((clockMs - expiryStamp) / 1000));
 

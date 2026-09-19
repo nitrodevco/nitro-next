@@ -122,6 +122,7 @@ export * from './room/object/logic/furniture/FurnitureAchievementResolutionLogic
 export * from './room/object/logic/furniture/FurnitureAreaHideLogic';
 export * from './room/object/logic/furniture/FurnitureBadgeDisplayLogic';
 export * from './room/object/logic/furniture/FurnitureChangeStateWhenStepOnLogic';
+export * from './room/object/logic/furniture/FurnitureChestLogic';
 export * from './room/object/logic/furniture/FurnitureClothingChangeLogic';
 export * from './room/object/logic/furniture/FurnitureCounterClockLogic';
 export * from './room/object/logic/furniture/FurnitureCrackableLogic';
@@ -240,6 +241,7 @@ export * from './room/object/visualization/furniture/FurnitureBBVisualization';
 export * from './room/object/visualization/furniture/FurnitureBottleVisualization';
 export * from './room/object/visualization/furniture/FurnitureBrandedImageVisualization';
 export * from './room/object/visualization/furniture/FurnitureBuilderPlaceholderVisualization';
+export * from './room/object/visualization/furniture/FurnitureChestVisualization';
 export * from './room/object/visualization/furniture/FurnitureCounterClockVisualization';
 export * from './room/object/visualization/furniture/FurnitureCuboidVisualization';
 export * from './room/object/visualization/furniture/FurnitureDynamicThumbnailVisualization';

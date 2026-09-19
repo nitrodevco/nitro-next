@@ -13,6 +13,7 @@ import { AvatarVisualization,
     FurnitureBBVisualization,
     FurnitureBottleVisualization,
     FurnitureBuilderPlaceholderVisualization,
+    FurnitureChestVisualization,
     FurnitureCounterClockVisualization,
     FurnitureCuboidVisualization,
     FurnitureExternalImageVisualization,
@@ -100,6 +101,10 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 break;
             case RoomObjectVisualizationType.FURNITURE_ISOMETRIC_BB:
                 visualization = FurnitureIsometricBBVisualization;
+                break;
+            case RoomObjectVisualizationType.FURNITURE_FURNI_CHEST:
+            case RoomObjectVisualizationType.FURNITURE_COINS_CHEST:
+                visualization = FurnitureChestVisualization;
                 break;
             case RoomObjectVisualizationType.FURNITURE_BOTTLE:
                 visualization = FurnitureBottleVisualization;
@@ -201,6 +206,8 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 visualizationData = new FurnitureVisualizationData();
                 break;
             case RoomObjectVisualizationType.FURNITURE_ANIMATED:
+            case RoomObjectVisualizationType.FURNITURE_FURNI_CHEST:
+            case RoomObjectVisualizationType.FURNITURE_COINS_CHEST:
             case RoomObjectVisualizationType.FURNITURE_RESETTING_ANIMATED:
             case RoomObjectVisualizationType.FURNITURE_POSTER:
             case RoomObjectVisualizationType.FURNITURE_HABBOWHEEL:

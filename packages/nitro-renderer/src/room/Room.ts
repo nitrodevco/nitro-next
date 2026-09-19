@@ -848,7 +848,7 @@ export class Room implements IRoom {
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAdUrl, '');
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureRealRoomObject, data.realRoomObject ? 1 : 0);
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, data.expires);
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpirtyTimestamp, GetTickerTime());
+            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTimestamp, GetTickerTime());
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureUsagePolicy, data.usagePolicy);
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerId, data.ownerId);
             roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, data.ownerName);
@@ -1207,7 +1207,7 @@ export class Room implements IRoom {
         if (!object) return false;
 
         object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, expires);
-        object.model.setValue(RoomObjectVariableEnum.FurnitureExpirtyTimestamp, GetTickerTime());
+        object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTimestamp, GetTickerTime());
 
         return true;
     }
@@ -1218,7 +1218,7 @@ export class Room implements IRoom {
         if (!object) return false;
 
         object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, expires);
-        object.model.setValue(RoomObjectVariableEnum.FurnitureExpirtyTimestamp, GetTickerTime());
+        object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTimestamp, GetTickerTime());
 
         return true;
     }
