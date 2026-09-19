@@ -40,7 +40,6 @@ export * from './incoming/Catalog/Data/CatalogOfferParser';
 export * from './incoming/Catalog/Data/CatalogPageLocalizationParser';
 export * from './incoming/Catalog/Data/CatalogPageParser';
 export * from './incoming/Catalog/Data/CatalogProductParser';
-export * from './incoming/Catalog/FigureSetIdsMessage';
 export * from './incoming/Catalog/GiftReceiverNotFoundEventMessage';
 export * from './incoming/Catalog/GiftWrappingConfigurationEventMessage';
 export * from './incoming/Catalog/HabboClubExtendOfferMessage';
