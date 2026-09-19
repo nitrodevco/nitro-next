@@ -1,23 +1,30 @@
-import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
-import { useRoom } from '#base/context/room';
-import { useRoomEventDispatcher, useRoomObjectDeselected, useRoomObjectSelected } from '#base/hooks';
+import { useRoom, useRoomStore } from '#base/context/room';
+import { useRoomEventDispatcher } from '#base/hooks';
 import { InfostandUserView } from '#base/views/room-widgets/object-infostand/InfostandUserView';
 
 import { InfostandBot } from './InfostandBot';
 import { InfostandFurni } from './InfostandFurni';
 import { InfostandPet } from './InfostandPet';
 
+/**
+ * The infostand - Flash's `InfoStandWidget`: whatever is selected gets its panel (user, bot,
+ * pet or furniture), and the panel closes when the selection does or the object leaves the
+ * room.
+ */
 export const RoomObjectInfostandWidget = () => {
     const [ selectedData, setSelectedData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
     const room = useRoom();
+    // The room object's type is a pet's breed name, not its kind; the user list knows the kind.
+    const selectedUserType = useRoomStore(x => (selectedData ? x.usersByRoomObjectId[selectedData.objectId]?.userType : undefined));
 
     const onClose = () => {
         setSelectedData(undefined);
     };
 
-    useRoomObjectDeselected((_e) => {
+    useRoomEventDispatcher(RoomWidgetUpdateRoomObjectEvent.OBJECT_DESELECTED, () => {
         setSelectedData(undefined);
     });
 
@@ -26,7 +33,7 @@ export const RoomObjectInfostandWidget = () => {
         if (selectedData && (selectedData.objectId === event.objectId) && (selectedData.category === event.category)) setSelectedData(undefined);
     });
 
-    useRoomObjectSelected((event) => {
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>(RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED, (event) => {
         setSelectedData({
             objectId: event.objectId,
             category: event.category,
@@ -46,15 +53,9 @@ export const RoomObjectInfostandWidget = () => {
             );
         }
         case RoomObjectCategoryEnum.Unit: {
-            const roomObject = room.getRoomObject(selectedData.objectId, selectedData.category);
+            if (selectedUserType === undefined) return null;
 
-            if (!roomObject) return null;
-
-            const userType = RoomObjectUserTypeUtils.getAvatarType(roomObject.type);
-
-            if (!userType) return null;
-
-            switch (userType) {
+            switch (selectedUserType) {
                 case RoomObjectUserType.Pet: {
                     return (
                         <InfostandPet

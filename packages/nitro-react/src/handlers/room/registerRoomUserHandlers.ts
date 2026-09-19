@@ -2,13 +2,18 @@ import { AvatarActionStateType, AvatarFigurePartType, AvatarGenderType, IRoomUse
 import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
-import { roomStore } from '#base/context/room';
+import { getRoom, roomStore } from '#base/context/room';
 import { userStore } from '#base/context/user';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
+/**
+ * The user half of Flash's `RoomMessageHandler` and its `RoomUsersHandler`: avatars, pets and
+ * bots arriving, moving, changing and leaving, plus the per-avatar state - dance, expression,
+ * effect, sleep, hand item, typing. Each packet updates the room object (which draws it) and the
+ * store's `usersByRoomObjectId` (which the widgets read).
+ */
 export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => {
-    const getRoom = () => roomStore.getState().room;
     const { setOwnRoomIndex, setIsOwnDancing, updateUsers, updateUserPartial, removeUser } = roomStore.getState();
 
     return subscribeAll(subscribe, [
@@ -265,8 +270,6 @@ export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => 
                     postureUpdate = true;
                     postureType = AvatarActionStateType.Float;
                 }
-
-                console.log(update.actions, postureType, parameter);
 
                 if (postureUpdate) room.updateRoomObjectUserPosture(update.objectId, postureType, parameter);
                 else if (isPosture) room.updateRoomObjectUserPosture(update.objectId, AvatarFigurePartType.Standard);

@@ -20,6 +20,10 @@ type Actions = {
     removeFriendRequests: (playerIds: number[]) => void;
 };
 
+/**
+ * The friend list as the server sends it - limits, categories, friends and requests. On the
+ * user store rather than the friend list window's, because the room widgets read it too.
+ */
 export const UserFriendsSlice: State = {
     userFriendLimit: 0,
     normalFriendLimit: 0,

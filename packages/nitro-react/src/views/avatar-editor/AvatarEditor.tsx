@@ -3,12 +3,11 @@ import { GetWardrobeComposer, SaveWardrobeOutfitComposer, SetClothingChangeDataC
 import { useEffect, useRef } from 'react';
 
 import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
-import { useAvatarEditorActions, useAvatarEditorStore, useAvatarEditorStoreApi } from '#base/context/avatar-editor';
+import { useAvatarEditorActions, useAvatarEditorStore } from '#base/context/avatar-editor';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useTranslation, useWindowParams } from '#base/context/system';
 import { useOwnClubLevel, useUserStore } from '#base/context/user';
-import { registerAvatarEditorHandlers } from '#base/handlers';
-import { AvatarEditorPartData, firstSelectableColorId, useAvatarEditorData, useAvatarEditorVisibility, usePartThumbnailLifetime, useRegisterHandlers } from '#base/hooks';
+import { AvatarEditorPartData, firstSelectableColorId, useAvatarEditorData, usePartThumbnailLifetime, useWindowVisibility } from '#base/hooks';
 import { Button, ButtonThick, Frame, InfiniteGrid, LayoutImage, Region, ScrollArea, TabButton, TabContext, ThemeImage, ThemeText } from '#base/theme';
 
 import { AvatarEditorPaletteThumb } from './AvatarEditorPaletteThumb';
@@ -76,7 +75,7 @@ export const AvatarEditor = () => {
     const activeSetType = activeSubType[activeCategory];
     const { setActiveCategory, setActiveSubType, setWardrobeVisible, setWardrobeSlot, loadFigure, setPart, removePart, setColors, setGender } = useAvatarEditorActions();
     const { parts, palettes } = useAvatarEditorData(activeSetType);
-    const { hide } = useAvatarEditorVisibility();
+    const { hide } = useWindowVisibility('avatar_editor');
 
     usePartThumbnailLifetime();
 
@@ -84,10 +83,6 @@ export const AvatarEditor = () => {
     const maxWardrobeSlots = useConfigValue<number>('avatar.wardrobe.max.slots') ?? 14;
     const t = useTranslation();
     const { send } = useWebSocketContext();
-
-    const editorStore = useAvatarEditorStoreApi();
-
-    useRegisterHandlers(socket => registerAvatarEditorHandlers(socket, editorStore, maxWardrobeSlots));
 
     const changeGender = (next: AvatarGenderType) => {
         if (next === gender) return;
@@ -161,9 +156,10 @@ export const AvatarEditor = () => {
         loadFigure(ownFigure || DEFAULT_FIGURES[ownGender] || '', ownGender, true);
     }, [ ownFigure, ownGender, !!clothingChange ]);
 
+    // The wardrobe is asked for once; the store keeps it across openings.
     useEffect(() => {
-        send(new GetWardrobeComposer({}));
-    }, []);
+        if (!wardrobe.length) send(new GetWardrobeComposer({}));
+    }, [ wardrobe.length ]);
 
     return (
         <Frame

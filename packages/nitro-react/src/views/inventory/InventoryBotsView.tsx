@@ -1,4 +1,4 @@
-import { InventoryStubTabPixi } from './InventoryStubTabPixi';
+import { InventoryStubTab } from './InventoryStubTab';
 
 /** Pixi port of theme/InventoryBotsView.tsx. */
-export const InventoryBotsView = () => <InventoryStubTabPixi />;
+export const InventoryBotsView = () => <InventoryStubTab />;

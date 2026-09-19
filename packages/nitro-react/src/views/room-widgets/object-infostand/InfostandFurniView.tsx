@@ -2,17 +2,22 @@ import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Border, Box, Button, CloseButton, Region, TextInput, TextStyleKey, ThemeText } from '#base/theme';
+import { Border, Box, Button, CloseButton, LayoutImage, Region, TextInput, TextStyleKey, ThemeImage, ThemeText } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
 
 import { useFurnitureImageTexturePixi } from '../../catalog/useFurnitureImageTexturePixi';
 import { InfostandBadgeView } from './InfostandBadgeView';
+import { UniqueItemPlaqueView } from './UniqueItemPlaqueView';
 
 /** `PickupMode` values the pickup button reads. */
 const PICKUP_NONE = 0;
 const PICKUP_FULL = 2;
 
 const PANEL_WIDTH = 190;
+
+/** `image_container`: the glass case a limited edition is shown in. */
+const CASE_WIDTH = 170;
+const CASE_HEIGHT = 130;
 
 /** Everything the furni infostand shows, worked out by its component. */
 export interface InfostandFurniDetails {
@@ -68,6 +73,8 @@ export interface InfostandFurniViewProps {
 export const InfostandFurniView = ({ details, canMove, canRotate, canUse, pickupMode, canSaveBranding, onMove, onRotate, onPickup, onUse, onBuy, onRent, onOpenOwner, onOpenGroup, onSaveBranding, onClose }: InfostandFurniViewProps) => {
     const t = useTranslation();
     const { texture, width, height } = useFurnitureImageTexturePixi(details.className, details.colorIndex, 2, RoomGeometryScaleType.ZoomedIn);
+    // In the case the picture must clear the plaque on the right and the glass edges.
+    const caseScale = Math.min(1, (CASE_WIDTH - 30) / Math.max(1, width), (CASE_HEIGHT - 10) / Math.max(1, height));
     // Branding edits are kept per staff details id, so another furni starts from its own values.
     const [ branding, setBranding ] = useState<{ id: number; values: { key: string; value: string }[] } | undefined>(undefined);
 
@@ -111,24 +118,62 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, pickup
                 </Box>
                 {details.isNft && text(t('infostand.nft.indicator', 'NFT'), 'text-style-bold', '#ffd700')}
                 {divider}
-                <Box layout={{ flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', paddingTop: 5, paddingBottom: 5 }}>
-                    {texture && (
-                        <pixiSprite
-                            texture={texture}
-                            layout={{ width, height: Math.min(height, 200) }}
-                        />
-                    )}
-                    {details.uniqueSerial && (
-                        <Border
-                            variant="0"
-                            tintColor="#1b1b1b"
-                            layout={{ flexDirection: 'row', gap: 4, paddingLeft: 6, paddingRight: 6, paddingTop: 2, paddingBottom: 2, marginTop: 4 }}
-                        >
-                            {text(`#${details.uniqueSerial.number}`, 'text-style-bold')}
-                            {text(`/ ${details.uniqueSerial.series}`)}
-                        </Border>
-                    )}
-                </Box>
+                {details.uniqueSerial
+                    ? (
+                        /* `showLimitedItem`: a limited edition sits in its glass case, plaque top right. */
+                            <Region layout={{ width: CASE_WIDTH, height: CASE_HEIGHT, alignSelf: 'center' }}>
+                                <ThemeImage
+                                    src={LayoutImage('unique_item_large_glass_top.png')}
+                                    stretch
+                                    layout={{ position: 'absolute', left: 0, top: 0, width: CASE_WIDTH, height: 5 }}
+                                />
+                                <ThemeImage
+                                    src={LayoutImage('unique_item_large_glass_mid.png')}
+                                    stretch
+                                    layout={{ position: 'absolute', left: 0, top: 5, width: CASE_WIDTH, height: CASE_HEIGHT - 10 }}
+                                />
+                                <ThemeImage
+                                    src={LayoutImage('unique_item_large_glass_bottom.png')}
+                                    stretch
+                                    layout={{ position: 'absolute', left: 0, bottom: 0, width: CASE_WIDTH, height: 5 }}
+                                />
+                                {[ { left: 8, top: -1 }, { left: 155, top: -1 }, { left: 8, bottom: -2 }, { left: 155, bottom: -2 } ].map((rivet, index) => (
+                                    <ThemeImage
+                                        key={index}
+                                        src={LayoutImage('unique_item_large_iron.png')}
+                                        layout={{ position: 'absolute', width: 5, height: 9, ...rivet }}
+                                    />
+                                ))}
+                                <Region layout={{ position: 'absolute', left: 5, top: 5, width: CASE_WIDTH - 30, height: CASE_HEIGHT - 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    {texture && (
+                                        <pixiSprite
+                                            texture={texture}
+                                            layout={{ width: width * caseScale, height: height * caseScale }}
+                                        />
+                                    )}
+                                </Region>
+                                <ThemeImage
+                                    src={LayoutImage('unique_item_large_glass_shine.png')}
+                                    stretch
+                                    layout={{ position: 'absolute', left: 0, top: 5, width: CASE_WIDTH, height: CASE_HEIGHT - 10 }}
+                                />
+                                <UniqueItemPlaqueView
+                                    serialNumber={details.uniqueSerial.number}
+                                    seriesSize={details.uniqueSerial.series}
+                                    layout={{ left: 128, top: 6 }}
+                                />
+                            </Region>
+                        )
+                    : (
+                            <Box layout={{ flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center', paddingTop: 5, paddingBottom: 5 }}>
+                                {texture && (
+                                    <pixiSprite
+                                        texture={texture}
+                                        layout={{ width, height: Math.min(height, 200) }}
+                                    />
+                                )}
+                            </Box>
+                        )}
                 {!!details.description.length && text(details.description)}
                 {details.chest && (
                     <>

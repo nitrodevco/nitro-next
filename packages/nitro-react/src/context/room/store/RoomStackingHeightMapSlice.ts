@@ -26,6 +26,12 @@ type Actions = {
     ) => boolean;
 };
 
+/**
+ * The furniture stacking height map - Flash's `FurniStackingHeightMap`: tile heights, stacking
+ * blocks and which tiles are room at all, plus the placement validation that reads them. The
+ * room engine reads tile heights off this slice through the reader `RoomStore.setRoom` lends
+ * it.
+ */
 export const RoomStackingHeightMapSliceInitialState: State = {
     width: 0,
     height: 0,

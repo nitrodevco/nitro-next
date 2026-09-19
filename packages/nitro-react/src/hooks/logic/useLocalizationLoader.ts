@@ -61,14 +61,12 @@ export const useLocalizationLoader = () => {
         }
 
         const load = async (urls: string[]) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            let data: Record<string, any> = {};
+            let data: Record<string, string> = {};
 
             for (const url of urls) {
                 try {
                     const response = await fetch(url);
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    const responseData = (await response.json()) as Record<string, any>;
+                    const responseData = (await response.json()) as Record<string, string>;
 
                     data = { ...data, ...responseData };
                 } catch (err) {

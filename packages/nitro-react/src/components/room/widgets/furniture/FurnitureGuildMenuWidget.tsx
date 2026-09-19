@@ -1,12 +1,12 @@
 import { NitroLogger, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { GuildFurniContextMenuInfoMessageType, JoinHabboGroupComposer } from '@nitrodevco/nitro-packets';
 
+import { goToRoom } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
-import { useGoToRoom } from '#base/hooks';
 import { FurnitureGuildMenuView } from '#base/views/room-widgets/furniture/FurnitureGuildMenuView';
 
-import { RoomObjectMenuBubblePixi } from '../object-menu/RoomObjectMenuBubblePixi';
+import { RoomObjectMenuBubble } from '../object-menu/RoomObjectMenuBubble';
 
 /**
  * The menu over a piece of guild furniture. The request handler asks about the guild as the
@@ -17,7 +17,6 @@ export const FurnitureGuildMenuWidget = () => {
     const request = useRoomWidget<GuildFurniContextMenuInfoMessageType>(RoomObjectWidgetRequestEvent.GUILD_FURNI_CONTEXT_MENU);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
-    const goToRoom = useGoToRoom();
 
     const onClose = () => closeRoomWidget(RoomObjectWidgetRequestEvent.GUILD_FURNI_CONTEXT_MENU);
 
@@ -26,7 +25,7 @@ export const FurnitureGuildMenuWidget = () => {
     if (!request || !data || (data.objectId !== request.objectId)) return null;
 
     return (
-        <RoomObjectMenuBubblePixi objectData={{ objectId: request.objectId, category: request.category }}>
+        <RoomObjectMenuBubble objectData={{ objectId: request.objectId, category: request.category }}>
             <FurnitureGuildMenuView
                 guildName={data.guildName}
                 isMember={data.userIsMember}
@@ -36,7 +35,7 @@ export const FurnitureGuildMenuWidget = () => {
                     onClose();
                 }}
                 onHomeRoom={() => {
-                    goToRoom(data.guildHomeRoomId);
+                    goToRoom(send, data.guildHomeRoomId);
                     onClose();
                 }}
                 onForum={() => {
@@ -45,6 +44,6 @@ export const FurnitureGuildMenuWidget = () => {
                     onClose();
                 }}
             />
-        </RoomObjectMenuBubblePixi>
+        </RoomObjectMenuBubble>
     );
 };

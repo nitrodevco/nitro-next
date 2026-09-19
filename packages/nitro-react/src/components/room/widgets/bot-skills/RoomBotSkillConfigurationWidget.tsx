@@ -2,7 +2,7 @@ import { CommandBotComposer, GetBotCommandConfigurationDataComposer } from '@nit
 import { useEffect, useState } from 'react';
 
 import { useWebSocketContext } from '#base/context/communication';
-import { BOT_SKILL_CHANGE_NAME, BOT_SKILL_SETUP_CHAT, roomStore, useRoomStore } from '#base/context/room';
+import { BOT_SKILL_CHANGE_NAME, BOT_SKILL_SETUP_CHAT, useRoomBotsActions, useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { Border, Box, Button, CheckBox, Frame, TextInput, ThemeText } from '#base/theme';
 
@@ -36,6 +36,7 @@ const parseChatter = (data: string): ChatterConfiguration => {
  */
 export const RoomBotSkillConfigurationWidget = () => {
     const configuration = useRoomStore(x => x.botSkillConfiguration);
+    const { closeBotSkillConfiguration } = useRoomBotsActions();
     const t = useTranslation();
     const { send } = useWebSocketContext();
     const helpLink = useConfigValue<string>('link.format.bots.help') ?? '';
@@ -67,7 +68,7 @@ export const RoomBotSkillConfigurationWidget = () => {
 
     const close = () => {
         setLoadedFor(undefined);
-        roomStore.getState().closeBotSkillConfiguration();
+        closeBotSkillConfiguration();
     };
 
     const save = (command: string) => {

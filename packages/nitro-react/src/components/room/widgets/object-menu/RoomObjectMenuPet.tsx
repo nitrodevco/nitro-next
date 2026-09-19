@@ -1,10 +1,10 @@
-import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectOperationType } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData, PetType, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserType } from '@nitrodevco/nitro-api';
 import { ChatComposer, GetPetCommandsComposer, HarvestPetComposer, MountPetComposer, RemoveSaddleFromPetComposer, RespectPetComposer, TogglePetBreedingPermissionComposer, TogglePetRidingPermissionComposer } from '@nitrodevco/nitro-packets';
 import { useEffect } from 'react';
 
 import { useWebSocketContext } from '#base/context/communication';
-import { useRoomPetCommands, useRoomPetInfo, useRoomStore } from '#base/context/room';
-import { useTranslation } from '#base/context/system';
+import { useRoomPetCommands, useRoomPetInfo, useRoomPetsActions, useRoomStore } from '#base/context/room';
+import { useConfigValue, useTranslation } from '#base/context/system';
 import { useOwnUserId, useUserActions, useUserStore } from '#base/context/user';
 import { useRoomObjectModify } from '#base/hooks';
 import { InfoBubblePetView, PetMenuAction } from '#base/views/room-widgets/object-menu/InfoBubblePetView';
@@ -15,6 +15,21 @@ const RIDING_PERMISSION_OPEN = 1;
 /** The breed that is a horse, and the one that is a monsterplant. */
 const HORSE_BREED = 8;
 const MONSTERPLANT_BREED = 16;
+
+/** `OwnPetMenuView`: the pets a nest can breed, each behind its own `nest.breeding.<type>.enabled` flag. */
+const NEST_BREEDING_TYPES: Record<number, string> = {
+    [PetType.DOG]: 'dog',
+    [PetType.CAT]: 'cat',
+    [PetType.TERRIER]: 'terrier',
+    [PetType.BEAR]: 'bear',
+    [PetType.PIG]: 'pig',
+};
+
+/** `pet.command.46`: what a nest-bred pet is told to start breeding. */
+const BREED_COMMAND = 46;
+
+/** The first number of a pet figure is its type. */
+const petTypeOf = (figure: string) => parseInt(figure.split(' ')[0] ?? '-1', 10);
 
 /**
  * The menu behind a pet - `OwnPetMenuView` and `PetMenuView`. What it offers is decided by the
@@ -28,11 +43,15 @@ export const RoomObjectMenuPet = ({ objectData, onClose }: { objectData: ISimple
     const info = useRoomPetInfo(petId);
     const commands = useRoomPetCommands(petId);
     const petRespectLeft = useUserStore(x => x.petRespectLeft);
+    const users = useRoomStore(x => x.usersByRoomObjectId);
     const { decreasePetRespects } = useUserActions();
+    const { setBreedMenu } = useRoomPetsActions();
     const { modifyRoomObject } = useRoomObjectModify();
     const ownUserId = useOwnUserId();
     const { send } = useWebSocketContext();
     const t = useTranslation();
+    const petType = petTypeOf(userData?.figure ?? '');
+    const nestBreedingEnabled = useConfigValue<boolean>(`nest.breeding.${NEST_BREEDING_TYPES[petType] ?? 'none'}.enabled`) ?? false;
 
     // The commands are only worth asking about for a pet we could actually train.
     useEffect(() => {
@@ -44,6 +63,23 @@ export const RoomObjectMenuPet = ({ objectData, onClose }: { objectData: ISimple
     if (!userData) return null;
 
     const isOwner = !!info && (info.ownerId === ownUserId);
+    const isMonsterplant = info?.breedId === MONSTERPLANT_BREED;
+    // A plant breeds with another plant in the room; a nest-bred pet is simply told to.
+    const canStartBreeding = isMonsterplant ? !!info?.canBreed : ((petType in NEST_BREEDING_TYPES) && nestBreedingEnabled);
+
+    /*
+     * `AvatarInfoWidgetHandler.activateBreedMenuForPets`: every other plant of the same type
+     * that may breed and whose owner allows it (or is you).
+     */
+    const openBreedMenu = () => {
+        const partnerObjectIds = Object.values(users)
+            .filter(other => (Number(other.userType) === Number(RoomObjectUserType.Pet)) && (other.objectId !== objectId))
+            .filter(other => other.canBreed && (other.hasBreedingPermission || (other.ownerId === ownUserId)))
+            .filter(other => petTypeOf(other.figure) === petType)
+            .map(other => other.objectId);
+
+        setBreedMenu({ petObjectId: objectId, partnerObjectIds });
+    };
 
     const act = (action: PetMenuAction) => {
         switch (action) {
@@ -61,6 +97,10 @@ export const RoomObjectMenuPet = ({ objectData, onClose }: { objectData: ISimple
             case 'toggle_riding_permission': send(new TogglePetRidingPermissionComposer({ petId })); break;
             case 'toggle_breeding_permission': send(new TogglePetBreedingPermissionComposer({ petId })); break;
             case 'harvest': send(new HarvestPetComposer({ petId })); break;
+            case 'breed':
+                if (isMonsterplant) openBreedMenu();
+                else send(new ChatComposer({ text: `${info?.name ?? userData.name} ${t(`pet.command.${BREED_COMMAND}`)}`, styleId: 0 }));
+                break;
             // Reviving costs a seed, so it is bought from the catalogue rather than sent from here.
             case 'revive': break;
             case 'train': break;
@@ -72,6 +112,7 @@ export const RoomObjectMenuPet = ({ objectData, onClose }: { objectData: ISimple
             name={info?.name.length ? info.name : userData.name}
             isOwner={isOwner}
             canRespect={petRespectLeft > 0}
+            respectsLeft={petRespectLeft}
             isMountable={info?.breedId === HORSE_BREED}
             isRiding={!!info?.isRiding}
             hasSaddle={!!info?.hasFreeSaddle}
@@ -80,6 +121,7 @@ export const RoomObjectMenuPet = ({ objectData, onClose }: { objectData: ISimple
             hasBreedingPermission={!!info?.hasBreedingPermission}
             canHarvest={!!info?.canHarvest}
             canRevive={!!info?.canRevive}
+            canStartBreeding={canStartBreeding}
             commands={commands.map(id => ({ id, label: t(`pet.command.${id}`, String(id)) }))}
             onAction={act}
             // A command is spoken at the pet, not sent as a packet of its own.

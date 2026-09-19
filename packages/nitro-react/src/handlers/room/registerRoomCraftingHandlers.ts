@@ -30,23 +30,23 @@ export const registerRoomCraftingHandlers = ({ subscribe }: WebSocketConnection)
     };
 
     return subscribeAll(subscribe, [
-        on(CraftableProductsMessage, (message) => {
+        on(CraftableProductsMessage, (data) => {
             merge({
-                products: message.recipeProductItems,
-                usableInventoryFurniClasses: message.usableInventoryFurniClasses,
+                products: data.recipeProductItems,
+                usableInventoryFurniClasses: data.usableInventoryFurniClasses,
             });
         }),
 
-        on(CraftingRecipeMessage, (message) => {
-            merge({ ingredients: message.ingredients });
+        on(CraftingRecipeMessage, (data) => {
+            merge({ ingredients: data.ingredients });
         }),
 
-        on(CraftingRecipesAvailableMessage, (message) => {
-            merge({ recipeComplete: message.recipeComplete });
+        on(CraftingRecipesAvailableMessage, (data) => {
+            merge({ recipeComplete: data.recipeComplete });
         }),
 
-        on(CraftingResultMessage, (message) => {
-            merge({ result: message.success ? (message.productData?.furnitureClassName ?? '') : '' });
+        on(CraftingResultMessage, (data) => {
+            merge({ result: data.success ? (data.productData?.furnitureClassName ?? '') : '' });
         }),
     ]);
 };

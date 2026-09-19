@@ -1,10 +1,10 @@
 import { RoomQueueWidget } from '#base/components';
-import { useNavigatorSearchCodeRequest, useNavigatorVisibility } from '#base/hooks';
+import { useNavigatorSearchCodeRequest, useWindowVisibility } from '#base/hooks';
 import { NavigatorRoomEntryDialogs } from '#base/views/navigator/NavigatorRoomEntryDialogs';
 import { NavigatorView } from '#base/views/navigator/NavigatorView';
 
 export const NavigatorComponent = () => {
-    const { isWindowVisible } = useNavigatorVisibility();
+    const { isWindowVisible } = useWindowVisibility('navigator');
 
     // A `navigator/tab/<name>` link travels as this window's parameter; act on it here.
     useNavigatorSearchCodeRequest();

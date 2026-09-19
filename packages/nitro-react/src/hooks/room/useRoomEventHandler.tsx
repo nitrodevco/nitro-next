@@ -12,6 +12,12 @@ import { useRoomObjectMove } from './useRoomObjectMove';
 import { useRoomObjectPlace } from './useRoomObjectPlace';
 import { useRoomObjectSelect } from './useRoomObjectSelect';
 
+/**
+ * The room's mouse events, dispatched by object category and the operation in progress -
+ * Flash's `RoomObjectEventHandler.handleRoomObjectMouseEvent`: clicks that walk, select, use or
+ * place, moves that drag the object being placed or moved, and the double clicks that use
+ * furniture.
+ */
 export const useRoomEventHandler = () => {
     const room = useRoom();
     const selectedObject = useRoomSelectedObject();

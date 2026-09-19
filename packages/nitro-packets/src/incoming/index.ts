@@ -528,6 +528,7 @@ export * from './Room/Layout/RoomOccupiedTilesMessage';
 export * from './Room/Permissions/YouAreControllerMessage';
 export * from './Room/Permissions/YouAreNotControllerMessage';
 export * from './Room/Permissions/YouAreOwnerMessage';
+export * from './Room/Pets/Data/PetBreedingResultDataParser';
 export * from './Room/Pets/PetBreedingResultEventMessage';
 export * from './Room/Pets/PetCommandsMessage';
 export * from './Room/Pets/PetExperienceMessage';

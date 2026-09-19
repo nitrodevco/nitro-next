@@ -3,6 +3,11 @@ import { FurnitureUsagePolicyEnum, GetObjectDataForFlags, IFurniData, IFurniture
 import { useRoom } from '#base/context/room';
 import { useSystemStore, useTranslation } from '#base/context/system';
 
+/**
+ * Everything the UI wants to know about one furniture object, joined from its room object model
+ * and the furniture data the client loaded: name and description (a poster takes its own from
+ * the localization), owner, usage policy, group and the parsed stuff data.
+ */
 export const useRoomFurnitureData = (objectId: number, category: RoomObjectCategoryEnum) => {
     const room = useRoom();
     const floorItems = useSystemStore(x => x.floorItems);

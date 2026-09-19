@@ -34,6 +34,10 @@ type Actions = {
     setChatSettings: (settings: IRoomChatSettings) => void;
 };
 
+/**
+ * Your session in the room - Flash's `RoomSession`: rights and ownership, the modes the room
+ * runs in (door, trade, pets), and the moderation and chat settings the widgets gate on.
+ */
 export const RoomSessionSliceInitialState: State = {
     doorMode: RoomDoorModeEnum.Open,
     tradeMode: RoomTradeModeEnum.Disabled,

@@ -3,7 +3,7 @@ import { AddFavouriteRoomComposer, DeleteFavouriteRoomComposer, GetExtendedProfi
 
 import { searchRoomTag } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { navigatorStore, useNavigatorStore } from '#base/context/navigator';
+import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useOwnControllerLevel } from '#base/context/room';
 import { useConfigValue, useHomeRoomId, useIsWindowVisible, useWindowActions } from '#base/context/system';
 import { useOwnSecurityLevel } from '#base/context/user';
@@ -35,7 +35,7 @@ export const RoomInfoWidget = () => {
 
     const { info: currentRoomInfo, isOwner, isStaffPicked, canMute, allInRoomMuted } = enteredRoom;
     const { roomId } = currentRoomInfo;
-    const { setRoomRating, setRoomFavourite, updateEnteredRoom } = navigatorStore.getState();
+    const { setRoomRating, setRoomFavourite, updateEnteredRoom } = useNavigatorActions();
     const isFavourite = favouriteRoomIds.includes(roomId);
     /* `RoomInfoViewCtrl`: anyone holding rights can edit the settings, and staff can pick a room. */
     const canEditRoomSettings = Number(controllerLevel) >= Number(RoomControllerLevelEnum.Guest);

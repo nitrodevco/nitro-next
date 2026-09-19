@@ -15,6 +15,14 @@ type State = {
     topId: string | undefined;
     zIndexById: Record<string, number>;
     landingViewVisible: boolean;
+    /**
+     * How wide the toolbar's left group (the icons) and right group (the friend bar) are, as
+     * the toolbar last measured them - what Flash's `toolBarAreaWidth` and `friendBarWidth`
+     * answered. The chat bar sits between them when they leave it room. Until the toolbar has
+     * reported, both are wide enough that nothing tries to fit.
+     */
+    toolbarAreaWidth: number;
+    friendBarWidth: number;
     /** From `NavigatorSettingsMessage`; 0 until it arrives or when no home room is set. */
     homeRoomId: number;
     /**
@@ -62,6 +70,7 @@ type Actions = {
     updateWindowParams: <T extends WindowName>(name: T, params: Partial<WindowRegistry[T]>) => void;
     bringWindowToFront: (id: string) => void;
     setLandingViewVisible: (landingViewVisible: boolean) => void;
+    setToolbarWidths: (toolbarAreaWidth: number, friendBarWidth: number) => void;
     setHomeRoomId: (homeRoomId: number) => void;
     startRoomSession: (roomId: number) => void;
     /** Texts are shown as given: pass them translated. */
@@ -81,6 +90,9 @@ const areWindowParamsEqual = (current: object, params: object) => {
     return entries.every(([ key, value ]) => value === (params as Record<string, unknown>)[key]);
 };
 
+/** `RoomChatInputWidget.getToolBarWidth`: what a toolbar that is not there yet is taken to be. */
+const UNMEASURED_TOOLBAR_WIDTH = 1000;
+
 const initialState: State = {
     config: {},
     localizations: {},
@@ -93,6 +105,8 @@ const initialState: State = {
     topId: undefined,
     zIndexById: {},
     landingViewVisible: true,
+    toolbarAreaWidth: UNMEASURED_TOOLBAR_WIDTH,
+    friendBarWidth: UNMEASURED_TOOLBAR_WIDTH,
     homeRoomId: 0,
     roomSessionRequest: undefined,
     dialogs: [],
@@ -348,6 +362,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
         });
     },
     setLandingViewVisible: (landingViewVisible: boolean) => set({ landingViewVisible }),
+    setToolbarWidths: (toolbarAreaWidth: number, friendBarWidth: number) => set(x => (((x.toolbarAreaWidth === toolbarAreaWidth) && (x.friendBarWidth === friendBarWidth)) ? x : { toolbarAreaWidth, friendBarWidth })),
     setHomeRoomId: (homeRoomId: number) => set({ homeRoomId }),
     startRoomSession: (roomId: number) => set(x => ({ roomSessionRequest: { type: 'start', roomId, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
     endRoomSession: () => set(x => ({ roomSessionRequest: { type: 'end', roomId: 0, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),

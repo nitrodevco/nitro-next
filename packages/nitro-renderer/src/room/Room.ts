@@ -23,6 +23,7 @@ import {
     IRoomObjectModel,
     IRoomObjectVisualization,
     IRoomRenderingCanvas,
+    IStackingHeightMapReader,
     IVariableFxConfigUpdateData,
     IVariableFxStatusRemoveData,
     IVariableFxStatusUpdateData,
@@ -121,6 +122,7 @@ export class Room implements IRoom {
     private _skipContentProcessingForNextFrame: boolean = false;
     private _skipFurnitureCreationForNextFrame: boolean = false;
     private _legacyGeometry: ILegacyWallGeometry | undefined = undefined;
+    private _stackingHeightMap: IStackingHeightMapReader | undefined = undefined;
     private _canvas: IRoomRenderingCanvas | undefined = undefined;
     private _areaSelection: IRoomAreaSelectionManager;
     private _isInitialized: boolean = false;
@@ -160,6 +162,7 @@ export class Room implements IRoom {
         }
 
         this._areaHides.clear();
+        this._stackingHeightMap = undefined;
         this._variableFx.dispose();
         this._model.dispose();
 
@@ -407,8 +410,17 @@ export class Room implements IRoom {
         return offset;
     }
 
+    /**
+     * The stacking height map is the UI's - it lives in the room store, which also validates
+     * placements against it - so the room only holds a reader onto it. Flash's `RoomEngine` kept
+     * its own `FurniStackingHeightMap` per room; this is the same lookup with the map elsewhere.
+     */
+    public setStackingHeightMap(map: IStackingHeightMapReader | undefined): void {
+        this._stackingHeightMap = map;
+    }
+
     public getTileHeight(x: number, y: number): number {
-        return -1;
+        return this._stackingHeightMap?.getTileHeight(x, y) ?? -1;
     }
 
     public setRoomInstanceRenderingCanvasOffset(point: PointData): boolean {
@@ -1221,9 +1233,8 @@ export class Room implements IRoom {
 
         if (isNaN(headDirection)) headDirection = object.model.getValue<number>(RoomObjectVariableEnum.HeadDirection);
 
-        // TODO fixedUserLocation
-
-        object.processUpdateMessage(new ObjectAvatarUpdateMessage(location, target, direction, headDirection, canStandUp, baseY, jumpingPower, false, animationTime, skipPositionUpdate));
+        // `RoomEngine.updateObjectUser`: both ends of the walk sit on the real floor, not the stacking map.
+        object.processUpdateMessage(new ObjectAvatarUpdateMessage(this.fixedUserLocation(location), this.fixedUserLocation(target), direction, headDirection, canStandUp, baseY, jumpingPower, false, animationTime, skipPositionUpdate));
 
         const ownRoomIndex = false;
 
@@ -1719,14 +1730,24 @@ export class Room implements IRoom {
         return undefined;
     }
 
-    private fixedUserLocation(location: IVector3D): IVector3D | undefined {
-        if (!this._legacyGeometry || !location) return undefined;
+    /**
+     * `RoomEngine.fixedUserLocation`: a user standing on bare floor is lifted onto the floor's
+     * drawn altitude (half a tile up next to a raised neighbour) rather than the stacking height
+     * the server sent. The stacking height is read off the map the UI lent this room; until it
+     * has, or off the map, the location stays as given.
+     */
+    private fixedUserLocation(location: IVector3D): IVector3D;
+    private fixedUserLocation(location: IVector3D | undefined): IVector3D | undefined;
+    private fixedUserLocation(location: IVector3D | undefined): IVector3D | undefined {
+        if (!location) return undefined;
+
+        if (!this._legacyGeometry) return location;
 
         let z = location.z;
         const tileHeight = this.getTileHeight(location.x, location.y);
         const wallHeight = this._legacyGeometry.getHeight(location.x, location.y);
 
-        if (Math.abs(z - tileHeight) < 0.1 && Math.abs(tileHeight - wallHeight) < 0.1) {
+        if ((Math.abs(z - tileHeight) < 0.02) && (Math.abs(tileHeight - wallHeight) < 0.02)) {
             z = this._legacyGeometry.getFloorAltitude(location.x, location.y);
         }
 

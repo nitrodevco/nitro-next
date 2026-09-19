@@ -2,9 +2,9 @@ import { useFriendsStore } from '#base/context/friend';
 import { useSystemActions, useTranslation, useWindowParams } from '#base/context/system';
 import { Accordion, Box, ColorLayer, Frame, ThemeText } from '#base/theme';
 
-import { FriendListFriendsPixi } from './FriendListFriendsPixi';
-import { FriendListRequestsPixi } from './FriendListRequestsPixi';
-import { FriendListSearchPixi } from './FriendListSearchPixi';
+import { FriendListFriends } from './FriendListFriends';
+import { FriendListRequests } from './FriendListRequests';
+import { FriendListSearch } from './FriendListSearch';
 
 export type FriendListViewWindowParams = { tab?: '' | 'friends' | 'requests' | 'search' };
 
@@ -56,9 +56,9 @@ export const FriendListView = () => {
                     color="#000000"
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, width: '100%', height: 1 }}
                 />
-                <FriendListFriendsPixi value="friends" />
-                <FriendListRequestsPixi value="requests" />
-                <FriendListSearchPixi value="search" />
+                <FriendListFriends value="friends" />
+                <FriendListRequests value="requests" />
+                <FriendListSearch value="search" />
             </Accordion>
             <Box layout={{ width: '100%', height: 20, flexShrink: 0, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingTop: 8, paddingRight: 32 }}>
                 <ThemeText

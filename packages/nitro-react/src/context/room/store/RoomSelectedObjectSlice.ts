@@ -20,6 +20,10 @@ type Actions = {
     setObjectPlacementSource: (source: RoomObjectPlacementSource) => void;
 };
 
+/**
+ * What is selected, being placed or being moved in the room, and where a placed object came
+ * from.
+ */
 export const RoomSelectedObjectSliceInitialState: State = {
     selectedAvatarId: -1,
     selectedObjectId: -1,

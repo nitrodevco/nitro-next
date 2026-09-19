@@ -3,13 +3,17 @@ import { DiceValueMessage, IRoomFloorItem, IRoomWallItem, ItemAddMessage, ItemDa
 import { LegacyWallGeometry, ObjectMoveUpdateMessage } from '@nitrodevco/nitro-renderer';
 
 import { WebSocketConnection } from '#base/context/communication';
-import { roomStore } from '#base/context/room';
+import { getRoom } from '#base/context/room';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
+/**
+ * The furniture half of Flash's `RoomMessageHandler`: floor and wall items arriving, updating
+ * and leaving, the sliding and wired movement bundles, dice values and one-way doors. Every
+ * packet ends in a call on the room, which owns the objects; the store only learns what the
+ * widgets need.
+ */
 export const registerRoomFurnitureHandlers = ({ subscribe }: WebSocketConnection) => {
-    const getRoom = () => roomStore.getState().room;
-
     const addRoomObjectFloor = (item: IRoomFloorItem) => {
         const room = getRoom();
 

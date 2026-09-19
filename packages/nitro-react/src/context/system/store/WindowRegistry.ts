@@ -4,6 +4,10 @@ import type { FriendListViewWindowParams } from '#base/views/friendlist/FriendLi
 import type { InventoryViewWindowParams } from '#base/views/inventory/InventoryView';
 import type { NavigatorViewWindowParams } from '#base/views/navigator/NavigatorView';
 
+/**
+ * Every window the client can show, with the parameters it is opened with - `showWindow(name,
+ * params)`. A new window registers its name and params type here.
+ */
 export type WindowRegistry = {
     avatar_editor: AvatarEditorViewWindowParams;
     catalog: CatalogViewWindowParams;

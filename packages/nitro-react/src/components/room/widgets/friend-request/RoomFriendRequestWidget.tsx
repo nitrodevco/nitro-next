@@ -7,7 +7,7 @@ import { useRoomFriendRequestActions, useRoomFriendRequests, useRoomObjectIdByWe
 import { useUserMessengerActions } from '#base/context/user';
 import { RoomFriendRequestView } from '#base/views/room-widgets/friend-request/RoomFriendRequestView';
 
-import { RoomObjectMenuBubblePixi } from '../object-menu/RoomObjectMenuBubblePixi';
+import { RoomObjectMenuBubble } from '../object-menu/RoomObjectMenuBubble';
 
 /**
  * Friend requests from people in the room, as a bubble over whoever sent one.
@@ -60,8 +60,8 @@ const FriendRequestBubble = ({ requesterId, children }: { requesterId: number; c
     if (objectId === undefined) return null;
 
     return (
-        <RoomObjectMenuBubblePixi objectData={{ objectId, category: RoomObjectCategoryEnum.Unit }}>
+        <RoomObjectMenuBubble objectData={{ objectId, category: RoomObjectCategoryEnum.Unit }}>
             {children}
-        </RoomObjectMenuBubblePixi>
+        </RoomObjectMenuBubble>
     );
 };

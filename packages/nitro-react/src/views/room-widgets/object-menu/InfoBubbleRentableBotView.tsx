@@ -3,7 +3,7 @@ import { CommandBotComposer, RemoveBotFromFlatComposer } from '@nitrodevco/nitro
 
 import { openClientLink } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { BOT_SKILL_CHANGE_NAME, BOT_SKILL_SETUP_CHAT, roomStore, useOwnControllerLevel, useRoomStore } from '#base/context/room';
+import { BOT_SKILL_CHANGE_NAME, BOT_SKILL_SETUP_CHAT, useOwnControllerLevel, useRoomBotsActions, useRoomStore } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { Box, Bubble, Button, NitroIcon, ThemeText } from '#base/theme';
 
@@ -39,6 +39,7 @@ export const InfoBubbleRentableBotView = ({ objectData, onClose }: InfoBubbleRen
     const controllerLevel = useOwnControllerLevel();
     const t = useTranslation();
     const { send } = useWebSocketContext();
+    const { openBotSkillConfiguration } = useRoomBotsActions();
 
     if (!userData) return null;
 
@@ -47,7 +48,7 @@ export const InfoBubbleRentableBotView = ({ objectData, onClose }: InfoBubbleRen
     const has = (skill: number) => skills.includes(skill);
     const canManage = isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.Guest);
     const command = (skill: number, data = '') => () => send(new CommandBotComposer({ botId, skillType: skill, command: data }));
-    const configure = (skill: number) => () => roomStore.getState().openBotSkillConfiguration(botId, skill);
+    const configure = (skill: number) => () => openBotSkillConfiguration(botId, skill);
 
     const buttons: MenuButton[] = [];
     const add = (visible: boolean, key: string, caption: string, onPress: () => void) => {

@@ -1,27 +1,26 @@
-import { ColorConverter, IRoomObject, MouseEventType, NitroLogger, RoomControllerLevelEnum, RoomEngineObjectEvent, RoomObjectBadgeAssetEvent, RoomObjectCategoryEnum, RoomObjectDataRequestEvent, RoomObjectDimmerStateUpdateEvent, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectHSLColorEnableEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
-import { GetItemDataComposer } from '@nitrodevco/nitro-packets';
+import { ColorConverter, IRoomObject, MouseEventType, NitroLogger, RoomEngineObjectEvent, RoomObjectBadgeAssetEvent, RoomObjectCategoryEnum, RoomObjectDataRequestEvent, RoomObjectDimmerStateUpdateEvent, RoomObjectEvent, RoomObjectFurnitureActionEvent, RoomObjectHSLColorEnableEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
 import { RoomObjectUpdateMessage } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';
 
 import { useWebSocketContext } from '#base/context/communication';
-import { useOwnControllerLevel, useRoom, useRoomIsPlayingGame, useRoomMouseActions } from '#base/context/room';
+import { useRoom, useRoomIsPlayingGame, useRoomMouseActions } from '#base/context/room';
 import { useConfigValue } from '#base/context/system';
 import { useOwnIsModerator, useOwnUserId } from '#base/context/user';
-import { useRoomBadgeAssetHandler, useRoomEventDispatcher, useRoomEventHandler, useRoomObjectInteraction, useRoomObjectSelect, useRoomWidgetRequestHandler } from '#base/hooks';
+import { useRoomBadgeAssetHandler, useRoomEventDispatcher, useRoomEventHandler, useRoomFurnitureActionHandler, useRoomObjectInteraction, useRoomObjectSelect, useRoomWidgetRequestHandler } from '#base/hooks';
 
 import { SetRoomBackgroundColor } from './roomBackgroundColor';
 
 export const RoomEventHandler = () => {
     const room = useRoom();
     const isModerator = useOwnIsModerator();
-    const controllerLevel = useOwnControllerLevel();
     const isPlayingGame = useRoomIsPlayingGame();
-    const { getMouseEventId, setMouseEventId, addCursorOwner, removeCursorOwner } = useRoomMouseActions();
+    const { getMouseEventId, setMouseEventId } = useRoomMouseActions();
     const { handleRoomObjectMouseEvent } = useRoomEventHandler();
     const { changeItemState } = useRoomObjectInteraction();
     const { selectAvatar } = useRoomObjectSelect();
     const { handleRoomWidgetRequestEvent } = useRoomWidgetRequestHandler();
     const { handleBadgeAssetEvent } = useRoomBadgeAssetHandler();
+    const { handleFurnitureActionEvent } = useRoomFurnitureActionHandler();
     const ownUserId = useOwnUserId();
     const urlPrefix = useConfigValue<string>('url.prefix') ?? '';
     const { send } = useWebSocketContext();
@@ -37,6 +36,12 @@ export const RoomEventHandler = () => {
 
         if (event instanceof RoomObjectWidgetRequestEvent) {
             handleRoomWidgetRequestEvent(event);
+
+            return;
+        }
+
+        if (event instanceof RoomObjectFurnitureActionEvent) {
+            handleFurnitureActionEvent(event);
 
             return;
         }
@@ -107,25 +112,6 @@ export const RoomEventHandler = () => {
             // A badge a furni wears is fetched and registered on the furni's own assets.
             case RoomObjectBadgeAssetEvent.LOAD_BADGE: {
                 handleBadgeAssetEvent(event as RoomObjectBadgeAssetEvent);
-                return;
-            }
-            case RoomObjectFurnitureActionEvent.STICKIE: {
-                // Using a post-it doesn't open anything by itself: the server is asked for the
-                // note, and the item-data update that comes back is what raises the widget.
-                send(new GetItemDataComposer({ objectId: event.objectId }));
-                return;
-            }
-            case RoomObjectFurnitureActionEvent.MOUSE_ARROW: {
-                removeCursorOwner(event.objectId, room.getRoomObjectCategoryForType(event.objectType));
-                return;
-            }
-            case RoomObjectFurnitureActionEvent.MOUSE_BUTTON: {
-                const category = room.getRoomObjectCategoryForType(event.objectType);
-
-                if (
-                    (category !== RoomObjectCategoryEnum.Floor && category !== RoomObjectCategoryEnum.Wall)
-                    || controllerLevel >= RoomControllerLevelEnum.Guest
-                ) addCursorOwner(event.objectId, category);
                 return;
             }
             default: {

@@ -3,7 +3,7 @@ import { ForwardToARandomPromotedRoomComposer, GetGuestRoomComposer, IRoomInfo, 
 import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useTranslation } from '#base/context/system';
-import { useNavigatorVisibility } from '#base/hooks';
+import { useWindowVisibility } from '#base/hooks';
 import { Border, Box, Frame, LayoutImage, ScrollArea, TabButton, TabContent, TabContext, ThemeImage, ThemeText } from '#base/theme';
 
 import { NavigatorCategoryView } from './NavigatorCategoryView';
@@ -38,7 +38,7 @@ export const NavigatorView = () => {
     const collapsedCategories = useNavigatorStore(x => x.collapsedCategories);
     const preferences = useNavigatorStore(x => x.preferences);
     const { setTopLevelContext, setIsSearching, setLeftPaneHidden, toggleCollapsedCategory, setViewMode } = useNavigatorActions();
-    const { hide } = useNavigatorVisibility();
+    const { hide } = useWindowVisibility('navigator');
     const { send } = useWebSocketContext();
     const t = useTranslation();
 

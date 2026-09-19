@@ -1,17 +1,15 @@
 import { WebSocketConnection } from '#base/context/communication';
 
 import { registerNavigatorHandlers, registerRoomQueueHandlers } from './navigator';
-import { registerMessengerHandlers } from './registerMessengerHandlers';
-import { registerWalletHandlers } from './registerWalletHandlers';
 import {
     registerRoomAreaHideHandlers, registerRoomBotHandlers, registerRoomChatHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
     registerRoomDirectoryHandlers, registerRoomDoorbellHandlers, registerRoomFriendFurniHandlers, registerRoomFriendRequestHandlers,
     registerRoomFurnitureHandlers, registerRoomGuildFurniHandlers, registerRoomInfostandHandlers, registerRoomJukeboxHandlers, registerRoomLinkHandlers, registerRoomMappingHandlers,
     registerRoomMysteryBoxHandlers, registerRoomPermissionsHandlers, registerRoomPetHandlers, registerRoomPetPackageHandlers, registerRoomPollHandlers,
-    registerRoomPresentHandlers, registerRoomQuizHandlers, registerRoomRentableSpaceHandlers, registerRoomSettingsHandlers, registerRoomTileHeights,
+    registerRoomPresentHandlers, registerRoomQuizHandlers, registerRoomRentableSpaceHandlers, registerRoomSettingsHandlers,
     registerRoomUserHandlers, registerRoomVariableFxHandlers, registerRoomYoutubeHandlers,
 } from './room';
-import { registerAvatarEffectsHandlers, registerUserInfoHandlers, registerUserSocialHandlers } from './user';
+import { registerAvatarEditorHandlers, registerAvatarEffectsHandlers, registerMessengerHandlers, registerUserInfoHandlers, registerUserSocialHandlers, registerWalletHandlers } from './user';
 
 /**
  * Every packet handler that lives as long as the connection, registered once. The stores they
@@ -19,9 +17,6 @@ import { registerAvatarEffectsHandlers, registerUserInfoHandlers, registerUserSo
  *
  * Room first, then the navigator, then the account: when one packet has several listeners they
  * run in this order, which is the order the old hook tree subscribed them in.
- *
- * Handlers whose store only exists while a window is open (the avatar editor) register from
- * that window instead.
  *
  * Returns one unsubscribe for all of them.
  */
@@ -56,12 +51,12 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerRoomPresentHandlers(socket),
         registerRoomRentableSpaceHandlers(socket),
         registerRoomYoutubeHandlers(socket),
-        registerRoomTileHeights(),
         registerNavigatorHandlers(socket),
         registerRoomQueueHandlers(socket),
         registerUserInfoHandlers(socket),
         registerUserSocialHandlers(socket),
         registerAvatarEffectsHandlers(socket),
+        registerAvatarEditorHandlers(socket),
         registerMessengerHandlers(socket),
         registerWalletHandlers(socket),
     ];

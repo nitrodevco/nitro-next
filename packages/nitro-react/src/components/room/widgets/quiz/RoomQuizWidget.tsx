@@ -9,7 +9,7 @@ import { QUIZ_VALUE_DISLIKE, QUIZ_VALUE_LIKE } from '#base/handlers';
 import { RoomQuizAnswerSignView } from '#base/views/room-widgets/quiz/RoomQuizAnswerSignView';
 import { RoomQuizView } from '#base/views/room-widgets/quiz/RoomQuizView';
 
-import { RoomObjectMenuBubblePixi } from '../object-menu/RoomObjectMenuBubblePixi';
+import { RoomObjectMenuBubble } from '../object-menu/RoomObjectMenuBubble';
 
 /** `poll.word.quiz.result.view.seconds` - how long the tally stays up once the question closes. */
 const DEFAULT_RESULT_SECONDS = 4;
@@ -116,8 +116,8 @@ const QuizAnswerSign = ({ userId, liked, seconds, onExpire }: QuizAnswerSignProp
     if (objectId === undefined) return null;
 
     return (
-        <RoomObjectMenuBubblePixi objectData={{ objectId, category: RoomObjectCategoryEnum.Unit }}>
+        <RoomObjectMenuBubble objectData={{ objectId, category: RoomObjectCategoryEnum.Unit }}>
             <RoomQuizAnswerSignView liked={liked} />
-        </RoomObjectMenuBubblePixi>
+        </RoomObjectMenuBubble>
     );
 };

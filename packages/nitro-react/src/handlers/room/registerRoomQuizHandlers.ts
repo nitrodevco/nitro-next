@@ -2,7 +2,7 @@ import { AvatarGestureType, RoomObjectUserType } from '@nitrodevco/nitro-api';
 import { QuestionAnsweredEventMessage, QuestionEventMessage, QuestionFinishedEventMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
-import { roomStore } from '#base/context/room';
+import { getRoom, roomStore } from '#base/context/room';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
@@ -18,7 +18,6 @@ const MS_PER_SECOND = 1000;
  * sees the running tally, and whoever answers pulls the face that goes with their answer.
  */
 export const registerRoomQuizHandlers = ({ subscribe }: WebSocketConnection) => {
-    const getRoom = () => roomStore.getState().room;
     const { startQuiz, finishQuiz, addQuizAnswer } = roomStore.getState();
 
     return subscribeAll(subscribe, [

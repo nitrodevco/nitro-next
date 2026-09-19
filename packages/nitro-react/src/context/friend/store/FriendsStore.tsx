@@ -29,6 +29,10 @@ const initialState: State = {
     relationshipDropdownId: 0,
 };
 
+/**
+ * The friend list window's own state - its search and filter inputs and what is selected.
+ * Window-scoped: created with the window and dropped when it closes.
+ */
 export type FriendsStore = State & Actions;
 
 export const createFriendsStore = () => createStore<FriendsStore>()((set, get, store) => ({

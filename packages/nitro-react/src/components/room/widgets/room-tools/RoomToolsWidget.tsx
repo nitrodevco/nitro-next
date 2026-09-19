@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { forwardToRoom, searchRoomTag } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { navigatorStore, useNavigatorStore } from '#base/context/navigator';
+import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
 import { UiFlagEnum, useRoomToolsCollapsed, useUserActions } from '#base/context/user';
 import { useRoomZoom } from '#base/hooks';
@@ -36,6 +36,7 @@ export const RoomToolsWidget = () => {
     const canRateCurrentRoom = useNavigatorStore(x => x.canRateCurrentRoom);
     const collapsed = useRoomToolsCollapsed();
     const { setUiFlag } = useUserActions();
+    const { stepRoomVisitHistory, setRoomRating } = useNavigatorActions();
     const { toggleWindow } = useWindowActions();
     const { level, canZoomIn, canZoomOut, zoomIn, zoomOut } = useRoomZoom();
 
@@ -74,7 +75,7 @@ export const RoomToolsWidget = () => {
     };
 
     const goTo = (direction: -1 | 1) => {
-        const entry = navigatorStore.getState().stepRoomVisitHistory(direction);
+        const entry = stepRoomVisitHistory(direction);
 
         if (entry) forwardToRoom(send, entry.roomId);
     };
@@ -82,7 +83,7 @@ export const RoomToolsWidget = () => {
     const likeRoom = () => {
         send(new RateFlatComposer({ points: LIKE_POINTS }));
         // The server does not answer a like, so the button is retired here.
-        navigatorStore.getState().setRoomRating(0, false);
+        setRoomRating(0, false);
     };
 
     const embedCode = t('navigator.embed.src', '', {

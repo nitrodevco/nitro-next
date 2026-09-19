@@ -2,7 +2,7 @@ import { IRoomWidgetRequest, RoomObjectWidgetRequestEvent } from '@nitrodevco/ni
 import { AreaHideMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
-import { roomStore } from '#base/context/room';
+import { getRoom, roomStore } from '#base/context/room';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
@@ -21,7 +21,6 @@ export type AreaHideData = {
  * applied by `registerRoomMappingHandlers` once that map is in place.
  */
 export const registerRoomAreaHideHandlers = ({ subscribe }: WebSocketConnection) => {
-    const getRoom = () => roomStore.getState().room;
     const getRequest = () => roomStore.getState().openWidgets[RoomObjectWidgetRequestEvent.AREA_HIDE] as IRoomWidgetRequest<AreaHideData> | undefined;
     const { mergeRoomWidgetData } = roomStore.getState();
 

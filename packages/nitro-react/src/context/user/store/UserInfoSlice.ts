@@ -11,6 +11,10 @@ type Actions = {
     setEmailVerified: (directMail: boolean) => void;
 };
 
+/**
+ * Who you are - the user object at login and everything Flash's `SessionDataManager` kept about
+ * the logged-in user.
+ */
 export const UserInfoSlice: State = {
     userId: -1,
     name: '',

@@ -138,3 +138,6 @@ export const createAvatarEditorStore = () => createStore<AvatarEditorStore>()((s
         return { wardrobe };
     }),
 }));
+
+/** The one editor there is; its contents outlive the window. */
+export const avatarEditorStore = createAvatarEditorStore();

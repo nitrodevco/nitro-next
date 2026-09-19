@@ -1,38 +1,20 @@
-// Body filled by hand from the 2026 client's own composer - the generator has no preserve step, so re-apply after a regeneration.
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper, ParseInts } from '@nitrodevco/nitro-api';
 
 export type PetCommandsMessageType = {
     petId: number;
-    /** Every command the pet's breed knows, whether or not it has learned it yet. */
+    /** Every command the breed can learn... */
     allCommands: number[];
-    /** The ones it has learned, which are the only ones worth offering. */
+    /** ...and the ones this pet has been taught. Both are `pet.command.<id>` keys. */
     enabledCommands: number[];
 };
 
 export class PetCommandsMessage implements IIncomingPacket<PetCommandsMessageType> {
     public parse(wrapper: IMessageDataWrapper): PetCommandsMessageType {
-        const packet: PetCommandsMessageType = {
+        return {
             petId: wrapper.readInt(),
-            allCommands: [],
-            enabledCommands: [],
+            allCommands: ParseInts(wrapper),
+            enabledCommands: ParseInts(wrapper),
         };
-
-        let count = wrapper.readInt();
-
-        while (count > 0) {
-            packet.allCommands.push(wrapper.readInt());
-
-            count--;
-        }
-
-        count = wrapper.readInt();
-
-        while (count > 0) {
-            packet.enabledCommands.push(wrapper.readInt());
-
-            count--;
-        }
-
-        return packet;
     }
 }

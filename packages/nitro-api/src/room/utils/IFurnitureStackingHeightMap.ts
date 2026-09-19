@@ -19,3 +19,6 @@ export interface IFurnitureStackingHeightMap {
     readonly width: number;
     readonly height: number;
 }
+
+/** The one thing the room engine asks of the stacking height map: how high a tile is, or -1 off the map. */
+export type IStackingHeightMapReader = Pick<IFurnitureStackingHeightMap, 'getTileHeight'>;

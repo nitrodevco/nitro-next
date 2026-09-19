@@ -1,10 +1,10 @@
 import { QuitComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
+import { goToRoom } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useInterpolate, useTranslation } from '#base/context/system';
-import { useGoToRoom } from '#base/hooks';
 import { Border, Box, Button, Frame, Region, TextInput, ThemeText } from '#base/theme';
 
 const DIALOG_POSITION = { position: 'absolute', top: 120, left: 320 } as const;
@@ -23,7 +23,6 @@ export const NavigatorRoomEntryDialogs = () => {
     const interpolate = useInterpolate();
     const t = useTranslation();
     const [ password, setPassword ] = useState('');
-    const goToRoom = useGoToRoom();
 
     const closeDialog = () => {
         setRoomEntryDialog(undefined);
@@ -39,7 +38,7 @@ export const NavigatorRoomEntryDialogs = () => {
 
         // ringDoorbell(): goToRoom(flatId, true) then hide() - the window comes back when the server answers
         const ring = () => {
-            goToRoom(room.roomId);
+            goToRoom(send, room.roomId);
             setRoomEntryDialogMode('doorbell_rung');
         };
 
@@ -105,7 +104,7 @@ export const NavigatorRoomEntryDialogs = () => {
 
         // onTry(): goToRoom(flatId, true, password) then hide() - a rejection (GenericError -100002) re-shows it with the retry text
         const tryPassword = () => {
-            goToRoom(room.roomId, password);
+            goToRoom(send, room.roomId, password);
             setRoomEntryDialogMode('password_sent');
         };
 

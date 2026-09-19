@@ -1,4 +1,4 @@
-import { roomStore } from '#base/context/room';
+import { useRoomSessionActions } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { Box, Bubble, Button } from '#base/theme';
 
@@ -8,6 +8,7 @@ import { Box, Bubble, Button } from '#base/theme';
  */
 export const DecorateModeBubbleView = () => {
     const t = useTranslation();
+    const { setIsDecorating } = useRoomSessionActions();
 
     return (
         <Bubble
@@ -20,7 +21,7 @@ export const DecorateModeBubbleView = () => {
                     variant="300"
                     tintColor="#2d2a27"
                     textColor="#ffffff"
-                    onPointerTap={() => roomStore.getState().setIsDecorating(false)}
+                    onPointerTap={() => setIsDecorating(false)}
                     layout={{ minHeight: 26, maxHeight: 26, width: '100%' }}
                 >
                     {t('widget.avatar.stop_decorating')}

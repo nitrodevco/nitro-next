@@ -20,7 +20,7 @@ import {
     RoomObjectUserType,
     RoomObjectVariableEnum,
 } from './object';
-import { ILegacyWallGeometry, IRoomAreaSelectionManager } from './utils';
+import { ILegacyWallGeometry, IRoomAreaSelectionManager, IStackingHeightMapReader } from './utils';
 
 export interface IRoom {
     dispose(): void;
@@ -30,6 +30,7 @@ export interface IRoom {
     update(time: number, update?: boolean): void;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
     getRoomInstanceRenderingCanvasOffset(): PointData;
+    /** The stacking height of a tile from the map the UI holds for this room, or -1 before it has one. */
     getTileHeight(x: number, y: number): number;
     setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
     getRoomObjectManager(category: RoomObjectCategoryEnum): IRoomObjectManager | undefined;
@@ -163,6 +164,8 @@ export interface IRoom {
     setRoomOverlayIconSpriteVisibility(flag: boolean): void;
     removeRoomOverlayIconSprite(): void;
     setLegacyGeometry(geometry: ILegacyWallGeometry): void;
+    /** Lends the room a live view of the stacking height map, which the UI owns and keeps up to date. */
+    setStackingHeightMap(map: IStackingHeightMapReader | undefined): void;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     setRoomValue<T>(key: RoomObjectVariableEnum, value: T): void;
     getGeometry(): IRoomGeometry | undefined;

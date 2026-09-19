@@ -1,8 +1,6 @@
 export interface ICatalogNode {
     depth: number;
     parent: ICatalogNode | undefined;
-    isOpen: boolean;
-    isActive: boolean;
     readonly visible: boolean;
     readonly icon: number;
     readonly pageId: number;

@@ -8,6 +8,11 @@ import { useConfigValue } from '#base/context/system';
 
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
 
+/**
+ * The room camera - Flash's `RoomEngine.updateRoomCamera`: follows your own avatar, or whatever
+ * the store names as the target, with the same easing, stops following once the user has
+ * dragged the room, and keeps the room inside the canvas.
+ */
 export const useRoomCamera = () => {
     const room = useRoom();
     const targetId = useRoomStore(x => x.targetId);

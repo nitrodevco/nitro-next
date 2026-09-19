@@ -26,16 +26,16 @@ export const registerRoomYoutubeHandlers = ({ subscribe }: WebSocketConnection) 
     };
 
     return subscribeAll(subscribe, [
-        on(YoutubeDisplayPlaylistsMessage, (message) => {
+        on(YoutubeDisplayPlaylistsMessage, (data) => {
             merge({
-                furniId: message.furniId,
-                playlists: message.playlists,
-                selectedPlaylistId: message.selectedPlaylistId,
+                furniId: data.furniId,
+                playlists: data.playlists,
+                selectedPlaylistId: data.selectedPlaylistId,
             });
         }),
 
-        on(YoutubeDisplayVideoMessage, (message) => {
-            merge({ furniId: message.furniId, videoId: message.videoId });
+        on(YoutubeDisplayVideoMessage, (data) => {
+            merge({ furniId: data.furniId, videoId: data.videoId });
         }),
     ]);
 };

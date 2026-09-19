@@ -5,7 +5,10 @@ type State = {
     catalogType: CatalogTypeEnum;
     rootNode: ICatalogNode | undefined;
     offersToNodes: Record<number, ICatalogNode[]>;
+    /** The path from the tab down to the page being shown; a node is active when it is on it. */
     activeNodes: ICatalogNode[];
+    /** The navigation folders currently unfolded, by page id. */
+    openPageIds: number[];
     isBusy: boolean;
     activePageId: number;
     activePage: IActivePage | undefined;
@@ -21,6 +24,7 @@ type Actions = {
     setRootNode: (rootNode: ICatalogNode) => void;
     setOffersToNodes: (offersToNodes: Record<number, ICatalogNode[]>) => void;
     setActiveNodes: (activeNodes: ICatalogNode[]) => void;
+    setOpenPageIds: (openPageIds: number[]) => void;
     setIsBusy: (isBusy: boolean) => void;
     setActivePageId: (activePageId: number) => void;
     setActivePage: (activePage: IActivePage) => void;
@@ -38,6 +42,7 @@ const initialState: State = {
     rootNode: undefined,
     offersToNodes: {},
     activeNodes: [],
+    openPageIds: [],
     isBusy: false,
     activePageId: -1,
     activePage: undefined,
@@ -49,6 +54,10 @@ const initialState: State = {
     searchResult: undefined,
 };
 
+/**
+ * The catalog window's own state: the index tree, the active page and offer, and the page a
+ * link asked for. Window-scoped: created with the window and dropped when it closes.
+ */
 export type CatalogStore = State & Actions;
 
 export const createCatalogStore = (catalogType: CatalogTypeEnum) => createStore<CatalogStore>()((set, get, store) => ({
@@ -57,6 +66,7 @@ export const createCatalogStore = (catalogType: CatalogTypeEnum) => createStore<
     setRootNode: (rootNode: ICatalogNode | undefined) => set({ rootNode }),
     setOffersToNodes: (offersToNodes: Record<number, ICatalogNode[]>) => set({ offersToNodes }),
     setActiveNodes: (activeNodes: ICatalogNode[]) => set({ activeNodes }),
+    setOpenPageIds: (openPageIds: number[]) => set({ openPageIds }),
     setIsBusy: (isBusy: boolean) => set({ isBusy }),
     setActivePageId: (activePageId: number) => set({ activePageId }),
     setActivePage: (activePage: IActivePage | undefined) => set({ activePage }),

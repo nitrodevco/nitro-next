@@ -1,12 +1,13 @@
 import { QuitComposer } from '@nitrodevco/nitro-packets';
+import { Container as PixiContainer } from 'pixi.js';
 import { useState } from 'react';
 
+import { goToHomeRoom } from '#base/commands';
 import { AvatarImage } from '#base/components';
 import { useWebSocketContext } from '#base/context/communication';
 import { useIsLandingViewVisible, useSystemActions, useTranslation } from '#base/context/system';
 import { useOwnUserFigure, useOwnUserGender } from '#base/context/user';
-import { useGoToHomeRoom } from '#base/hooks';
-import { Border, LayoutImage, Region, ThemeImage } from '#base/theme';
+import { Border, LayoutImage, Region, ThemeImage, useLayoutEvent } from '#base/theme';
 
 import { ToolbarExtendedMenu } from './ToolbarExtendedMenu';
 
@@ -17,11 +18,16 @@ export const ToolbarView = () => {
     const [ rightSideCollapsed, setRightSideCollapsed ] = useState(false);
     const ownFigure = useOwnUserFigure();
     const ownGender = useOwnUserGender();
-    const { toggleWindow, endRoomSession } = useSystemActions();
+    const { toggleWindow, endRoomSession, setToolbarWidths } = useSystemActions();
+    // The two groups are measured for the chat bar, which fits itself between them - `toolBarAreaWidth` / `friendBarWidth`.
+    const [ leftGroup, setLeftGroup ] = useState<PixiContainer | null>(null);
+    const [ rightGroup, setRightGroup ] = useState<PixiContainer | null>(null);
+    const reportWidths = () => setToolbarWidths(Math.ceil(leftGroup?.layout?.computedLayout.width ?? leftGroup?.width ?? 0), Math.ceil(rightGroup?.layout?.computedLayout.width ?? rightGroup?.width ?? 0));
+
+    useLayoutEvent(leftGroup, reportWidths);
+    useLayoutEvent(rightGroup, reportWidths);
     const landingViewVisible = useIsLandingViewVisible();
     const { send } = useWebSocketContext();
-    // HTIE_ICON_HOME -> goToHomeRoom(): a room forward to the home room (its GetGuestRoomResult starts the session)
-    const goToHomeRoom = useGoToHomeRoom();
     const t = useTranslation();
 
     // HabboLandingView.onToolbarClick HTIE_ICON_RECEPTION: quit and dispose the room session right away (RSE_ENDED shows the hotel view)
@@ -46,7 +52,10 @@ export const ToolbarView = () => {
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: -10, right: -10, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 10 }}
                 >
-                    <Region layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
+                    <Region
+                        ref={setLeftGroup}
+                        layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}
+                    >
                         <ThemeImage
                             src={leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png'}
                             width={14}
@@ -68,7 +77,8 @@ export const ToolbarView = () => {
                         {!leftSideCollapsed && landingViewVisible && (
                             <Region
                                 dynamicStyle="lifted_hover"
-                                onPointerTap={() => goToHomeRoom()}
+                                // HTIE_ICON_HOME -> goToHomeRoom(): a room forward to the home room (its GetGuestRoomResult starts the session)
+                                onPointerTap={() => goToHomeRoom(send)}
                                 tooltip={t('toolbar.icon.tooltip.exitroom.home')}
                             >
                                 <ThemeImage
@@ -181,7 +191,10 @@ export const ToolbarView = () => {
                             layout={{ width: 1, height: 40 }}
                         />
                     </Region>
-                    <Region layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}>
+                    <Region
+                        ref={setRightGroup}
+                        layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}
+                    >
                         <ThemeImage
                             name="line"
                             src={LayoutImage('bottom_bar_divider_1px.png')}

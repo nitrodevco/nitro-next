@@ -39,6 +39,23 @@ export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
             break;
         }
         case RoomObjectUserType.Pet: {
+            // Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+            const data = {
+                subType: String(wrapper.readInt()),
+                ownerId: wrapper.readInt(),
+                ownerName: wrapper.readString(),
+                rarityLevel: wrapper.readInt(),
+                hasSaddle: wrapper.readBoolean(),
+                isRiding: wrapper.readBoolean(),
+                canBreed: wrapper.readBoolean(),
+                canHarvest: wrapper.readBoolean(),
+                canRevive: wrapper.readBoolean(),
+                hasBreedingPermission: wrapper.readBoolean(),
+                petLevel: wrapper.readInt(),
+                petPosture: wrapper.readString(),
+            };
+
+            avatar = { ...avatar, ...data };
             break;
         }
         case RoomObjectUserType.Bot: {

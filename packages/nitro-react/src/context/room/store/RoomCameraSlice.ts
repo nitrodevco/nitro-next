@@ -17,6 +17,10 @@ type Actions = {
     disableFollowTemporarily: (duration: number) => void;
 };
 
+/**
+ * Who the camera follows and for how long, and whether following is suspended because the user
+ * dragged the room.
+ */
 export const RoomCameraSliceInitialState: State = {
     targetId: -1,
     targetCategory: RoomObjectCategoryEnum.Minimum,

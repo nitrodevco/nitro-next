@@ -44,39 +44,39 @@ export const registerRoomJukeboxHandlers = ({ send, subscribe }: WebSocketConnec
     };
 
     return subscribeAll(subscribe, [
-        on(UserSongDisksInventoryMessage, (message) => {
-            merge({ songDisks: message.songDisks });
-            requestMissingSongs(Object.values(message.songDisks));
+        on(UserSongDisksInventoryMessage, (data) => {
+            merge({ songDisks: data.songDisks });
+            requestMissingSongs(Object.values(data.songDisks));
         }),
 
-        on(JukeboxSongDisksMessage, (message) => {
-            merge({ maxLength: message.maxLength });
-            requestMissingSongs(Object.values(message.songDisks));
+        on(JukeboxSongDisksMessage, (data) => {
+            merge({ maxLength: data.maxLength });
+            requestMissingSongs(Object.values(data.songDisks));
         }),
 
-        on(PlayListMessage, (message) => {
-            merge({ playList: message.playList });
+        on(PlayListMessage, (data) => {
+            merge({ playList: data.playList });
         }),
 
         // Names arrive in batches, and two batches can land between renders, so the map is built
         // from what the store holds rather than from what this render happened to see.
-        on(TraxSongInfoMessage, (message) => {
+        on(TraxSongInfoMessage, (data) => {
             // The infostand names songs whether or not the editor is open.
-            roomStore.getState().addSongInfo(message.songs);
+            roomStore.getState().addSongInfo(data.songs);
 
             merge((previous) => {
                 const songs = { ...previous.songs };
 
-                for (const song of message.songs) songs[song.id] = song;
+                for (const song of data.songs) songs[song.id] = song;
 
                 return { songs };
             });
         }),
 
-        on(NowPlayingMessage, (message) => {
-            roomStore.getState().setNowPlayingSongId(message.currentSongId);
-            merge({ nowPlayingSongId: message.currentSongId });
-            requestMissingSongs([ message.currentSongId ]);
+        on(NowPlayingMessage, (data) => {
+            roomStore.getState().setNowPlayingSongId(data.currentSongId);
+            merge({ nowPlayingSongId: data.currentSongId });
+            requestMissingSongs([ data.currentSongId ]);
         }),
     ]);
 };

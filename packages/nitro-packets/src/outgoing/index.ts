@@ -339,6 +339,7 @@ export * from './Room/Chat/StartTypingComposer';
 export * from './Room/Chat/WhisperComposer';
 export * from './Room/Engine/ClickCharacterComposer';
 export * from './Room/Engine/ClickFurniComposer';
+export * from './Room/Engine/CompostPlantComposer';
 export * from './Room/Engine/GetFurnitureAliasesComposer';
 export * from './Room/Engine/GetItemDataComposer';
 export * from './Room/Engine/GetPetCommandsComposer';

@@ -6,6 +6,11 @@ import { roomStore } from '#base/context/room';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
+/**
+ * Your own standing in the room - Flash's `RoomPermissionsHandler`: controller level, owner,
+ * whether you are playing a game or only spectating. Everything that gates a menu button or a
+ * furniture move reads these.
+ */
 export const registerRoomPermissionsHandlers = ({ subscribe }: WebSocketConnection) => {
     const { setControllerLevel, setIsRoomOwner, setIsPlayingGame, setIsSpectator } = roomStore.getState();
 

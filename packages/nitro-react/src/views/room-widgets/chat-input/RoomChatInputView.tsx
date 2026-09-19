@@ -5,18 +5,25 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { IChatStyle } from '#base/chat';
 import { useWebSocketContext } from '#base/context/communication';
 import { roomStore, useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
-import { useConfigValue, useTranslation } from '#base/context/system';
+import { useConfigValue, useFriendBarWidth, useToolbarAreaWidth, useTranslation } from '#base/context/system';
 import { useOwnClubLevel, useOwnIsAmbassador, useOwnSecurityLevel, useRoomToolsCollapsed, useUserActions, useUserStore } from '#base/context/user';
-import { useChatStyles } from '#base/hooks';
+import { useChatStyles, useViewportSize } from '#base/hooks';
 import { Border, Box, Icon, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 import { roomToolsRight } from '#base/views/room-widgets/room-tools/roomToolsGeometry';
 
 import { ChatStyleSelectorView } from './ChatStyleSelectorView';
 
-/** `RoomChatInputView._Str_10663` - the gap kept from whatever sits left of the chat bar. */
+/** `RoomChatInputView.updatePosition` - the gap kept from whatever sits left of the chat bar. */
 const LEFT_MARGIN = 12;
-/** Clears the 54px toolbar the way the Flash bar sat just above its own. */
-const BOTTOM_OFFSET = 60;
+/** The bar's own size: the field, the gap and the habbicon button. */
+const CHAT_BAR_WIDTH = 451;
+const CHAT_BAR_HEIGHT = 39;
+/** `ToolbarView`'s height; the bar is centred in it when it sits there. */
+const TOOLBAR_HEIGHT = 54;
+/** The room the centred bar must leave the toolbar's icons on top of its own margin - `updatePosition`'s `+ 100`. */
+const TOOLBAR_CLEARANCE = 100;
+/** Where the bar goes when it does not fit in the toolbar: one toolbar height up (Flash: `height - 160` against `height - 104`). */
+const ABOVE_TOOLBAR_OFFSET = 56;
 /** The Flash `chat_input` field: Ubuntu 17, 100 characters. */
 const MAX_CHARS = 100;
 /** `_typingTimer` / `_idleTimer` - typing is announced after a second of it, withdrawn after ten idle. */
@@ -53,6 +60,9 @@ export const RoomChatInputView = () => {
     const disabledStyles = useConfigValue<string>('disabled.custom.chat.styles') ?? '';
     // The bar starts where the room tools end, as `RoomToolsWidget.getWidgetAreaWidth` told it to.
     const roomToolsCollapsed = useRoomToolsCollapsed();
+    const { width: viewportWidth } = useViewportSize();
+    const toolbarAreaWidth = useToolbarAreaWidth();
+    const friendBarWidth = useFriendBarWidth();
 
     const [ value, setValue ] = useState('');
     const [ focused, setFocused ] = useState(false);
@@ -338,8 +348,20 @@ export const RoomChatInputView = () => {
 
     if (!room) return null;
 
+    /*
+     * `RoomChatInputView.updatePosition`: the bar sits centred in the toolbar when the toolbar's
+     * icons and the friend bar leave it the room; otherwise it moves up one toolbar height and
+     * starts right of the room tools - still centred if the centre is clear of them.
+     */
+    const centredLeft = ~~((viewportWidth / 2) - (CHAT_BAR_WIDTH / 2));
+    const fitsInToolbar = ((viewportWidth - toolbarAreaWidth - friendBarWidth) > (CHAT_BAR_WIDTH + LEFT_MARGIN))
+        && (centredLeft >= (toolbarAreaWidth + LEFT_MARGIN + TOOLBAR_CLEARANCE))
+        && ((centredLeft + CHAT_BAR_WIDTH) <= (viewportWidth - friendBarWidth));
+    const left = fitsInToolbar ? centredLeft : Math.max(centredLeft, roomToolsRight(roomToolsCollapsed) + LEFT_MARGIN);
+    const bottom = ~~((TOOLBAR_HEIGHT - CHAT_BAR_HEIGHT) / 2) + (fitsInToolbar ? 0 : ABOVE_TOOLBAR_OFFSET);
+
     return (
-        <Box layout={{ position: 'absolute', left: roomToolsRight(roomToolsCollapsed) + LEFT_MARGIN, bottom: BOTTOM_OFFSET, width: 451, height: 39, flex: 1, gap: 5 }}>
+        <Box layout={{ position: 'absolute', left, bottom, width: CHAT_BAR_WIDTH, height: CHAT_BAR_HEIGHT, flex: 1, gap: 5 }}>
             <Border
                 variant="8"
                 tintColor="#e5e5e5"

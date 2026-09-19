@@ -14,13 +14,16 @@ export type PetMenuAction
         | 'toggle_breeding_permission'
         | 'harvest'
         | 'revive'
-        | 'train';
+        | 'train'
+        | 'breed';
 
 export interface InfoBubblePetViewProps {
     name: string;
     /** Only its owner gets the entries that change it. */
     isOwner: boolean;
     canRespect: boolean;
+    /** How many scratches you have left today - the button counts them down. */
+    respectsLeft: number;
     /** A horse: it can be climbed on, saddled and given riding permission. */
     isMountable: boolean;
     /** We are on it right now. */
@@ -31,6 +34,8 @@ export interface InfoBubblePetViewProps {
     hasBreedingPermission: boolean;
     canHarvest: boolean;
     canRevive: boolean;
+    /** Its owner may start breeding it: a plant with a partner in the room, or a pet the nests are on for. */
+    canStartBreeding: boolean;
     /** The commands it has learned; picking one speaks it. */
     commands: { id: number; label: string }[];
     onAction: (action: PetMenuAction) => void;
@@ -47,28 +52,30 @@ export interface InfoBubblePetViewProps {
  * as ordinary chat, exactly as `RoomWidgetPetCommandMessage` did.
  */
 export const InfoBubblePetView = ({
-    name, isOwner, canRespect, isMountable, isRiding, hasSaddle, ridingPermissionOpen,
-    canBreed, hasBreedingPermission, canHarvest, canRevive, commands, onAction, onCommand, onClose,
+    name, isOwner, canRespect, respectsLeft, isMountable, isRiding, hasSaddle, ridingPermissionOpen,
+    canBreed, hasBreedingPermission, canHarvest, canRevive, canStartBreeding, commands, onAction, onCommand, onClose,
 }: InfoBubblePetViewProps) => {
     const t = useTranslation();
     const [ showCommands, setShowCommands ] = useState(false);
 
     const entries: { key: PetMenuAction; label: string; visible: boolean }[] = [
-        { key: 'respect', label: t('infostand.button.petrespect'), visible: canRespect },
+        { key: 'respect', label: t('infostand.button.petrespect', '', { count: String(respectsLeft) }), visible: canRespect },
         { key: 'train', label: t('infostand.button.train', 'Train'), visible: isOwner && !!commands.length },
         { key: 'mount', label: t('infostand.button.mount'), visible: isOwner && isMountable && !isRiding },
         { key: 'dismount', label: t('infostand.button.dismount'), visible: isRiding },
         { key: 'saddle_off', label: t('infostand.button.saddleoff'), visible: isOwner && isMountable && hasSaddle && !isRiding },
         {
             key: 'toggle_riding_permission',
-            label: t(ridingPermissionOpen ? 'infostand.button.ridingpermission.off' : 'infostand.button.ridingpermission.on'),
+            // Flash drew a checkbox beside these; the tick stands in for it.
+            label: `${t('infostand.button.toggle_riding_permission')}${ridingPermissionOpen ? ' ✓' : ''}`,
             visible: isOwner && isMountable,
         },
         {
             key: 'toggle_breeding_permission',
-            label: t(hasBreedingPermission ? 'infostand.button.breedingpermission.off' : 'infostand.button.breedingpermission.on'),
+            label: `${t('infostand.button.toggle_breeding_permission')}${hasBreedingPermission ? ' ✓' : ''}`,
             visible: isOwner && canBreed,
         },
+        { key: 'breed', label: t('infostand.button.breed'), visible: isOwner && canStartBreeding },
         { key: 'harvest', label: t('infostand.button.harvest'), visible: isOwner && canHarvest },
         { key: 'revive', label: t('infostand.button.revive'), visible: isOwner && canRevive },
         { key: 'pick_up', label: t('infostand.button.pickup'), visible: isOwner && !isRiding },

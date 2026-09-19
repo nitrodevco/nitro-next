@@ -1,13 +1,13 @@
 import { useCatalogStore } from '#base/context/catalog';
 import { useTranslation } from '#base/context/system';
-import { useCatalogNavigation, useCatalogVisibility } from '#base/hooks';
+import { useCatalogNavigation, useWindowVisibility } from '#base/hooks';
 import { Box, Frame, Region, TabButton, TabContext } from '#base/theme';
 
 import { CatalogHeaderView } from './CatalogHeaderView';
 import { CatalogPurchaseConfirmationView } from './CatalogPurchaseConfirmationView';
 import { CatalogNavigationView } from './navigation/CatalogNavigationView';
 import { CatalogSearchView } from './navigation/CatalogSearchView';
-import { CatalogActivePagePixi } from './page/CatalogActivePagePixi';
+import { CatalogActivePage } from './page/CatalogActivePage';
 
 export type CatalogViewWindowParams = { pageId?: number; pageName?: string; offerId?: number };
 
@@ -16,7 +16,7 @@ export const CatalogView = () => {
     const rootNode = useCatalogStore(x => x.rootNode);
     const activeNodes = useCatalogStore(x => x.activeNodes);
     const { activateNode } = useCatalogNavigation();
-    const { hide } = useCatalogVisibility();
+    const { hide } = useWindowVisibility('catalog');
     const t = useTranslation();
 
     if (!rootNode) return null;
@@ -41,7 +41,7 @@ export const CatalogView = () => {
                         ? (
                                 <TabButton
                                     key={x.pageId}
-                                    selected={x.isActive}
+                                    selected={activeNodes.includes(x)}
                                     onPointerTap={() => activateNode(x)}
                                     layout={{ width: '100%' }}
                                 >
@@ -60,7 +60,7 @@ export const CatalogView = () => {
                         <CatalogNavigationView node={activeNodes[0]?.children[0]} />
                     </Box>
                     <Box layout={{ flexDirection: 'column', flex: 8, height: '100%', gap: 4 }}>
-                        <CatalogActivePagePixi />
+                        <CatalogActivePage />
                     </Box>
                 </Region>
             </Frame>

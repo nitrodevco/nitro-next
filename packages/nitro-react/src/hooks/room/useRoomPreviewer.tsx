@@ -313,6 +313,10 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         previewData.current.previewWidth = width;
         previewData.current.previewHeight = height;
+        // Whatever was measured against the old size is wrong for this one; the next frame
+        // centres the object in one jump rather than gliding over from where it was.
+        previewData.current.previewRectangle = undefined;
+        snapToFirstObject.current = true;
 
         if (!canvas) room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
         else canvas.initialize(width, height);
@@ -336,6 +340,11 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         if (!room) return;
 
         checkAutomaticObjectStateChange();
+
+        // Nothing to centre in until the target has a size: a rectangle measured against 0x0
+        // would park the object in the corner and use up the snap. On a remount the room is
+        // still there with an object in it, so this is reached before the first layout.
+        if ((previewData.current.previewWidth <= 0) || (previewData.current.previewHeight <= 0)) return;
 
         let offset = room.getRoomInstanceRenderingCanvasOffset();
 

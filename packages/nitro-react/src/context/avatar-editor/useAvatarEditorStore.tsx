@@ -1,13 +1,13 @@
-import { useContext } from 'react';
 import { useStore } from 'zustand';
 
-import { AvatarEditorContext } from './AvatarEditorContext';
-import { AvatarEditorStore } from './store';
+import { AvatarEditorStore, avatarEditorStore } from './store';
 
+/**
+ * A slice of the AvatarEditorStore, re-rendering only when that slice changes. It reads the
+ * app-wide singleton, so it works anywhere - there is no provider to be inside. There is only
+ * ever one editor, and what it holds (the wardrobe, the owned figure sets, the tab it was on)
+ * survives the window closing.
+ */
 export function useAvatarEditorStore<T>(selector: (state: AvatarEditorStore) => T) {
-    const store = useContext(AvatarEditorContext);
-
-    if (!store) throw new Error('useAvatarEditorStore must be used within AvatarEditorContextProvider');
-
-    return useStore(store, selector);
+    return useStore(avatarEditorStore, selector);
 }

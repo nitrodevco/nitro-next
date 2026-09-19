@@ -46,6 +46,9 @@ export const createRoomStore = () => createStore<RoomStore>()((set, get, store) 
             x.room.dispose();
         }
 
+        // The room reads tile heights off this store, live, so the map the handlers fill in is the one it sees.
+        room?.setStackingHeightMap({ getTileHeight: (tileX, tileY) => get().getTileHeight(tileX, tileY) });
+
         return { ...freshRoomState(store), room };
     }),
     ...createRoomMouseSlice(set, get, store),

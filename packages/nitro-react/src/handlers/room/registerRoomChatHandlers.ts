@@ -3,7 +3,7 @@ import { ChatMessage, FloodControlMessage, HandItemReceivedMessage, IChatLink, P
 
 import { createChatBubbleId } from '#base/chat';
 import { WebSocketConnection } from '#base/context/communication';
-import { roomStore } from '#base/context/room';
+import { getRoom, roomStore } from '#base/context/room';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
@@ -25,7 +25,6 @@ const PET_SUPPLEMENT_CHAT_TYPES: Record<number, RoomChatTypeEnum> = {
  * did), so its pointer keeps following them while they walk. Flood control and the room's chat settings land in the store for the chat input.
  */
 export const registerRoomChatHandlers = ({ subscribe }: WebSocketConnection) => {
-    const getRoom = () => roomStore.getState().room;
     const { addChatBubble, setFloodBlock, setChatSettings } = roomStore.getState();
     let lastAddedChatMs = 0;
     let chatFakeMsIncrementor = 0;

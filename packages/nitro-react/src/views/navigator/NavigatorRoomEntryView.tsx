@@ -24,7 +24,7 @@ export interface NavigatorRoomEntryViewProps {
 /**
  * Pixi port of views/navigator/NavigatorRoomEntryView.tsx. Border has no onClick of its own
  * (a plain presentational leaf everywhere else in this package), so the whole entry is wrapped
- * in an interactive Box the same way FriendListFriendItemPixi's relationship dropdown already
+ * in an interactive Box the same way FriendListFriendItem's relationship dropdown already
  * does, rather than widening Border's own contract for this one call site.
  */
 export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, onShowInfo }: NavigatorRoomEntryViewProps) => {

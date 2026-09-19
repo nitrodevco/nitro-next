@@ -1,8 +1,9 @@
 import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
+import { goToRoom } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { RoomLinkData } from '#base/handlers';
-import { useGoToRoom } from '#base/hooks';
 import { FurnitureRoomLinkView } from '#base/views/room-widgets/furniture/FurnitureRoomLinkView';
 
 import { readFurnitureLink } from './furnitureWidgetData';
@@ -16,7 +17,7 @@ export const FurnitureRoomLinkWidget = () => {
     const request = useRoomWidget<RoomLinkData>(RoomObjectWidgetRequestEvent.ROOM_LINK);
     const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
-    const goToRoom = useGoToRoom();
+    const { send } = useWebSocketContext();
 
     const onClose = () => closeRoomWidget(RoomObjectWidgetRequestEvent.ROOM_LINK);
 
@@ -36,7 +37,7 @@ export const FurnitureRoomLinkWidget = () => {
             roomName={data.roomName}
             ownerName={data.ownerName}
             onConfirm={() => {
-                goToRoom(targetRoomId);
+                goToRoom(send, targetRoomId);
                 onClose();
             }}
             onCancel={onClose}

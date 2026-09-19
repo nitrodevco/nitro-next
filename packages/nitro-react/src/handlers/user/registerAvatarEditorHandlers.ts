@@ -1,18 +1,21 @@
 import { FigureSetIdsEventMessage, WardrobeMessage } from '@nitrodevco/nitro-packets';
-import { StoreApi } from 'zustand';
 
-import { AvatarEditorStore, normalizeGender } from '#base/context/avatar-editor/store';
+import { avatarEditorStore, AvatarEditorWardrobeOutfit, normalizeGender } from '#base/context/avatar-editor';
 import { WebSocketConnection } from '#base/context/communication';
+import { systemStore } from '#base/context/system';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
+const DEFAULT_WARDROBE_SLOTS = 14;
+
 /**
- * Feeds the avatar editor store from the server: the sellable figure sets the user owns
- * (gates `isSellable` parts) and the wardrobe page. The editor makes a fresh store each time it
- * opens, so the store is handed in, and the editor registers this for as long as it is open.
+ * Feeds the avatar editor from the server - Flash's `AvatarEditorMessageHandler`: the sellable
+ * figure sets the user owns (gates `isSellable` parts) and the wardrobe page. Both land in the
+ * one app-wide editor store, so they are fetched once and are still there the next time the
+ * window opens.
  */
-export const registerAvatarEditorHandlers = ({ subscribe }: WebSocketConnection, store: StoreApi<AvatarEditorStore>, maxWardrobeSlots: number) => {
-    const { setFigureSetIds, setWardrobe } = store.getState();
+export const registerAvatarEditorHandlers = ({ subscribe }: WebSocketConnection) => {
+    const { setFigureSetIds, setWardrobe } = avatarEditorStore.getState();
 
     return subscribeAll(subscribe, [
         on(FigureSetIdsEventMessage, (data) => {
@@ -20,7 +23,8 @@ export const registerAvatarEditorHandlers = ({ subscribe }: WebSocketConnection,
         }),
 
         on(WardrobeMessage, (data) => {
-            const wardrobe = Array.from({ length: maxWardrobeSlots }, () => null as { figure: string; gender: ReturnType<typeof normalizeGender> } | null);
+            const maxSlots = Number(systemStore.getState().config['avatar.wardrobe.max.slots']) || DEFAULT_WARDROBE_SLOTS;
+            const wardrobe: AvatarEditorWardrobeOutfit[] = Array.from({ length: maxSlots }, () => null);
 
             for (const outfit of data.outfits) {
                 const index = outfit.slotId - 1;

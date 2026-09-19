@@ -15,6 +15,9 @@ type Actions = {
     setActivityPoints: (type: number, amount: number) => void;
 };
 
+/**
+ * The purse: credits, emeralds, silver and the activity point currencies by type.
+ */
 export const UserWalletSlice: State = {
     credits: 0,
     emeralds: 0,

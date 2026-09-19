@@ -4,8 +4,6 @@ export const CatalogNodeParser = (wrapper: IMessageDataWrapper): ICatalogNode =>
     return {
         depth: 0,
         parent: undefined,
-        isOpen: false,
-        isActive: false,
         visible: wrapper.readBoolean(),
         icon: wrapper.readInt(),
         pageId: wrapper.readInt(),

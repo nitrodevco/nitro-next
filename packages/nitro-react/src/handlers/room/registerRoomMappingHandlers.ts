@@ -3,12 +3,16 @@ import { FloorHeightMapMessage, HeightMapMessage, HeightMapMessageType, HeightMa
 import { LegacyWallGeometry, RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
 
 import { WebSocketConnection } from '#base/context/communication';
-import { roomStore } from '#base/context/room';
+import { getRoom, roomStore } from '#base/context/room';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
+/**
+ * The model half of Flash's `RoomMessageHandler`: the floor plan, the two height maps, the
+ * wallpaper/floor/landscape properties, the visualization settings and the special effects.
+ * The stacking height map lands in the store, which the room reads tile heights from.
+ */
 export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) => {
-    const getRoom = () => roomStore.getState().room;
     const { setHeightMap, setHeightMapUpdates } = roomStore.getState();
     let entryTile: { x: number; y: number; dir: number } | undefined = undefined;
 

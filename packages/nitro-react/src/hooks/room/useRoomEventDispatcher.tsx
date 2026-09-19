@@ -3,6 +3,11 @@ import { useEffect, useRef } from 'react';
 
 import { useRoom } from '#base/context/room';
 
+/**
+ * Subscribes a handler to one or more of the room's own events (`room.eventDispatcher`) for as
+ * long as the component is mounted. The handler lives in a ref, so the latest render's closure
+ * is the one called and callers need not memoise it.
+ */
 export const useRoomEventDispatcher = <T extends NitroEvent>(
     type: string | string[],
     handler: (event: T) => void,

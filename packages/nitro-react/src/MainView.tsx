@@ -13,6 +13,7 @@ import { Box, TooltipLayer } from './theme';
 import { HotelView } from './views/hotel-view/HotelView';
 import { ActivityPointsView } from './views/purse/ActivityPointsView';
 import { PurseView } from './views/purse/PurseView';
+import { RoomChatInputView } from './views/room-widgets/chat-input/RoomChatInputView';
 import { SystemDialogsView } from './views/system/SystemDialogsView';
 import { ToolbarView } from './views/toolbar/ToolbarView';
 
@@ -83,6 +84,8 @@ export const MainView = () => {
                 <NavigatorComponent />
                 <WalletComponent />
                 <ToolbarView />
+                {/* Drawn after the toolbar because it sits inside it when it fits; it renders nothing outside a room. */}
+                <RoomChatInputView />
                 <SystemDialogsView />
                 <TooltipLayer />
             </Box>

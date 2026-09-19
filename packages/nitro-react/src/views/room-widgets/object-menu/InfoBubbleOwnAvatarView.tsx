@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { dropCarryItem, openProfile } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { roomStore, useOwnIsDancing, useRoomStore } from '#base/context/room';
+import { useOwnIsDancing, useRoomSessionActions, useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
 import { useOwnClubLevel, useUserStore } from '#base/context/user';
 import { useRoomUserData } from '#base/hooks';
@@ -71,6 +71,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
     const t = useTranslation();
     const { send } = useWebSocketContext();
     const { showWindow, toggleWindow } = useWindowActions();
+    const { setIsDecorating } = useRoomSessionActions();
 
     if (!info) return null;
 
@@ -85,7 +86,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
     const buttons: Record<number, MenuButton[]> = {
         [MODE_NORMAL]: [
             // Decorating is a club feature, and only where you may move furniture.
-            { key: 'decorate', caption: t('widget.avatar.decorate'), visible: hasClub && ((info.myControllerLevel >= RoomControllerLevelEnum.Guest) || isRoomOwner), onPress: () => roomStore.getState().setIsDecorating(true) },
+            { key: 'decorate', caption: t('widget.avatar.decorate'), visible: hasClub && ((info.myControllerLevel >= RoomControllerLevelEnum.Guest) || isRoomOwner), onPress: () => setIsDecorating(true) },
             { key: 'change_looks', caption: t('widget.memenu.myclothes'), visible: true, onPress: () => showWindow('avatar_editor') },
             { key: 'wave', caption: t('widget.memenu.wave'), visible: !expressionsMenuEnabled, onPress: expression(AvatarExpressionEnum.Wave) },
             { key: 'expressions', caption: t('infostand.link.expressions'), visible: expressionsMenuEnabled, staysOpen: true, onPress: toMode(MODE_EXPRESSIONS) },

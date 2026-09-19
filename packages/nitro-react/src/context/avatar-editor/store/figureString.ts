@@ -1,5 +1,8 @@
 import { AvatarGenderType } from '@nitrodevco/nitro-api';
 
+/**
+ * Parsing and building `hr-100.hd-180-7...` figure strings, part by part.
+ */
 export const FIGURE_SET_TYPES = [ 'hd', 'hr', 'ha', 'he', 'ea', 'fa', 'ch', 'cc', 'ca', 'cp', 'lg', 'sh', 'wa' ] as const;
 
 export type FigureParts = Partial<Record<string, { setId: number; colorIds: number[] }>>;

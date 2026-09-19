@@ -7,6 +7,11 @@ import { systemStore } from '#base/context/system';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
+/**
+ * The room session's lifecycle - Flash's `RoomSessionManager`: the connection opening starts
+ * the session, `RoomReady` names the room the engine should build, and closing, an access
+ * denial or a failed connect ends it and puts the hotel view back.
+ */
 export const registerRoomDirectoryHandlers = ({ subscribe }: WebSocketConnection) => {
     // RoomMessageHandler keeps the current room id so it can dispose it on the next enter
     let currentRoomId = 0;

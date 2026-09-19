@@ -6,6 +6,11 @@ import { userStore } from '#base/context/user';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
+/**
+ * Who you are - Flash's `SessionDataManager`: the user object at login, figure and name changes,
+ * rights, noobness level, email status and the account preferences. Also counts pet respects
+ * down, since the server only reports a failure.
+ */
 export const registerUserInfoHandlers = ({ subscribe }: WebSocketConnection) => {
     const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects, setChatPreferences, setUiFlags, setUserInfo, setName, setFigure, setEmailVerified } = userStore.getState();
 

@@ -1,3 +1,4 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type PetExperienceMessageType = {
@@ -8,16 +9,10 @@ export type PetExperienceMessageType = {
 
 export class PetExperienceMessage implements IIncomingPacket<PetExperienceMessageType> {
     public parse(wrapper: IMessageDataWrapper): PetExperienceMessageType {
-        const packet: PetExperienceMessageType = {
-            petId: 0,
-            petRoomIndex: 0,
-            gainedExperience: 0,
+        return {
+            petId: wrapper.readInt(),
+            petRoomIndex: wrapper.readInt(),
+            gainedExperience: wrapper.readInt(),
         };
-
-        packet.petId = wrapper.readInt();
-        packet.petRoomIndex = wrapper.readInt();
-        packet.gainedExperience = wrapper.readInt();
-
-        return packet;
     }
 }

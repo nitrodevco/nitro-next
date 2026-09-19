@@ -85,7 +85,7 @@ const ScrollAreaPixi = forwardRef<PixiContainer, ScrollAreaProps>(
         // behavior - callers scrolling a single wide row (horizontal orientation) override via
         // `contentLayout`, the same way DOM callers would give their children their own
         // `flex flex-row` wrapper.
-        const resolvedContentLayout: BoxLayout = contentLayout ?? { position: 'relative', width: '100%', gap: 2 };
+        const resolvedContentLayout: BoxLayout = contentLayout ?? { position: 'relative', width: '100%', flexDirection: 'column', gap: 2 };
 
         return (
             <Box

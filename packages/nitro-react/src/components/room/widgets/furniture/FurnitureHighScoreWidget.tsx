@@ -4,7 +4,7 @@ import { useRoomWidget } from '#base/context/room';
 import { useRoomFurnitureData } from '#base/hooks';
 import { FurnitureHighScoreView } from '#base/views/room-widgets/furniture/FurnitureHighScoreView';
 
-import { RoomObjectMenuBubblePixi } from '../object-menu/RoomObjectMenuBubblePixi';
+import { RoomObjectMenuBubble } from '../object-menu/RoomObjectMenuBubble';
 
 /**
  * A game's scoreboard. Nothing opens or closes it by hand: `FurnitureHighScoreLogic` asks for it
@@ -24,12 +24,12 @@ export const FurnitureHighScoreWidget = () => {
     const { scoreType, clearType, entries } = furnitureData.stuffData;
 
     return (
-        <RoomObjectMenuBubblePixi objectData={{ objectId: request.objectId, category: request.category }}>
+        <RoomObjectMenuBubble objectData={{ objectId: request.objectId, category: request.category }}>
             <FurnitureHighScoreView
                 scoreType={scoreType}
                 clearType={clearType}
                 entries={entries.map(entry => ({ score: entry.score, users: entry.users }))}
             />
-        </RoomObjectMenuBubblePixi>
+        </RoomObjectMenuBubble>
     );
 };
