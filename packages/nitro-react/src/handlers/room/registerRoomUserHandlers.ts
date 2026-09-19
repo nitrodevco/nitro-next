@@ -1,5 +1,5 @@
 import { AvatarActionStateType, AvatarFigurePartType, AvatarGenderType, IRoomUserData, IVector3D, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { AvatarEffectMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from '@nitrodevco/nitro-packets';
+import { AvatarEffectMessage, BlockUserUpdateMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { getRoom, roomStore } from '#base/context/room';
@@ -12,6 +12,10 @@ import { on, subscribeAll } from '../packetSubscriptions';
  * bots arriving, moving, changing and leaving, plus the per-avatar state - dance, expression,
  * effect, sleep, hand item, typing. Each packet updates the room object (which draws it) and the
  * store's `usersByRoomObjectId` (which the widgets read).
+ *
+ * A blocked user is drawn as the generic blocked figure: `RoomEngine.addObjectUser` checked the
+ * block list as the avatar arrived, and `RoomMessageHandler.onBlockUserUpdate` swapped it when
+ * someone in the room was blocked or unblocked.
  */
 export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => {
     const { setOwnRoomIndex, setIsOwnDancing, updateUsers, updateUserPartial, removeUser } = roomStore.getState();
@@ -29,6 +33,8 @@ export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => 
                 const direction = new Vector3d(avatar.bodyRotation);
 
                 room.addRoomObjectUser(avatar.objectId, location, direction, avatar.bodyRotation, avatar.avatarType, avatar.figure);
+
+                if ((avatar.avatarType === RoomObjectUserType.User) && userStore.getState().blockedUserIds.includes(avatar.webId)) room.updateRoomObjectUserBlocked(avatar.objectId, true);
 
                 if (avatar.webId === userStore.getState().userId) {
                     setOwnRoomIndex(avatar.objectId);
@@ -274,6 +280,16 @@ export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => 
                 if (postureUpdate) room.updateRoomObjectUserPosture(update.objectId, postureType, parameter);
                 else if (isPosture) room.updateRoomObjectUserPosture(update.objectId, AvatarFigurePartType.Standard);
             }
+        }),
+
+        on(BlockUserUpdateMessage, (data) => {
+            const room = getRoom();
+
+            if (!room) return;
+
+            const user = Object.values(roomStore.getState().usersByRoomObjectId).find(x => (x.webID === data.userId) && (x.userType === RoomObjectUserType.User));
+
+            if (user) room.updateRoomObjectUserBlocked(user.objectId, data.result === 1);
         }),
 
         on(UserRemoveMessage, (data) => {

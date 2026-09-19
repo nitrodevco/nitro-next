@@ -1,4 +1,4 @@
-import { IRoomGeometry, IRoomSpriteMouseEvent, MouseEventType, RoomObjectEvent, RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomGeometry, IRoomSpriteMouseEvent, MouseEventType, RoomObjectEvent, RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
@@ -11,6 +11,13 @@ export class FurnitureDiceLogic extends FurnitureLogic {
             RoomObjectFurnitureActionEvent.DICE_ACTIVATE,
             RoomObjectFurnitureActionEvent.DICE_OFF,
         ]);
+    }
+
+    /** `FurnitureDiceLogic.initialize`: an `allspritesactivate` element makes every sprite toggle the dice. */
+    public override initialize(asset: IAssetData | undefined): void {
+        super.initialize(asset);
+
+        this._noTags = !!asset?.logic?.allSpritesActivate;
     }
 
     public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {

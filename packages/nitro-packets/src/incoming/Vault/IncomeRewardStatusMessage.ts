@@ -1,17 +1,15 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper, ParseArray } from '@nitrodevco/nitro-api';
 
-// TODO(IncomeRewards: List<IncomeRewardSnapshot>): List<T> requires custom read loop (length + items).
+import { IIncomeRewardStatusData } from './Data/IIncomeRewardStatusData';
+import { IncomeRewardStatusDataParser } from './Data/IncomeRewardStatusDataParser';
 
 export type IncomeRewardStatusMessageType = {
-    incomeRewards: any[];
+    data: IIncomeRewardStatusData[];
 };
 
 export class IncomeRewardStatusMessage implements IIncomingPacket<IncomeRewardStatusMessageType> {
     public parse(wrapper: IMessageDataWrapper): IncomeRewardStatusMessageType {
-        const packet: IncomeRewardStatusMessageType = {
-            incomeRewards: undefined as any, // List<T> requires custom read loop (length + items).
-        };
-
-        return packet;
+        const data = ParseArray(wrapper, IncomeRewardStatusDataParser);
+        return { data };
     }
 }

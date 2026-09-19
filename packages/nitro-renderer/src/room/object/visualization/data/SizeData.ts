@@ -74,7 +74,8 @@ export class SizeData {
 
             if (color.layers) {
                 for (const layer of color.layers) {
-                    if (layer?.color) colorData.setColorLayer(layer.id, layer.color);
+                    // Black is 0 - `SizeData.defineColors` sets every colorLayer it reads.
+                    if (layer && layer.color !== undefined) colorData.setColorLayer(layer.id, layer.color);
                 }
             }
 

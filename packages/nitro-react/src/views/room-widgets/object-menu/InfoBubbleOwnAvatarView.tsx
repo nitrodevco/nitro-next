@@ -63,7 +63,9 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
     const [ mode, setMode ] = useState((isDancing && hasClub) ? MODE_CLUB_DANCES : MODE_NORMAL);
     const [ collapsed, setCollapsed ] = useState(false);
     const effectsDisabled = useConfigValue<boolean>('memenu.effects.widget.disabled') ?? false;
-    const handItemDropEnabled = useConfigValue<boolean>('handitem.drop.enabled') ?? true;
+    // `OwnAvatarMenuView`: the config flag, and not while the room's configuration items block hand item control.
+    const isHanditemControlBlocked = useRoomStore(x => x.isHanditemControlBlocked);
+    const handItemDropEnabled = (useConfigValue<boolean>('handitem.drop.enabled') ?? true) && !isHanditemControlBlocked;
     const expressionsMenuEnabled = useConfigValue<boolean>('avatar.expressions_menu.enabled') ?? true;
     const signsEnabled = useConfigValue<boolean>('avatar.signs.enabled') ?? true;
     const sittingEnabled = useConfigValue<boolean>('avatar.sitting.enabled') ?? true;

@@ -15,7 +15,8 @@ import {
     RoomObjectVariableEnum,
 } from '@nitrodevco/nitro-api';
 import { AdvancedMap, AvatarActionStateType, AvatarActionStateTypeUtilities, AvatarGenderType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { Texture } from 'pixi.js';
+import { ColorMatrixFilter, Filter, Texture } from 'pixi.js';
+import { GlowFilter } from 'pixi-filters';
 
 import { GetAssetManager } from '#renderer/assets';
 import { GetTickerTime } from '#renderer/utils';
@@ -56,6 +57,15 @@ export class AvatarVisualization
     private static DEFAULT_CANVAS_OFFSETS: number[] = [ 0, 0, 0 ];
     private static MAX_EFFECT_CACHE: number = 2;
     private static SPRITE_INDEX_AVATAR: number = 0;
+    private static BLOCKED_AVATAR_COLOR: number = 0x666666;
+
+    /** Flash `GlowFilter(0xFFFFFF, 1, 6, 6)` around a highlighted avatar. */
+    private static HIGHLIGHT_FILTERS: Filter[] | undefined = undefined;
+    /**
+     * Flash `VARIABLE_HOLDER_FILTER`: the tint and inner glow the wired menu puts on the avatars
+     * that hold a variable. Pixi's colour matrix takes its offsets in 0-1 where Flash's are 0-255.
+     */
+    private static VARIABLE_HOLDER_FILTERS: Filter[] | undefined = undefined;
     private static BASE_Y_SCALE: number = 1000;
     private static AVATAR_SPRITE_DEFAULT_DEPTH: number = -0.01;
     private static AVATAR_OWN_DEPTH_ADJUST: number = 0.001;
@@ -89,6 +99,9 @@ export class AvatarVisualization
     private _sign: number = -1;
     private _highlightEnabled: boolean = false;
     private _highlight: boolean = false;
+    private _highlightVariableHolder: boolean = false;
+    private _blocked: boolean = false;
+    private _alphaMultiplier: number = 1;
     private _dance: number = 0;
     private _effect: number = 0;
     private _carryObject: number = 0;
@@ -169,6 +182,7 @@ export class AvatarVisualization
 
         const scale = geometry.scale;
         const effect = this._effect;
+        const alphaMultiplier = this._alphaMultiplier;
 
         let didScaleUpdate = false;
         let didEffectUpdate = false;
@@ -192,7 +206,9 @@ export class AvatarVisualization
 
             if (effect !== this._effect) didEffectUpdate = true;
 
-            if (didScaleUpdate || !this._avatarImage || didEffectUpdate) {
+            const didAlphaUpdate = alphaMultiplier !== this._alphaMultiplier;
+
+            if (didScaleUpdate || !this._avatarImage || didEffectUpdate || didAlphaUpdate) {
                 this._avatarImage?.dispose();
 
                 this._avatarImage = this.createAvatarImage(scale, this._effect);
@@ -205,10 +221,12 @@ export class AvatarVisualization
 
                 const sprite = this.getSprite(AvatarVisualization.AVATAR_LAYER_ID);
 
-                if (sprite && this._avatarImage && (this._avatarImage.isPlaceholder() || this._avatarImage.isBlocked())) {
-                    sprite.alpha = 150;
+                if (sprite && (this._avatarImage.isPlaceholder() || this._avatarImage.isBlocked())) {
+                    sprite.alpha = 150 * this._alphaMultiplier;
+                    sprite.color = this._avatarImage.isBlocked() ? AvatarVisualization.BLOCKED_AVATAR_COLOR : 0xFFFFFF;
                 } else if (sprite) {
                     sprite.alpha = 255;
+                    sprite.color = 0xFFFFFF;
                 }
             }
 
@@ -273,25 +291,17 @@ export class AvatarVisualization
             const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
 
             if (sprite) {
-                const highlightEnabled
-                    = this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlightEnable) === 1
-                        && this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlight) === 1;
+                const highlighted = this._highlightEnabled && this._highlight;
 
-                const avatarImage = this._avatarImage.getImageWithCroppedTop(AvatarSetType.Full, highlightEnabled);
+                const avatarImage = this._avatarImage.getImageWithCroppedTop(AvatarSetType.Full, highlighted || this._highlightVariableHolder);
 
                 if (avatarImage) {
                     sprite.texture = avatarImage;
 
-                    if (highlightEnabled) {
-                        // sprite.filters  = [
-                        //     new GlowFilter({
-                        //         color: 0xFFFFFF,
-                        //         distance: 6
-                        //     })
-                        // ];
-                    } else {
-                        sprite.filters = [];
-                    }
+                    // Flash applies one or the other to the avatar bitmap, the hover highlight first.
+                    if (highlighted) sprite.filters = AvatarVisualization.getHighlightFilters();
+                    else if (this._highlightVariableHolder) sprite.filters = AvatarVisualization.getVariableHolderFilters();
+                    else sprite.filters = [];
                 }
 
                 if (sprite.texture) {
@@ -314,6 +324,8 @@ export class AvatarVisualization
                 } else {
                     sprite.spriteType = RoomObjectSpriteTypeEnum.Avatar;
                 }
+
+                sprite.alpha = ((this._avatarImage.isPlaceholder() || this._avatarImage.isBlocked()) ? 150 : 255) * this._alphaMultiplier;
             }
 
             const typingBubble = this.getAddition(AvatarVisualization.TYPING_BUBBLE_ID) as TypingBubbleAddition;
@@ -423,6 +435,24 @@ export class AvatarVisualization
         }
     }
 
+    private static getHighlightFilters(): Filter[] {
+        if (!AvatarVisualization.HIGHLIGHT_FILTERS) AvatarVisualization.HIGHLIGHT_FILTERS = [ new GlowFilter({ color: 0xFFFFFF, alpha: 1, distance: 6, outerStrength: 2, innerStrength: 0 }) ];
+
+        return AvatarVisualization.HIGHLIGHT_FILTERS;
+    }
+
+    private static getVariableHolderFilters(): Filter[] {
+        if (!AvatarVisualization.VARIABLE_HOLDER_FILTERS) {
+            const tint = new ColorMatrixFilter();
+
+            tint.matrix = [ 0.9, 0, 0, 0, 0, 0, 1, 0, 0, 40 / 255, 0, 0, 1, 0, 80 / 255, 0, 0, 0, 0.85, 0 ];
+
+            AvatarVisualization.VARIABLE_HOLDER_FILTERS = [ tint, new GlowFilter({ color: 0xBBF7FA, alpha: 1, distance: 4, outerStrength: 0, innerStrength: 4 }) ];
+        }
+
+        return AvatarVisualization.VARIABLE_HOLDER_FILTERS;
+    }
+
     private createAvatarImage(scale: RoomGeometryScaleType, effectId: number): IAvatarImage | undefined {
         let cachedImage: IAvatarImage | undefined;
         let imageName = 'avatarImage' + scale.toString();
@@ -436,7 +466,7 @@ export class AvatarVisualization
         }
 
         if (!cachedImage && this._figure && this._figure.length > 0) {
-            cachedImage = this._data?.createAvatarImage(this._figure, scale, this._gender, this, this);
+            cachedImage = this._data?.createAvatarImage(this._figure, scale, this._gender, this, this, this._blocked);
 
             if (cachedImage) {
                 if (!effectId) {
@@ -640,6 +670,16 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
+        let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FigureAlphaMultiplier);
+
+        if (alphaMultiplier === undefined || alphaMultiplier === null || isNaN(alphaMultiplier)) alphaMultiplier = 1;
+
+        if (alphaMultiplier !== this._alphaMultiplier) {
+            this._alphaMultiplier = alphaMultiplier;
+
+            needsUpdate = true;
+        }
+
         if (this._carryObject > 0 && useObject > 0) {
             if (this._useObject !== this._carryObject) {
                 this._useObject = this._carryObject;
@@ -779,6 +819,8 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
+        if (this.updateBlocked(model.getValue<number>(RoomObjectVariableEnum.Blocked) > 0)) needsUpdate = true;
+
         const highlightEnabled = model.getValue<number>(RoomObjectVariableEnum.FigureHighlightEnable) > 0;
 
         if (highlightEnabled !== this._highlightEnabled) {
@@ -797,6 +839,14 @@ export class AvatarVisualization
             }
         }
 
+        const highlightVariableHolder = model.getValue<number>(RoomObjectVariableEnum.FigureHighlightVariableHolder) > 0;
+
+        if (highlightVariableHolder !== this._highlightVariableHolder) {
+            this._highlightVariableHolder = highlightVariableHolder;
+
+            needsUpdate = true;
+        }
+
         const ownUser = model.getValue<number>(RoomObjectVariableEnum.OwnUser) > 0;
 
         if (ownUser !== this._ownUser) {
@@ -808,6 +858,17 @@ export class AvatarVisualization
         this.updateModelCounter = model.updateCounter;
 
         return needsUpdate;
+    }
+
+    /** Flash `updateBlocked`: the cached images are of the other figure, so they all go. */
+    private updateBlocked(blocked: boolean): boolean {
+        if (blocked === this._blocked) return false;
+
+        this._blocked = blocked;
+
+        this.resetAvatar();
+
+        return true;
     }
 
     private updateScale(scale: RoomGeometryScaleType): void {
@@ -1012,7 +1073,7 @@ export class AvatarVisualization
 
                 if (this._shadow && this._shadow.texture) {
                     sprite.texture = this._shadow.texture;
-                    sprite.alpha = 50;
+                    sprite.alpha = 50 * this._alphaMultiplier;
                     sprite.relativeDepth = 1;
                 } else {
                     sprite.visible = false;

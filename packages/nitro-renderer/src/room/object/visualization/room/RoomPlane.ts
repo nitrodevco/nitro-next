@@ -376,8 +376,22 @@ export class RoomPlane implements IRoomPlane {
         const materialId = planeLayer?.materialId;
         const color = planeLayer?.color ?? 0xffffff;
 
-        const assetName
-            = planeVisualizationData?.textures?.find(t => t.id === materialId)?.bitmaps?.[0]?.assetName ?? '';
+        // `PlaneRasterizer`: a layer names a material, the material's cells name the texture, and the
+        // texture (`PlaneTexture.getPlaneTextureBitmap`) picks its bitmap by the plane's normal. Walls and
+        // floors happen to use one id for both; landscapes do not, so the material cannot be skipped.
+        // Only the first cell is drawn - the cell matrix itself (columns, repeat modes, extra items) and
+        // the layers above the first are the rasterizers' job, which are not ported.
+        const inNormalRange = (range: { normalMinX?: number; normalMaxX?: number; normalMinY?: number; normalMaxY?: number }) =>
+            this._normal.x >= (range.normalMinX ?? -1)
+            && this._normal.x <= (range.normalMaxX ?? 1)
+            && this._normal.y >= (range.normalMinY ?? -1)
+            && this._normal.y <= (range.normalMaxY ?? 1);
+
+        const material = planeVisualizationData?.materials?.find(m => m.id === materialId);
+        const matrix = material?.matrices?.find(inNormalRange) ?? material?.matrices?.[0];
+        const textureId = matrix?.columns?.[0]?.cells?.[0]?.textureId ?? materialId;
+        const bitmaps = planeVisualizationData?.textures?.find(t => t.id === textureId)?.bitmaps;
+        const assetName = (bitmaps?.find(inNormalRange) ?? bitmaps?.[0])?.assetName ?? '';
 
         const texture = GetAssetManager().getAsset(assetName)?.texture ?? Texture.WHITE;
 

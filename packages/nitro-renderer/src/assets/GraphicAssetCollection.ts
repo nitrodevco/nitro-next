@@ -217,6 +217,12 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
             if (!texture) continue;
 
+            // `GraphicAssetCollection.defineAssets`: the first definition of a name wins, unless what is
+            // there is an alias (its source is another asset), which a later definition replaces.
+            const existing = this._assets.get(asset.name);
+
+            if (existing && (existing.source === undefined || existing.source === existing.name)) continue;
+
             this._assets.set(asset.name, GraphicAsset.createAsset(asset.name, source, texture, x, y, flipH, flipV, usesPalette));
         }
     }
@@ -230,7 +236,8 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
             let color = palette.color1;
 
-            if (color && color.length > 0) colorOne = parseInt(color, 16);
+            // `GraphicAssetCollection.definePalettes`: color2 falls back to color1, not to white.
+            if (color && color.length > 0) colorOne = colorTwo = parseInt(color, 16);
 
             color = palette.color2;
 

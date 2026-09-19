@@ -16,6 +16,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
     public static TYPE: string = RoomObjectVisualizationType.FURNITURE_STATIC;
 
     private static VARIABLE_FX_SPRITE_TAG: string = 'variable_fx';
+    private static INVISIBLE_LAYER_TAG: string = 'invisible';
     private static VARIABLE_FX_ASSET_NAME: string = 'variable_fx_stack';
     private static VARIABLE_FX_STACK_LAYER: number = 0;
     private static VARIABLE_FX_STACK_GAP: number = 4;
@@ -28,6 +29,8 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
     protected _selectedColor: number = 0;
     protected _furnitureLift: number = 0;
     protected _alphaMultiplier: number = 1;
+    /** The room hides layers tagged `invisible` (Flash `furniture_invisible_layer`). */
+    protected _invisibleLayer: boolean = false;
     protected _alphaChanged: boolean = false;
     protected _clickUrl: string | undefined = undefined;
     protected _clickHandling: boolean = false;
@@ -227,6 +230,15 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
 
                 this._alphaChanged = true;
             }
+
+            const invisibleLayer = model.getValue<number>(RoomObjectVariableEnum.FurnitureInvisibleLayer) > 0;
+
+            // Flash raises the same flag as an alpha change, which redraws every layer.
+            if (this._invisibleLayer !== invisibleLayer) {
+                this._invisibleLayer = invisibleLayer;
+
+                this._alphaChanged = true;
+            }
         }
 
         const variableFxChanged = this.reconcileVariableFxStatuses(model.getValue<IVariableFxStatusModelData | undefined>(RoomObjectVariableEnum.VariableFxStatuses));
@@ -295,6 +307,11 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
                     sprite.alphaTolerance = this.getLayerIgnoreMouse(scale, this._direction, layerId)
                         ? AlphaTolerance.MATCH_NOTHING
                         : AlphaTolerance.MATCH_OPAQUE_PIXELS;
+
+                    if (this._invisibleLayer && sprite.tag === FurnitureVisualization.INVISIBLE_LAYER_TAG) {
+                        sprite.alpha = 0;
+                        sprite.alphaTolerance = AlphaTolerance.MATCH_NOTHING;
+                    }
 
                     relativeDepth = this.getLayerZOffset(scale, this._direction, layerId);
                     relativeDepth = relativeDepth - layerId * 0.001;

@@ -15,6 +15,7 @@ export class FurniturePresentLogic extends FurnitureLogic {
     private static EXTRA_PARAM: string = 'EXTRA_PARAM';
     private static PURCHASER_NAME: string = 'PURCHASER_NAME';
     private static PURCHASER_FIGURE: string = 'PURCHASER_FIGURE';
+    private static TRUSTED_SENDER: string = 'TRUSTED_SENDER';
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.PRESENT ]);
@@ -62,6 +63,11 @@ export class FurniturePresentLogic extends FurnitureLogic {
             this.object.model.setValue(
                 RoomObjectVariableEnum.FurniturePurchaserFigure,
                 stuffData.getValue(FurniturePresentLogic.PURCHASER_FIGURE),
+            );
+            // Set by the server for gifts from staff; anything else gets the untrusted-sender banner.
+            this.object.model.setValue(
+                RoomObjectVariableEnum.FurnitureTrustedSender,
+                (stuffData.getValue(FurniturePresentLogic.TRUSTED_SENDER) === 'true') ? 1 : 0,
             );
         }
 

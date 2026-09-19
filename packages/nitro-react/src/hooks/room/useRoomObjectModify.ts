@@ -21,9 +21,10 @@ export const useRoomObjectModify = () => {
     const selectedObject = useRoomSelectedObject();
     const controllerLevel = useRoomStore(x => x.controllerLevel);
     const isRoomOwner = useRoomStore(x => x.isRoomOwner);
+    const isFreeFurniMovementsMode = useRoomStore(x => x.isFreeFurniMovementsMode);
     const { setSelectedObject } = useRoomSelectedObjectActions();
     const { resetSelectedObject } = useRoomObjectSelect();
-    const { setFurnitureAlphaMultiplier, isValidLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
+    const { setObjectAlphaMultiplier, isValidLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
     const { send } = useWebSocketContext();
 
     /**
@@ -53,7 +54,8 @@ export const useRoomObjectModify = () => {
 
     const isFurnitureOwner = (object: IRoomObject | undefined) => object && (ownUserId === object.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId));
 
-    const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => room && (isRoomOwner || isModerator || (controllerLevel >= RoomControllerLevelEnum.Guest) || isFurnitureOwner(room.getRoomObject(objectId, category)));
+    /** `RoomDesktop.checkFurniManipulationRights`: rights, ownership, or a room whose configuration items free the furni for everyone. */
+    const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => room && (isRoomOwner || isModerator || (controllerLevel >= RoomControllerLevelEnum.Guest) || isFreeFurniMovementsMode || isFurnitureOwner(room.getRoomObject(objectId, category)));
 
     const modifyRoomObject = (objectId: number, category: RoomObjectCategoryEnum, operation: RoomObjectOperationType) => {
         if (!room) return false;
@@ -104,7 +106,7 @@ export const useRoomObjectModify = () => {
             }
             case RoomObjectOperationType.OBJECT_MOVE:
                 shouldReset = false;
-                setFurnitureAlphaMultiplier(roomObject, 0.5);
+                setObjectAlphaMultiplier(roomObject, 0.5);
 
                 selectedObjectData = new SelectedRoomObjectData(
                     roomObject.id,
@@ -130,7 +132,7 @@ export const useRoomObjectModify = () => {
                     roomObject.getDirection(),
                 );
 
-                setFurnitureAlphaMultiplier(roomObject, 1);
+                setObjectAlphaMultiplier(roomObject, 1);
 
                 room.removeRoomOverlayIconSprite();
 

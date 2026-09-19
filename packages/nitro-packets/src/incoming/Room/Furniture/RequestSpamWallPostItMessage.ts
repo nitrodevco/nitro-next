@@ -1,16 +1,15 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(ItemId: RoomObjectId): Unknown type 'RoomObjectId'. Add override mapping.
-
 export type RequestSpamWallPostItMessageType = {
-    itemId: any;
+    itemId: number;
     location: string;
 };
 
 export class RequestSpamWallPostItMessage implements IIncomingPacket<RequestSpamWallPostItMessageType> {
     public parse(wrapper: IMessageDataWrapper): RequestSpamWallPostItMessageType {
         const packet: RequestSpamWallPostItMessageType = {
-            itemId: undefined as any, // Unknown type 'RoomObjectId'. Add override mapping.
+            itemId: wrapper.readInt(),
             location: wrapper.readString(),
         };
 

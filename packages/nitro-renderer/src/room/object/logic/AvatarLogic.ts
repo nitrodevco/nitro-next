@@ -12,6 +12,7 @@ import { RoomObjectFurnitureActionEvent, RoomObjectMouseEvent, RoomObjectMoveEve
 
 import { GetTickerTime } from '../../../utils';
 import {
+    ObjectAvatarBlockedUpdateMessage,
     ObjectAvatarCarryObjectUpdateMessage,
     ObjectAvatarChatUpdateMessage,
     ObjectAvatarDanceUpdateMessage,
@@ -134,6 +135,12 @@ export class AvatarLogic extends MovingObjectLogic {
 
         if (message instanceof ObjectAvatarMutedUpdateMessage) {
             this.object.model.setValue(RoomObjectVariableEnum.FigureIsMuted, message.isMuted ? 1 : 0);
+
+            return;
+        }
+
+        if (message instanceof ObjectAvatarBlockedUpdateMessage) {
+            this.object.model.setValue(RoomObjectVariableEnum.Blocked, message.isBlocked ? 1 : 0);
 
             return;
         }

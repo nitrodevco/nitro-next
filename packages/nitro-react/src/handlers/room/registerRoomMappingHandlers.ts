@@ -1,4 +1,4 @@
-import { RoomGeometryScaleType, RoomZoomEvent, SpecialRoomEffectType, Vector3d } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType, RoomObjectVariableEnum, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
 import { FloorHeightMapMessage, HeightMapMessage, HeightMapMessageType, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from '@nitrodevco/nitro-packets';
 import { LegacyWallGeometry, RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
 
@@ -195,10 +195,14 @@ export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) 
             if (!room) return;
 
             const { mapData, wallGeometry } = parseMapData(data.modelData, data.fixedWallsHeight);
-            const cameraInitPosition = new Vector3d(data.cameraInitX, data.cameraInitY, data.cameraInitZ);
 
             room.applyRoomMap(mapData);
             room.setLegacyGeometry(wallGeometry);
+
+            // `RoomEngine.initializeRoom`: where the camera rests until there is an avatar to follow.
+            room.setRoomValue(RoomObjectVariableEnum.CameraInitX, data.cameraInitX);
+            room.setRoomValue(RoomObjectVariableEnum.CameraInitY, data.cameraInitY);
+            room.setRoomValue(RoomObjectVariableEnum.CameraInitZ, data.cameraInitZ);
 
             /*
              * The areas the room is already hiding when you walk into it. Flash handed the same list

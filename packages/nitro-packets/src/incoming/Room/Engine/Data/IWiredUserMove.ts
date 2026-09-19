@@ -12,5 +12,6 @@ export interface IWiredUserMove {
     animationTime: number;
     bodyRotation: number;
     headRotation: number;
+    /** `NaN` unless the move is a jump. */
     jumpPower: number;
 }

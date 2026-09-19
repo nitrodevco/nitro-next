@@ -10,7 +10,9 @@ import { FurniturePresentView } from '#base/views/room-widgets/furniture/Furnitu
 /**
  * A wrapped gift. The note and the sender come off the object; what is inside only arrives when
  * the server answers the open, which `registerRoomPresentHandlers` deposits on this request. Only the
- * person it was placed for can open it, which is the owner check Flash made.
+ * person it was placed for can open it, which is the owner check Flash made. Whether the sender
+ * is trusted (`FurniturePresentLogic` reads it off the gift's data) picks the banner and the
+ * card - `FurniturePresentWidgetHandler` passed it on the same way.
  */
 export const FurniturePresentWidget = () => {
     const request = useRoomWidget<PresentOpenedMessageType>(RoomObjectWidgetRequestEvent.PRESENT);
@@ -42,6 +44,7 @@ export const FurniturePresentWidget = () => {
         <FurniturePresentView
             message={roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureData) ?? ''}
             purchaserName={roomObject.model.getValue<string>(RoomObjectVariableEnum.FurniturePurchaserName) ?? ''}
+            trustedSender={roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureTrustedSender) === 1}
             openedProduct={openedProduct}
             canOpen={roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureOwnerId) === ownUserId}
             onOpen={onOpen}

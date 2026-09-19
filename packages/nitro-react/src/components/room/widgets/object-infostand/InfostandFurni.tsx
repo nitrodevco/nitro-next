@@ -37,6 +37,7 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
     const securityLevel = useOwnSecurityLevel();
     const controllerLevel = useOwnControllerLevel();
     const isRoomOwner = useRoomStore(x => x.isRoomOwner);
+    const isFreeFurniMovementsMode = useRoomStore(x => x.isFreeFurniMovementsMode);
     const nowPlayingSongId = useRoomStore(x => x.nowPlayingSongId);
     const songInfoById = useRoomStore(x => x.songInfoById);
     const groupDetails = useUserStore(x => (furniData?.groupId ? x.groupDetailsById[furniData.groupId] : undefined));
@@ -76,7 +77,8 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
     const isOwner = furniData.ownerId === ownUserId;
     const isAnyRoomController = Number(securityLevel) >= ANY_ROOM_CONTROLLER_SECURITY;
     const hasRights = controllerLevel >= RoomControllerLevelEnum.Guest;
-    const canMove = hasRights || isOwner || isRoomOwner || isAnyRoomController;
+    // Free furni movements mode (a wired configuration item) hands move, rotate and use to everyone.
+    const canMove = isFreeFurniMovementsMode || hasRights || isOwner || isRoomOwner || isAnyRoomController;
     const isCrackable = extraParam.startsWith(RoomWidgetEnumItemExtradataParameter.CRACKABLE_FURNI);
 
     let canUse = false;
@@ -85,6 +87,8 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
         if (furniData.usagePolicy === FurnitureUsagePolicyEnum.Everybody) canUse = true;
         if (hasRights && ((furniData.usagePolicy === FurnitureUsagePolicyEnum.Controller) || (extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX) || (extraParam === RoomWidgetEnumItemExtradataParameter.USABLE_PRODUCT))) canUse = true;
     }
+
+    if (useButtonEnabled && isFreeFurniMovementsMode) canUse = true;
 
     // A crackable is there to be hit.
     if (isCrackable) canUse = true;

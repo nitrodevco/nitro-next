@@ -1,4 +1,5 @@
 export * from './ObjectAdUpdateMessage';
+export * from './ObjectAvatarBlockedUpdateMessage';
 export * from './ObjectAvatarCarryObjectUpdateMessage';
 export * from './ObjectAvatarChatUpdateMessage';
 export * from './ObjectAvatarDanceUpdateMessage';

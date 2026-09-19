@@ -1,17 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(Data: object?): Unknown type 'object'. Add override mapping.
+import { IPopularRoomTagsResultData } from './Data/IPopularRoomTagsResultData';
+import { PopularRoomTagsResultDataParser } from './Data/PopularRoomTagsResultDataParser';
 
 export type PopularRoomTagsResultMessageType = {
-    data: any;
+    data: IPopularRoomTagsResultData;
 };
 
 export class PopularRoomTagsResultMessage implements IIncomingPacket<PopularRoomTagsResultMessageType> {
     public parse(wrapper: IMessageDataWrapper): PopularRoomTagsResultMessageType {
-        const packet: PopularRoomTagsResultMessageType = {
-            data: undefined as any, // Unknown type 'object'. Add override mapping.
-        };
-
-        return packet;
+        const data = PopularRoomTagsResultDataParser(wrapper);
+        return { data };
     }
 }

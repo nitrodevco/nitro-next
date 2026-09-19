@@ -1,17 +1,15 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper, ParseArray } from '@nitrodevco/nitro-api';
 
-// TODO(Item: FurnitureItemSnapshot): Unknown type 'FurnitureItemSnapshot'. Add override mapping.
+import { FurniListAddOrUpdateFurniParser } from './Data/FurniListAddOrUpdateFurniParser';
+import { IFurniListAddOrUpdateFurni } from './Data/IFurniListAddOrUpdateFurni';
 
 export type FurniListAddOrUpdateEventMessageType = {
-    item: any;
+    furni: IFurniListAddOrUpdateFurni[];
 };
 
 export class FurniListAddOrUpdateEventMessage implements IIncomingPacket<FurniListAddOrUpdateEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): FurniListAddOrUpdateEventMessageType {
-        const packet: FurniListAddOrUpdateEventMessageType = {
-            item: undefined as any, // Unknown type 'FurnitureItemSnapshot'. Add override mapping.
-        };
-
-        return packet;
+        return { furni: ParseArray(wrapper, FurniListAddOrUpdateFurniParser) };
     }
 }

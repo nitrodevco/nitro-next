@@ -14,6 +14,10 @@ type State = {
     isPlayingGame: boolean;
     isMoveBlocked: boolean;
     isOwnDancing: boolean;
+    /** The room's wired configuration items forbid passing and dropping hand items. */
+    isHanditemControlBlocked: boolean;
+    /** The room's wired configuration items let anyone move and use any furni. */
+    isFreeFurniMovementsMode: boolean;
     moderationSettings: IRoomModerationSettings;
     chatSettings: IRoomChatSettings;
 };
@@ -30,6 +34,8 @@ type Actions = {
     setIsSpectator: (flag: boolean) => void;
     setIsPlayingGame: (flag: boolean) => void;
     setIsOwnDancing: (flag: boolean) => void;
+    setIsHanditemControlBlocked: (flag: boolean) => void;
+    setIsFreeFurniMovementsMode: (flag: boolean) => void;
     setModerationSettings: (settings: IRoomModerationSettings) => void;
     setChatSettings: (settings: IRoomChatSettings) => void;
 };
@@ -52,6 +58,8 @@ export const RoomSessionSliceInitialState: State = {
     isPlayingGame: false,
     isMoveBlocked: false,
     isOwnDancing: false,
+    isHanditemControlBlocked: false,
+    isFreeFurniMovementsMode: false,
     moderationSettings: {
         whoCanMute: RoomModerationType.None,
         whoCanKick: RoomModerationType.None,
@@ -77,6 +85,8 @@ export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], Room
     setIsSpectator: (flag: boolean) => set({ isSpectator: flag }),
     setIsPlayingGame: (flag: boolean) => set({ isPlayingGame: flag }),
     setIsOwnDancing: (flag: boolean) => set({ isOwnDancing: flag }),
+    setIsHanditemControlBlocked: (flag: boolean) => set({ isHanditemControlBlocked: flag }),
+    setIsFreeFurniMovementsMode: (flag: boolean) => set({ isFreeFurniMovementsMode: flag }),
     setModerationSettings: (settings: IRoomModerationSettings) => set({ moderationSettings: { ...settings } }),
     setChatSettings: (settings: IRoomChatSettings) => set({ chatSettings: { ...settings } }),
 });

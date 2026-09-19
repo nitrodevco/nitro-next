@@ -15,7 +15,9 @@ export class PetVisualizationData extends FurnitureAnimatedVisualizationData {
     }
 
     protected override defineVisualizations(visualizations: IAssetVisualizationData[]): boolean {
-        this._isAllowedToTurnHead = true; // check visualization for '@disableheadturn'
+        // `AnimatedPetVisualizationData.defineVisualizations`: `graphics.@disableheadturn == "1"`, which the
+        // converter carries onto each visualization as `disableHeadTurn`.
+        this._isAllowedToTurnHead = !visualizations?.some(visualization => visualization.disableHeadTurn);
 
         return super.defineVisualizations(visualizations);
     }

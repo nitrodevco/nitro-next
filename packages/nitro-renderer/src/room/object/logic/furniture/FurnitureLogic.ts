@@ -76,7 +76,8 @@ export class FurnitureLogic extends MovingObjectLogic {
 
                     this._centerX = this._sizeX / 2;
                     this._centerY = this._sizeY / 2;
-                    this._centerZ = this._sizeZ / 2;
+                    // `FurnitureLogic.initialize`: an explicit `centerZ` wins over half the height.
+                    this._centerZ = dimensions.centerZ ?? (this._sizeZ / 2);
                 }
 
                 const directions = asset.logic.model.directions;

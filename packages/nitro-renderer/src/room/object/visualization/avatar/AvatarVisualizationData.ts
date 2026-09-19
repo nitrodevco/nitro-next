@@ -11,6 +11,10 @@ import {
 
 import { GetAvatarRenderManager } from '#renderer/avatar';
 
+/**
+ * Flash `AvatarVisualizationData`: where an avatar visualization gets its image from - the
+ * user's own figure, or the generic blocked figure when the user behind it is blocked.
+ */
 export class AvatarVisualizationData implements IObjectVisualizationData {
     public initialize(asset: IAssetData | undefined): boolean {
         return true;
@@ -24,23 +28,13 @@ export class AvatarVisualizationData implements IObjectVisualizationData {
         gender: AvatarGenderType,
         avatarListener: IAvatarImageListener,
         effectListener: IAvatarEffectListener | undefined = undefined,
+        blocked: boolean = false,
     ): IAvatarImage | undefined {
-        if (size > RoomGeometryScaleType.AvatarSizeNormal)
-            return GetAvatarRenderManager().createAvatarImage(
-                figure,
-                AvatarScaleType.Large,
-                gender,
-                avatarListener,
-                effectListener,
-            );
+        const scale = (size > RoomGeometryScaleType.AvatarSizeNormal) ? AvatarScaleType.Large : AvatarScaleType.Small;
 
-        return GetAvatarRenderManager().createAvatarImage(
-            figure,
-            AvatarScaleType.Small,
-            gender,
-            avatarListener,
-            effectListener,
-        );
+        if (blocked) return GetAvatarRenderManager().createBlockedAvatarImage(figure, scale);
+
+        return GetAvatarRenderManager().createAvatarImage(figure, scale, gender, avatarListener, effectListener);
     }
 
     public get layerCount(): number {

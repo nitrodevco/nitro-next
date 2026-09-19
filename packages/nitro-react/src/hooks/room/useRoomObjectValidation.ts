@@ -14,8 +14,17 @@ export const useRoomObjectValidation = () => {
     const floorItems = useSystemStore(x => x.floorItems);
     const { getTileHeight, validateLocation } = useRoomStackingHeightMapActions();
 
-    const setFurnitureAlphaMultiplier = (object: IRoomObjectController, multiplier: number) => {
-        object?.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, multiplier);
+    /**
+     * `RoomObjectEventHandler.setObjectAlphaMultiplier`: a user or a rentable bot being placed
+     * fades through its own key, which the avatar visualization reads; everything else through
+     * the furniture one.
+     */
+    const setObjectAlphaMultiplier = (object: IRoomObjectController, multiplier: number) => {
+        if (!object) return;
+
+        const isAvatar = (object.type === RoomObjectUserTypeName.User) || (object.type === RoomObjectUserTypeName.RentableBot);
+
+        object.model.setValue(isAvatar ? RoomObjectVariableEnum.FigureAlphaMultiplier : RoomObjectVariableEnum.FurnitureAlphaMultiplier, multiplier);
     };
 
     const getActiveSurfaceLocation = (roomObject: IRoomObject, event: RoomObjectMouseEvent) => {
@@ -187,5 +196,5 @@ export const useRoomObjectValidation = () => {
         return allowedDirections[dirIndex];
     };
 
-    return { setFurnitureAlphaMultiplier, getActiveSurfaceLocation, validateFurnitureLocation, validateWallItemLocation, isValidLocation, getValidRoomObjectDirection };
+    return { setObjectAlphaMultiplier, getActiveSurfaceLocation, validateFurnitureLocation, validateWallItemLocation, isValidLocation, getValidRoomObjectDirection };
 };

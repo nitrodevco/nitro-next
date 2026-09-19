@@ -1,17 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// TODO(WiredData: WiredDataSnapshot): Unknown type 'WiredDataSnapshot'. Add override mapping.
+import { IWiredFurniActionDef } from './Data/IWiredFurniActionDef';
+import { WiredFurniActionDefParser } from './Data/WiredFurniActionDefParser';
 
 export type WiredFurniActionEventMessageType = {
-    wiredData: any;
+    def: IWiredFurniActionDef;
 };
 
 export class WiredFurniActionEventMessage implements IIncomingPacket<WiredFurniActionEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): WiredFurniActionEventMessageType {
-        const packet: WiredFurniActionEventMessageType = {
-            wiredData: undefined as any, // Unknown type 'WiredDataSnapshot'. Add override mapping.
-        };
-
-        return packet;
+        const def = WiredFurniActionDefParser(wrapper);
+        return { def };
     }
 }

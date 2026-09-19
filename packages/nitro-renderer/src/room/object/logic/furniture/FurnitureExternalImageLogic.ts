@@ -10,11 +10,12 @@ export class FurnitureExternalImageLogic extends FurnitureMultiStateLogic {
     public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        let maskType = '';
+        // `FurnitureExternalImageLogic.initialize`: both variables are only set when the logic carries a `mask` type.
+        const maskType = asset?.logic?.maskType;
 
-        if (asset?.logic?.maskType) maskType = asset.logic.maskType ?? '';
+        if (maskType === undefined) return;
 
-        this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, false);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, true);
         this.object.model.setValue(RoomObjectVariableEnum.FurniturePlaneMaskType, maskType);
     }
 

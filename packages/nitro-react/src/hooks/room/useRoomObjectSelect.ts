@@ -1,7 +1,9 @@
-import { ISelectedRoomObjectData, NitroLogger, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { ISelectedRoomObjectData, NitroLogger, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectOperationType } from '@nitrodevco/nitro-api';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
 
 import { useRoom, useRoomIsPlayingGame, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
+
+import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 /**
  * Selecting and deselecting room objects and avatars -
@@ -16,6 +18,7 @@ export const useRoomObjectSelect = () => {
     const selectedObjectId = useRoomStore(x => x.selectedObjectId);
     const selectedObjectCategory = useRoomStore(x => x.selectedObjectCategory);
     const { setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject } = useRoomSelectedObjectActions();
+    const { setObjectAlphaMultiplier } = useRoomObjectValidation();
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
         if (!room) return;
@@ -109,7 +112,7 @@ export const useRoomObjectSelect = () => {
                     roomObject.setDirection(selectedObject.dir);
                 }
 
-                roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
+                setObjectAlphaMultiplier(roomObject, 1);
             }
 
             if (selectedObject.category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(selectedObject.objectId, true);

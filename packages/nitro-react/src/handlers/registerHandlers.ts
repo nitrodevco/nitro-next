@@ -2,7 +2,7 @@ import { WebSocketConnection } from '#base/context/communication';
 
 import { registerNavigatorHandlers, registerRoomQueueHandlers } from './navigator';
 import {
-    registerRoomAreaHideHandlers, registerRoomBotHandlers, registerRoomChatHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
+    registerRoomAreaHideHandlers, registerRoomBotHandlers, registerRoomChatHandlers, registerRoomConfigurationItemsHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
     registerRoomDirectoryHandlers, registerRoomDoorbellHandlers, registerRoomFriendFurniHandlers, registerRoomFriendRequestHandlers,
     registerRoomFurnitureHandlers, registerRoomGuildFurniHandlers, registerRoomInfostandHandlers, registerRoomJukeboxHandlers, registerRoomLinkHandlers, registerRoomMappingHandlers,
     registerRoomMysteryBoxHandlers, registerRoomPermissionsHandlers, registerRoomPetHandlers, registerRoomPetPackageHandlers, registerRoomPollHandlers,
@@ -24,6 +24,7 @@ export const registerHandlers = (socket: WebSocketConnection) => {
     const unsubscribes = [
         registerRoomAreaHideHandlers(socket),
         registerRoomChatHandlers(socket),
+        registerRoomConfigurationItemsHandlers(socket),
         registerRoomDataHandlers(socket),
         registerRoomDirectoryHandlers(socket),
         registerRoomDoorbellHandlers(socket),

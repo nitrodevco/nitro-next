@@ -4,6 +4,8 @@ import { Border, Button, ButtonThick, Frame, Region, ThemeText } from '#base/the
 export interface FurnitureCreditViewProps {
     /** Credits the bag, bar or coin is worth. */
     value: number;
+    /** An NFT credit furni: Flash words the prompt differently and appends a second sentence. */
+    isNftCredit: boolean;
     onExchange: () => void;
     onClose: () => void;
 }
@@ -13,8 +15,9 @@ export interface FurnitureCreditViewProps {
  * is worth, and the exchange that turns it into credits. Exchanging destroys the furni, so the
  * Flash client asked first rather than redeeming on use, and so does this.
  */
-export const FurnitureCreditView = ({ value, onExchange, onClose }: FurnitureCreditViewProps) => {
+export const FurnitureCreditView = ({ value, isNftCredit, onExchange, onClose }: FurnitureCreditViewProps) => {
     const t = useTranslation();
+    const description = t(isNftCredit ? 'nft.creditfurni.redeem.description' : 'widgets.furniture.credit.redeem.value', '', { value: value.toString() });
 
     return (
         <Frame
@@ -31,7 +34,7 @@ export const FurnitureCreditView = ({ value, onExchange, onClose }: FurnitureCre
                 layout={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 12 }}
             >
                 <ThemeText
-                    text={t('widgets.furniture.credit.redeem.value', '', { value: value.toString() })}
+                    text={isNftCredit ? `${description} ${t('nft.creditfurni.redeem.prompt')}` : description}
                     textStyle="text-style-bold"
                     textOptions={{ wordWrap: true, wordWrapWidth: 265 }}
                     verticalAlign="top"

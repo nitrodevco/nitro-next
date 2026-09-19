@@ -18,6 +18,8 @@ const actions = {
     setIsSpectator: state.setIsSpectator,
     setIsPlayingGame: state.setIsPlayingGame,
     setIsOwnDancing: state.setIsOwnDancing,
+    setIsHanditemControlBlocked: state.setIsHanditemControlBlocked,
+    setIsFreeFurniMovementsMode: state.setIsFreeFurniMovementsMode,
     setModerationSettings: state.setModerationSettings,
     setChatSettings: state.setChatSettings,
 };

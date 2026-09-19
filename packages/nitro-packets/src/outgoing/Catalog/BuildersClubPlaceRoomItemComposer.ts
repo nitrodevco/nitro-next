@@ -8,6 +8,8 @@ export type BuildersClubPlaceRoomItemComposerType = {
     x: number;
     y: number;
     direction: number;
+    /** Sent again with `true` after the user accepts the confirmation the server asked for. */
+    confirmed?: boolean;
 };
 
 export class BuildersClubPlaceRoomItemComposer implements IOutgoingPacket<BuildersClubPlaceRoomItemComposerType> {
@@ -21,6 +23,7 @@ export class BuildersClubPlaceRoomItemComposer implements IOutgoingPacket<Builde
             this.params.x,
             this.params.y,
             this.params.direction,
+            this.params.confirmed ?? false,
         ];
     }
 }

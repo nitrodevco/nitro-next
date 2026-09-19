@@ -276,7 +276,7 @@ export const registerRoomFurnitureHandlers = ({ subscribe }: WebSocketConnection
                 const direction = new Vector3d(userMove.bodyRotation % 8 * 45);
                 const headDirection = userMove.headRotation % 8 * 45;
 
-                room.updateRoomObjectUser(userMove.objectId, roundLocation(source), roundLocation(target), canStandUp, 0, direction, headDirection, userMove.animationTime);
+                room.updateRoomObjectUser(userMove.objectId, roundLocation(source), roundLocation(target), canStandUp, 0, direction, headDirection, userMove.animationTime, false, userMove.jumpPower);
             }
 
             for (const floorMove of data.floorMoves) {
@@ -288,7 +288,7 @@ export const registerRoomFurnitureHandlers = ({ subscribe }: WebSocketConnection
                 const target = new Vector3d(floorMove.targetX, floorMove.targetY, floorMove.targetZ);
                 const direction = new Vector3d(floorMove.rotation % 8 * 45);
 
-                object.processUpdateMessage(new ObjectMoveUpdateMessage(roundLocation(source), roundLocation(target), direction, true, floorMove.animationTime));
+                object.processUpdateMessage(new ObjectMoveUpdateMessage(roundLocation(source), roundLocation(target), direction, true, floorMove.animationTime, false, floorMove.overshootingDistance, floorMove.curveStrength));
             }
 
             for (const wallMove of data.wallMoves) {

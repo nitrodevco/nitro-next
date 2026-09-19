@@ -73,6 +73,10 @@ const getPreviewerRoom = (roomId: number, createMapForSize: ReturnType<typeof us
         if (map.mapData) room.applyRoomMap(map.mapData);
 
         room.updateRoomPlaneType('110', '99999', undefined);
+
+        // Flash `RoomPreviewer.applyInvisibleLayerState`: a showcase never draws the layers tagged
+        // `invisible`. Set on the room, every furni previewed in it starts with the flag.
+        room.setInvisibleFurni(true);
     }
 
     return room;

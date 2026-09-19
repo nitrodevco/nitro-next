@@ -1,3 +1,4 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper, WiredMovementType } from '@nitrodevco/nitro-api';
 
 import { IWiredFloorMove } from './Data/IWiredFloorMove';
@@ -27,7 +28,8 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 animationTime: wrapper.readInt(),
                 bodyRotation: wrapper.readInt(),
                 headRotation: wrapper.readInt(),
-                jumpPower: wrapper.readInt(),
+                // sent only for a jump: a flag, then the power
+                jumpPower: wrapper.readBoolean() ? wrapper.readInt() : NaN,
             };
         };
 
@@ -42,6 +44,9 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 objectId: wrapper.readInt(),
                 animationTime: wrapper.readInt(),
                 rotation: wrapper.readInt(),
+                // both optional, each behind its own flag
+                overshootingDistance: wrapper.readBoolean() ? wrapper.readInt() : NaN,
+                curveStrength: wrapper.readBoolean() ? wrapper.readInt() : NaN,
             };
         };
 
@@ -52,7 +57,7 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 sourceX: wrapper.readInt(),
                 sourceY: wrapper.readInt(),
                 sourceOffsetX: wrapper.readInt(),
-                sourceOffsetY: parseFloat(wrapper.readString()),
+                sourceOffsetY: wrapper.readInt(),
                 targetX: wrapper.readInt(),
                 targetY: wrapper.readInt(),
                 targetOffsetX: wrapper.readInt(),
@@ -79,7 +84,7 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
         let count = wrapper.readInt();
 
         while (count > 0) {
-            const type = wrapper.readInt();
+            const type: WiredMovementType = wrapper.readInt();
 
             switch (type) {
                 case WiredMovementType.User: {

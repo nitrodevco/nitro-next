@@ -50,6 +50,7 @@ import { GetRoomObjectLogicFactory, GetRoomObjectVisualizationFactory } from './
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';
 import {
+    ObjectAvatarBlockedUpdateMessage,
     ObjectAvatarCarryObjectUpdateMessage,
     ObjectAvatarChatUpdateMessage,
     ObjectAvatarDanceUpdateMessage,
@@ -744,11 +745,35 @@ export class Room implements IRoom {
     }
 
     public createRoomObjectFloor(id: number, type: string): IRoomObject | undefined {
-        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor);
+        return this.applyInvisibleFurniState(this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor));
     }
 
     public createRoomObjectWall(id: number, type: string): IRoomObject | undefined {
-        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Wall);
+        return this.applyInvisibleFurniState(this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Wall));
+    }
+
+    /**
+     * Flash `RoomEngine.setInvisibleFurni`: the room's "invisible furni" configuration item hides
+     * every furni layer tagged `invisible`. The flag is kept as a room value so furni placed
+     * afterwards pick it up (`applyInvisibleFurniState`), and pushed onto the furni already here.
+     */
+    public setInvisibleFurni(flag: boolean): void {
+        this.setRoomValue(RoomObjectVariableEnum.InvisibleFurni, flag ? 1 : 0);
+
+        for (const category of [ RoomObjectCategoryEnum.Floor, RoomObjectCategoryEnum.Wall ]) {
+            for (const object of this.getRoomObjectsForCategory(category)) object.model.setValue(RoomObjectVariableEnum.FurnitureInvisibleLayer, flag ? 1 : 0);
+        }
+    }
+
+    /** Flash `RoomEngine.isRoomVariableActive`: a room value that is set and above zero. */
+    public isRoomVariableActive(key: RoomObjectVariableEnum): boolean {
+        return this.getRoomValue<number>(key) > 0;
+    }
+
+    private applyInvisibleFurniState(object: IRoomObject | undefined): IRoomObject | undefined {
+        object?.model.setValue(RoomObjectVariableEnum.FurnitureInvisibleLayer, this.isRoomVariableActive(RoomObjectVariableEnum.InvisibleFurni) ? 1 : 0);
+
+        return object;
     }
 
     public createRoomObjectUser(id: number, type: string): IRoomObject | undefined {
@@ -1266,10 +1291,24 @@ export class Room implements IRoom {
         return true;
     }
 
+    /** Flash `RoomEngine.updateObjectUserBlocked`: swaps the avatar to or from the generic blocked figure. */
+    public updateRoomObjectUserBlocked(objectId: number, isBlocked: boolean): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarBlockedUpdateMessage(isBlocked));
+
+        return true;
+    }
+
     public updateRoomObjectUserAction(objectId: number, action: RoomObjectVariableEnum, value: number, parameter: string = ''): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (!object) return false;
+
+        // Flash `userIsBlocked`: a blocked user's dances, signs and hand items are not shown.
+        if (object.model.getValue<number>(RoomObjectVariableEnum.Blocked) > 0) return false;
 
         let message: ObjectStateUpdateMessage | undefined = undefined;
 

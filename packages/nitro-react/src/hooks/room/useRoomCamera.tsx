@@ -11,7 +11,9 @@ import { useRoomEventDispatcher } from './useRoomEventDispatcher';
 /**
  * The room camera - Flash's `RoomEngine.updateRoomCamera`: follows your own avatar, or whatever
  * the store names as the target, with the same easing, stops following once the user has
- * dragged the room, and keeps the room inside the canvas.
+ * dragged the room, and keeps the room inside the canvas. With nothing to follow - before your
+ * avatar arrives, or as a spectator - it rests on the room's camera init position, which is where
+ * `RoomDesktop.initCameraLocation` pointed it.
  */
 export const useRoomCamera = () => {
     const room = useRoom();
@@ -116,6 +118,18 @@ export const useRoomCamera = () => {
         cameraData.currentLocation = Vector3d.sum(cameraData.currentLocation, diff);
     };
 
+    const getCameraInitLocation = () => {
+        if (!room) return undefined;
+
+        const x = room.getRoomValue<number>(RoomObjectVariableEnum.CameraInitX);
+        const y = room.getRoomValue<number>(RoomObjectVariableEnum.CameraInitY);
+        const z = room.getRoomValue<number>(RoomObjectVariableEnum.CameraInitZ);
+
+        if ((typeof x !== 'number') || (typeof y !== 'number') || (typeof z !== 'number') || isNaN(x) || isNaN(y) || isNaN(z)) return undefined;
+
+        return new Vector3d(x, y, z);
+    };
+
     const updateRoomCamera = (time: number) => {
         const canvas = room?.canvas;
 
@@ -128,7 +142,7 @@ export const useRoomCamera = () => {
         if (roomBounds && (roomBounds.right < 0 || roomBounds.bottom < 0 || roomBounds.left >= viewport.width || roomBounds.top >= viewport.height)) cameraData.geometryUpdateId = -1;
 
         const targetObject = room.getRoomObject(targetId, targetCategory);
-        const goalLocation = targetObject?.getLocation() ?? new Vector3d();
+        const goalLocation = targetObject?.getLocation() ?? getCameraInitLocation() ?? new Vector3d();
 
         const needsUpdate
             = cameraData.screenSize.w !== viewport.width

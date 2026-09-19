@@ -6,6 +6,7 @@ export class AvatarActionManager {
     private _actions: Map<string, ActionDefinition> = new Map();
     private _defaultAction: ActionDefinition | undefined = undefined;
     private _defaultLayAction: ActionDefinition | undefined = undefined;
+    private _actionOffsets: Map<string, IAssetAvatarActionOffset> = new Map();
 
     public updateActions(data: IAssetAvatarActionData): void {
         if (data.actions) {
@@ -18,7 +19,13 @@ export class AvatarActionManager {
             }
         }
 
-        if (data.actionOffsets) this.parseActionOffsets(data.actionOffsets);
+        // `AvatarActionManager.updateActions` runs `parseActionOffsets` over every action after each
+        // update. The offsets are client assets (`action_offset_lay`, `action_offset_swim`), not part of
+        // the downloaded actions, so they are kept and re-applied - the downloaded set replaces the
+        // definitions the first pass put them on.
+        if (data.actionOffsets) for (const offset of data.actionOffsets) this._actionOffsets.set(offset.action, offset);
+
+        this.parseActionOffsets([ ...this._actionOffsets.values() ]);
     }
 
     private parseActionOffsets(data: IAssetAvatarActionOffset[]): void {

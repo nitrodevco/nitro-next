@@ -41,6 +41,7 @@ export * from './logic/furniture/FurnitureMultiHeightLogic';
 export * from './logic/furniture/FurnitureMultiStateLogic';
 export * from './logic/furniture/FurnitureMysteryBoxLogic';
 export * from './logic/furniture/FurnitureMysteryTrophyLogic';
+export * from './logic/furniture/FurnitureNftCreditLogic';
 export * from './logic/furniture/FurnitureOneWayDoorLogic';
 export * from './logic/furniture/FurniturePetCustomizationLogic';
 export * from './logic/furniture/FurniturePlaceholderLogic';

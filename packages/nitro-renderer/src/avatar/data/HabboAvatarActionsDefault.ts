@@ -107,5 +107,67 @@ export const HabboAvatarActionsDefault: IAssetAvatarActionData = {
                 },
             ],
         },
+        {
+            // `action_offset_swim` in the client's assets
+            action: 'swim',
+            offsets: [
+                {
+                    size: AvatarScaleType.Small,
+                    direction: 0,
+                    x: -28,
+                    y: 0,
+                    z: 0,
+                },
+                {
+                    size: AvatarScaleType.Small,
+                    direction: 1,
+                    x: -28,
+                    y: 0,
+                    z: 0,
+                },
+                {
+                    size: AvatarScaleType.Small,
+                    direction: 2,
+                    x: -28,
+                    y: 0,
+                    z: 0,
+                },
+                {
+                    size: AvatarScaleType.Small,
+                    direction: 3,
+                    x: -28,
+                    y: 0,
+                    z: 0,
+                },
+                {
+                    size: AvatarScaleType.Small,
+                    direction: 4,
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+                {
+                    size: AvatarScaleType.Small,
+                    direction: 5,
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+                {
+                    size: AvatarScaleType.Small,
+                    direction: 6,
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                },
+                {
+                    size: AvatarScaleType.Small,
+                    direction: 7,
+                    x: -28,
+                    y: 0,
+                    z: 0,
+                },
+            ],
+        },
     ],
 };

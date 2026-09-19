@@ -2,6 +2,7 @@
 export * from './registerRoomAreaHideHandlers';
 export * from './registerRoomBotHandlers';
 export * from './registerRoomChatHandlers';
+export * from './registerRoomConfigurationItemsHandlers';
 export * from './registerRoomCraftingHandlers';
 export * from './registerRoomDataHandlers';
 export * from './registerRoomDimmerHandlers';

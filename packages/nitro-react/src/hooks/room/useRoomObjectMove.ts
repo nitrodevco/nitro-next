@@ -11,7 +11,7 @@ import { useRoomObjectValidation } from './useRoomObjectValidation';
  */
 export const useRoomObjectMove = () => {
     const room = useRoom();
-    const { setFurnitureAlphaMultiplier, validateFurnitureLocation, validateWallItemLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
+    const { setObjectAlphaMultiplier, validateFurnitureLocation, validateWallItemLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
 
     const handleFurnitureMove = (
         roomObject: IRoomObjectController,
@@ -101,11 +101,11 @@ export const useRoomObjectMove = () => {
         }
 
         if (added) {
-            setFurnitureAlphaMultiplier(roomObject, 0.5);
+            setObjectAlphaMultiplier(roomObject, 0.5);
 
             room.setRoomOverlayIconSpriteVisibility(false);
         } else {
-            setFurnitureAlphaMultiplier(roomObject, 0);
+            setObjectAlphaMultiplier(roomObject, 0);
 
             room.setRoomOverlayIconSpriteVisibility(true);
         }

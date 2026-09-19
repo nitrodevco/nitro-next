@@ -19,7 +19,7 @@ export const useRoomObjectPlace = () => {
     const selectedObject = useRoomSelectedObject();
     const objectPlacementSource = useRoomObjectPlacementSource();
     const { setSelectedObject, setPlacedObject } = useRoomSelectedObjectActions();
-    const { setFurnitureAlphaMultiplier } = useRoomObjectValidation();
+    const { setObjectAlphaMultiplier } = useRoomObjectValidation();
     const { resetSelectedObject } = useRoomObjectSelect();
     const { handleFurnitureMove, handleWallItemMove } = useRoomObjectMove();
     const { send } = useWebSocketContext();
@@ -58,9 +58,9 @@ export const useRoomObjectPlace = () => {
 
             if (objectPlacementSource !== RoomObjectPlacementSource.CATALOG) {
                 if (category === RoomObjectCategoryEnum.Unit) {
-                    if (selectedObject.typeId === RoomObjectUserType.Pet) {
+                    if (Number(selectedObject.typeId) === Number(RoomObjectUserType.Pet)) {
                         NitroLogger.sendPacket(`new PetPlaceComposer(${selectedObject.objectId}, Math.trunc(${x}), Math.trunc(${y}))`);
-                    } else if (selectedObject.typeId === RoomObjectUserType.RentableBot) {
+                    } else if (Number(selectedObject.typeId) === Number(RoomObjectUserType.RentableBot)) {
                         NitroLogger.sendPacket(`new BotPlaceComposer(${selectedObject.objectId}, Math.trunc(${x}), Math.trunc(${y}))`);
                     }
                 } else if (roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureIsStickie) !== undefined) {
@@ -161,7 +161,7 @@ export const useRoomObjectPlace = () => {
                 }
             }
 
-            if (roomObject) setFurnitureAlphaMultiplier(roomObject, 0.5);
+            if (roomObject) setObjectAlphaMultiplier(roomObject, 0.5);
 
             room.setRoomOverlayIconSpriteVisibility(true);
         }
