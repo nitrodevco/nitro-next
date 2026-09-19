@@ -26,13 +26,18 @@ export const CatalogNavigationView = ({ node }: CatalogNavigationViewProps) => {
                 variant="3"
                 layout={{ flex: 1 }}
             >
-                {searchResult && searchResult.nodes.length > 0 && searchResult.nodes.map(x => (
+                {searchResult && searchResult.nodes.length > 0 && searchResult.nodes.map((x, index) => (
                     <CatalogNavigationSetItemView
-                        key={x.pageId}
+                        key={`${index}:${x.pageName}`}
                         node={x}
                     />
                 ))}
-                {!searchResult && <CatalogNavigationSetView node={node} />}
+                {!searchResult && (
+                    <CatalogNavigationSetView
+                        key={`${node.pageId}:${node.pageName}`}
+                        node={node}
+                    />
+                )}
             </ScrollArea>
         </Border>
     );

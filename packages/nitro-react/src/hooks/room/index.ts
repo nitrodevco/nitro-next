@@ -7,6 +7,7 @@ export * from './useRoomEventDispatcher';
 export * from './useRoomEventHandler';
 export * from './useRoomFurnitureActionHandler';
 export * from './useRoomFurnitureData';
+export * from './useRoomIsInitialized';
 export * from './useRoomMapping';
 export * from './useRoomMouse';
 export * from './useRoomObjectInteraction';

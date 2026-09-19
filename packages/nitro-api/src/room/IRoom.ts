@@ -147,6 +147,7 @@ export interface IRoom {
     updateRoomObjectUser(objectId: number, location: IVector3D, target?: IVector3D, canStandUp?: boolean, baseY?: number, direction?: IVector3D, headDirection?: number, animationTime?: number, skipPositionUpdate?: boolean, jumpingPower?: number): boolean;
     updateRoomObjectUserDirection(objectId: number, direction: IVector3D, headDirection: number): boolean;
     updateRoomObjectUserOwn(objectId: number): boolean;
+    updateRoomObjectUserBlocked(objectId: number, isBlocked: boolean): boolean;
     updateRoomObjectUserAction(objectId: number, action: RoomObjectVariableEnum, value: number, parameter?: string): boolean;
     updateRoomObjectUserFigure(objectId: number, figure: string, gender?: string, subType?: string, isRiding?: boolean): boolean;
     updateRoomObjectUserFlatControl(objectId: number, level: string): boolean;
@@ -168,6 +169,10 @@ export interface IRoom {
     setStackingHeightMap(map: IStackingHeightMapReader | undefined): void;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     setRoomValue<T>(key: RoomObjectVariableEnum, value: T): void;
+    /** A room value that is set and above zero - the wired configuration item flags. */
+    isRoomVariableActive(key: RoomObjectVariableEnum): boolean;
+    /** Hides (or shows again) the furni layers tagged `invisible`, for furni already here and placed later. */
+    setInvisibleFurni(flag: boolean): void;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObjectRoom(): IRoomObjectController | undefined;
     getRoomObjectCursor(): IRoomObjectController | undefined;

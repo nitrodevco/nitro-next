@@ -1,4 +1,4 @@
-import { IVector3D, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoom, IVector3D, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { Room } from '@nitrodevco/nitro-renderer';
 import { Matrix, Point, Rectangle } from 'pixi.js';
 import { useRef } from 'react';
@@ -7,6 +7,45 @@ import { useRoom, useRoomStore } from '#base/context/room';
 import { useConfigValue } from '#base/context/system';
 
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
+
+interface RoomCameraData {
+    /** The room this camera belongs to - Flash kept one `RoomCamera` per room instance. */
+    room: IRoom | undefined;
+    currentLocation: IVector3D | undefined;
+    targetLocation: IVector3D | undefined;
+    targetObjectLocation: IVector3D | undefined;
+    limitedLocation: { x: boolean; y: boolean };
+    centeredLocation: { x: boolean; y: boolean };
+    screenSize: { w: number; h: number };
+    roomSize: { w: number; h: number };
+    scale: RoomGeometryScaleType;
+    moveDistance: number;
+    previousMoveSpeed: number;
+    maintainPreviousMoveSpeed: boolean;
+    geometryUpdateId: number;
+    scaleChanged: boolean;
+    lastOffsetX: number;
+    lastOffsetY: number;
+}
+
+const createCameraData = (room: IRoom | undefined): RoomCameraData => ({
+    room,
+    currentLocation: undefined,
+    targetLocation: undefined,
+    targetObjectLocation: new Vector3d(),
+    limitedLocation: { x: false, y: false },
+    centeredLocation: { x: false, y: false },
+    screenSize: { w: 0, h: 0 },
+    roomSize: { w: 0, h: 0 },
+    scale: RoomGeometryScaleType.ZoomedIn,
+    moveDistance: 0,
+    previousMoveSpeed: 0,
+    maintainPreviousMoveSpeed: false,
+    geometryUpdateId: -1,
+    scaleChanged: false,
+    lastOffsetX: 0,
+    lastOffsetY: 0,
+});
 
 /**
  * The room camera - Flash's `RoomEngine.updateRoomCamera`: follows your own avatar, or whatever
@@ -22,39 +61,7 @@ export const useRoomCamera = () => {
     const cameraFollowDisabled = useRoomStore(x => x.cameraFollowDisabled);
     const followDuration = useRoomStore(x => x.followDuration);
     const moveSpeedDenominator = useConfigValue<number>('camera.move.speed') ?? 12;
-    const cameraDataRef = useRef<{
-        currentLocation: IVector3D | undefined;
-        targetLocation: IVector3D | undefined;
-        targetObjectLocation: IVector3D | undefined;
-        limitedLocation: { x: boolean; y: boolean };
-        centeredLocation: { x: boolean; y: boolean };
-        screenSize: { w: number; h: number };
-        roomSize: { w: number; h: number };
-        scale: RoomGeometryScaleType;
-        moveDistance: number;
-        previousMoveSpeed: number;
-        maintainPreviousMoveSpeed: boolean;
-        geometryUpdateId: number;
-        scaleChanged: boolean;
-        lastOffsetX: number;
-        lastOffsetY: number;
-    }>({
-        currentLocation: undefined,
-        targetLocation: undefined,
-        targetObjectLocation: new Vector3d(),
-        limitedLocation: { x: false, y: false },
-        centeredLocation: { x: false, y: false },
-        screenSize: { w: 0, h: 0 },
-        roomSize: { w: 0, h: 0 },
-        scale: RoomGeometryScaleType.ZoomedIn,
-        moveDistance: 0,
-        previousMoveSpeed: 0,
-        maintainPreviousMoveSpeed: false,
-        geometryUpdateId: -1,
-        scaleChanged: false,
-        lastOffsetX: 0,
-        lastOffsetY: 0,
-    });
+    const cameraDataRef = useRef<RoomCameraData>(createCameraData(undefined));
 
     const setCameraTarget = (target: IVector3D) => {
         const cameraData = cameraDataRef.current;
@@ -134,6 +141,10 @@ export const useRoomCamera = () => {
         const canvas = room?.canvas;
 
         if (!canvas) return;
+
+        // A new room starts with a new camera: where the last room was scrolled to says nothing
+        // about this one, and its location has to be initialized on this room's geometry.
+        if (cameraDataRef.current.room !== room) cameraDataRef.current = createCameraData(room);
 
         const cameraData = cameraDataRef.current;
         const viewport = new Rectangle(0, 0, canvas.width, canvas.height);

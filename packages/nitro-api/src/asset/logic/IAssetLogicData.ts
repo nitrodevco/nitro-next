@@ -13,4 +13,5 @@ export interface IAssetLogicData {
     planetSystems?: IAssetLogicPlanetSystem[];
     particleSystems?: IParticleSystem[];
     customVars?: ICustomVars;
+    allSpritesActivate?: boolean;
 }

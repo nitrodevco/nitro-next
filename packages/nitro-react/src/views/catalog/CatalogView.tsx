@@ -37,10 +37,10 @@ export const CatalogView = () => {
                     name="tab_context"
                     layout={{ width: '100%', height: 30 }}
                 >
-                    {rootNode.children.map(x => (x.visible
+                    {rootNode.children.map((x, index) => (x.visible
                         ? (
                                 <TabButton
-                                    key={x.pageId}
+                                    key={`${index}:${x.pageName}`}
                                     selected={activeNodes.includes(x)}
                                     onPointerTap={() => activateNode(x)}
                                     layout={{ width: '100%' }}
@@ -57,7 +57,8 @@ export const CatalogView = () => {
                 >
                     <Box layout={{ flexDirection: 'column', flex: 4, height: '100%', gap: 2 }}>
                         <CatalogSearchView />
-                        <CatalogNavigationView node={activeNodes[0]?.children[0]} />
+                        {/* `CatalogNavigator.showNodeContent`: the list is the selected tab's own children. */}
+                        <CatalogNavigationView node={activeNodes[0]} />
                     </Box>
                     <Box layout={{ flexDirection: 'column', flex: 8, height: '100%', gap: 4 }}>
                         <CatalogActivePage />

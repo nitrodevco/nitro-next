@@ -64,6 +64,7 @@ export class RoomObjectLogicType {
     public static FURNITURE_EDITABLE_ROOM_LINK = 'furniture_editable_room_link';
     public static FURNITURE_CRAFTING_GIZMO = 'furniture_crafting_gizmo';
     public static FURNITURE_AREA_HIDE = 'furniture_area_hide';
+    public static FURNITURE_NFT_CREDIT = 'furniture_nft_credit';
     public static ROOM = 'room';
     public static USER = 'user';
     public static BOT = 'bot';

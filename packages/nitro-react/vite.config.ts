@@ -65,10 +65,9 @@ export default defineConfig(({ mode }) => {
                     // a promise that only settles once the importing chunk has finished evaluating -
                     // so any top-level await on it deadlocks: the chunk never finishes, nothing
                     // downstream of it ever evaluates, and the browser reports nothing at all.
-                    // `truffle-text` top-level awaits `initFreeType()`, which `import()`s the
-                    // FreeType Emscripten module, and the blanket `node_modules -> vendor` rule
-                    // below used to put both sides in `vendor`. That deadlock is what left the
-                    // production build a silent black screen while dev (unbundled) was fine.
+                    // The blanket `node_modules -> vendor` rule below would otherwise put both
+                    // sides of such an `import()` in `vendor` - a silent black screen in the
+                    // production build while dev (unbundled) is fine.
                     if (meta.getModuleInfo(id)?.dynamicImporters?.length) return;
 
                     if (id.includes('/packages/nitro-api/')) {

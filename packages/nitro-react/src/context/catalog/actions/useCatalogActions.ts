@@ -11,7 +11,7 @@ export const useCatalogActions = () => {
         setRootNode: state.setRootNode,
         setOffersToNodes: state.setOffersToNodes,
         setActiveNodes: state.setActiveNodes,
-        setOpenPageIds: state.setOpenPageIds,
+        setOpenNodes: state.setOpenNodes,
         setIsBusy: state.setIsBusy,
         setActivePageId: state.setActivePageId,
         setActivePage: state.setActivePage,

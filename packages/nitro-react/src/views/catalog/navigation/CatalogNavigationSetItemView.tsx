@@ -14,7 +14,7 @@ export interface CatalogNavigationSetItemViewProps {
 export const CatalogNavigationSetItemView = ({ node }: CatalogNavigationSetItemViewProps) => {
     const { activateNode } = useCatalogNavigation();
     const isActive = useCatalogStore(x => x.activeNodes.includes(node));
-    const isOpen = useCatalogStore(x => x.openPageIds.includes(node.pageId));
+    const isOpen = useCatalogStore(x => x.openNodes.includes(node));
     const catalogIconUrl = useConfigValue<string>('catalog.icons.url') ?? '';
     const iconUrl = catalogIconUrl.replace('%name%', node.icon.toString());
 

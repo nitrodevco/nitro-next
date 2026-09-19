@@ -5,5 +5,6 @@ export interface IAssetRoomVisualizationData {
     floorData?: IAssetPlaneVisualizationData;
     wallData?: IAssetPlaneVisualizationData;
     landscapeData?: IAssetPlaneVisualizationData;
+    wallAdData?: IAssetPlaneVisualizationData;
     maskData?: IAssetPlaneMaskData;
 }

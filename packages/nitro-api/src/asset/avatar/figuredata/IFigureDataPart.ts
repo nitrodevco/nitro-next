@@ -6,4 +6,6 @@ export interface IFigureDataPart {
     colorable?: boolean;
     index: number;
     colorindex?: number;
+    paletteMapId?: number;
+    breed?: number;
 }

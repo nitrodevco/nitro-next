@@ -11,8 +11,18 @@
  * `RoomPlaneMaskData`. `VariableFxStatuses` and the `FurnitureFurniChest*` / `FurnitureChest*`
  * keys are likewise the port's own.
  *
- * A key with no reader yet (the habbicon, room-ad and NFT ones) is still listed, so that the
- * feature's port finds the name here instead of inventing a literal.
+ * Keys that are listed but not yet in use, so that the feature's port finds the name here instead
+ * of inventing a literal:
+ *
+ * - `FigureHabbicon`, `FigureHabbiconTriggerSequence`, `FigureHabbiconSpinOffset` - habbicons are
+ *   a subsystem of their own (`HabbiconAssetManager`, `HabbiconBubble`, the catalog and messenger
+ *   pickers) whose assets come from `habbicons.asset.root`, which no server here provides.
+ * - `RoomAd*` - the room billboard of Flash's ad manager, which is not ported. Flash itself only
+ *   uses `RoomAdImageAsset`; the other five are constants nothing in the client reads.
+ * - `FigureHighlightVariableHolder` is drawn by `AvatarVisualization`, but its only writer is the
+ *   wired menu's `VariableHoldersHighlighter`, which is not ported.
+ * - `ChooserDisabled` is written from the server's configuration item states, but the user
+ *   chooser that reads it is not ported.
  */
 export enum RoomObjectVariableEnum {
     ObjectRoomId = 'object_room_id',

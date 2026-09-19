@@ -8,7 +8,11 @@ type State = {
     /** The path from the tab down to the page being shown; a node is active when it is on it. */
     activeNodes: ICatalogNode[];
     /** The navigation folders currently unfolded, by page id. */
-    openPageIds: number[];
+    /**
+     * The folders that are unfolded in the navigation. Nodes, not page ids: a category that only
+     * groups pages has page id -1, so every such folder would share one id.
+     */
+    openNodes: ICatalogNode[];
     isBusy: boolean;
     activePageId: number;
     activePage: IActivePage | undefined;
@@ -24,7 +28,7 @@ type Actions = {
     setRootNode: (rootNode: ICatalogNode) => void;
     setOffersToNodes: (offersToNodes: Record<number, ICatalogNode[]>) => void;
     setActiveNodes: (activeNodes: ICatalogNode[]) => void;
-    setOpenPageIds: (openPageIds: number[]) => void;
+    setOpenNodes: (openNodes: ICatalogNode[]) => void;
     setIsBusy: (isBusy: boolean) => void;
     setActivePageId: (activePageId: number) => void;
     setActivePage: (activePage: IActivePage) => void;
@@ -42,7 +46,7 @@ const initialState: State = {
     rootNode: undefined,
     offersToNodes: {},
     activeNodes: [],
-    openPageIds: [],
+    openNodes: [],
     isBusy: false,
     activePageId: -1,
     activePage: undefined,
@@ -66,7 +70,7 @@ export const createCatalogStore = (catalogType: CatalogTypeEnum) => createStore<
     setRootNode: (rootNode: ICatalogNode | undefined) => set({ rootNode }),
     setOffersToNodes: (offersToNodes: Record<number, ICatalogNode[]>) => set({ offersToNodes }),
     setActiveNodes: (activeNodes: ICatalogNode[]) => set({ activeNodes }),
-    setOpenPageIds: (openPageIds: number[]) => set({ openPageIds }),
+    setOpenNodes: (openNodes: ICatalogNode[]) => set({ openNodes }),
     setIsBusy: (isBusy: boolean) => set({ isBusy }),
     setActivePageId: (activePageId: number) => set({ activePageId }),
     setActivePage: (activePage: IActivePage | undefined) => set({ activePage }),

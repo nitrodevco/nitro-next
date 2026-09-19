@@ -16,4 +16,5 @@ export interface IAssetVisualizationData {
     defaultPosture?: string;
     postures?: { defaultPosture?: string; postures?: IAssetPosture[] };
     gestures?: IAssetGesture[];
+    disableHeadTurn?: boolean;
 }

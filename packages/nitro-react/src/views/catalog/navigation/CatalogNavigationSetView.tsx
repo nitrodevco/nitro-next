@@ -14,10 +14,10 @@ export const CatalogNavigationSetView = ({ node }: CatalogNavigationSetViewProps
 
     return (
         <Box layout={{ flexDirection: 'column', gap: 2 }}>
-            {node.children.map(x => (x.visible
+            {node.children.map((x, index) => (x.visible
                 ? (
                         <CatalogNavigationSetItemView
-                            key={x.pageId}
+                            key={`${index}:${x.pageName}`}
                             node={x}
                         />
                     )
