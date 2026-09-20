@@ -50,7 +50,7 @@ export const FurniturePresentView = ({ message, purchaserName, trustedSender, op
                             layout={{ width: 300, height: 50 }}
                         >
                             <ThemeImage
-                                src={LayoutImage(trustedSender ? 'catalogue_ui2_checkmark_m.png' : 'catalogue_icon_alert_s.png')}
+                                src={LayoutImage(trustedSender ? 'room-ui/catalogue_ui2_checkmark_m.png' : 'room-ui/catalogue_icon_alert_s.png')}
                                 layout={trustedSender
                                     ? { position: 'absolute', left: 20, top: 13, width: 30, height: 24 }
                                     : { position: 'absolute', left: 22, top: 12, width: 26, height: 26 }}
@@ -66,7 +66,7 @@ export const FurniturePresentView = ({ message, purchaserName, trustedSender, op
                 )}
                 <Region layout={{ width: 306, height: 149, flexShrink: 0 }}>
                     <ThemeImage
-                        src={LayoutImage((trustedSender && !isOpened) ? 'catalogue_giftcard_staff.png' : 'catalogue_giftcard_blank.png')}
+                        src={LayoutImage((trustedSender && !isOpened) ? 'room-ui/catalogue_giftcard_staff.png' : 'shared/catalogue_giftcard_blank.png')}
                         layout={{ position: 'absolute', left: 0, top: 0, width: 306, height: 149 }}
                     />
                     <ThemeText

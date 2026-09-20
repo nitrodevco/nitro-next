@@ -33,7 +33,7 @@ export const FurnitureTrophyView = ({ color, title, ownerName, date, message, on
     return (
         <Region layout={{ position: 'absolute', top: 100, left: 100, width: 340, height: 173, justifyContent: 'center' }}>
             <ThemeImage
-                src={LayoutImage(theme.background)}
+                src={LayoutImage(`room-ui/${theme.background}`)}
                 layout={{ position: 'absolute', left: 0, top: 0, width: 340, height: 173 }}
             />
             <Region

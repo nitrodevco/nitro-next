@@ -36,11 +36,11 @@ export const FurnitureMysteryBoxView = ({ isOwner, onCancel, onClose }: Furnitur
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <Region layout={{ position: 'absolute', left: 41, width: 39, top: 43, height: 39 }}>
                     <ThemeImage
-                        src={LayoutImage(`mysterybox_${mine}_base.png`)}
+                        src={LayoutImage(`room-ui/mysterybox_${mine}_base.png`)}
                         layout={{ position: 'absolute', left: 0, top: 0, width: 39, height: 39 }}
                     />
                     <ThemeImage
-                        src={LayoutImage(`mysterybox_${mine}_overlay.png`)}
+                        src={LayoutImage(`room-ui/mysterybox_${mine}_overlay.png`)}
                         layout={{ position: 'absolute', left: 0, top: 0, width: 39, height: 39 }}
                     />
                 </Region>
@@ -57,11 +57,11 @@ export const FurnitureMysteryBoxView = ({ isOwner, onCancel, onClose }: Furnitur
                 >
                     <Region layout={{ position: 'absolute', left: 14, width: 39, top: 11, height: 39 }}>
                         <ThemeImage
-                            src={LayoutImage(`mysterybox_${theirs}_base.png`)}
+                            src={LayoutImage(`room-ui/mysterybox_${theirs}_base.png`)}
                             layout={{ position: 'absolute', left: 0, top: 0, width: 39, height: 39 }}
                         />
                         <ThemeImage
-                            src={LayoutImage(`mysterybox_${theirs}_overlay.png`)}
+                            src={LayoutImage(`room-ui/mysterybox_${theirs}_overlay.png`)}
                             layout={{ position: 'absolute', left: 0, top: 0, width: 39, height: 39 }}
                         />
                     </Region>

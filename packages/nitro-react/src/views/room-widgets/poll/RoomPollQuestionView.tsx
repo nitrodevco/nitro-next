@@ -63,7 +63,7 @@ export const RoomPollQuestionView = ({
                 />
                 <ThemeImage
                     name="poll_prompt_image"
-                    src={LayoutImage('poll_poll_prompt_question.png')}
+                    src={LayoutImage('room-ui/poll_poll_prompt_question.png')}
                     layout={{ position: 'absolute', left: 10, width: 40, top: 7, height: 40 }}
                 />
             </Region>
@@ -97,7 +97,7 @@ export const RoomPollQuestionView = ({
                                 />
                                 <ThemeImage
                                     name="write_deco"
-                                    src={LayoutImage('common_small_pen.png')}
+                                    src={LayoutImage('shared/common_small_pen.png')}
                                     layout={{ position: 'absolute', right: 5, width: 17, top: 6, height: 18 }}
                                 />
                             </Border>

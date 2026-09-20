@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
 /**
- * The eight colours the `stickie` layout offers, in its own left-to-right order. Only the first
- * four have a matching sprite colour in `FurnitureStickieLogic`; the rest fall back to yellow
- * paper in the room, which is what the Flash client did too.
+ * The eight colours the `stickie` layout offers (its `blue` .. `cyan` buttons), in its own
+ * left-to-right order. They are the eight `FurnitureStickieLogic.setColorIndexFromItemData`
+ * maps to `furniture_color` 1-8 in the room; a colour outside the list is shown as yellow (4).
  */
 const STICKIE_COLORS: string[] = [ '9CCEFF', 'FF9CFF', '9CFF9C', 'FFFF33', 'FFFFFF', 'FF9C9C', 'FFCC66', '9CFFFF' ];
 
@@ -44,7 +44,7 @@ export const FurnitureStickieView = ({ objectType, colorHex, text, canModify, on
     return (
         <Region layout={{ position: 'absolute', top: 120, left: 120, width: 185, height: 178 }}>
             <ThemeImage
-                src={LayoutImage(isPlain ? 'stickie_blanco.png' : `${objectType.replace('post_it', 'stickie')}.png`)}
+                src={LayoutImage(isPlain ? 'room-ui/stickie_blanco.png' : `room-ui/${objectType.replace('post_it', 'stickie')}.png`)}
                 tint={isPlain ? `#${colorHex}` : undefined}
                 layout={{ position: 'absolute', left: 0, top: 0, width: 185, height: 178 }}
             />
@@ -54,7 +54,7 @@ export const FurnitureStickieView = ({ objectType, colorHex, text, canModify, on
                     onPointerTap={onDelete}
                     layout={{ position: 'absolute', left: 9, top: 4, width: 10, height: 10 }}
                 >
-                    <ThemeImage src={LayoutImage('stickie_remove.png')} />
+                    <ThemeImage src={LayoutImage('room-ui/stickie_remove.png')} />
                 </Region>
             )}
             {canModify && isPlain && STICKIE_COLORS.map((color, index) => (
@@ -71,7 +71,7 @@ export const FurnitureStickieView = ({ objectType, colorHex, text, canModify, on
                 onPointerTap={onClose}
                 layout={{ position: 'absolute', right: 7, top: 5, width: 10, height: 10 }}
             >
-                <ThemeImage src={LayoutImage('stickie_close.png')} />
+                <ThemeImage src={LayoutImage('room-ui/stickie_close.png')} />
             </Region>
             {canModify
                 ? (

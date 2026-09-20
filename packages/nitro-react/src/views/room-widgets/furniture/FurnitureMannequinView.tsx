@@ -65,7 +65,7 @@ export const FurnitureMannequinView = ({
                   */}
                 <Region layout={{ width: 83, height: 130, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                     <ThemeImage
-                        src={LayoutImage('mannequin_preview_bg.png')}
+                        src={LayoutImage('room-ui/mannequin_preview_bg.png')}
                         layout={{ position: 'absolute', left: 0, top: 0, width: 83, height: 130 }}
                     />
                     <AvatarImage

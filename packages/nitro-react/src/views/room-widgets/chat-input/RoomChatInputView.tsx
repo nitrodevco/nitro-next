@@ -2,7 +2,8 @@ import { ClubLevelEnum, SecurityLevelEnum } from '@nitrodevco/nitro-api';
 import { CancelTypingComposer, ChatComposer, SetChatStylePreferenceComposer, ShoutComposer, StartTypingComposer, WhisperComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { IChatStyle } from '#base/chat';
+import { IChatStyle, isNftChatStyle, isStaticChatStyle } from '#base/chat';
+import { runWiredChatCommand } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { roomStore, useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
 import { useConfigValue, useFriendBarWidth, useToolbarAreaWidth, useTranslation } from '#base/context/system';
@@ -54,6 +55,8 @@ export const RoomChatInputView = () => {
     const clubLevel = useOwnClubLevel();
     const securityLevel = useOwnSecurityLevel();
     const isAmbassador = useOwnIsAmbassador();
+    const nftChatStyles = useUserStore(x => x.nftChatStyles);
+    const purchasableChatStyles = useUserStore(x => x.purchasableChatStyles);
     const selectedAvatarId = useRoomStore(x => x.selectedAvatarId);
     const selectedAvatarName = useRoomStore(x => x.usersByRoomObjectId[selectedAvatarId]?.name ?? '');
     const customStylesEnabled = useConfigValue<boolean>('custom.chat.styles.enabled') ?? true;
@@ -91,33 +94,56 @@ export const RoomChatInputView = () => {
     const speakMode = t('widgets.chatinput.mode.speak', ':speak');
     const isFloodBlocked = floodRemaining > 0;
 
-    /** The styles this user may pick - `RoomChatInputView.createWindow`'s filter. */
+    /**
+     * The styles this user may pick - `RoomChatInputView.createOrUpdateChatStylesView`. System
+     * styles never; NFT styles (1000-9999) when the account holds one; the client's own styles
+     * (under 1000, not purchasable) for staff when staff-overrideable, for ambassadors and staff
+     * when ambassador-only, else unless the config disables them, HC ones only with club; and
+     * anything else the account has bought.
+     */
     const pickableStyles = useMemo<IChatStyle[]>(() => {
         if (!customStylesEnabled) return [];
 
-        const disabled = disabledStyles.split(',').map(x => x.trim()).filter(x => x.length);
-        const isStaff = securityLevel >= SecurityLevelEnum.Moderator;
+        const disabled = disabledStyles.split(',');
+        const isStaff = (securityLevel >= SecurityLevelEnum.Employee);
+        const hasClub = (clubLevel >= ClubLevelEnum.Club);
         const styles: IChatStyle[] = [];
 
         for (const style of allStyles) {
             const styleId = style.id;
 
-            if (style.minRankRequired > 0) {
-                if (Number(securityLevel) >= style.minRankRequired) styles.push(style);
+            if (style.isSystemStyle) continue;
+
+            if (isNftChatStyle(styleId)) {
+                if (nftChatStyles.includes(styleId)) styles.push(style);
 
                 continue;
             }
 
-            if (!style.isSystemStyle && (disabled.indexOf(String(styleId)) === -1)) {
-                if (style.isHcOnly && (clubLevel >= ClubLevelEnum.Club)) styles.push(style);
-                else if (!style.isHcOnly && !style.isAmbassadorOnly) styles.push(style);
+            if (isStaticChatStyle(styleId) && !style.isPurchasable) {
+                if (style.isStaffOverrideable && isStaff) {
+                    styles.push(style);
+                    continue;
+                }
+
+                if (style.isAmbassadorOnly && (isStaff || isAmbassador)) {
+                    styles.push(style);
+                    continue;
+                }
+
+                if (disabled.includes(String(styleId))) continue;
+
+                if ((style.isHcOnly && hasClub) || (!style.isHcOnly && !style.isAmbassadorOnly)) {
+                    styles.push(style);
+                    continue;
+                }
             }
 
-            if (style.isAmbassadorOnly && (isStaff || isAmbassador)) styles.push(style);
+            if (purchasableChatStyles.includes(styleId)) styles.push(style);
         }
 
-        return styles.filter((style, index) => styles.indexOf(style) === index);
-    }, [ allStyles, customStylesEnabled, disabledStyles, securityLevel, clubLevel, isAmbassador ]);
+        return styles;
+    }, [ allStyles, customStylesEnabled, disabledStyles, securityLevel, clubLevel, isAmbassador, nftChatStyles, purchasableChatStyles ]);
 
     const highlightedStyleId = (selectedStyleId !== NO_STYLE_SELECTED)
         ? selectedStyleId
@@ -238,7 +264,10 @@ export const RoomChatInputView = () => {
 
         clearTimers();
 
-        if (message.length) {
+        // `ChatInputWidgetHandler`: a chat command is run, not said.
+        const isCommand = (mode !== 'whisper') && runWiredChatCommand(send, message);
+
+        if (message.length && !isCommand) {
             const cleaned = message.replace(/&#[0-9]+;/g, '');
 
             switch (mode) {
@@ -374,12 +403,12 @@ export const RoomChatInputView = () => {
                 >
                     <ThemeImage
                         name="style_bg"
-                        src={LayoutImage('common_chat_style_block.png')}
+                        src={LayoutImage('room-ui/common_chat_style_block.png')}
                         layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 38 }}
                     />
                     <ThemeImage
                         name="style_icon"
-                        src={LayoutImage('common_chat_styles.png')}
+                        src={LayoutImage('room-ui/common_chat_styles.png')}
                         layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 17, top: 10, height: 19 }}
                     />
                     <Icon
@@ -435,7 +464,7 @@ export const RoomChatInputView = () => {
                 <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                     <ThemeImage
                         name="chat_extra_bg"
-                        src={LayoutImage('habbicons_sticky_note.png')}
+                        src={LayoutImage('room-ui/habbicons_sticky_note.png')}
                         layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 38 }}
                     />
                     {/* <ThemeImage
@@ -446,12 +475,12 @@ export const RoomChatInputView = () => {
                     /> */}
                     <ThemeImage
                         name="chat_extra_icon"
-                        src={LayoutImage('habbicons_clip.png')}
+                        src={LayoutImage('room-ui/habbicons_clip.png')}
                         layout={{ position: 'absolute', right: 0, width: 18, top: 2, height: 15 }}
                     />
                     <ThemeImage
                         name="chat_extra_bg"
-                        src={LayoutImage('habbicons_sticky_note2.png')}
+                        src={LayoutImage('room-ui/habbicons_sticky_note2.png')}
                         layout={{ position: 'absolute', right: 5, width: 12, bottom: 0, height: 12 }}
                     />
                 </Region>

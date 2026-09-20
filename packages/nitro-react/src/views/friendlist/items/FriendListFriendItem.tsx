@@ -3,9 +3,19 @@ import { Container as PixiContainer } from 'pixi.js';
 import { memo, useRef } from 'react';
 
 import { useFriendsActions, useFriendsStore } from '#base/context/friend';
-import { Border, Box, NitroIcon, useOutsideClick } from '#base/theme';
+import { Border, Box, Icon, LayoutImage, ThemeImage, useOutsideClick } from '#base/theme';
 
 import { FriendListItem } from '../components/FriendListItem';
+
+/**
+ * `HabboFriendList.refreshRelationshipRegion`: the `relationship_status` bitmap is one of the
+ * four `relationship_status_*` library assets, picked by `relationshipStatus - 1`.
+ */
+const RELATIONSHIP_IMAGES = {
+    heart: LayoutImage('shared/relationship_status_heart.png'),
+    smile: LayoutImage('shared/relationship_status_smile.png'),
+    bobba: LayoutImage('shared/relationship_status_bobba.png'),
+} as const;
 
 export interface FriendListFriendItemPixiProps {
     friend: IMessengerFriend;
@@ -53,9 +63,12 @@ export const FriendListFriendItem = memo(({ friend, showRelationshipIcon = true,
                             onPointerOut={relationshipHover.onMouseLeave}
                             layout={{}}
                         >
-                            <NitroIcon
-                                icon="icon-arrow-down-black"
-                                layout={{}}
+                            {/* `friend_entry`'s `relationship_status` > `drop`:
+                                `<icon style="7" color="0x00">`, the icon set's 10x5 triangle. */}
+                            <Icon
+                                name="drop"
+                                variant={7}
+                                tintColor="#000000"
                             />
                         </Box>
                         {isDropdownVisible && (
@@ -73,8 +86,8 @@ export const FriendListFriendItem = memo(({ friend, showRelationshipIcon = true,
                                         cursor="pointer"
                                         layout={{}}
                                     >
-                                        <NitroIcon
-                                            icon="icon-heart-relationship"
+                                        <ThemeImage
+                                            src={RELATIONSHIP_IMAGES.heart}
                                             layout={{}}
                                         />
                                     </Box>
@@ -83,8 +96,8 @@ export const FriendListFriendItem = memo(({ friend, showRelationshipIcon = true,
                                         cursor="pointer"
                                         layout={{}}
                                     >
-                                        <NitroIcon
-                                            icon="icon-smile-relationship"
+                                        <ThemeImage
+                                            src={RELATIONSHIP_IMAGES.smile}
                                             layout={{}}
                                         />
                                     </Box>
@@ -93,8 +106,8 @@ export const FriendListFriendItem = memo(({ friend, showRelationshipIcon = true,
                                         cursor="pointer"
                                         layout={{}}
                                     >
-                                        <NitroIcon
-                                            icon="icon-bobba-relationship"
+                                        <ThemeImage
+                                            src={RELATIONSHIP_IMAGES.bobba}
                                             layout={{}}
                                         />
                                     </Box>
@@ -112,8 +125,11 @@ export const FriendListFriendItem = memo(({ friend, showRelationshipIcon = true,
                         onPointerOut={followHover.onMouseLeave}
                         layout={{}}
                     >
-                        <NitroIcon
-                            icon="icon-follow"
+                        {/* `FriendsView.refreshFriendEntry` -> `refreshButton(_, "follow_friend")`:
+                            the friend list's `follow_friend_png` library bitmap. */}
+                        <ThemeImage
+                            name="follow_friend"
+                            src={LayoutImage('friend-list/friendlist_follow_friend.png')}
                             layout={{}}
                         />
                     </Box>
@@ -127,8 +143,10 @@ export const FriendListFriendItem = memo(({ friend, showRelationshipIcon = true,
                         onPointerOut={messageHover.onMouseLeave}
                         layout={{}}
                     >
-                        <NitroIcon
-                            icon="icon-message-small"
+                        {/* `refreshButton(_, "start_chat")`: the `start_chat_png` speech bubble. */}
+                        <ThemeImage
+                            name="start_chat"
+                            src={LayoutImage('friend-list/friendlist_start_chat.png')}
                             layout={{}}
                         />
                     </Box>

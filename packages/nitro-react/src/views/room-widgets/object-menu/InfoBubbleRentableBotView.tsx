@@ -5,7 +5,11 @@ import { openClientLink } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { BOT_SKILL_CHANGE_NAME, BOT_SKILL_SETUP_CHAT, useOwnControllerLevel, useRoomBotsActions, useRoomStore } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
-import { Box, Bubble, Button, NitroIcon, ThemeText } from '#base/theme';
+import { useWiredShowInspectButton } from '#base/context/wired';
+import { Box, Bubble, ThemeText } from '#base/theme';
+
+import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
+import { InfoBubbleMinimize } from './InfoBubbleMinimize';
 
 export interface InfoBubbleRentableBotViewProps {
     objectData: ISimpleRoomObjectData;
@@ -31,6 +35,10 @@ type MenuButton = { key: string; caption: string; onPress: () => void };
  * The menu over a rentable bot - `RentableBotMenuView`. What it offers is what the bot can do:
  * each of its skills adds a button, some only for its owner, and a few skills carry a label and
  * a target in their command data that become buttons of their own.
+ *
+ * The captions are the `avatar_menu_widget` layout's: `nux_take_tour` is
+ * `${avatar.widget.nux.take.tour}` and `nux_proceed_1` `${avatar.widget.nux.proceed}`. Neither
+ * text file defines them today; they are Flash's keys all the same, so they stay.
  */
 export const InfoBubbleRentableBotView = ({ objectData, onClose }: InfoBubbleRentableBotViewProps) => {
     const userData = useRoomStore(x => x.usersByRoomObjectId[objectData.objectId]);
@@ -40,6 +48,7 @@ export const InfoBubbleRentableBotView = ({ objectData, onClose }: InfoBubbleRen
     const t = useTranslation();
     const { send } = useWebSocketContext();
     const { openBotSkillConfiguration } = useRoomBotsActions();
+    const showWiredInspect = useWiredShowInspectButton();
 
     if (!userData) return null;
 
@@ -83,6 +92,9 @@ export const InfoBubbleRentableBotView = ({ objectData, onClose }: InfoBubbleRen
         }
     }
 
+    // `RWUAM_WIRED_INSPECT_BOT`: the wired menu's inspection of this bot.
+    add(showWiredInspect, 'wired_inspect', t('infostand.button.wired_inspect'), () => openClientLink(send, `wiredmenu/open/inspection/1/${objectData.objectId}`));
+
     return (
         <Bubble
             variant="0"
@@ -99,28 +111,18 @@ export const InfoBubbleRentableBotView = ({ objectData, onClose }: InfoBubbleRen
                 </Box>
                 <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
                     {buttons.map(button => (
-                        <Button
+                        <InfoBubbleMenuButton
                             key={button.key}
-                            variant="300"
-                            tintColor="#2d2a27"
-                            textColor="#ffffff"
-                            onPointerTap={() => {
+                            caption={button.caption}
+                            onPress={() => {
                                 button.onPress();
                                 onClose();
                             }}
-                            layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                        >
-                            {button.caption}
-                        </Button>
+                        />
                     ))}
                 </Box>
             </Box>
-            <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 18, maxHeight: 18, padding: 8, width: '100%' }}>
-                <NitroIcon
-                    icon="icon-context-menu-arrow-down"
-                    layout={{}}
-                />
-            </Box>
+            <InfoBubbleMinimize collapsed={false} />
         </Bubble>
     );
 };

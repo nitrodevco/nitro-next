@@ -10,7 +10,7 @@ export interface ActivityPointsViewProps {
  * Pixi port of theme/ActivityPointsView.tsx. Only one currency kind ("stars") is defined -
  * DOM's own `.icon-currency` CSS (flagged `/* temporary *\/` in theme/icons.css) has no
  * `.stars` variant, so its icon already renders blank there; matched here by simply not
- * rendering a NitroIcon for it rather than inventing an icon key DOM itself doesn't have.
+ * rendering an icon for it rather than inventing an icon DOM itself doesn't have.
  * DOM's `hover:brightness-[1.2]` on the icon chip has no attached `onClick` anywhere in this
  * component - inert hover feedback with no behavior behind it, so it's dropped rather than
  * built out as new interactivity Pixi has no direct filter-hover equivalent for anyway.

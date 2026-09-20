@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
 import { useSystemStore } from '#base/context/system';
 import { useCatalogNavigation, useCatalogOfferActions } from '#base/hooks';
-import { Border, Box, NitroIcon, TextInput } from '#base/theme';
+import { Border, Box, LayoutImage, TextInput, ThemeImage } from '#base/theme';
 
 /**
  * Pixi port of views/catalog/navigation/CatalogSearchView.tsx. DOM's `placeholder`/`title`
@@ -39,30 +39,38 @@ export const CatalogSearchView = () => {
         return allowedNodes;
     };
 
+    /**
+     * `CatalogNavigator.markSearchNodes` / `addSearchNodesToList`: the visible pages whose name or
+     * localization matches, in tree order. Flash tests `param1.children` and recurses, so the
+     * index root is never a result of its own - that is structural, not the `pageId > 0` test:
+     * the root's page id is whatever the server writes for it, and some write a real one.
+     */
     const filterNodes = (search: string, furniLines: string[], node: ICatalogNode, nodes: ICatalogNode[]) => {
-        if (node.visible && (node.pageId > 0)) {
-            let nodeAdded = false;
+        for (const child of node.children) {
+            if (child.visible && (child.pageId > 0)) {
+                let nodeAdded = false;
 
-            const hayStack = [ node.pageName, node.localization ].join(' ').toLowerCase().replace(/ /gi, '');
+                const hayStack = [ child.pageName, child.localization ].join(' ').toLowerCase().replace(/ /gi, '');
 
-            if (hayStack.indexOf(search) > -1) {
-                nodes.push(node);
+                if (hayStack.indexOf(search) > -1) {
+                    nodes.push(child);
 
-                nodeAdded = true;
-            }
+                    nodeAdded = true;
+                }
 
-            if (!nodeAdded) {
-                for (const furniLine of furniLines) {
-                    if (hayStack.indexOf(furniLine) >= 0) {
-                        nodes.push(node);
+                if (!nodeAdded) {
+                    for (const furniLine of furniLines) {
+                        if (hayStack.indexOf(furniLine) >= 0) {
+                            nodes.push(child);
 
-                        break;
+                            break;
+                        }
                     }
                 }
             }
-        }
 
-        for (const child of node.children) filterNodes(search, furniLines, child, nodes);
+            filterNodes(search, furniLines, child, nodes);
+        }
     };
 
     useEffect(() => {
@@ -150,8 +158,12 @@ export const CatalogSearchView = () => {
                 onPointerTap={onIconPress}
                 layout={{ flexShrink: 0 }}
             >
-                <NitroIcon
-                    icon={searchValue.length > 0 ? 'catalog-icon-clear' : 'pencil-icon'}
+                {/* `HabboCatalog.onSearchInputEvent`: `search.clear.icon` is the `icons_close`
+                    cross while the field has text and the `common_small_pen` pencil when it is
+                    empty - both library bitmaps, not icon-set styles. */}
+                <ThemeImage
+                    name="search.clear.icon"
+                    src={LayoutImage(searchValue.length > 0 ? 'shared/icons_close.png' : 'shared/common_small_pen.png')}
                     layout={{}}
                 />
             </Box>

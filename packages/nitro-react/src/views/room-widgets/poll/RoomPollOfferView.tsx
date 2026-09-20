@@ -38,7 +38,7 @@ export const RoomPollOfferView = ({ headline, summary, onAccept, onDecline, onLa
             >
                 <ThemeImage
                     name="preview_image_bg"
-                    src={LayoutImage('poll_poll_prompt_frank.png')}
+                    src={LayoutImage('room-ui/poll_poll_prompt_frank.png')}
                     layout={{ position: 'absolute', left: 10, width: 80, top: 7, height: 80 }}
                 />
                 <ThemeText

@@ -28,7 +28,7 @@ const THUMB_DIRECTIONS = [ 2, 6, 0, 4, 3, 1 ];
 const BUILD_RETRIES = 10;
 const BUILD_RETRY_DELAY_MS = 100;
 
-/** `AvatarEditorGridPartItem.DRAW_ORDER` (AvatarFigurePartType values, back to front). */
+/** `AvatarEditorGridPartItem.DRAW_ORDER` (AvatarFigurePartType values, back to front). Checked against Flash by `scripts/drift/constants.py`. */
 const DRAW_ORDER = [
     AvatarFigurePartType.LeftHandItem,
     AvatarFigurePartType.LeftHand,
@@ -43,6 +43,8 @@ const DRAW_ORDER = [
     AvatarFigurePartType.ChestAccessory,
     AvatarFigurePartType.CoatChest,
     AvatarFigurePartType.ChestPrint,
+    AvatarFigurePartType.Misc,
+    AvatarFigurePartType.Pet,
     AvatarFigurePartType.WaistAccessory,
     AvatarFigurePartType.RightHand,
     AvatarFigurePartType.RightSleeve,

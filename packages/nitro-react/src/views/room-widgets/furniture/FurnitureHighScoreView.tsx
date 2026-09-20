@@ -128,7 +128,7 @@ export const FurnitureHighScoreView = ({ scoreType, clearType, entries }: Furnit
                                 layout={{ position: 'absolute', left: 2, width: 180, top: 2, height: 16 }}
                             />
                             <ThemeText
-                                text={isTimed ? formatTime(entry.score, (entry.score >= 3600) ? 3 : 2) : `${entry.score}`}
+                                text={isTimed ? formatTime(entry.score, (entry.score >= 3600) ? 3 : 2) : String(entry.score)}
                                 textOptions={{ fill: '#ffffff', align: 'right' }}
                                 layout={{ position: 'absolute', right: 13, width: 56, top: 2, height: 16 }}
                             />
@@ -136,7 +136,7 @@ export const FurnitureHighScoreView = ({ scoreType, clearType, entries }: Furnit
                     ))}
                 </ScrollArea>
                 <ThemeImage
-                    src={LayoutImage('high_score_highscore_cup.png')}
+                    src={LayoutImage('room-ui/high_score_highscore_cup.png')}
                     layout={{ position: 'absolute', left: 0, width: 40, top: 269, height: 70 }}
                 />
                 <ThemeText

@@ -37,7 +37,7 @@ export const RoomShareView = ({ embedCode, directLink, thumbnailUrl, onClose }: 
             >
                 <ThemeImage
                     name="thumbnail_image"
-                    src={thumbnailUrl.length ? thumbnailUrl : LayoutImage('newnavigator_default_room.png')}
+                    src={thumbnailUrl.length ? thumbnailUrl : LayoutImage('shared/newnavigator_default_room.png')}
                     layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
                 />
             </Region>

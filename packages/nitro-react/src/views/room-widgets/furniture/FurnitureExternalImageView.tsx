@@ -1,4 +1,3 @@
-import { useTranslation } from '#base/context/system';
 import { Border, Box, Frame, ThemeImage, ThemeText } from '#base/theme';
 
 export interface FurnitureExternalImageViewProps {
@@ -16,16 +15,17 @@ export interface FurnitureExternalImageViewProps {
  *
  * Flash also offered to report the photo, share its link and open the photographer's profile.
  * Each of those is a window the port has yet to build, so the photo is shown and no more.
+ *
+ * The frame carries no caption: `stories_image_widget` is a bare container with no title text, so
+ * Flash named the photo nowhere but in its own labels.
  */
 export const FurnitureExternalImageView = ({ imageUrl, creatorName, time, caption, onClose }: FurnitureExternalImageViewProps) => {
-    const t = useTranslation();
     const date = time ? new Date(time) : undefined;
 
     return (
         <Frame
             variant="0"
             id="furniture-external-image"
-            caption={t('widget.furni.external_image.title', 'Photo')}
             onClose={onClose}
             defaultPosition={{ x: 110, y: 70 }}
             rememberPosition={false}

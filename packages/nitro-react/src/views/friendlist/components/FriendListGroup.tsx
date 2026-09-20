@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { AccordionContent, AccordionItem, AccordionTrigger, NitroIcon, ThemeText } from '#base/theme';
+import { AccordionContent, AccordionItem, AccordionTrigger, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
 
 export interface FriendListGroupPixiProps {
     value: string;
@@ -21,8 +21,12 @@ export const FriendListGroup = ({ value, caption, children, showArrows = true }:
                         textOptions={{ fill: '#000000' }}
                     />
                     {showArrows && (
-                        <NitroIcon
-                            icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'}
+                        // `FriendsView.refreshCategoryEntry` -> `refreshCatIcon`: the category
+                        // row's caption trails the `arrow_down_black_png` / `arrow_right_black_png`
+                        // library bitmaps of `friend_entry`.
+                        <ThemeImage
+                            name={isOpen ? 'arrow_down_black' : 'arrow_right_black'}
+                            src={LayoutImage(isOpen ? 'friend-list/friendlist_arrow_down_black.png' : 'friend-list/friendlist_arrow_right_black.png')}
                             layout={{}}
                         />
                     )}

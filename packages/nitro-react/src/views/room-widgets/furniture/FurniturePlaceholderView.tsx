@@ -1,4 +1,3 @@
-import { useTranslation } from '#base/context/system';
 import { Border, Frame, ThemeText } from '#base/theme';
 
 export interface FurniturePlaceholderViewProps {
@@ -7,17 +6,16 @@ export interface FurniturePlaceholderViewProps {
 
 /**
  * The stand-in for furniture whose real dialog was never built, on the `placeholder` layout
- * (250x150). Its two lines are written into the Flash layout in English rather than localised,
- * so the keys below are ours with the layout's own text as the fallback.
+ * (250x150). Its two lines are written into the Flash layout in English rather than localised
+ * (`ph_frame` and `ph_msg` captions, no `${...}` key), so the port shows the same literal text -
+ * there is no key for a hotel to translate.
  */
 export const FurniturePlaceholderView = ({ onClose }: FurniturePlaceholderViewProps) => {
-    const t = useTranslation();
-
     return (
         <Frame
             variant="0"
             id="furniture-placeholder"
-            caption={t('widget.furni.placeholder.title', 'This feature is not yet available!')}
+            caption="This feature is not yet available!"
             dropShadow={false}
             onClose={onClose}
             defaultPosition={{ x: 120, y: 100 }}
@@ -29,7 +27,7 @@ export const FurniturePlaceholderView = ({ onClose }: FurniturePlaceholderViewPr
                 layout={{ flex: 1 }}
             >
                 <ThemeText
-                    text={t('widget.furni.placeholder.message', 'Coming soon!')}
+                    text="Coming soon!"
                     textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 134 }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 82, width: 134, top: 17, height: 44 }}

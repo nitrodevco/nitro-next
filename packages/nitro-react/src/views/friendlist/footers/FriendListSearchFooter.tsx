@@ -1,9 +1,13 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Border, Box, Button, NitroIcon, TextInput, ThemeText } from '#base/theme';
+import { Border, Box, Button, LayoutImage, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
-/** Pixi port of views/friendlist/footers/FriendListSearchFooter.tsx. */
+/**
+ * Pixi port of views/friendlist/footers/FriendListSearchFooter.tsx. `search_footer`'s
+ * `search_but` holds a `<bitmap name="search">` that `SearchView` fills with the friend list's
+ * `search_png` asset - a library bitmap, not an icon-set style.
+ */
 export const FriendListSearchFooter = () => {
     const [ value, setValue ] = useState('');
     const t = useTranslation();
@@ -24,8 +28,9 @@ export const FriendListSearchFooter = () => {
                     variant="0"
                     layout={{ flexShrink: 0, height: 21, flexDirection: 'row', alignItems: 'center', gap: 4, paddingLeft: 6, paddingRight: 6, paddingTop: 4, paddingBottom: 4 }}
                 >
-                    <NitroIcon
-                        icon="icon-search-outline"
+                    <ThemeImage
+                        name="search"
+                        src={LayoutImage('friend-list/friendlist_search.png')}
                         layout={{}}
                     />
                     <ThemeText

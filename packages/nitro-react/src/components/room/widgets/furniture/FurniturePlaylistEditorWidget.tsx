@@ -3,7 +3,6 @@ import { AddJukeboxDiskComposer, RemoveJukeboxDiskComposer } from '@nitrodevco/n
 
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
-import { useTranslation } from '#base/context/system';
 import { JukeboxData } from '#base/handlers';
 import { FurniturePlaylistEditorView, PlaylistEditorSong } from '#base/views/room-widgets/furniture/FurniturePlaylistEditorView';
 
@@ -16,19 +15,22 @@ export const FurniturePlaylistEditorWidget = () => {
     const request = useRoomWidget<JukeboxData>(RoomObjectWidgetRequestEvent.JUKEBOX_PLAYLIST_EDITOR);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
-    const t = useTranslation();
 
     const data = request?.data;
 
     if (!request || !data) return null;
 
-    /* A disk in your inventory names a song; the song is what has a title. */
+    /*
+     * A disk in your inventory names a song; the song is what has a title. Until the song's info
+     * has arrived the title is blank - `MusicInventoryGridView` builds the item with a null name and
+     * `MusicInventoryGridItem` leaves `song_title_text` empty, with no placeholder text.
+     */
     const inventory: PlaylistEditorSong[] = Object.entries(data.songDisks).map(([ diskId, songId ]) => {
         const song = data.songs[songId];
 
         return {
             id: parseInt(diskId, 10),
-            songName: song?.songName ?? t('playlist.editor.unknown.song', ''),
+            songName: song?.songName ?? '',
             creator: song?.creator ?? '',
             length: song?.length ?? 0,
         };

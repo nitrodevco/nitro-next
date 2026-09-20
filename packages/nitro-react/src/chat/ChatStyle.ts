@@ -6,15 +6,17 @@ import { ChatStyleDefinition } from './ChatStyleDefinitions';
 /** Tinted backgrounds kept per style - past this the least recently used colour is rebuilt on demand. */
 const MAX_TINTED_BACKGROUNDS = 32;
 
-/** What a chat bubble needs from its style - the Flash `IChatStyleInternal` + `IChatStyle` pair. */
+/** What a chat bubble needs from its style - the Flash `IChatStyle` + `IChatStyleInternal` pair. */
 export interface IChatStyle {
     readonly id: number;
     readonly assetId: string;
     readonly isSystemStyle: boolean;
+    readonly isPurchasable: boolean;
     readonly isHcOnly: boolean;
     readonly isAmbassadorOnly: boolean;
     readonly isStaffOverrideable: boolean;
-    readonly minRankRequired: number;
+    /** `[b]` / `[red]` ... markup is applied, and the icon is centred on the bubble's height. */
+    readonly isNotification: boolean;
     readonly allowHTML: boolean;
     /** No name prefix, no pointer, and clicking the bubble does nothing. */
     readonly isAnonymous: boolean;
@@ -29,15 +31,28 @@ export interface IChatStyle {
     readonly pointerTexture: Texture | undefined;
     /** `base bitmap height - pointerY`: the pointer's top sits this far above the bubble's bottom edge. */
     readonly pointerOffsetY: number;
+    /** `getPointerLeftMargin` - the style's own `pointerXMargins[0]`, else `fallback`. */
+    getPointerLeftMargin(fallback: number): number;
+    /** `getPointerRightMargin` - the style's own `pointerXMargins[1]`, else `fallback`. */
+    getPointerRightMargin(fallback: number): number;
     /** Where the speaker's head (or `iconTexture`) is centred; `undefined` when the style shows no face. */
     readonly faceOffset: Point | undefined;
     /** A style-provided picture that replaces the speaker's head (bot bubbles, notifications). */
     readonly iconTexture: Texture | undefined;
+    /** `getEmblem` - the badge drawn over the background (the staff hexagon's), its multi-line variant once the text wraps. */
+    getEmblem(multiline: boolean): Texture | undefined;
+    getEmblemOffset(multiline: boolean): Point | undefined;
     readonly selectorPreviewTexture: Texture | undefined;
     /** The bitmap the background nine-slice is cut from; `color` tints the colour layer where the style has one. */
     getBackgroundTexture(color?: number): Texture;
     /** The nine-slice borders (`9sliceXY` / `9sliceWH`) for `getBackgroundTexture`. */
     readonly nineSliceBorders: ChatStyleNineSliceBorders;
+    /**
+     * `usePixelPerfectNineSlice`: Flash's `ManualNineSliceSprite`, whose size is rounded to whole
+     * pixels and never smaller than its fixed borders. The port draws every style with a
+     * nearest-neighbour `NineSliceSprite`, which is what that class does; the flag adds its sizing.
+     */
+    readonly usePixelPerfectNineSlice: boolean;
 }
 
 export interface ChatStyleNineSliceBorders {
@@ -47,15 +62,24 @@ export interface ChatStyleNineSliceBorders {
     bottomHeight: number;
 }
 
-interface ChatStyleTextures {
+export interface ChatStyleTextures {
     base: Texture;
     pointer?: Texture;
     color?: Texture;
     selectorPreview?: Texture;
     icon?: Texture;
+    emblem?: Texture;
+    emblemMultiline?: Texture;
 }
 
 const toRectangle = (rect: { x: number; y: number; width: number; height: number }) => new Rectangle(rect.x, rect.y, rect.width, rect.height);
+
+const toPoint = (point: { x: number; y: number } | undefined) => (point ? new Point(point.x, point.y) : undefined);
+
+/** `ChatStyleLibrary.initializeStyleFromAssets`'s defaults for the keys a regpoints file may leave out. */
+const DEFAULT_TEXT_COLOR = 0;
+const DEFAULT_FONT_FACE = 'Volter';
+const DEFAULT_FONT_SIZE = 9;
 
 /** `0xRRGGBB` -> `#rrggbb`. */
 const toCssColor = (color: number): string => `#${(color & 0xffffff).toString(16).padStart(6, '0')}`;
@@ -70,11 +94,12 @@ const toCanvasImageSource = (texture: Texture): CanvasImageSource | undefined =>
 };
 
 /**
- * One entry of the Flash `ChatStyleLibrary`: the style's bitmaps plus the regpoints that say how
- * they fit together. `getBackgroundTexture` reproduces `ChatStyle.createBackground(color)`: with a
- * `chat_bubble_color` layer, that bitmap is colour-transformed to the speaker's chest colour and
- * DARKEN-blended onto a copy of the base at `colorXY`; `nineSliceBorders` says how the result is
- * nine-sliced along the one-pixel `9slice` grid. Tinted results are kept per colour in the
+ * One entry of the Flash `ChatStyleLibrary` - a port of `ChatStyle`: the style's bitmaps plus the
+ * regpoints that say how they fit together (pointer row and x margins, face, emblems, text
+ * margins, font) and the `chatstyles_xml` flags. `getBackgroundTexture` reproduces
+ * `ChatStyle.getNewBackgroundSprite(color)`: with a `chat_bubble_color` layer, that bitmap is
+ * colour-transformed to the speaker's chest colour and DARKEN-blended onto a copy of the base;
+ * `nineSliceBorders` says how the result is nine-sliced along the `9slice` grid. Tinted results are kept per colour in the
  * `AssetManager` (`chat:style:<asset>|<colour>`), most recent `MAX_TINTED_BACKGROUNDS` colours
  * - a room full of people wearing the same shirt composes the bitmap once, and a parade of
  * colours doesn't accumulate a texture each.
@@ -85,14 +110,22 @@ export class ChatStyle implements IChatStyle {
     private readonly _textFieldMargins: Rectangle;
     private readonly _overlap: Rectangle;
     private readonly _faceOffset: Point | undefined;
+    private readonly _emblemOffset: Point | undefined;
+    private readonly _emblemMultilineOffset: Point | undefined;
     private readonly _tintedBackgrounds: Map<number, Texture> = new Map();
 
     constructor(definition: ChatStyleDefinition, textures: ChatStyleTextures) {
         this._definition = definition;
         this._textures = textures;
-        this._textFieldMargins = toRectangle(definition.regPoints.textFieldMargins);
-        this._overlap = toRectangle(definition.regPoints.overlapRect);
-        this._faceOffset = definition.regPoints.faceXY ? new Point(definition.regPoints.faceXY.x, definition.regPoints.faceXY.y) : undefined;
+        const { textFieldMargins, overlapRect, faceXY, emblemXY, emblemMultilineXY } = definition.regPoints;
+
+        this._textFieldMargins = toRectangle(textFieldMargins);
+        // Flash leaves a style without `overlapRect` at `null`, which every reader takes as no overlap.
+        this._overlap = overlapRect ? toRectangle(overlapRect) : new Rectangle(0, 0, 0, 0);
+        this._faceOffset = toPoint(faceXY);
+        // An emblem needs both its regpoint and its bitmap (`hasConfig(...) && hasAsset(...)`).
+        this._emblemOffset = textures.emblem ? toPoint(emblemXY) : undefined;
+        this._emblemMultilineOffset = textures.emblemMultiline ? toPoint(emblemMultilineXY) : undefined;
     }
 
     public dispose(): void {
@@ -126,27 +159,31 @@ export class ChatStyle implements IChatStyle {
     }
 
     public get isSystemStyle(): boolean {
-        return this._definition.systemStyle;
+        return this._definition.flags.systemStyle ?? false;
+    }
+
+    public get isPurchasable(): boolean {
+        return this._definition.flags.purchasable ?? false;
     }
 
     public get isHcOnly(): boolean {
-        return this._definition.hcOnly;
+        return this._definition.flags.hcOnly ?? false;
     }
 
     public get isAmbassadorOnly(): boolean {
-        return this._definition.ambassadorOnly;
+        return this._definition.flags.ambassadorOnly ?? false;
     }
 
     public get isStaffOverrideable(): boolean {
-        return this._definition.staffOverrideable;
+        return this._definition.flags.staffOverrideable ?? false;
     }
 
-    public get minRankRequired(): number {
-        return this._definition.minRankRequired;
+    public get isNotification(): boolean {
+        return this._definition.flags.notification ?? false;
     }
 
     public get allowHTML(): boolean {
-        return this._definition.allowHTML;
+        return this._definition.flags.allowHTML ?? false;
     }
 
     public get isAnonymous(): boolean {
@@ -154,19 +191,23 @@ export class ChatStyle implements IChatStyle {
     }
 
     public get textColor(): number {
-        return this._definition.regPoints.textColorRGB;
+        return this._definition.regPoints.textColorRGB ?? DEFAULT_TEXT_COLOR;
     }
 
     public get linkColor(): number {
-        return this._definition.regPoints.linkColorRGB ?? this._definition.regPoints.textColorRGB;
+        return this._definition.regPoints.linkColorRGB ?? this.textColor;
     }
 
     public get fontFace(): string {
-        return this._definition.regPoints.fontFace;
+        return this._definition.regPoints.fontFace ?? DEFAULT_FONT_FACE;
     }
 
     public get fontSize(): number {
-        return this._definition.regPoints.fontSize;
+        return this._definition.regPoints.fontSize ?? DEFAULT_FONT_SIZE;
+    }
+
+    public get usePixelPerfectNineSlice(): boolean {
+        return this._definition.regPoints.usePixelPerfectNineSlice ?? false;
     }
 
     public get textFieldMargins(): Rectangle {
@@ -182,7 +223,38 @@ export class ChatStyle implements IChatStyle {
     }
 
     public get pointerOffsetY(): number {
-        return this._textures.base.height - (this._definition.regPoints.pointerY ?? this._textures.base.height);
+        return this._textures.base.height - (this._definition.regPoints.pointerY ?? 0);
+    }
+
+    public getPointerLeftMargin(fallback: number): number {
+        const margins = this._definition.regPoints.pointerXMargins;
+
+        return (margins && (margins.length >= 1)) ? margins[0] : fallback;
+    }
+
+    public getPointerRightMargin(fallback: number): number {
+        const margins = this._definition.regPoints.pointerXMargins;
+
+        return (margins && (margins.length >= 2)) ? margins[1] : fallback;
+    }
+
+    public getEmblem(multiline: boolean): Texture | undefined {
+        if (multiline && this._emblemMultilineOffset) return this._textures.emblemMultiline;
+
+        return this._emblemOffset ? this._textures.emblem : undefined;
+    }
+
+    public getEmblemOffset(multiline: boolean): Point | undefined {
+        if (multiline && this._emblemMultilineOffset) return this._emblemMultilineOffset;
+
+        return this._emblemOffset;
+    }
+
+    /** Every bitmap the style owns, for the library's one-time `nearest` pass. */
+    public get textures(): Texture[] {
+        const { base, pointer, color, selectorPreview, icon, emblem, emblemMultiline } = this._textures;
+
+        return [ base, pointer, color, selectorPreview, icon, emblem, emblemMultiline ].filter((texture): texture is Texture => !!texture);
     }
 
     public get faceOffset(): Point | undefined {
@@ -195,10 +267,6 @@ export class ChatStyle implements IChatStyle {
 
     public get selectorPreviewTexture(): Texture | undefined {
         return this._textures.selectorPreview;
-    }
-
-    public get baseTexture(): Texture {
-        return this._textures.base;
     }
 
     public get nineSliceBorders(): ChatStyleNineSliceBorders {
@@ -267,10 +335,10 @@ export class ChatStyle implements IChatStyle {
         tintCtx.globalCompositeOperation = 'destination-in';
         tintCtx.drawImage(overlay, 0, 0);
 
-        const at = this._definition.regPoints.colorXY ?? { x: 0, y: 0 };
-
+        // Flash's `draw` passes no matrix: the layer lands at 0,0 whatever `colorXY` says (the
+        // library reads it into the style and nothing reads it back).
         ctx.globalCompositeOperation = 'darken';
-        ctx.drawImage(tinted, at.x, at.y);
+        ctx.drawImage(tinted, 0, 0);
         ctx.globalCompositeOperation = 'source-over';
 
         // Owned here (not by Pixi's global `Cache`), registered with the asset manager.

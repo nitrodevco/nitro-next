@@ -1,6 +1,6 @@
 import { useFriendsActions, useFriendsStore } from '#base/context/friend';
 import { useSystemActions } from '#base/context/system';
-import { Border, Box, Button, NitroIcon, TextInput } from '#base/theme';
+import { Border, Box, Button, LayoutImage, TextInput, ThemeImage } from '#base/theme';
 
 const BUTTON_LAYOUT = { paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingBottom: 5 };
 
@@ -14,6 +14,13 @@ const BUTTON_LAYOUT = { paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingB
  * need - see FriendListTab.tsx). Widening `Button`'s own contract mid-batch for a cosmetic
  * footer hint was judged not worth the risk to an already-shipped, widely-used component; noted
  * here rather than silently dropped.
+ *
+ * The four button faces are the `friends_footer` layout's `<bitmap name="icon">` slots, which
+ * `FriendsView.fillFooter` -> `initButton` fills from the friend list's own asset library
+ * (`HabboFriendList.getButtonImage`): `room_invite_png`, `open_homepage_png`, `search_png` and
+ * `remove_friend_png`. None of them is an icon-set style, so they are drawn as layout art.
+ * `button_open_minimail` (`open_minimail_png`) is `visible="false"` in the layout and has no
+ * place here either.
  */
 export const FriendListFriendsFooter = () => {
     const selectedFriendIds = useFriendsStore(x => x.selectedFriendIds);
@@ -36,8 +43,9 @@ export const FriendListFriendsFooter = () => {
                         onPointerTap={() => toggleWindow('friendlist_invite')}
                         layout={BUTTON_LAYOUT}
                     >
-                        <NitroIcon
-                            icon="icon-room-invite"
+                        <ThemeImage
+                            name="icon"
+                            src={LayoutImage('friend-list/friendlist_room_invite.png')}
                             layout={{}}
                         />
                     </Button>
@@ -45,8 +53,9 @@ export const FriendListFriendsFooter = () => {
                         disabled={selectedFriendIds.length !== 1}
                         layout={BUTTON_LAYOUT}
                     >
-                        <NitroIcon
-                            icon="icon-homepage-outline"
+                        <ThemeImage
+                            name="icon"
+                            src={LayoutImage('friend-list/friendlist_open_homepage.png')}
                             layout={{}}
                         />
                     </Button>
@@ -72,8 +81,11 @@ export const FriendListFriendsFooter = () => {
                                             onPointerTap={() => toggleListSearchInput(false)}
                                             layout={{ position: 'absolute', right: 4, top: 6 }}
                                         >
-                                            <NitroIcon
-                                                icon="icon-close-gray"
+                                            {/* `clear_input_region`'s 9x9 `var_picker_cancel_search`
+                                                cross; the icon set's own style 20 exists but no
+                                                layout ever names it. */}
+                                            <ThemeImage
+                                                src={LayoutImage('shared/var_picker_cancel_search.png')}
                                                 layout={{}}
                                             />
                                         </Box>
@@ -84,8 +96,9 @@ export const FriendListFriendsFooter = () => {
                                         onPointerTap={() => toggleListSearchInput(true)}
                                         layout={BUTTON_LAYOUT}
                                     >
-                                        <NitroIcon
-                                            icon="icon-search-outline"
+                                        <ThemeImage
+                                            name="icon"
+                                            src={LayoutImage('friend-list/friendlist_search.png')}
                                             layout={{}}
                                         />
                                     </Button>
@@ -96,8 +109,9 @@ export const FriendListFriendsFooter = () => {
                         onPointerTap={() => toggleWindow('friendlist_remove_confirmation')}
                         layout={BUTTON_LAYOUT}
                     >
-                        <NitroIcon
-                            icon="icon-trash-outline"
+                        <ThemeImage
+                            name="icon"
+                            src={LayoutImage('friend-list/friendlist_remove_friend.png')}
                             layout={{}}
                         />
                     </Button>

@@ -1,10 +1,9 @@
 import { NewNavigatorSearchComposer } from '@nitrodevco/nitro-packets';
-import { useState } from 'react';
 
 import { useWebSocketContext } from '#base/context/communication';
 import { NavigatorFilterType, useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useTranslation } from '#base/context/system';
-import { Border, Box, Dropmenu, DropmenuItem, LayoutImage, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Border, Box, Dropmenu, LayoutImage, TextInput, ThemeImage } from '#base/theme';
 
 const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
     { type: 'anything', prefix: '' },
@@ -15,19 +14,10 @@ const FILTER_TYPES: { type: NavigatorFilterType; prefix: string }[] = [
 ];
 
 /**
- * Pixi port of views/navigator/NavigatorSearchView.tsx. The filter-type Dropmenu/DropmenuItem
- * click-to-open interaction follows the exact same `onPress`/`eventMode="static"` recipe
- * already verified working end-to-end (via headless-browser click tests) for equivalent
- * widgets in the Toolbar/FriendList/Inventory batches earlier this migration, including this
- * same NavigatorView's own left-pane-collapse toggle a few lines up the tree - but an
- * isolated standalone repro of just this popup, outside the real Frame/component tree, didn't
- * register clicks in this sandbox's headless test harness for reasons not root-caused (possibly
- * a harness-specific timing/hit-testing quirk with a single small interactive element and
- * nothing else competing for hit-testing, not reproduced with any other interactive element
- * tested this session). Left as implemented rather than reworked on unconfirmed suspicion.
+ * The navigator's search row: the filter type drop menu (a theme `Dropmenu`, which opens, fits and
+ * closes the way Flash's does), the search field and its button.
  */
 export const NavigatorSearchView = () => {
-    const [ isFilterOpen, setFilterOpen ] = useState(false);
     const topLevelContext = useNavigatorStore(x => x.topLevelContext);
     const searchFilter = useNavigatorStore(x => x.searchFilter);
     const filterType = useNavigatorStore(x => x.filterType);
@@ -47,39 +37,22 @@ export const NavigatorSearchView = () => {
 
     return (
         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, height: 36, paddingLeft: 4, paddingRight: 4 }}>
-            <Box layout={{ position: 'relative', flexShrink: 0 }}>
-                <Dropmenu
-                    variant="100"
-                    onPointerTap={() => setFilterOpen(prev => !prev)}
-                    layout={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 4, width: 116, height: 24 }}
-                >
-                    <ThemeText
-                        text={t(`navigator.filter.${filterType}`)}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#000000' }}
-                    />
-                </Dropmenu>
-                {isFilterOpen && (
-                    <Box
-                        zIndex={10}
-                        layout={{ position: 'absolute', top: 24, left: 0, width: 116, flexDirection: 'column' }}
-                    >
-                        {FILTER_TYPES.map(({ type }) => (
-                            <DropmenuItem
-                                key={type}
-                                onPointerTap={() => {
-                                    setFilterType(type);
-                                    setFilterOpen(false);
-                                    search(searchFilter, type);
-                                }}
-                                layout={{ width: '100%' }}
-                            >
-                                {t(`navigator.filter.${type}`)}
-                            </DropmenuItem>
-                        ))}
-                    </Box>
-                )}
-            </Box>
+            <Dropmenu
+                variant="100"
+                textStyle="text-style-u-regular"
+                textColor="#000000"
+                caption={t(`navigator.filter.${filterType}`)}
+                options={FILTER_TYPES.map(({ type }) => ({
+                    key: type,
+                    label: t(`navigator.filter.${type}`),
+                    selected: type === filterType,
+                    onSelect: () => {
+                        setFilterType(type);
+                        search(searchFilter, type);
+                    },
+                }))}
+                layout={{ width: 116, height: 24 }}
+            />
             <Border
                 variant="4"
                 layout={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingLeft: 6, paddingRight: 6, width: 235, height: 24 }}
@@ -101,7 +74,7 @@ export const NavigatorSearchView = () => {
                     }}
                     layout={{ flexShrink: 0 }}
                 >
-                    <ThemeImage src={LayoutImage(searchFilter.length > 0 ? 'icons_close.png' : 'common_small_pen.png')} />
+                    <ThemeImage src={LayoutImage(searchFilter.length > 0 ? 'shared/icons_close.png' : 'shared/common_small_pen.png')} />
                 </Box>
             </Border>
         </Box>

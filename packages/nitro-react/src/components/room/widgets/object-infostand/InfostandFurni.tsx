@@ -1,12 +1,13 @@
-import { CrackableDataType, FurniId, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, MapDataType, RoomControllerLevelEnum, RoomObjectOperationType, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import { CrackableDataType, FurniId, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, MapDataType, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 import { GetHabboGroupDetailsComposer, GetSongInfoComposer, SetObjectDataComposer } from '@nitrodevco/nitro-packets';
 import { useEffect } from 'react';
 
-import { openProfile } from '#base/commands';
+import { openClientLink, openProfile } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useOwnControllerLevel, useRoom, useRoomStore } from '#base/context/room';
 import { useConfigValue, useSystemActions } from '#base/context/system';
 import { useOwnSecurityLevel, useOwnUserId, useUserStore } from '#base/context/user';
+import { useWiredShowInspectButton } from '#base/context/wired';
 import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify, useSecondsClock } from '#base/hooks';
 import { InfostandFurniDetails, InfostandFurniView } from '#base/views/room-widgets/object-infostand/InfostandFurniView';
 
@@ -27,7 +28,8 @@ export const PICKUP_FULL = 2;
 /**
  * The infostand for furniture - `InfoStandFurniView`, with the crackable, jukebox and song disk
  * variants folded in. It works out what you may do with the object - move, rotate, pick up or
- * eject, use - the way `InfoStandFurniView.update` did, and gathers what the variants show.
+ * eject, use, wired inspect - the way `InfoStandFurniView.update` did, and gathers what the
+ * variants show. In wired play test mode (`playTestMode`) only what a visitor could do is offered.
  */
 export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => {
     const { objectId, category } = objectData;
@@ -38,6 +40,8 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
     const controllerLevel = useOwnControllerLevel();
     const isRoomOwner = useRoomStore(x => x.isRoomOwner);
     const isFreeFurniMovementsMode = useRoomStore(x => x.isFreeFurniMovementsMode);
+    const playTestMode = useRoomStore(x => x.playTestMode);
+    const showWiredInspectButton = useWiredShowInspectButton();
     const nowPlayingSongId = useRoomStore(x => x.nowPlayingSongId);
     const songInfoById = useRoomStore(x => x.songInfoById);
     const groupDetails = useUserStore(x => (furniData?.groupId ? x.groupDetailsById[furniData.groupId] : undefined));
@@ -77,15 +81,15 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
     const isOwner = furniData.ownerId === ownUserId;
     const isAnyRoomController = Number(securityLevel) >= ANY_ROOM_CONTROLLER_SECURITY;
     const hasRights = controllerLevel >= RoomControllerLevelEnum.Guest;
-    // Free furni movements mode (a wired configuration item) hands move, rotate and use to everyone.
-    const canMove = isFreeFurniMovementsMode || hasRights || isOwner || isRoomOwner || isAnyRoomController;
+    // Free furni movements mode (a wired configuration item) hands move, rotate and use to everyone; play test mode takes them from the rest.
+    const canMove = isFreeFurniMovementsMode || (!playTestMode && (hasRights || isOwner || isRoomOwner || isAnyRoomController));
     const isCrackable = extraParam.startsWith(RoomWidgetEnumItemExtradataParameter.CRACKABLE_FURNI);
 
     let canUse = false;
 
     if (useButtonEnabled) {
         if (furniData.usagePolicy === FurnitureUsagePolicyEnum.Everybody) canUse = true;
-        if (hasRights && ((furniData.usagePolicy === FurnitureUsagePolicyEnum.Controller) || (extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX) || (extraParam === RoomWidgetEnumItemExtradataParameter.USABLE_PRODUCT))) canUse = true;
+        if (!playTestMode && hasRights && ((furniData.usagePolicy === FurnitureUsagePolicyEnum.Controller) || (extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX) || (extraParam === RoomWidgetEnumItemExtradataParameter.USABLE_PRODUCT))) canUse = true;
     }
 
     if (useButtonEnabled && isFreeFurniMovementsMode) canUse = true;
@@ -95,10 +99,16 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
 
     let pickupMode = PICKUP_NONE;
 
-    if (isOwner || isAnyRoomController) pickupMode = PICKUP_FULL;
-    else if (isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.GuildAdmin)) pickupMode = PICKUP_EJECT;
+    // `updatePickupMode(event, playTestMode)`.
+    if (!playTestMode) {
+        if (isOwner || isAnyRoomController) pickupMode = PICKUP_FULL;
+        else if (isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.GuildAdmin)) pickupMode = PICKUP_EJECT;
 
-    if (furniData.isStickie) pickupMode = PICKUP_NONE;
+        if (furniData.isStickie) pickupMode = PICKUP_NONE;
+    }
+
+    // `RWFAM_WIRED_INSPECT`: a floor item by its id, a wall item by its negative id.
+    const wiredInspectId = (category === RoomObjectCategoryEnum.Floor) ? objectId : ((category === RoomObjectCategoryEnum.Wall) ? -objectId : undefined);
 
     const expirySeconds = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExpiryTime) ?? -1;
     const expiryStamp = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExpiryTimestamp) ?? 0;
@@ -143,6 +153,7 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
             canMove={canMove}
             canRotate={canMove && !furniData.isWallItem}
             canUse={canUse}
+            canWiredInspect={!playTestMode && showWiredInspectButton}
             pickupMode={pickupMode}
             canSaveBranding={Number(securityLevel) >= SAVE_BRANDING_SECURITY}
             onMove={() => modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_MOVE)}
@@ -152,6 +163,7 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
                 onClose();
             }}
             onUse={() => changeItemState(objectId, category, 0, false)}
+            onWiredInspect={() => (wiredInspectId !== undefined) && openClientLink(send, `wiredmenu/open/inspection/0/${wiredInspectId}`)}
             onBuy={() => showWindow('catalog', { offerId: furniData.furnitureData?.purchaseOfferId })}
             onRent={() => showWindow('catalog', { offerId: furniData.furnitureData?.rentOfferId })}
             onOpenOwner={() => (furniData.ownerId > 0) && openProfile(send, furniData.ownerId)}

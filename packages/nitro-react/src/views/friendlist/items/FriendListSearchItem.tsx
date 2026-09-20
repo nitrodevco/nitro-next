@@ -1,7 +1,7 @@
 import { IMessengerSearchResult } from '@nitrodevco/nitro-packets';
 
 import { useFriendsActions } from '#base/context/friend';
-import { Box, NitroIcon } from '#base/theme';
+import { Box, LayoutImage, ThemeImage } from '#base/theme';
 
 import { FriendListItem } from '../components/FriendListItem';
 
@@ -12,7 +12,11 @@ export interface FriendListSearchItemPixiProps {
     zebraColor?: string;
 }
 
-/** Pixi port of views/friendlist/items/FriendListSearchItem.tsx. */
+/**
+ * Pixi port of views/friendlist/items/FriendListSearchItem.tsx. `SearchView` fills the
+ * `search_entry` row's two `<bitmap>` slots from the friend list's asset library - `start_chat_png`
+ * for someone who is already a friend, `ask_for_friend_png` otherwise. Neither is an icon-set style.
+ */
 export const FriendListSearchItem = ({ result, isFriend, showAvatarHead, zebraColor }: FriendListSearchItemPixiProps) => {
     const { tooltipHandlers } = useFriendsActions();
     const hover = tooltipHandlers(isFriend ? 'friendlist.tip.im' : 'friendlist.tip.addfriend');
@@ -29,8 +33,9 @@ export const FriendListSearchItem = ({ result, isFriend, showAvatarHead, zebraCo
                 onPointerOut={hover.onMouseLeave}
                 layout={{ marginLeft: 'auto' }}
             >
-                <NitroIcon
-                    icon={isFriend ? 'icon-message-small' : 'icon-add'}
+                <ThemeImage
+                    name={isFriend ? 'start_chat' : 'ask_for_friend'}
+                    src={LayoutImage(isFriend ? 'friend-list/friendlist_start_chat.png' : 'friend-list/friendlist_ask_for_friend.png')}
                     layout={{}}
                 />
             </Box>

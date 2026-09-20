@@ -5,6 +5,7 @@ import { useRef } from 'react';
 
 import { useRoom, useRoomStore } from '#base/context/room';
 import { useConfigValue } from '#base/context/system';
+import { useUserStore } from '#base/context/user';
 
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
 
@@ -59,6 +60,8 @@ export const useRoomCamera = () => {
     const targetId = useRoomStore(x => x.targetId);
     const targetCategory = useRoomStore(x => x.targetCategory);
     const cameraFollowDisabled = useRoomStore(x => x.cameraFollowDisabled);
+    // `SessionDataManager.isRoomCameraFollowDisabled` - the account's "disable room camera follow" setting.
+    const followDisabledByUser = useUserStore(x => x.isRoomCameraFollowDisabled);
     const followDuration = useRoomStore(x => x.followDuration);
     const moveSpeedDenominator = useConfigValue<number>('camera.move.speed') ?? 12;
     const cameraDataRef = useRef<RoomCameraData>(createCameraData(undefined));
@@ -341,7 +344,7 @@ export const useRoomCamera = () => {
             cameraData.scale = canvas.geometry.scale;
         }
 
-        if (!cameraFollowDisabled) adjustCamera(time, 8);
+        if (!cameraFollowDisabled && !followDisabledByUser) adjustCamera(time, 8);
 
         const offsetX = -(cameraData.currentLocation?.x ?? 0);
         const offsetY = -(cameraData.currentLocation?.y ?? 0);

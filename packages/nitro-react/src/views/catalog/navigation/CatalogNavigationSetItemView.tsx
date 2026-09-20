@@ -3,7 +3,7 @@ import { ICatalogNode } from '@nitrodevco/nitro-api';
 import { useCatalogStore } from '#base/context/catalog';
 import { useConfigValue } from '#base/context/system';
 import { useCatalogNavigation } from '#base/hooks';
-import { Box, ColorLayer, NitroIcon, ThemeImage, ThemeText } from '#base/theme';
+import { Box, ColorLayer, Icon, ThemeImage, ThemeText } from '#base/theme';
 
 import { CatalogNavigationSetView } from './CatalogNavigationSetView';
 
@@ -41,9 +41,14 @@ export const CatalogNavigationSetItemView = ({ node }: CatalogNavigationSetItemV
                             textOptions={{ fill: isActive ? '#ffffff' : '#666666' }}
                         />
                         {node.children.length > 0 && (
-                            <NitroIcon
-                                icon={isOpen ? 'icon-tri-arrow-up' : 'icon-tri-arrow-down'}
-                                layout={{}}
+                            // `catalog_ubuntu_with_tabs`'s `drop_button` (`tags="DOWNBTN"`,
+                            // `color="0x999999"`), which `CatalogNodeRenderable.open`/`close`
+                            // flips between icon style 7 (triangle down) and style 5 (triangle
+                            // right) - not the up/down pair.
+                            <Icon
+                                name="drop_button"
+                                variant={isOpen ? 7 : 5}
+                                tintColor="#999999"
                             />
                         )}
                     </Box>

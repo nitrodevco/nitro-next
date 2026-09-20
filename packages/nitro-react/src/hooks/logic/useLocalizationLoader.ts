@@ -1,12 +1,24 @@
+/**
+ * Loads the texts into the system store once the config is in, in Flash's order: first the
+ * client's embedded localizations (`gamedata.urls.defaultLocalizations` - Flash
+ * `HabboLocalizationManager.loadDefaultEmbedLocalizations`, `default_localizations` with the
+ * language's file over it, extracted by nitro-tools), then the external texts
+ * (`gamedata.urls.externalTexts`), which override them. Either key is one URL or several, merged in
+ * order. Each body is read the way `CoreLocalizationManager.parseLocalizationData` reads Flash's
+ * `external_texts` - see `utils/localizationData.ts` - then `${key}` references between texts are
+ * resolved. A URL that does not answer 2xx is logged and skipped.
+ */
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
 import { useConfigValue, useSystemActions } from '#base/context/system';
+import { parseLocalizationData } from '#base/utils';
 
 export const useLocalizationLoader = () => {
     const [ needsUpdate, setNeedsUpdate ] = useState<boolean>(true);
     const { setLocalization } = useSystemActions();
-    const localizationUrl = useConfigValue<string>('gamedata.urls.externalTexts') ?? '';
+    const localizationUrl = useConfigValue<string | string[]>('gamedata.urls.externalTexts') ?? '';
+    const defaultLocalizationUrl = useConfigValue<string | string[]>('gamedata.urls.defaultLocalizations') ?? '';
 
     const isLocalizationReady = () => !needsUpdate;
 
@@ -52,12 +64,9 @@ export const useLocalizationLoader = () => {
 
         const urls: string[] = [];
 
-        if (localizationUrl) {
-            if (Array.isArray(localizationUrl)) {
-                localizationUrl.forEach((url: string) => urls.push(url));
-            } else {
-                urls.push(localizationUrl);
-            }
+        for (const value of [ defaultLocalizationUrl, localizationUrl ]) {
+            if (Array.isArray(value)) urls.push(...value);
+            else if (value) urls.push(value);
         }
 
         const load = async (urls: string[]) => {
@@ -66,7 +75,14 @@ export const useLocalizationLoader = () => {
             for (const url of urls) {
                 try {
                     const response = await fetch(url);
-                    const responseData = (await response.json()) as Record<string, string>;
+
+                    if (!response.ok) {
+                        NitroLogger.error(`Localization ${url} answered ${response.status}`);
+
+                        continue;
+                    }
+
+                    const responseData = parseLocalizationData(await response.text());
 
                     data = { ...data, ...responseData };
                 } catch (err) {
@@ -79,7 +95,7 @@ export const useLocalizationLoader = () => {
         };
 
         void load(urls);
-    }, [ needsUpdate, localizationUrl ]);
+    }, [ needsUpdate, localizationUrl, defaultLocalizationUrl ]);
 
     return { isLocalizationReady };
 };

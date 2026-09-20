@@ -13,13 +13,15 @@ const ANY_ROOM_CONTROLLER_SECURITY = 5;
 /**
  * The bot panel - `InfoStandBotView` and `InfoStandRentableBotView`. Everything it shows arrives
  * with the room's user list, so unlike a pet there is nothing to ask the server for. A rentable
- * bot can be moved and turned by anyone with rights, and picked up by whoever may manage it.
+ * bot can be moved and turned by anyone with rights - not in wired play test mode - and picked up
+ * by whoever may manage it.
  */
 export const InfostandBot = ({ objectData, onClose }: { objectData: ISimpleRoomObjectData; onClose: () => void }) => {
     const room = useRoom();
     // The raw room user rather than `useRoomUserData`'s avatar shape: only this one names the owner.
     const userData = useRoomStore(x => x.usersByRoomObjectId[objectData.objectId]);
     const isRoomOwner = useRoomStore(x => x.isRoomOwner);
+    const playTestMode = useRoomStore(x => x.playTestMode);
     const controllerLevel = useOwnControllerLevel();
     const securityLevel = useOwnSecurityLevel();
     const { modifyRoomObject } = useRoomObjectModify();
@@ -41,7 +43,7 @@ export const InfostandBot = ({ objectData, onClose }: { objectData: ISimpleRoomO
             gender={userData.gender}
             ownerName={hasOwner ? userData.ownerName : ''}
             carryItem={roomObject?.model.getValue<number>(RoomObjectVariableEnum.FigureCarryObject) ?? 0}
-            canMove={hasOwner && ((controllerLevel >= RoomControllerLevelEnum.Guest) || isRoomOwner || isAnyRoomController)}
+            canMove={hasOwner && !playTestMode && ((controllerLevel >= RoomControllerLevelEnum.Guest) || isRoomOwner || isAnyRoomController)}
             canPickUp={hasOwner && (isRoomOwner || isAnyRoomController)}
             onMove={() => modifyRoomObject(objectData.objectId, RoomObjectCategoryEnum.Unit, RoomObjectOperationType.OBJECT_MOVE)}
             onRotate={() => modifyRoomObject(objectData.objectId, RoomObjectCategoryEnum.Unit, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)}

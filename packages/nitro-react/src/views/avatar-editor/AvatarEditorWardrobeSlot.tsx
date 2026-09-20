@@ -20,11 +20,11 @@ export const AvatarEditorWardrobeSlot = ({ figure, gender = AvatarGenderType.Mal
             <Region layout={{ flexDirection: 'column', justifyContent: 'center', gap: 5 }}>
                 <ThemeImage
                     onPointerTap={usable ? onSet : undefined}
-                    src={LayoutImage('icons_forward_small.png')}
+                    src={LayoutImage('avatar-editor/icons_forward_small.png')}
                 />
                 <ThemeImage
                     onPointerTap={canGet ? onGet : undefined}
-                    src={LayoutImage('icons_back_small.png')}
+                    src={LayoutImage('avatar-editor/icons_back_small.png')}
                 />
             </Region>
             <Border

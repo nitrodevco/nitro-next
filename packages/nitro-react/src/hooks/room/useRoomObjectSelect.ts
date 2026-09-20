@@ -1,7 +1,10 @@
-import { ISelectedRoomObjectData, NitroLogger, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectOperationType } from '@nitrodevco/nitro-api';
+import { ISelectedRoomObjectData, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectOperationType } from '@nitrodevco/nitro-api';
+import { LookToComposer } from '@nitrodevco/nitro-packets';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
 
+import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomIsPlayingGame, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
+import { useWiredStore } from '#base/context/wired';
 
 import { useRoomObjectValidation } from './useRoomObjectValidation';
 
@@ -19,6 +22,8 @@ export const useRoomObjectSelect = () => {
     const selectedObjectCategory = useRoomStore(x => x.selectedObjectCategory);
     const { setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject } = useRoomSelectedObjectActions();
     const { setObjectAlphaMultiplier } = useRoomObjectValidation();
+    const hasClickUserWired = useWiredStore(x => x.hasClickUserWired);
+    const { send } = useWebSocketContext();
 
     const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
         if (!room) return;
@@ -70,9 +75,11 @@ export const useRoomObjectSelect = () => {
             nextAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(true));
             setSelectedAvatarId(objectId);
 
-            if (lookAt) {
+            // Not while the room's wired listens for clicks on users: the server decides what the click does.
+            if (lookAt && !hasClickUserWired) {
                 const location = nextAvatar.getLocation();
-                NitroLogger.sendPacket(`new RoomUnitLookComposer(~~(${location.x}), ~~(${location.y}))`);
+
+                send(new LookToComposer({ x: Math.trunc(location.x), y: Math.trunc(location.y) }));
             }
         }
 

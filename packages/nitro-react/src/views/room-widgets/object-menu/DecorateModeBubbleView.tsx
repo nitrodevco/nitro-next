@@ -1,6 +1,8 @@
 import { useRoomSessionActions } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
-import { Box, Bubble, Button } from '#base/theme';
+import { Box, Bubble } from '#base/theme';
+
+import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
 
 /**
  * The bubble that stays over your avatar while you decorate - `DecorateModeView`, on the
@@ -17,15 +19,10 @@ export const DecorateModeBubbleView = () => {
             layout={{ flexDirection: 'column', paddingTop: 8, paddingBottom: 8 }}
         >
             <Box layout={{ minWidth: 103, maxWidth: 103, marginLeft: 2, marginRight: 2 }}>
-                <Button
-                    variant="300"
-                    tintColor="#2d2a27"
-                    textColor="#ffffff"
-                    onPointerTap={() => setIsDecorating(false)}
-                    layout={{ minHeight: 26, maxHeight: 26, width: '100%' }}
-                >
-                    {t('widget.avatar.stop_decorating')}
-                </Button>
+                <InfoBubbleMenuButton
+                    caption={t('widget.avatar.stop_decorating')}
+                    onPress={() => setIsDecorating(false)}
+                />
             </Box>
         </Bubble>
     );

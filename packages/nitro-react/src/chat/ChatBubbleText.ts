@@ -1,56 +1,53 @@
 import { Texture } from 'pixi.js';
-import { getTruffle } from 'truffle-text/react';
 
-import { bufferToCanvas } from '#base/theme/font/truffle';
+import { HABBO_TEXT_STYLES, normalizeFlashTextFormat, parseFlashTextMarkup, renderBrowserTextCanvas, renderFlashTextCanvas } from '#base/theme/font/flash-text';
 
 export interface ChatBubbleTextRender {
     texture: Texture;
     /** The laid-out text's extent (the Flash `TextField.textWidth` / `textHeight`). */
     textWidth: number;
     textHeight: number;
+    /** `TextField.numLines`. */
+    lineCount: number;
 }
 
 /** `0xRRGGBB` -> `#rrggbb` for the rich-text markup. */
 export const chatColorToCss = (color: number): string => `#${(color & 0xffffff).toString(16).padStart(6, '0')}`;
 
-/** Escapes the three characters that would otherwise be read as markup (the Flash client escaped `<`/`>` and dropped numeric entities). */
+/**
+ * `HabboFreeFlowChat.fixHtml`'s escape: `<` and `>` only. An `&amp;` a user types is read as an
+ * entity by the text field, in Flash and here alike.
+ */
 export const escapeChatMarkup = (text: string): string => text
-    .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
 /**
  * Rasterises a bubble's html-ish text (`<b>name: </b>message`, `<i>...</i>`, `<font color>`,
- * `<u>`) through truffle, the same renderer every other piece of Habbo text in this client uses,
- * so the chat font is the client's own embedded Ubuntu at the style's size rather than a browser
- * fallback. Word-wrapped at `wrapWidth` like the Flash `TextField` with `wordWrap = true` and a
- * fixed width. Returns `undefined` before truffle has finished loading; the caller shows the
- * bubble without text rather than blocking.
+ * `<u>`) through the Flash text renderer, the same one every other piece of Habbo text in this
+ * client uses, so the chat font is the client's own embedded Ubuntu at the style's size.
+ * Word-wrapped at `wrapWidth` like the Flash `TextField` with `wordWrap = true` and a fixed
+ * width. A message with a character the captured fonts do not carry is drawn with the browser's
+ * canvas text in the same layout instead.
  */
 export const renderChatBubbleText = (markup: string, fontFace: string, fontSize: number, color: number, wrapWidth: number): ChatBubbleTextRender | undefined => {
-    const truffle = getTruffle();
+    if (!markup.length) return undefined;
 
-    if (!truffle || !markup.length) return undefined;
+    // `u_chat_speak` is the client's own Ubuntu 12 chat style (kerning, sharpness, thickness);
+    // the bubble style's face and size override it where a style asks for something else.
+    const format = normalizeFlashTextFormat({ ...HABBO_TEXT_STYLES.u_chat_speak, fontFamily: fontFace, fontSize, color });
+    const runs = parseFlashTextMarkup(markup, format);
+    const options = { wordWrap: true, wrapWidth: Math.max(1, Math.floor(wrapWidth)), breakWords: true };
+    const rendered = renderFlashTextCanvas(runs, format, options) ?? renderBrowserTextCanvas(runs, options);
 
-    try {
-        // `u_chat_speak` is the client's own Ubuntu 12 chat preset (kerning, hinting, calibration);
-        // the style's face/size override it where a style asks for something else.
-        const baseStyle = truffle.resolveStyle('u_chat_speak', { fontFamily: fontFace, size: fontSize, color });
-        const buffer = truffle.renderRichText(markup, baseStyle, { wordWrap: true, width: Math.max(1, Math.floor(wrapWidth)), color });
-        const canvas = bufferToCanvas(buffer);
-        // Owned by the bubble and destroyed with it - kept out of Pixi's global `Cache`.
-        const texture = Texture.from(canvas, true);
+    if (!rendered) return undefined;
 
-        texture.source.scaleMode = 'nearest';
+    // Owned by the bubble and destroyed with it - kept out of Pixi's global `Cache`.
+    const texture = Texture.from(rendered.canvas, true);
 
-        const layout = buffer.richLayout ?? buffer.layout;
+    texture.source.scaleMode = 'nearest';
 
-        return {
-            texture,
-            textWidth: Math.ceil(layout?.textWidth ?? buffer.width),
-            textHeight: Math.ceil(layout?.textHeight ?? buffer.height),
-        };
-    } catch {
-        return undefined;
-    }
+    const lineCount = (rendered.lineHeight > 0) ? Math.max(1, Math.round(rendered.textHeight / rendered.lineHeight)) : 1;
+
+    return { texture, textWidth: Math.ceil(rendered.textWidth), textHeight: Math.ceil(rendered.textHeight), lineCount };
 };

@@ -2,7 +2,7 @@ import { MouseEventType, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObje
 import { ClickCharacterComposer, ClickFurniComposer, MoveAvatarComposer } from '@nitrodevco/nitro-packets';
 
 import { useWebSocketContext } from '#base/context/communication';
-import { useRoom, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomStore } from '#base/context/room';
+import { useRoom, useRoomIsPlayingGame, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomStore } from '#base/context/room';
 
 import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
@@ -24,8 +24,8 @@ export const useRoomEventHandler = () => {
     const placedObject = useRoomPlacedObject();
     const isSpectator = useRoomStore(x => x.isSpectator);
     const isDecorating = useRoomStore(x => x.isDecorating);
-    const isPlayingGame = useRoomStore(x => x.isPlayingGame);
-    const isMoveBlocked = useRoomStore(x => x.isMoveBlocked);
+    // `getActiveRoomIsPlayingGame`, which the room's wired click settings can switch on as well.
+    const isPlayingGame = useRoomIsPlayingGame();
     const { getMouseEventId, setMouseEventId } = useRoomMouseActions();
     const { selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();
@@ -103,7 +103,7 @@ export const useRoomEventHandler = () => {
                             if (!didWalk && event instanceof RoomObjectTileMouseEvent) {
                                 if (isDecorating || isSpectator) return;
 
-                                if (!isMoveBlocked) send(new MoveAvatarComposer({ targetX: event.tileXAsInt, targetY: event.tileYAsInt }));
+                                if (!room.isMoveBlocked) send(new MoveAvatarComposer({ targetX: event.tileXAsInt, targetY: event.tileYAsInt }));
                             }
                         } else {
                             if (!room.isAreaSelectionMode || category === RoomObjectCategoryEnum.Unit) {
@@ -218,7 +218,17 @@ export const useRoomEventHandler = () => {
     useRoomEventDispatcher<RoomEngineObjectEvent>([
         RoomEngineObjectEvent.ADDED,
     ], (event) => {
-        if (!placedObject || placedObject.objectId !== event.objectId || placedObject.category !== event.category) return;
+        if (!placedObject) return;
+
+        // `RoomEngine.addObjectFurniture` / `addObjectWallItem`: a floor item was placed under its negative inventory id, a wall item is compared as is.
+        const category = Number(event.category);
+        const floor = Number(RoomObjectCategoryEnum.Floor);
+        const wall = Number(RoomObjectCategoryEnum.Wall);
+        const placed = (category === floor)
+            ? ((Math.abs(placedObject.objectId) === event.objectId) && (Number(placedObject.category) === floor))
+            : ((category === wall) && (placedObject.objectId === event.objectId) && (Number(placedObject.category) === wall));
+
+        if (!placed) return;
 
         selectObject(event.objectId, event.category);
     });

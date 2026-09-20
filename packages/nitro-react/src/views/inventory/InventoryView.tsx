@@ -56,7 +56,7 @@ export const InventoryView = () => {
                 </TabButton>
             </TabContext>
             <TabContent>
-                {activeTab === 'furni' && <InventoryFurniView scrollVariant="0" />}
+                {activeTab === 'furni' && <InventoryFurniView />}
                 {activeTab === 'pets' && <InventoryPetsView />}
                 {activeTab === 'bots' && <InventoryBotsView />}
                 {activeTab === 'badges' && <InventoryBadgesView />}

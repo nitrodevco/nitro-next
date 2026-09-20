@@ -28,11 +28,11 @@ export const FurnitureMonsterplantSeedWidget = () => {
             preview={(
                 <>
                     <ThemeImage
-                        src={LayoutImage('plant_seed_preview_bg.png')}
+                        src={LayoutImage('room-ui/plant_seed_preview_bg.png')}
                         layout={{ position: 'absolute', left: 0, top: 0, width: 122, height: 130 }}
                     />
                     <ThemeImage
-                        src={LayoutImage('plant_seed_preview.png')}
+                        src={LayoutImage('room-ui/plant_seed_preview.png')}
                         layout={{ position: 'absolute', left: 0, top: 0, width: 122, height: 130 }}
                     />
                 </>

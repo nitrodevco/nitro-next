@@ -121,7 +121,7 @@ export const RoomToolsView = ({
                                 layout={{ position: 'absolute', left: 87, width: 18, top: 3, height: 19 }}
                             >
                                 <ThemeImage
-                                    src={LayoutImage('roomtools_zoom_in.png')}
+                                    src={LayoutImage('room-ui/roomtools_zoom_in.png')}
                                     dynamicRole="icon"
                                     layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
                                 />
@@ -135,7 +135,7 @@ export const RoomToolsView = ({
                                 layout={{ position: 'absolute', left: 107, width: 18, top: 3, height: 19 }}
                             >
                                 <ThemeImage
-                                    src={LayoutImage('roomtools_zoom_out.png')}
+                                    src={LayoutImage('room-ui/roomtools_zoom_out.png')}
                                     dynamicRole="icon"
                                     layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
                                 />
@@ -155,13 +155,13 @@ export const RoomToolsView = ({
                                 layout={{ position: 'absolute', left: 0, width: 37, top: 3, height: 34 }}
                             >
                                 <ThemeImage
-                                    src={LayoutImage('roomtools_history_forward_bg.png')}
+                                    src={LayoutImage('room-ui/roomtools_history_forward_bg.png')}
                                     tint="#44a88d"
                                     dynamicRole="bg"
                                     layout={{ position: 'absolute', left: 3, width: 34, top: 2, height: 31 }}
                                 />
                                 <ThemeImage
-                                    src={LayoutImage('roomtools_history_back_icon.png')}
+                                    src={LayoutImage('room-ui/roomtools_history_back_icon.png')}
                                     dynamicRole="icon"
                                     layout={{ position: 'absolute', left: 4, width: 30, top: 3, height: 30 }}
                                 />
@@ -176,13 +176,13 @@ export const RoomToolsView = ({
                                 layout={{ position: 'absolute', left: 38, width: 35, top: 0, height: 38 }}
                             >
                                 <ThemeImage
-                                    src={LayoutImage('roomtools_history_open_bg.png')}
+                                    src={LayoutImage('room-ui/roomtools_history_open_bg.png')}
                                     tint="#44a88d"
                                     dynamicRole="icon"
                                     layout={{ position: 'absolute', left: 1, width: 33, top: 1, height: 35 }}
                                 />
                                 <ThemeImage
-                                    src={LayoutImage('roomtools_history_open_icon.png')}
+                                    src={LayoutImage('shared/roomtools_history_open_icon.png')}
                                     dynamicRole="icon"
                                     layout={{ position: 'absolute', left: 2, width: 32, top: 3, height: 35 }}
                                 />
@@ -197,13 +197,13 @@ export const RoomToolsView = ({
                                 layout={{ position: 'absolute', left: 74, width: 34, top: 5, height: 32 }}
                             >
                                 <ThemeImage
-                                    src={LayoutImage('roomtools_history_forward_bg.png')}
+                                    src={LayoutImage('room-ui/roomtools_history_forward_bg.png')}
                                     tint="#44a88d"
                                     dynamicRole="bg"
                                     layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 31 }}
                                 />
                                 <ThemeImage
-                                    src={LayoutImage('roomtools_history_back_icon.png')}
+                                    src={LayoutImage('room-ui/roomtools_history_back_icon.png')}
                                     dynamicRole="icon"
                                     layout={{ position: 'absolute', left: 3, width: 30, top: 1, height: 30 }}
                                 />
@@ -226,7 +226,7 @@ export const RoomToolsView = ({
                 >
                     {/* The same arrow bitmap either way, as the layout has it - only its inset differs. */}
                     <ThemeImage
-                        src={LayoutImage('roomtools_minimizebutton.png')}
+                        src={LayoutImage('shared/roomtools_minimizebutton.png')}
                         dynamicRole="icon"
                         layout={{ position: 'absolute', left: collapsed ? 11 : 9, width: 6, alignSelf: 'center', height: 8 }}
                     />

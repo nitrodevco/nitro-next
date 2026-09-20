@@ -16,6 +16,10 @@ const LIKE_POINTS = 1;
  * The room info panel the tool column's settings button opens - `RoomInfoViewCtrl`. Flash kept it
  * in the navigator; here it sits with the room, because it is only ever opened from the room and
  * needs the room's own controller level to decide what to offer.
+ *
+ * The gates are `RoomInfoViewCtrl.refreshButtons` and `refreshRoomDetails`, reading
+ * `NavigatorData`: `canEditRoomSettings` is the owner or staff from `hasSecurity(5)` - rights
+ * alone are not enough - and `roomPicker` is `UserRightsMessage.securityLevel >= 7`.
  */
 export const RoomInfoWidget = () => {
     const isVisible = useIsWindowVisible('room_info');
@@ -29,17 +33,20 @@ export const RoomInfoWidget = () => {
     const securityLevel = useOwnSecurityLevel();
     const thumbnailUrlBase = useConfigValue<string>('navigator.thumbnail.url_base') ?? '';
     const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
+    // `RoomInfoViewCtrl.layoutButtons`: the mute-all button needs the hotel's flag as well as the right.
+    const muteAllEnabled = useConfigValue<boolean>('room_moderation.mute_all.enabled') === true;
     const { send } = useWebSocketContext();
+    const { setRoomRating, setRoomFavourite, updateEnteredRoom } = useNavigatorActions();
 
     if (!isVisible || !enteredRoom) return null;
 
     const { info: currentRoomInfo, isOwner, isStaffPicked, canMute, allInRoomMuted } = enteredRoom;
     const { roomId } = currentRoomInfo;
-    const { setRoomRating, setRoomFavourite, updateEnteredRoom } = useNavigatorActions();
     const isFavourite = favouriteRoomIds.includes(roomId);
-    /* `RoomInfoViewCtrl`: anyone holding rights can edit the settings, and staff can pick a room. */
-    const canEditRoomSettings = Number(controllerLevel) >= Number(RoomControllerLevelEnum.Guest);
-    const canStaffPick = Number(securityLevel) >= Number(SecurityLevelEnum.Moderator);
+    /* `NavigatorData.canEditRoomSettings` - the room's owner, or staff from `hasSecurity(5)`. */
+    const canEditRoomSettings = isOwner || (Number(securityLevel) >= Number(SecurityLevelEnum.Moderator));
+    /* `NavigatorData.roomPicker`, set by `IncomingMessages.onUserRights` at `securityLevel >= 7`. */
+    const canStaffPick = Number(securityLevel) >= Number(SecurityLevelEnum.Community);
 
     const thumbnailUrl = currentRoomInfo.officialRoomPicRef.length
         ? `${imageLibraryUrl}${currentRoomInfo.officialRoomPicRef}`
@@ -63,10 +70,10 @@ export const RoomInfoWidget = () => {
             canEditRoomSettings={canEditRoomSettings}
             canStaffPick={canStaffPick}
             isStaffPicked={isStaffPicked}
-            canMuteAll={canMute}
+            canMuteAll={canMute && muteAllEnabled}
             allInRoomMuted={allInRoomMuted}
-            // Rights you were given rather than own are the only ones you can hand back.
-            canRemoveRights={!isOwner && (Number(controllerLevel) >= Number(RoomControllerLevelEnum.Guest))}
+            // `HabboNavigator.hasRoomRightsButIsNotOwner`: exactly the rights you were given.
+            canRemoveRights={!isOwner && (Number(controllerLevel) === Number(RoomControllerLevelEnum.Guest))}
             onOpenOwnerProfile={() => send(new GetExtendedProfileComposer({ userId: currentRoomInfo.ownerId }))}
             onSelectTag={tag => searchRoomTag(send, tag)}
             onRate={() => {

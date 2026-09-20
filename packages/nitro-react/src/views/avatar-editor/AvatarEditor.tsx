@@ -190,7 +190,7 @@ export const AvatarEditor = () => {
                         >
                             <ThemeImage
                                 name="wardrobe_icon"
-                                src={LayoutImage('avatar_editor_tabs_ae_tabs_wardrobe.png')}
+                                src={LayoutImage('avatar-editor/avatar_editor_tabs_ae_tabs_wardrobe.png')}
                             />
                         </Button>
                     </Region>
@@ -207,7 +207,7 @@ export const AvatarEditor = () => {
                                 onPointerTap={_ => setActiveCategory(x)}
                                 layout={{ width: 52, height: 46 }}
                             >
-                                <ThemeImage src={LayoutImage(`avatar_editor_tabs_ae_tabs_${x}.png`)} />
+                                <ThemeImage src={LayoutImage(`avatar-editor/avatar_editor_tabs_ae_tabs_${x}.png`)} />
                             </TabButton>
                         ))}
                     </TabContext>
@@ -226,14 +226,14 @@ export const AvatarEditor = () => {
                                             onPointerTap={_ => changeGender(AvatarGenderType.Male)}
                                             layout={{ alignItems: 'center', gap: 4 }}
                                         >
-                                            <ThemeImage src={LayoutImage(`avatar_editor_tabs_gender_male${gender !== AvatarGenderType.Male ? '_off' : ''}.png`)} />
+                                            <ThemeImage src={LayoutImage(`avatar-editor/avatar_editor_tabs_gender_male${gender !== AvatarGenderType.Male ? '_off' : ''}.png`)} />
                                             <ThemeText text={t('avatareditor.generic.boy')} />
                                         </Region>
                                         <Region
                                             onPointerTap={_ => changeGender(AvatarGenderType.Female)}
                                             layout={{ alignItems: 'center', gap: 4 }}
                                         >
-                                            <ThemeImage src={LayoutImage(`avatar_editor_tabs_gender_female${gender !== AvatarGenderType.Female ? '_off' : ''}.png`)} />
+                                            <ThemeImage src={LayoutImage(`avatar-editor/avatar_editor_tabs_gender_female${gender !== AvatarGenderType.Female ? '_off' : ''}.png`)} />
                                             <ThemeText text={t('avatareditor.generic.girl')} />
                                         </Region>
                                     </>
@@ -245,7 +245,7 @@ export const AvatarEditor = () => {
                                     >
                                         <ThemeImage
                                             onPointerTap={_ => setActiveSubType(x.setType)}
-                                            src={LayoutImage(`${x.icon}${activeSetType !== x.setType ? '_off' : ''}.png`)}
+                                            src={LayoutImage(`avatar-editor/${x.icon}${activeSetType !== x.setType ? '_off' : ''}.png`)}
                                         />
                                     </Region>
                                 ))}
@@ -316,7 +316,7 @@ export const AvatarEditor = () => {
                                 />
                                 <ThemeImage
                                     onPointerTap={_ => previewerRef.current?.rotateAvatar()}
-                                    src={LayoutImage('avatar_editor_rotate_avatar_button.png')}
+                                    src={LayoutImage('avatar-editor/avatar_editor_rotate_avatar_button.png')}
                                 />
                             </Region>
                             <ButtonThick

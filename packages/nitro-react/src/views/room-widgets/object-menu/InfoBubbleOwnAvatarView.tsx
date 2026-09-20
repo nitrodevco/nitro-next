@@ -2,13 +2,17 @@ import { AvatarActionStateType, AvatarExpressionEnum, ClubLevelEnum, ISimpleRoom
 import { AvatarExpressionComposer, ChangePostureComposer, DanceComposer, SignComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { dropCarryItem, openProfile } from '#base/commands';
+import { dropCarryItem, openClientLink, openProfile } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useOwnIsDancing, useRoomSessionActions, useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
 import { useOwnClubLevel, useUserStore } from '#base/context/user';
+import { useWiredShowInspectButton } from '#base/context/wired';
 import { useRoomUserData } from '#base/hooks';
-import { Box, Bubble, Button, NitroIcon, ThemeText } from '#base/theme';
+import { Box, Bubble, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
+
+import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
+import { InfoBubbleMinimize } from './InfoBubbleMinimize';
 
 export interface InfoBubbleOwnAvatarViewProps {
     objectData: ISimpleRoomObjectData;
@@ -27,14 +31,19 @@ const SWIMMING_EFFECTS = [ 29, 30, 185 ];
 const RIDING_EFFECT = 77;
 const MAX_CARRY_ITEM = 999999;
 
-/** `signs_grid`, in the layout's own order: numbers, then the picture signs. */
+/**
+ * `signs_grid`, in the layout's own order: numbers, then the picture signs. A picture cell is a
+ * `<bitmap tags="icon">` that `ButtonMenuView.showButtonGrid` fills by the window's own name
+ * (`sign_icon_heart`, `sign_icon_skull`, `sign_icon_13` ... `sign_icon_17`) out of the room UI's
+ * asset library - library bitmaps, not icon-set styles.
+ */
 const SIGN_BUTTONS: { key: number; icon?: string; label?: string }[] = [
     { key: 1, label: '1' }, { key: 2, label: '2' }, { key: 3, label: '3' },
     { key: 4, label: '4' }, { key: 5, label: '5' }, { key: 6, label: '6' },
     { key: 7, label: '7' }, { key: 8, label: '8' }, { key: 9, label: '9' },
-    { key: 10, label: '10' }, { key: 11, icon: 'icon-sign-heart' }, { key: 12, icon: 'icon-sign-skull' },
-    { key: 0, label: '0' }, { key: 13, icon: 'icon-sign-exclamation' }, { key: 15, icon: 'icon-sign-smile' },
-    { key: 14, icon: 'icon-sign-soccer' }, { key: 17, icon: 'icon-sign-yellow' }, { key: 16, icon: 'icon-sign-red' },
+    { key: 10, label: '10' }, { key: 11, icon: LayoutImage('room-ui/sign_icon_heart.png') }, { key: 12, icon: LayoutImage('room-ui/sign_icon_skull.png') },
+    { key: 0, label: '0' }, { key: 13, icon: LayoutImage('room-ui/sign_icon_13.png') }, { key: 15, icon: LayoutImage('room-ui/sign_icon_15.png') },
+    { key: 14, icon: LayoutImage('room-ui/sign_icon_14.png') }, { key: 17, icon: LayoutImage('room-ui/sign_icon_17.png') }, { key: 16, icon: LayoutImage('room-ui/sign_icon_16.png') },
 ];
 
 type MenuButton = {
@@ -54,6 +63,7 @@ type MenuButton = {
  */
 export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAvatarViewProps) => {
     const info = useRoomUserData(objectData.objectId);
+    const showWiredInspect = useWiredShowInspectButton();
     const isDancing = useOwnIsDancing();
     const clubLevel = useOwnClubLevel();
     const hasEffectOn = useUserStore(x => x.avatarEffects.some(effect => effect.isInUse));
@@ -98,6 +108,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
             { key: 'signs', caption: t('infostand.show.signs'), visible: signsEnabled, staysOpen: true, onPress: toMode(MODE_SIGNS) },
             { key: 'handitem', caption: t('avatar.widget.drop_hand_item'), visible: handItemDropEnabled && (info.carryItem > 0) && (info.carryItem < MAX_CARRY_ITEM), onPress: () => dropCarryItem(send) },
             { key: 'effects', caption: t('widget.memenu.effects'), visible: !effectsDisabled && !isRiding, onPress: () => toggleWindow('avatar_effects') },
+            { key: 'wired_inspect', caption: t('infostand.button.wired_inspect'), visible: showWiredInspect, onPress: () => openClientLink(send, `wiredmenu/open/inspection/1/${objectData.objectId}`) },
         ],
         [MODE_CLUB_DANCES]: [
             { key: 'dance_stop', caption: t('widget.memenu.dance.stop'), visible: true, enabled: isDancing, onPress: dance(0) },
@@ -164,55 +175,42 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
                         {(mode === MODE_SIGNS) && (
                             <Box layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}>
                                 {SIGN_BUTTONS.map(({ key, icon, label }) => (
-                                    <Button
+                                    <InfoBubbleMenuButton
                                         key={key}
-                                        variant="300"
-                                        tintColor="#2d2a27"
-                                        textColor="#ffffff"
-                                        onPointerTap={() => {
+                                        shape="grid"
+                                        width={34}
+                                        height={25}
+                                        caption={label}
+                                        onPress={() => {
                                             send(new SignComposer({ signType: key }));
                                             onClose();
                                         }}
-                                        layout={{ minHeight: 25, maxHeight: 25, width: 35 }}
                                     >
-                                        {icon
-                                            ? (
-                                                    <NitroIcon
-                                                        icon={icon as 'icon-sign-heart'}
-                                                        layout={{}}
-                                                    />
-                                                )
-                                            : label}
-                                    </Button>
+                                        {icon && (
+                                            <ThemeImage
+                                                src={icon}
+                                                layout={{}}
+                                            />
+                                        )}
+                                    </InfoBubbleMenuButton>
                                 ))}
                             </Box>
                         )}
                         {buttons[mode].filter(button => button.visible).map(button => (
-                            <Button
+                            <InfoBubbleMenuButton
                                 key={button.key}
-                                variant="300"
-                                tintColor="#2d2a27"
-                                textColor="#ffffff"
+                                caption={button.caption}
                                 disabled={button.enabled === false}
-                                onPointerTap={() => press(button)}
-                                layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                            >
-                                {button.caption}
-                            </Button>
+                                onPress={() => press(button)}
+                            />
                         ))}
                     </Box>
                 </Box>
             )}
-            <Box
-                cursor="pointer"
-                onPointerTap={() => setCollapsed(!collapsed)}
-                layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 18, maxHeight: 18, padding: 8, width: '100%' }}
-            >
-                <NitroIcon
-                    icon={!collapsed ? 'icon-context-menu-arrow-down' : 'icon-context-menu-arrow-up'}
-                    layout={{}}
-                />
-            </Box>
+            <InfoBubbleMinimize
+                collapsed={collapsed}
+                onToggle={() => setCollapsed(!collapsed)}
+            />
         </Bubble>
     );
 };

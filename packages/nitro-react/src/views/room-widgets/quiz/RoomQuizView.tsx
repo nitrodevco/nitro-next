@@ -121,7 +121,7 @@ export const RoomQuizView = ({ content, secondsLeft, showResult, likes, dislikes
                             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
-                                src={LayoutImage('word_quiz_thum_down_big.png')}
+                                src={LayoutImage('room-ui/word_quiz_thum_down_big.png')}
                                 layout={{ position: 'absolute', left: 9, width: 31, top: 11, height: 34 }}
                             />
                         </Border>
@@ -139,7 +139,7 @@ export const RoomQuizView = ({ content, secondsLeft, showResult, likes, dislikes
                             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
-                                src={LayoutImage('word_quiz_thum_up_big.png')}
+                                src={LayoutImage('room-ui/word_quiz_thum_up_big.png')}
                                 layout={{ position: 'absolute', left: 9, width: 31, top: 7, height: 34 }}
                             />
                         </Border>

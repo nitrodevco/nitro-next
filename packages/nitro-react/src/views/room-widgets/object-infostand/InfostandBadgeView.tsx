@@ -5,7 +5,7 @@ export interface InfostandBadgeViewProps {
     /** A badge code, or for a group badge the badge data string. */
     code: string | undefined;
     group?: boolean;
-    /** Owners of the badge, shown in the details for badges few people have. */
+    /** Owners of the badge, shown in the details for badges fewer than 1000 people have. */
     ownerCount?: number;
     onPress?: () => void;
     layout?: BoxLayout;
@@ -14,7 +14,8 @@ export interface InfostandBadgeViewProps {
 /**
  * One badge slot of the infostand - the `badge_image` widget. A user badge is drawn from
  * `badge.asset.url`, a group badge from `badge.asset.group.url`; hovering names it, as
- * `InfoStandUserView.showBadgeInfo` did.
+ * `InfoStandUserView.showBadgeInfo` did. The owner count line is `badge.owner_count` (`%count%`),
+ * shown only for 1-999 owners (`shouldShowOwnerCount` in `InfoStandUserView.populateBadgeDetails`).
  */
 export const InfostandBadgeView = ({ code, group = false, ownerCount, onPress, layout }: InfostandBadgeViewProps) => {
     const badgeUrl = useConfigValue<string>('badge.asset.url') ?? '';
@@ -27,7 +28,7 @@ export const InfostandBadgeView = ({ code, group = false, ownerCount, onPress, l
     const texture = useTextureFromUrl(url);
 
     const tooltip = (code && !group)
-        ? [ t(`badge_name_${code}`, code), t(`badge_desc_${code}`, ''), (ownerCount && (ownerCount > 0)) ? t('badge.owner.count', '', { count: String(ownerCount) }) : '' ].filter(line => line.length).join('\n')
+        ? [ t(`badge_name_${code}`, code), t(`badge_desc_${code}`, ''), (ownerCount && (ownerCount > 0) && (ownerCount < 1000)) ? t('badge.owner_count', '', { count: String(ownerCount) }) : '' ].filter(line => line.length).join('\n')
         : undefined;
 
     return (

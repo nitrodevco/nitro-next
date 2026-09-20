@@ -19,11 +19,12 @@ export interface FurnitureYoutubeViewProps {
     onClose: () => void;
 }
 
-/** The four playback commands the display takes, in the order the client sends them. */
-const COMMAND_PAUSE = 0;
-const COMMAND_PLAY = 1;
-const COMMAND_NEXT = 2;
-const COMMAND_PREVIOUS = 3;
+/**
+ * The playback commands `YoutubeDisplayWidgetHandler` sends: `switchToPreviousVideo` is 0,
+ * `switchToNextVideo` 1 (`pauseVideo` 2 and `continueVideo` 3 have no button - see below).
+ */
+const COMMAND_PREVIOUS = 0;
+const COMMAND_NEXT = 1;
 
 /**
  * A video display, on the `video_viewer` layout: which playlist it is set to, and the controls
@@ -32,6 +33,14 @@ const COMMAND_PREVIOUS = 3;
  * The video itself is not played here. Flash embedded a player in the room; the port draws its
  * room into a canvas with no room for one, so the display names what is on rather than showing
  * it.
+ *
+ * As in `video_viewer`, the frame has no caption and the only controls are `playlist_prev` and
+ * `playlist_next`, enabled once a playlist is chosen (`YoutubeDisplayWidget.updateButtons`) and
+ * tooltipped `${widget.furni.video_viewer.tooltip.prev|next}`. Flash drew them as the `icons_next`
+ * bitmap (mirrored for previous, which `ThemeImage` cannot do), so the port labels them with
+ * arrow glyphs. Flash had no pause or play button: a click on the embedded player sent
+ * `pauseVideo` / `continueVideo` by the player's state, and with no player there is nothing to
+ * click, so the port offers neither.
  */
 export const FurnitureYoutubeView = ({
     playlists, selectedPlaylistId, videoId, canControl, onSelectPlaylist, onControl, onClose,
@@ -42,7 +51,6 @@ export const FurnitureYoutubeView = ({
         <Frame
             variant="0"
             id="furniture-youtube"
-            caption={t('widget.furni.video_viewer.title', 'Video')}
             onClose={onClose}
             defaultPosition={{ x: 100, y: 80 }}
             rememberPosition={false}
@@ -88,28 +96,20 @@ export const FurnitureYoutubeView = ({
             {canControl && (
                 <Box layout={{ flexDirection: 'row', gap: 4, marginTop: 3 }}>
                     <Button
+                        tooltip={t('widget.furni.video_viewer.tooltip.prev')}
+                        disabled={!selectedPlaylistId.length}
                         onPointerTap={() => onControl(COMMAND_PREVIOUS)}
-                        layout={{ flex: 1, height: 24 }}
+                        layout={{ width: 40, height: 29 }}
                     >
-                        {t('widget.furni.video_viewer.previous', '<<')}
+                        {'<'}
                     </Button>
                     <Button
-                        onPointerTap={() => onControl(COMMAND_PLAY)}
-                        layout={{ flex: 1, height: 24 }}
-                    >
-                        {t('widget.furni.video_viewer.play', '>')}
-                    </Button>
-                    <Button
-                        onPointerTap={() => onControl(COMMAND_PAUSE)}
-                        layout={{ flex: 1, height: 24 }}
-                    >
-                        {t('widget.furni.video_viewer.pause', '||')}
-                    </Button>
-                    <Button
+                        tooltip={t('widget.furni.video_viewer.tooltip.next')}
+                        disabled={!selectedPlaylistId.length}
                         onPointerTap={() => onControl(COMMAND_NEXT)}
-                        layout={{ flex: 1, height: 24 }}
+                        layout={{ width: 40, height: 29 }}
                     >
-                        {t('widget.furni.video_viewer.next', '>>')}
+                        {'>'}
                     </Button>
                 </Box>
             )}

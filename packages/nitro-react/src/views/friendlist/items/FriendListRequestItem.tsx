@@ -1,7 +1,7 @@
 import { IFriendRequest } from '@nitrodevco/nitro-packets';
 
 import { useFriendsActions } from '#base/context/friend';
-import { Box, NitroIcon } from '#base/theme';
+import { Box, Icon } from '#base/theme';
 
 import { FriendListItem } from '../components/FriendListItem';
 
@@ -10,7 +10,11 @@ export interface FriendListRequestItemPixiProps {
     zebraColor?: string;
 }
 
-/** Pixi port of views/friendlist/items/FriendListRequestItem.tsx. */
+/**
+ * Pixi port of views/friendlist/items/FriendListRequestItem.tsx. `friend_request_entry`'s
+ * `accept` / `reject` containers hold icon-set styles 8 and 9, tinted `0x33cc00` and `0xff3333` -
+ * the same pair the requests footer's accept-all / dismiss-all buttons use.
+ */
 export const FriendListRequestItem = ({ request, zebraColor }: FriendListRequestItemPixiProps) => {
     const { tooltipHandlers } = useFriendsActions();
     const acceptHover = tooltipHandlers('friendlist.tip.accept');
@@ -28,9 +32,10 @@ export const FriendListRequestItem = ({ request, zebraColor }: FriendListRequest
                 onPointerOut={acceptHover.onMouseLeave}
                 layout={{}}
             >
-                <NitroIcon
-                    icon="icon-accept-check"
-                    layout={{}}
+                <Icon
+                    name="accept"
+                    variant={8}
+                    tintColor="#33cc00"
                 />
             </Box>
             <Box
@@ -39,9 +44,10 @@ export const FriendListRequestItem = ({ request, zebraColor }: FriendListRequest
                 onPointerOut={declineHover.onMouseLeave}
                 layout={{}}
             >
-                <NitroIcon
-                    icon="icon-decline-x"
-                    layout={{}}
+                <Icon
+                    name="reject"
+                    variant={9}
+                    tintColor="#ff3333"
                 />
             </Box>
         </FriendListItem>

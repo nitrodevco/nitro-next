@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { useFriendsActions } from '#base/context/friend';
 import { useTranslation } from '#base/context/system';
-import { AccordionContent, AccordionItem, AccordionTrigger, Box, ColorLayer, NitroIcon, ThemeText } from '#base/theme';
+import { AccordionContent, AccordionItem, AccordionTrigger, Box, ColorLayer, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
 
 export interface FriendListTabPixiProps {
     value: string;
@@ -50,8 +50,14 @@ export const FriendListTab = ({ value, caption, tooltip = '', gradientColors, da
                                 textStyle="text-style-regular"
                                 textOptions={{ fill: darkHeader ? '#ffffff' : '#000000' }}
                             />
-                            <NitroIcon
-                                icon={isOpen ? 'icon-arrow-down-black' : 'icon-arrow-right-black'}
+                            {/* `FriendListTabsView.refreshHeader` trails the caption with the
+                                `arrow_down_black_png` / `arrow_right_black_png` library bitmaps
+                                (`refreshArrowIcon`), never an icon-set style. Flash also has a
+                                white pair for the two dark headers; this port tints its own text
+                                instead and keeps the black arrows. */}
+                            <ThemeImage
+                                name={isOpen ? 'arrow_down_black' : 'arrow_right_black'}
+                                src={LayoutImage(isOpen ? 'friend-list/friendlist_arrow_down_black.png' : 'friend-list/friendlist_arrow_right_black.png')}
                                 layout={{}}
                             />
                         </Box>

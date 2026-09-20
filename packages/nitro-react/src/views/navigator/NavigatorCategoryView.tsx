@@ -2,7 +2,7 @@ import { IRoomInfo, ISearchResultList } from '@nitrodevco/nitro-packets';
 
 import { useNavigatorStore } from '#base/context/navigator';
 import { useInterpolate } from '#base/context/system';
-import { Box, ColorLayer, NitroIcon, ThemeText } from '#base/theme';
+import { Box, ColorLayer, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
 
 import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, ROW_BASE_COLOR, TILE_BASE_COLOR } from './NavigatorRoomEntryUtils';
 import { NavigatorRoomEntryView } from './NavigatorRoomEntryView';
@@ -25,6 +25,12 @@ export interface NavigatorCategoryViewProps {
  * Pixi port of views/navigator/NavigatorCategoryView.tsx. DOM's `title="..."` attributes (the
  * browser's own native hover tooltip, not this app's custom tooltip system) have no Pixi
  * equivalent and are dropped throughout this file - same for NavigatorRoomEntryView.tsx.
+ *
+ * Every control in `navigator_frame_2`'s `category_header` is a `<static_bitmap>` of the
+ * `newnavigator` asset library - the window has no `<icon>` element at all - so they are drawn
+ * as layout art rather than icon-set styles. `category_back` (`newnavigator_nav_view_mini`) is
+ * the "back" arrow Flash shows in place of the collapse control when `actionAllowed == 2`, not
+ * a third view mode.
  */
 export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, onShowMore, onBack, onAddQuickLink, onToggleMode }: NavigatorCategoryViewProps) => {
     const collapsedCategories = useNavigatorStore(x => x.collapsedCategories);
@@ -52,8 +58,9 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                     layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                 >
                     {block.actionAllowed !== 2 && (
-                        <NitroIcon
-                            icon={isCollapsed ? 'icon-nav-plus' : 'icon-nav-minus'}
+                        <ThemeImage
+                            name={isCollapsed ? 'category_expand' : 'category_collapse'}
+                            src={LayoutImage(isCollapsed ? 'navigator/newnavigator_button_category_expand.png' : 'navigator/newnavigator_button_category_collapse.png')}
                             layout={{ position: 'absolute', left: 5, top: isCollapsed ? 4 : 7 }}
                         />
                     )}
@@ -71,8 +78,9 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                             onPointerTap={() => onToggleMode(block.searchCode, mode === RESULTS_MODE_ROWS ? RESULTS_MODE_TILES : RESULTS_MODE_ROWS)}
                             layout={{}}
                         >
-                            <NitroIcon
-                                icon={mode === RESULTS_MODE_ROWS ? 'icon-nav-thumbnail' : 'icon-nav-inline'}
+                            <ThemeImage
+                                name={mode === RESULTS_MODE_ROWS ? 'category_toggle_tiles' : 'category_toggle_rows'}
+                                src={LayoutImage(mode === RESULTS_MODE_ROWS ? 'navigator/newnavigator_nav_view_thumbs.png' : 'navigator/newnavigator_nav_view_row.png')}
                                 layout={{}}
                             />
                         </Box>
@@ -83,8 +91,9 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                             onPointerTap={() => onShowMore(block.searchCode)}
                             layout={{}}
                         >
-                            <NitroIcon
-                                icon="icon-nav-category-show-more"
+                            <ThemeImage
+                                name="category_show_more"
+                                src={LayoutImage('navigator/newnavigator_button_category_show_more.png')}
                                 layout={{}}
                             />
                         </Box>
@@ -95,8 +104,9 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                             onPointerTap={onBack}
                             layout={{}}
                         >
-                            <NitroIcon
-                                icon="icon-nav-view-mini"
+                            <ThemeImage
+                                name="category_back"
+                                src={LayoutImage('navigator/newnavigator_nav_view_mini.png')}
                                 layout={{}}
                             />
                         </Box>
@@ -107,8 +117,9 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                             onPointerTap={() => onAddQuickLink(block.searchCode)}
                             layout={{}}
                         >
-                            <NitroIcon
-                                icon="icon-nav-quicklink-add"
+                            <ThemeImage
+                                name="category_add_quick_link"
+                                src={LayoutImage('navigator/newnavigator_button_quicklink_add.png')}
                                 layout={{}}
                             />
                         </Box>

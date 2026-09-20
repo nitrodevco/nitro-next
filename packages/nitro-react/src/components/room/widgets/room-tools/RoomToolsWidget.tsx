@@ -96,7 +96,7 @@ export const RoomToolsWidget = () => {
     const buttons: RoomToolsButton[] = [
         {
             key: 'button_settings',
-            icon: LayoutImage('roomtools_gear.png'),
+            icon: LayoutImage('room-ui/roomtools_gear.png'),
             labelKey: 'room.settings.button.text',
             tooltipKey: 'room.settings.button.tooltip',
             // `RoomToolsWidgetHandler.toggleRoomInfoWindow`.
@@ -106,7 +106,7 @@ export const RoomToolsWidget = () => {
 
     if (canRateCurrentRoom) buttons.push({
         key: 'button_like',
-        icon: LayoutImage('roomtools_like.png'),
+        icon: LayoutImage('room-ui/roomtools_like.png'),
         labelKey: 'room.like.button.text',
         tooltipKey: 'room.like.button.tooltip',
         onPress: likeRoom,
@@ -114,7 +114,7 @@ export const RoomToolsWidget = () => {
 
     buttons.push({
         key: 'button_share',
-        icon: LayoutImage('navigation_icon_weblink.png'),
+        icon: LayoutImage('room-ui/navigation_icon_weblink.png'),
         labelKey: 'navigator.embed.caption',
         onPress: () => {
             // Flash put the snippet on the clipboard as it opened the panel.

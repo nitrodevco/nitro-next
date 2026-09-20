@@ -26,7 +26,7 @@ const ToolbarExtendedMenuItem = ({ button, onSelect }: { button: ToolbarExtended
             tooltip={button.tooltip?.length ? button.tooltip : undefined}
         >
             <ThemeImage
-                src={LayoutImage(`${button.icon}.png`)}
+                src={LayoutImage(`toolbar/${button.icon}.png`)}
                 greyscale={!hovering}
             />
             <ThemeText

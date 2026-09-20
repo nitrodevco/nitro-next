@@ -23,7 +23,7 @@ export const RoomQuizAnswerSignView = ({ liked }: RoomQuizAnswerSignViewProps) =
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
         />
         <ThemeImage
-            src={LayoutImage(liked ? 'word_quiz_thum_up.png' : 'word_quiz_thum_down.png')}
+            src={LayoutImage(liked ? 'room-ui/word_quiz_thum_up.png' : 'room-ui/word_quiz_thum_down.png')}
             layout={{ position: 'absolute', left: 5, width: 22, top: 5, height: 22 }}
         />
     </Region>

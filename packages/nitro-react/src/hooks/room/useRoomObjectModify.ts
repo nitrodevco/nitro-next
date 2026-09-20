@@ -13,6 +13,8 @@ import { useRoomObjectValidation } from './useRoomObjectValidation';
  * The manipulation menu's operations on a room object - move, rotate, pick up, eject and the
  * rest of `RoomObjectOperationType` - and who may perform them:
  * `RoomObjectEventHandler.modifyRoomObject` with `SessionDataManager.canManipulateFurniture`.
+ * While the session is in wired play test mode nothing is modified, unless the room's
+ * configuration items free the furni for everyone.
  */
 export const useRoomObjectModify = () => {
     const room = useRoom();
@@ -22,6 +24,7 @@ export const useRoomObjectModify = () => {
     const controllerLevel = useRoomStore(x => x.controllerLevel);
     const isRoomOwner = useRoomStore(x => x.isRoomOwner);
     const isFreeFurniMovementsMode = useRoomStore(x => x.isFreeFurniMovementsMode);
+    const playTestMode = useRoomStore(x => x.playTestMode);
     const { setSelectedObject } = useRoomSelectedObjectActions();
     const { resetSelectedObject } = useRoomObjectSelect();
     const { setObjectAlphaMultiplier, isValidLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
@@ -59,6 +62,8 @@ export const useRoomObjectModify = () => {
 
     const modifyRoomObject = (objectId: number, category: RoomObjectCategoryEnum, operation: RoomObjectOperationType) => {
         if (!room) return false;
+
+        if (!isFreeFurniMovementsMode && playTestMode) return false;
 
         const roomObject = room.getRoomObject(objectId, category);
 

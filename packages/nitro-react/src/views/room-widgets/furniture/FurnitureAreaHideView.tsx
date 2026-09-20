@@ -32,6 +32,11 @@ export interface FurnitureAreaHideViewProps {
  * The area-hide controls, on the `area_hide_ui` layout (292x334): mark an area on the floor,
  * then say what should happen inside it. Selecting happens in the room itself, not in here - the
  * dialog only starts and clears it.
+ *
+ * The layout's `hidearea_info` text (`${widget.areahide.info}`) is not drawn: it is
+ * `visible="false"` in `area_hide_ui` and `AreaHideFurniWidget` never shows it (it only dims it with
+ * the rest of `_textNames`). The select and clear buttons are captioned as the layout's
+ * `select_button` / `clear_button` are, `${widget.areahide.area_selection.select|clear}`.
  */
 export const FurnitureAreaHideView = ({
     width, length, invisible, wallItems, inverted, isOn,
@@ -59,13 +64,6 @@ export const FurnitureAreaHideView = ({
                 layout={{ flex: 1, flexDirection: 'column', gap: 6, padding: 6 }}
             >
                 <ThemeText
-                    text={t('widget.areahide.info')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 268 }}
-                    verticalAlign="top"
-                    layout={{ width: 268, height: 40 }}
-                />
-                <ThemeText
                     text={t('widget.areahide.area_selection')}
                     textStyle="text-style-bold"
                 />
@@ -83,7 +81,7 @@ export const FurnitureAreaHideView = ({
                         onPointerTap={onSelect}
                         layout={{ flex: 1, height: 24 }}
                     >
-                        {t('widget.areahide.button.select')}
+                        {t('widget.areahide.area_selection.select')}
                     </Button>
                     <Button
                         variant="0"
@@ -91,7 +89,7 @@ export const FurnitureAreaHideView = ({
                         onPointerTap={onClear}
                         layout={{ flex: 1, height: 24 }}
                     >
-                        {t('widget.areahide.button.clear')}
+                        {t('widget.areahide.area_selection.clear')}
                     </Button>
                 </Box>
                 {OPTIONS.map(option => (

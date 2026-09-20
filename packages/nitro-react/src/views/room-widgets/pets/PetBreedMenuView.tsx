@@ -1,5 +1,7 @@
 import { useTranslation } from '#base/context/system';
-import { Box, Bubble, Button, ThemeText } from '#base/theme';
+import { Box, Bubble, ThemeText } from '#base/theme';
+
+import { InfoBubbleMenuButton } from '../object-menu/InfoBubbleMenuButton';
 
 export interface PetBreedMenuViewProps {
     /** The partner plant this bubble floats over. */
@@ -28,15 +30,10 @@ export const PetBreedMenuView = ({ name, onBreed }: PetBreedMenuViewProps) => {
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Box>
-                <Button
-                    variant="300"
-                    tintColor="#2d2a27"
-                    textColor="#ffffff"
-                    onPointerTap={onBreed}
-                    layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                >
-                    {t('breedpets.widget.use')}
-                </Button>
+                <InfoBubbleMenuButton
+                    caption={t('breedpets.widget.use')}
+                    onPress={onBreed}
+                />
             </Box>
         </Bubble>
     );

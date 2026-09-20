@@ -50,12 +50,15 @@ export interface InfostandFurniViewProps {
     canMove: boolean;
     canRotate: boolean;
     canUse: boolean;
+    /** The `wired_inspect` button: the wired menu's inspection of this furni. */
+    canWiredInspect: boolean;
     pickupMode: number;
     canSaveBranding: boolean;
     onMove: () => void;
     onRotate: () => void;
     onPickup: () => void;
     onUse: () => void;
+    onWiredInspect: () => void;
     onBuy: () => void;
     onRent: () => void;
     onOpenOwner: () => void;
@@ -68,9 +71,13 @@ export interface InfostandFurniViewProps {
  * The furniture infostand - `InfoStandFurniView` and the `infostand_furni_view` family of layouts:
  * the object's picture and texts, who owns it and which group it belongs to, the limited edition
  * plaque, chest contents, custom variables and staff details, the song a jukebox or disk carries,
- * the catalogue buttons, and the move / rotate / pick up / use row underneath.
+ * the catalogue buttons, and the move / rotate / pick up / use / wired inspect row underneath.
+ *
+ * An NFT and a locked chest are marked by icons, not text: `InfoStandFurniView.isNft` fills the
+ * layout's `nft_icon` with the `icon_nft` bitmap and `showChestData` shows `locked_icon`
+ * (`forum_forum_locked`) beside the chest name; `furni_view` gives neither a caption.
  */
-export const InfostandFurniView = ({ details, canMove, canRotate, canUse, pickupMode, canSaveBranding, onMove, onRotate, onPickup, onUse, onBuy, onRent, onOpenOwner, onOpenGroup, onSaveBranding, onClose }: InfostandFurniViewProps) => {
+export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWiredInspect, pickupMode, canSaveBranding, onMove, onRotate, onPickup, onUse, onWiredInspect, onBuy, onRent, onOpenOwner, onOpenGroup, onSaveBranding, onClose }: InfostandFurniViewProps) => {
     const t = useTranslation();
     const { texture, width, height } = useFurnitureImageTexturePixi(details.className, details.colorIndex, 2, RoomGeometryScaleType.ZoomedIn);
     // In the case the picture must clear the plaque on the right and the glass edges.
@@ -79,7 +86,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, pickup
     const [ branding, setBranding ] = useState<{ id: number; values: { key: string; value: string }[] } | undefined>(undefined);
 
     const brandingValues = (details.staffDetails && (branding?.id === details.staffDetails.id)) ? branding.values : (details.staffDetails?.branding ?? []);
-    const hasButtons = canMove || canRotate || (pickupMode !== PICKUP_NONE) || canUse;
+    const hasButtons = canMove || canRotate || (pickupMode !== PICKUP_NONE) || canUse || canWiredInspect;
 
     const text = (value: string, style: TextStyleKey = 'text-style-regular', color: string = '#ffffff') => (
         <ThemeText
@@ -116,31 +123,37 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, pickup
                         layout={{ flexShrink: 0 }}
                     />
                 </Box>
-                {details.isNft && text(t('infostand.nft.indicator', 'NFT'), 'text-style-bold', '#ffd700')}
+                {details.isNft && (
+                    <ThemeImage
+                        src={LayoutImage('room-ui/icon_nft.png')}
+                        name="nft_icon"
+                        layout={{ width: 18, height: 18 }}
+                    />
+                )}
                 {divider}
                 {details.uniqueSerial
                     ? (
                         /* `showLimitedItem`: a limited edition sits in its glass case, plaque top right. */
                             <Region layout={{ width: CASE_WIDTH, height: CASE_HEIGHT, alignSelf: 'center' }}>
                                 <ThemeImage
-                                    src={LayoutImage('unique_item_large_glass_top.png')}
+                                    src={LayoutImage('room-ui/unique_item_large_glass_top.png')}
                                     stretch
                                     layout={{ position: 'absolute', left: 0, top: 0, width: CASE_WIDTH, height: 5 }}
                                 />
                                 <ThemeImage
-                                    src={LayoutImage('unique_item_large_glass_mid.png')}
+                                    src={LayoutImage('room-ui/unique_item_large_glass_mid.png')}
                                     stretch
                                     layout={{ position: 'absolute', left: 0, top: 5, width: CASE_WIDTH, height: CASE_HEIGHT - 10 }}
                                 />
                                 <ThemeImage
-                                    src={LayoutImage('unique_item_large_glass_bottom.png')}
+                                    src={LayoutImage('room-ui/unique_item_large_glass_bottom.png')}
                                     stretch
                                     layout={{ position: 'absolute', left: 0, bottom: 0, width: CASE_WIDTH, height: 5 }}
                                 />
                                 {[ { left: 8, top: -1 }, { left: 155, top: -1 }, { left: 8, bottom: -2 }, { left: 155, bottom: -2 } ].map((rivet, index) => (
                                     <ThemeImage
                                         key={index}
-                                        src={LayoutImage('unique_item_large_iron.png')}
+                                        src={LayoutImage('room-ui/unique_item_large_iron.png')}
                                         layout={{ position: 'absolute', width: 5, height: 9, ...rivet }}
                                     />
                                 ))}
@@ -153,7 +166,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, pickup
                                     )}
                                 </Region>
                                 <ThemeImage
-                                    src={LayoutImage('unique_item_large_glass_shine.png')}
+                                    src={LayoutImage('room-ui/unique_item_large_glass_shine.png')}
                                     stretch
                                     layout={{ position: 'absolute', left: 0, top: 5, width: CASE_WIDTH, height: CASE_HEIGHT - 10 }}
                                 />
@@ -178,9 +191,19 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, pickup
                 {details.chest && (
                     <>
                         {divider}
-                        {text(details.chest.name, 'text-style-bold')}
+                        <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 3 }}>
+                            <Box layout={{ flexDirection: 'column', flex: 1 }}>
+                                {text(details.chest.name, 'text-style-bold')}
+                            </Box>
+                            {details.chest.isLocked && (
+                                <ThemeImage
+                                    src={LayoutImage('shared/forum_forum_locked.png')}
+                                    name="locked_icon"
+                                    layout={{ width: 13, height: 18, flexShrink: 0 }}
+                                />
+                            )}
+                        </Box>
                         {text(t(details.chest.isCoins ? 'infostand.chest_contents.coin' : 'infostand.chest_contents.furni', '', { amount: details.chest.contents }))}
-                        {details.chest.isLocked && text(t('infostand.chest.locked', 'Locked'))}
                     </>
                 )}
                 {details.crackable && text(t('infostand.crackable_furni.hits_remaining', '', { hits: String(details.crackable.hits), target: String(details.crackable.target) }))}
@@ -324,6 +347,15 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, pickup
                             layout={{}}
                         >
                             {t('infostand.button.use')}
+                        </Button>
+                    )}
+                    {canWiredInspect && (
+                        <Button
+                            variant="1"
+                            onPointerTap={onWiredInspect}
+                            layout={{}}
+                        >
+                            {t('infostand.button.wired_inspect')}
                         </Button>
                     )}
                 </Box>

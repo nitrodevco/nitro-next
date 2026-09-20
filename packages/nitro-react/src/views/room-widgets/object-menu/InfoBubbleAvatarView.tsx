@@ -1,13 +1,17 @@
 import { ISimpleRoomObjectData, RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
-import { ambassadorAlert, banUser, giveRights, ignoreUser, kickUser, muteUser, openProfile, passCarryItem, RELATIONSHIP_BOBBA, RELATIONSHIP_HEART, RELATIONSHIP_NONE, RELATIONSHIP_SMILE, replenishRespect, respectUser, sendFriendRequest, setRelationship, startTrading, takeRights, unignoreUser, unmuteUser, whisperUser } from '#base/commands';
+import { ambassadorAlert, banUser, giveRights, ignoreUser, kickUser, muteUser, openClientLink, openProfile, passCarryItem, RELATIONSHIP_BOBBA, RELATIONSHIP_HEART, RELATIONSHIP_NONE, RELATIONSHIP_SMILE, replenishRespect, respectUser, sendFriendRequest, setRelationship, startTrading, takeRights, unignoreUser, unmuteUser, whisperUser } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { useOwnRoomObjectId, useRoomStore } from '#base/context/room';
+import { useOwnRoomObjectId, useRoomIsPlayingGame, useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { useOwnIsAmbassador, useUserStore } from '#base/context/user';
+import { useWiredShowInspectButton } from '#base/context/wired';
 import { useRoomUserData } from '#base/hooks';
-import { Box, Bubble, Button, ContainerButton, LayoutImage, NitroIcon, ThemeImage, ThemeText } from '#base/theme';
+import { Box, Bubble, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
+
+import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
+import { InfoBubbleMinimize } from './InfoBubbleMinimize';
 
 export interface InfoBubbleAvatarViewProps {
     objectData: ISimpleRoomObjectData;
@@ -55,13 +59,14 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
     const respectReplenishesLeft = useUserStore(x => x.respectReplenishesLeft ?? 0);
     const accountSafetyLocked = useUserStore(x => x.accountSafetyLocked);
     const isAmbassador = useOwnIsAmbassador();
-    const isPlayingGame = useRoomStore(x => x.isPlayingGame);
+    const isPlayingGame = useRoomIsPlayingGame();
     const citizenshipTrack = useConfigValue<boolean>('talent.track.citizenship.enabled') ?? false;
     // `AvatarMenuView`: the config flag, and not while the room's configuration items block hand item control.
     const isHanditemControlBlocked = useRoomStore(x => x.isHanditemControlBlocked);
     const handItemGiveEnabled = (useConfigValue<boolean>('handitem.give.enabled') ?? true) && !isHanditemControlBlocked;
     const relationshipsEnabled = useConfigValue<boolean>('relationship.status.enabled') ?? true;
     const replenishCost = useConfigValue<number>('respect.replenish_cost_duckets') ?? 50;
+    const showWiredInspect = useWiredShowInspectButton();
     const t = useTranslation();
     const { send } = useWebSocketContext();
 
@@ -91,6 +96,8 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
             action('moderate', t('infostand.link.moderate'), canModerate, toMode(MODE_MODERATE), true),
             action('pass_handitem', t('avatar.widget.pass_hand_item'), handItemGiveEnabled && (ownCarryItem > 0) && (ownCarryItem < MAX_CARRY_ITEM), () => passCarryItem(send, webId)),
             action('ambassador', t('infostand.link.ambassador'), isAmbassador, toMode(MODE_AMBASSADOR), true),
+            // `RWUAM_WIRED_INSPECT`: the wired menu's inspection of this user.
+            action('wired_inspect', t('infostand.button.wired_inspect'), showWiredInspect, () => openClientLink(send, `wiredmenu/open/inspection/1/${objectId}`)),
         ],
         [MODE_MODERATE]: [
             action('kick', t('infostand.button.kick'), info.canBeKicked, () => kickUser(send, webId)),
@@ -155,7 +162,7 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
                     >
                         {relationshipIcon && (
                             <ThemeImage
-                                src={LayoutImage(relationshipIcon)}
+                                src={LayoutImage(`shared/${relationshipIcon}`)}
                                 layout={{ width: 16, height: 14 }}
                             />
                         )}
@@ -170,49 +177,38 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
                         {(mode === MODE_RELATIONSHIP) && (
                             <Box layout={{ flexDirection: 'row', width: '100%', gap: 1 }}>
                                 {[ RELATIONSHIP_HEART, RELATIONSHIP_SMILE, RELATIONSHIP_BOBBA ].map(relationship => (
-                                    <ContainerButton
+                                    <InfoBubbleMenuButton
                                         key={relationship}
-                                        variant="0"
-                                        tintColor="#2d2a27"
-                                        onPointerTap={() => {
+                                        shape="grid"
+                                        width={45}
+                                        height={25}
+                                        onPress={() => {
                                             setRelationship(send, webId, relationship);
                                             onClose();
                                         }}
-                                        layout={{ flex: 1, height: 25, alignItems: 'center', justifyContent: 'center' }}
                                     >
                                         <ThemeImage
-                                            src={LayoutImage(RELATIONSHIP_ICONS[relationship])}
+                                            src={LayoutImage(`shared/${RELATIONSHIP_ICONS[relationship]}`)}
                                             layout={{ width: 16, height: 14 }}
                                         />
-                                    </ContainerButton>
+                                    </InfoBubbleMenuButton>
                                 ))}
                             </Box>
                         )}
                         {buttons[mode].filter(button => button.visible).map(button => (
-                            <Button
+                            <InfoBubbleMenuButton
                                 key={button.key}
-                                variant="300"
-                                tintColor="#2d2a27"
-                                textColor="#ffffff"
-                                onPointerTap={() => press(button)}
-                                layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                            >
-                                {button.caption}
-                            </Button>
+                                caption={button.caption}
+                                onPress={() => press(button)}
+                            />
                         ))}
                     </Box>
                 </Box>
             )}
-            <Box
-                cursor="pointer"
-                onPointerTap={() => setCollapsed(!collapsed)}
-                layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 18, maxHeight: 18, padding: 8, width: '100%' }}
-            >
-                <NitroIcon
-                    icon={!collapsed ? 'icon-context-menu-arrow-down' : 'icon-context-menu-arrow-up'}
-                    layout={{}}
-                />
-            </Box>
+            <InfoBubbleMinimize
+                collapsed={collapsed}
+                onToggle={() => setCollapsed(!collapsed)}
+            />
         </Bubble>
     );
 };

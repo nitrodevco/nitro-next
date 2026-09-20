@@ -118,7 +118,7 @@ export const RoomEffectsView = ({ effects, onActivate, onToggleWear, onClose }: 
                                             )}
                                             {!effect.isActive && (
                                                 <ThemeText
-                                                    text={t('widget.memenu.effects.activate', 'Activate')}
+                                                    text={t('widgets.memenu.effects.activate')}
                                                     textOptions={{ fill: '#bbbbbb', align: 'center' }}
                                                     layout={{ position: 'absolute', right: 4, width: 98, bottom: 8, height: 13 }}
                                                 />

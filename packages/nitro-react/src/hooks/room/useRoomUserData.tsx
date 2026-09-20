@@ -95,7 +95,8 @@ export const useRoomUserData = (objectId: number): AvatarInfo | undefined => {
     const friend = useUserStore(x => (userData ? x.friends[userData.webID] : undefined));
     const requestSent = useUserStore(x => !!userData && x.sentFriendRequestIds.includes(userData.webID));
     const groupBadge = useUserStore(x => (userData ? (x.groupBadges[userData.groupId] ?? '') : ''));
-    const activityDisplayEnabled = useConfigValue<boolean>('infostand.activity_display.enabled') ?? true;
+    // `InfoStandWidgetHandler.isActivityDisplayEnabled`: `getBoolean`, so off unless the hotel sets it.
+    const activityDisplayEnabled = useConfigValue<boolean>('activity.point.display.enabled') === true;
 
     if (!room || !userData) return undefined;
 

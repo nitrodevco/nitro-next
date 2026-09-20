@@ -1,6 +1,7 @@
 import { NitroLogger, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { GetCraftableProductsComposer, GetGuestRoomComposer, GetGuildFurniContextMenuInfoComposer, GetJukeboxPlayListComposer, GetNowPlayingComposer, GetResolutionAchievementsComposer, GetUserSongDisksComposer, GetYoutubeDisplayStatusComposer, RentableSpaceStatusComposer, UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 
+import { openClientLink } from '#base/commands';
 import { readFurnitureLink } from '#base/components/room/widgets/furniture/furnitureWidgetData';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomWidgetActions } from '#base/context/room';
@@ -120,18 +121,18 @@ export const useRoomWidgetRequestHandler = () => {
                 return;
             }
             /*
-             * An internal link is not a dialog at all - it is wherever the furni points, which
-             * Flash handed to the client's link bus. The port has no such bus, so the only link
-             * it can follow itself is one naming a room, and anything else is logged rather
-             * than silently swallowed.
+             * An internal link is not a dialog at all - it is wherever the furni points
+             * (`furniture_data.internalLink`, else `furniture_internal_link`), which Flash's
+             * internal-link widget handler passed to `context.createLinkEvent`. `openClientLink`
+             * is that link bus here, and logs a link it cannot route.
              */
-            case RoomObjectWidgetRequestEvent.INERNAL_LINK: {
+            case RoomObjectWidgetRequestEvent.INTERNAL_LINK: {
                 const roomObject = room.getRoomObject(event.objectId, category);
                 const link = roomObject ? readFurnitureLink(roomObject) : undefined;
 
                 if (!link) return;
 
-                NitroLogger.events('RoomWidgetRequest', event.type, link);
+                openClientLink(send, link);
                 return;
             }
             default:

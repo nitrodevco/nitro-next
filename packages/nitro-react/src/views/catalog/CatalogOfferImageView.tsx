@@ -4,6 +4,11 @@ import { useCatalogOfferProduct } from '#base/hooks';
 
 import { useFurnitureImageTexturePixi } from './useFurnitureImageTexturePixi';
 
+/**
+ * Flash `catalog/viewer/§_-L1t§.PRODUCT_IMAGES`: offers (by localization id) whose preview is a
+ * fixed catalogue picture instead of their product. Checked against Flash by
+ * `scripts/drift/constants.py`.
+ */
 const PRODUCT_IMAGES: Record<string, string> = {
     deal01: 'ctlg_pic_deal01',
     deal02: 'ctlg_pic_deal02',
@@ -45,6 +50,9 @@ const PRODUCT_IMAGES: Record<string, string> = {
     wf_deal8: 'ctlg_pic_deal_wired_mvngfurni',
     wf_deal9: 'ctlg_pic_deal_wired_flshfires',
     qt_val11_heartlights: 'ctlg_pic_qt_val11_heartlights',
+    GET_SNOWWAR_TOKENS: 'snowwar_tokens_10',
+    GET_SNOWWAR_TOKENS2: 'snowwar_tokens_10',
+    GET_SNOWWAR_TOKENS3: 'snowwar_tokens_10',
     room_ad_plus_badge: 'events_confirm_purchase',
 };
 
@@ -53,11 +61,10 @@ export interface CatalogOfferImageViewProps {
 }
 
 /**
- * Pixi port of views/catalog/CatalogOfferImageView.tsx. DOM's `hardCodedImage` branch returns
- * null for offers with a static deal-graphic override - that graphic itself is never actually
- * rendered anywhere in the DOM source either (no `<img src={hardCodedImage}>` in this file or
- * its call sites), so this preserves the same "renders nothing for those offers" behavior
- * rather than inventing a lookup DOM itself doesn't wire up.
+ * The product preview of the purchase confirmation (`PurchaseConfirmationDialog`): the offer's
+ * furniture image. Flash shows the `PRODUCT_IMAGES` picture instead for the offers listed there;
+ * most of those pictures (`ctlg_pic_*`) come with the catalogue's own asset library, which the
+ * port does not load, so for those offers this renders nothing rather than the wrong product.
  */
 export const CatalogOfferImageView = ({ offer }: CatalogOfferImageViewProps) => {
     const product = useCatalogOfferProduct(offer);

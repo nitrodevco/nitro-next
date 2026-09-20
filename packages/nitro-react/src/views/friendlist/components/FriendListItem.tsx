@@ -2,7 +2,7 @@ import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import { ReactNode } from 'react';
 
 import { useFriendsActions } from '#base/context/friend';
-import { Box, ColorLayer, NitroIcon, ThemeText, useAvatarImageTexture } from '#base/theme';
+import { Box, ColorLayer, Icon, ThemeText, useAvatarImageTexture } from '#base/theme';
 
 interface FriendListItemPixiUser {
     readonly name: string;
@@ -62,9 +62,12 @@ export const FriendListItem = ({ user, selected = false, hideAvatarElement = fal
                     onPointerOut={profileHover.onMouseLeave}
                     layout={{}}
                 >
-                    <NitroIcon
-                        icon="icon-profile-small"
-                        layout={{}}
+                    {/* `friend_entry`'s `user_info_region`: icon style 21 (`icon_eye_off`), with
+                        style 22 as the hover twin that `setUserInfoState` swaps in. This port
+                        keeps the idle eye, the way RoomInfoView does with the same pair. */}
+                    <Icon
+                        name="icon_eye_off"
+                        variant={21}
                     />
                 </Box>
             </Box>

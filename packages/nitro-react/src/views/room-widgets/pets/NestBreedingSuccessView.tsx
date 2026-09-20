@@ -37,7 +37,7 @@ export const NestBreedingSuccessView = ({ petName, figure, posture, rarityCatego
                     layout={{ position: 'absolute', left: 39, width: 252, top: 15 }}
                 />
                 <ThemeImage
-                    src={LayoutImage('icons_hilighter_yellow.png')}
+                    src={LayoutImage('shared/icons_hilighter_yellow.png')}
                     layout={{ position: 'absolute', left: 127, width: 82, top: 33, height: 83 }}
                 />
                 {!!figure.length && (

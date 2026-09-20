@@ -77,8 +77,9 @@ export const useCatalogNavigation = () => {
 
     const activateNode = (targetNode: ICatalogNode, offerId: number = -1) => {
         // `CatalogNavigator.showNodeContent`: a tab opens the first page under it that has a
-        // layout, and its own page only when there is none.
-        if (targetNode.parent?.pageName === 'root') {
+        // layout, and its own page only when there is none. A tab is a child of the index root,
+        // which is the node with no parent - the name is the server's and is not relied on.
+        if (targetNode.parent && !targetNode.parent.parent) {
             const path = getPathToNodeWithLayout(targetNode);
 
             if (path.length) targetNode = path[path.length - 1];
@@ -88,7 +89,17 @@ export const useCatalogNavigation = () => {
 
         let node: ICatalogNode | undefined = targetNode;
 
-        while (node && (node.pageName !== 'root')) {
+        /*
+         * `CatalogNavigator.openCategoryForNode`: the walk up stops at the tab - the node whose
+         * parent is the index root - so `nodes[0]` is always the tab whose children the list
+         * draws (`showNodeContent` adds `param1.children`, never `param1`). Flash stops on
+         * `_loc2_.parent == null || _loc2_.parent.pageName == "root"`, and only the structural
+         * half of that is portable: the index root's page name is whatever the server has in the
+         * row, and the index packet marks it no other way. Stopping on the name instead pushed
+         * the index itself onto the path wherever the server does not call its root `root`, and
+         * the list then drew every tab where it should draw the open tab's children.
+         */
+        while (node && node.parent) {
             nodes.push(node);
 
             node = node.parent;

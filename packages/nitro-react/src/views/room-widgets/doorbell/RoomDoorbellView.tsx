@@ -16,6 +16,9 @@ const ENTRY_HEIGHT = 20;
 /**
  * Who is ringing at the door, on the `doorbell` layout (249x165). Only rooms you may answer for
  * ever fill it, and it is gone again as soon as the last caller has been let in or turned away.
+ *
+ * The accept and deny buttons carry no tooltip: `doorbell_list_entry` gives the two regions no
+ * caption or tooltip and `DoorbellView` sets none, so Flash showed only the icons.
  */
 export const RoomDoorbellView = ({ users, onAccept, onDeny, onClose }: RoomDoorbellViewProps) => {
     const t = useTranslation();
@@ -63,7 +66,6 @@ export const RoomDoorbellView = ({ users, onAccept, onDeny, onClose }: RoomDoorb
                             />
                             <Region
                                 name="accept"
-                                tooltip={t('widgets.doorbell.accept', 'Let in')}
                                 onPointerTap={() => onAccept(username)}
                                 cursor="pointer"
                                 layout={{ position: 'absolute', left: 155, width: 18, top: 4, height: 15 }}
@@ -76,7 +78,6 @@ export const RoomDoorbellView = ({ users, onAccept, onDeny, onClose }: RoomDoorb
                             </Region>
                             <Region
                                 name="deny"
-                                tooltip={t('widgets.doorbell.deny', 'Turn away')}
                                 onPointerTap={() => onDeny(username)}
                                 cursor="pointer"
                                 layout={{ position: 'absolute', left: 180, width: 15, top: 4, height: 13 }}

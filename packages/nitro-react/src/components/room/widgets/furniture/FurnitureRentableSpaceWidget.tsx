@@ -3,7 +3,7 @@ import { RentableSpaceCancelRentComposer, RentableSpaceRentComposer, RentableSpa
 
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
-import { useOwnUserId } from '#base/context/user';
+import { useOwnUserId, useUserStore } from '#base/context/user';
 import { FurnitureRentableSpaceView } from '#base/views/room-widgets/furniture/FurnitureRentableSpaceView';
 
 /**
@@ -14,6 +14,7 @@ import { FurnitureRentableSpaceView } from '#base/views/room-widgets/furniture/F
 export const FurnitureRentableSpaceWidget = () => {
     const request = useRoomWidget<RentableSpaceStatusMessageType>(RoomWidgetEnum.RENTABLESPACE);
     const ownUserId = useOwnUserId();
+    const credits = useUserStore(x => x.credits);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
 
@@ -29,6 +30,7 @@ export const FurnitureRentableSpaceWidget = () => {
             isOwnRent={data.rented && (data.renterId === ownUserId)}
             canRent={data.canRent}
             canRentErrorCode={data.canRentErrorCode}
+            canAfford={data.price <= credits}
             renterName={data.renterName}
             timeRemaining={data.timeRemaining}
             price={data.price}

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Box, Bubble, Button, ThemeText } from '#base/theme';
+import { Box, Bubble, ThemeText } from '#base/theme';
+
+import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
 
 /** What the pet's menu can be asked to do. */
 export type PetMenuAction
@@ -15,7 +17,8 @@ export type PetMenuAction
         | 'harvest'
         | 'revive'
         | 'train'
-        | 'breed';
+        | 'breed'
+        | 'wired_inspect';
 
 export interface InfoBubblePetViewProps {
     name: string;
@@ -36,6 +39,8 @@ export interface InfoBubblePetViewProps {
     canRevive: boolean;
     /** Its owner may start breeding it: a plant with a partner in the room, or a pet the nests are on for. */
     canStartBreeding: boolean;
+    /** `showInspectButton` - the wired menu's inspection of this pet, last in both pet menus. */
+    showWiredInspect: boolean;
     /** The commands it has learned; picking one speaks it. */
     commands: { id: number; label: string }[];
     onAction: (action: PetMenuAction) => void;
@@ -53,7 +58,7 @@ export interface InfoBubblePetViewProps {
  */
 export const InfoBubblePetView = ({
     name, isOwner, canRespect, respectsLeft, isMountable, isRiding, hasSaddle, ridingPermissionOpen,
-    canBreed, hasBreedingPermission, canHarvest, canRevive, canStartBreeding, commands, onAction, onCommand, onClose,
+    canBreed, hasBreedingPermission, canHarvest, canRevive, canStartBreeding, showWiredInspect, commands, onAction, onCommand, onClose,
 }: InfoBubblePetViewProps) => {
     const t = useTranslation();
     const [ showCommands, setShowCommands ] = useState(false);
@@ -79,6 +84,7 @@ export const InfoBubblePetView = ({
         { key: 'harvest', label: t('infostand.button.harvest'), visible: isOwner && canHarvest },
         { key: 'revive', label: t('infostand.button.revive'), visible: isOwner && canRevive },
         { key: 'pick_up', label: t('infostand.button.pickup'), visible: isOwner && !isRiding },
+        { key: 'wired_inspect', label: t('infostand.button.wired_inspect'), visible: showWiredInspect },
     ];
 
     return (
@@ -100,38 +106,26 @@ export const InfoBubblePetView = ({
                         ? (
                                 <>
                                     {commands.map(command => (
-                                        <Button
+                                        <InfoBubbleMenuButton
                                             key={command.id}
-                                            variant="300"
-                                            tintColor="#2d2a27"
-                                            textColor="#ffffff"
-                                            onPointerTap={() => {
+                                            caption={command.label}
+                                            onPress={() => {
                                                 onCommand(command.label);
                                                 onClose();
                                             }}
-                                            layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                                        >
-                                            {command.label}
-                                        </Button>
+                                        />
                                     ))}
-                                    <Button
-                                        variant="300"
-                                        tintColor="#2d2a27"
-                                        textColor="#ffffff"
-                                        onPointerTap={() => setShowCommands(false)}
-                                        layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                                    >
-                                        {t('generic.back')}
-                                    </Button>
+                                    <InfoBubbleMenuButton
+                                        caption={t('generic.back')}
+                                        onPress={() => setShowCommands(false)}
+                                    />
                                 </>
                             )
                         : entries.filter(entry => entry.visible).map(entry => (
-                                <Button
+                                <InfoBubbleMenuButton
                                     key={entry.key}
-                                    variant="300"
-                                    tintColor="#2d2a27"
-                                    textColor="#ffffff"
-                                    onPointerTap={() => {
+                                    caption={entry.label}
+                                    onPress={() => {
                                     // Training opens the command list rather than doing anything itself.
                                         if (entry.key === 'train') {
                                             setShowCommands(true);
@@ -142,10 +136,7 @@ export const InfoBubblePetView = ({
                                         onAction(entry.key);
                                         onClose();
                                     }}
-                                    layout={{ minHeight: 25, maxHeight: 25, width: '100%' }}
-                                >
-                                    {entry.label}
-                                </Button>
+                                />
                             ))}
                 </Box>
             </Box>

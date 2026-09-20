@@ -1,6 +1,5 @@
 import { Rectangle } from 'pixi.js';
 
-import { CHAT_BUBBLE_WIDTH_WIDE } from '../ChatConstants';
 import { ChatBubbleSimulationEntity } from './ChatBubbleSimulationEntity';
 import { IChatFlowBubble } from './IChatFlowBubble';
 
@@ -11,7 +10,8 @@ import { IChatFlowBubble } from './IChatFlowBubble';
  * edge to edge - the offset shifts as the stage nudges the bubble back toward its speaker.
  */
 export class ChatBubbleSimulationWithLimitedWideRect extends ChatBubbleSimulationEntity {
-    public static readonly WIDE_RECT_WIDTH = CHAT_BUBBLE_WIDTH_WIDE;
+    /** `WIDERECT_WIDTH` - its own constant in Flash, equal to (but not) `ChatBubbleWidth.THIN`. */
+    public static readonly WIDE_RECT_WIDTH = 240;
 
     private _wideRectOffset: number;
 

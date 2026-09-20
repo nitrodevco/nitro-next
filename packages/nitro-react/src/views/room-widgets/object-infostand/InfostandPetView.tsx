@@ -1,9 +1,10 @@
-import { ISimpleRoomObjectData, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData, PetType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { PetInfoMessageType } from '@nitrodevco/nitro-packets';
 
 import { useTranslation } from '#base/context/system';
 import { useChatPetFace } from '#base/hooks';
 import { Border, Box, CloseButton, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
+import { petTypeFromFigure } from '#base/utils';
 
 export interface InfostandPetViewProps {
     objectData: ISimpleRoomObjectData;
@@ -19,9 +20,6 @@ export interface InfostandPetViewProps {
     onRespect: () => void;
     onClose: () => void;
 }
-
-/** A monsterplant's breed - it shows its wellbeing and growth rather than the usual three bars. */
-const MONSTERPLANT_BREED = 16;
 
 /** `pet_view` - the panel is 190 wide with a 163-wide column inside it. */
 const PANEL_WIDTH = 190;
@@ -79,11 +77,19 @@ const StatusBar = ({ label, icon, value, max }: { label: string; icon: string; v
  *
  * A monsterplant is the odd one out - `status_item_list_monsterplant` swaps the happiness and
  * energy bars for its wellbeing and how long it has left to grow.
+ *
+ * The texts are the layout's own: `level_text` is `${pet.level}` (`%level%`, `%maxlevel%`),
+ * `petrespect_text` `${infostand.text.petrespect}` (`%count%`), `age_text` `${pet.age}` (`%age%`)
+ * and `growth_status_text` the fixed `${infostand.pet.text.growth}` label above
+ * `growth_status_widget`, Flash's countdown; both are hidden once the plant has grown
+ * (`InfoStandPetView.updateStateWidget`). The port draws the countdown as `formatDuration` text.
  */
 export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRespect, onClose }: InfostandPetViewProps) => {
     const t = useTranslation();
     const { texture: petTexture } = useChatPetFace(figure, posture, { scale: RoomGeometryScaleType.ZoomedIn, direction: 2 });
-    const isMonsterplant = !!info && (info.breedId === MONSTERPLANT_BREED);
+    // `InfoStandPetView.update`: `type == 16`, the type from the pet's figure (`getPetType`) - not its breed.
+    // A monsterplant shows its wellbeing and growth rather than the usual three bars.
+    const isMonsterplant = !!info && (petTypeFromFigure(figure) === PetType.MONSTERPLANT);
 
     return (
         <Box layout={{ flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
@@ -125,7 +131,7 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                             layout={{ position: 'absolute', left: 76, width: 95, top: 0, height: 78 }}
                         >
                             <ThemeText
-                                text={t('infostand.pet.text.level', 'Level %level%/%max%', { level: String(info.level), max: String(info.maxLevel) })}
+                                text={t('pet.level', '', { level: String(info.level), maxlevel: String(info.maxLevel) })}
                                 textOptions={{ fill: '#ffffff' }}
                                 name="level_text"
                                 layout={{ position: 'absolute', left: 0, top: 10, height: 13 }}
@@ -149,19 +155,19 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                     <>
                         <StatusBar
                             label={t('infostand.pet.text.happiness')}
-                            icon={LayoutImage('icon_pet_happiness.png')}
+                            icon={LayoutImage('room-ui/icon_pet_happiness.png')}
                             value={info.nutrition}
                             max={info.maxNutrition}
                         />
                         <StatusBar
                             label={t('infostand.pet.text.experience')}
-                            icon={LayoutImage('icon_pet_experience.png')}
+                            icon={LayoutImage('room-ui/icon_pet_experience.png')}
                             value={info.experience}
                             max={info.experienceRequiredToLevel}
                         />
                         <StatusBar
                             label={t('infostand.pet.text.energy')}
-                            icon={LayoutImage('icon_pet_energy.png')}
+                            icon={LayoutImage('room-ui/icon_pet_energy.png')}
                             value={info.energy}
                             max={info.maxEnergy}
                         />
@@ -171,15 +177,24 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                     <>
                         <StatusBar
                             label={t('infostand.pet.text.wellbeing')}
-                            icon={LayoutImage('icon_pet_wellbeing.png')}
+                            icon={LayoutImage('room-ui/icon_pet_wellbeing.png')}
                             value={info.remainingWellBeingSeconds}
                             max={info.maxWellBeingSeconds}
                         />
-                        <ThemeText
-                            text={t('infostand.pet.text.growthstatus', 'Grows in %time%', { time: formatDuration(info.remainingGrowingSeconds) })}
-                            textOptions={{ fill: '#ffffff' }}
-                            name="growth_status_text"
-                        />
+                        {(info.remainingGrowingSeconds > 0) && (
+                            <>
+                                <ThemeText
+                                    text={t('infostand.pet.text.growth')}
+                                    textOptions={{ fill: '#ffffff' }}
+                                    name="growth_status_text"
+                                />
+                                <ThemeText
+                                    text={formatDuration(info.remainingGrowingSeconds)}
+                                    textOptions={{ fill: '#ffffff' }}
+                                    name="growth_status_widget"
+                                />
+                            </>
+                        )}
                     </>
                 )}
                 {!!info && (
@@ -191,13 +206,13 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                             layout={{ width: 164, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', gap: 4 }}
                         >
                             <ThemeText
-                                text={t('infostand.pet.text.respect', 'Respect: %count%', { count: String(info.respect) })}
+                                text={t('infostand.text.petrespect', '', { count: String(info.respect) })}
                                 textOptions={{ fill: canRespect ? '#ffffff' : '#a4a4a4' }}
                                 name="petrespect_text"
                             />
                         </Region>
                         <ThemeText
-                            text={t('infostand.text.petage', 'Age: %age%', { age: String(info.age) })}
+                            text={t('pet.age', '', { age: String(info.age) })}
                             textOptions={{ fill: '#a4a4a4' }}
                             name="age_text"
                         />

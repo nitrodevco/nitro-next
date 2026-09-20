@@ -3,7 +3,7 @@ import { GetAssetManager } from '@nitrodevco/nitro-renderer';
 import { Texture } from 'pixi.js';
 
 import { ChatStyle, IChatStyle } from './ChatStyle';
-import { CHAT_STYLE_DEFAULT_ID, CHAT_STYLE_DEFINITIONS, chatStyleAssetUrl, ChatStyleDefinition } from './ChatStyleDefinitions';
+import { CHAT_STYLE_DEFAULT_ID, CHAT_STYLE_DEFINITIONS, chatStyleAssetUrl, ChatStyleDefinition, ChatStyleOptionalBitmap } from './ChatStyleDefinitions';
 
 /**
  * The Flash `ChatStyleLibrary`: every style in `chatstyles.xml`, its bitmaps loaded once through
@@ -53,40 +53,48 @@ export class ChatStyleLibrary {
     }
 
     private async loadStyles(): Promise<void> {
-        await Promise.all(CHAT_STYLE_DEFINITIONS.map(async (definition) => {
+        const styles = await Promise.all(CHAT_STYLE_DEFINITIONS.map(async (definition) => {
             try {
-                const style = await this.loadStyle(definition);
-
-                if (style) this._styles.set(definition.id, style);
+                return await this.loadStyle(definition);
             } catch (err) {
                 NitroLogger.warn(`Error initializing chat style: ${definition.id}`, err);
+
+                return undefined;
             }
         }));
 
+        // In `chatstyles_xml` order, which is the order `getStyleIds` - and so the style picker - lists them.
+        for (const style of styles) {
+            if (style) this._styles.set(style.id, style);
+        }
+
         // Every bubble bitmap is pixel art stretched through a nine-slice - never filter it.
         for (const style of this._styles.values()) {
-            for (const texture of [ style.baseTexture, style.pointerTexture, style.iconTexture, style.selectorPreviewTexture ]) {
-                if (texture) texture.source.scaleMode = 'nearest';
-            }
+            for (const texture of style.textures) texture.source.scaleMode = 'nearest';
         }
 
         this._isLoaded = true;
     }
 
     private async loadStyle(definition: ChatStyleDefinition): Promise<ChatStyle | undefined> {
-        const { assetId, regPoints, hasColorLayer, hasIcon } = definition;
+        const { assetId, regPoints, bitmaps } = definition;
         const base = await this.loadTexture(chatStyleAssetUrl(assetId, 'chat_bubble_base'));
 
         if (!base) throw new Error(`missing chat_bubble_base for ${assetId}`);
 
-        const [ pointer, color, selectorPreview, icon ] = await Promise.all([
+        const optional = (file: ChatStyleOptionalBitmap) => (bitmaps.includes(file) ? this.loadTexture(chatStyleAssetUrl(assetId, file)) : Promise.resolve(undefined));
+
+        // Flash reads the pointer only for a style that is not anonymous, and an emblem only where its regpoint is set.
+        const [ pointer, color, selectorPreview, icon, emblem, emblemMultiline ] = await Promise.all([
             regPoints.anonymous ? Promise.resolve(undefined) : this.loadTexture(chatStyleAssetUrl(assetId, 'chat_bubble_pointer')),
-            hasColorLayer ? this.loadTexture(chatStyleAssetUrl(assetId, 'chat_bubble_color')) : Promise.resolve(undefined),
+            optional('chat_bubble_color'),
             this.loadTexture(chatStyleAssetUrl(assetId, 'selector_preview')),
-            hasIcon ? this.loadTexture(chatStyleAssetUrl(assetId, 'icon')) : Promise.resolve(undefined),
+            optional('icon'),
+            regPoints.emblemXY ? optional('chat_bubble_emblem') : Promise.resolve(undefined),
+            regPoints.emblemMultilineXY ? optional('chat_bubble_emblem_multiline') : Promise.resolve(undefined),
         ]);
 
-        return new ChatStyle(definition, { base, pointer, color, selectorPreview, icon });
+        return new ChatStyle(definition, { base, pointer, color, selectorPreview, icon, emblem, emblemMultiline });
     }
 
     private async loadTexture(url: string): Promise<Texture | undefined> {

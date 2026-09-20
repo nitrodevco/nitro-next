@@ -1,32 +1,26 @@
 import { CatalogPricingTypeEnum } from '@nitrodevco/nitro-api';
-import { PurchaseFromCatalogComposer, PurchaseOKMessage } from '@nitrodevco/nitro-packets';
-import { useState } from 'react';
+import { PurchaseFromCatalogComposer } from '@nitrodevco/nitro-packets';
 
 import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
 import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
-import { useCatalogOfferActions, useMessageListener } from '#base/hooks';
+import { useCatalogOfferActions } from '#base/hooks';
 import { Border, Box, Button, ButtonThick, Frame, NitroCurrencyIcon, ThemeText } from '#base/theme';
 
 import { CatalogOfferImageView } from './CatalogOfferImageView';
 
-type PurchaseState = 'busy' | 'none';
-
-/** Pixi port of views/catalog/CatalogPurchaseConfirmationView.tsx. */
+/**
+ * Pixi port of views/catalog/CatalogPurchaseConfirmationView.tsx - Flash's `PurchaseWindowCtrl`.
+ * The buy button is locked while the server has not answered; `useCatalogMessages` unlocks it on
+ * every answer, so a refused purchase can be tried again.
+ */
 export const CatalogPurchaseConfirmationView = () => {
-    const [ purchaseState, setPurchaseState ] = useState<PurchaseState>('none');
     const activePurchase = useCatalogStore(x => x.activePurchase);
-    const { setActivePurchase } = useCatalogActions();
+    const isPurchasing = useCatalogStore(x => x.isPurchasing);
+    const { setActivePurchase, setIsPurchasing } = useCatalogActions();
     const { getOfferProduct } = useCatalogOfferActions();
     const { send } = useWebSocketContext();
     const t = useTranslation();
-
-    useMessageListener(PurchaseOKMessage, (data) => {
-        if (!activePurchase?.offer || !data.offer || data.offer.id !== activePurchase.offer.offerId) return;
-
-        setPurchaseState('none');
-        setActivePurchase(undefined);
-    });
 
     if (!activePurchase?.offer) return null;
 
@@ -36,7 +30,7 @@ export const CatalogPurchaseConfirmationView = () => {
     if (!product) return null;
 
     const purchase = () => {
-        setPurchaseState('busy');
+        setIsPurchasing(true);
 
         send(new PurchaseFromCatalogComposer({
             pageId: offer.page?.pageId ?? -1,
@@ -137,7 +131,7 @@ export const CatalogPurchaseConfirmationView = () => {
                         tintColor="#00aa00"
                         textColor="#ffffff"
                         onPointerTap={purchase}
-                        disabled={purchaseState === 'busy'}
+                        disabled={isPurchasing}
                         layout={{ width: '100%' }}
                     >
                         {t('catalog.purchase_confirmation.buy')}

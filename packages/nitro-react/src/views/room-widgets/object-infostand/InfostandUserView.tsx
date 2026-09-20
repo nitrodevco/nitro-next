@@ -7,7 +7,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { useRoomUserData } from '#base/hooks';
-import { Border, Box, CloseButton, LayoutImage, NitroIcon, Region, TextInput, ThemeImage, ThemeText, useAvatarImageTexture } from '#base/theme';
+import { Border, Box, CloseButton, LayoutImage, Region, TextInput, ThemeImage, ThemeText, useAvatarImageTexture } from '#base/theme';
 
 import { InfostandBadgeView } from './InfostandBadgeView';
 
@@ -40,12 +40,12 @@ const PANEL_WIDTH = 190;
  */
 export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProps) => {
     const info = useRoomUserData(objectData.objectId);
-    const badgesRank = useRoomStore(x => x.usersByRoomObjectId[objectData.objectId]?.badgesRank ?? 0);
+    // `InfoStandUserView.badgesRank`: shown whenever the server sends a rank (>= 0) - Flash has no config gate for it.
+    const badgesRank = useRoomStore(x => x.usersByRoomObjectId[objectData.objectId]?.badgesRank ?? -1);
     const [ editingObjectId, setEditingObjectId ] = useState<number | undefined>(undefined);
     const [ motto, setMotto ] = useState('');
     const mottoMaxLength = useConfigValue<number>('motto.max.length') ?? 38;
     const mottoChangeEnabled = useConfigValue<boolean>('infostand.motto.change.enabled') ?? true;
-    const badgesRankEnabled = useConfigValue<boolean>('badge.leaderboard.enabled') ?? false;
     const t = useTranslation();
     const { send } = useWebSocketContext();
     const { texture: avatarTexture, width: avatarWidth, height: avatarHeight } = useAvatarImageTexture(info?.figure, info?.gender ?? AvatarGenderType.Male, { direction: 4 });
@@ -113,8 +113,11 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                         onPointerTap={() => openProfile(send, info.webId)}
                         layout={{ flexDirection: 'row', flex: 1, alignItems: 'center', gap: 5 }}
                     >
-                        <NitroIcon
-                            icon="icon-profile-house"
+                        {/* `InfoStandUserView` blits the `icon_home` asset into `user_view`'s
+                            `<bitmap name="home_icon">` - a library bitmap, not an icon-set style. */}
+                        <ThemeImage
+                            name="home_icon"
+                            src={LayoutImage('room-ui/icon_home.png')}
                             layout={{}}
                         />
                         <ThemeText
@@ -150,7 +153,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                         >
                             {showsCrocodile && (
                                 <ThemeImage
-                                    src={LayoutImage('sticker_croco.png')}
+                                    src={LayoutImage('room-ui/sticker_croco.png')}
                                     layout={{}}
                                 />
                             )}
@@ -194,8 +197,11 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                             onPointerTap={startEditingMotto}
                             layout={{ flexShrink: 0 }}
                         >
-                            <NitroIcon
-                                icon="pencil-icon"
+                            {/* `motto_container`'s `changemotto.image` static bitmap -
+                                `common_small_pen`, the same 17x18 pen the catalogue search uses. */}
+                            <ThemeImage
+                                name="changemotto.image"
+                                src={LayoutImage('shared/common_small_pen.png')}
                                 layout={{}}
                             />
                         </Box>
@@ -240,9 +246,9 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                     text={`${t('infostand.text.achievement_score')} ${info.achievementScore}`}
                     textStyle="text-style-frame-title"
                 />
-                {badgesRankEnabled && (badgesRank > 0) && (
+                {(badgesRank >= 0) && (
                     <ThemeText
-                        text={`${t('infostand.text.badges_rank')} ${badgesRank}`}
+                        text={t('infostand.text.badges_rank', '', { rank: `#${badgesRank}` })}
                         textStyle="text-style-regular"
                         textOptions={{ fill: '#ffffff' }}
                     />
@@ -258,7 +264,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                             layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%' }}
                         >
                             <ThemeImage
-                                src={LayoutImage(`relationship_status_${name}.png`)}
+                                src={LayoutImage(`shared/relationship_status_${name}.png`)}
                                 layout={{ width: 17, height: 14, flexShrink: 0 }}
                             />
                             <Region

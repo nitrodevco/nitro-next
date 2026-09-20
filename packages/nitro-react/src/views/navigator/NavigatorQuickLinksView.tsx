@@ -4,9 +4,14 @@ import { useState } from 'react';
 import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useInterpolate, useTranslation } from '#base/context/system';
-import { Border, Box, ColorLayer, NitroIcon, ScrollArea, ThemeText } from '#base/theme';
+import { Border, Box, ColorLayer, LayoutImage, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 
-/** Pixi port of views/navigator/NavigatorQuickLinksView.tsx. */
+/**
+ * Pixi port of views/navigator/NavigatorQuickLinksView.tsx. `navigator_frame_2`'s
+ * `left_hide_container` heads the pane with the same `newnavigator_button_quicklink_add` bitmap
+ * the category header uses, and each `quick_link` row carries a hover-only `remove_quick_link`
+ * drawn from `newnavigator_icon_ql_remove`.
+ */
 export const NavigatorQuickLinksView = () => {
     const savedSearches = useNavigatorStore(x => x.savedSearches);
     const leftPaneHidden = useNavigatorStore(x => x.leftPaneHidden);
@@ -31,8 +36,8 @@ export const NavigatorQuickLinksView = () => {
             layout={{ flexDirection: 'column', flexShrink: 0, width: 141, height: '100%', padding: 4 }}
         >
             <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 5, flexShrink: 0, height: 21, paddingLeft: 4 }}>
-                <NitroIcon
-                    icon="icon-nav-quicklink-add"
+                <ThemeImage
+                    src={LayoutImage('navigator/newnavigator_button_quicklink_add.png')}
                     layout={{}}
                 />
                 <ThemeText
@@ -62,11 +67,16 @@ export const NavigatorQuickLinksView = () => {
                         {hoveredId === link.id && (
                             <Box
                                 cursor="pointer"
-                                onPointerTap={(event) => { event.stopPropagation(); send(new NavigatorDeleteSavedSearchComposer({ searchId: link.id })); }}
+                                onPointerTap={(event) => {
+                                    event.stopPropagation();
+
+                                    send(new NavigatorDeleteSavedSearchComposer({ searchId: link.id }));
+                                }}
                                 layout={{ flexShrink: 0 }}
                             >
-                                <NitroIcon
-                                    icon="icon-nav-quicklink-remove"
+                                <ThemeImage
+                                    name="remove_quick_link"
+                                    src={LayoutImage('navigator/newnavigator_icon_ql_remove.png')}
                                     layout={{}}
                                 />
                             </Box>

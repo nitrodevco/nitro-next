@@ -15,8 +15,9 @@ const EMPTY_LINKS: never[] = [];
 
 /**
  * One chat bubble - the visual half of the Flash `PooledChatBubble`, composed from hooks: the
- * style's bitmaps (`useChatStyle`), the speaker's head or the pet's face, the truffle-rasterised
- * text (`useChatBubbleText`) and the size arithmetic (`computeChatBubbleLayout`). Once laid out
+ * style's bitmaps (`useChatStyle`), the speaker's head or the pet's face, the rasterised
+ * text (`useChatBubbleText`) and the size arithmetic (`computeChatBubbleLayout`). The children
+ * stack as Flash added them: background, emblem, pointer, face, text. Once laid out
  * it registers a `ChatBubbleMotion` with the flow provider, which then drives the container's
  * position and pointer by ref every frame - the one part of a bubble that can't be declarative.
  */
@@ -35,7 +36,9 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
 
     const head = useChatAvatarHead(figure, userData?.gender ?? AvatarGenderType.Male);
     const pet = useChatPetFace(isPet ? userData?.figure : undefined, petPosture);
-    const faceTexture = style?.iconTexture ?? (isPet ? pet.texture : head.texture);
+    // `ChatBubbleFactory.getNewChatBubble`: the style's icon, else a forced figure's head, a user's head or a pet's face - bots get none.
+    const isForced = !!(data.forcedFigure || data.forcedUserName);
+    const faceTexture = style?.iconTexture ?? ((isForced || (userData?.userType === RoomObjectUserType.User)) ? head.texture : (isPet ? pet.texture : undefined));
     const color = data.forcedColor ?? (isPet ? pet.color : head.chestColor) ?? 0xffffff;
 
     const text = useMemo(() => resolveChatBubbleText(data, userName, t), [ data, userName, t ]);
@@ -43,13 +46,14 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
 
     const margins = style?.textFieldMargins;
     const wrapWidth = margins ? ((maxWidth - margins.x) - margins.width) : maxWidth;
-    const render = useChatBubbleText(content?.markup ?? '', style?.fontFace ?? 'Ubuntu', style?.fontSize ?? 12, content?.textColor ?? style?.textColor ?? 0, wrapWidth);
+    const render = useChatBubbleText(content?.markup ?? '', style?.fontFace ?? 'Ubuntu', style?.fontSize ?? 12, style?.textColor ?? 0, wrapWidth);
 
     const layout = useMemo(() => (style
         ? computeChatBubbleLayout({
                 style,
                 textWidth: render?.textWidth ?? 0,
                 textHeight: render?.textHeight ?? 0,
+                lineCount: render?.lineCount ?? 1,
                 maxWidth,
                 pointerHeight: style.pointerTexture?.height ?? 0,
                 faceWidth: faceTexture?.width,
@@ -136,6 +140,15 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
                 roundPixels
                 eventMode="none"
             />
+            {layout.emblem && (
+                <pixiSprite
+                    texture={layout.emblem.texture}
+                    x={layout.emblem.x}
+                    y={layout.emblem.y}
+                    roundPixels
+                    eventMode="none"
+                />
+            )}
             {(layout.pointerY !== undefined) && style.pointerTexture && (
                 // Positioned by the motion handle (`updatePointerPosition`), never through props.
                 <pixiSprite

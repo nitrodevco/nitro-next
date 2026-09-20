@@ -17,6 +17,8 @@ export interface FurnitureCraftingViewProps {
     selectedRecipeCode: string;
     /** What the selected recipe takes, once the server has said. */
     ingredients: CraftingIngredient[];
+    /** Whether the table is the viewer's own - nobody else may craft on it. */
+    isOwner: boolean;
     /** Whether what is in the mixer makes the selected recipe. */
     canCraft: boolean;
     /** What came out, once something has. */
@@ -33,9 +35,12 @@ export interface FurnitureCraftingViewProps {
  * Flash also let ingredients be dragged in from the inventory, which the port has no dragging
  * for yet - so the mixer is filled by putting the furni on the table in the room, and this shows
  * what that adds up to.
+ *
+ * The button reads `${crafting.btn.craft}`, or `${crafting.btn.notowner}` (and stays disabled) on
+ * someone else's table, as `CraftingInfoController.enableButton` captioned `btn_craft`.
  */
 export const FurnitureCraftingView = ({
-    products, selectedRecipeCode, ingredients, canCraft, result, onSelectRecipe, onCraft, onClose,
+    products, selectedRecipeCode, ingredients, isOwner, canCraft, result, onSelectRecipe, onCraft, onClose,
 }: FurnitureCraftingViewProps) => {
     const t = useTranslation();
 
@@ -100,11 +105,11 @@ export const FurnitureCraftingView = ({
                     </Border>
                     <Button
                         variant="0"
-                        disabled={!canCraft}
+                        disabled={!isOwner || !canCraft}
                         onPointerTap={onCraft}
                         layout={{ width: '100%', height: 30 }}
                     >
-                        {t('crafting.button.craft')}
+                        {t(isOwner ? 'crafting.btn.craft' : 'crafting.btn.notowner')}
                     </Button>
                 </Box>
             </Box>

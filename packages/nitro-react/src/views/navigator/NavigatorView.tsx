@@ -4,7 +4,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useTranslation } from '#base/context/system';
 import { useWindowVisibility } from '#base/hooks';
-import { Border, Box, Frame, LayoutImage, ScrollArea, TabButton, TabContent, TabContext, ThemeImage, ThemeText } from '#base/theme';
+import { Border, Box, Frame, LayoutImage, Region, ScrollArea, TabButton, TabContent, TabContext, ThemeImage, ThemeText } from '#base/theme';
 
 import { NavigatorCategoryView } from './NavigatorCategoryView';
 import { NavigatorQuickLinksView } from './NavigatorQuickLinksView';
@@ -28,6 +28,10 @@ const PROMOTE_SEARCH_CODES = [ 'roomads_view', 'myworld_view' ];
  * useFrameDrag), and widening Frame's own ref contract - the single most-used component in this
  * package - for a background telemetry feature with no visible effect on the user wasn't judged
  * worth it. Flagged rather than silently dropped.
+ *
+ * While a search is out the window says so the way `NavigatorView.isBusy` did: the caption turns
+ * to `${navigator.title.is.busy}` and the translucent `search_waiting_for_results_mask` (colour
+ * 0x6feceae0) lies over the last results, which stay underneath - Flash shows no searching text.
  */
 export const NavigatorView = () => {
     const topLevelContexts = useNavigatorStore(x => x.topLevelContexts);
@@ -92,7 +96,7 @@ export const NavigatorView = () => {
 
     return (
         <Frame
-            caption={t('navigator.title')}
+            caption={t(isSearching ? 'navigator.title.is.busy' : 'navigator.title')}
             id="navigator"
             defaultPosition={{ x: 20, y: 20 }}
             layout={{ position: 'absolute', width: leftPaneHidden ? FRAME_WIDTH_COLLAPSED : FRAME_WIDTH_EXPANDED, height: preferences?.windowHeight ?? 628 }}
@@ -106,7 +110,7 @@ export const NavigatorView = () => {
                     onPointerTap={() => setLeftPaneHidden(!leftPaneHidden)}
                     layout={{ flexShrink: 0, marginLeft: 4 }}
                 >
-                    <ThemeImage src={LayoutImage('newnavigator_button_quicklink_add.png')} />
+                    <ThemeImage src={LayoutImage('navigator/newnavigator_button_quicklink_add.png')} />
                 </Box>
                 <TabContext
                     variant="3"
@@ -145,16 +149,7 @@ export const NavigatorView = () => {
                             variant="3"
                             layout={{ flex: 1, minHeight: 0 }}
                         >
-                            {isSearching && (
-                                <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
-                                    <ThemeText
-                                        text={t('navigator.searching')}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ fill: '#000000' }}
-                                    />
-                                </Box>
-                            )}
-                            {!isSearching && !searchResult?.blocks.length && (
+                            {!searchResult?.blocks.length && (
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
                                     <ThemeText
                                         text={t('navigator.search.returned.no.results')}
@@ -163,7 +158,7 @@ export const NavigatorView = () => {
                                     />
                                 </Box>
                             )}
-                            {!isSearching && searchResult?.blocks.map(block => (
+                            {searchResult?.blocks.map(block => (
                                 <NavigatorCategoryView
                                     key={block.searchCode}
                                     block={block}
@@ -176,6 +171,14 @@ export const NavigatorView = () => {
                                 />
                             ))}
                         </ScrollArea>
+                        {isSearching && (
+                            <Region
+                                name="search_waiting_for_results_mask"
+                                backgroundColor="#eceae0"
+                                alpha={0.435}
+                                layout={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }}
+                            />
+                        )}
                     </Border>
                     <Box layout={{ flexDirection: 'row', gap: 16, flexShrink: 0, paddingTop: 20, paddingBottom: 10 }}>
                         <Box
@@ -188,7 +191,7 @@ export const NavigatorView = () => {
                                 layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                             />
                             <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                <ThemeImage src={LayoutImage('newnavigator_create_room.png')} />
+                                <ThemeImage src={LayoutImage('navigator/newnavigator_create_room.png')} />
                             </Box>
                             <ThemeText
                                 layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
@@ -209,7 +212,7 @@ export const NavigatorView = () => {
                                             layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                                         />
                                         <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                            <ThemeImage src={LayoutImage('newnavigator_promote_room.png')} />
+                                            <ThemeImage src={LayoutImage('navigator/newnavigator_promote_room.png')} />
                                         </Box>
                                         <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
@@ -233,7 +236,7 @@ export const NavigatorView = () => {
                                             layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
                                         />
                                         <Box layout={{ position: 'absolute', top: 2, left: 2, width: 185, height: 56, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                                            <ThemeImage src={LayoutImage('newnavigator_random_room.png')} />
+                                            <ThemeImage src={LayoutImage('navigator/newnavigator_random_room.png')} />
                                         </Box>
                                         <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}

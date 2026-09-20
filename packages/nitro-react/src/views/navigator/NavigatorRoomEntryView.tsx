@@ -1,16 +1,16 @@
 import { IRoomInfo } from '@nitrodevco/nitro-packets';
 
 import { useInterpolate } from '#base/context/system';
-import { Border, Box, NitroIcon, ThemeImage, ThemeText, useTextureFromUrl } from '#base/theme';
+import { Border, Box, LayoutImage, ThemeImage, ThemeText, useTextureFromUrl } from '#base/theme';
 
 import { RESULTS_MODE_TILES } from './NavigatorCategoryView';
 import { getUserCountColor } from './NavigatorRoomEntryUtils';
 
-/** RoomEntryUtils.getDoorModeIconAsset - switch(doorMode - 1) */
-const DOOR_MODE_ICONS: Record<number, 'icon-nav-doormode-doorbell' | 'icon-nav-doormode-password' | 'icon-nav-doormode-invisible'> = {
-    1: 'icon-nav-doormode-doorbell',
-    2: 'icon-nav-doormode-password',
-    3: 'icon-nav-doormode-invisible',
+/** `RoomEntryUtils.getDoorModeIconAsset` - `switch(doorMode - 1)`, an empty asset for an open door. */
+const DOOR_MODE_IMAGES: Record<number, string> = {
+    1: LayoutImage('navigator/newnavigator_doormode_doorbell_small.png'),
+    2: LayoutImage('navigator/newnavigator_doormode_password_small.png'),
+    3: LayoutImage('navigator/newnavigator_doormode_invisible_small.png'),
 };
 
 export interface NavigatorRoomEntryViewProps {
@@ -26,10 +26,15 @@ export interface NavigatorRoomEntryViewProps {
  * (a plain presentational leaf everywhere else in this package), so the whole entry is wrapped
  * in an interactive Box the same way FriendListFriendItem's relationship dropdown already
  * does, rather than widening Border's own contract for this one call site.
+ *
+ * Every picture in `navigator_entry_row_container` / `navigator_entry_tile_container` is a
+ * `newnavigator` library bitmap, not an icon-set style: `room_usercount_icon`,
+ * `info_popup_click_region`'s `newnavigator_button_show_room_info`, the runtime-assigned
+ * `doormode_icon`, `grouphome_icon` and the `room_pic_placeholder` fallback.
  */
 export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, onShowInfo }: NavigatorRoomEntryViewProps) => {
     const interpolate = useInterpolate();
-    const doorModeIcon = DOOR_MODE_ICONS[room.doorMode];
+    const doorModeImage = DOOR_MODE_IMAGES[room.doorMode];
     const roomPicUrl = room.officialRoomPicRef?.length ? room.officialRoomPicRef : undefined;
     // Image resolves its own texture internally, but this needs to know WHEN it's resolved to
     // pick between it and the default-room icon fallback - read it here too just for that
@@ -43,8 +48,9 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
             variant="3"
             layout={{ flexDirection: 'row', alignItems: 'center', gap: 1, paddingLeft: 3, paddingRight: 3, width: 40, height: 18 }}
         >
-            <NitroIcon
-                icon="icon-nav-usercount"
+            <ThemeImage
+                name="room_usercount_icon"
+                src={LayoutImage('shared/newnavigator_icon_usercount.png')}
                 layout={{}}
             />
             <ThemeText
@@ -78,26 +84,32 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                                 />
                             )
                         : (
-                                <NitroIcon
-                                    icon="icon-nav-default-room"
+                                <ThemeImage
+                                    name="room_pic_placeholder"
+                                    src={LayoutImage('shared/newnavigator_default_room.png')}
                                     layout={{}}
                                 />
                             )}
                 </Box>
                 <Box layout={{ position: 'absolute', top: 93, left: 40 }}>{userCount}</Box>
-                {doorModeIcon && (
-                    <NitroIcon
-                        icon={doorModeIcon}
+                {doorModeImage && (
+                    <ThemeImage
+                        name="doormode_icon"
+                        src={doorModeImage}
                         layout={{ position: 'absolute', top: 96, left: 92 }}
                     />
                 )}
                 <Box
                     cursor="pointer"
-                    onPointerTap={(event) => { event.stopPropagation(); onShowInfo?.(room); }}
+                    onPointerTap={(event) => {
+                        event.stopPropagation();
+
+                        onShowInfo?.(room);
+                    }}
                     layout={{ position: 'absolute', top: 120, left: 98 }}
                 >
-                    <NitroIcon
-                        icon="icon-nav-room-info"
+                    <ThemeImage
+                        src={LayoutImage('navigator/newnavigator_button_show_room_info.png')}
                         layout={{}}
                     />
                 </Box>
@@ -130,25 +142,31 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                     textOptions={{ fill: '#000000' }}
                 />
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 1, flexShrink: 0, paddingRight: 2 }}>
-                    {doorModeIcon && (
-                        <NitroIcon
-                            icon={doorModeIcon}
+                    {doorModeImage && (
+                        <ThemeImage
+                            name="doormode_icon"
+                            src={doorModeImage}
                             layout={{}}
                         />
                     )}
                     {room.groupId > 0 && (
-                        <NitroIcon
-                            icon="icon-nav-room-group"
+                        <ThemeImage
+                            name="grouphome_icon"
+                            src={LayoutImage('navigator/newnavigator_icon_group.png')}
                             layout={{}}
                         />
                     )}
                     <Box
                         cursor="pointer"
-                        onPointerTap={(event) => { event.stopPropagation(); onShowInfo?.(room); }}
+                        onPointerTap={(event) => {
+                            event.stopPropagation();
+
+                            onShowInfo?.(room);
+                        }}
                         layout={{}}
                     >
-                        <NitroIcon
-                            icon="icon-nav-room-info"
+                        <ThemeImage
+                            src={LayoutImage('navigator/newnavigator_button_show_room_info.png')}
                             layout={{}}
                         />
                     </Box>

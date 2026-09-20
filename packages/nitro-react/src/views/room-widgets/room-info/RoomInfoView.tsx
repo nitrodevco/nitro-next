@@ -45,6 +45,33 @@ export interface RoomInfoViewProps {
  *
  * Flash grew the window to whatever its visible rows needed (`Util.moveChildrenToColumn` then
  * `getLowestPoint`), so the body is a column here rather than the layout's fixed 411.
+ *
+ * `RoomInfoViewCtrl.layoutButtons` stacks seven buttons in this order: `room_settings_button`,
+ * `raid_protection_settings_button`, `room_filter_button`, `floor_plan_editor_button`,
+ * `staff_pick_button`, `room_report_button`, `room_muteall_button`. The port renders the three
+ * whose windows it has - settings, staff pick and mute all - in that relative order. The four it
+ * leaves out, and what each still needs:
+ *
+ * - `raid_protection_settings_button` (`${raid.protection.settings.button}`, new in
+ *   WIN63-202609091217-117204808) opens `navigator/raidprotection/<roomId>`, and
+ *   `RoomInfoViewCtrl.refreshRaidProtectionButton` shows it only while
+ *   `RaidProtectionSettingsController.isFeatureEnabled` (config `raid.protection.enabled`) and
+ *   `canManage(flatId)` - the latter true only after a `RaidProtectionCapabilityMessage` for the
+ *   live current room said so. The window behind it is the `raid_protection_settings` layout
+ *   (430 x 488: a warning card, an enable checkbox with detection-sensitivity/action/ban-duration
+ *   dropmenus, a guard card with duration and sensitivity, the incident status line, cancel and
+ *   save), driven by `RaidProtectionSettingsController` and `RaidProtectionSettingsData`.
+ *   `nitro-packets` has the five headers (`IncomingHeader.RaidProtectionCapabilityMessage` 734,
+ *   `RaidProtectionSettingsMessage` 3553, `RaidProtectionSettingsResultMessage` 3620,
+ *   `OutgoingHeader.GetRaidProtectionSettingsComposer` 206,
+ *   `SaveRaidProtectionSettingsComposer` 2687) but none of the five classes, so nothing can set
+ *   the capability and the button could only ever be hidden. It is ported when those exist.
+ * - `room_filter_button` (`canEditRoomSettings && room.custom.filter.enabled`) needs the room
+ *   word-filter window, which is not ported.
+ * - `floor_plan_editor_button` (`roomSession.roomControllerLevel >= 1`) needs the floor plan
+ *   editor (`floor_plan_editor_bc`), which is not ported.
+ * - `room_report_button` (hidden unless `room.report.enabled`) needs report/help, which is not
+ *   ported.
  */
 export const RoomInfoView = ({
     roomName, description, ownerName, showOwner, tags, rating, ranking, thumbnailUrl,
@@ -90,7 +117,7 @@ export const RoomInfoView = ({
                                 cursor="pointer"
                                 layout={{ width: 18, height: 22 }}
                             >
-                                <ThemeImage src={LayoutImage('extended_profile_block_icon.png')} />
+                                <ThemeImage src={LayoutImage('groups/extended_profile_block_icon.png')} />
                             </Region>
                         )}
                         {!isHome && (
@@ -101,7 +128,7 @@ export const RoomInfoView = ({
                                 cursor="pointer"
                                 layout={{ width: 18, height: 16 }}
                             >
-                                <ThemeImage src={LayoutImage('extended_profile_rooms.png')} />
+                                <ThemeImage src={LayoutImage('groups/extended_profile_rooms.png')} />
                             </Region>
                         )}
                         {canFavourite && (
@@ -112,7 +139,7 @@ export const RoomInfoView = ({
                                 cursor="pointer"
                                 layout={{ width: 18, height: 16 }}
                             >
-                                <ThemeImage src={LayoutImage(isFavourite ? 'extended_profile_clear_favourite.png' : 'extended_profile_make_favourite.png')} />
+                                <ThemeImage src={LayoutImage(isFavourite ? 'groups/extended_profile_clear_favourite.png' : 'groups/extended_profile_make_favourite.png')} />
                             </Region>
                         )}
                     </Box>
@@ -202,7 +229,7 @@ export const RoomInfoView = ({
                             cursor="pointer"
                             layout={{ width: 18, height: 16 }}
                         >
-                            <ThemeImage src={LayoutImage('roomtools_like.png')} />
+                            <ThemeImage src={LayoutImage('room-ui/roomtools_like.png')} />
                         </Region>
                     )}
                 </Region>
@@ -235,7 +262,7 @@ export const RoomInfoView = ({
                     >
                         <ThemeImage
                             name="thumbnail_image"
-                            src={thumbnailUrl.length ? thumbnailUrl : LayoutImage('newnavigator_default_room.png')}
+                            src={thumbnailUrl.length ? thumbnailUrl : LayoutImage('shared/newnavigator_default_room.png')}
                             layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
                         />
                     </Region>

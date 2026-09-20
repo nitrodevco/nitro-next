@@ -48,7 +48,7 @@ export const FurnitureMysteryTrophyWidget = () => {
                     layout={{ position: 'absolute', left: 7, width: 380, top: 6, height: 50 }}
                 />
                 <ThemeImage
-                    src={LayoutImage('common_small_pen.png')}
+                    src={LayoutImage('shared/common_small_pen.png')}
                     layout={{ position: 'absolute', left: 390, width: 17, top: 20, height: 18 }}
                 />
             </Border>

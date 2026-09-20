@@ -35,18 +35,18 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
         >
             { (selected || isHovering) && (
                 <ThemeImage
-                    src={LayoutImage('avatar_editor_parts_hilite.png')}
+                    src={LayoutImage('avatar-editor/avatar_editor_parts_hilite.png')}
                     alpha={selected ? 1 : 0.5}
                     layout={{ position: 'absolute', left: 0, top: 0 }}
                 />
             )}
             { isClear && (
-                <ThemeImage src={LayoutImage('avatar_editor_generic_remove_selection.png')} />
+                <ThemeImage src={LayoutImage('avatar-editor/avatar_editor_generic_remove_selection.png')} />
             )}
             { !isClear && !thumbnail && (
                 <ThemeImage
                     name="loading"
-                    src={LayoutImage('avatar_editor_avatar_editor_download_icon.png')}
+                    src={LayoutImage('shared/avatar_editor_avatar_editor_download_icon.png')}
                 />
             )}
             {thumbnail && isPixi && (
@@ -67,13 +67,13 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
             )}
             {isClub && (
                 <ThemeImage
-                    src={LayoutImage('icons_hc_icon_small.png')}
+                    src={LayoutImage('avatar-editor/icons_hc_icon_small.png')}
                     layout={{ position: 'absolute', right: 0, width: 10, bottom: 1, height: 9 }}
                 />
             )}
             {isSellable && (
                 <ThemeImage
-                    src={LayoutImage('icons_wearable.png')}
+                    src={LayoutImage('avatar-editor/icons_wearable.png')}
                     layout={{ position: 'absolute', left: 0, width: 17, bottom: 0, height: 20 }}
                 />
             )}

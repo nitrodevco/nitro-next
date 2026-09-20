@@ -1,7 +1,7 @@
 import { Container, Point, Rectangle, Sprite } from 'pixi.js';
 import { RefObject } from 'react';
 
-import { CHAT_BUBBLE_POINTER_MIN_X, CHAT_BUBBLE_POINTER_RIGHT_MARGIN, ChatBubbleLayout } from './ChatBubbleContent';
+import { ChatBubbleLayout } from './ChatBubbleContent';
 import { ChatBubbleData } from './ChatBubbleData';
 import { IChatFlowBubble, IChatFlowHost } from './simulation/IChatFlowBubble';
 
@@ -194,7 +194,7 @@ export class ChatBubbleMotion implements IChatFlowBubble {
         }
     }
 
-    /** `_Str_12210` - re-aims the pointer at the speaker, clamped inside the bubble. */
+    /** `repositionPointer` - re-aims the pointer at the speaker, clamped inside the bubble by the style's margins. */
     public updatePointerPosition(): void {
         const pointer = this._options.pointer.current;
         const metrics = this._metrics;
@@ -203,7 +203,7 @@ export class ChatBubbleMotion implements IChatFlowBubble {
 
         const speakerOffsetX = this.userScreenLocation.x - this._x;
 
-        pointer.x = Math.max(CHAT_BUBBLE_POINTER_MIN_X, Math.min(metrics.layout.width - CHAT_BUBBLE_POINTER_RIGHT_MARGIN, speakerOffsetX));
+        pointer.x = Math.max(metrics.layout.pointerMarginLeft, Math.min(metrics.layout.width - metrics.layout.pointerMarginRight, speakerOffsetX));
         pointer.y = metrics.layout.height - metrics.pointerOffsetY;
     }
 

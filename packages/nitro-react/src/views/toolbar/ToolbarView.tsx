@@ -7,6 +7,7 @@ import { AvatarImage } from '#base/components';
 import { useWebSocketContext } from '#base/context/communication';
 import { useIsLandingViewVisible, useSystemActions, useTranslation } from '#base/context/system';
 import { useOwnUserFigure, useOwnUserGender } from '#base/context/user';
+import { useWiredShowToolbarMenuButton } from '#base/context/wired';
 import { Border, LayoutImage, Region, ThemeImage, useLayoutEvent } from '#base/theme';
 
 import { ToolbarExtendedMenu } from './ToolbarExtendedMenu';
@@ -27,6 +28,8 @@ export const ToolbarView = () => {
     useLayoutEvent(leftGroup, reportWidths);
     useLayoutEvent(rightGroup, reportWidths);
     const landingViewVisible = useIsLandingViewVisible();
+    // `BottomBarLeft`: the wired menu icon is a room icon, and only for someone `showToolbarMenuButton` lets see it.
+    const showWiredMenuButton = useWiredShowToolbarMenuButton() && !landingViewVisible;
     const { send } = useWebSocketContext();
     const t = useTranslation();
 
@@ -57,7 +60,7 @@ export const ToolbarView = () => {
                         layout={{ position: 'relative', flexDirection: 'row', alignItems: 'center', gap: 15, height: '100%' }}
                     >
                         <ThemeImage
-                            src={leftSideCollapsed ? '/assets/flash/toolbar/collapse_left_active.png' : '/assets/flash/toolbar/collapse_left.png'}
+                            src={LayoutImage(leftSideCollapsed ? 'toolbar/collapse_left_active.png' : 'toolbar/collapse_left.png')}
                             width={14}
                             height={43}
                             onPointerTap={() => setLeftSideCollapsed(prev => !prev)}
@@ -70,7 +73,7 @@ export const ToolbarView = () => {
                             >
                                 <ThemeImage
                                     dynamicRole="icon"
-                                    src={LayoutImage('bottom_bar_logo.png')}
+                                    src={LayoutImage('toolbar/bottom_bar_logo.png')}
                                 />
                             </Region>
                         ) }
@@ -83,7 +86,7 @@ export const ToolbarView = () => {
                             >
                                 <ThemeImage
                                     dynamicRole="icon"
-                                    src={LayoutImage('bottom_bar_home.png')}
+                                    src={LayoutImage('toolbar/bottom_bar_home.png')}
                                 />
                             </Region>
                         ) }
@@ -95,7 +98,7 @@ export const ToolbarView = () => {
                             >
                                 <ThemeImage
                                     dynamicRole="icon"
-                                    src={LayoutImage('bottom_bar_navigator.png')}
+                                    src={LayoutImage('toolbar/bottom_bar_navigator.png')}
                                 />
                             </Region>
                         )}
@@ -107,7 +110,7 @@ export const ToolbarView = () => {
                             >
                                 <ThemeImage
                                     dynamicRole="icon"
-                                    src={LayoutImage('bottom_bar_progression.png')}
+                                    src={LayoutImage('toolbar/bottom_bar_progression.png')}
                                 />
                             </Region>
                         )}
@@ -118,7 +121,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={LayoutImage('bottom_bar_shop.png')}
+                                src={LayoutImage('toolbar/bottom_bar_shop.png')}
                             />
                         </Region>
                         <Region
@@ -127,7 +130,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={LayoutImage('bottom_bar_buildersclub.png')}
+                                src={LayoutImage('toolbar/bottom_bar_buildersclub.png')}
                             />
                         </Region>
                         <Region
@@ -137,7 +140,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={LayoutImage('bottom_bar_inventory.png')}
+                                src={LayoutImage('toolbar/bottom_bar_inventory.png')}
                             />
                         </Region>
                         <Region
@@ -147,7 +150,7 @@ export const ToolbarView = () => {
                             layout={{ width: 45, height: 45, justifyContent: 'center', alignItems: 'center' }}
                         >
                             <ThemeImage
-                                src={LayoutImage('bottom_bar_memenu_bg.png')}
+                                src={LayoutImage('toolbar/bottom_bar_memenu_bg.png')}
                                 layout={{ position: 'absolute', left: 0, width: 45, height: 45 }}
                             />
                             <Region
@@ -163,31 +166,34 @@ export const ToolbarView = () => {
                                 />
                             </Region>
                             <ThemeImage
-                                src={LayoutImage('bottom_bar_memenu_circle.png')}
+                                src={LayoutImage('toolbar/bottom_bar_memenu_circle.png')}
                                 layout={{ position: 'absolute', left: 0, width: 45, height: 45 }}
                             />
                         </Region>
-                        <Region
-                            dynamicStyle="lifted_hover"
-                            tooltip={t('toolbar.icon.label.wired_menu')}
-                        >
-                            <ThemeImage
-                                dynamicRole="icon"
-                                src={LayoutImage('bottom_bar_wired_menu.png')}
-                            />
-                        </Region>
+                        {showWiredMenuButton && (
+                            <Region
+                                dynamicStyle="lifted_hover"
+                                onPointerTap={() => toggleWindow('wired_menu')}
+                                tooltip={t('toolbar.icon.label.wired_menu')}
+                            >
+                                <ThemeImage
+                                    dynamicRole="icon"
+                                    src={LayoutImage('shared/bottom_bar_wired_menu.png')}
+                                />
+                            </Region>
+                        )}
                         <Region
                             dynamicStyle="lifted_hover"
                             tooltip={t('camera.interface.title')}
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={LayoutImage('bottom_bar_camera.png')}
+                                src={LayoutImage('toolbar/bottom_bar_camera.png')}
                             />
                         </Region>
                         <ThemeImage
                             name="line"
-                            src={LayoutImage('bottom_bar_divider_1px.png')}
+                            src={LayoutImage('shared/bottom_bar_divider_1px.png')}
                             layout={{ width: 1, height: 40 }}
                         />
                     </Region>
@@ -197,7 +203,7 @@ export const ToolbarView = () => {
                     >
                         <ThemeImage
                             name="line"
-                            src={LayoutImage('bottom_bar_divider_1px.png')}
+                            src={LayoutImage('shared/bottom_bar_divider_1px.png')}
                             layout={{ width: 1, height: 40 }}
                         />
                         <Region
@@ -207,7 +213,7 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={LayoutImage('friend_bar_all_friends.png')}
+                                src={LayoutImage('friend-bar/friend_bar_all_friends.png')}
                             />
                         </Region>
                         <Region
@@ -217,11 +223,11 @@ export const ToolbarView = () => {
                         >
                             <ThemeImage
                                 dynamicRole="icon"
-                                src={LayoutImage('friend_bar_search_habbos.png')}
+                                src={LayoutImage('friend-bar/friend_bar_search_habbos.png')}
                             />
                         </Region>
                         <ThemeImage
-                            src={rightSideCollapsed ? '/assets/flash/toolbar/collapse_right_active.png' : '/assets/flash/toolbar/collapse_right.png'}
+                            src={LayoutImage(rightSideCollapsed ? 'toolbar/collapse_right_active.png' : 'toolbar/collapse_right.png')}
                             width={14}
                             height={43}
                             cursor="pointer"
