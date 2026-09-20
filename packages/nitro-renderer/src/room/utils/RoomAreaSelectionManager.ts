@@ -1,8 +1,15 @@
-import { IRoom, IRoomAreaSelectionManager, IRoomObject, RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-api';
-import { ColorMatrixFilter } from 'pixi.js';
+import { IRoom, IRoomAreaSelectionManager, IRoomObject, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectMouseEvent, RoomObjectTileMouseEvent } from '@nitrodevco/nitro-api';
+import { ColorMatrix, ColorMatrixFilter } from 'pixi.js';
 
 import { FurnitureVisualization, RoomVisualization } from '../object';
 
+/**
+ * Port of Flash `room/utils/RoomAreaSelectionManager.as`: dragging out a rectangle of floor
+ * tiles, for the area hide furni and the wired "in area" selectors. While it is active every
+ * furni is drawn see-through (`FurnitureVisualization.lookThrough`) and the chosen tiles are
+ * tinted by one of three colour matrices, which are Flash's with the offsets brought from 0-255
+ * to Pixi's 0-1. The room lives no longer than this does, so its listener is never removed.
+ */
 export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
     public static NOT_ACTIVE: number = 0;
     public static NOT_SELECTING_AREA: number = 1;
@@ -12,7 +19,7 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
     public static HIGHLIGHT_BRIGHTEN = 'highlight_brighten';
     public static HIGHLIGHT_BLUE = 'highlight_blue';
 
-    private static HIGHLIGHT_FILTERS: { [key: string]: ColorMatrixFilter } = {};
+    private static HIGHLIGHT_FILTERS: { [key: string]: ColorMatrixFilter } | undefined = undefined;
 
     private _room: IRoom;
     private _state: number = RoomAreaSelectionManager.NOT_ACTIVE;
@@ -30,33 +37,38 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
     constructor(room: IRoom) {
         this._room = room;
 
-        /* EventStore.getState().subscribe<RoomEngineObjectEvent>(RoomEngineObjectEvent.ADDED, event => {
-            if (this._state === RoomAreaSelectionManager.NOT_ACTIVE) return;
+        this._room.eventDispatcher.addEventListener<RoomEngineObjectEvent>(RoomEngineObjectEvent.ADDED, event => this.onRoomObjectAdded(event));
+    }
 
-            if (event.roomId !== this._roomEngine.activeRoomId) return;
+    private static createHighlightFilter(matrix: ColorMatrix): ColorMatrixFilter {
+        const filter = new ColorMatrixFilter();
 
-            if (event.category !== 10 && event.category !== 20) return;
+        filter.matrix = matrix;
 
-            const roomObject = this._roomEngine.getRoomObject(event.roomId, event.objectId, event.category);
+        return filter;
+    }
 
-            if (roomObject.visualization instanceof FurnitureVisualization) roomObject.visualization.lookThrough = true;
-        }); */
+    private static getHighlightFilter(highlightType: string): ColorMatrixFilter {
+        if (!RoomAreaSelectionManager.HIGHLIGHT_FILTERS) {
+            RoomAreaSelectionManager.HIGHLIGHT_FILTERS = {
+                [RoomAreaSelectionManager.HIGHLIGHT_BRIGHTEN]: RoomAreaSelectionManager.createHighlightFilter([ 1.5, 0, 0, 0, 0, 0, 1.5, 0, 0, 20 / 255, 0, 0, 1.5, 0, 20 / 255, 0, 0, 0, 1, 0 ]),
+                [RoomAreaSelectionManager.HIGHLIGHT_BLUE]: RoomAreaSelectionManager.createHighlightFilter([ 1.05, 0, 0, 0, 0, 0, 1.3, 0, 0, 8 / 255, 0, 0, 1.8, 0, 20 / 255, 0, 0, 0, 1, 0 ]),
+                [RoomAreaSelectionManager.HIGHLIGHT_DARKEN]: RoomAreaSelectionManager.createHighlightFilter([ 0.55, 0, 0, 0, -10 / 255, 0, 0.55, 0, 0, -10 / 255, 0, 0, 0.55, 0, -10 / 255, 0, 0, 0, 1, 0 ]),
+            };
+        }
 
-        const brightenFilter = new ColorMatrixFilter();
+        return RoomAreaSelectionManager.HIGHLIGHT_FILTERS[highlightType];
+    }
 
-        brightenFilter.matrix = [ 1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1, 0, 0.0784, 0.0784, 0 ];
+    /** A furni placed while the selection is active is see-through like the rest. */
+    private onRoomObjectAdded(event: RoomEngineObjectEvent): void {
+        if (this._state === RoomAreaSelectionManager.NOT_ACTIVE) return;
 
-        const blueFilter = new ColorMatrixFilter();
+        if (event.category !== RoomObjectCategoryEnum.Floor && event.category !== RoomObjectCategoryEnum.Wall) return;
 
-        blueFilter.matrix = [ 1.05, 0, 0, 0, 0, 1.3, 0, 0, 0, 0, 1.8, 0, 0, 0, 0, 1, 0, 0.0314, 0.0784, 0 ];
+        const visualization = this._room.getRoomObject(event.objectId, event.category)?.visualization;
 
-        const darkenFilter = new ColorMatrixFilter();
-
-        darkenFilter.matrix = [ 0.55, 0, 0, 0, 0, 0.55, 0, 0, 0, 0, 0.55, 0, 0, 0, 0, 1, -0.0392, -0.0392, -0.0392, 0 ];
-
-        RoomAreaSelectionManager.HIGHLIGHT_FILTERS[RoomAreaSelectionManager.HIGHLIGHT_DARKEN] = darkenFilter;
-        RoomAreaSelectionManager.HIGHLIGHT_FILTERS[RoomAreaSelectionManager.HIGHLIGHT_BRIGHTEN] = brightenFilter;
-        RoomAreaSelectionManager.HIGHLIGHT_FILTERS[RoomAreaSelectionManager.HIGHLIGHT_BLUE] = blueFilter;
+        if (visualization instanceof FurnitureVisualization) visualization.lookThrough = true;
     }
 
     public startSelecting(): void {
@@ -66,8 +78,7 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
 
         this._state = RoomAreaSelectionManager.AWAITING_MOUSE_DOWN;
 
-        // TODO
-        // set isMoveBlocked = true;
+        this._room.setMoveBlocked(true);
     }
 
     public finishSelecting(): boolean {
@@ -75,8 +86,7 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
 
         this._state = RoomAreaSelectionManager.NOT_SELECTING_AREA;
 
-        // TODO
-        // set isMoveBlocked = false;
+        this._room.setMoveBlocked(false);
 
         if (this._callback)
             this._callback(this._highlightRootX, this._highlightRootY, this._highlightWidth, this._highlightHeight);
@@ -156,7 +166,7 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
             rootY,
             width,
             height,
-            RoomAreaSelectionManager.HIGHLIGHT_FILTERS[this._highlightType],
+            RoomAreaSelectionManager.getHighlightFilter(this._highlightType),
         );
     }
 
@@ -167,8 +177,7 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
 
         this._state = RoomAreaSelectionManager.NOT_SELECTING_AREA;
 
-        // TODO
-        // set isMoveBlocked = false;
+        this._room.setMoveBlocked(false);
 
         if (this._callback) this._callback(0, 0, 0, 0);
     }
@@ -183,7 +192,7 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
         this._highlightType = highlightType;
 
         for (const roomObject of this.getAllFurniture()) {
-            if (roomObject.visualization) (roomObject.visualization as FurnitureVisualization).lookThrough = true;
+            if (roomObject.visualization instanceof FurnitureVisualization) roomObject.visualization.lookThrough = true;
         }
 
         this._state = RoomAreaSelectionManager.NOT_SELECTING_AREA;
@@ -197,7 +206,7 @@ export class RoomAreaSelectionManager implements IRoomAreaSelectionManager {
         this._callback = undefined;
 
         for (const roomObject of this.getAllFurniture()) {
-            if (roomObject.visualization) (roomObject.visualization as FurnitureVisualization).lookThrough = false;
+            if (roomObject.visualization instanceof FurnitureVisualization) roomObject.visualization.lookThrough = false;
         }
 
         this.clearHighlight();

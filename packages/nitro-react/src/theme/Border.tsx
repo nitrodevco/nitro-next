@@ -8,11 +8,11 @@ import { BackgroundLayer, ColorLayer, Composite, CompositePiece, HsvNineSlice, N
 import { FillLayout, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
 
 /**
- * A border skin. `colorize: false` marks a skin whose every entity is `colorize="false"` in
- * the client's skin XML - `BitmapSkinRenderer.draw` copies such pieces untinted, so the
- * window's `color` has no effect on it and `tintColor` is ignored here too.
+ * A border skin. `colorize: false` (on `ThemeBase`, honoured by `useThemeVariant`) marks a skin
+ * whose every entity is `colorize="false"` in the client's skin XML - `BitmapSkinRenderer.draw`
+ * copies such pieces untinted, so the window's `color` has no effect on it.
  */
-export type BorderVariant = ThemeVariant & { colorize?: boolean };
+export type BorderVariant = ThemeVariant;
 
 const BORDER_VARIANTS: ThemeVariants<BorderVariant> = {
     0: { layer: NineSlice('border-0-default-src', 6, 6, 6, 6) },
@@ -166,8 +166,6 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
-        const skinTint = (config.colorize === false) ? undefined : resolvedTint;
-
         // The fill is part of the skin buffer, so it blends with it.
         const skin = (
             <>
@@ -180,7 +178,7 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                 {resolvedLayer && (
                     <BackgroundLayer
                         layer={resolvedLayer}
-                        tintColor={skinTint}
+                        tintColor={resolvedTint}
                     />
                 )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}

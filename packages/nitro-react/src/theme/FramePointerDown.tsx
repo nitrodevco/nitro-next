@@ -10,7 +10,7 @@ import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 export type FramePointerDownVariant = ThemeVariant;
 
 const FRAME_POINTER_DOWN_VARIANTS: ThemeVariants<FramePointerDownVariant> = {
-    7: { layer: Stretch('framepointerdown-src'), layout: { width: 16, height: 12 } },
+    7: { layer: Stretch('framepointerdown-7-default-src'), layout: { width: 16, height: 12 } },
 };
 
 export type FramePointerDownProps = ThemeProps<FramePointerDownVariant>;

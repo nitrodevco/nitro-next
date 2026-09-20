@@ -9,18 +9,22 @@ import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } f
 
 export type DroplistItemVariant = ThemeWithStatesVariant;
 
-const DROPLIST_ITEM_VARIANTS: ThemeVariants<DroplistItemVariant> = {
-    0: {
-        states: {
-            default: Stretch('dropmenuitem-0-default-src'),
-            hovering: Stretch('dropmenuitem-0-hovering-src'),
-            selected: Stretch('dropmenuitem-0-selected-src'),
-        },
-        layout: {
-            minWidth: 5,
-            minHeight: 19,
-        },
+const DROPLIST_ITEM_0_VARIANT: DroplistItemVariant = {
+    states: {
+        default: Stretch('dropmenuitem-0-default-src'),
+        hovering: Stretch('dropmenuitem-0-hovering-src'),
+        selected: Stretch('dropmenuitem-0-selected-src'),
     },
+    layout: {
+        minWidth: 5,
+        minHeight: 19,
+    },
+};
+
+/** `DroplistItem` variants - `type="droplist_item"`: both styles are `habbo_skin_droplist`'s `droplist_item` layout. */
+const DROPLIST_ITEM_VARIANTS: ThemeVariants<DroplistItemVariant> = {
+    0: DROPLIST_ITEM_0_VARIANT,
+    1: DROPLIST_ITEM_0_VARIANT,
 };
 
 export interface DroplistItemProps extends ThemeProps<DroplistItemVariant> {

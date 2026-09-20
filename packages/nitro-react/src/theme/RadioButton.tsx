@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, Stretch } from './layer';
+import { BackgroundLayer, Composite, CompositePiece, Stretch } from './layer';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 export type RadioButtonVariant = ThemeWithStatesVariant;
@@ -12,8 +12,8 @@ export type RadioButtonVariant = ThemeWithStatesVariant;
 const RADIO_BUTTON_VARIANTS: ThemeVariants<RadioButtonVariant> = {
     0: {
         states: {
-            default: Stretch('radiobutton-src', { x: 0, y: 0, width: 16, height: 16 }),
-            selected: Stretch('radiobutton-src', { x: 16, y: 0, width: 16, height: 16 }),
+            default: Stretch('radiobutton-0-default-src'),
+            selected: Stretch('radiobutton-0-selected-src'),
         },
         layout: {
             width: 16,
@@ -23,8 +23,8 @@ const RADIO_BUTTON_VARIANTS: ThemeVariants<RadioButtonVariant> = {
     },
     1: {
         states: {
-            default: Stretch('radiobutton-src', { x: 32, y: 0, width: 16, height: 16 }),
-            selected: Stretch('radiobutton-src', { x: 48, y: 0, width: 16, height: 16 }),
+            default: Stretch('radiobutton-1-default-src'),
+            selected: Stretch('radiobutton-1-selected-src'),
         },
         layout: {
             width: 16,
@@ -34,8 +34,8 @@ const RADIO_BUTTON_VARIANTS: ThemeVariants<RadioButtonVariant> = {
     },
     2: {
         states: {
-            default: Stretch('radiobutton-src', { x: 64, y: 0, width: 16, height: 16 }),
-            selected: Stretch('radiobutton-src', { x: 16, y: 0, width: 16, height: 16 }),
+            default: Stretch('radiobutton-2-default-src'),
+            selected: Stretch('radiobutton-2-selected-src'),
         },
         layout: {
             width: 16,
@@ -43,10 +43,18 @@ const RADIO_BUTTON_VARIANTS: ThemeVariants<RadioButtonVariant> = {
             padding: 0,
         },
     },
+    /*
+     * `illumina_light_skin_radio_button`: one 11x12 bitmap per state, placed at (0, 2) of an
+     * 11x14 layout with `scale horizontal="fixed" vertical="fixed"`. The wired styles give the
+     * control a 12x16 box (`radiobutton_view` in `wired_style_illumina_xml`), so stretching the
+     * art to fill it - as the 16x16 habbo styles can, their art being the box's size - squashed
+     * the dot into a lopsided blob. Pinned top left at its own size instead, the way Flash
+     * copies a `fixed` region.
+     */
     100: {
         states: {
-            default: Stretch('radiobutton-100-default-src'),
-            selected: Stretch('radiobutton-100-selected-src'),
+            default: Composite([ CompositePiece('radiobutton-100-default-src', 0, 0, undefined, undefined, 11, 14) ]),
+            selected: Composite([ CompositePiece('radiobutton-100-selected-src', 0, 0, undefined, undefined, 11, 14) ]),
         },
         layout: {
             width: 11,

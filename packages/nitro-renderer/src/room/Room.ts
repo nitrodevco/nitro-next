@@ -19,6 +19,7 @@ import {
     IRoomObject,
     IRoomObjectController,
     IRoomObjectEventHandler,
+    IRoomObjectHighLighter,
     IRoomObjectManager,
     IRoomObjectModel,
     IRoomObjectVisualization,
@@ -34,6 +35,7 @@ import {
     RoomEngineObjectEvent,
     RoomGeometryScaleType,
     RoomObjectCategoryEnum,
+    RoomObjectFurnitureActionEvent,
     RoomObjectUserType,
     RoomObjectUserTypeName,
     RoomObjectUserTypeUtils,
@@ -62,6 +64,7 @@ import {
     ObjectAvatarFlatControlUpdateMessage,
     ObjectAvatarGestureUpdateMessage,
     ObjectAvatarGuideStatusUpdateMessage,
+    ObjectAvatarHabbiconUpdateMessage,
     ObjectAvatarMutedUpdateMessage,
     ObjectAvatarOwnMessage,
     ObjectAvatarPetGestureUpdateMessage,
@@ -87,12 +90,12 @@ import {
     RoomObjectUpdateMessage,
     RoomObjectVariableFxStatusRemoveMessage,
     RoomObjectVariableFxStatusUpdateMessage } from './messages';
-import { MovingObjectLogic, RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
+import { FurnitureVisualization, MovingObjectLogic, RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
 import { VariableFxRoomData } from './object/variablefx/VariableFxRoomData';
 import { isVariableFxVisualizationHost } from './object/visualization/variablefx/IVariableFxVisualizationRoomData';
 import { RoomEventHandler } from './RoomEventHandler';
 import { RoomSpriteCanvas } from './RoomSpriteCanvas';
-import { RoomAreaSelectionManager } from './utils';
+import { RoomAreaSelectionManager, RoomObjectHighLighter } from './utils';
 
 export class Room implements IRoom {
     public static ROOM_OBJECT_ID: number = -1;
@@ -126,7 +129,13 @@ export class Room implements IRoom {
     private _stackingHeightMap: IStackingHeightMapReader | undefined = undefined;
     private _canvas: IRoomRenderingCanvas | undefined = undefined;
     private _areaSelection: IRoomAreaSelectionManager;
+    private _objectHighLighter: IRoomObjectHighLighter;
     private _isInitialized: boolean = false;
+    private _isMoveBlocked: boolean = false;
+
+    /** Flash `RoomEngine._clickThroughUsers` and its furni twin: the keys that currently ask for each. */
+    private _clickThroughUsers: Set<string> = new Set();
+    private _clickThroughFurni: Set<string> = new Set();
 
     /**
      * The area hides in force, held as the very messages that applied them. `applyRoomMap`
@@ -145,6 +154,7 @@ export class Room implements IRoom {
         this._eventDispatcher = new EventDispatcher();
         this._eventHandler = new RoomEventHandler(this);
         this._areaSelection = new RoomAreaSelectionManager(this);
+        this._objectHighLighter = new RoomObjectHighLighter(this);
 
         this._eventDispatcher.addEventListener<RoomContentLoadedEvent>(RoomContentLoadedEvent.RCLE_SUCCESS, event => this.onRoomContentLoadedEvent(event));
         this._eventDispatcher.addEventListener<RoomContentLoadedEvent>(RoomContentLoadedEvent.RCLE_FAILURE, event => this.onRoomContentLoadedEvent(event));
@@ -669,6 +679,9 @@ export class Room implements IRoom {
                     visualization.asset = asset;
 
                     if (visualizationData && visualization.initialize(visualizationData)) {
+                        // The placeholder's visualization is thrown away here; a wired look put on it while the furni was still loading moves over.
+                        if ((object.visualization instanceof FurnitureVisualization) && (visualization instanceof FurnitureVisualization)) visualization.filters = object.visualization.filters;
+
                         object.setVisualization(visualization);
 
                         this.assignVariableFxRoomData(visualization, category);
@@ -763,6 +776,56 @@ export class Room implements IRoom {
         for (const category of [ RoomObjectCategoryEnum.Floor, RoomObjectCategoryEnum.Wall ]) {
             for (const object of this.getRoomObjectsForCategory(category)) object.model.setValue(RoomObjectVariableEnum.FurnitureInvisibleLayer, flag ? 1 : 0);
         }
+    }
+
+    /**
+     * Flash `RoomEngine.setClickSettings`. The flags are read where Flash read them, at the top
+     * of `processRoomCanvasMouseEvent` (`RoomEventHandler.handleRoomCanvasMouseEvent` here): a
+     * click-through object never sees the mouse event and never claims its event id, so the next
+     * object under the pointer - other furni, or the floor tile - handles it instead.
+     *
+     * A category that becomes click-through also stops getting its roll-outs, so Flash dropped
+     * the button cursors its objects owned (`removeButtonMouseCursorOwners`). The cursor owners
+     * are kept by the UI here, which gives one up on `RoomObjectFurnitureActionEvent.MOUSE_ARROW`,
+     * so that is what each object of the category sends.
+     */
+    public setClickSettings(key: string, clickThroughUsers: boolean, clickThroughFurni: boolean): void {
+        const wasClickThroughUsers = this.clickThroughUsers;
+        const wasClickThroughFurni = this.clickThroughFurni;
+
+        if (clickThroughUsers) this._clickThroughUsers.add(key);
+        else this._clickThroughUsers.delete(key);
+
+        if (clickThroughFurni) this._clickThroughFurni.add(key);
+        else this._clickThroughFurni.delete(key);
+
+        if (!wasClickThroughUsers && clickThroughUsers) this.removeButtonMouseCursorOwners(RoomObjectCategoryEnum.Unit);
+
+        if (!wasClickThroughFurni && clickThroughFurni) {
+            this.removeButtonMouseCursorOwners(RoomObjectCategoryEnum.Floor);
+            this.removeButtonMouseCursorOwners(RoomObjectCategoryEnum.Wall);
+        }
+    }
+
+    private removeButtonMouseCursorOwners(category: RoomObjectCategoryEnum): void {
+        for (const object of this.getRoomObjectsForCategory(category)) this._eventHandler.handleRoomObjectEvent(new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_ARROW, object));
+    }
+
+    public get clickThroughUsers(): boolean {
+        return this._clickThroughUsers.size > 0;
+    }
+
+    public get clickThroughFurni(): boolean {
+        return this._clickThroughFurni.size > 0;
+    }
+
+    /** Flash `RoomEngine.setMoveBlocked`; its one writer is the area selection, while it is dragging. */
+    public setMoveBlocked(flag: boolean): void {
+        this._isMoveBlocked = flag;
+    }
+
+    public get isMoveBlocked(): boolean {
+        return this._isMoveBlocked;
     }
 
     /** Flash `RoomEngine.isRoomVariableActive`: a room value that is set and above zero. */
@@ -1346,11 +1409,16 @@ export class Room implements IRoom {
             case RoomObjectVariableEnum.FigureExpression:
                 message = new ObjectAvatarExpressionUpdateMessage(value);
                 break;
-            case RoomObjectVariableEnum.IsPlayingGame:
+            // Flash's case is `figure_is_playing_game`, the key the message writes; `is_playing_game` is the room's own
+            case RoomObjectVariableEnum.FigureIsPlayingGame:
                 message = new ObjectAvatarPlayingGameUpdateMessage(value === 1);
                 break;
             case RoomObjectVariableEnum.FigureGuideStatus:
                 message = new ObjectAvatarGuideStatusUpdateMessage(value);
+                break;
+            // Flash `RoomUI.onRoomUseHabbicon`; no packet here plays one yet (see AvatarLogic)
+            case RoomObjectVariableEnum.FigureHabbicon:
+                message = new ObjectAvatarHabbiconUpdateMessage(value);
                 break;
         }
 
@@ -1741,6 +1809,10 @@ export class Room implements IRoom {
 
     public get areaSelection(): IRoomAreaSelectionManager {
         return this._areaSelection;
+    }
+
+    public get objectHighLighter(): IRoomObjectHighLighter {
+        return this._objectHighLighter;
     }
 
     public get isAreaSelectionMode(): boolean {

@@ -4,6 +4,7 @@ export * from './RoomAreaSelectionManager';
 export * from './RoomEnterEffect';
 export * from './RoomFurnitureData';
 export * from './RoomGeometry';
+export * from './RoomObjectHighLighter';
 export * from './RoomRotatingEffect';
 export * from './RoomShakingEffect';
 export * from './SelectedRoomObjectData';

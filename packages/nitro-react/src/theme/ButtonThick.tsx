@@ -6,72 +6,48 @@ import { VariantCascadeProvider } from './cascade';
 import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
-import { makeTextStyleBold, roundedButtonVariant, shinyButtonBoldVariant } from './utils/buttonVariants';
+import { shinyButtonVariant, ThemeProps, ThemeVariants, ThemeWithStatesVariant, windowLayout, wrapTextChildren } from './utils';
 
 export type ButtonThickVariant = ThemeWithStatesVariant;
 
-const BUTTON_THICK_3_VARIANT: ButtonThickVariant = {
-    ...shinyButtonBoldVariant('buttonthick-3', '#000000'),
-    layout: {
-        paddingLeft: 10, paddingTop: 2, paddingRight: 10, paddingBottom: 3, minWidth: 20, minHeight: 22,
-    },
-};
-
 /**
- * `habbo_skin_button_thick` and its black twin, cut the way their templates describe: a 4px
- * edge, a single stretchable column of face, another 4px edge, and the same again vertically.
- * The middle row of the white skin reads
+ * `habbo_skin_button_thick` and its black and white twins, cut the way their templates describe:
+ * a 4px edge, a single stretchable column of face, another 4px edge, and the same again
+ * vertically. The middle row of the default skin reads
  *
  *   #000 #000 #fff #ccc | #fff | #888 #fff #000 #000
  *
  * - two columns of outline, a white highlight and a light bevel, then the white face, then the
  * darker bevel and the outline mirrored back.
  */
-const thickCapsuleVariant = (prefix: string, textColor: string): ThemeWithStatesVariant => ({
+const thickCapsuleVariant = (prefix: string): ThemeWithStatesVariant => ({
     states: {
         default: NineSlice(`${prefix}-default-src`, 4, 4, 4, 4),
         hovering: NineSlice(`${prefix}-hovering-src`, 4, 4, 4, 4),
         pressed: NineSlice(`${prefix}-pressed-src`, 4, 4, 4, 4),
         disabled: NineSlice(`${prefix}-disabled-src`, 4, 4, 4, 4),
     },
-    layout: {
-        paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4, minWidth: 8, minHeight: 23,
-    },
-    textStyle: 'text-style-button-bold',
-    textColor,
 });
 
+/**
+ * `ButtonThick` variants - the `type="button_thick"` rows of `habbo_element_description_xml`,
+ * keyed by their `style`: each the row's skin art plus the window layout it names.
+ */
 const BUTTON_THICK_VARIANTS: ThemeVariants<ButtonThickVariant> = {
-    // habbo_skin - default / white
-    0: thickCapsuleVariant('buttonthick-0', '#000000'),
-    // Habbo_skin black
-    1: thickCapsuleVariant('buttonthick-1', '#FFFFFF'),
-    // ubuntu_skin - default
-    3: {
-        ...BUTTON_THICK_3_VARIANT,
-        textColor: '#000000',
-    },
-    // ubuntu_skin - black
-    4: {
-        ...shinyButtonBoldVariant('buttonthick-4', '#ffffff'),
-        layout: {
-            paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28,
-        },
-    },
-    // ubuntu_skin - default rounded
-    5: {
-        ...makeTextStyleBold(roundedButtonVariant('containerbutton-4', '#ffffff')),
-        layout: {
-            paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6, minWidth: 20, minHeight: 28,
-        },
-    },
-    // ubuntu_skin - green
-    6: {
-        ...BUTTON_THICK_3_VARIANT,
-        tintColor: '#00aa00',
-        textColor: '#FFFFFF',
-    },
+    // habbo_skin_button_thick
+    0: { ...thickCapsuleVariant('buttonthick-0'), ...windowLayout('habbo_window_layout_button_thick') },
+    // habbo_skin_button_thick_black
+    1: { ...thickCapsuleVariant('buttonthick-1'), ...windowLayout('habbo_window_layout_button_thick_black') },
+    // habbo_skin_button_thick_white
+    2: { ...thickCapsuleVariant('buttonthick-2'), ...windowLayout('habbo_window_layout_button_thick') },
+    // habbo_skin_button_shiny_thick
+    3: { ...shinyButtonVariant('buttonthick-3'), ...windowLayout('habbo_window_layout_button_shiny_thick') },
+    // habbo_skin_button_shiny_thick_black
+    4: { ...shinyButtonVariant('buttonthick-4'), ...windowLayout('habbo_window_layout_button_shiny_thick_black') },
+    // "white": the shiny thick art on the shiny thick black layout (white caption, 28px tall)
+    5: { ...shinyButtonVariant('buttonthick-3'), ...windowLayout('habbo_window_layout_button_shiny_thick_black') },
+    // "green": as 5, tinted by the row's `color`
+    6: { ...shinyButtonVariant('buttonthick-3'), ...windowLayout('habbo_window_layout_button_shiny_thick_black'), tintColor: '#00aa00' },
 };
 
 export interface ButtonThickProps extends ThemeProps<ButtonThickVariant> {

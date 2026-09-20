@@ -5,97 +5,44 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, NineSlice } from './layer';
-import { BUTTON_100_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, buttonPlainVariant, ButtonVariant, classicButtonVariant, shinyButtonVariant, ThemeProps, ThemeVariants, wrapTextChildren } from './utils';
+import { BackgroundLayer } from './layer';
+import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, buttonPlainVariant, ButtonVariant, classicButtonVariant, shinyButtonVariant, ThemeProps, ThemeVariants, windowLayout, wrapTextChildren } from './utils';
 
-const BUTTON_3_VARIANT: ButtonVariant = {
-    ...shinyButtonVariant('button-3'),
-    layout: {
-        paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
-        minWidth: 20, minHeight: 22,
-    },
-};
-
-/** `Button` variants - the Flash `style` ids it draws. */
+/**
+ * `Button` variants - the `type="button"` rows of `habbo_element_description_xml`, keyed by
+ * their `style`: each the row's skin art plus the window layout it names (`windowLayout`).
+ */
 const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
-    // habbo_skin - white
-    0: {
-        ...classicButtonVariant('button-0'),
-        layout: {
-            padding: 8,
-        },
-    },
-    // Habbo_skin black
-    1: {
-        ...classicButtonVariant('button-1', '#ffffff'),
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-    },
-    // habbo_skin - white (button_default_white)
-    2: {
-        ...classicButtonVariant('button-2'),
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-    },
-    // ubuntu_skin - white
-    3: BUTTON_3_VARIANT,
-    // ubuntu_skin - shiny art with the black window layout (white caption)
-    5: {
-        ...BUTTON_3_VARIANT, textColor: '#ffffff',
-    },
-    // ubuntu_skin - black
-    4: {
-        ...shinyButtonVariant('button-4', '#ffffff'),
-        layout: {
-            paddingLeft: 10, paddingTop: 5, paddingRight: 10, paddingBottom: 6,
-            minWidth: 20, minHeight: 28,
-        },
-    },
-    // green
-    6: {
-        ...BUTTON_3_VARIANT,
-        tintColor: '#00aa00',
-        textColor: '#ffffff',
-    },
-    // landing view
-    100: BUTTON_100_VARIANT,
-    // window
-    101: {
-        ...BUTTON_100_VARIANT,
-        tintColor: '#bbbbbb',
-    },
-    // plain
-    102: buttonPlainVariant('button-102', false, '#000000'),
-    // unetched
-    103: buttonPlainVariant('button-103', false, '#000000'),
-    // illumina purple window / purple plain / dark recolorable
-    104: BUTTON_104_VARIANT,
-    105: BUTTON_105_VARIANT,
-    106: BUTTON_106_VARIANT,
-    // default
-    200: {
-        states: {
-            default: NineSlice('button-200-default-src', 4, 4, 4, 5),
-        },
-        layout: {
-            paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-            minWidth: 28, minHeight: 28,
-        },
-        textStyle: 'text-style-id-button',
-    },
-    // borderless / CUSTOM
-    300: {
-        ...classicButtonVariant('button-300', '#000000'),
-        layout: {
-            paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 3,
-            minWidth: 20, minHeight: 22,
-        },
-        textStyle: 'text-style-button-shiny-regular',
-    },
+    // habbo_skin_button_default
+    0: { ...classicButtonVariant('button-0'), ...windowLayout('habbo_window_layout_button') },
+    // habbo_skin_button_default_black
+    1: { ...classicButtonVariant('button-1'), ...windowLayout('habbo_window_layout_button_black') },
+    // habbo_skin_button_default_white
+    2: { ...classicButtonVariant('button-2'), ...windowLayout('habbo_window_layout_button') },
+    // habbo_skin_button_shiny_default
+    3: { ...shinyButtonVariant('button-3'), ...windowLayout('habbo_window_layout_button_shiny') },
+    // habbo_skin_button_shiny_black
+    4: { ...shinyButtonVariant('button-4'), ...windowLayout('habbo_window_layout_button_shiny_black') },
+    // "white": the shiny default art on the shiny black layout (white caption, 28px tall)
+    5: { ...shinyButtonVariant('button-3'), ...windowLayout('habbo_window_layout_button_shiny_black') },
+    // "green": as 5, tinted by the row's `color`
+    6: { ...shinyButtonVariant('button-3'), ...windowLayout('habbo_window_layout_button_shiny_black'), tintColor: '#00aa00' },
+    // illumina landing view
+    100: { ...BUTTON_100_VARIANT, ...windowLayout('illumina_light_button') },
+    // illumina window
+    101: { ...BUTTON_100_VARIANT, ...windowLayout('illumina_light_button'), tintColor: '#bbbbbb' },
+    // illumina plain
+    102: { ...BUTTON_102_VARIANT, ...windowLayout('illumina_light_button_plain') },
+    // illumina unetched
+    103: { ...buttonPlainVariant('button-103', false), ...windowLayout('illumina_light_button_plain') },
+    // illumina purple window
+    104: { ...BUTTON_104_VARIANT, ...windowLayout('illumina_purple_button') },
+    // illumina purple plain
+    105: { ...BUTTON_105_VARIANT, ...windowLayout('illumina_purple_button_plain') },
+    // illumina dark recolorable
+    106: { ...BUTTON_106_VARIANT, ...windowLayout('illumina_light_button_plain') },
+    // illumina dark
+    200: { ...BUTTON_200_VARIANT, ...windowLayout('illumina_dark_button') },
 };
 
 export interface ButtonProps extends ThemeProps<ButtonVariant> {

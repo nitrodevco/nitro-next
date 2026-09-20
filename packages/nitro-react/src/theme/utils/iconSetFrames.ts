@@ -1,9 +1,10 @@
 import { SpriteFrame } from './spriteFrame';
 
 /**
- * The `habbo_skin` `icon_set` skin, transcribed 1:1: each `<template name="icon_N">` there is
- * one rect out of the shared `habbo_icons.png` sheet, and a layout's `<icon style="N">`
- * selects it. Numbering is the skin's own, so it's kept as-is rather than renamed.
+ * `habbo_skin_icon_set_xml`, transcribed 1:1: each `<template name="icon_N">` there is one rect
+ * out of the SWF's `habbo_icons_png` (bundled as `public/assets/theme/icon/icon-set.png`), and a
+ * layout's `<icon style="N">` selects it. Numbering is the skin's own, so it's kept as-is rather
+ * than renamed. `scripts/drift/theme_skin.py` diffs the rects and the sheet against the SWF.
  */
 export const ICON_SET_FRAMES: Record<string, SpriteFrame> = {
     0: { x: 0, y: 0, width: 9, height: 10 },
@@ -90,4 +91,8 @@ export const ICON_SET_FRAMES: Record<string, SpriteFrame> = {
     81: { x: 537, y: 0, width: 11, height: 12 },
     82: { x: 617, y: 18, width: 18, height: 18 },
     83: { x: 549, y: 0, width: 12, height: 12 },
+    84: { x: 636, y: 18, width: 15, height: 18 },
+    85: { x: 562, y: 0, width: 11, height: 12 },
+    86: { x: 631, y: 37, width: 17, height: 15 },
+    87: { x: 574, y: 0, width: 12, height: 11 },
 };

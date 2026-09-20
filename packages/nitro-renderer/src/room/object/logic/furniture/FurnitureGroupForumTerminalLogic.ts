@@ -4,12 +4,12 @@ import { FurnitureGuildCustomizedLogic } from './FurnitureGuildCustomizedLogic';
 
 export class FurnitureGroupForumTerminalLogic extends FurnitureGuildCustomizedLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.INERNAL_LINK ]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.INTERNAL_LINK ]);
     }
 
     public override useObject(): void {
         this.handleRoomObjectEvent(
-            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INERNAL_LINK, this.object),
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INTERNAL_LINK, this.object),
         );
 
         super.useObject();

@@ -6,16 +6,30 @@ import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
 import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
-import { BUTTON_100_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, buttonPlainVariant, classicButtonVariant, roundedButtonVariant, shinyButtonVariant, withoutLayout } from './utils/buttonVariants';
+import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, buttonPlainVariant, classicButtonVariant, roundedButtonVariant, shinyButtonVariant } from './utils/buttonVariants';
 
 export type ContainerButtonVariant = ThemeVariant | ThemeWithStatesVariant;
 
-/** illumina `button_multi_*` - a segmented button's left/right/middle piece (no outer edge on the joined side). */
+/**
+ * illumina `button_multi_*` - a segmented button's left/right/middle piece (no outer edge on the
+ * joined side).
+ *
+ * The skin's `button_etch_*` entities are `colorize="false"`: the neutral shadow that rounds the
+ * piece off at the bottom is never tinted by the window's colour, only the `button_*` face is
+ * (`NewSourceTypeOption.updateVisuals` sets `_container.color`). They are cut into their own
+ * `-plain` sheet of the same size and metrics and drawn as the untinted overlay - baked into the
+ * tinted face they took the source type's colour and read as a coloured square over the curve.
+ */
 const multiVariant = (style: string, left: number, right: number): ContainerButtonVariant => ({
     states: {
         default: NineSlice(`containerbutton-${style}-default-src`, left, 4, right, 4),
         hovering: NineSlice(`containerbutton-${style}-hovering-src`, left, 4, right, 4),
         pressed: NineSlice(`containerbutton-${style}-pressed-src`, left, 4, right, 4),
+    },
+    overlays: {
+        default: NineSlice(`containerbutton-${style}-default-plain-src`, left, 4, right, 4),
+        hovering: NineSlice(`containerbutton-${style}-hovering-plain-src`, left, 4, right, 4),
+        pressed: NineSlice(`containerbutton-${style}-pressed-plain-src`, left, 4, right, 4),
     },
     textStyle: 'text-style-il-button',
 });
@@ -42,19 +56,21 @@ const CONTAINER_BUTTON_VARIANTS: ThemeVariants<ContainerButtonVariant> = {
     // ubuntu_skin shiny default ("default thin")
     7: shinyButtonVariant('button-3'),
     // illumina landing view / window
-    100: withoutLayout(BUTTON_100_VARIANT),
-    101: { ...withoutLayout(BUTTON_100_VARIANT), tintColor: '#bbbbbb' },
+    100: BUTTON_100_VARIANT,
+    101: { ...BUTTON_100_VARIANT, tintColor: '#bbbbbb' },
     // illumina plain / unetched
-    102: withoutLayout(buttonPlainVariant('button-102', false)),
-    103: withoutLayout(buttonPlainVariant('button-103', false)),
+    102: BUTTON_102_VARIANT,
+    103: buttonPlainVariant('button-103', false),
     // illumina multi-left / multi-right / multi-middle
     104: multiVariant('104', 4, 0),
     105: multiVariant('105', 0, 4),
     106: multiVariant('106', 0, 0),
     // illumina purple window / purple plain / dark recolorable
-    107: withoutLayout(BUTTON_104_VARIANT),
-    108: withoutLayout(BUTTON_105_VARIANT),
-    109: withoutLayout(BUTTON_106_VARIANT),
+    107: BUTTON_104_VARIANT,
+    108: BUTTON_105_VARIANT,
+    109: BUTTON_106_VARIANT,
+    // illumina dark - the same art as Button 200
+    200: BUTTON_200_VARIANT,
 };
 
 export interface ContainerButtonProps extends ThemeProps<ContainerButtonVariant> {

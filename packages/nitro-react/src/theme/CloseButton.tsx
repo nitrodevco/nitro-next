@@ -9,40 +9,52 @@ import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 
 export type CloseButtonVariant = ThemeWithStatesVariant;
 
+const LEADERBOARD_CLOSE_BUTTON: CloseButtonVariant = {
+    states: {
+        default: Stretch('closebutton-10000-default-src'),
+        hovering: Stretch('closebutton-10000-hovering-src'),
+        pressed: Stretch('closebutton-10000-pressed-src'),
+    },
+};
+
+/** `CloseButton` variants - the `type="closebutton"` rows of `habbo_element_description_xml`, keyed by their `style`. */
 const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = {
     0: {
         states: {
-            default: Stretch('closebutton-src', { x: 114, y: 0, width: 15, height: 15 }),
-            hovering: Stretch('closebutton-src', { x: 129, y: 0, width: 15, height: 15 }),
-            pressed: Stretch('closebutton-src', { x: 144, y: 0, width: 15, height: 15 }),
+            default: Stretch('closebutton-0-default-src'),
+            hovering: Stretch('closebutton-0-hovering-src'),
+            pressed: Stretch('closebutton-0-pressed-src'),
         },
     },
+    // `habbo_skin_button_close_black` draws its default, active and pressed states from one rect.
     1: {
         states: {
-            default: Stretch('closebutton-src', { x: 159, y: 0, width: 15, height: 15 }),
-            hovering: Stretch('closebutton-src', { x: 159, y: 0, width: 15, height: 15 }),
-            pressed: Stretch('closebutton-src', { x: 159, y: 0, width: 15, height: 15 }),
+            default: Stretch('closebutton-1-default-src'),
+            hovering: Stretch('closebutton-1-default-src'),
+            pressed: Stretch('closebutton-1-default-src'),
         },
     },
+    // ...as does `habbo_skin_button_close_white`.
     2: {
         states: {
-            default: Stretch('closebutton-src', { x: 174, y: 0, width: 15, height: 15 }),
-            hovering: Stretch('closebutton-src', { x: 174, y: 0, width: 15, height: 15 }),
-            pressed: Stretch('closebutton-src', { x: 174, y: 0, width: 15, height: 15 }),
+            default: Stretch('closebutton-2-default-src'),
+            hovering: Stretch('closebutton-2-default-src'),
+            pressed: Stretch('closebutton-2-default-src'),
         },
     },
     3: {
         states: {
-            default: Stretch('closebutton-src', { x: 0, y: 0, width: 19, height: 20 }),
-            hovering: Stretch('closebutton-src', { x: 19, y: 0, width: 19, height: 20 }),
-            pressed: Stretch('closebutton-src', { x: 38, y: 0, width: 19, height: 20 }),
+            default: Stretch('closebutton-3-default-src'),
+            hovering: Stretch('closebutton-3-hovering-src'),
+            pressed: Stretch('closebutton-3-pressed-src'),
         },
     },
+    // `habbo_skin_button_help_3` - the ubuntu frames' "?" button
     4: {
         states: {
-            default: Stretch('closebutton-src', { x: 57, y: 0, width: 19, height: 20 }),
-            hovering: Stretch('closebutton-src', { x: 76, y: 0, width: 19, height: 20 }),
-            pressed: Stretch('closebutton-src', { x: 95, y: 0, width: 19, height: 20 }),
+            default: Stretch('closebutton-4-default-src'),
+            hovering: Stretch('closebutton-4-hovering-src'),
+            pressed: Stretch('closebutton-4-pressed-src'),
         },
     },
     // habbo_skin "menu" (button_menu) - the hamburger-style frame button
@@ -53,12 +65,12 @@ const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = {
             pressed: Stretch('closebutton-5-pressed-src'),
         },
     },
-    // Separate, smaller texture - the whole texture is the frame, no hover/press states.
+    // illumina frame "close" button
     100: {
         states: {
-            default: Stretch('closebutton-100-src'),
-            hovering: Stretch('closebutton-100-src'),
-            pressed: Stretch('closebutton-100-src'),
+            default: Stretch('closebutton-100-default-src'),
+            hovering: Stretch('closebutton-100-hovering-src'),
+            pressed: Stretch('closebutton-100-pressed-src'),
         },
     },
     // illumina frame "menu" button
@@ -69,6 +81,14 @@ const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = {
             pressed: Stretch('closebutton-101-pressed-src'),
         },
     },
+    // illumina frame "minimize" button
+    102: {
+        states: {
+            default: Stretch('closebutton-102-default-src'),
+            hovering: Stretch('closebutton-102-hovering-src'),
+            pressed: Stretch('closebutton-102-pressed-src'),
+        },
+    },
     // illumina purple frame close
     103: {
         states: {
@@ -77,14 +97,15 @@ const CLOSE_BUTTON_VARIANTS: ThemeVariants<CloseButtonVariant> = {
             pressed: Stretch('closebutton-103-pressed-src'),
         },
     },
-    // leaderboard frames (10000-10007 all share this close button)
-    10000: {
-        states: {
-            default: Stretch('closebutton-10000-default-src'),
-            hovering: Stretch('closebutton-10000-hovering-src'),
-            pressed: Stretch('closebutton-10000-pressed-src'),
-        },
-    },
+    // leaderboard frames: 10000-10007 are one skin (`habbo_skin_button_close_leaderboard`)
+    10000: LEADERBOARD_CLOSE_BUTTON,
+    10001: LEADERBOARD_CLOSE_BUTTON,
+    10002: LEADERBOARD_CLOSE_BUTTON,
+    10003: LEADERBOARD_CLOSE_BUTTON,
+    10004: LEADERBOARD_CLOSE_BUTTON,
+    10005: LEADERBOARD_CLOSE_BUTTON,
+    10006: LEADERBOARD_CLOSE_BUTTON,
+    10007: LEADERBOARD_CLOSE_BUTTON,
 };
 
 export type CloseButtonProps = ThemeProps<CloseButtonVariant>;

@@ -14,7 +14,7 @@ export interface NitroCurrencyIconProps {
 }
 
 /**
- * See NitroIcon.tsx for why `layout` always defaults to `{}` here. `showLoadingPlaceholder`
+ * See Icon.tsx for why `layout` always defaults to `{}` here. `showLoadingPlaceholder`
  * mirrors DOM's theme/Image.tsx (which theme/NitroCurrencyIcon.tsx renders through): a
  * `loading.icon.url` placeholder shown while the real icon loads, and - since a Pixi texture
  * has no distinct "errored" state the way a DOM `<img onError>` does - left showing

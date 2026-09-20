@@ -21,6 +21,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
     private static VARIABLE_FX_STACK_LAYER: number = 0;
     private static VARIABLE_FX_STACK_GAP: number = 4;
     private static VARIABLE_FX_MANAGER_UPDATE_ID_UNSET: number = -2;
+    private static NO_FILTERS: Filter[] = [];
 
     protected _data: FurnitureVisualizationData | undefined = undefined;
     protected _type: string | undefined = undefined;
@@ -51,7 +52,14 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
     protected _spriteXOffsets: number[] = [];
     protected _spriteYOffsets: number[] = [];
     protected _spriteZOffsets: number[] = [];
-    protected _filters: Filter[] = [];
+
+    /**
+     * Flash `_filters`: filters put on the whole furni from outside (the wired UI's looks, through
+     * `RoomObjectHighLighter`). They belong to the object rather than to a direction or scale, so
+     * unlike the per-layer caches above they outlive `resetSpriteData`.
+     */
+    private _filters: Filter[] = FurnitureVisualization.NO_FILTERS;
+    private _needsFilterUpdate: boolean = false;
 
     private _animationNumber: number = 0;
     private _lookThrough: boolean = false;
@@ -87,6 +95,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
 
         this._data = undefined;
         this._variableFxRoomData = undefined;
+        this._filters = FurnitureVisualization.NO_FILTERS;
         this.resetSpriteData();
     }
 
@@ -111,7 +120,6 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
         this._spriteXOffsets = [];
         this._spriteYOffsets = [];
         this._spriteZOffsets = [];
-        this._filters = [];
     }
 
     protected override reset(): void {
@@ -154,6 +162,11 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
         if (this._needsLookThroughUpdate) {
             updateSprites = true;
             this._needsLookThroughUpdate = false;
+        }
+
+        if (this._needsFilterUpdate) {
+            updateSprites = true;
+            this._needsFilterUpdate = false;
         }
 
         let animation = 0;
@@ -332,11 +345,24 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
                 sprite.posture = assetData.source ? this.getPostureForAsset(scale, assetData.source) : undefined;
                 sprite.clickHandling = this._clickHandling;
 
-                if (sprite.blendMode !== 'add') sprite.filters = this._filters;
+                this.updateSpriteFilters(sprite);
             } else {
                 this.resetSprite(sprite);
             }
         } else if (sprite) this.resetSprite(sprite);
+    }
+
+    /**
+     * Flash `updateSpriteFilters`: every layer carries the furni's filters, except the additive
+     * ones (lights, glows), which are never filtered. Flash also appended a layer's own filters
+     * (`getSpriteFilters`); the one visualization that has any, the floating icon of the wired
+     * chests, is not ported, so there is nothing to append. `RoomObjectSprite.filters` counts
+     * every write as a change, so it is only written when the list really differs.
+     */
+    private updateSpriteFilters(sprite: IRoomObjectSprite): void {
+        const filters = (sprite.blendMode === 'add') ? FurnitureVisualization.NO_FILTERS : this._filters;
+
+        if (sprite.filters !== filters) sprite.filters = filters;
     }
 
     protected getLibraryAssetNameForSprite(asset: IGraphicAsset, sprite: IRoomObjectSprite): string | undefined {
@@ -710,6 +736,19 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
 
         this._lookThrough = flag;
         this._needsLookThroughUpdate = true;
+    }
+
+    /**
+     * Flash `filters`: the list is replaced, never edited in place - the sprites hold the array
+     * that was set, and a new array is what tells them it changed.
+     */
+    public get filters(): Filter[] {
+        return this._filters;
+    }
+
+    public set filters(filters: Filter[]) {
+        this._filters = (filters && filters.length) ? filters : FurnitureVisualization.NO_FILTERS;
+        this._needsFilterUpdate = true;
     }
 
     protected get direction(): number {

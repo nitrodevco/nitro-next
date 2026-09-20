@@ -1,6 +1,10 @@
 import { VariantCascadeMap } from '../cascade';
 
 export const VARIANT_CASCADE_CONFIG: Partial<Record<string, Partial<Record<string, VariantCascadeMap>>>> = {
+    // `bubble_7_xml` carries its own pointer skins (`habbo_skin_bubble_pointer_*_7_xml`).
+    bubble: {
+        7: { bubblePointerLeft: '7', bubblePointerRight: '7', bubblePointerUp: '7', bubblePointerDown: '7' },
+    },
     frame: {
         0: { header: '0', contentArea: '0' },
         1: { header: '1' },
@@ -9,10 +13,18 @@ export const VARIANT_CASCADE_CONFIG: Partial<Record<string, Partial<Record<strin
         4: { header: '3', tabContext: '3', tabContent: '3', scaler: '3' },
         7: { header: '7', tabContext: '3', tabContent: '3', scaler: '3' },
         100: { header: '100' },
+        101: { header: '101' },
         102: { header: '100' },
         103: { header: '103' },
         200: { header: '200' },
         10000: { header: '10000' },
+        10001: { header: '10001' },
+        10002: { header: '10002' },
+        10003: { header: '10003' },
+        10004: { header: '10004' },
+        10005: { header: '10005' },
+        10006: { header: '10006' },
+        10007: { header: '10007' },
     },
     header: {
         0: { closeButton: '0' },
@@ -22,9 +34,18 @@ export const VARIANT_CASCADE_CONFIG: Partial<Record<string, Partial<Record<strin
         4: { closeButton: '0' },
         7: { closeButton: '3' },
         100: { closeButton: '100' },
+        101: { closeButton: '100' },
         103: { closeButton: '103' },
         200: { closeButton: '100' },
+        // `habbo_window_layout_header_leaderboard` names close button 10000 for every leaderboard style
         10000: { closeButton: '10000' },
+        10001: { closeButton: '10000' },
+        10002: { closeButton: '10000' },
+        10003: { closeButton: '10000' },
+        10004: { closeButton: '10000' },
+        10005: { closeButton: '10000' },
+        10006: { closeButton: '10000' },
+        10007: { closeButton: '10000' },
     },
     tabContext: {
         0: {},

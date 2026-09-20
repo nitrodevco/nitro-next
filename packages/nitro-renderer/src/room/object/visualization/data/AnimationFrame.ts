@@ -1,8 +1,14 @@
-﻿export class AnimationFrame {
+/**
+ * One frame of a furniture animation layer, pooled. Ports
+ * `com.sulake.habbo.room.object.visualization.data.AnimationFrame`; its static constants are
+ * checked by `scripts/drift/constants.py` (Flash's obfuscated `§_-a2r§` is `SEQUENCE_NOT_DEFINED`,
+ * `§_-J2J§` is `POOL`).
+ */
+export class AnimationFrame {
     public static FRAME_REPEAT_FOREVER: number = -1;
     public static SEQUENCE_NOT_DEFINED: number = -1;
 
-    private static POOL_SIZE_LIMIT: number = 3000;
+    private static POOL_SIZE_LIMIT: number = 6000;
     private static POOL: AnimationFrame[] = [];
 
     private _id: number = -1;

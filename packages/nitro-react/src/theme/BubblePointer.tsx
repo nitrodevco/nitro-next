@@ -21,12 +21,13 @@ const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
         cascadeKey: 'bubblePointerLeft',
         variants: {
             0: {
-                layer: Stretch('bubblepointerleft-src', { x: 11, y: 0, width: 8, height: 13 }),
+                layer: Stretch('bubblepointerleft-0-default-src'),
                 layout: { marginRight: -2 },
             },
+            // `bubble_7_xml` puts every pointer 2px outside the window, over the skin's 6px transparent margin.
             7: {
-                layer: Stretch('bubblepointerleft-src', { x: 0, y: 0, width: 11, height: 18 }),
-                layout: { marginRight: -2 },
+                layer: Stretch('bubblepointerleft-7-default-src'),
+                layout: { marginRight: -9 },
             },
         },
     },
@@ -34,12 +35,12 @@ const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
         cascadeKey: 'bubblePointerRight',
         variants: {
             0: {
-                layer: Stretch('bubblepointerright-src', { x: 11, y: 0, width: 8, height: 13 }),
+                layer: Stretch('bubblepointerright-0-default-src'),
                 layout: { marginLeft: -2 },
             },
             7: {
-                layer: Stretch('bubblepointerright-src', { x: 0, y: 0, width: 11, height: 18 }),
-                layout: { marginLeft: -2 },
+                layer: Stretch('bubblepointerright-7-default-src'),
+                layout: { marginLeft: -9 },
             },
         },
     },
@@ -47,12 +48,12 @@ const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
         cascadeKey: 'bubblePointerUp',
         variants: {
             0: {
-                layer: Stretch('bubblepointerup-src', { x: 16, y: 0, width: 13, height: 9 }),
+                layer: Stretch('bubblepointerup-0-default-src'),
                 layout: { marginBottom: -3 },
             },
             7: {
-                layer: Stretch('bubblepointerup-src', { x: 0, y: 0, width: 16, height: 10 }),
-                layout: { marginBottom: -3 },
+                layer: Stretch('bubblepointerup-7-default-src'),
+                layout: { marginBottom: -8 },
             },
         },
     },
@@ -60,12 +61,12 @@ const DIRECTION_CONFIG: Record<Direction, DirectionConfig> = {
         cascadeKey: 'bubblePointerDown',
         variants: {
             0: {
-                layer: Stretch('bubblepointerdown-src', { x: 16, y: 0, width: 13, height: 9 }),
+                layer: Stretch('bubblepointerdown-0-default-src'),
                 layout: { marginTop: -3 },
             },
             7: {
-                layer: Stretch('bubblepointerdown-src', { x: 0, y: 0, width: 16, height: 11 }),
-                layout: { marginTop: -3 },
+                layer: Stretch('bubblepointerdown-7-default-src'),
+                layout: { marginTop: -9 },
             },
         },
     },

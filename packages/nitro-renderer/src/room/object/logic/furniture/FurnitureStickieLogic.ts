@@ -3,8 +3,17 @@ import { IAssetData, IRoomObjectUpdateMessage, RoomObjectFurnitureActionEvent, R
 import { ObjectItemDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * A post-it: opens the stickie widget on double click and tints itself from its item data.
+ * Ports `FurnitureStickieLogic`.
+ */
 export class FurnitureStickieLogic extends FurnitureLogic {
-    private static STICKIE_COLORS: string[] = [ '9CCEFF', 'FF9CFF', '9CFF9C', 'FFFF33' ];
+    /**
+     * The paper colours `FurnitureStickieLogic.setColorIndexFromItemData` knows, in order: the item
+     * data's colour at index `n` is `furniture_color` `n + 1`, anything else is colour 4 (yellow).
+     * Checked against Flash by `scripts/drift/constants.py`.
+     */
+    public static readonly STICKIE_COLORS: readonly string[] = [ '9CCEFF', 'FF9CFF', '9CFF9C', 'FFFF33', 'FFFFFF', 'FF9C9C', 'FFCC66', '9CFFFF' ];
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [
@@ -38,6 +47,7 @@ export class FurnitureStickieLogic extends FurnitureLogic {
         );
     }
 
+    /** `FurnitureStickieLogic.setColorIndexFromItemData`. */
     protected updateColor(): void {
         const furnitureData = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureData);
 

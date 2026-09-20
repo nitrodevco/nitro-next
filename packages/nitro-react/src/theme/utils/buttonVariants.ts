@@ -1,5 +1,5 @@
 import { Composite, CompositeLayerPieceProps, CompositePiece, NineSlice } from '../layer';
-import { ThemeBase, ThemeWithStatesVariant } from '.';
+import { ThemeWithStatesVariant } from '.';
 
 export type ButtonVariant = ThemeWithStatesVariant;
 
@@ -72,10 +72,6 @@ export const shinyButtonVariant = (prefix: string, textColor?: string): ThemeWit
     textColor,
 });
 
-export const shinyButtonBoldVariant = (prefix: string, textColor?: string): ThemeWithStatesVariant => ({
-    ...makeTextStyleBold(shinyButtonVariant(prefix, textColor)),
-});
-
 export const roundedButtonVariant = (prefix: string, textColor?: string): ThemeWithStatesVariant => ({
     states: {
         default: NineSlice(`${prefix}-default-src`, 6, 6, 6, 7),
@@ -94,26 +90,34 @@ export const buttonPlainVariant = (prefix: string, hasHover: boolean, textColor?
         pressed: NineSlice(`${prefix}-pressed-src`, 6, 8, 4, 8),
     },
     overlays: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
-    layout: {
-        paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-        minWidth: 28, minHeight: 28,
-    },
     textStyle: 'text-style-il-button',
     textColor,
 });
 
-export const makeTextStyleBold = <T extends ThemeBase>(variant: T): T => {
-    let textStyle = variant.textStyle as string;
+/**
+ * `illumina_light_skin_button_plain` (button / container_button style 102). Its face is the
+ * 6/8/4/8 nine-slice; over it, untinted and at their own size, the two `*_curve` decorations the
+ * layout centres vertically and the three `button_etching_*` pieces the layout pins to the bottom
+ * edge. The etch is `colorize="false"` - a white line at alpha 196 that softens the lower corners
+ * - and flattening it into the sheet gave every stepper and dialog button a hard white rim.
+ * The pressed template maps the curves to 1x1 transparent regions, as Flash does.
+ */
+const illuminaPlainButtonOverlay = (state: 'default' | 'pressed') => Composite([
+    CompositePiece(`button-102-${state}-button-center-left-curve-src`, undefined, 1, undefined, undefined, 3, 5, 'center'),
+    CompositePiece(`button-102-${state}-button-center-right-curve-src`, undefined, undefined, 1, undefined, 3, 5, 'center'),
+    CompositePiece(`button-102-${state}-button-etching-left-src`, undefined, 0, undefined, 0, 6, 5),
+    CompositePiece(`button-102-${state}-button-etching-center-src`, undefined, 6, 4, 0, undefined, 5),
+    CompositePiece(`button-102-${state}-button-etching-right-src`, undefined, undefined, 0, 0, 4, 5),
+]);
 
-    if (textStyle?.length) {
-        if (textStyle.endsWith('-regular')) textStyle.replace('-regular', '-bold');
-        else textStyle = `${textStyle}-bold`;
-    }
-
-    return { ...variant, textStyle };
+export const BUTTON_102_VARIANT: ButtonVariant = {
+    states: {
+        default: NineSlice('button-102-default-src', 6, 8, 4, 8),
+        pressed: NineSlice('button-102-pressed-src', 6, 8, 4, 8),
+    },
+    overlays: { default: illuminaPlainButtonOverlay('default'), pressed: illuminaPlainButtonOverlay('pressed') },
+    textStyle: 'text-style-il-button',
 };
-
-export const withoutLayout = <T extends ThemeBase>({ layout: _layout, ...variant }: T): T => ({ ...variant }) as T;
 
 export const BUTTON_100_VARIANT: ButtonVariant = {
     // The glow is the (tinted) state layer; the face and curves are the (untinted) overlay.
@@ -123,25 +127,37 @@ export const BUTTON_100_VARIANT: ButtonVariant = {
         pressed: BUTTON_100_GLOW,
     },
     overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
-    layout: {
-        paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
-        minWidth: 48, minHeight: 48,
-    },
     textStyle: 'text-style-il-button',
 };
 
+/**
+ * `illumina_purple_skin_button` - the same shape as the light button (style 100): a colorizing
+ * 19/19/19/19 glow with the face and its side curves inset 11px inside it, all of them
+ * `colorize="false"`. Those are the `-plain` sheet, drawn untinted over the tinted glow.
+ */
 export const BUTTON_104_VARIANT: ButtonVariant = {
     states: {
         default: NineSlice('button-104-default-src', 19, 19, 19, 19),
         hovering: NineSlice('button-104-hovering-src', 19, 19, 19, 19),
         pressed: NineSlice('button-104-pressed-src', 19, 19, 19, 19),
     },
-    layout: {
-        paddingLeft: 24, paddingTop: 14, paddingRight: 24, paddingBottom: 14,
-        minWidth: 48, minHeight: 48,
+    overlays: {
+        default: NineSlice('button-104-default-plain-src', 19, 19, 19, 19),
+        hovering: NineSlice('button-104-hovering-plain-src', 19, 19, 19, 19),
+        pressed: NineSlice('button-104-pressed-plain-src', 19, 19, 19, 19),
     },
-    textStyle: 'text-style-il-button', textColor: '#ffffff',
+    textStyle: 'text-style-il-button-white',
 };
 
-export const BUTTON_105_VARIANT = buttonPlainVariant('button-105', true);
+/** `illumina_purple_skin_button_plain`: every entity is `colorize="false"`, so nothing tints it. */
+export const BUTTON_105_VARIANT: ButtonVariant = { ...buttonPlainVariant('button-105', true), colorize: false };
 export const BUTTON_106_VARIANT = buttonPlainVariant('button-106', true);
+
+/** `illumina_dark_skin_button`: the skin defines only its default state, and never colorizes. */
+export const BUTTON_200_VARIANT: ButtonVariant = {
+    states: {
+        default: NineSlice('button-200-default-src', 4, 4, 4, 5),
+    },
+    colorize: false,
+    textStyle: 'text-style-id-button',
+};

@@ -1,43 +1,8 @@
 @import 'tailwindcss';
 @source "**/*.{ts,tsx,css}";
-@source inline("grid-cols-{1..12}");
 
 @import './theme/font/fonts.css';
 @import './base.css';
 
 @theme static {
-    /* Typography */
-    --font-sans: 'Ubuntu', system-ui, sans-serif;
-    --font-size-base: 0.875rem;
-
-    /* Sizing */
-    --spacing-toolbar-h: 54px;
-    --spacing-card-header-h: 32px;
-    --spacing-nav-w: 420px;
-    --spacing-nav-h: 440px;
-    --spacing-inv-w: 528px;
-    --spacing-inv-h: 320px;
-
-    /* Keyframes */
-    --animate-rotating: rotating 1s linear infinite;
-
-    --toolbar-bg: rgba(46, 45, 44, 0.76);
-    --toolbar-border: rgba(0, 0, 0, 0.3);
-    --toolbar-shadow-top: rgba(83, 82, 78, 0.76);
-    --toolbar-shadow-down: rgba(73, 72, 69, 0.76);
-    --toolbar-icons-spacing: 3.75;
-    --toolbar-menu-image: url('./assets/flash/toolbar/menu_bg.png');
-
-    --nitro-infostand-width: 190px;
-    --nitro-infostand-motto-height: 25px;
-
-    @keyframes rotating {
-        from {
-            transform: rotate(0);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-    }
 }

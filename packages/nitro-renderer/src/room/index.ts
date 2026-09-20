@@ -242,6 +242,7 @@ export * from './utils/RoomAreaSelectionManager';
 export * from './utils/RoomEnterEffect';
 export * from './utils/RoomFurnitureData';
 export * from './utils/RoomGeometry';
+export * from './utils/RoomObjectHighLighter';
 export * from './utils/RoomRotatingEffect';
 export * from './utils/RoomShakingEffect';
 export * from './utils/SelectedRoomObjectData';

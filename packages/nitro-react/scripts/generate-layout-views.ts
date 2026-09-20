@@ -1,7 +1,12 @@
 /**
  * Turns the Flash client's window layout XMLs (`scripts/binaryData/*_xml$*.bin`, one `<layout>`
  * root each) into React view components built from the theme components in `src/theme`, one
- * file per layout under `src/views/layouts/`, plus a barrel `index.ts`.
+ * file per layout under `scripts/layouts/`, plus `layoutRegistry.ts` and `layoutAssets.ts`.
+ *
+ * The output is reference material, not app code: a view under `src/views` is written by hand
+ * from the layout it ports (see AGENTS.md, "Widget views from Flash layouts"). The whole output
+ * folder is rewritten on every run, so nothing there survives a hand edit - only the layout
+ * bitmaps a hand-written view names are protected (`protectHandWrittenImages`).
  *
  * Every XML element tag maps to the theme component of the same role (`frame` -> `Frame`,
  * `border` -> `Border`, `button` -> `Button`, `text` -> `ThemeText`, ...), its `style` attribute
@@ -10,7 +15,12 @@
  * height` + `<scale>` anchoring becomes an absolute `layout`. Elements the client filled at
  * runtime (`widget`) become `WidgetSlot` placeholders; interactive elements get an `on<Name>`
  * callback prop; text inputs get local state. Bitmaps referenced by `asset_uri`/
- * `bitmap_asset_name` are copied out of `scripts/images` into `public/assets/images/layouts/`.
+ * `bitmap_asset_name` are copied out of `scripts/images` into `public/assets/<component>/`, the
+ * component being the client library/package the layout that names the bitmap belongs to
+ * (`ASSET_FOLDERS`); a bitmap two components name goes to `public/assets/shared/`. An asset name
+ * is not unique across the client's libraries, so which file a name means is decided - never
+ * guessed - by `resolveImage`/`pickImage`, and `public/assets/layout-images.json` records the
+ * source file of every bitmap written.
  *
  *   yarn workspace @nitrodevco/nitro-react generate-layout-views
  */
@@ -23,10 +33,65 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const XML_DIR = join(__dirname, 'binaryData');
 const IMAGE_DIR = join(__dirname, 'images');
-const OUT_DIR = join(__dirname, '../src/views/layouts');
-/** Hand-written views live here, and they use `layoutImage()` too - see `protectHandWrittenImages`. */
+/**
+ * The converted layouts, beside the XML they come from. They are read while a view is written
+ * by hand, never imported by the app, so they stay out of `src` (and out of the typecheck).
+ * Their emitted imports still spell `#base/views/layouts/...`, which is where a layout would be
+ * if one were ever moved into the app.
+ */
+const OUT_DIR = join(__dirname, 'layouts');
+/** Hand-written views live here, and they use `LayoutImage()` too - see `protectHandWrittenImages`. */
 const HAND_WRITTEN_DIR = join(__dirname, '../src');
-const IMAGE_OUT_DIR = join(__dirname, '../public/assets/images/layouts');
+/** Layout bitmaps land under `public/assets/<component>/` - one folder per client component, beside the theme's own. */
+const IMAGE_OUT_DIR = join(__dirname, '../public/assets');
+/** Which bitmaps under `IMAGE_OUT_DIR` this script owns, by `<component>/<file>` - the rest were hand-placed and are never pruned. */
+const IMAGE_MANIFEST = join(IMAGE_OUT_DIR, 'layout-images.json');
+
+/**
+ * The component folder a layout's bitmaps are filed under, by the head of the layout's own output
+ * folder (`layoutFolder`: the client library that embeds it, then its driving class' package).
+ * Kebab-case, one per client component, and the client's own name for it: `roomui/widget/infostand`
+ * -> `room-ui`, `userdefinedroomevents` -> `wired` (the client's name for the same feature in every
+ * text key and in `views/wired-*`). `navigator` and `newnavigator` are one navigator, and the
+ * `window/utils/*` layouts (habbopedia, floor plan editor, profiler) belong to the same
+ * `com.sulake.habbo.window` library as `windowmanager`.
+ */
+const ASSET_FOLDERS: Record<string, string> = {
+    avatareditor: 'avatar-editor',
+    catalog: 'catalog',
+    communicationdemo: 'communication-demo',
+    discord: 'discord',
+    friendbar: 'friend-bar',
+    friendlist: 'friend-list',
+    games: 'games',
+    groups: 'groups',
+    help: 'help',
+    inventory: 'inventory',
+    messenger: 'messenger',
+    moderation: 'moderation',
+    navigator: 'navigator',
+    newnavigator: 'navigator',
+    notifications: 'notifications',
+    questengine: 'quest-engine',
+    roomui: 'room-ui',
+    toolbar: 'toolbar',
+    userdefinedroomevents: 'wired',
+    window: 'window-manager',
+    windowmanager: 'window-manager',
+};
+
+/** Bitmaps two components name have no owner - one copy, here, referenced by both. */
+const SHARED_FOLDER = 'shared';
+
+/**
+ * Where a layout with no library and no driving class (`unassigned`) would file its art. None of
+ * the six does today - they are the feed, list-tester, room-settings and raid-protection layouts,
+ * and not one names a bitmap - so this is a fallback, not a folder: the window manager is where
+ * a layout nothing embeds is built from.
+ */
+const UNASSIGNED_FOLDER = 'window-manager';
+
+const assetFolder = (layoutFolder: string): string => ASSET_FOLDERS[layoutFolder.split('/')[0]] ?? UNASSIGNED_FOLDER;
 const TEXT_STYLES_FILE = join(__dirname, '../src/theme/utils/textStyles.ts');
 
 // ---------------------------------------------------------------------------------------------
@@ -231,51 +296,154 @@ const camel = (value: string): string => {
 };
 
 // ---------------------------------------------------------------------------------------------
-// Text style lookup - the XML's `text_style` variable is the truffle `habboKey`; the theme
+// Text style lookup - the XML's `text_style` variable is the client's own style name (`habboKey`); the theme
 // keys those by `TextStyleKey`, so read that table straight out of textStyles.ts.
 // ---------------------------------------------------------------------------------------------
 
 const TEXT_STYLE_BY_HABBO_KEY: Record<string, string> = {};
 
-for (const match of readFileSync(TEXT_STYLES_FILE, 'utf8').matchAll(/'(text-style-[\w-]+)':\s*\{[^}]*habboKey:\s*'(\w+)'/g)) {
-    TEXT_STYLE_BY_HABBO_KEY[match[2]] ??= match[1];
+// `'text-style-u-small': habboTextStyle('u_small')`, or the older spelling that wrote the format
+// out with a `habboKey:` field. An entry the regex misses costs every text that uses that style
+// its `textStyle` prop, silently - `resolveTextStyle` has no other source.
+for (const match of readFileSync(TEXT_STYLES_FILE, 'utf8').matchAll(/'(text-style-[\w-]+)':\s*(?:habboTextStyle\('(\w+)'\)|\{[^}]*habboKey:\s*'(\w+)')/g)) {
+    TEXT_STYLE_BY_HABBO_KEY[match[2] ?? match[3]] ??= match[1];
 }
 
-const resolveTextStyle = (habboKey: string | undefined): { textStyle?: string; fill?: string } => {
-    if (!habboKey) return {};
+if (!Object.keys(TEXT_STYLE_BY_HABBO_KEY).length) throw new Error(`No text styles read from ${TEXT_STYLES_FILE} - its TEXT_STYLES table is written in a shape this script does not know.`);
 
-    if (TEXT_STYLE_BY_HABBO_KEY[habboKey]) return { textStyle: TEXT_STYLE_BY_HABBO_KEY[habboKey] };
-
-    if (habboKey.endsWith('_white')) {
-        const base = TEXT_STYLE_BY_HABBO_KEY[habboKey.slice(0, -6)];
-
-        if (base) return { textStyle: base, fill: '#ffffff' };
-    }
-
-    return {};
-};
+/** Every style in the client's `styles.css` has a theme key, the `_white` ones included - they are not the black styles recoloured (no etching). */
+const resolveTextStyle = (habboKey: string | undefined): string | undefined => (habboKey ? TEXT_STYLE_BY_HABBO_KEY[habboKey] : undefined);
 
 // ---------------------------------------------------------------------------------------------
 // Image lookup - `scripts/images` files are `<id>_<asset_name>$<hash>.<ext>`; the XML refers
 // to them by `<asset_name>` (with or without the `_png` suffix).
+//
+// An asset name is NOT unique: every client library embeds its own art, and a dozen of them
+// export a `heart_png`, a `close_png`, a `logo_png`, a `zoom_in_png`. The id prefix is the
+// decompiler's running number over the whole SWF, so it says nothing about which library a file
+// came from - the `roomui` bitmaps alone are scattered over ids 1749-2856. Picking "the last one
+// readdir yielded" therefore picked a different library's art at random: the room tools toolbar
+// drew the 43x44 camera-mode `zoom_in` beside the 18x18 `zoom_out`. Every name keeps all its
+// files here, and `resolveImage` chooses between them - see `pickImage`.
 // ---------------------------------------------------------------------------------------------
 
-const imageFiles = new Map<string, string>();
+/** Every `scripts/images` file a name answers to, in readdir order; the last is the pick this script made before it chose. */
+const imageFiles = new Map<string, string[]>();
+
+/** `<asset name>$<hash>` - the identity a client library class names a bitmap by - to its `scripts/images` file. */
+const imageByIdentity = new Map<string, string>();
 
 for (const file of readdirSync(IMAGE_DIR)) {
-    const match = /^\d+_(.+?)\$[^$]*\.(png|gif|jpg)$/i.exec(file);
+    const match = /^\d+_(.+?)\$([^$]*)\.(png|gif|jpg)$/i.exec(file);
 
     if (!match) continue;
 
     const name = match[1];
 
-    // Later ids are newer exports of the same asset - keep the highest.
-    imageFiles.set(name, file);
-    imageFiles.set(name.replace(/_(png|gif|jpg)$/i, ''), file);
+    imageByIdentity.set(`${name}$${match[2]}`, file);
+
+    for (const key of new Set([ name, name.replace(/_(png|gif|jpg)$/i, '') ])) {
+        const files = imageFiles.get(key);
+
+        if (files) files.push(file);
+        else imageFiles.set(key, [ file ]);
+    }
 }
+
+/** Content hash of a `scripts/images` file - what tells two ids holding the same art from two different bitmaps. */
+const imageHashes = new Map<string, string>();
+const imageHash = (file: string): string => {
+    let hash = imageHashes.get(file);
+
+    if (hash === undefined) {
+        hash = createHash('sha1').update(readFileSync(join(IMAGE_DIR, file))).digest('hex');
+        imageHashes.set(file, hash);
+    }
+
+    return hash;
+};
+
+/** A bitmap's pixel size, read out of its own header - no decoding, and `canvas` is async. */
+const imageSizes = new Map<string, { width: number; height: number } | undefined>();
+const imageSize = (file: string): { width: number; height: number } | undefined => {
+    if (imageSizes.has(file)) return imageSizes.get(file);
+
+    const data = readFileSync(join(IMAGE_DIR, file));
+    let size: { width: number; height: number } | undefined;
+
+    if (data.length > 24 && data.readUInt32BE(0) === 0x89504e47) size = { width: data.readUInt32BE(16), height: data.readUInt32BE(20) };
+    else if (data.length > 10 && data.toString('latin1', 0, 3) === 'GIF') size = { width: data.readUInt16LE(6), height: data.readUInt16LE(8) };
+    else if (data.length > 4 && data.readUInt16BE(0) === 0xffd8) {
+        // JPEG: walk the markers to the start-of-frame, which carries the dimensions.
+        for (let at = 2; at + 9 < data.length;) {
+            if (data[at] !== 0xff) { at++; continue; }
+
+            const marker = data[at + 1];
+
+            if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+                size = { width: data.readUInt16BE(at + 7), height: data.readUInt16BE(at + 5) };
+                break;
+            }
+
+            at += 2 + data.readUInt16BE(at + 2);
+        }
+    }
+
+    imageSizes.set(file, size);
+
+    return size;
+};
+
+/** The distinct arts among these files, each as the files that hold it - several ids often hold identical bytes, which is harmless. */
+const distinctArts = (files: string[]): string[][] => {
+    const arts = new Map<string, string[]>();
+
+    for (const file of files) {
+        const art = arts.get(imageHash(file));
+
+        if (art) art.push(file);
+        else arts.set(imageHash(file), [ file ]);
+    }
+
+    return [ ...arts.values() ];
+};
 
 const copiedImages = new Map<string, string>();
 const unresolvedImages = new Set<string>();
+
+/**
+ * Where each bitmap comes from and which components name it. Nothing is copied while the layouts
+ * are generated: the second component that names a bitmap is what turns it into a `shared/` one,
+ * and that is only known once every layout has been read (`placeImages`).
+ */
+interface ImageJob {
+    /** File in `scripts/images` to copy, or to crop `region` out of. */
+    source: string;
+    region?: NonNullable<ManifestAsset['region']>;
+    components: Set<string>;
+    /** A bitmap a hand-written view names by path decides its own folder - no layout speaks for it. */
+    pinned?: string;
+}
+
+const imageJobs = new Map<string, ImageJob>();
+
+/** Marks an emitted `layoutImage()` argument whose component folder is filled in by `resolveTokens`. */
+const IMAGE_TOKEN = '__LAYOUT_IMAGE__';
+
+/**
+ * A family whose members a hand-written view builds names inside (`mysterybox_${type}_base.png`)
+ * has to stay in one folder, or the template points at a folder the file is not in. Each of these
+ * is a bitmap the layouts alone would file elsewhere - the pin names the view that builds it.
+ */
+const PINNED_IMAGES: Record<string, string> = {
+    // views/avatar-editor/AvatarEditor.tsx: `avatar_editor_tabs_ae_tabs_${category}.png`, and a catalog layout draws the generic tab too.
+    'avatar_editor_tabs_ae_tabs_generic.png': 'avatar-editor',
+    // views/room-widgets/furniture/FurnitureMysteryBoxView.tsx: `mysterybox_${box|key}_base|overlay.png`; the key pair is in a notifications layout as well.
+    'mysterybox_key_base.png': 'room-ui',
+    'mysterybox_key_overlay.png': 'room-ui',
+    // views/wired-trading/trade/WiredTradeView.tsx: `wired_chests_images_${layoutType}_payments.png`; the generic one is in an inventory layout.
+    'wired_chests_images_generic_payments.png': 'wired',
+};
 
 /**
  * The asset manifests (`*_manifest_xml`) publish named sub-regions of a sheet:
@@ -305,17 +473,19 @@ for (const file of readdirSync(XML_DIR)) {
     }
 }
 
-/** Sub-region crops to render once every layout has been generated (`loadImage` is async). */
-const cropJobs: { source: string; out: string; region: NonNullable<ManifestAsset['region']> }[] = [];
 
 /**
  * The client's asset-library classes (`HabboWindowManagerCom.as`, `HabboInventoryCom.as`, ...)
- * publish many bitmaps under a different name than the embedded file:
- * `public static var collectables_cabinet_element:Class = coll_window_top_image_cabinet_png$<hash>;`.
- * Layouts reference the published name, `scripts/images` holds the embedded file - this maps
- * one to the other.
+ * publish their embedded bitmaps by name, often a different one than the embedded file's:
+ * `public static var roomtools_zoom_in:Class = zoom_in_png$1d108f3d…;`. A layout's `asset_uri`
+ * is that published name, and the right-hand side is `<embedded name>$<hash>` - the whole
+ * identity, not just the name, so it picks one `zoom_in_png` out of the several the SWF holds.
+ *
+ * This is the client's own answer to "which file does this name mean", so `resolveImage` asks it
+ * first. Entries where the published name equals the embedded one are kept too: they carry no
+ * renaming, but they still name an exact file.
  */
-const imageAliases = new Map<string, string>();
+const imageIdentities = new Map<string, Set<string>>();
 
 const AS3_LIBRARY_DIR = join(__dirname, 'scripts');
 
@@ -324,24 +494,77 @@ if (existsSync(AS3_LIBRARY_DIR)) {
         if (!file.endsWith('.as')) continue;
 
         const source = readFileSync(join(AS3_LIBRARY_DIR, file), 'utf8');
-        const pattern = /public static var (\w+):Class = §?([\w-]+?_(?:png|gif|jpg))\$[^;§]*§?;/g;
+        const pattern = /public static var (\w+):Class = §?([\w-]+?_(?:png|gif|jpg)\$[\w-]+)§?;/g;
 
         for (let match = pattern.exec(source); match; match = pattern.exec(source)) {
-            const [ , alias, embedded ] = match;
+            const [ , alias, identity ] = match;
+            const identities = imageIdentities.get(alias);
 
-            if (alias !== embedded && !imageAliases.has(alias)) imageAliases.set(alias, embedded);
+            if (identities) identities.add(identity);
+            else imageIdentities.set(alias, new Set([ identity ]));
         }
     }
 }
+
+/**
+ * A bitmap name several libraries export different art under, where neither the library table nor
+ * the layout's declared size settled which one this output is. The pick is then the one this
+ * script has always made (the last file readdir yielded) - arbitrary, so it is printed at the end
+ * beside the candidates, the way `unresolvedImages` is: wrong art does not fail, it just draws.
+ */
+interface AmbiguousImage {
+    key: string;
+    chosen: string;
+    declared: string;
+    candidates: string[];
+}
+
+const ambiguousImages = new Map<string, AmbiguousImage>();
+
+/**
+ * Which of `files` is the art `name` means. All the same bytes - the usual case, one asset
+ * exported under several ids - and it does not matter; otherwise the layout's declared size
+ * decides, and where that matches several candidates or none (a 9-slice, a stretched bar, a
+ * bitmap no layout names) the pick is recorded as ambiguous rather than guessed at silently.
+ */
+const pickImage = (name: string, key: string, files: string[], declared: { width: number; height: number } | undefined): string => {
+    const fallback = files[files.length - 1];
+    const arts = distinctArts(files);
+
+    if (arts.length < 2) return fallback;
+
+    const matching = declared ? arts.filter(art => imageSize(art[0])?.width === declared.width && imageSize(art[0])?.height === declared.height) : [];
+
+    if (matching.length === 1) return matching[0][matching[0].length - 1];
+
+    const describe = (file: string): string => {
+        const size = imageSize(file);
+
+        return `${file.split('_')[0]} (${size ? `${size.width}x${size.height}` : 'unread'})`;
+    };
+
+    // First claim wins, the way `claimImage` does - the layout that names a bitmap is read before
+    // the hand-written views, so what is reported is the verdict of the call that fixed the source.
+    if (!ambiguousImages.has(name)) {
+        ambiguousImages.set(name, {
+            key,
+            chosen: describe(fallback),
+            declared: declared ? `${declared.width}x${declared.height}` : 'nothing',
+            candidates: arts.map(art => describe(art[0])),
+        });
+    }
+
+    return fallback;
+};
 
 /**
  * Bitmaps no layout names statically but the client assigned at runtime - MeMenuMainView.as's
  * `_icons` table (`<name>_white` default / `<name>_color` hover per me-menu tile). Copied so the
  * wired views can reference them through `layoutImage()` like everything else.
  */
-const RUNTIME_IMAGES = [
+const RUNTIME_IMAGES: { name: string; component: string }[] = [
     'gohome', 'dance', 'clothes', 'effects', 'badges', 'wave', 'settings', 'credits', 'minimail', 'profile', 'achievements', 'compass', 'lighthouse',
-].flatMap(name => [ `${name}_white`, `${name}_color` ]).concat([
+].flatMap(name => [ `${name}_white`, `${name}_color` ]).map(name => ({ name, component: 'room-ui' })).concat([
     // AvatarEditor tab icons: the layouts reference the `_off` state, TabUtils.setElementImage()
     // strips `_off` for the active one; plus the runtime-only swatch/slot art the editor code loads.
     'avatar_editor_tabs_gender_male', 'avatar_editor_tabs_gender_female', 'avatar_editor_tabs_head_hair', 'avatar_editor_tabs_head_hats',
@@ -349,39 +572,63 @@ const RUNTIME_IMAGES = [
     'avatar_editor_tabs_top_jacket', 'avatar_editor_tabs_top_prints', 'avatar_editor_tabs_top_accessories', 'avatar_editor_tabs_bottom_trousers',
     'avatar_editor_tabs_bottom_shoes', 'avatar_editor_tabs_bottom_accessories', 'avatar_editor_tabs_icon_misc_pets', 'avatar_editor_tabs_icon_misc_misc',
     'avatar_editor_wardrobe_empty_slot', 'avatar_editor_editor_clr_13x21_2', 'avatar_editor_editor_clr_13x21_3',
-]);
+].map(name => ({ name, component: 'avatar-editor' })));
 
-const resolveImage = (name: string): string | undefined => {
+/**
+ * Records that `component` draws `outName`, which the `scripts/images` file `source` holds (a
+ * `region` of it, for a manifest sub-asset). The folder follows in `placeImages`.
+ */
+const claimImage = (outName: string, source: string, component: string | undefined, region?: NonNullable<ManifestAsset['region']>): void => {
+    const job = imageJobs.get(outName) ?? { source, region, components: new Set<string>() };
+
+    if (component) {
+        if (component.includes('/')) job.pinned = component.slice(0, component.lastIndexOf('/'));
+        else job.components.add(component);
+    }
+
+    imageJobs.set(outName, job);
+};
+
+/**
+ * `component` is the asset folder of the layout that names the bitmap, or - for a hand-written
+ * view - the `<component>/<file>` path it names, which pins the folder itself. `declared` is the
+ * size the layout gives the element drawing it, which is what tells one library's `zoom_in_png`
+ * from another's when the library table has no entry for the name (see `pickImage`).
+ */
+const resolveImage = (name: string, component?: string, declared?: { width: number; height: number }): string | undefined => {
+    let file: string | undefined;
+    // The client library's own `<name>$<hash>` for this published name, where it has one.
+    const identities = imageIdentities.get(name) ?? imageIdentities.get(`${name}_png`);
+    const named = [ ...identities ?? [] ].map(identity => imageByIdentity.get(identity)).filter((found): found is string => !!found);
+
+    if (named.length) file = pickImage(name, `library alias -> ${named.length} file(s)`, named, declared);
+
     // `asset_uri` names carry their library/folder as leading tokens (`avatar_editor_tabs_ae_tabs_head`
     // is the file `ae_tabs_head`; `icons_hc_icon_small` is `hc_icon_small`) - strip tokens until one matches.
-    let file: string | undefined;
     const tokens = name.split('_');
-    const alias = imageAliases.get(name) ?? imageAliases.get(`${name}_png`);
-
-    if (alias) file = imageFiles.get(alias) ?? imageFiles.get(alias.replace(/_(png|gif|jpg)$/i, ''));
 
     for (let skip = 0; skip < Math.min(4, tokens.length) && !file; skip++) {
         const candidate = tokens.slice(skip).join('_');
+        const key = imageFiles.has(candidate) ? candidate : imageFiles.has(`${candidate}_png`) ? `${candidate}_png` : undefined;
 
-        file = imageFiles.get(candidate) ?? imageFiles.get(`${candidate}_png`);
+        if (key) file = pickImage(name, key, imageFiles.get(key)!, declared);
     }
 
     if (!file) {
         const manifest = manifestAssets.get(name);
-        const refFile = manifest && (imageFiles.get(manifest.ref) ?? imageFiles.get(manifest.ref.replace(/_(png|gif|jpg)$/i, '')));
+        const refKey = manifest && (imageFiles.has(manifest.ref) ? manifest.ref : imageFiles.has(manifest.ref.replace(/_(png|gif|jpg)$/i, '')) ? manifest.ref.replace(/_(png|gif|jpg)$/i, '') : undefined);
+        // The region's own size is the crop, not the sheet's, so it cannot pick between sheets.
+        const refFile = refKey && pickImage(name, refKey, imageFiles.get(refKey)!, manifest?.region ? undefined : declared);
 
         if (manifest && refFile && manifest.region) {
             const outName = `${name}.png`;
 
-            if (!copiedImages.has(outName)) {
-                cropJobs.push({ source: join(IMAGE_DIR, refFile), out: join(IMAGE_OUT_DIR, outName), region: manifest.region });
-                copiedImages.set(outName, refFile);
-            }
+            claimImage(outName, refFile, component, manifest.region);
 
             return outName;
         }
 
-        file = refFile;
+        file = refFile || undefined;
     }
 
     if (!file) {
@@ -393,13 +640,31 @@ const resolveImage = (name: string): string | undefined => {
     const ext = file.slice(file.lastIndexOf('.'));
     const outName = `${name.replace(/_(png|gif|jpg)$/i, '')}${ext}`;
 
-    if (!copiedImages.has(outName)) {
-        copyFileSync(join(IMAGE_DIR, file), join(IMAGE_OUT_DIR, outName));
-        copiedImages.set(outName, file);
-    }
+    claimImage(outName, file, component);
 
     return outName;
 };
+
+/**
+ * Every claimed bitmap's folder, once every layout and every hand-written view has been read: the
+ * one component that names it, `shared/` when two or more do, and the pin where a hand-written
+ * view's template needs a family kept together.
+ */
+const imageFolder = new Map<string, string>();
+
+const placeImages = (): void => {
+    for (const [ outName, job ] of imageJobs) {
+        // The layouts decide: a hand-written view's own path only speaks for art no layout names,
+        // so a view that points at the wrong folder reads as a missing file (scripts/drift/assets.py)
+        // instead of silently moving a bitmap out from under the layouts that share it.
+        const named = job.components.size === 1 ? [ ...job.components ][0] : job.components.size ? SHARED_FOLDER : undefined;
+
+        imageFolder.set(outName, PINNED_IMAGES[outName] ?? named ?? job.pinned ?? UNASSIGNED_FOLDER);
+    }
+};
+
+/** The `<component>/<file>` path of a claimed bitmap - only valid after `placeImages`. */
+const imagePath = (outName: string): string => `${imageFolder.get(outName) ?? UNASSIGNED_FOLDER}/${outName}`;
 
 // ---------------------------------------------------------------------------------------------
 // Emitter
@@ -1008,8 +1273,8 @@ const selfBox = (el: Element, flow = false): ParentBox => ({ width: num(el.attrs
 /** Just the `<ThemeText>` for a text element - used where the parent already lays its caption out (a button). */
 const textElement = (ctx: EmitContext, el: Element, parentName?: string): { props: string[]; hasText: boolean; wordWrap: boolean; autoSize: string } => {
     const caption = captionExpr(ctx, el.attrs.caption);
-    const { textStyle, fill: styleFill } = resolveTextStyle(el.vars.text_style);
-    const fill = hexColor(el.vars.text_color) ?? styleFill;
+    const textStyle = resolveTextStyle(el.vars.text_style);
+    const fill = hexColor(el.vars.text_color);
     const wordWrap = !!(bool(el.vars.word_wrap) || bool(el.vars.multiline));
     const autoSize = el.vars.auto_size && AUTO_SIZE_JUSTIFY[el.vars.auto_size] ? el.vars.auto_size : 'left';
     const textOptions: Record<string, string | number | undefined> = {
@@ -1054,7 +1319,7 @@ const emitInlineText = (ctx: EmitContext, el: Element, button: Element, indent: 
 
     const textProp = props.find(prop => prop.startsWith('text='))!;
     const styleProp = props.find(prop => prop.startsWith('textStyle='));
-    const buttonStyle = resolveTextStyle(button.vars.text_style).textStyle;
+    const buttonStyle = resolveTextStyle(button.vars.text_style);
     const redundantStyle = !styleProp || styleProp === `textStyle="${buttonStyle}"`;
     const plain = props.length === 1 + (styleProp ? 1 : 0) && redundantStyle;
 
@@ -1130,6 +1395,20 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     return wrap('Region', regionProps, indent, child);
 };
 
+/**
+ * The bitmap's own pixel size as the layout declares it - the discriminator between two libraries'
+ * art of the same name (`resolveImage`). A stretched element (a 9-slice, a bar pulled across a
+ * window) is drawn at a size that is not the art's, so it declares nothing.
+ */
+const declaredBitmapSize = (el: Element): { width: number; height: number } | undefined => {
+    if (bool(el.vars.stretched_x) || bool(el.vars.stretched_y) || bool(el.vars.fit_size_to_contents) === false) return undefined;
+
+    const width = num(el.attrs.width);
+    const height = num(el.attrs.height);
+
+    return width > 0 && height > 0 ? { width, height } : undefined;
+};
+
 const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, host?: Element): string[] => {
     const assetName = el.vars.asset_uri ?? el.vars.bitmap_asset_name ?? '';
     const props = [ ...metaProps(ctx, host ?? el) ];
@@ -1140,15 +1419,13 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
         src = quote(assetName);
         ctx.warnings.push(`external image ${assetName}`);
     } else if (assetName) {
-        const file = resolveImage(assetName);
+        const folder = assetFolder(ctx.file.folder);
+        const file = resolveImage(assetName, folder, declaredBitmapSize(el));
 
-        if (file) {
-            ctx.imports.add('layoutImage');
-            src = `layoutImage(${quote(file)})`;
-        } else {
-            ctx.imports.add('layoutImage');
-            src = `layoutImage(${quote(`${assetName}.png`)})`;
-        }
+        ctx.imports.add('layoutImage');
+        // The component folder of a bitmap two layouts share is only known once every layout has
+        // been read, so the call is written as a token and resolved in `resolveTokens`.
+        src = `layoutImage(${quote(file ? `${IMAGE_TOKEN}${file}` : `${folder}/${assetName}.png`)})`;
     }
 
     const override = overrideProp(ctx, el, 'src', 'string', parent.name);
@@ -1627,7 +1904,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         case 'button_group_center':
         case 'button_group_right': {
             const component = { button: 'Button', button_thick: 'ButtonThick', button_group_left: 'ButtonGroupLeft', button_group_center: 'ButtonGroupCenter', button_group_right: 'ButtonGroupRight' }[tag]!;
-            const { textStyle } = resolveTextStyle(el.vars.text_style);
+            const textStyle = resolveTextStyle(el.vars.text_style);
             const extra = [ `onPointerTap={${handlerProp(ctx, el, tag)}}`, ...(textStyle ? [ `textStyle="${textStyle}"` ] : []) ];
 
             return emitThemed(ctx, component, el, parent, indent, extra, captionAndButtonChildren);
@@ -1635,8 +1912,10 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         // A container button's face is its children - the client never rendered its own
         // `caption` (the skin has no label), so only the children are emitted.
         case 'container_button':
-        case 'iconbutton':
             return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], buttonChildren);
+        // `iconbutton` has its own skin per intent (style 3 plus, 4 minus) and draws no children.
+        case 'iconbutton':
+            return emitThemed(ctx, 'IconButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], none);
         case 'closebutton':
             return emitThemed(ctx, 'CloseButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'close')}}` ], none);
         case 'checkbox':
@@ -1984,9 +2263,9 @@ rmSync(OUT_DIR, { recursive: true, force: true });
 mkdirSync(OUT_DIR, { recursive: true });
 mkdirSync(IMAGE_OUT_DIR, { recursive: true });
 
-for (const name of RUNTIME_IMAGES) resolveImage(name);
+for (const { name, component } of RUNTIME_IMAGES) resolveImage(name, component);
 
-interface Source { id: number; base: string; file: string; root: XmlNode }
+interface Source { id: number; base: string; file: string; root: XmlNode; xml: string }
 
 const sources: Source[] = [];
 
@@ -1995,11 +2274,14 @@ for (const file of readdirSync(XML_DIR)) {
 
     if (!match) continue;
 
-    const root = parseXml(readFileSync(join(XML_DIR, file), 'utf8'));
+    const text = readFileSync(join(XML_DIR, file), 'utf8');
+    const root = parseXml(text);
 
     if (root?.tag !== 'layout') continue;
 
-    sources.push({ id: num(match[1]), base: match[2], file, root });
+    // The XML this layout was generated from, recorded in the registry so `scripts/drift/layouts.py`
+    // can tell a conversion that is in step with `binaryData` from one a client refresh left behind.
+    sources.push({ id: num(match[1]), base: match[2], file, root, xml: createHash('sha1').update(text).digest('hex').slice(0, 12) });
 }
 
 sources.sort((a, b) => a.base.localeCompare(b.base) || a.id - b.id);
@@ -2151,7 +2433,7 @@ for (const { source, componentName, usage, folder } of planned) {
 
     registry.push([
         `${INDENT}{`,
-        `${INDENT}${INDENT}name: ${quote(source.base)}, id: ${source.id}, component: ${quote(componentName)}, size: ${quote(size)}, rootIsFrame: ${rootIsFrame},`,
+        `${INDENT}${INDENT}name: ${quote(source.base)}, id: ${source.id}, xml: ${quote(source.xml)}, component: ${quote(componentName)}, size: ${quote(size)}, rootIsFrame: ${rootIsFrame},`,
         `${INDENT}${INDENT}props: [ ${props.map(quote).join(', ')} ],`,
         `${INDENT}${INDENT}nested: { ${Object.entries(nested).map(([ prop, component ]) => `${prop}: ${quote(component)}`).join(', ')} },`,
         `${INDENT}${INDENT}subComponents: [ ${subComponents.map(quote).join(', ')} ],`,
@@ -2164,6 +2446,10 @@ for (const { source, componentName, usage, folder } of planned) {
 
     for (const warning of warnings) warningCounts.set(warning, (warningCounts.get(warning) ?? 0) + 1);
 }
+
+// Every layout has been read, so which components name each bitmap - and with that its folder -
+// is settled, and `resolveTokens` can fill the folder into the emitted `layoutImage()` calls.
+placeImages();
 
 // Name the shared widget variants - the most-used markup of a widget id gets the plain name
 // (`PurchaseWidget`), the rest are numbered - then write their files and resolve the tokens.
@@ -2184,7 +2470,8 @@ for (const [ widgetName, variants ] of [ ...sharedWidgets.entries() ].sort(([ a 
 
 const resolveTokens = (text: string): string => text
     .replace(/catalog\/widgets\/(__SHARED_\w+?_[0-9a-f]{8}__)'/g, (_, token: string) => `${tokenPaths.get(token) ?? `${WIDGETS_FOLDER}/${tokenNames.get(token)}`}'`)
-    .replace(/__SHARED_\w+?_[0-9a-f]{8}__/g, token => tokenNames.get(token) ?? token);
+    .replace(/__SHARED_\w+?_[0-9a-f]{8}__/g, token => tokenNames.get(token) ?? token)
+    .replace(new RegExp(`${IMAGE_TOKEN}([^']+)`, 'g'), (_, file: string) => imagePath(file));
 
 for (const variants of sharedWidgets.values()) {
     for (const variant of variants.values()) {
@@ -2229,7 +2516,8 @@ for (const file of pendingFiles) {
 
 writeFileSync(join(OUT_DIR, 'layoutAssets.ts'), [
     '/** Bitmaps referenced by the generated layouts - copied out of `scripts/images` by scripts/generate-layout-views.ts. */',
-    'export const layoutImage = (file: string): string => `./assets/images/layouts/${file}`;',
+    '/** `file` is `<component>/<asset name>`, the way `src/theme/LayoutImage.ts` takes it. */',
+    'export const layoutImage = (file: string): string => `./assets/${file}`;',
     '',
     '/**',
     ' * Configuration a catalog page put on a widget slot as tags, read by the widget classes',
@@ -2257,6 +2545,8 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
     `${INDENT}/** The Flash asset name (\`<name>_xml\`). */`,
     `${INDENT}name: string;`,
     `${INDENT}id: number;`,
+    `${INDENT}/** sha1 (12 hex) of the \`scripts/binaryData\` XML this was converted from - \`scripts/drift/layouts.py\` compares it, so a refreshed client asset reads as drift until the layouts are regenerated. */`,
+    `${INDENT}xml: string;`,
     `${INDENT}component: string;`,
     `${INDENT}size: string;`,
     `${INDENT}/** Whether the component renders its own \`Frame\` (window chrome) at the root. */`,
@@ -2298,65 +2588,145 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
 
 console.log(`Generated ${exports.length} layout components into ${OUT_DIR}`);
 
-protectHandWrittenImages(HAND_WRITTEN_DIR);
-
-for (const job of cropJobs) {
-    const image = await loadImage(job.source);
-    const canvas = createCanvas(job.region.width, job.region.height);
-
-    canvas.getContext('2d').drawImage(image, job.region.x, job.region.y, job.region.width, job.region.height, 0, 0, job.region.width, job.region.height);
-    writeFileSync(job.out, canvas.toBuffer('image/png'));
-}
+/** The bitmaps a previous run of this script copied, as `<component>/<file>` - everything else under the component folders is hand-placed. */
+const owned = new Set<string>(Object.keys(existsSync(IMAGE_MANIFEST) ? JSON.parse(readFileSync(IMAGE_MANIFEST, 'utf8')).files ?? {} : {}));
 
 /**
- * Views written by hand reference this folder as well, through the same `LayoutImage()` helper,
- * and no layout speaks for them - a room widget drawn against a Flash layout often needs a
- * bitmap the generated version of that layout never asked for. Their images are resolved here
- * like any other, so they are copied if they are missing and, either way, survive the prune
- * below.
+ * Every bitmap under the component folders right now, as `<component>/<file>`. Only those folders
+ * are read: `public/assets` also holds the theme atlas, the fonts, the chat styles and the
+ * currency art, none of which this script has any business listing - let alone pruning.
+ */
+const placedImages: string[] = [ ...new Set([ ...Object.values(ASSET_FOLDERS), SHARED_FOLDER, UNASSIGNED_FOLDER ]) ]
+    .filter(folder => existsSync(join(IMAGE_OUT_DIR, folder)))
+    .flatMap(folder => readdirSync(join(IMAGE_OUT_DIR, folder)).filter(file => /\.(png|gif|jpg)$/i.test(file)).map(file => `${folder}/${file}`));
+
+/**
+ * The bitmap already placed under this `<component>/<name>` (whatever its extension), or - for a
+ * bare name, which is how the notification, trophy and variable-picker tables hold one - the first
+ * component folder that has it.
+ */
+const placedImage = (name: string): string | undefined => (name.includes('/')
+    ? [ 'png', 'gif', 'jpg' ].map(ext => `${name}.${ext}`).find(file => existsSync(join(IMAGE_OUT_DIR, file)))
+    : placedImages.find(file => /^[^/]+\/(.+)\.(?:png|gif|jpg)$/i.exec(file)?.[1] === name));
+
+/**
+ * A bitmap the app names but this script did not write: it stays exactly as it is, and the prune
+ * skips it. One this run did copy keeps its source, or the manifest would forget it owns the file.
+ */
+const keepPlaced = (file: string): void => { if (!copiedImages.has(file)) copiedImages.set(file, '(hand-placed)'); };
+
+/**
+ * Views written by hand draw these bitmaps as well, through the same `LayoutImage()` helper, and
+ * no layout speaks for them - a room widget drawn against a Flash layout often needs a bitmap the
+ * generated version of that layout never asked for. A name that resolves to a `scripts/images`
+ * asset is copied if it is missing, into the component folder the call itself names; one already
+ * placed that this script did not put there is left untouched, because its name may equally well
+ * find an unrelated asset (token stripping makes `notifications_treasure_hunt_key_base` find
+ * `treasure_hunt_key_base`) and the hand-placed file is the one the view was drawn against.
  *
- * Only literal names can be read this way. A reference built at runtime
- * (`layoutImage(`mysterybox_${side}_base.png`)`) is invisible here, so those images have to be
- * ones a generated layout names too.
+ * Three shapes are read, because a bitmap is as often named away from the call: the literal call
+ * (`LayoutImage('room-ui/icon_nft.png')`), any string literal that names a placed file (the
+ * notification, trophy and variable-picker tables, which hold the bare Flash asset name), and the
+ * literal head of a template (`LayoutImage(`wired/wired_misc_directional_system_${id}.png`)`),
+ * which keeps every file that starts with it. The last is deliberately broad: keeping a stale
+ * bitmap costs a few KB, deleting a live one breaks a view with no error anywhere.
  */
 const protectHandWrittenImages = (dir: string): void => {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
         const path = join(dir, entry.name);
 
         if (entry.isDirectory()) {
-            if (path !== OUT_DIR) protectHandWrittenImages(path);
+            protectHandWrittenImages(path);
 
             continue;
         }
 
         if (!entry.name.endsWith('.tsx') && !entry.name.endsWith('.ts')) continue;
 
-        for (const match of readFileSync(path, 'utf8').matchAll(/LayoutImage\('([^']+)'\)/g)) {
-            const name = match[1].replace(/\.(png|gif|jpg)$/i, '');
+        const text = readFileSync(path, 'utf8');
 
-            if (resolveImage(name)) continue;
+        for (const match of text.matchAll(/\bLayoutImage\('([^']+)'\)/g)) {
+            const path = match[1].replace(/\.(png|gif|jpg)$/i, '');
+            const placed = placedImage(path);
 
-            // Nothing in scripts/images answers to it, but the app asks for it by name, so it
-            // stays where it is rather than being swept away as unreferenced.
-            const existing = `${name}.png`;
+            if (placed && !owned.has(placed)) keepPlaced(placed);
+            // The call names `<component>/<file>`; `resolveImage` looks the asset up by its name
+            // and takes the folder from the path it was asked for.
+            else if (!resolveImage(path.slice(path.lastIndexOf('/') + 1), path)) unresolvedImages.add(path);
+        }
 
-            if (existsSync(join(IMAGE_OUT_DIR, existing))) copiedImages.set(existing, '(hand-placed)');
-            else unresolvedImages.add(name);
+        for (const match of text.matchAll(/['"`]([\w-]{4,}?)(?:\.(?:png|gif|jpg))?['"`]/g)) {
+            const placed = placedImage(match[1]);
+
+            if (placed && !owned.has(placed)) keepPlaced(placed);
+        }
+
+        // A template's head is `<component>/<stem>` in a hand-written view and a bare stem in a
+        // table of asset names, so both the path and the file name are tried.
+        for (const match of text.matchAll(/['"`]([\w/-]{6,})\$\{/g)) {
+            for (const file of placedImages) {
+                if ((file.startsWith(match[1]) || file.slice(file.indexOf('/') + 1).startsWith(match[1])) && !owned.has(file)) keepPlaced(file);
+            }
         }
     }
 };
 
-// The folder is owned by this script - drop anything no layout references any more.
-const stale = readdirSync(IMAGE_OUT_DIR).filter(file => /\.(png|gif|jpg)$/i.test(file) && !copiedImages.has(file));
+protectHandWrittenImages(HAND_WRITTEN_DIR);
 
-for (const file of stale) rmSync(join(IMAGE_OUT_DIR, file));
+// A hand-written view may have claimed a bitmap no layout names; it decides its own folder.
+placeImages();
+
+let crops = 0;
+
+for (const [ outName, job ] of imageJobs) {
+    const out = join(IMAGE_OUT_DIR, imagePath(outName));
+
+    mkdirSync(dirname(out), { recursive: true });
+
+    if (job.region) {
+        const image = await loadImage(join(IMAGE_DIR, job.source));
+        const canvas = createCanvas(job.region.width, job.region.height);
+
+        canvas.getContext('2d').drawImage(image, job.region.x, job.region.y, job.region.width, job.region.height, 0, 0, job.region.width, job.region.height);
+        writeFileSync(out, canvas.toBuffer('image/png'));
+        crops++;
+    } else {
+        copyFileSync(join(IMAGE_DIR, job.source), out);
+    }
+
+    copiedImages.set(imagePath(outName), job.source);
+}
+
+// Only what a previous run of this script put there is pruned, by the `<component>/<file>` path
+// the manifest records. A hand-placed bitmap (the notification icons, the wired style sheets'
+// crops, the stickie and trophy art - named at runtime out of a table, so no literal names them)
+// is left alone: the earlier rule, "anything this run did not copy", deleted 111 of those the
+// first time the prune actually ran. A file this run wrote to a different folder than last run's
+// manifest names is stale under its old path and fresh under the new one.
+const stale = [ ...owned ].filter(file => !copiedImages.has(file));
+const handPlaced = placedImages.filter(file => !owned.has(file) && !copiedImages.has(file));
+
+for (const file of stale) rmSync(join(IMAGE_OUT_DIR, file), { force: true });
 if (stale.length) console.log(`Removed ${stale.length} stale images: ${stale.join(', ')}`);
+if (handPlaced.length) console.log(`Kept ${handPlaced.length} hand-placed images no layout names (not in ${IMAGE_MANIFEST})`);
 
-console.log(`Copied ${copiedImages.size} images into ${IMAGE_OUT_DIR} (${cropJobs.length} cropped from manifest regions, ${unresolvedImages.size} referenced assets not found in scripts/images)`);
+// `(hand-placed)` entries are in `copiedImages` to survive the prune, not because this script
+// wrote them - listing one here would hand it to the next run to overwrite and then delete.
+writeFileSync(IMAGE_MANIFEST, `${JSON.stringify({
+    note: 'Written by scripts/generate-layout-views.ts: the layout bitmaps under public/assets/<component>/ that the generator owns, and may replace or prune, each with the scripts/images file it was copied (or cropped) from. Anything under those folders that this file does not list was placed by hand and the generator leaves it alone.',
+    files: Object.fromEntries([ ...copiedImages ].filter(([ , source ]) => source !== '(hand-placed)').sort(([ a ], [ b ]) => a.localeCompare(b))),
+}, null, 4)}\n`);
+
+console.log(`Copied ${imageJobs.size} images into ${IMAGE_OUT_DIR} (${crops} cropped from manifest regions, ${unresolvedImages.size} referenced assets not found in scripts/images)`);
 for (const name of [ ...unresolvedImages ].sort()) console.log(`  missing image: ${name}`);
 
-if (!existsSync(join(IMAGE_OUT_DIR, 'README.md'))) {
-    writeFileSync(join(IMAGE_OUT_DIR, 'README.md'), '# Generated - populated by `yarn workspace @nitrodevco/nitro-react generate-layout-views`.\n');
+// A name several libraries export different art under, that neither the client's own library
+// table nor the layout's declared size settled. The pick is then arbitrary, and a wrong bitmap
+// never fails - it just draws wrong - so every one of them is named here, and `scripts/drift/
+// layout_images.py` holds them against `known.LAYOUT_IMAGES_AMBIGUOUS`.
+if (ambiguousImages.size) console.log(`${ambiguousImages.size} ambiguous image name(s) - several libraries export different art under the name and neither the library table nor the declared size chose:`);
+for (const [ name, info ] of [ ...ambiguousImages ].sort(([ a ], [ b ]) => a.localeCompare(b))) {
+    console.log(`  ambiguous image: ${name} [${info.key}] declares ${info.declared}, candidates ${info.candidates.join(', ')} - kept ${info.chosen}`);
 }
 
 for (const [ warning, count ] of [ ...warningCounts.entries() ].sort((a, b) => b[1] - a[1])) console.log(`  ${count}x ${warning}`);

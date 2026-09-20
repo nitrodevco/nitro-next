@@ -2,7 +2,7 @@ import { Container as PixiContainer } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box } from './Box';
-import { useThemeVariant } from './hooks';
+import { usePixiTexture, useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
 import { ThemeImage } from './ThemeImage';
 import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
@@ -35,7 +35,7 @@ const SCALER_VARIANTS: ThemeVariants<ScalerVariant> = {
         overlay: Stretch('scaler-0-default-shine-src'),
     },
     3: {
-        layer: Stretch('scaler-src'),
+        layer: Stretch('scaler-3-default-src'),
         layout: {
             position: 'absolute',
             right: 3,
@@ -44,8 +44,13 @@ const SCALER_VARIANTS: ThemeVariants<ScalerVariant> = {
             height: 20,
         },
     },
+    // Style 4 is `habbo_skin_scaler_3` as well, so it draws style 3's piece.
     4: {
-        layer: Stretch('scaler-src'),
+        layer: Stretch('scaler-3-default-src'),
+    },
+    // `renderer="null"`: a scaler with no art, as big as its layout makes it
+    100: {
+        zIndex: 20,
     },
 };
 
@@ -64,6 +69,9 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
             cascadeKey: 'scaler', variants: SCALER_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+
+        // The skin's own size: Flash's scaler is as big as its bitmap unless its layout says otherwise.
+        const skinTexture = usePixiTexture((resolvedLayer?.kind === 'sprite') ? resolvedLayer.textureKey : undefined);
 
         if (!config || direction === 'none') return null;
 
@@ -85,7 +93,7 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
             );
         }
 
-        // TODO - layer size to fit image
+        // A skin with its shine laid over it: sized to the skin bitmap, which both layers stretch to.
         return (
             <Box
                 ref={ref}
@@ -93,6 +101,8 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
                 zIndex={config.zIndex}
                 layout={{
                     position: 'absolute',
+                    width: skinTexture?.width,
+                    height: skinTexture?.height,
                     ...config.layout,
                     ...layout,
                 }}

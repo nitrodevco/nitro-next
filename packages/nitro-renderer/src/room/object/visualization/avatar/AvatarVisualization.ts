@@ -36,27 +36,44 @@ import { ExpressionAdditionFactory,
 } from './additions';
 import { AvatarVisualizationData } from './AvatarVisualizationData';
 
+/**
+ * Draws a room avatar: the avatar image, its shadow and its additions (bubbles, expressions, the
+ * Variable FX stack). Ports `AvatarVisualization`.
+ */
 export class AvatarVisualization
     extends RoomObjectSpriteVisualization
     implements IAvatarImageListener, IAvatarEffectListener, IVariableFxVisualizationHost {
-    private static AVATAR: string = 'avatar';
-    private static FLOATING_IDLE_Z_ID: number = 1;
-    private static TYPING_BUBBLE_ID: number = 2;
-    private static EXPRESSION_ID: number = 3;
-    private static NUMBER_BUBBLE_ID: number = 4;
-    private static GAME_CLICK_TARGET_ID: number = 5;
-    private static MUTED_BUBBLE_ID: number = 6;
-    private static GUIDE_BUBBLE_ID: number = 7;
-    private static STACKED_ADDITIONS_ID: number = 9;
-    private static OWN_USER_ID: number = 4;
-    private static AVATAR_LAYER_ID: number = 0;
-    private static SHADOW_LAYER_ID: number = 1;
-    private static SNOWBOARDING_EFFECT: number = 97;
-    private static INITIAL_RESERVED_SPRITES: number = 2;
+    // The static constants of Flash `AvatarVisualization`, under Flash's names (checked by
+    // `scripts/drift/constants.py`). Flash's obfuscated `§_-A1O§` is `SPRITE_INDEX_SHADOW`.
+    private static AVATAR_SPRITE_TAG: string = 'avatar';
+    private static AVATAR_SPRITE_DEFAULT_DEPTH: number = -0.01;
+    private static AVATAR_OWN_DEPTH_ADJUST: number = 0.001;
+    private static AVATAR_SPRITE_LAYING_DEPTH: number = -0.409;
+    private static BASE_Y_SCALE: number = 1000;
     private static ANIMATION_FRAME_UPDATE_INTERVAL: number = 2;
-    private static DEFAULT_CANVAS_OFFSETS: number[] = [ 0, 0, 0 ];
-    private static MAX_EFFECT_CACHE: number = 2;
+    private static SNOWBOARDING_EFFECT: number = 97;
+    private static FREEZE_EFFECT: number = 218;
+    /** How many effect avatar images `getAvatarImage` keeps before disposing the oldest. */
+    private static MAX_AVATARS_WITH_EFFECT: number = 3;
     private static SPRITE_INDEX_AVATAR: number = 0;
+    private static SPRITE_INDEX_SHADOW: number = 1;
+    private static INITIAL_RESERVED_SPRITES: number = 2;
+    private static ADDITION_ID_IDLE_BUBBLE: number = 1;
+    private static ADDITION_ID_TYPING_BUBBLE: number = 2;
+    private static ADDITION_ID_EXPRESSION: number = 3;
+    private static ADDITION_ID_NUMBER_BUBBLE: number = 4;
+    private static ADDITION_ID_GAME_CLICK_TARGET: number = 5;
+    private static ADDITION_ID_MUTED_BUBBLE: number = 6;
+    private static ADDITION_ID_GUIDE_STATUS_BUBBLE: number = 7;
+    /**
+     * The habbicon bubble's addition id. Flash puts a `HabbiconBubble` into the stacked additions
+     * when `figure_habbicon` is set; the port has not ported `HabbiconBubble`, so nothing reads
+     * this yet (`StackedAdditions.LAYER_HABBICON` is its layer).
+     */
+    public static readonly ADDITION_ID_HABBICON_BUBBLE: number = 8;
+    private static ADDITION_ID_STACKED_ADDITIONS: number = 9;
+    private static DEFAULT_CANVAS_OFFSETS: number[] = [ 0, 0, 0 ];
+    /** Flash's literal `6710886`: the grey a blocked avatar's placeholder is tinted. */
     private static BLOCKED_AVATAR_COLOR: number = 0x666666;
 
     /** Flash `GlowFilter(0xFFFFFF, 1, 6, 6)` around a highlighted avatar. */
@@ -66,10 +83,6 @@ export class AvatarVisualization
      * that hold a variable. Pixi's colour matrix takes its offsets in 0-1 where Flash's are 0-255.
      */
     private static VARIABLE_HOLDER_FILTERS: Filter[] | undefined = undefined;
-    private static BASE_Y_SCALE: number = 1000;
-    private static AVATAR_SPRITE_DEFAULT_DEPTH: number = -0.01;
-    private static AVATAR_OWN_DEPTH_ADJUST: number = 0.001;
-    private static AVATAR_SPRITE_LAYING_DEPTH: number = -0.409;
 
     protected _data: AvatarVisualizationData | undefined = undefined;
 
@@ -219,7 +232,7 @@ export class AvatarVisualization
 
                 this._updatesUntilFrameUpdate = 0;
 
-                const sprite = this.getSprite(AvatarVisualization.AVATAR_LAYER_ID);
+                const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
 
                 if (sprite && (this._avatarImage.isPlaceholder() || this._avatarImage.isBlocked())) {
                     sprite.alpha = 150 * this._alphaMultiplier;
@@ -328,7 +341,7 @@ export class AvatarVisualization
                 sprite.alpha = ((this._avatarImage.isPlaceholder() || this._avatarImage.isBlocked()) ? 150 : 255) * this._alphaMultiplier;
             }
 
-            const typingBubble = this.getAddition(AvatarVisualization.TYPING_BUBBLE_ID) as TypingBubbleAddition;
+            const typingBubble = this.getAddition(AvatarVisualization.ADDITION_ID_TYPING_BUBBLE) as TypingBubbleAddition;
 
             if (typingBubble) {
                 if (!this._isLaying) typingBubble.relativeDepth = AvatarVisualization.AVATAR_SPRITE_DEFAULT_DEPTH - 0.01 + _local_20[2];
@@ -343,7 +356,7 @@ export class AvatarVisualization
             const grayscaleColor = (avatarSpriteData && avatarSpriteData.paletteIsGrayscale && avatarSpriteData.reds) ? (avatarSpriteData.reds[0] & 0xFFFFFF) : undefined;
 
             for (const spriteData of this._avatarImage.getSprites()) {
-                if (spriteData.id === AvatarVisualization.AVATAR) {
+                if (spriteData.id === AvatarVisualization.AVATAR_SPRITE_TAG) {
                     const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
 
                     if (sprite) {
@@ -472,7 +485,7 @@ export class AvatarVisualization
                 if (!effectId) {
                     this._cachedAvatars.add(imageName, cachedImage);
                 } else {
-                    if (this._cachedAvatarEffects.length >= AvatarVisualization.MAX_EFFECT_CACHE) {
+                    if (this._cachedAvatarEffects.length >= AvatarVisualization.MAX_AVATARS_WITH_EFFECT) {
                         const cacheKey = this._cachedAvatarEffects.getKey(0);
 
                         if (cacheKey !== undefined) this._cachedAvatarEffects.remove(cacheKey)?.dispose();
@@ -692,49 +705,49 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
-        let idleAddition = this.getAddition(AvatarVisualization.FLOATING_IDLE_Z_ID);
+        let idleAddition = this.getAddition(AvatarVisualization.ADDITION_ID_IDLE_BUBBLE);
 
         if (this._sleep) {
             if (!idleAddition)
 
                 idleAddition = this.addAddition(
-                    new FloatingIdleZAddition(AvatarVisualization.FLOATING_IDLE_Z_ID, this),
+                    new FloatingIdleZAddition(AvatarVisualization.ADDITION_ID_IDLE_BUBBLE, this),
                 );
 
             needsUpdate = true;
-        } else if (idleAddition) this.removeAddition(AvatarVisualization.FLOATING_IDLE_Z_ID);
+        } else if (idleAddition) this.removeAddition(AvatarVisualization.ADDITION_ID_IDLE_BUBBLE);
 
         const isMuted = model.getValue<number>(RoomObjectVariableEnum.FigureIsMuted) > 0;
 
-        let mutedAddition = this.getAddition(AvatarVisualization.MUTED_BUBBLE_ID);
+        let mutedAddition = this.getAddition(AvatarVisualization.ADDITION_ID_MUTED_BUBBLE);
 
         if (isMuted) {
             if (!mutedAddition)
 
-                mutedAddition = this.addAddition(new MutedBubbleAddition(AvatarVisualization.MUTED_BUBBLE_ID, this));
+                mutedAddition = this.addAddition(new MutedBubbleAddition(AvatarVisualization.ADDITION_ID_MUTED_BUBBLE, this));
 
             needsUpdate = true;
         } else {
             if (mutedAddition) {
-                this.removeAddition(AvatarVisualization.MUTED_BUBBLE_ID);
+                this.removeAddition(AvatarVisualization.ADDITION_ID_MUTED_BUBBLE);
 
                 needsUpdate = true;
             }
 
             const isTyping = model.getValue<number>(RoomObjectVariableEnum.FigureIsTyping) > 0;
 
-            let typingAddition = this.getAddition(AvatarVisualization.TYPING_BUBBLE_ID);
+            let typingAddition = this.getAddition(AvatarVisualization.ADDITION_ID_TYPING_BUBBLE);
 
             if (isTyping) {
                 if (!typingAddition)
 
                     typingAddition = this.addAddition(
-                        new TypingBubbleAddition(AvatarVisualization.TYPING_BUBBLE_ID, this),
+                        new TypingBubbleAddition(AvatarVisualization.ADDITION_ID_TYPING_BUBBLE, this),
                     );
 
                 needsUpdate = true;
             } else if (typingAddition) {
-                this.removeAddition(AvatarVisualization.TYPING_BUBBLE_ID);
+                this.removeAddition(AvatarVisualization.ADDITION_ID_TYPING_BUBBLE);
 
                 needsUpdate = true;
             }
@@ -743,59 +756,59 @@ export class AvatarVisualization
         const guideStatusValue = model.getValue<number>(RoomObjectVariableEnum.FigureGuideStatus) || 0;
 
         if (guideStatusValue !== AvatarGuideStatus.NONE) {
-            this.removeAddition(AvatarVisualization.GUIDE_BUBBLE_ID);
+            this.removeAddition(AvatarVisualization.ADDITION_ID_GUIDE_STATUS_BUBBLE);
             this.addAddition(
-                new GuideStatusBubbleAddition(AvatarVisualization.GUIDE_BUBBLE_ID, this, guideStatusValue),
+                new GuideStatusBubbleAddition(AvatarVisualization.ADDITION_ID_GUIDE_STATUS_BUBBLE, this, guideStatusValue),
             );
 
             needsUpdate = true;
-        } else if (this.getAddition(AvatarVisualization.GUIDE_BUBBLE_ID)) {
-            this.removeAddition(AvatarVisualization.GUIDE_BUBBLE_ID);
+        } else if (this.getAddition(AvatarVisualization.ADDITION_ID_GUIDE_STATUS_BUBBLE)) {
+            this.removeAddition(AvatarVisualization.ADDITION_ID_GUIDE_STATUS_BUBBLE);
 
             needsUpdate = true;
         }
 
         const isPlayingGame = model.getValue<number>(RoomObjectVariableEnum.FigureIsPlayingGame) > 0;
 
-        let gameClickAddition = this.getAddition(AvatarVisualization.GAME_CLICK_TARGET_ID);
+        let gameClickAddition = this.getAddition(AvatarVisualization.ADDITION_ID_GAME_CLICK_TARGET);
 
         if (isPlayingGame) {
             if (!gameClickAddition)
 
                 gameClickAddition = this.addAddition(
-                    new GameClickTargetAddition(AvatarVisualization.GAME_CLICK_TARGET_ID),
+                    new GameClickTargetAddition(AvatarVisualization.ADDITION_ID_GAME_CLICK_TARGET),
                 );
 
             needsUpdate = true;
-        } else if (gameClickAddition) this.removeAddition(AvatarVisualization.GAME_CLICK_TARGET_ID);
+        } else if (gameClickAddition) this.removeAddition(AvatarVisualization.ADDITION_ID_GAME_CLICK_TARGET);
 
         const numberValue = model.getValue<number>(RoomObjectVariableEnum.FigureNumberValue);
 
-        let numberAddition = this.getAddition(AvatarVisualization.NUMBER_BUBBLE_ID);
+        let numberAddition = this.getAddition(AvatarVisualization.ADDITION_ID_NUMBER_BUBBLE);
 
         if (numberValue > 0) {
             if (!numberAddition)
 
                 numberAddition = this.addAddition(
-                    new NumberBubbleAddition(AvatarVisualization.NUMBER_BUBBLE_ID, numberValue, this),
+                    new NumberBubbleAddition(AvatarVisualization.ADDITION_ID_NUMBER_BUBBLE, numberValue, this),
                 );
 
             needsUpdate = true;
-        } else if (numberAddition) this.removeAddition(AvatarVisualization.NUMBER_BUBBLE_ID);
+        } else if (numberAddition) this.removeAddition(AvatarVisualization.ADDITION_ID_NUMBER_BUBBLE);
 
-        let expressionAddition = this.getAddition(AvatarVisualization.EXPRESSION_ID);
+        let expressionAddition = this.getAddition(AvatarVisualization.ADDITION_ID_EXPRESSION);
 
         if (this._expression > 0) {
             if (!expressionAddition) {
                 expressionAddition = ExpressionAdditionFactory.getExpressionAddition(
-                    AvatarVisualization.EXPRESSION_ID,
+                    AvatarVisualization.ADDITION_ID_EXPRESSION,
                     this._expression,
                     this,
                 );
 
                 if (expressionAddition) this.addAddition(expressionAddition);
             }
-        } else if (expressionAddition) this.removeAddition(AvatarVisualization.EXPRESSION_ID);
+        } else if (expressionAddition) this.removeAddition(AvatarVisualization.ADDITION_ID_EXPRESSION);
 
         this.updateScale(scale);
 
@@ -939,7 +952,7 @@ export class AvatarVisualization
         let spriteCount = AvatarVisualization.INITIAL_RESERVED_SPRITES;
 
         for (const sprite of this._avatarImage.getSprites()) {
-            if (sprite.id !== AvatarVisualization.AVATAR) spriteCount++;
+            if (sprite.id !== AvatarVisualization.AVATAR_SPRITE_TAG) spriteCount++;
         }
 
         if (spriteCount !== this.totalSprites) this.createSprites(spriteCount);
@@ -977,7 +990,7 @@ export class AvatarVisualization
 
         this._avatarImage = undefined;
 
-        const sprite = this.getSprite(AvatarVisualization.AVATAR_LAYER_ID);
+        const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
 
         if (sprite) {
             sprite.texture = Texture.EMPTY;
@@ -1019,9 +1032,9 @@ export class AvatarVisualization
     }
 
     private getStackedAdditions(create: boolean): StackedAdditions | undefined {
-        let stackedAdditions = this.getAddition(AvatarVisualization.STACKED_ADDITIONS_ID) as StackedAdditions | undefined;
+        let stackedAdditions = this.getAddition(AvatarVisualization.ADDITION_ID_STACKED_ADDITIONS) as StackedAdditions | undefined;
 
-        if (!stackedAdditions && create) stackedAdditions = this.addAddition(new StackedAdditions(AvatarVisualization.STACKED_ADDITIONS_ID, this)) as StackedAdditions;
+        if (!stackedAdditions && create) stackedAdditions = this.addAddition(new StackedAdditions(AvatarVisualization.ADDITION_ID_STACKED_ADDITIONS, this)) as StackedAdditions;
 
         return stackedAdditions;
     }
@@ -1032,7 +1045,7 @@ export class AvatarVisualization
 
         if (!stackedAdditions || !stackedAdditions.isEmpty) return false;
 
-        this.removeAddition(AvatarVisualization.STACKED_ADDITIONS_ID);
+        this.removeAddition(AvatarVisualization.ADDITION_ID_STACKED_ADDITIONS);
 
         this._forceUpdate = true;
 
@@ -1042,14 +1055,14 @@ export class AvatarVisualization
     private updateShadow(scale: RoomGeometryScaleType): void {
         this._shadow = undefined;
 
-        const sprite = this.getSprite(AvatarVisualization.SHADOW_LAYER_ID);
+        const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_SHADOW);
 
         if (!sprite) return;
 
         let hasShadow
             = this._posture === AvatarActionStateType.Walk || this._posture === AvatarActionStateType.Stand || (this._posture === AvatarActionStateType.Sit && this._canStandUp);
 
-        if (this._effect === AvatarVisualization.SNOWBOARDING_EFFECT) hasShadow = false;
+        if (this._effect === AvatarVisualization.SNOWBOARDING_EFFECT || this._effect === AvatarVisualization.FREEZE_EFFECT) hasShadow = false;
 
         if (hasShadow) {
             sprite.visible = true;

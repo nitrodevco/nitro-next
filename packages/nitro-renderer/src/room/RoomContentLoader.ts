@@ -122,7 +122,9 @@ export class RoomContentLoader implements IRoomContentLoader {
     public getFurnitureWallNameForTypeId(typeId: number, extra?: string): string {
         let type = this._wallItemTypes.get(typeId);
 
-        if (type === 'poster' && extra) type = `${type} ${extra}`;
+        // `RoomContentLoader.getWallItemType`: the poster id is appended as it is - `poster5`, the asset each
+        // poster is. `poster 5` is its productdata code, a different thing.
+        if (type === 'poster' && extra) type = `${type}${extra}`;
 
         return this.removeColorIndex(type ?? '');
     }

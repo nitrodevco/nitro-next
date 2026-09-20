@@ -9,32 +9,24 @@ import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } f
 
 export type CheckBoxVariant = ThemeWithStatesVariant;
 
-const CHECK_BOX_0_VARIANT: CheckBoxVariant = {
+/** The three classic checkbox skins are one 15x15 bitmap per state, so only their art differs. */
+const habboCheckBox = (style: '0' | '1' | '2'): CheckBoxVariant => ({
     states: {
-        default: Stretch('checkbox-src', { x: 0, y: 0, width: 15, height: 15 }),
-        selected: Stretch('checkbox-src', { x: 15, y: 0, width: 15, height: 15 }),
+        default: Stretch(`checkbox-${style}-default-src`),
+        selected: Stretch(`checkbox-${style}-selected-src`),
     },
     layout: {
         width: 15,
         height: 15,
         padding: 0,
     },
-};
+});
 
+/** `CheckBox` variants - the `type="checkbox"` rows of `habbo_element_description_xml`, keyed by their `style`. */
 const CHECK_BOX_VARIANTS: ThemeVariants<CheckBoxVariant> = {
-    0: CHECK_BOX_0_VARIANT,
-    1: {
-        states: {
-            default: Stretch('checkbox-src', { x: 30, y: 0, width: 15, height: 15 }),
-            selected: Stretch('checkbox-src', { x: 45, y: 0, width: 15, height: 15 }),
-        },
-        layout: {
-            width: 15,
-            height: 15,
-            padding: 0,
-        },
-    },
-    2: CHECK_BOX_0_VARIANT,
+    0: habboCheckBox('0'),
+    1: habboCheckBox('1'),
+    2: habboCheckBox('2'),
     100: {
         states: {
             default: Stretch('checkbox-100-default-src'),

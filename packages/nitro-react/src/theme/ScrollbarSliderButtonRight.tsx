@@ -9,36 +9,37 @@ import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 export type ScrollbarSliderButtonRightVariant = ThemeWithStatesVariant;
 
 /**
- * The scrollbar's "right" step button: one 160x17 sheet packing the default / pressed /
- * disabled frames of every variant, 16x17 each, selected by state through `Stretch(key, frame)`
- * like every other state-driven skin. Variants 0/1 have no distinct hover art (hovering repeats
- * the default frame, the same pattern as `CloseButton`'s 1/2).
+ * The scrollbar's "right" step button: one PNG per variant and state under
+ * `public/assets/theme/scrollbarsliderbuttonright/`, cut from `habbo_skin_scrollbar`'s
+ * `scrollbar_button_right` layout (and the `_black` / `_3` skins' own). Variants 0/1 have no
+ * distinct hover art - the skins' `active` state is commented out, so hovering repeats the
+ * default piece, the same pattern as `CloseButton`'s 1/2.
  */
 const SCROLLBAR_SLIDER_BUTTON_RIGHT_VARIANTS: ThemeVariants<ScrollbarSliderButtonRightVariant> = {
     0: {
         states: {
-            default: Stretch('scrollbarsliderbuttonright-src', { x: 0, y: 0, width: 16, height: 17 }),
-            hovering: Stretch('scrollbarsliderbuttonright-src', { x: 0, y: 0, width: 16, height: 17 }),
-            pressed: Stretch('scrollbarsliderbuttonright-src', { x: 16, y: 0, width: 16, height: 17 }),
-            disabled: Stretch('scrollbarsliderbuttonright-src', { x: 32, y: 0, width: 16, height: 17 }),
+            default: Stretch('scrollbarsliderbuttonright-0-default-src'),
+            hovering: Stretch('scrollbarsliderbuttonright-0-default-src'),
+            pressed: Stretch('scrollbarsliderbuttonright-0-pressed-src'),
+            disabled: Stretch('scrollbarsliderbuttonright-0-disabled-src'),
         },
         layout: { width: 16, height: 17 },
     },
     1: {
         states: {
-            default: Stretch('scrollbarsliderbuttonright-src', { x: 48, y: 0, width: 16, height: 17 }),
-            hovering: Stretch('scrollbarsliderbuttonright-src', { x: 48, y: 0, width: 16, height: 17 }),
-            pressed: Stretch('scrollbarsliderbuttonright-src', { x: 64, y: 0, width: 16, height: 17 }),
-            disabled: Stretch('scrollbarsliderbuttonright-src', { x: 80, y: 0, width: 16, height: 17 }),
+            default: Stretch('scrollbarsliderbuttonright-1-default-src'),
+            hovering: Stretch('scrollbarsliderbuttonright-1-default-src'),
+            pressed: Stretch('scrollbarsliderbuttonright-1-pressed-src'),
+            disabled: Stretch('scrollbarsliderbuttonright-1-disabled-src'),
         },
         layout: { width: 16, height: 17 },
     },
     3: {
         states: {
-            default: Stretch('scrollbarsliderbuttonright-src', { x: 96, y: 0, width: 16, height: 17 }),
-            hovering: Stretch('scrollbarsliderbuttonright-src', { x: 112, y: 0, width: 16, height: 17 }),
-            pressed: Stretch('scrollbarsliderbuttonright-src', { x: 128, y: 0, width: 16, height: 17 }),
-            disabled: Stretch('scrollbarsliderbuttonright-src', { x: 144, y: 0, width: 16, height: 17 }),
+            default: Stretch('scrollbarsliderbuttonright-3-default-src'),
+            hovering: Stretch('scrollbarsliderbuttonright-3-hovering-src'),
+            pressed: Stretch('scrollbarsliderbuttonright-3-pressed-src'),
+            disabled: Stretch('scrollbarsliderbuttonright-3-disabled-src'),
         },
         layout: { width: 16, height: 17 },
     },
@@ -59,13 +60,12 @@ export const ScrollbarSliderButtonRight: ForwardRefExoticComponent<ScrollbarSlid
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
-        if (!resolvedLayer || resolvedLayer.kind !== 'sprite' || !resolvedLayer.frame) return null;
+        if (!resolvedLayer || resolvedLayer.kind !== 'sprite') return null;
 
         return (
             <ThemeImage
                 ref={ref}
                 textureKey={resolvedLayer.textureKey}
-                frame={resolvedLayer.frame}
                 tint={resolvedTint}
                 {...handlers}
                 layout={{ ...config.layout, ...layout }}

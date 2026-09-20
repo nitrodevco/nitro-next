@@ -38,6 +38,17 @@ export type DropShadowConfig = {
 export type ThemeBase = {
     layout?: BoxLayout;
     tintColor?: string;
+    /**
+     * `false` for a skin whose every entity is `colorize="false"` in the client's skin XML:
+     * `BitmapSkinRenderer.draw` copies such pieces untinted, so the window's `color` has no
+     * effect on it. `useThemeVariant` then drops the tint - the variant's own `tintColor` and
+     * the one a call site passes alike - which is what keeps the wired dialog's
+     * `_frame.color = style.frameColor` (`FramePreset`) from darkening the illumina light
+     * frame the client never tints. A skin where only *some* entities are `colorize="false"`
+     * is not this: those pieces are cut into their own sheet and drawn as an untinted
+     * `overlay` (see `scripts/extract-skin-assets.ts`).
+     */
+    colorize?: boolean;
     textStyle?: TextStyleKey;
     textColor?: string;
     zIndex?: number;

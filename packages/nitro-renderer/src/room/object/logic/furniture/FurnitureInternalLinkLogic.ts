@@ -7,7 +7,7 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
     private _updateCount: number = 0;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.INERNAL_LINK ]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.INTERNAL_LINK ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -49,7 +49,7 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
 
     public override useObject(): void {
         this.handleRoomObjectEvent(
-            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INERNAL_LINK, this.object),
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INTERNAL_LINK, this.object),
         );
     }
 

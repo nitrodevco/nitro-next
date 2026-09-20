@@ -11,3 +11,4 @@ export * from './ParseArray';
 export * from './ParseInts';
 export * from './ParseStrings';
 export * from './ReadLong';
+export * from './WriteLong';

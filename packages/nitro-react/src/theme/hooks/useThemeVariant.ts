@@ -29,7 +29,9 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
     const resolvedLayer = statesConfig.states ? resolveByState(statesConfig.states, state, selected) : layerConfig.layer;
     const resolvedOverlay = statesConfig.overlays ? resolveByState(statesConfig.overlays, state, selected) : layerConfig.overlay;
     const resolvedShadow = (dropShadow === false) ? undefined : (dropShadow ?? config.dropShadow);
-    const resolvedTint = tintColor ?? config.tintColor;
+    // `colorize: false` is a skin the client never tints at all (see `ThemeBase.colorize`), so
+    // neither the variant's own tint nor the one a call site passes reaches its art.
+    const resolvedTint = (config.colorize === false) ? undefined : (tintColor ?? config.tintColor);
     const resolvedTextStyle = textStyle ?? config.textStyle;
     const resolvedTextColor = textColor ?? config.textColor;
 

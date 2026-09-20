@@ -8,7 +8,7 @@
  * triggered the first time a component that needs it happens to render - see that module's
  * own docblock) into a single request at boot, on both render targets.
  *
- * Re-run whenever an asset under `public/assets/images/**` is added, removed, or replaced:
+ * Re-run whenever an asset under `public/assets/theme/**` is added, removed, or replaced:
  *
  *   yarn workspace @nitrodevco/nitro-react bundle-theme-assets
  */
@@ -24,7 +24,7 @@ const PUBLIC_DIR = join(__dirname, '../public');
 const OUT_DIR = join(PUBLIC_DIR, 'assets/theme-atlas');
 
 interface PackedImage {
-    /** The path key exactly as it appears in `THEME_URLS`'s values (`assets/images/...`),
+    /** The path key exactly as it appears in `THEME_URLS`'s values (`assets/theme/...`),
      *  not the theme key - several theme keys can (in principle) share one path, and the
      *  runtime bundle looks entries up by path, so packing by path once avoids ever
      *  double-packing the same file. */
