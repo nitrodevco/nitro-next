@@ -1,10 +1,8 @@
 import { FC } from 'react';
 
 import { useAvatarLoader, useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
-import { getRenderMode } from '#base/theme';
 
-import { NitroDomView } from './NitroDomView';
-import { NitroPixiView } from './NitroPixiView';
+import { NitroView } from './NitroView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 
 export const Nitro: FC = () => {
@@ -19,7 +17,5 @@ export const Nitro: FC = () => {
 
     if (!isReady) return <LoadingScreenView />;
 
-    if (getRenderMode() === 'dom') return <NitroDomView />;
-
-    return <NitroPixiView />;
+    return <NitroView />;
 };

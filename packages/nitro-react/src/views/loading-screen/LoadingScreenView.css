@@ -1,3 +1,6 @@
+/* Tailwind's utilities/theme, for the `@layer utilities` keyframes below. */
+@reference '../../index.css';
+
 @layer utilities {
     @keyframes spin-slow {
         from {

@@ -5,7 +5,7 @@ import { Box, LayoutImage, ThemeImage } from '#base/theme';
 
 import { FriendListItem } from '../components/FriendListItem';
 
-export interface FriendListSearchItemPixiProps {
+export interface FriendListSearchItemProps {
     result: IMessengerSearchResult;
     isFriend: boolean;
     showAvatarHead: boolean;
@@ -17,7 +17,7 @@ export interface FriendListSearchItemPixiProps {
  * `search_entry` row's two `<bitmap>` slots from the friend list's asset library - `start_chat_png`
  * for someone who is already a friend, `ask_for_friend_png` otherwise. Neither is an icon-set style.
  */
-export const FriendListSearchItem = ({ result, isFriend, showAvatarHead, zebraColor }: FriendListSearchItemPixiProps) => {
+export const FriendListSearchItem = ({ result, isFriend, showAvatarHead, zebraColor }: FriendListSearchItemProps) => {
     const { tooltipHandlers } = useFriendsActions();
     const hover = tooltipHandlers(isFriend ? 'friendlist.tip.im' : 'friendlist.tip.addfriend');
 

@@ -22,7 +22,7 @@ import { useConfigData, useSystemStore, useTranslation } from '#base/context/sys
 import { useUserStore } from '#base/context/user';
 import { WiredChestUpgradeRequest } from '#base/context/wired-trading';
 import { Border, Box, Button, ButtonThick, Frame, Icon, ThemeText } from '#base/theme';
-import { useFurnitureImageTexturePixi } from '#base/views/catalog/useFurnitureImageTexturePixi';
+import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 import { WiredDropdown } from '#base/views/wired-setup/kit/WiredDropdown';
 import { WiredFlow } from '#base/views/wired-setup/kit/WiredFlow';
 import { WiredStyleProvider } from '#base/views/wired-setup/kit/WiredStyleContext';
@@ -43,7 +43,7 @@ const configInteger = (config: Record<string, unknown>, key: string, fallback: n
 /** `product_image`: the chest furni at 64, facing 90 degrees, in the 126x152 border. */
 export const WiredChestPreview = ({ furniTypeId }: { furniTypeId: number }) => {
     const furniData = useSystemStore(x => x.floorItems[furniTypeId]);
-    const { texture, width, height } = useFurnitureImageTexturePixi(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
+    const { texture, width, height } = useFurnitureImageTexture(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
 
     return (
         <Border

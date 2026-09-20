@@ -1,8 +1,6 @@
 import { GetRenderer, GetRoomStage } from '@nitrodevco/nitro-renderer';
 import { Graphics } from 'pixi.js';
 
-import { getRenderMode } from '#base/theme';
-
 let backdrop: Graphics | undefined = undefined;
 let backdropColor: number = 0;
 
@@ -25,10 +23,6 @@ const redraw = () => {
  * this switches at once.
  */
 export const SetRoomBackgroundColor = (color: number | undefined) => {
-    // The DOM renderer blits the room canvas on its own rather than through the room stage, so
-    // there is no layer behind it to fill.
-    if (getRenderMode() !== 'pixi') return;
-
     if (color === undefined) {
         if (!backdrop) return;
 

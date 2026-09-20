@@ -1,15 +1,13 @@
 import { BLEND_MODES, Container as PixiContainer, EventMode, FederatedPointerEvent, Texture } from 'pixi.js';
-import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler, ReactNode, Ref } from 'react';
+import { forwardRef, Ref } from 'react';
 
 import { useConfigValue } from '#base/context/system';
-import { isAssetName } from '#base/utils';
 
 import { BoxLayout } from './Box';
-import { boxLayoutToStyle } from './dom/boxStyle';
 import { useDynamicStyleEffect } from './dynamicstyle';
-import { getCroppedTexture, getTextureGreyscale, getTextureSilhouette, usePixiTexture, useTextureFromUrl, useThemeImageUrl } from './hooks';
+import { getCroppedTexture, getTextureGreyscale, getTextureSilhouette, usePixiTexture, useTextureFromUrl } from './hooks';
 import { useTooltipHandlers } from './tooltip/useTooltipHandlers';
-import { compose, cursorForHandlers, DynamicStyleRole, getAssetImageUrl, getRenderMode, getThemeAtlas, getThemeSprite, insetStretchAxes, multiplyAlphas, multiplyTints, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta, themeSpriteFillStyle } from './utils';
+import { compose, cursorForHandlers, DynamicStyleRole, insetStretchAxes, multiplyAlphas, multiplyTints, resolveEventMode, SpriteFrame, ThemeLayoutMeta } from './utils';
 
 export interface ImageProps extends ThemeLayoutMeta {
     /**
@@ -84,10 +82,9 @@ export interface ImageProps extends ThemeLayoutMeta {
 const WHITE = '#ffffff';
 
 /**
- * The single dual-target sprite/image primitive - one `pixiSprite` or one `<img>`/`<div>`, no
- * wrapper container. Every themed icon, button skin, or loose image (whole, or cropped out of
+ * The single sprite/image primitive - one `pixiSprite`, no wrapper container. Every themed icon, button skin, or loose image (whole, or cropped out of
  * a shared spritesheet via `frame`, or a theme atlas sprite via `textureKey`) goes through this
- * rather than writing a raw `pixiSprite`/`<img>` directly. The `layer/` family (SpriteLayer,
+ * rather than writing a raw `pixiSprite` directly. The `layer/` family (SpriteLayer,
  * CompositePieceSprite, ...) is the deliberate exception: those stretch a texture to exactly
  * fill an arbitrary box, a different contract from this one's "native size, or the size you
  * asked for".
@@ -97,7 +94,7 @@ const WHITE = '#ffffff';
  * silhouette added over it (`blendMode: 'add'` at the offset's fraction of white adds exactly
  * that flat amount, where a tint could only multiply).
  */
-const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
+export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
     src, textureKey, texture: ownTexture, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, greyscale, blendMode, dynamicRole, tooltip, eventMode, cursor,
     onPointerOver: onPointerOverProp, onPointerOut: onPointerOutProp, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     showLoadingPlaceholder, layout, visible,
@@ -205,247 +202,5 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
 
     return sprite(layout, true);
 });
-
-ImagePixi.displayName = 'ImagePixi';
-
-interface DomCopy {
-    style: CSSProperties;
-}
-
-/**
- * A single `<img>` (whole image) or a single `background-position`-cropped `<div>` (`frame` /
- * `textureKey`). `width`/`height` go on the `<img>` as real attributes so the browser reserves
- * the box before the image loads. A tinted non-theme image (an overlay masked to the image,
- * multiplied over it) and a dynamic style's etching/brightening copies (the same mask in a
- * flat colour, `plus-lighter` for the additive brightening) need a wrapper around it; theme
- * sprites recolour through a pre-recoloured atlas slice instead.
- */
-const ImageDom = forwardRef<PixiContainer, ImageProps>(({
-    src: srcProp, textureKey, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, greyscale, blendMode, dynamicRole, tooltip, eventMode, cursor,
-    onPointerOver: onPointerOverProp, onPointerOut: onPointerOutProp, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
-    layout, visible,
-}, ref) => {
-    // `src` is a bundle asset name (what `LayoutImage` builds) as often as it is a real url.
-    // Asking for the texture is what pulls in a bundle that isn't preloaded; the url CSS needs
-    // is then cut from what the bundle holds - see utils/assetImages.ts.
-    const assetName = isAssetName(srcProp) ? srcProp : undefined;
-    const assetTexture = useTextureFromUrl(assetName);
-    const src = assetName ? (assetTexture ? getAssetImageUrl(assetName) : undefined) : srcProp;
-    const tooltipHandlers = useTooltipHandlers(tooltip);
-    const onPointerOver = compose(tooltipHandlers.onPointerOver, onPointerOverProp);
-    const onPointerOut = compose(tooltipHandlers.onPointerOut, onPointerOutProp);
-    const effect = useDynamicStyleEffect(dynamicRole);
-    const etching = effect?.etching;
-    const resolvedTint = multiplyTints(tint, effect?.tint);
-    const resolvedAlpha = multiplyAlphas(alpha, effect?.alpha);
-    const sprite = getThemeSprite(textureKey);
-    const tintedUrl = useThemeImageUrl(textureKey && resolvedTint ? textureKey : undefined, { kind: 'tint', color: resolvedTint ?? '' });
-    const etchingUrl = useThemeImageUrl(textureKey && etching ? textureKey : undefined, { kind: 'silhouette', color: etching?.color ?? '#000000' });
-    const brightenUrl = useThemeImageUrl(textureKey && effect?.brighten ? textureKey : undefined, { kind: 'silhouette', color: WHITE });
-    const atlasUrl = getThemeAtlas()?.url;
-    const sheetUrl = textureKey ? (resolvedTint ? tintedUrl : (sprite && atlasUrl)) : (frame ? src : undefined);
-
-    if (textureKey ? !sheetUrl : !src) return null;
-
-    const nativeWidth = frame?.width ?? sprite?.width;
-    const nativeHeight = frame?.height ?? sprite?.height;
-    const resolvedWidth = width ?? nativeWidth;
-    const resolvedHeight = height ?? nativeHeight;
-    const explicitSize = width !== undefined || height !== undefined || !!stretch;
-    const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
-    const layoutStyle = boxLayoutToStyle(layout);
-    const stretchAxes = insetStretchAxes(layout, width, height);
-
-    // A replaced element (`<img>`) keeps its intrinsic size between two insets instead of
-    // stretching; span it explicitly. The background `<div>` path isn't replaced, but gets the
-    // same explicit span so both paths agree.
-    if (stretchAxes.x && typeof layout?.left === 'number' && typeof layout.right === 'number') layoutStyle.width = `calc(100% - ${layout.left + layout.right}px)`;
-    if (stretchAxes.y && typeof layout?.top === 'number' && typeof layout.bottom === 'number') layoutStyle.height = `calc(100% - ${layout.top + layout.bottom}px)`;
-    // See Box.tsx's BoxDom for why 'static'/'dynamic' need an explicit 'auto' here (CSS
-    // pointer-events is inherited, and #ui-container sets it to 'none' at its root).
-    const style: CSSProperties = {
-        ...layoutStyle,
-        width: layoutStyle.width ?? resolvedWidth,
-        height: layoutStyle.height ?? resolvedHeight,
-        display: visible === false ? 'none' : 'block',
-        // CSS `zoom` scales the element's layout box AND its content/background together -
-        // the one DOM knob that scales a sheet-crop background and a plain <img> identically,
-        // natural size known or not.
-        zoom: scale !== 1 ? scale : undefined,
-        zIndex,
-        cursor: cursor ?? cursorForHandlers(resolvedEventMode, { onPointerTap }),
-        opacity: resolvedAlpha,
-        mixBlendMode: typeof blendMode === 'string' && blendMode !== 'normal' && blendMode !== 'inherit' ? (blendMode === 'add' ? 'screen' : blendMode) as CSSProperties['mixBlendMode'] : undefined,
-        pointerEvents: pointerEventsFromEventMode(resolvedEventMode),
-        imageRendering: 'pixelated',
-        // CSS `grayscale()` uses the same Rec. 709 luminance weights as the client's matrix.
-        filter: greyscale ? 'grayscale(1)' : undefined,
-        transform: effect && (effect.x || effect.y) ? `translate(${effect.x}px, ${effect.y}px)` : undefined,
-        // The global stylesheet caps `img` at `max-width: 100%`, which would shrink the image to
-        // its flex parent instead of keeping its own size - the image's size is authoritative.
-        maxWidth: 'none',
-        maxHeight: 'none',
-    };
-    const handlers = {
-        onPointerEnter: onPointerOver as unknown as PointerEventHandler,
-        onPointerLeave: onPointerOut as unknown as PointerEventHandler,
-        onPointerDown: onPointerDown as unknown as PointerEventHandler,
-        onPointerUp: onPointerUp as unknown as PointerEventHandler,
-        onClick: onPointerTap as unknown as MouseEventHandler,
-    };
-    const elementRef = ref as unknown as Ref<never>;
-
-    // The sheet crop: the div is the box, the background is positioned so the frame sits
-    // centred in it (top-left when the box is the frame's own size). The atlas offset only
-    // applies to the untinted atlas path - a recoloured slice is the sprite alone.
-    const boxWidth = typeof style.width === 'number' ? style.width : nativeWidth ?? 0;
-    const boxHeight = typeof style.height === 'number' ? style.height : nativeHeight ?? 0;
-    const dx = explicitSize ? 0 : Math.floor((boxWidth - (nativeWidth ?? boxWidth)) / 2);
-    const dy = explicitSize ? 0 : Math.floor((boxHeight - (nativeHeight ?? boxHeight)) / 2);
-    const cropPosition = (standalone: boolean) => `${dx - (standalone ? 0 : (sprite?.x ?? 0)) - (frame?.x ?? 0)}px ${dy - (standalone ? 0 : (sprite?.y ?? 0)) - (frame?.y ?? 0)}px`;
-
-    // The dynamic-style copies, as the same crop/mask in a flat colour.
-    const copies: DomCopy[] = [];
-    const copyStyle = (left: number, top: number, copyAlpha: number, additive: boolean): CSSProperties => ({
-        position: 'absolute', left, top, width: '100%', height: '100%', pointerEvents: 'none', opacity: copyAlpha,
-        mixBlendMode: additive ? 'plus-lighter' : undefined, imageRendering: 'pixelated',
-    });
-    const sheetCopy = (url: string | undefined, left: number, top: number, copyAlpha: number, additive: boolean) => {
-        if (!url) return;
-
-        copies.push({ style: { ...copyStyle(left, top, copyAlpha, additive), backgroundImage: `url(${url})`, backgroundRepeat: 'no-repeat', ...(stretch ? { backgroundSize: '100% 100%' } : { backgroundPosition: cropPosition(true) }) } });
-    };
-    const maskCopy = (color: string, left: number, top: number, copyAlpha: number, additive: boolean) => {
-        if (!src || frame) return;
-
-        const maskSize = explicitSize ? '100% 100%' : 'auto';
-
-        copies.push({ style: { ...copyStyle(left, top, copyAlpha, additive), backgroundColor: color, WebkitMaskImage: `url(${src})`, maskImage: `url(${src})`, WebkitMaskRepeat: 'no-repeat', maskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskPosition: 'center', WebkitMaskSize: maskSize, maskSize } });
-    };
-
-    if (etching) {
-        if (textureKey) sheetCopy(etchingUrl, etching.x, etching.y, etching.alpha * (alpha ?? 1), false);
-        else maskCopy(etching.color, etching.x, etching.y, etching.alpha * (alpha ?? 1), false);
-    }
-
-    const brighten = effect?.brighten;
-    // A tint on a plain image, or any dynamic-style copy, needs a wrapper the copies overlay.
-    // The wrapper then owns the box (position, insets, nudge, zoom, stacking) and the element
-    // sits in normal flow inside it, so a plain `<img>` with no known native size still gives
-    // the wrapper its size - absolutely positioning it would collapse the wrapper to nothing.
-    const wrapped = !!etching || !!brighten || (!!resolvedTint && !sheetUrl);
-    const elementStyle: CSSProperties = wrapped
-        ? { ...style, position: 'relative', left: undefined, top: undefined, right: undefined, bottom: undefined, transform: undefined, zoom: undefined, zIndex: undefined }
-        : style;
-
-    let base: ReactNode;
-    let tintOverlay: ReactNode;
-
-    if (sheetUrl && stretch) {
-        // A skin sprite filling its box: out of the atlas with the percentage formula, or a
-        // standalone (tinted / fallback) slice scaled to the box.
-        const fill = textureKey && !resolvedTint && sprite ? themeSpriteFillStyle(sprite, frame) : undefined;
-
-        base = (
-            <div
-                ref={elementRef}
-                style={{
-                    ...elementStyle,
-                    ...(fill ?? { backgroundImage: `url(${sheetUrl})`, backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }),
-                }}
-                {...handlers}
-            />
-        );
-    } else if (sheetUrl) {
-        base = (
-            <div
-                ref={elementRef}
-                style={{
-                    ...elementStyle,
-                    backgroundImage: `url(${sheetUrl})`,
-                    backgroundPosition: cropPosition(!!(textureKey && resolvedTint)),
-                    backgroundRepeat: 'no-repeat',
-                }}
-                {...handlers}
-            />
-        );
-    } else {
-        base = (
-            <img
-                ref={elementRef}
-                src={src}
-                width={resolvedWidth}
-                height={resolvedHeight}
-                style={{ ...elementStyle, objectFit: explicitSize ? 'fill' : 'none', objectPosition: 'center' }}
-                {...handlers}
-            />
-        );
-
-        if (resolvedTint) {
-            tintOverlay = (
-                <div style={{
-                    position: 'absolute', inset: 0,
-                    backgroundColor: resolvedTint,
-                    mixBlendMode: 'multiply',
-                    pointerEvents: 'none',
-                    WebkitMaskImage: `url(${src})`,
-                    maskImage: `url(${src})`,
-                    WebkitMaskRepeat: 'no-repeat',
-                    maskRepeat: 'no-repeat',
-                    WebkitMaskPosition: 'center',
-                    maskPosition: 'center',
-                    WebkitMaskSize: explicitSize ? '100% 100%' : 'auto',
-                    maskSize: explicitSize ? '100% 100%' : 'auto',
-                }}
-                />
-            );
-        }
-    }
-
-    if (brighten) {
-        if (textureKey) sheetCopy(brightenUrl, 0, 0, brighten, true);
-        else maskCopy(WHITE, 0, 0, brighten, true);
-    }
-
-    if (!wrapped) return base;
-
-    // The wrapper takes the box and the nudge; the element in flow inside it gives it its size
-    // when the layout didn't, and the copies overlay that size.
-    return (
-        <div style={{ ...layoutStyle, position: layoutStyle.position ?? 'relative', width: style.width, height: style.height, display: visible === false ? 'none' : 'inline-flex', flexShrink: 0, zoom: style.zoom, zIndex, transform: style.transform }}>
-            {copies.slice(0, etching ? 1 : 0).map((copy, index) => (
-                <div
-                    key={`etching-${index}`}
-                    style={copy.style}
-                />
-            ))}
-            {base}
-            {tintOverlay}
-            {copies.slice(etching ? 1 : 0).map((copy, index) => (
-                <div
-                    key={`brighten-${index}`}
-                    style={copy.style}
-                />
-            ))}
-        </div>
-    );
-});
-
-ImageDom.displayName = 'ImageDom';
-
-export const ThemeImage = forwardRef<PixiContainer, ImageProps>((props, ref) =>
-    getRenderMode() === 'dom'
-        ? (
-                <ImageDom
-                    ref={ref}
-                    {...props}
-                />
-            )
-        : (
-                <ImagePixi
-                    ref={ref}
-                    {...props}
-                />
-            ));
 
 ThemeImage.displayName = 'ThemeImage';

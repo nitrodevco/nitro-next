@@ -9,7 +9,7 @@ import { FriendListSearchFooter } from './footers/FriendListSearchFooter';
 import { FriendListTab } from './FriendListTab';
 import { FriendListSearchItem } from './items/FriendListSearchItem';
 
-export interface FriendListSearchPixiProps {
+export interface FriendListSearchProps {
     value: string;
 }
 
@@ -21,7 +21,7 @@ interface FriendListSearchGroupData {
 }
 
 /** Pixi port of views/friendlist/FriendListSearch.tsx. */
-export const FriendListSearch = ({ value }: FriendListSearchPixiProps) => {
+export const FriendListSearch = ({ value }: FriendListSearchProps) => {
     const friends = useFriends();
     const t = useTranslation();
 

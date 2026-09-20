@@ -17,7 +17,7 @@ import { WiredInspectionPreview } from '#base/context/wired';
 import { useChatPetFace } from '#base/hooks';
 import { Border, Box, ContainerButton, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
 
-import { useFurnitureImageTexturePixi } from '../catalog/useFurnitureImageTexturePixi';
+import { useFurnitureImageTexture } from '../catalog/useFurnitureImageTexture';
 
 const BORDER_WIDTH = 141;
 const BORDER_HEIGHT = 225;
@@ -27,7 +27,7 @@ const FurniPreview = ({ objectId }: { objectId: number }) => {
     const roomObject = room?.getRoomObject(Math.abs(objectId), (objectId < 0) ? RoomObjectCategoryEnum.Wall : RoomObjectCategoryEnum.Floor);
     const colorIndex = roomObject?.model.getValue<number>(RoomObjectVariableEnum.FurnitureColor) ?? 0;
     const extras = roomObject?.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras) ?? 0;
-    const { texture, width, height } = useFurnitureImageTexturePixi(roomObject?.type, Number(colorIndex) || 0, 180, RoomGeometryScaleType.ZoomedIn, Number(extras) || 0);
+    const { texture, width, height } = useFurnitureImageTexture(roomObject?.type, Number(colorIndex) || 0, 180, RoomGeometryScaleType.ZoomedIn, Number(extras) || 0);
 
     if (!texture) return null;
 

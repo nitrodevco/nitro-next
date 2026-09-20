@@ -10,12 +10,12 @@ import { FriendListFriendsFooter } from './footers/FriendListFriendsFooter';
 import { FriendListTab } from './FriendListTab';
 import { FriendListFriendItem } from './items/FriendListFriendItem';
 
-export interface FriendListFriendsPixiProps {
+export interface FriendListFriendsProps {
     value: string;
 }
 
 /** Pixi port of views/friendlist/FriendListFriends.tsx. */
-export const FriendListFriends = ({ value }: FriendListFriendsPixiProps) => {
+export const FriendListFriends = ({ value }: FriendListFriendsProps) => {
     const filterValue = useFriendsStore(x => x.filterValue);
     const onlineFriends = useOnlineFriends();
     const offlineFriends = useOfflineFriends();

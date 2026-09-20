@@ -3,7 +3,7 @@ import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { useTranslation } from '#base/context/system';
 import { Box, Button, Frame, Region, ThemeText } from '#base/theme';
 
-import { useFurnitureImageTexturePixi } from '../../catalog/useFurnitureImageTexturePixi';
+import { useFurnitureImageTexture } from '../../catalog/useFurnitureImageTexture';
 
 /** One seed a breeding produced, or the empty place of one. */
 export interface BreedingSeed {
@@ -29,7 +29,7 @@ const COLUMN_WIDTH = 122;
 const IMAGE_HEIGHT = 130;
 
 const SeedPicture = ({ className }: { className: string }) => {
-    const { texture, width, height } = useFurnitureImageTexturePixi(className.length ? className : undefined, 0, 2, RoomGeometryScaleType.ZoomedIn);
+    const { texture, width, height } = useFurnitureImageTexture(className.length ? className : undefined, 0, 2, RoomGeometryScaleType.ZoomedIn);
     const scale = Math.min(1, COLUMN_WIDTH / Math.max(1, width), IMAGE_HEIGHT / Math.max(1, height));
 
     return (

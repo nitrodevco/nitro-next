@@ -1,9 +1,7 @@
 import { Texture } from 'pixi.js';
 
 import { getOrBuildTexture, usePixiEffectTexture } from '../hooks/usePixiTexture';
-import { useThemeImageUrl } from '../hooks/useThemeImageUrl';
 import { boxBlurAlpha } from '../utils/boxBlur';
-import { getRenderMode } from '../utils/renderMode';
 import { ThemeSliceEffect } from '../utils/themeSprites';
 import { DropShadowConfig } from '../utils/ThemeVariant';
 import { BackgroundLayerConfig } from './BackgroundLayer';
@@ -112,7 +110,7 @@ const skinEffect = ({ color, alpha, blur }: ResolvedShadow, pad: number): ThemeS
 
 type NineSliceSkin = Extract<BackgroundLayerConfig, { kind: 'nineSlice' }>;
 
-const SkinShadowPixi = ({ skin, shadow }: { skin: NineSliceSkin; shadow: ResolvedShadow }) => {
+const SkinShadow = ({ skin, shadow }: { skin: NineSliceSkin; shadow: ResolvedShadow }) => {
     const pad = Math.ceil(shadow.blur / 2);
     const texture = usePixiEffectTexture(skin.textureKey, skinEffect(shadow, pad));
 
@@ -136,36 +134,7 @@ const SkinShadowPixi = ({ skin, shadow }: { skin: NineSliceSkin; shadow: Resolve
     );
 };
 
-const SkinShadowDom = ({ skin, shadow }: { skin: NineSliceSkin; shadow: ResolvedShadow }) => {
-    const pad = Math.ceil(shadow.blur / 2);
-    const url = useThemeImageUrl(skin.textureKey, skinEffect(shadow, pad));
-
-    if (!url) return null;
-
-    const box = shadowBoxLayout(shadow.x, shadow.y, pad);
-    const width = `${skin.topHeight + pad}px ${skin.rightWidth + pad}px ${skin.bottomHeight + pad}px ${skin.leftWidth + pad}px`;
-
-    return (
-        <div style={{
-            position: 'absolute',
-            left: box.left,
-            top: box.top,
-            right: box.right,
-            bottom: box.bottom,
-            pointerEvents: 'none',
-            borderStyle: 'solid',
-            borderColor: 'transparent',
-            borderWidth: width,
-            borderImageSource: `url(${url})`,
-            borderImageSlice: `${skin.topHeight + pad} ${skin.rightWidth + pad} ${skin.bottomHeight + pad} ${skin.leftWidth + pad} fill`,
-            borderImageWidth: width,
-            imageRendering: 'pixelated',
-        }}
-        />
-    );
-};
-
-const RectShadowPixi = ({ shadow }: { shadow: ResolvedShadow }) => {
+const RectShadow = ({ shadow }: { shadow: ResolvedShadow }) => {
     const baked = rectShadowTexture(shadow.blur, shadow.color, shadow.alpha);
 
     if (!baked) return null;
@@ -192,35 +161,18 @@ const RectShadowPixi = ({ shadow }: { shadow: ResolvedShadow }) => {
     );
 };
 
-/** CSS `box-shadow`'s blur radius spreads about half as far as Flash's box window, hence the halving. */
-const RectShadowDom = ({ shadow }: { shadow: ResolvedShadow }) => {
-    const [ r, g, b ] = parseColor(shadow.color);
-
-    return (
-        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', boxShadow: `${shadow.x}px ${shadow.y}px ${shadow.blur / 2}px rgba(${r}, ${g}, ${b}, ${shadow.alpha})` }} />
-    );
-};
-
 /** Render as the FIRST child of the box it shadows, so everything else draws over it. */
 export const ShadowLayer = ({ layer, ...config }: ShadowLayerProps) => {
     const shadow = resolve(config);
-    const dom = getRenderMode() === 'dom';
 
     if (layer?.kind === 'nineSlice') {
-        return dom
-            ? (
-                    <SkinShadowDom
-                        skin={layer}
-                        shadow={shadow}
-                    />
-                )
-            : (
-                    <SkinShadowPixi
-                        skin={layer}
-                        shadow={shadow}
-                    />
-                );
+        return (
+            <SkinShadow
+                skin={layer}
+                shadow={shadow}
+            />
+        );
     }
 
-    return dom ? <RectShadowDom shadow={shadow} /> : <RectShadowPixi shadow={shadow} />;
+    return <RectShadow shadow={shadow} />;
 };

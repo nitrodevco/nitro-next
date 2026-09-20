@@ -22,13 +22,7 @@ export interface IAssetManager {
     getBundleFile<T>(bundleName: string, fileName: string): T | undefined;
     /** A non-JSON, non-PNG entry of a retained bundle, as bytes (a `.ttf` face, ...). */
     getBundleBinary(bundleName: string, fileName: string): ArrayBuffer | undefined;
-    /** A `blob:` URL for one of a retained bundle's bitmaps, for the DOM render target. */
-    getBundleImageUrl(bundleName: string, fileName: string): string | undefined;
-    /** The same, searching every retained bundle - asset names are unique across all of them. */
-    findBundleImageUrl(fileName: string): string | undefined;
     /** Drops a retained bundle's tables and raw bytes once its consumer has read them. */
     releaseBundleData(name: string): void;
-    /** Whether retained bundles keep encoded bitmap bytes for `getBundleImageUrl` (DOM target only). */
-    keepBundleImageBytes: boolean;
     readonly collections: Map<string, IGraphicAssetCollection>;
 }

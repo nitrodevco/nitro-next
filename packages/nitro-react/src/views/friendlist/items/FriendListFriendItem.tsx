@@ -17,7 +17,7 @@ const RELATIONSHIP_IMAGES = {
     bobba: LayoutImage('shared/relationship_status_bobba.png'),
 } as const;
 
-export interface FriendListFriendItemPixiProps {
+export interface FriendListFriendItemProps {
     friend: IMessengerFriend;
     showRelationshipIcon?: boolean;
     showFollowIcon?: boolean;
@@ -26,7 +26,7 @@ export interface FriendListFriendItemPixiProps {
 }
 
 /** Pixi port of views/friendlist/items/FriendListFriendItem.tsx. */
-export const FriendListFriendItem = memo(({ friend, showRelationshipIcon = true, showFollowIcon = true, showMessageIcon = true, zebraColor }: FriendListFriendItemPixiProps) => {
+export const FriendListFriendItem = memo(({ friend, showRelationshipIcon = true, showFollowIcon = true, showMessageIcon = true, zebraColor }: FriendListFriendItemProps) => {
     const dropdownRef = useRef<PixiContainer | null>(null);
 
     const relationshipDropdownId = useFriendsStore(x => x.relationshipDropdownId);

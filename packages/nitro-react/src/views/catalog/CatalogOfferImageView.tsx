@@ -2,7 +2,7 @@ import { IPurchasableOffer, RoomGeometryScaleType } from '@nitrodevco/nitro-api'
 
 import { useCatalogOfferProduct } from '#base/hooks';
 
-import { useFurnitureImageTexturePixi } from './useFurnitureImageTexturePixi';
+import { useFurnitureImageTexture } from './useFurnitureImageTexture';
 
 /**
  * Flash `catalog/viewer/§_-L1t§.PRODUCT_IMAGES`: offers (by localization id) whose preview is a
@@ -71,7 +71,7 @@ export const CatalogOfferImageView = ({ offer }: CatalogOfferImageViewProps) => 
     const hardCodedImage = PRODUCT_IMAGES[offer.localizationId];
     const skip = !product || (hardCodedImage && hardCodedImage.length > 0);
 
-    const { texture, width, height } = useFurnitureImageTexturePixi(
+    const { texture, width, height } = useFurnitureImageTexture(
         skip ? undefined : product.furnitureData.className,
         skip ? undefined : product.furnitureData.colorIndex,
         2,

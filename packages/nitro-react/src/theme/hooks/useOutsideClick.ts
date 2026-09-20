@@ -5,8 +5,8 @@ import { RefObject, useEffect, useRef } from 'react';
 /**
  * Pixi port of hooks/ui/useOutsideClick.ts. DOM's version hit-tests via `element.contains(
  * event.target)`, which has no Pixi equivalent (a Pixi container isn't a DOM node, and every
- * popup shares the same single `<canvas>` as its DOM target regardless of where it sits in the
- * Pixi display tree). This instead hit-tests geometrically: the same native `window`
+ * popup is drawn into the one shared `<canvas>` wherever it sits in the Pixi display tree).
+ * This instead hit-tests geometrically: the same native `window`
  * `pointerdown` listener DOM's version uses (browser pointer events work the same regardless of
  * which element started them, the same reasoning useFrameDrag.ts/useScrollController.ts already
  * rely on for their own window-level listeners), converted from window/client space into the

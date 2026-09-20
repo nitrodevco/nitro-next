@@ -1,5 +1,5 @@
 import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { GetAvatarRenderManager, GetRenderer, GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
+import { GetAvatarRenderManager, GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer, PointData } from 'pixi.js';
 import { RefObject, useEffect, useRef } from 'react';
 
@@ -54,7 +54,7 @@ export interface RoomPreviewerApi {
  * its Yoga-computed size drives the room canvas) or a DOM `<canvas>` (the room is rendered
  * off-screen and blitted into it every frame, sized by its parent element).
  */
-export type RoomPreviewerTarget = PixiContainer | HTMLCanvasElement;
+export type RoomPreviewerTarget = PixiContainer;
 
 /**
  * The engine room a previewer draws into, created and given its small showcase floor on first
@@ -327,17 +327,6 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         room.canvas?.setBackgroundVisible(!transparent);
         applyFixedScale();
-
-        const target = targetRef.current;
-
-        if (target instanceof HTMLCanvasElement) {
-            target.width = width;
-            target.height = height;
-            target.style.width = `${width}px`;
-            target.style.height = `${height}px`;
-
-            render();
-        }
     };
 
     const updateRoomPreview = () => {
@@ -510,23 +499,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         room.updateRoomObjectUserDirection(PREVIEW_OBJECT_ID, new Vector3d(degrees), degrees);
     };
 
-    /** DOM target: blit the room's master container (advanced by the engine tick) into the `<canvas>`. */
-    const renderToCanvas = (canvas: HTMLCanvasElement) => {
-        if (!room?.canvas?.master) return;
-
-        updateRoomPreview();
-
-        const extracted = GetRenderer().extract.canvas({ target: room.canvas.master });
-        const ctx = canvas.getContext('2d');
-
-        if (!ctx) return;
-
-        ctx.clearRect(0, 0, room.canvas.master.width, room.canvas.master.height);
-
-        ctx.drawImage(extracted as unknown as CanvasImageSource, 0, 0, room.canvas.master.width, room.canvas.master.height);
-    };
-
-    /** Pixi target: keep the room's master container (advanced by the engine tick) parented under the node. */
+    /** Keeps the room's master container (advanced by the engine tick) parented under the node. */
     const renderIntoContainer = (node: PixiContainer) => {
         if (!room?.canvas?.master) return;
 
@@ -549,8 +522,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         if (!target) return;
 
-        if (target instanceof HTMLCanvasElement) renderToCanvas(target);
-        else renderIntoContainer(target);
+        renderIntoContainer(target);
     };
 
     useEffect(() => {
@@ -599,12 +571,10 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         GetTicker().add(tick);
 
-        let timer: ReturnType<typeof setTimeout> | undefined;
-        let observer: ResizeObserver | undefined;
         let layoutNode: PixiContainer | undefined;
         const target = targetRef.current;
 
-        // Pixi: the node's Yoga size, from @pixi/layout's `layout` event rather than polling.
+        // The node's Yoga size, from @pixi/layout's `layout` event rather than polling.
         const onLayout = () => {
             if (!layoutNode) return;
 
@@ -614,29 +584,11 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
             if (width > 0 && height > 0 && (width !== previewData.current.previewWidth || height !== previewData.current.previewHeight)) resizeRoomPreview(width, height);
         };
 
-        if (target && !(target instanceof HTMLCanvasElement)) {
+        if (target) {
             layoutNode = target;
 
             layoutNode.on('layout', onLayout);
             onLayout();
-        }
-
-        // DOM: the <canvas> follows its parent element's size.
-        if (target instanceof HTMLCanvasElement && target.parentElement) {
-            const parent = target.parentElement;
-            const rect = parent.getBoundingClientRect();
-
-            resizeRoomPreview(Math.floor(rect.width), Math.floor(rect.height));
-
-            observer = new ResizeObserver((entries) => {
-                const { width, height } = entries[0]?.contentRect ?? { width: 0, height: 0 };
-
-                clearTimeout(timer);
-
-                timer = setTimeout(() => resizeRoomPreview(Math.floor(width), Math.floor(height)), 5);
-            });
-
-            observer.observe(parent);
         }
 
         const onObjectEvent = (event: RoomEngineObjectEvent) => {
@@ -661,8 +613,6 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         return () => {
             GetTicker().remove(tick);
             layoutNode?.off('layout', onLayout);
-            observer?.disconnect();
-            clearTimeout(timer);
             listeners.map(x => x?.());
 
             if (mountedMasterRef.current?.parent) mountedMasterRef.current.parent.removeChild(mountedMasterRef.current);

@@ -40,7 +40,7 @@ import {
 import { useConfigValue, useSystemStore, useTranslation } from '#base/context/system';
 import { useWiredTradingStore } from '#base/context/wired-trading';
 import { Border, Box, Button, Dropmenu, InfiniteGrid, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
-import { useFurnitureImageTexturePixi } from '#base/views/catalog/useFurnitureImageTexturePixi';
+import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 
 const THUMB_SIZE = 42;
 /** `GroupItem.updateBackgroundVisual`: 10275685 for a new group, 13421772 otherwise. */
@@ -120,7 +120,7 @@ const FurniThumb = ({ group, selected, onSelect }: FurniThumbProps) => {
 /** `furni_preview_widget`, standing in for the room previewer: the furni at 64 facing 90 degrees. */
 const FurniPreview = ({ group }: { group: InventoryFurniGroup }) => {
     const furniData = useGroupFurniData(group);
-    const { texture, width, height } = useFurnitureImageTexturePixi(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
+    const { texture, width, height } = useFurnitureImageTexture(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
 
     if (!texture) return null;
 

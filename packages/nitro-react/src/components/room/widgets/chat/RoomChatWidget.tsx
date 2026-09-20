@@ -1,6 +1,5 @@
 import { useRoom } from '#base/context/room';
 import { useUserStore } from '#base/context/user';
-import { getRenderMode } from '#base/theme';
 
 import { ChatFlowProvider } from './ChatFlowProvider';
 import { RoomChatBubbles } from './RoomChatBubbles';
@@ -16,7 +15,7 @@ export const RoomChatWidget = () => {
     const room = useRoom();
     const freeFlowChatDisabled = useUserStore(x => x.freeFlowChatDisabled);
 
-    if (!room || freeFlowChatDisabled || (getRenderMode() !== 'pixi')) return null;
+    if (!room || freeFlowChatDisabled) return null;
 
     return (
         <ChatFlowProvider>

@@ -5,7 +5,6 @@ import { useEffect, useRef } from 'react';
 
 import { useRoom, useRoomMouseActions, useRoomStore } from '#base/context/room';
 import { useRoomCamera } from '#base/hooks';
-import { getRenderMode } from '#base/theme';
 
 type MouseData = {
     mouseXY: { x: number; y: number };
@@ -30,7 +29,6 @@ export const RoomCanvas = () => {
         isDragged: false,
         wasDragged: false,
     });
-    const renderMode = getRenderMode();
 
     const handleRoomDragging = (
         x: number,
@@ -162,7 +160,7 @@ export const RoomCanvas = () => {
         if (!canvas) {
             canvas = room.getRoomCanvas(width, height, RoomGeometryScaleType.ZoomedIn);
 
-            if (renderMode === 'pixi' && canvas.master) GetRoomStage().addChild(canvas.master);
+            if (canvas.master) GetRoomStage().addChild(canvas.master);
         } else {
             canvas.initialize(width, height);
         }
@@ -183,8 +181,6 @@ export const RoomCanvas = () => {
             room.canvas.initialize(width, height);
 
             updateRoomCamera(-1);
-
-            if (renderMode === 'dom') renderer.render(container);
         };
 
         renderer.on('resize', resizeCanvas);
@@ -210,8 +206,6 @@ export const RoomCanvas = () => {
 
             if (hasAndResetCursorUpdate()) container.cursor = hasCursorOwners() ? 'pointer' : 'auto';
 
-            if (renderMode === 'dom') renderer.render(container);
-
             /*
              * Everything that sits over the room - the name and menu bubbles, friend requests, quiz
              * thumbs - repositions itself off this, once the camera and any drag have moved the
@@ -229,22 +223,6 @@ export const RoomCanvas = () => {
 
         const handlePointerEvent = (event: FederatedPointerEvent) => {
             if (!room) return;
-
-            // Pixi's EventSystem listens for `pointermove` on `document` and `pointerup` on
-            // `window` (pixi.js's EventSystem.mjs), not scoped to its own canvas the way
-            // `pointerdown` is - by design, so a drag begun on the canvas keeps tracking once
-            // the pointer strays off it. In DOM render mode that same canvas sits underneath
-            // real DOM windows (#ui-container, z-index above it), so those two event types
-            // still reach the room's hover/drag handling even while the pointer is actually
-            // over a window's own DOM elements, letting room interactions leak through
-            // whatever's visually on top. Bail out whenever the canvas isn't the real topmost
-            // element at this point - Pixi's own UI render mode has nothing to check here since
-            // the UI is part of the very same canvas.
-            if (getRenderMode() === 'dom') {
-                const canvas = GetRenderer().canvas;
-
-                if (canvas && document.elementFromPoint(event.clientX, event.clientY) !== canvas) return;
-            }
 
             let eventType = event.type;
 

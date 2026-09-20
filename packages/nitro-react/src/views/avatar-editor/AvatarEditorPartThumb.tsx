@@ -2,7 +2,7 @@ import { IPartColor } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
 import { PartThumbnailRequest, usePartThumbnail } from '#base/hooks';
-import { Box, getRenderMode, LayoutImage, Region, ThemeImage } from '#base/theme';
+import { Box, LayoutImage, Region, ThemeImage } from '#base/theme';
 
 export interface AvatarEditorPartThumbProps {
     selected: boolean;
@@ -24,7 +24,6 @@ const CELL = 50;
 export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesColors, isClub, isSellable, isClear, disabled, selectPart }: AvatarEditorPartThumbProps) => {
     const [ isHovering, setIsHovering ] = useState<boolean>(false);
     const thumbnail = usePartThumbnail(isClear ? undefined : part, setType);
-    const isPixi = getRenderMode() !== 'dom';
 
     return (
         <Region
@@ -49,7 +48,7 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
                     src={LayoutImage('shared/avatar_editor_avatar_editor_download_icon.png')}
                 />
             )}
-            {thumbnail && isPixi && (
+            {thumbnail && (
                 <Box
                     alpha={disabled ? 0.2 : 1}
                     layout={{ position: 'absolute', left: Math.floor((CELL - thumbnail.width) / 2), top: Math.floor((CELL - thumbnail.height) / 2), width: thumbnail.width, height: thumbnail.height }}

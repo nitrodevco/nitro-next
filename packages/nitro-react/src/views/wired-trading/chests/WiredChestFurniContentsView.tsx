@@ -23,7 +23,7 @@ import { useWiredTradingStore } from '#base/context/wired-trading';
 import { useWiredChestItemFurniData, useWiredChestItemName, useWiredChestItemNameResolver } from '#base/hooks';
 import { Border, Box, Button, LayoutImage, Region, ScrollArea, TextInput, ThemeImage, ThemeText } from '#base/theme';
 import { WiredChestItemGroup } from '#base/utils';
-import { useFurnitureImageTexturePixi } from '#base/views/catalog/useFurnitureImageTexturePixi';
+import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 import { WiredChestItemCell } from '#base/views/wired-trading/common/WiredChestItemCell';
 
 /** `FurniChestView.§_-u11§`: the search bar shows from this many groups. */
@@ -37,7 +37,7 @@ export const WIRED_FURNI_CHEST_HEIGHT = 264;
 /** `preview_image`: the product image widget, the furni at 64 facing 90 degrees. */
 const ChestItemPreview = ({ itemType }: { itemType: IChestItemType }) => {
     const furniData = useWiredChestItemFurniData(itemType);
-    const { texture, width, height } = useFurnitureImageTexturePixi(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
+    const { texture, width, height } = useFurnitureImageTexture(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
 
     if (!texture) return null;
 

@@ -58,7 +58,7 @@ export const NotificationsBubble = ({ item, frame, zIndex, onHover, onClick, onS
     const [ node, setNode ] = useState<PixiContainer | null>(null);
 
     // A DOM-mode node is an element: see `useLayoutEvent`.
-    useLayoutEvent(node, () => onMeasure(node?.layout?.computedLayout.height ?? (node as unknown as HTMLElement | null)?.clientHeight ?? 0));
+    useLayoutEvent(node, () => onMeasure(node?.layout?.computedLayout.height ?? 0));
 
     return (
         <Box

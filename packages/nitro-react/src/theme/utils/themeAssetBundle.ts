@@ -46,15 +46,12 @@ export const preloadThemeAssets = async (): Promise<void> => {
         if (texture) registerThemeTexture(key, texture);
     }
 
-    // Only the DOM target gets a url: it draws chrome with CSS, and the bytes behind the url are
-    // only retained for it (see `AssetManager.keepBundleImageBytes`). Pixi draws `sheet` itself.
-    const url = assetManager.getBundleImageUrl(BUNDLE_NAME, `${BUNDLE_NAME}.png`);
     // The `ImageBitmap` the bundle decoded to: a `CanvasImageSource`, which is all a slice needs.
     const image: CanvasImageSource | undefined = sheet.source.resource;
 
     if (!image) return;
 
-    registerThemeAtlas({ image, url, width: sheet.source.width, height: sheet.source.height }, manifest.frames);
+    registerThemeAtlas({ image, width: sheet.source.width, height: sheet.source.height }, manifest.frames);
 
     // The rects are in `themeSprites` now; the manifest they were read out of is not needed again.
     assetManager.releaseBundleData(BUNDLE_NAME);

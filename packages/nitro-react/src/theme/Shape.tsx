@@ -2,8 +2,7 @@ import { Container as PixiContainer, Graphics } from 'pixi.js';
 import { forwardRef, useCallback } from 'react';
 
 import { Box, BoxLayout } from './Box';
-import { boxLayoutToStyle } from './dom';
-import { getRenderMode, ThemeLayoutMeta } from './utils';
+import { ThemeLayoutMeta } from './utils';
 
 export type ShapeKind = 'rectangle' | 'round_rectangle' | 'ellipse' | 'rhombus';
 
@@ -39,23 +38,6 @@ export const Shape = forwardRef<PixiContainer, ShapeProps>(({ shape = 'rectangle
 
         if (strokeColor && strokeThickness > 0) g.stroke({ color: strokeColor, width: strokeThickness });
     }, [ shape, color, strokeColor, strokeThickness, radius ]);
-
-    if (getRenderMode() === 'dom') {
-        const borderRadius = shape === 'ellipse' ? '50%' : shape === 'round_rectangle' ? radius : undefined;
-
-        return (
-            <div style={{
-                ...boxLayoutToStyle(layout),
-                display: visible === false ? 'none' : undefined,
-                backgroundColor: color,
-                opacity: alpha,
-                borderRadius,
-                border: strokeColor && strokeThickness > 0 ? `${strokeThickness}px solid ${strokeColor}` : undefined,
-                transform: shape === 'rhombus' ? 'rotate(45deg) scale(0.7071)' : undefined,
-            }}
-            />
-        );
-    }
 
     return (
         <Box

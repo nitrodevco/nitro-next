@@ -1,15 +1,12 @@
-import { Color, Container, Graphics } from 'pixi.js';
-import { DropShadowFilter } from 'pixi-filters';
-import { CSSProperties, forwardRef, ForwardRefExoticComponent, JSX, MouseEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes, useCallback, useState } from 'react';
+import { Container, Graphics } from 'pixi.js';
+import { forwardRef, ForwardRefExoticComponent, JSX, ReactNode, RefAttributes, useCallback, useState } from 'react';
 
-import { boxLayoutToStyle } from './dom';
-import { cursorForHandlers, getRenderMode, pointerEventsFromEventMode, resolveEventMode, wrapTextChildren } from './utils';
+import { cursorForHandlers, resolveEventMode, wrapTextChildren } from './utils';
 
 /**
  * The flex/positioning primitive: a thin typed wrapper around pixiContainer + @pixi/layout's
  * `layout` prop (flexDirection, justifyContent, alignItems, gap, padding, position:
- * 'absolute'/'relative', percentage sizing, ...). Views compose everything from Box the way
- * they compose divs in the DOM theme package.
+ * 'absolute'/'relative', percentage sizing, ...). Views compose everything from Box.
  */
 export type BoxProps = JSX.IntrinsicElements['pixiContainer'];
 
@@ -65,7 +62,7 @@ const clipsOverflow = (layout: BoxProps['layout']): boolean => {
     return overflow === 'hidden' || overflow === 'scroll';
 };
 
-const BoxPixi = forwardRef<Container, BoxProps>(
+export const Box: ForwardRefExoticComponent<BoxProps & RefAttributes<Container>> = forwardRef<Container, BoxProps>(
     ({ children, eventMode, cursor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap, mask, ...props }, ref) => {
         const [ overflowMask, setOverflowMask ] = useState<Graphics | null>(null);
         const clips = clipsOverflow(props.layout);
@@ -106,88 +103,6 @@ const BoxPixi = forwardRef<Container, BoxProps>(
             </pixiContainer>
         );
     },
-);
-
-BoxPixi.displayName = 'BoxPixi';
-
-/**
- * `BoxProps` is `JSX.IntrinsicElements['pixiContainer']` - the full Pixi Container prop
- * surface (filters, mask, hitArea, blendMode, ...). Only the subset actually exercised by the
- * dual-target components (layout, eventMode, cursor, the pointer handlers `useInteractionState`
- * produces or a caller attaches directly, x/y, zIndex, alpha) is translated to CSS/DOM event
- * props here; anything else (Frame's drop-shadow `filters`, `mask`, a custom `hitArea`) is a
- * Pixi-only concern that simply doesn't apply in DOM mode and is dropped rather than faked.
- */
-const BoxDom = forwardRef<Container, BoxProps>(
-    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, visible, filters, blendMode, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
-        const style = boxLayoutToStyle(layout as BoxLayout | undefined);
-        const dropShadows = (Array.isArray(filters) ? filters : filters ? [ filters ] : []).filter((filter): filter is DropShadowFilter => filter instanceof DropShadowFilter);
-
-        // The one Pixi filter with a faithful CSS counterpart (Frame's window shadow, a layout
-        // port's `<DropShadowFilter>`); any other filter has no DOM equivalent and is dropped.
-        if (dropShadows.length) {
-            style.filter = dropShadows.map(filter => `drop-shadow(${filter.offset.x}px ${filter.offset.y}px ${filter.blur}px ${Color.shared.setValue(filter.color).setAlpha(filter.alpha).toRgbaString()})`).join(' ');
-        }
-        const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
-
-        // `#ui-container` (MainView.tsx) sets `pointer-events: none` at its root so clicks
-        // pass through to the room canvas beneath everywhere except an actual interactive
-        // element - every interactive Box needs to explicitly opt back in with `auto` (CSS
-        // `pointer-events` is inherited, so without this every button under that root would
-        // silently inherit `none` and never receive a click).
-        style.pointerEvents = pointerEventsFromEventMode(resolvedEventMode);
-        // Same rule as BoxPixi above: the pointer follows the click handlers, never the event
-        // mode, and a caller's own cursor always wins.
-        const resolvedCursor = (typeof cursor === 'string' && cursor.length) ? cursor : cursorForHandlers(resolvedEventMode, { onPointerTap });
-
-        if (resolvedCursor) style.cursor = resolvedCursor;
-        if (typeof zIndex === 'number') style.zIndex = zIndex;
-        if (typeof alpha === 'number') style.opacity = alpha;
-        if (visible === false) style.display = 'none';
-        // CSS has no additive blend; `screen` is the closest look for the glow sprites that use it.
-        if (typeof blendMode === 'string' && blendMode !== 'normal' && blendMode !== 'inherit') style.mixBlendMode = (blendMode === 'add' ? 'screen' : blendMode) as CSSProperties['mixBlendMode'];
-        if (x || y) {
-            style.transform = `translate(${x}px, ${y}px)`;
-            style.transformOrigin = 'top left';
-        }
-
-        return (
-            <div
-                // DOM mode never runs the Pixi-specific ref consumers a caller might be holding
-                // this for (measurement via `.layout.computedLayout`, drag/resize, hitArea
-                // wiring) - none of that executes when getRenderMode() === 'dom', so redirecting
-                // the incoming `Ref<Container>` at a plain HTMLDivElement here is safe in
-                // practice even though the two element types don't structurally match.
-                ref={ref as unknown as Ref<HTMLDivElement>}
-                style={style}
-                onPointerEnter={onPointerOver as unknown as PointerEventHandler}
-                onPointerLeave={onPointerOut as unknown as PointerEventHandler}
-                onPointerDown={onPointerDown as unknown as PointerEventHandler}
-                onPointerUp={onPointerUp as unknown as PointerEventHandler}
-                onClick={onPointerTap as unknown as MouseEventHandler}
-            >
-                {wrapTextChildren(children as ReactNode)}
-            </div>
-        );
-    },
-);
-
-BoxDom.displayName = 'BoxDom';
-
-export const Box: ForwardRefExoticComponent<BoxProps & RefAttributes<Container>> = forwardRef<Container, BoxProps>(
-    (props, ref) => getRenderMode() === 'dom'
-        ? (
-                <BoxDom
-                    ref={ref}
-                    {...props}
-                />
-            )
-        : (
-                <BoxPixi
-                    ref={ref}
-                    {...props}
-                />
-            ),
 );
 
 Box.displayName = 'Box';

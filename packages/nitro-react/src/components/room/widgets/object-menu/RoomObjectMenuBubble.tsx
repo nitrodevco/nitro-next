@@ -21,7 +21,7 @@ const OBJECT_GAP = 4;
 /** Where the drop smoothing starts from, before any real height has been seen. */
 const INITIAL_MAX_STACK = -1000000;
 
-type RoomObjectInfoBubblePixiProps = {
+type RoomObjectInfoBubbleProps = {
     objectData: ISimpleRoomObjectData;
     /** Humanoid units get the taller gap above the head; furniture and pets leave this out. */
     userType?: RoomObjectUserType;
@@ -45,7 +45,7 @@ const isAvatar = (userType: RoomObjectUserType | undefined) => (userType === Roo
  * that is the flicker on first open. Transparent rather than invisible, because yoga does not
  * measure an invisible node at all.
  */
-export const RoomObjectMenuBubble = (props: RoomObjectInfoBubblePixiProps) => {
+export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
     const { objectData, userType, fades = false, children, onClose = undefined } = props;
     const { objectId, category } = objectData;
     const room = useRoom();

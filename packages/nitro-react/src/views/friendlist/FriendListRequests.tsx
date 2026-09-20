@@ -5,12 +5,12 @@ import { FriendListRequestsFooter } from './footers/FriendListRequestsFooter';
 import { FriendListTab } from './FriendListTab';
 import { FriendListRequestItem } from './items/FriendListRequestItem';
 
-export interface FriendListRequestsPixiProps {
+export interface FriendListRequestsProps {
     value: string;
 }
 
 /** Pixi port of views/friendlist/FriendListRequests.tsx. */
-export const FriendListRequests = ({ value }: FriendListRequestsPixiProps) => {
+export const FriendListRequests = ({ value }: FriendListRequestsProps) => {
     const requests = useFriendRequests();
 
     if (!Object.keys(requests).length) return null;

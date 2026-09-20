@@ -53,7 +53,7 @@ const habboTextStyle = <K extends HabboTextStyleName>(habboKey: K): { fontFamily
 
 /**
  * The theme's text styles, each a Flash `styles.css` style by its `habboKey`. Exported (not
- * module-private) so `theme/dom/textStyleDom.ts` can translate the same font/size/color data to
+ * module-private) so callers can read the same font/size/color data off
  * CSS instead of duplicating this table.
  */
 export const TEXT_STYLES = {

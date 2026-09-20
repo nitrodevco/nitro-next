@@ -13,7 +13,7 @@ import { preloadAssetBundles } from '#base/utils';
 import { MainView } from './MainView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 
-export const NitroPixiView = () => {
+export const NitroView = () => {
     const [ isRendererReady, setIsRendererReady ] = useState(false);
     const [ isEngineReady, setIsEngineReady ] = useState(false);
     const { isAuthenticated, connect } = useWebSocketContext();

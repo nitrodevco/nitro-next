@@ -5,11 +5,10 @@
  *
  * A window's content area clips (`ContentArea` masks its overflow), and a drop menu's list or a
  * sub menu of the wired variable picker reaches past the window's edge, so the popup cannot stay
- * where React mounts it. `@pixi/react` has no portal, so on the Pixi target the popup's container is moved,
- * after mount, into the screen-sized layer all windows live in (the ancestor right under the
- * stage) and handed back before React unmounts it; React only ever talks to the container
- * itself (`removeChild` destroys it wherever it is), never to its position in the display list.
- * The DOM target has a real portal and uses it.
+ * where React mounts it. `@pixi/react` has no portal, so the popup's container is moved, after
+ * mount, into the screen-sized layer all windows live in (the ancestor right under the stage)
+ * and handed back before React unmounts it; React only ever talks to the container itself
+ * (`removeChild` destroys it wherever it is), never to its position in the display list.
  *
  * `x` / `y` are screen coordinates - take them from `getGlobalRect(anchor)` in the handler that
  * opens the popup. A pointer press anywhere outside the popup (its overflowing children
@@ -18,11 +17,9 @@
 import { GetRenderer } from '@nitrodevco/nitro-renderer';
 import { Container } from 'pixi.js';
 import { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import { Box, BoxLayout } from './Box';
 import { useRevealWhenSettled } from './hooks';
-import { getRenderMode } from './utils/renderMode';
 
 /** Above every frame (their z-indices count up from 100), below the tooltip layer (100000). */
 const POPUP_Z_INDEX = 90000;
@@ -35,10 +32,8 @@ export interface FloatingPopupProps {
     children?: ReactNode;
 }
 
-/** Whether a native pointer event landed on the popup, on either render target. */
-const isInsidePopup = (node: Container | HTMLElement, event: PointerEvent): boolean => {
-    if (node instanceof HTMLElement) return (event.target instanceof Node) && node.contains(event.target);
-
+/** Whether a native pointer event landed on the popup. */
+const isInsidePopup = (node: Container, event: PointerEvent): boolean => {
     const canvas = GetRenderer().canvas;
 
     if (!canvas) return true;
@@ -115,8 +110,6 @@ export const FloatingPopup = ({ x, y, onOutsideClick, layout, children }: Floati
             {children}
         </Box>
     );
-
-    if (getRenderMode() === 'dom') return createPortal(popup, document.body);
 
     return (
         <Box

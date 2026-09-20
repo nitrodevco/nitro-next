@@ -1,2 +1,2 @@
 export * from './flash-text';
-export * from './FlashTextPixi';
+export * from './FlashText';

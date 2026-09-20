@@ -195,7 +195,7 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                 {(blend === undefined)
                     ? skin
                     : (
-                            // The skin alone at `blend` (a group alpha in DOM; per-sprite in Pixi, identical for
+                            // The skin alone at `blend` (a group alpha - identical to a per-sprite one for
                             // the single-sprite and non-overlapping composite skins). Children stay outside it.
                             <Box
                                 layout={FillLayout}

@@ -1,7 +1,6 @@
 import { BoxLayout } from '../Box';
-import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
 import { getCroppedTexture, usePixiTexture } from '../hooks';
-import { FillLayout, getRenderMode, SpriteFrame, spriteLayoutFromFrame } from '../utils';
+import { FillLayout, SpriteFrame, spriteLayoutFromFrame } from '../utils';
 import { BackgroundLayerConfig } from './BackgroundLayer';
 
 export interface SpriteLayerProps {
@@ -15,7 +14,7 @@ export interface SpriteLayerProps {
     layout?: BoxLayout;
 }
 
-const SpriteLayerPixi = ({ textureKey, frame, tintColor, layout }: SpriteLayerProps) => {
+const SpriteLayer = ({ textureKey, frame, tintColor, layout }: SpriteLayerProps) => {
     const baseTexture = usePixiTexture(textureKey);
     // A sub-frame shares the base's source; `getCroppedTexture` hands back the same Texture
     // object for the same rect every time, so remounts allocate nothing.
@@ -33,24 +32,6 @@ const SpriteLayerPixi = ({ textureKey, frame, tintColor, layout }: SpriteLayerPr
     );
 };
 
-const SpriteLayerDom = ({ textureKey, frame, tintColor, layout }: SpriteLayerProps) => {
-    if (!textureKey) return null;
-
-    const resolvedLayout = spriteLayoutFromFrame(frame, layout);
-
-    return (
-        <BackgroundLayerDom
-            layer={{ kind: 'sprite', textureKey, frame }}
-            tintColor={tintColor}
-            style={resolvedLayout ? boxLayoutToStyle(resolvedLayout) : undefined}
-        />
-    );
-};
-
 const Stretch = (textureKey: string, frame?: SpriteFrame): BackgroundLayerConfig => ({ kind: 'sprite', textureKey, frame });
-
-const SpriteLayer = (props: SpriteLayerProps) => getRenderMode() === 'dom'
-    ? <SpriteLayerDom {...props} />
-    : <SpriteLayerPixi {...props} />;
 
 export { SpriteLayer, Stretch };

@@ -84,13 +84,24 @@ const DEFAULT_FONT_SIZE = 9;
 /** `0xRRGGBB` -> `#rrggbb`. */
 const toCssColor = (color: number): string => `#${(color & 0xffffff).toString(16).padStart(6, '0')}`;
 
-/** The drawable behind a Pixi texture, for the canvas compositing `createBackground` does. */
-const toCanvasImageSource = (texture: Texture): CanvasImageSource | undefined => {
-    const resource = (texture.source as { resource?: unknown }).resource;
+/**
+ * Blits one texture onto a canvas at `(x, y)`, for the compositing `createBackground` does.
+ *
+ * The rect matters: a bundled bitmap is a region of its bundle's packed sheet, not a texture that
+ * owns its source, so drawing `texture.source.resource` whole puts the top-left corner of the
+ * whole chat-styles sheet in the bubble instead of the style's own art. `texture.frame` is where
+ * this one actually sits in it.
+ */
+const drawTexture = (ctx: CanvasRenderingContext2D, texture: Texture, x: number, y: number): boolean => {
+    const resource = (texture.source as { resource?: unknown }).resource as CanvasImageSource | undefined;
 
-    if (!resource) return undefined;
+    if (!resource || (typeof resource !== 'object')) return false;
 
-    return resource as CanvasImageSource;
+    const { x: sx, y: sy, width, height } = texture.frame;
+
+    ctx.drawImage(resource, sx, sy, width, height, x, y, width, height);
+
+    return true;
 };
 
 /**
@@ -297,11 +308,6 @@ export class ChatStyle implements IChatStyle {
             return cached;
         }
 
-        const base = toCanvasImageSource(this._textures.base);
-        const overlay = toCanvasImageSource(colorLayer);
-
-        if (!base || !overlay) return this._textures.base;
-
         const width = this._textures.base.width;
         const height = this._textures.base.height;
         const canvas = document.createElement('canvas');
@@ -314,7 +320,8 @@ export class ChatStyle implements IChatStyle {
         if (!ctx) return this._textures.base;
 
         ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(base, 0, 0);
+
+        if (!drawTexture(ctx, this._textures.base, 0, 0)) return this._textures.base;
 
         // Flash: `draw(colorBitmap, null, ColorTransform(r, g, b), BlendMode.DARKEN)` - the colour
         // bitmap multiplied by the colour, keeping its own alpha, darkened onto the base copy.
@@ -328,12 +335,14 @@ export class ChatStyle implements IChatStyle {
         if (!tintCtx) return this._textures.base;
 
         tintCtx.imageSmoothingEnabled = false;
-        tintCtx.drawImage(overlay, 0, 0);
+
+        if (!drawTexture(tintCtx, colorLayer, 0, 0)) return this._textures.base;
+
         tintCtx.globalCompositeOperation = 'multiply';
         tintCtx.fillStyle = toCssColor(key);
         tintCtx.fillRect(0, 0, tinted.width, tinted.height);
         tintCtx.globalCompositeOperation = 'destination-in';
-        tintCtx.drawImage(overlay, 0, 0);
+        drawTexture(tintCtx, colorLayer, 0, 0);
 
         // Flash's `draw` passes no matrix: the layer lands at 0,0 whatever `colorXY` says (the
         // library reads it into the style and nothing reads it back).

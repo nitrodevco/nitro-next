@@ -4,14 +4,14 @@ import { ReactNode } from 'react';
 import { useFriendsActions } from '#base/context/friend';
 import { Box, ColorLayer, Icon, ThemeText, useAvatarImageTexture } from '#base/theme';
 
-interface FriendListItemPixiUser {
+interface FriendListItemUser {
     readonly name: string;
     readonly figure: string;
     readonly gender?: AvatarGenderType;
 }
 
-export interface FriendListItemPixiProps {
-    user: FriendListItemPixiUser;
+export interface FriendListItemProps {
+    user: FriendListItemUser;
     selected?: boolean;
     hideAvatarElement?: boolean;
     showAvatarHead?: boolean;
@@ -30,7 +30,7 @@ export interface FriendListItemPixiProps {
  * asks `useAvatarImageTexture` for a `headOnly` crop directly (same pragmatic divergence already
  * used for the toolbar's circular avatar) and stretches it to fill the 20x20 slot instead.
  */
-export const FriendListItem = ({ user, selected = false, hideAvatarElement = false, showAvatarHead = true, zebraColor, onPress, children }: FriendListItemPixiProps) => {
+export const FriendListItem = ({ user, selected = false, hideAvatarElement = false, showAvatarHead = true, zebraColor, onPress, children }: FriendListItemProps) => {
     const { tooltipHandlers } = useFriendsActions();
     const profileHover = tooltipHandlers('infostand.profile.link.tooltip');
     const { texture: avatarTexture } = useAvatarImageTexture(showAvatarHead ? user.figure : undefined, user.gender ?? AvatarGenderType.Unisex, { headOnly: true, direction: 2 });

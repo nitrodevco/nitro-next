@@ -3,7 +3,7 @@ import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import { RoomPreviewerApi, RoomPreviewerOptions, useRoomPreviewer } from '#base/hooks';
-import { Box, BoxLayout, getRenderMode } from '#base/theme';
+import { Box, BoxLayout } from '#base/theme';
 
 /** What a parent drives the preview with, through a ref - the hook's own API. */
 export type RoomPreviewerHandle = RoomPreviewerApi;
@@ -35,7 +35,7 @@ const useReadyCallback = (api: RoomPreviewerApi, onReady?: (api: RoomPreviewerAp
     }, [ api.room ]);
 };
 
-const RoomPreviewerPixi = forwardRef<RoomPreviewerHandle, RoomPreviewerProps>(({ roomId = RoomId.TEMP_ROOM_CATALOG, transparent = true, scale, showWalls, showFloor, onPointerTap, layout, onReady }, ref) => {
+export const RoomPreviewer = forwardRef<RoomPreviewerHandle, RoomPreviewerProps>(({ roomId = RoomId.TEMP_ROOM_CATALOG, transparent = true, scale, showWalls, showFloor, onPointerTap, layout, onReady }, ref) => {
     const containerRef = useRef<PixiContainer | null>(null);
     const api = useRoomPreviewer(roomId, containerRef, { transparent, scale, showWalls, showFloor });
 
@@ -57,46 +57,5 @@ const RoomPreviewerPixi = forwardRef<RoomPreviewerHandle, RoomPreviewerProps>(({
         </Box>
     );
 });
-
-RoomPreviewerPixi.displayName = 'RoomPreviewerPixi';
-
-const RoomPreviewerDom = forwardRef<RoomPreviewerHandle, RoomPreviewerProps>(({ roomId = RoomId.TEMP_ROOM_CATALOG, transparent = true, scale, showWalls, showFloor, onPointerTap, layout, onReady }, ref) => {
-    const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const api = useRoomPreviewer(roomId, canvasRef, { transparent, scale, showWalls, showFloor });
-
-    useImperativeHandle(ref, () => api, [ api ]);
-    useReadyCallback(api, onReady);
-
-    return (
-        <Box
-            onPointerTap={onPointerTap}
-            layout={{ width: '100%', height: '100%', overflow: 'hidden', ...layout }}
-        >
-            <canvas ref={canvasRef} />
-        </Box>
-    );
-});
-
-RoomPreviewerDom.displayName = 'RoomPreviewerDom';
-
-/**
- * A room rendered as an object showcase: a temp preview room with its walls and floor hidden
- * and no backdrop, so only the placed object (an avatar, a furni) shows - the avatar editor's
- * live figure, the catalog's product preview. Drive it through the ref (`RoomPreviewerHandle`);
- * everything else - the update loop, sizing, centring, auto state-cycling - is `useRoomPreviewer`.
- */
-export const RoomPreviewer = forwardRef<RoomPreviewerHandle, RoomPreviewerProps>((props, ref) => (getRenderMode() === 'dom'
-    ? (
-            <RoomPreviewerDom
-                ref={ref}
-                {...props}
-            />
-        )
-    : (
-            <RoomPreviewerPixi
-                ref={ref}
-                {...props}
-            />
-        )));
 
 RoomPreviewer.displayName = 'RoomPreviewer';

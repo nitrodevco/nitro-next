@@ -41,9 +41,7 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 const distance = (x: number, y: number, toX: number, toY: number) => Math.hypot(x - toX, y - toY);
 
 /**
- * Pixi port of hooks/ui/useFrameResize.ts, extended to also drive Frame's DOM render target
- * through the same hook (see getGlobalRect.ts for the one place that actually differs per
- * target). Pixi's FederatedPointerEvent has no setPointerCapture (confirmed absent from
+ * Pixi port of hooks/ui/useFrameResize.ts. Pixi's FederatedPointerEvent has no setPointerCapture (confirmed absent from
  * pixi.js's FederatedEvent types), so unlike the original DOM hook this drives the whole
  * gesture off window-level pointermove/pointerup listeners (the same technique
  * useFrameDrag.ts uses) instead of per-element pointer capture, in both render targets - kept
@@ -53,7 +51,7 @@ const distance = (x: number, y: number, toX: number, toY: number) => Math.hypot(
  */
 export const useFrameResize = (
     id: string | undefined,
-    frameRef: RefObject<PixiContainer | HTMLElement | null>,
+    frameRef: RefObject<PixiContainer | null>,
     direction: FrameResizeDirection = 'all',
     minSize: { width: number; height: number } = { width: MIN_SIZE, height: MIN_SIZE },
     maxSize: { width?: number; height?: number } = {},

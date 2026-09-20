@@ -5,7 +5,7 @@ import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, CloseButton, LayoutImage, Region, TextInput, TextStyleKey, ThemeImage, ThemeText } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
 
-import { useFurnitureImageTexturePixi } from '../../catalog/useFurnitureImageTexturePixi';
+import { useFurnitureImageTexture } from '../../catalog/useFurnitureImageTexture';
 import { InfostandBadgeView } from './InfostandBadgeView';
 import { UniqueItemPlaqueView } from './UniqueItemPlaqueView';
 
@@ -79,7 +79,7 @@ export interface InfostandFurniViewProps {
  */
 export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWiredInspect, pickupMode, canSaveBranding, onMove, onRotate, onPickup, onUse, onWiredInspect, onBuy, onRent, onOpenOwner, onOpenGroup, onSaveBranding, onClose }: InfostandFurniViewProps) => {
     const t = useTranslation();
-    const { texture, width, height } = useFurnitureImageTexturePixi(details.className, details.colorIndex, 2, RoomGeometryScaleType.ZoomedIn);
+    const { texture, width, height } = useFurnitureImageTexture(details.className, details.colorIndex, 2, RoomGeometryScaleType.ZoomedIn);
     // In the case the picture must clear the plaque on the right and the glass edges.
     const caseScale = Math.min(1, (CASE_WIDTH - 30) / Math.max(1, width), (CASE_HEIGHT - 10) / Math.max(1, height));
     // Branding edits are kept per staff details id, so another furni starts from its own values.

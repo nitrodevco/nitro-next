@@ -7,8 +7,7 @@
  *
  * `font-faces.nitro` holds the `.ttf` faces the browser falls back to for a string the exact
  * renderer cannot take (anything outside printable ASCII, or a raw `fontFamily` override). Those
- * are registered with `document.fonts` from the bundle's own bytes rather than declared in
- * `fonts.css`, and deliberately not awaited: at ~1.3MB they are far too much to hold up the first
+ * are registered with `document.fonts` from the bundle's own bytes, and deliberately not awaited: at ~1.3MB they are far too much to hold up the first
  * frame, and the browser used to fetch them off `@font-face` on first use anyway.
  */
 import { NitroLogger } from '@nitrodevco/nitro-api';
@@ -50,8 +49,8 @@ const FLASH_FONT_FACES: readonly FlashFontFace[] = [
 ];
 
 /**
- * What `theme/font/fonts.css` used to declare: the four Flash families with their weights and
- * styles, plus the single-face aliases `TEXT_STYLES` names for Pixi's canvas text.
+ * The four Flash families with their weights and styles, plus the single-face aliases
+ * `TEXT_STYLES` names for Pixi's canvas text.
  */
 const BROWSER_FONT_FACES: readonly BrowserFontFace[] = [
     { family: 'Ubuntu', file: 'Ubuntu-R.ttf', weight: '400', style: 'normal' },

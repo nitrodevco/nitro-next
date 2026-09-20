@@ -8,7 +8,7 @@
  */
 import { useMemo } from 'react';
 
-import { BoxLayout, FlashTextDom, FlashTextFormat, FlashTextPixi, FlashTextRun, getRenderMode, parseFlashTextMarkup, renderBrowserTextCanvas, renderFlashTextCanvas } from '#base/theme';
+import { BoxLayout, FlashText, FlashTextFormat, FlashTextRun, parseFlashTextMarkup, renderBrowserTextCanvas, renderFlashTextCanvas } from '#base/theme';
 
 export interface WiredFlashLabelProps {
     text: string;
@@ -36,18 +36,8 @@ export const WiredFlashLabel = ({ text, format, html = false, wrapWidth, align =
 
     if (!rendered) return null;
 
-    if (getRenderMode() === 'dom') {
-        return (
-            <FlashTextDom
-                rendered={rendered}
-                alpha={alpha}
-                layout={layout}
-            />
-        );
-    }
-
     return (
-        <FlashTextPixi
+        <FlashText
             rendered={rendered}
             alpha={alpha}
             layout={layout}

@@ -8,23 +8,19 @@ import { createRoot } from 'react-dom/client';
 import { WebSocketContextProvider } from '#base/context/communication';
 
 import { Nitro } from './Nitro';
-import { setRenderMode } from './theme';
 
 // NitroLogger.LOG_ERROR = import.meta.env.DEV;
 // NitroLogger.LOG_WARN = import.meta.env.DEV;
 // NitroLogger.LOG_PACKETS = import.meta.env.DEV;
 
-if (new URLSearchParams(window.location.search).get('renderer') === 'dom') setRenderMode('dom');
-else {
-    extend({
-        Container,
-        Graphics,
-        NineSliceSprite,
-        Sprite,
-        Text,
-        TilingSprite,
-    });
-}
+extend({
+    Container,
+    Graphics,
+    NineSliceSprite,
+    Sprite,
+    Text,
+    TilingSprite,
+});
 
 declare global {
     interface Window {

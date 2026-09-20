@@ -22,7 +22,7 @@ export interface FurnitureImageTexture {
  * render a frame in between. Destroying the previous texture on arrival, as this used to, left
  * that frame drawing a texture with no source: Pixi's batcher then throws reading `alphaMode`.
  */
-export const useFurnitureImageTexturePixi = (
+export const useFurnitureImageTexture = (
     type: string | undefined,
     colorIndex: number = 0,
     direction: number = 2,

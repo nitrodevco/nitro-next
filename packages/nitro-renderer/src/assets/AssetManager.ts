@@ -9,12 +9,6 @@ export class AssetManager implements IAssetManager {
     private _textures: Map<string, Texture> = new Map();
     private _collections: Map<string, IGraphicAssetCollection> = new Map();
     private _bundles: Map<string, NitroBundle> = new Map();
-    /**
-     * Whether a retained bundle keeps each bitmap's encoded bytes, so `getBundleImageUrl` can hand
-     * out a `blob:` URL for it. Only the DOM render target needs that - Pixi draws the `Texture` -
-     * and it is ~2.6 MB held for the session, so it is off unless that target sets it at boot.
-     */
-    public keepBundleImageBytes: boolean = false;
     private _bundlePromises: Map<string, Promise<IGraphicAssetCollection | undefined>> = new Map();
 
     public getTexture(name: string): Texture | undefined {
@@ -168,7 +162,7 @@ export class AssetManager implements IAssetManager {
     /**
      * A UI asset bundle: the same `.nitro` archive furniture comes in, kept by name after it is
      * read so its JSON entries and encoded bitmaps stay reachable (`getBundleFile`,
-     * `getBundleImageUrl`). Every asset in it lands in `_textures` under its own name, so a
+     * `getBundleBinary`). Every asset in it lands in `_textures` under its own name, so a
      * bundled bitmap is `GetAssetManager().getTexture('room-ui-roomtools_gear')` from anywhere.
      *
      * Downloading the same bundle twice joins the first download rather than fetching again.
@@ -187,7 +181,7 @@ export class AssetManager implements IAssetManager {
 
                 if (!response || response.status !== 200) throw new Error(`Invalid response for bundle ${name}: ${response?.status}`);
 
-                const bundle = await NitroBundle.fromBuffer(await response.arrayBuffer(), this.keepBundleImageBytes);
+                const bundle = await NitroBundle.fromBuffer(await response.arrayBuffer());
                 const collection = await this.processNitroBundle(bundle, name);
 
                 this._bundles.set(name, bundle);
@@ -244,30 +238,6 @@ export class AssetManager implements IAssetManager {
      */
     public getBundleBinary(bundleName: string, fileName: string): ArrayBuffer | undefined {
         return this._bundles.get(bundleName)?.binaries[fileName];
-    }
-
-    /** A `blob:` URL for one of a retained bundle's bitmaps - see `NitroBundle.getObjectUrl`. */
-    public getBundleImageUrl(bundleName: string, fileName: string): string | undefined {
-        const bundle = this._bundles.get(bundleName);
-
-        if (!bundle) return undefined;
-
-        return bundle.getObjectUrl(fileName) ?? bundle.getObjectUrl(`${fileName}.png`);
-    }
-
-    /**
-     * The same, without knowing which bundle holds the file. Asset names are unique across every
-     * bundle (the builder fails the build if two ever collide), so the first hit is the only hit
-     * - and a caller drawing a bitmap has its name, not the archive it happens to ship in.
-     */
-    public findBundleImageUrl(fileName: string): string | undefined {
-        for (const bundle of this._bundles.values()) {
-            const url = bundle.getObjectUrl(fileName) ?? bundle.getObjectUrl(`${fileName}.png`);
-
-            if (url) return url;
-        }
-
-        return undefined;
     }
 
     /**

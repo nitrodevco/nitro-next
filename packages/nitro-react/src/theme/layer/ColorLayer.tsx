@@ -1,6 +1,5 @@
 import { BoxLayout } from '../Box';
-import { boxLayoutToStyle } from '../dom';
-import { FillLayout, getRenderMode } from '../utils';
+import { FillLayout } from '../utils';
 
 export const ColorLayer = ({ color, alpha, layout }: {
     color?: string;
@@ -9,10 +8,6 @@ export const ColorLayer = ({ color, alpha, layout }: {
     layout?: BoxLayout;
 }) => {
     if (!color?.length) return null;
-
-    if (getRenderMode() === 'dom') {
-        return <div style={{ ...boxLayoutToStyle(layout ?? FillLayout), backgroundColor: color, opacity: alpha }} />;
-    }
 
     return (
         <pixiGraphics

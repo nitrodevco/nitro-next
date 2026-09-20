@@ -71,24 +71,6 @@ const pruneBundledAssets = (): Plugin => ({
     },
 });
 
-const tailwindAutoReference = (): Plugin => {
-    const indexCss = path.resolve(r('./src/index.css'));
-
-    return {
-        name: 'tailwind-auto-reference',
-        enforce: 'pre',
-        transform(code, id) {
-            const file = path.resolve(id.split('?')[0]);
-
-            if (file === indexCss || !file.endsWith('.css') || !file.startsWith(path.resolve(r('./src/views'))) || /@reference\b/.test(code) || /@import\s+['"]tailwindcss['"]/.test(code)) return;
-
-            const rel = path.relative(path.dirname(file), indexCss).replace(/\\/g, '/');
-
-            return `@reference '${rel.startsWith('.') ? rel : './' + rel}';\n${code}`;
-        },
-    };
-};
-
 /**
  * Dev-server speed. The workspace packages resolve to their TypeScript sources, so by default
  * the unbundled dev server sends every one of their modules to the browser individually -
@@ -157,7 +139,6 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
         pruneBundledAssets(),
-        tailwindAutoReference(),
         react(),
         babel({
             plugins: ['babel-plugin-react-compiler'],

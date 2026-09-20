@@ -1,8 +1,6 @@
 import { Container as PixiContainer, Texture } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
-import { getRenderMode } from '../utils';
-
 /** Animation frames a container has to stay unchanged, with a size and in place, before it is shown. */
 const SETTLE_FRAMES = 2;
 /** A container that never stops changing (an animated child) is shown after this many frames regardless. */
@@ -43,20 +41,17 @@ const describe = (node: PixiContainer): string => {
  * it has a size, neither its bounds nor what it draws have changed for a couple of animation
  * frames, and `isPositioned` (read on every check, so it may read refs) agrees that it sits
  * where it goes.
- *
- * The DOM target lays out synchronously; there it is shown at once.
  */
-export const useRevealWhenSettled = (node: PixiContainer | HTMLElement | null, isPositioned?: () => boolean): boolean => {
+export const useRevealWhenSettled = (node: PixiContainer | null, isPositioned?: () => boolean): boolean => {
     const [ revealed, setRevealed ] = useState(false);
     const isPositionedRef = useRef(isPositioned);
-    const isDom = getRenderMode() === 'dom';
 
     useEffect(() => {
         isPositionedRef.current = isPositioned;
     });
 
     useEffect(() => {
-        if (revealed || isDom || !(node instanceof PixiContainer)) return;
+        if (revealed || !(node instanceof PixiContainer)) return;
 
         let previous = '';
         let quietFrames = 0;
@@ -86,7 +81,7 @@ export const useRevealWhenSettled = (node: PixiContainer | HTMLElement | null, i
         handle = requestAnimationFrame(check);
 
         return () => cancelAnimationFrame(handle);
-    }, [ node, revealed, isDom ]);
+    }, [ node, revealed ]);
 
-    return revealed || isDom;
+    return revealed;
 };

@@ -29,9 +29,7 @@ const MIN_VISIBLE = 40;
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 /**
- * Pixi port of hooks/ui/useFrameDrag.ts, extended to also drive Frame's DOM render target
- * through the same hook (see getGlobalRect.ts for the one place that actually differs per
- * target). In Pixi mode the drag offset is applied as the container's own `.x`/`.y` -
+ * Pixi port of hooks/ui/useFrameDrag.ts. The drag offset is applied as the container's own `.x`/`.y` -
  * @pixi/layout's ContainerMixin ADDS the yoga-computed position on top of the container's
  * existing `.position` (see updateLocalTransformWithLayout in node_modules/@pixi/layout), the
  * same layering CSS `transform: translate()` gives the DOM version (see Box.tsx's own `x`/`y`
@@ -71,9 +69,9 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
     const generatedId = useId();
     const stackId = id ?? generatedId;
 
-    const frameRef = useRef<PixiContainer | HTMLElement | null>(null);
+    const frameRef = useRef<PixiContainer | null>(null);
     // The node as state as well: `useLayoutEvent` subscribes to a node, and a ref cannot be read while rendering.
-    const [ frameNode, setFrameNode ] = useState<PixiContainer | HTMLElement | null>(null);
+    const [ frameNode, setFrameNode ] = useState<PixiContainer | null>(null);
     const centeringRef = useRef(centered);
     // Where the frame was last put by a drag or by centering, for the callbacks that report it.
     const latestOffsetRef = useRef<{ dx: number; dy: number } | null>(null);
@@ -115,13 +113,13 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
 
     useEffect(() => stopDragging, [ stopDragging ]);
 
-    const attachFrame = useCallback((node: PixiContainer | HTMLElement | null) => {
+    const attachFrame = useCallback((node: PixiContainer | null) => {
         frameRef.current = node;
 
         setFrameNode(node);
     }, []);
 
-    useLayoutEvent(frameNode as PixiContainer | null, () => {
+    useLayoutEvent(frameNode, () => {
         if (!centeringRef.current || !frameNode) return;
 
         const rect = getGlobalRect(frameNode);
@@ -153,11 +151,7 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
         // (CloseButton, with `stopsPropagation`) calling `stopPropagation()` can never
         // retroactively stop this handler, since it already ran by the time the descendant's own
         // handler executes. Checking that this container is itself the real hit target is what
-        // correctly excludes a press that landed on such a descendant instead. DOM's real
-        // synthetic-event bubbling doesn't share this ordering quirk - a descendant's
-        // `stopPropagation()` already prevents this handler from running at all there - and
-        // DOM's `target` is the deepest DOM node regardless of interactivity, so this check
-        // would incorrectly reject legitimate header clicks in DOM mode.
+        // correctly excludes a press that landed on such a descendant instead.
         if (event instanceof FederatedPointerEvent && event.target !== event.currentTarget) return;
 
         const node = frameRef.current;

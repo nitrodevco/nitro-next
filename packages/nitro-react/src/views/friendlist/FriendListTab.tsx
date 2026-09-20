@@ -4,7 +4,7 @@ import { useFriendsActions } from '#base/context/friend';
 import { useTranslation } from '#base/context/system';
 import { AccordionContent, AccordionItem, AccordionTrigger, Box, ColorLayer, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
 
-export interface FriendListTabPixiProps {
+export interface FriendListTabProps {
     value: string;
     caption: string;
     tooltip?: string;
@@ -18,7 +18,7 @@ export interface FriendListTabPixiProps {
 }
 
 /** Pixi port of views/friendlist/FriendListTab.tsx. */
-export const FriendListTab = ({ value, caption, tooltip = '', gradientColors, darkHeader, contentBackgroundColor, children }: FriendListTabPixiProps) => {
+export const FriendListTab = ({ value, caption, tooltip = '', gradientColors, darkHeader, contentBackgroundColor, children }: FriendListTabProps) => {
     const { tooltipHandlers } = useFriendsActions();
     const t = useTranslation();
     const hover = tooltip ? tooltipHandlers(tooltip) : undefined;

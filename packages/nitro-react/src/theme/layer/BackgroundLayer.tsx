@@ -1,6 +1,5 @@
 import { BoxLayout } from '../Box';
-import { BackgroundLayerDom, boxLayoutToStyle } from '../dom';
-import { deriveHsvLayerColor, getRenderMode, SpriteFrame, spriteLayoutFromFrame } from '../utils';
+import { deriveHsvLayerColor, SpriteFrame } from '../utils';
 import { CompositeLayer, CompositeLayerPieceProps } from './CompositeLayer';
 import { NineSliceBorderWidth, NineSliceLayer, NineSliceRepeatAxis } from './NineSliceLayer';
 import { SpriteLayer } from './SpriteLayer';
@@ -76,28 +75,6 @@ export const BackgroundLayer = ({ layer, tintColor, layout }: {
                         : { bottom: layer.bottom ?? 0 }),
             }
         : undefined;
-
-    if (getRenderMode() === 'dom') {
-        // Bypasses `SpriteLayer.tsx`'s own `SpriteLayerDom` entirely (goes straight to the
-        // shared `BackgroundLayerDom`, same as every other kind here) - `spriteLayoutFromFrame`
-        // is the one piece of that component's logic this still needs: without it, a `frame`'d
-        // sprite with no caller `layout` would fall through to `BackgroundLayerDom`'s own
-        // stretch-to-fill default instead of sizing to its native crop dimensions.
-        const spriteLayout = layer.kind === 'sprite' ? spriteLayoutFromFrame(layer.frame, layout) : undefined;
-        const domStyle = layer.kind === 'tile'
-            ? (tileInsetLayout ? boxLayoutToStyle(tileInsetLayout) : (layout ? boxLayoutToStyle(layout) : undefined))
-            : layer.kind === 'sprite'
-                ? (spriteLayout ? boxLayoutToStyle(spriteLayout) : undefined)
-                : (layout ? boxLayoutToStyle(layout) : undefined);
-
-        return (
-            <BackgroundLayerDom
-                layer={layer}
-                tintColor={tintColor}
-                style={domStyle}
-            />
-        );
-    }
 
     switch (layer.kind) {
         case 'composite': return (

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { AccordionContent, AccordionItem, AccordionTrigger, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
 
-export interface FriendListGroupPixiProps {
+export interface FriendListGroupProps {
     value: string;
     caption: string;
     children?: ReactNode;
@@ -10,7 +10,7 @@ export interface FriendListGroupPixiProps {
 }
 
 /** Pixi port of views/friendlist/components/FriendListGroup.tsx. */
-export const FriendListGroup = ({ value, caption, children, showArrows = true }: FriendListGroupPixiProps) => (
+export const FriendListGroup = ({ value, caption, children, showArrows = true }: FriendListGroupProps) => (
     <AccordionItem value={value}>
         <AccordionTrigger layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, paddingLeft: 4, paddingTop: 2, paddingBottom: 2, height: 20 }}>
             {({ isOpen }) => (

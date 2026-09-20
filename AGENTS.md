@@ -44,6 +44,8 @@ src/
   components/   Wiring: mounts, permissions, callbacks; renders a view.
   views/        Presentation, one window or widget per directory.
   theme/        The Pixi UI kit (Frame, Box, Button, ThemeText, ...). Do not add feature code here.
+                Everything renders through Pixi - there is no DOM render target, and no component
+                has a DOM twin. React DOM mounts one thing: the canvas `PixiApplicationRoot` owns.
   chat/         Chat bubble models.
   utils/        Pure helpers.
 ```
@@ -177,9 +179,10 @@ In either shape a view may read stores through selector and action hooks, transl
 never registers packet handlers.
 
 Naming: `*Widget` for a room widget's component, `*Component` for a window's mount, `*View` for
-a view, and no `Pixi`/`Dom` suffix unless the file has a render-mode twin (the theme,
-`RoomPreviewer`, `AvatarImage`). Sub-views of a window (`FriendListTab`, `AvatarEditorWardrobe`)
-carry the window's name as a prefix.
+a view. Sub-views of a window (`FriendListTab`, `AvatarEditorWardrobe`) carry the window's name as
+a prefix. Nothing carries a `Pixi` or `Dom` suffix: the client renders with Pixi only, and a name
+like `BoxPixi` used to mean it had a DOM twin. `Pixi` in a name is the library
+(`PixiApplicationRoot`, `usePixiTexture`, the `Container as PixiContainer` alias), never a target.
 
 - Text goes through `ThemeText` with a `textStyle` key (see Text below); tooltips through `Region`.
   `Frame` needs an explicit `layout.height`, or its content is clipped. A `CheckBox` and its
@@ -273,9 +276,8 @@ Rules that come out of that:
   `bundles.json` lists and the current table no longer builds, so a renamed bundle does not leave
   its old file behind to be served. A `.nitro` no manifest ever named is left alone.
 - **A `ThemeImage`'s `src` is an asset name or a url**, told apart by `isAssetName` - a name has no
-  scheme, no `/` and no `.`. Pixi draws the texture; the DOM target needs a url, and
-  `getAssetImageUrl` makes one (a `blob:` of the archive's own bytes for a loose asset, a canvas
-  slice for a sheet frame).
+  scheme, no `/` and no `.`. Either way it resolves to a `Texture` through the asset manager; a
+  bundled bitmap is never fetched by url.
 - **A table a bundle carries is the one copy, and it lives beside the art it describes.** Each
   chat style's row is a `chat_definition.json` in its own folder - `{ id, flags, regPoints,
   bitmaps }`, with the folder name as the `assetId`, so that name is written once. The builder

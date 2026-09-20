@@ -7,13 +7,12 @@ const ApplyTextureDefaults = () => {
 };
 
 /**
- * `destroyEvents` defaults to `true` for nitro-imager's headless usage (PrepareRenderer({}) -
+ * `destroyEvents` defaults to `true` for nitro-imager's headless usage (`PrepareRenderer({})` -
  * no canvas is ever attached to a page, so there's nothing for Pixi's EventSystem to listen on
- * and it's just wasted setup). A caller that DOES attach this renderer to a real, interactive
- * canvas (see NitroDomView.tsx, the room-only renderer for DOM render mode) needs to pass
- * `destroyEvents: false` - unlike NitroPixiView.tsx's flow (SetRenderer adopts @pixi/react's
- * own Application-owned renderer, whose events are never touched here), DOM mode has no
- * later step that re-attaches or replaces events once destroyed, so losing them here is permanent.
+ * and it's just wasted setup). A caller that attaches this renderer to a real, interactive
+ * canvas passes `destroyEvents: false`: nothing re-attaches events once destroyed, so losing
+ * them here is permanent. The client itself takes neither path - `PixiApplicationRoot` hands
+ * @pixi/react's own Application-owned renderer to `SetRenderer` below, which leaves events alone.
  */
 export const PrepareRenderer = async (options: Partial<AutoDetectOptions>, { destroyEvents = true }: { destroyEvents?: boolean } = {}): Promise<Renderer> => {
     ApplyTextureDefaults();

@@ -5,7 +5,7 @@ import { BoxLayout } from '../Box';
 import { insetStretchAxes } from '../utils/layoutInsetStretch';
 import { FlashTextCanvas } from './flash-text';
 
-export interface FlashTextPixiProps {
+export interface FlashTextProps {
     /** The rasterised text - see `useFlashTextCanvas`. */
     rendered: FlashTextCanvas;
     layout?: BoxLayout;
@@ -20,7 +20,7 @@ export interface FlashTextPixiProps {
  * Flash-exact text as one sprite. The bitmap is shown 1:1 with nearest-neighbour sampling: the
  * rasterizer already grid-fitted every glyph to whole pixels, and any resampling would undo it.
  */
-export const FlashTextPixi = ({ rendered, layout, visible, alpha, x, y }: FlashTextPixiProps) => {
+export const FlashText = ({ rendered, layout, visible, alpha, x, y }: FlashTextProps) => {
     const texture = useMemo(() => {
         // Owned here and destroyed on change - kept out of Pixi's global `Cache`, which would
         // otherwise hold every label's canvas until that destroy.
@@ -70,4 +70,4 @@ export const FlashTextPixi = ({ rendered, layout, visible, alpha, x, y }: FlashT
     return sprite(layout, true);
 };
 
-FlashTextPixi.displayName = 'FlashTextPixi';
+FlashText.displayName = 'FlashText';

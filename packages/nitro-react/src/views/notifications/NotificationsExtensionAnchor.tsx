@@ -19,8 +19,7 @@ export const NotificationsExtensionAnchor = () => {
     const [ node, setNode ] = useState<PixiContainer | null>(null);
     const { setExtensionHeight } = useNotificationActions();
 
-    // In the DOM render mode the node is an element (see `useLayoutEvent`), whose parent is its `parentElement`.
-    const column = node ? (node.parent ?? (node as unknown as HTMLElement).parentElement as unknown as PixiContainer | null) : null;
+    const column = node?.parent ?? null;
     const { height } = useLayoutSize(column);
 
     useEffect(() => {

@@ -7,8 +7,6 @@
  * randomize button and zoom label use it too). This hands it every state; the controller rebuilds
  * only when `refreshKey` changed - the runtime config, which is what Flash calls `refresh(state)`
  * for (`init`, and the visualization and value range presets' changes) - and stops on unmount.
- * The picture is a Pixi texture, so the DOM render target, which cannot show one, leaves the box
- * empty.
  */
 import { useEffect, useSyncExternalStore } from 'react';
 

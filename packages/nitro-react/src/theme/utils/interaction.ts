@@ -110,27 +110,12 @@ const isHitTarget = (eventMode: EventMode | undefined): boolean => eventMode ===
  * tooltip host, a row that highlights under the pointer) or a wheel, and pointing at those
  * promises a click that does nothing.
  *
- * A hit target that isn't actionable still names its cursor rather than leaving it unset, so
- * that the DOM renderer doesn't let it inherit a clickable ancestor's pointer - Pixi reads the
- * hit target's own cursor and has no inheritance to undo, and the two targets should agree.
+ * A hit target that isn't actionable still names its cursor rather than leaving it unset: Pixi
+ * reads the hit target's own cursor, so saying `default` is what keeps a non-actionable target
+ * from looking clickable.
  */
 export const cursorForHandlers = (eventMode: EventMode | undefined, handlers: PointerHandlerDetection): string | undefined => {
     if (hasClickHandler(handlers)) return 'pointer';
 
     return isHitTarget(eventMode) ? 'default' : undefined;
-};
-
-/**
- * DOM has no equivalent to Pixi's `passive`/`static`/`dynamic` split - only "never a hit
- * target" (`none`) and "always one" (`auto`, `pointer-events`'s own default). Every
- * interactive `eventMode` maps to `auto` here; anything else (including unset/`passive`) is
- * left unset so `pointer-events` inherits normally - `none` under `#ui-container`
- * (MainView.tsx sets that at its root so clicks pass through to the room canvas), `auto`
- * everywhere else - matching Pixi's own passive-by-default behavior on both targets.
- */
-export const pointerEventsFromEventMode = (eventMode: EventMode | undefined): 'auto' | 'none' | undefined => {
-    if (eventMode === 'none') return 'none';
-    if (eventMode === 'static' || eventMode === 'dynamic') return 'auto';
-
-    return undefined;
 };
