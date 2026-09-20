@@ -3,8 +3,10 @@ import { ForwardToSomeRoomComposer } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { systemStore, WindowParams } from '#base/context/system';
+import { getWiredHasReadPermission, getWiredMenuEnabled } from '#base/context/wired';
 
 import { forwardToRoom, goToHomeRoom, searchNavigator, searchRoomTag } from './navigatorCommands';
+import { openWiredRewardView, openWiredSelfDonation } from './wiredTradingCommands';
 
 type Send = WebSocketConnection['send'];
 
@@ -12,6 +14,52 @@ type Send = WebSocketConnection['send'];
 const TAB_LINK_SEARCH_CODES: Record<string, string> = { me: 'myworld_view' };
 
 const INVENTORY_TABS: WindowParams<'inventory'>['tab'][] = [ 'furni', 'pets', 'bots', 'badges' ];
+
+/** `WiredMenuTabConfigs.TAB_*_ID` - the wired menu tabs a link can route further into. */
+const WIRED_MENU_TAB_MONITOR = 'monitor';
+const WIRED_MENU_TAB_OVERVIEW = 'variable_overview';
+const WIRED_MENU_TAB_INSPECTION = 'inspection';
+
+/**
+ * `WiredMenuController.linkReceived` - `wiredmenu/open[/<tab>[/...]]` and `wiredmenu/logs`, turned
+ * into the `wired_menu` window's params. Outside a room with wired the user may read, the link
+ * gets Flash's "invalid room" alert instead.
+ */
+const openWiredMenuLink = (parts: string[]): boolean => {
+    const { showWindow, showAlert, interpolate, visibleWindows } = systemStore.getState();
+
+    if (!getWiredMenuEnabled() || !getWiredHasReadPermission()) {
+        showAlert(interpolate('${wiredmenu.invalid_room.title}'), interpolate('${wiredmenu.invalid_room.desc}'));
+
+        return true;
+    }
+
+    switch (parts[1]) {
+        case 'open': {
+            const params: WindowParams<'wired_menu'> = {};
+
+            if (parts.length >= 3) params.tab = parts[2];
+
+            // `routeInspectionLink`: wiredmenu/open/inspection/<sourceType>/<id>.
+            if ((parts[2] === WIRED_MENU_TAB_INSPECTION) && (parts.length >= 5)) params.inspect = { sourceType: parseInt(parts[3], 10), id: parseInt(parts[4], 10) };
+
+            // `routeOverviewLink`: wiredmenu/open/variable_overview/<name>.
+            if ((parts[2] === WIRED_MENU_TAB_OVERVIEW) && (parts.length >= 4)) params.variableName = parts[3];
+
+            showWindow('wired_menu', params);
+
+            return true;
+        }
+        case 'logs': {
+            // A menu that is not up yet opens on the monitor tab; one that is keeps its tab.
+            showWindow('wired_menu', visibleWindows.wired_menu ? { ...visibleWindows.wired_menu, logs: true } : { tab: WIRED_MENU_TAB_MONITOR, logs: true });
+
+            return true;
+        }
+    }
+
+    return false;
+};
 
 /**
  * `ILinkEventTracker.linkReceived`: the in-client links a menu, a habbopage or a bot's link skill
@@ -90,6 +138,31 @@ export const openClientLink = (send: Send, link: string) => {
         case 'avatareditor': {
             if (parts[1] === 'open') {
                 showWindow('avatar_editor');
+
+                return;
+            }
+
+            break;
+        }
+        case 'wiredmenu': {
+            if (openWiredMenuLink(parts)) return;
+
+            break;
+        }
+        // `RewardNotificationController.linkReceived`: wiredrewards/open/<internalId>.
+        case 'wiredrewards': {
+            if ((parts[1] === 'open') && (parts.length >= 3)) {
+                openWiredRewardView(parseInt(parts[2], 10));
+
+                return;
+            }
+
+            break;
+        }
+        // `SelfDonationTool.linkReceived`: selfdonation/open, sandbox hotels only.
+        case 'selfdonation': {
+            if (parts[1] === 'open') {
+                openWiredSelfDonation();
 
                 return;
             }
