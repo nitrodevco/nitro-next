@@ -7,6 +7,8 @@
     "figuredata.url": "https://assets.nitrodev.co/gamedata/FigureData.json",
     "figuremap.url": "https://assets.nitrodev.co/gamedata/FigureMap.json",
     "effectmap.url": "https://assets.nitrodev.co/gamedata/EffectMap.json",
+    "avatar.actions.url": "https://assets.nitrodev.co/gamedata/HabboAvatarActions.json",
+    "avatar.animations.url": "https://assets.nitrodev.co/gamedata/HabboAvatarAnimations.json",
     "asset.urls.generic": "https://assets.nitrodev.co/bundled/generic/%libname%.nitro",
     "asset.urls.furni": "https://assets.nitrodev.co/bundled/furniture/%libname%.nitro",
     "asset.urls.icons.furni": "https://assets.nitrodev.co/images/furni-icons/%libname%%param%_icon.png",

@@ -1,4 +1,4 @@
-import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IAvatarImageListener, IAvatarRenderManager, IAvatarStructure, IEffectAssetDownloadLibrary, IEffectMapLibrary, IFigureData, IFigureMapLibrary, IFigurePartSet, IGraphicAsset, IStructureData } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType, IAssetAvatarActionData, IAssetAvatarAnimation, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IAvatarImageListener, IAvatarRenderManager, IAvatarStructure, IEffectAssetDownloadLibrary, IEffectMapLibrary, IFigureData, IFigureMapLibrary, IFigurePartSet, IGraphicAsset, IStructureData } from '@nitrodevco/nitro-api';
 
 import { AssetAliasCollection } from './alias';
 import { AvatarAssetDownloadManager } from './AvatarAssetDownloadManager';
@@ -6,7 +6,7 @@ import { AvatarFigureContainer } from './AvatarFigureContainer';
 import { AvatarImage } from './AvatarImage';
 import { AvatarStructure } from './AvatarStructure';
 import { BlockedAvatarImage } from './BlockedAvatarImage';
-import { HabboAvatarActions, HabboAvatarActionsDefault, HabboAvatarAnimations, HabboAvatarBuiltInAnimations, HabboAvatarFigureDataDefault, HabboAvatarGeometry, HabboAvatarPartSets } from './data';
+import { HabboAvatarActionsDefault, HabboAvatarBuiltInAnimations, HabboAvatarFigureDataDefault, HabboAvatarGeometry, HabboAvatarPartSets } from './data';
 import { EffectAssetDownloadManager } from './EffectAssetDownloadManager';
 import { FigureDataContainer } from './FigureDataContainer';
 import { PlaceHolderAvatarImage } from './PlaceHolderAvatarImage';
@@ -37,13 +37,23 @@ export class AvatarRenderManager implements IAvatarRenderManager {
     public init(): void {
         this._structure.initGeometry(HabboAvatarGeometry);
         this._structure.initPartSets(HabboAvatarPartSets);
-        // the baked-in actions (Default + snowwar) first, the downloaded set over them - as Flash `initActions` then `updateActions`
+        // Flash `initActions`: the baked-in set. The downloaded one goes over it through
+        // `processAvatarActions`, which `useAvatarLoader` calls once `avatar.actions.url` lands -
+        // Flash downloaded `HabboAvatarActions.xml` too, so the order is its `updateActions`.
         this._structure.updateActions(HabboAvatarActionsDefault);
-        this._structure.updateActions(HabboAvatarActions);
-        this._structure.initAnimation(HabboAvatarAnimations);
         this._structure.initFigureData(HabboAvatarFigureDataDefault);
         // Flash `registerBuiltInAnimations`: the animations embedded in the client rather than in an effect library
         this._structure.registerAnimations(HabboAvatarBuiltInAnimations);
+    }
+
+    /** `avatar.actions.url`, applied over the baked-in set - see `init`. */
+    public processAvatarActions(data: IAssetAvatarActionData): void {
+        this._structure.updateActions(data);
+    }
+
+    /** `avatar.animations.url`: the per-action frame table, which nothing else writes. */
+    public processAvatarAnimations(data: IAssetAvatarAnimation[]): void {
+        this._structure.initAnimation(data);
     }
 
     public processFigureMap(data: IFigureMapLibrary[], assetUrl: string) {

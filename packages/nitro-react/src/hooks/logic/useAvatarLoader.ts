@@ -1,4 +1,4 @@
-import { IEffectMapLibrary, IFigureMapLibrary, NitroLogger } from '@nitrodevco/nitro-api';
+import { IAssetAvatarActionData, IAssetAvatarAnimation, IEffectMapLibrary, IFigureMapLibrary, NitroLogger } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';
 
@@ -10,6 +10,8 @@ export const useAvatarLoader = () => {
     const avatarAssetUrl = useConfigValue<string>('asset.urls.avatar') ?? '';
     const effectAssetUrl = useConfigValue<string>('asset.urls.effect') ?? '';
     const figureDataUrl = useConfigValue<string>('figuredata.url') ?? '';
+    const avatarActionsUrl = useConfigValue<string>('avatar.actions.url') ?? '';
+    const avatarAnimationsUrl = useConfigValue<string>('avatar.animations.url') ?? '';
 
     useEffect(() => {
         if (!figureMapUrl || !effectMapUrl || !figureDataUrl) return;
@@ -60,8 +62,44 @@ export const useAvatarLoader = () => {
             }
         };
 
+        /**
+         * `HabboAvatarActions.xml` and `HabboAvatarAnimation.xml`, which the client used to carry
+         * as ~105 KB of compiled-in table. Flash downloaded the actions too, so fetching them is
+         * the client's own shape; `init()` has already applied the baked-in action set, and this
+         * goes over it exactly as Flash's `initActions` then `updateActions` did.
+         */
+        const loadAvatarActionsAsync = async (url: string) => {
+            if (!url || !url.length) return;
+
+            try {
+                const response = await fetch(url);
+
+                if (response.status !== 200) throw new Error('Invalid avatar actions url');
+
+                GetAvatarRenderManager().processAvatarActions(await response.json() as IAssetAvatarActionData);
+            } catch (e) {
+                NitroLogger.error(e);
+            }
+        };
+
+        const loadAvatarAnimationsAsync = async (url: string) => {
+            if (!url || !url.length) return;
+
+            try {
+                const response = await fetch(url);
+
+                if (response.status !== 200) throw new Error('Invalid avatar animations url');
+
+                GetAvatarRenderManager().processAvatarAnimations(await response.json() as IAssetAvatarAnimation[]);
+            } catch (e) {
+                NitroLogger.error(e);
+            }
+        };
+
         GetAvatarRenderManager().init();
 
+        void loadAvatarActionsAsync(avatarActionsUrl);
+        void loadAvatarAnimationsAsync(avatarAnimationsUrl);
         void loadFigureMapAsync(figureMapUrl);
         void loadEffectMapAsync(effectMapUrl);
         void loadFigureDataAsync(figureDataUrl);

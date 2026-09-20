@@ -1,0 +1,37 @@
+{
+    "id": 38,
+    "flags": {
+        "systemStyle": true
+    },
+    "regPoints": {
+        "scale9": {
+            "x": 29,
+            "y": 17,
+            "width": 1,
+            "height": 1
+        },
+        "pointerY": 23,
+        "faceXY": {
+            "x": 11,
+            "y": 12
+        },
+        "textFieldMargins": {
+            "x": 28,
+            "y": 4,
+            "width": 12,
+            "height": 7
+        },
+        "textColorRGB": 0,
+        "fontFace": "Ubuntu",
+        "fontSize": 12,
+        "overlapRect": {
+            "x": 0,
+            "y": -2,
+            "width": 0,
+            "height": 0
+        }
+    },
+    "bitmaps": [
+        "icon"
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "id": 251,
+    "flags": {
+        "systemStyle": true,
+        "notification": true
+    },
+    "regPoints": {
+        "scale9": {
+            "x": 38,
+            "y": 7,
+            "width": 1,
+            "height": 1
+        },
+        "faceXY": {
+            "x": 19,
+            "y": 13
+        },
+        "anonymous": true,
+        "textFieldMargins": {
+            "x": 38,
+            "y": 2,
+            "width": 12,
+            "height": 6
+        },
+        "textColorRGB": 0,
+        "fontFace": "Ubuntu",
+        "fontSize": 17,
+        "overlapRect": {
+            "x": 0,
+            "y": -2,
+            "width": 0,
+            "height": -4
+        }
+    },
+    "bitmaps": [
+        "icon"
+    ]
+}

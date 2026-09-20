@@ -1,0 +1,36 @@
+{
+    "id": 21,
+    "flags": {
+        "hcOnly": true,
+        "staffOverrideable": true
+    },
+    "regPoints": {
+        "scale9": {
+            "x": 32,
+            "y": 22,
+            "width": 1,
+            "height": 1
+        },
+        "pointerY": 34,
+        "faceXY": {
+            "x": 15,
+            "y": 23
+        },
+        "textFieldMargins": {
+            "x": 25,
+            "y": 15,
+            "width": 12,
+            "height": 9
+        },
+        "textColorRGB": 0,
+        "fontFace": "Ubuntu",
+        "fontSize": 12,
+        "overlapRect": {
+            "x": 0,
+            "y": 9,
+            "width": 0,
+            "height": 0
+        }
+    },
+    "bitmaps": []
+}

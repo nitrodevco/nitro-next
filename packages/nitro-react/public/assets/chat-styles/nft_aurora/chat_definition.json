@@ -1,0 +1,37 @@
+{
+    "id": 1026,
+    "flags": {},
+    "regPoints": {
+        "scale9": {
+            "x": 30,
+            "y": 14,
+            "width": 1,
+            "height": 1
+        },
+        "pointerY": 31,
+        "faceXY": {
+            "x": 16,
+            "y": 16
+        },
+        "colorXY": {
+            "x": 0,
+            "y": 0
+        },
+        "textFieldMargins": {
+            "x": 28,
+            "y": 6,
+            "width": 12,
+            "height": 12
+        },
+        "textColorRGB": 16759552,
+        "fontFace": "Ubuntu",
+        "fontSize": 12,
+        "overlapRect": {
+            "x": 0,
+            "y": -4,
+            "width": 0,
+            "height": 0
+        }
+    },
+    "bitmaps": []
+}

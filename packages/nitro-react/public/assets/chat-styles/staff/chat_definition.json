@@ -1,0 +1,47 @@
+{
+    "id": 23,
+    "flags": {
+        "staffOverrideable": true
+    },
+    "regPoints": {
+        "scale9": {
+            "x": 39,
+            "y": 15,
+            "width": 1,
+            "height": 1
+        },
+        "pointerY": 25,
+        "faceXY": {
+            "x": 16,
+            "y": 15
+        },
+        "textFieldMargins": {
+            "x": 33,
+            "y": 7,
+            "width": 17,
+            "height": 11
+        },
+        "textColorRGB": 0,
+        "fontFace": "Ubuntu",
+        "fontSize": 12,
+        "overlapRect": {
+            "x": 3,
+            "y": 2,
+            "width": 0,
+            "height": 0
+        },
+        "usePixelPerfectNineSlice": true,
+        "emblemXY": {
+            "x": 0,
+            "y": 0
+        },
+        "emblemMultilineXY": {
+            "x": 0,
+            "y": 0
+        }
+    },
+    "bitmaps": [
+        "chat_bubble_emblem",
+        "chat_bubble_emblem_multiline"
+    ]
+}

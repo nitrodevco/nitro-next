@@ -6,11 +6,13 @@ import { useEffect } from 'react';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useIsLandingViewVisible } from '#base/context/system';
 
-import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorComponent, RoomWrapper, WalletComponent } from './components';
+import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorComponent, RoomWrapper, ToolbarOtherSettingsComponent, WalletComponent, WiredChestComponent, WiredContractComponent, WiredMenuComponent, WiredRewardNotificationsComponent, WiredSelfDonationComponent, WiredSetupComponent, WiredTradeComponent, WiredTransactionsComponent } from './components';
 import { registerHandlers } from './handlers';
 import { useRegisterHandlers } from './hooks';
 import { Box, TooltipLayer } from './theme';
 import { HotelView } from './views/hotel-view/HotelView';
+import { NotificationsExtensionAnchor } from './views/notifications/NotificationsExtensionAnchor';
+import { NotificationsView } from './views/notifications/NotificationsView';
 import { ActivityPointsView } from './views/purse/ActivityPointsView';
 import { PurseView } from './views/purse/PurseView';
 import { RoomChatInputView } from './views/room-widgets/chat-input/RoomChatInputView';
@@ -75,6 +77,7 @@ export const MainView = () => {
                     >
                         <ActivityPointsView />
                     </Box>
+                    <NotificationsExtensionAnchor />
                 </Box>
                 <AvatarEditorComponent />
                 <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
@@ -83,9 +86,19 @@ export const MainView = () => {
                 <MessengerComponent />
                 <NavigatorComponent />
                 <WalletComponent />
+                <WiredSetupComponent />
+                <WiredMenuComponent />
+                <WiredChestComponent />
+                <WiredContractComponent />
+                <WiredTransactionsComponent />
+                <WiredTradeComponent />
+                <WiredSelfDonationComponent />
+                <WiredRewardNotificationsComponent />
                 <ToolbarView />
+                <ToolbarOtherSettingsComponent />
                 {/* Drawn after the toolbar because it sits inside it when it fits; it renders nothing outside a room. */}
                 <RoomChatInputView />
+                <NotificationsView />
                 <SystemDialogsView />
                 <TooltipLayer />
             </Box>
