@@ -7,4 +7,7 @@ export * from './inventory';
 export * from './messenger';
 export * from './navigator';
 export * from './room';
+export * from './toolbar';
 export * from './wallet';
+export * from './wired';
+export * from './wired-trading';

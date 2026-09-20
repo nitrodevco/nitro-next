@@ -12,7 +12,7 @@ export interface RoomEffectsViewProps {
 }
 
 /** Where the effect icons live - one per effect type, outside the generated layout folder. */
-const effectIcon = (type: number) => `./assets/images/effects/fx_icon_${type}.png`;
+const effectIcon = (type: number) => `./assets/effect-icons/fx_icon_${type}.png`;
 
 /** `EffectsWidget.update` grew the list to what it held, between these. */
 const MIN_LIST_HEIGHT = 48;

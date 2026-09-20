@@ -5,6 +5,8 @@ import { useWindowActions, useWindowZIndex } from '#base/context/system';
 import { getStoredFramePosition, setStoredFramePosition } from '#base/utils';
 
 import { getGlobalRect } from '../utils';
+import { useLayoutEvent } from './useLayoutEvent';
+import { useRevealWhenSettled } from './useRevealWhenSettled';
 
 type DragState = {
     pointerId: number;
@@ -41,11 +43,8 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 export interface FrameDragOptions {
     /**
      * Where the frame opens, in screen pixels. This is the drag offset's starting value rather
-     * than a layout position, and that distinction matters: the clamp below reads the frame's
-     * position off `getGlobalPosition`, which sees `.x`/`.y` but not the position yoga computed
-     * for it. A frame placed through `top`/`left` therefore looks like it is sitting at 0,0 to
-     * the drag, so the offset can never go negative and the window cannot be dragged above or
-     * left of wherever the layout put it.
+     * than a layout position: the offset is what is remembered and handed back, so a frame placed
+     * through `top`/`left` would reopen at that layout position plus wherever it was dragged to.
      */
     defaultPosition?: { x: number; y: number };
     /**
@@ -54,13 +53,30 @@ export interface FrameDragOptions {
      * against the furni every time, not wherever a different one was dragged last.
      */
     remember?: boolean;
+    /**
+     * Opens the frame centered in the viewport - the Flash `window.center()`. A frame whose
+     * height follows its content is not its final size on the first layout, so it is centered
+     * again on every resize until it is first pressed; after that it stays where it is.
+     */
+    centered?: boolean;
+    /**
+     * Told where the frame is each time it has been centered or dragged, for a caller that
+     * keeps the position itself (and hands it back as `defaultPosition`) rather than through
+     * `remember`.
+     */
+    onPositionChange?: (position: { x: number; y: number }) => void;
 }
 
-export const useFrameDrag = (id: string | undefined, { defaultPosition, remember = true }: FrameDragOptions = {}) => {
+export const useFrameDrag = (id: string | undefined, { defaultPosition, remember = true, centered = false, onPositionChange }: FrameDragOptions = {}) => {
     const generatedId = useId();
     const stackId = id ?? generatedId;
 
     const frameRef = useRef<PixiContainer | HTMLElement | null>(null);
+    // The node as state as well: `useLayoutEvent` subscribes to a node, and a ref cannot be read while rendering.
+    const [ frameNode, setFrameNode ] = useState<PixiContainer | HTMLElement | null>(null);
+    const centeringRef = useRef(centered);
+    // Where the frame was last put by a drag or by centering, for the callbacks that report it.
+    const latestOffsetRef = useRef<{ dx: number; dy: number } | null>(null);
     const dragStateRef = useRef<DragState | null>(null);
     const activeListenersRef = useRef<ActiveListeners | null>(null);
 
@@ -72,6 +88,12 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
         return getStoredFramePosition(id) ?? opened;
     });
 
+    // Unrendered until it has been laid out and put at its offset - see `useRevealWhenSettled`.
+    const revealed = useRevealWhenSettled(frameNode, () => {
+        const latest = latestOffsetRef.current;
+
+        return !latest || !(frameNode instanceof PixiContainer) || ((frameNode.x === latest.dx) && (frameNode.y === latest.dy));
+    });
     const zIndex = useWindowZIndex(stackId);
     const { bringWindowToFront } = useWindowActions();
 
@@ -92,6 +114,34 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
     }, []);
 
     useEffect(() => stopDragging, [ stopDragging ]);
+
+    const attachFrame = useCallback((node: PixiContainer | HTMLElement | null) => {
+        frameRef.current = node;
+
+        setFrameNode(node);
+    }, []);
+
+    useLayoutEvent(frameNode as PixiContainer | null, () => {
+        if (!centeringRef.current || !frameNode) return;
+
+        const rect = getGlobalRect(frameNode);
+
+        if (!rect.width || !rect.height) return;
+
+        const next = {
+            dx: Math.max(0, Math.floor((window.innerWidth - rect.width) / 2)),
+            dy: Math.max(0, Math.floor((window.innerHeight - rect.height) / 2)),
+        };
+
+        const last = latestOffsetRef.current;
+
+        if (last && (last.dx === next.dx) && (last.dy === next.dy)) return;
+
+        latestOffsetRef.current = next;
+
+        setOffset(next);
+        onPositionChange?.({ x: next.dx, y: next.dy });
+    });
 
     const handleHeaderPointerDown = (event: FederatedPointerEvent | PointerEvent) => {
         if (event.button !== 0) return;
@@ -138,10 +188,14 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
             const newLeft = Math.floor(clamp(dragState.startGlobalX + dx, MIN_VISIBLE - dragState.width, window.innerWidth - MIN_VISIBLE));
             const newTop = Math.floor(clamp(dragState.startGlobalY + dy, 0, window.innerHeight - MIN_VISIBLE));
 
-            setOffset({
+            const next = {
                 dx: dragState.origDx + (newLeft - dragState.startGlobalX),
                 dy: dragState.origDy + (newTop - dragState.startGlobalY),
-            });
+            };
+
+            latestOffsetRef.current = next;
+
+            setOffset(next);
         };
 
         const handleUp = (upEvent: PointerEvent) => {
@@ -149,13 +203,13 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
 
             stopDragging();
 
-            if (!id || !remember) return;
+            const dropped = latestOffsetRef.current;
 
-            setOffset((current) => {
-                setStoredFramePosition(id, current);
+            if (!dropped) return;
 
-                return current;
-            });
+            if (id && remember) setStoredFramePosition(id, dropped);
+
+            onPositionChange?.({ x: dropped.dx, y: dropped.dy });
         };
 
         activeListenersRef.current = { move: handleMove, up: handleUp };
@@ -165,8 +219,10 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
     };
 
     const handleActivate = () => {
+        centeringRef.current = false;
+
         bringWindowToFront(stackId);
     };
 
-    return { frameRef, offset, zIndex, onPointerDown: handleActivate, onHeaderPointerDown: handleHeaderPointerDown };
+    return { frameRef, attachFrame, offset, zIndex, revealed, onPointerDown: handleActivate, onHeaderPointerDown: handleHeaderPointerDown };
 };

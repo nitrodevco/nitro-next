@@ -52,9 +52,9 @@ export interface ScrollViewportProps {
  * stayed `false` and the content height measured exactly equal to the viewport height until
  * this was added).
  *
- * `roundPixels` on both the mask and the content container matters once truffle-rendered text
+ * `roundPixels` on both the mask and the content container matters once Flash-rendered text
  * lives inside a scroller: `scrollOffset` accumulates from raw wheel/drag deltas and is routinely
- * fractional, and `TruffleTextPixi`'s own sprites already round *themselves* to the nearest
+ * fractional, and `FlashTextPixi`'s own sprites already round *themselves* to the nearest
  * pixel (`roundPixels` there). Left unrounded here, the content container's fractional -y
  * translation and the mask's own (otherwise-fixed) rect can each land on a different sub-pixel
  * boundary than a content sprite's independently-rounded position - a mismatch too small to

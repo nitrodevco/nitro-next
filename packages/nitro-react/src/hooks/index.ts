@@ -9,3 +9,5 @@ export * from './room';
 export * from './system';
 export * from './useSecondsClock';
 export * from './useViewportSize';
+export * from './wired';
+export * from './wired-trading';
