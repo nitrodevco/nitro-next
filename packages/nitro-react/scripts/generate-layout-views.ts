@@ -572,7 +572,14 @@ const RUNTIME_IMAGES: { name: string; component: string }[] = [
     'avatar_editor_tabs_top_jacket', 'avatar_editor_tabs_top_prints', 'avatar_editor_tabs_top_accessories', 'avatar_editor_tabs_bottom_trousers',
     'avatar_editor_tabs_bottom_shoes', 'avatar_editor_tabs_bottom_accessories', 'avatar_editor_tabs_icon_misc_pets', 'avatar_editor_tabs_icon_misc_misc',
     'avatar_editor_wardrobe_empty_slot', 'avatar_editor_editor_clr_13x21_2', 'avatar_editor_editor_clr_13x21_3',
-].map(name => ({ name, component: 'avatar-editor' })));
+].map(name => ({ name, component: 'avatar-editor' }))).concat([
+    // The placeholder every badge draws while it loads: `AchievementController`,
+    // `AchievementsResolutionController` and the two resolution views all set
+    // `assetUri = "common_loading_icon"`, and the room logics send it as the `loading_icon`
+    // asset name (`FurnitureGuildCustomizedLogic`). Only the friend bar's layout names it
+    // statically, so without this row it would sit in that one component's folder.
+    { name: 'common_loading_icon', component: 'quest-engine' },
+]);
 
 /**
  * Records that `component` draws `outName`, which the `scripts/images` file `source` holds (a

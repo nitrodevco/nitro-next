@@ -4,7 +4,7 @@
  * `style_<assetId>_regpoints` text (where the nine-slice grid, pointer, face, emblem, text
  * margins and colours sit inside the style's bitmaps). `regPoints` carries exactly the keys the
  * style's file has, so an absent key is absent in Flash too and `ChatStyle` applies the
- * library's defaults. The bitmaps live under `public/assets/chat/styles/<assetId>/`, copied
+ * library's defaults. The bitmaps live under `public/assets/chat-styles/<assetId>/`, copied
  * straight out of the SWF: `chat_bubble_base`, `chat_bubble_pointer` and `selector_preview`
  * for every style, plus whatever `bitmaps` lists.
  *
@@ -201,7 +201,7 @@ export const CHAT_STYLE_DEFINITIONS: ChatStyleDefinition[] = [
 /** `ChatStyleLibrary.DEFAULT_STYLE` - the style every unknown id falls back to. */
 export const CHAT_STYLE_DEFAULT_ID = 0;
 
-export const CHAT_STYLE_ASSET_BASE = '/assets/chat/styles';
+export const CHAT_STYLE_ASSET_BASE = '/assets/chat-styles';
 
 export const chatStyleAssetUrl = (assetId: string, file: ChatStyleAssetFile): string => `${CHAT_STYLE_ASSET_BASE}/${assetId}/${file}.png`;
 
