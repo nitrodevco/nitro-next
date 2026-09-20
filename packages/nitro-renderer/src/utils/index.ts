@@ -9,3 +9,4 @@ export * from './PaletteMapFilter';
 export * from './TexturePool';
 export * from './TextureUtils';
 export * from './WiredFurnitureBorderFilter';
+export * from './ZipArchive';

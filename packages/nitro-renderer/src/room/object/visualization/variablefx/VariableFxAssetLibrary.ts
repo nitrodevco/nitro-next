@@ -1,32 +1,33 @@
 import { GetConfigValue, NitroLogger } from '@nitrodevco/nitro-api';
 
+import { GetAssetManager } from '../../../../assets/GetAssetManager';
 import { IVariableFxAssetProvider, VariableFxIconMetadataEntry, VariableFxRendererMapping } from './IVariableFxAssetProvider';
 import { createTransparentBitmap, getBitmapContext, VariableFxBitmap } from './rendering/VariableFxBitmap';
 import { VariableFxServerTables } from './VariableFxTables';
 
-interface VariableFxAtlasFrame {
-    frame: { x: number; y: number; w: number; h: number };
-}
-
-interface VariableFxAtlasManifest {
-    frames: Record<string, VariableFxAtlasFrame>;
+/** The two XML tables the Flash library carried, as `scripts/build-asset-bundles.ts` converts them. */
+interface VariableFxBundleTables {
     icons: Record<string, { x: number; y: number }>;
     renderers: { id: number; name: string; rendererClass: string }[];
-    meta: { image: string };
 }
 
-const DEFAULT_ASSET_URL = '/assets/variablefx';
+const BUNDLE_NAME = 'variable-fx';
+const DEFAULT_BUNDLE_URL = '/assets/bundles/%name%.nitro';
+
+/**
+ * The bundle names each bitmap for its path under `public/assets`, so the `variablefx_*` name
+ * the renderers ask for is this prefix plus that name.
+ */
+const ASSET_PREFIX = 'variablefx-';
 
 /**
  * The Flash client embedded every `variablefx_*` bitmap (and the icon/renderer XML tables) in
- * its room visualization library. Here they are packed into one atlas (`atlas.png` +
- * `manifest.json`, built by nitro-react's `scripts/build-variablefx-atlas.ts`) which this
- * loads once; the renderers compose on the CPU, so each asset is sliced out into its own
- * canvas on first use rather than uploaded as a texture.
+ * its room visualization library. Here they are one `.nitro` bundle: the bitmaps packed into a
+ * sheet the shared `AssetManager` decodes and uploads once, and the two tables beside them as
+ * JSON. The renderers compose on the CPU, so each asset is still cut out into its own canvas on
+ * first use - out of the decoded sheet rather than a separately fetched atlas image.
  */
 export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
-    private _manifest: VariableFxAtlasManifest | undefined = undefined;
-    private _image: HTMLImageElement | undefined = undefined;
     private _bitmaps: Map<string, VariableFxBitmap> = new Map();
     private _iconMetadata: Map<string, VariableFxIconMetadataEntry> = new Map();
     private _rendererMappings: VariableFxRendererMapping[] = [];
@@ -37,15 +38,13 @@ export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
         return this._ready;
     }
 
-    public load(baseUrl?: string): Promise<boolean> {
+    public load(): Promise<boolean> {
         if (this._ready) return Promise.resolve(true);
         if (this._loading) return this._loading;
 
-        const base = (baseUrl ?? GetConfigValue<string>('variablefx.asset.url') ?? DEFAULT_ASSET_URL).replace(/\/$/, '');
-
-        this._loading = this.loadAtlas(base)
+        this._loading = this.loadBundle()
             .catch((err: unknown) => {
-                NitroLogger.error('VariableFxAssetLibrary: failed to load atlas', err);
+                NitroLogger.error('VariableFxAssetLibrary: failed to load bundle', err);
 
                 return false;
             })
@@ -57,20 +56,22 @@ export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
     }
 
     public getBitmap(name: string): VariableFxBitmap | undefined {
-        if (!this._manifest || !this._image) return undefined;
+        if (!this._ready) return undefined;
 
         const existing = this._bitmaps.get(name);
 
         if (existing) return existing;
 
-        const entry = this._manifest.frames[name];
+        const texture = GetAssetManager().getTexture(`${ASSET_PREFIX}${name}`);
+        const resource = texture?.source.resource as CanvasImageSource | undefined;
 
-        if (!entry) return undefined;
+        if (!texture || !resource || (typeof resource !== 'object')) return undefined;
 
-        const { x, y, w, h } = entry.frame;
-        const bitmap = createTransparentBitmap(w, h);
+        // The asset's rect within the packed sheet the bundle carries.
+        const { x, y, width, height } = texture.frame;
+        const bitmap = createTransparentBitmap(width, height);
 
-        getBitmapContext(bitmap).drawImage(this._image, x, y, w, h, 0, 0, w, h);
+        getBitmapContext(bitmap).drawImage(resource, x, y, width, height, 0, 0, width, height);
 
         this._bitmaps.set(name, bitmap);
 
@@ -85,24 +86,22 @@ export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
         return this._rendererMappings;
     }
 
-    private async loadAtlas(base: string): Promise<boolean> {
-        const response = await fetch(`${base}/manifest.json`);
+    private async loadBundle(): Promise<boolean> {
+        const url = (GetConfigValue<string>('asset.bundles.url') ?? DEFAULT_BUNDLE_URL).replace('%name%', BUNDLE_NAME);
+        const assetManager = GetAssetManager();
 
-        if (!response.ok) throw new Error(`manifest request failed (${response.status})`);
+        if (!await assetManager.downloadAssetBundle(BUNDLE_NAME, url)) throw new Error(`bundle request failed: ${url}`);
 
-        const manifest = await response.json() as VariableFxAtlasManifest;
-        const image = await this.loadImage(`${base}/${manifest.meta?.image ?? 'atlas.png'}`);
+        const tables = assetManager.getBundleFile<VariableFxBundleTables>(BUNDLE_NAME, `${BUNDLE_NAME}-tables`);
 
-        this._manifest = manifest;
-        this._image = image;
         this._iconMetadata = new Map();
         this._rendererMappings = [];
 
-        for (const [ name, offsets ] of Object.entries(manifest.icons ?? {})) {
+        for (const [ name, offsets ] of Object.entries(tables?.icons ?? {})) {
             this._iconMetadata.set(name, { offsetX: Math.trunc(offsets.x) || 0, offsetY: Math.trunc(offsets.y) || 0 });
         }
 
-        for (const mapping of manifest.renderers ?? []) {
+        for (const mapping of tables?.renderers ?? []) {
             const rendererName = VariableFxServerTables.resolveRendererById(mapping.id);
 
             if (rendererName === undefined || rendererName !== mapping.name || !mapping.rendererClass?.length) continue;
@@ -112,18 +111,10 @@ export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
 
         this._ready = true;
 
+        // Both tables are now maps of our own; the JSON they came from is not read again.
+        assetManager.releaseBundleData(BUNDLE_NAME);
+
         return true;
-    }
-
-    private loadImage(url: string): Promise<HTMLImageElement> {
-        return new Promise((resolve, reject) => {
-            const image = new Image();
-
-            image.crossOrigin = 'anonymous';
-            image.onload = () => resolve(image);
-            image.onerror = () => reject(new Error(`image request failed: ${url}`));
-            image.src = url;
-        });
     }
 }
 

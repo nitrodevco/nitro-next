@@ -2,14 +2,14 @@ import { GetAssetManager } from '@nitrodevco/nitro-renderer';
 import { Assets, Rectangle, Texture } from 'pixi.js';
 import { useSyncExternalStore } from 'react';
 
+import { isAssetName, lazyBundleForAsset, loadAssetBundle } from '#base/utils';
+
 import { SpriteFrame } from '../utils/spriteFrame';
 import { getThemeSliceCanvas, ThemeSliceEffect, themeSliceEffectId } from '../utils/themeSprites';
-import { THEME_URLS } from '../utils/themeUrls';
-import { useThemeImageUrl } from './useThemeImageUrl';
 
 // ---------------------------------------------------------------------------------------------
-// Theme textures - every chrome sprite the atlas holds, as a `Texture` sharing the one atlas
-// base texture (see utils/themeAssetBundle.ts). Filled once at boot; every lookup after that
+// Theme textures - every chrome sprite the `theme` bundle's sheet holds, as a `Texture` sharing
+// its one base texture (see utils/themeAssetBundle.ts). Filled once at boot; every lookup after that
 // is a synchronous Map read, so no component ever creates a texture of its own for chrome.
 //
 // Every texture derived from one (a standalone copy, a silhouette, a shadow, a greyscale) is
@@ -239,6 +239,18 @@ export const loadTexture = (url: string): Promise<Texture | undefined> => {
     const promise = (async () => {
         let texture = GetAssetManager().getTexture(url);
 
+        // A bundle asset name, not a url. Everything the preload covers is already in the asset
+        // manager; a name belonging to a bundle that is loaded on demand pulls that bundle in
+        // once and is found on the way out. A name in neither is a typo or a missing build, and
+        // the `undefined` stays cached so the retry loop below doesn't chase it.
+        if (!texture && isAssetName(url)) {
+            const bundle = lazyBundleForAsset(url);
+
+            if (bundle && await loadAssetBundle(bundle)) texture = GetAssetManager().getTexture(url);
+
+            return texture;
+        }
+
         if (!texture && (url.startsWith('data:') || url.startsWith('blob:'))) {
             // `AssetManager.downloadAsset` routes by file extension, which a data/blob URL
             // doesn't have (a generated thumbnail, an extracted render) - Pixi's own loader
@@ -323,25 +335,13 @@ export interface PixiTextureOptions {
 }
 
 /**
- * Resolves a theme asset key (`'border-9-default-src'`) to its Pixi Texture: the atlas-backed
- * one registered at boot (synchronously, no state), else the per-file URL through
- * `useTextureFromUrl` (the atlas failed to load, or the key isn't packed).
+ * Resolves a theme asset key (`'border-9-default-src'`) to its Pixi Texture - the one the
+ * `theme` bundle's sheet was cut into at boot, read synchronously with no state. `undefined`
+ * until that bundle has landed, and for a key the sheet does not carry.
  */
-export const usePixiTexture = (themeKey: string | undefined, options?: PixiTextureOptions): Texture | undefined => {
-    const atlasTexture = options?.standalone ? getStandaloneThemeTexture(themeKey) : getThemeTexture(themeKey);
-    const fallback = useTextureFromUrl(atlasTexture ? undefined : (themeKey ? THEME_URLS[themeKey] : undefined));
+export const usePixiTexture = (themeKey: string | undefined, options?: PixiTextureOptions): Texture | undefined => (options?.standalone
+    ? getStandaloneThemeTexture(themeKey)
+    : getThemeTexture(themeKey));
 
-    return atlasTexture ?? fallback;
-};
-
-/**
- * A theme key with an effect applied, as a texture: synchronously out of the atlas, else
- * (atlas not loaded) through the per-file recoloured URL `useThemeImageUrl` builds.
- */
-export const usePixiEffectTexture = (themeKey: string | undefined, effect: ThemeSliceEffect): Texture | undefined => {
-    const immediate = getThemeEffectTexture(themeKey, effect);
-    const url = useThemeImageUrl(immediate ? undefined : themeKey, effect);
-    const fallback = useTextureFromUrl(url);
-
-    return immediate ?? fallback;
-};
+/** A theme key with an effect applied, as a texture - cut out of the sheet once per key + effect. */
+export const usePixiEffectTexture = (themeKey: string | undefined, effect: ThemeSliceEffect): Texture | undefined => getThemeEffectTexture(themeKey, effect);

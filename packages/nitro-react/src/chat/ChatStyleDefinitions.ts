@@ -8,6 +8,12 @@
  * straight out of the SWF: `chat_bubble_base`, `chat_bubble_pointer` and `selector_preview`
  * for every style, plus whatever `bitmaps` lists.
  *
+ * `CHAT_STYLE_DEFINITIONS` is read at build time, not at run time: `scripts/build-asset-bundles.ts`
+ * writes it into `chat-styles.nitro` as `chat-style-definitions.json` beside those bitmaps, and
+ * `ChatStyleLibrary` reads it back from there - one copy of the catalogue, arriving with the art
+ * it describes, rather than a second one compiled into the client. The types and the two id
+ * predicates below are runtime code and are imported normally.
+ *
  * Carried by hand; `scripts/drift/chat_styles.py` diffs every style, field and bitmap against
  * the client, so keep this in step with it after a revision bump.
  */
@@ -201,9 +207,11 @@ export const CHAT_STYLE_DEFINITIONS: ChatStyleDefinition[] = [
 /** `ChatStyleLibrary.DEFAULT_STYLE` - the style every unknown id falls back to. */
 export const CHAT_STYLE_DEFAULT_ID = 0;
 
-export const CHAT_STYLE_ASSET_BASE = '/assets/chat-styles';
-
-export const chatStyleAssetUrl = (assetId: string, file: ChatStyleAssetFile): string => `${CHAT_STYLE_ASSET_BASE}/${assetId}/${file}.png`;
+/**
+ * A style's bitmap by the name it has in `chat-styles.nitro` - the path under `public/assets`
+ * with `/` turned into `-`, as `scripts/build-asset-bundles.ts` names every packed asset.
+ */
+export const chatStyleAssetName = (assetId: string, file: ChatStyleAssetFile): string => `chat-styles-${assetId}-${file}`;
 
 /** `RoomChatInputView.isNftChatStyle` - ids 1000-9999 are NFT styles, pickable only when the account holds one. */
 export const isNftChatStyle = (styleId: number): boolean => (styleId >= 1000) && (styleId <= 9999);

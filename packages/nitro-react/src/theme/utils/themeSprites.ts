@@ -1,13 +1,13 @@
 import { boxBlurAlpha } from './boxBlur';
 import { getRenderMode } from './renderMode';
-import { THEME_URLS } from './themeUrls';
+import { THEME_ASSETS } from './themeAssets';
 
 /**
- * One theme asset's rect inside the packed atlas (`public/assets/theme-atlas/atlas.png`, built
- * by scripts/build-theme-atlas.ts from every `THEME_URLS` entry).
+ * One theme asset's rect inside the packed sheet the `theme` bundle carries (`theme.png`, built
+ * by scripts/build-asset-bundles.ts from every `THEME_ASSETS` entry).
  */
 export interface ThemeSprite {
-    /** The `THEME_URLS` key. */
+    /** The `THEME_ASSETS` key. */
     key: string;
     x: number;
     y: number;
@@ -16,11 +16,20 @@ export interface ThemeSprite {
 }
 
 interface ThemeAtlas {
-    /** The atlas image's own URL - the one network/decoded copy every DOM reference shares. */
-    url: string;
+    /**
+     * A `blob:` URL of the sheet's PNG bytes, straight out of the bundle - the one reference
+     * every DOM `background-image` shares. Only set under the DOM render target: Pixi draws the
+     * decoded texture, and the bytes behind this are not retained there.
+     */
+    url: string | undefined;
     width: number;
     height: number;
-    image: HTMLImageElement;
+    /**
+     * The decoded sheet, for slicing a sprite onto a canvas. This is the `ImageBitmap` inside
+     * the bundle's texture, not an `<img>` - both are `CanvasImageSource`, and only the DOM
+     * target's CSS needs a URL.
+     */
+    image: CanvasImageSource;
 }
 
 let atlas: ThemeAtlas | undefined;
@@ -37,12 +46,12 @@ const sprites = new Map<string, ThemeSprite>();
 const sliceCanvases = new Map<string, HTMLCanvasElement>();
 const sliceUrls = new Map<string, string>();
 
-/** Registers the atlas and every sprite rect it holds. Called once by `preloadThemeAssets`. */
-export const registerThemeAtlas = (image: HTMLImageElement, url: string, frames: Record<string, { frame: { x: number; y: number; w: number; h: number } }>): void => {
-    atlas = { url, width: image.naturalWidth, height: image.naturalHeight, image };
+/** Registers the sheet and every sprite rect it holds. Called once by `preloadThemeAssets`. */
+export const registerThemeAtlas = (sheet: { image: CanvasImageSource; url: string | undefined; width: number; height: number }, frames: Record<string, { frame: { x: number; y: number; w: number; h: number } }>): void => {
+    atlas = sheet;
 
-    for (const [ key, fileUrl ] of Object.entries(THEME_URLS)) {
-        const rect = frames[fileUrl.replace(/^\.\//, '')]?.frame;
+    for (const [ key, asset ] of Object.entries(THEME_ASSETS)) {
+        const rect = frames[asset]?.frame;
 
         if (rect) sprites.set(key, { key, x: rect.x, y: rect.y, width: rect.w, height: rect.h });
     }
@@ -50,7 +59,7 @@ export const registerThemeAtlas = (image: HTMLImageElement, url: string, frames:
 
 export const getThemeAtlas = (): ThemeAtlas | undefined => atlas;
 
-/** The atlas rect of a theme key, or `undefined` while the atlas hasn't loaded (callers fall back to the per-file `THEME_URLS` URL). */
+/** The sheet rect of a theme key, or `undefined` while the `theme` bundle hasn't loaded. */
 export const getThemeSprite = (key: string | undefined): ThemeSprite | undefined => (key ? sprites.get(key) : undefined);
 
 export type ThemeSliceEffect
@@ -217,7 +226,7 @@ export const getThemeSliceUrl = (key: string, effect: ThemeSliceEffect = { kind:
 export const themeSpriteFillStyle = (sprite: ThemeSprite, offset?: { x: number; y: number; width: number; height: number }): {
     backgroundImage: string; backgroundSize: string; backgroundPosition: string; backgroundRepeat: 'no-repeat';
 } | undefined => {
-    if (!atlas) return undefined;
+    if (!atlas?.url) return undefined;
 
     const x = sprite.x + (offset?.x ?? 0);
     const y = sprite.y + (offset?.y ?? 0);
@@ -240,7 +249,7 @@ export const themeSpriteFillStyle = (sprite: ThemeSprite, offset?: { x: number; 
  */
 export const themeSpriteNativeStyle = (sprite: ThemeSprite, offset?: { x: number; y: number }): {
     backgroundImage: string; backgroundPosition: string; backgroundRepeat: 'no-repeat';
-} | undefined => (atlas
+} | undefined => (atlas?.url
     ? {
             backgroundImage: `url(${atlas.url})`,
             backgroundPosition: `-${sprite.x + (offset?.x ?? 0)}px -${sprite.y + (offset?.y ?? 0)}px`,

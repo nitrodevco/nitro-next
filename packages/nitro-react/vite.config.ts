@@ -1,10 +1,75 @@
 import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+import { existsSync, readdirSync, readFileSync, rmdirSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { defineConfig, Plugin } from 'vite';
 
 const r = (p: string) => `${import.meta.dirname}/${p}`;
+
+/**
+ * Drops the art that is already inside a `.nitro` bundle from the built output.
+ *
+ * Everything under `public/assets/<component>/` is the input of
+ * `scripts/build-asset-bundles.ts`, not something the client fetches: it is packed into
+ * `public/assets/bundles/*.nitro` and reached through the `AssetManager` by asset name. Vite
+ * copies `public/` verbatim, though, so without this the same ~1,800 files ship a second time
+ * loose beside the bundles that contain them.
+ *
+ * The prune list is the builder's own manifest (`bundles.json`, one `absorbed` entry per file a
+ * bundle took in), so a bundle definition and the files it removes can never drift apart - and
+ * a hand-placed file no bundle names is left alone.
+ */
+const pruneBundledAssets = (): Plugin => ({
+    name: 'prune-bundled-assets',
+    apply: 'build',
+    closeBundle() {
+        const manifest = r('public/assets/bundles/bundles.json');
+
+        if (!existsSync(manifest)) {
+            this.warn('No public/assets/bundles/bundles.json - run `yarn build-asset-bundles`. The loose art has been left in the output.');
+
+            return;
+        }
+
+        const { bundles } = JSON.parse(readFileSync(manifest, 'utf8')) as { bundles: { absorbed: string[] }[] };
+        const root = r('dist/assets');
+        let removed = 0;
+
+        for (const bundle of bundles) {
+            for (const absorbed of bundle.absorbed) {
+                const file = path.join(root, absorbed);
+
+                if (!existsSync(file)) continue;
+
+                rmSync(file);
+                removed++;
+            }
+        }
+
+        // Bottom-up, so a folder emptied by the pass above goes with its contents. `dist/assets`
+        // itself always holds the built chunks, so it is never a candidate.
+        const pruneEmpty = (dir: string): boolean => {
+            for (const entry of readdirSync(dir)) {
+                const full = path.join(dir, entry);
+
+                if (statSync(full).isDirectory() && pruneEmpty(full)) rmdirSync(full);
+            }
+
+            return !readdirSync(dir).length;
+        };
+
+        // The manifest itself is a build record, not a runtime file - it is read from `public/`
+        // above, so the copy in the output goes too.
+        const shipped = path.join(root, 'bundles/bundles.json');
+
+        if (existsSync(shipped)) rmSync(shipped);
+
+        pruneEmpty(root);
+
+        this.info(`Pruned ${removed} bundled asset files from dist/assets`);
+    },
+});
 
 const tailwindAutoReference = (): Plugin => {
     const indexCss = path.resolve(r('./src/index.css'));
@@ -91,6 +156,7 @@ export default defineConfig(({ mode }) => {
         },
     },
     plugins: [
+        pruneBundledAssets(),
         tailwindAutoReference(),
         react(),
         babel({

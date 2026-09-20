@@ -2,16 +2,27 @@ import { NitroLogger } from '@nitrodevco/nitro-api';
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
 import { Texture } from 'pixi.js';
 
+import { loadAssetBundle } from '#base/utils';
+
 import { ChatStyle, IChatStyle } from './ChatStyle';
-import { CHAT_STYLE_DEFAULT_ID, CHAT_STYLE_DEFINITIONS, chatStyleAssetUrl, ChatStyleDefinition, ChatStyleOptionalBitmap } from './ChatStyleDefinitions';
+import { CHAT_STYLE_DEFAULT_ID, chatStyleAssetName, ChatStyleDefinition, ChatStyleOptionalBitmap } from './ChatStyleDefinitions';
+
+/** What `scripts/build-asset-bundles.ts` writes into `chat-styles.nitro` beside the bitmaps. */
+interface ChatStyleCatalogue {
+    defaultId: number;
+    styles: ChatStyleDefinition[];
+}
+
+const BUNDLE_NAME = 'chat-styles';
 
 /**
- * The Flash `ChatStyleLibrary`: every style in `chatstyles.xml`, its bitmaps loaded once through
- * the shared asset manager (so the room and the UI share one decoded copy). `load()` is awaited
- * at boot alongside the theme atlas; `getStyle` falls back to the default style for unknown
- * ids exactly like the client did. A style whose bitmaps failed to load is skipped with a
- * warning rather than aborting the whole library - that too mirrors the client's per-style
- * try/catch.
+ * The Flash `ChatStyleLibrary`: every style in `chatstyles.xml`, read out of the `chat-styles`
+ * bundle - the catalogue (`chat-style-definitions.json`) and the bitmaps it describes arrive
+ * together in one archive, and the bitmaps are already decoded into the shared asset manager, so
+ * the room and the UI draw one copy. `load()` is awaited at boot; `getStyle` falls back to the
+ * default style for unknown ids exactly like the client did. A style whose bitmaps are missing is
+ * skipped with a warning rather than aborting the whole library - that too mirrors the client's
+ * per-style try/catch.
  */
 export class ChatStyleLibrary {
     private readonly _styles: Map<number, ChatStyle> = new Map();
@@ -53,15 +64,29 @@ export class ChatStyleLibrary {
     }
 
     private async loadStyles(): Promise<void> {
-        const styles = await Promise.all(CHAT_STYLE_DEFINITIONS.map(async (definition) => {
+        if (!await loadAssetBundle(BUNDLE_NAME)) {
+            NitroLogger.error('ChatStyleLibrary: the chat-styles bundle failed to load - no chat style is available');
+
+            return;
+        }
+
+        const catalogue = GetAssetManager().getBundleFile<ChatStyleCatalogue>(BUNDLE_NAME, 'chat-style-definitions');
+
+        if (!catalogue?.styles?.length) {
+            NitroLogger.error('ChatStyleLibrary: the chat-styles bundle carries no style catalogue');
+
+            return;
+        }
+
+        const styles = catalogue.styles.map((definition) => {
             try {
-                return await this.loadStyle(definition);
+                return this.loadStyle(definition);
             } catch (err) {
                 NitroLogger.warn(`Error initializing chat style: ${definition.id}`, err);
 
                 return undefined;
             }
-        }));
+        });
 
         // In `chatstyles_xml` order, which is the order `getStyleIds` - and so the style picker - lists them.
         for (const style of styles) {
@@ -74,38 +99,34 @@ export class ChatStyleLibrary {
         }
 
         this._isLoaded = true;
+
+        // Every style is built; the catalogue behind them is not read again.
+        GetAssetManager().releaseBundleData(BUNDLE_NAME);
     }
 
-    private async loadStyle(definition: ChatStyleDefinition): Promise<ChatStyle | undefined> {
+    private loadStyle(definition: ChatStyleDefinition): ChatStyle {
         const { assetId, regPoints, bitmaps } = definition;
-        const base = await this.loadTexture(chatStyleAssetUrl(assetId, 'chat_bubble_base'));
+        const base = this.getTexture(assetId, 'chat_bubble_base');
 
         if (!base) throw new Error(`missing chat_bubble_base for ${assetId}`);
 
-        const optional = (file: ChatStyleOptionalBitmap) => (bitmaps.includes(file) ? this.loadTexture(chatStyleAssetUrl(assetId, file)) : Promise.resolve(undefined));
+        const optional = (file: ChatStyleOptionalBitmap) => (bitmaps.includes(file) ? this.getTexture(assetId, file) : undefined);
 
         // Flash reads the pointer only for a style that is not anonymous, and an emblem only where its regpoint is set.
-        const [ pointer, color, selectorPreview, icon, emblem, emblemMultiline ] = await Promise.all([
-            regPoints.anonymous ? Promise.resolve(undefined) : this.loadTexture(chatStyleAssetUrl(assetId, 'chat_bubble_pointer')),
-            optional('chat_bubble_color'),
-            this.loadTexture(chatStyleAssetUrl(assetId, 'selector_preview')),
-            optional('icon'),
-            regPoints.emblemXY ? optional('chat_bubble_emblem') : Promise.resolve(undefined),
-            regPoints.emblemMultilineXY ? optional('chat_bubble_emblem_multiline') : Promise.resolve(undefined),
-        ]);
-
-        return new ChatStyle(definition, { base, pointer, color, selectorPreview, icon, emblem, emblemMultiline });
+        return new ChatStyle(definition, {
+            base,
+            pointer: regPoints.anonymous ? undefined : this.getTexture(assetId, 'chat_bubble_pointer'),
+            color: optional('chat_bubble_color'),
+            selectorPreview: this.getTexture(assetId, 'selector_preview'),
+            icon: optional('icon'),
+            emblem: regPoints.emblemXY ? optional('chat_bubble_emblem') : undefined,
+            emblemMultiline: regPoints.emblemMultilineXY ? optional('chat_bubble_emblem_multiline') : undefined,
+        });
     }
 
-    private async loadTexture(url: string): Promise<Texture | undefined> {
-        const assetManager = GetAssetManager();
-        const existing = assetManager.getTexture(url);
-
-        if (existing) return existing;
-
-        await assetManager.downloadAsset(url);
-
-        return assetManager.getTexture(url);
+    /** Every bitmap is already in the asset manager: the bundle put it there when it was read. */
+    private getTexture(assetId: string, file: Parameters<typeof chatStyleAssetName>[1]): Texture | undefined {
+        return GetAssetManager().getTexture(chatStyleAssetName(assetId, file));
     }
 }
 
@@ -118,5 +139,5 @@ export const GetChatStyleLibrary = (): ChatStyleLibrary => {
     return library;
 };
 
-/** Kicks off (or joins) the bitmap download - awaited at boot next to the theme atlas. */
+/** Kicks off (or joins) the `chat-styles` bundle load - awaited at boot beside the theme's. */
 export const preloadChatStyles = (): Promise<void> => GetChatStyleLibrary().load();

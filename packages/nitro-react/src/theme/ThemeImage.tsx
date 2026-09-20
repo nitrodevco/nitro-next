@@ -2,16 +2,21 @@ import { BLEND_MODES, Container as PixiContainer, EventMode, FederatedPointerEve
 import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler, ReactNode, Ref } from 'react';
 
 import { useConfigValue } from '#base/context/system';
+import { isAssetName } from '#base/utils';
 
 import { BoxLayout } from './Box';
 import { boxLayoutToStyle } from './dom/boxStyle';
 import { useDynamicStyleEffect } from './dynamicstyle';
 import { getCroppedTexture, getTextureGreyscale, getTextureSilhouette, usePixiTexture, useTextureFromUrl, useThemeImageUrl } from './hooks';
 import { useTooltipHandlers } from './tooltip/useTooltipHandlers';
-import { compose, cursorForHandlers, DynamicStyleRole, getRenderMode, getThemeAtlas, getThemeSprite, insetStretchAxes, multiplyAlphas, multiplyTints, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta, themeSpriteFillStyle } from './utils';
+import { compose, cursorForHandlers, DynamicStyleRole, getAssetImageUrl, getRenderMode, getThemeAtlas, getThemeSprite, insetStretchAxes, multiplyAlphas, multiplyTints, pointerEventsFromEventMode, resolveEventMode, SpriteFrame, ThemeLayoutMeta, themeSpriteFillStyle } from './utils';
 
 export interface ImageProps extends ThemeLayoutMeta {
-    /** An arbitrary image URL (a layout bitmap, an avatar render). Ignored when `textureKey` is set. */
+    /**
+     * A bundled bitmap's asset name (`LayoutImage('room-ui/roomtools_gear.png')` ->
+     * `room-ui-roomtools_gear`) or an arbitrary image URL (an avatar render, a room thumbnail,
+     * a badge). Ignored when `textureKey` is set.
+     */
     src?: string | undefined;
     /** A theme asset key (`'icon-set-src'`) - drawn from the shared atlas, no image of its own. */
     textureKey?: string;
@@ -216,10 +221,16 @@ interface DomCopy {
  * sprites recolour through a pre-recoloured atlas slice instead.
  */
 const ImageDom = forwardRef<PixiContainer, ImageProps>(({
-    src, textureKey, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, greyscale, blendMode, dynamicRole, tooltip, eventMode, cursor,
+    src: srcProp, textureKey, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, greyscale, blendMode, dynamicRole, tooltip, eventMode, cursor,
     onPointerOver: onPointerOverProp, onPointerOut: onPointerOutProp, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     layout, visible,
 }, ref) => {
+    // `src` is a bundle asset name (what `LayoutImage` builds) as often as it is a real url.
+    // Asking for the texture is what pulls in a bundle that isn't preloaded; the url CSS needs
+    // is then cut from what the bundle holds - see utils/assetImages.ts.
+    const assetName = isAssetName(srcProp) ? srcProp : undefined;
+    const assetTexture = useTextureFromUrl(assetName);
+    const src = assetName ? (assetTexture ? getAssetImageUrl(assetName) : undefined) : srcProp;
     const tooltipHandlers = useTooltipHandlers(tooltip);
     const onPointerOver = compose(tooltipHandlers.onPointerOver, onPointerOverProp);
     const onPointerOut = compose(tooltipHandlers.onPointerOut, onPointerOutProp);

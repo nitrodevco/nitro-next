@@ -1,91 +1,61 @@
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
-import { Spritesheet, SpritesheetData, Texture } from 'pixi.js';
+import { SpritesheetData } from 'pixi.js';
+
+import { loadAssetBundle } from '#base/utils';
 
 import { registerThemeTexture } from '../hooks/usePixiTexture';
-import { getRenderMode } from './renderMode';
+import { THEME_ASSETS } from './themeAssets';
 import { registerThemeAtlas } from './themeSprites';
-import { THEME_URLS } from './themeUrls';
 
 /**
- * Loads the combined theme-chrome atlas (`scripts/build-theme-atlas.ts` packs every PNG
- * `THEME_URLS` points at into `public/assets/theme-atlas/{atlas.png,manifest.json}`) once at
- * boot, on both render targets:
+ * Loads the `theme` asset bundle and hands its contents to the two registries the chrome reads,
+ * once at boot, on both render targets.
  *
- * - The decoded atlas image and every sprite's rect go into `themeSprites.ts`'s registry. DOM
- *   chrome then references the ONE atlas image (`background-position`/`-size` picks the rect),
- *   and the few places that need a standalone image (`border-image`, `background-repeat`, a
- *   tinted copy) slice it out of that image on demand, once per key.
- * - For Pixi the atlas becomes ONE base texture (a single GPU upload) that a Pixi `Spritesheet`
- *   cuts into per-asset `Texture`s sharing it - the same mechanism `AssetManager` uses for
- *   `.nitro` bundles. Those are registered with `usePixiTexture`'s cache (synchronous lookups,
- *   no per-component texture creation) and with `AssetManager` under the asset's URL, so
- *   anything still resolving by URL finds the same texture.
+ * The bundle (`scripts/build-asset-bundles.ts`) carries every PNG `THEME_ASSETS` names packed
+ * into one sheet plus a Pixi `SpritesheetData` manifest, so `AssetManager` has already made it
+ * one GPU upload and cut a `Texture` per asset out of it by the time this runs. What is left is
+ * naming them the way the theme does:
  *
- * Nothing here is load-bearing: if the manifest or image fails, every lazy path (per-file
- * `THEME_URLS` URLs through `useTextureFromUrl`, plain CSS `url(...)`) still works as before.
+ * - Pixi: each sprite's `Texture` goes into `usePixiTexture`'s cache under its theme key, so a
+ *   lookup during render is a synchronous `Map` read and no component ever builds a texture.
+ * - DOM: `themeSprites.ts` gets the decoded sheet, its rects and a `blob:` URL of its bytes.
+ *   Chrome then references that one URL (`background-position`/`-size` picks the rect), and the
+ *   few places needing a standalone image (`border-image`, `background-repeat`, a tinted copy)
+ *   slice it out of the decoded sheet on demand, once per key.
+ *
+ * There is no per-file fallback behind this any more: the loose PNGs under `public/assets/theme`
+ * are the builder's input and are not served. If the bundle fails, the chrome is missing and the
+ * error is on the console - which is the intent, an asset silently taking the slow path is how a
+ * regression hides.
  */
-
-const ATLAS_BASE = '/assets/theme-atlas';
-
-const fetchManifest = async (): Promise<SpritesheetData | undefined> => {
-    try {
-        const response = await fetch(`${ATLAS_BASE}/manifest.json`);
-
-        if (!response.ok) return undefined;
-
-        return await response.json() as SpritesheetData;
-    } catch {
-        return undefined;
-    }
-};
-
-const loadImageElement = (src: string): Promise<HTMLImageElement> => new Promise((resolve, reject) => {
-    const img = new Image();
-
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(`Failed to load ${src}`));
-    img.src = src;
-});
-
-const preloadForPixi = async (image: HTMLImageElement, manifest: SpritesheetData): Promise<void> => {
-    // The one upload of the atlas: owned by the asset manager, not Pixi's global `Cache`.
-    const base = Texture.from(image, true);
-
-    // `GetRenderer.ts` sets `TextureSource.defaultOptions.scaleMode = 'nearest'` when the
-    // renderer is created - this runs at boot, before that, so set it explicitly.
-    base.source.scaleMode = 'nearest';
-
-    const sheet = new Spritesheet(base, manifest);
-
-    await sheet.parse();
-
-    const assetManager = GetAssetManager();
-
-    assetManager.setTexture('theme:atlas', base);
-
-    for (const [ key, url ] of Object.entries(THEME_URLS)) {
-        const texture = sheet.textures[url.replace(/^\.\//, '')];
-
-        if (!texture) continue;
-
-        registerThemeTexture(key, texture);
-        assetManager.setTexture(url, texture);
-    }
-};
+const BUNDLE_NAME = 'theme';
 
 export const preloadThemeAssets = async (): Promise<void> => {
-    const manifest = await fetchManifest();
+    if (!await loadAssetBundle(BUNDLE_NAME)) return;
 
-    if (!manifest) return;
+    const assetManager = GetAssetManager();
+    const manifest = assetManager.getBundleFile<SpritesheetData>(BUNDLE_NAME, `${BUNDLE_NAME}_spritesheet`);
+    // `processNitroBundle` registers the sheet itself under the manifest's own name.
+    const sheet = assetManager.getTexture(`${BUNDLE_NAME}_spritesheet`);
 
-    try {
-        const url = `${ATLAS_BASE}/${manifest.meta.image ?? 'atlas.png'}`;
-        const image = await loadImageElement(url);
+    if (!manifest?.frames || !sheet) return;
 
-        registerThemeAtlas(image, url, manifest.frames);
+    for (const [ key, asset ] of Object.entries(THEME_ASSETS)) {
+        const texture = assetManager.getTexture(asset);
 
-        if (getRenderMode() !== 'dom') await preloadForPixi(image, manifest);
-    } catch {
-        // Leave whatever didn't resolve on the normal lazy-load path - see module docblock.
+        if (texture) registerThemeTexture(key, texture);
     }
+
+    // Only the DOM target gets a url: it draws chrome with CSS, and the bytes behind the url are
+    // only retained for it (see `AssetManager.keepBundleImageBytes`). Pixi draws `sheet` itself.
+    const url = assetManager.getBundleImageUrl(BUNDLE_NAME, `${BUNDLE_NAME}.png`);
+    // The `ImageBitmap` the bundle decoded to: a `CanvasImageSource`, which is all a slice needs.
+    const image: CanvasImageSource | undefined = sheet.source.resource;
+
+    if (!image) return;
+
+    registerThemeAtlas({ image, url, width: sheet.source.width, height: sheet.source.height }, manifest.frames);
+
+    // The rects are in `themeSprites` now; the manifest they were read out of is not needed again.
+    assetManager.releaseBundleData(BUNDLE_NAME);
 };

@@ -1,6 +1,6 @@
 import { useTranslation } from '#base/context/system';
 import { UserAvatarEffect } from '#base/context/user';
-import { Border, Box, CloseButton, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { Border, Box, CloseButton, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 
 export interface RoomEffectsViewProps {
     effects: UserAvatarEffect[];
@@ -11,8 +11,12 @@ export interface RoomEffectsViewProps {
     onClose: () => void;
 }
 
-/** Where the effect icons live - one per effect type, outside the generated layout folder. */
-const effectIcon = (type: number) => `./assets/effect-icons/fx_icon_${type}.png`;
+/**
+ * The effect icons - one per effect type, outside the generated layout folder. `effect-icons` is
+ * not in the boot preload, so the first of these to be drawn pulls the bundle in (see
+ * `lazyBundleForAsset`); the list is only on screen once the user opens it.
+ */
+const effectIcon = (type: number) => LayoutImage(`effect-icons/fx_icon_${type}.png`);
 
 /** `EffectsWidget.update` grew the list to what it held, between these. */
 const MIN_LIST_HEIGHT = 48;
