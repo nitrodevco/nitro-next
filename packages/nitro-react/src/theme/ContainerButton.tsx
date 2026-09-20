@@ -14,11 +14,21 @@ export type ContainerButtonVariant = ThemeVariant | ThemeWithStatesVariant;
  * illumina `button_multi_*` - a segmented button's left/right/middle piece (no outer edge on the
  * joined side).
  *
- * The skin's `button_etch_*` entities are `colorize="false"`: the neutral shadow that rounds the
- * piece off at the bottom is never tinted by the window's colour, only the `button_*` face is
- * (`NewSourceTypeOption.updateVisuals` sets `_container.color`). They are cut into their own
- * `-plain` sheet of the same size and metrics and drawn as the untinted overlay - baked into the
- * tinted face they took the source type's colour and read as a coloured square over the curve.
+ * Three layers, because the skin colorizes only one of them. The `button_*` face is what
+ * `NewSourceTypeOption.updateVisuals` tints through `_container.color`; the `button_etch_*`
+ * entities are `colorize="false"` - the neutral shadow that rounds the piece off at the bottom -
+ * so they are cut into a `-plain` sheet of the same size and metrics and drawn untinted over it.
+ * Baked into the face they took the source type's colour and read as a coloured square over the
+ * curve.
+ *
+ * The outer `button_center_*_curve` - the gradient patch that carries the face's light-to-dark
+ * transition down the outer edge - is `vertical="center"`, so Flash puts it halfway up the
+ * *rendered* segment, not at its layout rect. Cut at the rect it covered the rounded bottom
+ * corner and filled it in: the same `#e2e2e2` as the face, so invisible while the segment is
+ * unselected and a squared-off block once the picker tints the selected one. It is baked at the
+ * centred position for the sheet's own height instead (`centeredInSheet` in
+ * `extract-skin-assets.ts`), which is exact here - `sourceTypeSelector` draws these segments at
+ * the 19px the skin itself is.
  */
 const multiVariant = (style: string, left: number, right: number): ContainerButtonVariant => ({
     states: {

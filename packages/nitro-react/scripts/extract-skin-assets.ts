@@ -28,9 +28,12 @@
  *   button's etch follows the bottom edge). The theme places them with `CompositePiece`, the way
  *   the illumina button's face and the light frame's border already are.
  *
- * `exclude` is the same idea for a *colorizing* entity the theme places itself: a nine-slice
- * cannot carry a `center`-scaled decoration, so the illumina plain button's side curves are left
- * out of the sheet and drawn from their own pieces instead of being stretched with the middle.
+ * `exclude` is the same idea for a *colorizing* entity the theme places itself, and `center`
+ * scaling is why it exists: the client re-centres such an entity as the window grows, so a sheet
+ * cut at its layout rect is wrong at every size - the segmented button's side gradient landed on
+ * its rounded bottom corner and squared it off. Either the job excludes it and the theme centres
+ * the piece, or `centeredInSheet` keeps it in the sheet, centred for the sheet's own size; baking
+ * one at its layout rect throws.
  *
  * Prints the nine-slice metrics (left/top/right/bottom, from the corner entities) for each
  * output so the matching `ThemeVariants` entry can be written by hand.
@@ -81,10 +84,24 @@ interface Job {
      * They are written as pieces, exactly as `plainOverlay: 'pieces'` writes the untintable ones.
      */
     exclude?: string[];
+    /**
+     * `center`-scaled entities the sheet keeps, centred for the sheet's own size - exact wherever
+     * the theme draws the skin at that size, an approximation at any other. The guard below asks
+     * for this deliberately, because the alternative (`exclude`) needs the theme to place the
+     * piece, and an `overlay` is a single layer that cannot hold both a nine-slice and pieces.
+     */
+    centeredInSheet?: string[];
 }
 
 /** `button_etching_left` -> `button-etching-left`, the suffix a piece's file and theme key carry. */
 const pieceName = (entity: string) => entity.replace(/_/g, '-');
+
+/**
+ * The gradient patches every illumina button skin puts halfway up its left and right edges,
+ * carrying the face's light-to-dark transition down the outer edge. They are `vertical="center"`,
+ * so the client places them by the rendered height - which a sheet can only hold for one height.
+ */
+const CURVES = [ 'button_center_left_curve', 'button_center_right_curve' ];
 
 const JOBS: Job[] = [
     // A border skin also carries an `active` state - the focused window's. `Border` has no such
@@ -98,14 +115,18 @@ const JOBS: Job[] = [
     { component: 'button', style: '2', skin: 'habbo_skin_button_default_white' },
     // Eleven of the purple button's nineteen entities - the whole face, curves included - are
     // `colorize="false"`; only its glow colorizes. Cut apart, or the window's colour paints the face.
-    { component: 'button', style: '104', skin: 'illumina_purple_skin_button', plainOverlay: 'sheet' },
-    { component: 'button', style: '105', skin: 'illumina_purple_skin_button_plain' },
-    { component: 'button', style: '106', skin: 'illumina_light_skin_button_dark_recolorable' },
+    // Its curves stay in the `-plain` sheet, centred for the sheet's own 50px: they are
+    // untintable, so nothing bleeds through them, and the face they sit on is one nine-sliced
+    // overlay layer that cannot also carry pieces. See `BUTTON_104_VARIANT`.
+    { component: 'button', style: '104', skin: 'illumina_purple_skin_button', plainOverlay: 'sheet', centeredInSheet: CURVES },
+    { component: 'button', style: '105', skin: 'illumina_purple_skin_button_plain', exclude: CURVES },
+    { component: 'button', style: '106', skin: 'illumina_light_skin_button_dark_recolorable', exclude: CURVES },
     // The segmented source type picker's three pieces. Their `button_etch_*` entities are
     // `colorize="false"` - the neutral shadow under the rounded bottom corners - so they are cut
     // as a separate overlay; tinted with the rest they read as a coloured square over the curve.
-    { component: 'containerbutton', style: '104', skin: 'illumina_light_skin_button_multi_left', plainOverlay: 'sheet' },
-    { component: 'containerbutton', style: '105', skin: 'illumina_light_skin_button_multi_right', plainOverlay: 'sheet' },
+    { component: 'containerbutton', style: '104', skin: 'illumina_light_skin_button_multi_left', plainOverlay: 'sheet', centeredInSheet: CURVES },
+    { component: 'containerbutton', style: '105', skin: 'illumina_light_skin_button_multi_right', plainOverlay: 'sheet', centeredInSheet: CURVES },
+    // The middle piece has no outer edge, so no curve of its own.
     { component: 'containerbutton', style: '106', skin: 'illumina_light_skin_button_multi_middle', plainOverlay: 'sheet' },
     /*
      * The illumina plain button (button / container_button style 102 - the wired dialog's
@@ -237,8 +258,17 @@ const rectOf = (entity: XmlNode, variables: Record<string, string>): Rect | unde
  * which a static nine-slice PNG cannot carry; those keep the layout's size, as the rendered
  * piece has to stand for every size the client draws it at.
  */
-const stretches = (entity: XmlNode, axis: 'horizontal' | 'vertical'): boolean =>
-    (find(entity, 'scale')?.attrs[axis] ?? 'fixed').toLowerCase() !== 'fixed';
+const scaleOf = (entity: XmlNode, axis: 'horizontal' | 'vertical'): string =>
+    (find(entity, 'scale')?.attrs[axis] ?? 'fixed').toLowerCase();
+
+/**
+ * Whether `BitmapSkinRenderer.draw` resizes this region on the axis. Only `strech` and `tiled`
+ * do: `fixed` copies the template's pixels, and `move` / `center` copy them too - they re-place
+ * the region as the window grows rather than resizing it. Taking the layout rect's size for those
+ * two stretched the segmented button's pressed side gradient, whose template maps it to a 1x1
+ * region while the layout rect stays 3x5.
+ */
+const stretches = (entity: XmlNode, axis: 'horizontal' | 'vertical'): boolean => [ 'strech', 'tiled' ].includes(scaleOf(entity, axis));
 
 const fileFor = (dir: string, name: string, ext: string): string => {
     const file = readdirSync(dir).find(entry => entry.includes(`_${name}$`) && entry.endsWith(ext));
@@ -321,6 +351,25 @@ for (const job of selected) {
 
             if (!at || !from) continue;
 
+            /*
+             * A `center`-scaled entity sits where the *rendered* size puts it, not where its
+             * layout rect does - the client re-centres it as the window grows. A sheet cut at the
+             * layout rect is therefore wrong at every size, the natural one included: the
+             * segmented button's side gradient ended up over its rounded bottom corner and
+             * squared it off. The sheet can only hold such an entity centred for its own size,
+             * which is exact wherever the theme draws the skin at that size and an approximation
+             * otherwise - so a job has to say `centeredInSheet` for it, or `exclude` it and let
+             * the theme place it with `CompositePiece`'s `alignSelf: 'center'`.
+             */
+            const centred = (axis: 'horizontal' | 'vertical') => scaleOf(entity, axis) === 'center';
+            const isCentred = centred('horizontal') || centred('vertical');
+            const atNaturalSize = (!centred('horizontal') || (at.x === ((width - from.width) >> 1)))
+                && (!centred('vertical') || (at.y === ((height - from.height) >> 1)));
+
+            if (isCentred && !asPiece(entity) && !atNaturalSize && !job.centeredInSheet?.includes(entity.attrs.name)) {
+                throw new Error(`${job.skin}: ${entity.attrs.name} is scaled "center" but its layout rect is ${at.x},${at.y}, not the ${(width - from.width) >> 1},${(height - from.height) >> 1} the client centres it at - exclude it so the theme places it, or list it in centeredInSheet with the reason the sheet may hold it`);
+            }
+
             if (asPiece(entity)) {
                 // At the template's own size: the layout's `move` / `center` placement is the
                 // theme's `CompositePiece` to make, not something a sheet can hold.
@@ -338,8 +387,10 @@ for (const job of selected) {
             const target = (plainCtx && (entity.attrs.colorize === 'false')) ? plainCtx : ctx;
             const shade = entity.attrs.colorizeMethod === 'hsv_layer' ? Number(entity.attrs.shade ?? 0) : 0;
             const to = {
-                x: at.x,
-                y: at.y,
+                // `center` puts the piece in the middle of the sheet, which is where the client
+                // draws it whenever the skin is rendered at its own size (see the guard above).
+                x: centred('horizontal') ? ((width - from.width) >> 1) : at.x,
+                y: centred('vertical') ? ((height - from.height) >> 1) : at.y,
                 width: stretches(entity, 'horizontal') ? at.width : from.width,
                 height: stretches(entity, 'vertical') ? at.height : from.height,
             };

@@ -182,6 +182,20 @@ export const THEME_URLS: Record<string, string> = {
     'button-106-default-src': './assets/theme/button/106-default.png',
     'button-106-hovering-src': './assets/theme/button/106-hovering.png',
     'button-106-pressed-src': './assets/theme/button/106-pressed.png',
+    // The purple plain and dark recolorable buttons' side gradients - `vertical="center"`, so they
+    // are pieces the theme centres rather than art a sheet can hold (see `extract-skin-assets.ts`).
+    'button-105-default-button-center-left-curve-src': './assets/theme/button/105-default-button-center-left-curve.png',
+    'button-105-default-button-center-right-curve-src': './assets/theme/button/105-default-button-center-right-curve.png',
+    'button-105-hovering-button-center-left-curve-src': './assets/theme/button/105-hovering-button-center-left-curve.png',
+    'button-105-hovering-button-center-right-curve-src': './assets/theme/button/105-hovering-button-center-right-curve.png',
+    'button-105-pressed-button-center-left-curve-src': './assets/theme/button/105-pressed-button-center-left-curve.png',
+    'button-105-pressed-button-center-right-curve-src': './assets/theme/button/105-pressed-button-center-right-curve.png',
+    'button-106-default-button-center-left-curve-src': './assets/theme/button/106-default-button-center-left-curve.png',
+    'button-106-default-button-center-right-curve-src': './assets/theme/button/106-default-button-center-right-curve.png',
+    'button-106-hovering-button-center-left-curve-src': './assets/theme/button/106-hovering-button-center-left-curve.png',
+    'button-106-hovering-button-center-right-curve-src': './assets/theme/button/106-hovering-button-center-right-curve.png',
+    'button-106-pressed-button-center-left-curve-src': './assets/theme/button/106-pressed-button-center-left-curve.png',
+    'button-106-pressed-button-center-right-curve-src': './assets/theme/button/106-pressed-button-center-right-curve.png',
     'button-102-default-src': './assets/theme/button/102-default.png',
     'button-102-pressed-src': './assets/theme/button/102-pressed.png',
     // The plain button's side curves (`vertical="center"`) and its `button_etching_*` bottom line

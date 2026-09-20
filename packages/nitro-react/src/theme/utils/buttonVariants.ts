@@ -34,20 +34,34 @@ const illuminaButtonFace = (state: 'default' | 'pressed'): CompositeLayerPiecePr
     ];
 };
 
-/** The side curves at `inset` from either edge, vertically centred. */
-const illuminaButtonCurves = (inset: number): CompositeLayerPieceProps[] => [
-    CompositePiece('button-100-default-button-center-left-curve-src', undefined, inset, undefined, undefined, 3, 5, 'center'),
-    CompositePiece('button-100-default-button-center-right-curve-src', undefined, undefined, inset, undefined, 3, 5, 'center'),
+/**
+ * The `button_center_*_curve` patches every illumina button skin puts on its left and right edges
+ * at `inset` from either, carrying the face's light-to-dark transition down the outer edge. They
+ * are `vertical="center"`: the client places them halfway up the *rendered* button, not where
+ * their layout rect sits, which is a placement a nine-sliced sheet cannot hold at more than one
+ * height. So they are cut as pieces (`extract-skin-assets.ts`'s `exclude`) and centred here.
+ * Baked at the layout rect, the segmented picker's patch landed on the rounded bottom corner and
+ * squared it off - the same `#e2e2e2` as the face, so invisible on an unselected segment and a
+ * hard block on the tinted one. The pressed templates map the patches to 1x1 transparent regions,
+ * so the pressed pieces draw nothing, exactly as Flash does.
+ */
+const illuminaButtonCurves = (prefix: string, state: string, inset: number): CompositeLayerPieceProps[] => [
+    CompositePiece(`${prefix}-${state}-button-center-left-curve-src`, undefined, inset, undefined, undefined, 3, 5, 'center'),
+    CompositePiece(`${prefix}-${state}-button-center-right-curve-src`, undefined, undefined, inset, undefined, 3, 5, 'center'),
 ];
 
 /** The tinted hover/press glow around the face (`100-hovering.png`, the only glow sheet the skin has). */
 const BUTTON_100_GLOW = NineSlice('button-100-hovering-src', 19, 19, 19, 19);
 
-const BUTTON_100_DEFAULT_OVERLAY = Composite([ ...illuminaButtonFace('default'), ...illuminaButtonCurves(12) ]);
+const BUTTON_100_DEFAULT_OVERLAY = Composite([ ...illuminaButtonFace('default'), ...illuminaButtonCurves('button-100', 'default', 12) ]);
 const BUTTON_100_PRESSED_OVERLAY = Composite(illuminaButtonFace('pressed'));
 
-/** The plain (non-glowing) illumina buttons draw their face as a nine-slice and only add the curves. */
-const BUTTON_CURVE_OVERLAY = Composite(illuminaButtonCurves(1));
+/**
+ * `illumina_light_skin_button_unetched` (style 103) is the one plain illumina button with no job
+ * of its own - its art is a hand-cut 11x28 strip - so it borrows style 100's curve pieces, which
+ * are the same 3x5 art. Every other plain button draws its own (`buttonPlainVariant`'s `prefix`).
+ */
+const BUTTON_CURVE_OVERLAY = Composite(illuminaButtonCurves('button-100', 'default', 1));
 const BUTTON_CURVE_PRESSED_OVERLAY = Composite([]);
 
 export const classicButtonVariant = (prefix: string, textColor?: string): ThemeWithStatesVariant => ({
@@ -83,13 +97,24 @@ export const roundedButtonVariant = (prefix: string, textColor?: string): ThemeW
     textColor,
 });
 
-export const buttonPlainVariant = (prefix: string, hasHover: boolean, textColor?: string): ButtonVariant => ({
+/**
+ * A plain (non-glowing) illumina button: the face as a 6/8/4/8 nine-slice with the side curves
+ * centred over it. `ownCurves` draws the skin's own curve pieces per state; only style 103, whose
+ * art is hand-cut and has no pieces, falls back to style 100's.
+ */
+export const buttonPlainVariant = (prefix: string, hasHover: boolean, textColor?: string, ownCurves = false): ButtonVariant => ({
     states: {
         default: NineSlice(`${prefix}-default-src`, 6, 8, 4, 8),
         ...(hasHover && { hovering: NineSlice(`${prefix}-hovering-src`, 6, 8, 4, 8) }),
         pressed: NineSlice(`${prefix}-pressed-src`, 6, 8, 4, 8),
     },
-    overlays: { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
+    overlays: ownCurves
+        ? {
+                default: Composite(illuminaButtonCurves(prefix, 'default', 1)),
+                ...(hasHover && { hovering: Composite(illuminaButtonCurves(prefix, 'hovering', 1)) }),
+                pressed: Composite(illuminaButtonCurves(prefix, 'pressed', 1)),
+            }
+        : { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
     textStyle: 'text-style-il-button',
     textColor,
 });
@@ -103,8 +128,7 @@ export const buttonPlainVariant = (prefix: string, hasHover: boolean, textColor?
  * The pressed template maps the curves to 1x1 transparent regions, as Flash does.
  */
 const illuminaPlainButtonOverlay = (state: 'default' | 'pressed') => Composite([
-    CompositePiece(`button-102-${state}-button-center-left-curve-src`, undefined, 1, undefined, undefined, 3, 5, 'center'),
-    CompositePiece(`button-102-${state}-button-center-right-curve-src`, undefined, undefined, 1, undefined, 3, 5, 'center'),
+    ...illuminaButtonCurves('button-102', state, 1),
     CompositePiece(`button-102-${state}-button-etching-left-src`, undefined, 0, undefined, 0, 6, 5),
     CompositePiece(`button-102-${state}-button-etching-center-src`, undefined, 6, 4, 0, undefined, 5),
     CompositePiece(`button-102-${state}-button-etching-right-src`, undefined, undefined, 0, 0, 4, 5),
@@ -132,8 +156,11 @@ export const BUTTON_100_VARIANT: ButtonVariant = {
 
 /**
  * `illumina_purple_skin_button` - the same shape as the light button (style 100): a colorizing
- * 19/19/19/19 glow with the face and its side curves inset 11px inside it, all of them
- * `colorize="false"`. Those are the `-plain` sheet, drawn untinted over the tinted glow.
+ * 19/19/19/19 glow with the face inset 11px inside it, all of it `colorize="false"`, drawn as the
+ * untinted `-plain` sheet over the tinted glow. Its two side curves ride in that sheet rather
+ * than being pieces: they are untintable, so nothing can bleed through them, and an overlay is
+ * one layer - a nine-sliced face and centred pieces cannot share it. See the job's
+ * `centeredInSheet` for what that approximates.
  */
 export const BUTTON_104_VARIANT: ButtonVariant = {
     states: {
@@ -150,8 +177,8 @@ export const BUTTON_104_VARIANT: ButtonVariant = {
 };
 
 /** `illumina_purple_skin_button_plain`: every entity is `colorize="false"`, so nothing tints it. */
-export const BUTTON_105_VARIANT: ButtonVariant = { ...buttonPlainVariant('button-105', true), colorize: false };
-export const BUTTON_106_VARIANT = buttonPlainVariant('button-106', true);
+export const BUTTON_105_VARIANT: ButtonVariant = { ...buttonPlainVariant('button-105', true, undefined, true), colorize: false };
+export const BUTTON_106_VARIANT = buttonPlainVariant('button-106', true, undefined, true);
 
 /** `illumina_dark_skin_button`: the skin defines only its default state, and never colorizes. */
 export const BUTTON_200_VARIANT: ButtonVariant = {
