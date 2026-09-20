@@ -7,11 +7,19 @@ import { systemStore } from '#base/context/system';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
-/** `RoomUI`'s answer to `PetPlacingError`, by error code. */
+/**
+ * The text of `PetPlacingError`, by error code: `RoomUsersHandler.onPetPlacingError` turns the
+ * code into a `RSEME_*` event and `RoomUI.roomSessionDialogEventHandler` into this key, shown
+ * under `error.title`. A code outside the table shows nothing, as in Flash.
+ * Checked against Flash by `scripts/drift/constants.py`.
+ */
 const PET_PLACING_ERRORS: Record<number, string> = {
     0: 'room.error.pets.forbidden_in_hotel',
     1: 'room.error.pets.forbidden_in_flat',
     2: 'room.error.max_pets',
+    3: 'room.error.pets.no_free_tiles',
+    4: 'room.error.pets.selected_tile_not_free',
+    5: 'room.error.max_own_pets',
 };
 
 /** `PetBreedingMessage.state` - what the other plant's owner did, or what we are being asked. */
@@ -93,7 +101,9 @@ export const registerRoomPetHandlers = ({ subscribe }: WebSocketConnection) => {
         }),
 
         on(PetPlacingErrorMessage, (data) => {
-            alert('generic.alert.title', PET_PLACING_ERRORS[data.errorCode] ?? 'room.error.pets.selected_tile_not_free');
+            const messageKey = PET_PLACING_ERRORS[data.errorCode];
+
+            if (messageKey) alert('error.title', messageKey);
         }),
 
         // `AvatarInfoWidget`'s `RWPPBE_PET_BREEDING_` cases.

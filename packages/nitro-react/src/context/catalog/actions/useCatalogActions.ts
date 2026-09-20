@@ -20,6 +20,7 @@ export const useCatalogActions = () => {
         setRequestedPage: state.setRequestedPage,
         setPurchaseOptions: state.setPurchaseOptions,
         setActivePurchase: state.setActivePurchase,
+        setIsPurchasing: state.setIsPurchasing,
         setSearchResult: state.setSearchResult,
         resetCatalog: state.resetCatalog,
     };

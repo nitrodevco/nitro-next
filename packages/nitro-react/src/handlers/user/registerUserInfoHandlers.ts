@@ -1,5 +1,5 @@
 import { ChangeUserNameResultMessageCode } from '@nitrodevco/nitro-api';
-import { AccountPreferencesEventMessage, ChangeUserNameResultMessage, EmailStatusResultEventMessage, FigureUpdateEventMessage, NoobnessLevelMessage, PetRespectFailedMessage, UserNameChangedMessage, UserObjectMessage, UserRightsMessage } from '@nitrodevco/nitro-packets';
+import { AccountPreferencesEventMessage, ChangeUserNameResultMessage, EmailStatusResultEventMessage, FigureUpdateEventMessage, GetUserNftChatStylesComposer, NoobnessLevelMessage, PetRespectFailedMessage, UserNameChangedMessage, UserNftChatStylesMessage, UserObjectMessage, UserPurchasableChatStyleChangedMessage, UserPurchasableChatStylesMessage, UserRightsMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { userStore } from '#base/context/user';
@@ -8,11 +8,12 @@ import { on, subscribeAll } from '../packetSubscriptions';
 
 /**
  * Who you are - Flash's `SessionDataManager`: the user object at login, figure and name changes,
- * rights, noobness level, email status and the account preferences. Also counts pet respects
- * down, since the server only reports a failure.
+ * rights, noobness level, email status, the account preferences and the chat styles the account
+ * owns (NFT and bought ones, which the chat input's style picker offers). Also counts pet
+ * respects down, since the server only reports a failure.
  */
-export const registerUserInfoHandlers = ({ subscribe }: WebSocketConnection) => {
-    const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects, setChatPreferences, setUiFlags, setUserInfo, setName, setFigure, setEmailVerified } = userStore.getState();
+export const registerUserInfoHandlers = ({ send, subscribe }: WebSocketConnection) => {
+    const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects, setChatPreferences, setUiFlags, setRoomCameraFollowDisabled, setRoomInvitesIgnored, setOnlineIndicatorPreference, setUserInfo, setName, setFigure, setEmailVerified, setNftChatStyles, setPurchasableChatStyles, setPurchasableChatStyleOwned } = userStore.getState();
 
     return subscribeAll(subscribe, [
         on(FigureUpdateEventMessage, (data) => {
@@ -21,6 +22,20 @@ export const registerUserInfoHandlers = ({ subscribe }: WebSocketConnection) => 
 
         on(UserObjectMessage, (data) => {
             setUserInfo(data.userInfo);
+            // `SessionDataManager.initSessionData`.
+            send(new GetUserNftChatStylesComposer({}));
+        }),
+
+        on(UserNftChatStylesMessage, (data) => {
+            setNftChatStyles(data.chatStyleIds);
+        }),
+
+        on(UserPurchasableChatStylesMessage, (data) => {
+            setPurchasableChatStyles(data.chatStyleIds);
+        }),
+
+        on(UserPurchasableChatStyleChangedMessage, (data) => {
+            setPurchasableChatStyleOwned(data.styleId, data.added);
         }),
 
         on(NoobnessLevelMessage, (data) => {
@@ -53,6 +68,9 @@ export const registerUserInfoHandlers = ({ subscribe }: WebSocketConnection) => 
 
         on(AccountPreferencesEventMessage, (data) => {
             setUiFlags(data.uiFlags);
+            setRoomCameraFollowDisabled(data.roomCameraFollowDisabled);
+            setRoomInvitesIgnored(data.roomInvitesIgnored);
+            setOnlineIndicatorPreference(data.onlineIndicatorPreference);
             setChatPreferences({
                 preferredChatStyle: data.preferedChatStyle,
                 freeFlowChatDisabled: data.freeFlowChatDisabled,

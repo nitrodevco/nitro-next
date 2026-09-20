@@ -1,4 +1,4 @@
-import { BinaryReader, BinaryWriter, Byte, EvaWireDataWrapper, IMessageDataWrapper, IncomingPacketConstructor, IOutgoingPacket, NitroLogger, Short } from '@nitrodevco/nitro-api';
+import { BinaryReader, BinaryWriter, Byte, ClientDeviceCategoryEnum, ClientPlatformEnum, EvaWireDataWrapper, IMessageDataWrapper, IncomingPacketConstructor, IOutgoingPacket, NitroLogger, Short } from '@nitrodevco/nitro-api';
 import { AuthenticationOKMessage, ClientHelloComposer, GetIncomingPackets, GetOutgoingPackets, PingMessage, PongComposer, SSOTicketComposer } from '@nitrodevco/nitro-packets';
 import { GetTickerTime } from '@nitrodevco/nitro-renderer';
 import { ReactNode, useEffect, useRef, useState } from 'react';
@@ -48,8 +48,8 @@ export const WebSocketContextProvider = ({ children }: ProviderProps) => {
                 send(new ClientHelloComposer({
                     production: production,
                     platform: 'WEB',
-                    clientPlatform: 0,
-                    deviceCategory: 0,
+                    clientPlatform: ClientPlatformEnum.Unknown,
+                    deviceCategory: ClientDeviceCategoryEnum.Unknown,
                 }));
 
                 const params = new URLSearchParams(window.location.search);

@@ -1,4 +1,4 @@
-import { AcceptFriendResultMessage, ConsoleMessageHistoryMessage, FindFriendsProcessResultMessage, FollowFriendErrorCodeType, FollowFriendFailedMessage, FriendListFragmentMessage, FriendListUpdateMessage, FriendNotificationMessage, FriendRequestsMessage, HabboSearchResultMessage, InstantMessageErrorMessage, MessengerErrorMessage, MessengerInitMessage, MiniMailNewMessage, MiniMailUnreadCountMessage, NewConsoleMessageMessage, NewFriendRequestMessage, RoomInviteErrorMessage, RoomInviteMessage } from '@nitrodevco/nitro-packets';
+import { AcceptFriendResultMessage, ConsoleMessageHistoryMessage, FindFriendsProcessResultMessage, FollowFriendErrorCodeType, FollowFriendFailedMessage, FriendListErrorCodeType, FriendListFragmentMessage, FriendListUpdateMessage, FriendNotificationMessage, FriendRequestsMessage, HabboSearchResultMessage, InstantMessageErrorMessage, MessengerErrorMessage, MessengerInitMessage, MiniMailNewMessage, MiniMailUnreadCountMessage, NewConsoleMessageMessage, NewFriendRequestMessage, RoomInviteErrorMessage, RoomInviteMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { systemStore } from '#base/context/system';
@@ -11,14 +11,27 @@ import { on, subscribeAll } from '../packetSubscriptions';
  * handlers: the initial fragments, updates, requests, searches, room invites and the messages
  * themselves. The friend data lives in the user store because the room widgets read it too.
  */
-/** `HabboFriendList.showAlertView`: what a rejected friend request is explained with. */
-const FRIEND_REQUEST_ERRORS: Record<number, string> = {
-    0: 'friendlist.error.friendlistownlimit',
-    1: 'friendlist.error.friendlistlimitofrequester',
-    2: 'friendlist.error.friend_requests_disabled',
-    3: 'friendlist.error.requestnotfound',
-    6: 'friendlist.error.blocked_by_them',
-    7: 'friendlist.error.blocked_by_you',
+/**
+ * `HabboFriendList.showAlertView`: the text a friend list error code is explained with, for a
+ * rejected friend request (`AcceptFriendResult`) and a `MessengerError` alike. The codes are
+ * `FriendListErrorCodeType`'s (Flash switches on `errorCode - 1`, so its `case 0` is code 1).
+ * Checked against Flash by `scripts/drift/constants.py`.
+ */
+const FRIEND_LIST_ERRORS: Record<number, string> = {
+    [FriendListErrorCodeType.YouHitFriendLimit]: 'friendlist.error.friendlistownlimit',
+    [FriendListErrorCodeType.TheyHitFriendLimit]: 'friendlist.error.friendlistlimitofrequester',
+    [FriendListErrorCodeType.FriendRequestsDisabled]: 'friendlist.error.friend_requests_disabled',
+    [FriendListErrorCodeType.FriendRequestNotFound]: 'friendlist.error.requestnotfound',
+    [FriendListErrorCodeType.BlockedByThem]: 'friendlist.error.blocked_by_them',
+    [FriendListErrorCodeType.BlockedByYou]: 'friendlist.error.blocked_by_you',
+};
+
+/** `HabboFriendList.showAlertView`, under `friendlist.alert.title`; an unknown code is shown raw, as Flash did. */
+const showFriendListError = (errorCode: number, clientMessageId: number = 0) => {
+    const { showAlert, getLocalizationValue } = systemStore.getState();
+    const key = FRIEND_LIST_ERRORS[errorCode];
+
+    showAlert(getLocalizationValue('friendlist.alert.title'), key ? getLocalizationValue(key) : `Received messenger error: msg: ${clientMessageId}, errorCode: ${errorCode}`);
 };
 
 export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) => {
@@ -26,13 +39,7 @@ export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) =>
 
     return subscribeAll(subscribe, [
         on(AcceptFriendResultMessage, (data) => {
-            const { showAlert, getLocalizationValue } = systemStore.getState();
-
-            for (const failure of data.failures) {
-                const key = FRIEND_REQUEST_ERRORS[failure.errorCode];
-
-                showAlert(getLocalizationValue('generic.alert.title'), key ? getLocalizationValue(key) : `Received messenger error: ${failure.errorCode}`);
-            }
+            for (const failure of data.failures) showFriendListError(failure.errorCode);
         }),
 
         on(ConsoleMessageHistoryMessage, (data) => {
@@ -95,8 +102,8 @@ export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) =>
         on(InstantMessageErrorMessage, (data) => {
         }),
 
-        on(MessengerErrorMessage, (data) => {
-        }),
+        // `HabboFriendList.onMessengerError`.
+        on(MessengerErrorMessage, data => showFriendListError(data.errorCode, data.clientMessageId)),
 
         on(MessengerInitMessage, (data) => {
             setFriendLimits(data.userFriendLimit, data.normalFriendLimit, data.extendedFriendLimit);

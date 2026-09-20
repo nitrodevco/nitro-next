@@ -16,7 +16,13 @@ const actions = {
     setPreferredChatStyle: state.setPreferredChatStyle,
     setFreeFlowChatDisabled: state.setFreeFlowChatDisabled,
     setUiFlags: state.setUiFlags,
+    setRoomCameraFollowDisabled: state.setRoomCameraFollowDisabled,
+    setRoomInvitesIgnored: state.setRoomInvitesIgnored,
+    setOnlineIndicatorPreference: state.setOnlineIndicatorPreference,
     setUiFlag: state.setUiFlag,
+    setNftChatStyles: state.setNftChatStyles,
+    setPurchasableChatStyles: state.setPurchasableChatStyles,
+    setPurchasableChatStyleOwned: state.setPurchasableChatStyleOwned,
 };
 
 export const useUserActions = () => actions;

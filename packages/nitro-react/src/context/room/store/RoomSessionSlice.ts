@@ -4,7 +4,19 @@ import { StateCreator } from 'zustand';
 type State = {
     doorMode: RoomDoorModeEnum;
     tradeMode: RoomTradeModeEnum;
+    /**
+     * `RoomSession.roomControllerLevel` (the getter): the level the server gave, or `None` while
+     * `playTestMode` is on - the level every rights check reads.
+     */
     controllerLevel: RoomControllerLevelEnum;
+    /** `RoomSession.roomControllerLevel` (the setter's field `§_-G1z§`) - the level the server gave. */
+    grantedControllerLevel: RoomControllerLevelEnum;
+    /**
+     * `RoomSession.playTestMode` - the wired menu's play test mode, copied onto the session when it
+     * starts and whenever the mode changes (`WiredMenuController.setPlayTestMode`). The room is
+     * used as a visitor would: no rights, no moving furni, no use of furni a visitor may not use.
+     */
+    playTestMode: boolean;
     ownRoomIndex: number;
     allowPets: boolean;
     isGuildRoom: boolean;
@@ -12,7 +24,12 @@ type State = {
     isDecorating: boolean;
     isSpectator: boolean;
     isPlayingGame: boolean;
-    isMoveBlocked: boolean;
+    /**
+     * The room's wired click settings make avatars click-and-walk-behind - Flash's
+     * `IHabboUserDefinedRoomEvents.isGameMode`, which `RoomEngine.getIsPlayingGame` counts as
+     * playing a game. Written by the wired environment; read through `useRoomIsPlayingGame`.
+     */
+    isWiredGameMode: boolean;
     isOwnDancing: boolean;
     /** The room's wired configuration items forbid passing and dropping hand items. */
     isHanditemControlBlocked: boolean;
@@ -26,6 +43,7 @@ type Actions = {
     setDoorMode: (mode: RoomDoorModeEnum) => void;
     setTradeMode: (mode: RoomTradeModeEnum) => void;
     setControllerLevel: (level: RoomControllerLevelEnum) => void;
+    setPlayTestMode: (playTestMode: boolean) => void;
     setOwnRoomIndex: (index: number) => void;
     setAllowPets: (flag: boolean) => void;
     setIsGuildRoom: (flag: boolean) => void;
@@ -33,6 +51,7 @@ type Actions = {
     setIsDecorating: (flag: boolean) => void;
     setIsSpectator: (flag: boolean) => void;
     setIsPlayingGame: (flag: boolean) => void;
+    setIsWiredGameMode: (flag: boolean) => void;
     setIsOwnDancing: (flag: boolean) => void;
     setIsHanditemControlBlocked: (flag: boolean) => void;
     setIsFreeFurniMovementsMode: (flag: boolean) => void;
@@ -50,13 +69,15 @@ export const RoomSessionSliceInitialState: State = {
     allowPets: false,
     // Nobody has rights until the server says so - `YouAreControllerMessage` on entry.
     controllerLevel: RoomControllerLevelEnum.None,
+    grantedControllerLevel: RoomControllerLevelEnum.None,
+    playTestMode: false,
     ownRoomIndex: -1,
     isGuildRoom: false,
     isRoomOwner: false,
     isDecorating: false,
     isSpectator: false,
     isPlayingGame: false,
-    isMoveBlocked: false,
+    isWiredGameMode: false,
     isOwnDancing: false,
     isHanditemControlBlocked: false,
     isFreeFurniMovementsMode: false,
@@ -76,7 +97,8 @@ export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], Room
     ...RoomSessionSliceInitialState,
     setDoorMode: (mode: RoomDoorModeEnum) => set({ doorMode: mode }),
     setTradeMode: (mode: RoomTradeModeEnum) => set({ tradeMode: mode }),
-    setControllerLevel: (level: RoomControllerLevelEnum) => set({ controllerLevel: level }),
+    setControllerLevel: (level: RoomControllerLevelEnum) => set(x => ({ grantedControllerLevel: level, controllerLevel: x.playTestMode ? RoomControllerLevelEnum.None : level })),
+    setPlayTestMode: (playTestMode: boolean) => set(x => ({ playTestMode, controllerLevel: playTestMode ? RoomControllerLevelEnum.None : x.grantedControllerLevel })),
     setOwnRoomIndex: (index: number) => set({ ownRoomIndex: index }),
     setAllowPets: (flag: boolean) => set({ allowPets: flag }),
     setIsGuildRoom: (flag: boolean) => set({ isGuildRoom: flag }),
@@ -84,6 +106,7 @@ export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], Room
     setIsDecorating: (flag: boolean) => set({ isDecorating: flag }),
     setIsSpectator: (flag: boolean) => set({ isSpectator: flag }),
     setIsPlayingGame: (flag: boolean) => set({ isPlayingGame: flag }),
+    setIsWiredGameMode: (flag: boolean) => set({ isWiredGameMode: flag }),
     setIsOwnDancing: (flag: boolean) => set({ isOwnDancing: flag }),
     setIsHanditemControlBlocked: (flag: boolean) => set({ isHanditemControlBlocked: flag }),
     setIsFreeFurniMovementsMode: (flag: boolean) => set({ isFreeFurniMovementsMode: flag }),

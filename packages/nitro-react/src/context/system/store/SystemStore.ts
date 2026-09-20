@@ -261,6 +261,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
                 furniLine: furniture.furniline ?? '',
                 environment: furniture.environment ?? '',
                 rare: furniture.rare,
+                tradeable: furniture.tradeable,
                 isExternalImage: !(className.indexOf('external_image') === -1),
             };
         }
@@ -303,6 +304,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
                 furniLine: furniture.furniline ?? '',
                 environment: furniture.environment ?? '',
                 rare: furniture.rare,
+                tradeable: furniture.tradeable,
                 isExternalImage: !(furniture.classname.indexOf('external_image') === -1),
             };
         }

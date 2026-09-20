@@ -2,34 +2,55 @@ import { BannedUsersFromRoomEventMessage, FlatControllerAddedEventMessage, FlatC
 
 import { WebSocketConnection } from '#base/context/communication';
 import { roomStore } from '#base/context/room';
-import { systemStore } from '#base/context/system';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
 /**
- * The room settings window's own round trips - `RoomSettingsCtrl`. A save that goes through
- * closes the window; one the server refuses leaves it open with what it said.
+ * `RoomSettingsCtrl.onRoomSettingsSaveError`: the server's code (and, for 16, the field it names)
+ * turned into the text Flash shows beside that field. Flash also moves to the field's tab, which
+ * the window does for itself from the key this returns.
+ */
+const roomSettingsSaveErrorKey = (errorCode: number, info: string): string => {
+    switch (errorCode) {
+        case 5: return 'navigator.roomsettings.passwordismandatory';
+        case 7: return 'navigator.roomsettings.roomnameismandatory';
+        case 8:
+        case 10:
+        case 11: return 'navigator.roomsettings.unacceptablewords';
+        case 12: return 'navigator.roomsettings.nonuserchoosabletag';
+        case 13: return 'navigator.roomsettings.toomanycharacters';
+        case 16:
+            if (info === 'idleSleepTimeoutSeconds') return 'navigator.roomsettings.idle_sleep_timeout.invalid';
+            if (info === 'idleAutokickTimeoutSeconds') return 'navigator.roomsettings.idle_autokick_timeout.invalid';
+
+            return `navigator.roomsettings.save.error.${errorCode}`;
+        // `"Update failed: error " + code` in Flash - a key here, so a hotel can word it.
+        default: return `navigator.roomsettings.save.error.${errorCode}`;
+    }
+};
+
+/**
+ * The room settings window's own round trips - `RoomSettingsCtrl`. A save the server refuses
+ * leaves the window open showing what it said; one that goes through leaves it open too.
  */
 export const registerRoomSettingsHandlers = ({ subscribe }: WebSocketConnection) => {
     const {
         setRoomSettingsForm, setRoomSettingsFormError, setRoomSettingsFormSaving,
         setRoomControllers, addRoomController, removeRoomController, setRoomBannedUsers, removeRoomBannedUser,
     } = roomStore.getState();
-    const { hideWindow } = systemStore.getState();
 
     return subscribeAll(subscribe, [
         on(RoomSettingsDataEventMessage, (data) => {
             setRoomSettingsForm(data);
         }),
 
+        // `IncomingMessages.onRoomSettingsSaved` reloads the room list and leaves the window open.
         on(RoomSettingsSavedEventMessage, () => {
             setRoomSettingsFormSaving(false);
-            hideWindow('room_settings');
         }),
 
         on(RoomSettingsSaveErrorEventMessage, (data) => {
-            // The server names the field it refused; the code alone is all there is to show.
-            setRoomSettingsFormError(`navigator.roomsettings.save.error.${data.errorCode}`);
+            setRoomSettingsFormError(roomSettingsSaveErrorKey(data.errorCode, data.info));
         }),
 
         on(RoomSettingsErrorEventMessage, (data) => {

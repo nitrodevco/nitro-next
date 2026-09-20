@@ -21,6 +21,13 @@ type State = {
     requestedPage: ICatalogRequestedPage;
     purchaseOptions: IPurchaseOptions;
     activePurchase: IPurchaseOptions | undefined;
+    /**
+     * The confirmation dialog is waiting for the server's answer to its `PurchaseFromCatalog`:
+     * `PurchaseWindowCtrl`'s locked buy button. Every answer clears it - `PurchaseOKMessage`,
+     * `PurchaseErrorMessage`, `PurchaseNotAllowedMessage` and `NotEnoughBalanceMessage` - so a
+     * refused purchase can be tried again instead of leaving the button dead.
+     */
+    isPurchasing: boolean;
     searchResult: ICatalogSearchResult | undefined;
 };
 
@@ -37,6 +44,7 @@ type Actions = {
     setRequestedPage: (requestedPage: ICatalogRequestedPage) => void;
     setPurchaseOptions: (purchaseOptions: Partial<IPurchaseOptions>) => void;
     setActivePurchase: (activePurchase: IPurchaseOptions | undefined) => void;
+    setIsPurchasing: (isPurchasing: boolean) => void;
     setSearchResult: (searchResult: ICatalogSearchResult | undefined) => void;
     resetCatalog: () => void;
 };
@@ -55,6 +63,7 @@ const initialState: State = {
     requestedPage: CatalogRequestedPageUtilities.getEmpty(),
     purchaseOptions: { offer: undefined, quantity: 1, extraData: '', extraParamRequired: false, objectData: undefined },
     activePurchase: undefined,
+    isPurchasing: false,
     searchResult: undefined,
 };
 
@@ -78,7 +87,8 @@ export const createCatalogStore = (catalogType: CatalogTypeEnum) => createStore<
     setFrontPageItems: (frontPageItems: ICatalogFrontPageItem[]) => set({ frontPageItems }),
     setRequestedPage: (requestedPage: ICatalogRequestedPage) => set({ requestedPage }),
     setPurchaseOptions: (purchaseOptions: Partial<IPurchaseOptions>) => set(x => ({ purchaseOptions: { ...x.purchaseOptions, ...purchaseOptions } })),
-    setActivePurchase: (activePurchase: IPurchaseOptions) => set({ activePurchase }),
+    setActivePurchase: (activePurchase: IPurchaseOptions) => set({ activePurchase, isPurchasing: false }),
+    setIsPurchasing: (isPurchasing: boolean) => set({ isPurchasing }),
     setSearchResult: (searchResult: ICatalogSearchResult | undefined) => set({ searchResult }),
     resetCatalog: () => set({ ...initialState, catalogType }),
 }));

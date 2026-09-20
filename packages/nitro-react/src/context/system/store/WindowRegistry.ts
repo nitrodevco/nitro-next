@@ -1,3 +1,4 @@
+import type { WiredMenuWindowParams } from '#base/context/wired';
 import type { AvatarEditorViewWindowParams } from '#base/views/avatar-editor/AvatarEditor';
 import type { CatalogViewWindowParams } from '#base/views/catalog/CatalogView';
 import type { FriendListViewWindowParams } from '#base/views/friendlist/FriendListView';
@@ -27,6 +28,15 @@ export type WindowRegistry = {
     room_settings: NoWindowParams;
 
     navigator: NavigatorViewWindowParams;
+
+    /** The wired menu (`WiredMenuController`), from the toolbar or a `wiredmenu/...` link. The setup dialog is not a window: it opens when the server says so. */
+    wired_menu: WiredMenuWindowParams;
+
+    /** The sandbox self donation tool (`SelfDonationTool`), from a `selfdonation/open` link on sandbox hotels only. */
+    wired_self_donation: NoWindowParams;
+
+    /** The toolbar's "other settings" (`OtherSettingsView`), from the settings list under the purse. */
+    toolbar_other_settings: NoWindowParams;
 
     /** Dev tool: browse/open any of the generated Flash layout ports (views/layouts). */
     layout_browser: NoWindowParams;

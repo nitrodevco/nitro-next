@@ -4,5 +4,4 @@ export * from './useOwnIsDancing';
 export * from './useOwnRoomObject';
 export * from './useOwnRoomObjectId';
 export * from './useRoomCanDecorate';
-export * from './useRoomIsMoveBlocked';
 export * from './useRoomIsPlayingGame';

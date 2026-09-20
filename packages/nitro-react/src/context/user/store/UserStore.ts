@@ -17,7 +17,12 @@ type State = {
     systemOpen: boolean;
     systemShutdown: boolean;
     isAuthenticHabbo: boolean;
+    /** `SessionDataManager.isRoomCameraFollowDisabled` - `AccountPreferences.roomCameraFollowDisabled`: the room camera stays put when the avatar walks. */
     isRoomCameraFollowDisabled: boolean;
+    /** `HabboMessenger.getRoomInvitesIgnored` - `AccountPreferences.roomInvitesIgnored`. */
+    roomInvitesIgnored: boolean;
+    /** `HabboMessenger.getOnlineIndicatorPreference` - `AccountPreferences.onlineIndicatorPreference`: who is told when this user comes online. */
+    onlineIndicatorPreference: number;
     /**
      * `AccountPreferencesEventMessage.uiFlags`: the account's remembered UI switches, one bit
      * each, kept whole because `SetUIFlagsComposer` sends the whole word back.
@@ -32,6 +37,10 @@ type State = {
     chatMode: RoomChatModeType;
     chatBubbleWidth: RoomChatBubbleWidthType;
     chatScrollSpeed: RoomChatScrollSpeedType;
+    /** `SessionDataManager.hasNftChatStyle` - the NFT chat styles (ids 1000-9999) the account holds (`UserNftChatStylesMessage`). */
+    nftChatStyles: number[];
+    /** `SessionDataManager.hasPurchasableChatStyle` - the bought chat styles (`UserPurchasableChatStylesMessage`, then one at a time). */
+    purchasableChatStyles: number[];
 };
 
 /** The bits of `uiFlags` this client knows about (`SessionDataManager.setUIFlag`). */
@@ -59,8 +68,15 @@ type Actions = {
     setPreferredChatStyle: (preferredChatStyle: number) => void;
     setFreeFlowChatDisabled: (freeFlowChatDisabled: boolean) => void;
     setUiFlags: (uiFlags: number) => void;
+    setRoomCameraFollowDisabled: (isRoomCameraFollowDisabled: boolean) => void;
+    setRoomInvitesIgnored: (roomInvitesIgnored: boolean) => void;
+    setOnlineIndicatorPreference: (onlineIndicatorPreference: number) => void;
     /** Flips one bit and hands back the whole word, so the caller can send it on. */
     setUiFlag: (flag: UiFlagEnum, on: boolean) => number;
+    setNftChatStyles: (nftChatStyles: number[]) => void;
+    setPurchasableChatStyles: (purchasableChatStyles: number[]) => void;
+    /** `SessionDataManager.onPurchasableChatStyleChanged`: one style bought or taken away. */
+    setPurchasableChatStyleOwned: (styleId: number, owned: boolean) => void;
 };
 
 const initialState: State = {
@@ -74,6 +90,8 @@ const initialState: State = {
     systemShutdown: false,
     isAuthenticHabbo: false,
     isRoomCameraFollowDisabled: false,
+    roomInvitesIgnored: false,
+    onlineIndicatorPreference: 0,
     uiFlags: 0,
     preferredChatStyle: 0,
     freeFlowChatDisabled: false,
@@ -81,6 +99,8 @@ const initialState: State = {
     chatMode: RoomChatModeType.FreeFlow,
     chatBubbleWidth: RoomChatBubbleWidthType.Normal,
     chatScrollSpeed: RoomChatScrollSpeedType.Normal,
+    nftChatStyles: [],
+    purchasableChatStyles: [],
 };
 
 export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice & UserEffectsSlice & UserSocialSlice;
@@ -96,6 +116,9 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
     setPreferredChatStyle: (preferredChatStyle: number) => set({ preferredChatStyle }),
     setFreeFlowChatDisabled: (freeFlowChatDisabled: boolean) => set({ freeFlowChatDisabled }),
     setUiFlags: (uiFlags: number) => set({ uiFlags }),
+    setRoomCameraFollowDisabled: (isRoomCameraFollowDisabled: boolean) => set({ isRoomCameraFollowDisabled }),
+    setRoomInvitesIgnored: (roomInvitesIgnored: boolean) => set({ roomInvitesIgnored }),
+    setOnlineIndicatorPreference: (onlineIndicatorPreference: number) => set({ onlineIndicatorPreference }),
     setUiFlag: (flag: UiFlagEnum, on: boolean) => {
         const uiFlags = on ? (get().uiFlags | flag) : (get().uiFlags & ~flag);
 
@@ -103,6 +126,13 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
 
         return uiFlags;
     },
+    setNftChatStyles: (nftChatStyles: number[]) => set({ nftChatStyles }),
+    setPurchasableChatStyles: (purchasableChatStyles: number[]) => set({ purchasableChatStyles }),
+    setPurchasableChatStyleOwned: (styleId: number, owned: boolean) => set(state => ({
+        purchasableChatStyles: owned
+            ? [ ...state.purchasableChatStyles, styleId ]
+            : state.purchasableChatStyles.filter((id, index) => (index !== state.purchasableChatStyles.indexOf(styleId))),
+    })),
     ...createUserInfoSlice(set, get, store),
     ...createUserFriendsSlice(set, get, store),
     ...createUserWalletSlice(set, get, store),
