@@ -1,5 +1,8 @@
-﻿export class RoomWidgetEnum {
-    public static CHAT_WIDGET: string = 'RWE_CHAT_WIDGET' as const;
+﻿/**
+ * The room widget names. Mirrors `com.sulake.habbo.ui.widget.enums.RoomWidgetEnum`; checked by
+ * `scripts/drift/enums.py`.
+ */
+export class RoomWidgetEnum {
     public static INFOSTAND: string = 'RWE_INFOSTAND' as const;
     public static ME_MENU: string = 'RWE_ME_MENU' as const;
     public static CHAT_INPUT_WIDGET: string = 'RWE_CHAT_INPUT_WIDGET' as const;
@@ -7,7 +10,6 @@
     public static FURNI_CREDIT_WIDGET: string = 'RWE_FURNI_CREDIT_WIDGET' as const;
     public static FURNI_STICKIE_WIDGET: string = 'RWE_FURNI_STICKIE_WIDGET' as const;
     public static FURNI_TROPHY_WIDGET: string = 'RWE_FURNI_TROPHY_WIDGET' as const;
-    public static FURNI_LOVELOCK_WIDGET: string = 'RWE_FURNI_LOVELOCK_WIDGET' as const;
     public static FURNI_PRESENT_WIDGET: string = 'RWE_FURNI_PRESENT_WIDGET' as const;
     public static FURNI_ECOTRONBOX_WIDGET: string = 'RWE_FURNI_ECOTRONBOX_WIDGET' as const;
     public static FURNI_PET_PACKAGE_WIDGET: string = 'RWE_FURNI_PET_PACKAGE_WIDGET' as const;
@@ -16,7 +18,6 @@
     public static LOADINGBAR: string = 'RWE_LOADINGBAR' as const;
     public static ROOM_QUEUE: string = 'RWE_ROOM_QUEUE' as const;
     public static ROOM_POLL: string = 'RWE_ROOM_POLL' as const;
-    public static ROOM_VOTE: string = 'RWE_ROOM_VOTE' as const;
     public static USER_CHOOSER: string = 'RWE_USER_CHOOSER' as const;
     public static FURNI_CHOOSER: string = 'RWE_FURNI_CHOOSER' as const;
     public static ROOM_DIMMER: string = 'RWE_ROOM_DIMMER' as const;
@@ -27,7 +28,6 @@
     public static FRIENDS_BAR: string = 'RWE_FRIENDS_BAR' as const;
     public static PURSE_WIDGET: string = 'RWE_PURSE_WIDGET' as const;
     public static AVATAR_INFO: string = 'RWE_AVATAR_INFO' as const;
-    public static WELCOME_GIFT: string = 'RWE_WELCOME_GIFT' as const;
     public static SPAMWALL_POSTIT_WIDGET: string = 'RWE_SPAMWALL_POSTIT_WIDGET' as const;
     public static EFFECTS: string = 'RWE_EFFECTS' as const;
     public static MANNEQUIN: string = 'RWE_MANNEQUIN' as const;
@@ -36,6 +36,7 @@
     public static CAMERA: string = 'RWE_CAMERA' as const;
     public static ROOM_THUMBNAIL_CAMERA: string = 'RWE_ROOM_THUMBNAIL_CAMERA' as const;
     public static ROOM_BACKGROUND_COLOR: string = 'RWE_ROOM_BACKGROUND_COLOR' as const;
+    public static AREA_HIDE: string = 'RWE_AREA_HIDE' as const;
     public static CUSTOM_USER_NOTIFICATION: string = 'RWE_CUSTOM_USER_NOTIFICATION' as const;
     public static FURNI_ACHIEVEMENT_RESOLUTION_ENGRAVING: string
         = 'RWE_FURNI_ACHIEVEMENT_RESOLUTION_ENGRAVING' as const;
@@ -54,5 +55,4 @@
     public static UI_HELP_BUBBLE: string = 'RWE_UI_HELP_BUBBLE' as const;
     public static ROOM_LINK: string = 'RWE_ROOM_LINK' as const;
     public static CRAFTING: string = 'RWE_CRAFTING' as const;
-    public static ROOMGAME_CHECKERS: string = 'RWE_GAME_CHECKERS' as const;
 }

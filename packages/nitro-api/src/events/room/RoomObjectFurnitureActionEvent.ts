@@ -16,4 +16,5 @@ export class RoomObjectFurnitureActionEvent extends RoomObjectEvent {
     public static JUKEBOX_DISPOSE: string = 'ROFCAE_JUKEBOX_DISPOSE' as const;
     public static MOUSE_BUTTON: string = 'ROFCAE_MOUSE_BUTTON' as const;
     public static MOUSE_ARROW: string = 'ROFCAE_MOUSE_ARROW' as const;
+    public static NFT_REWARD_BOX: string = 'ROFCAE_NFT_REWARD_BOX' as const;
 }

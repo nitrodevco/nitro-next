@@ -2,17 +2,21 @@ import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
 
 import { RoomWidgetUpdateEvent } from './RoomWidgetUpdateEvent';
 
+/**
+ * A room object selected, deselected, added, removed or rolled over, told to the widgets. Mirrors
+ * `com.sulake.habbo.ui.widget.events.RoomWidgetRoomObjectUpdateEvent` (paired in
+ * `scripts/drift/known.py`); `OBJECT_DOUBLE_CLICKED` is Nitro's own.
+ */
 export class RoomWidgetUpdateRoomObjectEvent extends RoomWidgetUpdateEvent {
-    public static OBJECT_SELECTED: string = 'RWUROE_OBJECT_SELECTED' as const;
-    public static OBJECT_DESELECTED: string = 'RWUROE_OBJECT_DESELECTED' as const;
-    public static USER_REMOVED: string = 'RWUROE_USER_REMOVED' as const;
-    public static FURNI_REMOVED: string = 'RWUROE_FURNI_REMOVED' as const;
-    public static FURNI_ADDED: string = 'RWUROE_FURNI_ADDED' as const;
-    public static USER_ADDED: string = 'RWUROE_USER_ADDED' as const;
-    public static OBJECT_ROLL_OVER: string = 'RWUROE_OBJECT_ROLL_OVER' as const;
-    public static OBJECT_ROLL_OUT: string = 'RWUROE_OBJECT_ROLL_OUT' as const;
-    public static OBJECT_REQUEST_MANIPULATION: string = 'RWUROE_OBJECT_REQUEST_MANIPULATION' as const;
-    public static OBJECT_DOUBLE_CLICKED: string = 'RWUROE_OBJECT_DOUBLE_CLICKED' as const;
+    public static OBJECT_SELECTED: string = 'RWROUE_OBJECT_SELECTED' as const;
+    public static OBJECT_DESELECTED: string = 'RWROUE_OBJECT_DESELECTED' as const;
+    public static USER_REMOVED: string = 'RWROUE_USER_REMOVED' as const;
+    public static FURNI_REMOVED: string = 'RWROUE_FURNI_REMOVED' as const;
+    public static FURNI_ADDED: string = 'RWROUE_FURNI_ADDED' as const;
+    public static USER_ADDED: string = 'RWROUE_USER_ADDED' as const;
+    public static OBJECT_ROLL_OVER: string = 'RWROUE_OBJECT_ROLL_OVER' as const;
+    public static OBJECT_ROLL_OUT: string = 'RWROUE_OBJECT_ROLL_OUT' as const;
+    public static OBJECT_DOUBLE_CLICKED: string = 'RWROUE_OBJECT_DOUBLE_CLICKED' as const;
 
     private _objectId: number;
     private _category: number;

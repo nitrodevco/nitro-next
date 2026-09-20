@@ -1,9 +1,11 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { IWiredVariable } from './IWiredVariable';
 
+/** Flash `_-YB.WiredVariable`: the text connector map sits behind a flag. */
 export const WiredVariableParser = (wrapper: IMessageDataWrapper): IWiredVariable => {
-    let textConnector: Map<number, string> = new Map<number, string>();
+    let textConnector: Map<number, string> | undefined;
     const variableId = wrapper.readString();
     const variableType = wrapper.readInt();
     const variableName = wrapper.readString();
@@ -17,14 +19,14 @@ export const WiredVariableParser = (wrapper: IMessageDataWrapper): IWiredVariabl
     const isInvisible = wrapper.readBoolean();
     const canReadCreationTime = wrapper.readBoolean();
     const canReadLastUpdateTime = wrapper.readBoolean();
-    const loc2 = wrapper.readBoolean();
-    if (loc2) {
+    const hasTextConnector = wrapper.readBoolean();
+    if (hasTextConnector) {
         textConnector = new Map();
         const count = wrapper.readInt();
-        for (let i2 = 0; i2 < count; i2++) {
-            const loc6 = wrapper.readInt();
-            const loc5 = wrapper.readString();
-            textConnector.set(loc6, loc5);
+        for (let i = 0; i < count; i++) {
+            const value = wrapper.readInt();
+            const text = wrapper.readString();
+            textConnector.set(value, text);
         }
     }
     return { variableId, variableType, variableName, availabilityType, variableTarget, alwaysAvailable, canCreateAndDelete, hasValue, canWriteValue, canInterceptChanges, isInvisible, canReadCreationTime, canReadLastUpdateTime, textConnector };

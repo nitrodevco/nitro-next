@@ -1,4 +1,7 @@
-/** The chat "types" the Flash `RoomSessionChatEvent` carried - the kind of bubble a message renders as. */
+/**
+ * The chat "types" the Flash `RoomSessionChatEvent` carried (its `CHAT_TYPE_*` constants) - the kind
+ * of bubble a message renders as. Checked against that class by `scripts/drift/enums.py`.
+ */
 export enum RoomChatTypeEnum {
     Speak = 0,
     Whisper = 1,
@@ -11,4 +14,6 @@ export enum RoomChatTypeEnum {
     PetRebreed = 8,
     PetSpeed = 9,
     MuteRemaining = 10,
+    Ping = 11,
+    SpecialSystem = 12,
 }

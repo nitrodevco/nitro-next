@@ -1,3 +1,4 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 /** Reads `int count` followed by `count` (string key, string value) pairs into a Map. */

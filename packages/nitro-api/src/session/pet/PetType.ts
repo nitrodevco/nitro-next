@@ -34,4 +34,7 @@
     public static FOOLS: number = 32;
     public static PTEROSAUR: number = 33;
     public static VELOCIRAPTOR: number = 34;
+    public static COW: number = 35;
+    /** Obfuscated in Flash (`§_-u13§`); `pet.type.36` is "Dragon Dog". */
+    public static DRAGONDOG: number = 36;
 }

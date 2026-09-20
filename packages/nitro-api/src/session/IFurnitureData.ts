@@ -30,5 +30,7 @@ export interface IFurnitureData {
     readonly furniLine: string;
     readonly environment: string;
     readonly rare: boolean;
+    /** Furnidata `tradeable`: `AddEditContractElement.validate` refuses a furni type that cannot be traded. */
+    readonly tradeable: boolean;
     readonly isExternalImage: boolean;
 }

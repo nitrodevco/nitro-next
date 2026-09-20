@@ -22,4 +22,6 @@ export enum FurnitureSpecialType {
     MonsterplantRebreed = 21,
     MonsterplantFertilize = 22,
     FigurePurchasableSet = 23,
+    FurniChest = 24,
+    CoinsChest = 25,
 }

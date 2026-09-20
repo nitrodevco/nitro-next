@@ -6,10 +6,7 @@ import { IInputSourcesConf } from './IInputSourcesConf';
 // com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.InputSourcesConf.readAllowedSources
 const readAllowedSources = (wrapper: IMessageDataWrapper): number[][] => ParseArray(wrapper, ParseInts);
 // com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.InputSourcesConf.readDefaultSources
-const readDefaultSources = (wrapper: IMessageDataWrapper): unknown[] => {
-    const result = ParseInts(wrapper);
-    return result;
-};
+const readDefaultSources = (wrapper: IMessageDataWrapper): number[] => ParseInts(wrapper);
 
 export const InputSourcesConfParser = (wrapper: IMessageDataWrapper): IInputSourcesConf => {
     return {

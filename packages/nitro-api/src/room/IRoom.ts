@@ -20,7 +20,7 @@ import {
     RoomObjectUserType,
     RoomObjectVariableEnum,
 } from './object';
-import { ILegacyWallGeometry, IRoomAreaSelectionManager, IStackingHeightMapReader } from './utils';
+import { ILegacyWallGeometry, IRoomAreaSelectionManager, IRoomObjectHighLighter, IStackingHeightMapReader } from './utils';
 
 export interface IRoom {
     dispose(): void;
@@ -173,6 +173,15 @@ export interface IRoom {
     isRoomVariableActive(key: RoomObjectVariableEnum): boolean;
     /** Hides (or shows again) the furni layers tagged `invisible`, for furni already here and placed later. */
     setInvisibleFurni(flag: boolean): void;
+    /**
+     * Flash `RoomEngine.setClickSettings`: makes the room's users and/or furni click-through, so a
+     * click lands on whatever is behind them. Settings are kept per `key` (`'wired_env'` for the
+     * room's wired click settings, `'object_handler'` while a furni is moved or placed) and a
+     * category is click-through while any key asks for it; `false, false` clears the key.
+     */
+    setClickSettings(key: string, clickThroughUsers: boolean, clickThroughFurni: boolean): void;
+    /** Flash `RoomEngine.setMoveBlocked`: a tile click does not walk while the area selection is dragging. */
+    setMoveBlocked(flag: boolean): void;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObjectRoom(): IRoomObjectController | undefined;
     getRoomObjectCursor(): IRoomObjectController | undefined;
@@ -195,6 +204,10 @@ export interface IRoom {
     readonly objects: Map<number, IRoomObject>;
     readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly areaSelection: IRoomAreaSelectionManager;
+    readonly objectHighLighter: IRoomObjectHighLighter;
+    readonly clickThroughUsers: boolean;
+    readonly clickThroughFurni: boolean;
+    readonly isMoveBlocked: boolean;
     readonly isAreaSelectionMode: boolean;
     readonly legacyGeometry: ILegacyWallGeometry | undefined;
     readonly isInitialized: boolean;

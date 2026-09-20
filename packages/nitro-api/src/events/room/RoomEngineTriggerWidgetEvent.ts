@@ -1,5 +1,11 @@
 ﻿import { RoomEngineObjectEvent } from './RoomEngineObjectEvent';
 
+/**
+ * The room engine asking the UI for a furniture widget. Mirrors
+ * `com.sulake.habbo.room.events.RoomEngineToWidgetEvent` (paired in `scripts/drift/known.py`); the port
+ * routes widget requests straight from `RoomObjectWidgetRequestEvent`, so only the area hide state
+ * event is built on it.
+ */
 export class RoomEngineTriggerWidgetEvent extends RoomEngineObjectEvent {
     public static OPEN_WIDGET: string = 'RETWE_OPEN_WIDGET' as const;
     public static CLOSE_WIDGET: string = 'RETWE_CLOSE_WIDGET' as const;
@@ -7,8 +13,6 @@ export class RoomEngineTriggerWidgetEvent extends RoomEngineObjectEvent {
     public static CLOSE_FURNI_CONTEXT_MENU: string = 'RETWE_CLOSE_FURNI_CONTEXT_MENU' as const;
     public static REQUEST_PLACEHOLDER: string = 'RETWE_REQUEST_PLACEHOLDER' as const;
     public static REQUEST_CREDITFURNI: string = 'RETWE_REQUEST_CREDITFURNI' as const;
-    public static REQUEST_STACK_HEIGHT: string = 'RETWE_REQUEST_STACK_HEIGHT' as const;
-    public static REQUEST_EXTERNAL_IMAGE: string = 'RETWE_REQUEST_EXTERNAL_IMAGE' as const;
     public static REQUEST_STICKIE: string = 'RETWE_REQUEST_STICKIE' as const;
     public static REQUEST_PRESENT: string = 'RETWE_REQUEST_PRESENT' as const;
     public static REQUEST_TROPHY: string = 'RETWE_REQUEST_TROPHY' as const;
@@ -39,7 +43,6 @@ export class RoomEngineTriggerWidgetEvent extends RoomEngineObjectEvent {
     public static REQUEST_HIDE_HIGH_SCORE_DISPLAY: string = 'RETWE_REQUEST_HIDE_HIGH_SCORE_DISPLAY' as const;
     public static REQUEST_INTERNAL_LINK: string = 'RETWE_REQUEST_INTERNAL_LINK' as const;
     public static REQUEST_ROOM_LINK: string = 'RETWE_REQUEST_ROOM_LINK' as const;
-    public static REQUEST_YOUTUBE: string = 'RETWE_REQUEST_YOUTUBE' as const;
 
     private _widget: string;
 

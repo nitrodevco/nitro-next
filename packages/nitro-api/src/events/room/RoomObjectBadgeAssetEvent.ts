@@ -3,7 +3,7 @@
 import { RoomObjectEvent } from './RoomObjectEvent';
 
 export class RoomObjectBadgeAssetEvent extends RoomObjectEvent {
-    public static LOAD_BADGE: string = 'ROBAE_LOAD_BADGE' as const;
+    public static LOAD_BADGE: string = 'ROGBE_LOAD_BADGE' as const;
 
     private _badgeId: string;
     private _groupBadge: boolean;

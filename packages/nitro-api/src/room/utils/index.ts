@@ -1,6 +1,7 @@
 export * from './IFurnitureStackingHeightMap';
 export * from './ILegacyWallGeometry';
 export * from './IRoomAreaSelectionManager';
+export * from './IRoomObjectHighLighter';
 export * from './IRoomPreviewerData';
 export * from './IRoomWidgetRequest';
 export * from './ISelectedRoomObjectData';

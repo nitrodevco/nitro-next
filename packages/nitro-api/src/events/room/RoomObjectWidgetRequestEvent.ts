@@ -1,15 +1,25 @@
 ﻿import { RoomObjectEvent } from './RoomObjectEvent';
 
+/**
+ * A furniture logic asking the UI to open (or close) the widget for its object. Mirrors
+ * `com.sulake.habbo.room.events.RoomObjectWidgetRequestEvent`, values included (`ROWRE__CREDITFURNI`
+ * and `ROWRE__STICKIE` carry Flash's double underscore); checked by `scripts/drift/enums.py`.
+ *
+ * `STACK_HEIGHT`, `EXTERNAL_IMAGE` and `YOUTUBE` are Nitro's own: Flash opens those widgets with
+ * `OPEN_WIDGET` and the logic's `widget` name, the port gives each its own request type. Every
+ * member is handled by `furnitureWidgetRegistry` or `useRoomWidgetRequestHandler`, or is listed in
+ * `known.WIDGET_REQUESTS_UNHANDLED` with the reason.
+ */
 export class RoomObjectWidgetRequestEvent extends RoomObjectEvent {
     public static OPEN_WIDGET: string = 'ROWRE_OPEN_WIDGET' as const;
     public static CLOSE_WIDGET: string = 'ROWRE_CLOSE_WIDGET' as const;
     public static OPEN_FURNI_CONTEXT_MENU: string = 'ROWRE_OPEN_FURNI_CONTEXT_MENU' as const;
     public static CLOSE_FURNI_CONTEXT_MENU: string = 'ROWRE_CLOSE_FURNI_CONTEXT_MENU' as const;
     public static PLACEHOLDER: string = 'ROWRE_PLACEHOLDER' as const;
-    public static CREDITFURNI: string = 'ROWRE_CREDITFURNI' as const;
+    public static CREDITFURNI: string = 'ROWRE__CREDITFURNI' as const;
     public static STACK_HEIGHT: string = 'ROWRE_STACK_HEIGHT' as const;
     public static EXTERNAL_IMAGE: string = 'ROWRE_EXTERNAL_IMAGE' as const;
-    public static STICKIE: string = 'ROWRE_STICKIE' as const;
+    public static STICKIE: string = 'ROWRE__STICKIE' as const;
     public static PRESENT: string = 'ROWRE_PRESENT' as const;
     public static TROPHY: string = 'ROWRE_TROPHY' as const;
     public static TEASER: string = 'ROWRE_TEASER' as const;
@@ -26,7 +36,8 @@ export class RoomObjectWidgetRequestEvent extends RoomObjectEvent {
 
     public static PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG: string = 'ROWRE_PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG' as const;
     public static BACKGROUND_COLOR: string = 'ROWRE_BACKGROUND_COLOR' as const;
-    public static AREA_HIDE: string = 'ROWRE_AREA_HIDE' as const;
+    /** Flash's obfuscated `§_-Bn§`. */
+    public static AREA_HIDE: string = 'ROWRE_HIDE_AREA' as const;
     public static MYSTERYBOX_OPEN_DIALOG: string = 'ROWRE_MYSTERYBOX_OPEN_DIALOG' as const;
     public static EFFECTBOX_OPEN_DIALOG: string = 'ROWRE_EFFECTBOX_OPEN_DIALOG' as const;
     public static MYSTERYTROPHY_OPEN_DIALOG: string = 'ROWRE_MYSTERYTROPHY_OPEN_DIALOG' as const;
@@ -38,7 +49,7 @@ export class RoomObjectWidgetRequestEvent extends RoomObjectEvent {
     public static BADGE_DISPLAY_ENGRAVING: string = 'ROWRE_BADGE_DISPLAY_ENGRAVING' as const;
     public static HIGH_SCORE_DISPLAY: string = 'ROWRE_HIGH_SCORE_DISPLAY' as const;
     public static HIDE_HIGH_SCORE_DISPLAY: string = 'ROWRE_HIDE_HIGH_SCORE_DISPLAY' as const;
-    public static INERNAL_LINK: string = 'ROWRE_INTERNAL_LINK' as const;
+    public static INTERNAL_LINK: string = 'ROWRE_INTERNAL_LINK' as const;
     public static ROOM_LINK: string = 'ROWRE_ROOM_LINK' as const;
     public static YOUTUBE: string = 'ROWRE_YOUTUBE' as const;
 }

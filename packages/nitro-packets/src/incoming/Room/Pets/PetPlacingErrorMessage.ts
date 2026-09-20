@@ -2,7 +2,10 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type PetPlacingErrorMessageType = {
-    /** 0 pets are forbidden in the hotel, 1 in this room, 2 the room is full of them. */
+    /**
+     * `RoomUsersHandler.onPetPlacingError`: 0 pets are forbidden in the hotel, 1 in this room, 2 the
+     * room is full of them, 3 no free tiles, 4 the selected tile is not free, 5 you have placed your maximum.
+     */
     errorCode: number;
 };
 

@@ -19,8 +19,6 @@
  *   pickers) whose assets come from `habbicons.asset.root`, which no server here provides.
  * - `RoomAd*` - the room billboard of Flash's ad manager, which is not ported. Flash itself only
  *   uses `RoomAdImageAsset`; the other five are constants nothing in the client reads.
- * - `FigureHighlightVariableHolder` is drawn by `AvatarVisualization`, but its only writer is the
- *   wired menu's `VariableHoldersHighlighter`, which is not ported.
  * - `ChooserDisabled` is written from the server's configuration item states, but the user
  *   chooser that reads it is not ported.
  */

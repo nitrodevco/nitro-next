@@ -1,3 +1,4 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { IWiredFurniConditionDef } from './IWiredFurniConditionDef';
@@ -6,7 +7,7 @@ import { WiredFurniActionDefBaseParser } from './WiredFurniActionDefBaseParser';
 
 export const WiredFurniConditionDefParser = (wrapper: IMessageDataWrapper): IWiredFurniConditionDef => {
     let quantifierCode: number = 0;
-    let quantifierType: QuantifierType = QuantifierType.UNKNOWN_0;
+    let quantifierType: QuantifierType = QuantifierType.None;
     let isInvert: boolean = false;
     const hooks = {
         readDefinitionSpecifics: (wrapper: IMessageDataWrapper) => {
