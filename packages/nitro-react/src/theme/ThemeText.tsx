@@ -4,9 +4,10 @@ import { CSSProperties, useMemo } from 'react';
 import { GetPixelRatio } from '#base/utils';
 
 import { BoxLayout } from './Box';
-import { boxLayoutToStyle, getDomTextStyle, TruffleTextDom } from './dom';
+import { boxLayoutToStyle, FlashTextDom, getDomTextStyle } from './dom';
 import { useDynamicStyleEffect } from './dynamicstyle';
-import { TruffleTextPixi } from './font/TruffleTextPixi';
+import { FlashTextPixi } from './font/FlashTextPixi';
+import { FlashTextCanvasConfig, useFlashTextCanvas } from './hooks/useFlashTextCanvas';
 import { DynamicStyleRole, getHabboKey, getPixiTextStyle, getRenderMode, insetStretchAxes, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
 
 export type TextConfig = {
@@ -30,7 +31,7 @@ export type TextConfig = {
 type TextRenderConfig = TextConfig & { x?: number; y?: number };
 
 /** A raw `fontFamily`/`fontSize` override means the caller wants something other than the
- *  named style's own truffle preset - falls straight through to native rendering, same as a
+ *  named style's own Flash format - falls straight through to native rendering, same as a
  *  style with no `habboKey` at all (see `theme/utils/textStyles.ts`'s `TEXT_STYLES`). */
 const resolveHabboKey = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined) => {
     if (textOptions?.fontFamily || typeof textOptions?.fontSize === 'number') return undefined;
@@ -39,7 +40,7 @@ const resolveHabboKey = (textStyle: TextStyleKey | undefined, textOptions: TextS
 };
 
 /** `TextStyleOptions.dropShadow` is `boolean | Partial<TextDropShadow>` (Pixi's own native
- *  `pixiText` fills in its defaults internally) - the truffle renderers need a complete config
+ *  `pixiText` fills in its defaults internally) - the Flash text renderer needs a complete config
  *  up front, so `true` resolves to `TEXT_DROP_SHADOW`'s defaults and a partial config is
  *  layered on top of them. */
 const resolveDropShadow = (dropShadow: TextStyleOptions['dropShadow']): TextDropShadow | undefined => {
@@ -117,7 +118,7 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, v
         />
     );
 
-    // Same leaf/inset rule as `TruffleTextPixi`: a leaf keeps its intrinsic size between two
+    // Same leaf/inset rule as `FlashTextPixi`: a leaf keeps its intrinsic size between two
     // insets, so a container host does the spanning and the text fills it.
     if (stretchAxes.x || stretchAxes.y) {
         return (
@@ -135,29 +136,35 @@ const TextPixiNative = ({ text, textStyle, textOptions, layout, verticalAlign, v
     return label(layout, true);
 };
 
-/** Prefers truffle's pixel-perfect rendering for this named style (see `theme/font/truffle.ts`);
- *  falls back to `TextPixiNative`'s native canvas text - unchanged from before truffle was
- *  wired in - for a raw `fontFamily`/`fontSize` override, so no call site can ever go blank
- *  because of this. */
+/** What `useFlashTextCanvas` needs from a text's config. */
+const flashTextConfig = (textOptions: TextStyleOptions | undefined): FlashTextCanvasConfig => ({
+    color: (typeof textOptions?.fill === 'string') ? textOptions.fill : undefined,
+    dropShadow: resolveDropShadow(textOptions?.dropShadow),
+    align: (textOptions?.align === 'center' || textOptions?.align === 'right') ? textOptions.align : 'left',
+    wordWrap: textOptions?.wordWrap,
+    wordWrapWidth: (typeof textOptions?.wordWrapWidth === 'number') ? textOptions.wordWrapWidth : undefined,
+    breakWords: textOptions?.breakWords,
+    lineHeight: (typeof textOptions?.lineHeight === 'number') ? textOptions.lineHeight : undefined,
+});
+
+/**
+ * Prefers the Flash-exact rendering of this named style (see `theme/font/flash-text`); falls
+ * back to `TextPixiNative`'s canvas text for a raw `fontFamily`/`fontSize` override and for a
+ * string with a character the captured fonts do not carry, so no call site ever goes blank.
+ */
 const TextPixi = (props: TextRenderConfig) => {
     const { text, textStyle, textOptions, layout, verticalAlign, visible, alpha, x, y } = props;
-    const habboKey = resolveHabboKey(textStyle, textOptions);
+    const rendered = useFlashTextCanvas(text, resolveHabboKey(textStyle, textOptions), flashTextConfig(textOptions));
 
-    if (habboKey) {
+    if (rendered) {
         return (
-            <TruffleTextPixi
-                habboKey={habboKey}
-                text={text}
-                color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
-                dropShadow={resolveDropShadow(textOptions?.dropShadow)}
+            <FlashTextPixi
+                rendered={rendered}
                 visible={visible}
                 alpha={alpha}
                 x={x}
                 y={y}
-                lineHeight={typeof textOptions?.lineHeight === 'number' ? textOptions.lineHeight : undefined}
                 layout={{ objectPosition: textObjectPosition(textOptions?.align, verticalAlign), ...layout }}
-                wordWrap={textOptions?.wordWrap}
-                wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}
             />
         );
     }
@@ -197,24 +204,18 @@ const TextDomNative = ({ text, textStyle, textOptions, layout, verticalAlign, vi
 
 const TextDom = (props: TextRenderConfig) => {
     const { text, textStyle, textOptions, layout, verticalAlign, visible, alpha, x, y } = props;
-    const habboKey = resolveHabboKey(textStyle, textOptions);
+    const rendered = useFlashTextCanvas(text, resolveHabboKey(textStyle, textOptions), flashTextConfig(textOptions));
 
-    if (habboKey) {
+    if (rendered) {
         return (
-            <TruffleTextDom
-                habboKey={habboKey}
-                text={text}
-                color={typeof textOptions?.fill === 'string' ? textOptions.fill : undefined}
-                dropShadow={resolveDropShadow(textOptions?.dropShadow)}
+            <FlashTextDom
+                rendered={rendered}
                 visible={visible}
                 alpha={alpha}
                 x={x}
                 y={y}
                 objectPosition={textObjectPosition(textOptions?.align, verticalAlign)}
-                lineHeight={typeof textOptions?.lineHeight === 'number' ? textOptions.lineHeight : undefined}
                 layout={layout}
-                wordWrap={textOptions?.wordWrap}
-                wordWrapWidth={typeof textOptions?.wordWrapWidth === 'number' ? textOptions.wordWrapWidth : undefined}
             />
         );
     }

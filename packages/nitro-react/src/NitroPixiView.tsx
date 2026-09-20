@@ -7,7 +7,8 @@ import { useEffect, useState } from 'react';
 
 import { preloadChatStyles } from '#base/chat';
 import { useWebSocketContext } from '#base/context/communication';
-import { PixiApplicationRoot, preloadNitroTruffle, preloadThemeAssets, WIRED_HABBO_KEYS } from '#base/theme';
+import { PixiApplicationRoot, preloadFlashFonts, preloadThemeAssets } from '#base/theme';
+import { preloadAssetBundles } from '#base/utils';
 
 import { MainView } from './MainView';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
@@ -29,7 +30,10 @@ export const NitroPixiView = () => {
         const setup = async () => {
             try {
                 await Promise.all([
-                    preloadNitroTruffle(WIRED_HABBO_KEYS),
+                    // Every bundle the config's preload list names. The three below each wait on
+                    // the one bundle they read from, which this has already started.
+                    preloadAssetBundles(),
+                    preloadFlashFonts(),
                     preloadThemeAssets(),
                     preloadChatStyles(),
                     GetRoomEngine().init(),

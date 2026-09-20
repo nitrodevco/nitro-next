@@ -1,2 +1,2 @@
-export * from './truffle';
-export * from './TruffleTextPixi';
+export * from './flash-text';
+export * from './FlashTextPixi';

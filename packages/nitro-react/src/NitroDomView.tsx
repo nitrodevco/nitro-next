@@ -10,8 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useWebSocketContext } from '#base/context/communication';
 
 import { MainView } from './MainView';
-import { preloadNitroTruffle, preloadThemeAssets, WIRED_HABBO_KEYS } from './theme';
-import { GetPixelRatio } from './utils';
+import { preloadFlashFonts, preloadThemeAssets } from './theme';
+import { GetPixelRatio, preloadAssetBundles } from './utils';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 
 export const NitroDomView = () => {
@@ -51,7 +51,10 @@ export const NitroDomView = () => {
                 }, { destroyEvents: false });
 
                 await Promise.all([
-                    preloadNitroTruffle(WIRED_HABBO_KEYS),
+                    // Every bundle the config's preload list names. The two below each wait on
+                    // the one bundle they read from, which this has already started.
+                    preloadAssetBundles(),
+                    preloadFlashFonts(),
                     preloadThemeAssets(),
                     GetRoomEngine().init(),
                 ]);

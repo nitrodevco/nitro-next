@@ -1,5 +1,6 @@
 export * from './useAvatarImageTexture';
 export * from './useDomScrollController';
+export * from './useFlashTextCanvas';
 export * from './useFrameDrag';
 export * from './useFrameResize';
 export * from './useHoldToRepeat';
@@ -8,6 +9,7 @@ export * from './useLayoutEvent';
 export * from './useOutsideClick';
 export * from './usePixiTexture';
 export * from './useResolvedVariant';
+export * from './useRevealWhenSettled';
 export * from './useRowVirtualizer';
 export * from './useScrollController';
 export * from './useThemeImageUrl';

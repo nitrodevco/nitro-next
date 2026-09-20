@@ -1,3 +1,5 @@
+import { GetAssetManager } from '@nitrodevco/nitro-renderer';
+
 export type RenderMode = 'pixi' | 'dom';
 
 /**
@@ -12,6 +14,12 @@ let mode: RenderMode = 'pixi';
 
 export const setRenderMode = (next: RenderMode): void => {
     mode = next;
+
+    // DOM chrome is CSS `url(...)` and `<img src>`, so a bundled bitmap has to stay addressable
+    // as bytes; Pixi draws the texture and would only be holding a second compressed copy of
+    // every sheet for the session. Set before any bundle is read - `index.tsx` picks the mode at
+    // module load, the preload runs in an effect.
+    if (next === 'dom') GetAssetManager().keepBundleImageBytes = true;
 };
 
 export const getRenderMode = (): RenderMode => mode;

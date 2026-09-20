@@ -1,8 +1,8 @@
 import { CanvasTextMetrics, Container as PixiContainer, FederatedPointerEvent, TextStyleOptions } from 'pixi.js';
 import { forwardRef, ForwardRefExoticComponent, RefAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getTruffle } from 'truffle-text/react';
 
 import { Box, BoxLayout } from './Box';
+import { flashTextCaretRect, flashTextSelectionRects, HABBO_TEXT_STYLES, normalizeFlashTextFormat } from './font/flash-text';
 import { useLayoutSize, useOutsideClick } from './hooks';
 import { ColorLayer } from './layer';
 import { ThemeText } from './ThemeText';
@@ -30,7 +30,7 @@ export interface TextInputProps {
     /** Masks the value with bullets (the Flash `display_as_password` text field). */
     password?: boolean;
     fontSize?: number;
-    /** A theme text style (truffle-rendered) for the value; `fontSize`/`fontFamily` override it with native canvas text. */
+    /** A theme text style (rendered Flash-exact) for the value; `fontSize`/`fontFamily` override it with native canvas text. */
     textStyle?: TextStyleKey;
     fontFamily?: string;
     textColor?: string;
@@ -84,7 +84,7 @@ const hiddenInputStyle: Partial<CSSStyleDeclaration> = {
  * IME composition - with none of the per-keystroke window listeners the earlier version had to
  * re-attach on every render (the lag). The Pixi side only mirrors: the value through
  * `ThemeText`, the selection as a highlight, and a blinking caret positioned from real glyph
- * metrics (canvas text metrics for a native font, truffle's `caretRect` for a themed style).
+ * metrics (canvas text metrics for a native font, the Flash text layout for a themed style).
  * A click places the caret at the nearest glyph boundary, and a single-line field scrolls
  * horizontally to keep the caret in view once the text outgrows the box.
  *
@@ -268,8 +268,9 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             return () => clearInterval(interval);
         }, [ focused, value, selection ]);
 
-        // A named theme style renders through truffle; a size/family override falls back to native canvas text (see ThemeText).
+        // A named theme style renders Flash-exact; a size/family override falls back to native canvas text (see ThemeText).
         const habboKey = textStyle ? getHabboKey(textStyle) : undefined;
+        const flashFormat = useMemo(() => (habboKey ? normalizeFlashTextFormat(HABBO_TEXT_STYLES[habboKey]) : undefined), [ habboKey ]);
         const wrapWidth = Math.max(1, innerWidth);
         const textOptions = useMemo<TextStyleOptions>(() => ({
             fill: textColor,
@@ -281,24 +282,14 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
 
         const measureStyle = useMemo(() => getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions), [ textStyle, textOptions ]);
 
-        /** Caret geometry in the text's own space - truffle's own metrics for a themed style, canvas metrics for a native font. */
+        /** Caret geometry in the text's own space - the Flash text layout for a themed style, canvas metrics for a native font. */
         const measureCaret = useCallback((text: string, index: number): CaretGeometry => {
             index = Math.max(0, Math.min(index, text.length));
 
-            const truffle = habboKey ? getTruffle() : null;
+            // `null` for a character the captured fonts do not carry - ThemeText draws canvas text then, so measure that.
+            const flashRect = flashFormat ? flashTextCaretRect(text, index, flashFormat, { wordWrap: multiline, wrapWidth: multiline ? wrapWidth : undefined, breakWords: multiline }) : null;
 
-            if (truffle && habboKey) {
-                try {
-                    // An empty field still needs a line height for the caret.
-                    if (!text.length) return { x: 0, y: 0, height: truffle.measure(' ', habboKey).height };
-
-                    const rect = truffle.caretRect(text, index, habboKey, { wordWrap: multiline, width: multiline ? wrapWidth : undefined });
-
-                    return { x: rect.x, y: rect.y, height: rect.height };
-                } catch {
-                    // fall through to the canvas measurement
-                }
-            }
+            if (flashRect) return { x: flashRect.x, y: flashRect.y, height: flashRect.height };
 
             const metrics = CanvasTextMetrics.measureText(text.length ? text : ' ', measureStyle);
 
@@ -327,21 +318,14 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             }
 
             return { x: 0, y: 0, height: metrics.lineHeight };
-        }, [ habboKey, measureStyle, multiline, wrapWidth ]);
+        }, [ flashFormat, measureStyle, multiline, wrapWidth ]);
 
         const measureSelection = useCallback((text: string, start: number, end: number): SelectionRect[] => {
             if (start === end) return [];
 
-            const truffle = habboKey ? getTruffle() : null;
+            const flashRects = flashFormat ? flashTextSelectionRects(text, start, end, flashFormat, { wordWrap: multiline, wrapWidth: multiline ? wrapWidth : undefined, breakWords: multiline }) : null;
 
-            if (truffle && habboKey) {
-                try {
-                    return truffle.selectionRects(text, start, end, habboKey, { wordWrap: multiline, width: multiline ? wrapWidth : undefined })
-                        .map(rect => ({ x: rect.x, y: rect.y, width: rect.width, height: rect.height }));
-                } catch {
-                    // fall through to the canvas measurement
-                }
-            }
+            if (flashRects) return flashRects;
 
             const from = measureCaret(text, start);
             const to = measureCaret(text, end);
@@ -359,7 +343,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             rects.push({ x: 0, y: to.y, width: Math.max(1, to.x), height: lineHeight });
 
             return rects;
-        }, [ habboKey, measureCaret, multiline, wrapWidth ]);
+        }, [ flashFormat, measureCaret, multiline, wrapWidth ]);
 
         const displayValue = password ? '•'.repeat(value.length) : value;
         const showPlaceholder = !value.length && !focused && !!placeholder;

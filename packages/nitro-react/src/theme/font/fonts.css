@@ -1,29 +1,75 @@
+/*
+ * The client's embedded fonts for the browser's own text - what a string falls back to when the
+ * exact renderer (theme/font/flash-text) cannot take it. `Ubuntu`, `UbuntuCondensed`, `Volter`
+ * and `Volter Bold` carry the family names the Flash client used, weight and style included;
+ * the single-face aliases below them are what `TEXT_STYLES` names for Pixi's canvas text.
+ */
 @font-face {
     font-family: Ubuntu;
-    src: url('/assets/truffle/fonts/Ubuntu-C.ttf');
+    font-weight: 400;
+    font-style: normal;
+    src: url('/assets/fonts/Ubuntu-R.ttf');
 }
 
 @font-face {
-    font-family: UbuntuBold;
-    src: url('/assets/truffle/fonts/Ubuntu-B.ttf');
+    font-family: Ubuntu;
+    font-weight: 700;
+    font-style: normal;
+    src: url('/assets/fonts/Ubuntu-B.ttf');
 }
 
 @font-face {
-    font-family: UbuntuBoldItalics;
-    src: url('/assets/truffle/fonts/Ubuntu-BI.ttf');
+    font-family: Ubuntu;
+    font-weight: 400;
+    font-style: italic;
+    src: url('/assets/fonts/Ubuntu-I.ttf');
 }
 
 @font-face {
-    font-family: UbuntuItalics;
-    src: url('/assets/truffle/fonts/Ubuntu-I.ttf');
+    font-family: Ubuntu;
+    font-weight: 700;
+    font-style: italic;
+    src: url('/assets/fonts/Ubuntu-BI.ttf');
 }
 
 @font-face {
-    font-family: VolterBold;
-    src: url('/assets/truffle/fonts/Volter-Bold.ttf');
+    font-family: UbuntuCondensed;
+    src: url('/assets/fonts/Ubuntu-C.ttf');
 }
 
 @font-face {
     font-family: Volter;
-    src: url('/assets/truffle/fonts/Volter.ttf');
+    font-weight: 400;
+    src: url('/assets/fonts/Volter.ttf');
+}
+
+@font-face {
+    font-family: Volter;
+    font-weight: 700;
+    src: url('/assets/fonts/Volter-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Volter Bold';
+    src: url('/assets/fonts/Volter-Bold.ttf');
+}
+
+@font-face {
+    font-family: UbuntuBold;
+    src: url('/assets/fonts/Ubuntu-B.ttf');
+}
+
+@font-face {
+    font-family: UbuntuBoldItalics;
+    src: url('/assets/fonts/Ubuntu-BI.ttf');
+}
+
+@font-face {
+    font-family: UbuntuItalics;
+    src: url('/assets/fonts/Ubuntu-I.ttf');
+}
+
+@font-face {
+    font-family: VolterBold;
+    src: url('/assets/fonts/Volter-Bold.ttf');
 }
