@@ -18,7 +18,7 @@
     "badge.asset.group.url": "https://assets.nitrodev.co/habbo-imaging/badge/%badgedata%.gif",
     "catalog.icons.url": "https://assets.nitrodev.co/images/catalog-icons/icon_%name%.png",
     "asset.bundles.url": "/assets/bundles/%name%.nitro",
-    "asset.bundles.preload": [ "theme", "fonts", "chat-styles", "variable-fx", "wired", "interface" ],
+    "asset.bundles.preload": [ "theme", "fonts", "chat-styles", "nitro-renderer", "nitro-wired", "nitro-layouts" ],
     "loading.icon.url": "shared-common_loading_icon",
     "wired.menu.enabled": true,
     "wired.variables.context_visible": true,

@@ -11,21 +11,20 @@ interface VariableFxBundleTables {
     renderers: { id: number; name: string; rendererClass: string }[];
 }
 
-const BUNDLE_NAME = 'variable-fx';
+const BUNDLE_NAME = 'nitro-renderer';
+const TABLES_FILE = 'variable-fx-tables';
 const DEFAULT_BUNDLE_URL = '/assets/bundles/%name%.nitro';
 
 /**
- * The bundle names each bitmap for its path under `public/assets`, so the `variablefx_*` name
- * the renderers ask for is this prefix plus that name.
- */
-const ASSET_PREFIX = 'variablefx-';
-
-/**
  * The Flash client embedded every `variablefx_*` bitmap (and the icon/renderer XML tables) in
- * its room visualization library. Here they are one `.nitro` bundle: the bitmaps packed into a
+ * its room visualization library. Here they share `nitro-renderer.nitro` with the avatar
+ * additions - what the room engine draws, as against the UI's own art: the bitmaps packed into a
  * sheet the shared `AssetManager` decodes and uploads once, and the two tables beside them as
  * JSON. The renderers compose on the CPU, so each asset is still cut out into its own canvas on
  * first use - out of the decoded sheet rather than a separately fetched atlas image.
+ *
+ * The bitmaps keep the names the SWF gave them (`variablefx_*`), which is what the renderers ask
+ * for, so a lookup here is the asset name unchanged.
  */
 export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
     private _bitmaps: Map<string, VariableFxBitmap> = new Map();
@@ -62,7 +61,7 @@ export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
 
         if (existing) return existing;
 
-        const texture = GetAssetManager().getTexture(`${ASSET_PREFIX}${name}`);
+        const texture = GetAssetManager().getTexture(name);
         const resource = texture?.source.resource as CanvasImageSource | undefined;
 
         if (!texture || !resource || (typeof resource !== 'object')) return undefined;
@@ -92,7 +91,7 @@ export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
 
         if (!await assetManager.downloadAssetBundle(BUNDLE_NAME, url)) throw new Error(`bundle request failed: ${url}`);
 
-        const tables = assetManager.getBundleFile<VariableFxBundleTables>(BUNDLE_NAME, `${BUNDLE_NAME}-tables`);
+        const tables = assetManager.getBundleFile<VariableFxBundleTables>(BUNDLE_NAME, TABLES_FILE);
 
         this._iconMetadata = new Map();
         this._rendererMappings = [];
@@ -110,9 +109,6 @@ export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
         }
 
         this._ready = true;
-
-        // Both tables are now maps of our own; the JSON they came from is not read again.
-        assetManager.releaseBundleData(BUNDLE_NAME);
 
         return true;
     }

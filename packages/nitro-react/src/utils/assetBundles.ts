@@ -19,13 +19,13 @@ import { GetAssetManager } from '@nitrodevco/nitro-renderer';
 const DEFAULT_BUNDLE_URL = '/assets/bundles/%name%.nitro';
 
 /**
- * Everything the client cannot draw its first frame without. `catalog` and `effect-icons` are
- * deliberately absent: neither is on screen at boot, both are large, and the window that needs
- * one asks for it (`loadAssetBundle`) when it opens. `font-faces` is absent for the same reason
- * plus one more - it is only the browser's fallback for a string the exact text renderer cannot
- * take, so `preloadFlashFonts` starts it in the background instead of blocking on it.
+ * Everything the client cannot draw its first frame without. `effect-icons` is deliberately
+ * absent: it is not on screen at boot, and the one view that draws it asks for it
+ * (`loadAssetBundle`) when it opens. `font-faces` is absent for the same reason plus one more -
+ * it is only the browser's fallback for a string the exact text renderer cannot take, so
+ * `preloadFlashFonts` starts it in the background instead of blocking on it.
  */
-const DEFAULT_PRELOAD = [ 'theme', 'fonts', 'chat-styles', 'variable-fx', 'wired', 'interface' ];
+const DEFAULT_PRELOAD = [ 'theme', 'fonts', 'chat-styles', 'nitro-renderer', 'nitro-wired', 'nitro-layouts' ];
 
 /**
  * The bundles left out of the preload, by the asset-name prefix that belongs to each. A texture
@@ -34,7 +34,6 @@ const DEFAULT_PRELOAD = [ 'theme', 'fonts', 'chat-styles', 'variable-fx', 'wired
  * names a bundle.
  */
 const LAZY_BUNDLE_PREFIXES: [prefix: string, bundle: string][] = [
-    [ 'catalog-', 'catalog' ],
     [ 'effect-icons-', 'effect-icons' ],
 ];
 
