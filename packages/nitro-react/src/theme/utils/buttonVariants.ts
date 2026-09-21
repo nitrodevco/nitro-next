@@ -71,7 +71,7 @@ export const classicButtonVariant = (prefix: string, textColor?: string): ThemeW
         pressed: NineSlice(`${prefix}-pressed-src`, 3, 3, 3, 3),
         disabled: NineSlice(`${prefix}-disabled-src`, 3, 3, 3, 3),
     },
-    textStyle: 'text-style-button-regular',
+    textStyle: 'button_regular',
     textColor,
 });
 
@@ -82,7 +82,7 @@ export const shinyButtonVariant = (prefix: string, textColor?: string): ThemeWit
         pressed: NineSlice(`${prefix}-pressed-src`, 5, 5, 5, 5),
         disabled: NineSlice(`${prefix}-disabled-src`, 5, 5, 5, 5),
     },
-    textStyle: 'text-style-button-shiny-regular',
+    textStyle: 'button_shiny_regular',
     textColor,
 });
 
@@ -93,7 +93,7 @@ export const roundedButtonVariant = (prefix: string, textColor?: string): ThemeW
         pressed: NineSlice(`${prefix}-pressed-src`, 6, 6, 6, 7),
         disabled: NineSlice(`${prefix}-disabled-src`, 6, 6, 6, 7),
     },
-    textStyle: 'text-style-button-shiny-regular',
+    textStyle: 'button_shiny_regular',
     textColor,
 });
 
@@ -115,7 +115,7 @@ export const buttonPlainVariant = (prefix: string, hasHover: boolean, textColor?
                 pressed: Composite(illuminaButtonCurves(prefix, 'pressed', 1)),
             }
         : { default: BUTTON_CURVE_OVERLAY, pressed: BUTTON_CURVE_PRESSED_OVERLAY },
-    textStyle: 'text-style-il-button',
+    textStyle: 'il_button',
     textColor,
 });
 
@@ -140,7 +140,7 @@ export const BUTTON_102_VARIANT: ButtonVariant = {
         pressed: NineSlice('button-102-pressed-src', 6, 8, 4, 8),
     },
     overlays: { default: illuminaPlainButtonOverlay('default'), pressed: illuminaPlainButtonOverlay('pressed') },
-    textStyle: 'text-style-il-button',
+    textStyle: 'il_button',
 };
 
 export const BUTTON_100_VARIANT: ButtonVariant = {
@@ -151,7 +151,7 @@ export const BUTTON_100_VARIANT: ButtonVariant = {
         pressed: BUTTON_100_GLOW,
     },
     overlays: { default: BUTTON_100_DEFAULT_OVERLAY, pressed: BUTTON_100_PRESSED_OVERLAY },
-    textStyle: 'text-style-il-button',
+    textStyle: 'il_button',
 };
 
 /**
@@ -173,7 +173,7 @@ export const BUTTON_104_VARIANT: ButtonVariant = {
         hovering: NineSlice('button-104-hovering-plain-src', 19, 19, 19, 19),
         pressed: NineSlice('button-104-pressed-plain-src', 19, 19, 19, 19),
     },
-    textStyle: 'text-style-il-button-white',
+    textStyle: 'il_button_white',
 };
 
 /** `illumina_purple_skin_button_plain`: every entity is `colorize="false"`, so nothing tints it. */
@@ -186,5 +186,5 @@ export const BUTTON_200_VARIANT: ButtonVariant = {
         default: NineSlice('button-200-default-src', 4, 4, 4, 5),
     },
     colorize: false,
-    textStyle: 'text-style-id-button',
+    textStyle: 'id_button',
 };

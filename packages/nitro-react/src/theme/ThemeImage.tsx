@@ -5,7 +5,7 @@ import { useConfigValue } from '#base/context/system';
 
 import { BoxLayout } from './Box';
 import { useDynamicStyleEffect } from './dynamicstyle';
-import { getCroppedTexture, getTextureGreyscale, getTextureSilhouette, usePixiTexture, useTextureFromUrl } from './hooks';
+import { getCroppedTexture, getMirroredTexture, getTextureGreyscale, getTextureSilhouette, usePixiTexture, useTextureFromUrl } from './hooks';
 import { useTooltipHandlers } from './tooltip/useTooltipHandlers';
 import { compose, cursorForHandlers, DynamicStyleRole, insetStretchAxes, multiplyAlphas, multiplyTints, resolveEventMode, SpriteFrame, ThemeLayoutMeta } from './utils';
 
@@ -33,6 +33,13 @@ export interface ImageProps extends ThemeLayoutMeta {
     stretch?: boolean;
     /** Zoom factor on the render size: `(width ?? native) * scale` - `scale={2}` doubles it, layout box included. */
     scale?: number;
+    /**
+     * Per-axis factors on top of `scale`. The magnitude scales that axis's render size; a
+     * negative one mirrors the image along it (`scaleX={-1}` flips it left-to-right) inside the
+     * same box, so a flipped image lays out exactly where the unflipped one would.
+     */
+    scaleX?: number;
+    scaleY?: number;
     zIndex?: number;
     tint?: string;
     /** The Flash window `blend` of a bitmap - its opacity. */
@@ -95,7 +102,7 @@ const WHITE = '#ffffff';
  * that flat amount, where a tint could only multiply).
  */
 export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
-    src, textureKey, texture: ownTexture, frame, width, height, stretch, scale = 1, zIndex, tint, alpha, greyscale, blendMode, dynamicRole, tooltip, eventMode, cursor,
+    src, textureKey, texture: ownTexture, frame, width, height, stretch, scale = 1, scaleX = 1, scaleY = 1, zIndex, tint, alpha, greyscale, blendMode, dynamicRole, tooltip, eventMode, cursor,
     onPointerOver: onPointerOverProp, onPointerOut: onPointerOutProp, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     showLoadingPlaceholder, layout, visible,
 }, ref) => {
@@ -116,7 +123,13 @@ export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
     // never allocates a new Texture.
     const colourTexture = resolvedBaseTexture && frame ? getCroppedTexture(resolvedBaseTexture, frame) : resolvedBaseTexture;
     // Grey is baked once per texture (`getTextureGreyscale`); a source a canvas can't read stays in colour.
-    const texture = colourTexture && greyscale ? (getTextureGreyscale(colourTexture) ?? colourTexture) : colourTexture;
+    const shadedTexture = colourTexture && greyscale ? (getTextureGreyscale(colourTexture) ?? colourTexture) : colourTexture;
+    // A negative axis mirrors the texture itself (see `getMirroredTexture`), last, so the
+    // derivations above stay keyed on the unflipped source.
+    const flipX = scaleX < 0;
+    const flipY = scaleY < 0;
+    const mirror = (source: Texture | undefined) => (source ? getMirroredTexture(source, flipX, flipY) : undefined);
+    const texture = mirror(shadedTexture);
     const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
     if (!texture) return null;
@@ -124,21 +137,21 @@ export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
     // Silhouettes are alpha shapes, so they come from the colour source - one per texture,
     // whether or not the sprite is drawn grey.
     const etching = effect?.etching;
-    const etchingTexture = etching && colourTexture ? getTextureSilhouette(colourTexture, etching.color) : undefined;
-    const brightenTexture = effect?.brighten && colourTexture ? getTextureSilhouette(colourTexture, WHITE) : undefined;
+    const etchingTexture = mirror(etching && colourTexture ? getTextureSilhouette(colourTexture, etching.color) : undefined);
+    const brightenTexture = mirror(effect?.brighten && colourTexture ? getTextureSilhouette(colourTexture, WHITE) : undefined);
     const resolvedTint = multiplyTints(tint, effect?.tint);
     const resolvedAlpha = multiplyAlphas(alpha, effect?.alpha);
     const nudge = effect ? { x: effect.x, y: effect.y } : {};
 
     // A non-1 `scale` needs the texture stretched into the scaled box, exactly like an explicit size.
-    const explicitSize = width !== undefined || height !== undefined || !!stretch || scale !== 1;
+    const explicitSize = width !== undefined || height !== undefined || !!stretch || scale !== 1 || Math.abs(scaleX) !== 1 || Math.abs(scaleY) !== 1;
     // Same rule as `Box`: the pointer follows the click handlers, never the event mode, unless
     // the caller names a cursor of its own.
     const resolvedCursor = cursor ?? cursorForHandlers(resolvedEventMode, { onPointerTap });
     const stretchAxes = insetStretchAxes(layout, width, height);
     const objectFit = explicitSize ? 'fill' : 'none';
-    const renderWidth = (width ?? texture.width) * scale;
-    const renderHeight = (height ?? texture.height) * scale;
+    const renderWidth = (width ?? texture.width) * scale * Math.abs(scaleX);
+    const renderHeight = (height ?? texture.height) * scale * Math.abs(scaleY);
     const sprite = (spriteLayout: typeof layout, nudged: boolean) => (
         <pixiSprite
             ref={ref as Ref<never>}
@@ -172,11 +185,14 @@ export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
     // A layout that spans between insets needs a container to do the spanning - a Yoga leaf
     // keeps its intrinsic size (see `insetStretchAxes`). The sprite fills that host. The same
     // host carries an etching or brightening copy, positioned over the sprite's own box.
-    if (stretchAxes.x || stretchAxes.y || etchingTexture || brightenTexture) {
+    const amplify = effect?.amplify;
+
+    if (stretchAxes.x || stretchAxes.y || etchingTexture || brightenTexture || amplify) {
         const size: { width: number | '100%'; height: number | '100%' } = { width: stretchAxes.x ? '100%' : renderWidth, height: stretchAxes.y ? '100%' : renderHeight };
-        const copy = (copyTexture: Texture, left: number, top: number, copyAlpha: number, additive: boolean) => (
+        const copy = (copyTexture: Texture, left: number, top: number, copyAlpha: number, additive: boolean, copyTint?: string) => (
             <pixiSprite
                 texture={copyTexture}
+                tint={copyTint}
                 alpha={copyAlpha}
                 blendMode={additive ? 'add' : 'normal'}
                 eventMode="none"
@@ -195,6 +211,7 @@ export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
             >
                 {etchingTexture && etching && copy(etchingTexture, etching.x, etching.y, etching.alpha * (alpha ?? 1), false)}
                 {sprite(size, false)}
+                {amplify && copy(texture, 0, 0, amplify * (resolvedAlpha ?? 1), true, resolvedTint)}
                 {brightenTexture && effect?.brighten && copy(brightenTexture, 0, 0, effect.brighten, true)}
             </pixiContainer>
         );

@@ -1,5 +1,5 @@
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
-import { Assets, Rectangle, Texture } from 'pixi.js';
+import { Assets, groupD8, Rectangle, Texture } from 'pixi.js';
 import { useSyncExternalStore } from 'react';
 
 import { isAssetName, lazyBundleForAsset, loadAssetBundle } from '#base/utils';
@@ -187,6 +187,42 @@ export const getTextureGreyscale = (texture: Texture): Texture | undefined => ge
 
     ctx.putImageData(image, 0, 0);
 });
+
+const mirroredTextures = new WeakMap<Texture, Map<number, Texture>>();
+
+/**
+ * A texture drawn mirrored - horizontally, vertically or both - sharing its source. The flip is
+ * the texture's groupD8 `rotate`, so the sprite keeps an ordinary positive scale and `@pixi/layout`
+ * places it in its box as usual (a negative sprite scale would flip it about its corner, out of
+ * the box). One per source texture + axes, kept only as long as the source is.
+ */
+export const getMirroredTexture = (texture: Texture, flipX: boolean, flipY: boolean): Texture => {
+    if (!flipX && !flipY) return texture;
+
+    const rotate = flipX && flipY ? groupD8.W : (flipX ? groupD8.MIRROR_HORIZONTAL : groupD8.MIRROR_VERTICAL);
+    let byRotate = mirroredTextures.get(texture);
+    const cached = byRotate?.get(rotate);
+
+    if (cached) return cached;
+
+    const mirrored = new Texture({
+        source: texture.source,
+        frame: texture.frame.clone(),
+        orig: texture.orig.clone(),
+        trim: texture.trim?.clone(),
+        rotate: groupD8.add(texture.rotate, rotate),
+        label: texture.label ? `${texture.label} (mirror:${rotate})` : undefined,
+    });
+
+    if (!byRotate) {
+        byRotate = new Map();
+        mirroredTextures.set(texture, byRotate);
+    }
+
+    byRotate.set(rotate, mirrored);
+
+    return mirrored;
+};
 
 /**
  * A sub-frame of a texture (an icon out of the icon sheet, a slice of a nine-slice for tiling),

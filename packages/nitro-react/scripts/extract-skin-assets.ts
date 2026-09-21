@@ -44,13 +44,16 @@
  * style), so one skin can be re-cut without rewriting every other theme PNG.
  */
 import { createCanvas, loadImage } from 'canvas';
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const XML_DIR = join(__dirname, 'binaryData');
-const IMAGE_DIR = join(__dirname, 'images');
+/**
+ * The skin XML and the sheets they cut from are the window manager's own assets, so both come
+ * from that one component bundle of `scripts/flash-js-resources`.
+ */
+const SKIN_DIR = join(__dirname, 'flash-js-resources', 'habbo-window-manager-com');
 const OUT_DIR = join(__dirname, '../public/assets/theme');
 
 interface Job {
@@ -270,12 +273,13 @@ const scaleOf = (entity: XmlNode, axis: 'horizontal' | 'vertical'): string =>
  */
 const stretches = (entity: XmlNode, axis: 'horizontal' | 'vertical'): boolean => [ 'strech', 'tiled' ].includes(scaleOf(entity, axis));
 
+/** `habbo_skin_button_xml` -> `habbo_skin_button.xml`: a bundle file is its asset name with the type token as the extension. */
 const fileFor = (dir: string, name: string, ext: string): string => {
-    const file = readdirSync(dir).find(entry => entry.includes(`_${name}$`) && entry.endsWith(ext));
+    const file = join(dir, name.replace(/_(xml|png|gif|jpg)$/i, '') + ext);
 
-    if (!file) throw new Error(`No ${ext} for ${name} in ${dir}`);
+    if (!existsSync(file)) throw new Error(`No ${ext} for ${name} in ${dir}`);
 
-    return join(dir, file);
+    return file;
 };
 
 const sheets = new Map<string, Awaited<ReturnType<typeof loadImage>>>();
@@ -286,7 +290,7 @@ const SHEET_ALIASES: Record<string, string> = { habbo_blue_skin_png: 'habbo_skin
 const sheetFor = async (asset: string) => {
     let sheet = sheets.get(asset);
 
-    if (!sheet) sheets.set(asset, sheet = await loadImage(fileFor(IMAGE_DIR, SHEET_ALIASES[asset] ?? asset, '.png')));
+    if (!sheet) sheets.set(asset, sheet = await loadImage(fileFor(SKIN_DIR, SHEET_ALIASES[asset] ?? asset, '.png')));
 
     return sheet;
 };
@@ -298,7 +302,7 @@ const selected = JOBS.filter(job => !filters.length || filters.some(filter => fi
 if (filters.length && !selected.length) throw new Error(`No job matches ${filters.join(', ')}`);
 
 for (const job of selected) {
-    const skin = parseXml(readFileSync(fileFor(XML_DIR, `${job.skin}_xml`, '.bin'), 'utf8'));
+    const skin = parseXml(readFileSync(fileFor(SKIN_DIR, `${job.skin}_xml`, '.xml'), 'utf8'));
     const variables = Object.fromEntries(findAll(find(skin, 'variables') ?? { tag: '', attrs: {}, children: [] }, 'variable').map(v => [ v.attrs.key, v.attrs.value ]));
     const templates = Object.fromEntries(findAll(find(skin, 'templates')!, 'template').map(t => [ t.attrs.name, t ]));
     const layouts = Object.fromEntries(findAll(find(skin, 'layouts')!, 'layout').map(l => [ l.attrs.name, l ]));

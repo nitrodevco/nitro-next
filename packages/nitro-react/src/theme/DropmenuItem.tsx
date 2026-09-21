@@ -22,7 +22,7 @@ const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
             paddingRight: 4,
             paddingBottom: 2,
         },
-        textStyle: 'text-style-regular',
+        textStyle: 'regular',
     },
     1: {
         states: {
@@ -36,7 +36,7 @@ const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
             paddingRight: 4,
             paddingBottom: 2,
         },
-        textStyle: 'text-style-regular',
+        textStyle: 'regular',
         textColor: '#ffffff',
     },
     3: {
@@ -51,7 +51,7 @@ const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
             paddingRight: 4,
             paddingBottom: 4,
         },
-        textStyle: 'text-style-u-regular',
+        textStyle: 'u_regular',
     },
     100: {
         states: {
@@ -65,7 +65,7 @@ const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
             paddingRight: 4,
             paddingBottom: 2,
         },
-        textStyle: 'text-style-il-regular',
+        textStyle: 'il_regular',
     },
 };
 

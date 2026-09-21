@@ -23,7 +23,7 @@ const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22,
         },
-        textStyle: 'text-style-button-tab',
+        textStyle: 'button_tab',
         textColor: '#000000',
     },
     // black
@@ -37,7 +37,7 @@ const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22,
         },
-        textStyle: 'text-style-button-tab',
+        textStyle: 'button_tab',
         textColor: '#ffffff',
     },
     // white - reuses variant '0's art wholesale
@@ -51,7 +51,7 @@ const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
             paddingLeft: 8, paddingTop: 2, paddingRight: 8, paddingBottom: 4,
             minWidth: 20, minHeight: 22,
         },
-        textStyle: 'text-style-button-tab',
+        textStyle: 'button_tab',
         textColor: '#000000',
     },
     // shiny/pill
@@ -65,7 +65,7 @@ const TAB_BUTTON_VARIANTS: ThemeVariants<TabButtonVariant> = {
             paddingLeft: 10, paddingTop: 0, paddingRight: 10, paddingBottom: 0,
             minHeight: 32, maxHeight: 32,
         },
-        textStyle: 'text-style-button-shiny-regular',
+        textStyle: 'button_shiny_regular',
         textColor: '#000000',
     },
 };

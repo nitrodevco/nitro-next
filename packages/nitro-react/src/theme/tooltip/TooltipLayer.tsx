@@ -52,7 +52,7 @@ export const TooltipLayer = () => {
             <Tooltip>
                 <ThemeText
                     text={text}
-                    textStyle="text-style-u-tool-tip"
+                    textStyle="u_tool_tip"
                 />
             </Tooltip>
         </Box>

@@ -61,7 +61,7 @@ const RADIO_BUTTON_VARIANTS: ThemeVariants<RadioButtonVariant> = {
             height: 14,
             paddingLeft: 14,
         },
-        textStyle: 'text-style-il-regular',
+        textStyle: 'il_regular',
         textColor: '#000000',
     },
 };

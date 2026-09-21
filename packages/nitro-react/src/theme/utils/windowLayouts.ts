@@ -12,19 +12,19 @@ import type { TextStyleKey } from './textStyles';
  * `Button` / `ButtonThick` variant against the layout its element row names.
  */
 export const WINDOW_LAYOUTS = {
-    habbo_window_layout_button: { width: 20, height: 22, margins: [ 8, 4, 8, 4 ], textStyle: 'text-style-button-regular' },
-    habbo_window_layout_button_black: { width: 20, height: 22, margins: [ 8, 4, 8, 4 ], textStyle: 'text-style-button-regular', textColor: '#ffffff' },
-    habbo_window_layout_button_thick: { width: 20, height: 22, margins: [ 8, 4, 8, 4 ], textStyle: 'text-style-button-bold' },
-    habbo_window_layout_button_thick_black: { width: 20, height: 22, margins: [ 8, 4, 8, 4 ], textStyle: 'text-style-button-bold', textColor: '#ffffff' },
-    habbo_window_layout_button_shiny: { width: 20, height: 22, margins: [ 8, 2, 8, 3 ], textStyle: 'text-style-button-shiny-regular' },
-    habbo_window_layout_button_shiny_black: { width: 20, height: 28, margins: [ 10, 5, 10, 6 ], textStyle: 'text-style-button-shiny-regular', textColor: '#ffffff' },
-    habbo_window_layout_button_shiny_thick: { width: 20, height: 22, margins: [ 10, 2, 10, 3 ], textStyle: 'text-style-button-shiny-bold' },
-    habbo_window_layout_button_shiny_thick_black: { width: 20, height: 28, margins: [ 10, 5, 10, 6 ], textStyle: 'text-style-button-shiny-bold', textColor: '#ffffff' },
-    illumina_light_button: { width: 48, height: 48, margins: [ 24, 14, 24, 14 ], textStyle: 'text-style-il-button' },
-    illumina_light_button_plain: { width: 28, height: 28, margins: [ 13, 3, 13, 3 ], textStyle: 'text-style-il-button' },
-    illumina_purple_button: { width: 48, height: 48, margins: [ 24, 14, 24, 14 ], textStyle: 'text-style-il-button-white' },
-    illumina_purple_button_plain: { width: 28, height: 28, margins: [ 13, 3, 13, 3 ], textStyle: 'text-style-il-button-white' },
-    illumina_dark_button: { width: 28, height: 28, margins: [ 13, 3, 13, 3 ], textStyle: 'text-style-id-button' },
+    habbo_window_layout_button: { width: 20, height: 22, margins: [ 8, 4, 8, 4 ], textStyle: 'button_regular' },
+    habbo_window_layout_button_black: { width: 20, height: 22, margins: [ 8, 4, 8, 4 ], textStyle: 'button_regular', textColor: '#ffffff' },
+    habbo_window_layout_button_thick: { width: 20, height: 22, margins: [ 8, 4, 8, 4 ], textStyle: 'button_bold' },
+    habbo_window_layout_button_thick_black: { width: 20, height: 22, margins: [ 8, 4, 8, 4 ], textStyle: 'button_bold', textColor: '#ffffff' },
+    habbo_window_layout_button_shiny: { width: 20, height: 22, margins: [ 8, 2, 8, 3 ], textStyle: 'button_shiny_regular' },
+    habbo_window_layout_button_shiny_black: { width: 20, height: 28, margins: [ 10, 5, 10, 6 ], textStyle: 'button_shiny_regular', textColor: '#ffffff' },
+    habbo_window_layout_button_shiny_thick: { width: 20, height: 22, margins: [ 10, 2, 10, 3 ], textStyle: 'button_shiny_bold' },
+    habbo_window_layout_button_shiny_thick_black: { width: 20, height: 28, margins: [ 10, 5, 10, 6 ], textStyle: 'button_shiny_bold', textColor: '#ffffff' },
+    illumina_light_button: { width: 48, height: 48, margins: [ 24, 14, 24, 14 ], textStyle: 'il_button' },
+    illumina_light_button_plain: { width: 28, height: 28, margins: [ 13, 3, 13, 3 ], textStyle: 'il_button' },
+    illumina_purple_button: { width: 48, height: 48, margins: [ 24, 14, 24, 14 ], textStyle: 'il_button_white' },
+    illumina_purple_button_plain: { width: 28, height: 28, margins: [ 13, 3, 13, 3 ], textStyle: 'il_button_white' },
+    illumina_dark_button: { width: 28, height: 28, margins: [ 13, 3, 13, 3 ], textStyle: 'id_button' },
 } as const satisfies Record<string, { width: number; height: number; margins: readonly [ number, number, number, number ]; textStyle: TextStyleKey; textColor?: string }>;
 
 export type WindowLayoutName = keyof typeof WINDOW_LAYOUTS;

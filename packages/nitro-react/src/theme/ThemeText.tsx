@@ -5,9 +5,10 @@ import { GetPixelRatio } from '#base/utils';
 
 import { BoxLayout } from './Box';
 import { useDynamicStyleEffect } from './dynamicstyle';
+import { FlashTextFieldOverrides } from './font/flash-text';
 import { FlashText } from './font/FlashText';
 import { FlashTextCanvasConfig, useFlashTextCanvas } from './hooks/useFlashTextCanvas';
-import { DynamicStyleRole, getHabboKey, getPixiTextStyle, insetStretchAxes, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
+import { browserFaceOverride, DEFAULT_TEXT_STYLE, DynamicStyleRole, flashFaceOverride, getPixiTextStyle, insetStretchAxes, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
 
 export type TextConfig = {
     text: string;
@@ -24,18 +25,31 @@ export type TextConfig = {
     alpha?: number;
     /** A `#icon` tag under a `dynamicStyle` host: the host's child rule recolours and nudges the text. */
     dynamicRole?: DynamicStyleRole;
+    /**
+     * The `TextField` vars a Flash `<text>` layout declares over its style - `antialias_type`,
+     * `grid_fit_type`, `sharpness`, `thickness`, `kerning`. Pixi's `TextStyleOptions` has no room
+     * for them, and without them a field whose layout turns advanced anti-aliasing on over a
+     * Volter style (the chat input's flood warning) cannot render exactly. `font_face`,
+     * `font_size` and `text_color` are `textOptions.fontFamily` / `fontSize` / `fill`.
+     */
+    flashFormat?: FlashTextFieldOverrides;
 } & ThemeLayoutMeta;
 
 /** The resolved config the renderers take: the effect already folded into colour, opacity and offset. */
 type TextRenderConfig = TextConfig & { x?: number; y?: number };
 
-/** A raw `fontFamily`/`fontSize` override means the caller wants something other than the
- *  named style's own Flash format - falls straight through to native rendering, same as a
- *  style with no `habboKey` at all (see `theme/utils/textStyles.ts`'s `TEXT_STYLES`). */
-const resolveHabboKey = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined) => {
-    if (textOptions?.fontFamily || typeof textOptions?.fontSize === 'number') return undefined;
+/** The style the exact renderer draws in: a raw `fontFamily`/`fontSize` override is still that
+ *  style's own Flash format with the face or size swapped in - a Flash layout's `font_face` and
+ *  `font_size` vars are exactly that, applied over the style the way
+ *  `TextController.setTextFormatting` applies them - so an override keeps rendering exactly
+ *  (`useFlashTextCanvas` folds them into the format). Only a family none of the captured faces
+ *  covers, or a non-numeric size, falls through to native rendering. */
+const resolveFlashStyle = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined) => {
+    if (textOptions?.fontSize !== undefined && typeof textOptions.fontSize !== 'number') return undefined;
 
-    return getHabboKey(textStyle ?? 'text-style-regular');
+    if (textOptions?.fontFamily && !flashFaceOverride(textOptions.fontFamily)) return undefined;
+
+    return textStyle ?? DEFAULT_TEXT_STYLE;
 };
 
 /** `TextStyleOptions.dropShadow` is `boolean | Partial<TextDropShadow>` (Pixi's own native
@@ -52,7 +66,7 @@ const resolveDropShadow = (dropShadow: TextStyleOptions['dropShadow']): TextDrop
 const baseFill = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined): string => {
     if (typeof textOptions?.fill === 'string') return textOptions.fill;
 
-    const styleColor = (TEXT_STYLES[textStyle ?? 'text-style-regular'] as { color?: string }).color;
+    const styleColor = TEXT_STYLES[textStyle ?? DEFAULT_TEXT_STYLE].color;
 
     return styleColor ?? '#000000';
 };
@@ -88,8 +102,13 @@ const baseFill = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOpt
  * natural size on both axes is what makes it overflow a too-small container instead, matching
  * a `<span>`'s real floor.
  */
-const NativeText = ({ text, textStyle, textOptions, layout, verticalAlign, visible, alpha, x, y }: TextRenderConfig) => {
-    const style = useMemo(() => getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions), [ textStyle, textOptions ]);
+const NativeText = ({ text, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y }: TextRenderConfig) => {
+    // The layout's `font_face`/`bold`/`italic` vars again, in the face names Pixi's canvas text
+    // knows - `fontFamily` alone would leave a `bold` var out of the fallback.
+    const style = useMemo(() => getPixiTextStyle(textStyle ?? DEFAULT_TEXT_STYLE, {
+        ...textOptions,
+        ...browserFaceOverride(textStyle ?? DEFAULT_TEXT_STYLE, flashFaceOverride(textOptions?.fontFamily), flashFormat),
+    }), [ textStyle, textOptions, flashFormat ]);
     const metrics = useMemo(() => (text?.length ? CanvasTextMetrics.measureText(text, style) : undefined), [ text, style ]);
 
     if (!text?.length || !metrics) return null;
@@ -135,8 +154,11 @@ const NativeText = ({ text, textStyle, textOptions, layout, verticalAlign, visib
 };
 
 /** What `useFlashTextCanvas` needs from a text's config. */
-const flashTextConfig = (textOptions: TextStyleOptions | undefined): FlashTextCanvasConfig => ({
+const flashTextConfig = (textOptions: TextStyleOptions | undefined, flashFormat: FlashTextFieldOverrides | undefined): FlashTextCanvasConfig => ({
     color: (typeof textOptions?.fill === 'string') ? textOptions.fill : undefined,
+    fontSize: (typeof textOptions?.fontSize === 'number') ? textOptions.fontSize : undefined,
+    face: flashFaceOverride(textOptions?.fontFamily),
+    field: flashFormat,
     dropShadow: resolveDropShadow(textOptions?.dropShadow),
     align: (textOptions?.align === 'center' || textOptions?.align === 'right') ? textOptions.align : 'left',
     wordWrap: textOptions?.wordWrap,
@@ -146,13 +168,14 @@ const flashTextConfig = (textOptions: TextStyleOptions | undefined): FlashTextCa
 });
 
 /**
- * Prefers the Flash-exact rendering of this named style (see `theme/font/flash-text`); falls
- * back to `NativeText`'s canvas text for a raw `fontFamily`/`fontSize` override and for a
- * string with a character the captured fonts do not carry, so no call site ever goes blank.
+ * Prefers the Flash-exact rendering of this named style (see `theme/font/flash-text`), the
+ * call site's `fontFamily`/`fontSize` override folded into its format; falls back to
+ * `NativeText`'s canvas text for a face the captured fonts do not have and for a string with a
+ * character they do not carry, so no call site ever goes blank.
  */
 const RenderedText = (props: TextRenderConfig) => {
-    const { text, textStyle, textOptions, layout, verticalAlign, visible, alpha, x, y } = props;
-    const rendered = useFlashTextCanvas(text, resolveHabboKey(textStyle, textOptions), flashTextConfig(textOptions));
+    const { text, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y } = props;
+    const rendered = useFlashTextCanvas(text, resolveFlashStyle(textStyle, textOptions), flashTextConfig(textOptions, flashFormat));
 
     if (rendered) {
         return (

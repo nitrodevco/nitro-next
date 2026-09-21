@@ -3,6 +3,7 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
+import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
 import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
@@ -41,7 +42,7 @@ const multiVariant = (style: string, left: number, right: number): ContainerButt
         hovering: NineSlice(`containerbutton-${style}-hovering-plain-src`, left, 4, right, 4),
         pressed: NineSlice(`containerbutton-${style}-pressed-plain-src`, left, 4, right, 4),
     },
-    textStyle: 'text-style-il-button',
+    textStyle: 'il_button',
 });
 
 /**
@@ -92,24 +93,28 @@ export interface ContainerButtonProps extends ThemeProps<ContainerButtonVariant>
 /**
  * The Flash `container_button`: a button whose face is built from arbitrary children
  * (positioned absolutely, exactly like a `container`) rather than a centered caption. Press
- * feedback beyond the sheet's own states came from `dynamic_style`, which is carried on
- * `ThemeLayoutMeta` but not applied yet.
+ * feedback beyond the sheet's own states comes from `dynamic_style` - almost always `button`,
+ * whose `#icon` rule brightens a tagged icon child on hover and sinks and darkens it when pressed
+ * - applied here the way `Button` applies it: the host rule to the button itself, the child rules
+ * to its tagged descendants through `DynamicStyleProvider`.
  */
 export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContainerButtonProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
+        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'containerButton', variants: CONTAINER_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled, selected,
+        const { ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
+            cascadeKey: 'containerButton', variants: CONTAINER_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled, selected, interactive: !!dynamicStyle,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+        const hostEffect = useHostDynamicStyleEffect(dynamicStyle, state);
 
         return (
             <Box
                 ref={ref}
                 visible={visible}
                 layout={{ ...config.layout, ...layout }}
+                {...dynamicStyleBoxProps(hostEffect)}
                 {...handlers}
             >
                 {resolvedLayer && (
@@ -119,9 +124,14 @@ export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & R
                     />
                 )}
                 {resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} />}
-                <VariantCascadeProvider map={ownCascade}>
-                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
-                </VariantCascadeProvider>
+                <DynamicStyleProvider
+                    name={dynamicStyle}
+                    state={state}
+                >
+                    <VariantCascadeProvider map={ownCascade}>
+                        {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                    </VariantCascadeProvider>
+                </DynamicStyleProvider>
             </Box>
         );
     },

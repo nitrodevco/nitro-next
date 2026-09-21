@@ -31,8 +31,37 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const XML_DIR = join(__dirname, 'binaryData');
-const IMAGE_DIR = join(__dirname, 'images');
+const RESOURCE_DIR = join(__dirname, 'flash-js-resources');
+
+/**
+ * `scripts/flash-js-resources/<component>/` - one client library's asset bundle as `flash-js`
+ * loads it, unpacked. A file is its Flash asset name with the type token turned into the
+ * extension (`habbo_element_description_xml` -> `habbo_element_description.xml`, `zoom_in_png` ->
+ * `zoom_in.png`), so the folder a file sits in *is* the library that embeds it - the question a
+ * library table and a size comparison used to have to answer.
+ */
+const RESOURCE_COMPONENTS: string[] = existsSync(RESOURCE_DIR)
+    ? readdirSync(RESOURCE_DIR, { withFileTypes: true }).filter(entry => entry.isDirectory()).map(entry => entry.name).sort()
+    : [];
+
+/** `habbo_element_description.xml` -> `habbo_element_description_xml`, the name the client asks for. */
+const assetNameOf = (file: string): string => file.replace(/\.(\w+)$/, '_$1');
+
+/** Every file of a component, as the `<component>/<file>` path the rest of this script passes around. */
+const resourceFiles = (component: string): string[] =>
+    readdirSync(join(RESOURCE_DIR, component)).map(file => `${component}/${file}`);
+
+const resourcePath = (file: string): string => join(RESOURCE_DIR, file);
+
+/**
+ * The decompiled AS3 client of the revision the config names - the same root
+ * `scripts/drift/known.py` derives, so a revision bump moves both together. The generator reads
+ * two things from it: each library's `public static var <name>:Class = <file>$<hash>;` table (the
+ * alias a layout's `asset_uri` may use), and which class builds a layout, which is what files the
+ * layout's art under the right component.
+ */
+const REVISION = JSON.parse(readFileSync(join(__dirname, '../public/config/nitro-config.json'), 'utf8'))['production.version'];
+const AS3_ROOT = join('D:', 'Habbo', REVISION, 'scripts-deob');
 /**
  * The converted layouts, beside the XML they come from. They are read while a view is written
  * by hand, never imported by the app, so they stay out of `src` (and out of the typecheck).
@@ -80,6 +109,36 @@ const ASSET_FOLDERS: Record<string, string> = {
     windowmanager: 'window-manager',
 };
 
+/**
+ * The `flash-js-resources` folder(s) holding the library behind each art folder - the inverse of
+ * `ASSET_FOLDERS`. This is what makes a bitmap name unambiguous: `zoom_in` asked for by a
+ * `room-ui` layout is the one in `habbo-room-ui-com`, whatever else exports that name.
+ */
+const RESOURCE_FOR_FOLDER: Record<string, string[]> = {
+    'avatar-editor': [ 'habbo-avatar-editor-com' ],
+    catalog: [ 'habbo-catalog-com' ],
+    'communication-demo': [ 'habbo-communication-demo-com' ],
+    'friend-bar': [ 'habbo-friend-bar-com' ],
+    'friend-list': [ 'habbo-friend-list-com' ],
+    games: [ 'habbo-games-com' ],
+    groups: [ 'habbo-groups-com' ],
+    help: [ 'habbo-help-com' ],
+    inventory: [ 'habbo-inventory-com' ],
+    messenger: [ 'habbo-messenger-com' ],
+    moderation: [ 'habbo-moderation-com' ],
+    navigator: [ 'habbo-navigator-com', 'habbo-new-navigator' ],
+    notifications: [ 'habbo-notifications-com' ],
+    'quest-engine': [ 'habbo-quest-engine-com' ],
+    'room-ui': [ 'habbo-room-ui-com' ],
+    toolbar: [ 'habbo-toolbar-com' ],
+    wired: [ 'habbo-user-defined-room-events-com' ],
+    'window-manager': [ 'habbo-window-manager-com' ],
+};
+
+/** The resource folders a call site's `component` (an art folder, or a `<component>/<file>` pin) points at. */
+const preferredComponents = (component: string | undefined): string[] =>
+    (component ? RESOURCE_FOR_FOLDER[component.split('/')[0]] ?? [] : []);
+
 /** Bitmaps two components name have no owner - one copy, here, referenced by both. */
 const SHARED_FOLDER = 'shared';
 
@@ -92,7 +151,7 @@ const SHARED_FOLDER = 'shared';
 const UNASSIGNED_FOLDER = 'window-manager';
 
 const assetFolder = (layoutFolder: string): string => ASSET_FOLDERS[layoutFolder.split('/')[0]] ?? UNASSIGNED_FOLDER;
-const TEXT_STYLES_FILE = join(__dirname, '../src/theme/utils/textStyles.ts');
+const HABBO_TEXT_STYLES_FILE = join(__dirname, '../src/theme/font/flash-text/habboTextStyles.ts');
 
 // ---------------------------------------------------------------------------------------------
 // Minimal XML reader - the layouts are machine-exported, attribute-only trees (no text nodes,
@@ -296,23 +355,49 @@ const camel = (value: string): string => {
 };
 
 // ---------------------------------------------------------------------------------------------
-// Text style lookup - the XML's `text_style` variable is the client's own style name (`habboKey`); the theme
-// keys those by `TextStyleKey`, so read that table straight out of textStyles.ts.
+// Text style lookup - the XML's `text_style` variable is the client's own style name, which is
+// also the theme's `textStyle` key, so this only has to know which names exist. They come from
+// `habboTextStyles.ts`, generated from the same `styles_css` the layouts name.
 // ---------------------------------------------------------------------------------------------
 
-const TEXT_STYLE_BY_HABBO_KEY: Record<string, string> = {};
+const HABBO_TEXT_STYLE_ROWS = [ ...readFileSync(HABBO_TEXT_STYLES_FILE, 'utf8').matchAll(/^ {4}(\w+):\s*\{([^}]*)\}/gm) ];
+const HABBO_TEXT_STYLE_NAMES = new Set(HABBO_TEXT_STYLE_ROWS.map(match => match[1]));
 
-// `'text-style-u-small': habboTextStyle('u_small')`, or the older spelling that wrote the format
-// out with a `habboKey:` field. An entry the regex misses costs every text that uses that style
-// its `textStyle` prop, silently - `resolveTextStyle` has no other source.
-for (const match of readFileSync(TEXT_STYLES_FILE, 'utf8').matchAll(/'(text-style-[\w-]+)':\s*(?:habboTextStyle\('(\w+)'\)|\{[^}]*habboKey:\s*'(\w+)')/g)) {
-    TEXT_STYLE_BY_HABBO_KEY[match[2] ?? match[3]] ??= match[1];
-}
+/** The styles whose own `antiAliasType` is `advanced` - which decides whether `setTextFormatting`
+ *  puts a `grid_fit_type` var back to `pixel`, see `textFormatVars`. */
+const ADVANCED_TEXT_STYLES = new Set(HABBO_TEXT_STYLE_ROWS.filter(match => match[2].includes("antiAliasType: 'advanced'")).map(match => match[1]));
 
-if (!Object.keys(TEXT_STYLE_BY_HABBO_KEY).length) throw new Error(`No text styles read from ${TEXT_STYLES_FILE} - its TEXT_STYLES table is written in a shape this script does not know.`);
+if (!HABBO_TEXT_STYLE_NAMES.size) throw new Error(`No text styles read from ${HABBO_TEXT_STYLES_FILE} - its HABBO_TEXT_STYLES table is written in a shape this script does not know.`);
 
-/** Every style in the client's `styles.css` has a theme key, the `_white` ones included - they are not the black styles recoloured (no etching). */
-const resolveTextStyle = (habboKey: string | undefined): string | undefined => (habboKey ? TEXT_STYLE_BY_HABBO_KEY[habboKey] : undefined);
+/**
+ * Every style in the client's `styles.css` is a theme style, the `_white` ones included - they
+ * are not the black styles recoloured (no etching). A name that is in no layout's vocabulary
+ * means the generated `habboTextStyles.ts` is behind the revision, so it is dropped rather than
+ * emitted as a key that does not typecheck.
+ */
+const resolveTextStyle = (name: string | undefined): string | undefined => ((name && HABBO_TEXT_STYLE_NAMES.has(name)) ? name : undefined);
+
+/**
+ * The style a text starts from when it declares no `text_style` var of its own. Every window
+ * carries a `style` id, and `TextController`'s constructor takes its style name from
+ * `ThemeManager.getPropertyDefaults(style)` - the property defaults of the first real theme
+ * covering that id, and three of those name a different `text_style`: Volter (ids 0-2)
+ * `regular`, Ubuntu (3-7) and Misc (10000-10007) `u_regular`, Illumina Light and Dark (100-199,
+ * 200-299) `il_regular`.
+ *
+ * `windowToXMLString` writes a var out only where it differs from those defaults, so an element
+ * with no `text_style` is not `regular` - it is whatever its own theme says. Reading it as
+ * `regular` put Volter 9 under the 1,708 texts the Ubuntu and Illumina themes cover.
+ */
+const themeTextStyle = (el: Element): string => {
+    const style = num(el.attrs.style);
+
+    if ((style >= 3 && style < 8) || (style >= 10000 && style < 10008)) return 'u_regular';
+
+    if (style >= 100 && style < 300) return 'il_regular';
+
+    return 'regular';
+};
 
 // ---------------------------------------------------------------------------------------------
 // Image lookup - `scripts/images` files are `<id>_<asset_name>$<hash>.<ext>`; the XML refers
@@ -327,26 +412,27 @@ const resolveTextStyle = (habboKey: string | undefined): string | undefined => (
 // files here, and `resolveImage` chooses between them - see `pickImage`.
 // ---------------------------------------------------------------------------------------------
 
-/** Every `scripts/images` file a name answers to, in readdir order; the last is the pick this script made before it chose. */
+/** Every `<component>/<file>` a bitmap name answers to, across every library that embeds one. */
 const imageFiles = new Map<string, string[]>();
 
-/** `<asset name>$<hash>` - the identity a client library class names a bitmap by - to its `scripts/images` file. */
-const imageByIdentity = new Map<string, string>();
+/** `<component>/<file>` -> the component folder it came from, which is the library that embeds it. */
+const imageComponent = new Map<string, string>();
 
-for (const file of readdirSync(IMAGE_DIR)) {
-    const match = /^\d+_(.+?)\$([^$]*)\.(png|gif|jpg)$/i.exec(file);
+for (const component of RESOURCE_COMPONENTS) {
+    for (const file of resourceFiles(component)) {
+        if (!/\.(png|gif|jpg)$/i.test(file)) continue;
 
-    if (!match) continue;
+        const name = assetNameOf(file.slice(component.length + 1));
 
-    const name = match[1];
+        imageComponent.set(file, component);
 
-    imageByIdentity.set(`${name}$${match[2]}`, file);
+        // A layout names a bitmap with or without its type token, so both keys answer.
+        for (const key of new Set([ name, name.replace(/_(png|gif|jpg)$/i, '') ])) {
+            const files = imageFiles.get(key);
 
-    for (const key of new Set([ name, name.replace(/_(png|gif|jpg)$/i, '') ])) {
-        const files = imageFiles.get(key);
-
-        if (files) files.push(file);
-        else imageFiles.set(key, [ file ]);
+            if (files) files.push(file);
+            else imageFiles.set(key, [ file ]);
+        }
     }
 }
 
@@ -356,7 +442,7 @@ const imageHash = (file: string): string => {
     let hash = imageHashes.get(file);
 
     if (hash === undefined) {
-        hash = createHash('sha1').update(readFileSync(join(IMAGE_DIR, file))).digest('hex');
+        hash = createHash('sha1').update(readFileSync(resourcePath(file))).digest('hex');
         imageHashes.set(file, hash);
     }
 
@@ -368,7 +454,7 @@ const imageSizes = new Map<string, { width: number; height: number } | undefined
 const imageSize = (file: string): { width: number; height: number } | undefined => {
     if (imageSizes.has(file)) return imageSizes.get(file);
 
-    const data = readFileSync(join(IMAGE_DIR, file));
+    const data = readFileSync(resourcePath(file));
     let size: { width: number; height: number } | undefined;
 
     if (data.length > 24 && data.readUInt32BE(0) === 0x89504e47) size = { width: data.readUInt32BE(16), height: data.readUInt32BE(20) };
@@ -457,10 +543,12 @@ interface ManifestAsset {
 
 const manifestAssets = new Map<string, ManifestAsset>();
 
-for (const file of readdirSync(XML_DIR)) {
-    if (!/_manifest_xml\$/.test(file)) continue;
+for (const component of RESOURCE_COMPONENTS) {
+    const manifest = join(RESOURCE_DIR, component, '_manifest.xml');
 
-    const source = readFileSync(join(XML_DIR, file), 'utf8');
+    if (!existsSync(manifest)) continue;
+
+    const source = readFileSync(manifest, 'utf8');
     const pattern = /<asset [^>]*name="([^"]+)"[^>]*ref="([^"]+)"[^>]*(?:\/>|>([\s\S]*?)<\/asset>)/g;
 
     for (let match = pattern.exec(source); match; match = pattern.exec(source)) {
@@ -487,7 +575,7 @@ for (const file of readdirSync(XML_DIR)) {
  */
 const imageIdentities = new Map<string, Set<string>>();
 
-const AS3_LIBRARY_DIR = join(__dirname, 'scripts');
+const AS3_LIBRARY_DIR = AS3_ROOT;
 
 if (existsSync(AS3_LIBRARY_DIR)) {
     for (const file of readdirSync(AS3_LIBRARY_DIR)) {
@@ -527,7 +615,13 @@ const ambiguousImages = new Map<string, AmbiguousImage>();
  * decides, and where that matches several candidates or none (a 9-slice, a stretched bar, a
  * bitmap no layout names) the pick is recorded as ambiguous rather than guessed at silently.
  */
-const pickImage = (name: string, key: string, files: string[], declared: { width: number; height: number } | undefined): string => {
+const pickImage = (name: string, key: string, files: string[], declared: { width: number; height: number } | undefined, prefer: string[] = []): string => {
+    // The library that embeds the bitmap answers first: a name several components export is one
+    // file per component, and the layout asking for it belongs to exactly one of them.
+    const owned = prefer.length ? files.filter(file => prefer.includes(imageComponent.get(file) ?? '')) : [];
+
+    if (owned.length) files = owned;
+
     const fallback = files[files.length - 1];
     const arts = distinctArts(files);
 
@@ -579,7 +673,13 @@ const RUNTIME_IMAGES: { name: string; component: string }[] = [
     // asset name (`FurnitureGuildCustomizedLogic`). Only the friend bar's layout names it
     // statically, so without this row it would sit in that one component's folder.
     { name: 'common_loading_icon', component: 'quest-engine' },
-]);
+    // The floor plan editor's five tool bitmaps. Its own layout (`floor_plan_editor_bc_xml`) is
+    // one the component bundles do not carry, so nothing names them statically, but the art is
+    // the window manager's and `FloorPlanEditorView` draws all five.
+]).concat([
+    'floor_plan_editor_add_tile', 'floor_plan_editor_remove_tile', 'floor_plan_editor_raise_tile',
+    'floor_plan_editor_sink_tile', 'floor_plan_editor_enter_tile',
+].map(name => ({ name, component: 'window-manager' })));
 
 /**
  * Records that `component` draws `outName`, which the `scripts/images` file `source` holds (a
@@ -604,11 +704,25 @@ const claimImage = (outName: string, source: string, component: string | undefin
  */
 const resolveImage = (name: string, component?: string, declared?: { width: number; height: number }): string | undefined => {
     let file: string | undefined;
-    // The client library's own `<name>$<hash>` for this published name, where it has one.
-    const identities = imageIdentities.get(name) ?? imageIdentities.get(`${name}_png`);
-    const named = [ ...identities ?? [] ].map(identity => imageByIdentity.get(identity)).filter((found): found is string => !!found);
+    const prefer = preferredComponents(component);
+    // A bundle file *is* the published asset name (`newnavigator_create_room.png`), so the name the
+    // layout asks for is looked up as-is first. That is the client's own answer, and it is exact.
+    const exact = imageFiles.get(name) ?? imageFiles.get(name.replace(/_(png|gif|jpg)$/i, ''));
 
-    if (named.length) file = pickImage(name, `library alias -> ${named.length} file(s)`, named, declared);
+    if (exact) file = pickImage(name, name, exact, declared, prefer);
+
+    // Only a name no bundle carries goes through the library's alias table. Its right-hand side
+    // names the *embedded* file (`roomtools_zoom_in` -> `zoom_in_png$1d108f3d`), and without the
+    // hash - which the bundles do not carry - an embedded name is shared by several libraries'
+    // art, so trying it first picked a 23x23 icon for the 187x59 `newnavigator_create_room`.
+    if (!file) {
+        const identities = imageIdentities.get(name) ?? imageIdentities.get(`${name}_png`);
+        const named = [ ...identities ?? [] ]
+            .map(identity => identity.slice(0, identity.indexOf('$')))
+            .flatMap(embedded => imageFiles.get(embedded) ?? imageFiles.get(embedded.replace(/_(png|gif|jpg)$/i, '')) ?? []);
+
+        if (named.length) file = pickImage(name, `library alias -> ${named.length} file(s)`, named, declared, prefer);
+    }
 
     // `asset_uri` names carry their library/folder as leading tokens (`avatar_editor_tabs_ae_tabs_head`
     // is the file `ae_tabs_head`; `icons_hc_icon_small` is `hc_icon_small`) - strip tokens until one matches.
@@ -618,14 +732,14 @@ const resolveImage = (name: string, component?: string, declared?: { width: numb
         const candidate = tokens.slice(skip).join('_');
         const key = imageFiles.has(candidate) ? candidate : imageFiles.has(`${candidate}_png`) ? `${candidate}_png` : undefined;
 
-        if (key) file = pickImage(name, key, imageFiles.get(key)!, declared);
+        if (key) file = pickImage(name, key, imageFiles.get(key)!, declared, prefer);
     }
 
     if (!file) {
         const manifest = manifestAssets.get(name);
         const refKey = manifest && (imageFiles.has(manifest.ref) ? manifest.ref : imageFiles.has(manifest.ref.replace(/_(png|gif|jpg)$/i, '')) ? manifest.ref.replace(/_(png|gif|jpg)$/i, '') : undefined);
         // The region's own size is the crop, not the sheet's, so it cannot pick between sheets.
-        const refFile = refKey && pickImage(name, refKey, imageFiles.get(refKey)!, manifest?.region ? undefined : declared);
+        const refFile = refKey && pickImage(name, refKey, imageFiles.get(refKey)!, manifest?.region ? undefined : declared, prefer);
 
         if (manifest && refFile && manifest.region) {
             const outName = `${name}.png`;
@@ -1080,14 +1194,14 @@ const metaProps = (ctx: EmitContext, el: Element): string[] => {
     const tooltip = captionExpr(ctx, el.vars.tool_tip_caption);
 
     if (tooltip) props.push(jsxAttr('tooltip', tooltip));
-    // Only the two styles `DynamicStyleManager` defines do anything; any other name (`button`,
-    // `reward_track_item`, `..._gentle`) resolves to a bare `DynamicStyle` with no rules.
+    // A name `DynamicStyleManager` does not define resolves to a bare `DynamicStyle` with no rules,
+    // so only its five (`DYNAMIC_STYLES` in theme/utils/dynamicStyles.ts) are emitted.
     if (el.attrs.dynamic_style && DYNAMIC_STYLE_NAMES.has(el.attrs.dynamic_style)) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
 
     return props;
 };
 
-const DYNAMIC_STYLE_NAMES = new Set([ 'lifted_hover', 'brightness_and_shadow_under' ]);
+const DYNAMIC_STYLE_NAMES = new Set([ 'lifted_hover', 'brightness_and_shadow_under', 'brightness_and_shadow_under_gentle', 'reward_track_item', 'button' ]);
 
 // ---------------------------------------------------------------------------------------------
 // Tags. The Flash `tags` attribute was mostly a lookup handle (`findChildByTag("close")`) or a
@@ -1277,15 +1391,118 @@ const emitChildren = (ctx: EmitContext, el: Element, parent: ParentBox, indent: 
 
 const selfBox = (el: Element, flow = false): ParentBox => ({ width: num(el.attrs.width), height: num(el.attrs.height), flow, name: el.attrs.name });
 
+/**
+ * A layout's `font_face` spelling as the theme names that face - the alias `browserFace` hands
+ * Pixi's canvas text, which `flashFaceOverride` reads back into a Flash family, weight and slant.
+ * `UbuntuThick` is the client's own `UbuntuThick-Bold.ttf`, which the port has captured neither
+ * an AIR bundle nor a `.ttf` for; it is emitted all the same, and reported at the end of a run.
+ */
+const FONT_FACES: Record<string, string> = {
+    'Ubuntu': 'Ubuntu',
+    'Ubuntu bold': 'UbuntuBold',
+    'Ubuntu condensed': 'UbuntuCondensed',
+    'UbuntuCondensed': 'UbuntuCondensed',
+    'UbuntuThick': 'UbuntuThick',
+    'Volter': 'Volter',
+    'Volter Bold': 'VolterBold',
+};
+
+/** The faces `flashFaceOverride` knows; anything else renders in whatever the browser substitutes. */
+const PORTED_FACES = new Set([ 'Ubuntu', 'UbuntuBold', 'UbuntuItalics', 'UbuntuBoldItalics', 'UbuntuCondensed', 'Volter', 'VolterBold' ]);
+
+/** Faces a run met that the theme has no captured font for - printed with the missing images. */
+const unportedFaces = new Map<string, number>();
+
+/**
+ * Whether a declared var actually reaches the `TextField`.
+ *
+ * `TextController.setTextFormatting` re-applies the style over every property whose recorded
+ * value is falsy (`if(!_loc2_.sharpness) _loc3_.sharpness = int(_loc5_.sharpness)`), so a
+ * `sharpness="0"` or `leading="0"` - which the layout editor writes on almost every text - is
+ * the style's own value, not zero. The setters that record a *string* escape that: `setBold`
+ * writes `fontWeight = "bold"` whether the var is true or false, `setItalic` writes
+ * `"italic"`/`"normal"` and `setUnderline` `"underline"`/`"none"`, so those three count either
+ * way. `setEtchingColor` is guarded by `== null` rather than falsiness, so `0x0` counts too.
+ */
+const VAR_COUNTS_WHEN_FALSY = new Set([ 'bold', 'italic', 'underline', 'font_face', 'antialias_type', 'grid_fit_type', 'etching_color', 'etching_position' ]);
+
+const varApplies = (key: string, raw: string | undefined): boolean => {
+    if (raw === undefined) return false;
+    if (VAR_COUNTS_WHEN_FALSY.has(key)) return true;
+
+    return raw !== 'false' && raw !== '0' && Number(raw) !== 0;
+};
+
+/** `0xff000000` / `0x0` -> the `0xAARRGGBB` literal `FlashTextFormat.etchingColor` takes. */
+const argbLiteral = (value: string): string | undefined => {
+    const digits = value.replace(/^0x/i, '').replace(/[^0-9a-f]/gi, '');
+
+    return digits.length ? `0x${digits.slice(-8).padStart(8, '0').toUpperCase()}` : undefined;
+};
+
+/**
+ * The `TextField` vars an element declares over its style, split the way `ThemeText` takes them:
+ * `font_face`, `font_size` and `text_color` into `textOptions` (Pixi's own vocabulary, which the
+ * canvas-text fallback reads), the rest into `flashFormat`. Every key of
+ * `TextController.createPropertySetterTable` that decides the format is here; the ones that do
+ * not (`margins`, `max_chars`, `restrict`, `mouse_wheel_enabled`, ...) are window behaviour and
+ * stay out.
+ */
+const textFormatVars = (el: Element): { options: Record<string, string | number | undefined>; flash: Record<string, string | number | undefined> } => {
+    const v = el.vars;
+    const face = varApplies('font_face', v.font_face) ? v.font_face : undefined;
+
+    const resolvedFace = face ? (FONT_FACES[face] ?? face) : undefined;
+
+    if (resolvedFace && !PORTED_FACES.has(resolvedFace)) unportedFaces.set(resolvedFace, (unportedFaces.get(resolvedFace) ?? 0) + 1);
+
+    // `setGridFitType` is the one setter that records nothing of its own, so a later
+    // `text_style` - which re-runs `setTextFormatting` - puts an advanced style's grid fit back
+    // to `pixel` over it, unless an `antialias_type` was recorded before that point. Vars are
+    // applied in document order (`XMLPropertyArrayParser.parse` of the `<variables>` children),
+    // so the order they are listed in decides it.
+    const order = Object.keys(v);
+    const at = (key: string): number => (order.includes(key) ? order.indexOf(key) : Infinity);
+    const gridFitReset = order.includes('text_style')
+        && ADVANCED_TEXT_STYLES.has(v.text_style)
+        && at('text_style') > at('grid_fit_type')
+        && at('antialias_type') > at('text_style');
+
+    return {
+        options: {
+            fontFamily: resolvedFace ? quote(resolvedFace) : undefined,
+            fontSize: varApplies('font_size', v.font_size) ? num(v.font_size) : undefined,
+        },
+        flash: {
+            bold: varApplies('bold', v.bold) ? String(bool(v.bold)) : undefined,
+            italic: varApplies('italic', v.italic) ? String(bool(v.italic)) : undefined,
+            underline: varApplies('underline', v.underline) ? String(bool(v.underline)) : undefined,
+            letterSpacing: varApplies('spacing', v.spacing) ? num(v.spacing) : undefined,
+            leading: varApplies('leading', v.leading) ? num(v.leading) : undefined,
+            antiAliasType: varApplies('antialias_type', v.antialias_type) ? quote(v.antialias_type === 'normal' ? 'normal' : 'advanced') : undefined,
+            gridFitType: (varApplies('grid_fit_type', v.grid_fit_type) && !gridFitReset) ? quote(v.grid_fit_type!) : undefined,
+            thickness: varApplies('thickness', v.thickness) ? num(v.thickness) : undefined,
+            sharpness: varApplies('sharpness', v.sharpness) ? num(v.sharpness) : undefined,
+            kerning: varApplies('kerning', v.kerning) ? String(bool(v.kerning)) : undefined,
+            etchingColor: varApplies('etching_color', v.etching_color) ? argbLiteral(v.etching_color!) : undefined,
+            etchingPosition: varApplies('etching_position', v.etching_position) ? quote(v.etching_position!) : undefined,
+        },
+    };
+};
+
 /** Just the `<ThemeText>` for a text element - used where the parent already lays its caption out (a button). */
 const textElement = (ctx: EmitContext, el: Element, parentName?: string): { props: string[]; hasText: boolean; wordWrap: boolean; autoSize: string } => {
     const caption = captionExpr(ctx, el.attrs.caption);
-    const textStyle = resolveTextStyle(el.vars.text_style);
-    const fill = hexColor(el.vars.text_color);
+    const textStyle = resolveTextStyle(el.vars.text_style) ?? themeTextStyle(el);
+    // `setTextColor` records the colour and `setTextFormatting` re-applies the style over it
+    // whenever that record is falsy, so `text_color="0x0"` is the style's colour, not black.
+    const fill = varApplies('text_color', el.vars.text_color) ? hexColor(el.vars.text_color) : undefined;
     const wordWrap = !!(bool(el.vars.word_wrap) || bool(el.vars.multiline));
     const autoSize = el.vars.auto_size && AUTO_SIZE_JUSTIFY[el.vars.auto_size] ? el.vars.auto_size : 'left';
+    const format = textFormatVars(el);
     const textOptions: Record<string, string | number | undefined> = {
         fill: textColorExpr(ctx, el, fill),
+        ...format.options,
         wordWrap: wordWrap ? 'true' : undefined,
         wordWrapWidth: wordWrap && !(el.params & PARAM.REFLECT_H) ? num(el.attrs.width) : undefined,
         align: autoSize !== 'left' ? quote(autoSize) : undefined,
@@ -1298,8 +1515,9 @@ const textElement = (ctx: EmitContext, el: Element, parentName?: string): { prop
     else if (override) props.push(`text={${override} ?? ''}`);
     else if (caption) props.push(`text=${caption.startsWith('\'') ? jsxStr(decode(el.attrs.caption ?? '')) : `{${caption}}`}`);
 
-    if (textStyle) props.push(`textStyle="${textStyle}"`);
+    if (textStyle !== 'regular') props.push(`textStyle="${textStyle}"`);
     if (Object.values(textOptions).some(value => value !== undefined)) props.push(`textOptions={${layoutLiteral(textOptions)}}`);
+    if (Object.values(format.flash).some(value => value !== undefined)) props.push(`flashFormat={${layoutLiteral(format.flash)}}`);
     props.push(...dynamicRoleProp(el));
     if (hasText) ctx.imports.add('ThemeText');
 
@@ -1326,7 +1544,7 @@ const emitInlineText = (ctx: EmitContext, el: Element, button: Element, indent: 
 
     const textProp = props.find(prop => prop.startsWith('text='))!;
     const styleProp = props.find(prop => prop.startsWith('textStyle='));
-    const buttonStyle = resolveTextStyle(button.vars.text_style);
+    const buttonStyle = resolveTextStyle(button.vars.text_style) ?? themeTextStyle(button);
     const redundantStyle = !styleProp || styleProp === `textStyle="${buttonStyle}"`;
     const plain = props.length === 1 + (styleProp ? 1 : 0) && redundantStyle;
 
@@ -2187,7 +2405,7 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 // `<name>_xml` asset, or `getAssetByName("<name>")`), for the registry / layout browser.
 // ---------------------------------------------------------------------------------------------
 
-const AS3_DIR = join(__dirname, 'scripts');
+const AS3_DIR = AS3_ROOT;
 
 interface As3Usage {
     /** Root library classes (`HabboFriendBarCom`, `HabboRoomUICom`, ...) that embed the layout's XML asset. */
@@ -2272,26 +2490,36 @@ mkdirSync(IMAGE_OUT_DIR, { recursive: true });
 
 for (const { name, component } of RUNTIME_IMAGES) resolveImage(name, component);
 
-interface Source { id: number; base: string; file: string; root: XmlNode; xml: string }
+interface Source { library: string; base: string; file: string; root: XmlNode; xml: string }
+
+/** `habbo-room-ui-com` -> `roomui` - the short tag that tells two libraries' same-named layouts apart. */
+const libraryTag = (component: string): string => component.replace(/^habbo-/, '').replace(/-com$/, '').replace(/-/g, '');
 
 const sources: Source[] = [];
 
-for (const file of readdirSync(XML_DIR)) {
-    const match = /^(\d+)_(.+)_xml\$/.exec(file);
+for (const component of RESOURCE_COMPONENTS) {
+    for (const file of resourceFiles(component)) {
+        if (!file.endsWith('.xml') || file.endsWith('/_manifest.xml')) continue;
 
-    if (!match) continue;
+        const text = readFileSync(resourcePath(file), 'utf8');
+        const root = parseXml(text);
 
-    const text = readFileSync(join(XML_DIR, file), 'utf8');
-    const root = parseXml(text);
+        if (root?.tag !== 'layout') continue;
 
-    if (root?.tag !== 'layout') continue;
-
-    // The XML this layout was generated from, recorded in the registry so `scripts/drift/layouts.py`
-    // can tell a conversion that is in step with `binaryData` from one a client refresh left behind.
-    sources.push({ id: num(match[1]), base: match[2], file, root, xml: createHash('sha1').update(text).digest('hex').slice(0, 12) });
+        // The XML this layout was generated from, recorded in the registry so
+        // `scripts/drift/layouts.py` can tell a conversion that is in step with the reference
+        // material from one a client refresh left behind.
+        sources.push({
+            library: component,
+            base: assetNameOf(file.slice(component.length + 1)).replace(/_xml$/, ''),
+            file,
+            root,
+            xml: createHash('sha1').update(text).digest('hex').slice(0, 12),
+        });
+    }
 }
 
-sources.sort((a, b) => a.base.localeCompare(b.base) || a.id - b.id);
+sources.sort((a, b) => a.base.localeCompare(b.base) || a.library.localeCompare(b.library));
 
 // Keyed by the lower-cased component name, not the raw base: `memenu_settings_menu` and
 // `me_menu_settings_menu` are distinct layouts whose PascalCase names differ only in case,
@@ -2369,7 +2597,7 @@ const as3Usage = collectAs3Usage(new Set(sources.map(source => source.base)));
 const registry: string[] = [];
 
 const planned = sources.map((source) => {
-    const suffix = (baseCounts.get(nameKey(source)) ?? 0) > 1 ? `_${source.id}` : '';
+    const suffix = (baseCounts.get(nameKey(source)) ?? 0) > 1 ? `_${libraryTag(source.library)}` : '';
     const componentName = `${pascal(source.base)}${suffix ? pascal(suffix) : ''}Layout`;
     const usage = as3Usage.get(source.base);
 
@@ -2428,7 +2656,7 @@ for (const { source, componentName, folder } of planned) if (!layoutByBase.has(s
 const generatedInfo = new Map<string, Pick<GeneratedComponent, 'props' | 'nested' | 'subComponentProps'>>();
 
 for (const { source, componentName, usage, folder } of planned) {
-    const { parts, imports, sharedImports, props, nested, subComponentProps, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root, folder);
+    const { parts, imports, sharedImports, props, nested, subComponentProps, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file, source.root, folder);
 
     generatedInfo.set(componentName, { props, nested, subComponentProps });
 
@@ -2440,7 +2668,7 @@ for (const { source, componentName, usage, folder } of planned) {
 
     registry.push([
         `${INDENT}{`,
-        `${INDENT}${INDENT}name: ${quote(source.base)}, id: ${source.id}, xml: ${quote(source.xml)}, component: ${quote(componentName)}, size: ${quote(size)}, rootIsFrame: ${rootIsFrame},`,
+        `${INDENT}${INDENT}name: ${quote(source.base)}, library: ${quote(source.library)}, xml: ${quote(source.xml)}, component: ${quote(componentName)}, size: ${quote(size)}, rootIsFrame: ${rootIsFrame},`,
         `${INDENT}${INDENT}props: [ ${props.map(quote).join(', ')} ],`,
         `${INDENT}${INDENT}nested: { ${Object.entries(nested).map(([ prop, component ]) => `${prop}: ${quote(component)}`).join(', ')} },`,
         `${INDENT}${INDENT}subComponents: [ ${subComponents.map(quote).join(', ')} ],`,
@@ -2551,8 +2779,9 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
     'export interface LayoutRegistryEntry {',
     `${INDENT}/** The Flash asset name (\`<name>_xml\`). */`,
     `${INDENT}name: string;`,
-    `${INDENT}id: number;`,
-    `${INDENT}/** sha1 (12 hex) of the \`scripts/binaryData\` XML this was converted from - \`scripts/drift/layouts.py\` compares it, so a refreshed client asset reads as drift until the layouts are regenerated. */`,
+    `${INDENT}/** The \`flash-js-resources\` folder the layout came from - the client library that embeds it. */`,
+    `${INDENT}library: string;`,
+    `${INDENT}/** sha1 (12 hex) of the \`flash-js-resources\` XML this was converted from - \`scripts/drift/layouts.py\` compares it, so a refreshed client asset reads as drift until the layouts are regenerated. */`,
     `${INDENT}xml: string;`,
     `${INDENT}component: string;`,
     `${INDENT}size: string;`,
@@ -2691,14 +2920,14 @@ for (const [ outName, job ] of imageJobs) {
     mkdirSync(dirname(out), { recursive: true });
 
     if (job.region) {
-        const image = await loadImage(join(IMAGE_DIR, job.source));
+        const image = await loadImage(resourcePath(job.source));
         const canvas = createCanvas(job.region.width, job.region.height);
 
         canvas.getContext('2d').drawImage(image, job.region.x, job.region.y, job.region.width, job.region.height, 0, 0, job.region.width, job.region.height);
         writeFileSync(out, canvas.toBuffer('image/png'));
         crops++;
     } else {
-        copyFileSync(join(IMAGE_DIR, job.source), out);
+        copyFileSync(resourcePath(job.source), out);
     }
 
     copiedImages.set(imagePath(outName), job.source);
@@ -2734,6 +2963,13 @@ for (const name of [ ...unresolvedImages ].sort()) console.log(`  missing image:
 if (ambiguousImages.size) console.log(`${ambiguousImages.size} ambiguous image name(s) - several libraries export different art under the name and neither the library table nor the declared size chose:`);
 for (const [ name, info ] of [ ...ambiguousImages ].sort(([ a ], [ b ]) => a.localeCompare(b))) {
     console.log(`  ambiguous image: ${name} [${info.key}] declares ${info.declared}, candidates ${info.candidates.join(', ')} - kept ${info.chosen}`);
+}
+
+// A `font_face` the theme has no captured AIR bundle and no `.ttf` for. The var is emitted all
+// the same - dropping it is the silent drift this table exists to stop - but the text renders in
+// whatever face the browser substitutes, so the gap has to be visible.
+for (const [ face, count ] of [ ...unportedFaces ].sort(([ a ], [ b ]) => a.localeCompare(b))) {
+    console.log(`  unported font face: ${face} (${count} element(s)) - no captured bundle or .ttf in public/assets/fonts`);
 }
 
 for (const [ warning, count ] of [ ...warningCounts.entries() ].sort((a, b) => b[1] - a[1])) console.log(`  ${count}x ${warning}`);

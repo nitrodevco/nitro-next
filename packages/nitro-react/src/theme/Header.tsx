@@ -27,7 +27,7 @@ const HEADER_0_VARIANT: HeaderVariant = {
         margin: 6,
         padding: 0,
     },
-    textStyle: 'text-style-frame-title',
+    textStyle: 'frame_title',
     needsBgChip: true,
     menuButton: { variant: '5', left: 1, top: 0 },
 };
@@ -39,7 +39,7 @@ const HEADER_LEADERBOARD: HeaderVariant = {
         paddingLeft: 8,
         paddingRight: 8,
     },
-    textStyle: 'text-style-il-frame-modal-title',
+    textStyle: 'u_frame_title',
     textColor: '#ffffff',
 };
 
@@ -53,16 +53,19 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
     0: {
         ...HEADER_0_VARIANT,
         tintColor: '#418db0',
+        textStyle: 'frame_title',
         textColor: '#ffffff',
     },
     1: {
         ...HEADER_0_VARIANT,
         tintColor: '#4c4c4c',
+        textStyle: 'frame_title',
         textColor: '#ffffff',
     },
     2: {
         ...HEADER_0_VARIANT,
         tintColor: '#fac200',
+        textStyle: 'frame_title',
         textColor: '#ffffff',
     },
     3: {
@@ -72,7 +75,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
             marginLeft: 9,
             marginRight: 9,
         },
-        textStyle: 'text-style-u-frame-title',
+        textStyle: 'u_frame_title',
         textColor: '#ffffff',
     },
     4: {
@@ -84,7 +87,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
             paddingRight: 8,
             paddingBottom: 1,
         },
-        textStyle: 'text-style-u-frame-title',
+        textStyle: 'u_frame_title',
         textColor: '#ffffff',
     },
     7: {
@@ -95,7 +98,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
             paddingRight: 8,
             paddingBottom: 4,
         },
-        textStyle: 'text-style-u-frame-title',
+        textStyle: 'u_frame_title',
         textColor: '#000000',
     },
     /*
@@ -109,7 +112,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
             minHeight: 30,
             padding: 0,
         },
-        textStyle: 'text-style-il-frame-title',
+        textStyle: 'il_frame_title',
         textColor: '#000000',
         captionAt: { left: 8, top: 11 },
         menuButton: { variant: '101', left: 8, top: 9 },
@@ -121,7 +124,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
             minHeight: 30,
             padding: 0,
         },
-        textStyle: 'text-style-il-frame-title-white',
+        textStyle: 'il_frame_title_white',
         captionAt: { left: 8, top: 11 },
         closeAt: { right: 8, top: 9 },
     },
@@ -135,7 +138,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
             height: 70,
             padding: 0,
         },
-        textStyle: 'text-style-il-frame-modal-title',
+        textStyle: 'il_frame_modal_title',
         captionAt: { left: 8, top: 0 },
         closeAt: { right: 8, top: 49 },
     },
@@ -156,7 +159,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
             minHeight: 30,
             padding: 0,
         },
-        textStyle: 'text-style-u-frame-title',
+        textStyle: 'id_frame_title',
         textColor: '#ffffff',
     },
 };

@@ -39,7 +39,7 @@ const CHECK_BOX_VARIANTS: ThemeVariants<CheckBoxVariant> = {
             paddingTop: 4,
             paddingBottom: 4,
         },
-        textStyle: 'text-style-il-button',
+        textStyle: 'il_button',
     },
     101: {
         states: {
@@ -53,7 +53,7 @@ const CHECK_BOX_VARIANTS: ThemeVariants<CheckBoxVariant> = {
             paddingTop: 4,
             paddingBottom: 4,
         },
-        textStyle: 'text-style-il-button',
+        textStyle: 'il_button',
     },
 };
 

@@ -33,7 +33,7 @@ export const BUTTON_GROUP_LEFT_VARIANTS: ThemeVariants<ButtonGroupVariant> = {
             paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
             minWidth: 28, minHeight: 28,
         },
-        textStyle: 'text-style-il-button',
+        textStyle: 'il_button',
     },
 };
 

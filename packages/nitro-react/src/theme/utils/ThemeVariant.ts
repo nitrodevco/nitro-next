@@ -13,8 +13,8 @@ import { TextStyleKey } from './textStyles';
  * become real props in the generator, the rest were lookup handles). `tooltip` is the
  * `tool_tip_caption` variable (the Flash `params` bit-field is applied by the generator - anchoring,
  * auto-sizing, clipping, click targets - and not carried), `dynamicStyle` the
- * hover/press effect (see utils/dynamicStyles.ts - `Region`, `Button` and `ButtonThick` host
- * it). `tooltip` shows through `TooltipLayer` on hover (every `useThemeVariant` component and
+ * hover/press effect (see utils/dynamicStyles.ts - `Region`, `Button`, `ButtonThick` and
+ * `ContainerButton` host it). `tooltip` shows through `TooltipLayer` on hover (every `useThemeVariant` component and
  * `ThemeImage`); `visible` and `dynamicStyle` apply where a component forwards them to its `Box`.
  */
 export type ThemeLayoutMeta = {

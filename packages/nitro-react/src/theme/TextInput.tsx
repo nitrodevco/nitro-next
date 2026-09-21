@@ -6,7 +6,7 @@ import { flashTextCaretRect, flashTextSelectionRects, HABBO_TEXT_STYLES, normali
 import { useLayoutSize, useOutsideClick } from './hooks';
 import { ColorLayer } from './layer';
 import { ThemeText } from './ThemeText';
-import { getHabboKey, getPixiTextStyle, TextStyleKey } from './utils';
+import { DEFAULT_TEXT_STYLE, getPixiTextStyle, TextStyleKey } from './utils';
 
 export interface TextInputProps {
     value: string;
@@ -269,8 +269,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
         }, [ focused, value, selection ]);
 
         // A named theme style renders Flash-exact; a size/family override falls back to native canvas text (see ThemeText).
-        const habboKey = textStyle ? getHabboKey(textStyle) : undefined;
-        const flashFormat = useMemo(() => (habboKey ? normalizeFlashTextFormat(HABBO_TEXT_STYLES[habboKey]) : undefined), [ habboKey ]);
+        const flashFormat = useMemo(() => (textStyle ? normalizeFlashTextFormat(HABBO_TEXT_STYLES[textStyle]) : undefined), [ textStyle ]);
         const wrapWidth = Math.max(1, innerWidth);
         const textOptions = useMemo<TextStyleOptions>(() => ({
             fill: textColor,
@@ -280,7 +279,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             ...(multiline ? { wordWrap: true, wordWrapWidth: wrapWidth, breakWords: true } : {}),
         }), [ textColor, textStyle, fontSize, fontFamily, multiline, wrapWidth ]);
 
-        const measureStyle = useMemo(() => getPixiTextStyle(textStyle ?? 'text-style-regular', textOptions), [ textStyle, textOptions ]);
+        const measureStyle = useMemo(() => getPixiTextStyle(textStyle ?? DEFAULT_TEXT_STYLE, textOptions), [ textStyle, textOptions ]);
 
         /** Caret geometry in the text's own space - the Flash text layout for a themed style, canvas metrics for a native font. */
         const measureCaret = useCallback((text: string, index: number): CaretGeometry => {
@@ -418,7 +417,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                     ))}
                     <ThemeText
                         text={showPlaceholder ? placeholder : displayValue}
-                        textStyle={textStyle ?? 'text-style-regular'}
+                        textStyle={textStyle ?? DEFAULT_TEXT_STYLE}
                         textOptions={showPlaceholder ? { ...textOptions, fill: placeholderColor } : textOptions}
                     />
                     {focused && caretVisible && (

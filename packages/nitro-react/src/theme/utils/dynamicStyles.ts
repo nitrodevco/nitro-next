@@ -1,10 +1,11 @@
 import { InteractionState } from '../hooks/useInteractionState';
 
 /**
- * Port of the client's `com.sulake.core.window.dynamicstyle` - the two hover/press effects a
- * layout names through `dynamic_style="..."` (`lifted_hover` on the toolbar icons and friend
- * bar buttons, `brightness_and_shadow_under` on the room tool buttons), transcribed from
- * `DynamicStyleManager.fillStyleTable()`.
+ * Port of the client's `com.sulake.core.window.dynamicstyle` - the hover/press effects a layout
+ * names through `dynamic_style="..."`, all five of them, transcribed from
+ * `DynamicStyleManager.fillStyleTable()` (and matching `flash-js`'s `DynamicStyleManager.js`):
+ * `lifted_hover` (toolbar icons, friend bar buttons), `brightness_and_shadow_under` (room tool
+ * buttons), `brightness_and_shadow_under_gentle`, `reward_track_item` and `button`.
  *
  * A style is a rule per window state for the host window itself, plus rules for children
  * tagged `#icon` / `#bg`. `WindowController` picks the state (disabled > pressed > hovering >
@@ -15,12 +16,16 @@ import { InteractionState } from '../hooks/useInteractionState';
  * solid-colour copy of the bitmap at `etchingPoint` underneath it, `etchingColor` being ARGB
  * so its top byte is the copy's opacity (`BitmapDataRenderer.draw`).
  *
- * Every `DynamicStyle` starts with a disabled rule of alpha 0.4 (`DynamicStyle`'s constructor),
+ * Every `DynamicStyle` starts with a disabled rule of alpha 0.5 (`DynamicStyle`'s constructor),
  * and an unknown style name, or a tagged child under a style that has no rule for its tag,
  * resolves to that bare default - so a disabled dynamic-style host always fades.
  */
-/** The `dynamic_style="..."` names the client's `DynamicStyleManager` knows (`DynamicStyle.STYLE_LIFTED_HOVER` / `BRIGHTNESS_AND_SHADOW_UNDER`). */
-export type DynamicStyleName = 'lifted_hover' | 'brightness_and_shadow_under';
+/**
+ * The `dynamic_style="..."` names the client's `DynamicStyleManager` knows - `DynamicStyle`'s
+ * `STYLE_LIFTED_HOVER`, `BRIGHTNESS_AND_SHADOW_UNDER`, `BRIGHTNESS_AND_SHADOW_UNDER_GENTLE`,
+ * `REWARD_TRACK_ITEM` and `BUTTON` (obfuscated `§_-N1X§` in the AS3).
+ */
+export type DynamicStyleName = 'lifted_hover' | 'brightness_and_shadow_under' | 'brightness_and_shadow_under_gentle' | 'reward_track_item' | 'button';
 
 /** The child tags a style has rules for (`#icon` / `#bg`). */
 export type DynamicStyleRole = 'icon' | 'bg';
@@ -43,8 +48,8 @@ interface DynamicStyleDefinition {
 }
 
 const EMPTY_RULE: DynamicStyleRule = {};
-/** `DynamicStyle`'s constructor default for `disabledStyles`. */
-const DISABLED_RULE: DynamicStyleRule = { colorTransform: [ 1, 1, 1, 0.4, 0, 0, 0, 0 ] };
+/** `DynamicStyle`'s constructor default for `disabledStyles` - the same in the AS3 and `flash-js`. */
+const DISABLED_RULE: DynamicStyleRule = { colorTransform: [ 1, 1, 1, 0.5, 0, 0, 0, 0 ] };
 
 const LIFTED_HOVER: DynamicStyleDefinition = {
     host: {
@@ -65,7 +70,7 @@ const BRIGHTNESS_AND_SHADOW_UNDER: DynamicStyleDefinition = {
     children: {
         icon: {
             default: { etchingColor: 0x48000000, etchingPoint: [ 0, 1 ] },
-            pressed: { etchingColor: 0x80000000, etchingPoint: [ 0, -1 ], offsetY: -1, colorTransform: [ 0.7, 0.7, 0.7, 1, 0, 0, 0, 0 ] },
+            pressed: { etchingColor: 0x80000000, etchingPoint: [ 0, -1 ], offsetY: 1, colorTransform: [ 0.7, 0.7, 0.7, 1, 0, 0, 0, 0 ] },
             hovering: { etchingColor: 0x48000000, etchingPoint: [ 0, 1 ], colorTransform: [ 1, 1, 1, 1, 77, 77, 77, 0 ] },
         },
         bg: {
@@ -77,9 +82,47 @@ const BRIGHTNESS_AND_SHADOW_UNDER: DynamicStyleDefinition = {
     },
 };
 
+const BRIGHTNESS_AND_SHADOW_UNDER_GENTLE: DynamicStyleDefinition = {
+    host: {},
+    children: {
+        icon: {
+            default: { etchingColor: 0x48000000, etchingPoint: [ 0, 1 ] },
+            pressed: { etchingColor: 0x80000000, etchingPoint: [ 0, -1 ], offsetY: 1, colorTransform: [ 0.8, 0.8, 0.8, 1, 0, 0, 0, 0 ] },
+            hovering: { etchingColor: 0x48000000, etchingPoint: [ 0, 1 ], colorTransform: [ 1.1, 1.1, 1.1, 1, 30, 30, 30, 0 ] },
+        },
+    },
+};
+
+const REWARD_TRACK_ITEM: DynamicStyleDefinition = {
+    host: {},
+    children: {
+        icon: {
+            default: { etchingColor: 0x48000000, etchingPoint: [ 0, 1 ] },
+            pressed: { etchingColor: 0x80000000, etchingPoint: [ 0, -1 ], offsetY: 1, colorTransform: [ 0.8, 0.8, 0.8, 1, 0, 0, 0, 0 ] },
+            hovering: { etchingColor: 0x48000000, etchingPoint: [ 0, 1 ], colorTransform: [ 1.1, 1.1, 1.1, 1, 15, 15, 15, 0 ] },
+            disabled: { colorTransform: [ 0.75, 0.75, 0.75, 0.8, 0, 0, 0, 0 ] },
+        },
+    },
+};
+
+/** The etching sits exactly under the icon (`[0, 0]`), so it only shows where the art is translucent. */
+const BUTTON: DynamicStyleDefinition = {
+    host: {},
+    children: {
+        icon: {
+            default: { etchingColor: 0x48000000, etchingPoint: [ 0, 0 ] },
+            pressed: { etchingColor: 0x80000000, etchingPoint: [ 0, 0 ], offsetY: 1, colorTransform: [ 0.8, 0.8, 0.8, 1, 0, 0, 0, 0 ] },
+            hovering: { etchingColor: 0x48000000, etchingPoint: [ 0, 0 ], colorTransform: [ 1.1, 1.1, 1.1, 1, 15, 15, 15, 0 ] },
+        },
+    },
+};
+
 export const DYNAMIC_STYLES: Record<DynamicStyleName, DynamicStyleDefinition> = {
     lifted_hover: LIFTED_HOVER,
     brightness_and_shadow_under: BRIGHTNESS_AND_SHADOW_UNDER,
+    brightness_and_shadow_under_gentle: BRIGHTNESS_AND_SHADOW_UNDER_GENTLE,
+    reward_track_item: REWARD_TRACK_ITEM,
+    button: BUTTON,
 };
 
 /** `DynamicStyle.getStyleByWindowState` for the host (`role` undefined) or a tagged child. */
@@ -96,6 +139,11 @@ export const resolveDynamicStyleRule = (name: DynamicStyleName, role: DynamicSty
  * A rule as render terms: the position nudge, the colour multipliers as a `tint`, the alpha
  * multiplier, a flat additive brightening (the `+77` channel offsets, as a fraction of white)
  * and the etching's colour, opacity and offset.
+ *
+ * A multiply tint can only darken, and the `_gentle` / `reward_track_item` / `button` hovers
+ * multiply by 1.1. `in * m` is `in + in * (m - 1)`, so the part above 1 is `amplify`: the art
+ * drawn again over itself, additively, at that opacity. That is exact, where folding it into the
+ * tint would either drop the brightening (clamped) or spill into the next channel (unclamped).
  */
 export interface DynamicStyleEffect {
     x: number;
@@ -103,10 +151,12 @@ export interface DynamicStyleEffect {
     tint?: string;
     alpha?: number;
     brighten?: number;
+    amplify?: number;
     etching?: { color: string; alpha: number; x: number; y: number };
 }
 
-const toHex = (r: number, g: number, b: number): string => `#${((Math.round(r) << 16) | (Math.round(g) << 8) | Math.round(b)).toString(16).padStart(6, '0')}`;
+const byte = (value: number): number => Math.max(0, Math.min(255, Math.round(value)));
+const toHex = (r: number, g: number, b: number): string => `#${((byte(r) << 16) | (byte(g) << 8) | byte(b)).toString(16).padStart(6, '0')}`;
 
 export const dynamicStyleEffect = (rule: DynamicStyleRule): DynamicStyleEffect => {
     const effect: DynamicStyleEffect = { x: rule.offsetX ?? 0, y: rule.offsetY ?? 0 };
@@ -114,8 +164,13 @@ export const dynamicStyleEffect = (rule: DynamicStyleRule): DynamicStyleEffect =
 
     if (transform) {
         const [ rM, gM, bM, aM, rO, gO, bO ] = transform;
+        // Up to 1 a channel multiplies through the tint; above 1 the excess is `amplify`, one
+        // factor for all three - the client's own tables only ever scale the channels together.
+        const amplify = Math.max(rM, gM, bM) - 1;
+        const scale = (amplify > 0) ? 1 + amplify : 1;
 
-        if (rM !== 1 || gM !== 1 || bM !== 1) effect.tint = toHex(rM * 255, gM * 255, bM * 255);
+        if (rM !== scale || gM !== scale || bM !== scale) effect.tint = toHex((rM / scale) * 255, (gM / scale) * 255, (bM / scale) * 255);
+        if (amplify > 0) effect.amplify = amplify;
         if (aM !== 1) effect.alpha = aM;
 
         const offset = (rO + gO + bO) / 3;
@@ -168,12 +223,13 @@ export const multiplyAlphas = (a: number | undefined, b: number | undefined): nu
 
 /** A colour through an effect's `ColorTransform` - multiplied by `tint`, then `brighten` of white added, clamped (what the client's transform does to a text colour). */
 export const transformColor = (color: string, effect: DynamicStyleEffect | undefined): string => {
-    if (!effect || (!effect.tint && !effect.brighten)) return color;
+    if (!effect || (!effect.tint && !effect.brighten && !effect.amplify)) return color;
 
     const [ r, g, b ] = parseHex(color);
     const [ tr, tg, tb ] = effect.tint ? parseHex(effect.tint) : [ 255, 255, 255 ];
     const add = (effect.brighten ?? 0) * 255;
-    const channel = (value: number, mul: number): number => Math.min(255, ((value * mul) / 255) + add);
+    const scale = 1 + (effect.amplify ?? 0);
+    const channel = (value: number, mul: number): number => Math.min(255, (((value * mul) / 255) * scale) + add);
 
     return toHex(channel(r, tr), channel(g, tg), channel(b, tb));
 };

@@ -1,6 +1,6 @@
 import { TextDropShadow, TextStyle, TextStyleOptions } from 'pixi.js';
 
-import type { FlashTextFormat, HabboTextStyleName } from '../font/flash-text';
+import type { FlashTextFace, FlashTextFieldOverrides, FlashTextFormat, HabboTextStyleName } from '../font/flash-text';
 import { HABBO_TEXT_STYLES } from '../font/flash-text/habboTextStyles';
 
 /** Default drop-shadow shape a bare `dropShadow: true` (no explicit config) resolves to -
@@ -36,119 +36,121 @@ const browserFace = (fontFamily: string, bold: boolean, italic: boolean): { font
 };
 
 /**
+ * `browserFace` read backwards: every face a raw `textOptions.fontFamily` can name, by the alias
+ * the table above hands Pixi's canvas text, and the Flash family plus weight and slant it is.
+ */
+const FLASH_FACES: Readonly<Record<string, FlashTextFace>> = {
+    Ubuntu: { fontFamily: 'Ubuntu', bold: false, italic: false },
+    UbuntuBold: { fontFamily: 'Ubuntu', bold: true, italic: false },
+    UbuntuItalics: { fontFamily: 'Ubuntu', bold: false, italic: true },
+    UbuntuBoldItalics: { fontFamily: 'Ubuntu', bold: true, italic: true },
+    UbuntuCondensed: { fontFamily: 'UbuntuCondensed', bold: false, italic: false },
+    Volter: { fontFamily: 'Volter', bold: false, italic: false },
+    VolterBold: { fontFamily: 'Volter Bold', bold: false, italic: false },
+    'Volter Bold': { fontFamily: 'Volter Bold', bold: false, italic: false },
+};
+
+/**
+ * The captured face a raw `fontFamily` override asks for, so the override can be folded into the
+ * named style's Flash format instead of dropping the text to the browser's canvas. `undefined`
+ * for a family none of `FLASH_FONT_FACES` covers - that one has no exact rendering.
+ */
+export const flashFaceOverride = (fontFamily: TextStyleOptions['fontFamily']): FlashTextFace | undefined =>
+    (typeof fontFamily === 'string') ? FLASH_FACES[fontFamily] : undefined;
+
+/** A theme text style as Pixi's canvas text needs it - the browser-side fallback for a style
+ *  whose Flash format the exact renderer cannot take (see `ThemeText`). */
+export interface ThemeTextStyle {
+    fontFamily: string;
+    fontSize: number;
+    fontWeight?: 'bold';
+    fontStyle?: 'italic';
+    color?: string;
+}
+
+/**
  * A theme text style read off `HABBO_TEXT_STYLES[habboKey]` - the family, size, weight, slant and
  * colour the Flash `styles.css` gives it - so the browser fallback cannot drift from the Flash
  * renderer's format.
  */
-const habboTextStyle = <K extends HabboTextStyleName>(habboKey: K): { fontFamily: string; fontSize: number; fontWeight?: 'bold'; fontStyle?: 'italic'; color?: string; habboKey: K } => {
+const habboTextStyle = (habboKey: HabboTextStyleName): ThemeTextStyle => {
     const format: Partial<FlashTextFormat> = HABBO_TEXT_STYLES[habboKey];
 
     return {
         ...browserFace(format.fontFamily ?? 'Volter', !!format.bold, !!format.italic),
         fontSize: format.fontSize ?? 9,
         ...(format.color !== undefined && { color: `#${format.color.toString(16).padStart(6, '0')}` }),
-        habboKey,
     };
 };
 
 /**
- * The theme's text styles, each a Flash `styles.css` style by its `habboKey`. Exported (not
- * module-private) so callers can read the same font/size/color data off
- * CSS instead of duplicating this table.
+ * A theme text style is named the way the Flash client names it - `u_regular`, `il_button`,
+ * `id_heading_1`. That one spelling is the key of `HABBO_TEXT_STYLES` (the format the exact
+ * renderer draws from), the `textStyle` prop a view passes, and the value a window layout's
+ * `text_style` var carries, so a style cannot be named two ways and drift between them.
  */
-export const TEXT_STYLES = {
-    'text-style-regular': habboTextStyle('regular'),
-    'text-style-u-regular': habboTextStyle('u_regular'),
-    'text-style-u-small': habboTextStyle('u_small'),
-    'text-style-u-bold': habboTextStyle('u_bold'),
-    'text-style-u-headline-big': habboTextStyle('u_headline_big'),
-    'text-style-u-headline-small': habboTextStyle('u_headline_small'),
-    'text-style-u-headline-medium': habboTextStyle('u_headline_medium'),
-    'text-style-u-italic': habboTextStyle('u_italic'),
-    'text-style-u-italic-small': habboTextStyle('u_tag'),
-    'text-style-u-tool-tip': habboTextStyle('u_tool_tip'),
-    'text-style-u-frame-title': habboTextStyle('u_frame_title'),
-    'text-style-button-regular': habboTextStyle('button_regular'),
-    'text-style-button-bold': habboTextStyle('button_bold'),
-    'text-style-button-shiny-regular': habboTextStyle('button_shiny_regular'),
-    'text-style-button-shiny-bold': habboTextStyle('button_shiny_bold'),
-    'text-style-button-shiny-regular-white': habboTextStyle('button_shiny_regular_white'),
-    'text-style-button-shiny-bold-white': habboTextStyle('button_shiny_bold_white'),
-    'text-style-il-regular': habboTextStyle('il_regular'),
-    'text-style-il-button': habboTextStyle('il_button'),
-    // The `_white` styles are not the black ones recoloured: they drop the etching, which a white `fill` on the black style would keep.
-    'text-style-il-button-white': habboTextStyle('il_button_white'),
-    'text-style-id-button': habboTextStyle('id_button'),
-    'text-style-button-tab': habboTextStyle('button_tab'),
-    'text-style-il-frame-title': habboTextStyle('il_frame_title'),
-    'text-style-il-frame-title-white': habboTextStyle('il_frame_title_white'),
-    'text-style-frame-title': habboTextStyle('frame_title'),
-    // Remaining HABBO_TEXT_STYLES entries not yet referenced by any view - kept baked/wired
-    // for parity with the catalog even though nothing calls them by this key today.
-    'text-style-u-bold-italic': habboTextStyle('u_bold_italic'),
-    'text-style-u-button-tab': habboTextStyle('u_button_tab'),
-    'text-style-u-chat-name': habboTextStyle('u_chat_name'),
-    'text-style-u-chat-name-whisper': habboTextStyle('u_chat_name_whisper'),
-    'text-style-u-chat-speak': habboTextStyle('u_chat_speak'),
-    'text-style-u-chat-shout': habboTextStyle('u_chat_shout'),
-    'text-style-u-chat-whisper': habboTextStyle('u_chat_whisper'),
-    // UbuntuCondensed
-    'text-style-ubuntu-condensed-regular': habboTextStyle('ubuntu_condensed_regular'),
-    'text-style-ubuntu-condensed-title': habboTextStyle('ubuntu_condensed_title'),
-    // Item-list panel styles (il_*)
-    'text-style-il-regular-white': habboTextStyle('il_regular_white'),
-    'text-style-il-small': habboTextStyle('il_small'),
-    'text-style-il-small-white': habboTextStyle('il_small_white'),
-    'text-style-il-heading-title': habboTextStyle('il_heading_title'),
-    'text-style-il-heading-1': habboTextStyle('il_heading_1'),
-    'text-style-il-heading-2': habboTextStyle('il_heading_2'),
-    'text-style-il-heading-3': habboTextStyle('il_heading_3'),
-    'text-style-il-border': habboTextStyle('il_border'),
-    'text-style-il-frame-modal-title': habboTextStyle('il_frame_modal_title'),
-    'text-style-il-link-regular': habboTextStyle('il_link_regular'),
-    'text-style-il-link-strong': habboTextStyle('il_link_strong'),
-    // Item-list dialog styles (id_*)
-    'text-style-id-regular': habboTextStyle('id_regular'),
-    'text-style-id-small': habboTextStyle('id_small'),
-    'text-style-id-heading-title': habboTextStyle('id_heading_title'),
-    'text-style-id-heading-1': habboTextStyle('id_heading_1'),
-    'text-style-id-heading-2': habboTextStyle('id_heading_2'),
-    'text-style-id-heading-3': habboTextStyle('id_heading_3'),
-    'text-style-id-border': habboTextStyle('id_border'),
-    'text-style-id-frame-title': habboTextStyle('id_frame_title'),
-    'text-style-id-frame-modal-title': habboTextStyle('id_frame_modal_title'),
-    'text-style-id-link-regular': habboTextStyle('id_link_regular'),
-    'text-style-id-link-strong': habboTextStyle('id_link_strong'),
-    // Volter/Volter (classic client) styles
-    'text-style-italic': habboTextStyle('italic'),
-    'text-style-bold': habboTextStyle('bold'),
-    'text-style-small': habboTextStyle('small'),
-    'text-style-bold-italic': habboTextStyle('bold_italic'),
-    'text-style-headline-big': habboTextStyle('headline_big'),
-    'text-style-headline-medium': habboTextStyle('headline_medium'),
-    'text-style-headline-small': habboTextStyle('headline_small'),
-    'text-style-chat-name': habboTextStyle('chat_name'),
-    'text-style-chat-speak': habboTextStyle('chat_speak'),
-    'text-style-chat-shout': habboTextStyle('chat_shout'),
-    'text-style-chat-whisper': habboTextStyle('chat_whisper'),
-    'text-style-tool-tip': habboTextStyle('tool_tip'),
-    'text-style-tag': habboTextStyle('tag'),
-} as const satisfies Record<string, TextStyleOptions & { color?: string; habboKey: HabboTextStyleName }>;
-
-export type TextStyleKey = keyof typeof TEXT_STYLES;
+export type TextStyleKey = HabboTextStyleName;
 
 /**
- * The Flash client's own name for a theme text style - the key into `HABBO_TEXT_STYLES`, whose
- * format the exact renderer draws it in. Not every entry has one (its literal type only exists
- * on the ones that do), so this is the one place that cast lives.
+ * Every Flash style as the browser-text fallback needs it. Derived from `HABBO_TEXT_STYLES`
+ * rather than listed: a style added to that generated table is a theme style the moment it lands,
+ * and one that leaves cannot be left behind here.
  */
-export const getHabboKey = (key: TextStyleKey): HabboTextStyleName | undefined =>
-    (TEXT_STYLES[key] as { habboKey?: HabboTextStyleName }).habboKey;
+export const TEXT_STYLES = Object.fromEntries(
+    (Object.keys(HABBO_TEXT_STYLES) as TextStyleKey[]).map(key => [ key, habboTextStyle(key) ]),
+) as Readonly<Record<TextStyleKey, ThemeTextStyle>>;
+
+/**
+ * The browser-text face for a style once the layout's own `font_face`, `bold` and `italic` vars
+ * are applied over it - what the canvas-text fallback needs when the exact renderer cannot take
+ * the string. A face alias adds its weight and slant rather than clearing them, the way
+ * `font_face` does in Flash.
+ */
+export const browserFaceOverride = (textStyle: TextStyleKey, face: FlashTextFace | undefined, field: FlashTextFieldOverrides | undefined): { fontFamily: string; fontWeight?: 'bold'; fontStyle?: 'italic' } => {
+    const style: Partial<FlashTextFormat> = HABBO_TEXT_STYLES[textStyle];
+
+    return browserFace(
+        face?.fontFamily ?? style.fontFamily ?? 'Volter',
+        field?.bold ?? (face?.bold || !!style.bold),
+        field?.italic ?? (face?.italic || !!style.italic),
+    );
+};
+
+/** What a text with no style of its own draws in - `TextStyleManager.getStyle("regular")`, the
+ *  style `TextController.setTextFormatting` falls back to when the field names none. */
+export const DEFAULT_TEXT_STYLE: TextStyleKey = 'regular';
+
+/**
+ * The style a window of this `style` id starts its text from. `TextController`'s constructor
+ * takes its style name from `ThemeManager.getPropertyDefaults(style)` - the property defaults of
+ * the first real theme covering that id - and the three real themes name different ones:
+ *
+ * | theme | style ids | default `text_style` |
+ * |---|---|---|
+ * | Volter | 0-2 | `regular` |
+ * | Ubuntu | 3-7 | `u_regular` |
+ * | Illumina Light / Dark | 100-199 / 200-299 | `il_regular` |
+ * | Misc | 10000-10007 | `u_regular` |
+ *
+ * A theme variant that names no style of its own takes this rather than `regular`, so an Ubuntu
+ * frame's caption is Ubuntu 12 and an illumina one's is etched, the way the client draws them.
+ */
+export const themeDefaultTextStyle = (style: string | number | undefined): TextStyleKey => {
+    const id = Number(style);
+
+    if (!Number.isFinite(id)) return DEFAULT_TEXT_STYLE;
+
+    if ((id >= 3 && id < 8) || (id >= 10000 && id < 10008)) return 'u_regular';
+
+    if (id >= 100 && id < 300) return 'il_regular';
+
+    return DEFAULT_TEXT_STYLE;
+};
 
 const cache = new Map<TextStyleKey, TextStyle>();
 
 export const getPixiTextStyle = (key: TextStyleKey, overrides?: TextStyleOptions): TextStyle => {
-    const { color, habboKey: _habboKey, ...base } = TEXT_STYLES[key] as TextStyleOptions & { color?: string; habboKey?: HabboTextStyleName };
+    const { color, ...base } = TEXT_STYLES[key];
     const options: TextStyleOptions = color ? { fill: color, ...base } : base;
 
     if (!overrides) {

@@ -31,6 +31,26 @@ export interface FlashTextFormat {
     etchingPosition: EtchingPosition | null;
 }
 
+/**
+ * The face part of a format - what a raw `fontFamily` override has to resolve to before it can
+ * be folded into a named style's format (`theme/utils/textStyles.ts`'s `flashFaceOverride`).
+ */
+export type FlashTextFace = Pick<FlashTextFormat, 'fontFamily' | 'bold' | 'italic'>;
+
+/**
+ * The `TextField` vars a Flash `<text>` layout declares over its style's format, by the names
+ * `TextController.createPropertySetterTable` gives them: `bold`, `italic`, `underline`,
+ * `spacing`, `leading`, `antialias_type`, `grid_fit_type`, `thickness`, `sharpness`, `kerning`,
+ * `etching_color` and `etching_position`. `setTextFormatting` applies each var the element
+ * declares on top of the named style and leaves the style's own value everywhere else, so they
+ * are all optional. The three Pixi has its own vocabulary for - `font_face`, `font_size` and
+ * `text_color` - travel in `textOptions` as `fontFamily`, `fontSize` and `fill` instead.
+ */
+export type FlashTextFieldOverrides = Partial<Pick<FlashTextFormat,
+    'bold' | 'italic' | 'underline' | 'letterSpacing' | 'leading'
+    | 'antiAliasType' | 'gridFitType' | 'thickness' | 'sharpness' | 'kerning'
+    | 'etchingColor' | 'etchingPosition'>>;
+
 /** What a `TextField` renders with when its style names nothing else. */
 export const DEFAULT_FLASH_TEXT_FORMAT: Readonly<FlashTextFormat> = Object.freeze({
     fontFamily: 'Volter',

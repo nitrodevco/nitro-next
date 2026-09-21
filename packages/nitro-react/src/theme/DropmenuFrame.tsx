@@ -39,8 +39,8 @@ export type DropmenuVariant = (ThemeVariant | ThemeWithStatesVariant) & {
 const DEFAULT_ARROW_LAYOUT: BoxLayout = { right: 5, top: 2, width: 16, height: 16 };
 
 const DROPMENU_VARIANTS: ThemeVariants<DropmenuVariant> = {
-    0: { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', layout: { minWidth: 40, minHeight: 22 }, textStyle: 'text-style-regular', textColor: '#000000', listInset: { left: 6, top: 2, right: 6 } },
-    1: { layer: NineSlice('button-1-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-1-default-arrow-src', layout: { minWidth: 40, minHeight: 22 }, textStyle: 'text-style-regular', textColor: '#ffffff', listInset: { left: 6, top: 2, right: 6 } },
+    0: { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', layout: { minWidth: 40, minHeight: 22 }, textStyle: 'regular', textColor: '#000000', listInset: { left: 6, top: 2, right: 6 } },
+    1: { layer: NineSlice('button-1-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-1-default-arrow-src', layout: { minWidth: 40, minHeight: 22 }, textStyle: 'regular', textColor: '#ffffff', listInset: { left: 6, top: 2, right: 6 } },
     // `habbo_skin_dropmenu_3`: `dropmenu_frame_3` is a 6px-cornered white frame (the same in both
     // states) and a 22x20 `arrow` entity at x = width - 24, y = 2 that changes on hover.
     3: {
@@ -51,10 +51,10 @@ const DROPMENU_VARIANTS: ThemeVariants<DropmenuVariant> = {
         layout: {
             minWidth: 40, minHeight: 23,
         },
-        textStyle: 'text-style-u-regular', textColor: '#000000',
+        textStyle: 'u_regular', textColor: '#000000',
         listInset: { left: 2, top: 2, right: 2 },
     },
-    100: { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', layout: { minWidth: 40, minHeight: 22 }, textStyle: 'text-style-il-regular', textColor: '#000000', listInset: { left: 6, top: 2, right: 6 } },
+    100: { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', layout: { minWidth: 40, minHeight: 22 }, textStyle: 'il_regular', textColor: '#000000', listInset: { left: 6, top: 2, right: 6 } },
 };
 
 export interface DropmenuFrameProps extends ThemeProps<DropmenuVariant> {

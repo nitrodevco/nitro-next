@@ -3,9 +3,10 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
+import { dynamicStyleBoxProps, useDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, ColorLayer, Composite, CompositePiece, HsvNineSlice, NineSlice } from './layer';
-import { FillLayout, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+import { DynamicStyleRole, FillLayout, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
 
 /**
  * A border skin. `colorize: false` (on `ThemeBase`, honoured by `useThemeVariant`) marks a skin
@@ -139,9 +140,18 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
      * skin, 70% of the parent's own background, which is why it reads lighter than the skin's
      * colour on a light window. Children are not dimmed: nearly every layout border uses the
      * parent graphic context (`params` bit 16), where each child window composites itself with
-     * its own blend.
+     * its own blend. See `ownGraphicContext` for the borders that do not.
      */
     blend?: number;
+    /**
+     * The border's `params` lack bit 16, so it has a graphic context of its own. For such a window
+     * `WindowRendererItem.render` copies the skin in at full opacity and puts `blend` on the
+     * context instead (`getGraphicContext(true).blend`, i.e. its `alpha`) - and the context holds
+     * every child window's context too, so the whole subtree fades with it, text included.
+     * `room_tools_toolbar`'s `window_bg` and `room_tools_history`'s border are the two the port
+     * draws; without this their labels come out at full strength, visibly whiter than Flash's.
+     */
+    ownGraphicContext?: boolean;
     /**
      * A fill behind the skin. `WindowRendererItem` creates the skin buffer filled with the
      * window's `color` *including its alpha byte* - most layout colours have none
@@ -151,6 +161,13 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
      */
     backgroundColor?: string;
     backgroundAlpha?: number;
+    /**
+     * A `#icon` / `#bg` tag under a `dynamic_style` host: the host's child rule moves, recolours and
+     * fades the border with everything in it (ubuntu's `element_entry_template`, whose tagged
+     * `icon_border` holds the product icon). As for a `Region`, a container takes the rule's offset,
+     * multiply and alpha; the etching and the additive brightening are drawn only for a bitmap.
+     */
+    dynamicRole?: DynamicStyleRole;
     children?: ReactNode;
 }
 
@@ -162,10 +179,11 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
  * parent, not white.
  */
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
-    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, blend, backgroundColor, backgroundAlpha, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, blend, ownGraphicContext, backgroundColor, backgroundAlpha, dynamicRole, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'border', variants: BORDER_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+        const roleEffect = useDynamicStyleEffect(dynamicRole);
         // The fill is part of the skin buffer, so it blends with it.
         const skin = (
             <>
@@ -190,9 +208,10 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                 ref={ref}
                 visible={visible}
                 layout={{ ...config.layout, ...layout }}
+                {...dynamicStyleBoxProps(roleEffect, ownGraphicContext ? blend : undefined)}
                 {...handlers}
             >
-                {(blend === undefined)
+                {(blend === undefined || ownGraphicContext)
                     ? skin
                     : (
                             // The skin alone at `blend` (a group alpha - identical to a per-sprite one for

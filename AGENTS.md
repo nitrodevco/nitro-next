@@ -9,9 +9,28 @@ A port of the Habbo Flash client to Pixi v8 + React. Yarn workspaces under `pack
 | `nitro-renderer` | The room engine: object logics, visualizations, asset loading. |
 | `nitro-react` | The client UI. Almost all feature work lands here. |
 
-The reference implementation is the decompiled Flash client. When porting a feature, read the
-Flash class first and name it in the docblock of what you write (`` `InfoStandWidgetHandler.checkUserWithRightsModerationLevel` ``).
+The reference implementation is the Flash client. When porting a feature, read the Flash class
+first and name it in the docblock of what you write (`` `InfoStandWidgetHandler.checkUserWithRightsModerationLevel` ``).
 Match its behaviour and gating rules; do not invent simpler ones.
+
+## Reference material
+
+None of this is in the repo's history; it is read, not shipped. The AS3 client decides what a
+feature *does*. The JavaScript conversion is the best answer to how to *write* it here.
+
+| Where | What it is |
+|---|---|
+| `D:\Habbo\WIN63-202609091217-117204808\scripts-deob` | The decompiled AS3 client of the revision `production.version` names - the source of truth for behaviour, gating, constants and event flow. `known.FLASH_ROOT` in `scripts/drift` points here, and `_assets/` under it holds that revision's raw XML and skin bitmaps. |
+| `packages/nitro-react/scripts/flash-js` | Sulake's own AS3-to-JavaScript conversion of the same client (`HabboAirLauncher.app.js`), reconstructed one file per class in the AS3 package structure. This is the official latest client and the best implementation of anything that has already been solved in JavaScript - read it before inventing one. `flash/` is its Flash/AIR API emulation, `runtime/` the helpers with no AS3 counterpart (the text rasterizer among them), `_obf/` the classes whose real package could not be recovered. |
+| `packages/nitro-react/scripts/flash-js-resources` | What `flash-js` loads, one folder per component (`habbo-window-manager-com`, `habbo-room-ui-com`, `habbo-catalog-com`, ... 27 of them): that component's `<layout>` and skin XML, its PNGs and fonts, plus `_index.json` and `_manifest.xml`. Names are plain (`habbo_element_description.xml`, `roomtools_gear.png`) - no decompiler id, no `$hash` - and an asset sits in the folder of the library that embeds it. |
+| `D:\Habbo\packet-tool\out` | Every packet the tool generates - the bodies `yarn sync-packets` brings in. See Packets. |
+| `D:\Repositories\turbo\turbo-workspace\turbo-cloud` | The companion server this client talks to - what the wire actually carries, and the end of any question a packet capture cannot answer. |
+| `D:\Repositories\nitro\nitro-tools` | Generates the hotel's gamedata: texts, external variables, avatar data. See Staying in step with the client. |
+
+Because `flash-js-resources` groups assets by the library that owns them, "which `zoom_in` is
+this one" is answered by the folder. The flat dumps that used to sit in `scripts/binaryData` and
+`scripts/images` - one pile for the whole SWF, every file prefixed with the decompiler's running
+number - are gone, and with them the guessing those required.
 
 ## Gates
 
@@ -288,9 +307,51 @@ Rules that come out of that:
 
 ### Text
 
-All UI text goes through `ThemeText` (and `TextInput`) with a `textStyle` key from
-`theme/utils/textStyles.ts`. Each key carries a `habboKey` - the Flash client's own style name -
-and `theme/font/flash-text` draws it exactly as the Flash client did:
+All UI text goes through `ThemeText` (and `TextInput`) with a `textStyle` key, and
+`theme/font/flash-text` draws it exactly as the Flash client did.
+
+**A style is named the way the client names it** - `u_regular`, `il_button`, `id_heading_1`. That
+one spelling is the key of `HABBO_TEXT_STYLES`, the `textStyle` prop a view passes, and the value a
+layout's `text_style` var carries. `TEXT_STYLES` in `theme/utils/textStyles.ts` is derived from
+`HABBO_TEXT_STYLES` rather than listed beside it (it only adds the browser-text face each style
+falls back to), so a style added to the generated table is a theme style the moment it lands. There
+is no second `text-style-*` spelling any more; `theme_skin.py` fails on one.
+
+**A text's format is its style plus the `TextField` vars its layout declares over it**, the way
+`TextController.setTextFormatting` layers them. Three of those vars have Pixi equivalents and ride
+in `textOptions` - `font_face` as `fontFamily`, `font_size` as `fontSize`, `text_color` as `fill`.
+The rest have none, so they ride in `flashFormat`: `bold`, `italic`, `underline`, `spacing`,
+`leading`, `antialias_type`, `grid_fit_type`, `thickness`, `sharpness`, `kerning`, `etching_color`
+and `etching_position`. `ThemeText` folds both onto the style before rasterising, so an override is
+still Flash-exact - it does **not** drop the text to the browser's canvas, which is what made a
+`fontSize: 11` room-tools label the only blurry text on the bar. Only a face none of the captured
+fonts covers still falls back.
+
+Three things about those vars that are easy to get wrong, and that `generate-layout-views.ts`
+encodes:
+
+- **A text with no `text_style` var is not `regular`.** The window's `style` id picks a theme, and
+  `ThemeManager`'s three real themes each default `text_style` differently: Volter (ids 0-2)
+  `regular`, Ubuntu (3-7) and Misc (10000-10007) `u_regular`, Illumina Light and Dark (100-199,
+  200-299) `il_regular`. The layout editor writes a var out only where it differs from that
+  default, so reading a missing `text_style` as `regular` put Volter 9 under the 1,708 texts the
+  Ubuntu and Illumina themes cover.
+- **A falsy var is usually no var at all.** `setTextFormatting` re-applies the style over every
+  property whose recorded value is falsy (`if(!_loc2_.sharpness)`), so the `sharpness="0"`,
+  `leading="0"`, `spacing="0"`, `kerning="false"` and `text_color="0x0"` the layout editor writes
+  on almost every text are the *style's* values, not zeroes. The setters that record a string
+  escape that - `setBold` writes `"bold"` whether the var is true or false, and `setItalic` and
+  `setUnderline` likewise - so `bold`, `italic` and `underline` count either way, and
+  `setEtchingColor` is guarded by `== null`, so `0x0` counts too.
+- **`grid_fit_type` is the one setter that records nothing**, so a `text_style` var listed after it
+  puts an advanced style's grid fit back to `pixel` over it. Vars apply in document order.
+  `advanced` + `subpixel` has no exact rendering - Sulake's own build throws on it - so those texts
+  draw in canvas text, here and in the client this renderer came from.
+
+`UbuntuThick` is a fourth embedded face (`UbuntuThick-Bold.ttf`) that 39 layout texts name and the
+port has captured neither an AIR bundle nor a `.ttf` for. The generator emits the var and prints
+the face at the end of a run rather than dropping it, so the gap stays visible.
+
 
 - `flash-text/air32/` is a port of Sulake's bit-exact re-implementation of Adobe AIR's text
   rasterizer. Its arithmetic is deliberately literal: every `Math.fround`, every rounding helper
@@ -298,10 +359,13 @@ and `theme/font/flash-text` draws it exactly as the Flash client did:
   there is only safe if the rendered pixels stay identical: run
   `node scripts/flash-text-golden/run-check-ts.mjs` from `packages/nitro-react`, which hashes 7,832
   renders against the original renderer's output (`scripts/` is git-ignored, so the harness and
-  the original in `scripts/flash-text-renderer` are local only).
+  the original in `scripts/flash-text-renderer` are local only). That original is the rasterizer
+  `flash-js/runtime/` carries, extracted - so when a text question outgrows the port, read it
+  there in its own context.
 - `habboTextStyles.ts` is generated from the client's `styles.css` by
-  `scripts/generate-habbo-text-styles.ts`. Regenerate it, never edit it; a new theme style is a
-  new `TEXT_STYLES` entry, `habboTextStyle('<habboKey>')` of an existing key - never a hand-written font.
+  `scripts/generate-habbo-text-styles.ts`. Regenerate it, never edit it; it is the whole list of
+  theme styles, so a style it gains is one a view can name that day and one it loses is a
+  `textStyle` that stops typechecking - never a hand-written font beside it.
 - Fonts are captured bundles in `public/assets/fonts/*.air51.json`, shipped in `fonts.nitro` and
   registered once at boot by `preloadFlashFonts()`. They cover printable ASCII. A string with any
   other character - or a raw `fontFamily`/`fontSize` override - falls back to the browser's text
@@ -312,8 +376,8 @@ and `theme/font/flash-text` draws it exactly as the Flash client did:
   selection geometry (`flashTextCaretRect`) is in that same space.
 - The `il_*` styles are etched: a translucent white line under every glyph, made for dark text
   on a light panel. Never put a light `fill` on one - the etch shows through as a smear. Flash
-  has separate un-etched styles for that (`text-style-il-button-white`,
-  `text-style-il-frame-title-white`, `text-style-il-regular-white`, ...); use those.
+  has separate un-etched styles for that (`il_button_white`, `il_frame_title_white`,
+  `il_regular_white`, ...); use those.
 - For anything that is not a `ThemeText` - chat bubbles, a texture you own - use
   `renderFlashTextCanvas` (plain text or `parseFlashTextMarkup` runs) and fall back to
   `renderBrowserTextCanvas`, the way `chat/ChatBubbleText.ts` does.
@@ -338,9 +402,10 @@ it only ever shows as the bare key. `localization_keys.py` lists them.
 `packages/nitro-react/scripts/layouts/` holds the Flash window layouts already converted to React.
 Read the generated layout for geometry and text styles, then write the view by hand under
 `views/`, keeping the numbers and dropping the scaffolding (lorem-ipsum defaults, per-element
-`visible*` props, one-file-per-region). Bitmaps come from `scripts/images/` into
-`public/assets/<component>/<name>.png`, referenced with `LayoutImage('<component>/<name>.png')` -
-which is the *asset name* of the bitmap in its `.nitro` bundle, not a url. See Asset bundles.
+`visible*` props, one-file-per-region). Bitmaps come from the owning component's folder under
+`scripts/flash-js-resources/` into `public/assets/<component>/<name>.png`, referenced with
+`LayoutImage('<component>/<name>.png')` - which is the *asset name* of the bitmap in its `.nitro`
+bundle, not a url. See Asset bundles.
 
 The component is the client's own, kebab-cased, one folder per library beside the theme's own art:
 `room-ui`, `catalog`, `toolbar`, `navigator` (`navigator` + `newnavigator`), `wired`
@@ -351,41 +416,58 @@ The component is the client's own, kebab-cased, one folder per library beside th
 in `shared/` (one copy, never two), and a new layout bitmap goes in the folder of the component
 that names it. The file name stays the Flash asset name.
 
-An asset name is **not unique**: each client library embeds its own art, so the SWF holds a dozen
-`heart_png`, four `camera_png`, three `slider_obj_png`, and the `<id>_` prefix of a `scripts/images`
-file is the decompiler's running number over the whole SWF - it names no library and orders nothing
-(the `roomui` bitmaps run from 1749 to 2856). Keeping "whichever file readdir yielded last" was
-therefore a coin toss between libraries, and it lost seventeen times: the room tools toolbar drew
-the 43x44 camera-mode `zoom_in` beside its own 18x18 `zoom_out`. Which file a name means is decided,
-never guessed, in this order (`resolveImage` / `pickImage`):
+An asset name is **not unique across the client**: every library embeds its own art, so there are
+a dozen `heart_png`, four `camera_png`, three `slider_obj_png`. `flash-js-resources` answers that
+by construction - an asset sits in the folder of the library that embeds it, so `zoom_in` under
+`habbo-room-ui-com` is the room tools' own and nothing else. Take a bitmap from the folder of the
+component whose layout names it, never from whichever folder happens to have the name.
 
-1. **The libraries' own table.** `HabboWindowManagerCom.as` and friends publish each embedded
-   bitmap as `public static var roomtools_zoom_in:Class = zoom_in_png$1d108f3d…;` - the right-hand
-   side is `<embedded name>$<hash>`, the whole identity. That is the client answering the question,
-   so it wins wherever it has an entry.
-2. **The size the layout declares.** An unstretched `<static_bitmap width="18" height="18">` is
-   drawn at the art's own size, so it picks the candidate whose pixels match.
-3. Neither - a 9-slice, a bar the layout stretches, a bitmap no layout names - and the pick really
-   is arbitrary: the generator keeps the old one, prints it at the end beside its candidates the
-   way it prints missing images, and it needs a `known.LAYOUT_IMAGES_AMBIGUOUS` reason. A wrong
-   bitmap fails nothing; it just draws wrong, so the ambiguity has to be visible.
+That question used to be a guess, and it is worth knowing why the auditing exists: the art used to
+arrive as one flat dump of the whole SWF, every file prefixed with the decompiler's running number,
+which names no library and orders nothing. "Whichever file readdir yielded last" lost seventeen
+times - the room tools toolbar drew the 43x44 camera-mode `zoom_in` beside its own 18x18
+`zoom_out`. So `public/assets/layout-images.json` records the bundle file behind every bitmap
+written (`<component>/<file>` -> `<library>/<file>`), and `layout_images.py` holds the shipped bytes
+to it and checks that where a bundle carries the exact name, that is the file shipped. A name that
+still settles neither way needs a `known.LAYOUT_IMAGES_AMBIGUOUS` reason: a wrong bitmap fails
+nothing, it just draws wrong.
 
-`public/assets/layout-images.json` records the `scripts/images` file behind every bitmap written,
-so the pick is auditable rather than trusted, and `layout_images.py` re-derives it from the
-libraries and the layouts and holds the shipped bytes to it.
-
-The conversions follow `scripts/binaryData`: after a refresh of the XML, regenerate them with
-`yarn workspace @nitrodevco/nitro-react generate-layout-views` and read the diff - it is the list
-of what the client changed, and the views written from those layouts are what has to follow.
+The conversions follow the component XML under `scripts/flash-js-resources/`: after a refresh of
+that, regenerate them with `yarn workspace @nitrodevco/nitro-react generate-layout-views` and read
+the diff - it is the list of what the client changed, and the views written from those layouts are
+what has to follow.
 `layouts.py` compares each registry entry's `xml` hash with the asset it came from, so a
 conversion that is a revision behind is drift.
+
+How the generator finds a bitmap, in order (`resolveImage`):
+
+1. **The exact name.** A bundle file *is* the published asset name, so `newnavigator_create_room`
+   is `newnavigator_create_room.png` and that is the client's own answer. Where several components
+   carry it, the one owning the layout wins (`RESOURCE_FOR_FOLDER`, the inverse of `ASSET_FOLDERS`).
+2. **The libraries' alias table**, only for a name no bundle carries. Its right-hand side is the
+   *embedded* file (`roomtools_zoom_in` -> `zoom_in_png$<hash>`), and without the hash - which the
+   bundles drop - an embedded name is shared by several libraries' art. Trying it first shipped a
+   23x23 icon for the 187x59 `newnavigator_create_room`; that is why it comes second.
+3. Token stripping (`avatar_editor_tabs_ae_tabs_head` -> `ae_tabs_head`), then a manifest region.
+
+The alias table and the class that builds each layout (which files its art under a component) are
+read from the decompiled client, whose root the generator derives from `production.version` the
+way `known.py` does. A bitmap no layout names statically but a view draws goes in `RUNTIME_IMAGES`
+- the floor plan editor's tool art is there because its own layout is not in the bundles.
+
+**The bundles and the decompiled client are not the same build.** `binary_data.py` holds one
+against the other, and the assets that differ - 22 catalog page layouts, and the element
+description, icon set and illumina border the theme is cut from - are listed in
+`known.REFERENCE_BUILD_SKEW` with which side the port follows. Regenerating from the bundles is
+fine for everything else; for those, the drift checks and the theme follow `scripts-deob`.
 
 The generator owns its output folder and rewrites it whole: an edit made to a converted layout is
 gone on the next run, so a fix belongs in the generator or in the hand-written view. What it does
 protect is the art under `public/assets/<component>/`, which holds hand-placed bitmaps beside the
 ones it copies (a view names many of them at runtime, out of a table). It prunes only what
 `public/assets/layout-images.json` says it wrote - by that file's `<component>/<file>` path - and
-leaves a hand-placed file untouched even when an asset of the same name exists in `scripts/images`.
+leaves a hand-placed file untouched even when an asset of the same name exists in the reference
+material.
 
 ### Wired (`src/wired`, `views/wired-*`)
 
@@ -524,9 +606,9 @@ accumulate as "known noise"; that is how seventeen missing variable keys went un
 | `IncomingHeader.ts` / `OutgoingHeader.ts` and the packet classes | `D:\Habbo\packet-tool\out` | see Packets; `packets.py` checks names, ids and registration, `wire.py` what each packet reads and writes |
 | Which incoming packets the client acts on (`handlers/**`, and the window hooks that use `useMessageListener`) | the Flash component that constructs the message id's `*MessageEvent` - `addHabboConnectionMessageEvent(new XMessageEvent(onX))` | by hand; `handlers.py` reports a registered packet nothing subscribes to (naming the Flash class that handles it, so the gap is read as a missing feature), a `known.HANDLERS_UNHANDLED` entry that has gone stale, and a listener on a packet Flash never acts on (`known.HANDLERS_PORT_ONLY`) |
 | `nitro-api` enums, constant classes and event classes that mirror a Flash constant class (`RoomObjectVariableEnum`, `RoomWidgetEnum`, `RoomObjectWidgetRequestEvent`, `PetType`, ...), and same-named constant classes in nitro-renderer / nitro-react | the `.as` class - same name, or paired in `known.PAIRED` / `MERGED` (obfuscated or renamed), or by value overlap (`enums.py -v` lists the pairs) | by hand; the *values* must be Flash's strings, typos and case included (`furniture_expirty_timestamp`, `GAME_TOKEN`, `ROWRE__STICKIE`). A nitro-api class that pairs with nothing is drift until `known.ENUMS_UNPAIRED` says why; every `RoomObjectWidgetRequestEvent` member needs a widget or handler case, or a `known.WIDGET_REQUESTS_UNHANDLED` reason |
-| `nitro-react/scripts/binaryData/*.bin` (git-ignored; the input of `generate-layout-views.ts`, `extract-skin-assets.ts`, `generate-habbo-text-styles.ts` and of the hand-written views that cite a layout) | `scripts-deob/_assets` of the revision | `binary_data.py` matches on `<asset>$<hash>` and reports stale, removed and new assets; `--fix` refreshes them, `-d` shows the diff. Then regenerate what reads them and re-read the views whose layout changed |
-| `nitro-react/scripts/layouts/**` (git-ignored) and `public/assets/<component>/*.png` - the client's `<layout>` assets converted to React, the reference every hand-written view is drawn from | `nitro-react/scripts/binaryData/*_xml$*.bin` | `nitro-react/scripts/generate-layout-views.ts` (`yarn workspace @nitrodevco/nitro-react generate-layout-views`) - regenerate, never edit; `layouts.py` compares each registry entry's `xml` hash with its asset, and `layout_views.py` compares the client's controls with the hand-written views |
-| Which `scripts/images` file each shipped layout bitmap is, recorded in `public/assets/layout-images.json` | the client libraries' `public static var <name>:Class = <file>$<hash>;` tables (`HabboWindowManagerCom.as`, ...) and the size each layout declares for the element drawing it | by the generator (see "Widget views from Flash layouts"); `layout_images.py` re-derives the pick and reports a bitmap whose shipped bytes are not the file the client's own table or the declared size names - a name several libraries export different art under and neither settles goes in `known.LAYOUT_IMAGES_AMBIGUOUS` with why the one shipped is kept |
+| `nitro-react/scripts/flash-js-resources/<component>/` (git-ignored; the input of `generate-layout-views.ts`, `extract-skin-assets.ts`, `generate-habbo-text-styles.ts` and of the hand-written views that cite a layout) | the component bundles `flash-js` loads, of the revision `production.version` names | by refreshing the folder from the client. `binary_data.py` holds each bundled asset against the decompiled client by published name and reports one whose bytes differ - the two references being different builds - unless `known.REFERENCE_BUILD_SKEW` says which side the port follows. Then regenerate what reads them and re-read the views whose layout changed |
+| `nitro-react/scripts/layouts/**` (git-ignored) and `public/assets/<component>/*.png` - the client's `<layout>` assets converted to React, the reference every hand-written view is drawn from | the `*.xml` of each `nitro-react/scripts/flash-js-resources/<component>/` | `nitro-react/scripts/generate-layout-views.ts` (`yarn workspace @nitrodevco/nitro-react generate-layout-views`) - regenerate, never edit; `layouts.py` compares each registry entry's `xml` hash with its asset, and `layout_views.py` compares the client's controls with the hand-written views |
+| Which reference file each shipped layout bitmap is, recorded in `public/assets/layout-images.json` | the bundle file carrying the published name, in the folder of the library that owns the layout | by the generator (see "Widget views from Flash layouts"); `layout_images.py` holds every shipped bitmap to its recorded bundle file byte for byte (a manifest crop to its region's size) and reports one shipped from a differently-named file where a bundle carries the exact name - another library's art under a shared embedded name. A name that settles neither way goes in `known.LAYOUT_IMAGES_AMBIGUOUS` with why the one shipped is kept |
 | A port class's constants where the Flash class has them (`AvatarLogic`, `AvatarVisualization`, `AnimationFrame`, `LayerData`), and the tables lifted out of a Flash method (the post-it colours, the dimmer colours, ...) | the `.as` class | by hand, under Flash's names; `constants.py` compares every static const of the paired class (an obfuscated Flash name maps through its `rename`, one the port leaves out needs a `skip` reason) and, for `AvatarLogic`, the timeouts Flash writes as literals |
 | `RoomObjectLogicFactory` / `RoomObjectVisualizationFactory` | `RoomObjectFactory.as` / `RoomObjectVisualizationFactory.as` | by hand; a type only Flash builds falls back to the basic class, so list it in the factory's comment or port it |
 | The hand-written `views/**` built from a Flash layout - the controls each one draws | `<layout>_xml` of the revision, and the `.as` class that drives the window | by hand; `layout_views.py` records each layout's named controls beside its view in `known.LAYOUT_VIEWS` and reports one the client added, dropped or reordered. A view built from a layout with no row falls behind unnoticed, so add the row with the view; a control the port leaves out on purpose stays in the list and the view's docblock says why (`RoomInfoView` names all four of its own) |
@@ -536,7 +618,8 @@ accumulate as "known noise"; that is how seventeen missing variable keys went un
 | The config flags the port reads, in `public/config/nitro-config.json` | the hotel's `external_variables` (nitro-tools `gamedata/ExternalVariables.json`) and the keys the `.as` files name | by hand; `config_keys.py` reports a key the hotel sets that the config lacks, and a key no Flash class names (Nitro's own go in `known.CONFIG_KEYS_PORT_ONLY`) |
 | Class constants mirrored whole outside nitro-api (`AvatarVisualization`, `AnimationFrame`, `LayerData`, the Variable FX tables and paint colours) and module tables copied out of a Flash array or switch (post-it colours, pet/bot placing and friend list error texts, visitor steps, thumbnail `DRAW_ORDER`, `PRODUCT_IMAGES`, dimmer colours, trophy themes, mannequin clothing, ...) | the `.as` class or method named in each docblock | by hand; `constants.py` reads both sides and compares them. A file whose docblock names `drift/constants.py` is left out of `enums.py`; add a table to `constants.py` when you carry a new one |
 | `public/assets/chat-styles/<assetId>/chat_definition.json` and its `*.png`; `ChatMarkup.ts` palettes, `ChatConstants.ts` bubble widths | `chatstyles_xml`, every `style_<assetId>_regpoints` and bitmap of `HabboFreeFlowChatCom.as` (read as `ChatStyleLibrary.as` reads them); `ChatMarkup.as`, `ChatBubbleWidth.as` | by hand, bitmaps copied from the SWF images; `chat_styles.py` diffs every style's flags, regpoints keys and pixels, a regpoints key the library starts reading, the palettes and the width mapping |
-| The theme's skin tables: every `*_VARIANTS` table under `nitro-react/src/theme`, `theme/utils/windowLayouts.ts`, `theme/utils/iconSetFrames.ts` + `public/assets/images/icon-set.png`, and `TEXT_STYLES` in `theme/utils/textStyles.ts` | the `(type, style)` rows of `habbo_element_description_xml`, the window layouts they name (`HabboWindowManagerCom.as`), `habbo_skin_icon_set_xml` + `habbo_icons_png`, `styles_css` | by hand, art cut from the skin sheets (`scripts/extract-skin-assets.ts`, then `yarn build-asset-bundles`); `theme_skin.py` diffs the style ids per type, button layouts, frame minimum sizes, row tints, icon rects and pixels, and holds every `TEXT_STYLES` entry to `habboTextStyle(habboKey)`. A style left out or added goes in `known.THEME_STYLES_NOT_PORTED` / `THEME_STYLES_PORT_ONLY` |
+| The theme's skin tables: every `*_VARIANTS` table under `nitro-react/src/theme`, `theme/utils/windowLayouts.ts`, `theme/utils/iconSetFrames.ts` + `public/assets/images/icon-set.png`, and `TEXT_STYLES` in `theme/utils/textStyles.ts` | the `(type, style)` rows of `habbo_element_description_xml`, the window layouts they name (`HabboWindowManagerCom.as`), `habbo_skin_icon_set_xml` + `habbo_icons_png`, `styles_css` | by hand, art cut from the skin sheets (`scripts/extract-skin-assets.ts`, then `yarn build-asset-bundles`); `theme_skin.py` diffs the style ids per type, button layouts, frame minimum sizes, row tints, icon rects and pixels, and holds `TEXT_STYLES` to deriving its entries from `HABBO_TEXT_STYLES`, `TextStyleKey` to being `HabboTextStyleName`, and every `textStyle` prop in the tree to a style that table has. A style left out or added goes in `known.THEME_STYLES_NOT_PORTED` / `THEME_STYLES_PORT_ONLY` |
+| `nitro-react/src/theme/utils/dynamicStyles.ts` - the hover/press/disabled effects a layout names with `dynamic_style` (`lifted_hover`, `brightness_and_shadow_under`, `_gentle`, `reward_track_item`, `button`), and the generator's `DYNAMIC_STYLE_NAMES` | `DynamicStyleManager.fillStyleTable()` and `DynamicStyle`'s constructor defaults | by hand; `dynamic_styles.py` compares every style's effective rule for the host and each `#icon` / `#bg` child in every state, through the port's own `resolveDynamicStyleRule`. A name the port lacks draws nothing and fails nothing - that is how `button` went missing |
 | The text keys the port asks for (`t('...')`, `'${...}'`) | the embedded `default_localizations` + the hotel's external texts (nitro-tools `gamedata/DefaultLocalizations_en.json`, `ExternalTexts.json`) and the keys Flash's classes and layouts name | `localization_keys.py` reports a key in neither file that no Flash class or layout names |
 
 Rules that come out of that:
@@ -577,7 +660,8 @@ Rules that come out of that:
   upload `packages/nitro-renderer/gamedata/*.json` to the hotel's `/gamedata`. A stale upload does
   not fail - the avatars just animate like the previous revision.
 - Theme skin art is cut from the Flash skin bitmap along its skin XML's entities (`habbo_skin_*_xml`
-  in `scripts/binaryData`), one image per entity that moves or stretches on its own - the
+  in `flash-js-resources/habbo-window-manager-com`), one image per entity that moves or stretches
+  on its own - the
   `dropmenu` arrow was once baked into its frame, and stretched with it. Rebuild the bundles
   (`yarn build-asset-bundles` in nitro-react) after adding or replacing one.
 - An entity marked `colorize="false"` is one `BitmapSkinRenderer.draw` copies *without* the

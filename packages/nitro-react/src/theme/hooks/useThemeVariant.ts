@@ -1,5 +1,5 @@
 import { useTooltipHandlers } from '../tooltip/useTooltipHandlers';
-import { AnyThemeVariant, ThemeOptions, ThemeResult, ThemeVariant, ThemeWithStatesVariant } from '../utils';
+import { AnyThemeVariant, themeDefaultTextStyle, ThemeOptions, ThemeResult, ThemeVariant, ThemeWithStatesVariant } from '../utils';
 import { compose } from '../utils/interaction';
 import { resolveByState, useInteractionState } from './useInteractionState';
 import { useResolvedVariant } from './useResolvedVariant';
@@ -32,7 +32,10 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
     // `colorize: false` is a skin the client never tints at all (see `ThemeBase.colorize`), so
     // neither the variant's own tint nor the one a call site passes reaches its art.
     const resolvedTint = (config.colorize === false) ? undefined : (tintColor ?? config.tintColor);
-    const resolvedTextStyle = textStyle ?? config.textStyle;
+    // A variant that names no style of its own is not `regular`: the window's `style` id picks a
+    // theme, and `ThemeManager`'s three real themes default `text_style` differently. Without
+    // this an Ubuntu frame (style 4, 10001-10007) and every illumina one (100-299) drew Volter 9.
+    const resolvedTextStyle = textStyle ?? config.textStyle ?? themeDefaultTextStyle(resolvedVariant);
     const resolvedTextColor = textColor ?? config.textColor;
 
     return { resolvedVariant, ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedShadow, resolvedTint, resolvedTextStyle, resolvedTextColor };
