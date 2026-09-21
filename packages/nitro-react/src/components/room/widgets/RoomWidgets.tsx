@@ -4,6 +4,7 @@ import { RoomBotSkillConfigurationWidget } from './bot-skills/RoomBotSkillConfig
 import { RoomChatWidget } from './chat/RoomChatWidget';
 import { RoomDoorbellWidget } from './doorbell/RoomDoorbellWidget';
 import { RoomEffectsWidget } from './effects/RoomEffectsWidget';
+import { FloorPlanEditorWidget } from './floor-plan-editor/FloorPlanEditorWidget';
 import { RoomFriendRequestWidget } from './friend-request/RoomFriendRequestWidget';
 import { RoomFurnitureWidgets } from './furniture';
 import { RoomObjectInfostandWidget } from './object-infostand';
@@ -37,6 +38,7 @@ export const RoomWidgets = () => {
             <RoomEffectsWidget />
             <RoomInfoWidget />
             <RoomSettingsWidget />
+            <FloorPlanEditorWidget />
             <RoomBotSkillConfigurationWidget />
             <RoomPetBreedMenuWidget />
             <RoomPlantBreedingWidget />

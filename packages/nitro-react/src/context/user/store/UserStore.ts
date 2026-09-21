@@ -39,6 +39,17 @@ type State = {
     chatScrollSpeed: RoomChatScrollSpeedType;
     /** `SessionDataManager.hasNftChatStyle` - the NFT chat styles (ids 1000-9999) the account holds (`UserNftChatStylesMessage`). */
     nftChatStyles: number[];
+    /**
+     * `BuildersClubSubscriptionStatusMessage` - how long the account's Builder's Club has left, in
+     * seconds. `BCFloorPlanEditor` counts it down while the editor is open and disables the save
+     * once it runs out, so it is the account's fact rather than the room's.
+     */
+    buildersClubSecondsLeft: number;
+    /** The same subscription with its grace period, which is what the catalogue's Builder's Club page shows. */
+    buildersClubSecondsLeftWithGrace: number;
+    /** How many furni the subscription currently allows, and the most it ever would. */
+    buildersClubFurniLimit: number;
+    buildersClubMaxFurniLimit: number;
     /** `SessionDataManager.hasPurchasableChatStyle` - the bought chat styles (`UserPurchasableChatStylesMessage`, then one at a time). */
     purchasableChatStyles: number[];
 };
@@ -77,6 +88,9 @@ type Actions = {
     setPurchasableChatStyles: (purchasableChatStyles: number[]) => void;
     /** `SessionDataManager.onPurchasableChatStyleChanged`: one style bought or taken away. */
     setPurchasableChatStyleOwned: (styleId: number, owned: boolean) => void;
+    setBuildersClubSubscription: (secondsLeft: number, secondsLeftWithGrace: number, furniLimit: number, maxFurniLimit: number) => void;
+    /** The editor's own ten-second countdown (`BCFloorPlanEditor.onBcCountdownTimerEvent`), so the save stops working the moment the subscription does. */
+    decreaseBuildersClubSecondsLeft: (seconds: number) => void;
 };
 
 const initialState: State = {
@@ -101,6 +115,10 @@ const initialState: State = {
     chatScrollSpeed: RoomChatScrollSpeedType.Normal,
     nftChatStyles: [],
     purchasableChatStyles: [],
+    buildersClubSecondsLeft: 0,
+    buildersClubSecondsLeftWithGrace: 0,
+    buildersClubFurniLimit: 0,
+    buildersClubMaxFurniLimit: 0,
 };
 
 export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice & UserEffectsSlice & UserSocialSlice;
@@ -133,6 +151,8 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
             ? [ ...state.purchasableChatStyles, styleId ]
             : state.purchasableChatStyles.filter((id, index) => (index !== state.purchasableChatStyles.indexOf(styleId))),
     })),
+    setBuildersClubSubscription: (buildersClubSecondsLeft: number, buildersClubSecondsLeftWithGrace: number, buildersClubFurniLimit: number, buildersClubMaxFurniLimit: number) => set({ buildersClubSecondsLeft, buildersClubSecondsLeftWithGrace, buildersClubFurniLimit, buildersClubMaxFurniLimit }),
+    decreaseBuildersClubSecondsLeft: (seconds: number) => set(state => ({ buildersClubSecondsLeft: state.buildersClubSecondsLeft - seconds })),
     ...createUserInfoSlice(set, get, store),
     ...createUserFriendsSlice(set, get, store),
     ...createUserWalletSlice(set, get, store),

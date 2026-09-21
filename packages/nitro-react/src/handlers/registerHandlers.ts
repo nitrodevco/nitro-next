@@ -5,7 +5,7 @@ import { registerNavigatorHandlers, registerRoomQueueHandlers } from './navigato
 import { registerNotificationHandlers } from './notifications';
 import {
     registerRoomAreaHideHandlers, registerRoomBotHandlers, registerRoomChatHandlers, registerRoomConfigurationItemsHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
-    registerRoomDirectoryHandlers, registerRoomDoorbellHandlers, registerRoomFriendFurniHandlers, registerRoomFriendRequestHandlers,
+    registerRoomDirectoryHandlers, registerRoomDoorbellHandlers, registerRoomFloorPlanHandlers, registerRoomFriendFurniHandlers, registerRoomFriendRequestHandlers,
     registerRoomFurnitureHandlers, registerRoomGuildFurniHandlers, registerRoomInfostandHandlers, registerRoomJukeboxHandlers, registerRoomLinkHandlers, registerRoomMappingHandlers,
     registerRoomMysteryBoxHandlers, registerRoomPermissionsHandlers, registerRoomPetHandlers, registerRoomPetPackageHandlers, registerRoomPollHandlers,
     registerRoomPresentHandlers, registerRoomQuizHandlers, registerRoomRentableSpaceHandlers, registerRoomSettingsHandlers,
@@ -34,6 +34,7 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerRoomDoorbellHandlers(socket),
         registerRoomFurnitureHandlers(socket),
         registerRoomMappingHandlers(socket),
+        registerRoomFloorPlanHandlers(socket),
         registerRoomPermissionsHandlers(socket),
         registerRoomPetHandlers(socket),
         registerRoomPetPackageHandlers(socket),

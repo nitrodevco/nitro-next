@@ -72,6 +72,8 @@ export const RoomInfoWidget = () => {
             isStaffPicked={isStaffPicked}
             canMuteAll={canMute && muteAllEnabled}
             allInRoomMuted={allInRoomMuted}
+            // `RoomInfoViewCtrl.refreshButtons`: the floor plan editor needs rights in the room, not ownership.
+            canEditFloorPlan={Number(controllerLevel) >= Number(RoomControllerLevelEnum.Guest)}
             // `HabboNavigator.hasRoomRightsButIsNotOwner`: exactly the rights you were given.
             canRemoveRights={!isOwner && (Number(controllerLevel) === Number(RoomControllerLevelEnum.Guest))}
             onOpenOwnerProfile={() => send(new GetExtendedProfileComposer({ userId: currentRoomInfo.ownerId }))}
@@ -92,6 +94,7 @@ export const RoomInfoWidget = () => {
             onMakeHome={() => send(new UpdateHomeRoomComposer({ roomId }))}
             onRemoveRights={() => send(new RemoveOwnRoomRightsRoomComposer({ roomId }))}
             onRoomSettings={() => showWindow('room_settings')}
+            onFloorPlanEditor={() => showWindow('floor_plan_editor')}
             onToggleStaffPick={() => {
                 send(new ToggleStaffPickComposer({ roomId, isStaffPicked: !isStaffPicked }));
                 updateEnteredRoom(roomId, { isStaffPicked: !isStaffPicked });

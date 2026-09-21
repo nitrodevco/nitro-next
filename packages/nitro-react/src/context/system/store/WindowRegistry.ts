@@ -27,6 +27,9 @@ export type WindowRegistry = {
     room_info: NoWindowParams;
     room_settings: NoWindowParams;
 
+    /** The floor plan editor (`BCFloorPlanEditor`), opened from the room info panel. */
+    floor_plan_editor: NoWindowParams;
+
     navigator: NavigatorViewWindowParams;
 
     /** The wired menu (`WiredMenuController`), from the toolbar or a `wiredmenu/...` link. The setup dialog is not a window: it opens when the server says so. */

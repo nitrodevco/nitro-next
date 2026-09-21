@@ -23,6 +23,8 @@ const actions = {
     setNftChatStyles: state.setNftChatStyles,
     setPurchasableChatStyles: state.setPurchasableChatStyles,
     setPurchasableChatStyleOwned: state.setPurchasableChatStyleOwned,
+    setBuildersClubSubscription: state.setBuildersClubSubscription,
+    decreaseBuildersClubSecondsLeft: state.decreaseBuildersClubSecondsLeft,
 };
 
 export const useUserActions = () => actions;

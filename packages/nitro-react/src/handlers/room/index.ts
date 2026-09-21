@@ -8,6 +8,7 @@ export * from './registerRoomDataHandlers';
 export * from './registerRoomDimmerHandlers';
 export * from './registerRoomDirectoryHandlers';
 export * from './registerRoomDoorbellHandlers';
+export * from './registerRoomFloorPlanHandlers';
 export * from './registerRoomFriendFurniHandlers';
 export * from './registerRoomFriendRequestHandlers';
 export * from './registerRoomFurnitureHandlers';

@@ -3,6 +3,7 @@ export * from './RoomBotsSlice';
 export * from './RoomCameraSlice';
 export * from './RoomChatSlice';
 export * from './RoomDoorbellSlice';
+export * from './RoomFloorPlanSlice';
 export * from './RoomFriendRequestSlice';
 export * from './RoomMouseSlice';
 export * from './RoomPetsSlice';

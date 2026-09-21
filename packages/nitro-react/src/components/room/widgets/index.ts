@@ -3,6 +3,7 @@ export * from './bot-skills';
 export * from './chat';
 export * from './doorbell';
 export * from './effects';
+export * from './floor-plan-editor';
 export * from './friend-request';
 export * from './furniture';
 export * from './object-infostand';

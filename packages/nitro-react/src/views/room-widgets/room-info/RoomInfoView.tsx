@@ -24,6 +24,8 @@ export interface RoomInfoViewProps {
     isStaffPicked: boolean;
     canMuteAll: boolean;
     allInRoomMuted: boolean;
+    /** `roomSession.roomControllerLevel >= 1` - anyone with rights in the room may edit its floor plan. */
+    canEditFloorPlan: boolean;
     /** Only offered where rights were given rather than owned. */
     canRemoveRights: boolean;
     onOpenOwnerProfile: () => void;
@@ -33,6 +35,7 @@ export interface RoomInfoViewProps {
     onMakeHome: () => void;
     onRemoveRights: () => void;
     onRoomSettings: () => void;
+    onFloorPlanEditor: () => void;
     onToggleStaffPick: () => void;
     onMuteAll: () => void;
     onClose: () => void;
@@ -48,9 +51,9 @@ export interface RoomInfoViewProps {
  *
  * `RoomInfoViewCtrl.layoutButtons` stacks seven buttons in this order: `room_settings_button`,
  * `raid_protection_settings_button`, `room_filter_button`, `floor_plan_editor_button`,
- * `staff_pick_button`, `room_report_button`, `room_muteall_button`. The port renders the three
- * whose windows it has - settings, staff pick and mute all - in that relative order. The four it
- * leaves out, and what each still needs:
+ * `staff_pick_button`, `room_report_button`, `room_muteall_button`. The port renders the four
+ * whose windows it has - settings, the floor plan editor, staff pick and mute all - in that
+ * relative order. The three it leaves out, and what each still needs:
  *
  * - `raid_protection_settings_button` (`${raid.protection.settings.button}`, new in
  *   WIN63-202609091217-117204808) opens `navigator/raidprotection/<roomId>`, and
@@ -68,17 +71,15 @@ export interface RoomInfoViewProps {
  *   the capability and the button could only ever be hidden. It is ported when those exist.
  * - `room_filter_button` (`canEditRoomSettings && room.custom.filter.enabled`) needs the room
  *   word-filter window, which is not ported.
- * - `floor_plan_editor_button` (`roomSession.roomControllerLevel >= 1`) needs the floor plan
- *   editor (`floor_plan_editor_bc`), which is not ported.
  * - `room_report_button` (hidden unless `room.report.enabled`) needs report/help, which is not
  *   ported.
  */
 export const RoomInfoView = ({
     roomName, description, ownerName, showOwner, tags, rating, ranking, thumbnailUrl,
     isHome, isFavourite, canFavourite, canRate, canEditRoomSettings, canStaffPick, isStaffPicked,
-    canMuteAll, allInRoomMuted, canRemoveRights,
+    canMuteAll, allInRoomMuted, canEditFloorPlan, canRemoveRights,
     onOpenOwnerProfile, onSelectTag, onRate, onToggleFavourite, onMakeHome, onRemoveRights,
-    onRoomSettings, onToggleStaffPick, onMuteAll, onClose,
+    onRoomSettings, onFloorPlanEditor, onToggleStaffPick, onMuteAll, onClose,
 }: RoomInfoViewProps) => {
     const t = useTranslation();
 
@@ -279,6 +280,16 @@ export const RoomInfoView = ({
                             layout={{ width: 220, height: 29 }}
                         >
                             {t('navigator.roomsettings')}
+                        </Button>
+                    )}
+                    {canEditFloorPlan && (
+                        <Button
+                            variant="3"
+                            name="floor_plan_editor_button"
+                            onPointerTap={onFloorPlanEditor}
+                            layout={{ width: 220, height: 29 }}
+                        >
+                            {t('open.floor.plan.editor')}
                         </Button>
                     )}
                     {canStaffPick && (
