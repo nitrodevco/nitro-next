@@ -49,7 +49,7 @@ const SystemDialogView = ({ dialog, offset }: { dialog: SystemDialog; offset: nu
                 <ThemeText
                     layout={{ flex: 1 }}
                     text={dialog.message}
-                    textStyle="text-style-regular"
+                    textStyle="regular"
                     textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: DIALOG_WIDTH - 30 }}
                 />
             </Border>

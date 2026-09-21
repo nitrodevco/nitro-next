@@ -13,15 +13,14 @@
  */
 import { CanvasTextMetrics } from 'pixi.js';
 
-import { FLASH_TEXT_GUTTER, FlashTextRenderer, getHabboKey, getPixiTextStyle, HABBO_TEXT_STYLES, normalizeFlashTextFormat, TextStyleKey } from '#base/theme';
+import { FLASH_TEXT_GUTTER, FlashTextRenderer, getPixiTextStyle, HABBO_TEXT_STYLES, normalizeFlashTextFormat, TextStyleKey } from '#base/theme';
 
 /** `overflow_replace` of `element_text`. */
 export const TABLE_OVERFLOW_REPLACE = '...';
 
 /** Left edge of every character, followed by the text's width - `TextField.textWidth`, gutter excluded. */
 const charPositions = (text: string, textStyle: TextStyleKey): number[] => {
-    const habboKey = getHabboKey(textStyle);
-    const flash = habboKey ? FlashTextRenderer.measureCharPositions(text, normalizeFlashTextFormat(HABBO_TEXT_STYLES[habboKey])) : null;
+    const flash = FlashTextRenderer.measureCharPositions(text, normalizeFlashTextFormat(HABBO_TEXT_STYLES[textStyle]));
 
     if (flash) return flash;
 
@@ -48,8 +47,7 @@ export const measureTableText = (text: string, textStyle: TextStyleKey): number 
  * draws it. 12 is that position for Volter at 9px, used until the captured fonts are loaded.
  */
 export const tableLinkUnderlineY = (textStyle: TextStyleKey): number => {
-    const habboKey = getHabboKey(textStyle);
-    const metrics = habboKey ? FlashTextRenderer.metrics(normalizeFlashTextFormat(HABBO_TEXT_STYLES[habboKey])) : null;
+    const metrics = FlashTextRenderer.metrics(normalizeFlashTextFormat(HABBO_TEXT_STYLES[textStyle]));
 
     return metrics ? (FLASH_TEXT_GUTTER + Math.round(metrics.baseline) + 1) : 12;
 };

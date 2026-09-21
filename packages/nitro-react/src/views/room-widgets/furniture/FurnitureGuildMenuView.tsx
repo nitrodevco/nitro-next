@@ -41,7 +41,7 @@ export const FurnitureGuildMenuView = ({
             <Region layout={{ width: 107, flexDirection: 'column', alignItems: 'center', paddingTop: 7 }}>
                 <ThemeText
                     text={guildName}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_bold"
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                     layout={{ height: 16, width: '100%' }}
                 />
@@ -59,7 +59,7 @@ export const FurnitureGuildMenuView = ({
                     >
                         <ThemeText
                             text={button.label}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#ffffff', align: 'center' }}
                         />
                     </ContainerButton>

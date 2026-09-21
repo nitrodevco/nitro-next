@@ -168,7 +168,7 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
                         )}
                         <ThemeText
                             text={isBlocked ? t('infostand.blocked_user') : info.name}
-                            textStyle={isBlocked ? 'text-style-u-regular' : 'text-style-u-bold'}
+                            textStyle={isBlocked ? 'u_regular' : 'u_bold'}
                             textOptions={{ fill: '#ffffff' }}
                         />
                     </Box>

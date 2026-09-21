@@ -133,13 +133,13 @@ export const WiredMenuView = () => {
                 ))}
                 <ThemeText
                     text={t(`wiredmenu.${activeTab}.title`, activeTab)}
-                    textStyle="text-style-u-headline-medium"
+                    textStyle="u_headline_medium"
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 14, width: FRAME_WIDTH, height: 21 }}
                 />
                 <Region
-                    dynamicStyle="brightness_and_shadow_under"
+                    dynamicStyle="button"
                     tooltip={t('wiredmenu.discord_region.tooltip', 'wiredmenu.discord_region.tooltip')}
                     cursor="pointer"
                     onPointerTap={() => {

@@ -74,7 +74,7 @@ export const FriendListItem = ({ user, selected = false, hideAvatarElement = fal
             <ThemeText
                 layout={{ flex: 1 }}
                 text={user.name}
-                textStyle="text-style-regular"
+                textStyle="regular"
                 textOptions={{ fill: '#000000' }}
             />
             <Box layout={{ flexDirection: 'row', gap: 2, alignItems: 'center', justifyContent: 'space-around', flexShrink: 0, minWidth: 45, maxWidth: 52 }}>

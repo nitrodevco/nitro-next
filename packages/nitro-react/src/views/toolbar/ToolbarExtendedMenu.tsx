@@ -30,7 +30,7 @@ const ToolbarExtendedMenuItem = ({ button, onSelect }: { button: ToolbarExtended
                 greyscale={!hovering}
             />
             <ThemeText
-                textStyle="text-style-il-small"
+                textStyle="il_small"
                 textOptions={{ fill: hovering ? '#21cff4' : '#ffffff' }}
                 text={button.caption}
             />

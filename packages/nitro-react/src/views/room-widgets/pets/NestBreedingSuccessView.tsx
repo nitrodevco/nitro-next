@@ -32,7 +32,7 @@ export const NestBreedingSuccessView = ({ petName, figure, posture, rarityCatego
             <Region layout={{ flex: 1, width: '100%' }}>
                 <ThemeText
                     text={t('breedpets.nestbreeding.success.title')}
-                    textStyle="text-style-bold"
+                    textStyle="il_regular"
                     textOptions={{ fill: '#000000' }}
                     layout={{ position: 'absolute', left: 39, width: 252, top: 15 }}
                 />
@@ -52,13 +52,13 @@ export const NestBreedingSuccessView = ({ petName, figure, posture, rarityCatego
                 )}
                 <ThemeText
                     text={petName}
-                    textStyle="text-style-bold"
+                    textStyle="bold"
                     textOptions={{ fill: '#000000' }}
                     layout={{ position: 'absolute', left: 42, width: 252, top: 116 }}
                 />
                 <ThemeText
                     text={t(`breedpets.nestbreeding.success.raritycategory.${rarityCategory}`)}
-                    textStyle="text-style-regular"
+                    textStyle="regular"
                     textOptions={{ fill: '#000000' }}
                     layout={{ position: 'absolute', left: 42, width: 252, top: 127 }}
                 />

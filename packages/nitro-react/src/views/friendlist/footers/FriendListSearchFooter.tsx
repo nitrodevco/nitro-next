@@ -35,7 +35,7 @@ export const FriendListSearchFooter = () => {
                     />
                     <ThemeText
                         text={t('generic.search')}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#000000' }}
                     />
                 </Button>

@@ -124,8 +124,8 @@ export const WiredVariablePickerExpandedView = ({ x, y, width, borderVariant, pi
                     {(query.length === 0) && (
                         <ThemeText
                             text={t('wiredfurni.variable_picker.search', 'wiredfurni.variable_picker.search')}
-                            textStyle="text-style-regular"
                             textOptions={{ fill: '#808080' }}
+                            flashFormat={{ antiAliasType: 'advanced' }}
                             layout={{ position: 'absolute', left: 7, top: 3 }}
                         />
                     )}
@@ -145,7 +145,7 @@ export const WiredVariablePickerExpandedView = ({ x, y, width, borderVariant, pi
                         }}
                         focused={true}
                         maxLength={MAX_CHARS}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         backgroundColor=""
                         focusedBackgroundColor=""
                         layout={{ position: 'absolute', left: 7, top: 3, width: width - 7 - 20, height: 17 }}
@@ -175,8 +175,8 @@ export const WiredVariablePickerExpandedView = ({ x, y, width, borderVariant, pi
                                 <Box layout={{ width: contentWidth, height: 52, alignItems: 'center', justifyContent: 'center' }}>
                                     <ThemeText
                                         text={t('wiredfurni.variable_picker.empty', 'wiredfurni.variable_picker.empty')}
-                                        textStyle="text-style-regular"
                                         textOptions={{ fill: '#333333' }}
+                                        flashFormat={{ antiAliasType: 'advanced' }}
                                         alpha={0.5}
                                     />
                                 </Box>

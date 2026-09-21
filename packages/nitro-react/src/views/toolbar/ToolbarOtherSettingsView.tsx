@@ -46,7 +46,7 @@ const CheckRow = ({ label, selected, onToggle }: CheckRowProps) => (
         />
         <ThemeText
             text={label}
-            textStyle="text-style-u-regular"
+            textStyle="u_regular"
             textOptions={{ fill: '#ffffff' }}
         />
     </Box>
@@ -85,7 +85,7 @@ export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) =
             >
                 <ThemeText
                     text={t('widget.memenu.other.settings.title')}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                     layout={{ position: 'absolute', left: 45, top: 5, width: 153, height: 17 }}
                 />
@@ -113,7 +113,7 @@ export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) =
                     />
                     <ThemeText
                         text={t('memenu.settings.other.friend.online.notification.title')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#ffffff' }}
                         layout={{ width: LIST_WIDTH, height: 17 }}
                     />
@@ -126,7 +126,7 @@ export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) =
                     {showPhoneReset && (
                         <Button
                             variant="3"
-                            textStyle="text-style-button-shiny-regular"
+                            textStyle="button_shiny_regular"
                             onPointerTap={() => {
                                 setPhoneResetSent(true);
                                 resetPhoneNumberCollection(send);
@@ -139,7 +139,7 @@ export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) =
                 </Box>
                 <Button
                     variant="3"
-                    textStyle="text-style-button-shiny-regular"
+                    textStyle="button_shiny_regular"
                     onPointerTap={onClose}
                     layout={{ position: 'absolute', left: 10, top: 203, width: 60, height: 28 }}
                 >

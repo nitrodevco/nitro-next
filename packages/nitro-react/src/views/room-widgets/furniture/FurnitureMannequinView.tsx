@@ -116,12 +116,12 @@ export const FurnitureMannequinView = ({
                     <>
                         <ThemeText
                             text={name}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             layout={{ position: 'absolute', right: 6, width: 254, top: 30, height: 33 }}
                         />
                         <ThemeText
                             text={t('mannequin.widget.savetext')}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
                             verticalAlign="top"
                             layout={{ position: 'absolute', left: 126, width: 197, top: 66, height: 61 }}
@@ -140,7 +140,9 @@ export const FurnitureMannequinView = ({
                         >
                             <ThemeText
                                 text={t('mannequin.widget.back')}
-                                textStyle="text-style-u-regular"
+                                textStyle="u_regular"
+                                textOptions={{ fontSize: 13 }}
+                                flashFormat={{ underline: true, thickness: -15, sharpness: 80 }}
                             />
                         </Region>
                     </>
@@ -149,13 +151,14 @@ export const FurnitureMannequinView = ({
                     <>
                         <ThemeText
                             text={name}
-                            textStyle="text-style-u-italic"
+                            textStyle="u_italic"
                             layout={{ position: 'absolute', left: 126, width: 244, top: 30, height: 25 }}
                         />
                         <ThemeText
                             text={t('mannequin.widget.weartext')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 242 }}
+                            textStyle="u_regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 242, fontSize: 13 }}
+                            flashFormat={{ thickness: -15, sharpness: 80 }}
                             verticalAlign="top"
                             layout={{ position: 'absolute', left: 126, width: 242, top: 60, height: 61 }}
                         />
@@ -172,8 +175,9 @@ export const FurnitureMannequinView = ({
                     <>
                         <ThemeText
                             text={t('mannequin.widget.clubnotification')}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textOptions={{ wordWrap: true, wordWrapWidth: 241 }}
+                            flashFormat={{ thickness: -15, sharpness: 80 }}
                             verticalAlign="top"
                             layout={{ position: 'absolute', left: 126, width: 241, top: 52, height: 61 }}
                         />
@@ -191,8 +195,9 @@ export const FurnitureMannequinView = ({
                     <>
                         <ThemeText
                             text={t('mannequin.widget.wronggender')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 245 }}
+                            textStyle="u_regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 245, fontSize: 13 }}
+                            flashFormat={{ thickness: -15, sharpness: 80 }}
                             verticalAlign="top"
                             layout={{ position: 'absolute', left: 126, width: 245, top: 52, height: 86 }}
                         />

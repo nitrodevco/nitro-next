@@ -54,14 +54,14 @@ const OfferingNode = ({ node, index }: { node: ITradeRequirementNode; index: num
             {(index > 0) && (
                 <ThemeText
                     text="&"
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     layout={{ marginTop: 11 }}
                 />
             )}
             {(node.amount > 1) && (
                 <ThemeText
                     text={`${node.amount}x`}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     layout={{ marginTop: 11 }}
                 />
             )}
@@ -89,7 +89,7 @@ const OfferingRule = ({ rule, index }: { rule: ITradeRequirementRule; index: num
                 {(index > 0) && (
                     <ThemeText
                         text={t('inventory.wired_trading.requirements.or')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         alpha={0.5}
                     />
                 )}
@@ -138,7 +138,7 @@ const OfferingSide = ({ requirementType, rules, text, give, width, height }: Off
         content = (
             <ThemeText
                 text={t(key, key)}
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 alpha={TEXT_BLEND}
                 textOptions={{ wordWrap: true, wordWrapWidth: width - 20, align: 'center' }}
             />
@@ -159,7 +159,7 @@ const OfferingSide = ({ requirementType, rules, text, give, width, height }: Off
         content = (
             <ThemeText
                 text={text}
-                textStyle="text-style-u-bold"
+                textStyle="u_bold"
                 alpha={TEXT_BLEND}
                 textOptions={{ wordWrap: true, wordWrapWidth: width - 20, align: 'center' }}
             />
@@ -170,7 +170,7 @@ const OfferingSide = ({ requirementType, rules, text, give, width, height }: Off
         <Box layout={{ width, flexDirection: 'column', gap: 7 }}>
             <ThemeText
                 text={t(give ? 'inventory.wired_trading.requirements.offering' : 'inventory.wired_trading.requirements.receiving')}
-                textStyle="text-style-u-bold"
+                textStyle="u_bold"
                 textOptions={{ align: 'center' }}
                 layout={{ width }}
             />
@@ -248,7 +248,7 @@ export const WiredTradeRequirementsView = ({ requirement, tradeTypeName, canAcce
             <Box layout={{ width: 390, flexDirection: 'column', gap: 6 }}>
                 <ThemeText
                     text={t('inventory.wired_trading.requirements.title', '', { type: tradeTypeName })}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     alpha={0.5}
                     textOptions={{ align: 'center' }}
                     layout={{ width: 390 }}
@@ -301,14 +301,14 @@ export const WiredTradeRequirementsView = ({ requirement, tradeTypeName, canAcce
                 {isAuto && (
                     <ThemeText
                         text={t(autoHintKey, '', { amount: String(rules?.autoMultiplierMax ?? 1) })}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ wordWrap: true, wordWrapWidth: 390 }}
                     />
                 )}
                 {isPayment && showGet && (
                     <ThemeText
                         text={t('inventory.wired_trading.requirements.receive_text_disclaimer', '', { you_get_name: t('inventory.wired_trading.requirements.receiving') })}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#bf272a', wordWrap: true, wordWrapWidth: 390 }}
                     />
                 )}

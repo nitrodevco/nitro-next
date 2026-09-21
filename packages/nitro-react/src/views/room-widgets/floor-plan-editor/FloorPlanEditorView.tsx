@@ -158,7 +158,7 @@ export const FloorPlanEditorView = ({
                         />
                         <ThemeText
                             text={t('floor.plan.editor.subtitle')}
-                            textStyle="text-style-u-small"
+                            textStyle="u_small"
                             textOptions={{ fill: '#ffffff' }}
                             layout={{ position: 'absolute', left: 74, width: 115, top: 9, height: 15 }}
                         />
@@ -177,6 +177,7 @@ export const FloorPlanEditorView = ({
                     >
                         <ThemeText
                             text={t('floor.plan.editor.draw.mode')}
+                            textStyle="u_regular"
                             layout={{ position: 'absolute', left: 0, width: 161, top: 1, height: 17 }}
                         />
                         <Region
@@ -199,11 +200,11 @@ export const FloorPlanEditorView = ({
                                 </ContainerButton>
                             ))}
                             <ThemeImage
-                                src={LayoutImage('shared/landing_view_reception_horizontal.png')}
+                                src={LayoutImage('friend-bar/landing_view_reception_horizontal.png')}
                                 layout={{ position: 'absolute', left: 122, top: 0, width: 2, height: 42 }}
                             />
                             <ThemeImage
-                                src={LayoutImage('shared/landing_view_reception_horizontal.png')}
+                                src={LayoutImage('friend-bar/landing_view_reception_horizontal.png')}
                                 layout={{ position: 'absolute', left: 256, top: 0, width: 2, height: 42 }}
                             />
                         </Region>
@@ -319,7 +320,7 @@ export const FloorPlanEditorView = ({
                         </ContainerButton>
                     </Region>
                     <ThemeImage
-                        src={LayoutImage('shared/landing_view_reception_horizontal.png')}
+                        src={LayoutImage('friend-bar/landing_view_reception_horizontal.png')}
                         layout={{ position: 'absolute', left: 142, top: 3, width: 3, height: 97 }}
                     />
                     <Region layout={{ position: 'absolute', left: 146, top: 3, width: 128, height: 99 }}>
@@ -364,13 +365,14 @@ export const FloorPlanEditorView = ({
                         />
                         <ThemeText
                             text={t('floor.editor.wall.height')}
+                            textStyle="u_regular"
                             name="wall_height_text"
                             alpha={wallHeightEnabled ? 1 : 0.6}
                             layout={{ width: 105, height: 17, flexShrink: 0 }}
                         />
                         <ThemeText
                             text={String(wallHeightValue + 1)}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             textOptions={{ fill: '#5f5f5f', align: 'center' }}
                             name="wall_height_number"
                             alpha={wallHeightEnabled ? 1 : 0.6}
@@ -390,7 +392,7 @@ export const FloorPlanEditorView = ({
                         >
                             <ThemeImage
                                 name="wall_height_slider"
-                                src={LayoutImage('shared/icons_toolbar_divider.png')}
+                                src={LayoutImage('toolbar/icons_toolbar_divider.png')}
                                 stretch
                                 layout={{ position: 'absolute', left: 0, top: 0, width: 111, height: 30 }}
                             />
@@ -425,7 +427,7 @@ export const FloorPlanEditorView = ({
                             variant="3"
                             name="reload"
                             onPointerTap={onReload}
-                            textStyle="text-style-button-shiny-bold"
+                            textStyle="button_shiny_bold"
                             layout={{ width: 120, height: 35, flexShrink: 0, minWidth: 100, maxWidth: 120 }}
                         >
                             {t('floor.plan.editor.reload')}
@@ -439,7 +441,7 @@ export const FloorPlanEditorView = ({
                             variant="3"
                             name="import_export"
                             onPointerTap={() => setImportExportVisible(!importExportVisible)}
-                            textStyle="text-style-button-shiny-bold"
+                            textStyle="button_shiny_bold"
                             layout={{ width: 120, height: 35, flexShrink: 0, minWidth: 90, maxWidth: 120 }}
                         >
                             {t('floor.plan.editor.import.export')}
@@ -448,7 +450,7 @@ export const FloorPlanEditorView = ({
                             variant="3"
                             name="cancel"
                             onPointerTap={onClose}
-                            textStyle="text-style-button-shiny-bold"
+                            textStyle="button_shiny_bold"
                             layout={{ width: 120, height: 35, flexShrink: 0, minWidth: 90, maxWidth: 120 }}
                         >
                             {t('floor.plan.editor.cancel')}
@@ -459,7 +461,7 @@ export const FloorPlanEditorView = ({
                             tintColor="#0bb3e3"
                             disabled={!canSave}
                             onPointerTap={() => onSave(wallHeightEnabled ? wallHeightValue : -1)}
-                            textStyle="text-style-button-shiny-bold"
+                            textStyle="button_shiny_bold"
                             layout={{ width: 120, height: 35, flexShrink: 0, minWidth: 90, maxWidth: 120 }}
                         >
                             {t('floor.plan.editor.save')}

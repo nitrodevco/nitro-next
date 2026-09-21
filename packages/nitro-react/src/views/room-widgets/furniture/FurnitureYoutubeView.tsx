@@ -81,6 +81,7 @@ export const FurnitureYoutubeView = ({
                     : (
                             <ThemeText
                                 text={t('widget.furni.video_viewer.no_videos')}
+                                textStyle="il_regular_white"
                                 textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 290 }}
                                 verticalAlign="top"
                                 layout={{ flex: 1 }}
@@ -89,7 +90,7 @@ export const FurnitureYoutubeView = ({
                 {!!videoId.length && (
                     <ThemeText
                         text={videoId}
-                        textStyle="text-style-u-small"
+                        textStyle="u_small"
                     />
                 )}
             </Border>

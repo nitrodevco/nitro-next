@@ -69,12 +69,12 @@ export const FurnitureRentableSpaceView = ({
                             <>
                                 <ThemeText
                                     text={t('rentablespace.widget.rented_to_label')}
-                                    textStyle="text-style-bold"
+                                    textStyle="u_headline_small"
                                 />
                                 <ThemeText text={renterName} />
                                 <ThemeText
                                     text={t('rentablespace.widget.expires_label')}
-                                    textStyle="text-style-bold"
+                                    textStyle="u_headline_small"
                                 />
                                 <ThemeText text={`${hours}h ${minutes}m`} />
                             </>
@@ -82,6 +82,7 @@ export const FurnitureRentableSpaceView = ({
                     : (
                             <ThemeText
                                 text={t('rentablespace.widget.instructions')}
+                                textStyle="u_regular"
                                 textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 241 }}
                                 verticalAlign="top"
                                 layout={{ flex: 1 }}

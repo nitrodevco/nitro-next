@@ -101,7 +101,7 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 8 }}>
                     <ThemeText
                         text={info?.name.length ? info.name : name}
-                        textStyle="text-style-button-bold"
+                        textStyle="button_bold"
                         name="name_text"
                         layout={{ flex: 1 }}
                     />
@@ -115,6 +115,7 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                     <ThemeText
                         text={t(`pet.breed.${info.breedId}`, '')}
                         textOptions={{ fill: '#a4a4a4' }}
+                        flashFormat={{ antiAliasType: 'advanced' }}
                         name="breed_text"
                     />
                 )}
@@ -133,12 +134,14 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                             <ThemeText
                                 text={t('pet.level', '', { level: String(info.level), maxlevel: String(info.maxLevel) })}
                                 textOptions={{ fill: '#ffffff' }}
+                                flashFormat={{ antiAliasType: 'advanced' }}
                                 name="level_text"
                                 layout={{ position: 'absolute', left: 0, top: 10, height: 13 }}
                             />
                             <ThemeText
                                 text={t('infostand.pet.text.skill')}
                                 textOptions={{ fill: '#a4a4a4' }}
+                                flashFormat={{ antiAliasType: 'advanced' }}
                                 name="status_skill_text"
                                 layout={{ position: 'absolute', left: 0, top: 31, height: 13 }}
                             />
@@ -186,6 +189,7 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                                 <ThemeText
                                     text={t('infostand.pet.text.growth')}
                                     textOptions={{ fill: '#ffffff' }}
+                                    flashFormat={{ antiAliasType: 'advanced' }}
                                     name="growth_status_text"
                                 />
                                 <ThemeText
@@ -208,17 +212,20 @@ export const InfostandPetView = ({ info, figure, posture, name, canRespect, onRe
                             <ThemeText
                                 text={t('infostand.text.petrespect', '', { count: String(info.respect) })}
                                 textOptions={{ fill: canRespect ? '#ffffff' : '#a4a4a4' }}
+                                flashFormat={{ antiAliasType: 'advanced' }}
                                 name="petrespect_text"
                             />
                         </Region>
                         <ThemeText
                             text={t('pet.age', '', { age: String(info.age) })}
                             textOptions={{ fill: '#a4a4a4' }}
+                            flashFormat={{ antiAliasType: 'advanced' }}
                             name="age_text"
                         />
                         <ThemeText
                             text={t('infostand.text.petowner', 'Owner: %name%', { name: info.ownerName })}
                             textOptions={{ fill: '#a4a4a4' }}
+                            flashFormat={{ antiAliasType: 'advanced' }}
                             name="owner_text"
                         />
                     </>

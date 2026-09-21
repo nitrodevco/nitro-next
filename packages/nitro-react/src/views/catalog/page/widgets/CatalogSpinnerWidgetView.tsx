@@ -34,7 +34,7 @@ export const CatalogSpinnerWidgetView = () => {
         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%' }}>
             <ThemeText
                 text={t('catalog.bundlewidget.quantity')}
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 textOptions={{ fill: '#666666' }}
             />
             <Border

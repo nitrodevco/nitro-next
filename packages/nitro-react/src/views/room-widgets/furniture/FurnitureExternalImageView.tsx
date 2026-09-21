@@ -46,7 +46,7 @@ export const FurnitureExternalImageView = ({ imageUrl, creatorName, time, captio
                 <Box layout={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <ThemeText
                         text={creatorName}
-                        textStyle="text-style-bold"
+                        textStyle="bold"
                     />
                     {date && (
                         <ThemeText text={`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`} />

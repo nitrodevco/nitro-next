@@ -57,7 +57,7 @@ export const FurnitureUseProductView = ({
                 {infoKey && (
                     <ThemeText
                         text={t(infoKey)}
-                        textStyle="text-style-u-italic"
+                        textStyle="u_italic"
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 140, width: 200, top: 60, height: 40 }}

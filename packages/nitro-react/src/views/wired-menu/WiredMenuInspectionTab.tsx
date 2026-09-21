@@ -93,8 +93,9 @@ export const WiredMenuInspectionTab = () => {
             <Box layout={{ position: 'absolute', left: 14, top: 94, width: 150, height: 274 }}>
                 <ThemeText
                     text={t('wiredmenu.inspection.preview', 'wiredmenu.inspection.preview')}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000' }}
+                    flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
                 />
@@ -117,8 +118,9 @@ export const WiredMenuInspectionTab = () => {
             <Box layout={{ position: 'absolute', left: 183, top: 17, width: 303, height: 351 }}>
                 <ThemeText
                     text={t('wiredmenu.inspection.variables', 'wiredmenu.inspection.variables')}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000' }}
+                    flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
                 />

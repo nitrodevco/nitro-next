@@ -29,11 +29,11 @@ export const FurnitureMysteryBoxRewardView = ({ rewardName, onClose }: Furniture
             <Box layout={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                 <ThemeText
                     text={t('mysterybox.reward.title')}
-                    textStyle="text-style-il-heading-2"
+                    textStyle="il_heading_2"
                 />
                 <ThemeText
                     text={rewardName}
-                    textStyle="text-style-bold"
+                    textStyle="bold"
                     textOptions={{ align: 'center', wordWrap: true, wordWrapWidth: 380 }}
                 />
                 <Button

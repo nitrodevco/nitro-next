@@ -57,7 +57,7 @@ export const InfoBubbleMenuButton = ({ shape = 'action', width = '100%', height 
                         ? (
                                 <ThemeText
                                     text={caption}
-                                    textStyle={shape === 'grid' ? 'text-style-u-bold' : 'text-style-u-regular'}
+                                    textStyle={shape === 'grid' ? 'u_bold' : 'u_regular'}
                                     textOptions={{ fill: '#ffffff' }}
                                 />
                             )

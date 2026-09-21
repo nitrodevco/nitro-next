@@ -47,7 +47,7 @@ export const AvatarEditorWardrobe = ({ slots, slotCount, clubLevel, onSave, onLo
             >
                 <ThemeText
                     text={t('avatareditor.wardrobe.title')}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_bold"
                     textOptions={{ fill: '#83827e' }}
                 />
                 <Icon variant="13" />

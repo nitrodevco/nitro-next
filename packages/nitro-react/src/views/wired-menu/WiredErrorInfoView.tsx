@@ -46,7 +46,7 @@ export const WiredErrorInfoView = ({ error, onClose }: WiredErrorInfoViewProps) 
                 />
                 <ThemeText
                     text={error.errorName}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_bold"
                     textOptions={{ fill: '#000000' }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 109, top: 11, height: 17 }}
@@ -57,7 +57,7 @@ export const WiredErrorInfoView = ({ error, onClose }: WiredErrorInfoViewProps) 
                 >
                     <ThemeText
                         text={t(`wiredmenu.error_info.${error.errorId}`, `wiredmenu.error_info.${error.errorId}`)}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 315 }}
                         verticalAlign="top"
                     />

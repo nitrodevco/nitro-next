@@ -9,7 +9,7 @@
  * and the underline per text. The format starts from the key's Flash style and applies those on
  * top, so the text is still drawn by the exact renderer.
  */
-import { FLASH_TEXT_GUTTER, FlashTextFormat, FlashTextRenderer, getHabboKey, HABBO_TEXT_STYLES, layoutFlashTextBlock, normalizeFlashTextFormat } from '#base/theme';
+import { FLASH_TEXT_GUTTER, FlashTextFormat, FlashTextRenderer, HABBO_TEXT_STYLES, layoutFlashTextBlock, normalizeFlashTextFormat } from '#base/theme';
 import { WiredStyleTextTemplate } from '#base/wired';
 
 export interface WiredTextOverrides {
@@ -29,10 +29,9 @@ const parseColor = (color: string): number => parseInt(color.replace('#', ''), 1
 const luma = (color: number): number => (((color >> 16) & 0xFF) * 0.299 + ((color >> 8) & 0xFF) * 0.587 + (color & 0xFF) * 0.114) / 255;
 
 export const wiredTextFormat = (template: WiredStyleTextTemplate, { color, fontSize, underline }: WiredTextOverrides = {}): FlashTextFormat => {
-    const habboKey = getHabboKey(template.textStyle);
     const resolvedColor = color ?? template.color;
     const format = normalizeFlashTextFormat({
-        ...(habboKey ? HABBO_TEXT_STYLES[habboKey] : {}),
+        ...HABBO_TEXT_STYLES[template.textStyle],
         ...(template.bold ? { bold: true } : {}),
         ...((fontSize !== undefined && fontSize > 0) ? { fontSize } : {}),
         ...(underline ? { underline: true } : {}),

@@ -57,8 +57,9 @@ export const FurniturePresentView = ({ message, purchaserName, trustedSender, op
                             />
                             <ThemeText
                                 text={trustedSender ? t('gift.trusted.banner.text') : t('gift.untrusted.banner.text', '', { name: purchaserName })}
-                                textStyle="text-style-id-heading-3"
+                                textStyle="id_regular"
                                 textOptions={{ wordWrap: true, wordWrapWidth: 235 }}
+                                flashFormat={{ bold: true, etchingPosition: 'left' }}
                                 layout={{ position: 'absolute', left: 65, top: 10, width: 235, height: 30 }}
                             />
                         </Border>
@@ -71,7 +72,7 @@ export const FurniturePresentView = ({ message, purchaserName, trustedSender, op
                     />
                     <ThemeText
                         text={isOpened ? t('widget.furni.present.message_opened', '', { product: openedProduct }) : message}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 95, top: 31, width: 190, height: 100 }}
@@ -79,7 +80,7 @@ export const FurniturePresentView = ({ message, purchaserName, trustedSender, op
                     {!isOpened && !!purchaserName && (
                         <ThemeText
                             text={t('widget.furni.present.message_from', '', { name: purchaserName })}
-                            textStyle="text-style-u-italic"
+                            textStyle="u_italic"
                             textOptions={{ align: 'right' }}
                             layout={{ position: 'absolute', left: 95, top: 118, width: 190, height: 12 }}
                         />

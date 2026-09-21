@@ -65,11 +65,12 @@ export const FurnitureAreaHideView = ({
             >
                 <ThemeText
                     text={t('widget.areahide.area_selection')}
-                    textStyle="text-style-bold"
+                    textStyle="u_small"
+                    flashFormat={{ bold: true }}
                 />
                 <ThemeText
                     text={t('widget.areahide.area_selection.info')}
-                    textStyle="text-style-u-small"
+                    textStyle="u_small"
                     textOptions={{ wordWrap: true, wordWrapWidth: 268 }}
                     verticalAlign="top"
                     layout={{ width: 268, height: 32 }}
@@ -112,7 +113,7 @@ export const FurnitureAreaHideView = ({
                 ))}
                 <ThemeText
                     text={t('widget.areahide.options.invert.info')}
-                    textStyle="text-style-u-small"
+                    textStyle="u_small"
                     textOptions={{ wordWrap: true, wordWrapWidth: 268 }}
                     verticalAlign="top"
                     layout={{ width: 268, height: 32 }}

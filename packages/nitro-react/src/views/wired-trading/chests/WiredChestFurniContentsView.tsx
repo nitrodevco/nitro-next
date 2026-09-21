@@ -62,7 +62,7 @@ const ChestItemName = ({ storage }: ChestItemNameProps) => {
     return (
         <ThemeText
             text={name}
-            textStyle="text-style-u-bold"
+            textStyle="u_bold"
             textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
             verticalAlign="top"
             layout={{ position: 'absolute', left: 5, top: 5, width: 190 }}
@@ -161,7 +161,7 @@ export const WiredChestFurniContentsView = ({ chestId, canWithdraw }: WiredChest
                         {(searchText.length === 0) && (
                             <ThemeText
                                 text={t('catalog.search')}
-                                textStyle="text-style-u-regular"
+                                textStyle="u_regular"
                                 textOptions={{ fill: '#666666' }}
                                 alpha={0.5}
                                 layout={{ position: 'absolute', left: 4, top: 3 }}
@@ -177,7 +177,7 @@ export const WiredChestFurniContentsView = ({ chestId, canWithdraw }: WiredChest
                                     clearSearch();
                                 }
                             }}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textColor="#666666"
                             backgroundColor="#ffffff"
                             focusedBackgroundColor="#ffffff"
@@ -200,7 +200,7 @@ export const WiredChestFurniContentsView = ({ chestId, canWithdraw }: WiredChest
                 {!shown.length && (
                     <ThemeText
                         text={t('wiredchests.furni_chest.no_items')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         alpha={0.5}
                         textOptions={{ align: 'center' }}
                         layout={{ position: 'absolute', left: 0, right: 0, top: 113 }}
@@ -252,7 +252,7 @@ export const WiredChestFurniContentsView = ({ chestId, canWithdraw }: WiredChest
                             value={withdrawAmount}
                             onChange={value => setWithdrawAmount(value.replace(/[^0-9]/g, ''))}
                             onEnter={onWithdraw}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             layout={{ width: 28, height: 17, marginLeft: 1, marginTop: 1 }}
                         />
                     </Border>

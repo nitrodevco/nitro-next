@@ -90,7 +90,7 @@ export const RoomBotSkillConfigurationWidget = () => {
                 <Box layout={{ flexDirection: 'column', gap: 4, padding: 6 }}>
                     <ThemeText
                         text={t('bot.skill.name.configuration.new.name')}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#000000' }}
                     />
                     <TextInput
@@ -134,7 +134,7 @@ export const RoomBotSkillConfigurationWidget = () => {
             <Box layout={{ flexDirection: 'column', gap: 6, padding: 6 }}>
                 <ThemeText
                     text={t('bot.skill.chatter.configuration.chat.text')}
-                    textStyle="text-style-regular"
+                    textStyle="regular"
                     textOptions={{ fill: '#000000' }}
                 />
                 <Border layout={{ height: 178 }}>
@@ -154,7 +154,7 @@ export const RoomBotSkillConfigurationWidget = () => {
                     />
                     <ThemeText
                         text={t('bot.skill.chatter.configuration.automatic.chat')}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#000000' }}
                     />
                 </Box>
@@ -167,14 +167,14 @@ export const RoomBotSkillConfigurationWidget = () => {
                     />
                     <ThemeText
                         text={t('bot.skill.chatter.configuration.markov')}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#000000' }}
                     />
                 </Box>
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                     <ThemeText
                         text={t('bot.skill.chatter.configuration.chat.delay')}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#000000' }}
                     />
                     <TextInput
@@ -191,7 +191,7 @@ export const RoomBotSkillConfigurationWidget = () => {
                     >
                         <ThemeText
                             text={t('bot.skill.chatter.configuration.help.link')}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#0000ff' }}
                         />
                     </Box>

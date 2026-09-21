@@ -91,7 +91,7 @@ export const WiredChestItemCell = ({ itemType, isLimited = false, count, active 
                         >
                             <ThemeText
                                 text={String(count)}
-                                textStyle="text-style-regular"
+                                textStyle="regular"
                                 textOptions={{ fill: NUMBER_COLOR }}
                             />
                         </Region>
@@ -100,7 +100,7 @@ export const WiredChestItemCell = ({ itemType, isLimited = false, count, active 
                 {incomplete && (
                     <ThemeText
                         text={`+${count}`}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#666666', fontSize: (count >= 1000) ? 12 : 16, align: 'center' }}
                         layout={{ position: 'absolute', left: 3, top: 9, width: 34, height: 21 }}
                     />

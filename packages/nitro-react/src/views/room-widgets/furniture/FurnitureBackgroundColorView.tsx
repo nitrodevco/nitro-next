@@ -29,7 +29,7 @@ const Channel = ({ label, value, onChange }: ChannelProps) => (
     <Box layout={{ width: 251, height: 42, flexDirection: 'column', flexShrink: 0, justifyContent: 'center', gap: 2 }}>
         <ThemeText
             text={label}
-            textStyle="text-style-u-small"
+            textStyle="u_small"
             layout={{ width: 144, height: 15 }}
         />
         <Box layout={{ flexDirection: 'row', gap: 1, width: 206, height: 12 }}>
@@ -81,7 +81,7 @@ export const FurnitureBackgroundColorView = ({
                 <Box layout={{ flexDirection: 'row', alignItems: 'flex-start', height: 29, flexShrink: 0 }}>
                     <ThemeText
                         text={t('widget.backgroundcolor.info')}
-                        textStyle="text-style-u-small"
+                        textStyle="u_small"
                         textOptions={{ wordWrap: true, wordWrapWidth: 218 }}
                         verticalAlign="top"
                         layout={{ width: 218, height: 29 }}

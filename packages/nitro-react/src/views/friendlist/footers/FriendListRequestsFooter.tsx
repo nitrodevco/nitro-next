@@ -23,8 +23,7 @@ export const FriendListRequestsFooter = () => {
                     />
                     <ThemeText
                         text={t('friendlist.requests.acceptall')}
-                        textStyle="text-style-regular"
-                        textOptions={{ fill: '#000000' }}
+                        textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
                     />
                 </Button>
                 <Button layout={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', gap: 11, paddingLeft: 8, paddingTop: 4, paddingBottom: 4 }}>
@@ -35,8 +34,7 @@ export const FriendListRequestsFooter = () => {
                     />
                     <ThemeText
                         text={t('friendlist.requests.dismissall')}
-                        textStyle="text-style-regular"
-                        textOptions={{ fill: '#000000' }}
+                        textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
                     />
                 </Button>
             </Border>

@@ -39,7 +39,7 @@ export const RoomQuizView = ({ content, secondsLeft, showResult, likes, dislikes
                         />
                         <ThemeText
                             text={String(dislikes)}
-                            textStyle="text-style-u-headline-small"
+                            textStyle="u_headline_small"
                             textOptions={{ fill: '#ffffff' }}
                             name="lbl_dislike_count"
                             layout={{ position: 'absolute', alignSelf: 'center', top: 7, height: 19 }}
@@ -47,7 +47,7 @@ export const RoomQuizView = ({ content, secondsLeft, showResult, likes, dislikes
                     </Region>
                     <ThemeText
                         text={content}
-                        textStyle="text-style-ubuntu-condensed-regular"
+                        textStyle="ubuntu_condensed_regular"
                         textOptions={{ wordWrap: true, wordWrapWidth: 100 }}
                         name="quiz_topic"
                         verticalAlign="top"
@@ -61,7 +61,7 @@ export const RoomQuizView = ({ content, secondsLeft, showResult, likes, dislikes
                         />
                         <ThemeText
                             text={String(likes)}
-                            textStyle="text-style-u-headline-small"
+                            textStyle="u_headline_small"
                             textOptions={{ fill: '#ffffff' }}
                             name="lbl_like_count"
                             layout={{ position: 'absolute', alignSelf: 'center', top: 7, height: 19 }}
@@ -87,7 +87,7 @@ export const RoomQuizView = ({ content, secondsLeft, showResult, likes, dislikes
                 >
                     <ThemeText
                         text={content}
-                        textStyle="text-style-ubuntu-condensed-regular"
+                        textStyle="ubuntu_condensed_regular"
                         textOptions={{ wordWrap: true, wordWrapWidth: 336 }}
                         name="quiz_topic"
                         verticalAlign="top"
@@ -98,7 +98,7 @@ export const RoomQuizView = ({ content, secondsLeft, showResult, likes, dislikes
                 {secondsLeft > 0 && (
                     <ThemeText
                         text={String(secondsLeft)}
-                        textStyle="text-style-u-headline-small"
+                        textStyle="u_headline_small"
                         textOptions={{ fill: '#ffffff' }}
                         name="countdown"
                         layout={{ position: 'absolute', right: 8, top: 6, height: 19 }}

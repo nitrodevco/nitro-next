@@ -67,7 +67,7 @@ export const NavigatorCategoryView = ({ block, onEnter, onShowInfo, onCollapse, 
                     <ThemeText
                         layout={{ position: 'absolute', top: 5, left: 20, width: 320 }}
                         text={interpolate(title)}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#0F557B' }}
                     />
                 </Box>

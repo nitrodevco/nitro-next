@@ -88,7 +88,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
     const brandingValues = (details.staffDetails && (branding?.id === details.staffDetails.id)) ? branding.values : (details.staffDetails?.branding ?? []);
     const hasButtons = canMove || canRotate || (pickupMode !== PICKUP_NONE) || canUse || canWiredInspect;
 
-    const text = (value: string, style: TextStyleKey = 'text-style-regular', color: string = '#ffffff') => (
+    const text = (value: string, style: TextStyleKey = 'regular', color: string = '#ffffff') => (
         <ThemeText
             text={value}
             textStyle={style}
@@ -115,7 +115,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
             >
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 8 }}>
                     <Box layout={{ flexDirection: 'column', flex: 1 }}>
-                        {text(details.name, 'text-style-button-bold')}
+                        {text(details.name, 'button_bold')}
                     </Box>
                     <CloseButton
                         variant="1"
@@ -193,7 +193,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
                         {divider}
                         <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 3 }}>
                             <Box layout={{ flexDirection: 'column', flex: 1 }}>
-                                {text(details.chest.name, 'text-style-bold')}
+                                {text(details.chest.name, 'bold')}
                             </Box>
                             {details.chest.isLocked && (
                                 <ThemeImage
@@ -210,7 +210,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
                 {details.jukebox && (
                     <>
                         {divider}
-                        {text(t(details.jukebox.playing ? 'infostand.jukebox.text.now.playing' : 'infostand.jukebox.text.not.playing'), 'text-style-bold')}
+                        {text(t(details.jukebox.playing ? 'infostand.jukebox.text.now.playing' : 'infostand.jukebox.text.not.playing'), 'bold')}
                         {details.jukebox.playing && !!details.jukebox.songName.length && text(details.jukebox.songName)}
                         {details.jukebox.playing && !!details.jukebox.creator.length && text(details.jukebox.creator)}
                     </>
@@ -218,7 +218,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
                 {details.songDisk && (
                     <>
                         {divider}
-                        {!!details.songDisk.songName.length && text(details.songDisk.songName, 'text-style-bold')}
+                        {!!details.songDisk.songName.length && text(details.songDisk.songName, 'bold')}
                         {!!details.songDisk.creator.length && text(details.songDisk.creator)}
                     </>
                 )}
@@ -230,7 +230,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
                         onPointerTap={(details.ownerKind === 'user') ? onOpenOwner : undefined}
                         layout={{ flexDirection: 'row', width: '100%' }}
                     >
-                        {text(ownerLabel, 'text-style-button-bold')}
+                        {text(ownerLabel, 'button_bold')}
                     </Region>
                 )}
                 {(details.expiration >= 0) && text(t('infostand.rent.expiration', '', { time: GetFriendlyTime(t, details.expiration) }))}
@@ -245,7 +245,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
                             group
                         />
                         <Box layout={{ flex: 1 }}>
-                            {text(details.group.name, 'text-style-u-bold')}
+                            {text(details.group.name, 'u_bold')}
                         </Box>
                     </Region>
                 )}
@@ -257,7 +257,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
                                 key={variable.name}
                                 layout={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}
                             >
-                                {text(variable.name, 'text-style-bold')}
+                                {text(variable.name, 'bold')}
                                 {text(variable.value)}
                             </Box>
                         ))}
@@ -272,7 +272,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
                                 key={entry.key}
                                 layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
                             >
-                                {text(entry.key, 'text-style-bold')}
+                                {text(entry.key, 'bold')}
                                 <TextInput
                                     value={entry.value}
                                     onChange={value => setBranding({ id: details.staffDetails!.id, values: brandingValues.map((other, i) => ((i === index) ? { ...other, value } : other)) })}

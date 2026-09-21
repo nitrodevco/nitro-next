@@ -102,7 +102,7 @@ const FurniThumb = ({ group, selected, onSelect }: FurniThumbProps) => {
                     >
                         <ThemeText
                             text={String(unlockedCount)}
-                            textStyle="text-style-id-small"
+                            textStyle="id_small"
                         />
                     </Region>
                 )}
@@ -229,20 +229,20 @@ export const InventoryFurniView = () => {
                     </Box>
                     <ThemeText
                         text={name}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ wordWrap: true, wordWrapWidth: 180 }}
                         layout={{ width: 180 }}
                     />
                     <ThemeText
                         text={description}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ wordWrap: true, wordWrapWidth: 180 }}
                         layout={{ width: 180, maxHeight: 45 }}
                     />
                     {selectedItem && !tradeRunning && (
                         <Button
                             variant="3"
-                            textStyle="text-style-button-shiny-regular"
+                            textStyle="button_shiny_regular"
                             layout={{ width: 180, height: 22 }}
                         >
                             {t('inventory.furni.placetoroom')}
@@ -258,7 +258,7 @@ export const InventoryFurniView = () => {
                     {selectedItem && tradeRunning && (
                         <Button
                             variant="3"
-                            textStyle="text-style-button-shiny-regular"
+                            textStyle="button_shiny_regular"
                             disabled={!canOffer}
                             onPointerTap={onOffer}
                             layout={{ width: 148, height: 22 }}

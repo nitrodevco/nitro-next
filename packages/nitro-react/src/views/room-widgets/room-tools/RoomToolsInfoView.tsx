@@ -41,7 +41,7 @@ export const RoomToolsInfoView = ({ roomName, ownerLine, tags, left, onSelectTag
             >
                 <ThemeText
                     text={roomName}
-                    textStyle="text-style-ubuntu-condensed-title"
+                    textStyle="ubuntu_condensed_title"
                     name="room_name"
                     layout={{ position: 'absolute', left: 10, top: 6, height: 24, minWidth: 60, maxWidth: 300 }}
                 />
@@ -51,7 +51,7 @@ export const RoomToolsInfoView = ({ roomName, ownerLine, tags, left, onSelectTag
                 >
                     <ThemeText
                         text={ownerLine}
-                        textStyle="text-style-u-headline-medium"
+                        textStyle="u_headline_medium"
                         textOptions={{ fill: '#999999' }}
                         name="room_owner"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 21, maxWidth: 300 }}

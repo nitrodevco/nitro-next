@@ -23,7 +23,7 @@ export const CatalogPurchaseWidgetView = () => {
                 >
                     <ThemeText
                         text={t('catalog.purchase.select.info')}
-                        textStyle="text-style-u-headline-small"
+                        textStyle="u_headline_small"
                         textOptions={{ fill: '#666666' }}
                     />
                 </Border>

@@ -43,11 +43,11 @@ const KeyValue = ({ name, value }: KeyValueProps) => (
     <Box layout={{ flexDirection: 'row', gap: 2, height: 20 }}>
         <ThemeText
             text={name}
-            textStyle="text-style-u-bold"
+            textStyle="u_bold"
         />
         <ThemeText
             text={value}
-            textStyle="text-style-u-regular"
+            textStyle="u_regular"
         />
     </Box>
 );

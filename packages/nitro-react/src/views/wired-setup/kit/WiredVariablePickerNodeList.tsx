@@ -61,7 +61,7 @@ export const WiredVariablePickerNodeList = ({ nodes, width, isRoot, borderVarian
             >
                 <ThemeText
                     text={node.name}
-                    textStyle="text-style-regular"
+                    textStyle="regular"
                     textOptions={{ fill: '#555555' }}
                     alpha={blend}
                     layout={{ position: 'absolute', left: 7, top: 3 }}

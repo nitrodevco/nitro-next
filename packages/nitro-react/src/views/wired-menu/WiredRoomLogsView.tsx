@@ -143,7 +143,7 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
     const boldText = (key: string, left: number, top: number) => (
         <ThemeText
             text={t(key, key)}
-            textStyle="text-style-u-bold"
+            textStyle="u_bold"
             textOptions={{ fill: '#000000' }}
             verticalAlign="top"
             layout={{ position: 'absolute', left, top, height: 17 }}
@@ -171,7 +171,7 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
                 >
                     <ThemeText
                         text={t('wiredmenu.logs_overview.info', 'wiredmenu.logs_overview.info')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#000000', align: 'center', wordWrap: true, wordWrapWidth: 574 }}
                         verticalAlign="middle"
                         layout={{ position: 'absolute', left: 1, top: 3, width: 578, height: 32 }}
@@ -187,7 +187,7 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
                 </Box>
                 <ThemeText
                     text={t('wiredmenu.logs_overview.auto_refresh', 'wiredmenu.logs_overview.auto_refresh')}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 86 }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 614, top: 18, width: 90, height: 29 }}
@@ -203,7 +203,7 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
                             maxLength={FILTER_MAX_CHARS}
                             onChange={setQuery}
                             onEnter={() => updateFilters()}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             layout={{ position: 'absolute', left: 6, top: 4, width: 257, height: 18 }}
                         />
                     </Border>

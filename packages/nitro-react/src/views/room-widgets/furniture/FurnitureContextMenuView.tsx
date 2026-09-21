@@ -79,7 +79,7 @@ export const FurnitureContextMenuView = ({ objectData, menu, onClose }: Furnitur
             <Region layout={{ width: 107, flexDirection: 'column', alignItems: 'center', paddingTop: 7 }}>
                 <ThemeText
                     text={title}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_bold"
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                     layout={{ height: 16, width: '100%' }}
                 />
@@ -96,7 +96,7 @@ export const FurnitureContextMenuView = ({ objectData, menu, onClose }: Furnitur
                     >
                         <ThemeText
                             text={caption}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#ffffff', align: 'center' }}
                         />
                     </ContainerButton>

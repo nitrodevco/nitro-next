@@ -120,7 +120,7 @@ export const NavigatorRoomEntryDialogs = () => {
             >
                 <ThemeText
                     text={interpolate(room.name)}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_bold"
                     layout={{ position: 'absolute', left: 10, width: 176, top: 16, height: 16 }}
                 />
                 <ThemeText
@@ -131,6 +131,8 @@ export const NavigatorRoomEntryDialogs = () => {
                 />
                 <ThemeText
                     text={t('navigator.password.enter')}
+                    textOptions={{ fontFamily: 'Ubuntu', fontSize: 12 }}
+                    flashFormat={{ antiAliasType: 'advanced' }}
                     layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21 }}
                 />
                 <TextInput
@@ -182,7 +184,7 @@ export const NavigatorRoomEntryDialogs = () => {
                     <ThemeText
                         layout={{ flex: 1 }}
                         text={t(alert.messageKey)}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 210 }}
                     />
                 </Border>

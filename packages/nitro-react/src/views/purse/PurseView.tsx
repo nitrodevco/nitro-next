@@ -61,7 +61,7 @@ export const PurseView = () => {
                         >
                             <ThemeText
                                 text={String(amount)}
-                                textStyle="text-style-u-bold"
+                                textStyle="u_bold"
                                 textOptions={{ fill: color }}
                             />
                             <NitroCurrencyIcon
@@ -80,7 +80,7 @@ export const PurseView = () => {
                         <ThemeImage src={LayoutImage('toolbar/pursearea_hc_icon.png')} />
                         <ThemeText
                             text={t('purse.clubdays.zero.amount.text')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             textOptions={{ fill: '#00C1C4' }}
                         />
                     </Border>
@@ -92,7 +92,7 @@ export const PurseView = () => {
                         <ThemeImage src={LayoutImage('toolbar/pursearea_icon_earnings.png')} />
                         <ThemeText
                             text={t('earnings.title')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             textOptions={{ fill: '#00C1C4' }}
                         />
                     </Border>

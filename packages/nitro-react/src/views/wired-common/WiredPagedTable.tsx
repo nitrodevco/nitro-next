@@ -200,7 +200,7 @@ export const WiredPagedTable = <T extends object>({ currentPage, totalEntries, p
                     <Box layout={{ position: 'absolute', left: 0, right: 0, top: PAGE_TEXT_TOP, height: PAGE_TEXT_HEIGHT, flexDirection: 'row', justifyContent: 'center', gap: PAGE_TEXT_SPACING }}>
                         <ThemeText
                             text={pagingText?.start ?? ''}
-                            textStyle="text-style-regular"
+                            textStyle="regular"
                             alpha={PAGE_TEXT_BLEND}
                             verticalAlign="top"
                             layout={{ height: PAGE_TEXT_HEIGHT }}
@@ -217,14 +217,14 @@ export const WiredPagedTable = <T extends object>({ currentPage, totalEntries, p
                                 onFocusChange={(focused) => {
                                     if (!focused) navigateToInputPage();
                                 }}
-                                textStyle="text-style-regular"
+                                textStyle="regular"
                                 focusedBackgroundColor="#ffffff"
                                 layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                             />
                         </Region>
                         <ThemeText
                             text={pagingText?.end ?? ''}
-                            textStyle="text-style-regular"
+                            textStyle="regular"
                             alpha={PAGE_TEXT_BLEND}
                             verticalAlign="top"
                             layout={{ height: PAGE_TEXT_HEIGHT }}

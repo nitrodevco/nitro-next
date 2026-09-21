@@ -103,7 +103,7 @@ const OfferCell = ({ group, onPress }: OfferCellProps) => {
                 {(count > 1) && (
                     <ThemeText
                         text={String(count)}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         layout={{ position: 'absolute', right: 3, top: 2 }}
                     />
                 )}
@@ -129,7 +129,7 @@ const OfferSide = ({ title, groups, itemCount, credits, left, onPressGroup }: Of
         <Box layout={{ position: 'absolute', left, top: 29, width: 200, height: 200 }}>
             <ThemeText
                 text={title}
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 textOptions={{ align: 'center' }}
                 layout={{ position: 'absolute', left: 0, top: 2, width: 200 }}
             />
@@ -148,14 +148,14 @@ const OfferSide = ({ title, groups, itemCount, credits, left, onPressGroup }: Of
             </Border>
             <ThemeText
                 text={t('inventory.trading.info.itemcount', '', { value: String(itemCount) })}
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 alpha={TEXT_BLEND}
                 textOptions={{ align: 'center' }}
                 layout={{ position: 'absolute', left: 0, top: 162, width: 200 }}
             />
             <ThemeText
                 text={t('inventory.trading.info.creditvalue', '', { value: String(credits) })}
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 alpha={TEXT_BLEND}
                 textOptions={{ align: 'center' }}
                 layout={{ position: 'absolute', left: 0, top: 180, width: 200 }}
@@ -267,7 +267,7 @@ export const WiredTradeView = () => {
                     >
                         <ThemeText
                             text={infoText}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             alpha={TEXT_BLEND}
                             textOptions={{ align: 'center' }}
                             layout={{ position: 'absolute', left: 38, top: 7, width: 401 }}
@@ -325,7 +325,7 @@ export const WiredTradeView = () => {
                         {(secondsLeft >= 0) && (secondsLeft < SECONDS_LEFT_LIMIT) && (
                             <ThemeText
                                 text={t('inventory.wired_trading.seconds_left', '', { seconds: (seconds < 10) ? `0${seconds}` : String(seconds), minutes: String(minutes) })}
-                                textStyle="text-style-u-regular"
+                                textStyle="u_regular"
                                 textOptions={{ fill: '#bf272a' }}
                                 layout={{ marginTop: 5 }}
                             />

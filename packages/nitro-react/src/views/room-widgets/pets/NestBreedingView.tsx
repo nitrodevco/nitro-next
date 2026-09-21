@@ -41,7 +41,7 @@ export const NestBreedingView = ({ pet1, pet2, rarityCategories, resultPetType, 
     // A refusal from the server hands the field back.
     const locked = sent && !nameRejected;
 
-    const text = (value: string, style: 'text-style-regular' | 'text-style-bold' | 'text-style-il-heading-3' = 'text-style-regular', width: number = WIDTH - 24) => (
+    const text = (value: string, style: 'regular' | 'bold' | 'il_heading_3' = 'regular', width: number = WIDTH - 24) => (
         <ThemeText
             text={value}
             textStyle={style}
@@ -51,14 +51,14 @@ export const NestBreedingView = ({ pet1, pet2, rarityCategories, resultPetType, 
 
     const parent = (pet: IBreedingPetInfo, index: 1 | 2) => (
         <Box layout={{ width: PET_COLUMN_WIDTH, flexDirection: 'column', gap: 1, alignItems: 'center' }}>
-            {text(t(`breedpets.widget.pet${index}.name`, pet.name, { name: pet.name }), 'text-style-bold', PET_COLUMN_WIDTH)}
+            {text(t(`breedpets.widget.pet${index}.name`, pet.name, { name: pet.name }), 'bold', PET_COLUMN_WIDTH)}
             <PetPortraitView
                 figure={pet.figure}
                 width={PET_COLUMN_WIDTH}
                 height={70}
             />
-            {text(t(`breedpets.widget.pet${index}.level`, '', { level: String(pet.level) }), 'text-style-regular', PET_COLUMN_WIDTH)}
-            {text(t(`breedpets.widget.pet${index}.description`, '', { name: pet.owner }), 'text-style-regular', PET_COLUMN_WIDTH)}
+            {text(t(`breedpets.widget.pet${index}.level`, '', { level: String(pet.level) }), 'regular', PET_COLUMN_WIDTH)}
+            {text(t(`breedpets.widget.pet${index}.description`, '', { name: pet.owner }), 'regular', PET_COLUMN_WIDTH)}
         </Box>
     );
 
@@ -82,7 +82,7 @@ export const NestBreedingView = ({ pet1, pet2, rarityCategories, resultPetType, 
                     {parent(pet2, 2)}
                 </Border>
                 <Box layout={{ flexDirection: 'column', gap: 2 }}>
-                    {text(t('breedpets.confirmation.widget.baby.name'), 'text-style-bold')}
+                    {text(t('breedpets.confirmation.widget.baby.name'), 'bold')}
                     <Border
                         variant="0"
                         layout={{ height: 31, padding: 5 }}
@@ -95,13 +95,13 @@ export const NestBreedingView = ({ pet1, pet2, rarityCategories, resultPetType, 
                         />
                     </Border>
                 </Box>
-                {text(t('breedpets.confirmation.widget.breeding.info'), 'text-style-il-heading-3')}
+                {text(t('breedpets.confirmation.widget.breeding.info'), 'il_heading_3')}
                 <Border
                     variant="0"
                     layout={{ flexDirection: 'column', gap: 5, padding: 10, height: 209 }}
                 >
-                    {text(t('breedpets.confirmation.widget.text'), 'text-style-regular', WIDTH - 44)}
-                    {text(t('breedpets.confirmation.widget.info'), 'text-style-regular', WIDTH - 44)}
+                    {text(t('breedpets.confirmation.widget.text'), 'regular', WIDTH - 44)}
+                    {text(t('breedpets.confirmation.widget.info'), 'regular', WIDTH - 44)}
                     {rarityCategories.map((category, index) => (
                         <Box
                             key={index}
@@ -109,7 +109,7 @@ export const NestBreedingView = ({ pet1, pet2, rarityCategories, resultPetType, 
                         >
                             <ThemeText
                                 text={t(`breedpets.confirmation.widget.raritycategory.${index + 1}`, '', { percent: String(category.chance) })}
-                                textStyle="text-style-regular"
+                                textStyle="regular"
                                 textOptions={{ fill: '#000000' }}
                                 layout={{ width: 104 }}
                             />
@@ -146,7 +146,7 @@ export const NestBreedingView = ({ pet1, pet2, rarityCategories, resultPetType, 
                 >
                     <ThemeText
                         text={t('breedpets.confirmation.widget.button.cancel')}
-                        textStyle="text-style-il-link-regular"
+                        textStyle="il_link_regular"
                         textOptions={{ fill: '#0000ff' }}
                     />
                 </Region>

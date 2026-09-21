@@ -104,7 +104,7 @@ export const CatalogProductViewWidgetView = () => {
                 <Box layout={{ position: 'absolute', top: 22, left: 5, width: 175, flexDirection: 'column', gap: 4 }}>
                     <ThemeText
                         text={product.productData?.name ?? t(activeOffer.localizationId)}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Box>

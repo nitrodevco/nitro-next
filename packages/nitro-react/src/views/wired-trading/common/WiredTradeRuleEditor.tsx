@@ -6,7 +6,9 @@
  *
  * - A node cell (`element_entry_template`): the furni's icon in an `#eeeeee` style 4 border, or
  *   the coins icon; the amount in a small badge unless it is a single furni; a close "x" at its
- *   top right while hovered (not in overview mode). A click edits the node.
+ *   top right while hovered (not in overview mode). A click edits the node. The template is
+ *   `dynamic_style="brightness_and_shadow_under_gentle"` with the border as its `#icon`, so a
+ *   pressed cell sinks a pixel and darkens.
  * - The rule (`isOneLineMode`): up to `MAX_NODES_IN_RULE` (5) nodes on one line; the "+" hides at 5.
  *   With `onRemove` a close "x" shows at the rule's top right while it is hovered.
  * - Overview mode is `NodeOverviewPreset` (the reward popup): no "+", no close buttons, the
@@ -70,6 +72,7 @@ const NodeCell = ({ node, closable, onPress, onClose }: NodeCellProps) => {
 
     return (
         <Region
+            dynamicStyle="brightness_and_shadow_under_gentle"
             cursor={onPress ? 'pointer' : undefined}
             onPointerTap={onPress}
             onPointerOver={() => setHovered(true)}
@@ -79,6 +82,7 @@ const NodeCell = ({ node, closable, onPress, onClose }: NodeCellProps) => {
             <Border
                 variant="4"
                 tintColor="#eeeeee"
+                dynamicRole="icon"
                 layout={{ position: 'absolute', left: 0, top: 0, width: CELL_SIZE, height: CELL_SIZE }}
             >
                 {isFurni && (iconUrl !== '') && (
@@ -104,7 +108,7 @@ const NodeCell = ({ node, closable, onPress, onClose }: NodeCellProps) => {
                         >
                             <ThemeText
                                 text={String(node.amount)}
-                                textStyle="text-style-u-bold"
+                                textStyle="u_bold"
                                 textOptions={{ fontSize: 10, fill: '#222222' }}
                                 layout={{ marginTop: -1 }}
                             />
@@ -160,7 +164,7 @@ export const WiredTradeRuleEditor = ({ title, nodes, overview = false, onAddNode
             >
                 <ThemeText
                     text={caption(title)}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     layout={{ height: 18 }}
                 />
                 <Box layout={{ flexDirection: 'row', flexWrap: overview ? 'wrap' : 'nowrap', gap: CELL_SPACING, minHeight: CELL_SIZE }}>

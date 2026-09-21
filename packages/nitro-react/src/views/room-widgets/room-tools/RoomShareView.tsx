@@ -47,15 +47,15 @@ export const RoomShareView = ({ embedCode, directLink, thumbnailUrl, onClose }: 
             >
                 <ThemeText
                     text={t('navigator.embed.headline')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 281 }}
+                    textStyle="u_bold"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 281, fontSize: 18 }}
                     name="embed_info_hdln"
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, right: 4, top: 0, height: 26 }}
                 />
                 <ThemeText
                     text={t('navigator.embed.info')}
-                    textStyle="text-style-u-small"
+                    textStyle="u_small"
                     textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
                     name="embed_info_txt"
                     verticalAlign="top"
@@ -63,16 +63,17 @@ export const RoomShareView = ({ embedCode, directLink, thumbnailUrl, onClose }: 
                 />
                 <ThemeText
                     text={embedCode}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
+                    textStyle="u_small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 286, fontSize: 14 }}
+                    flashFormat={{ underline: true }}
                     name="embed_src_txt"
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, right: -1, top: 68, height: 36 }}
                 />
                 <ThemeText
                     text={t('navigator.embed.direct.info')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 286 }}
+                    textStyle="u_small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 286, fontSize: 14 }}
                     name="embed_info_direct_txt"
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, right: -1, top: 107, height: 50 }}

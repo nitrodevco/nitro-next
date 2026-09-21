@@ -34,11 +34,11 @@ const Pair = ({ name, value }: PairProps) => (
     <Box layout={{ flexDirection: 'row', gap: 2, height: 20, flexShrink: 0 }}>
         <ThemeText
             text={name}
-            textStyle="text-style-u-bold"
+            textStyle="u_bold"
         />
         <ThemeText
             text={value}
-            textStyle="text-style-u-regular"
+            textStyle="u_regular"
         />
     </Box>
 );
@@ -89,7 +89,7 @@ const ItemsOverview = ({ title, coins, furnis, furniCount, isIncompleteData }: I
         <Box layout={{ position: 'relative', width: 165, height: 161 }}>
             <ThemeText
                 text={title}
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 textOptions={{ align: 'center' }}
                 layout={{ position: 'absolute', left: 0, top: 0, width: 165 }}
             />
@@ -132,7 +132,7 @@ const ItemsOverview = ({ title, coins, furnis, furniCount, isIncompleteData }: I
                 {isEmpty && (
                     <ThemeText
                         text={t('wiredchests.log_details.transactions.none_placeholder')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         alpha={0.5}
                         textOptions={{ align: 'center' }}
                         layout={{ position: 'absolute', left: 0, top: 41, width: 165 }}
@@ -250,14 +250,14 @@ export const WiredTransactionDetailsView = ({ details, onClose }: WiredTransacti
                     <Box layout={{ flexDirection: 'column', width: 293, gap: 1 }}>
                         <ThemeText
                             text={loc('wiredchests.log_details.extra.title')}
-                            textStyle="text-style-u-headline-small"
+                            textStyle="u_headline_small"
                         />
                         <Box layout={{ height: 7 }} />
                         {EXTRA_DESCRIPTIONS.map(index => (
                             <ThemeText
                                 key={index}
                                 text={loc(`wiredchests.log_details.extra.desc.${index}`)}
-                                textStyle="text-style-u-regular"
+                                textStyle="u_regular"
                                 textOptions={{ wordWrap: true, wordWrapWidth: 293 }}
                             />
                         ))}

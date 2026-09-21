@@ -47,7 +47,7 @@ export const FriendListTab = ({ value, caption, tooltip = '', gradientColors, da
                         <Box layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', paddingLeft: 8, paddingRight: 8, gap: 6 }}>
                             <ThemeText
                                 text={t(caption)}
-                                textStyle="text-style-regular"
+                                textStyle="regular"
                                 textOptions={{ fill: darkHeader ? '#ffffff' : '#000000' }}
                             />
                             {/* `FriendListTabsView.refreshHeader` trails the caption with the

@@ -95,7 +95,7 @@ const ValueBubble = ({ objectId, category, value, isAvatar }: ValueBubbleProps) 
             >
                 <ThemeText
                     text={value}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#ffffff', fontSize: 11 }}
                     verticalAlign="top"
                 />

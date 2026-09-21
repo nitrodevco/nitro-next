@@ -51,7 +51,7 @@ export const CatalogHeaderView = () => {
                 />
                 <ThemeText
                     text={activeNode?.localization ?? ''}
-                    textStyle="text-style-u-headline-big"
+                    textStyle="u_headline_big"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>

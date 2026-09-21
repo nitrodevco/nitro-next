@@ -37,7 +37,8 @@ export const RoomDoorbellView = ({ users, onAccept, onDeny, onClose }: RoomDoorb
         >
             <ThemeText
                 text={t('widgets.doorbell.info')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
+                textOptions={{ wordWrap: true, wordWrapWidth: 215, fontFamily: 'Ubuntu', fontSize: 12 }}
+                flashFormat={{ antiAliasType: 'advanced' }}
                 verticalAlign="top"
                 layout={{ position: 'absolute', left: 10, right: 12, top: 13, height: 32 }}
             />

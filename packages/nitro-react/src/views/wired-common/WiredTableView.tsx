@@ -193,13 +193,13 @@ interface TitleCellProps {
 const TitleCell = ({ column, width }: TitleCellProps) => {
     const alignment = column.alignment ?? 'center';
     const textWidth = Math.max(0, width - (TEXT_MARGIN * 2));
-    const clips = (measureTableText(column.title, 'text-style-bold') + (TEXT_GUTTER * 2)) > textWidth;
+    const clips = (measureTableText(column.title, 'bold') + (TEXT_GUTTER * 2)) > textWidth;
 
     return (
         <Box layout={{ width, height: TITLE_ROW_HEIGHT, flexShrink: 0, overflow: clips ? 'hidden' : undefined }}>
             <ThemeText
                 text={column.title}
-                textStyle="text-style-bold"
+                textStyle="bold"
                 textOptions={{ align: alignment }}
                 verticalAlign="top"
                 layout={{ position: 'absolute', left: TEXT_MARGIN, top: 2, width: textWidth, height: TEXT_HEIGHT }}
@@ -259,8 +259,8 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
     const isLink = (type === 'link');
     const textWidth = Math.max(0, width - (TEXT_MARGIN * 2));
     // TextController only replaces an overflow for autoSize "none" (a "left" column) and "right".
-    const fitted = useMemo(() => ((isLink || alignment === 'center') ? { text, overflown: false } : fitTableText(text, 'text-style-regular', textWidth)), [ isLink, alignment, text, textWidth ]);
-    const naturalWidth = useMemo(() => measureTableText(text, 'text-style-regular') + (TEXT_GUTTER * 2), [ text ]);
+    const fitted = useMemo(() => ((isLink || alignment === 'center') ? { text, overflown: false } : fitTableText(text, 'regular', textWidth)), [ isLink, alignment, text, textWidth ]);
+    const naturalWidth = useMemo(() => measureTableText(text, 'regular') + (TEXT_GUTTER * 2), [ text ]);
     const clips = isLink ? (naturalWidth > width) : ((alignment === 'center') && (naturalWidth > textWidth));
     const isInspecting = (inputValue !== null);
 
@@ -289,7 +289,7 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
             {!isInspecting && !isLink && (
                 <ThemeText
                     text={fitted.text}
-                    textStyle="text-style-regular"
+                    textStyle="regular"
                     textOptions={{ fill: textColor ?? '#000000', align: alignment }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: TEXT_MARGIN, top: 1, width: textWidth, height: TEXT_HEIGHT }}
@@ -309,14 +309,14 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
                     >
                         <ThemeText
                             text={text}
-                            textStyle="text-style-regular"
+                            textStyle="regular"
                             textOptions={{ fill: LINK_COLOR }}
                             verticalAlign="top"
                             layout={{ height: TEXT_HEIGHT }}
                         />
                         <Region
                             backgroundColor={LINK_COLOR}
-                            layout={{ position: 'absolute', left: TEXT_GUTTER, right: TEXT_GUTTER, top: tableLinkUnderlineY('text-style-regular'), height: 1 }}
+                            layout={{ position: 'absolute', left: TEXT_GUTTER, right: TEXT_GUTTER, top: tableLinkUnderlineY('regular'), height: 1 }}
                         />
                     </Region>
                 </Box>
@@ -345,7 +345,7 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
                         onFocusChange={(focused) => {
                             if (!focused) setInputValue(null);
                         }}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         focusedBackgroundColor="#ffffff"
                         layout={{ width: '100%', height: '100%' }}
                     />
@@ -551,7 +551,7 @@ export const WiredTableView = <T extends object>({ columns, rows, getRowId, getC
                 <Box layout={{ position: 'absolute', left: 0, right: 0, top: headerHeight, bottom: TABLE_MARGIN * 2, alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text={emptyText ?? t('wiredmenu.table.empty')}
-                        textStyle="text-style-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: EMPTY_TEXT_COLOR }}
                     />
                 </Box>

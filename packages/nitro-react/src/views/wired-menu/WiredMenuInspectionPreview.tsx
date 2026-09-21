@@ -93,7 +93,7 @@ export const WiredMenuInspectionPreview = ({ preview, showHighlightButton, highl
     const instruction = (key: string) => (
         <ThemeText
             text={t(key, key)}
-            textStyle="text-style-u-regular"
+            textStyle="u_regular"
             textOptions={{ fill: '#000000', align: 'center' }}
             alpha={0.6}
             verticalAlign="top"

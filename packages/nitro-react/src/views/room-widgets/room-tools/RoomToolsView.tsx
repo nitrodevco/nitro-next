@@ -71,40 +71,18 @@ export const RoomToolsView = ({
                     name="window_bg"
                     tintColor="#24231e"
                     blend={0.8}
+                    ownGraphicContext
                     layout={{ position: 'absolute', left: 1, width: 164, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="itemlist_buttons"
                         layout={{ position: 'absolute', left: 24, top: 6, minWidth: 140, flexDirection: 'column' }}
                     >
-                        {buttons.map(button => (
-                            <Region
-                                key={button.key}
-                                name={button.key}
-                                tooltip={button.tooltipKey ? t(button.tooltipKey) : undefined}
-                                dynamicStyle="brightness_and_shadow_under"
-                                disabled={button.disabled}
-                                onPointerTap={button.onPress}
-                                cursor="pointer"
-                                layout={{ width: 130, height: BUTTON_HEIGHT, flexShrink: 0 }}
-                            >
-                                <ThemeImage
-                                    src={button.icon}
-                                    dynamicRole="icon"
-                                    layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
-                                />
-                                <ThemeText
-                                    text={t(button.labelKey)}
-                                    textStyle="text-style-u-button-tab"
-                                    textOptions={{ fill: '#bbbbbb' }}
-                                    layout={{ position: 'absolute', left: 36, width: 90, top: 4, height: 14, maxWidth: 90 }}
-                                />
-                            </Region>
-                        ))}
                         <Region layout={{ width: 130, height: ZOOM_ROW_HEIGHT, flexShrink: 0 }}>
                             <ThemeText
                                 text={t('room.zoom.text', 'Zoom %zoom_level%', { zoom_level: String(zoomLevel) })}
-                                textOptions={{ fill: '#cccccc' }}
+                                textOptions={{ fill: '#cccccc', fontSize: 11 }}
+                                textStyle="u_regular"
                                 name="zoom_text"
                                 layout={{ position: 'absolute', left: 6, width: 90, top: 4, height: 14, maxWidth: 90 }}
                             />
@@ -114,6 +92,7 @@ export const RoomToolsView = ({
                             />
                             <Region
                                 name="zoom_in_btn"
+                                dynamicStyle="button"
                                 tooltip={t('room.zoom.zoom_in.tooltip')}
                                 disabled={!canZoomIn}
                                 onPointerTap={onZoomIn}
@@ -128,6 +107,7 @@ export const RoomToolsView = ({
                             </Region>
                             <Region
                                 name="zoom_out_btn"
+                                dynamicStyle="button"
                                 tooltip={t('room.zoom.zoom_out.tooltip')}
                                 disabled={!canZoomOut}
                                 onPointerTap={onZoomOut}
@@ -141,6 +121,33 @@ export const RoomToolsView = ({
                                 />
                             </Region>
                         </Region>
+                        <Region
+                            backgroundColor="#707070"
+                            layout={{ position: 'absolute', left: 3, width: 125, top: 26, height: 1 }}
+                        />
+                        {buttons.map(button => (
+                            <Region
+                                key={button.key}
+                                name={button.key}
+                                tooltip={button.tooltipKey ? t(button.tooltipKey) : undefined}
+                                dynamicStyle="brightness_and_shadow_under"
+                                disabled={button.disabled}
+                                onPointerTap={button.onPress}
+                                cursor="pointer"
+                                layout={{ alignItems: 'center', gap: 4, flexShrink: 0 }}
+                            >
+                                <ThemeImage
+                                    src={button.icon}
+                                    dynamicRole="icon"
+                                />
+                                <ThemeText
+                                    text={t(button.labelKey)}
+                                    textStyle="u_button_tab"
+                                    textOptions={{ fill: '#bbbbbb', fontSize: 11 }}
+                                    flashFormat={{ underline: true }}
+                                />
+                            </Region>
+                        ))}
                         <Region
                             name="cnt_history"
                             layout={{ width: 115, height: HISTORY_ROW_HEIGHT, flexShrink: 0 }}
@@ -214,23 +221,15 @@ export const RoomToolsView = ({
             )}
             <Border
                 variant="2"
-                name={collapsed ? 'side_bar_expand' : 'side_bar_collapse'}
                 tintColor="#3b3933"
-                layout={{ position: 'absolute', left: 0, width: ROOM_TOOLS_SIDE_BAR_WIDTH, top: 0, bottom: 0 }}
+                onPointerTap={onToggleCollapsed}
+                layout={{ position: 'absolute', left: 0, width: ROOM_TOOLS_SIDE_BAR_WIDTH, top: 0, bottom: 0, flex: 1, alignItems: 'center', justifyContent: 'center' }}
             >
-                <Region
-                    name={collapsed ? 'button_expand' : 'button_collapse'}
-                    onPointerTap={onToggleCollapsed}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                >
-                    {/* The same arrow bitmap either way, as the layout has it - only its inset differs. */}
-                    <ThemeImage
-                        src={LayoutImage('shared/roomtools_minimizebutton.png')}
-                        dynamicRole="icon"
-                        layout={{ position: 'absolute', left: collapsed ? 11 : 9, width: 6, alignSelf: 'center', height: 8 }}
-                    />
-                </Region>
+                <ThemeImage
+                    src={LayoutImage('shared/roomtools_minimizebutton.png')}
+                    dynamicRole="icon"
+                    scaleX={collapsed ? 1 : -1}
+                />
             </Border>
         </Box>
     );

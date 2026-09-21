@@ -63,7 +63,7 @@ export const FriendListView = () => {
             <Box layout={{ width: '100%', height: 20, flexShrink: 0, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingTop: 8, paddingRight: 32 }}>
                 <ThemeText
                     text={t(tooltip)}
-                    textStyle="text-style-regular"
+                    textStyle="regular"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Box>

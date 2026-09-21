@@ -33,7 +33,7 @@ export const FurnitureClothingChangeView = ({ onSelectGender, onClose }: Furnitu
             >
                 <ThemeText
                     text={t('widget.furni.clothingchange.gender.info')}
-                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 254 }}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 254, fontFamily: 'Volter', fontSize: 9 }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 20, width: 254, top: 16, height: 42 }}
                 />

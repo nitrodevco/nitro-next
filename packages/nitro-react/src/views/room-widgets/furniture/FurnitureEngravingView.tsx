@@ -69,19 +69,19 @@ export const FurnitureEngravingView = ({
             </Region>
             <ThemeText
                 text={t(`${theme.prefix}.engraving.caption`)}
-                textStyle="text-style-u-bold"
+                textStyle="u_bold"
                 textOptions={{ fill: theme.text, align: 'center' }}
                 layout={{ position: 'absolute', left: 79, width: 217, top: 126, height: 17 }}
             />
             <ThemeText
                 text={leftName}
-                textStyle="text-style-u-bold"
+                textStyle="u_bold"
                 textOptions={{ fill: theme.name, align: 'right' }}
                 layout={{ position: 'absolute', left: 19, width: 150, top: 175, height: 17 }}
             />
             <ThemeText
                 text={rightName}
-                textStyle="text-style-u-bold"
+                textStyle="u_bold"
                 textOptions={{ fill: theme.name }}
                 layout={{ position: 'absolute', left: 199, width: 87, top: 175, height: 17 }}
             />

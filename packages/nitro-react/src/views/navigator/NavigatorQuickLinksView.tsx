@@ -43,7 +43,7 @@ export const NavigatorQuickLinksView = () => {
                 <ThemeText
                     layout={{ flex: 1 }}
                     text={t('navigator.quick.links.title')}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_bold"
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Box>
@@ -61,7 +61,7 @@ export const NavigatorQuickLinksView = () => {
                         <ThemeText
                             layout={{ flex: 1 }}
                             text={interpolate(link.localization)}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#000000' }}
                         />
                         {hoveredId === link.id && (

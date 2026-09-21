@@ -239,7 +239,7 @@ const RightsRow = ({ name, onAction }: { name: string; onAction: () => void }) =
 const SettingHeading = ({ text }: { text: string }) => (
     <ThemeText
         text={text}
-        textStyle="text-style-u-bold"
+        textStyle="u_bold"
         textOptions={{ fill: '#000000' }}
         layout={{ marginTop: 4 }}
     />
@@ -353,8 +353,9 @@ export const RoomSettingsView = ({
                         />
                         <ThemeText
                             text={t('navigator.roomsettings.delete')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             textOptions={{ fill: '#bb2200' }}
+                            flashFormat={{ underline: true }}
                         />
                     </Region>
                 )}
@@ -367,6 +368,7 @@ export const RoomSettingsView = ({
             <SettingHeading text={t('navigator.roomsettings.roomaccess.caption')} />
             <ThemeText
                 text={t('navigator.roomsettings.roomaccess.info')}
+                textStyle="u_regular"
                 textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 300 }}
             />
             <SettingHeading text={t('navigator.roomsettings.doormode')} />
@@ -402,6 +404,7 @@ export const RoomSettingsView = ({
                     <SettingHeading text={t('notification.builders_club.room_locked.title')} />
                     <ThemeText
                         text={t('notification.builders_club.room_locked.message')}
+                        textStyle="u_regular"
                         textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 300 }}
                     />
                 </Box>
@@ -409,6 +412,7 @@ export const RoomSettingsView = ({
             {isGroupRoom && (
                 <ThemeText
                     text={t('navigator.roomsettings.roomaccess.guild.disclaimer')}
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 300 }}
                     layout={{ marginTop: 6 }}
                 />
@@ -480,6 +484,7 @@ export const RoomSettingsView = ({
             <SettingHeading text={t('navigator.roomsettings.vip.caption')} />
             <ThemeText
                 text={t('navigator.roomsettings.vip.info')}
+                textStyle="u_regular"
                 textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 300 }}
             />
             <SettingHeading text={t('navigator.roomsettings.vip_settings')} />

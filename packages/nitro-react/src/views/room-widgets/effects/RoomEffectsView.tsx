@@ -58,7 +58,7 @@ export const RoomEffectsView = ({ effects, onActivate, onToggleWear, onClose }: 
                 />
                 <ThemeText
                     text={t('widget.memenu.effects')}
-                    textStyle="text-style-u-frame-title"
+                    textStyle="u_frame_title"
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                     name="title"
                     layout={{ position: 'absolute', left: 3, right: 3, top: 7, height: 17 }}

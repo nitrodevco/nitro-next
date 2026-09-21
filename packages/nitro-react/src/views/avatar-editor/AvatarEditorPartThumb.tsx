@@ -45,7 +45,7 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
             { !isClear && !thumbnail && (
                 <ThemeImage
                     name="loading"
-                    src={LayoutImage('shared/avatar_editor_avatar_editor_download_icon.png')}
+                    src={LayoutImage('catalog/avatar_editor_avatar_editor_download_icon.png')}
                 />
             )}
             {thumbnail && (

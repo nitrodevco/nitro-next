@@ -119,29 +119,31 @@ export const WiredChestUpgradeView = ({ request, onClose }: WiredChestUpgradeVie
                 <Box layout={{ position: 'absolute', left: 143, top: 15, width: 197, flexDirection: 'column', gap: 4 }}>
                     <ThemeText
                         text={t('wiredchests.upgrade.capacity.extra', '', { purchase_capacity: String(purchaseCapacity) })}
-                        textStyle="text-style-u-headline-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
+                        textStyle="u_bold"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 197, fontSize: 14 }}
                         verticalAlign="top"
                         layout={{ width: 197 }}
                     />
                     <ThemeText
                         text={t('wiredchests.upgrade.capacity.current', '', { current_capacity: String(currentCapacity) })}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
+                        flashFormat={{ bold: false }}
                         verticalAlign="top"
                         layout={{ width: 197 }}
                     />
                     <ThemeText
                         text={t('wiredchests.upgrade.capacity.new', '', { new_capacity: String(currentCapacity + purchaseCapacity) })}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
+                        flashFormat={{ bold: false }}
                         verticalAlign="top"
                         layout={{ width: 197 }}
                     />
                     <Box layout={{ flexDirection: 'row', gap: 5, height: 25 }}>
                         <ThemeText
                             text={t('wiredchests.upgrade.capacity.amount')}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             layout={{ marginTop: 3 }}
                         />
                         <WiredStyleProvider style={UBUNTU_WIRED_STYLE}>
@@ -160,14 +162,14 @@ export const WiredChestUpgradeView = ({ request, onClose }: WiredChestUpgradeVie
                 <Box layout={{ position: 'absolute', left: 142, top: 137, height: 22, flexDirection: 'row' }}>
                     <ThemeText
                         text={t('catalog.purchase.confirmation.dialog.cost')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         layout={{ marginTop: 1, marginRight: 4 }}
                     />
                     <Box layout={{ flexDirection: 'row', gap: 2, height: 25 }}>
                         {(costCredits !== 0) && (
                             <ThemeText
                                 text={String(costCredits * amount)}
-                                textStyle="text-style-u-headline-small"
+                                textStyle="u_headline_small"
                                 layout={{ marginTop: 1 }}
                             />
                         )}
@@ -175,14 +177,14 @@ export const WiredChestUpgradeView = ({ request, onClose }: WiredChestUpgradeVie
                         {(costCredits !== 0) && (costDiamonds !== 0) && (
                             <ThemeText
                                 text="+"
-                                textStyle="text-style-u-headline-small"
+                                textStyle="u_headline_small"
                                 layout={{ marginTop: 1 }}
                             />
                         )}
                         {(costDiamonds !== 0) && (
                             <ThemeText
                                 text={String(costDiamonds * amount)}
-                                textStyle="text-style-u-headline-small"
+                                textStyle="u_headline_small"
                                 layout={{ marginTop: 1 }}
                             />
                         )}
@@ -192,7 +194,7 @@ export const WiredChestUpgradeView = ({ request, onClose }: WiredChestUpgradeVie
                 {errorKey && (
                     <ThemeText
                         text={t('wiredchests.upgrade.error', '', { reason: t(errorKey, errorKey) })}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: ERROR_COLOR, wordWrap: true, wordWrapWidth: 327 }}
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 12, top: 174, width: 327 }}

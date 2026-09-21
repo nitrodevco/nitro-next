@@ -39,8 +39,7 @@ export const FriendListRoomInviteView = () => {
             <Border layout={{ height: 116, flexDirection: 'column', paddingLeft: 9, paddingRight: 9, paddingTop: 4, paddingBottom: 4 }}>
                 <ThemeText
                     text={t('friendlist.invite.summary', '', { count: selectedFriendIds.length.toString() })}
-                    textStyle="text-style-regular"
-                    textOptions={{ fill: '#000000' }}
+                    textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
                 />
                 <TextInput
                     value={message}
@@ -53,8 +52,7 @@ export const FriendListRoomInviteView = () => {
                 <ThemeText
                     layout={{ marginTop: 1 }}
                     text={t('friendlist.invite.note')}
-                    textStyle="text-style-regular"
-                    textOptions={{ fill: '#000000' }}
+                    textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
                 />
             </Border>
             <Box layout={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>

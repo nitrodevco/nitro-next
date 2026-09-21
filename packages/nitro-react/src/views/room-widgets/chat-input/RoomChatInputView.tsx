@@ -430,10 +430,13 @@ export const RoomChatInputView = () => {
                     )}
                 </Region>
                 {isFloodBlocked && (
+                    // `block_text`'s own vars in `chatinput_window_new_xml`, over the default
+                    // `regular` style: Ubuntu bold 14 in advanced anti-aliasing, unkerned, red.
                     <ThemeText
                         name="block_text"
                         text={t('chat.input.alert.flood', 'You are talking too fast. Wait %time% seconds.', { time: String(floodRemaining) })}
                         textOptions={{ fill: '#ff0000', fontFamily: 'UbuntuBold', fontSize: 14 }}
+                        flashFormat={{ antiAliasType: 'advanced', sharpness: 0, thickness: 0, kerning: false }}
                         layout={{ position: 'absolute', left: 10, top: 9, width: 325, height: 23 }}
                     />
                 )}

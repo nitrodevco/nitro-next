@@ -58,7 +58,8 @@ export const FurnitureCraftingView = ({
                 <Box layout={{ width: 260, flexDirection: 'column', gap: 4 }}>
                     <ThemeText
                         text={t('crafting.title.products')}
-                        textStyle="text-style-bold"
+                        textStyle="u_regular"
+                        textOptions={{ fontFamily: 'UbuntuBold', fontSize: 14 }}
                     />
                     <Border layout={{ flex: 1 }}>
                         <ScrollArea
@@ -83,7 +84,8 @@ export const FurnitureCraftingView = ({
                 <Box layout={{ flex: 1, flexDirection: 'column', gap: 4 }}>
                     <ThemeText
                         text={t('crafting.title.mixer')}
-                        textStyle="text-style-bold"
+                        textStyle="u_regular"
+                        textOptions={{ fontFamily: 'UbuntuBold', fontSize: 14 }}
                     />
                     <Border layout={{ flex: 1, flexDirection: 'column', padding: 4, gap: 2 }}>
                         {ingredients.map(ingredient => (
@@ -96,7 +98,7 @@ export const FurnitureCraftingView = ({
                         {!!result.length && (
                             <ThemeText
                                 text={result}
-                                textStyle="text-style-bold"
+                                textStyle="bold"
                                 textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 220 }}
                                 verticalAlign="top"
                                 layout={{ marginTop: 6 }}

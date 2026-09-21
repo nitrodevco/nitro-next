@@ -37,7 +37,7 @@ export const CatalogNavigationSetItemView = ({ node }: CatalogNavigationSetItemV
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', flex: 1, paddingLeft: 10, paddingRight: 10, justifyContent: 'space-between' }}>
                         <ThemeText
                             text={node.localization}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             textOptions={{ fill: isActive ? '#ffffff' : '#666666' }}
                         />
                         {node.children.length > 0 && (

@@ -122,7 +122,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                         />
                         <ThemeText
                             text={info.name}
-                            textStyle="text-style-button-bold"
+                            textStyle="button_bold"
                         />
                     </Region>
                     <CloseButton
@@ -134,7 +134,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                 {!!info.realName.length && (
                     <ThemeText
                         text={t('infostand.text.realname', '', { realname: info.realName })}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#ffffff' }}
                     />
                 )}
@@ -214,7 +214,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                         >
                             <ThemeText
                                 text={(info.isOwnUser && !info.motto.length) ? t('infostand.motto.change') : info.motto}
-                                textStyle="text-style-regular"
+                                textStyle="regular"
                                 textOptions={{ fill: (info.isOwnUser && !info.motto.length) ? '#aaaaaa' : '#ffffff', wordWrap: true, wordWrapWidth: PANEL_WIDTH - 40 }}
                             />
                         </Box>
@@ -237,20 +237,21 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                 {carriesItem && (
                     <ThemeText
                         text={t('infostand.text.handitem', '', { item: t(`handitem${info.carryItem}`, `handitem${info.carryItem}`) })}
-                        textStyle="text-style-regular"
+                        textStyle="regular"
                         textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: PANEL_WIDTH - 20 }}
                     />
                 )}
                 {divider}
                 <ThemeText
                     text={`${t('infostand.text.achievement_score')} ${info.achievementScore}`}
-                    textStyle="text-style-frame-title"
+                    textOptions={{ fontFamily: 'VolterBold' }}
+                    flashFormat={{ antiAliasType: 'advanced' }}
                 />
                 {(badgesRank >= 0) && (
                     <ThemeText
                         text={t('infostand.text.badges_rank', '', { rank: `#${badgesRank}` })}
-                        textStyle="text-style-regular"
-                        textOptions={{ fill: '#ffffff' }}
+                        textOptions={{ fill: '#ffffff', fontFamily: 'VolterBold' }}
+                        flashFormat={{ antiAliasType: 'advanced' }}
                     />
                 )}
                 {RELATIONSHIP_ROWS.map(({ type, name }) => {
@@ -274,14 +275,14 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                             >
                                 <ThemeText
                                     text={relationship.randomFriendName}
-                                    textStyle="text-style-u-bold"
+                                    textStyle="u_bold"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
                             </Region>
                             {(relationship.friendCount > 1) && (
                                 <ThemeText
                                     text={t(`infostand.relstatus.${name}.others`, '', { amount: String(relationship.friendCount - 1) })}
-                                    textStyle="text-style-regular"
+                                    textStyle="regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
                             )}

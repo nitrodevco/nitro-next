@@ -33,7 +33,7 @@ const COLUMN_WIDTH = 122;
 export const PlantBreedingView = ({ mode, plant1, plant2, onBreed, onAccept, onCancel }: PlantBreedingViewProps) => {
     const t = useTranslation();
 
-    const text = (value: string, style: 'text-style-regular' | 'text-style-bold' | 'text-style-u-italic' = 'text-style-regular', width: number = WIDTH - 20) => (
+    const text = (value: string, style: 'regular' | 'bold' | 'u_italic' = 'regular', width: number = WIDTH - 20) => (
         <ThemeText
             text={value}
             textStyle={style}
@@ -43,15 +43,15 @@ export const PlantBreedingView = ({ mode, plant1, plant2, onBreed, onAccept, onC
 
     const column = (plant: BreedingPlant, index: 1 | 2) => (
         <Box layout={{ width: COLUMN_WIDTH, flexDirection: 'column', gap: 1, alignItems: 'center' }}>
-            {text(t(`breedpets.widget.plant${index}.name`, plant.name, { name: plant.name }), 'text-style-bold', COLUMN_WIDTH)}
+            {text(t(`breedpets.widget.plant${index}.name`, plant.name, { name: plant.name }), 'bold', COLUMN_WIDTH)}
             <PetPortraitView
                 figure={plant.figure}
                 posture={plant.posture}
                 width={COLUMN_WIDTH}
                 height={130}
             />
-            {text(t(`breedpets.widget.plant${index}.raritylevel`, '', { level: String(plant.rarityLevel) }), 'text-style-regular', COLUMN_WIDTH)}
-            {text(t(`breedpets.widget.plant${index}.description`, '', { name: plant.ownerName }), 'text-style-regular', COLUMN_WIDTH)}
+            {text(t(`breedpets.widget.plant${index}.raritylevel`, '', { level: String(plant.rarityLevel) }), 'regular', COLUMN_WIDTH)}
+            {text(t(`breedpets.widget.plant${index}.description`, '', { name: plant.ownerName }), 'regular', COLUMN_WIDTH)}
         </Box>
     );
 
@@ -67,7 +67,7 @@ export const PlantBreedingView = ({ mode, plant1, plant2, onBreed, onAccept, onC
         >
             <Region layout={{ flexDirection: 'column', gap: 10, padding: 10 }}>
                 {text((mode === 'ask') ? t('breedpets.widget.text') : t('breedpets.widget.request', '', { name: plant2.ownerName }))}
-                {text(t('breedpets.widget.info'), 'text-style-u-italic')}
+                {text(t('breedpets.widget.info'), 'u_italic')}
                 <Box layout={{ flexDirection: 'row', gap: 10 }}>
                     {column(plant1, 1)}
                     {column(plant2, 2)}
@@ -82,7 +82,7 @@ export const PlantBreedingView = ({ mode, plant1, plant2, onBreed, onAccept, onC
                     </Button>
                     <ButtonThick
                         variant="3"
-                        textStyle="text-style-button-shiny-bold"
+                        textStyle="button_shiny_bold"
                         onPointerTap={(mode === 'ask') ? onBreed : onAccept}
                         layout={{ width: COLUMN_WIDTH, height: 26 }}
                     >

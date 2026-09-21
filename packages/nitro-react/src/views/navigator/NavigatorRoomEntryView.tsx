@@ -55,7 +55,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
             />
             <ThemeText
                 text={String(room.population)}
-                textStyle="text-style-u-bold"
+                textStyle="u_bold"
                 textOptions={{ fill: '#ffffff' }}
             />
         </Border>
@@ -116,7 +116,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                 <ThemeText
                     layout={{ position: 'absolute', top: 116, left: 0, width: 100, height: 30 }}
                     text={interpolate(room.name)}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_bold"
                     textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 94, breakWords: true }}
                 />
             </Box>
@@ -138,7 +138,7 @@ export const NavigatorRoomEntryView = ({ room, mode, backgroundColor, onEnter, o
                 <ThemeText
                     layout={{ flex: 1, paddingLeft: 4 }}
                     text={interpolate(room.name)}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000' }}
                 />
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 1, flexShrink: 0, paddingRight: 2 }}>

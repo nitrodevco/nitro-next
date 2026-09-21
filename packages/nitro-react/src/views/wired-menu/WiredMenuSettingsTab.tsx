@@ -52,7 +52,7 @@ const permissionBoxes = (modifyMask: number, readMask: number) => {
 const SectionTitle = ({ text }: { text: string }) => (
     <ThemeText
         text={text}
-        textStyle="text-style-u-bold"
+        textStyle="u_bold"
         textOptions={{ fill: '#000000' }}
         verticalAlign="top"
         layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
@@ -119,8 +119,9 @@ export const WiredMenuSettingsTab = () => {
                     <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 102, flexDirection: 'column', gap: -1 }}>
                         <ThemeText
                             text={t('wiredmenu.settings.room_settings.modify_rights', 'wiredmenu.settings.room_settings.modify_rights')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#000000' }}
+                            flashFormat={{ bold: true }}
                             alpha={isRoomOwnerOrStaff ? 1 : 0.5}
                             verticalAlign="top"
                             layout={{ height: 20, flexShrink: 0 }}
@@ -136,8 +137,9 @@ export const WiredMenuSettingsTab = () => {
                     <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 102, flexDirection: 'column', gap: -1 }}>
                         <ThemeText
                             text={t('wiredmenu.settings.room_settings.read_rights', 'wiredmenu.settings.room_settings.read_rights')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#000000' }}
+                            flashFormat={{ bold: true }}
                             alpha={isRoomOwnerOrStaff ? 1 : 0.5}
                             verticalAlign="top"
                             layout={{ height: 20, flexShrink: 0 }}
@@ -153,8 +155,9 @@ export const WiredMenuSettingsTab = () => {
                     <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
                         <ThemeText
                             text={t('wiredmenu.settings.room_settings.timezone', 'wiredmenu.settings.room_settings.timezone')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#000000' }}
+                            flashFormat={{ bold: true }}
                             alpha={isRoomOwnerOrStaff ? 1 : 0.5}
                             verticalAlign="top"
                             layout={{ position: 'absolute', left: 0, top: 0, height: 20 }}
@@ -176,8 +179,9 @@ export const WiredMenuSettingsTab = () => {
                     <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
                         <ThemeText
                             text={t('wiredmenu.settings.room_settings.room_state', 'wiredmenu.settings.room_settings.room_state')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#000000' }}
+                            flashFormat={{ bold: true }}
                             verticalAlign="top"
                             layout={{ position: 'absolute', left: 0, top: 0, height: 20 }}
                         />
@@ -221,8 +225,9 @@ export const WiredMenuSettingsTab = () => {
                     <Box layout={{ position: 'absolute', left: 10, top: 8, width: 213, height: 101, flexDirection: 'column', gap: -1, overflow: 'hidden' }}>
                         <ThemeText
                             text={t('wiredmenu.settings.preferences.general', 'wiredmenu.settings.preferences.general')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#000000' }}
+                            flashFormat={{ bold: true }}
                             verticalAlign="top"
                             layout={{ height: 20, flexShrink: 0 }}
                         />
@@ -241,8 +246,9 @@ export const WiredMenuSettingsTab = () => {
                         <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
                             <ThemeText
                                 text={t('wiredmenu.settings.preferences.wired_style', 'wiredmenu.settings.preferences.wired_style')}
-                                textStyle="text-style-u-bold"
+                                textStyle="u_regular"
                                 textOptions={{ fill: '#000000' }}
+                                flashFormat={{ bold: true }}
                                 verticalAlign="top"
                                 layout={{ position: 'absolute', left: 0, top: 0, height: 20 }}
                             />

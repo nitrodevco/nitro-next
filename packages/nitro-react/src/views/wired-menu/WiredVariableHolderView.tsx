@@ -105,7 +105,7 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
     const boldText = (key: string) => (
         <ThemeText
             text={t(key, key)}
-            textStyle="text-style-u-bold"
+            textStyle="u_bold"
             textOptions={{ fill: '#000000' }}
             verticalAlign="top"
             layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
@@ -133,7 +133,7 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
                 >
                     <ThemeText
                         text={t('wiredmenu.variable_management_detail.info', 'wiredmenu.variable_management_detail.info')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#000000', align: 'center', wordWrap: true, wordWrapWidth: 214 }}
                         verticalAlign="middle"
                         layout={{ position: 'absolute', left: 5, top: 12, width: 218, height: 32 }}
@@ -184,7 +184,7 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
                         onChange={() => {}}
                         onKeyDown={() => true}
                         multiline
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         layout={{ position: 'absolute', left: 6, top: 6, width: 182, height: 80 }}
                     />
                 </Border>

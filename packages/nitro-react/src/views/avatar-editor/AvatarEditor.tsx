@@ -178,14 +178,14 @@ export const AvatarEditor = () => {
                     >
                         <ThemeText
                             text={name}
-                            textStyle="text-style-il-frame-modal-title"
+                            textStyle="il_frame_modal_title"
                             textOptions={{ fill: '#ffffff', align: 'center' }}
                             layout={{ top: 15 }}
                         />
                         <Button
                             onPointerTap={_ => setWardrobeVisible(!wardrobeVisible)}
                             variant="3"
-                            textStyle="text-style-button-shiny-regular"
+                            textStyle="button_shiny_regular"
                             layout={{ position: 'absolute', right: 11, top: 9, width: 55, height: 30 }}
                         >
                             <ThemeImage
@@ -322,7 +322,7 @@ export const AvatarEditor = () => {
                             <ButtonThick
                                 variant="3"
                                 onPointerTap={_ => saveFigure()}
-                                textStyle="text-style-button-shiny-bold"
+                                textStyle="button_shiny_bold"
                                 layout={{ width: 100, height: 28 }}
                             >
                                 {t('avatareditor.save')}

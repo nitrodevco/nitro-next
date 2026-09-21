@@ -39,7 +39,7 @@ export const NavigatorSearchView = () => {
         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, height: 36, paddingLeft: 4, paddingRight: 4 }}>
             <Dropmenu
                 variant="100"
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 textColor="#000000"
                 caption={t(`navigator.filter.${filterType}`)}
                 options={FILTER_TYPES.map(({ type }) => ({

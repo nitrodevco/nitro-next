@@ -17,7 +17,7 @@ export const FriendListGroup = ({ value, caption, children, showArrows = true }:
                 <>
                     <ThemeText
                         text={caption}
-                        textStyle="text-style-button-bold"
+                        textStyle="button_bold"
                         textOptions={{ fill: '#000000' }}
                     />
                     {showArrows && (

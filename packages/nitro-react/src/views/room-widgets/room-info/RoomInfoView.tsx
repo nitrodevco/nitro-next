@@ -103,7 +103,7 @@ export const RoomInfoView = ({
                 <Region layout={{ width: 224, flexDirection: 'row', alignItems: 'flex-start', gap: 4, flexShrink: 0 }}>
                     <ThemeText
                         text={roomName}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ wordWrap: true, wordWrapWidth: 153 }}
                         name="room_name"
                         verticalAlign="top"
@@ -155,7 +155,7 @@ export const RoomInfoView = ({
                     >
                         <ThemeText
                             text={t('navigator.roomownercaption')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             textOptions={{ fill: '#777777' }}
                             name="owner_caption"
                         />
@@ -166,7 +166,7 @@ export const RoomInfoView = ({
                         />
                         <ThemeText
                             text={ownerName}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             name="owner_name"
                         />
                     </Region>
@@ -200,7 +200,7 @@ export const RoomInfoView = ({
                 {!!description.length && (
                     <ThemeText
                         text={description}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
                         name="room_desc"
                         verticalAlign="top"
@@ -213,13 +213,13 @@ export const RoomInfoView = ({
                 >
                     <ThemeText
                         text={t('navigator.roomrating')}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#777777' }}
                         name="rating_caption"
                     />
                     <ThemeText
                         text={String(rating)}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         name="rating_txt"
                     />
                     {canRate && (
@@ -241,13 +241,13 @@ export const RoomInfoView = ({
                     >
                         <ThemeText
                             text={t('navigator.roomranking')}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             textOptions={{ fill: '#777777' }}
                             name="ranking_caption"
                         />
                         <ThemeText
                             text={String(ranking)}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             name="ranking_txt"
                         />
                     </Region>

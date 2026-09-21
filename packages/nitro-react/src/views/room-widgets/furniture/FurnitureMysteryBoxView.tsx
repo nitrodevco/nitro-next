@@ -46,7 +46,7 @@ export const FurnitureMysteryBoxView = ({ isOwner, onCancel, onClose }: Furnitur
                 </Region>
                 <ThemeText
                     text={t(`${prefix}subtitle`)}
-                    textStyle="text-style-il-heading-2"
+                    textStyle="il_heading_2"
                     textOptions={{ wordWrap: true, wordWrapWidth: 201 }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 115, width: 201, top: 34, height: 60 }}

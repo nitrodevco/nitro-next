@@ -41,7 +41,7 @@ export const RoomQueueView = ({ position, spectator, clubQueue, canChangeQueue, 
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <ThemeText
                     text={t(positionKey, 'Your position in the queue: %position%', { position: String(position) })}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_bold"
                     textOptions={{ wordWrap: true, wordWrapWidth: 217, align: 'center' }}
                     name="info_text"
                     verticalAlign="top"
@@ -51,6 +51,7 @@ export const RoomQueueView = ({ position, spectator, clubQueue, canChangeQueue, 
                     <ThemeText
                         text={t('room.queue.spectator.info')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
+                        flashFormat={{ antiAliasType: 'advanced' }}
                         name="spectator_info"
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 14, width: 200, top: 58, height: 29 }}

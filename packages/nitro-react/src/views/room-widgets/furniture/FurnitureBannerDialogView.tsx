@@ -52,7 +52,7 @@ export const FurnitureBannerDialogView = ({
                 />
                 <ThemeText
                     text={t(titleKey)}
-                    textStyle="text-style-u-headline-big"
+                    textStyle="u_headline_big"
                     textOptions={{ fill: '#ffffff' }}
                     layout={{ position: 'absolute', left: 16, width: 396, top: 11, height: 30 }}
                 />
@@ -76,7 +76,7 @@ export const FurnitureBannerDialogView = ({
                 >
                     <ThemeText
                         text={t('generic.cancel')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#333333' }}
                     />
                 </Region>

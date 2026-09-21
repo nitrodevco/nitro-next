@@ -53,7 +53,7 @@ export const InfostandBotView = ({ name, motto, figure, gender, ownerName, carry
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 8 }}>
                     <ThemeText
                         text={name}
-                        textStyle="text-style-button-bold"
+                        textStyle="button_bold"
                         name="name_text"
                         layout={{ flex: 1 }}
                     />

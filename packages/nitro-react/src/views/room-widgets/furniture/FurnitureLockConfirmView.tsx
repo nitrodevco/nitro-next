@@ -29,6 +29,7 @@ export const FurnitureLockConfirmView = ({ otherLocked, onConfirm, onCancel }: F
             <Box layout={{ flex: 1, flexDirection: 'column', gap: 8, padding: 8 }}>
                 <ThemeText
                     text={t('friend.furniture.confirm.lock.subtitle')}
+                    textStyle="il_heading_1"
                     textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 280 }}
                     verticalAlign="top"
                     layout={{ flex: 1 }}
@@ -36,7 +37,7 @@ export const FurnitureLockConfirmView = ({ otherLocked, onConfirm, onCancel }: F
                 {otherLocked && (
                     <ThemeText
                         text={t('friend.furniture.confirm.lock.other.locked')}
-                        textStyle="text-style-bold"
+                        textStyle="il_regular"
                         textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 280 }}
                         verticalAlign="top"
                     />

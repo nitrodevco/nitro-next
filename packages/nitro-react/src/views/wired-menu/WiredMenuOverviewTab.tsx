@@ -33,7 +33,7 @@ interface TextRow {
 const SectionTitle = ({ text, left, top }: { text: string; left: number; top: number }) => (
     <ThemeText
         text={text}
-        textStyle="text-style-u-bold"
+        textStyle="u_bold"
         textOptions={{ fill: '#000000' }}
         verticalAlign="top"
         layout={{ position: 'absolute', left, top, height: 19 }}
@@ -169,13 +169,14 @@ export const WiredMenuOverviewTab = () => {
                         {t('wiredmenu.variable_overview.manage', 'wiredmenu.variable_overview.manage')}
                     </Button>
                 </Box>
-                <Box
-                    alpha={canDelete ? 1 : 0.5}
-                    layout={{ width: 25, height: 25 }}
-                >
+                {/* `delete_button` is `dynamic_style="button"`: disabled, the style fades it (0.5, and its
+                    `#icon` rule halves the icon again), which is why `Util.disableSection` leaves the
+                    tagged icon's blend alone - so no hand-made fade wraps this one. */}
+                <Box layout={{ width: 25, height: 25 }}>
                     <ContainerButton
                         variant="7"
                         tintColor="#e33934"
+                        dynamicStyle="button"
                         disabled={!canDelete}
                         tooltip={t('wiredmenu.variable_overview.delete_all.tooltip', 'wiredmenu.variable_overview.delete_all.tooltip')}
                         onPointerTap={() => deleteWiredOverviewVariableHolders(send)}
@@ -183,6 +184,7 @@ export const WiredMenuOverviewTab = () => {
                     >
                         <ThemeImage
                             src={LayoutImage('shared/forum_forum_hide.png')}
+                            dynamicRole="icon"
                             eventMode="none"
                             layout={{ position: 'absolute', left: 6, top: 2, width: 16, height: 16 }}
                         />

@@ -128,8 +128,9 @@ export const WiredMenuMonitorTab = () => {
             <Box layout={{ position: 'absolute', left: 14, top: 18, width: 215, height: 123 }}>
                 <ThemeText
                     text={t('wiredmenu.monitor.statistics', 'wiredmenu.monitor.statistics')}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000' }}
+                    flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
                 />
@@ -177,8 +178,9 @@ export const WiredMenuMonitorTab = () => {
             <Box layout={{ position: 'absolute', left: 14, top: 152, width: 472, height: 218 }}>
                 <ThemeText
                     text={t('wiredmenu.monitor.log', 'wiredmenu.monitor.log')}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000' }}
+                    flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
                 />

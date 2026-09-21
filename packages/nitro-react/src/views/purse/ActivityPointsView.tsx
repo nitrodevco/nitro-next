@@ -38,12 +38,12 @@ export const ActivityPointsView = ({ layout }: ActivityPointsViewProps) => {
                     <Box layout={{ flex: 1, flexDirection: 'row', paddingLeft: 7, paddingRight: 16, justifyContent: 'space-between', alignItems: 'center' }}>
                         <ThemeText
                             text={name}
-                            textStyle="text-style-button-bold"
+                            textStyle="button_bold"
                             textOptions={{ fill: color }}
                         />
                         <ThemeText
                             text={amount > 0 ? String(amount) : t('purse.shells.zero.amount.text')}
-                            textStyle="text-style-button-bold"
+                            textStyle="button_bold"
                             textOptions={{ fill: '#ffffff' }}
                         />
                     </Box>

@@ -167,7 +167,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
                     >
                         <ThemeText
                             text={info.name}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             textOptions={{ fill: '#ffffff' }}
                         />
                     </Box>

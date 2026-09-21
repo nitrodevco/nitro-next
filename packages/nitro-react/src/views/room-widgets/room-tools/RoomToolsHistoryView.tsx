@@ -31,6 +31,7 @@ export const RoomToolsHistoryView = ({ entries, onSelect }: RoomToolsHistoryView
             variant="2"
             tintColor="#24231e"
             blend={0.8}
+            ownGraphicContext
             layout={{ width: WIDTH, height, padding: PADDING, flexDirection: 'column', gap: SPACING }}
         >
             {entries.map(entry => (

@@ -94,7 +94,7 @@ export const WiredInputField = ({ value, onChange, fieldWidth, height, multiline
                     >
                         <ThemeText
                             text={warning}
-                            textStyle="text-style-il-regular"
+                            textStyle="il_regular"
                         />
                     </Border>
                     <Box layout={{ position: 'absolute', top: ERROR_TIP_TOP - ERROR_TOP, width: ERROR_TIP_WIDTH, height: ERROR_TIP_HEIGHT, overflow: 'hidden' }}>
@@ -120,7 +120,7 @@ export const WiredInputField = ({ value, onChange, fieldWidth, height, multiline
                     >
                         <ThemeText
                             text={`${value.length}/${maxCharacters}`}
-                            textStyle="text-style-il-regular-white"
+                            textStyle="il_regular_white"
                         />
                     </Border>
                 </Box>

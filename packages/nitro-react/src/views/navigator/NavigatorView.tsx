@@ -153,7 +153,7 @@ export const NavigatorView = () => {
                                 <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 53 }}>
                                     <ThemeText
                                         text={t('navigator.search.returned.no.results')}
-                                        textStyle="text-style-u-headline-medium"
+                                        textStyle="u_headline_medium"
                                         textOptions={{ fill: '#000000' }}
                                     />
                                 </Box>
@@ -196,8 +196,9 @@ export const NavigatorView = () => {
                             <ThemeText
                                 layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
                                 text={t('navigator.create.room')}
-                                textStyle="text-style-u-bold"
+                                textStyle="id_heading_2"
                                 textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }}
+                                flashFormat={{ etchingColor: 0x3F000000, etchingPosition: 'bottom-right' }}
                             />
                         </Box>
                         {PROMOTE_SEARCH_CODES.includes(searchResult?.searchCodeOriginal ?? '')
@@ -217,8 +218,9 @@ export const NavigatorView = () => {
                                         <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
                                             text={t('navigator.promote.room')}
-                                            textStyle="text-style-u-bold"
+                                            textStyle="id_heading_2"
                                             textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }}
+                                            flashFormat={{ etchingColor: 0x3F000000, etchingPosition: 'bottom-right' }}
                                         />
                                     </Box>
                                 )
@@ -241,8 +243,9 @@ export const NavigatorView = () => {
                                         <ThemeText
                                             layout={{ position: 'absolute', top: 24, left: 62, width: 125 }}
                                             text={t('navigator.random.room')}
-                                            textStyle="text-style-u-bold"
+                                            textStyle="id_heading_2"
                                             textOptions={{ fill: '#ffffff', dropShadow: NAV_BUTTON_DROP_SHADOW }}
+                                            flashFormat={{ etchingColor: 0x3F000000, etchingPosition: 'bottom-right' }}
                                         />
                                     </Box>
                                 )}

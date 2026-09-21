@@ -37,7 +37,7 @@ export const WiredMenuCheckOption = ({ label, selected, onToggle, disabled = fal
             </Box>
             <ThemeText
                 text={label}
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 textOptions={{ fill: '#000000' }}
                 alpha={rowDisabled ? 0.5 : 1}
                 verticalAlign="top"

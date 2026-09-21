@@ -53,8 +53,8 @@ export const WiredChestWiredUpgradeView = ({ furniTypeId, isStarterChest, onBuy,
                 <Box layout={{ position: 'absolute', left: 143, top: 15, width: 197, flexDirection: 'column', gap: 4 }}>
                     <ThemeText
                         text={t('wiredchests.upgrade.wired.info')}
-                        textStyle="text-style-u-headline-small"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
+                        textStyle="u_bold"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 197, fontSize: 14 }}
                         verticalAlign="top"
                         layout={{ width: 197 }}
                     />
@@ -68,19 +68,21 @@ export const WiredChestWiredUpgradeView = ({ furniTypeId, isStarterChest, onBuy,
                 <Box layout={{ position: 'absolute', left: 142, top: 137, height: 22, flexDirection: 'row', gap: 4 }}>
                     <ThemeText
                         text={t('catalog.purchase.confirmation.dialog.cost')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         layout={{ marginTop: 1 }}
                     />
                     <ThemeText
                         text={t('wiredchests.upgrade.wired.cost')}
-                        textStyle="text-style-u-headline-small"
+                        textStyle="u_regular"
+                        textOptions={{ fontSize: 14 }}
+                        flashFormat={{ bold: true }}
                         layout={{ marginTop: 1 }}
                     />
                 </Box>
                 {isStarterChest && (
                     <ThemeText
                         text={t('wiredchests.upgrade.wired.error', '', { reason: t('wiredchests.upgrade.wired.error.reason.rookie_chest') })}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: ERROR_COLOR, wordWrap: true, wordWrapWidth: 327 }}
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 12, top: 174, width: 327 }}

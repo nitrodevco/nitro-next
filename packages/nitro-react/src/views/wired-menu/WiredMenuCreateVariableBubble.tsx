@@ -52,8 +52,9 @@ export const WiredMenuCreateVariableBubble = ({ variables, filter, target, roomI
                 <Box layout={{ position: 'absolute', left: 14, top: 14, width: 158, height: 42 }}>
                     <ThemeText
                         text={t('wiredmenu.inspection.select_variable', 'wiredmenu.inspection.select_variable')}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#000000' }}
+                        flashFormat={{ bold: true }}
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
                     />
@@ -77,8 +78,9 @@ export const WiredMenuCreateVariableBubble = ({ variables, filter, target, roomI
                 >
                     <ThemeText
                         text={t('wiredmenu.inspection.select_value', 'wiredmenu.inspection.select_value')}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#000000' }}
+                        flashFormat={{ bold: true }}
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
                     />
@@ -89,7 +91,7 @@ export const WiredMenuCreateVariableBubble = ({ variables, filter, target, roomI
                         <TextInput
                             value={valueText}
                             onChange={value => setValueText(value.replace(/[^0-9-]/g, ''))}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             layout={{ position: 'absolute', left: 5, top: 3, width: 71, height: 17 }}
                         />
                     </Border>

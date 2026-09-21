@@ -122,7 +122,7 @@ export const WiredVariableOwnersView = ({ page, variable }: WiredVariableOwnersV
     const boldText = (key: string, left: number, top: number) => (
         <ThemeText
             text={loc(key)}
-            textStyle="text-style-u-bold"
+            textStyle="u_bold"
             textOptions={{ fill: '#000000' }}
             verticalAlign="top"
             layout={{ position: 'absolute', left, top, height: 17 }}
@@ -150,7 +150,7 @@ export const WiredVariableOwnersView = ({ page, variable }: WiredVariableOwnersV
                 >
                     <ThemeText
                         text={INFO_TEXT.replace(/\r/g, '\n')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#000000', align: 'center', wordWrap: true, wordWrapWidth: 596 }}
                         verticalAlign="middle"
                         layout={{ position: 'absolute', left: 1, top: 3, width: 600, height: 32 }}
@@ -159,14 +159,14 @@ export const WiredVariableOwnersView = ({ page, variable }: WiredVariableOwnersV
                 <Box layout={{ position: 'absolute', left: 15, top: 55, height: 20, flexDirection: 'row', gap: 2 }}>
                     <ThemeText
                         text={loc('wiredmenu.variable_management.variable_name')}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#000000' }}
                         verticalAlign="top"
                         layout={{ height: 17 }}
                     />
                     <ThemeText
                         text={variable.variableName}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#000000' }}
                         verticalAlign="top"
                         layout={{ height: 17 }}

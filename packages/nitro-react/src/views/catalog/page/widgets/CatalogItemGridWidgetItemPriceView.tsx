@@ -16,7 +16,7 @@ export const CatalogItemGridWidgetItemPriceView = ({ offer }: CatalogItemGridWid
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 2 }}>
                     <ThemeText
                         text={String(offer.priceInCredits)}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#000000' }}
                         layout={{ height: 12 }}
                     />
@@ -31,13 +31,13 @@ export const CatalogItemGridWidgetItemPriceView = ({ offer }: CatalogItemGridWid
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 2 }}>
                     <ThemeText
                         text="+"
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#000000' }}
                         layout={{ height: 12 }}
                     />
                     <ThemeText
                         text={String(offer.priceInActivityPoints)}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#000000' }}
                         layout={{ height: 12 }}
                     />

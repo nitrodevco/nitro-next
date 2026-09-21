@@ -31,7 +31,7 @@ export const FurnitureAlertView = ({ captionKey, subtitleKey, messageKey, onClos
                 {subtitleKey && (
                     <ThemeText
                         text={t(subtitleKey)}
-                        textStyle="text-style-bold"
+                        textStyle="bold"
                         textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 270 }}
                         verticalAlign="top"
                     />

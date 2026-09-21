@@ -40,7 +40,7 @@ export const RoomFriendRequestView = ({ requesterName, onAccept, onDecline, onIg
                 >
                     <ThemeText
                         text={t('widget.friendrequest.from', '%name% wants to be your friend', { name: requesterName })}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 142 }}
                         verticalAlign="top"
                     />
@@ -53,8 +53,9 @@ export const RoomFriendRequestView = ({ requesterName, onAccept, onDecline, onIg
                 >
                     <ThemeText
                         text={t('widget.friendrequest.decline')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff' }}
+                        textStyle="u_regular"
+                        textOptions={{ fill: '#ffffff', fontSize: 11 }}
+                        flashFormat={{ underline: true, thickness: -15, sharpness: 80 }}
                     />
                 </Region>
                 <ContainerButton
@@ -70,7 +71,9 @@ export const RoomFriendRequestView = ({ requesterName, onAccept, onDecline, onIg
                     />
                     <ThemeText
                         text={t('widget.friendrequest.accept')}
-                        textStyle="text-style-button-shiny-bold"
+                        textStyle="button_shiny_bold"
+                        textOptions={{ fontSize: 11 }}
+                        flashFormat={{ thickness: -15, sharpness: 80 }}
                         layout={{ position: 'absolute', left: 23, width: 65, top: 3, height: 16 }}
                     />
                 </ContainerButton>

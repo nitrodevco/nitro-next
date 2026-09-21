@@ -56,7 +56,7 @@ export const RoomPollQuestionView = ({
             >
                 <ThemeText
                     text={headline}
-                    textStyle="text-style-u-headline-big"
+                    textStyle="u_headline_big"
                     textOptions={{ fill: '#ffffff' }}
                     name="poll_question_headline"
                     layout={{ position: 'absolute', left: 80, right: 10, top: 15, height: 25 }}
@@ -74,7 +74,7 @@ export const RoomPollQuestionView = ({
             >
                 <ThemeText
                     text={question.questionText}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
                     name="poll_question_text"
                     verticalAlign="top"
@@ -129,7 +129,7 @@ export const RoomPollQuestionView = ({
                                         )}
                                 <ThemeText
                                     text={choice.choiceText}
-                                    textStyle="text-style-u-regular"
+                                    textStyle="u_regular"
                                     textOptions={{ wordWrap: true, wordWrapWidth: 341 }}
                                     name="poll_answer_entity_text"
                                     verticalAlign="top"
@@ -144,7 +144,7 @@ export const RoomPollQuestionView = ({
             >
                 <ThemeText
                     text={t('poll_question_number', '%number% / %count%', { number: String(number), count: String(count) })}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#333333' }}
                     name="poll_question_number"
                     layout={{ position: 'absolute', left: 0, width: 100, top: 10, height: 17 }}
@@ -157,7 +157,7 @@ export const RoomPollQuestionView = ({
                 >
                     <ThemeText
                         text={t('cancel')}
-                        textStyle="text-style-u-regular"
+                        textStyle="u_regular"
                         textOptions={{ fill: '#333333' }}
                     />
                 </Region>

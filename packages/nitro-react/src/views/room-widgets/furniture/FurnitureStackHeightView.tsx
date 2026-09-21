@@ -54,6 +54,7 @@ export const FurnitureStackHeightView = ({ height, multiWalkMode, onApply, onAbo
         >
             <ThemeText
                 text={t('widget.custom.stack.height.text')}
+                textStyle="il_regular"
                 textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 294 }}
                 verticalAlign="top"
                 layout={{ width: 294, height: 45, marginBottom: 6 }}
@@ -115,6 +116,7 @@ export const FurnitureStackHeightView = ({ height, multiWalkMode, onApply, onAbo
                 />
                 <ThemeText
                     text={t('widget.custom.multiwalk_mode.text')}
+                    textStyle="il_regular"
                     textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 282 }}
                     verticalAlign="top"
                     layout={{ width: 282, height: 28 }}

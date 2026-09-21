@@ -53,7 +53,7 @@ const SeedPicture = ({ className }: { className: string }) => {
 export const BreedingResultView = ({ seeds, luckyUser, onClose }: BreedingResultViewProps) => {
     const t = useTranslation();
 
-    const text = (value: string, style: 'text-style-regular' | 'text-style-bold' | 'text-style-u-italic' = 'text-style-regular', width: number = WIDTH - 20) => (
+    const text = (value: string, style: 'regular' | 'bold' | 'u_italic' = 'regular', width: number = WIDTH - 20) => (
         <ThemeText
             text={value}
             textStyle={style}
@@ -65,11 +65,11 @@ export const BreedingResultView = ({ seeds, luckyUser, onClose }: BreedingResult
         <Box layout={{ width: COLUMN_WIDTH, flexDirection: 'column', gap: 1, alignItems: 'center' }}>
             {seed.present && (
                 <>
-                    {text(t(`breedpetsresult.widget.seed${index}.name`, seed.name, { name: seed.name }), 'text-style-bold', COLUMN_WIDTH)}
+                    {text(t(`breedpetsresult.widget.seed${index}.name`, seed.name, { name: seed.name }), 'bold', COLUMN_WIDTH)}
                     <SeedPicture className={seed.className} />
-                    {text(t(`breedpetsresult.widget.seed${index}.raritylevel`, '', { level: String(seed.rarityLevel) }), 'text-style-regular', COLUMN_WIDTH)}
-                    {text(t(`breedpetsresult.widget.seed${index}.description`, '', { name: seed.ownerName }), 'text-style-regular', COLUMN_WIDTH)}
-                    {seed.hasMutation && text(t('breedpetsresult.widget.info.mutation'), 'text-style-u-italic', COLUMN_WIDTH)}
+                    {text(t(`breedpetsresult.widget.seed${index}.raritylevel`, '', { level: String(seed.rarityLevel) }), 'regular', COLUMN_WIDTH)}
+                    {text(t(`breedpetsresult.widget.seed${index}.description`, '', { name: seed.ownerName }), 'regular', COLUMN_WIDTH)}
+                    {seed.hasMutation && text(t('breedpetsresult.widget.info.mutation'), 'u_italic', COLUMN_WIDTH)}
                 </>
             )}
         </Box>
@@ -87,7 +87,7 @@ export const BreedingResultView = ({ seeds, luckyUser, onClose }: BreedingResult
         >
             <Region layout={{ flexDirection: 'column', gap: 10, padding: 10 }}>
                 {text(luckyUser ? t('breedpetsresult.widget.text.sorry', '', { user: luckyUser }) : t('breedpetsresult.widget.text'))}
-                {text(t(luckyUser ? 'breedpetsresult.widget.info.sorry' : 'breedpetsresult.widget.info'), 'text-style-u-italic')}
+                {text(t(luckyUser ? 'breedpetsresult.widget.info.sorry' : 'breedpetsresult.widget.info'), 'u_italic')}
                 <Box layout={{ flexDirection: 'row', gap: 10 }}>
                     {column(seeds[0], 1)}
                     {column(seeds[1], 2)}

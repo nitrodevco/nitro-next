@@ -12,7 +12,7 @@
  * text keeps its template colour. Theme variants are the Flash window `style` ids, as the theme
  * components take them; the theme falls back to its default art for an id it has no skin for.
  */
-import type { TextStyleKey } from '#base/theme';
+import type { DynamicStyleName, TextStyleKey } from '#base/theme';
 
 export type WiredStyleName = 'illumina' | 'volter' | 'volter_yellow' | 'volter_blue' | 'volter_green' | 'ubuntu';
 
@@ -116,6 +116,11 @@ export interface WiredStyleAssetButtonTemplate {
     size: number;
     assetInset: number;
     assetSize: number;
+    /**
+     * The template's `dynamic_style` - `button` on illumina's and the volters' `asset_button`,
+     * whose bitmap is its `#icon`. Absent where the style has no `asset_button` of its own.
+     */
+    dynamicStyle?: DynamicStyleName;
 }
 
 /**
@@ -143,6 +148,8 @@ export type WiredStyleSourceTypeSelectorTemplate
         splitterColor: string; splitterShadowColor: string;
         /** `wired_styles_illumina_icon_source_<type>`. */
         assetPrefix: string;
+        /** The three button templates' `dynamic_style` (`button` in illumina's), each around its `#icon` `type_image`. */
+        dynamicStyle?: DynamicStyleName;
     }
     | {
         kind: 'flat';

@@ -97,7 +97,7 @@ export const InfoBubblePetView = ({
                 <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24 }}>
                     <ThemeText
                         text={name}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Box>

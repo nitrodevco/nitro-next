@@ -36,7 +36,7 @@ export const WiredMenuTypePicker = ({ titleKey, count, selected, onSelect }: Wir
         <Box layout={{ width: width + 9, height: 70, flexShrink: 0 }}>
             <ThemeText
                 text={t(titleKey, titleKey)}
-                textStyle="text-style-u-bold"
+                textStyle="u_bold"
                 textOptions={{ fill: '#000000' }}
                 verticalAlign="top"
                 layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}

@@ -74,8 +74,9 @@ export const WiredMenuChestsTab = () => {
             <Box layout={{ position: 'absolute', left: 14, top: 18, width: 472, height: 110 }}>
                 <ThemeText
                     text={t('wiredmenu.chests.chest_control', 'wiredmenu.chests.chest_control')}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000' }}
+                    flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
                 />
@@ -113,14 +114,15 @@ export const WiredMenuChestsTab = () => {
             <Box layout={{ position: 'absolute', left: 14, top: 139, width: 472, height: 228 }}>
                 <ThemeText
                     text={t('wiredmenu.chests.room_logs', 'wiredmenu.chests.room_logs')}
-                    textStyle="text-style-u-bold"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000' }}
+                    flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
                 />
                 <ThemeText
                     text={t('wiredmenu.chests.room_logs.extra', 'wiredmenu.chests.room_logs.extra')}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#000000', align: 'right' }}
                     alpha={0.5}
                     verticalAlign="top"

@@ -35,7 +35,7 @@ export const FurnitureCreditView = ({ value, isNftCredit, onExchange, onClose }:
             >
                 <ThemeText
                     text={isNftCredit ? `${description} ${t('nft.creditfurni.redeem.prompt')}` : description}
-                    textStyle="text-style-bold"
+                    textStyle="bold"
                     textOptions={{ wordWrap: true, wordWrapWidth: 265 }}
                     verticalAlign="top"
                     layout={{ width: 265, height: 60 }}

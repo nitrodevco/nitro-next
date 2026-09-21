@@ -116,7 +116,7 @@ const DefaultBubble = ({ item }: { item: NotificationItem }) => {
             </Box>
             <ThemeText
                 text={interpolate(item.text)}
-                textStyle="text-style-bold"
+                textStyle="bold"
                 textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 116 }}
                 verticalAlign="top"
                 layout={{ width: 116 }}
@@ -143,7 +143,7 @@ const BubbleHeader = ({ title, color, centered }: { title: string; color: string
         >
             <ThemeText
                 text={title}
-                textStyle="text-style-u-bold"
+                textStyle="u_bold"
                 textOptions={{ fill: '#ffffff' }}
             />
         </Box>
@@ -190,7 +190,7 @@ const WiredBubble = ({ item, isDisplayed }: { item: NotificationItem; isDisplaye
             />
             <ThemeText
                 text={interpolate(item.text)}
-                textStyle="text-style-id-regular"
+                textStyle="id_regular"
                 textOptions={{ wordWrap: true, wordWrapWidth: 174, align: 'center' }}
                 verticalAlign="top"
                 layout={{ width: 174, marginLeft: 8 }}
@@ -201,7 +201,7 @@ const WiredBubble = ({ item, isDisplayed }: { item: NotificationItem; isDisplaye
                 <Button
                     variant="106"
                     tintColor="#6e8cb7"
-                    textStyle="text-style-il-button-white"
+                    textStyle="il_button_white"
                     onPointerTap={toggle}
                     layout={{ alignSelf: 'flex-end', marginRight: 7, minWidth: 65, height: 25, flexShrink: 0 }}
                 >
@@ -238,7 +238,7 @@ const TreasureHuntBubble = ({ item }: { item: NotificationItem }) => {
             />
             <ThemeText
                 text={interpolate(item.text)}
-                textStyle="text-style-id-regular"
+                textStyle="id_regular"
                 textOptions={{ wordWrap: true, wordWrapWidth: 119 }}
                 verticalAlign="top"
                 layout={{ width: 119 }}
@@ -301,7 +301,7 @@ const FriendOnlineBubble = ({ item, onSwipe }: { item: NotificationItem; onSwipe
                 </Region>
                 <ThemeText
                     text={interpolate(item.text)}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#cfcfcf' }}
                 />
             </Box>

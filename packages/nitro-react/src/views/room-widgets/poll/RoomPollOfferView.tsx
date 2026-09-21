@@ -43,7 +43,7 @@ export const RoomPollOfferView = ({ headline, summary, onAccept, onDecline, onLa
                 />
                 <ThemeText
                     text={headline}
-                    textStyle="text-style-u-headline-big"
+                    textStyle="u_headline_big"
                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 250 }}
                     name="poll_offer_headline"
                     verticalAlign="top"
@@ -57,7 +57,7 @@ export const RoomPollOfferView = ({ headline, summary, onAccept, onDecline, onLa
             >
                 <ThemeText
                     text={summary}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
                     name="poll_offer_summary"
                     verticalAlign="top"
@@ -75,7 +75,7 @@ export const RoomPollOfferView = ({ headline, summary, onAccept, onDecline, onLa
                     >
                         <ThemeText
                             text={`${t('cancel')}...`}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#333333' }}
                         />
                     </Region>
@@ -87,8 +87,9 @@ export const RoomPollOfferView = ({ headline, summary, onAccept, onDecline, onLa
                     >
                         <ThemeText
                             text={t('poll_offer_later')}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             textOptions={{ fill: '#333333' }}
+                            flashFormat={{ underline: true }}
                         />
                     </Region>
                     <ButtonThick

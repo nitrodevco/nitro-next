@@ -91,12 +91,16 @@ const OptionRow = ({ selected, disabled, label, onToggle }: OptionRowProps) => (
         />
         <ThemeText
             text={label}
-            textStyle="text-style-u-regular"
+            textStyle="u_regular"
         />
     </Box>
 );
 
-/** The header's 24x24 settings buttons: a `container_button` of style 7 around an etched icon. */
+/**
+ * The header's 24x24 settings buttons: a `container_button` of style 7 around its `#icon`, both
+ * `dynamic_style="button"` in `chest_generic` - so the icon's hover, press and disabled looks are
+ * the style's, not a fade of its own.
+ */
 const HeaderIconButton = ({ icon, iconLeft, iconTop, right, tooltip, disabled, onPress }: { icon: string; iconLeft: number; iconTop: number; right: number; tooltip: string; disabled: boolean; onPress: () => void }) => (
     <Region
         tooltip={tooltip}
@@ -104,6 +108,7 @@ const HeaderIconButton = ({ icon, iconLeft, iconTop, right, tooltip, disabled, o
     >
         <ContainerButton
             variant="7"
+            dynamicStyle="button"
             disabled={disabled}
             onPointerTap={() => {
                 if (!disabled) onPress();
@@ -112,7 +117,7 @@ const HeaderIconButton = ({ icon, iconLeft, iconTop, right, tooltip, disabled, o
         >
             <ThemeImage
                 src={LayoutImage(icon)}
-                alpha={disabled ? 0.5 : 1}
+                dynamicRole="icon"
                 layout={{ position: 'absolute', left: iconLeft, top: iconTop }}
             />
         </ContainerButton>
@@ -234,7 +239,7 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                         />
                         <ThemeText
                             text={interpolate(description)}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                             alpha={TEXT_BLEND}
                             textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
                             verticalAlign="top"
@@ -321,7 +326,7 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                                                 <Box layout={{ position: 'absolute', left: 0, top: 2, height: 22, flexDirection: 'row', gap: 6 }}>
                                                     <ThemeText
                                                         text={t('wiredchests.capacity')}
-                                                        textStyle="text-style-u-regular"
+                                                        textStyle="u_regular"
                                                         layout={{ marginTop: 2 }}
                                                     />
                                                     <Box
@@ -340,7 +345,7 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                                                                 onFocusChange={(focused) => {
                                                                     if (!focused && isOwner) applyOptions(form);
                                                                 }}
-                                                                textStyle="text-style-u-regular"
+                                                                textStyle="u_regular"
                                                                 layout={{ position: 'absolute', left: 5, top: 3, width: 55, height: 17 }}
                                                             />
                                                         </Border>
@@ -350,7 +355,7 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                                         : (
                                                 <ThemeText
                                                     text={t('wiredchests.space_used2', '', { count: String(count), total })}
-                                                    textStyle="text-style-u-regular"
+                                                    textStyle="u_regular"
                                                     alpha={TEXT_BLEND}
                                                     layout={{ position: 'absolute', left: 0, top: 4 }}
                                                 />
@@ -358,7 +363,7 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                                     <Box layout={{ position: 'absolute', right: 16, top: 0, height: 25, flexDirection: 'row', gap: 6 }}>
                                         <ThemeText
                                             text={t('wiredchests.max_capacity', '', { max_capacity: String(maxCapacity) })}
-                                            textStyle="text-style-u-regular"
+                                            textStyle="u_regular"
                                             alpha={TEXT_BLEND}
                                             layout={{ marginTop: 4 }}
                                         />
@@ -420,7 +425,7 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                             : (
                                     <ThemeText
                                         text={t('wiredchests.space_used', '', { count: String(count), total })}
-                                        textStyle="text-style-u-regular"
+                                        textStyle="u_regular"
                                         alpha={TEXT_BLEND}
                                         layout={{ position: 'absolute', right: 15, top: 94 }}
                                     />
@@ -439,7 +444,8 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                         <Box layout={{ flexDirection: 'column', width: 353, gap: 1 }}>
                             <ThemeText
                                 text={t('wiredchests.lock_info.title')}
-                                textStyle="text-style-u-headline-small"
+                                textStyle="u_bold"
+                                textOptions={{ fontSize: 14 }}
                             />
                             <Box layout={{ height: 7 }} />
                             <WiredText text="${wiredchests.lock_info.desc}" />
@@ -453,7 +459,8 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                             <Box layout={{ height: 14 }} />
                             <ThemeText
                                 text={t('wiredchests.capacity_info.title')}
-                                textStyle="text-style-u-headline-small"
+                                textStyle="u_bold"
+                                textOptions={{ fontSize: 14 }}
                             />
                             <Box layout={{ height: 7 }} />
                             <WiredText text="${wiredchests.capacity_info.desc}" />

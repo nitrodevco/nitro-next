@@ -78,7 +78,7 @@ export const FurnitureHighScoreView = ({ scoreType, clearType, entries }: Furnit
                 >
                     <ThemeText
                         text={caption}
-                        textStyle="text-style-u-bold"
+                        textStyle="u_bold"
                         textOptions={{ fill: '#ffffff' }}
                         layout={{ position: 'absolute', left: 4, right: 4, top: 2, height: 17 }}
                     />
@@ -93,6 +93,7 @@ export const FurnitureHighScoreView = ({ scoreType, clearType, entries }: Furnit
                     >
                         <ThemeText
                             text={t('high.score.display.users.header')}
+                            textStyle="il_regular"
                             layout={{ position: 'absolute', left: 1, right: 1, top: 3, height: 16 }}
                         />
                     </Border>
@@ -141,7 +142,7 @@ export const FurnitureHighScoreView = ({ scoreType, clearType, entries }: Furnit
                 />
                 <ThemeText
                     text={t('high.score.display.congratulations.footer')}
-                    textStyle="text-style-u-regular"
+                    textStyle="u_regular"
                     textOptions={{ fill: '#6f6f6f', align: 'center' }}
                     layout={{ position: 'absolute', left: 41, width: 233, top: 311, height: 17 }}
                 />

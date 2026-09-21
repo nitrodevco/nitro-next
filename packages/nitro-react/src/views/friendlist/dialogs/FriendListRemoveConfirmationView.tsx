@@ -47,8 +47,7 @@ export const FriendListRemoveConfirmationView = () => {
                 <ThemeText
                     layout={{ flex: 1 }}
                     text={t('friendlist.removefriendconfirm.userlist', '', { user_names: usernames })}
-                    textStyle="text-style-regular"
-                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 190 }}
+                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 190, fontFamily: 'Volter', fontSize: 9 }}
                 />
             </Border>
             <Box layout={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>

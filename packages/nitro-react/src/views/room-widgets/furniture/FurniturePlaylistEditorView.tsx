@@ -53,7 +53,7 @@ export const FurniturePlaylistEditorView = ({
             <Box layout={{ flex: 1, flexDirection: 'column' }}>
                 <ThemeText
                     text={song.songName}
-                    textStyle="text-style-bold"
+                    textStyle="bold"
                 />
                 <ThemeText text={song.creator} />
             </Box>
@@ -92,8 +92,9 @@ export const FurniturePlaylistEditorView = ({
                     >
                         <ThemeText
                             text={t('playlist.editor.my.music')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff' }}
+                            textStyle="bold"
+                            textOptions={{ fill: '#ffffff', fontFamily: 'Ubuntu', fontSize: 20 }}
+                            flashFormat={{ bold: true, antiAliasType: 'advanced' }}
                         />
                     </Region>
                     <ScrollArea
@@ -114,8 +115,9 @@ export const FurniturePlaylistEditorView = ({
                     >
                         <ThemeText
                             text={t('playlist.editor.playlist')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff' }}
+                            textStyle="bold"
+                            textOptions={{ fill: '#ffffff', fontFamily: 'Ubuntu', fontSize: 20 }}
+                            flashFormat={{ bold: true, antiAliasType: 'advanced' }}
                         />
                     </Region>
                     <ScrollArea

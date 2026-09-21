@@ -15,7 +15,7 @@ export const CatalogTotalPriceWidgetView = () => {
         <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 4, width: '100%' }}>
             <ThemeText
                 text={t('catalog.bundlewidget.price')}
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 textOptions={{ fill: '#666666' }}
             />
             <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
@@ -23,7 +23,7 @@ export const CatalogTotalPriceWidgetView = () => {
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                         <ThemeText
                             text={String(activeOffer.priceInCredits)}
-                            textStyle="text-style-u-headline-small"
+                            textStyle="u_headline_small"
                             textOptions={{ fill: '#000000' }}
                         />
                         <NitroCurrencyIcon
@@ -36,13 +36,13 @@ export const CatalogTotalPriceWidgetView = () => {
                     <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                         <ThemeText
                             text="+"
-                            textStyle="text-style-u-headline-small"
+                            textStyle="u_headline_small"
                             textOptions={{ fill: '#000000' }}
                         />
                         <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
                             <ThemeText
                                 text={String(activeOffer.priceInActivityPoints)}
-                                textStyle="text-style-u-headline-small"
+                                textStyle="u_headline_small"
                                 textOptions={{ fill: '#000000' }}
                             />
                             <NitroCurrencyIcon

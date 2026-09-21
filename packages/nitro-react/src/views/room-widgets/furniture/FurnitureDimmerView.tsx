@@ -73,7 +73,7 @@ export const FurnitureDimmerView = ({
                 >
                     <ThemeText
                         text={t('widget.dimmer.info.off')}
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 219 }}
+                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 219, fontFamily: 'Volter', fontSize: 9 }}
                         verticalAlign="top"
                         layout={{ width: 219, height: 60 }}
                     />
@@ -118,12 +118,12 @@ export const FurnitureDimmerView = ({
                         />
                         <ThemeText
                             text={t('widget.dimmer.type.checkbox')}
-                            textOptions={{ fill: '#000000' }}
+                            textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
                         />
                     </Box>
                     <ThemeText
                         text={t('widget.dimmer.info')}
-                        textOptions={{ fill: '#999999', wordWrap: true, wordWrapWidth: 222 }}
+                        textOptions={{ fill: '#999999', wordWrap: true, wordWrapWidth: 222, fontFamily: 'Volter', fontSize: 9 }}
                         verticalAlign="top"
                         layout={{ width: 222, flex: 1 }}
                     />

@@ -41,7 +41,7 @@ export const WiredMenuDropmenu = ({ items, selected, onSelect, canSelect, disabl
         <Box layout={{ flexShrink: 0, ...layout, width, height }}>
             <Dropmenu
                 variant="3"
-                textStyle="text-style-u-regular"
+                textStyle="u_regular"
                 textColor="#000000"
                 caption={items[selected] ?? ''}
                 options={options}

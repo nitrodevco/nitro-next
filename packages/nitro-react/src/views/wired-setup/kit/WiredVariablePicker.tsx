@@ -112,8 +112,8 @@ export const WiredVariablePicker = ({ variables, state, onChange, filter, roomId
                 >
                     <ThemeText
                         text={selected?.variableName ?? t('wiredfurni.variable_picker.search', 'wiredfurni.variable_picker.search')}
-                        textStyle="text-style-regular"
                         textOptions={{ fill: selected ? '#000000' : '#808080' }}
+                        flashFormat={{ antiAliasType: 'advanced' }}
                         layout={{ position: 'absolute', left: 7, top: 3 }}
                     />
                 </Region>

@@ -22,7 +22,7 @@ export interface FloorPlanSliderProps {
 }
 
 /** `tile_height_slider_track` / `wall_height_slider_track` - both sliders name the same handle bitmap. */
-const TRACK_IMAGE = 'shared/avatar_editor_avatar_editor_download_icon.png';
+const TRACK_IMAGE = 'catalog/avatar_editor_avatar_editor_download_icon.png';
 const TRACK_WIDTH = 12;
 const TRACK_HEIGHT = 16;
 

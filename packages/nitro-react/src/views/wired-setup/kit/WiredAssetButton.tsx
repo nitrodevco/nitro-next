@@ -6,6 +6,12 @@
  * `selected` shows the way `updateVisuals` does it: the volters keep a selected button in its
  * hovered face, the other styles keep it pressed. Unlike the mini button, a press on a selected
  * one still calls back (`maybeCancelEvent`).
+ *
+ * Illumina's and the volters' template is `dynamic_style="button"` around an `#icon` bitmap. There
+ * the style owns the disabled look as well: `Util.disableSection` never blends a window (every
+ * `WindowController` has `caption`, `enable` and `disable`, the test it skips on) and only calls
+ * `disable()`, so the button fades by the style's rule - the face to 0.5 and the icon, through its
+ * own `#icon` rule, to 0.25. The kit's half-blend applies only to a template without a style.
  */
 import { BackgroundLayer, Box, ContainerButton, LayoutImage, ThemeImage } from '#base/theme';
 import { resolveWiredAssetName } from '#base/wired';
@@ -37,12 +43,13 @@ export const WiredAssetButton = ({ asset, tooltip, selected = false, onPress, di
 
     return (
         <Box
-            alpha={wiredDisabledAlpha(isDisabled)}
+            alpha={template.dynamicStyle ? undefined : wiredDisabledAlpha(isDisabled)}
             layout={{ width: template.size, height: template.size, flexShrink: 0 }}
         >
             <ContainerButton
                 variant={template.variant}
                 tintColor={(selected && style.isVolter) ? VOLTER_SELECTED_TINT : undefined}
+                dynamicStyle={template.dynamicStyle}
                 disabled={isDisabled}
                 tooltip={tooltip ? caption(tooltip) : undefined}
                 onPointerTap={onPress}
@@ -50,7 +57,10 @@ export const WiredAssetButton = ({ asset, tooltip, selected = false, onPress, di
             >
                 {pressedLayer && <BackgroundLayer layer={pressedLayer} />}
                 <Box layout={{ position: 'absolute', left: template.assetInset, top: template.assetInset, width: template.assetSize, height: template.assetSize, justifyContent: 'center', alignItems: 'center' }}>
-                    <ThemeImage src={LayoutImage(`wired/${resolveWiredAssetName(style, asset)}.png`)} />
+                    <ThemeImage
+                        src={LayoutImage(`wired/${resolveWiredAssetName(style, asset)}.png`)}
+                        dynamicRole="icon"
+                    />
                 </Box>
             </ContainerButton>
         </Box>

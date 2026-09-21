@@ -13,6 +13,9 @@
  * among `options` shows the first one (`resolveSourceTypeSelection`), and `onSelect` fires only
  * for a type other than the selected one. Flash's picker has no disabled state; the kit's
  * `disabled` context still greys it out and stops it taking input.
+ *
+ * Each button template is `dynamic_style="button"` around its `#icon` type image, so the icon is
+ * etched, brightens on hover and sinks a pixel when pressed.
  */
 import { useState } from 'react';
 
@@ -70,6 +73,7 @@ export const WiredNewSourceTypePicker = ({ options, selected, onSelect, disabled
                         tooltip={t(`wiredfurni.params.sourcetype.${name}`, `wiredfurni.params.sourcetype.${name}`)}
                         tintColor={uintToHexColor(newSourceTypeOptionColor(segment.sourceType, segment.active, segment.hovered))}
                         selected={segment.active}
+                        dynamicStyle={template.dynamicStyle}
                         disabled={disabled}
                         onPointerOver={() => setHovered(segment.sourceType)}
                         onPointerOut={() => setHovered(current => (current === segment.sourceType) ? null : current)}
@@ -78,6 +82,7 @@ export const WiredNewSourceTypePicker = ({ options, selected, onSelect, disabled
                     >
                         <ThemeImage
                             src={LayoutImage(`wired/${template.assetPrefix}${name}.png`)}
+                            dynamicRole="icon"
                             eventMode="none"
                             layout={{ position: 'absolute', left: iconX, top: iconY }}
                         />

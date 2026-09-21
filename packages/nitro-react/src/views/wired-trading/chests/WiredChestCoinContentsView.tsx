@@ -66,14 +66,14 @@ export const WiredChestCoinContentsView = ({ chestId, className, canWithdraw }: 
                 <Box layout={{ position: 'absolute', left: 9, top: 68, width: 54, height: 47 }}>
                     <ThemeText
                         text={t('wiredchests.coin_chest.balance')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fontSize: 11, align: 'center' }}
+                        textStyle="u_regular"
+                        textOptions={{ align: 'center', fontSize: 11 }}
                         layout={{ position: 'absolute', left: 2, top: 7, width: 45, height: 16 }}
                     />
                     <Box layout={{ position: 'absolute', left: 0, top: 22, width: 54, flexDirection: 'row', justifyContent: 'center', gap: 1 }}>
                         <ThemeText
                             text={String(coins)}
-                            textStyle="text-style-u-bold"
+                            textStyle="u_bold"
                         />
                         <Icon
                             variant={35}
@@ -90,7 +90,7 @@ export const WiredChestCoinContentsView = ({ chestId, className, canWithdraw }: 
                             value={withdrawAmount}
                             onChange={value => setWithdrawAmount(value.replace(/[^0-9]/g, ''))}
                             onEnter={onWithdraw}
-                            textStyle="text-style-u-regular"
+                            textStyle="u_regular"
                             layout={{ width: 25, height: 17, marginLeft: 1, marginTop: 1 }}
                         />
                     </Border>
