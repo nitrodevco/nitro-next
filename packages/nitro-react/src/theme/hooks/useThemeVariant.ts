@@ -5,7 +5,7 @@ import { resolveByState, useInteractionState } from './useInteractionState';
 import { useResolvedVariant } from './useResolvedVariant';
 
 export const useThemeVariant = <T extends AnyThemeVariant>({
-    cascadeKey, variants, variant, defaultVariant = '0', tintColor, textStyle, textColor, dropShadow, tooltip, disabled, selected, interactive, stopsPropagation,
+    cascadeKey, variants, variant, defaultVariant = '0', tintColor, textStyle, textColor, dropShadow, tooltip, tooltipDelay, disabled, selected, interactive, stopsPropagation,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
 }: ThemeOptions<T>): ThemeResult<T> => {
     const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
@@ -16,7 +16,7 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
     // A tooltip rides on the same hover the state tracking uses; because `useInteractionState`
     // reads the cursor off the click handlers alone, a component hovered only for its tooltip
     // keeps the arrow rather than reading as clickable.
-    const tooltipHandlers = useTooltipHandlers(tooltip);
+    const tooltipHandlers = useTooltipHandlers(tooltip, tooltipDelay);
     const { state, handlers } = useInteractionState({
         disabled, interactive, stopsPropagation, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         onPointerOver: compose(tooltipHandlers.onPointerOver, onPointerOver),

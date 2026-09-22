@@ -67,11 +67,11 @@ export interface DropmenuFrameProps extends ThemeProps<DropmenuVariant> {
 
 export const DropmenuFrame: ForwardRefExoticComponent<DropmenuFrameProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuFrameProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, zIndex, expanded = false, listHeight, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, zIndex, expanded = false, listHeight, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'dropmenu', variants: DROPMENU_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor,
+            cascadeKey: 'dropmenu', variants: DROPMENU_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

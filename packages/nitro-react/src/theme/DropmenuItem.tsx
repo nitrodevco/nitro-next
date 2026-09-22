@@ -14,6 +14,7 @@ const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
         states: {
             default: Stretch('dropmenuitem-0-default-src'),
             hovering: Stretch('dropmenuitem-0-hovering-src'),
+            pressed: Stretch('dropmenuitem-0-selected-src'),
             selected: Stretch('dropmenuitem-0-selected-src'),
         },
         layout: {
@@ -28,6 +29,7 @@ const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
         states: {
             default: Stretch('dropmenuitem-1-default-src'),
             hovering: Stretch('dropmenuitem-1-hovering-src'),
+            pressed: Stretch('dropmenuitem-1-selected-src'),
             selected: Stretch('dropmenuitem-1-selected-src'),
         },
         layout: {
@@ -43,6 +45,7 @@ const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
         states: {
             default: Stretch('dropmenuitem-0-default-src'),
             hovering: Stretch('dropmenuitem-3-hovering-src'),
+            pressed: Stretch('dropmenuitem-3-selected-src'),
             selected: Stretch('dropmenuitem-3-selected-src'),
         },
         layout: {
@@ -57,6 +60,7 @@ const DROPMENU_ITEM_VARIANTS: ThemeVariants<DropmenuItemVariant> = {
         states: {
             default: Stretch('dropmenuitem-0-default-src'),
             hovering: Stretch('dropmenuitem-3-hovering-src'),
+            pressed: Stretch('dropmenuitem-3-selected-src'),
             selected: Stretch('dropmenuitem-3-selected-src'),
         },
         layout: {
@@ -77,11 +81,11 @@ export interface DropmenuItemProps extends ThemeProps<DropmenuItemVariant> {
 
 export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuItemProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, selected, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'dropmenuItem', variants: DROPMENU_ITEM_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, selected,
+            cascadeKey: 'dropmenuItem', variants: DROPMENU_ITEM_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, selected,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

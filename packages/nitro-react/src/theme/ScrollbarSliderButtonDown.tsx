@@ -54,9 +54,9 @@ export interface ScrollbarSliderButtonDownProps extends ThemeProps<ScrollbarSlid
  * `useHoldToRepeat` (see ScrollbarVertical.tsx), spread in as the pointer handlers.
  */
 export const ScrollbarSliderButtonDown: ForwardRefExoticComponent<ScrollbarSliderButtonDownProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderButtonDownProps>(
-    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { config, handlers, resolvedLayer, resolvedTint } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderButtonDown', variants: SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled,
+            cascadeKey: 'scrollbarSliderButtonDown', variants: SCROLLBAR_SLIDER_BUTTON_DOWN_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

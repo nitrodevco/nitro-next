@@ -1,20 +1,24 @@
 import { useContext, useMemo } from 'react';
 
 import { InteractionState } from '../hooks/useInteractionState';
-import { DynamicStyleEffect, dynamicStyleEffect, DynamicStyleName, DynamicStyleRole, resolveDynamicStyleRule } from '../utils/dynamicStyles';
+import { DYNAMIC_STYLES, DynamicStyleEffect, dynamicStyleEffect, DynamicStyleName, DynamicStyleRole, resolveDynamicStyleRule } from '../utils/dynamicStyles';
 import { DynamicStyleContext } from './DynamicStyleContext';
 
 /** The host's own rule for its current state - `undefined` when the component names no style. */
 export const useHostDynamicStyleEffect = (name: DynamicStyleName | undefined, state: InteractionState): DynamicStyleEffect | undefined =>
     useMemo(() => (name ? dynamicStyleEffect(resolveDynamicStyleRule(name, undefined, state)) : undefined), [ name, state ]);
 
-/** A tagged child's rule for the nearest host's state - `undefined` outside a host, or without a role. */
+/**
+ * A tagged child's rule for the nearest host's state - `undefined` outside a host, without a
+ * role, or when the host's style has no rule for that role: `recursivelyUpdateChildrensDynamicStyles`
+ * applies a style only where `getChildStyle` finds one, and leaves every other child as it is.
+ */
 export const useDynamicStyleEffect = (role: DynamicStyleRole | undefined): DynamicStyleEffect | undefined => {
     const host = useContext(DynamicStyleContext);
     const name = host?.name;
     const state = host?.state ?? 'default';
 
-    return useMemo(() => ((name && role) ? dynamicStyleEffect(resolveDynamicStyleRule(name, role, state)) : undefined), [ name, role, state ]);
+    return useMemo(() => ((name && role && DYNAMIC_STYLES[name].children[role]) ? dynamicStyleEffect(resolveDynamicStyleRule(name, role, state)) : undefined), [ name, role, state ]);
 };
 
 /**

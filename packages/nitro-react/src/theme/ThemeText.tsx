@@ -5,9 +5,9 @@ import { GetPixelRatio } from '#base/utils';
 
 import { BoxLayout } from './Box';
 import { useDynamicStyleEffect } from './dynamicstyle';
-import { FlashTextFieldOverrides } from './font/flash-text';
+import { DEFAULT_FLASH_TEXT_FORMAT, FlashTextFieldOverrides, parseFlashTextMarkup } from './font/flash-text';
 import { FlashText } from './font/FlashText';
-import { FlashTextCanvasConfig, useFlashTextCanvas } from './hooks/useFlashTextCanvas';
+import { FlashTextCanvasConfig, FlashTextOverflowReplace, useFlashTextCanvas } from './hooks/useFlashTextCanvas';
 import { browserFaceOverride, DEFAULT_TEXT_STYLE, DynamicStyleRole, flashFaceOverride, getPixiTextStyle, insetStretchAxes, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
 
 export type TextConfig = {
@@ -33,6 +33,28 @@ export type TextConfig = {
      * `font_size` and `text_color` are `textOptions.fontFamily` / `fontSize` / `fill`.
      */
     flashFormat?: FlashTextFieldOverrides;
+    /**
+     * The text is Flash `htmlText` - a `formatted_text` / `html` window, whose
+     * `FormattedTextController` / `HTMLTextController` set `field.htmlText` - and renders its
+     * `<b>`, `<i>`, `<u>`, `<font>`, `<br>` and `<p>` (see `parseFlashTextMarkup`). The browser
+     * fallback shows the text with its tags stripped.
+     */
+    markup?: boolean;
+    /**
+     * With `markup`: a click on an `<a href>`'s glyphs, and only there, calls this with the link -
+     * the href, an `event:` link's without its prefix (`HTMLTextController.immediateClickHandler`'s
+     * `WindowLinkEvent.link`; an in-client link goes on to `openClientLink`). Exact rendering only:
+     * the browser fallback draws the text without its links.
+     */
+    onLink?: (link: string) => void;
+    /**
+     * A Flash `auto_size="none"` field: `TextController.refreshTextImage` forces it to the box
+     * its window has, so the rendered text is cut off at `layout`'s numeric `width` / `height`
+     * instead of overflowing them. Exact rendering only - the browser fallback is not cropped.
+     */
+    clip?: boolean;
+    /** The window's `overflow_replace` truncation - see `FlashTextOverflowReplace`. Exact rendering only. */
+    overflowReplace?: FlashTextOverflowReplace;
 } & ThemeLayoutMeta;
 
 /** The resolved config the renderers take: the effect already folded into colour, opacity and offset. */
@@ -102,7 +124,9 @@ const baseFill = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOpt
  * natural size on both axes is what makes it overflow a too-small container instead, matching
  * a `<span>`'s real floor.
  */
-const NativeText = ({ text, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y }: TextRenderConfig) => {
+const NativeText = ({ text: source, markup, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y }: TextRenderConfig) => {
+    // Markup the exact renderer could not take shows as its text alone.
+    const text = useMemo(() => (markup ? parseFlashTextMarkup(source, DEFAULT_FLASH_TEXT_FORMAT).map(run => run.text).join('') : source), [ markup, source ]);
     // The layout's `font_face`/`bold`/`italic` vars again, in the face names Pixi's canvas text
     // knows - `fontFamily` alone would leave a `bold` var out of the fallback.
     const style = useMemo(() => getPixiTextStyle(textStyle ?? DEFAULT_TEXT_STYLE, {
@@ -154,7 +178,7 @@ const NativeText = ({ text, textStyle, textOptions, flashFormat, layout, vertica
 };
 
 /** What `useFlashTextCanvas` needs from a text's config. */
-const flashTextConfig = (textOptions: TextStyleOptions | undefined, flashFormat: FlashTextFieldOverrides | undefined): FlashTextCanvasConfig => ({
+const flashTextConfig = (textOptions: TextStyleOptions | undefined, flashFormat: FlashTextFieldOverrides | undefined, markup: boolean | undefined, overflowReplace: FlashTextOverflowReplace | undefined): FlashTextCanvasConfig => ({
     color: (typeof textOptions?.fill === 'string') ? textOptions.fill : undefined,
     fontSize: (typeof textOptions?.fontSize === 'number') ? textOptions.fontSize : undefined,
     face: flashFaceOverride(textOptions?.fontFamily),
@@ -165,6 +189,8 @@ const flashTextConfig = (textOptions: TextStyleOptions | undefined, flashFormat:
     wordWrapWidth: (typeof textOptions?.wordWrapWidth === 'number') ? textOptions.wordWrapWidth : undefined,
     breakWords: textOptions?.breakWords,
     lineHeight: (typeof textOptions?.lineHeight === 'number') ? textOptions.lineHeight : undefined,
+    markup,
+    overflowReplace,
 });
 
 /**
@@ -174,8 +200,8 @@ const flashTextConfig = (textOptions: TextStyleOptions | undefined, flashFormat:
  * character they do not carry, so no call site ever goes blank.
  */
 const RenderedText = (props: TextRenderConfig) => {
-    const { text, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y } = props;
-    const rendered = useFlashTextCanvas(text, resolveFlashStyle(textStyle, textOptions), flashTextConfig(textOptions, flashFormat));
+    const { text, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y, markup, clip, overflowReplace, onLink } = props;
+    const rendered = useFlashTextCanvas(text, resolveFlashStyle(textStyle, textOptions), flashTextConfig(textOptions, flashFormat, markup, overflowReplace));
 
     if (rendered) {
         return (
@@ -185,6 +211,10 @@ const RenderedText = (props: TextRenderConfig) => {
                 alpha={alpha}
                 x={x}
                 y={y}
+                clipWidth={(clip && typeof layout?.width === 'number') ? layout.width : undefined}
+                clipHeight={(clip && typeof layout?.height === 'number') ? layout.height : undefined}
+                clip={clip}
+                onLink={onLink}
                 layout={{ objectPosition: textObjectPosition(textOptions?.align, verticalAlign), ...layout }}
             />
         );

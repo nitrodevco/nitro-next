@@ -3,44 +3,43 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 import { Box } from './Box';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, NineSlice, Tiled } from './layer';
+import { BackgroundLayer, Composite, NineSlice, Tiled } from './layer';
 import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 
 export type ScrollbarSliderBarHorizontalVariant = ThemeWithStatesVariant;
 
 /**
  * The horizontal scrollbar thumb - the same shape as `ScrollbarSliderBarVertical`: the bar's
- * body as a state-driven nine-slice (`states`), and for the classic skins a "grip" pattern
- * tiled along the bar's middle (`overlays`, a `Tiled` strip inset from the bar's ends), untinted
- * like the vertical grip.
+ * body as a state-driven nine-slice (`states`), and for the classic skins the grip tiled along
+ * its middle (`overlays`).
+ *
+ * The classic lift is that one lying down (`scrollbar_lift_horizontal`): 2px caps left and right, and the
+ * 10x7 grip placed at 8,5 and tiled across as the bar grows, so it spans x 8 to 6 from the right
+ * (see `classicVerticalLift` in ScrollbarSliderBarVertical.tsx for the rule).
  */
+const classicHorizontalLift = (style: string): ScrollbarSliderBarHorizontalVariant => ({
+    states: {
+        default: NineSlice(`scrollbarsliderbarhorizontal-${style}-default-src`, 2, 0, 2, 0),
+        disabled: NineSlice(`scrollbarsliderbarhorizontal-${style}-disabled-src`, 2, 0, 2, 0),
+        pressed: NineSlice(`scrollbarsliderbarhorizontal-${style}-pressed-src`, 2, 0, 2, 0),
+    },
+    overlays: {
+        default: Tiled(`scrollbarsliderbarhorizontal-${style}-default-grd-src`, { left: 8, right: 6, top: 5, height: 7 }),
+        pressed: Tiled(`scrollbarsliderbarhorizontal-${style}-pressed-grd-src`, { left: 8, right: 6, top: 5, height: 7 }),
+        // The `disabled` template has no grip.
+        disabled: Composite([]),
+    },
+});
+
 const SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS: ThemeVariants<ScrollbarSliderBarHorizontalVariant> = {
-    0: {
-        states: {
-            default: NineSlice('scrollbarsliderbarhorizontal-0-default-src', 2, 0, 2, 0),
-            hovering: NineSlice('scrollbarsliderbarhorizontal-0-default-src', 2, 0, 2, 0),
-            pressed: NineSlice('scrollbarsliderbarhorizontal-0-pressed-src', 2, 0, 2, 0),
-        },
-        overlays: {
-            default: Tiled('scrollbarsliderbarhorizontal-0-default-grd-src', { left: 2, right: 2, top: 5, height: 7 }),
-            pressed: Tiled('scrollbarsliderbarhorizontal-0-pressed-grd-src', { left: 2, right: 2, top: 5, height: 7 }),
-        },
-    },
-    1: {
-        states: {
-            default: NineSlice('scrollbarsliderbarhorizontal-1-default-src', 2, 0, 2, 0),
-            hovering: NineSlice('scrollbarsliderbarhorizontal-1-default-src', 2, 0, 2, 0),
-            pressed: NineSlice('scrollbarsliderbarhorizontal-1-default-src', 2, 0, 2, 0),
-        },
-        overlays: {
-            default: Tiled('scrollbarsliderbarhorizontal-1-default-grd-src', { left: 0, right: 0, top: 5, height: 7 }),
-            pressed: Tiled('scrollbarsliderbarhorizontal-1-default-grd-src', { left: 0, right: 0, top: 5, height: 7 }),
-        },
-    },
+    0: classicHorizontalLift('0'),
+    1: classicHorizontalLift('1'),
     3: {
         states: {
             default: NineSlice('scrollbarsliderbarhorizontal-3-default-src', 5, 0, 5, 0, undefined, 'x'),
             hovering: NineSlice('scrollbarsliderbarhorizontal-3-hovering-src', 5, 0, 5, 0, undefined, 'x'),
+            // `lift_*_disabled_3` is an empty template: no lift is drawn while the bar is disabled.
+            disabled: Composite([]),
             pressed: NineSlice('scrollbarsliderbarhorizontal-3-pressed-src', 5, 0, 5, 0, undefined, 'x'),
         },
     },
@@ -60,15 +59,18 @@ const SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS: ThemeVariants<ScrollbarSliderBar
     },
 };
 
-export type ScrollbarSliderBarHorizontalProps = ThemeProps<ScrollbarSliderBarHorizontalVariant>;
+export interface ScrollbarSliderBarHorizontalProps extends ThemeProps<ScrollbarSliderBarHorizontalVariant> {
+    /** The scrollbar is disabled (its content fits): the lift fills the track in its `disabled` art and takes no input. */
+    disabled?: boolean;
+}
 
 export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSliderBarHorizontalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderBarHorizontalProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, disabled,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderBarHorizontal', variants: SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS, variant, defaultVariant, tooltip, tintColor,
+            cascadeKey: 'scrollbarSliderBarHorizontal', variants: SCROLLBAR_SLIDER_BAR_HORIZONTAL_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, disabled,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
         const mergedLayout = { position: 'absolute' as const, ...config.layout, ...layout };
@@ -78,7 +80,7 @@ export const ScrollbarSliderBarHorizontal: ForwardRefExoticComponent<ScrollbarSl
                 ref={ref}
                 layout={mergedLayout}
                 {...handlers}
-                cursor={state === 'pressed' ? 'grabbing' : 'grab'}
+                cursor={disabled ? 'default' : (state === 'pressed' ? 'grabbing' : 'grab')}
             >
                 {resolvedLayer && (
                     <BackgroundLayer

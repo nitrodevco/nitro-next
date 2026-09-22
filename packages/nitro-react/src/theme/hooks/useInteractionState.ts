@@ -77,11 +77,21 @@ export const useInteractionState = ({
     return { state: disabled ? 'disabled' : state, handlers };
 };
 
+/**
+ * The art a themed component draws for its state, as `SkinContainer.getTheActualState` picks it:
+ * the highest-priority state the window is in *and the skin defines* - disabled, then pressed,
+ * then selected, then hovering, else default. A held button is hovered too, so a skin with no
+ * pressed art draws its hover (or, when selected, its selected art) while held.
+ *
+ * Where a skin's `pressed` is another state's template, the variant says so by naming that art
+ * for `pressed` - the group buttons press to their `selected` bitmap, the checkboxes to their
+ * unticked one - rather than this guessing it.
+ */
 export const resolveByState = <T>(states: InteractionStates<T>, state: InteractionState, selected?: boolean): T => {
     if (state === 'disabled' && states.disabled !== undefined) return states.disabled;
-    if ((selected || state === 'pressed') && states.selected !== undefined) return states.selected;
     if (state === 'pressed' && states.pressed !== undefined) return states.pressed;
-    if (state === 'hovering' && states.hovering !== undefined) return states.hovering;
+    if (selected && states.selected !== undefined) return states.selected;
+    if ((state === 'hovering' || state === 'pressed') && states.hovering !== undefined) return states.hovering;
 
     return states.default;
 };

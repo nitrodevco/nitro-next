@@ -1,40 +1,15 @@
-import { ButtonGroupComponentProps, ButtonGroupVariant, createButtonGroupComponent, ThemeVariants } from './utils';
-import { classicButtonVariant } from './utils/buttonVariants';
+import { ButtonGroupComponentProps, ButtonGroupVariant, buttonGroupVariant, createButtonGroupComponent, ThemeVariants, windowLayout } from './utils';
 
+/**
+ * `button_group_left` - the rows of `habbo_element_description_xml`. The `_white` skin (style 2)
+ * cuts exactly style 0's regions, and style 100 is the style 0 skin on the illumina plain button's
+ * layout, so both draw style 0's files.
+ */
 export const BUTTON_GROUP_LEFT_VARIANTS: ThemeVariants<ButtonGroupVariant> = {
-    // default
-    0: {
-        ...classicButtonVariant('buttongroupleft-0'),
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-    },
-    // black
-    1: {
-        ...classicButtonVariant('buttongroupleft-1', '#ffffff'),
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-    },
-    // white (reuses '0' art in every state)
-    2: {
-        ...classicButtonVariant('buttongroupleft-0'),
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-    },
-    // landing view / IL button size (reuses '0' art)
-    100: {
-        ...classicButtonVariant('buttongroupleft-0'),
-        layout: {
-            paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-            minWidth: 28, minHeight: 28,
-        },
-        textStyle: 'il_button',
-    },
+    0: { ...buttonGroupVariant('buttongroupleft-0', 3), ...windowLayout('habbo_window_layout_button') },
+    1: { ...buttonGroupVariant('buttongroupleft-1', 3), ...windowLayout('habbo_window_layout_button_black') },
+    2: { ...buttonGroupVariant('buttongroupleft-0', 3), ...windowLayout('habbo_window_layout_button') },
+    100: { ...buttonGroupVariant('buttongroupleft-0', 3), ...windowLayout('illumina_light_button_plain') },
 };
 
 export type ButtonGroupLeftProps = ButtonGroupComponentProps;

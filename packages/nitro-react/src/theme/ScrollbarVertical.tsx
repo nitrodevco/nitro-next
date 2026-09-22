@@ -38,12 +38,20 @@ export interface ScrollbarVerticalProps {
     variant?: string;
     defaultVariant?: string;
     tintColor?: string;
+    /**
+     * What happens once the content fits. `true` (the default) removes the scrollbar, as
+     * `ScrollableItemListWindow` / `ScrollableItemGridWindow` hide theirs. `false` keeps it, the
+     * way a layout's own `scrollbar_*` window stays: `ScrollBarController.updateLiftSizeAndPosition`
+     * disables it and every `_INTERNAL` part, so the buttons, the track and the lift - grown to
+     * the whole track - draw their `disabled` art and take no input.
+     */
+    hideWhenDisabled?: boolean;
     layout?: BoxLayout;
 }
 
 export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarVerticalProps>(
     (
-        { trackRef, thumbSize, thumbOffset, scrollable, onTrackPointerDown, onThumbPointerDown, stepBackward, stepForward, variant, defaultVariant, tintColor, layout },
+        { trackRef, thumbSize, thumbOffset, scrollable, onTrackPointerDown, onThumbPointerDown, stepBackward, stepForward, variant, defaultVariant, tintColor, hideWhenDisabled = true, layout },
         ref,
     ) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('scrollbarVertical', variant, defaultVariant);
@@ -58,10 +66,9 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
         // tabIndex is, so there's no Pixi event to hook the keyboard-stepping behavior to -
         // intentionally dropped rather than silently omitted.
 
-        // DOM's `invisible w-0! pointer-events-none` collapse when `!controller.scrollable` -
-        // not rendering the subtree at all is the Pixi equivalent of zero width + fully
-        // non-interactive, and simpler than threading a zero-size layout through every child.
-        if (!scrollable) return null;
+        const disabled = !scrollable;
+
+        if (disabled && hideWhenDisabled) return null;
 
         return (
             <Box
@@ -71,6 +78,7 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
                 <VariantCascadeProvider map={ownCascade}>
                     <ScrollbarSliderButtonUp
                         defaultVariant={resolvedVariant}
+                        disabled={disabled}
                         layout={{ flexShrink: 0 }}
                         onPointerDown={holdUp.onPointerDown}
                         onPointerUp={holdUp.onPointerUp}
@@ -79,6 +87,7 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
                     <ScrollbarSliderTrackVertical
                         ref={node => trackRef(node)}
                         defaultVariant={resolvedVariant}
+                        disabled={disabled}
                         onPointerDown={onTrackPointerDown}
                     >
                         {/* `thumbSize` can briefly read 0 on the very first measure tick after
@@ -89,7 +98,15 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
                             confirmed directly, one that starts at zero size never recovers once
                             resized on the following tick, unlike one that simply mounts fresh
                             once a real size is already known. */}
-                        {thumbSize > 0 && (
+                        {disabled && (
+                            <ScrollbarSliderBarVertical
+                                defaultVariant={resolvedVariant}
+                                tintColor={tintColor}
+                                disabled
+                                layout={{ left: 0, width: '100%', top: 0, height: '100%' }}
+                            />
+                        )}
+                        {!disabled && thumbSize > 0 && (
                             <ScrollbarSliderBarVertical
                                 defaultVariant={resolvedVariant}
                                 tintColor={tintColor}
@@ -100,6 +117,7 @@ export const ScrollbarVertical: ForwardRefExoticComponent<ScrollbarVerticalProps
                     </ScrollbarSliderTrackVertical>
                     <ScrollbarSliderButtonDown
                         defaultVariant={resolvedVariant}
+                        disabled={disabled}
                         layout={{ flexShrink: 0 }}
                         onPointerDown={holdDown.onPointerDown}
                         onPointerUp={holdDown.onPointerUp}

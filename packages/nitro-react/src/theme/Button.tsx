@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from './cascade';
 import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer } from './layer';
-import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, buttonPlainVariant, ButtonVariant, classicButtonVariant, shinyButtonVariant, ThemeProps, ThemeVariants, windowLayout, wrapTextChildren } from './utils';
+import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_103_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, ButtonVariant, classicButtonVariant, shinyButtonVariant, ThemeProps, ThemeVariants, windowLayout, wrapTextChildren } from './utils';
 
 /**
  * `Button` variants - the `type="button"` rows of `habbo_element_description_xml`, keyed by
@@ -34,7 +34,7 @@ const BUTTON_VARIANTS: ThemeVariants<ButtonVariant> = {
     // illumina plain
     102: { ...BUTTON_102_VARIANT, ...windowLayout('illumina_light_button_plain') },
     // illumina unetched
-    103: { ...buttonPlainVariant('button-103', false), ...windowLayout('illumina_light_button_plain') },
+    103: { ...BUTTON_103_VARIANT, ...windowLayout('illumina_light_button_plain') },
     // illumina purple window
     104: { ...BUTTON_104_VARIANT, ...windowLayout('illumina_purple_button') },
     // illumina purple plain
@@ -53,11 +53,11 @@ export interface ButtonProps extends ThemeProps<ButtonVariant> {
 
 export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled, selected, interactive: !!dynamicStyle,
+            cascadeKey: 'button', variants: BUTTON_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, selected, interactive: !!dynamicStyle,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
         // A few layouts put a `dynamic_style` on a button too: its own rule (only the disabled fade) and its tagged children's.

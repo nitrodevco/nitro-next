@@ -55,8 +55,10 @@ export const renderBrowserTextCanvas = (runs: readonly FlashTextRun[], options: 
 
     context.textBaseline = 'alphabetic';
 
+    const lineOffsets = lines.map(line => ((options.align === 'center') ? Math.floor((innerWidth - line.width) / 2) : (options.align === 'right') ? Math.floor(innerWidth - line.width) : 0));
+
     lines.forEach((line, lineIndex) => {
-        const lineX = gutter + ((options.align === 'center') ? Math.floor((innerWidth - line.width) / 2) : (options.align === 'right') ? Math.floor(innerWidth - line.width) : 0);
+        const lineX = gutter + lineOffsets[lineIndex];
         const lineY = lineIndex * lineHeight + baseline;
 
         for (const segment of line.segments) {
@@ -70,5 +72,5 @@ export const renderBrowserTextCanvas = (runs: readonly FlashTextRun[], options: 
         }
     });
 
-    return { canvas, width, height, textWidth, textHeight: lines.length * lineHeight, lineHeight, baseline, gutter };
+    return { canvas, width, height, textWidth, textHeight: lines.length * lineHeight, lineHeight, baseline, gutter, lineLayout: lines, lineOffsets };
 };

@@ -14,7 +14,7 @@ export interface TooltipState {
     visible: boolean;
 }
 
-/** `RegionController`'s `tool_tip_delay` default. */
+/** `ThemeManager`'s `tool_tip_delay` default - what a window without its own var waits. */
 export const TOOLTIP_DELAY_MS = 500;
 
 const listeners = new Set<() => void>();

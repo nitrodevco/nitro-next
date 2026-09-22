@@ -107,6 +107,62 @@ const textureToCanvas = (texture: Texture): { canvas: HTMLCanvasElement; ctx: Ca
     return { canvas, ctx };
 };
 
+/** A texture's alpha channel, one byte per texel of its frame, row by row. */
+export interface TextureAlpha {
+    width: number;
+    height: number;
+    data: Uint8Array;
+}
+
+/** `null` marks a texture whose pixels a canvas cannot read (a render texture, a tainted image). */
+const alphaChannels = new WeakMap<Texture, TextureAlpha | null>();
+
+/**
+ * The alpha channel of a loaded texture's frame - for an atlas sprite only its own sub-rect of
+ * the shared sheet - read once per texture and kept as long as the texture is. The frame is read
+ * as stored: a groupD8 `rotate` (a mirrored copy, see `getMirroredTexture`) is not applied, so
+ * pass the unmirrored texture and mirror the coordinates. `undefined` when the pixels can't be read.
+ */
+export const getTextureAlpha = (texture: Texture): TextureAlpha | undefined => {
+    const cached = alphaChannels.get(texture);
+
+    if (cached !== undefined) return cached ?? undefined;
+
+    const drawn = textureToCanvas(texture);
+    let alpha: TextureAlpha | null = null;
+
+    if (drawn) {
+        try {
+            const { width, height } = drawn.canvas;
+            const pixels = drawn.ctx.getImageData(0, 0, width, height).data;
+            const data = new Uint8Array(width * height);
+
+            for (let i = 0; i < data.length; i++) data[i] = pixels[(i * 4) + 3];
+
+            alpha = { width, height, data };
+        } catch {
+            alpha = null;
+        }
+    }
+
+    alphaChannels.set(texture, alpha);
+
+    return alpha ?? undefined;
+};
+
+/**
+ * The alpha (0-255) of the texel under `(x, y)` in `alpha`'s frame, or 0 off it - Flash's
+ * `BitmapData.getPixel32(x, y) >>> 24`, the value `BitmapData.hitTest` holds to its threshold.
+ */
+export const alphaAt = (alpha: TextureAlpha, x: number, y: number): number => {
+    const u = Math.floor(x);
+    const v = Math.floor(y);
+
+    if (u < 0 || v < 0 || u >= alpha.width || v >= alpha.height) return 0;
+
+    return alpha.data[(v * alpha.width) + u];
+};
+
 /** Derived textures of sources the `AssetManager` doesn't hold (a caller's own render), kept only as long as the source is. */
 const transientDerived = new WeakMap<Texture, Map<string, Texture>>();
 
@@ -186,6 +242,26 @@ export const getTextureGreyscale = (texture: Texture): Texture | undefined => ge
     }
 
     ctx.putImageData(image, 0, 0);
+});
+
+/**
+ * A bitmap's `rotation` variable (`BitmapDataRenderer.draw`): the source turned about its own
+ * centre into a transparent bitmap of the *same* size, so whatever the turn carries past that
+ * rect is cut off, and drawn without smoothing. Done before any scaling, as the client does.
+ */
+export const getTextureRotated = (texture: Texture, degrees: number): Texture | undefined => getDerivedTexture(texture, `rotate:${degrees}`, (ctx, canvas) => {
+    const copy = document.createElement('canvas');
+
+    copy.width = canvas.width;
+    copy.height = canvas.height;
+    copy.getContext('2d')?.drawImage(canvas, 0, 0);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.imageSmoothingEnabled = false;
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate((degrees / 180) * Math.PI);
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+    ctx.drawImage(copy, 0, 0);
 });
 
 const mirroredTextures = new WeakMap<Texture, Map<number, Texture>>();

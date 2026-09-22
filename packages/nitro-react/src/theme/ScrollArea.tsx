@@ -19,10 +19,22 @@ export interface ScrollAreaProps {
     reachThreshold?: number;
     onReachStart?: () => void;
     onReachEnd?: () => void;
+    /**
+     * Whether the scrollbar goes away while the content fits (the default, as a
+     * `scrollable_itemlist` / `scrollable_itemgrid` hides its own), or stays drawn disabled, as a
+     * layout's own `scrollbar_*` window does - see `ScrollbarVertical`'s `hideWhenDisabled`.
+     */
+    hideDisabledScrollbar?: boolean;
     /** Scrolls back to the start whenever this value changes - pass whatever identifies the content (a tab, a category, a page). */
     scrollResetKey?: unknown;
     layout?: BoxLayout;
     viewportLayout?: BoxLayout;
+    /**
+     * Where the scrollbar sits. A layout port passes the rect of the layout's own `scrollbar_*`
+     * window (with `viewportLayout` the list's), so the two are placed as Flash places them
+     * rather than the bar being carved out of the list's box.
+     */
+    scrollbarLayout?: BoxLayout;
     contentLayout?: BoxLayout;
     children?: ReactNode;
 }
@@ -37,7 +49,7 @@ export interface ScrollAreaProps {
  */
 export const ScrollArea = forwardRef<PixiContainer, ScrollAreaProps>(
     (
-        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, scrollResetKey, layout, viewportLayout, contentLayout, children },
+        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, scrollResetKey, hideDisabledScrollbar = true, layout, viewportLayout, scrollbarLayout, contentLayout, children },
         ref,
     ) => {
         const showVertical = orientation === 'vertical' || orientation === 'both';
@@ -151,6 +163,8 @@ export const ScrollArea = forwardRef<PixiContainer, ScrollAreaProps>(
                         variant={variant}
                         defaultVariant={defaultVariant}
                         tintColor={tintColor}
+                        hideWhenDisabled={hideDisabledScrollbar}
+                        layout={scrollbarLayout}
                     />
                 )}
                 {showHorizontal && (
@@ -158,8 +172,6 @@ export const ScrollArea = forwardRef<PixiContainer, ScrollAreaProps>(
                         trackRef={horizontal.trackRef}
                         thumbSize={horizontal.thumbSize}
                         thumbOffset={horizontal.thumbOffset}
-                        atStart={horizontal.atStart}
-                        atEnd={horizontal.atEnd}
                         scrollable={horizontal.scrollable}
                         onTrackPointerDown={horizontal.onTrackPointerDown}
                         onThumbPointerDown={horizontal.onThumbPointerDown}
@@ -168,6 +180,8 @@ export const ScrollArea = forwardRef<PixiContainer, ScrollAreaProps>(
                         variant={variant}
                         defaultVariant={defaultVariant}
                         tintColor={tintColor}
+                        hideWhenDisabled={hideDisabledScrollbar}
+                        layout={scrollbarLayout}
                     />
                 )}
             </Box>

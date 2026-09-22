@@ -16,7 +16,7 @@
  * refusal: Flash's `WE_SELECT` + `preventWindowOperation` is simply not acting).
  */
 import { Container as PixiContainer } from 'pixi.js';
-import { Key, useRef, useState } from 'react';
+import { Key, ReactNode, useRef, useState } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { DropmenuFrame } from './DropmenuFrame';
@@ -40,6 +40,11 @@ export interface DropmenuOption {
     disabled?: boolean;
     /** Act without closing the view. */
     keepOpen?: boolean;
+    /**
+     * The item's own window in place of its label - a droplist item built from a layout (the
+     * catalogue's `guild_selector_widget_item`: the group's name and its colours).
+     */
+    content?: ReactNode;
     onSelect: () => void;
 }
 
@@ -52,6 +57,8 @@ export interface DropmenuProps {
     textColor?: string;
     /** What the closed menu shows - the selected option's label, or a prompt. */
     caption?: string;
+    /** What the closed menu shows instead of `caption` - the selected droplist item's window. */
+    captionContent?: ReactNode;
     options?: readonly DropmenuOption[];
     disabled?: boolean;
     /** One option row's height. */
@@ -70,7 +77,7 @@ interface OpenMenu {
 }
 
 export const Dropmenu = ({
-    variant, defaultVariant, tooltip, tintColor, textStyle, textColor, caption = '', options = [], disabled = false,
+    variant, defaultVariant, tooltip, tintColor, textStyle, textColor, caption = '', captionContent, options = [], disabled = false,
     itemHeight = DEFAULT_ITEM_HEIGHT, layout, visible, zIndex, onOpenChange,
 }: DropmenuProps) => {
     const anchorRef = useRef<PixiContainer>(null);
@@ -137,7 +144,7 @@ export const Dropmenu = ({
                     onPointerTap={toggle}
                     layout={{ flexGrow: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 4, paddingRight: ARROW_SPACE, ...layout }}
                 >
-                    {caption}
+                    {captionContent ?? caption}
                 </DropmenuFrame>
             </Box>
             {open && placement && (
@@ -167,7 +174,7 @@ export const Dropmenu = ({
                                 onPointerTap={() => pick(option)}
                                 layout={{ width: '100%', height: itemHeight, flexShrink: 0, flexDirection: 'row', alignItems: 'center' }}
                             >
-                                {option.label}
+                                {option.content ?? option.label}
                             </DropmenuItem>
                         ))}
                     </DropmenuFrame>

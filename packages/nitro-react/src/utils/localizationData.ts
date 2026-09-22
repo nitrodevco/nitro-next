@@ -12,9 +12,9 @@
  * is skipped.
  *
  * One difference on purpose: Flash does not store an empty value, and its `getLocalization`
- * then answers with its `""` default. `getLocalizationValue` has no such default - a missing
- * key without one is `undefined` - so the ~1700 empty values (`badge_desc_*`, `abtest.motd`) are
- * kept, which gives callers the same `""` Flash gave them.
+ * then answers with the caller's default (`""` when none is given). The ~1700 empty values
+ * (`badge_desc_*`, `abtest.motd`) are kept here, which gives a caller with no default the same
+ * `""`; a caller that passes a default for one of them gets `""` rather than that default.
  */
 const LINE_SEPARATOR = /\n\r+|\n+|\r+/gm;
 const SURROUNDING_WHITESPACE = /^\s+|\s+$/g;

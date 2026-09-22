@@ -43,11 +43,11 @@ export interface IconButtonProps extends ThemeProps<IconButtonVariant> {
 export const IconButton: ForwardRefExoticComponent<IconButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, IconButtonProps>(
     ({
         // There is no style 0 to fall back on, so the "+" is the default rather than `useThemeVariant`'s.
-        variant, defaultVariant = '3', tooltip, layout, tintColor, textStyle, textColor, visible, disabled, selected,
+        variant, defaultVariant = '3', tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, disabled, selected,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'iconButton', variants: ICON_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled, selected,
+            cascadeKey: 'iconButton', variants: ICON_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, selected,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

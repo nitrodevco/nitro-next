@@ -20,6 +20,11 @@ import { TextStyleKey } from './textStyles';
 export type ThemeLayoutMeta = {
     name?: string;
     tooltip?: string;
+    /**
+     * The window's `tool_tip_delay` in ms - how long the pointer rests before `WindowToolTipAgent`
+     * shows `tooltip`; `ThemeManager`'s 500 (`TOOLTIP_DELAY_MS`) when absent.
+     */
+    tooltipDelay?: number;
     dynamicStyle?: DynamicStyleName;
     visible?: boolean;
     dropShadow?: DropShadowConfig;
@@ -85,6 +90,8 @@ export type ThemeOptions<T extends AnyThemeVariant = AnyThemeVariant> = {
     dropShadow?: DropShadowConfig | false;
     /** The `tool_tip_caption`: shown by `TooltipLayer` after the client's delay while hovered. */
     tooltip?: string;
+    /** `tool_tip_delay` in ms - 500 when absent (ThemeManager's default). */
+    tooltipDelay?: number;
     disabled?: boolean;
     selected?: boolean;
     /** Track hover/press even without a pointer handler (a `dynamicStyle` host needs the state for its looks). */
