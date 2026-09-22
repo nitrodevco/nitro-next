@@ -1,21 +1,23 @@
 import { CatalogPageRequestType, CatalogRequestedPageUtilities, ICatalogRequestedPage } from '@nitrodevco/nitro-api';
 import { useEffect } from 'react';
 
-import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
+import { getCatalogWindowName, useCatalogActions, useCatalogStore } from '#base/context/catalog';
 import { useWindowParams } from '#base/context/system';
 
 import { useWindowVisibility } from '../system';
 import { useCatalogNavigation } from './useCatalogNavigation';
 
 export const useCatalogPageRequest = () => {
-    const { isWindowVisible } = useWindowVisibility('catalog');
+    // The window of this store's catalogue type - `catalog` or `builders_catalog`.
+    const windowName = getCatalogWindowName(useCatalogStore(x => x.catalogType));
+    const { isWindowVisible } = useWindowVisibility(windowName);
     const rootNode = useCatalogStore(x => x.rootNode);
     const activePage = useCatalogStore(x => x.activePage);
     const requestedPage = useCatalogStore(x => x.requestedPage);
     const { activateNode, openPageById, openPageByName, openPageByOfferId } = useCatalogNavigation();
     const { setRequestedPage } = useCatalogActions();
 
-    const params = useWindowParams('catalog');
+    const params = useWindowParams(windowName);
 
     useEffect(() => {
         let requestedPage: ICatalogRequestedPage | undefined;

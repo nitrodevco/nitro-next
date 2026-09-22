@@ -1,7 +1,6 @@
 import { RoomObjectWidgetRequestEvent, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { ComponentType } from 'react';
 
-import { FurnitureAchievementFailedWidget } from './FurnitureAchievementFailedWidget';
 import { FurnitureAreaHideWidget } from './FurnitureAreaHideWidget';
 import { FurnitureBackgroundColorWidget } from './FurnitureBackgroundColorWidget';
 import { FurnitureBadgeEngravingWidget } from './FurnitureBadgeEngravingWidget';
@@ -24,6 +23,7 @@ import { FurniturePetPackageWidget } from './FurniturePetPackageWidget';
 import { FurniturePetProductWidget } from './FurniturePetProductWidget';
 import { FurniturePlaceholderWidget } from './FurniturePlaceholderWidget';
 import { FurniturePlaylistEditorWidget } from './FurniturePlaylistEditorWidget';
+import { FurniturePresentOpenedWidget } from './FurniturePresentOpenedWidget';
 import { FurniturePresentWidget } from './FurniturePresentWidget';
 import { FurniturePurchasableClothingWidget } from './FurniturePurchasableClothingWidget';
 import { FurnitureRentableSpaceWidget } from './FurnitureRentableSpaceWidget';
@@ -31,20 +31,20 @@ import { FurnitureRoomLinkWidget } from './FurnitureRoomLinkWidget';
 import { FurnitureStackHeightWidget } from './FurnitureStackHeightWidget';
 import { FurnitureStickieWidget } from './FurnitureStickieWidget';
 import { FurnitureTrophyWidget } from './FurnitureTrophyWidget';
-import { PET_PACKAGE_WIDGET } from './furnitureWidgetData';
+import { PET_PACKAGE_WIDGET, PRESENT_OPENED_WIDGET } from './furnitureWidgetData';
 import { FurnitureYoutubeWidget } from './FurnitureYoutubeWidget';
 
 /**
  * Which dialog answers which request. A widget reads its own request once mounted, so this only
  * decides what is worth mounting - and adding a dialog to the room means adding a line here.
  *
- * Most of these are the `RoomObjectWidgetRequestEvent` a furniture logic dispatches. Two arrive
+ * Most of these are the `RoomObjectWidgetRequestEvent` a furniture logic dispatches. Three arrive
  * by another road: `RoomWidgetEnum` values name the widget a logic asks for through OPEN_WIDGET,
- * and the pet package is raised by the server rather than by any furni at all.
+ * the pet package is raised by the server rather than by any furni at all, and an opened gift's
+ * card is put up by the gift's own card, since the box is gone by the time it shows.
  */
 export const FURNITURE_WIDGETS: Record<string, ComponentType> = {
     [RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_ENGRAVING]: FurnitureBadgeEngravingWidget,
-    [RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_FAILED]: FurnitureAchievementFailedWidget,
     [RoomObjectWidgetRequestEvent.AREA_HIDE]: FurnitureAreaHideWidget,
     [RoomObjectWidgetRequestEvent.BACKGROUND_COLOR]: FurnitureBackgroundColorWidget,
     [RoomObjectWidgetRequestEvent.BADGE_DISPLAY_ENGRAVING]: FurnitureBadgeEngravingWidget,
@@ -75,4 +75,5 @@ export const FURNITURE_WIDGETS: Record<string, ComponentType> = {
     [RoomWidgetEnum.CRAFTING]: FurnitureCraftingWidget,
     [RoomWidgetEnum.RENTABLESPACE]: FurnitureRentableSpaceWidget,
     [PET_PACKAGE_WIDGET]: FurniturePetPackageWidget,
+    [PRESENT_OPENED_WIDGET]: FurniturePresentOpenedWidget,
 };

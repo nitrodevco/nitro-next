@@ -18,7 +18,7 @@ import {
 const STACK_ID = 'notifications';
 
 /** Each layout's window height as built, until the bubble has been laid out and measured. */
-const LAYOUT_HEIGHTS: Record<NotificationLayoutName, number> = { default: 66, friendonline: 58, treasure_hunt: 87, wired: 60 };
+const LAYOUT_HEIGHTS: Record<NotificationLayoutName, number> = { default: 66, friendonline: 58, nft_opening: 110, treasure_hunt: 87, wired: 60 };
 
 const sameFrames = (a: Record<number, NotificationFrame>, b: Record<number, NotificationFrame>) => {
     const keys = Object.keys(a);

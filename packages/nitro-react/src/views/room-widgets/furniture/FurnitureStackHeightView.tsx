@@ -1,127 +1,268 @@
-import { useState } from 'react';
+import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Border, Box, Button, CheckBox, Frame, TextInput, ThemeText } from '#base/theme';
+import { Border, Button, CheckBox, ContainerButton, Frame, Icon, Region, TextInput, ThemeText } from '#base/theme';
 
-/** The helper tops out at ten tiles, the height Flash's slider could reach. */
-const MAX_HEIGHT = 10;
+/** `CustomStackHeightWidget.SLIDER_RANGE`: the slider spans 0 to 10 tiles. */
+const SLIDER_RANGE = 10;
+/** `slider` is 206 wide and its button `SLIDER_BUTTON_WIDTH` 20, so the button travels 186px. */
+const SLIDER_WIDTH = 206;
+const SLIDER_BUTTON_WIDTH = 20;
+const SLIDER_TRAVEL = SLIDER_WIDTH - SLIDER_BUTTON_WIDTH;
+/** `SLIDER_LIVE_UPDATE_INTERVAL_MS`: while the button is dragged the height goes out at most this often. */
+const SLIDER_LIVE_UPDATE_INTERVAL_MS = 30;
+/** The nudge the move buttons make here - see the docblock. */
 const STEP = 0.1;
+/** The frame's `height_max` (a walk tile, with `walktile_container`) and `height_min` (any other furni). */
+const WALK_HEIGHT = 210;
+const STACK_HEIGHT = 185;
 
 export interface FurnitureStackHeightViewProps {
     height: number;
     multiWalkMode: boolean;
+    /** A walk-magic tile: Flash's walk variant, with the multi walk toggle and the `widget.custom.walk.*` texts. */
+    isWalkTile: boolean;
     onApply: (height: number, multiWalkMode: boolean) => void;
     /** Hands the tile back to normal stacking, the layout's "place on top". */
     onAboveStack: () => void;
     onClose: () => void;
 }
 
-const clamp = (height: number) => Math.min(Math.max(Number.isNaN(height) ? 0 : height, 0), MAX_HEIGHT);
+/** `currentHeightValue`: the input's number, or 0 when it is not one. */
+const parseHeight = (value: string) => {
+    const height = parseFloat(value);
+
+    return Number.isNaN(height) ? 0 : height;
+};
+
+const clampSliderX = (x: number) => Math.max(0, Math.min(SLIDER_TRAVEL, x));
+
+/** `updateHeightSelection`: the button's place along the slider, in hundredths of a tile. */
+const heightAtSliderX = (x: number) => Math.trunc((clampSliderX(x) / SLIDER_TRAVEL) * SLIDER_RANGE * 100) / 100;
+
+/** `updateSlider`: where the button sits for a height, capped at the slider's end. */
+const sliderXForHeight = (height: number) => Math.trunc(SLIDER_TRAVEL * Math.min(height / SLIDER_RANGE, 1));
 
 /**
- * The stacking helper, on the `custom_stack_height` layout (320x210): a height in tiles, the
- * nudges either side of it, and the two shortcuts - back to normal stacking, or flat on the
- * floor. Heights go out in hundredths of a tile, so 1.5 tiles is 150 on the wire.
+ * The stacking helper, on the `custom_stack_height` layout (320x210) that
+ * `CustomStackHeightWidget.createWindow` builds and centres. `open` makes it the walk or the
+ * stack variant: a walk tile keeps `walktile_container` and the frame's `height_max`, anything
+ * else hides it and drops to `height_min`, and the caption and `height_text` are
+ * `widget.custom.walk|stack.height.title|text`. Heights go out in hundredths of a tile, so 1.5
+ * tiles is 150 on the wire.
+ *
+ * The slider is `windowProcedure`'s: pressing the track puts the button at the pointer and sends
+ * that height; dragging the button (`WE_RELOCATED`) writes the height into the input and sends it
+ * live, at most every 30ms, and once more on release. Enter in the input sends what is typed;
+ * leaving it with an unsent edit puts the furni's height back (`onInputHeightUnfocus`).
+ *
+ * `button_move_up` / `button_move_down` send `SetAdjacentCustomStackingHeightComposer` in Flash,
+ * letting the server pick the next stacking height; that composer is not in the port's packets,
+ * so here they nudge the height by 0.1 and send it. The button's double click (whole tiles) is
+ * not ported.
  */
-export const FurnitureStackHeightView = ({ height, multiWalkMode, onApply, onAboveStack, onClose }: FurnitureStackHeightViewProps) => {
+export const FurnitureStackHeightView = ({ height, multiWalkMode, isWalkTile, onApply, onAboveStack, onClose }: FurnitureStackHeightViewProps) => {
     const [ draft, setDraft ] = useState<string>(height.toString());
+    const [ edited, setEdited ] = useState<boolean>(false);
     const [ lastHeight, setLastHeight ] = useState<number>(height);
     const [ multiWalk, setMultiWalk ] = useState<boolean>(multiWalkMode);
+    const [ dragX, setDragX ] = useState<number | null>(null);
     const t = useTranslation();
+    const trackRef = useRef<PixiContainer | null>(null);
+    const stopDragRef = useRef<(() => void) | null>(null);
 
-    // The server's own height wins whenever it changes under us.
-    if (height !== lastHeight) {
+    useEffect(() => () => stopDragRef.current?.(), []);
+
+    // The server's own height wins whenever it changes under us, unless the height is being dragged or typed (`canApplyLiveHeight`).
+    if ((height !== lastHeight) && (dragX === null) && !edited) {
         setLastHeight(height);
         setDraft(height.toString());
     }
 
-    const applyHeight = (value: number) => {
-        const next = clamp(value);
+    const send = (value: number) => onApply(value, multiWalk);
 
-        setDraft(next.toString());
-        onApply(next, multiWalk);
+    const setAltitude = (value: number) => {
+        setEdited(false);
+        setDraft(value.toString());
+        send(value);
     };
+
+    const onTrackTap = (event: FederatedPointerEvent) => {
+        if (event.target !== event.currentTarget || !trackRef.current) return;
+
+        const value = heightAtSliderX(event.getLocalPosition(trackRef.current).x);
+
+        setEdited(false);
+        setDraft(value.toString());
+        send(value);
+    };
+
+    const onButtonDown = (event: FederatedPointerEvent) => {
+        if (event.button !== 0) return;
+
+        stopDragRef.current?.();
+
+        const startX = sliderXForHeight(parseHeight(draft));
+        const startClientX = event.clientX;
+        let lastSent = -SLIDER_LIVE_UPDATE_INTERVAL_MS;
+        let latest = parseHeight(draft);
+
+        setEdited(false);
+        setDragX(startX);
+
+        const move = (moveEvent: PointerEvent) => {
+            const x = clampSliderX(startX + (moveEvent.clientX - startClientX));
+
+            latest = heightAtSliderX(x);
+            setDragX(x);
+            setDraft(latest.toString());
+
+            if ((moveEvent.timeStamp - lastSent) >= SLIDER_LIVE_UPDATE_INTERVAL_MS) {
+                lastSent = moveEvent.timeStamp;
+                send(latest);
+            }
+        };
+
+        const stop = () => {
+            window.removeEventListener('pointermove', move);
+            window.removeEventListener('pointerup', up);
+            stopDragRef.current = null;
+        };
+
+        const up = () => {
+            stop();
+            setDragX(null);
+            send(latest);
+        };
+
+        stopDragRef.current = stop;
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+    };
+
+    const sliderX = dragX ?? sliderXForHeight(parseHeight(draft));
 
     return (
         <Frame
-            variant="0"
-            id="furniture-stack-height"
-            caption={t('widget.custom.stack.height.title')}
+            variant="100"
+            caption={t(isWalkTile ? 'widget.custom.walk.height.title' : 'widget.custom.stack.height.title')}
+            dropShadow={{ angle: 0, alpha: 0.35, blur: 20 }}
             onClose={onClose}
-            defaultPosition={{ x: 90, y: 90 }}
+            centered
             rememberPosition={false}
-            layout={{ position: 'absolute', width: 320, height: 210 }}
+            resizeDirection="none"
+            margins={[ 1, 30, 1, 1 ]}
+            layout={{ width: 320, height: isWalkTile ? WALK_HEIGHT : STACK_HEIGHT }}
         >
+            <Button
+                variant="102"
+                onPointerTap={onAboveStack}
+                layout={{ position: 'absolute', left: 12, top: 110, height: 29 }}
+            >
+                {t('furniture.above.stack')}
+            </Button>
+            <Button
+                variant="102"
+                onPointerTap={() => setAltitude(0)}
+                layout={{ position: 'absolute', right: 10, top: 110, height: 29 }}
+            >
+                {t('furniture.floor.level')}
+            </Button>
+            <Border
+                ref={trackRef}
+                variant="105"
+                onPointerTap={onTrackTap}
+                layout={{ position: 'absolute', left: 35, top: 68, width: SLIDER_WIDTH, height: 30 }}
+            >
+                <ContainerButton
+                    variant="102"
+                    onPointerDown={onButtonDown}
+                    layout={{ position: 'absolute', left: sliderX, top: 0, width: SLIDER_BUTTON_WIDTH, height: 30 }}
+                />
+            </Border>
             <ThemeText
-                text={t('widget.custom.stack.height.text')}
+                text={t(isWalkTile ? 'widget.custom.walk.height.text' : 'widget.custom.stack.height.text')}
                 textStyle="il_regular"
-                textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 294 }}
+                textOptions={{ wordWrap: true, wordWrapWidth: 290 }}
+                clip
                 verticalAlign="top"
-                layout={{ width: 294, height: 45, marginBottom: 6 }}
+                layout={{ position: 'absolute', left: 10, top: 5, width: 294, height: 59 }}
             />
-            <Box layout={{ flexDirection: 'row', gap: 6, alignItems: 'center', marginBottom: 8 }}>
-                <Button
-                    variant="0"
-                    onPointerTap={() => applyHeight(clamp(parseFloat(draft)) - STEP)}
-                    layout={{ width: 24, height: 24 }}
-                >
-                    -
-                </Button>
-                <Border
-                    variant="0"
-                    layout={{ width: 58, height: 26, paddingLeft: 6, paddingRight: 6 }}
-                >
-                    <TextInput
-                        value={draft}
-                        onChange={setDraft}
-                        onEnter={() => applyHeight(parseFloat(draft))}
-                        onFocusChange={focused => !focused && applyHeight(parseFloat(draft))}
-                        maxLength={5}
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Border>
-                <Button
-                    variant="0"
-                    onPointerTap={() => applyHeight(clamp(parseFloat(draft)) + STEP)}
-                    layout={{ width: 24, height: 24 }}
-                >
-                    +
-                </Button>
-            </Box>
-            <Box layout={{ flexDirection: 'row', gap: 6, alignItems: 'center', marginBottom: 8 }}>
-                <Button
-                    variant="0"
-                    onPointerTap={onAboveStack}
-                    layout={{ width: 134, height: 24 }}
-                >
-                    {t('furniture.above.stack')}
-                </Button>
-                <Button
-                    variant="0"
-                    onPointerTap={() => applyHeight(0)}
-                    layout={{ width: 126, height: 24 }}
-                >
-                    {t('furniture.floor.level')}
-                </Button>
-            </Box>
-            <Box layout={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
-                <CheckBox
-                    variant="0"
-                    selected={multiWalk}
-                    onPointerTap={() => {
-                        setMultiWalk(!multiWalk);
-                        onApply(clamp(parseFloat(draft)), !multiWalk);
+            <Border
+                variant="105"
+                layout={{ position: 'absolute', left: 250, top: 68, width: 58, height: 30 }}
+            >
+                <TextInput
+                    value={draft}
+                    onChange={(value) => {
+                        setEdited(true);
+                        setDraft(value);
                     }}
-                    layout={{ width: 17, height: 16 }}
-                />
-                <ThemeText
-                    text={t('widget.custom.multiwalk_mode.text')}
+                    onEnter={() => setAltitude(parseHeight(draft))}
+                    onFocusChange={(focused) => {
+                        if (focused || !edited) return;
+
+                        setEdited(false);
+                        setDraft(height.toString());
+                    }}
                     textStyle="il_regular"
-                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 282 }}
-                    verticalAlign="top"
-                    layout={{ width: 282, height: 28 }}
+                    flashPlacement
+                    restrict="0123456789."
+                    backgroundColor={null}
+                    focusedBackgroundColor={null}
+                    layout={{ position: 'absolute', left: 7, top: 7, width: 45, height: 20 }}
                 />
-            </Box>
+            </Border>
+            {isWalkTile && (
+                <Region layout={{ position: 'absolute', left: 0, top: 149, width: 318, height: 24 }}>
+                    <CheckBox
+                        variant="102"
+                        selected={multiWalk}
+                        onPointerTap={() => {
+                            setMultiWalk(!multiWalk);
+                            onApply(parseHeight(draft), !multiWalk);
+                        }}
+                        layout={{ position: 'absolute', left: 13, top: 3, width: 17, height: 16 }}
+                    />
+                    <ThemeText
+                        text={t('widget.custom.multiwalk_mode.text')}
+                        textStyle="il_regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 278 }}
+                        clip
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 31, top: 2, width: 282, height: 19 }}
+                    />
+                </Region>
+            )}
+            <ContainerButton
+                variant="102"
+                tooltip={t('widget.custom.height.move_down')}
+                dynamicStyle="button"
+                onPointerTap={() => setAltitude(Math.max(0, Math.round((parseHeight(draft) - STEP) * 100) / 100))}
+                layout={{ position: 'absolute', left: 9, top: 84, width: 19, height: 20 }}
+            >
+                <Icon
+                    variant="0"
+                    tintColor="#7f7f7f"
+                    dynamicRole="icon"
+                    layout={{ position: 'absolute', left: 5, top: 5, width: 12, height: 12 }}
+                />
+            </ContainerButton>
+            <ContainerButton
+                variant="102"
+                tooltip={t('widget.custom.height.move_up')}
+                dynamicStyle="button"
+                onPointerTap={() => setAltitude(Math.round((parseHeight(draft) + STEP) * 100) / 100)}
+                layout={{ position: 'absolute', left: 9, top: 62, width: 19, height: 20 }}
+            >
+                <Icon
+                    variant="1"
+                    tintColor="#7f7f7f"
+                    dynamicRole="icon"
+                    layout={{ position: 'absolute', left: 5, top: 4, width: 12, height: 12 }}
+                />
+            </ContainerButton>
         </Frame>
     );
 };

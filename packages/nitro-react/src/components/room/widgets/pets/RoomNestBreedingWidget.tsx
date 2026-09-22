@@ -12,7 +12,7 @@ import { NestBreedingView } from '#base/views/room-widgets/pets/NestBreedingView
 export const RoomNestBreedingWidget = () => {
     const request = useRoomStore(x => x.nestBreeding);
     const { setNestBreeding } = useRoomPetsActions();
-    const { showAlert } = useWindowActions();
+    const { showSimpleAlert } = useWindowActions();
     const { send } = useWebSocketContext();
     const t = useTranslation();
 
@@ -28,7 +28,12 @@ export const RoomNestBreedingWidget = () => {
             nameRejected={request.nameRejected}
             onBreed={(name) => {
                 if (!name.length) {
-                    showAlert(t('breedpets.confirmation.alert.name.required.head'), t('breedpets.confirmation.alert.name.required.desc'));
+                    // `ConfirmPetBreedingView`'s `save_button` with an empty name.
+                    showSimpleAlert({
+                        caption: t('breedpets.confirmation.alert.title'),
+                        subtitle: t('breedpets.confirmation.alert.name.required.head'),
+                        message: t('breedpets.confirmation.alert.name.required.desc'),
+                    });
 
                     return;
                 }

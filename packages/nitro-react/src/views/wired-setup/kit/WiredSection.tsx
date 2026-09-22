@@ -16,6 +16,11 @@
  * `defaultCollapsed` picks `COLLAPSED` (`§_-I5§`) over `EXPANDED` (`§_-t1§`, `SectionParam.§_-MG§`).
  * The folded state is the section's own, as in Flash, where the button adds and removes the
  * content window; it starts from `defaultCollapsed` each time the section mounts.
+ *
+ * A section standing directly in the frame's list is one of its elements (`WiredFrameListItem`):
+ * the frame follows it with a spacer, and `InnerBorderFramePreset` hides the first one's
+ * splitter. `visible` is `WiredUIPreset.visible` - hidden, the section keeps its place (and its
+ * spacer) in that list.
  */
 import { ReactNode, useState } from 'react';
 
@@ -25,6 +30,7 @@ import { useWiredFillLayout } from './useWiredFillLayout';
 import { WiredCollapseExpandButton } from './WiredCollapseExpandButton';
 import { WiredDisabled } from './WiredDisabled';
 import { WiredFlow } from './WiredFlow';
+import { WiredFrameListItem } from './WiredFrameListItem';
 import { WiredPaddedContainer } from './WiredPaddedContainer';
 import { WiredSourceTypeSelector } from './WiredSourceTypeSelector';
 import { WiredSplitter } from './WiredSplitter';
@@ -60,9 +66,28 @@ export interface WiredSectionProps {
     bordered?: boolean;
     /** `splitterVisible`. Default `true`. */
     splitterVisible?: boolean;
+    /** `WiredUIPreset.visible`. Default `true`. */
+    visible?: boolean;
+    /**
+     * The section is drawn by a preset that is not a section itself (the Variable FX presets extend
+     * `WiredUIPreset` and hold a `SectionPreset`): `InnerBorderFramePreset` only hides a
+     * `SectionPreset`'s or an `AbstractSectionPreset`'s splitter, so the first element keeps it.
+     */
+    keepsFirstSplitter?: boolean;
 }
 
-export const WiredSection = ({ title, children, collapsible = false, defaultCollapsed = false, disabled = false, sourceTypeSelector, headerOptions, headerOptionLeft, titleYOffset = 0, bordered = false, splitterVisible = true }: WiredSectionProps) => {
+export const WiredSection = ({ visible = true, splitterVisible = true, keepsFirstSplitter = false, ...props }: WiredSectionProps) => (
+    <WiredFrameListItem visible={visible}>
+        {splitterHidden => (
+            <WiredSectionBody
+                {...props}
+                splitterVisible={splitterVisible && (keepsFirstSplitter || !splitterHidden)}
+            />
+        )}
+    </WiredFrameListItem>
+);
+
+const WiredSectionBody = ({ title, children, collapsible = false, defaultCollapsed = false, disabled = false, sourceTypeSelector, headerOptions, headerOptionLeft, titleYOffset = 0, bordered = false, splitterVisible = true }: Omit<WiredSectionProps, 'visible' | 'keepsFirstSplitter'>) => {
     const style = useWiredStyle();
     const fillLayout = useWiredFillLayout();
     const [ expanded, setExpanded ] = useState(!(collapsible && defaultCollapsed));

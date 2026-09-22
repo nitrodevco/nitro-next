@@ -146,9 +146,12 @@ export const WiredVariablePickerExpandedView = ({ x, y, width, borderVariant, pi
                         focused={true}
                         maxLength={MAX_CHARS}
                         textStyle="regular"
-                        backgroundColor=""
-                        focusedBackgroundColor=""
-                        layout={{ position: 'absolute', left: 7, top: 3, width: width - 7 - 20, height: 17 }}
+                        // `input_field`: a 190x17 input at (7, 3) of the 197px field - flush with its
+                        // right edge, under the cancel button - with no fill of its own.
+                        flashPlacement
+                        backgroundColor={null}
+                        focusedBackgroundColor={null}
+                        layout={{ position: 'absolute', left: 7, top: 3, width: width - 7, height: 17 }}
                     />
                     {(query.length > 0) && (
                         <Region
@@ -159,7 +162,11 @@ export const WiredVariablePickerExpandedView = ({ x, y, width, borderVariant, pi
                             }}
                             layout={{ position: 'absolute', right: 8, top: 5, width: 9, height: 9 }}
                         >
-                            <ThemeImage src={LayoutImage('shared/var_picker_cancel_search.png')} />
+                            <ThemeImage
+                                src={LayoutImage('shared/var_picker_cancel_search.png')}
+                                bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                                layout={{ position: 'absolute', left: 0, top: 0 }}
+                            />
                         </Region>
                     )}
                 </Box>

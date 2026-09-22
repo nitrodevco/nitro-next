@@ -20,7 +20,8 @@ import { PetFigureData } from '#renderer/session';
 import { GetTicker, NumberBank, TextureUtils } from '#renderer/utils';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
-import { ObjectDataUpdateMessage } from './messages';
+import { ObjectDataUpdateMessage, ObjectRoomMaskUpdateMessage } from './messages';
+import { RoomLogic, RoomPlaneParser } from './object';
 import { RefreshVariableFxRendererMappings } from './object/variablefx/VariableFxRoomData';
 import { GetVariableFxAssetLibrary } from './object/visualization/variablefx/VariableFxAssetLibrary';
 import { Room } from './Room';
@@ -142,7 +143,57 @@ export class RoomEngine implements IRoomEngine {
         return image;
     }
 
-    public async getGenericRoomObjectTexture(
+    /**
+     * Flash `RoomEngine.getRoomImage`, as a texture: a small room with these floor, wall and
+     * landscape types, rendered as a `room` object of the temporary room. The planes and the types
+     * travel in the object's value (`<floor>\n<wall>\n<landscape>\n<window>`), which
+     * `initializeRoomForGettingImage` reads back; `windowType` cuts that window's mask into the
+     * wall, the way the catalogue's spaces preview shows its landscape through one.
+     */
+    public getRoomTexture(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined, scale: RoomGeometryScaleType, listener: IGetImageListener | undefined = undefined, windowType: string | undefined = undefined): Promise<Texture | undefined> {
+        let value = `${floorType ?? ''}\n${wallType ?? ''}\n${landscapeType ?? ''}\n`;
+
+        if (windowType !== undefined) value += windowType;
+
+        return this.getGenericRoomObjectTexture('room', value, new Vector3d(), scale, listener);
+    }
+
+    /**
+     * Flash `RoomEngine.initializeRoomForGettingImage`: a 6x6 floor of height 0 inside a one-tile
+     * border, walls 6 high, the plane types from the value, and - when the value names a window
+     * (its fourth line; an empty one is still a mask of no type, which the logic ignores) - that
+     * window's mask as `20_1` at (2.5, 0.5, 2).
+     */
+    private initializeRoomForGettingImage(roomObject: IRoomObjectController, value: string): void {
+        const parts = value.split('\n');
+
+        if (parts.length < 3) return;
+
+        const [ floorType, wallType, landscapeType, windowType ] = parts;
+        const size = 6;
+        const parser = new RoomPlaneParser();
+
+        parser.initializeTileMap(size + 2, size + 2);
+
+        for (let y = 1; y < (1 + size); y++) {
+            for (let x = 1; x < (1 + size); x++) parser.setTileHeight(x, y, 0);
+        }
+
+        parser.wallHeight = size;
+        parser.initializeFromTileData();
+
+        if (roomObject.logic instanceof RoomLogic) roomObject.logic.initialize(parser.getMapData());
+
+        roomObject.model.setValue(RoomObjectVariableEnum.RoomFloorType, floorType);
+        roomObject.model.setValue(RoomObjectVariableEnum.RoomWallType, wallType);
+        roomObject.model.setValue(RoomObjectVariableEnum.RoomLandscapeType, landscapeType);
+
+        if (windowType !== undefined) roomObject.processUpdateMessage(new ObjectRoomMaskUpdateMessage(ObjectRoomMaskUpdateMessage.ADD_MASK, '20_1', windowType, new Vector3d(2.5, 0.5, 2)));
+
+        parser.dispose();
+    }
+
+    public getGenericRoomObjectTexture(
         type: string,
         value: string,
         direction: IVector3D,
@@ -154,6 +205,23 @@ export class RoomEngine implements IRoomEngine {
         frameCount: number = -1,
         posture: string = '',
     ): Promise<Texture | undefined> {
+        // The render is synchronous. The executor runs it at once and a throw rejects the promise,
+        // exactly as the `async` method with nothing to await did.
+        return new Promise(resolve => resolve(this.renderGenericRoomObjectTexture(type, value, direction, scale, listener, extras, objectData, state, frameCount, posture)));
+    }
+
+    private renderGenericRoomObjectTexture(
+        type: string,
+        value: string,
+        direction: IVector3D,
+        scale: RoomGeometryScaleType,
+        listener: IGetImageListener | undefined,
+        extras: number,
+        objectData: IObjectData | undefined,
+        state: number,
+        frameCount: number,
+        posture: string,
+    ): Texture | undefined {
         const room = this.getTemporaryRoom();
 
         if (!room) return undefined;
@@ -209,6 +277,7 @@ export class RoomEngine implements IRoomEngine {
                 }
                 break;
             case RoomObjectCategoryEnum.Room:
+                this.initializeRoomForGettingImage(roomObject, value);
                 break;
         }
 

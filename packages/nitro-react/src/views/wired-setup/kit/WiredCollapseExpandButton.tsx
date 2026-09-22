@@ -29,10 +29,12 @@ export const WiredCollapseExpandButton = ({ expanded, onToggle, disabled = false
             cursor="pointer"
             disabled={isDisabled}
             onPointerTap={() => onToggle(!expanded)}
+            backgroundColor={expandCollapse.backgroundColor ?? undefined}
             layout={{ position: 'relative', width: expandCollapse.width, height: expandCollapse.height, marginTop: expandCollapse.offsetY, flexShrink: 0 }}
         >
             <ThemeImage
                 src={LayoutImage(`wired/${expanded ? expandCollapse.upAsset : expandCollapse.downAsset}.png`)}
+                bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
                 tint={expandCollapse.arrowTint ?? undefined}
                 alpha={wiredDisabledAlpha(isDisabled)}
                 eventMode="none"

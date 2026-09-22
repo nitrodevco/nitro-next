@@ -9,6 +9,10 @@
  * its filters back into the controls and scrolls to the top; an auto refresh leaves both alone.
  *
  * The reference server (turbo-cloud) does not answer `WiredGetRoomLogs`.
+ *
+ * Every text is style 3 without a `text_style` var (`u_regular`); the three filter labels add
+ * `bold`, `info_text` is an `html` window (markup, `leading` 1), and the auto refresh label has
+ * neither `word_wrap` nor an `auto_size`, so it stays on one line cut at its 90x29.
  */
 import type { IWiredLogEntry, IWiredLogPage } from '@nitrodevco/nitro-packets';
 import { useEffect, useRef, useState } from 'react';
@@ -35,6 +39,8 @@ const LEVEL_COLORS = [ 4607, 11757568, 14362624, 10158534 ].map(uintToHexColor);
 const FILTER_MAX_CHARS = 400;
 /** The header above `middle`. */
 const HEADER_HEIGHT = 97;
+/** The frame's `margin_*` vars: the content box starts under the 33px title bar. */
+const FRAME_MARGINS = [ 0, 33, 0, 0 ] as const;
 
 export interface WiredRoomLogsViewProps {
     page: IWiredLogPage;
@@ -143,8 +149,8 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
     const boldText = (key: string, left: number, top: number) => (
         <ThemeText
             text={t(key, key)}
-            textStyle="u_bold"
-            textOptions={{ fill: '#000000' }}
+            textStyle="u_regular"
+            flashFormat={{ bold: true }}
             verticalAlign="top"
             layout={{ position: 'absolute', left, top, height: 17 }}
         />
@@ -162,6 +168,7 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
             rememberPosition={false}
             onClose={closeWiredRoomLogs}
             layout={{ position: 'absolute', width: 700, height: 508, minWidth: 700, maxWidth: 700, minHeight: 380, maxHeight: 700 }}
+            margins={FRAME_MARGINS}
             contentLayout={{ flexDirection: 'column' }}
         >
             <Box layout={{ width: 700, height: HEADER_HEIGHT, flexShrink: 0 }}>
@@ -172,26 +179,13 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
                     <ThemeText
                         text={t('wiredmenu.logs_overview.info', 'wiredmenu.logs_overview.info')}
                         textStyle="u_regular"
-                        textOptions={{ fill: '#000000', align: 'center', wordWrap: true, wordWrapWidth: 574 }}
-                        verticalAlign="middle"
+                        textOptions={{ align: 'center', wordWrap: true, wordWrapWidth: 574 }}
+                        flashFormat={{ leading: 1 }}
+                        markup
+                        verticalAlign="top"
                         layout={{ position: 'absolute', left: 1, top: 3, width: 578, height: 32 }}
                     />
                 </Border>
-                <Box layout={{ position: 'absolute', left: 596, top: 19, width: 15, height: 15 }}>
-                    <CheckBox
-                        variant="3"
-                        selected={autoRefresh}
-                        onPointerTap={() => setAutoRefresh(!autoRefresh)}
-                        layout={{ width: 15, height: 15 }}
-                    />
-                </Box>
-                <ThemeText
-                    text={t('wiredmenu.logs_overview.auto_refresh', 'wiredmenu.logs_overview.auto_refresh')}
-                    textStyle="u_regular"
-                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 86 }}
-                    verticalAlign="top"
-                    layout={{ position: 'absolute', left: 614, top: 18, width: 90, height: 29 }}
-                />
                 <Box layout={{ position: 'absolute', left: 15, top: 60, width: 314, height: 25 }}>
                     {boldText('wiredmenu.logs_overview.filter', 0, 3)}
                     <Border
@@ -204,10 +198,28 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
                             onChange={setQuery}
                             onEnter={() => updateFilters()}
                             textStyle="u_regular"
+                            flashPlacement
+                            backgroundColor={null}
+                            focusedBackgroundColor={null}
                             layout={{ position: 'absolute', left: 6, top: 4, width: 257, height: 18 }}
                         />
                     </Border>
                 </Box>
+                <Box layout={{ position: 'absolute', left: 596, top: 19, width: 15, height: 15 }}>
+                    <CheckBox
+                        variant="3"
+                        selected={autoRefresh}
+                        onPointerTap={() => setAutoRefresh(!autoRefresh)}
+                        layout={{ width: 15, height: 15 }}
+                    />
+                </Box>
+                <ThemeText
+                    text={t('wiredmenu.logs_overview.auto_refresh', 'wiredmenu.logs_overview.auto_refresh')}
+                    textStyle="u_regular"
+                    clip
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 614, top: 18, width: 90, height: 29 }}
+                />
                 <Box layout={{ position: 'absolute', left: 349, top: 60, width: 164, height: 25 }}>
                     {boldText('wiredmenu.logs_overview.log_source', 0, 3)}
                     <WiredMenuDropmenu

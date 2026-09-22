@@ -45,6 +45,8 @@ export const createVolterLightStyle = ({ name, frameColor, backgroundColor, adva
             input: { ...base.input, textColor: LIGHT_TEXT_COLOR, backgroundColor: '#ffffff', fieldBorderColor: LIGHT_TEXT_COLOR },
             checkbox: { variant: '2', width: 17, height: 17 },
             radioButton: { variant: '2', width: 14, height: 17 },
+            // The light templates leave the region's `background` off.
+            expandCollapse: { ...base.expandCollapse, backgroundColor: null },
             iconButton: { ...base.iconButton, variant: '2' },
             button: { ...base.button, variant: '2' },
             miniButton: { kind: 'flat', width: 17, height: 17, borderColor: '#000000', fillColor: LIGHT_FILL_COLOR, iconWidth: 13, iconHeight: 15 },

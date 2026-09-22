@@ -17,6 +17,8 @@ const SPACING = 3;
 const ROW_WIDTH = 120;
 const ROW_HEIGHT = 17;
 const PANEL_WIDTH = 192;
+/** `extension_grid`'s `spacing`: the gap under every extension in the column. */
+const GRID_SPACING = 2;
 
 export interface ToolbarSettingsEntry {
     key: string;
@@ -29,11 +31,10 @@ export const ToolbarSettingsView = ({ entries }: { entries: ToolbarSettingsEntry
     const height = (PADDING * 2) + (entries.length * ROW_HEIGHT) + (Math.max(0, entries.length - 1) * SPACING);
 
     return (
-        <Region layout={{ position: 'relative', width: PANEL_WIDTH, height, flexShrink: 0 }}>
+        <Region layout={{ position: 'relative', width: PANEL_WIDTH, height, flexShrink: 0, marginBottom: GRID_SPACING }}>
             <Border
                 variant="6"
                 tintColor="#55534e"
-                backgroundColor="#55534e"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <Border
@@ -52,7 +53,10 @@ export const ToolbarSettingsView = ({ entries }: { entries: ToolbarSettingsEntry
                     >
                         <ThemeText
                             text={entry.label}
+                            textStyle="u_regular"
                             textOptions={{ fill: '#ffffff' }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 0, top: 0, height: ROW_HEIGHT }}
                         />
                     </Region>
                 ))}

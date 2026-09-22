@@ -6,7 +6,8 @@
  * comes online, and the phone number collection reset (only while `sms.identity.verification.*`
  * and the phone statuses say it applies). Every switch is saved the moment it is flipped. Opened
  * from the settings list under the purse (`ToolbarSettingsView`), placed as Flash placed it: at
- * the top of the desktop, 200 pixels from its right edge.
+ * the top of the desktop, 200 pixels from its right edge. The online indicator menu is the layout's
+ * style 0 `dropmenu`, picked by index.
  */
 import { useState } from 'react';
 
@@ -15,8 +16,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { useWiredStore } from '#base/context/wired';
-import { Border, Box, Button, CheckBox, Region, ThemeText } from '#base/theme';
-import { WiredMenuDropmenu } from '#base/views/wired-menu/WiredMenuDropmenu';
+import { Border, Box, Button, CheckBox, Dropmenu, Region, ThemeText } from '#base/theme';
 
 /** `me_menu_other_settings` - the window, and the itemlist its rows sit in (`spacing` 7). */
 const WINDOW_WIDTH = 242;
@@ -31,12 +31,14 @@ const PHONE_STATUS_NONE = 0;
 
 interface CheckRowProps {
     label: string;
+    /** The label's width in the layout. */
+    labelWidth: number;
     selected: boolean;
     onToggle: (selected: boolean) => void;
 }
 
 /** An `itemlist_horizontal` row: the 15 x 15 checkbox one pixel down, the label 5 pixels after it. */
-const CheckRow = ({ label, selected, onToggle }: CheckRowProps) => (
+const CheckRow = ({ label, labelWidth, selected, onToggle }: CheckRowProps) => (
     <Box layout={{ flexDirection: 'row', gap: 5, height: 16, flexShrink: 0 }}>
         <CheckBox
             variant="3"
@@ -48,6 +50,8 @@ const CheckRow = ({ label, selected, onToggle }: CheckRowProps) => (
             text={label}
             textStyle="u_regular"
             textOptions={{ fill: '#ffffff' }}
+            verticalAlign="top"
+            layout={{ width: labelWidth, height: 17, flexShrink: 0 }}
         />
     </Box>
 );
@@ -87,6 +91,7 @@ export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) =
                     text={t('widget.memenu.other.settings.title')}
                     textStyle="u_regular"
                     textOptions={{ fill: '#ffffff', align: 'center' }}
+                    verticalAlign="top"
                     layout={{ position: 'absolute', left: 45, top: 5, width: 153, height: 17 }}
                 />
                 <Region
@@ -96,18 +101,21 @@ export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) =
                 <Box layout={{ position: 'absolute', left: 10, top: 35, width: LIST_WIDTH, flexDirection: 'column', gap: 7 }}>
                     <CheckRow
                         label={t('memenu.settings.other.ignore.room.invites')}
+                        labelWidth={247}
                         selected={roomInvitesIgnored}
                         onToggle={selected => setRoomInvitesIgnored(send, selected)}
                     />
                     {cameraFollowEnabled && (
                         <CheckRow
                             label={t('memenu.settings.other.disable.room.camera.follow')}
+                            labelWidth={293}
                             selected={cameraFollowDisabled}
                             onToggle={selected => setRoomCameraFollowDisabled(send, selected)}
                         />
                     )}
                     <CheckRow
                         label={t('memenu.settings.wired_whisper_read_disable')}
+                        labelWidth={159}
                         selected={wiredWhisperDisabled}
                         onToggle={selected => setWiredWhisperDisabled(send, selected)}
                     />
@@ -115,12 +123,21 @@ export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) =
                         text={t('memenu.settings.other.friend.online.notification.title')}
                         textStyle="u_regular"
                         textOptions={{ fill: '#ffffff' }}
-                        layout={{ width: LIST_WIDTH, height: 17 }}
+                        clip
+                        verticalAlign="top"
+                        layout={{ width: LIST_WIDTH, height: 17, flexShrink: 0 }}
                     />
-                    <WiredMenuDropmenu
-                        items={onlineOptions}
-                        selected={onlineIndicatorPreference}
-                        onSelect={selection => setOnlineIndicatorPreference(send, selection)}
+                    <Dropmenu
+                        variant="0"
+                        caption={onlineOptions[onlineIndicatorPreference] ?? ''}
+                        options={onlineOptions.map((option, index) => ({
+                            key: index,
+                            label: option,
+                            selected: index === onlineIndicatorPreference,
+                            onSelect: () => {
+                                if (index !== onlineIndicatorPreference) setOnlineIndicatorPreference(send, index);
+                            },
+                        }))}
                         layout={{ width: LIST_WIDTH, height: 24 }}
                     />
                     {showPhoneReset && (

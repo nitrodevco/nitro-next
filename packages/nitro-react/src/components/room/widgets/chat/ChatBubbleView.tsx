@@ -2,9 +2,10 @@ import { AvatarGenderType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjec
 import { Container as PixiContainer, FederatedPointerEvent, Graphics, Rectangle, Sprite, Texture } from 'pixi.js';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
-import { buildChatBubbleMarkup, ChatBubbleData, ChatBubbleMotion, computeChatBubbleLayout, resolveChatBubbleText } from '#base/chat';
+import { buildChatBubbleMarkup, ChatBubbleData, ChatBubbleMotion, chatFontSizeScale, computeChatBubbleLayout, resolveChatBubbleText, scaleChatFontSize } from '#base/chat';
 import { useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
+import { useUserStore } from '#base/context/user';
 import { useChatAvatarHead, useChatBubbleText, useChatFlow, useChatPetFace, useChatStyle } from '#base/hooks';
 
 interface ChatBubbleViewProps {
@@ -17,7 +18,11 @@ const EMPTY_LINKS: never[] = [];
  * One chat bubble - the visual half of the Flash `PooledChatBubble`, composed from hooks: the
  * style's bitmaps (`useChatStyle`), the speaker's head or the pet's face, the rasterised
  * text (`useChatBubbleText`) and the size arithmetic (`computeChatBubbleLayout`). The children
- * stack as Flash added them: background, emblem, pointer, face, text. Once laid out
+ * stack as Flash added them: background, emblem, pointer, face, text. The chat font size setting
+ * (`HabboFreeFlowChat.chatFontSizeScale`) scales the text size and the height cap the way
+ * `recreate` applied it - once, when the bubble is built, so a bubble already on screen keeps its
+ * size when the setting changes; only `displayedHeight`, which reads the scale each time, follows
+ * the new one. Once laid out
  * it registers a `ChatBubbleMotion` with the flow provider, which then drives the container's
  * position and pointer by ref every frame - the one part of a bubble that can't be declarative.
  */
@@ -28,6 +33,11 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
     const room = useRoom();
     const style = useChatStyle(data.styleId);
     const userData = useRoomStore(x => x.usersByRoomObjectId[data.objectId]);
+    const chatSizePreference = useUserStore(x => x.chatSizePreference);
+    // `recreate` read the scale once; the state keeps the mode this bubble was built with.
+    const [ builtWithSizePreference ] = useState(chatSizePreference);
+    const fontSizeScale = chatFontSizeScale(builtWithSizePreference);
+    const displayFontSizeScale = chatFontSizeScale(chatSizePreference);
 
     const isPet = (userData?.userType === RoomObjectUserType.Pet);
     const userName = data.forcedUserName ?? userData?.name ?? '';
@@ -46,7 +56,7 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
 
     const margins = style?.textFieldMargins;
     const wrapWidth = margins ? ((maxWidth - margins.x) - margins.width) : maxWidth;
-    const render = useChatBubbleText(content?.markup ?? '', style?.fontFace ?? 'Ubuntu', style?.fontSize ?? 12, style?.textColor ?? 0, wrapWidth);
+    const render = useChatBubbleText(content?.markup ?? '', style?.fontFace ?? 'Ubuntu', scaleChatFontSize(style?.fontSize, fontSizeScale), style?.textColor ?? 0, wrapWidth);
 
     const layout = useMemo(() => (style
         ? computeChatBubbleLayout({
@@ -58,8 +68,10 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
                 pointerHeight: style.pointerTexture?.height ?? 0,
                 faceWidth: faceTexture?.width,
                 faceHeight: faceTexture?.height,
+                fontSizeScale,
+                displayFontSizeScale,
             })
-        : undefined), [ style, render, maxWidth, faceTexture ]);
+        : undefined), [ style, render, maxWidth, faceTexture, fontSizeScale, displayFontSizeScale ]);
 
     const backgroundTexture = useMemo(() => style?.getBackgroundTexture(color), [ style, color ]);
 

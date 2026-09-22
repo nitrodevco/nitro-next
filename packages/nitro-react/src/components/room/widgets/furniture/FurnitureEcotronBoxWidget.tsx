@@ -24,7 +24,8 @@ export const FurnitureEcotronBoxWidget = () => {
 
     return (
         <FurnitureEcotronBoxView
-            name={furnitureData?.name ?? ''}
+            furniTypeName={furnitureData?.furnitureData?.className ?? ''}
+            date={furnitureData?.stuffData?.getLegacyString() ?? ''}
             onOpen={onOpen}
             onClose={onClose}
         />

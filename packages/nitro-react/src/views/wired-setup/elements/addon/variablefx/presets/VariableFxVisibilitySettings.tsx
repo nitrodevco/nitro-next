@@ -110,6 +110,7 @@ export const VariableFxVisibilitySettings = ({ state, variables, ctx, onChange, 
 
     return (
         <WiredSection
+            keepsFirstSplitter
             title="${wiredfurni.params.variablefx.visibility}"
             collapsible
             defaultCollapsed

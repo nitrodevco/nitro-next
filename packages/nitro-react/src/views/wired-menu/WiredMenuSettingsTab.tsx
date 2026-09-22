@@ -49,13 +49,28 @@ const permissionBoxes = (modifyMask: number, readMask: number) => {
     return { modify, read };
 };
 
+/** A container's `title`: bold, `auto_size` none, so it is cut at its box. */
 const SectionTitle = ({ text }: { text: string }) => (
     <ThemeText
         text={text}
-        textStyle="u_bold"
-        textOptions={{ fill: '#000000' }}
+        textStyle="u_regular"
+        flashFormat={{ bold: true }}
+        clip
         verticalAlign="top"
-        layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
+        layout={{ position: 'absolute', left: 0, top: 0, width: 208, height: 19 }}
+    />
+);
+
+/** A bordered section's heading: bold, cut at its box (205x20, the read rights' 195x20). */
+const OptionsTitle = ({ text, width = 205, alpha = 1, flow = false }: { text: string; width?: number; alpha?: number; flow?: boolean }) => (
+    <ThemeText
+        text={text}
+        textStyle="u_regular"
+        flashFormat={{ bold: true }}
+        clip
+        alpha={alpha}
+        verticalAlign="top"
+        layout={flow ? { width, height: 20, flexShrink: 0 } : { position: 'absolute', left: 0, top: 0, width, height: 20 }}
     />
 );
 
@@ -92,7 +107,9 @@ export const WiredMenuSettingsTab = () => {
             selected={box.selected}
             disabled={box.implied}
             rowDisabled={!isRoomOwnerOrStaff}
-            size={20}
+            checkSize={[ 20, 20 ]}
+            labelWidth={210}
+            labelClip
             onToggle={selected => setWiredPermission(send, mask, level, selected)}
         />
     );
@@ -101,8 +118,11 @@ export const WiredMenuSettingsTab = () => {
         <WiredMenuCheckOption
             label={t(label, label)}
             selected={selected}
-            size={18}
-            width={213}
+            checkSize={[ 19, 18 ]}
+            width={450}
+            labelWidth={390}
+            labelHeight={17}
+            labelClip
             onToggle={onToggle}
         />
     );
@@ -116,15 +136,11 @@ export const WiredMenuSettingsTab = () => {
                     tintColor="#dadada"
                     layout={{ position: 'absolute', left: 0, top: 20, width: 227, height: 111 }}
                 >
-                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 102, flexDirection: 'column', gap: -1 }}>
-                        <ThemeText
+                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 102, flexDirection: 'column', gap: -1, overflow: 'hidden' }}>
+                        <OptionsTitle
                             text={t('wiredmenu.settings.room_settings.modify_rights', 'wiredmenu.settings.room_settings.modify_rights')}
-                            textStyle="u_regular"
-                            textOptions={{ fill: '#000000' }}
-                            flashFormat={{ bold: true }}
                             alpha={isRoomOwnerOrStaff ? 1 : 0.5}
-                            verticalAlign="top"
-                            layout={{ height: 20, flexShrink: 0 }}
+                            flow
                         />
                         {WIRED_MODIFY_PERMISSION_LEVELS.map(level => permissionOption('modify', level, modify[level]))}
                     </Box>
@@ -132,17 +148,14 @@ export const WiredMenuSettingsTab = () => {
                 <Border
                     variant="3"
                     tintColor="#dadada"
-                    layout={{ position: 'absolute', left: 245, top: 20, width: 227, height: 111 }}
+                    layout={{ position: 'absolute', left: 245, top: 20, width: 227, height: 111, overflow: 'hidden' }}
                 >
-                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 102, flexDirection: 'column', gap: -1 }}>
-                        <ThemeText
+                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 233, height: 102, flexDirection: 'column', gap: -1, overflow: 'hidden' }}>
+                        <OptionsTitle
                             text={t('wiredmenu.settings.room_settings.read_rights', 'wiredmenu.settings.room_settings.read_rights')}
-                            textStyle="u_regular"
-                            textOptions={{ fill: '#000000' }}
-                            flashFormat={{ bold: true }}
+                            width={195}
                             alpha={isRoomOwnerOrStaff ? 1 : 0.5}
-                            verticalAlign="top"
-                            layout={{ height: 20, flexShrink: 0 }}
+                            flow
                         />
                         {WIRED_READ_PERMISSION_LEVELS.map(level => permissionOption('read', level, read[level]))}
                     </Box>
@@ -153,14 +166,9 @@ export const WiredMenuSettingsTab = () => {
                     layout={{ position: 'absolute', left: 0, top: 143, width: 227, height: 64 }}
                 >
                     <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
-                        <ThemeText
+                        <OptionsTitle
                             text={t('wiredmenu.settings.room_settings.timezone', 'wiredmenu.settings.room_settings.timezone')}
-                            textStyle="u_regular"
-                            textOptions={{ fill: '#000000' }}
-                            flashFormat={{ bold: true }}
                             alpha={isRoomOwnerOrStaff ? 1 : 0.5}
-                            verticalAlign="top"
-                            layout={{ position: 'absolute', left: 0, top: 0, height: 20 }}
                         />
                         <WiredMenuDropmenu
                             items={timezones}
@@ -177,14 +185,7 @@ export const WiredMenuSettingsTab = () => {
                     layout={{ position: 'absolute', left: 245, top: 143, width: 227, height: 64 }}
                 >
                     <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
-                        <ThemeText
-                            text={t('wiredmenu.settings.room_settings.room_state', 'wiredmenu.settings.room_settings.room_state')}
-                            textStyle="u_regular"
-                            textOptions={{ fill: '#000000' }}
-                            flashFormat={{ bold: true }}
-                            verticalAlign="top"
-                            layout={{ position: 'absolute', left: 0, top: 0, height: 20 }}
-                        />
+                        <OptionsTitle text={t('wiredmenu.settings.room_settings.room_state', 'wiredmenu.settings.room_settings.room_state')} />
                         <Box
                             alpha={hasWritePermission ? 1 : 0.5}
                             layout={{ position: 'absolute', left: 0, top: 21, width: 98, height: 28 }}
@@ -223,13 +224,9 @@ export const WiredMenuSettingsTab = () => {
                     layout={{ position: 'absolute', left: 0, top: 20, width: 227, height: 111 }}
                 >
                     <Box layout={{ position: 'absolute', left: 10, top: 8, width: 213, height: 101, flexDirection: 'column', gap: -1, overflow: 'hidden' }}>
-                        <ThemeText
+                        <OptionsTitle
                             text={t('wiredmenu.settings.preferences.general', 'wiredmenu.settings.preferences.general')}
-                            textStyle="u_regular"
-                            textOptions={{ fill: '#000000' }}
-                            flashFormat={{ bold: true }}
-                            verticalAlign="top"
-                            layout={{ height: 20, flexShrink: 0 }}
+                            flow
                         />
                         {preferenceOption('wiredmenu.settings.preferences.toolbar', wiredMenuButton, selected => changeWiredMenuPreferences(send, { wiredMenuButton: selected }))}
                         {preferenceOption('wiredmenu.settings.preferences.inspect_button', wiredInspectButton, selected => changeWiredMenuPreferences(send, { wiredInspectButton: selected }))}
@@ -244,14 +241,7 @@ export const WiredMenuSettingsTab = () => {
                         layout={{ position: 'absolute', left: 245, top: 20, width: 227, height: 64 }}
                     >
                         <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
-                            <ThemeText
-                                text={t('wiredmenu.settings.preferences.wired_style', 'wiredmenu.settings.preferences.wired_style')}
-                                textStyle="u_regular"
-                                textOptions={{ fill: '#000000' }}
-                                flashFormat={{ bold: true }}
-                                verticalAlign="top"
-                                layout={{ position: 'absolute', left: 0, top: 0, height: 20 }}
-                            />
+                            <OptionsTitle text={t('wiredmenu.settings.preferences.wired_style', 'wiredmenu.settings.preferences.wired_style')} />
                             <WiredMenuDropmenu
                                 items={styleItems}
                                 selected={Math.max(0, styleSelection)}

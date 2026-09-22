@@ -15,6 +15,8 @@ import { useWiredStyle } from '../../../../kit/WiredStyleContext';
 import { VariableFxVariableOverrideRow } from './VariableFxVariableOverrideRow';
 
 export interface VariableFxAdvancedRangeProps {
+    /** `visible = VariableFxEditorMetadata.categoryUsesValueRange(categoryId)` - hidden, the section keeps its place in the frame's list. */
+    visible: boolean;
     overrideMin: VariableFxOverrideRow;
     overrideMax: VariableFxOverrideRow;
     sourceType: number;
@@ -23,12 +25,14 @@ export interface VariableFxAdvancedRangeProps {
     onRowChange: (kind: number, row: VariableFxOverrideRow) => void;
 }
 
-export const VariableFxAdvancedRange = ({ overrideMin, overrideMax, sourceType, variables, roomId, onRowChange }: VariableFxAdvancedRangeProps) => {
+export const VariableFxAdvancedRange = ({ visible, overrideMin, overrideMax, sourceType, variables, roomId, onRowChange }: VariableFxAdvancedRangeProps) => {
     const style = useWiredStyle();
 
     return (
         <WiredSection
+            keepsFirstSplitter
             title="${wiredfurni.params.variablefx.advanced.range}"
+            visible={visible}
             collapsible
             defaultCollapsed
         >

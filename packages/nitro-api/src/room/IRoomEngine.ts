@@ -22,6 +22,12 @@ export interface IRoomEngine {
      * asset is still downloading.
      */
     getGenericRoomObjectTexture(type: string, value: string, direction: IVector3D, scale: RoomGeometryScaleType, listener?: IGetImageListener, extras?: number, objectData?: IObjectData, state?: number, frameCount?: number, posture?: string): Promise<Texture | undefined>;
+    /**
+     * Flash's `getRoomImage` as a texture the caller owns: a small room with these plane types,
+     * and `windowType`'s mask cut into its wall. Resolves undefined (and notifies `listener`
+     * later) while the room's assets are still downloading.
+     */
+    getRoomTexture(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined, scale: RoomGeometryScaleType, listener?: IGetImageListener, windowType?: string): Promise<Texture | undefined>;
     /** `getGenericRoomObjectTexture` read back into an `<img>` - for a DOM consumer that needs a URL. */
     getGenericRoomObjectImage(type: string, value: string, direction: IVector3D, scale: RoomGeometryScaleType, listener?: IGetImageListener, extras?: number, objectData?: IObjectData, state?: number, frameCount?: number, posture?: string): Promise<ImageLike | undefined>;
 }

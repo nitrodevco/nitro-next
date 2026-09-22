@@ -34,12 +34,9 @@ import {
     WIRED_CHEST_KEY_IS_WIRED_ENABLED, WIRED_CHEST_KEY_LOCKED, WIRED_CHEST_KEY_NAME, WIRED_CHEST_TYPE_COIN, WiredChestFurniData, WiredChestView as WiredChestViewData,
 } from '#base/context/wired-trading';
 import { Border, Box, Button, CheckBox, ContainerButton, Frame, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
-import { WiredStyleProvider } from '#base/views/wired-setup/kit/WiredStyleContext';
-import { WiredText } from '#base/views/wired-setup/kit/WiredText';
 import { getWiredTradingBubbleAnchor, WiredTradingBubbleAnchor } from '#base/views/wired-trading/common/wiredTradingBubbleAnchor';
 import { WiredTradingInfoBubble } from '#base/views/wired-trading/common/WiredTradingInfoBubble';
 import { WiredTradingPlusButton } from '#base/views/wired-trading/common/WiredTradingPlusButton';
-import { UBUNTU_WIRED_STYLE } from '#base/wired';
 
 import { WIRED_COIN_CHEST_HEIGHT, WIRED_COIN_CHEST_WIDTH, WiredChestCoinContentsView } from './WiredChestCoinContentsView';
 import { WIRED_FURNI_CHEST_HEIGHT, WIRED_FURNI_CHEST_WIDTH, WiredChestFurniContentsView } from './WiredChestFurniContentsView';
@@ -50,6 +47,11 @@ const FOOTER_HEIGHT = 123;
 const FRAME_CHROME_HEIGHT = 35;
 /** `§_-92g§`. */
 const FRAME_CHROME_WIDTH = 2;
+/** The frame's `margin_*` vars: `main_list` starts under the title bar, flush with the edges. */
+const FRAME_MARGINS = [ 0, 33, 0, 0 ] as const;
+/** `lock_info_bubble_texts`: its 353px texts wrap at the field width less the 2px gutters. */
+const BUBBLE_TEXT_WIDTH = 353;
+const BUBBLE_TEXT_WRAP = BUBBLE_TEXT_WIDTH - 4;
 const TEXT_BLEND = 0.6;
 
 /** The rules of `lock_info_bubble_texts`: seven about locking, four about capacity. */
@@ -101,7 +103,7 @@ const OptionRow = ({ selected, disabled, label, onToggle }: OptionRowProps) => (
  * `dynamic_style="button"` in `chest_generic` - so the icon's hover, press and disabled looks are
  * the style's, not a fade of its own.
  */
-const HeaderIconButton = ({ icon, iconLeft, iconTop, right, tooltip, disabled, onPress }: { icon: string; iconLeft: number; iconTop: number; right: number; tooltip: string; disabled: boolean; onPress: () => void }) => (
+const HeaderIconButton = ({ icon, iconLeft, iconTop, iconWidth, iconHeight, right, tooltip, disabled, onPress }: { icon: string; iconLeft: number; iconTop: number; iconWidth: number; iconHeight: number; right: number; tooltip: string; disabled: boolean; onPress: () => void }) => (
     <Region
         tooltip={tooltip}
         layout={{ position: 'absolute', right, top: 7, width: 24, height: 24 }}
@@ -117,8 +119,9 @@ const HeaderIconButton = ({ icon, iconLeft, iconTop, right, tooltip, disabled, o
         >
             <ThemeImage
                 src={LayoutImage(icon)}
+                bitmap={{ stretchedX: false, stretchedY: false, etchingColor: 0x48000000, fitSizeToContents: true }}
                 dynamicRole="icon"
-                layout={{ position: 'absolute', left: iconLeft, top: iconTop }}
+                layout={{ position: 'absolute', left: iconLeft, top: iconTop, width: iconWidth, height: iconHeight }}
             />
         </ContainerButton>
     </Region>
@@ -224,10 +227,10 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                 resizeDirection="none"
                 defaultPosition={{ x: 60, y: 50 }}
                 onClose={onClose}
-                contentLayout={{ paddingLeft: 0, paddingRight: 0, marginBottom: 0 }}
+                margins={FRAME_MARGINS}
                 layout={{ position: 'absolute', width, height }}
             >
-                <Box layout={{ position: 'relative', width, height: HEADER_HEIGHT + contentsHeight + FOOTER_HEIGHT, flexDirection: 'column' }}>
+                <Box layout={{ position: 'absolute', left: 0, top: 0, width, height: HEADER_HEIGHT + contentsHeight + FOOTER_HEIGHT, flexDirection: 'column' }}>
                     <Box layout={{ position: 'relative', width, height: HEADER_HEIGHT, flexShrink: 0 }}>
                         <Region
                             backgroundColor="#dadada"
@@ -241,7 +244,7 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                             text={interpolate(description)}
                             textStyle="u_bold"
                             alpha={TEXT_BLEND}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 376 }}
                             verticalAlign="top"
                             layout={{ position: 'absolute', left: 10, top: 10, width: 380 }}
                         />
@@ -251,6 +254,8 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                                     icon="wired/wired_chests_bell_icon.png"
                                     iconLeft={6}
                                     iconTop={4}
+                                    iconWidth={12}
+                                    iconHeight={15}
                                     right={39}
                                     tooltip={interpolate('${tooltip.notification_settings}')}
                                     disabled={!isOwner}
@@ -260,6 +265,8 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                                     icon="wired/wired_chests_gear_icon.png"
                                     iconLeft={5}
                                     iconTop={5}
+                                    iconWidth={14}
+                                    iconHeight={14}
                                     right={10}
                                     tooltip={interpolate('${tooltip.settings}')}
                                     disabled={!isOwner}
@@ -339,6 +346,10 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                                                             layout={{ width: 65, height: 22 }}
                                                         >
                                                             <TextInput
+                                                                flashPlacement
+                                                                restrict="0-9"
+                                                                backgroundColor={null}
+                                                                focusedBackgroundColor={null}
                                                                 value={form.capacity}
                                                                 onChange={onCapacityChange}
                                                                 onEnter={() => applyOptions(form)}
@@ -389,7 +400,11 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                                 onPointerTap={event => setLockInfoAnchor(getWiredTradingBubbleAnchor(event))}
                                 layout={{ position: 'absolute', right: 19, top: 6, width: 18, height: 18 }}
                             >
-                                <ThemeImage src={LayoutImage('shared/icons_info_grey.png')} />
+                                <ThemeImage
+                                    src={LayoutImage('shared/icons_info_grey.png')}
+                                    bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                                    layout={{ position: 'absolute', left: 0, top: 0, width: 18, height: 18 }}
+                                />
                             </Region>
                         )}
                         <Box layout={{ position: 'absolute', left: 17, top: 87, height: 30, flexDirection: 'row', gap: 13 }}>
@@ -440,39 +455,55 @@ export const WiredChestView = ({ view, furni, onClose }: WiredChestViewProps) =>
                     height={536}
                     onClose={() => setLockInfoAnchor(undefined)}
                 >
-                    <WiredStyleProvider style={UBUNTU_WIRED_STYLE}>
-                        <Box layout={{ flexDirection: 'column', width: 353, gap: 1 }}>
+                    <Box layout={{ flexDirection: 'column', width: BUBBLE_TEXT_WIDTH, gap: 1 }}>
+                        <ThemeText
+                            text={t('wiredchests.lock_info.title')}
+                            textStyle="u_bold"
+                            textOptions={{ fontSize: 14 }}
+                            verticalAlign="top"
+                        />
+                        <Box layout={{ width: 30, height: 7 }} />
+                        <ThemeText
+                            text={t('wiredchests.lock_info.desc')}
+                            textStyle="u_regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: BUBBLE_TEXT_WRAP }}
+                            verticalAlign="top"
+                        />
+                        {LOCK_RULES.map(rule => (
                             <ThemeText
-                                text={t('wiredchests.lock_info.title')}
-                                textStyle="u_bold"
-                                textOptions={{ fontSize: 14 }}
+                                key={`lock${rule}`}
+                                text={t(`wiredchests.lock_info.rule_${rule}`)}
+                                textStyle="u_regular"
+                                textOptions={{ wordWrap: true, wordWrapWidth: BUBBLE_TEXT_WRAP }}
+                                markup
+                                verticalAlign="top"
                             />
-                            <Box layout={{ height: 7 }} />
-                            <WiredText text="${wiredchests.lock_info.desc}" />
-                            {LOCK_RULES.map(rule => (
-                                <WiredText
-                                    key={`lock${rule}`}
-                                    text={`\${wiredchests.lock_info.rule_${rule}}`}
-                                    html
-                                />
-                            ))}
-                            <Box layout={{ height: 14 }} />
+                        ))}
+                        <Box layout={{ width: 30, height: 14 }} />
+                        <ThemeText
+                            text={t('wiredchests.capacity_info.title')}
+                            textStyle="u_bold"
+                            textOptions={{ fontSize: 14 }}
+                            verticalAlign="top"
+                        />
+                        <Box layout={{ width: 30, height: 7 }} />
+                        <ThemeText
+                            text={t('wiredchests.capacity_info.desc')}
+                            textStyle="u_regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: BUBBLE_TEXT_WRAP }}
+                            verticalAlign="top"
+                        />
+                        {CAPACITY_RULES.map(rule => (
                             <ThemeText
-                                text={t('wiredchests.capacity_info.title')}
-                                textStyle="u_bold"
-                                textOptions={{ fontSize: 14 }}
+                                key={`capacity${rule}`}
+                                text={t(`wiredchests.capacity_info.rule_${rule}`)}
+                                textStyle="u_regular"
+                                textOptions={{ wordWrap: true, wordWrapWidth: BUBBLE_TEXT_WRAP }}
+                                markup
+                                verticalAlign="top"
                             />
-                            <Box layout={{ height: 7 }} />
-                            <WiredText text="${wiredchests.capacity_info.desc}" />
-                            {CAPACITY_RULES.map(rule => (
-                                <WiredText
-                                    key={`capacity${rule}`}
-                                    text={`\${wiredchests.capacity_info.rule_${rule}}`}
-                                    html
-                                />
-                            ))}
-                        </Box>
-                    </WiredStyleProvider>
+                        ))}
+                    </Box>
                 </WiredTradingInfoBubble>
             )}
         </>

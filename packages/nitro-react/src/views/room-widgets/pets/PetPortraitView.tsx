@@ -12,17 +12,26 @@ export interface PetPortraitViewProps {
     direction?: number;
 }
 
-/** A pet drawn to fit a box, the way the breeding dialogs' `preview_image`s were filled. */
+/**
+ * A pet drawn into a box the way the breeding dialogs fill their `preview_image` bitmaps
+ * (`ConfirmPetBreedingView.updatePreviewImage` and its siblings): the 64-scale image copied in at
+ * its own size, centred, and cut at the box - never scaled to fit.
+ */
 export const PetPortraitView = ({ figure, posture, width, height, direction = 2 }: PetPortraitViewProps) => {
     const { texture } = useChatPetFace(figure, posture, { scale: RoomGeometryScaleType.ZoomedIn, direction });
-    const scale = texture ? Math.min(1, width / Math.max(1, texture.width), height / Math.max(1, texture.height)) : 1;
 
     return (
-        <Box layout={{ width, height, alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+        <Box layout={{ width, height, flexShrink: 0, overflow: 'hidden' }}>
             {texture && (
                 <pixiSprite
                     texture={texture}
-                    layout={{ width: texture.width * scale, height: texture.height * scale }}
+                    layout={{
+                        position: 'absolute',
+                        left: Math.trunc((width - texture.width) / 2),
+                        top: Math.trunc((height - texture.height) / 2),
+                        width: texture.width,
+                        height: texture.height,
+                    }}
                 />
             )}
         </Box>

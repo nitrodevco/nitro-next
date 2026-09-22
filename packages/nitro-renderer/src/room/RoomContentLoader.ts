@@ -50,6 +50,8 @@ export class RoomContentLoader implements IRoomContentLoader {
     private _furniRevisions: Map<string, number> = new Map();
     private _pets: { [index: string]: number } = {};
     private _petColors: Map<number, Map<number, IPetColorResult>> = new Map();
+    /** Flash's `_petLayers`: per pet type, per visualization size, each tagged layer's id. */
+    private _petLayers: Map<number, Map<number, Map<string, number>>> = new Map();
     private _objectAliases: Map<string, string> = new Map();
     private _objectOriginalNames: Map<string, string> = new Map();
 
@@ -176,6 +178,24 @@ export class RoomContentLoader implements IRoomContentLoader {
         }
 
         return results;
+    }
+
+    /** Flash `RoomContentLoader.getPetLayerIdForTag`: the id of the layer tagged `tagName` in the pet's visualization of `size`, -1 for none. */
+    public getPetLayerIdForTag(petIndex: number, tagName: string, size: number = 64): number {
+        return this._petLayers.get(petIndex)?.get(size)?.get(tagName) ?? -1;
+    }
+
+    /** Flash `RoomContentLoader.getPetDefaultPalette`: the master palette whose layer tags include `tagName`. */
+    public getPetDefaultPalette(petIndex: number, tagName: string): IPetColorResult | undefined {
+        const colorResults = this._petColors.get(petIndex);
+
+        if (colorResults) {
+            for (const result of colorResults.values()) {
+                if (result.layerTags.includes(tagName) && result.isMaster) return result;
+            }
+        }
+
+        return undefined;
     }
 
     public getCollection(name: string): IGraphicAssetCollection | undefined {
@@ -348,7 +368,24 @@ export class RoomContentLoader implements IRoomContentLoader {
                 const petIndex = this._pets[type];
                 const collection = this.getCollection(type);
 
-                if (petIndex && collection && collection.data.palettes) {
+                // Type 0 (the dog) is a pet too: Flash keys both tables by the type, whatever it is.
+                if ((petIndex !== undefined) && collection && collection.data.visualizations) {
+                    const layers: Map<number, Map<string, number>> = new Map();
+
+                    for (const visualization of collection.data.visualizations) {
+                        const tagged: Map<string, number> = new Map();
+
+                        for (const layer of visualization.layers ?? []) {
+                            if (layer.tag !== undefined) tagged.set(layer.tag, layer.id);
+                        }
+
+                        layers.set(visualization.size ?? 0, tagged);
+                    }
+
+                    this._petLayers.set(petIndex, layers);
+                }
+
+                if ((petIndex !== undefined) && collection && collection.data.palettes) {
                     const palettes: Map<number, IPetColorResult> = new Map();
 
                     for (const palette of collection.data.palettes) {

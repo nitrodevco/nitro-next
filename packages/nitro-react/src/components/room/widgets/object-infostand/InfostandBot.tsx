@@ -37,6 +37,7 @@ export const InfostandBot = ({ objectData, onClose }: { objectData: ISimpleRoomO
     return (
         <InfostandBotView
             objectData={objectData}
+            rentable={isRentable}
             name={userData.name}
             motto={userData.custom}
             figure={userData.figure}

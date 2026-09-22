@@ -35,13 +35,12 @@ export const VariableFxView = ({ form, setForm, ctx, topInfo }: VariableFxViewPr
                 ctx={ctx}
                 onChange={patch => setForm(current => changeVariableFxVisualization(current, patch))}
             />
-            {usesValueRange && (
-                <VariableFxValueRange
-                    min={form.rangeMin}
-                    max={form.rangeMax}
-                    onChange={(min, max) => setForm(current => changeVariableFxValueRange(current, min, max))}
-                />
-            )}
+            <VariableFxValueRange
+                visible={usesValueRange}
+                min={form.rangeMin}
+                max={form.rangeMax}
+                onChange={(min, max) => setForm(current => changeVariableFxValueRange(current, min, max))}
+            />
             <VariableFxVisibilitySettings
                 state={state}
                 variables={form.roomVariables}
@@ -49,16 +48,15 @@ export const VariableFxView = ({ form, setForm, ctx, topInfo }: VariableFxViewPr
                 onChange={patch => setForm(current => changeVariableFxVisibility(current, patch))}
                 onAudienceVariableSaved={(variableId, withValue, value) => setForm(current => saveVariableFxAudienceVariable(current, variableId, withValue, value))}
             />
-            {usesValueRange && (
-                <VariableFxAdvancedRange
-                    overrideMin={form.overrideMin}
-                    overrideMax={form.overrideMax}
-                    sourceType={state.sourceType}
-                    variables={form.roomVariables}
-                    roomId={ctx.roomId}
-                    onRowChange={(kind, row) => setForm(current => changeVariableFxOverrideRow(current, kind, row))}
-                />
-            )}
+            <VariableFxAdvancedRange
+                visible={usesValueRange}
+                overrideMin={form.overrideMin}
+                overrideMax={form.overrideMax}
+                sourceType={state.sourceType}
+                variables={form.roomVariables}
+                roomId={ctx.roomId}
+                onRowChange={(kind, row) => setForm(current => changeVariableFxOverrideRow(current, kind, row))}
+            />
         </>
     );
 };

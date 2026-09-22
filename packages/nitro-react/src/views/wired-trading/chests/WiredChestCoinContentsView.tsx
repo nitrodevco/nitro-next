@@ -14,7 +14,7 @@ import { withdrawWiredChestCoins } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import { useWiredTradingStore } from '#base/context/wired-trading';
-import { Border, Box, Button, Icon, LayoutImage, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Box, Button, Icon, LayoutImage, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
 /** `CoinChestSubController.DARK_THEME_CHEST_NAMES`. */
 const DARK_THEME_CHEST_NAMES = [ 'wf_storage_coins1' ];
@@ -61,13 +61,15 @@ export const WiredChestCoinContentsView = ({ chestId, className, canWithdraw }: 
             <Box layout={{ position: 'absolute', left: 44, top: 24, width: 324, height: 228 }}>
                 <ThemeImage
                     src={LayoutImage(`wired/wired_chests_images_${theme}_coins_chest_balance_${chestState(coins)}.png`)}
-                    layout={{ position: 'absolute', left: 0, top: 0 }}
+                    bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: 324, height: 228 }}
                 />
                 <Box layout={{ position: 'absolute', left: 9, top: 68, width: 54, height: 47 }}>
                     <ThemeText
                         text={t('wiredchests.coin_chest.balance')}
                         textStyle="u_regular"
                         textOptions={{ align: 'center', fontSize: 11 }}
+                        verticalAlign="top"
                         layout={{ position: 'absolute', left: 2, top: 7, width: 45, height: 16 }}
                     />
                     <Box layout={{ position: 'absolute', left: 0, top: 22, width: 54, flexDirection: 'row', justifyContent: 'center', gap: 1 }}>
@@ -82,18 +84,19 @@ export const WiredChestCoinContentsView = ({ chestId, className, canWithdraw }: 
                     </Box>
                 </Box>
                 <Box layout={{ position: 'absolute', left: 160, top: 18, height: 28, flexDirection: 'row', gap: 5 }}>
-                    <Border
-                        variant="4"
-                        layout={{ width: 27, height: 19, marginTop: 1 }}
-                    >
-                        <TextInput
-                            value={withdrawAmount}
-                            onChange={value => setWithdrawAmount(value.replace(/[^0-9]/g, ''))}
-                            onEnter={onWithdraw}
-                            textStyle="u_regular"
-                            layout={{ width: 25, height: 17, marginLeft: 1, marginTop: 1 }}
-                        />
-                    </Border>
+                    <TextInput
+                        value={withdrawAmount}
+                        onChange={value => setWithdrawAmount(value.replace(/[^0-9]/g, ''))}
+                        onEnter={onWithdraw}
+                        textStyle="u_regular"
+                        flashPlacement
+                        restrict="0-9"
+                        border="#000000"
+                        alwaysShowSelection
+                        backgroundColor={null}
+                        focusedBackgroundColor={null}
+                        layout={{ width: 27, height: 19, marginTop: 1, flexShrink: 0 }}
+                    />
                     <Button
                         variant="3"
                         disabled={!canWithdraw || isEmpty}

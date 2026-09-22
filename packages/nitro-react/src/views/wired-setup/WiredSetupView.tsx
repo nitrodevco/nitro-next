@@ -12,13 +12,29 @@
  * 6. `createAdvancedSections` - the quantifier and the input sources, in advanced mode;
  * 7. `createFooter` - "ready" and "cancel".
  *
- * `FramePreset` stacks them `sectionSpacing` apart (the gap after the advanced settings takes
- * their background, `blendSpacer`), makes the frame `widthModifier` times the style's frame
- * template wide and its height whatever the parts need, and puts the quick menu behind the
- * frame's menu button. `InnerBorderFramePreset` (the light volter styles) instead sets
- * everything between the header and the footer on the style's inner border and has no quick
- * menu. An element with `allowScrolling` scrolls between a sticky header and footer once it is
- * taller than the screen allows (`WiredUIBuilder.build`: `screenResolutionY / 1.8`).
+ * Flash's builder hands the frame one flat array: the header, every preset the element's
+ * `buildInputs` added, the parts 3 to 6, the footer. `FramePreset.createListView` follows every
+ * one but the footer with a `sectionSpacing` spacer (the one after the advanced settings takes
+ * their background, `blendSpacer`), in a list with no spacing of its own; it makes the frame
+ * `widthModifier` times the style's frame template wide and its height whatever the list needs,
+ * and puts the quick menu behind the frame's menu button. An element with `allowScrolling`
+ * scrolls everything after the header's spacer up to the footer between a sticky header and
+ * footer, the whole list at most `screenResolutionY / 1.8` high (`WiredUIBuilder.build`).
+ *
+ * `InnerBorderFramePreset` (the light volter styles) sets everything between the header and the
+ * footer on the style's inner border (padded 9, 8, 9, 8, the style's background behind it), the
+ * three `genericHorizontalSpacing` apart; there the first element hides its splitter and has no
+ * spacer after it, while every later one is followed by one, the last included. The footer's
+ * splitter is hidden, the scroll parameters are dropped and there is no quick menu.
+ *
+ * The elements between the header and the footer are a `WiredFrameList`, and every one of them
+ * places itself: each top-level section of an element's view (`WiredSection` and everything
+ * built on it, `WiredSplitter`, `WiredAlignCenter`) and each of the parts 3 to 6 is a
+ * `WiredFrameListItem`, which registers the box it renders into, learns from the list whether it
+ * is the first, and draws its own spacer (and, for a section, its own splitter) by that. An
+ * element view keeps returning its sections as one fragment; a section it hides
+ * (`WiredUIPreset.visible = false`) takes `visible` rather than leaving the tree, since Flash keeps
+ * its index and its spacer.
  *
  * The dialog opens centered the first time and where it was left after that (`savePosition` /
  * `restorePositionAndActivate`); it is mounted per edit, so a paste or a reset starts it afresh.
@@ -32,11 +48,12 @@ import { useSystemStore, useTranslation } from '#base/context/system';
 import { useWiredHasWritePermission, useWiredMenuEnabled, useWiredSetupActions, useWiredStore, wiredClipboardKey, WiredSetupSession } from '#base/context/wired';
 import { useWiredActiveStyle, useWiredElementContext } from '#base/hooks';
 import { Border, Box, Frame, ScrollArea, useLayoutSize } from '#base/theme';
-import { ActionTypeCodes, hasWiredAdvancedSettings, hidesPickFurniInstructions, SLIDER_CONVERTER_PULSES, WiredStyle } from '#base/wired';
+import { ActionTypeCodes, hasWiredAdvancedSettings, hidesPickFurniInstructions, SLIDER_CONVERTER_PULSES } from '#base/wired';
 
 import { WiredCheckboxGroup } from './kit/WiredCheckboxGroup';
+import { WiredFrameList } from './kit/WiredFrameList';
+import { WiredFrameListItem } from './kit/WiredFrameListItem';
 import { WiredSection } from './kit/WiredSection';
-import { WiredSimpleList } from './kit/WiredSimpleList';
 import { WiredSliderSection } from './kit/WiredSliderSection';
 import { WiredSpacer } from './kit/WiredSpacer';
 import { WiredStyleProvider } from './kit/WiredStyleContext';
@@ -57,39 +74,16 @@ const INNER_BORDER_PADDING = { left: 9, top: 8, right: 9, bottom: 8 };
 const SCROLL_SCREEN_SHARE = 1.8;
 
 /**
- * What the theme's frame skins put above and below the content, and where their menu button's
- * bottom left corner is from the content's top left - Flash reads both off the skin.
+ * Where the skin's menu button (`header_button_menu`) has its bottom left corner, from the frame's
+ * top left: `MenuPreset.requestOpen` opens the menu there (the button's global position plus its
+ * height). `illumina_light_frame_wired` places the 20x20 button at (8, 9); the habbo frame
+ * (`habbo_window_layout_frame`) its 15px header at (6, 6), with the button at (1, 0) in it.
  */
-const FRAME_CHROME: Record<string, { top: number; bottom: number; menuLeft: number; menuTop: number }> = {
-    // `illumina_light_frame_wired`: the title bar is 30 high, the menu button 20x20 at (8, 9).
-    102: { top: 30, bottom: 7, menuLeft: 2, menuTop: -1 },
-    // The habbo frame: 2px frame padding and the 15px header in its 6px margin; the menu button (13 high) at the header's top left.
-    0: { top: 29, bottom: 7, menuLeft: 1, menuTop: -8 },
-    2: { top: 29, bottom: 7, menuLeft: 1, menuTop: -8 },
+const MENU_ANCHORS: Record<string, { x: number; y: number }> = {
+    102: { x: 8, y: 29 },
+    0: { x: 7, y: 21 },
+    2: { x: 7, y: 21 },
 };
-
-/** A part of the dialog; `blendColor` is `blendingBackgroundColor`, which the gap after the part takes. */
-interface WiredSetupPart {
-    key: string;
-    node: ReactNode;
-    blendColor?: string;
-}
-
-/** `FramePreset.createListView` - the parts `sectionSpacing` apart. */
-const renderParts = (style: WiredStyle, parts: WiredSetupPart[]) => parts.map((part, index) => (
-    <Box
-        key={part.key}
-        layout={{ flexDirection: 'column', alignItems: 'stretch', flexShrink: 0 }}
-    >
-        {part.node}
-        {(index < (parts.length - 1)) && (
-            <WiredSpacer
-                height={style.sectionSpacing}
-                backgroundColor={part.blendColor}
-            />
-        )}
-    </Box>
-));
 
 /** `getElementName` - the furni's localized name, `NAME: <type id>` when the furnidata does not know it. */
 const useWiredElementName = (stuffTypeId: number): string => {
@@ -120,13 +114,15 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
     const [ contentNode, setContentNode ] = useState<Container | null>(null);
     const [ headerNode, setHeaderNode ] = useState<Container | null>(null);
     const [ middleNode, setMiddleNode ] = useState<Container | null>(null);
+    const [ footerNode, setFooterNode ] = useState<Container | null>(null);
     const contentSize = useLayoutSize(contentNode);
     const headerSize = useLayoutSize(headerNode);
     const middleSize = useLayoutSize(middleNode);
+    const footerSize = useLayoutSize(footerNode);
     const [ screenHeight ] = useState(() => window.innerHeight);
 
     const frame = style.templates.frame;
-    const chrome = FRAME_CHROME[frame.variant] ?? FRAME_CHROME[0];
+    const menuAnchor = MENU_ANCHORS[frame.variant] ?? MENU_ANCHORS[0];
     const widthModifier = (typeof definition.widthModifier === 'function') ? definition.widthModifier(form) : (definition.widthModifier ?? 1);
     const width = Math.round(frame.width * widthModifier);
     const contentWidth = width - frame.marginLeft - frame.marginRight;
@@ -167,48 +163,37 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
         onSelect: sourceType => setSetupForm(current => headerSelector.set(current, sourceType)),
     };
 
-    const header: WiredSetupPart = {
-        key: 'header',
-        node: (
-            <Box
-                ref={setHeaderNode}
-                layout={{ flexDirection: 'column', alignItems: 'stretch', flexShrink: 0 }}
-            >
-                <WiredSetupHeader
-                    style={style}
-                    name={name}
-                    holder={definition.holder}
-                    buttonText={buttonText}
-                    buttonVisible={buttonVisible}
-                    onButton={onButton}
-                    sourceTypeSelector={headerSourceTypeSelector}
+    const header = (
+        <Box
+            ref={setHeaderNode}
+            layout={{ flexDirection: 'column', alignItems: 'stretch', flexShrink: 0 }}
+        >
+            <WiredSetupHeader
+                style={style}
+                name={name}
+                holder={definition.holder}
+                buttonText={buttonText}
+                buttonVisible={buttonVisible}
+                onButton={onButton}
+                sourceTypeSelector={headerSourceTypeSelector}
+            />
+        </Box>
+    );
+
+    const advancedShown = (definition.advancedAlwaysVisible ?? false) || advancedExpanded;
+
+    // The elements between the header and the footer, each a `WiredFrameListItem` placing itself in the frame's list.
+    const elements = (
+        <>
+            {View && (
+                <View
+                    form={form}
+                    setForm={update => setSetupForm(update)}
+                    triggerable={triggerable}
+                    ctx={ctx}
                 />
-            </Box>
-        ),
-    };
-
-    const middle: WiredSetupPart[] = [];
-
-    if (View) {
-        middle.push({
-            key: 'inputs',
-            node: (
-                <WiredSimpleList spacing={style.sectionSpacing}>
-                    <View
-                        form={form}
-                        setForm={update => setSetupForm(update)}
-                        triggerable={triggerable}
-                        ctx={ctx}
-                    />
-                </WiredSimpleList>
-            ),
-        });
-    }
-
-    if (triggerable.holder === 'selector') {
-        middle.push({
-            key: 'selector-options',
-            node: (
+            )}
+            {(triggerable.holder === 'selector') && (
                 <WiredSection title="${wiredfurni.params.selector_options_selector}">
                     <WiredCheckboxGroup
                         options={[
@@ -218,28 +203,16 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
                         onToggle={(id, selected) => patchSetupTriggerable((id === 0) ? { isFilter: selected } : { isInvert: selected })}
                     />
                 </WiredSection>
-            ),
-        });
-    }
-
-    if (isWiredStuffSelectionMode(setup) && !hidesPickFurniInstructions(edit)) {
-        middle.push({
-            key: 'furni-picks',
-            node: (
+            )}
+            {isWiredStuffSelectionMode(setup) && !hidesPickFurniInstructions(edit) && (
                 <WiredSection title={t('wiredfurni.pickfurnis.caption', 'wiredfurni.pickfurnis.caption', { count: String(stuffIds1.length), limit: String(triggerable.furniLimit) })}>
                     <WiredText
                         text="${wiredfurni.pickfurnis.desc}"
                         color={style.softTextColor}
                     />
                 </WiredSection>
-            ),
-        });
-    }
-
-    if ((triggerable.holder === 'action') && (definition.allowDelaying ?? true)) {
-        middle.push({
-            key: 'delay',
-            node: (
+            )}
+            {(triggerable.holder === 'action') && (definition.allowDelaying ?? true) && (
                 <WiredSliderSection
                     titleKey="wiredfurni.params.delay"
                     unitKey="seconds"
@@ -251,36 +224,34 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
                     onChange={delayInPulses => patchSetupTriggerable({ delayInPulses })}
                     showInput={false}
                 />
-            ),
-        });
-    }
+            )}
+            {hasWiredAdvancedSettings(triggerable) && (
+                // `AdvancedSettingsWrapperPreset.blendingBackgroundColor`: the advanced background while it is shown.
+                <WiredFrameListItem blendColor={advancedShown ? style.advancedBackgroundColor : style.backgroundColor}>
+                    {() => (
+                        <WiredSetupAdvancedSettings
+                            style={style}
+                            edit={edit}
+                            ctx={ctx}
+                            expanded={advancedExpanded}
+                            activeFurniPicks={activeFurniPicks}
+                            onToggleExpanded={() => patchSetup({ advancedExpanded: !advancedExpanded })}
+                            onSelectQuantifier={quantifierCode => patchSetupTriggerable({ quantifierCode })}
+                            onStepInputSource={stepWiredInputSource}
+                            onSelectMergedSourceType={setWiredMergedSourceType}
+                            onSelectFurniPicks={picks => patchSetup({ activeFurniPicks: picks })}
+                        />
+                    )}
+                </WiredFrameListItem>
+            )}
+        </>
+    );
 
-    if (hasWiredAdvancedSettings(triggerable)) {
-        const expanded = (definition.advancedAlwaysVisible ?? false) || advancedExpanded;
-
-        middle.push({
-            key: 'advanced',
-            blendColor: expanded ? style.advancedBackgroundColor : style.backgroundColor,
-            node: (
-                <WiredSetupAdvancedSettings
-                    style={style}
-                    edit={edit}
-                    ctx={ctx}
-                    expanded={advancedExpanded}
-                    activeFurniPicks={activeFurniPicks}
-                    onToggleExpanded={() => patchSetup({ advancedExpanded: !advancedExpanded })}
-                    onSelectQuantifier={quantifierCode => patchSetupTriggerable({ quantifierCode })}
-                    onStepInputSource={stepWiredInputSource}
-                    onSelectMergedSourceType={setWiredMergedSourceType}
-                    onSelectFurniPicks={picks => patchSetup({ activeFurniPicks: picks })}
-                />
-            ),
-        });
-    }
-
-    const footer: WiredSetupPart = {
-        key: 'footer',
-        node: (
+    const footer = (
+        <Box
+            ref={setFooterNode}
+            layout={{ flexDirection: 'column', alignItems: 'stretch', flexShrink: 0 }}
+        >
             <WiredSetupFooter
                 style={style}
                 saveDisabled={!hasWritePermission}
@@ -288,8 +259,8 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
                 onSave={() => saveWired(send)}
                 onCancel={closeWiredSetup}
             />
-        ),
-    };
+        </Box>
+    );
 
     const noPicks = (stuffIds1.length + stuffIds2.length) === 0;
 
@@ -310,15 +281,24 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
 
     if ((definition.holder === 'action') && (definition.code === ActionTypeCodes.RESET)) menuItems.push(null, { name: 'Erase from existence', onClick: () => eraseWiredFromExistence(send) });
 
-    const maxMiddleHeight = Math.floor(screenHeight / SCROLL_SCREEN_SHARE);
-    const scrolls = (definition.allowScrolling ?? false) && (middleSize.height > maxMiddleHeight);
+    // `FramePreset.createListView` with `ListScrollParams`: the scroll list gets what the screen share leaves after the header and the footer, each with its spacer.
+    const maxMiddleHeight = Math.max(0, Math.floor(screenHeight / SCROLL_SCREEN_SHARE) - (Math.ceil(headerSize.height) + style.sectionSpacing) - (Math.ceil(footerSize.height) + style.sectionSpacing));
+    // `InnerBorderFramePreset` hands `FramePreset` no `ListScrollParams`, so an inner border dialog never scrolls.
+    const scrolls = !style.useInnerBorder && (definition.allowScrolling ?? false) && (middleSize.height > maxMiddleHeight);
 
     let middleNodes: ReactNode = (
         <Box
             ref={setMiddleNode}
             layout={{ flexDirection: 'column', alignItems: 'stretch', flexShrink: 0 }}
         >
-            {renderParts(style, middle)}
+            {/* `FramePreset`: the header's spacer - inside the scroll list when it scrolls, where `createListView` unshifts it. */}
+            {!style.useInnerBorder && <WiredSpacer height={style.sectionSpacing} />}
+            <WiredFrameList
+                innerBorder={style.useInnerBorder}
+                spacing={style.sectionSpacing}
+            >
+                {elements}
+            </WiredFrameList>
         </Box>
     );
 
@@ -327,10 +307,10 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
     let body: ReactNode;
 
     if (style.useInnerBorder) {
-        // `InnerBorderFramePreset`: the header, then the rest on the inner border, then the footer.
+        // `InnerBorderFramePreset`: the header, the elements on the inner border, then the footer, in a list with the default spacing.
         body = (
             <Box layout={{ flexDirection: 'column', alignItems: 'stretch', gap: style.genericHorizontalSpacing }}>
-                {header.node}
+                {header}
                 <Border
                     variant={style.templates.innerBorder?.variant}
                     tintColor={style.templates.innerBorder?.color ?? undefined}
@@ -345,18 +325,22 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
                         </Border>
                     </Box>
                 </Border>
-                {footer.node}
+                {footer}
             </Box>
         );
     } else {
+        // `FramePreset`: the header, its spacer and the elements (each followed by its own spacer), then the footer.
         body = (
             <Box layout={{ flexDirection: 'column', alignItems: 'stretch' }}>
-                {renderParts(style, [ header, { key: 'middle', node: middleNodes, blendColor: middle[middle.length - 1]?.blendColor }, footer ].filter(part => (part.key !== 'middle') || (middle.length > 0)))}
+                {header}
+                {middleNodes}
+                {footer}
             </Box>
         );
     }
 
-    const height = Math.ceil(contentSize.height) + chrome.top + chrome.bottom;
+    // `FramePreset.fixHeight`: the list's height plus the template's top and bottom margins.
+    const height = Math.ceil(contentSize.height) + frame.marginTop + frame.marginBottom;
     const hasMenu = !style.useInnerBorder;
 
     return (
@@ -380,7 +364,8 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
                         height={Math.ceil(headerSize.height) + frame.marginTop + style.sectionSpacing}
                     />
                 )}
-                contentLayout={{ paddingLeft: frame.marginLeft, paddingRight: frame.marginRight, paddingTop: 0, paddingBottom: 0 }}
+                // The template's `margin_*` vars move `_CONTENT` (`FrameController.marginsCallback`).
+                margins={[ frame.marginLeft, frame.marginTop, frame.marginRight, frame.marginBottom ]}
                 layout={{ position: 'absolute', width, height, minWidth: width, minHeight: height }}
             >
                 <Box
@@ -390,7 +375,7 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
                     {body}
                 </Box>
                 {menuOpen && (
-                    <Box layout={{ position: 'absolute', left: chrome.menuLeft, top: chrome.menuTop }}>
+                    <Box layout={{ position: 'absolute', left: menuAnchor.x - frame.marginLeft, top: menuAnchor.y - frame.marginTop }}>
                         <WiredSetupQuickMenu
                             style={style}
                             items={menuItems}

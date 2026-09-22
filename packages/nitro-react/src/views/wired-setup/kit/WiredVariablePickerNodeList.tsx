@@ -23,6 +23,9 @@ const ODD_BG = '#fafafa';
 /** A greyed-out row: `nodeName.blend` / `icon.blend`. */
 const DISABLED_BLEND = 0.55;
 
+/** `node_template`'s `tool_tip_delay`. */
+const NODE_TOOLTIP_DELAY = 1000;
+
 export interface WiredVariablePickerNodeListProps {
     nodes: readonly WiredVariableNode[];
     width: number;
@@ -53,6 +56,7 @@ export const WiredVariablePickerNodeList = ({ nodes, width, isRoot, borderVarian
             <Region
                 key={node.name}
                 tooltip={tooltip}
+                tooltipDelay={NODE_TOOLTIP_DELAY}
                 backgroundColor={(index === hoveredIndex) ? HOVER_BG : (((index % 2) === 0) ? EVEN_BG : ODD_BG)}
                 cursor={selectable ? 'pointer' : 'default'}
                 onPointerOver={(event: FederatedPointerEvent) => onHover(index, getGlobalRect(event.currentTarget))}
@@ -63,6 +67,7 @@ export const WiredVariablePickerNodeList = ({ nodes, width, isRoot, borderVarian
                     text={node.name}
                     textStyle="regular"
                     textOptions={{ fill: '#555555' }}
+                    flashFormat={{ antiAliasType: 'advanced' }}
                     alpha={blend}
                     layout={{ position: 'absolute', left: 7, top: 3 }}
                 />

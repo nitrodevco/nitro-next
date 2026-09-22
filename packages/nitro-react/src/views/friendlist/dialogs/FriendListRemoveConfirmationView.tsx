@@ -4,9 +4,13 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useFriendsActions, useFriendsStore } from '#base/context/friend';
 import { useIsWindowVisible, useSystemActions, useTranslation } from '#base/context/system';
 import { useFriends } from '#base/context/user';
-import { Border, Box, Button, Frame, ThemeText } from '#base/theme';
+import { Border, Button, ButtonThick, Frame, ThemeText } from '#base/theme';
 
-/** Pixi port of views/friendlist/dialogs/FriendListRemoveConfirmationView.tsx. */
+/**
+ * `FriendRemoveView` - the `friend_remove_confirm` alert (160x200, content at margins
+ * 6/25/6/7): the 150x143 border with the word-wrapped Volter 9 `remove_info` naming the selected
+ * friends, over the thick `ok` and plain `cancel` buttons at y 147.
+ */
 export const FriendListRemoveConfirmationView = () => {
     const isVisible = useIsWindowVisible('friendlist_remove_confirmation');
     const { toggleWindow } = useSystemActions();
@@ -37,33 +41,41 @@ export const FriendListRemoveConfirmationView = () => {
     return (
         <Frame
             variant="0"
-            id="friendlist-room-invite"
+            id="friendlist-remove-confirmation"
             defaultPosition={{ x: 260, y: 20 }}
-            layout={{ position: 'absolute', width: 211, height: 175 }}
+            dropShadow={false}
+            resizeDirection="none"
+            layout={{ position: 'absolute', width: 160, height: 200 }}
+            margins={[ 6, 25, 6, 7 ]}
             caption={t('friendlist.removefriendconfirm.title')}
             onClose={() => toggleWindow('friendlist_remove_confirmation')}
         >
-            <Border layout={{ height: 116, paddingLeft: 9, paddingRight: 9, paddingTop: 4, paddingBottom: 4 }}>
+            <Border
+                variant="0"
+                layout={{ position: 'absolute', left: 0, top: 0, width: 150, height: 143 }}
+            >
                 <ThemeText
-                    layout={{ flex: 1 }}
                     text={t('friendlist.removefriendconfirm.userlist', '', { user_names: usernames })}
-                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 190, fontFamily: 'Volter', fontSize: 9 }}
+                    textOptions={{ fontFamily: 'Volter', fontSize: 9, wordWrap: true, wordWrapWidth: 126 }}
+                    clip
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, top: 10, width: 130, height: 120 }}
                 />
             </Border>
-            <Box layout={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
-                <Button
-                    layout={{ height: 22 }}
-                    onPointerTap={removeFriends}
-                >
-                    {t('generic.ok')}
-                </Button>
-                <Button
-                    layout={{ height: 22 }}
-                    onPointerTap={() => toggleWindow('friendlist_remove_confirmation')}
-                >
-                    {t('generic.cancel')}
-                </Button>
-            </Box>
+            <Button
+                variant="0"
+                onPointerTap={() => toggleWindow('friendlist_remove_confirmation')}
+                layout={{ position: 'absolute', left: 88, top: 147, width: 60, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.cancel')}
+            </Button>
+            <ButtonThick
+                variant="0"
+                onPointerTap={removeFriends}
+                layout={{ position: 'absolute', left: 0, top: 147, width: 60, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.ok')}
+            </ButtonThick>
         </Frame>
     );
 };

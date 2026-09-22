@@ -55,6 +55,11 @@ type State = {
     petCommandsById: Record<number, number[]>;
     breedMenu: PetBreedMenu | undefined;
     plantBreeding: PlantBreedingRequest | undefined;
+    /**
+     * The system confirmation telling you to wait for the other plant's owner -
+     * `AvatarInfoWidget._breedingConfirmationAlert` - while it is up.
+     */
+    plantBreedingWaitingDialogId: number | undefined;
     nestBreeding: NestBreedingRequest | undefined;
     breedingResult: BreedingResult | undefined;
     nestBreedingSuccess: NestBreedingSuccess | undefined;
@@ -69,6 +74,7 @@ type Actions = {
     setPlantBreeding: (plantBreeding: PlantBreedingRequest | undefined) => void;
     /** Closes the plant dialog, but only the one about these two plants. */
     closePlantBreeding: (requestObjectId: number, targetObjectId: number) => void;
+    setPlantBreedingWaitingDialogId: (plantBreedingWaitingDialogId: number | undefined) => void;
     setNestBreeding: (nestBreeding: NestBreedingRequest | undefined) => void;
     setNestBreedingNameRejected: () => void;
     setBreedingResult: (breedingResult: BreedingResult | undefined) => void;
@@ -80,6 +86,7 @@ export const RoomPetsSliceInitialState: State = {
     petCommandsById: {},
     breedMenu: undefined,
     plantBreeding: undefined,
+    plantBreedingWaitingDialogId: undefined,
     nestBreeding: undefined,
     breedingResult: undefined,
     nestBreedingSuccess: undefined,
@@ -103,6 +110,7 @@ export const createRoomPetsSlice: StateCreator<RoomPetsSlice, [], [], RoomPetsSl
     closePlantBreeding: (requestObjectId, targetObjectId) => set(x => (
         (x.plantBreeding && (x.plantBreeding.requestObjectId === requestObjectId) && (x.plantBreeding.targetObjectId === targetObjectId)) ? { plantBreeding: undefined } : x
     )),
+    setPlantBreedingWaitingDialogId: plantBreedingWaitingDialogId => set({ plantBreedingWaitingDialogId }),
     setNestBreeding: nestBreeding => set({ nestBreeding }),
     setNestBreedingNameRejected: () => set(x => (x.nestBreeding ? { nestBreeding: { ...x.nestBreeding, nameRejected: true } } : x)),
     setBreedingResult: breedingResult => set({ breedingResult }),

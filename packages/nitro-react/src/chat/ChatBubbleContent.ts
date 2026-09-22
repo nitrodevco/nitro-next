@@ -14,8 +14,20 @@ import { IChatStyle } from './ChatStyle';
 
 export type ChatLocalizer = (key: string, defaultValue?: string, replacements?: Record<string, string>) => string;
 
-/** `_Str_1488` - a non-system bubble never grows taller than this; longer text is clipped. */
+/** `PooledChatBubble.MAX_HEIGHT` - a non-system bubble never grows taller than this times the chat font size scale; longer text is clipped. */
 export const CHAT_BUBBLE_MAX_TEXT_HEIGHT = 108;
+
+/** `int(108 * freeFlowChat.chatFontSizeScale)`: the height cap `PooledChatBubble.recreate` and `displayedHeight` work with. */
+export const chatBubbleMaxHeight = (fontSizeScale: number): number => Math.trunc(CHAT_BUBBLE_MAX_TEXT_HEIGHT * fontSizeScale);
+
+/**
+ * `PooledChatBubble.createScaledTextFormat`: the style's text size times the chat font size scale,
+ * 12 when the style has none, never under 1. Nothing else in the format is scaled - not the
+ * leading, the margins or the wrap width. A fractional result (13.8, 15.6) is kept as it is:
+ * the exact renderer takes whole sizes only, so such a bubble draws in the browser's text, as it
+ * does in Sulake's own JavaScript client (`TextField` hands the size on unrounded).
+ */
+export const scaleChatFontSize = (fontSize: number | undefined, fontSizeScale: number): number => Math.max(1, (fontSize ?? 12) * fontSizeScale);
 /** `PooledChatBubble`'s pointer margins - how far inside the bubble's left / right edge the pointer stays, unless the style's `pointerXMargins` says otherwise. */
 export const CHAT_BUBBLE_POINTER_DEFAULT_MARGIN_LEFT = 28;
 export const CHAT_BUBBLE_POINTER_DEFAULT_MARGIN_RIGHT = 15;
@@ -95,11 +107,11 @@ export interface ChatBubbleLayout {
     /** The art's full extent, pointer and face included (Flash `Sprite.width/height`). */
     bubbleWidth: number;
     bubbleHeight: number;
-    /** `_Str_22234` */
+    /** `PooledChatBubble.displayedHeight`: the extent capped at `int(108 * chatFontSizeScale)`, system styles excepted. */
     limitedHeight: number;
     textX: number;
     textY: number;
-    /** Text taller than 108px is clipped to this box (at `textX`/`textY`). */
+    /** Text taller than the height cap is clipped to this box (at `textX`/`textY`). */
     clip: { width: number; height: number } | undefined;
     pointerY: number | undefined;
     /** `getPointerLeftMargin(28)` / `getPointerRightMargin(15)` - the pointer's x is clamped to `[left, width - right]`. */
@@ -122,17 +134,25 @@ export interface ChatBubbleLayoutInput {
     pointerHeight: number;
     faceWidth?: number;
     faceHeight?: number;
+    /** `chatFontSizeScale` when the bubble was built - it sets the height cap `recreate` works with. */
+    fontSizeScale: number;
+    /**
+     * `chatFontSizeScale` now: `displayedHeight` reads the component's scale each time it is
+     * asked, so a bubble built before the setting changed is stacked by the new cap.
+     */
+    displayFontSizeScale: number;
 }
 
 /** The size arithmetic of `PooledChatBubble.recreate` - pure, so a bubble can lay itself out in a memo. */
-export const computeChatBubbleLayout = ({ style, textWidth, textHeight, lineCount, maxWidth, minHeight = -1, pointerHeight, faceWidth, faceHeight }: ChatBubbleLayoutInput): ChatBubbleLayout => {
+export const computeChatBubbleLayout = ({ style, textWidth, textHeight, lineCount, maxWidth, minHeight = -1, pointerHeight, faceWidth, faceHeight, fontSizeScale, displayFontSizeScale }: ChatBubbleLayoutInput): ChatBubbleLayout => {
     const margins = style.textFieldMargins;
     const base = style.getBackgroundTexture();
+    const maxHeight = chatBubbleMaxHeight(fontSizeScale);
 
     let width = Math.min(maxWidth, (textWidth + margins.x) + margins.width);
     let height = (textHeight + margins.y) + margins.height;
 
-    if (!style.isSystemStyle) height = Math.min(CHAT_BUBBLE_MAX_TEXT_HEIGHT, height);
+    if (!style.isSystemStyle) height = Math.min(maxHeight, height);
 
     if (minHeight !== -1) height = Math.max(minHeight, height);
 
@@ -198,8 +218,8 @@ export const computeChatBubbleLayout = ({ style, textWidth, textHeight, lineCoun
         bubbleHeight = Math.max(bubbleHeight, y + shownHeight);
     }
 
-    const clip = (!style.isSystemStyle && (textHeight > CHAT_BUBBLE_MAX_TEXT_HEIGHT))
-        ? { width: textWidth + 5, height: CHAT_BUBBLE_MAX_TEXT_HEIGHT - margins.height }
+    const clip = (!style.isSystemStyle && (textHeight > maxHeight))
+        ? { width: textWidth + 5, height: maxHeight - margins.height }
         : undefined;
 
     return {
@@ -207,7 +227,7 @@ export const computeChatBubbleLayout = ({ style, textWidth, textHeight, lineCoun
         height,
         bubbleWidth,
         bubbleHeight,
-        limitedHeight: style.isSystemStyle ? bubbleHeight : Math.min(CHAT_BUBBLE_MAX_TEXT_HEIGHT, bubbleHeight),
+        limitedHeight: style.isSystemStyle ? bubbleHeight : Math.min(chatBubbleMaxHeight(displayFontSizeScale), bubbleHeight),
         textX,
         textY,
         clip,

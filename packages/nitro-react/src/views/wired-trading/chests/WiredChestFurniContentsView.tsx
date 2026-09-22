@@ -34,19 +34,22 @@ const GRID_OFFSET_SEARCH = 28;
 export const WIRED_FURNI_CHEST_WIDTH = 458;
 export const WIRED_FURNI_CHEST_HEIGHT = 264;
 
-/** `preview_image`: the product image widget, the furni at 64 facing 90 degrees. */
+/**
+ * `preview_image`: the product image widget (170x167 at 2,9 of `stretching_preview_image_container`),
+ * the furni at 64 facing 90 degrees, unscaled in the middle of `product_image_xml`'s
+ * `product_preview` bitmap (`pivot_point` center).
+ */
 const ChestItemPreview = ({ itemType }: { itemType: IChestItemType }) => {
     const furniData = useWiredChestItemFurniData(itemType);
-    const { texture, width, height } = useFurnitureImageTexture(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
+    const { texture } = useFurnitureImageTexture(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
 
     if (!texture) return null;
 
     return (
-        <pixiSprite
+        <ThemeImage
             texture={texture}
-            width={width}
-            height={height}
-            layout={{}}
+            bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+            layout={{ position: 'absolute', left: 2, top: 35, width: 170, height: 167 }}
         />
     );
 };
@@ -55,7 +58,10 @@ interface ChestItemNameProps {
     storage: IChestStorage | undefined;
 }
 
-/** `furni_name`: bold, wrapping at 190. */
+/**
+ * `furni_name`: bold, 190x17 with no `auto_size`, so it wraps at 190 less the gutters and is cut
+ * at its box - and at the 175px border around it.
+ */
 const ChestItemName = ({ storage }: ChestItemNameProps) => {
     const name = useWiredChestItemName(storage?.type, storage?.specialType ?? 0);
 
@@ -63,9 +69,10 @@ const ChestItemName = ({ storage }: ChestItemNameProps) => {
         <ThemeText
             text={name}
             textStyle="u_bold"
-            textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
+            textOptions={{ wordWrap: true, wordWrapWidth: 186 }}
             verticalAlign="top"
-            layout={{ position: 'absolute', left: 5, top: 5, width: 190 }}
+            clip
+            layout={{ position: 'absolute', left: 5, top: 5, width: 190, height: 17 }}
         />
     );
 };
@@ -164,10 +171,12 @@ export const WiredChestFurniContentsView = ({ chestId, canWithdraw }: WiredChest
                                 textStyle="u_regular"
                                 textOptions={{ fill: '#666666' }}
                                 alpha={0.5}
+                                verticalAlign="top"
                                 layout={{ position: 'absolute', left: 4, top: 3 }}
                             />
                         )}
                         <TextInput
+                            flashPlacement
                             value={searchText}
                             onChange={setSearchText}
                             onKeyDown={(event) => {
@@ -179,8 +188,8 @@ export const WiredChestFurniContentsView = ({ chestId, canWithdraw }: WiredChest
                             }}
                             textStyle="u_regular"
                             textColor="#666666"
-                            backgroundColor="#ffffff"
-                            focusedBackgroundColor="#ffffff"
+                            backgroundColor={null}
+                            focusedBackgroundColor={null}
                             layout={{ position: 'absolute', left: 4, top: 3, width: 216, height: 18 }}
                         />
                         {(searchText.length > 0) && (
@@ -191,7 +200,8 @@ export const WiredChestFurniContentsView = ({ chestId, canWithdraw }: WiredChest
                             >
                                 <ThemeImage
                                     src={LayoutImage('shared/icons_close.png')}
-                                    layout={{ position: 'absolute', left: 4, top: 4 }}
+                                    bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                                    layout={{ position: 'absolute', left: 4, top: 4, width: 11, height: 12 }}
                                 />
                             </Region>
                         )}
@@ -226,36 +236,37 @@ export const WiredChestFurniContentsView = ({ chestId, canWithdraw }: WiredChest
                 <Border
                     variant="2"
                     tintColor="#d8d8d8"
-                    layout={{ position: 'absolute', left: 0, top: 0, width: 175, height: 211 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: 175, height: 211, overflow: 'hidden' }}
                 >
                     {sample
                         ? (
                                 <>
                                     <ChestItemName storage={sample} />
-                                    <Box layout={{ position: 'absolute', left: 2, top: 35, width: 170, height: 167, alignItems: 'center', justifyContent: 'center' }}>
-                                        <ChestItemPreview itemType={sample.type} />
-                                    </Box>
+                                    <ChestItemPreview itemType={sample.type} />
                                 </>
                             )
                         : (
-                                <Box layout={{ position: 'absolute', left: 0, top: 10, width: 175, height: 201, alignItems: 'center', justifyContent: 'center' }}>
-                                    <ThemeImage src={LayoutImage('wired/wired_chests_images_classic_furni_chest_empty.png')} />
-                                </Box>
+                                <ThemeImage
+                                    src={LayoutImage('wired/wired_chests_images_classic_furni_chest_empty.png')}
+                                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                                    layout={{ position: 'absolute', left: 0, top: 10, width: 175, height: 201 }}
+                                />
                             )}
                 </Border>
                 <Box layout={{ position: 'absolute', left: 62, top: 211 + 9, width: 113, height: 28, flexDirection: 'row', gap: 10 }}>
-                    <Border
-                        variant="4"
-                        layout={{ width: 30, height: 19, marginTop: 1 }}
-                    >
-                        <TextInput
-                            value={withdrawAmount}
-                            onChange={value => setWithdrawAmount(value.replace(/[^0-9]/g, ''))}
-                            onEnter={onWithdraw}
-                            textStyle="u_regular"
-                            layout={{ width: 28, height: 17, marginLeft: 1, marginTop: 1 }}
-                        />
-                    </Border>
+                    <TextInput
+                        value={withdrawAmount}
+                        onChange={value => setWithdrawAmount(value.replace(/[^0-9]/g, ''))}
+                        onEnter={onWithdraw}
+                        textStyle="u_regular"
+                        flashPlacement
+                        restrict="0-9"
+                        border="#000000"
+                        alwaysShowSelection
+                        backgroundColor={null}
+                        focusedBackgroundColor={null}
+                        layout={{ width: 30, height: 19, marginTop: 1, flexShrink: 0 }}
+                    />
                     <Button
                         variant="3"
                         disabled={!sample || !canWithdraw}

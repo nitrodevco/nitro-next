@@ -27,13 +27,13 @@
  *
  * Flash has no sorting in `TableView`; the windows ask the server for a sort order instead.
  *
- * Not carried over, on purpose:
- * - `manageRowViews` and its row pool (`LAZY_CHUNKING`, `SCROLL_BUFFER`, `DeBouncer`). It exists
- *   to avoid building window trees for rows far off screen; every row here is mounted, since
- *   the theme's `ScrollArea` owns its scroll position and a page is 25-50 rows.
- * - `tool_tip_delay="0"` of `table_element`: tooltips use the theme's one delay.
- * - A Volter link is underlined with a 1px rule under the baseline rather than by the text
- *   renderer, which only underlines the anti-aliased styles.
+ * Every text is style 3 with no `text_style` var, which the Ubuntu theme reads as `u_regular`;
+ * `column_name` adds `bold` and `element_link` `underline` over it.
+ *
+ * Not carried over, on purpose: `manageRowViews` and its row pool (`LAZY_CHUNKING`,
+ * `SCROLL_BUFFER`, `DeBouncer`). It exists to avoid building window trees for rows far off
+ * screen; every row here is mounted, since the theme's `ScrollArea` owns its scroll position and
+ * a page is 25-50 rows.
  */
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
@@ -41,7 +41,12 @@ import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from '#base/context/system';
 import { Border, Box, BoxLayout, getGlobalRect, GlobalRect, Region, ScrollArea, TextInput, ThemeImage, ThemeText, useLayoutSize, useOutsideClick } from '#base/theme';
 
-import { fitTableText, measureTableText, tableLinkUnderlineY } from './wiredTableText';
+import { fitTableText, measureTableText } from './wiredTableText';
+
+/** `element_text` / `element_link` / `element_input` / `column_name`: style 3 without a `text_style` var. */
+const CELL_TEXT_STYLE = 'u_regular';
+/** `table_element`'s `tool_tip_delay`. */
+const CELL_TOOLTIP_DELAY = 0;
 
 /** `TableView.TABLE_MARGIN`: `table_contents` sits 5px inside `table_border` on every side. */
 const TABLE_MARGIN = 5;
@@ -189,17 +194,19 @@ interface TitleCellProps {
     width: number;
 }
 
-/** One `column_name` clone of `TableView.initializeColumns`: bold, margins of 4, aligned like its column. */
+/** One `column_name` clone of `TableView.initializeColumns`: `u_regular` made bold, margins of 4, aligned like its column. */
 const TitleCell = ({ column, width }: TitleCellProps) => {
     const alignment = column.alignment ?? 'center';
     const textWidth = Math.max(0, width - (TEXT_MARGIN * 2));
-    const clips = (measureTableText(column.title, 'bold') + (TEXT_GUTTER * 2)) > textWidth;
+    // `u_bold` is `u_regular` with `bold` on - the format `column_name` draws in.
+    const clips = (measureTableText(column.title, 'u_bold') + (TEXT_GUTTER * 2)) > textWidth;
 
     return (
         <Box layout={{ width, height: TITLE_ROW_HEIGHT, flexShrink: 0, overflow: clips ? 'hidden' : undefined }}>
             <ThemeText
                 text={column.title}
-                textStyle="bold"
+                textStyle={CELL_TEXT_STYLE}
+                flashFormat={{ bold: true }}
                 textOptions={{ align: alignment }}
                 verticalAlign="top"
                 layout={{ position: 'absolute', left: TEXT_MARGIN, top: 2, width: textWidth, height: TEXT_HEIGHT }}
@@ -259,8 +266,8 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
     const isLink = (type === 'link');
     const textWidth = Math.max(0, width - (TEXT_MARGIN * 2));
     // TextController only replaces an overflow for autoSize "none" (a "left" column) and "right".
-    const fitted = useMemo(() => ((isLink || alignment === 'center') ? { text, overflown: false } : fitTableText(text, 'regular', textWidth)), [ isLink, alignment, text, textWidth ]);
-    const naturalWidth = useMemo(() => measureTableText(text, 'regular') + (TEXT_GUTTER * 2), [ text ]);
+    const fitted = useMemo(() => ((isLink || alignment === 'center') ? { text, overflown: false } : fitTableText(text, CELL_TEXT_STYLE, textWidth)), [ isLink, alignment, text, textWidth ]);
+    const naturalWidth = useMemo(() => measureTableText(text, CELL_TEXT_STYLE) + (TEXT_GUTTER * 2), [ text ]);
     const clips = isLink ? (naturalWidth > width) : ((alignment === 'center') && (naturalWidth > textWidth));
     const isInspecting = (inputValue !== null);
 
@@ -274,6 +281,7 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
     return (
         <Region
             tooltip={tooltip ?? (fitted.overflown ? text : undefined)}
+            tooltipDelay={CELL_TOOLTIP_DELAY}
             cursor="default"
             onPointerTap={(editable || inspectable) ? openInput : undefined}
             layout={{ width, height: ROW_HEIGHT, flexShrink: 0, overflow: clips ? 'hidden' : undefined }}
@@ -289,7 +297,7 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
             {!isInspecting && !isLink && (
                 <ThemeText
                     text={fitted.text}
-                    textStyle="regular"
+                    textStyle={CELL_TEXT_STYLE}
                     textOptions={{ fill: textColor ?? '#000000', align: alignment }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: TEXT_MARGIN, top: 1, width: textWidth, height: TEXT_HEIGHT }}
@@ -309,14 +317,11 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
                     >
                         <ThemeText
                             text={text}
-                            textStyle="regular"
+                            textStyle={CELL_TEXT_STYLE}
                             textOptions={{ fill: LINK_COLOR }}
+                            flashFormat={{ underline: true }}
                             verticalAlign="top"
                             layout={{ height: TEXT_HEIGHT }}
-                        />
-                        <Region
-                            backgroundColor={LINK_COLOR}
-                            layout={{ position: 'absolute', left: TEXT_GUTTER, right: TEXT_GUTTER, top: tableLinkUnderlineY('regular'), height: 1 }}
                         />
                     </Region>
                 </Box>
@@ -345,8 +350,11 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
                         onFocusChange={(focused) => {
                             if (!focused) setInputValue(null);
                         }}
-                        textStyle="regular"
-                        focusedBackgroundColor="#ffffff"
+                        textStyle={CELL_TEXT_STYLE}
+                        flashPlacement
+                        // `background="true"` with no colour: Flash fills nothing behind `element_input`.
+                        backgroundColor={null}
+                        focusedBackgroundColor={null}
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Box>
@@ -364,6 +372,7 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
                 >
                     <ThemeImage
                         src={extraButton.src}
+                        bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
                         layout={{ position: 'absolute', left: 0, top: 0, width: 20, height: 20 }}
                     />
                 </Region>
@@ -477,7 +486,7 @@ export const WiredTableView = <T extends object>({ columns, rows, getRowId, getC
                         </Box>
                         <Region
                             backgroundColor="#000000"
-                            alpha={SPLITTER_ALPHA}
+                            backgroundAlpha={SPLITTER_ALPHA}
                             layout={{ width: rowWidth, height: SPLITTER_HEIGHT, flexShrink: 0 }}
                         />
                     </>
@@ -521,6 +530,7 @@ export const WiredTableView = <T extends object>({ columns, rows, getRowId, getC
                                                     <Region
                                                         key={column.id}
                                                         tooltip={cell.tooltip}
+                                                        tooltipDelay={CELL_TOOLTIP_DELAY}
                                                         cursor="default"
                                                         layout={{ width, height: ROW_HEIGHT, flexShrink: 0 }}
                                                     >

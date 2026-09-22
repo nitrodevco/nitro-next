@@ -70,7 +70,7 @@ export const UBUNTU_WIRED_STYLE: WiredStyle = {
         dropdown: { variant: '3', width: 149, height: 24 },
         checkbox: { variant: '3', width: 17, height: 15 },
         radioButton: { variant: '3', width: 15, height: 15 },
-        expandCollapse: { width: 16, height: 12, offsetY: 2, arrowY: 1, arrowTint: '#999999', upAsset: 'wired_volter_uparrow', downAsset: 'wired_volter_downarrow' },
+        expandCollapse: { width: 16, height: 12, offsetY: 2, arrowY: 1, arrowTint: '#999999', upAsset: 'wired_volter_uparrow', downAsset: 'wired_volter_downarrow', backgroundColor: null },
         iconButton: {
             variant: '3', size: 22, iconTint: '#7f7f7f', iconSize: 12,
             icons: { left: { icon: 2, x: 6, y: 6 }, right: { icon: 3, x: 6, y: 6 }, up: { icon: 1, x: 7, y: 5 }, down: { icon: 0, x: 7, y: 6 } },

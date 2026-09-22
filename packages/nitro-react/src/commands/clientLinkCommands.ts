@@ -5,7 +5,10 @@ import { WebSocketConnection } from '#base/context/communication';
 import { systemStore, WindowParams } from '#base/context/system';
 import { getWiredHasReadPermission, getWiredMenuEnabled } from '#base/context/wired';
 
+import { showEarnings } from './earningsCommands';
+import { habbiconsEnabled, openHabbiconHub } from './habbiconCommands';
 import { forwardToRoom, goToHomeRoom, searchNavigator, searchRoomTag } from './navigatorCommands';
+import { openSpecialItemsDisplay } from './specialItemsCommands';
 import { openWiredRewardView, openWiredSelfDonation } from './wiredTradingCommands';
 
 type Send = WebSocketConnection['send'];
@@ -72,7 +75,7 @@ const openWiredMenuLink = (parts: string[]): boolean => {
  */
 export const openClientLink = (send: Send, link: string) => {
     const parts = link.split('/');
-    const { showWindow } = systemStore.getState();
+    const { showWindow, hideWindow } = systemStore.getState();
 
     switch (parts[0]) {
         // `HabboNewNavigator.linkReceived`.
@@ -113,14 +116,39 @@ export const openClientLink = (send: Send, link: string) => {
         case 'catalog': {
             switch (parts[1]) {
                 case 'open': {
+                    // The normal catalogue takes over from the Builders Club one (`toggleCatalog`).
+                    hideWindow('builders_catalog');
+
                     if (parts.length > 2) showWindow('catalog', { pageName: parts[2] });
                     else showWindow('catalog');
+
+                    return;
+                }
+                // `warehouse`: the Builders Club catalogue - `openCatalogPage(page, "BUILDERS_CLUB")`, or
+                // `toggleCatalog("BUILDERS_CLUB", true)`, which shows it whatever is open.
+                case 'warehouse': {
+                    hideWindow('catalog');
+
+                    if (parts.length > 2) showWindow('builders_catalog', { pageName: parts[2] });
+                    else showWindow('builders_catalog');
+
+                    return;
+                }
+                // `createLinkEvent("habbicons/open")`, with `habbicons.enabled` on.
+                case 'habbicons': {
+                    if (habbiconsEnabled()) openClientLink(send, 'habbicons/open');
 
                     return;
                 }
             }
 
             break;
+        }
+        // `HabbiconController.linkReceived`: `habbicons/open`, with `habbicons.enabled` on.
+        case 'habbicons': {
+            if (parts[1] === 'open') openHabbiconHub(send);
+
+            return;
         }
         // `HabboInventory.linkReceived`: `open` alone means the furni tab.
         case 'inventory': {
@@ -159,6 +187,34 @@ export const openClientLink = (send: Send, link: string) => {
 
             break;
         }
+        // `EarningsController.linkReceived`: habboUI/open/vault - what `HabboCatalog.openVault` sends.
+        case 'habboUI': {
+            if ((parts.length >= 3) && (parts[1] === 'open') && (parts[2] === 'vault')) {
+                showEarnings(send);
+
+                return;
+            }
+
+            // `HabboClubCenter.linkReceived`: habboUI/open/hccenter - `openClubCenter` / `verifyClubLevel`.
+            // The club centre's own mount (`CatalogClubCenterComponent`) runs `showClubCenter`.
+            if ((parts.length >= 3) && (parts[1] === 'open') && (parts[2] === 'hccenter')) {
+                showWindow('club_center');
+
+                return;
+            }
+
+            break;
+        }
+        // `SpecialItemsController.linkReceived`: special_items_display/<key>.
+        case 'special_items_display': {
+            if (parts.length >= 2) {
+                openSpecialItemsDisplay(send, parts[1]);
+
+                return;
+            }
+
+            break;
+        }
         // `SelfDonationTool.linkReceived`: selfdonation/open, sandbox hotels only.
         case 'selfdonation': {
             if (parts[1] === 'open') {
@@ -168,6 +224,12 @@ export const openClientLink = (send: Send, link: string) => {
             }
 
             break;
+        }
+        // `CollectiblesController.linkReceived`: `collectibles/open`; anything else under it does nothing.
+        case 'collectibles': {
+            if ((parts.length >= 2) && (parts[1] === 'open')) showWindow('collectibles');
+
+            return;
         }
         // `HabboFriendList.linkReceived`; `openchat` needs the messenger, which has no window yet.
         case 'friendlist': {

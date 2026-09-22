@@ -29,14 +29,56 @@ const RELATIONSHIP_ROWS: { type: number; name: string }[] = [
 /** The motto that swaps the avatar for a crocodile - `InfoStandUserView.setMotto`. */
 const CROCODILE_MOTTO = 'crikey';
 
-const PANEL_WIDTH = 190;
+/** `InfoStandUserView.LINK_COLOR_ACTIONS_DEFAULT` / `_HOVER`: the name link's colour, out and over. */
+const NAME_COLOR = '#ffffff';
+const NAME_HOVER_COLOR = '#91c2ff';
+
+/** `MOTTO_UNCHANGED_COLOR` / `MOTTO_EDITED_COLOR`: a motto, and the change prompt standing in for none. */
+const MOTTO_COLOR = '#ffffff';
+const MOTTO_PROMPT_COLOR = '#aaaaaa';
+
+/** `MIN_MOTTO_HEIGHT` / `MAX_MOTTO_HEIGHT`: the motto field's height is `textHeight + 5` between these. */
+const MIN_MOTTO_HEIGHT = 23;
+const MAX_MOTTO_HEIGHT = 50;
+
+/** The `motto_text` input's `margin_top` var. */
+const MOTTO_MARGIN_TOP = 6;
+
+/** Every row of `infostand_element_list` is this wide; its `spacing` is 3. */
+const LIST_WIDTH = 170;
+
+/** The `container` spacers between the list's groups - `0xffff333333`, a full-alpha `#333333`. */
+const Spacer = () => (
+    <Region
+        backgroundColor="#333333"
+        layout={{ width: LIST_WIDTH, height: 1, flexShrink: 0 }}
+    />
+);
+
+/** The badge slots of `image_and_badges_container`: `badge_<n>` at the layout's `x, y`. */
+const BADGE_SLOTS: { slot: number; left: number; top: number }[] = [
+    { slot: 0, left: 88, top: 1 },
+    { slot: 1, left: 88, top: 44 },
+    { slot: 2, left: 131, top: 44 },
+    { slot: 3, left: 88, top: 87 },
+    { slot: 4, left: 131, top: 87 },
+];
 
 /**
  * The infostand for a user - `InfoStandUserView`, on the `user_view` layout: their name (a link
  * to their profile), their look and badges with the group badge, their motto (editable when it is
- * your own), what they carry, their achievement score and badge rank, and who they have a
+ * your own), their badge rank, achievement score and what they carry, and who they have a
  * relationship with. Selecting them asks for the badges and relationships, which fill in a moment
  * later.
+ *
+ * The rows are `infostand_element_list` (an `itemlist_vertical` at 10,10 with `spacing` 3 that
+ * resizes to its items) and the border is that list's height plus 20 (`updateWindow`), so the
+ * list is a column here; everything else keeps the layout's absolute rects.
+ *
+ * `setRealName` looks for a `realname_text` the layout does not have, so Flash never shows the
+ * real name, and neither does this. The avatar is `avatar_image` with `avatar_image:cropped`;
+ * `useAvatarImageTexture` has no cropped render, so the uncropped image is centred where the
+ * cropped one would be.
  */
 export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProps) => {
     const info = useRoomUserData(objectData.objectId);
@@ -44,8 +86,13 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
     const badgesRank = useRoomStore(x => x.usersByRoomObjectId[objectData.objectId]?.badgesRank ?? -1);
     const [ editingObjectId, setEditingObjectId ] = useState<number | undefined>(undefined);
     const [ motto, setMotto ] = useState('');
+    const [ nameHovered, setNameHovered ] = useState(false);
     const mottoMaxLength = useConfigValue<number>('motto.max.length') ?? 38;
     const mottoChangeEnabled = useConfigValue<boolean>('infostand.motto.change.enabled') ?? true;
+    // `InfoStandWidgetHandler.isActivityDisplayEnabled` shows `score_spacer`, `score_text` and `score_value`.
+    const activityDisplayEnabled = useConfigValue<boolean>('activity.point.display.enabled') === true;
+    // `InfoStandUserView.createWindow`: `relationship_status_container.visible = getBoolean("relationship.status.enabled")`.
+    const relationshipsEnabled = useConfigValue<boolean>('relationship.status.enabled') === true;
     const t = useTranslation();
     const { send } = useWebSocketContext();
     const { texture: avatarTexture, width: avatarWidth, height: avatarHeight } = useAvatarImageTexture(info?.figure, info?.gender ?? AvatarGenderType.Male, { direction: 4 });
@@ -81,214 +128,244 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
     const badgeInSlot = (slot: number) => info.badges.find(badge => badge.badgeIndex === (slot + 1));
     const showsCrocodile = info.motto.toLowerCase().includes(CROCODILE_MOTTO);
     const carriesItem = (info.carryItem > 0) && (info.carryItem < MAX_CARRY_ITEM);
-
-    const badge = (slot: number) => {
-        const selected = badgeInSlot(slot);
-
-        return (
-            <InfostandBadgeView
-                code={selected?.badgeCode}
-                ownerCount={selected?.ownerCount}
-            />
-        );
-    };
-
-    const divider = (
-        <Region
-            backgroundColor="#383838"
-            layout={{ width: '100%', height: 1 }}
-        />
-    );
+    // `setMotto`: your own empty motto reads as the change prompt, in the edited colour.
+    const showsMottoPrompt = info.isOwnUser && !info.motto.length;
 
     return (
-        <Box layout={{ flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+        <Box layout={{ flexDirection: 'column', alignItems: 'flex-end', gap: 10 }}>
             <Border
                 variant="1"
-                layout={{ flexDirection: 'column', minWidth: PANEL_WIDTH, maxWidth: PANEL_WIDTH, gap: 5, padding: 10 }}
+                layout={{ width: 190, flexShrink: 0, paddingLeft: 10, paddingTop: 10, paddingBottom: 10 }}
             >
-                <Box layout={{ flexDirection: 'row', alignItems: 'center', width: '100%', gap: 8 }}>
-                    <Region
-                        tooltip={t('infostand.profile.link.tooltip')}
-                        cursor="pointer"
-                        onPointerTap={() => openProfile(send, info.webId)}
-                        layout={{ flexDirection: 'row', flex: 1, alignItems: 'center', gap: 5 }}
-                    >
-                        {/* `InfoStandUserView` blits the `icon_home` asset into `user_view`'s
-                            `<bitmap name="home_icon">` - a library bitmap, not an icon-set style. */}
-                        <ThemeImage
-                            name="home_icon"
-                            src={LayoutImage('room-ui/icon_home.png')}
-                            layout={{}}
-                        />
-                        <ThemeText
-                            text={info.name}
-                            textStyle="button_bold"
-                        />
-                    </Region>
-                    <CloseButton
-                        variant="1"
-                        onPointerTap={onClose}
-                        layout={{ flexShrink: 0 }}
-                    />
-                </Box>
-                {!!info.realName.length && (
-                    <ThemeText
-                        text={t('infostand.text.realname', '', { realname: info.realName })}
-                        textStyle="regular"
-                        textOptions={{ fill: '#ffffff' }}
+                <ThemeImage
+                    name="home_icon"
+                    src={LayoutImage('room-ui/icon_home.png')}
+                    cursor="pointer"
+                    onPointerTap={() => openProfile(send, info.webId)}
+                    // `InfoStandUserView`: `icon_home` copied at 0,0 into a bitmap of the window's own 16x15, all of it clickable.
+                    bitmap={{ stretchedX: false, stretchedY: false }}
+                    layout={{ position: 'absolute', left: 8, top: 11, width: 16, height: 15 }}
+                />
+                <CloseButton
+                    variant="1"
+                    onPointerTap={onClose}
+                    layout={{ position: 'absolute', left: 168, top: 6, width: 18, height: 16 }}
+                />
+                {showsCrocodile && (
+                    <ThemeImage
+                        name="sticker_croco"
+                        src={LayoutImage('room-ui/sticker_croco.png')}
+                        bitmap={{ stretchedX: false, stretchedY: false }}
+                        layout={{ position: 'absolute', left: 2, top: 64, width: 92, height: 63 }}
                     />
                 )}
-                {divider}
-                <Box layout={{ flexDirection: 'row', width: '100%', gap: 4 }}>
+                <Box layout={{ flexDirection: 'column', width: LIST_WIDTH, gap: 3 }}>
                     <Region
                         tooltip={t('infostand.profile.link.tooltip')}
+                        tooltipDelay={100}
                         cursor="pointer"
                         onPointerTap={() => openProfile(send, info.webId)}
-                        layout={{ width: 67, height: 130 }}
+                        onPointerOver={() => setNameHovered(true)}
+                        onPointerOut={() => setNameHovered(false)}
+                        layout={{ width: 135, height: 12, marginLeft: 18, flexShrink: 0 }}
                     >
+                        <ThemeText
+                            text={info.name}
+                            textOptions={{ fill: nameHovered ? NAME_HOVER_COLOR : NAME_COLOR, fontFamily: 'VolterBold' }}
+                            flashFormat={{ antiAliasType: 'advanced' }}
+                            verticalAlign="top"
+                        />
+                    </Region>
+                    <Spacer />
+                    <Box layout={{ width: 193, height: 132, marginLeft: -16, flexShrink: 0 }}>
                         <Border
                             variant="0"
                             tintColor="#666666"
-                            layout={{ width: 67, height: 130, justifyContent: 'center', alignItems: 'center' }}
+                            layout={{ position: 'absolute', left: 16, top: 0, width: 67, height: 130 }}
+                        />
+                        <Region
+                            tooltip={t('infostand.profile.link.tooltip')}
+                            tooltipDelay={100}
+                            cursor="pointer"
+                            onPointerTap={() => openProfile(send, info.webId)}
+                            layout={{ position: 'absolute', left: 17, top: 2, width: 66, height: 127, justifyContent: 'center', alignItems: 'center' }}
                         >
-                            {showsCrocodile && (
-                                <ThemeImage
-                                    src={LayoutImage('room-ui/sticker_croco.png')}
-                                    layout={{}}
-                                />
-                            )}
                             {!showsCrocodile && avatarTexture && (
                                 <pixiSprite
                                     texture={avatarTexture}
                                     layout={{ width: avatarWidth, height: avatarHeight }}
                                 />
                             )}
-                        </Border>
-                    </Region>
-                    <Box layout={{ flexDirection: 'column', gap: 1 }}>
-                        <Box layout={{ flexDirection: 'row', gap: 1 }}>
-                            {badge(0)}
-                            <InfostandBadgeView
-                                code={info.groupBadge}
-                                group
-                                // `RoomWidgetGetBadgeDetailsMessage`: the group's own details.
-                                onPress={info.groupId ? () => send(new GetHabboGroupDetailsComposer({ groupId: info.groupId, openDetails: true })) : undefined}
-                            />
-                        </Box>
-                        <Box layout={{ flexDirection: 'row', gap: 1 }}>
-                            {badge(1)}
-                            {badge(2)}
-                        </Box>
-                        <Box layout={{ flexDirection: 'row', gap: 1 }}>
-                            {badge(3)}
-                            {badge(4)}
-                        </Box>
+                        </Region>
+                        {BADGE_SLOTS.map(({ slot, left, top }) => {
+                            const selected = badgeInSlot(slot);
+
+                            return (
+                                <InfostandBadgeView
+                                    key={slot}
+                                    code={selected?.badgeCode}
+                                    ownerCount={selected?.ownerCount}
+                                    layout={{ position: 'absolute', left, top }}
+                                />
+                            );
+                        })}
+                        <InfostandBadgeView
+                            code={info.groupBadge}
+                            group
+                            // `RoomWidgetGetBadgeDetailsMessage`: the group's own details.
+                            onPress={info.groupId ? () => send(new GetHabboGroupDetailsComposer({ groupId: info.groupId, openDetails: true })) : undefined}
+                            layout={{ position: 'absolute', left: 131, top: 1 }}
+                        />
                     </Box>
-                </Box>
-                {divider}
-                <Border
-                    variant="0"
-                    tintColor="#666666"
-                    layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%', minHeight: 23, paddingLeft: 6, paddingRight: 6, paddingTop: 2, paddingBottom: 2 }}
-                >
-                    {info.isOwnUser && mottoChangeEnabled && !isEditingMotto && (
-                        <Box
-                            cursor="pointer"
-                            onPointerTap={startEditingMotto}
-                            layout={{ flexShrink: 0 }}
-                        >
-                            {/* `motto_container`'s `changemotto.image` static bitmap -
-                                `common_small_pen`, the same 17x18 pen the catalogue search uses. */}
+                    <Spacer />
+                    <Border
+                        variant="0"
+                        tintColor="#666666"
+                        layout={{ width: LIST_WIDTH, flexShrink: 0, paddingLeft: 20, paddingTop: 2, paddingBottom: 1 }}
+                    >
+                        {/* `changemotto.image` (`common_small_pen`), shown for your own motto only. */}
+                        {info.isOwnUser && (
                             <ThemeImage
                                 name="changemotto.image"
                                 src={LayoutImage('shared/common_small_pen.png')}
-                                layout={{}}
+                                cursor={mottoChangeEnabled ? 'pointer' : undefined}
+                                onPointerTap={startEditingMotto}
+                                bitmap={{}}
+                                layout={{ position: 'absolute', left: 3, width: 17, height: 18, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5 }}
                             />
-                        </Box>
-                    )}
-                    {!isEditingMotto && (
-                        <Box
-                            cursor={info.isOwnUser ? 'pointer' : undefined}
-                            onPointerTap={startEditingMotto}
-                            layout={{ flex: 1 }}
-                        >
-                            <ThemeText
-                                text={(info.isOwnUser && !info.motto.length) ? t('infostand.motto.change') : info.motto}
-                                textStyle="regular"
-                                textOptions={{ fill: (info.isOwnUser && !info.motto.length) ? '#aaaaaa' : '#ffffff', wordWrap: true, wordWrapWidth: PANEL_WIDTH - 40 }}
-                            />
-                        </Box>
-                    )}
-                    {isEditingMotto && (
-                        <TextInput
-                            value={motto}
-                            onChange={setMotto}
-                            onEnter={submitMotto}
-                            onFocusChange={focused => !focused && submitMotto()}
-                            focused
-                            maxLength={mottoMaxLength}
-                            fontSize={9}
-                            textColor="#ffffff"
-                            backgroundColor="#666666"
-                            layout={{ flex: 1, height: 20 }}
-                        />
-                    )}
-                </Border>
-                {carriesItem && (
-                    <ThemeText
-                        text={t('infostand.text.handitem', '', { item: t(`handitem${info.carryItem}`, `handitem${info.carryItem}`) })}
-                        textStyle="regular"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: PANEL_WIDTH - 20 }}
-                    />
-                )}
-                {divider}
-                <ThemeText
-                    text={`${t('infostand.text.achievement_score')} ${info.achievementScore}`}
-                    textOptions={{ fontFamily: 'VolterBold' }}
-                    flashFormat={{ antiAliasType: 'advanced' }}
-                />
-                {(badgesRank >= 0) && (
-                    <ThemeText
-                        text={t('infostand.text.badges_rank', '', { rank: `#${badgesRank}` })}
-                        textOptions={{ fill: '#ffffff', fontFamily: 'VolterBold' }}
-                        flashFormat={{ antiAliasType: 'advanced' }}
-                    />
-                )}
-                {RELATIONSHIP_ROWS.map(({ type, name }) => {
-                    const relationship = info.relationships.find(entry => entry.relationshipStatusType === type);
-
-                    if (!relationship || (relationship.friendCount <= 0)) return null;
-
-                    return (
-                        <Box
-                            key={type}
-                            layout={{ flexDirection: 'row', alignItems: 'center', gap: 4, width: '100%' }}
-                        >
-                            <ThemeImage
-                                src={LayoutImage(`shared/relationship_status_${name}.png`)}
-                                layout={{ width: 17, height: 14, flexShrink: 0 }}
-                            />
-                            <Region
-                                cursor="pointer"
-                                onPointerTap={() => openProfile(send, relationship.randomFriendId)}
-                                layout={{ flexDirection: 'row', alignItems: 'center', flexShrink: 0 }}
+                        )}
+                        {!isEditingMotto && (
+                            // `motto_text`: 140 wide, `textHeight + 5` high within 23-50, the text
+                            // `margin_top` below its top and cut at its bottom.
+                            <Box
+                                cursor={(info.isOwnUser && mottoChangeEnabled) ? 'pointer' : undefined}
+                                onPointerTap={startEditingMotto}
+                                layout={{ width: 140, minHeight: MIN_MOTTO_HEIGHT, maxHeight: MAX_MOTTO_HEIGHT, overflow: 'hidden' }}
                             >
                                 <ThemeText
-                                    text={relationship.randomFriendName}
-                                    textStyle="u_bold"
-                                    textOptions={{ fill: '#ffffff' }}
+                                    text={showsMottoPrompt ? t('infostand.motto.change') : info.motto}
+                                    textOptions={{ fill: showsMottoPrompt ? MOTTO_PROMPT_COLOR : MOTTO_COLOR, wordWrap: true, wordWrapWidth: 136 }}
+                                    flashFormat={{ antiAliasType: 'advanced' }}
+                                    verticalAlign="top"
+                                    // The bitmap is `textHeight + 4` with its gutter: down by the
+                                    // margin, it leaves `textHeight + 5` of the field's height.
+                                    layout={{ marginTop: MOTTO_MARGIN_TOP, marginBottom: 1 - MOTTO_MARGIN_TOP }}
                                 />
-                            </Region>
-                            {(relationship.friendCount > 1) && (
-                                <ThemeText
-                                    text={t(`infostand.relstatus.${name}.others`, '', { amount: String(relationship.friendCount - 1) })}
+                            </Box>
+                        )}
+                        {isEditingMotto && (
+                            <Box layout={{ width: 140, height: MIN_MOTTO_HEIGHT, paddingTop: MOTTO_MARGIN_TOP }}>
+                                <TextInput
+                                    value={motto}
+                                    onChange={setMotto}
+                                    onEnter={submitMotto}
+                                    onFocusChange={focused => !focused && submitMotto()}
+                                    focused
+                                    maxLength={mottoMaxLength}
                                     textStyle="regular"
-                                    textOptions={{ fill: '#ffffff' }}
+                                    textColor={MOTTO_PROMPT_COLOR}
+                                    flashPlacement
+                                    alwaysShowSelection
+                                    backgroundColor={null}
+                                    focusedBackgroundColor={null}
+                                    layout={{ width: 140, height: MIN_MOTTO_HEIGHT - MOTTO_MARGIN_TOP }}
                                 />
-                            )}
+                            </Box>
+                        )}
+                    </Border>
+                    {(badgesRank >= 0) && (
+                        <>
+                            <Spacer />
+                            <Box layout={{ width: LIST_WIDTH, height: 15, flexShrink: 0, overflow: 'hidden' }}>
+                                <ThemeText
+                                    text={t('infostand.text.badges_rank', '', { rank: `#${badgesRank}` })}
+                                    textOptions={{ fill: '#ffffff', fontFamily: 'VolterBold', wordWrap: true, wordWrapWidth: LIST_WIDTH - 4 }}
+                                    flashFormat={{ antiAliasType: 'advanced' }}
+                                    verticalAlign="top"
+                                />
+                            </Box>
+                        </>
+                    )}
+                    {activityDisplayEnabled && (
+                        <>
+                            <Spacer />
+                            <ThemeText
+                                text={t('infostand.text.achievement_score')}
+                                textOptions={{ fill: '#ffffff', fontFamily: 'VolterBold', wordWrap: true, wordWrapWidth: LIST_WIDTH - 4 }}
+                                flashFormat={{ antiAliasType: 'advanced' }}
+                                clip
+                                verticalAlign="top"
+                                layout={{ width: LIST_WIDTH, height: 15, flexShrink: 0 }}
+                            />
+                            <ThemeText
+                                text={String(info.achievementScore)}
+                                textOptions={{ fill: '#ffffff', fontFamily: 'VolterBold', wordWrap: true, wordWrapWidth: LIST_WIDTH - 4 }}
+                                flashFormat={{ antiAliasType: 'advanced' }}
+                                clip
+                                verticalAlign="top"
+                                layout={{ width: LIST_WIDTH, height: 15, flexShrink: 0 }}
+                            />
+                        </>
+                    )}
+                    {carriesItem && (
+                        <>
+                            <Spacer />
+                            {/* `handitem_txt`: `textHeight + 5` high - the bitmap and one pixel. */}
+                            <ThemeText
+                                text={t('infostand.text.handitem', '', { item: t(`handitem${info.carryItem}`, `handitem${info.carryItem}`) })}
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: LIST_WIDTH - 4 }}
+                                flashFormat={{ antiAliasType: 'advanced' }}
+                                verticalAlign="top"
+                                layout={{ marginBottom: 1 }}
+                            />
+                        </>
+                    )}
+                    <Spacer />
+                    {relationshipsEnabled && (
+                        <Box layout={{ flexDirection: 'column', width: LIST_WIDTH, height: 55, gap: 3, flexShrink: 0 }}>
+                            {RELATIONSHIP_ROWS.map(({ type, name }) => {
+                                const relationship = info.relationships.find(entry => entry.relationshipStatusType === type);
+
+                                if (!relationship || (relationship.friendCount <= 0)) return null;
+
+                                return (
+                                    <Box
+                                        key={type}
+                                        layout={{ flexDirection: 'row', width: 172, height: 16, flexShrink: 0, overflow: 'hidden' }}
+                                    >
+                                        <ThemeImage
+                                            src={LayoutImage(`shared/relationship_status_${name}.png`)}
+                                            bitmap={{ stretchedX: false, stretchedY: false }}
+                                            layout={{ width: 17, height: 14, flexShrink: 0 }}
+                                        />
+                                        <Region
+                                            cursor="pointer"
+                                            onPointerTap={() => openProfile(send, relationship.randomFriendId)}
+                                            layout={{ height: 13, flexShrink: 0 }}
+                                        >
+                                            <ThemeText
+                                                text={relationship.randomFriendName}
+                                                textStyle="bold"
+                                                textOptions={{ fill: '#ffffff' }}
+                                                flashFormat={{ underline: true, antiAliasType: 'advanced' }}
+                                                verticalAlign="top"
+                                            />
+                                        </Region>
+                                        {(relationship.friendCount > 1) && (
+                                            <ThemeText
+                                                text={t(`infostand.relstatus.${name}.others`, '', { amount: String(relationship.friendCount - 1) })}
+                                                textStyle="regular"
+                                                textOptions={{ fill: '#ffffff' }}
+                                                verticalAlign="top"
+                                                layout={{ height: 13, flexShrink: 0 }}
+                                            />
+                                        )}
+                                    </Box>
+                                );
+                            })}
                         </Box>
-                    );
-                })}
+                    )}
+                </Box>
             </Border>
         </Box>
     );

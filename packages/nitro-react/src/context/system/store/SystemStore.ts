@@ -1,6 +1,9 @@
 import { FurnitureTypeEnum, IFurnitureData, IFurnitureType, IProductData } from '@nitrodevco/nitro-api';
 import { createStore } from 'zustand';
 
+import { fillLocalizationParameters } from '#base/utils';
+
+import { createSystemDialogsSlice, SystemDialogsSlice } from './SystemDialogsSlice';
 import { VisibleWindows, WindowName, WindowRegistry } from './WindowRegistry';
 
 type State = {
@@ -33,20 +36,7 @@ type State = {
      * repeated request for the same room id observable.
      */
     roomSessionRequest: RoomSessionRequest | undefined;
-    /** Alerts and confirmations up over everything - `IHabboWindowManager.alert` / `confirm`. */
-    dialogs: SystemDialog[];
 };
-
-/** One alert or confirmation. A confirmation runs `onConfirm` when accepted; closing it any other way does nothing. */
-export interface SystemDialog {
-    id: number;
-    kind: 'alert' | 'confirm';
-    title: string;
-    message: string;
-    onConfirm?: () => void;
-}
-
-let nextDialogId = 1;
 
 export interface RoomSessionRequest {
     type: 'start' | 'end';
@@ -73,10 +63,6 @@ type Actions = {
     setToolbarWidths: (toolbarAreaWidth: number, friendBarWidth: number) => void;
     setHomeRoomId: (homeRoomId: number) => void;
     startRoomSession: (roomId: number) => void;
-    /** Texts are shown as given: pass them translated. */
-    showAlert: (title: string, message: string) => void;
-    showConfirm: (title: string, message: string, onConfirm: () => void) => void;
-    closeDialog: (id: number) => void;
     endRoomSession: () => void;
 };
 
@@ -109,10 +95,9 @@ const initialState: State = {
     friendBarWidth: UNMEASURED_TOOLBAR_WIDTH,
     homeRoomId: 0,
     roomSessionRequest: undefined,
-    dialogs: [],
 };
 
-export type SystemStore = State & Actions;
+export type SystemStore = State & Actions & SystemDialogsSlice;
 
 export const createSystemStore = () => createStore<SystemStore>()((set, get, store) => ({
     ...initialState,
@@ -121,17 +106,21 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
         set((state) => {
             return { config: { ...state.config, [key]: value } };
         }),
-    getLocalizationValue: (key: string, defaultValue?: string, replacements?: Record<string, string>) => {
-        let value = get().localizations[key] ?? defaultValue;
+    /*
+     * `HabboLocalizationManager.getLocalizationWithParams` / `getLocalization`: the text of `key`
+     * with `replacements` filled (`Localization.fillParameterValues`, `fillLocalizationParameters`)
+     * and its `${key}` placeholders resolved (`interpolate`). A key with no text answers
+     * `defaultValue` - unless there are parameters: `registerParameter` creates the missing
+     * localization with the key as its text, so it is the key, filled, that comes back.
+     */
+    getLocalizationValue: (key: string, defaultValue: string = '', replacements?: Record<string, string>) => {
+        const { localizations, getLocalizationValue, interpolate } = get();
+        const hasParameters = !!replacements && (Object.keys(replacements).length > 0);
+        const raw = localizations[key] ?? (hasParameters ? key : undefined);
 
-        if (replacements) {
-            const keys = Object.keys(replacements);
+        if (raw === undefined) return interpolate(defaultValue);
 
-            if (keys.length) for (const key of keys) value = value.replace(`%${key}%`, replacements[key]);
-        }
-
-        // HabboLocalizationManager.getLocalization runs interpolate() over the result
-        return get().interpolate(value);
+        return interpolate(fillLocalizationParameters(raw, key, replacements, getLocalizationValue));
     },
     /*
      * CoreLocalizationManager.interpolate — replace every ${key} it can resolve, then
@@ -184,12 +173,12 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
         for (const item of furniture) {
             switch (item.type) {
                 case FurnitureTypeEnum.Floor:
-                    locals.set(`roomitem.name.${item.id}`, item.localizedName);
-                    locals.set(`roomitem.desc.${item.id}`, item.description);
+                    locals.set(`roomItem.name.${item.id}`, item.localizedName);
+                    locals.set(`roomItem.desc.${item.id}`, item.description);
                     break;
                 case FurnitureTypeEnum.Wall:
-                    locals.set(`wallitem.name.${item.id}`, item.localizedName);
-                    locals.set(`wallitem.desc.${item.id}`, item.description);
+                    locals.set(`wallItem.name.${item.id}`, item.localizedName);
+                    locals.set(`wallItem.desc.${item.id}`, item.description);
                     break;
             }
         }
@@ -262,6 +251,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
                 environment: furniture.environment ?? '',
                 rare: furniture.rare,
                 tradeable: furniture.tradeable,
+                recyclable: furniture.recyclable,
                 isExternalImage: !(className.indexOf('external_image') === -1),
             };
         }
@@ -305,6 +295,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
                 environment: furniture.environment ?? '',
                 rare: furniture.rare,
                 tradeable: furniture.tradeable,
+                recyclable: furniture.recyclable,
                 isExternalImage: !(furniture.classname.indexOf('external_image') === -1),
             };
         }
@@ -368,9 +359,7 @@ export const createSystemStore = () => createStore<SystemStore>()((set, get, sto
     setHomeRoomId: (homeRoomId: number) => set({ homeRoomId }),
     startRoomSession: (roomId: number) => set(x => ({ roomSessionRequest: { type: 'start', roomId, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
     endRoomSession: () => set(x => ({ roomSessionRequest: { type: 'end', roomId: 0, sequence: (x.roomSessionRequest?.sequence ?? 0) + 1 } })),
-    showAlert: (title: string, message: string) => set(x => ({ dialogs: [ ...x.dialogs, { id: nextDialogId++, kind: 'alert', title, message } ] })),
-    showConfirm: (title: string, message: string, onConfirm: () => void) => set(x => ({ dialogs: [ ...x.dialogs, { id: nextDialogId++, kind: 'confirm', title, message, onConfirm } ] })),
-    closeDialog: (id: number) => set(x => ({ dialogs: x.dialogs.filter(dialog => dialog.id !== id) })),
+    ...createSystemDialogsSlice(set, get, store),
 }));
 
 /**

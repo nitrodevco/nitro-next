@@ -17,4 +17,3 @@ export * from './ICatalogRequestedPage';
 export * from './ICatalogSearchResult';
 export * from './IProduct';
 export * from './IPurchasableOffer';
-export * from './IPurchaseOptions';

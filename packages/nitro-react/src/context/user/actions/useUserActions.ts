@@ -14,6 +14,7 @@ const actions = {
     decreasePetRespects: state.decreasePetRespects,
     setChatPreferences: state.setChatPreferences,
     setPreferredChatStyle: state.setPreferredChatStyle,
+    setChatSizePreference: state.setChatSizePreference,
     setFreeFlowChatDisabled: state.setFreeFlowChatDisabled,
     setUiFlags: state.setUiFlags,
     setRoomCameraFollowDisabled: state.setRoomCameraFollowDisabled,

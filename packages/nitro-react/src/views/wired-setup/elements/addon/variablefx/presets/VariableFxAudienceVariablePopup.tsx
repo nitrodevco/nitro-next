@@ -4,7 +4,8 @@
  * "select value" checkbox (only for a variable with a value) and the value input (any int, 0x / 0b
  * accepted; only while the checkbox is ticked), padded 8px, over a save / cancel button row, in a
  * frame of the dialog's wired style (`createFramePreset`) titled
- * `wiredfurni.params.variablefx.audience_popup.title`.
+ * `wiredfurni.params.variablefx.audience_popup.title`, 300 wide and as high as its list plus the
+ * template's margins (`FramePreset.resizeToWidth` / `fixHeight`).
  *
  * Flash adds the frame to the desktop and centres it; here it floats above every window through
  * `FloatingPopup`, centred, and closes only by its close button, cancel or save - not on an
@@ -12,10 +13,9 @@
  * which also feeds the picker's recent tab), whether a value was chosen and the value.
  */
 import type { IWiredVariable } from '@nitrodevco/nitro-packets';
-import { Container } from 'pixi.js';
 import { useState } from 'react';
 
-import { Box, FloatingPopup, Frame, useLayoutSize } from '#base/theme';
+import { Box, FloatingPopup, Frame } from '#base/theme';
 import { createVariablePickerState, getPickerSelectedVariable, rememberPickedVariables, WIRED_INT_MAX, WIRED_INT_MIN, WIRED_SOURCE_USER, WiredVariablePickerState } from '#base/wired';
 
 import { useWiredCaption } from '../../../../kit/useWiredCaption';
@@ -29,15 +29,9 @@ import { WiredSpacer } from '../../../../kit/WiredSpacer';
 import { useWiredStyle } from '../../../../kit/WiredStyleContext';
 import { WiredVariablePicker } from '../../../../kit/WiredVariablePicker';
 
-/** `WIDTH`. */
+/** `resizeToWidth(300)`. */
 const WIDTH = 300;
 const CONTENT_PADDING = 8;
-
-/** The frame skins' title bar and bottom edge - the same numbers `WiredSetupView` sizes the dialog with. */
-const FRAME_CHROME: Record<string, { top: number; bottom: number }> = {
-    102: { top: 30, bottom: 7 },
-    0: { top: 29, bottom: 7 },
-};
 
 export interface VariableFxAudienceVariablePopupProps {
     variables: readonly IWiredVariable[] | undefined;
@@ -63,8 +57,6 @@ const hasValue = (variable: IWiredVariable | null): boolean => (variable !== nul
 export const VariableFxAudienceVariablePopup = ({ variables, variableId, selectValue, value, roomId, onSave, onClose }: VariableFxAudienceVariablePopupProps) => {
     const style = useWiredStyle();
     const caption = useWiredCaption();
-    const [ contentNode, setContentNode ] = useState<Container | null>(null);
-    const contentSize = useLayoutSize(contentNode);
     // `open` + `refreshValueControls`: a variable without a value cannot keep "select value" ticked.
     const [ popup, setPopup ] = useState<AudiencePopupState>(() => {
         const picker = createVariablePickerState(variables, variableId, WIRED_SOURCE_USER);
@@ -74,8 +66,6 @@ export const VariableFxAudienceVariablePopup = ({ variables, variableId, selectV
     const selected = getPickerSelectedVariable(variables, popup.picker);
     const selectedHasValue = hasValue(selected);
     const frame = style.templates.frame;
-    const chrome = FRAME_CHROME[frame.variant] ?? FRAME_CHROME[0];
-    const height = Math.ceil(contentSize.height) + chrome.top + chrome.bottom;
 
     const save = () => {
         if (!selected) return;
@@ -101,13 +91,13 @@ export const VariableFxAudienceVariablePopup = ({ variables, variableId, selectV
                 rememberPosition={false}
                 centered
                 onClose={onClose}
-                contentLayout={{ paddingLeft: frame.marginLeft, paddingRight: frame.marginRight, paddingTop: 0, paddingBottom: 0 }}
-                layout={{ position: 'absolute', width: WIDTH, height, minWidth: WIDTH, minHeight: height }}
+                // The template's `margin_*` vars place `_CONTENT`; `FramePreset.fixHeight` makes the
+                // frame its list's height plus the top and bottom margins.
+                margins={[ frame.marginLeft, frame.marginTop, frame.marginRight, frame.marginBottom ]}
+                fitContent="height"
+                layout={{ position: 'absolute', width: WIDTH, minWidth: WIDTH, minHeight: 0 }}
             >
-                <Box
-                    ref={setContentNode}
-                    layout={{ flexDirection: 'column', alignItems: 'stretch', width: WIDTH - frame.marginLeft - frame.marginRight, flexShrink: 0 }}
-                >
+                <Box layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', alignItems: 'stretch', width: WIDTH - frame.marginLeft - frame.marginRight }}>
                     <WiredPaddedContainer
                         left={CONTENT_PADDING}
                         top={CONTENT_PADDING}

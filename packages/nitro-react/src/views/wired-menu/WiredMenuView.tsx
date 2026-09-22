@@ -96,10 +96,11 @@ export const WiredMenuView = () => {
             defaultPosition={{ x: 36, y: 35 }}
             onClose={() => hideWindow('wired_menu')}
             layout={{ position: 'absolute', width: FRAME_WIDTH, height: FRAME_HEIGHT }}
+            margins={[ 0, 36, 0, 0 ]}
         >
             <TabContext
                 variant="3"
-                layout={{ position: 'absolute', left: 0, top: 2, width: FRAME_WIDTH, height: 30 }}
+                layout={{ position: 'absolute', left: 0, top: 2, width: FRAME_WIDTH, height: 30, overflow: 'hidden' }}
             >
                 {ENABLED_TABS.map((tab, index) => (
                     <TabButton
@@ -123,18 +124,22 @@ export const WiredMenuView = () => {
                         layout={{ position: 'absolute', left: 2, top: 2, width: 494, height: 46 }}
                     />
                 </Region>
-                {HEADER_PATTERN.map((left, index) => (
-                    <ThemeImage
-                        key={left}
-                        src={LayoutImage('wired/wired_box_lines.png')}
-                        alpha={0.3}
-                        layout={{ position: 'absolute', left, top: (index % 2) ? -20 : 20, width: 64, height: 51 }}
-                    />
-                ))}
+                <Box layout={{ position: 'absolute', left: 0, top: 0, width: 500, height: 50, overflow: 'hidden' }}>
+                    {HEADER_PATTERN.map((left, index) => (
+                        <ThemeImage
+                            key={left}
+                            src={LayoutImage('wired/wired_box_lines.png')}
+                            bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                            alpha={0.3}
+                            layout={{ position: 'absolute', left, top: (index % 2) ? -20 : 20, width: 64, height: 51 }}
+                        />
+                    ))}
+                </Box>
                 <ThemeText
                     text={t(`wiredmenu.${activeTab}.title`, activeTab)}
-                    textStyle="u_headline_medium"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                    textStyle="u_regular"
+                    textOptions={{ fill: '#ffffff', fontSize: 16, align: 'center' }}
+                    flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 14, width: FRAME_WIDTH, height: 21 }}
                 />
@@ -150,6 +155,7 @@ export const WiredMenuView = () => {
                     <ThemeImage
                         dynamicRole="icon"
                         src={LayoutImage('wired/icon_discord.png')}
+                        bitmap={{ stretchedX: false, stretchedY: false, etchingColor: 0x48000000, fitSizeToContents: true }}
                         layout={{ position: 'absolute', left: 0, top: 1, width: 22, height: 23 }}
                     />
                 </Region>
@@ -164,7 +170,7 @@ export const WiredMenuView = () => {
                     // `loading_view`: it covers the body and swallows its clicks.
                     <Region
                         backgroundColor="#e9e9e1"
-                        alpha={0.6}
+                        backgroundAlpha={0.6}
                         onPointerDown={event => event.stopPropagation()}
                         layout={{ position: 'absolute', left: 0, top: 0, width: FRAME_WIDTH, height: 382 }}
                     />

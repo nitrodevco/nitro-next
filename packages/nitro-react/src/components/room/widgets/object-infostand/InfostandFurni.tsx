@@ -2,7 +2,7 @@ import { CrackableDataType, FurniId, FurnitureUsagePolicyEnum, ISimpleRoomObject
 import { GetHabboGroupDetailsComposer, GetSongInfoComposer, SetObjectDataComposer } from '@nitrodevco/nitro-packets';
 import { useEffect } from 'react';
 
-import { openClientLink, openProfile } from '#base/commands';
+import { openClientLink, openProfile, openRentConfirmationWindow } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useOwnControllerLevel, useRoom, useRoomStore } from '#base/context/room';
 import { useConfigValue, useSystemActions } from '#base/context/system';
@@ -137,7 +137,7 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
         expiration: (isOwner && (expiration >= 0)) ? expiration : -1,
         group: (groupId > 0) ? { name: groupDetails?.groupName ?? '', badge: groupDetails?.badgeCode ?? '' } : undefined,
         uniqueSerial: stuffData.isUnique ? { number: stuffData.uniqueNumber, series: stuffData.uniqueSeries } : undefined,
-        chest: (mapData && mapData.chestName.length) ? { name: mapData.chestName, contents: mapData.getValue('contents_count'), isCoins: furniData.furnitureData?.category === 'coin_chest', isLocked: (mapData.getValue('is_wired_enabled') === '1') && (mapData.getValue('locked') === '1') } : undefined,
+        chest: (mapData && mapData.chestName.length) ? { name: mapData.chestName, contents: mapData.getValue('contents_count'), isCoins: furniData.furnitureData?.category === 'coin_chest', isWiredEnabled: mapData.getValue('is_wired_enabled') === '1', isLocked: mapData.getValue('locked') === '1' } : undefined,
         customVariables: customVariableNames.map(name => ({ name, value: furnitureDataMap[name] ?? '' })),
         staffDetails: isAnyRoomController ? { id: objectId, branding: brandingOptions } : undefined,
         crackable: (isCrackable && (stuffData instanceof CrackableDataType)) ? { hits: stuffData.hits, target: stuffData.target } : undefined,
@@ -145,6 +145,9 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
         songDisk: (songDiskId >= 0) ? { songName: song?.songName ?? '', creator: song?.creator ?? '' } : undefined,
         canBuy: !((isOwner && (expiration >= 0))) && ((furniData.furnitureData?.purchaseOfferId ?? -1) >= 0),
         canRent: !((isOwner && (expiration >= 0))) && ((furniData.furnitureData?.rentOfferId ?? -1) >= 0),
+        // `updatePurchaseButtonVisibility`: your own running rental can be extended or bought out when its type allows it.
+        canExtend: isOwner && (expiration >= 0) && !!furniData.furnitureData?.rentCouldBeUsedForBuyout,
+        canBuyout: isOwner && (expiration >= 0) && !!furniData.furnitureData?.purchaseCouldBeUsedForBuyout,
     };
 
     return (
@@ -166,6 +169,8 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
             onWiredInspect={() => (wiredInspectId !== undefined) && openClientLink(send, `wiredmenu/open/inspection/0/${wiredInspectId}`)}
             onBuy={() => showWindow('catalog', { offerId: furniData.furnitureData?.purchaseOfferId })}
             onRent={() => showWindow('catalog', { offerId: furniData.furnitureData?.rentOfferId })}
+            onExtend={() => furniData.furnitureData && openRentConfirmationWindow(send, furniData.furnitureData, false, objectId)}
+            onBuyout={() => furniData.furnitureData && openRentConfirmationWindow(send, furniData.furnitureData, true, objectId)}
             onOpenOwner={() => (furniData.ownerId > 0) && openProfile(send, furniData.ownerId)}
             onOpenGroup={() => send(new GetHabboGroupDetailsComposer({ groupId, openDetails: true }))}
             onSaveBranding={values => send(new SetObjectDataComposer({ objectId, data: new Map(values.map(({ key, value }) => [ key, value.split('\t').join('') ])) }))}

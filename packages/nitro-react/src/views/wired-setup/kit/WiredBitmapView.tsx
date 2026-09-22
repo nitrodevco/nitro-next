@@ -30,13 +30,17 @@ export const WiredBitmapView = ({ width, height, texture, src, onPress }: WiredB
             eventMode={disabled ? 'none' : undefined}
             cursor={onPress ? 'pointer' : undefined}
             onPointerTap={onPress}
-            layout={{ width, height, flexShrink: 0, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}
+            layout={{ width, height, flexShrink: 0 }}
         >
             {(texture || src) && (
+                // `bitmap_wrapper_view`: unstretched at the centre pivot, `int((box - bitmap) / 2)`,
+                // clipped to the window. Its `fit_size_to_contents` is undone by `resizeToWidth`.
                 <ThemeImage
                     texture={texture}
                     src={src}
                     alpha={wiredDisabledAlpha(disabled)}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                    layout={{ width, height }}
                 />
             )}
         </Box>

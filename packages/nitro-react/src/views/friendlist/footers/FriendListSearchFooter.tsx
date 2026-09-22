@@ -1,45 +1,59 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Border, Box, Button, LayoutImage, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Border, ContainerButton, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
 /**
- * Pixi port of views/friendlist/footers/FriendListSearchFooter.tsx. `search_footer`'s
- * `search_but` holds a `<bitmap name="search">` that `SearchView` fills with the friend list's
- * `search_png` asset - a library bitmap, not an icon-set style.
+ * The search tab's `search_footer` (223x41 on `0xb6b6b6`, stretched to the tab's width): a
+ * `0x848484` border at (5, 5) with the white, black-bordered `search_str` input and the style-0
+ * `search_but` container button 7 from the right. `SearchView.onSearchStrInput` cuts the input
+ * at 25 characters. The button's `<bitmap name="search">` is filled with the friend list's
+ * `search_png` library bitmap - not an icon-set style.
  */
 export const FriendListSearchFooter = () => {
     const [ value, setValue ] = useState('');
     const t = useTranslation();
 
     return (
-        <Box layout={{ height: 40, flexShrink: 0, paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingBottom: 5 }}>
+        <Region
+            backgroundColor="#b6b6b6"
+            layout={{ position: 'relative', width: '100%', height: 41, flexShrink: 0 }}
+        >
             <Border
-                tintColor="#838383"
-                layout={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 6, paddingRight: 6, gap: 4 }}
+                variant="0"
+                tintColor="#848484"
+                layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 31 }}
             >
                 <TextInput
                     value={value}
                     onChange={setValue}
-                    fontSize={9}
-                    layout={{ flex: 1, height: 21 }}
+                    maxLength={25}
+                    flashPlacement
+                    border="#000000"
+                    alwaysShowSelection
+                    backgroundColor="#ffffff"
+                    focusedBackgroundColor="#ffffff"
+                    layout={{ position: 'absolute', left: 6, right: 82, top: 5, height: 20 }}
                 />
-                <Button
+                <ContainerButton
                     variant="0"
-                    layout={{ flexShrink: 0, height: 21, flexDirection: 'row', alignItems: 'center', gap: 4, paddingLeft: 6, paddingRight: 6, paddingTop: 4, paddingBottom: 4 }}
+                    layout={{ position: 'absolute', right: 7, top: 5, width: 70, height: 21, overflow: 'hidden' }}
                 >
                     <ThemeImage
                         name="search"
                         src={LayoutImage('friend-list/friendlist_search.png')}
-                        layout={{}}
+                        bitmap={{}}
+                        hitThreshold={10}
+                        layout={{ position: 'absolute', left: 5, top: 4, width: 12, height: 12 }}
                     />
                     <ThemeText
                         text={t('generic.search')}
-                        textStyle="regular"
-                        textOptions={{ fill: '#000000' }}
+                        clip
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 20, top: 3, width: 50, height: 20 }}
                     />
-                </Button>
+                </ContainerButton>
             </Border>
-        </Box>
+        </Region>
     );
 };

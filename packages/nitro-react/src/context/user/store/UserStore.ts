@@ -32,6 +32,10 @@ type State = {
     preferredChatStyle: number;
     /** `AccountPreferencesEventMessage.freeFlowChatDisabled` - hides the in-room bubbles entirely. */
     freeFlowChatDisabled: boolean;
+    /**
+     * `HabboFreeFlowChat.chatFontSizeMode` - `AccountPreferencesEventMessage.chatSizePreference`,
+     * clamped to 0 (S) - 4 (XXL): how much larger the bubbles' text is drawn (`chatFontSizeScale`).
+     */
     chatSizePreference: number;
     /** The account-level FreeFlow settings the newer client moved out of the room settings: `chatMode` / `chatBubbleWidth` / `chatScrollSpeed`. */
     chatMode: RoomChatModeType;
@@ -77,6 +81,8 @@ type Actions = {
     decreasePetRespects: () => void;
     setChatPreferences: (preferences: UserChatPreferences) => void;
     setPreferredChatStyle: (preferredChatStyle: number) => void;
+    /** `HabboFreeFlowChat.chatFontSizeMode = mode` - the caller clamps it, as the setter does. */
+    setChatSizePreference: (chatSizePreference: number) => void;
     setFreeFlowChatDisabled: (freeFlowChatDisabled: boolean) => void;
     setUiFlags: (uiFlags: number) => void;
     setRoomCameraFollowDisabled: (isRoomCameraFollowDisabled: boolean) => void;
@@ -132,6 +138,7 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
     setTags: (tags: string[]) => set({ tags }),
     setChatPreferences: (preferences: UserChatPreferences) => set({ ...preferences }),
     setPreferredChatStyle: (preferredChatStyle: number) => set({ preferredChatStyle }),
+    setChatSizePreference: (chatSizePreference: number) => set({ chatSizePreference }),
     setFreeFlowChatDisabled: (freeFlowChatDisabled: boolean) => set({ freeFlowChatDisabled }),
     setUiFlags: (uiFlags: number) => set({ uiFlags }),
     setRoomCameraFollowDisabled: (isRoomCameraFollowDisabled: boolean) => set({ isRoomCameraFollowDisabled }),

@@ -1,59 +1,27 @@
-import { CatalogRequestedPageUtilities, FurnitureTypeEnum, IActivePage, ICatalogNode, ICatalogPageLocalization, IPurchasableOffer } from '@nitrodevco/nitro-api';
-import { GetCatalogPageComposer, GetProductOfferComposer } from '@nitrodevco/nitro-packets';
+/**
+ * The catalogue navigation - Flash's `CatalogNavigator` (`showNodeContent`, `openCategoryForNode`,
+ * `activateNode`) and `HabboCatalog.openCatalogPage*`: which nodes are open, which page is loaded,
+ * and how a link or a request finds its page. A page link on an open catalogue forces the page to
+ * be rebuilt (`openCatalogPageById` -> `catalogViewer.setForceRefresh()`).
+ */
+import { CatalogRequestedPageUtilities, ICatalogNode } from '@nitrodevco/nitro-api';
 
-import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
+import { loadCatalogPage } from '#base/commands';
+import { getCatalogWindowName, useCatalogActions, useCatalogStore, useCatalogStoreApi } from '#base/context/catalog';
 import { useWebSocketContext } from '#base/context/communication';
 
 import { useWindowVisibility } from '../system';
 import { useCatalogNodeActions } from './useCatalogNodeActions';
-import { useCatalogOfferActions } from './useCatalogOfferActions';
 
 export const useCatalogNavigation = () => {
-    const catalogType = useCatalogStore(x => x.catalogType);
     const activeNodes = useCatalogStore(x => x.activeNodes);
     const openNodes = useCatalogStore(x => x.openNodes);
     const rootNode = useCatalogStore(x => x.rootNode);
-    const { setActiveNodes, setOpenNodes, setIsBusy, setActivePageId, setActivePage, setActiveOffer, setRequestedPage, setPurchaseOptions } = useCatalogActions();
+    const store = useCatalogStoreApi();
+    const { setActiveNodes, setOpenNodes, setRequestedPage, setForceRefresh } = useCatalogActions();
     const { getNodeByPageId, getNodeByPageName, getNodesByOfferId } = useCatalogNodeActions();
-    const { getOfferProduct } = useCatalogOfferActions();
-    const { isWindowVisible, show } = useWindowVisibility('catalog');
+    const { isWindowVisible, show } = useWindowVisibility(getCatalogWindowName(useCatalogStore(x => x.catalogType)));
     const { send } = useWebSocketContext();
-
-    const loadCatalogPage = (pageId: number, offerId: number) => {
-        if (pageId < 0) return;
-
-        setIsBusy(true);
-        setActivePageId(pageId);
-
-        send(new GetCatalogPageComposer({ pageId, offerId, catalogType }));
-    };
-
-    const showCatalogPage = (pageId: number, layoutCode: string, localization: ICatalogPageLocalization, offers: IPurchasableOffer[], offerId: number, acceptSeasonCurrencyAsCredits: boolean, mode: number = -1) => {
-        const page = {
-            pageId,
-            layoutCode,
-            localization,
-            offers,
-            acceptSeasonCurrencyAsCredits,
-            mode: mode === -1 ? 0 : mode,
-        } as IActivePage;
-
-        for (const offer of page.offers) offer.page = page;
-
-        setActivePage(page);
-
-        if (offerId > -1 && page.offers.length) {
-            for (const offer of page.offers) {
-                if (offer.offerId !== offerId) continue;
-
-                setActiveOffer(offer);
-
-                return;
-            }
-        }
-
-        setActiveOffer(undefined);
-    };
 
     /**
      * `CatalogNavigator.getPathToNodeWithLayout`: from a tab, the way down to the first visible
@@ -126,21 +94,7 @@ export const useCatalogNavigation = () => {
         setActiveNodes(nodes);
         setOpenNodes([ ...open ]);
 
-        if (targetNode.pageId > -1) loadCatalogPage(targetNode.pageId, offerId);
-    };
-
-    const selectOffer = (offer: IPurchasableOffer) => {
-        const product = getOfferProduct(offer);
-
-        if (!product) return;
-
-        if (offer.isLazy) {
-            send(new GetProductOfferComposer({ offerId: product.furnitureData.rentOfferId > -1 ? product.furnitureData.rentOfferId : product.furnitureData.purchaseOfferId }));
-        } else {
-            setActiveOffer(offer);
-
-            if (product.productType === FurnitureTypeEnum.Wall) setPurchaseOptions({ extraData: product.extraParam });
-        }
+        if (targetNode.pageId > -1) loadCatalogPage(send, store, targetNode.pageId, offerId);
     };
 
     const openPageById = (pageId: number) => {
@@ -153,7 +107,10 @@ export const useCatalogNavigation = () => {
 
             const node = getNodeByPageId(pageId, rootNode);
 
-            if (node) activateNode(node);
+            if (!node) return;
+
+            setForceRefresh();
+            activateNode(node);
         }
     };
 
@@ -179,9 +136,12 @@ export const useCatalogNavigation = () => {
         } else {
             const nodes = getNodesByOfferId(offerId);
 
-            if (nodes.length) activateNode(nodes[0], offerId);
+            if (!nodes.length) return;
+
+            setForceRefresh();
+            activateNode(nodes[0], offerId);
         }
     };
 
-    return { loadCatalogPage, showCatalogPage, activateNode, selectOffer, openPageById, openPageByName, openPageByOfferId };
+    return { activateNode, openPageById, openPageByName, openPageByOfferId };
 };

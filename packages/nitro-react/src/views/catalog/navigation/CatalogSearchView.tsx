@@ -1,18 +1,23 @@
 import { CatalogTypeEnum, ICatalogNode, IFurnitureData, IPurchasableOffer } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useCatalogActions, useCatalogStore } from '#base/context/catalog';
-import { useSystemStore } from '#base/context/system';
-import { useCatalogNavigation, useCatalogOfferActions } from '#base/hooks';
-import { Border, Box, LayoutImage, TextInput, ThemeImage } from '#base/theme';
+import { showCatalogPage } from '#base/commands';
+import { CatalogPage, useCatalogActions, useCatalogStore, useCatalogStoreApi } from '#base/context/catalog';
+import { useSystemStore, useTranslation } from '#base/context/system';
+import { useCatalogOfferActions } from '#base/hooks';
+import { Border, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
 /**
- * Pixi port of views/catalog/navigation/CatalogSearchView.tsx. DOM's `placeholder`/`title`
- * attributes on the input (`t('catalog.search')`/`t('navigator.tooltip.filter.input')`-style
- * hints) have no Pixi `TextInput` equivalent yet (no placeholder support) - dropped rather than
- * built out for this one call site.
+ * The catalogue search, `searchContainer` of `catalog_ubuntu_with_tabs.xml` - Flash's
+ * `HabboCatalog.onSearchInputEvent` / `performSearch`. The layout's `search.helper` text stands in
+ * for a placeholder: it sits under the transparent `search.input` and shows while it is empty.
  */
-export const CatalogSearchView = () => {
+export interface CatalogSearchViewProps {
+    /** `CatalogViewer.setLeftPaneVisibility`: hidden while a wide layout covers it. */
+    visible?: boolean;
+}
+
+export const CatalogSearchView = ({ visible = true }: CatalogSearchViewProps) => {
     const [ searchValue, setSearchValue ] = useState('');
     const floorItems = useSystemStore(x => x.floorItems);
     const wallItems = useSystemStore(x => x.wallItems);
@@ -20,8 +25,9 @@ export const CatalogSearchView = () => {
     const rootNode = useCatalogStore(x => x.rootNode);
     const offersToNodes = useCatalogStore(x => x.offersToNodes);
     const { setSearchResult } = useCatalogActions();
-    const { showCatalogPage } = useCatalogNavigation();
+    const store = useCatalogStoreApi();
     const { processAsOffer } = useCatalogOfferActions();
+    const t = useTranslation();
 
     const onIconPress = () => {
         if (searchValue.length > 0) setSearchValue('');
@@ -136,7 +142,7 @@ export const CatalogSearchView = () => {
                 nodes: nodes.filter(x => x.visible),
             });
 
-            showCatalogPage(-1, 'default_3x3', { imageDatas: [], textDatas: [] }, purchasableOffers, -1, false, 1);
+            showCatalogPage(store, -1, 'default_3x3', { imageDatas: [], textDatas: [] }, purchasableOffers, -1, false, CatalogPage.MODE_SEARCH);
         }, 300);
 
         return () => clearTimeout(timeout);
@@ -145,18 +151,38 @@ export const CatalogSearchView = () => {
     return (
         <Border
             variant="105"
-            layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24, paddingLeft: 6, paddingRight: 6, gap: 6 }}
+            name="searchContainer"
+            visible={visible}
+            layout={{ position: 'absolute', left: 8, width: 184, top: 131, height: 24 }}
         >
+            {/* `search.helper`: shown while the field is empty (`onSearchInputEvent`). */}
+            {!searchValue.length && (
+                <ThemeText
+                    name="search.helper"
+                    text={t('catalog.search')}
+                    textStyle="u_regular"
+                    textOptions={{ fill: '#666666' }}
+                    markup
+                    alpha={0.5}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 4, top: 3 }}
+                />
+            )}
             <TextInput
                 value={searchValue}
                 onChange={setSearchValue}
-                fontSize={10}
-                layout={{ flex: 1, height: 22, width: '100%' }}
+                textStyle="u_regular"
+                textColor="#666666"
+                flashPlacement
+                backgroundColor={null}
+                focusedBackgroundColor={null}
+                layout={{ position: 'absolute', left: 4, width: 144, top: 3, height: 18 }}
             />
-            <Box
+            <Region
+                name="clear_search_button"
                 cursor="pointer"
                 onPointerTap={onIconPress}
-                layout={{ flexShrink: 0 }}
+                layout={{ position: 'absolute', left: 160, width: 20, top: 2, height: 20 }}
             >
                 {/* `HabboCatalog.onSearchInputEvent`: `search.clear.icon` is the `icons_close`
                     cross while the field has text and the `common_small_pen` pencil when it is
@@ -164,9 +190,10 @@ export const CatalogSearchView = () => {
                 <ThemeImage
                     name="search.clear.icon"
                     src={LayoutImage(searchValue.length > 0 ? 'shared/icons_close.png' : 'shared/common_small_pen.png')}
-                    layout={{}}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                 />
-            </Box>
+            </Region>
         </Border>
     );
 };

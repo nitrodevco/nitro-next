@@ -33,20 +33,21 @@ export const WiredMenuTypePicker = ({ titleKey, count, selected, onSelect }: Wir
     const width = 5 + (count * BUTTON_SIZE) + ((count - 1) * BUTTON_SPACING) + 5;
 
     return (
-        <Box layout={{ width: width + 9, height: 70, flexShrink: 0 }}>
+        <Box layout={{ width: width + 9, height: 70, flexShrink: 0, overflow: 'hidden' }}>
             <ThemeText
                 text={t(titleKey, titleKey)}
-                textStyle="u_bold"
-                textOptions={{ fill: '#000000' }}
+                textStyle="u_regular"
+                flashFormat={{ bold: true }}
+                clip
                 verticalAlign="top"
-                layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
+                layout={{ position: 'absolute', left: 0, top: 0, width: 165, height: 19 }}
             />
             <Border
                 variant="3"
                 tintColor="#dadada"
                 layout={{ position: 'absolute', left: 0, top: 20, width, height: 47 }}
             >
-                <Box layout={{ position: 'absolute', left: 5, top: 5, flexDirection: 'row', gap: BUTTON_SPACING }}>
+                <Box layout={{ position: 'absolute', left: 5, top: 5, width: width - 5, height: BUTTON_SIZE, flexDirection: 'row', gap: BUTTON_SPACING }}>
                     {buttons.map(button => (
                         <Box
                             key={button.type}
@@ -59,16 +60,12 @@ export const WiredMenuTypePicker = ({ titleKey, count, selected, onSelect }: Wir
                                 onPointerTap={() => onSelect(button.type)}
                                 layout={{ position: 'absolute', left: 0, top: 0, width: BUTTON_SIZE, height: 36 }}
                             />
-                            {/* `pivot_point="center"`, not stretched. */}
-                            <Box
+                            <ThemeImage
+                                src={LayoutImage(`wired/icon_wired_variable_${button.name}_large.png`)}
+                                bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
                                 eventMode="none"
-                                layout={{ position: 'absolute', left: 0, top: 0, width: BUTTON_SIZE, height: BUTTON_SIZE, alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeImage
-                                    src={LayoutImage(`wired/icon_wired_variable_${button.name}_large.png`)}
-                                    eventMode="none"
-                                />
-                            </Box>
+                                layout={{ position: 'absolute', left: 0, top: 0, width: BUTTON_SIZE, height: BUTTON_SIZE }}
+                            />
                         </Box>
                     ))}
                 </Box>

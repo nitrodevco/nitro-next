@@ -10,10 +10,9 @@
  * `showFrame` centres the window the first time it shows (`window.center()`, then
  * `xOffsetFromCenter`); `isRememberLocation` windows keep their place after that.
  */
-import { Container } from 'pixi.js';
 import { ReactNode, useState } from 'react';
 
-import { Box, Frame, useLayoutSize } from '#base/theme';
+import { Box, Frame } from '#base/theme';
 import { WiredScrollList } from '#base/views/wired-setup/kit/WiredScrollList';
 import { WiredSpacer } from '#base/views/wired-setup/kit/WiredSpacer';
 import { WiredStyleProvider } from '#base/views/wired-setup/kit/WiredStyleContext';
@@ -44,12 +43,9 @@ export interface WiredTradingFrameProps {
 }
 
 export const WiredTradingFrame = ({ id, title, width, scroll, xOffsetFromCenter = 0, rememberLocation = false, openOffset, onClose, parts }: WiredTradingFrameProps) => {
-    const [ contentNode, setContentNode ] = useState<Container | null>(null);
-    const contentSize = useLayoutSize(contentNode);
     const [ centeredAt ] = useState(() => ({ x: Math.max(0, Math.round((window.innerWidth - width) / 2) + xOffsetFromCenter + (openOffset?.x ?? 0)), y: Math.max(0, Math.round((window.innerHeight - 300) / 2) + (openOffset?.y ?? 0)) }));
     const shown = parts.filter(part => (part !== null) && (part !== false) && (part !== undefined));
     const contentWidth = width - (FRAME_MARGIN_SIDE * 2);
-    const height = Math.ceil(contentSize.height) + FRAME_MARGIN_TOP + FRAME_MARGIN_BOTTOM;
     const style = UBUNTU_WIRED_STYLE;
 
     const list = shown.map((part, index) => (
@@ -75,13 +71,14 @@ export const WiredTradingFrame = ({ id, title, width, scroll, xOffsetFromCenter 
                 centered={!openOffset && !xOffsetFromCenter}
                 defaultPosition={centeredAt}
                 onClose={onClose}
-                contentLayout={{ paddingLeft: FRAME_MARGIN_SIDE, paddingRight: FRAME_MARGIN_SIDE, paddingTop: 0, paddingBottom: 0, marginBottom: 0 }}
-                layout={{ position: 'absolute', width, height, minWidth: width, minHeight: height }}
+                // The template's `margin_*` vars move `_CONTENT` (`FrameController.marginsCallback`).
+                margins={[ FRAME_MARGIN_SIDE, FRAME_MARGIN_TOP, FRAME_MARGIN_SIDE, FRAME_MARGIN_BOTTOM ]}
+                // `FramePreset.fixHeight`: the list's height plus the top and bottom margins, the
+                // limits pinned to it - so no skin minimum clamps it.
+                fitContent="height"
+                layout={{ position: 'absolute', width, minWidth: width, minHeight: 0 }}
             >
-                <Box
-                    ref={setContentNode}
-                    layout={{ flexDirection: 'column', alignItems: 'stretch', width: contentWidth, flexShrink: 0 }}
-                >
+                <Box layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', alignItems: 'stretch', width: contentWidth }}>
                     {scroll
                         ? (
                                 <WiredScrollList

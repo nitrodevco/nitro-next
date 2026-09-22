@@ -4,6 +4,7 @@
  * the components that render them, and testable on their own.
  */
 import { GetObjectDataForFlags, IRoomObject, MapDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { PresentOpenedMessageType } from '@nitrodevco/nitro-packets';
 
 export interface StickieData {
     /** Bare hex, no leading hash: the colour the note's paper is drawn in. */
@@ -140,3 +141,21 @@ export const resolvePhotoUrl = (url: string, baseUrl: string, isPoster: boolean)
  * and this is the key it lives under.
  */
 export const PET_PACKAGE_WIDGET = 'PET_PACKAGE';
+
+/**
+ * `PresentFurniWidget`'s opened card (`packagecard_new_opened`) outlives the gift it came out of -
+ * the box leaves the room the moment it is opened - so it is not a request of the gift's own. It
+ * is opened, empty, by the open button (`sendOpen`: Flash's `§_-B28§` "opening" flag) and filled
+ * by `PresentOpenedMessage` (`RWPDUE_CONTENTS*`), and this is the key it lives under.
+ */
+export const PRESENT_OPENED_WIDGET = 'PRESENT_OPENED';
+
+/** What the opened card is handed: the sender of the gift that was opened, then what came out. */
+export interface PresentOpenedData {
+    /** `_senderName`, `§_-I2T§` and `§_-1V§`, kept from the card whose open button was pressed. */
+    senderName: string;
+    senderFigure: string;
+    trustedSender: boolean;
+    /** Nothing until the server has answered the open. */
+    contents?: PresentOpenedMessageType;
+}

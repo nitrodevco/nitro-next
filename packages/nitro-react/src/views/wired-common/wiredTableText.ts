@@ -13,7 +13,7 @@
  */
 import { CanvasTextMetrics } from 'pixi.js';
 
-import { FLASH_TEXT_GUTTER, FlashTextRenderer, getPixiTextStyle, HABBO_TEXT_STYLES, normalizeFlashTextFormat, TextStyleKey } from '#base/theme';
+import { FlashTextRenderer, getPixiTextStyle, HABBO_TEXT_STYLES, normalizeFlashTextFormat, TextStyleKey } from '#base/theme';
 
 /** `overflow_replace` of `element_text`. */
 export const TABLE_OVERFLOW_REPLACE = '...';
@@ -39,17 +39,6 @@ export const measureTableText = (text: string, textStyle: TextStyleKey): number 
     const positions = charPositions(text, textStyle);
 
     return positions[positions.length - 1];
-};
-
-/**
- * Where the rule under an `underline="true"` text (`element_link`) goes, from the top of the
- * rendered text: one pixel under the baseline, as the browser fallback of the text renderer
- * draws it. 12 is that position for Volter at 9px, used until the captured fonts are loaded.
- */
-export const tableLinkUnderlineY = (textStyle: TextStyleKey): number => {
-    const metrics = FlashTextRenderer.metrics(normalizeFlashTextFormat(HABBO_TEXT_STYLES[textStyle]));
-
-    return metrics ? (FLASH_TEXT_GUTTER + Math.round(metrics.baseline) + 1) : 12;
 };
 
 export interface FittedTableText {

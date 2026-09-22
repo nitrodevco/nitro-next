@@ -39,8 +39,17 @@ const getOwnItemRefsInTrade = (): number[] => {
     return tradeItems.firstUserItemArray.map(item => item.roomItemId);
 };
 
-/** `FurniModel.updateItemLocks`: the items the running trade holds are locked, every other one is not. */
-export const updateInventoryFurniLocks = () => inventoryStore.getState().updateFurniLocks(getOwnItemRefsInTrade());
+/**
+ * `FurniModel.updateItemLocks`: the items the running trade holds, the recycler's
+ * (`RecyclerModel.getOwnItemsInRecycler`) and the offer being made (`MarketplaceModel.getOfferItemRefs`)
+ * are locked, every other one is not. As in Flash the recycler's list is of strip ids while the
+ * locks compare room item ids.
+ */
+export const updateInventoryFurniLocks = () => {
+    const { recyclerItemIds, marketplaceOfferItems, updateFurniLocks } = inventoryStore.getState();
+
+    updateFurniLocks([ ...getOwnItemRefsInTrade(), ...(recyclerItemIds ?? []), ...(marketplaceOfferItems ?? []).map(item => item.ref) ]);
+};
 
 /** `FurniModel.removeAllLocks` - what `subCategorySwitch('empty')` does when the trade sub page goes. */
 export const removeAllInventoryFurniLocks = () => inventoryStore.getState().updateFurniLocks([]);

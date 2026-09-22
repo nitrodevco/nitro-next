@@ -1,7 +1,7 @@
 import { IMessengerSearchResult } from '@nitrodevco/nitro-packets';
 
 import { useFriendsActions } from '#base/context/friend';
-import { Box, LayoutImage, ThemeImage } from '#base/theme';
+import { LayoutImage, ThemeImage } from '#base/theme';
 
 import { FriendListItem } from '../components/FriendListItem';
 
@@ -13,9 +13,10 @@ export interface FriendListSearchItemProps {
 }
 
 /**
- * Pixi port of views/friendlist/items/FriendListSearchItem.tsx. `SearchView` fills the
- * `search_entry` row's two `<bitmap>` slots from the friend list's asset library - `start_chat_png`
- * for someone who is already a friend, `ask_for_friend_png` otherwise. Neither is an icon-set style.
+ * A result's `search_entry` row (`SearchView.refreshEntry`). `SearchView` fills the row's two
+ * `<bitmap>` slots from the friend list's asset library - `start_chat_png` (right 4, y 3) for
+ * someone who is already a friend, `ask_for_friend_png` (right 5, y 2) otherwise. Neither is an
+ * icon-set style.
  */
 export const FriendListSearchItem = ({ result, isFriend, showAvatarHead, zebraColor }: FriendListSearchItemProps) => {
     const { tooltipHandlers } = useFriendsActions();
@@ -23,22 +24,36 @@ export const FriendListSearchItem = ({ result, isFriend, showAvatarHead, zebraCo
 
     return (
         <FriendListItem
+            entry="search_entry"
             user={result}
             showAvatarHead={showAvatarHead}
             zebraColor={zebraColor}
         >
-            <Box
-                cursor="pointer"
-                onPointerOver={hover.onMouseEnter}
-                onPointerOut={hover.onMouseLeave}
-                layout={{ marginLeft: 'auto' }}
-            >
-                <ThemeImage
-                    name={isFriend ? 'start_chat' : 'ask_for_friend'}
-                    src={LayoutImage(isFriend ? 'friend-list/friendlist_start_chat.png' : 'friend-list/friendlist_ask_for_friend.png')}
-                    layout={{}}
-                />
-            </Box>
+            {isFriend
+                ? (
+                        <ThemeImage
+                            name="start_chat"
+                            src={LayoutImage('friend-list/friendlist_start_chat.png')}
+                            bitmap={{}}
+                            hitThreshold={10}
+                            cursor="pointer"
+                            onPointerOver={hover.onMouseEnter}
+                            onPointerOut={hover.onMouseLeave}
+                            layout={{ position: 'absolute', right: 4, top: 3, width: 16, height: 14 }}
+                        />
+                    )
+                : (
+                        <ThemeImage
+                            name="ask_for_friend"
+                            src={LayoutImage('friend-list/friendlist_ask_for_friend.png')}
+                            bitmap={{}}
+                            hitThreshold={10}
+                            cursor="pointer"
+                            onPointerOver={hover.onMouseEnter}
+                            onPointerOut={hover.onMouseLeave}
+                            layout={{ position: 'absolute', right: 5, top: 2, width: 17, height: 16 }}
+                        />
+                    )}
         </FriendListItem>
     );
 };

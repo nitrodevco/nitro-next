@@ -1,143 +1,23 @@
-import { CatalogPricingModelEnum, CatalogPricingTypeEnum, CatalogTypeEnum, FurnitureTypeEnum, ICatalogOffer, IFurnitureData, IProduct, IPurchasableOffer } from '@nitrodevco/nitro-api';
+import { ICatalogOffer, IFurnitureData } from '@nitrodevco/nitro-api';
 
 import { useCatalogStore } from '#base/context/catalog';
 import { useSystemStore } from '#base/context/system';
+import { getOfferProduct, processCatalogOffer, processFurnitureAsOffer } from '#base/utils';
 
+/**
+ * The offer builders of `utils/catalogOffers` bound to the window's catalogue type and the loaded
+ * furniture and product data, for the views that build offers (the search) or read an offer's
+ * product.
+ */
 export const useCatalogOfferActions = () => {
     const catalogType = useCatalogStore(x => x.catalogType);
     const floorItems = useSystemStore(x => x.floorItems);
     const wallItems = useSystemStore(x => x.wallItems);
     const productData = useSystemStore(x => x.productData);
+    const lookup = { floorItems, wallItems, productData };
 
-    const getFurnitureData = (classId: number, productType: FurnitureTypeEnum) => {
-        switch (productType) {
-            case FurnitureTypeEnum.Floor:
-                return floorItems[classId];
-            case FurnitureTypeEnum.Wall:
-                return wallItems[classId];
-        }
-
-        return undefined;
-    };
-
-    const stripAddonProducts = (products: IProduct[]) => {
-        if (products.length === 1) return products;
-
-        return products.filter(product => ((product.productType !== FurnitureTypeEnum.Badge) && (product.productType !== FurnitureTypeEnum.Effect) && (product.classId !== 108)));
-    };
-
-    const getPricingModelForProducts = (products: IProduct[]) => {
-        const stripped = stripAddonProducts(products);
-
-        if (stripped.length === 1) return stripped[0].productCount === 1 ? CatalogPricingModelEnum.Single : CatalogPricingModelEnum.Multi;
-
-        if (stripped.length > 1) return CatalogPricingModelEnum.Bundle;
-
-        return CatalogPricingModelEnum.Unknown;
-    };
-
-    const getPricingTypeForOffer = (offer: ICatalogOffer) => {
-        if (offer.costCredits > 0 && offer.costCurrency > 0) return CatalogPricingTypeEnum.CreditsActivityPoints;
-
-        if (offer.costCredits > 0) return CatalogPricingTypeEnum.Credits;
-
-        if (offer.costCurrency > 0) return CatalogPricingTypeEnum.ActivityPoints;
-
-        return CatalogPricingTypeEnum.None;
-    };
-
-    const getOfferProduct = (offer: IPurchasableOffer) => {
-        if (!offer.products.length) return undefined;
-
-        if (offer.products.length === 1) return offer.products[0];
-
-        return stripAddonProducts(offer.products)?.[0] ?? undefined;
-    };
-
-    const processOffer = (offer: ICatalogOffer) => {
-        if (!offer || !offer.products.length) return undefined;
-
-        const pData = productData[offer.localizationId];
-        const products: IProduct[] = [];
-
-        let badgeCode: string | undefined = undefined;
-
-        for (const product of offer.products) {
-            const furnitureData = getFurnitureData(product.spriteId, product.productType);
-
-            if (!furnitureData) continue;
-
-            products.push({
-                productType: product.productType,
-                classId: product.spriteId,
-                extraParam: product.extraParam,
-                productCount: product.quantity,
-                productData: pData,
-                furnitureData,
-                isUnique: product.isUnique,
-                uniqueSize: product.uniqueSize,
-                uniqueLeft: product.uniqueRemaining,
-            });
-
-            if (product.productType === FurnitureTypeEnum.Badge) badgeCode = product.extraParam;
-        }
-
-        const purchasableOffer = {
-            pricingModel: getPricingModelForProducts(products),
-            pricingType: getPricingTypeForOffer(offer),
-            offerId: offer.id,
-            localizationId: offer.localizationId,
-            priceInCredits: offer.costCredits,
-            priceInActivityPoints: offer.costCurrency,
-            activityPointType: offer.costCurrencyType,
-            giftable: offer.canGift,
-            isRentOffer: offer.rentable,
-            clubLevel: offer.clubLevel,
-            products,
-            bundlePurchaseAllowed: offer.canBundle,
-            isLazy: false,
-            page: undefined,
-            badgeCode: badgeCode,
-        } as IPurchasableOffer;
-
-        if (!(catalogType == CatalogTypeEnum.Normal || (purchasableOffer.pricingModel !== CatalogPricingModelEnum.Bundle && purchasableOffer.pricingModel !== CatalogPricingModelEnum.Multi))) return undefined;
-
-        return purchasableOffer;
-    };
-
-    const processAsOffer = (furnitureData: IFurnitureData) => {
-        if (!furnitureData) return undefined;
-
-        return {
-            pricingModel: CatalogPricingModelEnum.Furniture,
-            pricingType: CatalogPricingTypeEnum.None,
-            offerId: furnitureData.rentOfferId > -1 ? furnitureData.rentOfferId : furnitureData.purchaseOfferId,
-            localizationId: `roomItem.name.${furnitureData.id}`,
-            priceInCredits: 0,
-            priceInActivityPoints: 0,
-            activityPointType: 0,
-            giftable: false,
-            isRentOffer: furnitureData.rentOfferId > -1,
-            clubLevel: 0,
-            products: [
-                {
-                    productType: furnitureData.type,
-                    classId: furnitureData.id,
-                    extraParam: furnitureData.customParams,
-                    productCount: 1,
-                    productData: productData[furnitureData.className],
-                    furnitureData,
-                    isUnique: false,
-                    uniqueSize: 0,
-                    uniqueLeft: 0,
-                },
-            ],
-            bundlePurchaseAllowed: false,
-            isLazy: true,
-            page: undefined,
-            badgeCode: '',
-        } as IPurchasableOffer;
-    };
+    const processOffer = (offer: ICatalogOffer) => processCatalogOffer(offer, catalogType, lookup);
+    const processAsOffer = (furnitureData: IFurnitureData) => processFurnitureAsOffer(furnitureData, lookup);
 
     return { getOfferProduct, processOffer, processAsOffer };
 };

@@ -21,17 +21,17 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useConfigData, useSystemStore, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { WiredChestUpgradeRequest } from '#base/context/wired-trading';
-import { Border, Box, Button, ButtonThick, Frame, Icon, ThemeText } from '#base/theme';
+import { Border, Box, Button, ButtonThick, Dropmenu, Frame, Icon, ThemeImage, ThemeText } from '#base/theme';
 import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
-import { WiredDropdown } from '#base/views/wired-setup/kit/WiredDropdown';
-import { WiredFlow } from '#base/views/wired-setup/kit/WiredFlow';
-import { WiredStyleProvider } from '#base/views/wired-setup/kit/WiredStyleContext';
-import { UBUNTU_WIRED_STYLE } from '#base/wired';
 
 /** `getActivityPointsForType(5)`: diamonds. */
 const DIAMONDS_TYPE = 5;
 const DEFAULT_UPGRADE_COST = 999;
 const ERROR_COLOR = '#c42f3d';
+/** The frame's `margin_*` vars. */
+const FRAME_MARGINS = [ 1, 25, 1, 7 ] as const;
+/** `properties_itemlist`'s 197px texts wrap at the field width less the 2px gutters. */
+const TEXT_WRAP = 193;
 
 /** `getInteger(key, 999)`. */
 const configInteger = (config: Record<string, unknown>, key: string, fallback: number): number => {
@@ -40,23 +40,25 @@ const configInteger = (config: Record<string, unknown>, key: string, fallback: n
     return Number.isFinite(value) ? Math.trunc(value) : fallback;
 };
 
-/** `product_image`: the chest furni at 64, facing 90 degrees, in the 126x152 border. */
+/**
+ * `product_image`: the chest furni at 64, facing 90 degrees - a 126x152 bitmap at 1,1 of the
+ * `#f1f1f1` style 0 border, unscaled in its middle (`pivot_point` center) and cut at the border.
+ */
 export const WiredChestPreview = ({ furniTypeId }: { furniTypeId: number }) => {
     const furniData = useSystemStore(x => x.floorItems[furniTypeId]);
-    const { texture, width, height } = useFurnitureImageTexture(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
+    const { texture } = useFurnitureImageTexture(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
 
     return (
         <Border
             variant="0"
             tintColor="#f1f1f1"
-            layout={{ position: 'absolute', left: 10, top: 12, width: 126, height: 152, alignItems: 'center', justifyContent: 'center' }}
+            layout={{ position: 'absolute', left: 10, top: 12, width: 126, height: 152, overflow: 'hidden' }}
         >
             {texture && (
-                <pixiSprite
+                <ThemeImage
                     texture={texture}
-                    width={width}
-                    height={height}
-                    layout={{}}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                    layout={{ position: 'absolute', left: 1, top: 1, width: 126, height: 152 }}
                 />
             )}
         </Border>
@@ -111,96 +113,117 @@ export const WiredChestUpgradeView = ({ request, onClose }: WiredChestUpgradeVie
             rememberPosition={false}
             centered
             onClose={onClose}
-            contentLayout={{ paddingLeft: 0, paddingRight: 0, marginBottom: 0 }}
+            margins={FRAME_MARGINS}
             layout={{ position: 'absolute', width: 353, height: 287 }}
         >
-            <Box layout={{ position: 'relative', width: 353, height: 254 }}>
-                <WiredChestPreview furniTypeId={furniTypeId} />
-                <Box layout={{ position: 'absolute', left: 143, top: 15, width: 197, flexDirection: 'column', gap: 4 }}>
-                    <ThemeText
-                        text={t('wiredchests.upgrade.capacity.extra', '', { purchase_capacity: String(purchaseCapacity) })}
-                        textStyle="u_bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 197, fontSize: 14 }}
-                        verticalAlign="top"
-                        layout={{ width: 197 }}
-                    />
-                    <ThemeText
-                        text={t('wiredchests.upgrade.capacity.current', '', { current_capacity: String(currentCapacity) })}
-                        textStyle="u_bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
-                        flashFormat={{ bold: false }}
-                        verticalAlign="top"
-                        layout={{ width: 197 }}
-                    />
-                    <ThemeText
-                        text={t('wiredchests.upgrade.capacity.new', '', { new_capacity: String(currentCapacity + purchaseCapacity) })}
-                        textStyle="u_bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
-                        flashFormat={{ bold: false }}
-                        verticalAlign="top"
-                        layout={{ width: 197 }}
-                    />
-                    <Box layout={{ flexDirection: 'row', gap: 5, height: 25 }}>
+            {/* `content`: an item list, so the buttons move up while the error text is hidden. */}
+            <Box layout={{ position: 'absolute', left: 0, top: 8, width: 351, flexDirection: 'column', gap: 10 }}>
+                <Box layout={{ position: 'relative', width: 349, height: 164, flexShrink: 0, overflow: 'hidden' }}>
+                    <WiredChestPreview furniTypeId={furniTypeId} />
+                    <Box layout={{ position: 'absolute', left: 143, top: 15, width: 197, flexDirection: 'column', gap: 4 }}>
                         <ThemeText
-                            text={t('wiredchests.upgrade.capacity.amount')}
-                            textStyle="u_regular"
-                            layout={{ marginTop: 3 }}
+                            text={t('wiredchests.upgrade.capacity.extra', '', { purchase_capacity: String(purchaseCapacity) })}
+                            textStyle="u_bold"
+                            textOptions={{ wordWrap: true, wordWrapWidth: TEXT_WRAP, fontSize: 14 }}
+                            verticalAlign="top"
+                            layout={{ width: 197 }}
                         />
-                        <WiredStyleProvider style={UBUNTU_WIRED_STYLE}>
-                            <WiredFlow direction="row">
-                                <WiredDropdown
-                                    options={amounts}
-                                    selected={selection}
-                                    onSelect={setSelection}
-                                    width={58}
-                                    disabled={atCapacity}
-                                />
-                            </WiredFlow>
-                        </WiredStyleProvider>
+                        <ThemeText
+                            text={t('wiredchests.upgrade.capacity.current', '', { current_capacity: String(currentCapacity) })}
+                            textStyle="u_bold"
+                            textOptions={{ wordWrap: true, wordWrapWidth: TEXT_WRAP }}
+                            flashFormat={{ bold: false }}
+                            verticalAlign="top"
+                            layout={{ width: 197 }}
+                        />
+                        <ThemeText
+                            text={t('wiredchests.upgrade.capacity.new', '', { new_capacity: String(currentCapacity + purchaseCapacity) })}
+                            textStyle="u_bold"
+                            textOptions={{ wordWrap: true, wordWrapWidth: TEXT_WRAP }}
+                            flashFormat={{ bold: false }}
+                            verticalAlign="top"
+                            layout={{ width: 197 }}
+                        />
+                        <Box layout={{ flexDirection: 'row', gap: 5, height: 25, flexShrink: 0 }}>
+                            <ThemeText
+                                text={t('wiredchests.upgrade.capacity.amount')}
+                                textStyle="u_regular"
+                                verticalAlign="top"
+                                layout={{ marginTop: 3 }}
+                            />
+                            <Dropmenu
+                                variant="3"
+                                caption={amounts[selection]?.label ?? ''}
+                                options={amounts.map(option => ({
+                                    key: option.id,
+                                    label: option.label,
+                                    selected: option.id === selection,
+                                    onSelect: () => {
+                                        if (option.id !== selection) setSelection(option.id);
+                                    },
+                                }))}
+                                disabled={atCapacity}
+                                layout={{ width: 58, height: 25, flexShrink: 0 }}
+                            />
+                        </Box>
                     </Box>
-                </Box>
-                <Box layout={{ position: 'absolute', left: 142, top: 137, height: 22, flexDirection: 'row' }}>
-                    <ThemeText
-                        text={t('catalog.purchase.confirmation.dialog.cost')}
-                        textStyle="u_regular"
-                        layout={{ marginTop: 1, marginRight: 4 }}
-                    />
-                    <Box layout={{ flexDirection: 'row', gap: 2, height: 25 }}>
-                        {(costCredits !== 0) && (
-                            <ThemeText
-                                text={String(costCredits * amount)}
-                                textStyle="u_headline_small"
-                                layout={{ marginTop: 1 }}
+                    <Box layout={{ position: 'absolute', left: 142, top: 137, height: 22, flexDirection: 'row' }}>
+                        <ThemeText
+                            text={t('catalog.purchase.confirmation.dialog.cost')}
+                            textStyle="u_regular"
+                            textOptions={{ fontSize: 14 }}
+                            verticalAlign="top"
+                            layout={{ marginTop: 1 }}
+                        />
+                        <Box layout={{ flexDirection: 'row', gap: 2, height: 25, flexShrink: 0 }}>
+                            {(costCredits !== 0) && (
+                                <ThemeText
+                                    text={String(costCredits * amount)}
+                                    textStyle="u_bold"
+                                    textOptions={{ fontSize: 14 }}
+                                    verticalAlign="top"
+                                    layout={{ marginTop: 1 }}
+                                />
+                            )}
+                            <Icon
+                                variant={34}
+                                layout={{ width: 22, height: 22, flexShrink: 0 }}
                             />
-                        )}
-                        <Icon variant={34} />
-                        {(costCredits !== 0) && (costDiamonds !== 0) && (
-                            <ThemeText
-                                text="+"
-                                textStyle="u_headline_small"
-                                layout={{ marginTop: 1 }}
+                            {(costCredits !== 0) && (costDiamonds !== 0) && (
+                                <ThemeText
+                                    text="+"
+                                    textStyle="u_bold"
+                                    textOptions={{ fontSize: 14 }}
+                                    verticalAlign="top"
+                                    layout={{ marginTop: 1 }}
+                                />
+                            )}
+                            {(costDiamonds !== 0) && (
+                                <ThemeText
+                                    text={String(costDiamonds * amount)}
+                                    textStyle="u_bold"
+                                    textOptions={{ fontSize: 14 }}
+                                    verticalAlign="top"
+                                    layout={{ marginTop: 1 }}
+                                />
+                            )}
+                            <Icon
+                                variant={41}
+                                layout={{ width: 22, height: 22, flexShrink: 0 }}
                             />
-                        )}
-                        {(costDiamonds !== 0) && (
-                            <ThemeText
-                                text={String(costDiamonds * amount)}
-                                textStyle="u_headline_small"
-                                layout={{ marginTop: 1 }}
-                            />
-                        )}
-                        <Icon variant={41} />
+                        </Box>
                     </Box>
                 </Box>
                 {errorKey && (
                     <ThemeText
                         text={t('wiredchests.upgrade.error', '', { reason: t(errorKey, errorKey) })}
                         textStyle="u_bold"
-                        textOptions={{ fill: ERROR_COLOR, wordWrap: true, wordWrapWidth: 327 }}
+                        textOptions={{ fill: ERROR_COLOR, wordWrap: true, wordWrapWidth: 323 }}
                         verticalAlign="top"
-                        layout={{ position: 'absolute', left: 12, top: 174, width: 327 }}
+                        layout={{ marginLeft: 12, width: 327 }}
                     />
                 )}
-                <Box layout={{ position: 'absolute', left: 13, top: 214, width: 325, height: 27, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Box layout={{ marginLeft: 13, height: 27, flexDirection: 'row', gap: 105, flexShrink: 0 }}>
                     <Button
                         variant="3"
                         onPointerTap={onClose}
@@ -210,6 +233,7 @@ export const WiredChestUpgradeView = ({ request, onClose }: WiredChestUpgradeVie
                     </Button>
                     <ButtonThick
                         variant="5"
+                        tintColor="#00aa00"
                         disabled={buying || (errorKey !== undefined)}
                         onPointerTap={() => {
                             if (buying || errorKey) return;

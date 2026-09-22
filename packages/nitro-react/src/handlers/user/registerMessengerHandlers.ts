@@ -26,12 +26,15 @@ const FRIEND_LIST_ERRORS: Record<number, string> = {
     [FriendListErrorCodeType.BlockedByYou]: 'friendlist.error.blocked_by_you',
 };
 
+/** `HabboFriendList.simpleAlert`: the window manager's `simpleAlert` with a caption and a message only. */
+const friendListAlert = (title: string, message: string) => systemStore.getState().showSimpleAlert({ caption: title, message });
+
 /** `HabboFriendList.showAlertView`, under `friendlist.alert.title`; an unknown code is shown raw, as Flash did. */
 const showFriendListError = (errorCode: number, clientMessageId: number = 0) => {
-    const { showAlert, getLocalizationValue } = systemStore.getState();
+    const { getLocalizationValue } = systemStore.getState();
     const key = FRIEND_LIST_ERRORS[errorCode];
 
-    showAlert(getLocalizationValue('friendlist.alert.title'), key ? getLocalizationValue(key) : `Received messenger error: msg: ${clientMessageId}, errorCode: ${errorCode}`);
+    friendListAlert(getLocalizationValue('friendlist.alert.title'), key ? getLocalizationValue(key) : `Received messenger error: msg: ${clientMessageId}, errorCode: ${errorCode}`);
 };
 
 export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) => {
@@ -45,17 +48,20 @@ export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) =>
         on(ConsoleMessageHistoryMessage, (data) => {
         }),
 
+        // `HabboFriendBarView.onFindFriendsNotification`: `notify`, which is the plain alert with its ok button.
         on(FindFriendsProcessResultMessage, (data) => {
+            const { showAlert, getLocalizationValue } = systemStore.getState();
             const title = data.success ? 'friendbar.find.success.title' : 'friendbar.find.error.title';
             const text = data.success ? 'friendbar.find.success.text' : 'friendbar.find.error.text';
 
-            // window.notify(t(title), t(text))
+            showAlert(getLocalizationValue(title, title), getLocalizationValue(text, text));
         }),
 
+        // `HabboFriendList.onFollowFriendFailed`, with `getFollowFriendErrorText`.
         on(FollowFriendFailedMessage, (data) => {
-            const title = 'friendlist.alert.title';
+            const { getLocalizationValue } = systemStore.getState();
 
-            let errorText = 'Unknown follow friend error' + data.errorCode;
+            let errorText = '';
 
             switch (data.errorCode) {
                 case FollowFriendErrorCodeType.NotFriend:
@@ -72,7 +78,7 @@ export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) =>
                     break;
             }
 
-            // window.simpleAlert(title, errorText)
+            friendListAlert(getLocalizationValue('friendlist.alert.title'), errorText ? getLocalizationValue(errorText) : `Unknown follow friend error ${data.errorCode}`);
         }),
 
         on(FriendListFragmentMessage, (data) => {
@@ -124,7 +130,9 @@ export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) =>
             processFriendRequests([ data.request ]);
         }),
 
+        // `HabboFriendList.onRoomInviteError`: shown raw, the recipients joined the way `Util.arrayToString` does.
         on(RoomInviteErrorMessage, (data) => {
+            friendListAlert(systemStore.getState().getLocalizationValue('friendlist.alert.title'), `Received room invite error: errorCode: ${data.errorCode}, recipients: ${data.failedRecipients.join(', ')}`);
         }),
 
         on(RoomInviteMessage, (data) => {

@@ -11,12 +11,12 @@
  */
 import { RoomObjectCategoryEnum, RoomRenderedEvent } from '@nitrodevco/nitro-api';
 import { Container as PixiContainer } from 'pixi.js';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 import { useRoom } from '#base/context/room';
 import { useWiredStore } from '#base/context/wired';
 import { useRoomEventDispatcher } from '#base/hooks';
-import { Box, Bubble, ThemeText } from '#base/theme';
+import { Box, Bubble, ThemeText, useLayoutSize } from '#base/theme';
 import { FixedSizeStack } from '#base/utils';
 
 /** `VariableInfoBubbleView._-zV` / `_-Qf`. */
@@ -24,6 +24,15 @@ const LOCATION_STACK_SIZE = 18;
 const BUBBLE_DROP_SPEED = 3;
 /** `getMaximumVerticalLead`. */
 const MAX_VERTICAL_LEAD_RATIO = 0.05;
+/**
+ * The layout's `border` bubble and its `value` text. The text grows with `auto_size` left and
+ * carries `reflect_horizontal_resize_to_parent`, so the bubble grows by as much as the text does.
+ * Style 5 is not a bubble style of the skin, which falls back to style 0; the layout's empty
+ * style 100 `static_bitmap` draws nothing and is left out.
+ */
+const BUBBLE_WIDTH = 60;
+const BUBBLE_HEIGHT = 39;
+const VALUE_WIDTH = 22;
 
 interface ValueBubbleProps {
     objectId: number;
@@ -38,6 +47,8 @@ const ValueBubble = ({ objectId, category, value, isAvatar }: ValueBubbleProps) 
     const bubbleRef = useRef<PixiContainer>(null);
     const stack = useRef(new FixedSizeStack(LOCATION_STACK_SIZE));
     const lastMax = useRef(0);
+    const [ textNode, setTextNode ] = useState<PixiContainer | null>(null);
+    const textSize = useLayoutSize(textNode);
 
     // `setActive` after `setInactive`: a bubble given to another object starts over, out of sight until placed.
     useLayoutEffect(() => {
@@ -91,14 +102,20 @@ const ValueBubble = ({ objectId, category, value, isAvatar }: ValueBubbleProps) 
             <Bubble
                 variant="5"
                 tintColor="#ade6ff"
-                layout={{ paddingLeft: 11, paddingRight: 8, paddingTop: 3, paddingBottom: 6, minWidth: 30, minHeight: 23 }}
+                margins={[ 8, 8, 8, 8 ]}
+                layout={{ width: BUBBLE_WIDTH + (textSize.width || VALUE_WIDTH) - VALUE_WIDTH, height: BUBBLE_HEIGHT }}
             >
-                <ThemeText
-                    text={value}
-                    textStyle="u_regular"
-                    textOptions={{ fill: '#ffffff', fontSize: 11 }}
-                    verticalAlign="top"
-                />
+                <Box
+                    ref={setTextNode}
+                    layout={{ position: 'absolute', left: 11, top: 3, height: 16 }}
+                >
+                    <ThemeText
+                        text={value}
+                        textStyle="u_regular"
+                        textOptions={{ fill: '#ffffff', fontSize: 11 }}
+                        verticalAlign="top"
+                    />
+                </Box>
             </Bubble>
         </Box>
     );

@@ -27,6 +27,7 @@ export const FurnitureLockConfirmWidget = () => {
 
     return (
         <FurnitureLockConfirmView
+            isOwner={data.isOwner}
             otherLocked={data.otherLocked}
             onConfirm={() => answer(true)}
             onCancel={() => answer(false)}

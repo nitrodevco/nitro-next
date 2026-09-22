@@ -4,7 +4,8 @@
  * `upgrade_capacity_btn` and the rule editor's `add_more` are both this button.
  *
  * `interactive_cursor_disabled` is set on the chest's, so no hand cursor. The region around it
- * carries the tooltip, which a disabled button still shows (`upgrade_capacity_region`).
+ * carries the tooltip, which a disabled button still shows (`upgrade_capacity_region`), at once:
+ * its `tool_tip_delay` is 0.
  */
 import { IconButton, Region } from '#base/theme';
 
@@ -18,6 +19,7 @@ export interface WiredTradingPlusButtonProps {
 export const WiredTradingPlusButton = ({ disabled = false, tooltip, onPress }: WiredTradingPlusButtonProps) => (
     <Region
         tooltip={tooltip || undefined}
+        tooltipDelay={0}
         layout={{ width: 22, height: 22, flexShrink: 0 }}
     >
         <IconButton

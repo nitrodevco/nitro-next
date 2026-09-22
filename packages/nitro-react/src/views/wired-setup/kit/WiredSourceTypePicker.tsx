@@ -101,6 +101,8 @@ export const WiredSourceTypePicker = ({ options, selected, onSelect, disabled: o
                                 />
                                 <ThemeImage
                                     src={LayoutImage(`wired/${template.assetPrefix}${name}.png`)}
+                                    // `type_image` / `type_icon_bitmap`: unstretched, the window sized to its bitmap.
+                                    bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
                                     tint={template.iconTint ?? undefined}
                                     alpha={blend}
                                     eventMode="none"

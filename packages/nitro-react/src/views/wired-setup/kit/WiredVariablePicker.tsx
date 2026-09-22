@@ -30,13 +30,18 @@ import { Container } from 'pixi.js';
 import { useRef, useState, useSyncExternalStore } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Border, Box, BoxLayout, FloatingPopup, getGlobalRect, Icon, Region, ThemeText } from '#base/theme';
+import { Border, Box, BoxLayout, FloatingPopup, getGlobalRect, Icon, Region, ThemeText, useLayoutSize } from '#base/theme';
 import { determineInitialVariablePickerTab, filterPickerVariables, findPickerVariableByDisplayName, findPickerVariableById, getVariablePickerHistory, selectPickerVariable, subscribeVariablePickerHistory, VARIABLE_PICKER_TAB_SEARCH, WiredVariableFilter, WiredVariablePickerState } from '#base/wired';
 
 import { useWiredDisabled, wiredDisabledAlpha } from './useWiredDisabled';
 import { useWiredFillLayout } from './useWiredFillLayout';
 import { useWiredStyle } from './WiredStyleContext';
 import { WiredVariablePickerExpandedView } from './WiredVariablePickerExpandedView';
+
+/** `input_field_region`'s height and `input_placeholder_text`'s `margin_left` / `margin_top`. */
+const FIELD_HEIGHT = 20;
+const FIELD_MARGIN_LEFT = 7;
+const FIELD_MARGIN_TOP = 3;
 
 export interface WiredVariablePickerProps {
     variables: readonly IWiredVariable[] | null | undefined;
@@ -54,6 +59,8 @@ export const WiredVariablePicker = ({ variables, state, onChange, filter, roomId
     const disabled = useWiredDisabled(ownDisabled);
     const fillLayout = useWiredFillLayout();
     const anchorRef = useRef<Container>(null);
+    const [ fieldNode, setFieldNode ] = useState<Container | null>(null);
+    const fieldWidth = Math.floor(useLayoutSize(fieldNode).width);
     const [ expanded, setExpanded ] = useState<{ x: number; y: number; width: number } | null>(null);
     const [ query, setQuery ] = useState('');
     const [ tabId, setTabId ] = useState<number | null>(null);
@@ -106,16 +113,22 @@ export const WiredVariablePicker = ({ variables, state, onChange, filter, roomId
                 layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: 22 }}
             >
                 <Region
+                    ref={setFieldNode}
                     cursor={disabled ? 'default' : 'pointer'}
                     onPointerTap={expand}
-                    layout={{ position: 'absolute', left: 0, top: 1, width: '100%', height: 20 }}
+                    layout={{ position: 'absolute', left: 0, top: 1, width: '100%', height: FIELD_HEIGHT }}
                 >
-                    <ThemeText
-                        text={selected?.variableName ?? t('wiredfurni.variable_picker.search', 'wiredfurni.variable_picker.search')}
-                        textOptions={{ fill: selected ? '#000000' : '#808080' }}
-                        flashFormat={{ antiAliasType: 'advanced' }}
-                        layout={{ position: 'absolute', left: 7, top: 3 }}
-                    />
+                    {/* `input_placeholder_text`: the field's size at its margins, word wrapped and cut at the field. */}
+                    {(fieldWidth > 0) && (
+                        <ThemeText
+                            text={selected?.variableName ?? t('wiredfurni.variable_picker.search', 'wiredfurni.variable_picker.search')}
+                            textOptions={{ fill: selected ? '#000000' : '#808080', wordWrap: true, wordWrapWidth: Math.max(1, fieldWidth - FIELD_MARGIN_LEFT - 4) }}
+                            flashFormat={{ antiAliasType: 'advanced' }}
+                            verticalAlign="top"
+                            clip
+                            layout={{ position: 'absolute', left: FIELD_MARGIN_LEFT, top: FIELD_MARGIN_TOP, width: fieldWidth - FIELD_MARGIN_LEFT, height: FIELD_HEIGHT - FIELD_MARGIN_TOP }}
+                        />
+                    )}
                 </Region>
                 <Icon
                     variant={7}

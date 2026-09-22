@@ -7,11 +7,12 @@ import { useOwnRoomObjectId, useRoomIsPlayingGame, useRoomStore } from '#base/co
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { useOwnIsAmbassador, useUserStore } from '#base/context/user';
 import { useWiredShowInspectButton } from '#base/context/wired';
-import { useRoomUserData } from '#base/hooks';
-import { Box, Bubble, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
+import { TRADE_REASON_ROOM, TRADE_REASON_SHUTDOWN, useRoomUserData } from '#base/hooks';
+import { Box, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
 
-import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
-import { InfoBubbleMinimize } from './InfoBubbleMinimize';
+import { InfoBubbleMenuButton, MENU_MODERATION_COLOR } from './InfoBubbleMenuButton';
+import { InfoBubbleMenuFrame } from './InfoBubbleMenuFrame';
+import { AVATAR_MENU_GEOMETRY } from './InfoBubbleMenuGeometry';
 
 export interface InfoBubbleAvatarViewProps {
     objectData: ISimpleRoomObjectData;
@@ -35,6 +36,17 @@ const RELATIONSHIP_ICONS: Record<number, string> = {
     [RELATIONSHIP_BOBBA]: 'relationship_status_bobba.png',
 };
 
+/** `avatar_menu_widget`'s rows are 137 wide; the relationship grid's cells 45 by 25. */
+const ROW_WIDTH = 137;
+const ROW_HEIGHT = 26;
+const GRID_CELL_WIDTH = 45;
+const GRID_HEIGHT = 25;
+
+/** The rows the layout tags `moderate` or `ambassador` - their labels are `0xff8133`. */
+const MODERATION_ROWS = [ 'kick', 'mute', 'mute_2min', 'mute_5min', 'mute_10min', 'ban_with_duration', 'ban_hour', 'ban_day', 'perm_ban', 'give_rights', 'remove_rights', 'unignore', 'ignore', 'ambassador_alert', 'ambassador_kick', 'ambassador_mute_15min', 'ambassador_mute_60min', 'ambassador_mute_18hour', 'ambassador_mute_36hour', 'ambassador_mute_72hour', 'ambassador_unmute' ];
+/** The rows carrying `arrow_right` - each opens a sub-page. */
+const SUBMENU_ROWS = [ 'relationship', 'mute', 'ban_with_duration', 'moderate', 'ambassador' ];
+
 type MenuButton = {
     key: string;
     caption: string;
@@ -48,6 +60,10 @@ type MenuButton = {
  * The menu over another user - `AvatarMenuView`, on the `avatar_menu_widget` layout. The name
  * opens their profile; the buttons act on them through the same actions the infostand uses, and
  * the moderation, ban, mute, relationship and ambassador sets are sub-pages of the one menu.
+ *
+ * Each page lists its rows in the layout's child order (`updateButtons` only shows and hides
+ * them). The layout's `blow`, `perform`, `report` and `donate_*` rows are not offered: the port
+ * has no action behind them.
  */
 export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarViewProps) => {
     const { objectId } = objectData;
@@ -143,72 +159,92 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
     };
 
     const relationshipIcon = RELATIONSHIP_ICONS[info.relationshipStatus];
+    const visibleButtons = buttons[mode].filter(button => button.visible);
+    const showsGrid = (mode === MODE_RELATIONSHIP);
+    const rowHeights = [ ...(showsGrid ? [ GRID_HEIGHT ] : []), ...visibleButtons.map(() => ROW_HEIGHT) ];
+    // `updateButtons`: the trade button's tooltip says why trading is off.
+    const tradeTooltip = (info.canTradeReason === TRADE_REASON_SHUTDOWN)
+        ? t('infostand.button.trade.tooltip.shutdown')
+        : ((info.canTradeReason === TRADE_REASON_ROOM) ? t('infostand.button.trade.tooltip.tradingroom') : undefined);
 
     return (
-        <Bubble
-            variant="0"
-            tintColor="#6e6b67"
-            layout={{ flexDirection: 'column' }}
-        >
-            {!collapsed && (
-                <Box layout={{ minWidth: 137, maxWidth: 137, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
-                    <Box
-                        cursor="pointer"
-                        onPointerTap={() => {
-                            openProfile(send, webId);
-                            onClose();
-                        }}
-                        layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, minHeight: 24, maxHeight: 24 }}
-                    >
-                        {relationshipIcon && (
-                            <ThemeImage
-                                src={LayoutImage(`shared/${relationshipIcon}`)}
-                                layout={{ width: 16, height: 14 }}
-                            />
-                        )}
-                        <ThemeText
-                            text={isBlocked ? t('infostand.blocked_user') : info.name}
-                            textStyle={isBlocked ? 'u_regular' : 'u_bold'}
-                            textOptions={{ fill: '#ffffff' }}
+        <InfoBubbleMenuFrame
+            geometry={AVATAR_MENU_GEOMETRY}
+            rowHeights={rowHeights}
+            collapsed={collapsed}
+            onToggleCollapsed={() => setCollapsed(!collapsed)}
+            header={(
+                <Region
+                    name="profile_link"
+                    cursor="pointer"
+                    onPointerTap={() => {
+                        openProfile(send, webId);
+                        onClose();
+                    }}
+                    layout={{ position: 'absolute', left: 0, top: 7, width: 143, height: 16, flexDirection: 'row', justifyContent: 'center' }}
+                >
+                    {/* `name`: `u_bold` at `font_size` 11, centred; a blocked user is the italic `infostand.blocked_user`. */}
+                    <ThemeText
+                        text={isBlocked ? t('infostand.blocked_user') : info.name}
+                        textStyle="u_bold"
+                        textOptions={{ fill: '#ffffff', fontSize: 11 }}
+                        flashFormat={isBlocked ? { italic: true } : undefined}
+                        name="name"
+                        verticalAlign="top"
+                    />
+                    {relationshipIcon && (
+                        <ThemeImage
+                            name="relationship_status"
+                            src={LayoutImage(`shared/${relationshipIcon}`)}
+                            bitmap={{ stretchedX: false, stretchedY: false }}
+                            layout={{ position: 'absolute', left: 5, top: 1, width: 16, height: 14 }}
                         />
-                    </Box>
-                    <Box layout={{ width: '100%', height: 1, marginBottom: 3 }} />
-                    <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
-                        {(mode === MODE_RELATIONSHIP) && (
-                            <Box layout={{ flexDirection: 'row', width: '100%', gap: 1 }}>
-                                {[ RELATIONSHIP_HEART, RELATIONSHIP_SMILE, RELATIONSHIP_BOBBA ].map(relationship => (
-                                    <InfoBubbleMenuButton
-                                        key={relationship}
-                                        shape="grid"
-                                        width={45}
-                                        height={25}
-                                        onPress={() => {
-                                            setRelationship(send, webId, relationship);
-                                            onClose();
-                                        }}
-                                    >
-                                        <ThemeImage
-                                            src={LayoutImage(`shared/${RELATIONSHIP_ICONS[relationship]}`)}
-                                            layout={{ width: 16, height: 14 }}
-                                        />
-                                    </InfoBubbleMenuButton>
-                                ))}
-                            </Box>
-                        )}
-                        {buttons[mode].filter(button => button.visible).map(button => (
-                            <InfoBubbleMenuButton
-                                key={button.key}
-                                caption={button.caption}
-                                onPress={() => press(button)}
+                    )}
+                </Region>
+            )}
+        >
+            {showsGrid && (
+                <Box layout={{ flexDirection: 'row', width: ROW_WIDTH, height: GRID_HEIGHT, gap: 1, flexShrink: 0 }}>
+                    {[ RELATIONSHIP_HEART, RELATIONSHIP_SMILE, RELATIONSHIP_BOBBA ].map(relationship => (
+                        <InfoBubbleMenuButton
+                            key={relationship}
+                            shape="grid"
+                            width={GRID_CELL_WIDTH}
+                            height={GRID_HEIGHT}
+                            onPress={() => {
+                                setRelationship(send, webId, relationship);
+                                onClose();
+                            }}
+                        >
+                            {/* The 49x17 `static_bitmap` over the button, its art centred and never stretched. */}
+                            <ThemeImage
+                                src={LayoutImage(`shared/${RELATIONSHIP_ICONS[relationship]}`)}
+                                bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                                layout={{ width: GRID_CELL_WIDTH + 4, height: 17 }}
                             />
-                        ))}
-                    </Box>
+                        </InfoBubbleMenuButton>
+                    ))}
                 </Box>
             )}
-            <InfoBubbleMinimize
-                collapsed={collapsed}
-                onToggle={() => setCollapsed(!collapsed)}
-            />
-        </Bubble>
+            {visibleButtons.map(button => (
+                <InfoBubbleMenuButton
+                    key={button.key}
+                    width={ROW_WIDTH}
+                    caption={button.caption}
+                    captionColor={MODERATION_ROWS.includes(button.key) ? MENU_MODERATION_COLOR : undefined}
+                    arrow={SUBMENU_ROWS.includes(button.key) ? 'right' : ((button.key === 'actions') ? 'left' : undefined)}
+                    tooltip={(button.key === 'trade') ? tradeTooltip : undefined}
+                    adornment={(button.key === 'replenish_respect') && (
+                        <ThemeImage
+                            src={LayoutImage('shared/pursearea_duckets_icon.png')}
+                            bitmap={{ stretchedX: false, stretchedY: false, etchingColor: 0x48000000 }}
+                            dynamicRole="icon"
+                            layout={{ position: 'absolute', left: 110, top: 10, width: 15, height: 15 }}
+                        />
+                    )}
+                    onPress={() => press(button)}
+                />
+            ))}
+        </InfoBubbleMenuFrame>
     );
 };

@@ -1,44 +1,63 @@
 import { ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { useCatalogStore } from '#base/context/catalog';
-import { Border, ScrollArea } from '#base/theme';
+import { Border, Region, ScrollArea } from '#base/theme';
 
 import { CatalogNavigationSetItemView } from './CatalogNavigationSetItemView';
 import { CatalogNavigationSetView } from './CatalogNavigationSetView';
 
 export interface CatalogNavigationViewProps {
     node: ICatalogNode;
+    /** `CatalogViewer.setLeftPaneVisibility`: hidden while a wide layout covers it. */
+    visible?: boolean;
 }
 
-/** Pixi port of views/catalog/navigation/CatalogNavigationView.tsx. */
-export const CatalogNavigationView = ({ node }: CatalogNavigationViewProps) => {
+/**
+ * `navigationContainer` of `catalog_ubuntu_with_tabs.xml`: the half-blended style 6 border and,
+ * inside it, `navigationList` - the `scrollable_itemlist_vertical` `CatalogNavigator` fills with
+ * the selected tab's children (`showNodeContent`) or with the search matches
+ * (`addSearchNodesToList`). Both are anchored to the frame's bottom. The 17px scrollbar sits flush
+ * against the list and hides while the list fits, which then takes the whole width
+ * (`habbo_window_layout_scrollable_itemlist_vertical_ubuntu`, `ScrollableItemListWindow`).
+ */
+export const CatalogNavigationView = ({ node, visible = true }: CatalogNavigationViewProps) => {
     const searchResult = useCatalogStore(x => x.searchResult);
 
     if (!node) return null;
 
     return (
-        <Border
-            variant="6"
-            blend={0.5}
-            layout={{ width: '100%', height: '100%', padding: 4 }}
+        <Region
+            name="navigationContainer"
+            visible={visible}
+            layout={{ position: 'absolute', left: 8, width: 184, top: 159, bottom: 7 }}
         >
+            <Border
+                variant="6"
+                blend={0.5}
+                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
+            />
             <ScrollArea
-                variant="3"
-                layout={{ flex: 1 }}
+                orientation="vertical"
+                layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5, gap: 0 }}
             >
-                {searchResult && searchResult.nodes.length > 0 && searchResult.nodes.map((x, index) => (
-                    <CatalogNavigationSetItemView
-                        key={`${index}:${x.pageName}`}
-                        node={x}
-                    />
-                ))}
-                {!searchResult && (
-                    <CatalogNavigationSetView
-                        key={`${node.pageId}:${node.pageName}`}
-                        node={node}
-                    />
-                )}
+                <Region
+                    name="navigationList"
+                    layout={{ flexDirection: 'column', width: '100%' }}
+                >
+                    {searchResult && searchResult.nodes.length > 0 && searchResult.nodes.map((x, index) => (
+                        <CatalogNavigationSetItemView
+                            key={`${index}:${x.pageName}`}
+                            node={x}
+                        />
+                    ))}
+                    {!searchResult && (
+                        <CatalogNavigationSetView
+                            key={`${node.pageId}:${node.pageName}`}
+                            node={node}
+                        />
+                    )}
+                </Region>
             </ScrollArea>
-        </Border>
+        </Region>
     );
 };

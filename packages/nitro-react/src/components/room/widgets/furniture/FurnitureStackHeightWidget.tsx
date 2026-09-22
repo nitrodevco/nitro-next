@@ -44,6 +44,7 @@ export const FurnitureStackHeightWidget = () => {
         <FurnitureStackHeightView
             height={roomObject.getLocation()?.z ?? 0}
             multiWalkMode={roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtra) === 1}
+            isWalkTile={isWalkMagic}
             onApply={apply}
             onAboveStack={() => send(new SetCustomStackingHeightComposer({ objectId: request.objectId, height: ABOVE_STACK }))}
             onClose={onClose}

@@ -7,7 +7,8 @@
  *   one line as wide as its text and `extra1` takes the rest.
  * - The style's y offset (`radioButtonYOffset` / `checkboxYOffset`) lowers the icon and caption
  *   when positive and the control when negative.
- * - An `extra1` taller than the row centres the row on itself.
+ * - An `extra1` taller than the row centres the row on itself; otherwise `extra1` sits at the
+ *   row's top (`resizeToWidth` only moves the control and the caption).
  * - Both extras are disabled while the option is not selected (`onUnSelect`), and with the
  *   option when that is disabled as a whole.
  * - Every option but the group's last is at least `minimumOptionHeight` high and keeps
@@ -69,8 +70,8 @@ export const WiredOptionRow = ({ control, spacing, yOffset, label, icon, extra, 
                 ...layout,
             }}
             >
-                <Box layout={{ flexDirection: 'row', alignItems: 'center', gap: spacing, alignSelf: 'stretch' }}>
-                    <Box layout={{ flexDirection: 'row', alignItems: 'flex-start', gap: spacing, flexGrow: hasExtra ? 0 : 1, flexShrink: hasExtra ? 0 : 1, flexBasis: hasExtra ? undefined : 0, minWidth: 0 }}>
+                <Box layout={{ flexDirection: 'row', alignItems: 'flex-start', gap: spacing, alignSelf: 'stretch' }}>
+                    <Box layout={{ flexDirection: 'row', alignItems: 'flex-start', alignSelf: 'center', gap: spacing, flexGrow: hasExtra ? 0 : 1, flexShrink: hasExtra ? 0 : 1, flexBasis: hasExtra ? undefined : 0, minWidth: 0 }}>
                         <Box layout={{ marginTop: controlOffset, flexShrink: 0 }}>
                             {control}
                         </Box>

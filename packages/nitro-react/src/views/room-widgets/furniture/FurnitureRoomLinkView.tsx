@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context/system';
-import { Border, Box, Button, Frame, ThemeText } from '#base/theme';
+import { ButtonThick, Frame, ReflectResize, Region, ThemeText } from '#base/theme';
 
 export interface FurnitureRoomLinkViewProps {
     roomName: string;
@@ -8,10 +8,21 @@ export interface FurnitureRoomLinkViewProps {
     onCancel: () => void;
 }
 
+/** `_alert_description`'s layout rect: `height_min` 72, and `reflect_vertical_resize_to_parent`. */
+const DESCRIPTION = { left: 16, top: 14, width: 253, height: 72 } as const;
+
 /**
- * Where a room-link teleport goes, asked before it takes you there. Flash filled the two names
- * into its message with `%%room_name%%` and `%%room_owner%%` - two per cent signs, not the
- * client's usual one - so the substitution is done here rather than through the translator.
+ * Where a room-link teleport goes, asked before it takes you there:
+ * `FurnitureRoomLinkHandler.onRoomInfo`, which raises `windowManager.confirm` with ok and cancel
+ * (`0x10 | 0x20`). Flash filled the two names into its message with `%%room_name%%` and
+ * `%%room_owner%%` - two per cent signs, not the client's usual one - so the substitution is done
+ * here rather than through the translator.
+ *
+ * `ConfirmDialog` on `habbo_window_confirm` (300x165), centred: a style 3 frame tinted `0x418db0`
+ * (margins 6, 25, 6, 7), the `u_regular` description at (16, 14) - `auto_size` left, never under
+ * its 72px `height_min`, and reflecting its growth on to the window - the underlined
+ * `${generic.cancel}` link and the `${generic.ok}` `button_thick`, both anchored to the bottom.
+ * The header's close button cancels, as `_alert_button_cancel` does.
  */
 export const FurnitureRoomLinkView = ({ roomName, ownerName, onConfirm, onCancel }: FurnitureRoomLinkViewProps) => {
     const t = useTranslation();
@@ -22,36 +33,49 @@ export const FurnitureRoomLinkView = ({ roomName, ownerName, onConfirm, onCancel
 
     return (
         <Frame
-            variant="0"
+            variant="3"
             id="furniture-room-link"
             caption={t('room.link.confirmation.title')}
+            tintColor="#418db0"
+            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onCancel}
-            defaultPosition={{ x: 120, y: 100 }}
+            centered
             rememberPosition={false}
-            layout={{ position: 'absolute', width: 300, height: 170 }}
+            resizeDirection="none"
+            margins={[ 6, 25, 6, 7 ]}
+            layout={{ position: 'absolute', width: 300, height: 165 }}
         >
-            <Border layout={{ flex: 1, padding: 8 }}>
+            <ReflectResize
+                height={DESCRIPTION.height}
+                layout={{ position: 'absolute', left: DESCRIPTION.left, top: DESCRIPTION.top, width: DESCRIPTION.width, minHeight: DESCRIPTION.height }}
+            >
                 <ThemeText
                     text={message}
-                    textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 270 }}
+                    textStyle="u_regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: DESCRIPTION.width - 4 }}
                     verticalAlign="top"
-                    layout={{ flex: 1 }}
                 />
-            </Border>
-            <Box layout={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
-                <Button
-                    onPointerTap={onConfirm}
-                    layout={{ height: 22 }}
-                >
-                    {t('generic.ok')}
-                </Button>
-                <Button
-                    onPointerTap={onCancel}
-                    layout={{ height: 22 }}
-                >
-                    {t('generic.cancel')}
-                </Button>
-            </Box>
+            </ReflectResize>
+            <Region
+                cursor="pointer"
+                onPointerTap={onCancel}
+                layout={{ position: 'absolute', left: 20, width: 100, bottom: 14, flexDirection: 'row', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('generic.cancel')}
+                    textStyle="u_regular"
+                    flashFormat={{ underline: true }}
+                    verticalAlign="top"
+                />
+            </Region>
+            <ButtonThick
+                variant="3"
+                tintColor="#efefef"
+                onPointerTap={onConfirm}
+                layout={{ position: 'absolute', left: 196, bottom: 7, minWidth: 50, height: 28 }}
+            >
+                {t('generic.ok')}
+            </ButtonThick>
         </Frame>
     );
 };

@@ -51,9 +51,15 @@ export interface FurnitureHighScoreViewProps {
 }
 
 /**
- * A game's scoreboard, on the `high_score_display` layout (275x341). The title says what the
- * board ranks and how often it resets, then every score with whoever holds it. Read-only, and
- * it has no close button: the furni's own state decides whether the board is up.
+ * A game's scoreboard, on the `high_score_display` layout (275x341) that
+ * `HighScoreDisplayWidget.open` fills: the title says what the board ranks and how often it
+ * resets, then every score with whoever holds it, one cloned `entry_template` per entry. Read-only,
+ * and it has no close button: the furni's own state decides whether the board is up.
+ *
+ * The title and footer are labels centred in their parent (`relative_horizontal_scale_center` +
+ * `on_accommodate_align_center`). `score_header` and each row's `score` are right-aligned
+ * auto-size texts, so they keep their right edge; a row's `usernames` grows right from x 2, up to
+ * its `width_max` of 180. A row is 258 wide in a 256 wide list, which clips it.
  */
 export const FurnitureHighScoreView = ({ scoreType, clearType, entries }: FurnitureHighScoreViewProps) => {
     const t = useTranslation();
@@ -67,86 +73,100 @@ export const FurnitureHighScoreView = ({ scoreType, clearType, entries }: Furnit
     });
 
     return (
-        <Region layout={{ position: 'relative', width: 275, height: 341 }}>
-            <Bubble
-                variant="100"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+        <Bubble
+            variant="100"
+            margins={[ 1, 1, 1, 1 ]}
+            layout={{ width: 275, height: 341 }}
+        >
+            <Region
+                backgroundColor="#3f3f3f"
+                layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20, flexDirection: 'row', justifyContent: 'center' }}
             >
-                <Region
-                    backgroundColor="#3f3f3f"
-                    layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20, justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={caption}
-                        textStyle="u_bold"
-                        textOptions={{ fill: '#ffffff' }}
-                        layout={{ position: 'absolute', left: 4, right: 4, top: 2, height: 17 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={caption}
+                    textStyle="u_bold"
+                    textOptions={{ fill: '#ffffff' }}
+                    verticalAlign="top"
+                    layout={{ marginTop: 2, height: 17, flexShrink: 0 }}
+                />
+            </Region>
+            <Border
+                variant="100"
+                layout={{ position: 'absolute', left: 8, width: 258, top: 30, height: 23 }}
+            >
                 <Border
                     variant="100"
-                    layout={{ position: 'absolute', left: 8, width: 258, top: 30, height: 23, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 23 }}
                 >
-                    <Border
-                        variant="100"
-                        layout={{ width: 190, height: '100%' }}
-                    >
-                        <ThemeText
-                            text={t('high.score.display.users.header')}
-                            textStyle="il_regular"
-                            layout={{ position: 'absolute', left: 1, right: 1, top: 3, height: 16 }}
-                        />
-                    </Border>
-                    <Border
-                        variant="100"
-                        layout={{ marginLeft: -2, width: 70, height: '100%' }}
-                    >
-                        <ThemeText
-                            text={t(isTimed ? 'high.score.display.time.header' : 'high.score.display.score.header')}
-                            textOptions={{ align: 'right' }}
-                            layout={{ position: 'absolute', left: 1, right: 5, top: 3, height: 16 }}
-                        />
-                    </Border>
+                    <ThemeText
+                        text={t('high.score.display.users.header')}
+                        textStyle="il_regular"
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 1, top: 3, height: 16 }}
+                    />
                 </Border>
                 <Border
-                    variant="108"
-                    tintColor="#676767"
-                    layout={{ position: 'absolute', left: 8, width: 257, top: 53, height: 255 }}
-                />
-                <ScrollArea
-                    orientation="vertical"
-                    layout={{ position: 'absolute', left: 8, width: 256, top: 53, height: 253 }}
-                    contentLayout={{ position: 'relative', flexDirection: 'column', width: '100%' }}
+                    variant="100"
+                    layout={{ position: 'absolute', left: 188, width: 70, top: 0, height: 23, overflow: 'hidden' }}
                 >
-                    {entries.map((entry, index) => (
-                        <Region
-                            key={index}
-                            layout={{ width: 258, height: 20, flexShrink: 0 }}
-                        >
-                            <ThemeText
-                                text={entry.users.join(', ')}
-                                textOptions={{ fill: '#ffffff' }}
-                                layout={{ position: 'absolute', left: 2, width: 180, top: 2, height: 16 }}
-                            />
-                            <ThemeText
-                                text={isTimed ? formatTime(entry.score, (entry.score >= 3600) ? 3 : 2) : String(entry.score)}
-                                textOptions={{ fill: '#ffffff', align: 'right' }}
-                                layout={{ position: 'absolute', right: 13, width: 56, top: 2, height: 16 }}
-                            />
-                        </Region>
-                    ))}
-                </ScrollArea>
-                <ThemeImage
-                    src={LayoutImage('room-ui/high_score_highscore_cup.png')}
-                    layout={{ position: 'absolute', left: 0, width: 40, top: 269, height: 70 }}
-                />
+                    <ThemeText
+                        text={t(isTimed ? 'high.score.display.time.header' : 'high.score.display.score.header')}
+                        textStyle="il_regular"
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', right: 5, top: 3, height: 16 }}
+                    />
+                </Border>
+            </Border>
+            <Border
+                variant="108"
+                tintColor="#676767"
+                layout={{ position: 'absolute', left: 8, width: 257, top: 53, height: 255 }}
+            />
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 311, height: 17, flexDirection: 'row', justifyContent: 'center' }}>
                 <ThemeText
                     text={t('high.score.display.congratulations.footer')}
                     textStyle="u_regular"
-                    textOptions={{ fill: '#6f6f6f', align: 'center' }}
-                    layout={{ position: 'absolute', left: 41, width: 233, top: 311, height: 17 }}
+                    textOptions={{ fill: '#6f6f6f' }}
+                    verticalAlign="top"
+                    layout={{ height: 17, flexShrink: 0 }}
                 />
-            </Bubble>
-        </Region>
+            </Region>
+            <ThemeImage
+                src={LayoutImage('room-ui/high_score_highscore_cup.png')}
+                bitmap={{ fitSizeToContents: true }}
+                layout={{ position: 'absolute', left: 0, top: 269 }}
+            />
+            <ScrollArea
+                orientation="vertical"
+                layout={{ position: 'absolute', left: 8, width: 256, top: 53, height: 253 }}
+                contentLayout={{ position: 'relative', flexDirection: 'column', width: '100%' }}
+            >
+                {entries.map((entry, index) => (
+                    <Region
+                        key={index}
+                        layout={{ width: 258, height: 20, flexShrink: 0 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 2, top: 2, height: 16, maxWidth: 180, overflow: 'hidden' }}>
+                            <ThemeText
+                                text={entry.users.join(', ')}
+                                textStyle="il_regular"
+                                textOptions={{ fill: '#ffffff' }}
+                                flashFormat={{ etchingColor: 0x62FFFFFF }}
+                                verticalAlign="top"
+                                layout={{ height: 16, flexShrink: 0 }}
+                            />
+                        </Region>
+                        <ThemeText
+                            text={isTimed ? formatTime(entry.score, (entry.score >= 3600) ? 3 : 2) : String(entry.score)}
+                            textStyle="il_regular"
+                            textOptions={{ fill: '#ffffff' }}
+                            flashFormat={{ etchingColor: 0x62FFFFFF }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', right: 13, top: 2, height: 16 }}
+                        />
+                    </Region>
+                ))}
+            </ScrollArea>
+        </Bubble>
     );
 };

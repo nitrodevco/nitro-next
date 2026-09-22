@@ -109,8 +109,15 @@ export const WiredMenuInspectionPreview = ({ preview, showHighlightButton, highl
         >
             {(preview.kind === 'furni_instructions') && instruction('wiredmenu.inspection.preview_furni_instruction')}
             {(preview.kind === 'user_instructions') && instruction('wiredmenu.inspection.preview_user_instruction')}
+            {/* `global_placeholder`: `setGlobalPlaceholder` shows it where the layout put it (10,64), which its 120x97 bitmap fills. */}
+            {(preview.kind === 'global') && (
+                <ThemeImage
+                    src={LayoutImage('wired/wired_global_placeholder.png')}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center', fitSizeToContents: true }}
+                    layout={{ position: 'absolute', left: 10, top: 64, width: 120, height: 97 }}
+                />
+            )}
             <Box layout={{ position: 'absolute', left: 0, top: 0, width: BORDER_WIDTH, height: BORDER_HEIGHT, alignItems: 'center', justifyContent: 'center' }}>
-                {(preview.kind === 'global') && <ThemeImage src={LayoutImage('wired/wired_global_placeholder.png')} />}
                 {(preview.kind === 'furni') && (
                     <FurniPreview
                         key={preview.objectId}
@@ -133,6 +140,7 @@ export const WiredMenuInspectionPreview = ({ preview, showHighlightButton, highl
                         variant="7"
                         disabled={!highlightEnabled}
                         tooltip={t('wiredmenu.inspection.highlight_wireds', 'wiredmenu.inspection.highlight_wireds')}
+                        tooltipDelay={250}
                         onPointerTap={onHighlight}
                         layout={{ width: 25, height: 26 }}
                     >
@@ -140,8 +148,9 @@ export const WiredMenuInspectionPreview = ({ preview, showHighlightButton, highl
                         {!!catalogIconsUrl.length && (
                             <ThemeImage
                                 src={catalogIconsUrl.replace('%name%', '80')}
+                                bitmap={{ fitSizeToContents: true }}
                                 eventMode="none"
-                                layout={{ position: 'absolute', left: 4, top: 6 }}
+                                layout={{ position: 'absolute', left: 4, top: 6, width: 16, height: 14 }}
                             />
                         )}
                     </ContainerButton>

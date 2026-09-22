@@ -92,6 +92,8 @@ export const FloorPlanSlider = ({ steps, value, onChange, width, height, barLeft
             <ThemeImage
                 name="slider_track"
                 src={LayoutImage(TRACK_IMAGE)}
+                // Both tracks (`tile_height_slider_track`, `wall_height_slider_track`) are `zoom_y="-1"`: drawn upside down.
+                bitmap={{ zoomY: -1 }}
                 alpha={disabled ? DISABLED_ALPHA : 1}
                 layout={{ position: 'absolute', left: Math.round(value * (width / steps)), top: trackTop, width: TRACK_WIDTH, height: TRACK_HEIGHT }}
             />

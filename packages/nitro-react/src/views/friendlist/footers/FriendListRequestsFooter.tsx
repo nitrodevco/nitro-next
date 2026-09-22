@@ -1,43 +1,63 @@
 import { useTranslation } from '#base/context/system';
-import { Border, Box, Button, Icon, ThemeText } from '#base/theme';
+import { Border, ContainerButton, Icon, Region, ThemeText } from '#base/theme';
 
 /**
- * Pixi port of views/friendlist/footers/FriendListRequestsFooter.tsx. `friend_requests_footer`
- * draws both buttons with icon-set styles: `accept_all_but` is style 8 tinted `0x33cc00`,
- * `reject_all_but` style 9 tinted `0xff3333`.
+ * The requests tab's `friend_requests_footer` (223x67, stretched to the tab's width): a
+ * `0xd9d9d9` border at (5, 5) with the two full-width style-0 container buttons,
+ * `accept_all_but` at y 5 (icon style 8 tinted `0x33cc00`, text at x 32) and `reject_all_but`
+ * at y 30 (style 9 tinted `0xff3333`, text at x 30). The texts are Volter 9 in the button's own
+ * colour - the layout's `text_color="0"` is no var at all.
  */
 export const FriendListRequestsFooter = () => {
     const t = useTranslation();
 
     return (
-        <Box layout={{ height: 66, flexShrink: 0, paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingBottom: 5 }}>
+        <Region
+            backgroundColor="#ffffff"
+            layout={{ position: 'relative', width: '100%', height: 67, flexShrink: 0 }}
+        >
             <Border
-                tintColor="#d8d8d8"
-                layout={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingLeft: 5, paddingRight: 5, gap: 4 }}
+                variant="0"
+                tintColor="#d9d9d9"
+                layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 57 }}
             >
-                <Button layout={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', gap: 8, paddingLeft: 8, paddingTop: 4, paddingBottom: 4 }}>
-                    <Icon
-                        name="icon"
-                        variant={8}
-                        tintColor="#33cc00"
-                    />
-                    <ThemeText
-                        text={t('friendlist.requests.acceptall')}
-                        textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
-                    />
-                </Button>
-                <Button layout={{ width: '100%', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', gap: 11, paddingLeft: 8, paddingTop: 4, paddingBottom: 4 }}>
+                <ContainerButton
+                    variant="0"
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 30, height: 21, overflow: 'hidden' }}
+                >
                     <Icon
                         name="icon"
                         variant={9}
                         tintColor="#ff3333"
+                        layout={{ position: 'absolute', left: 9, top: 4, width: 16, height: 14 }}
                     />
                     <ThemeText
                         text={t('friendlist.requests.dismissall')}
-                        textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
+                        textOptions={{ fontFamily: 'Volter', fontSize: 9 }}
+                        clip
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 30, right: 13, top: 3, height: 20 }}
                     />
-                </Button>
+                </ContainerButton>
+                <ContainerButton
+                    variant="0"
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 21, overflow: 'hidden' }}
+                >
+                    <Icon
+                        name="icon"
+                        variant={8}
+                        tintColor="#33cc00"
+                        layout={{ position: 'absolute', left: 9, top: 4, width: 16, height: 14 }}
+                    />
+                    <ThemeText
+                        text={t('friendlist.requests.acceptall')}
+                        textOptions={{ fontFamily: 'Volter', fontSize: 9 }}
+                        clip
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 32, right: 11, top: 3, height: 20 }}
+                    />
+                </ContainerButton>
             </Border>
-        </Box>
+        </Region>
     );
 };

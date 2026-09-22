@@ -1,5 +1,7 @@
 import { createStore } from 'zustand';
 
+import type { CollectibleProductInfo } from '#base/context/collectibles';
+
 import { NOTIFICATION_STYLES, NotificationAssetName, NotificationLayoutName, NotificationStyleConfig, NotificationStyleName } from './NotificationConfig';
 
 /**
@@ -20,9 +22,15 @@ import { NOTIFICATION_STYLES, NotificationAssetName, NotificationLayoutName, Not
 
 /**
  * `addItem`'s extra data object, by `NotificationExtraDataKey`. `product`, `rarity` and
- * `rarity_color` belong to the `nft_opening` layout, which is not ported (see `NotificationConfig`).
+ * `rarity_color` are read by the `nft_opening` layout only.
  */
 export interface NotificationOptions {
+    /** `product`: the `IProductDisplayInfo` the `nft_opening` bubble's `product_icon` shows. */
+    product?: CollectibleProductInfo;
+    /** `rarity`: after `collectibles.item.rarity` on the `nft_opening` bubble's strip. */
+    rarity?: string;
+    /** `rarity_color`: the strip's colour. */
+    rarityColor?: number;
     /**
      * `id`: a notification with an id is not added again while one with the same id is queued or
      * up, and can be taken down with `removeNotificationById`.

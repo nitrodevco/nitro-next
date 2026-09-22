@@ -164,15 +164,17 @@ export const WiredSlider = ({ min, max, step, value, onChange, disabled = false 
                     <ThemeImage
                         src={LayoutImage(`wired/${template.baseAsset}.png`)}
                         tint={template.baseTint ?? undefined}
-                        width={Math.floor(trackWidth)}
-                        height={template.baseHeight}
+                        // `slider_base`: stretched across the slider, drawn at its own height (`stretched_y` false).
+                        bitmap={{ stretchedY: false }}
                         eventMode="none"
-                        layout={{ position: 'absolute', left: 0, top: 0 }}
+                        layout={{ position: 'absolute', left: 0, top: 0, width: Math.floor(trackWidth), height: template.baseHeight }}
                     />
                 )}
                 <Box layout={{ position: 'absolute', left: 0, top: template.movementAreaY, right: 0, height: template.buttonHeight }}>
                     <ThemeImage
                         src={LayoutImage(`wired/${template.buttonAsset}.png`)}
+                        // `slider_button`: unstretched, the window sized to its bitmap.
+                        bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
                         cursor={(isDisabled || (step === 0)) ? 'default' : 'pointer'}
                         onPointerDown={onKnobPointerDown}
                         layout={{ position: 'absolute', left: knobX, top: 0 }}

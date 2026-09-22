@@ -12,6 +12,8 @@ import type { NavigatorViewWindowParams } from '#base/views/navigator/NavigatorV
 export type WindowRegistry = {
     avatar_editor: AvatarEditorViewWindowParams;
     catalog: CatalogViewWindowParams;
+    /** The Builders Club catalogue (`toggleCatalog("BUILDERS_CLUB")`) - see `getCatalogWindowName`. */
+    builders_catalog: CatalogViewWindowParams;
 
     friendlist: FriendListViewWindowParams;
     friendlist_invite: NoWindowParams;
@@ -40,6 +42,24 @@ export type WindowRegistry = {
 
     /** The toolbar's "other settings" (`OtherSettingsView`), from the settings list under the purse. */
     toolbar_other_settings: NoWindowParams;
+
+    /** The vault (`EarningsView`), from `habboUI/open/vault` - the purse's earnings button or the new earnings bubble. */
+    earnings: NoWindowParams;
+
+    /** The club centre (`HabboClubCenter`'s `ClubCenterView`), from `habboUI/open/hccenter` - `openClubCenter`, `verifyClubLevel`. */
+    club_center: NoWindowParams;
+
+    /** The special items display (`SpecialItemsView`), from a `special_items_display/<key>` link. */
+    special_items_display: NoWindowParams;
+
+    /** The offer centre's reward list (`OfferCenter.showRewards`). */
+    offer_center: NoWindowParams;
+
+    /** The habbicon hub (`HabbiconView`), from `habbicons/open` - `HabbiconController.openHabbiconHub`. */
+    habbicons: NoWindowParams;
+
+    /** The collectibles hub (`CollectiblesView`), from the me menu or a `collectibles/open` link. */
+    collectibles: NoWindowParams;
 
     /** Dev tool: browse/open any of the generated Flash layout ports (views/layouts). */
     layout_browser: NoWindowParams;

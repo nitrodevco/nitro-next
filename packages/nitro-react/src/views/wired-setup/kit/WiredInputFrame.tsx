@@ -9,6 +9,10 @@
  * it puts around the field (Flash's `extraWidth = template.width - field.width`). Without it
  * the frame fills. `invalid` recolours the template with the style's
  * `invalidInputBackgroundColor` (`NumberInputPreset.updateInvalidState`). Internal to the kit.
+ *
+ * The volters' outline is the field's own `border` var: `TextField` strokes it on the field's
+ * edge, inside its box, and the text keeps its 2px gutter from that same edge - so the field is
+ * not inset by the outline's pixel.
  */
 import { ReactNode } from 'react';
 
@@ -76,7 +80,7 @@ export const WiredInputFrame = ({ fieldWidth, height, invalid = false, alpha, to
                         layout={{ position: 'absolute', ...edge }}
                     />
                 ))}
-                <Box layout={(template.fieldBorderColor !== null) ? { ...fieldLayout, left: 1, top: 1, right: 1, bottom: 1 } : fieldLayout}>
+                <Box layout={fieldLayout}>
                     {children}
                 </Box>
             </Box>

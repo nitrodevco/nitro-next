@@ -1,29 +1,33 @@
 import { useRoomSessionActions } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
-import { Box, Bubble } from '#base/theme';
 
 import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
+import { InfoBubbleMenuFrame } from './InfoBubbleMenuFrame';
+import { OWN_AVATAR_DECORATING_GEOMETRY } from './InfoBubbleMenuGeometry';
+
+/** `own_avatar_decorating`'s one row: 101x26. */
+const ROW_WIDTH = 101;
+const ROW_HEIGHT = 26;
 
 /**
  * The bubble that stays over your avatar while you decorate - `DecorateModeView`, on the
- * `own_avatar_decorating` layout. Its one button ends decorating.
+ * `own_avatar_decorating` layout: no header, the black rule at y 7 and its one `decorate` row,
+ * which ends decorating.
  */
 export const DecorateModeBubbleView = () => {
     const t = useTranslation();
     const { setIsDecorating } = useRoomSessionActions();
 
     return (
-        <Bubble
-            variant="0"
-            tintColor="#6e6b67"
-            layout={{ flexDirection: 'column', paddingTop: 8, paddingBottom: 8 }}
+        <InfoBubbleMenuFrame
+            geometry={OWN_AVATAR_DECORATING_GEOMETRY}
+            rowHeights={[ ROW_HEIGHT ]}
         >
-            <Box layout={{ minWidth: 103, maxWidth: 103, marginLeft: 2, marginRight: 2 }}>
-                <InfoBubbleMenuButton
-                    caption={t('widget.avatar.stop_decorating')}
-                    onPress={() => setIsDecorating(false)}
-                />
-            </Box>
-        </Bubble>
+            <InfoBubbleMenuButton
+                width={ROW_WIDTH}
+                caption={t('widget.avatar.stop_decorating')}
+                onPress={() => setIsDecorating(false)}
+            />
+        </InfoBubbleMenuFrame>
     );
 };

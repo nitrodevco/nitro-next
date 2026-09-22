@@ -2,6 +2,8 @@ import { CatalogTypeEnum } from '@nitrodevco/nitro-api';
 
 import { CatalogContextProvider } from '#base/context/catalog';
 
+import { CatalogBuildersClubComponent } from './CatalogBuildersClubComponent';
+import { CatalogClubComponent } from './CatalogClubComponent';
 import { CatalogComponent } from './CatalogComponent';
 
 type CatalogWrapperProps = {
@@ -11,7 +13,8 @@ type CatalogWrapperProps = {
 export const CatalogWrapper = ({ catalogType }: CatalogWrapperProps) => {
     return (
         <CatalogContextProvider catalogType={catalogType}>
-            <CatalogComponent />
+            {(catalogType === CatalogTypeEnum.BuildersClub) ? <CatalogBuildersClubComponent /> : <CatalogComponent />}
+            {(catalogType === CatalogTypeEnum.Normal) && <CatalogClubComponent />}
         </CatalogContextProvider>
     );
 };

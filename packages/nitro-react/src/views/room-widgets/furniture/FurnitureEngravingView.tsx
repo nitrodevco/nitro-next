@@ -1,18 +1,63 @@
 import { AvatarGenderType } from '@nitrodevco/nitro-api';
 
-import { useTranslation } from '#base/context/system';
-import { CloseButton, Region, ThemeImage, ThemeText, useAvatarImageTexture } from '#base/theme';
+import { useConfigValue, useTranslation } from '#base/context/system';
+import { useViewportSize } from '#base/hooks';
+import { Region, ThemeImage, ThemeText, useAvatarImageTexture } from '#base/theme';
+
+/** A plaque's text boxes: `x`, `y` and `width` as its layout places them. */
+type TextBox = { left: number; top: number; width: number };
+
+interface EngravingTheme {
+    /** The localization prefix and the layout (`<prefix>_engraving`) it names. */
+    prefix: string;
+    /** `asset_uri` of the `background` bitmap, under `${image.library.url}`. */
+    background: string;
+    /** `text_color` of `header` and `date`, and of the two names. */
+    text: string;
+    name: string;
+    /** `etching_color` of every text. */
+    etching: number;
+    header: TextBox;
+    nameLeft: TextBox;
+    nameRight: TextBox;
+    date: TextBox;
+}
+
+/** `lovelock_engraving` and `wildwest_engraving` differ only in their texts and background. */
+const LOVELOCK_GEOMETRY = {
+    text: '#59224a',
+    name: '#59224a',
+    etching: 0xFFFFFFFF,
+    header: { left: 82, top: 126, width: 217 },
+    nameLeft: { left: 19, top: 175, width: 150 },
+    nameRight: { left: 199, top: 175, width: 87 },
+    date: { left: 143, top: 151, width: 97 },
+};
 
 /**
- * The three engraved friend furni, by the `furniture_friendfurni_engraving` value their own
- * logic writes. Each is the same plaque with its own wording and ink; 1 and 2 are unused, as
- * they were in `FriendFurniEngravingWidget.open`.
+ * The engraved friend furni, by the `furniture_friendfurni_engraving` value their own logic
+ * writes - `FriendFurniEngravingWidget.open` builds `LoveLockEngravingView` (0),
+ * `WildWestEngravingView` (3) or `HabboweenEngravingView` (4), each only naming its layout; 1 and
+ * 2 build nothing.
  */
-const ENGRAVING_THEMES: Record<number, { prefix: string; text: string; name: string }> = {
-    0: { prefix: 'lovelock', text: '#59224a', name: '#59224a' },
-    3: { prefix: 'wildwest', text: '#59224a', name: '#59224a' },
-    4: { prefix: 'habboween', text: '#2a2420', name: '#6b115c' },
+const ENGRAVING_THEMES: Record<number, EngravingTheme> = {
+    0: { prefix: 'lovelock', background: 'furniextras/loveLock_engraving.png', ...LOVELOCK_GEOMETRY },
+    3: { prefix: 'wildwest', background: 'furniextras/loveLock_wildwest.png', ...LOVELOCK_GEOMETRY },
+    4: {
+        prefix: 'habboween',
+        background: 'furniextras/loveLock_hween14.png',
+        text: '#2a2420',
+        name: '#6b115c',
+        etching: 0xFF958D95,
+        header: { left: 82, top: 130, width: 217 },
+        nameLeft: { left: 20, top: 175, width: 150 },
+        nameRight: { left: 190, top: 175, width: 161 },
+        date: { left: 143, top: 154, width: 97 },
+    },
 };
+
+const WIDTH = 375;
+const HEIGHT = 210;
 
 export interface FurnitureEngravingViewProps {
     /** 0 lovelock, 3 wild west, 4 habboween. */
@@ -26,69 +71,91 @@ export interface FurnitureEngravingViewProps {
 }
 
 /**
- * Two friends engraved on a lock, on the `lovelock_engraving` layout (375x210): the pair of
- * them side by side, their names beneath and the day it was sealed.
+ * Two friends engraved on a lock, on the `lovelock_engraving` / `wildwest_engraving` /
+ * `habboween_engraving` layouts (375x210) that `FriendFurniEngravingView.createWindow` builds and
+ * centres: the plaque art from the image library, the pair of them side by side, their names
+ * beneath and the day it was sealed.
  *
- * Flash painted the plaque itself from the external image host, which the port cannot reach, so
- * the engraving keeps the layout's geometry and ink over a plain ground.
+ * Each avatar is the large cropped image, drawn centred in its 70x115 bitmap
+ * (`setElementImage`); only the right one is turned to direction 4, so the left keeps the avatar's
+ * default 2 and the two face each other. The close button is drawn by the plaque art: the layout
+ * only puts the invisible `header_button_close` region over it.
  */
 export const FurnitureEngravingView = ({
     engravingType, leftName, rightName, leftFigure, rightFigure, date, onClose,
 }: FurnitureEngravingViewProps) => {
     const t = useTranslation();
+    const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
+    const viewport = useViewportSize();
     const theme = ENGRAVING_THEMES[engravingType] ?? ENGRAVING_THEMES[0];
-    const left = useAvatarImageTexture(leftFigure, AvatarGenderType.Male, { direction: 4 });
+    const left = useAvatarImageTexture(leftFigure, AvatarGenderType.Male, { direction: 2 });
     const right = useAvatarImageTexture(rightFigure, AvatarGenderType.Male, { direction: 4 });
+    const etching = { etchingColor: theme.etching, etchingPosition: 'bottom' as const };
 
     return (
-        <Region
-            backgroundColor="#f5e9de"
-            layout={{ position: 'absolute', top: 90, left: 110, width: 375, height: 210 }}
+        <Region layout={{
+            position: 'absolute',
+            left: Math.max(0, Math.floor((viewport.width - WIDTH) / 2)),
+            top: Math.max(0, Math.floor((viewport.height - HEIGHT) / 2)),
+            width: WIDTH,
+            height: HEIGHT,
+        }}
         >
-            <CloseButton
-                onPointerTap={onClose}
-                layout={{ position: 'absolute', right: 4, top: 4, width: 18, height: 20 }}
+            <ThemeImage
+                src={`${imageLibraryUrl}${theme.background}`}
+                bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                layout={{ position: 'absolute', left: 0, top: 0, width: WIDTH, height: HEIGHT }}
             />
-            <Region layout={{ position: 'absolute', left: 115, width: 70, top: 7, height: 115, alignItems: 'center', justifyContent: 'flex-end' }}>
-                {left.texture && (
-                    <ThemeImage
-                        texture={left.texture}
-                        width={left.width}
-                        height={left.height}
-                    />
-                )}
-            </Region>
-            <Region layout={{ position: 'absolute', left: 186, width: 70, top: 7, height: 115, alignItems: 'center', justifyContent: 'flex-end' }}>
-                {right.texture && (
-                    <ThemeImage
-                        texture={right.texture}
-                        width={right.width}
-                        height={right.height}
-                    />
-                )}
-            </Region>
             <ThemeText
                 text={t(`${theme.prefix}.engraving.caption`)}
                 textStyle="u_bold"
                 textOptions={{ fill: theme.text, align: 'center' }}
-                layout={{ position: 'absolute', left: 79, width: 217, top: 126, height: 17 }}
+                flashFormat={etching}
+                verticalAlign="top"
+                layout={{ position: 'absolute', ...theme.header, height: 17 }}
             />
+            {left.texture && (
+                <ThemeImage
+                    texture={left.texture}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                    layout={{ position: 'absolute', left: 115, top: 7, width: 70, height: 115 }}
+                />
+            )}
+            {right.texture && (
+                <ThemeImage
+                    texture={right.texture}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                    layout={{ position: 'absolute', left: 186, top: 7, width: 70, height: 115 }}
+                />
+            )}
             <ThemeText
                 text={leftName}
                 textStyle="u_bold"
                 textOptions={{ fill: theme.name, align: 'right' }}
-                layout={{ position: 'absolute', left: 19, width: 150, top: 175, height: 17 }}
+                flashFormat={etching}
+                verticalAlign="top"
+                layout={{ position: 'absolute', ...theme.nameLeft, height: 17 }}
             />
             <ThemeText
                 text={rightName}
                 textStyle="u_bold"
                 textOptions={{ fill: theme.name }}
-                layout={{ position: 'absolute', left: 199, width: 87, top: 175, height: 17 }}
+                flashFormat={etching}
+                verticalAlign="top"
+                layout={{ position: 'absolute', ...theme.nameRight, height: 17 }}
             />
             <ThemeText
                 text={date}
+                textStyle="u_bold"
                 textOptions={{ fill: theme.text, align: 'center' }}
-                layout={{ position: 'absolute', left: 79, width: 217, top: 148, height: 17 }}
+                flashFormat={etching}
+                verticalAlign="top"
+                layout={{ position: 'absolute', ...theme.date, height: 4 }}
+            />
+            <Region
+                cursor="pointer"
+                onPointerTap={onClose}
+                layout={{ position: 'absolute', left: 330, top: 33, width: 21, height: 17 }}
             />
         </Region>
     );

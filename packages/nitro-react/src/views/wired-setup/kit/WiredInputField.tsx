@@ -80,7 +80,6 @@ export const WiredInputField = ({ value, onChange, fieldWidth, height, multiline
     const showsWarn = charLimitWarning && template.hasCharLimitWarn && showsCharLimitWarning(value.length, maxCharacters);
 
     const showsError = template.hasWarningDisplay && !!warning;
-    const fieldBackground = (showsError ? style.invalidInputBackgroundColor : template.backgroundColor) ?? '';
 
     const errorOverlay = showsError
         ? (
@@ -149,10 +148,14 @@ export const WiredInputField = ({ value, onChange, fieldWidth, height, multiline
                                 maxLength={(maxCharacters > 0) ? maxCharacters : undefined}
                                 textStyle={template.textStyle}
                                 textColor={template.textColor}
-                                // An empty colour draws no fill: the dark volter's field is see-through. The
-                                // invalid tint multiplies the template's white, which leaves the tint itself.
-                                backgroundColor={fieldBackground}
-                                focusedBackgroundColor={fieldBackground}
+                                // The `field` is a Flash input: its text at the 2px gutter, top left, and
+                                // no fill of its own (no `background` var) - what shows under it is the
+                                // template's border skin or fill, which `WiredInputFrame` draws, tinted
+                                // `invalidInputBackgroundColor` while the number is invalid.
+                                flashPlacement
+                                alwaysShowSelection
+                                backgroundColor={null}
+                                focusedBackgroundColor={null}
                                 layout={{ width: '100%', height: '100%' }}
                             />
                         </Box>

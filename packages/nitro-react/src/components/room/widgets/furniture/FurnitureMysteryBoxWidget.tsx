@@ -3,7 +3,7 @@ import { MysteryBoxWaitingCanceledComposer } from '@nitrodevco/nitro-packets';
 
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
-import { useSystemStore, useTranslation } from '#base/context/system';
+import { useSystemStore } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { MysteryBoxData } from '#base/handlers';
 import { useRoomFurnitureData } from '#base/hooks';
@@ -20,9 +20,9 @@ export const FurnitureMysteryBoxWidget = () => {
     const furnitureData = useRoomFurnitureData(request?.objectId ?? -1, request?.category ?? 0);
     const userId = useUserStore(x => x.userId);
     const floorItems = useSystemStore(x => x.floorItems);
+    const wallItems = useSystemStore(x => x.wallItems);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
-    const t = useTranslation();
 
     const onClose = () => closeRoomWidget(RoomObjectWidgetRequestEvent.MYSTERYBOX_OPEN_DIALOG);
 
@@ -31,11 +31,13 @@ export const FurnitureMysteryBoxWidget = () => {
     if (!request || !data) return null;
 
     if (data.prize) {
-        const product = floorItems[data.prize.classId];
+        // `showRewardWindow` draws a floor (`s`) or wall (`i`) prize from the room engine by its class id.
+        const product = (data.prize.contentType === 's') ? floorItems[data.prize.classId] : ((data.prize.contentType === 'i') ? wallItems[data.prize.classId] : undefined);
 
         return (
             <FurnitureMysteryBoxRewardView
-                rewardName={product?.localizedName ?? t(`productdata.${data.prize.contentType}.name`, data.prize.contentType)}
+                rewardType={product?.className}
+                rewardColorIndex={product?.colorIndex ?? 0}
                 onClose={onClose}
             />
         );

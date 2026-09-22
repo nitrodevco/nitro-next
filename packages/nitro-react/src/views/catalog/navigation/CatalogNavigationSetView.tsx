@@ -1,6 +1,6 @@
 import { ICatalogNode } from '@nitrodevco/nitro-api';
 
-import { Box } from '#base/theme';
+import { Region } from '#base/theme';
 
 import { CatalogNavigationSetItemView } from './CatalogNavigationSetItemView';
 
@@ -8,12 +8,15 @@ export interface CatalogNavigationSetViewProps {
     node: ICatalogNode;
 }
 
-/** Pixi port of views/catalog/navigation/CatalogNavigationSetView.tsx. */
+/**
+ * A node's child list: `normal_list_template` of `catalog_ubuntu_with_tabs.xml`, the itemlist
+ * `CatalogNodeRenderable.createChildList` clones - its visible children stacked with no spacing.
+ */
 export const CatalogNavigationSetView = ({ node }: CatalogNavigationSetViewProps) => {
     if (!node.children.length) return null;
 
     return (
-        <Box layout={{ flexDirection: 'column', gap: 2 }}>
+        <Region layout={{ flexDirection: 'column', width: 178 }}>
             {node.children.map((x, index) => (x.visible
                 ? (
                         <CatalogNavigationSetItemView
@@ -22,6 +25,6 @@ export const CatalogNavigationSetView = ({ node }: CatalogNavigationSetViewProps
                         />
                     )
                 : null))}
-        </Box>
+        </Region>
     );
 };

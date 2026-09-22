@@ -1,7 +1,8 @@
 /**
  * `conditions/§_-02a§.createTimezoneSection` - the `time.timezone_selection` section of
  * `TimeMatches` and `DateMatches`: a dropdown of the zones (`wiredfurni.tooltip.timezone` as its
- * caption), hidden while there is only one zone to choose.
+ * caption), hidden (`visible = false`, so it keeps its spacer in the frame's list) while there
+ * is only one zone to choose.
  */
 import { isTimezoneSectionVisible, TimezoneConditionForm } from '#base/wired';
 
@@ -13,17 +14,16 @@ export interface ConditionTimezoneSectionProps {
     onSelect: (timezoneId: number) => void;
 }
 
-export const ConditionTimezoneSection = ({ form, onSelect }: ConditionTimezoneSectionProps) => {
-    if (!isTimezoneSectionVisible(form)) return null;
-
-    return (
-        <WiredSection title="${wiredfurni.params.time.timezone_selection}">
-            <WiredDropdown
-                options={form.timezones.map((timezone, id) => ({ id, label: timezone }))}
-                selected={form.timezoneId}
-                onSelect={onSelect}
-                caption="${wiredfurni.tooltip.timezone}"
-            />
-        </WiredSection>
-    );
-};
+export const ConditionTimezoneSection = ({ form, onSelect }: ConditionTimezoneSectionProps) => (
+    <WiredSection
+        title="${wiredfurni.params.time.timezone_selection}"
+        visible={isTimezoneSectionVisible(form)}
+    >
+        <WiredDropdown
+            options={form.timezones.map((timezone, id) => ({ id, label: timezone }))}
+            selected={form.timezoneId}
+            onSelect={onSelect}
+            caption="${wiredfurni.tooltip.timezone}"
+        />
+    </WiredSection>
+);

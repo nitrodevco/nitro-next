@@ -4,9 +4,14 @@ import { useState } from 'react';
 import { useWebSocketContext } from '#base/context/communication';
 import { useFriendsStore } from '#base/context/friend';
 import { useIsWindowVisible, useSystemActions, useTranslation } from '#base/context/system';
-import { Border, Box, Button, Frame, TextInput, ThemeText } from '#base/theme';
+import { Border, Button, ButtonThick, Frame, TextInput, ThemeText } from '#base/theme';
 
-/** Pixi port of views/friendlist/dialogs/FriendListRoomInviteView.tsx. */
+/**
+ * `RoomInviteView` - the `room_invite_confirm` alert (211x175, content at margins 6/25/6/7): the
+ * 199x118 border with the `invite_summary`, the 180x70 word-wrapping `message_input` and the
+ * `invite_note`, all Volter 9, over the thick `ok` (send) and plain `cancel` buttons at y 122.
+ * `RoomInviteView.onMessageInput` cuts the message at 120 characters.
+ */
 export const FriendListRoomInviteView = () => {
     const isVisible = useIsWindowVisible('friendlist_invite');
     const { toggleWindow } = useSystemActions();
@@ -32,43 +37,60 @@ export const FriendListRoomInviteView = () => {
             variant="0"
             id="friendlist-room-invite"
             defaultPosition={{ x: 260, y: 20 }}
+            dropShadow={false}
+            resizeDirection="none"
             layout={{ position: 'absolute', width: 211, height: 175 }}
+            margins={[ 6, 25, 6, 7 ]}
             caption={t('friendlist.invite.title')}
             onClose={() => toggleWindow('friendlist_invite')}
         >
-            <Border layout={{ height: 116, flexDirection: 'column', paddingLeft: 9, paddingRight: 9, paddingTop: 4, paddingBottom: 4 }}>
+            <Border
+                variant="0"
+                layout={{ position: 'absolute', left: 0, top: 0, width: 199, height: 118 }}
+            >
                 <ThemeText
                     text={t('friendlist.invite.summary', '', { count: selectedFriendIds.length.toString() })}
-                    textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
+                    textOptions={{ fontFamily: 'Volter', fontSize: 9 }}
+                    clip
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, top: 5, width: 180, height: 20 }}
                 />
                 <TextInput
                     value={message}
                     onChange={setMessage}
-                    maxLength={255}
+                    maxLength={120}
                     multiline
-                    fontSize={9.12}
-                    layout={{ width: '100%', height: 70, marginTop: 2 }}
+                    fontFamily="Volter"
+                    fontSize={9}
+                    flashPlacement
+                    border="#000000"
+                    alwaysShowSelection
+                    backgroundColor={null}
+                    focusedBackgroundColor={null}
+                    layout={{ position: 'absolute', left: 10, top: 24, width: 180, height: 70 }}
                 />
                 <ThemeText
-                    layout={{ marginTop: 1 }}
                     text={t('friendlist.invite.note')}
-                    textOptions={{ fill: '#000000', fontFamily: 'Volter', fontSize: 9 }}
+                    textOptions={{ fontFamily: 'Volter', fontSize: 9 }}
+                    clip
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, top: 98, width: 180, height: 20 }}
                 />
             </Border>
-            <Box layout={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 3 }}>
-                <Button
-                    layout={{ height: 22 }}
-                    onPointerTap={sendRoomInvite}
-                >
-                    {t('friendlist.invite.send')}
-                </Button>
-                <Button
-                    layout={{ height: 22 }}
-                    onPointerTap={() => toggleWindow('friendlist_invite')}
-                >
-                    {t('generic.cancel')}
-                </Button>
-            </Box>
+            <Button
+                variant="0"
+                onPointerTap={() => toggleWindow('friendlist_invite')}
+                layout={{ position: 'absolute', left: 139, top: 122, width: 60, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.cancel')}
+            </Button>
+            <ButtonThick
+                variant="0"
+                onPointerTap={sendRoomInvite}
+                layout={{ position: 'absolute', left: 0, top: 122, width: 60, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('friendlist.invite.send')}
+            </ButtonThick>
         </Frame>
     );
 };

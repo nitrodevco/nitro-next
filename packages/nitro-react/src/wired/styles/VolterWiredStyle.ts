@@ -68,7 +68,7 @@ export const VOLTER_WIRED_STYLE: WiredStyle = {
         dropdown: { variant: '200', width: 149, height: 22 },
         checkbox: { variant: '1', width: 17, height: 17 },
         radioButton: { variant: '1', width: 14, height: 16 },
-        expandCollapse: { width: 16, height: 10, offsetY: 0, arrowY: 0, arrowTint: null, upAsset: 'wired_volter_uparrow', downAsset: 'wired_volter_downarrow' },
+        expandCollapse: { width: 16, height: 10, offsetY: 0, arrowY: 0, arrowTint: null, upAsset: 'wired_volter_uparrow', downAsset: 'wired_volter_downarrow', backgroundColor: '#3d3d3d' },
         iconButton: {
             variant: '1', size: 20, iconTint: '#777777', iconSize: 12,
             icons: { left: { icon: 2, x: 5, y: 5 }, right: { icon: 3, x: 5, y: 5 }, up: { icon: 1, x: 6, y: 5 }, down: { icon: 0, x: 6, y: 6 } },

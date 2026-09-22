@@ -84,6 +84,11 @@ export interface WiredStyleExpandCollapseTemplate {
     arrowTint: string | null;
     upAsset: string;
     downAsset: string;
+    /**
+     * The region's fill behind the arrows, `null` for none: only `wired_style_volter` turns its
+     * `background` on (`0xffff3d3d3d`, which `WindowParser`'s uint wraps to `0xff3d3d3d`).
+     */
+    backgroundColor: string | null;
 }
 
 /** One `iconbutton_<name>`: a container button around an `icon_set` icon. */

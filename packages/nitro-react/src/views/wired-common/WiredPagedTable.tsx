@@ -7,9 +7,12 @@
  * `variables_management_overview_xml`, `transaction_overview_xml`) hold in `table_view` and in
  * `footer`; the frame, the header and the filters are the window's. The three layouts agree on
  * every number used here: `table_view` is inset 14px from the frame on both sides, the footer is
- * 60 high with the 30 high `pagination` row 16 down, the 50x30 first/previous buttons start 17
+ * 60 high and ends 2px above the content box's bottom, with the 30 high `pagination` row 16 down, the 50x30 first/previous buttons start 17
  * from the left with 13 between them, next/last end 17 from the right with 10 between them, and
- * the "N found. Showing page [ ] of M" row is centred, 4 down, 2 between its three parts.
+ * the "N found. Showing page [ ] of M" row is centred, 4 down, 2 between its three parts. Its
+ * texts are style 3 without a `text_style` var (`u_regular`), and `pagina_number_input` is a
+ * `border="true"` field whose `background="true"` fills it in `TextField.backgroundColor`'s own
+ * white, the layout giving it no colour of its own.
  *
  * It is controlled: the caller says which page is shown and how many there are, and gets
  * `onRequestPage` when the user asks for another one and the rate limiter agrees
@@ -37,7 +40,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Box, BoxLayout, ContainerButton, Icon, Region, TextInput, ThemeText } from '#base/theme';
+import { Box, BoxLayout, ContainerButton, Icon, TextInput, ThemeText } from '#base/theme';
 
 import { useWiredPageRequests, WiredPageRequests } from './useWiredPageRequests';
 import { calculateLastPage, clampInputPage, NO_PAGE, parseInputPage, restrictPageInput, splitPagingText } from './wiredPaging';
@@ -45,6 +48,8 @@ import { WiredTableView, WiredTableViewProps } from './WiredTableView';
 
 /** `footer` and the `pagination` row in it. */
 const FOOTER_HEIGHT = 60;
+/** The content box (`margin_bottom` 0) runs 2px past the footer's bottom edge. */
+const FOOTER_BOTTOM = 2;
 const PAGINATION_TOP = 16;
 const PAGINATION_HEIGHT = 30;
 /** `footer_buttons_left` / `footer_buttons_right`. */
@@ -53,7 +58,8 @@ const BUTTONS_LEFT_SPACING = 13;
 const BUTTONS_RIGHT_SPACING = 10;
 const BUTTON_WIDTH = 50;
 const BUTTON_HEIGHT = 30;
-/** The page text row: 4 down in `pagination`, `spacing` 2, 17 high texts at blend 0.7, a 21x17 bordered input. */
+/** The page text row: 4 down in `pagination`, `spacing` 2, 17 high `u_regular` texts at blend 0.7, a 21x17 bordered input. */
+const PAGE_TEXT_STYLE = 'u_regular';
 const PAGE_TEXT_TOP = 4;
 const PAGE_TEXT_SPACING = 2;
 const PAGE_TEXT_HEIGHT = 17;
@@ -167,7 +173,7 @@ export const WiredPagedTable = <T extends object>({ currentPage, totalEntries, p
                     scrollResetKey={scrollResetKey ?? currentPage}
                 />
             </Box>
-            <Box layout={{ width: '100%', height: FOOTER_HEIGHT, flexShrink: 0 }}>
+            <Box layout={{ width: '100%', height: FOOTER_HEIGHT, flexShrink: 0, marginBottom: FOOTER_BOTTOM }}>
                 <Box layout={{ position: 'absolute', left: 0, right: 0, top: PAGINATION_TOP, height: PAGINATION_HEIGHT }}>
                     <Box layout={{ position: 'absolute', left: BUTTONS_SIDE_INSET, top: 0, height: BUTTON_HEIGHT, flexDirection: 'row', gap: BUTTONS_LEFT_SPACING }}>
                         <PageButton
@@ -200,31 +206,28 @@ export const WiredPagedTable = <T extends object>({ currentPage, totalEntries, p
                     <Box layout={{ position: 'absolute', left: 0, right: 0, top: PAGE_TEXT_TOP, height: PAGE_TEXT_HEIGHT, flexDirection: 'row', justifyContent: 'center', gap: PAGE_TEXT_SPACING }}>
                         <ThemeText
                             text={pagingText?.start ?? ''}
-                            textStyle="regular"
+                            textStyle={PAGE_TEXT_STYLE}
                             alpha={PAGE_TEXT_BLEND}
                             verticalAlign="top"
                             layout={{ height: PAGE_TEXT_HEIGHT }}
                         />
-                        {/* `border="true"` on the input: the 1px black outline of a Flash TextField, inside its 21x17. */}
-                        <Region
-                            backgroundColor="#000000"
+                        <TextInput
+                            value={inputText}
+                            onChange={value => setInputText(restrictPageInput(value))}
+                            onEnter={navigateToInputPage}
+                            onFocusChange={(focused) => {
+                                if (!focused) navigateToInputPage();
+                            }}
+                            textStyle={PAGE_TEXT_STYLE}
+                            flashPlacement
+                            border="#000000"
+                            backgroundColor="#ffffff"
+                            focusedBackgroundColor="#ffffff"
                             layout={{ width: PAGE_INPUT_WIDTH, height: PAGE_TEXT_HEIGHT, flexShrink: 0 }}
-                        >
-                            <TextInput
-                                value={inputText}
-                                onChange={value => setInputText(restrictPageInput(value))}
-                                onEnter={navigateToInputPage}
-                                onFocusChange={(focused) => {
-                                    if (!focused) navigateToInputPage();
-                                }}
-                                textStyle="regular"
-                                focusedBackgroundColor="#ffffff"
-                                layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
-                            />
-                        </Region>
+                        />
                         <ThemeText
                             text={pagingText?.end ?? ''}
-                            textStyle="regular"
+                            textStyle={PAGE_TEXT_STYLE}
                             alpha={PAGE_TEXT_BLEND}
                             verticalAlign="top"
                             layout={{ height: PAGE_TEXT_HEIGHT }}

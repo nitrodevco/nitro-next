@@ -11,7 +11,8 @@ import { FurnitureBannerDialogView } from '#base/views/room-widgets/furniture/Fu
 const MAX_INSCRIPTION_LENGTH = 500;
 
 /**
- * A mystery trophy, engraved as it is opened. Whatever is typed here is what the trophy will
+ * A mystery trophy, engraved as it is opened - `MysteryTrophyOpenDialogView` on the `mysterytrophy`
+ * layout, whose `input_border` sits at (17, 15) in the 475x90 container at y 100. Whatever is typed here is what the trophy will
  * say for good - there is no second dialog, which is why the box asks so plainly.
  */
 export const FurnitureMysteryTrophyWidget = () => {
@@ -29,7 +30,9 @@ export const FurnitureMysteryTrophyWidget = () => {
             captionKey="mysterytrophy.name.title"
             titleKey="mysterytrophy.header.title"
             descriptionKey="mysterytrophy.header.description"
+            iconPath="client_static/alert_mystTrophy.png"
             height={270}
+            buttonRow={{ left: -1, top: 186, cancelLeft: 177, confirmLeft: 319 }}
             onConfirm={() => {
                 send(new OpenMysteryTrophyComposer({ objectId: request.objectId, inscription }));
                 onClose();
@@ -38,18 +41,21 @@ export const FurnitureMysteryTrophyWidget = () => {
         >
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 17, width: 417, top: 15, height: 65 }}
+                layout={{ position: 'absolute', left: 17, top: 115, width: 417, height: 65 }}
             >
                 <TextInput
                     value={inscription}
                     onChange={setInscription}
                     maxLength={MAX_INSCRIPTION_LENGTH}
                     multiline
-                    layout={{ position: 'absolute', left: 7, width: 380, top: 6, height: 50 }}
+                    textStyle="u_regular"
+                    flashPlacement
+                    layout={{ position: 'absolute', left: 7, top: 6, width: 380, height: 50 }}
                 />
                 <ThemeImage
                     src={LayoutImage('shared/common_small_pen.png')}
-                    layout={{ position: 'absolute', left: 390, width: 17, top: 20, height: 18 }}
+                    bitmap={{ fitSizeToContents: true }}
+                    layout={{ position: 'absolute', left: 390, top: 20 }}
                 />
             </Border>
         </FurnitureBannerDialogView>

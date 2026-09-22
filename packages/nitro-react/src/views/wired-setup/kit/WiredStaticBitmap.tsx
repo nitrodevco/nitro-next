@@ -23,6 +23,7 @@ export const WiredStaticBitmap = ({ asset, layout }: WiredStaticBitmapProps) => 
     return (
         <ThemeImage
             src={LayoutImage(`${asset}.png`)}
+            bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
             alpha={wiredDisabledAlpha(disabled)}
             layout={{ flexShrink: 0, ...layout }}
         />

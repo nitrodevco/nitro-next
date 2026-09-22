@@ -15,11 +15,10 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import { useWiredHasReadPermission, useWiredHasWritePermission, useWiredStore } from '#base/context/wired';
 import { useSecondsClock } from '#base/hooks';
-import { Border, Box, Button, HABBO_TEXT_STYLES, LayoutImage, normalizeFlashTextFormat, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { Border, Box, Button, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
 
 import { WiredTableCell, WiredTableColumn, WiredTableView } from '../wired-common/WiredTableView';
-import { WiredFlashLabel } from '../wired-setup/kit/WiredFlashLabel';
 
 const COLOR_RED = 'ff5733';
 const COLOR_ORANGE = 'BD7800';
@@ -29,9 +28,6 @@ const COLOR_GREEN = '008000';
 const THRESHOLD_USAGE = [ 0.3, 0.7 ];
 const THRESHOLD_FURNI = [ 0.6, 0.85 ];
 const THRESHOLD_VARS = [ 0.5, 0.8 ];
-
-/** The statistics' `html` fields: `u_regular` at `font_size` 11. */
-const STAT_FORMAT = normalizeFlashTextFormat({ ...HABBO_TEXT_STYLES.u_regular, fontSize: 11 });
 
 /** `colorize`. */
 const colorize = (amount: number, limit: number, [ first, second ]: number[]): string => {
@@ -129,10 +125,10 @@ export const WiredMenuMonitorTab = () => {
                 <ThemeText
                     text={t('wiredmenu.monitor.statistics', 'wiredmenu.monitor.statistics')}
                     textStyle="u_regular"
-                    textOptions={{ fill: '#000000' }}
                     flashFormat={{ bold: true }}
+                    clip
                     verticalAlign="top"
-                    layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: 106, height: 19 }}
                 />
                 <Border
                     variant="3"
@@ -144,11 +140,13 @@ export const WiredMenuMonitorTab = () => {
                         contentLayout={{ position: 'relative', width: '100%', flexDirection: 'column', gap: 2 }}
                     >
                         {statLines.map((line, index) => (
-                            <WiredFlashLabel
+                            <ThemeText
                                 key={index}
                                 text={line}
-                                format={STAT_FORMAT}
-                                html
+                                textStyle="u_regular"
+                                textOptions={{ fontSize: 11 }}
+                                markup
+                                verticalAlign="top"
                                 layout={{ height: 16, flexShrink: 0 }}
                             />
                         ))}
@@ -159,7 +157,8 @@ export const WiredMenuMonitorTab = () => {
                 {!panicking && (
                     <ThemeImage
                         src={LayoutImage('wired/wired_monitor_element1.png')}
-                        layout={{ position: 'absolute', left: 0, top: 0 }}
+                        bitmap={{ fitSizeToContents: true }}
+                        layout={{ position: 'absolute', left: 0, top: 0, width: 256, height: 145 }}
                     />
                 )}
                 {panicking && (
@@ -170,7 +169,8 @@ export const WiredMenuMonitorTab = () => {
                     >
                         <ThemeImage
                             src={LayoutImage('wired/wired_monitor_element2.png')}
-                            layout={{ position: 'absolute', left: 0, top: 0 }}
+                            bitmap={{ fitSizeToContents: true }}
+                            layout={{ position: 'absolute', left: 0, top: 0, width: 256, height: 145 }}
                         />
                     </Region>
                 )}
@@ -179,10 +179,10 @@ export const WiredMenuMonitorTab = () => {
                 <ThemeText
                     text={t('wiredmenu.monitor.log', 'wiredmenu.monitor.log')}
                     textStyle="u_regular"
-                    textOptions={{ fill: '#000000' }}
                     flashFormat={{ bold: true }}
+                    clip
                     verticalAlign="top"
-                    layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: 106, height: 19 }}
                 />
                 <WiredTableView
                     columns={columns}

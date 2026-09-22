@@ -1,25 +1,20 @@
 import { useFriendsActions, useFriendsStore } from '#base/context/friend';
 import { useSystemActions } from '#base/context/system';
-import { Border, Box, Button, LayoutImage, TextInput, ThemeImage } from '#base/theme';
-
-const BUTTON_LAYOUT = { paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingBottom: 5 };
+import { Border, ContainerButton, LayoutImage, Region, TextInput, ThemeImage } from '#base/theme';
 
 /**
- * Pixi port of views/friendlist/footers/FriendListFriendsFooter.tsx. DOM's `tooltipHandlers`
- * (onMouseEnter/onMouseLeave updating the frame's own footer hint text) is wired everywhere
- * here that this port controls the Box directly, but skipped on the four `Button`-wrapped icons
- * (invite/home/search/remove) - `Button`'s own `useInteractionState` already owns
- * `onPointerOver`/`onPointerOut` for its hover-art swap, and it has no passthrough for a second
- * caller-supplied pair (unlike `AccordionTrigger`, which this migration extended for the same
- * need - see FriendListTab.tsx). Widening `Button`'s own contract mid-batch for a cosmetic
- * footer hint was judged not worth the risk to an already-shipped, widely-used component; noted
- * here rather than silently dropped.
+ * The friends tab's `friends_footer` (223x41, stretched to the tab's width by
+ * `refreshTabContentDims`): a `0xd9d9d9` border at (5, 5) holding the style-0 container buttons at
+ * their layout rects - `button_room_invite` and `button_open_homepage` from the left,
+ * `button_search` and `button_remove_friend` from the right - and the `friend_search` input with
+ * its `clear_input_region` that replace the search button (`FriendsView.onSearchButtonClick`).
+ * Each button reports its `friendlist.tip.*` to the window's info text, as `showInfo` does.
  *
- * The four button faces are the `friends_footer` layout's `<bitmap name="icon">` slots, which
+ * The four button faces are the layout's `<bitmap name="icon">` slots, which
  * `FriendsView.fillFooter` -> `initButton` fills from the friend list's own asset library
  * (`HabboFriendList.getButtonImage`): `room_invite_png`, `open_homepage_png`, `search_png` and
- * `remove_friend_png`. None of them is an icon-set style, so they are drawn as layout art.
- * `button_open_minimail` (`open_minimail_png`) is `visible="false"` in the layout and has no
+ * `remove_friend_png`, each sized to its bitmap (`search_png` is 12x12 in a 13x13 slot).
+ * `button_open_minimail` is `visible="false"` in the layout and has no
  * place here either.
  */
 export const FriendListFriendsFooter = () => {
@@ -29,94 +24,118 @@ export const FriendListFriendsFooter = () => {
     const { setListSearchValue, toggleListSearchInput, tooltipHandlers, setFilterValue } = useFriendsActions();
     const { toggleWindow } = useSystemActions();
 
+    const inviteHover = tooltipHandlers('friendlist.tip.invite');
+    const homeHover = tooltipHandlers('friendlist.tip.home');
     const searchHover = tooltipHandlers('friendlist.tip.search');
+    const removeHover = tooltipHandlers('friendlist.tip.remove');
 
     return (
-        <Box layout={{ height: 40, flexShrink: 0, paddingLeft: 6, paddingRight: 6, paddingTop: 5, paddingBottom: 5 }}>
+        <Region
+            backgroundColor="#ffffff"
+            layout={{ position: 'relative', width: '100%', height: 41, flexShrink: 0 }}
+        >
             <Border
-                tintColor="#d8d8d8"
-                layout={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 5, paddingRight: 5 }}
+                variant="0"
+                tintColor="#d9d9d9"
+                layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 31 }}
             >
-                <Box layout={{ flexDirection: 'row', gap: 4 }}>
-                    <Button
-                        disabled={selectedFriendIds.length < 1}
-                        onPointerTap={() => toggleWindow('friendlist_invite')}
-                        layout={BUTTON_LAYOUT}
-                    >
-                        <ThemeImage
-                            name="icon"
-                            src={LayoutImage('friend-list/friendlist_room_invite.png')}
-                            layout={{}}
-                        />
-                    </Button>
-                    <Button
-                        disabled={selectedFriendIds.length !== 1}
-                        layout={BUTTON_LAYOUT}
-                    >
-                        <ThemeImage
-                            name="icon"
-                            src={LayoutImage('friend-list/friendlist_open_homepage.png')}
-                            layout={{}}
-                        />
-                    </Button>
-                </Box>
-                <Box layout={{ flex: 1, flexDirection: 'row', gap: 4, justifyContent: 'flex-end', alignItems: 'center' }}>
-                    <Box
+                <ContainerButton
+                    variant="0"
+                    disabled={selectedFriendIds.length < 1}
+                    onPointerTap={() => toggleWindow('friendlist_invite')}
+                    onPointerOver={inviteHover.onMouseEnter}
+                    onPointerOut={inviteHover.onMouseLeave}
+                    layout={{ position: 'absolute', left: 5, top: 4, width: 32, height: 22 }}
+                >
+                    <ThemeImage
+                        name="icon"
+                        src={LayoutImage('friend-list/friendlist_room_invite.png')}
+                        bitmap={{}}
+                        layout={{ position: 'absolute', left: 6, top: 4, width: 19, height: 13 }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="0"
+                    disabled={selectedFriendIds.length !== 1}
+                    onPointerOver={homeHover.onMouseEnter}
+                    onPointerOut={homeHover.onMouseLeave}
+                    layout={{ position: 'absolute', left: 41, top: 4, width: 27, height: 22 }}
+                >
+                    <ThemeImage
+                        name="icon"
+                        src={LayoutImage('friend-list/friendlist_open_homepage.png')}
+                        bitmap={{}}
+                        layout={{ position: 'absolute', left: 7, top: 5, width: 13, height: 11 }}
+                    />
+                </ContainerButton>
+                {!showListSearchInput && (
+                    <ContainerButton
+                        variant="0"
+                        onPointerTap={() => toggleListSearchInput(true)}
                         onPointerOver={searchHover.onMouseEnter}
                         onPointerOut={searchHover.onMouseLeave}
-                        layout={{ position: 'relative' }}
-                    >
-                        {showListSearchInput
-                            ? (
-                                    <>
-                                        <TextInput
-                                            value={listSearchValue}
-                                            onChange={setListSearchValue}
-                                            onEnter={() => setFilterValue(listSearchValue)}
-                                            fontSize={9}
-                                            layout={{ width: 108, height: 20 }}
-                                        />
-                                        <Box
-                                            cursor="pointer"
-                                            onPointerTap={() => toggleListSearchInput(false)}
-                                            layout={{ position: 'absolute', right: 4, top: 6 }}
-                                        >
-                                            {/* `clear_input_region`'s 9x9 `var_picker_cancel_search`
-                                                cross; the icon set's own style 20 exists but no
-                                                layout ever names it. */}
-                                            <ThemeImage
-                                                src={LayoutImage('shared/var_picker_cancel_search.png')}
-                                                layout={{}}
-                                            />
-                                        </Box>
-                                    </>
-                                )
-                            : (
-                                    <Button
-                                        onPointerTap={() => toggleListSearchInput(true)}
-                                        layout={BUTTON_LAYOUT}
-                                    >
-                                        <ThemeImage
-                                            name="icon"
-                                            src={LayoutImage('friend-list/friendlist_search.png')}
-                                            layout={{}}
-                                        />
-                                    </Button>
-                                )}
-                    </Box>
-                    <Button
-                        disabled={selectedFriendIds.length < 1}
-                        onPointerTap={() => toggleWindow('friendlist_remove_confirmation')}
-                        layout={BUTTON_LAYOUT}
+                        layout={{ position: 'absolute', right: 32, top: 4, width: 23, height: 22 }}
                     >
                         <ThemeImage
                             name="icon"
-                            src={LayoutImage('friend-list/friendlist_remove_friend.png')}
-                            layout={{}}
+                            src={LayoutImage('friend-list/friendlist_search.png')}
+                            bitmap={{}}
+                            layout={{ position: 'absolute', left: 5, top: 4, width: 12, height: 12 }}
                         />
-                    </Button>
-                </Box>
+                    </ContainerButton>
+                )}
+                {showListSearchInput && (
+                    <>
+                        <Region
+                            onPointerOver={searchHover.onMouseEnter}
+                            onPointerOut={searchHover.onMouseLeave}
+                            layout={{ position: 'absolute', left: 76, right: 34, top: 5, height: 19 }}
+                        >
+                            <TextInput
+                                value={listSearchValue}
+                                onChange={setListSearchValue}
+                                onEnter={() => setFilterValue(listSearchValue)}
+                                flashPlacement
+                                border="#000000"
+                                backgroundColor={null}
+                                focusedBackgroundColor={null}
+                                layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: 19 }}
+                            />
+                        </Region>
+                        {/* `clear_input_region`: a white 11x11 patch under the 9x9 `var_picker_cancel_search` cross. */}
+                        <Region
+                            cursor="pointer"
+                            onPointerTap={() => toggleListSearchInput(false)}
+                            layout={{ position: 'absolute', right: 35, top: 7, width: 16, height: 16 }}
+                        >
+                            <Region
+                                backgroundColor="#ffffff"
+                                layout={{ position: 'absolute', left: 2, top: 2, width: 11, height: 11 }}
+                            />
+                            <ThemeImage
+                                src={LayoutImage('shared/var_picker_cancel_search.png')}
+                                bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                                layout={{ position: 'absolute', right: 4, top: 3, width: 9, height: 9 }}
+                            />
+                        </Region>
+                    </>
+                )}
+                <ContainerButton
+                    variant="0"
+                    disabled={selectedFriendIds.length < 1}
+                    onPointerTap={() => toggleWindow('friendlist_remove_confirmation')}
+                    onPointerOver={removeHover.onMouseEnter}
+                    onPointerOut={removeHover.onMouseLeave}
+                    layout={{ position: 'absolute', right: 5, top: 4, width: 23, height: 22 }}
+                >
+                    <ThemeImage
+                        name="icon"
+                        src={LayoutImage('friend-list/friendlist_remove_friend.png')}
+                        bitmap={{}}
+                        layout={{ position: 'absolute', left: 5, top: 4, width: 13, height: 13 }}
+                    />
+                </ContainerButton>
             </Border>
-        </Box>
+        </Region>
     );
 };

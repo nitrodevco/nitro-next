@@ -30,13 +30,15 @@ interface TextRow {
     text: string;
 }
 
-const SectionTitle = ({ text, left, top }: { text: string; left: number; top: number }) => (
+/** A container's `title`: bold, `auto_size` none, so it is cut at its box. */
+const SectionTitle = ({ text, width }: { text: string; width: number }) => (
     <ThemeText
         text={text}
-        textStyle="u_bold"
-        textOptions={{ fill: '#000000' }}
+        textStyle="u_regular"
+        flashFormat={{ bold: true }}
+        clip
         verticalAlign="top"
-        layout={{ position: 'absolute', left, top, height: 19 }}
+        layout={{ position: 'absolute', left: 0, top: 0, width, height: 19 }}
     />
 );
 
@@ -123,8 +125,7 @@ export const WiredMenuOverviewTab = () => {
             <Box layout={{ position: 'absolute', left: 14, top: 94, width: 188, height: 239 }}>
                 <SectionTitle
                     text={t('wiredmenu.variable_overview.picker', 'wiredmenu.variable_overview.picker')}
-                    left={0}
-                    top={0}
+                    width={165}
                 />
                 <WiredTableView
                     columns={listColumns}
@@ -184,6 +185,7 @@ export const WiredMenuOverviewTab = () => {
                     >
                         <ThemeImage
                             src={LayoutImage('shared/forum_forum_hide.png')}
+                            bitmap={{ stretchedX: false, stretchedY: false, etchingColor: 0x48000000, fitSizeToContents: true }}
                             dynamicRole="icon"
                             eventMode="none"
                             layout={{ position: 'absolute', left: 6, top: 2, width: 16, height: 16 }}
@@ -194,8 +196,7 @@ export const WiredMenuOverviewTab = () => {
             <Box layout={{ position: 'absolute', left: 230, top: 17, width: 256, height: 208 }}>
                 <SectionTitle
                     text={t('wiredmenu.variable_overview.properties', 'wiredmenu.variable_overview.properties')}
-                    left={0}
-                    top={0}
+                    width={188}
                 />
                 <WiredTableView
                     columns={propertyColumns}
@@ -208,8 +209,7 @@ export const WiredMenuOverviewTab = () => {
             <Box layout={{ position: 'absolute', left: 230, top: 233, width: 256, height: 135 }}>
                 <SectionTitle
                     text={t('wiredmenu.variable_overview.text_values', 'wiredmenu.variable_overview.text_values')}
-                    left={0}
-                    top={0}
+                    width={188}
                 />
                 <Box
                     alpha={hasTexts ? 1 : 0.5}

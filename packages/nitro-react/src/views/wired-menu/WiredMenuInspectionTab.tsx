@@ -90,14 +90,14 @@ export const WiredMenuInspectionTab = () => {
                     onSelect={sourceType => selectWiredInspectionType(send, sourceType)}
                 />
             </Box>
-            <Box layout={{ position: 'absolute', left: 14, top: 94, width: 150, height: 274 }}>
+            <Box layout={{ position: 'absolute', left: 14, top: 94, width: 150, height: 274, overflow: 'hidden' }}>
                 <ThemeText
                     text={t('wiredmenu.inspection.preview', 'wiredmenu.inspection.preview')}
                     textStyle="u_regular"
-                    textOptions={{ fill: '#000000' }}
                     flashFormat={{ bold: true }}
+                    clip
                     verticalAlign="top"
-                    layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: 165, height: 19 }}
                 />
                 <WiredMenuInspectionPreview
                     preview={preview}
@@ -112,17 +112,20 @@ export const WiredMenuInspectionTab = () => {
                         rowDisabled={type === Number(VariableExtraSourceTypes.GLOBAL_SOURCE)}
                         onToggle={setWiredInspectionPinned}
                         width={197}
+                        height={18}
+                        labelWidth={82}
+                        labelHeight={17}
                     />
                 </Box>
             </Box>
-            <Box layout={{ position: 'absolute', left: 183, top: 17, width: 303, height: 351 }}>
+            <Box layout={{ position: 'absolute', left: 183, top: 17, width: 303, height: 351, overflow: 'hidden' }}>
                 <ThemeText
                     text={t('wiredmenu.inspection.variables', 'wiredmenu.inspection.variables')}
                     textStyle="u_regular"
-                    textOptions={{ fill: '#000000' }}
                     flashFormat={{ bold: true }}
+                    clip
                     verticalAlign="top"
-                    layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: 188, height: 19 }}
                 />
                 <Box
                     alpha={(state === WIRED_INSPECTION_STATE_NOTHING) ? 0.5 : 1}

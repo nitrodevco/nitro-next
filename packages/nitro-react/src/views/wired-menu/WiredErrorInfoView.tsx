@@ -37,17 +37,19 @@ export const WiredErrorInfoView = ({ error, onClose }: WiredErrorInfoViewProps) 
             resizeDirection="none"
             defaultPosition={{ x: 35, y: 30 }}
             onClose={onClose}
-            layout={{ position: 'absolute', width: 337, height: contentsHeight + 48 }}
+            layout={{ position: 'absolute', width: 337, height: contentsHeight + 48, minWidth: 300 }}
+            margins={[ 0, 36, 0, 0 ]}
         >
-            <Box layout={{ position: 'absolute', left: 8, top: 3, width: 320, height: contentsHeight }}>
+            <Box layout={{ position: 'absolute', left: 8, right: 9, top: 3, height: contentsHeight }}>
                 <ThemeImage
                     src={LayoutImage(`wired/icon_wired_${error.category.toLowerCase()}.png`)}
-                    layout={{ position: 'absolute', left: 280, top: 0 }}
+                    bitmap={{}}
+                    layout={{ position: 'absolute', left: 280, top: 0, width: 40, height: 40 }}
                 />
                 <ThemeText
                     text={error.errorName}
-                    textStyle="u_bold"
-                    textOptions={{ fill: '#000000' }}
+                    textStyle="u_regular"
+                    flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 109, top: 11, height: 17 }}
                 />
@@ -58,7 +60,7 @@ export const WiredErrorInfoView = ({ error, onClose }: WiredErrorInfoViewProps) 
                     <ThemeText
                         text={t(`wiredmenu.error_info.${error.errorId}`, `wiredmenu.error_info.${error.errorId}`)}
                         textStyle="u_regular"
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 315 }}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 315 }}
                         verticalAlign="top"
                     />
                 </Box>

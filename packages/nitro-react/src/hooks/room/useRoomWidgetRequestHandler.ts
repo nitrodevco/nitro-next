@@ -2,9 +2,11 @@ import { NitroLogger, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, Room
 import { GetCraftableProductsComposer, GetGuestRoomComposer, GetGuildFurniContextMenuInfoComposer, GetJukeboxPlayListComposer, GetNowPlayingComposer, GetResolutionAchievementsComposer, GetUserSongDisksComposer, GetYoutubeDisplayStatusComposer, RentableSpaceStatusComposer, UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 
 import { openClientLink } from '#base/commands';
-import { readFurnitureLink } from '#base/components/room/widgets/furniture/furnitureWidgetData';
+import { PRESENT_OPENED_WIDGET, PresentOpenedData, readFurnitureLink } from '#base/components/room/widgets/furniture/furnitureWidgetData';
 import { useWebSocketContext } from '#base/context/communication';
-import { useRoom, useRoomWidgetActions } from '#base/context/room';
+import { useRoom, useRoomStore, useRoomWidgetActions } from '#base/context/room';
+import { useTranslation, useWindowActions } from '#base/context/system';
+import { LayoutImage } from '#base/theme';
 
 /**
  * The bridge between a room object asking for its dialog and the UI opening it - the Flash
@@ -23,7 +25,11 @@ import { useRoom, useRoomWidgetActions } from '#base/context/room';
 export const useRoomWidgetRequestHandler = () => {
     const room = useRoom();
     const { openRoomWidget, closeRoomWidget, closeRoomWidgetsForObject, setFurnitureContextMenu } = useRoomWidgetActions();
+    // The opened gift card is on screen once its contents have arrived.
+    const presentOpenedShowing = useRoomStore(x => !!(x.openWidgets[PRESENT_OPENED_WIDGET]?.data as PresentOpenedData | undefined)?.contents);
+    const { showSimpleAlert } = useWindowActions();
     const { send } = useWebSocketContext();
+    const t = useTranslation();
 
     const handleRoomWidgetRequestEvent = (event: RoomObjectWidgetRequestEvent) => {
         if (!room) return;
@@ -72,6 +78,20 @@ export const useRoomWidgetRequestHandler = () => {
              */
             case RoomObjectWidgetRequestEvent.HIDE_HIGH_SCORE_DISPLAY:
                 closeRoomWidgetsForObject(event.objectId, category);
+                return;
+            /*
+             * A resolution trophy whose achievement was not reached in time has nothing to offer
+             * but news: `FurnitureBadgeDisplayWidgetHandler` answers it with a `simpleAlert`, with
+             * the window manager's `help_error_state` illustration (the same bytes as the help
+             * window's copy, which is the one the bundles carry).
+             */
+            case RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_FAILED:
+                showSimpleAlert({
+                    caption: t('resolution.failed.title'),
+                    subtitle: t('resolution.failed.subtitle'),
+                    message: t('resolution.failed.text'),
+                    illustration: LayoutImage('help/help_error_state.png'),
+                });
                 return;
             /*
              * The four below ask the server something instead of opening anything themselves,
@@ -135,6 +155,24 @@ export const useRoomWidgetRequestHandler = () => {
                 openClientLink(send, link);
                 return;
             }
+            /*
+             * `PresentFurniWidget.onObjectUpdate`: another gift's card (`RWPDUE_PACKAGEINFO`)
+             * takes down the opened card, and a gift still being opened stops waiting for its
+             * contents (`§_-B28§ = false`).
+             */
+            case RoomObjectWidgetRequestEvent.PRESENT:
+                closeRoomWidget(PRESENT_OPENED_WIDGET);
+                openRoomWidget(request);
+                return;
+            /*
+             * `PresentFurniWidget.onEcotronUpdate`: an ecotron box's card only hides the opened
+             * card's window (`hideInterface`), so a gift still waiting for its contents keeps
+             * waiting and shows them when they come.
+             */
+            case RoomObjectWidgetRequestEvent.ECOTRONBOX:
+                if (presentOpenedShowing) closeRoomWidget(PRESENT_OPENED_WIDGET);
+                openRoomWidget(request);
+                return;
             default:
                 // Opened by type, so a widget component that declares this type picks it up with
                 // no change here. One that nothing renders sits in the store until the object

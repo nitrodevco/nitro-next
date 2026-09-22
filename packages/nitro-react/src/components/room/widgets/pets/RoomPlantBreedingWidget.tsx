@@ -1,8 +1,8 @@
 import { BreedPetsComposer } from '@nitrodevco/nitro-packets';
 
+import { showBreedingPetsWaitingConfirmationAlert } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomPetsActions, useRoomStore } from '#base/context/room';
-import { useTranslation, useWindowActions } from '#base/context/system';
 import { BreedingPlant, PlantBreedingView } from '#base/views/room-widgets/pets/PlantBreedingView';
 
 /** `BreedPetsMessageComposer`'s first argument. */
@@ -12,7 +12,8 @@ const BREED_ACCEPT = 2;
 
 /**
  * Two monsterplants about to breed - `BreedMonsterPlantsConfirmationView`. Proposing sends the
- * request and, when the other plant is someone else's, tells you to wait for them; their side
+ * request and, when the other plant is someone else's, tells you to wait for them (a confirmation
+ * whose cancel calls it off, `showBreedingPetsWaitingConfirmationAlert`); their side
  * sees the same dialog in accept mode. Either side's cancel calls it off for both.
  */
 export const RoomPlantBreedingWidget = () => {
@@ -20,9 +21,7 @@ export const RoomPlantBreedingWidget = () => {
     const plant1 = useRoomStore(x => (request ? x.usersByRoomObjectId[request.requestObjectId] : undefined));
     const plant2 = useRoomStore(x => (request ? x.usersByRoomObjectId[request.targetObjectId] : undefined));
     const { setPlantBreeding } = useRoomPetsActions();
-    const { showAlert } = useWindowActions();
     const { send } = useWebSocketContext();
-    const t = useTranslation();
 
     if (!request || !plant1 || !plant2) return null;
 
@@ -37,7 +36,7 @@ export const RoomPlantBreedingWidget = () => {
             onBreed={() => {
                 sendState(BREED_ASK);
 
-                if (plant1.ownerId !== plant2.ownerId) showAlert(t('breedpets.confirmation.notification.title'), t('breedpets.confirmation.notification.text'));
+                if (plant1.ownerId !== plant2.ownerId) showBreedingPetsWaitingConfirmationAlert(send, plant1.webID, plant2.webID);
 
                 setPlantBreeding(undefined);
             }}

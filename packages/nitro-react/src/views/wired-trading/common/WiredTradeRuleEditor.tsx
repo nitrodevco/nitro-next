@@ -32,9 +32,14 @@ import { WiredTradingPlusButton } from './WiredTradingPlusButton';
 const CELL_SIZE = 42;
 const CELL_SPACING = 6;
 
-/** `close_rule_region` / `close_region`: a 15x15 style 12 border with the grey "x". */
-const CloseButton = ({ onPress, layout }: { onPress: () => void; layout: { left?: number; right?: number; top: number } }) => (
+/**
+ * `close_rule_region` / `close_region`: a 15x15 style 12 border with the grey "x", both `#bg` of
+ * the region's `brightness_and_shadow_under` dynamic style. Only the rule's "x" carries an
+ * `etching_color` in the template (`etched`); the node's has none.
+ */
+const CloseButton = ({ onPress, etched = false, layout }: { onPress: () => void; etched?: boolean; layout: { left?: number; right?: number; top: number } }) => (
     <Region
+        dynamicStyle="brightness_and_shadow_under"
         cursor="pointer"
         onPointerTap={(event) => {
             event.stopPropagation();
@@ -45,12 +50,15 @@ const CloseButton = ({ onPress, layout }: { onPress: () => void; layout: { left?
         <Border
             variant="12"
             tintColor="#dddddd"
+            dynamicRole="bg"
             layout={{ width: 15, height: 15 }}
         >
             <ThemeImage
                 src={LayoutImage('shared/common_close_x.png')}
+                bitmap={{ stretchedX: false, stretchedY: false, ...(etched && { etchingColor: 0x48000000 }), fitSizeToContents: true }}
                 tint="#777777"
-                layout={{ position: 'absolute', left: 3, top: 3 }}
+                dynamicRole="bg"
+                layout={{ position: 'absolute', left: 3, top: 3, width: 9, height: 9 }}
             />
         </Border>
     </Region>
@@ -85,15 +93,19 @@ const NodeCell = ({ node, closable, onPress, onClose }: NodeCellProps) => {
                 dynamicRole="icon"
                 layout={{ position: 'absolute', left: 0, top: 0, width: CELL_SIZE, height: CELL_SIZE }}
             >
+                {/* `element_icon_widget`: `product_icon_xml`'s 46x40 bitmap at -3,0 of the 40x40 widget at 1,1. */}
                 {isFurni && (iconUrl !== '') && (
-                    <Box layout={{ position: 'absolute', left: 1, top: 1, width: 40, height: 40, alignItems: 'center', justifyContent: 'center' }}>
-                        <ThemeImage src={iconUrl} />
-                    </Box>
+                    <ThemeImage
+                        src={iconUrl}
+                        bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                        layout={{ position: 'absolute', left: -2, top: 1, width: 46, height: 40 }}
+                    />
                 )}
                 {!isFurni && (
                     <ThemeImage
                         src={LayoutImage('wired/inventory_furni_icon_credits.png')}
-                        layout={{ position: 'absolute', left: 8, top: 12 }}
+                        bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                        layout={{ position: 'absolute', left: 8, top: 12, width: 25, height: 18 }}
                     />
                 )}
                 {showQuantity && (
@@ -110,6 +122,7 @@ const NodeCell = ({ node, closable, onPress, onClose }: NodeCellProps) => {
                                 text={String(node.amount)}
                                 textStyle="u_bold"
                                 textOptions={{ fontSize: 10, fill: '#222222' }}
+                                verticalAlign="top"
                                 layout={{ marginTop: -1 }}
                             />
                         </Border>
@@ -165,6 +178,7 @@ export const WiredTradeRuleEditor = ({ title, nodes, overview = false, onAddNode
                 <ThemeText
                     text={caption(title)}
                     textStyle="u_regular"
+                    verticalAlign="top"
                     layout={{ height: 18 }}
                 />
                 <Box layout={{ flexDirection: 'row', flexWrap: overview ? 'wrap' : 'nowrap', gap: CELL_SPACING, minHeight: CELL_SIZE }}>
@@ -190,6 +204,7 @@ export const WiredTradeRuleEditor = ({ title, nodes, overview = false, onAddNode
             {!overview && hovered && onRemove && (
                 <CloseButton
                     onPress={onRemove}
+                    etched
                     layout={{ right: 4, top: 3 }}
                 />
             )}

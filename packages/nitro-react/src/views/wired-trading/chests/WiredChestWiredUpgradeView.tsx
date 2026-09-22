@@ -11,13 +11,14 @@ import { useState } from 'react';
 
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { Box, Button, ButtonThick, Frame, ThemeImage, ThemeText } from '#base/theme';
-import { WiredStyleProvider } from '#base/views/wired-setup/kit/WiredStyleContext';
-import { WiredText } from '#base/views/wired-setup/kit/WiredText';
-import { UBUNTU_WIRED_STYLE } from '#base/wired';
 
 import { WiredChestPreview } from './WiredChestUpgradeView';
 
 const ERROR_COLOR = '#c42f3d';
+/** The frame's `margin_*` vars. */
+const FRAME_MARGINS = [ 1, 25, 1, 7 ] as const;
+/** `properties_itemlist`'s 197px texts wrap at the field width less the 2px gutters. */
+const TEXT_WRAP = 193;
 
 export interface WiredChestWiredUpgradeViewProps {
     furniTypeId: number;
@@ -41,54 +42,63 @@ export const WiredChestWiredUpgradeView = ({ furniTypeId, isStarterChest, onBuy,
             rememberPosition={false}
             centered
             onClose={onClose}
-            contentLayout={{ paddingLeft: 0, paddingRight: 0, marginBottom: 0 }}
+            margins={FRAME_MARGINS}
             layout={{ position: 'absolute', width: 353, height: 287 }}
         >
-            <Box layout={{ position: 'relative', width: 353, height: 254 }}>
-                <WiredChestPreview furniTypeId={furniTypeId} />
-                <ThemeImage
-                    src={`${imageLibraryUrl}catalogue/icon_80.png`}
-                    layout={{ position: 'absolute', left: 10 + 89, top: 12 + 7, width: 30, height: 30 }}
-                />
-                <Box layout={{ position: 'absolute', left: 143, top: 15, width: 197, flexDirection: 'column', gap: 4 }}>
-                    <ThemeText
-                        text={t('wiredchests.upgrade.wired.info')}
-                        textStyle="u_bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 197, fontSize: 14 }}
-                        verticalAlign="top"
-                        layout={{ width: 197 }}
+            {/* `content`: an item list, so the buttons move up while the error text is hidden. */}
+            <Box layout={{ position: 'absolute', left: 0, top: 8, width: 351, flexDirection: 'column', gap: 10 }}>
+                <Box layout={{ position: 'relative', width: 349, height: 164, flexShrink: 0, overflow: 'hidden' }}>
+                    <WiredChestPreview furniTypeId={furniTypeId} />
+                    {/* `wired_icon`, at 89,7 of the preview's border. */}
+                    <ThemeImage
+                        src={`${imageLibraryUrl}catalogue/icon_80.png`}
+                        bitmap={{ stretchedX: false, stretchedY: false, pivot: 'top right' }}
+                        layout={{ position: 'absolute', left: 10 + 89, top: 12 + 7, width: 30, height: 30 }}
                     />
-                    <WiredStyleProvider style={UBUNTU_WIRED_STYLE}>
-                        <WiredText
-                            text="${wiredchests.big_fat_warning}"
-                            html
+                    <Box layout={{ position: 'absolute', left: 143, top: 15, width: 197, flexDirection: 'column', gap: 4 }}>
+                        <ThemeText
+                            text={t('wiredchests.upgrade.wired.info')}
+                            textStyle="u_bold"
+                            textOptions={{ wordWrap: true, wordWrapWidth: TEXT_WRAP, fontSize: 14 }}
+                            verticalAlign="top"
+                            layout={{ width: 197 }}
                         />
-                    </WiredStyleProvider>
-                </Box>
-                <Box layout={{ position: 'absolute', left: 142, top: 137, height: 22, flexDirection: 'row', gap: 4 }}>
-                    <ThemeText
-                        text={t('catalog.purchase.confirmation.dialog.cost')}
-                        textStyle="u_regular"
-                        layout={{ marginTop: 1 }}
-                    />
-                    <ThemeText
-                        text={t('wiredchests.upgrade.wired.cost')}
-                        textStyle="u_regular"
-                        textOptions={{ fontSize: 14 }}
-                        flashFormat={{ bold: true }}
-                        layout={{ marginTop: 1 }}
-                    />
+                        <ThemeText
+                            text={t('wiredchests.big_fat_warning')}
+                            textStyle="u_regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: TEXT_WRAP }}
+                            markup
+                            verticalAlign="top"
+                            layout={{ width: 197 }}
+                        />
+                    </Box>
+                    <Box layout={{ position: 'absolute', left: 142, top: 137, height: 22, flexDirection: 'row' }}>
+                        <ThemeText
+                            text={t('catalog.purchase.confirmation.dialog.cost')}
+                            textStyle="u_regular"
+                            textOptions={{ fontSize: 14 }}
+                            verticalAlign="top"
+                            layout={{ marginTop: 1 }}
+                        />
+                        <ThemeText
+                            text={t('wiredchests.upgrade.wired.cost')}
+                            textStyle="u_bold"
+                            textOptions={{ fontSize: 14 }}
+                            verticalAlign="top"
+                            layout={{ marginTop: 1 }}
+                        />
+                    </Box>
                 </Box>
                 {isStarterChest && (
                     <ThemeText
                         text={t('wiredchests.upgrade.wired.error', '', { reason: t('wiredchests.upgrade.wired.error.reason.rookie_chest') })}
                         textStyle="u_bold"
-                        textOptions={{ fill: ERROR_COLOR, wordWrap: true, wordWrapWidth: 327 }}
+                        textOptions={{ fill: ERROR_COLOR, wordWrap: true, wordWrapWidth: 323 }}
                         verticalAlign="top"
-                        layout={{ position: 'absolute', left: 12, top: 174, width: 327 }}
+                        layout={{ marginLeft: 12, width: 327 }}
                     />
                 )}
-                <Box layout={{ position: 'absolute', left: 13, top: 214, width: 325, height: 27, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Box layout={{ marginLeft: 13, height: 27, flexDirection: 'row', gap: 105, flexShrink: 0 }}>
                     <Button
                         variant="3"
                         onPointerTap={onClose}
@@ -98,6 +108,7 @@ export const WiredChestWiredUpgradeView = ({ furniTypeId, isStarterChest, onBuy,
                     </Button>
                     <ButtonThick
                         variant="5"
+                        tintColor="#00aa00"
                         disabled={bought || isStarterChest}
                         onPointerTap={() => {
                             if (bought || isStarterChest) return;

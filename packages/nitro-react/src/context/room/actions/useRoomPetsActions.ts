@@ -13,6 +13,7 @@ const actions = {
     setBreedMenu: state.setBreedMenu,
     setPlantBreeding: state.setPlantBreeding,
     closePlantBreeding: state.closePlantBreeding,
+    setPlantBreedingWaitingDialogId: state.setPlantBreedingWaitingDialogId,
     setNestBreeding: state.setNestBreeding,
     setNestBreedingNameRejected: state.setNestBreedingNameRejected,
     setBreedingResult: state.setBreedingResult,

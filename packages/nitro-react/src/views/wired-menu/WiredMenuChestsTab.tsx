@@ -75,7 +75,6 @@ export const WiredMenuChestsTab = () => {
                 <ThemeText
                     text={t('wiredmenu.chests.chest_control', 'wiredmenu.chests.chest_control')}
                     textStyle="u_regular"
-                    textOptions={{ fill: '#000000' }}
                     flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
@@ -115,15 +114,15 @@ export const WiredMenuChestsTab = () => {
                 <ThemeText
                     text={t('wiredmenu.chests.room_logs', 'wiredmenu.chests.room_logs')}
                     textStyle="u_regular"
-                    textOptions={{ fill: '#000000' }}
                     flashFormat={{ bold: true }}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
                 />
+                {/* `title_extra` grows with `auto_size` left but carries `WINDOW_PARAM_ON_RESIZE_ALIGN_RIGHT`, so it keeps its right edge. */}
                 <ThemeText
                     text={t('wiredmenu.chests.room_logs.extra', 'wiredmenu.chests.room_logs.extra')}
                     textStyle="u_regular"
-                    textOptions={{ fill: '#000000', align: 'right' }}
+                    textOptions={{ align: 'right' }}
                     alpha={0.5}
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 272, top: 0, width: 197, height: 17 }}

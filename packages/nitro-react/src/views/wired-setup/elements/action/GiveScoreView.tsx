@@ -1,7 +1,8 @@
 /**
  * `actiontypes/GiveScore.buildInputs` - the points slider (1 to 1000, with its number input),
  * the "times per game" slider (1 to 10, then unlimited; hidden on a box that was saved as
- * unlimited, the way `onEditStart` hides it) and the add / remove radio.
+ * unlimited, the way `onEditStart` hides it - hidden, it keeps its spacer in the frame's list) and
+ * the add / remove radio.
  */
 import { createSliderConverterCountOrUnlimited, GIVE_SCORE_UNLIMITED_TIMES, GiveScoreActionForm, SLIDER_CONVERTER_ECHO, WiredElementView } from '#base/wired';
 
@@ -27,19 +28,18 @@ export const GiveScoreView: WiredElementView<GiveScoreActionForm> = ({ form, set
             value={form.points}
             onChange={points => setForm({ points })}
         />
-        {form.timesVisible && (
-            <WiredSliderSection
-                titleKey="wiredfurni.params.settimesingame"
-                unitKey="times"
-                converter={TIMES_CONVERTER}
-                min={1}
-                max={GIVE_SCORE_UNLIMITED_TIMES}
-                step={1}
-                value={form.times}
-                onChange={times => setForm({ times })}
-                showInput={false}
-            />
-        )}
+        <WiredSliderSection
+            titleKey="wiredfurni.params.settimesingame"
+            unitKey="times"
+            converter={TIMES_CONVERTER}
+            min={1}
+            max={GIVE_SCORE_UNLIMITED_TIMES}
+            step={1}
+            value={form.times}
+            onChange={times => setForm({ times })}
+            showInput={false}
+            sectionProps={{ visible: form.timesVisible }}
+        />
         <WiredSection title="${wiredfurni.params.points_operation}">
             <WiredRadioGroup
                 options={[ { id: 0, label: '${wiredfurni.params.points_operation.0}' }, { id: 1, label: '${wiredfurni.params.points_operation.1}' } ]}

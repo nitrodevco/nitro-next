@@ -20,7 +20,9 @@ export const FurnitureEffectBoxWidget = () => {
             captionKey="effectbox.name.title"
             titleKey="effectbox.header.title"
             descriptionKey="effectbox.header.description"
+            iconPath="client_static/frank1.png"
             height={193}
+            buttonRow={{ left: -1, top: 101, cancelLeft: 177, confirmLeft: 319 }}
             onConfirm={() => {
                 send(new UseFurnitureComposer({ objectId: request.objectId, param: 0 }));
                 onClose();

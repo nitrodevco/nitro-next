@@ -21,6 +21,16 @@ export interface AvatarEditorPartThumbProps {
 
 const CELL = 50;
 
+const CENTERED = { stretchedX: false, stretchedY: false, pivot: 'center' } as const;
+
+/**
+ * One part of the parts grid - the `thumb_template` row of the `AvatarEditorContent` layout,
+ * driven as Flash's `AvatarEditorGridPartItem`: the `avatar_editor_parts_hilite` backdrop (full
+ * while selected, at half under the pointer), the part's thumbnail centred in the 50x50 `bitmap`
+ * (the remove icon for the clear item, the download icon while its library loads, a fifth of its
+ * alpha when it cannot be worn), the HC icon and the sellable icon.
+ */
+
 export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesColors, isClub, isSellable, isClear, disabled, selectPart }: AvatarEditorPartThumbProps) => {
     const [ isHovering, setIsHovering ] = useState<boolean>(false);
     const thumbnail = usePartThumbnail(isClear ? undefined : part, setType);
@@ -30,28 +40,37 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
             onPointerOver={_ => setIsHovering(true)}
             onPointerOut={_ => setIsHovering(false)}
             onPointerTap={selectPart}
-            layout={{ width: CELL, height: CELL, flexShrink: 0, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}
+            name="thumb_template"
+            layout={{ width: CELL, height: CELL, flexShrink: 0, overflow: 'hidden' }}
         >
             { (selected || isHovering) && (
                 <ThemeImage
+                    name="hover"
                     src={LayoutImage('avatar-editor/avatar_editor_parts_hilite.png')}
+                    bitmap={CENTERED}
                     alpha={selected ? 1 : 0.5}
-                    layout={{ position: 'absolute', left: 0, top: 0 }}
+                    layout={{ position: 'absolute', left: 0, width: CELL, top: 0, height: CELL }}
                 />
             )}
             { isClear && (
-                <ThemeImage src={LayoutImage('avatar-editor/avatar_editor_generic_remove_selection.png')} />
+                <ThemeImage
+                    src={LayoutImage('avatar-editor/avatar_editor_generic_remove_selection.png')}
+                    bitmap={CENTERED}
+                    layout={{ position: 'absolute', left: 0, width: CELL, top: 0, height: CELL }}
+                />
             )}
             { !isClear && !thumbnail && (
                 <ThemeImage
                     name="loading"
                     src={LayoutImage('catalog/avatar_editor_avatar_editor_download_icon.png')}
+                    bitmap={CENTERED}
+                    layout={{ position: 'absolute', left: 0, width: CELL, top: 0, height: CELL }}
                 />
             )}
             {thumbnail && (
                 <Box
                     alpha={disabled ? 0.2 : 1}
-                    layout={{ position: 'absolute', left: Math.floor((CELL - thumbnail.width) / 2), top: Math.floor((CELL - thumbnail.height) / 2), width: thumbnail.width, height: thumbnail.height }}
+                    layout={{ position: 'absolute', left: Math.trunc((CELL - thumbnail.width) / 2), top: Math.trunc((CELL - thumbnail.height) / 2), width: thumbnail.width, height: thumbnail.height }}
                 >
                     {thumbnail.layers.map((layer, index) => (
                         <pixiSprite
@@ -66,14 +85,18 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
             )}
             {isClub && (
                 <ThemeImage
+                    name="club_icon"
                     src={LayoutImage('avatar-editor/icons_hc_icon_small.png')}
-                    layout={{ position: 'absolute', right: 0, width: 10, bottom: 1, height: 9 }}
+                    bitmap={CENTERED}
+                    layout={{ position: 'absolute', left: 40, width: 10, top: 40, height: 9 }}
                 />
             )}
             {isSellable && (
                 <ThemeImage
+                    name="sellable_icon"
                     src={LayoutImage('avatar-editor/icons_wearable.png')}
-                    layout={{ position: 'absolute', left: 0, width: 17, bottom: 0, height: 20 }}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'bottom left' }}
+                    layout={{ position: 'absolute', left: 0, width: 17, top: 30, height: 20 }}
                 />
             )}
         </Region>

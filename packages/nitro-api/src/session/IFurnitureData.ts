@@ -32,5 +32,7 @@ export interface IFurnitureData {
     readonly rare: boolean;
     /** Furnidata `tradeable`: `AddEditContractElement.validate` refuses a furni type that cannot be traded. */
     readonly tradeable: boolean;
+    /** Furnidata `recyclable`: the catalogue's product view marks a furni the recycler refuses (`updateAvailabilityIndicators`). */
+    readonly recyclable: boolean;
     readonly isExternalImage: boolean;
 }

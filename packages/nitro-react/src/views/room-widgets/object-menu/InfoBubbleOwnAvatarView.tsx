@@ -9,10 +9,11 @@ import { useConfigValue, useTranslation, useWindowActions } from '#base/context/
 import { useOwnClubLevel, useUserStore } from '#base/context/user';
 import { useWiredShowInspectButton } from '#base/context/wired';
 import { useRoomUserData } from '#base/hooks';
-import { Box, Bubble, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
+import { Box, Icon, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
 
 import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
-import { InfoBubbleMinimize } from './InfoBubbleMinimize';
+import { InfoBubbleMenuFrame } from './InfoBubbleMenuFrame';
+import { OWN_AVATAR_MENU_GEOMETRY } from './InfoBubbleMenuGeometry';
 
 export interface InfoBubbleOwnAvatarViewProps {
     objectData: ISimpleRoomObjectData;
@@ -45,6 +46,18 @@ const SIGN_BUTTONS: { key: number; icon?: string; label?: string }[] = [
     { key: 0, label: '0' }, { key: 13, icon: LayoutImage('room-ui/sign_icon_13.png') }, { key: 15, icon: LayoutImage('room-ui/sign_icon_15.png') },
     { key: 14, icon: LayoutImage('room-ui/sign_icon_14.png') }, { key: 17, icon: LayoutImage('room-ui/sign_icon_17.png') }, { key: 16, icon: LayoutImage('room-ui/sign_icon_16.png') },
 ];
+
+/** `own_avatar_menu`'s rows are 103 wide; the sign grid is 103x152 of 25-high cells, the first 34 wide and the rest 33, each over a 39-wide button. */
+const ROW_WIDTH = 103;
+const ROW_HEIGHT = 26;
+const SIGNS_GRID_HEIGHT = 152;
+const SIGN_BUTTON_WIDTH = 39;
+const SIGN_BUTTON_HEIGHT = 29;
+
+/** The rows carrying `arrow_right` (at 92) - each opens a sub-page. */
+const SUBMENU_ROWS = [ 'expressions', 'dance_menu', 'signs', 'more' ];
+/** The expressions the layout marks with icon style 14 at 88,10 - the VIP ones. */
+const VIP_ICON_ROWS = [ 'blow', '67', 'jump', 'laugh' ];
 
 type MenuButton = {
     key: string;
@@ -123,9 +136,9 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
             { key: 'stand', caption: t('widget.memenu.stand'), visible: sittingEnabled && !isSwimming && !isRiding && info.canStandUp, onPress: () => send(new ChangePostureComposer({ postureType: PostureTypeEnum.Stand })) },
             { key: 'wave', caption: t('widget.memenu.wave'), visible: true, enabled: !isSwimming, onPress: expression(AvatarExpressionEnum.Wave) },
             { key: 'blow', caption: t('widget.memenu.blow'), visible: true, enabled: canUseVipExpressions || !hasVip, vip: true, onPress: expression(AvatarExpressionEnum.Blow) },
+            { key: '67', caption: t('widget.memenu.expression_67'), visible: expression67Enabled, enabled: canUseVipExpressions || !hasVip, vip: true, onPress: expression(AvatarExpressionEnum.Expression67) },
             { key: 'laugh', caption: t('widget.memenu.laugh'), visible: true, enabled: canUseVipExpressions || !hasVip, vip: true, onPress: expression(AvatarExpressionEnum.Laugh) },
             { key: 'idle', caption: t('widget.memenu.idle'), visible: true, onPress: expression(AvatarExpressionEnum.Idle) },
-            { key: '67', caption: t('widget.memenu.expression_67'), visible: expression67Enabled, enabled: canUseVipExpressions || !hasVip, vip: true, onPress: expression(AvatarExpressionEnum.Expression67) },
             { key: 'back', caption: t('generic.back'), visible: true, staysOpen: true, onPress: toMode(MODE_NORMAL) },
         ],
         [MODE_SIGNS]: [
@@ -149,68 +162,80 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
         if (!button.staysOpen) onClose();
     };
 
+    const visibleButtons = buttons[mode].filter(button => button.visible);
+    const showsSigns = (mode === MODE_SIGNS);
+    const rowHeights = [ ...(showsSigns ? [ SIGNS_GRID_HEIGHT ] : []), ...visibleButtons.map(() => ROW_HEIGHT) ];
+
     return (
-        <Bubble
-            variant="0"
-            tintColor="#6e6b67"
-            layout={{ flexDirection: 'column' }}
+        <InfoBubbleMenuFrame
+            geometry={OWN_AVATAR_MENU_GEOMETRY}
+            rowHeights={rowHeights}
+            collapsed={collapsed}
+            onToggleCollapsed={() => setCollapsed(!collapsed)}
+            header={(
+                <Region
+                    name="profile_link"
+                    cursor="pointer"
+                    onPointerTap={() => {
+                        openProfile(send, info.webId);
+                        onClose();
+                    }}
+                    layout={{ position: 'absolute', left: 0, top: 7, width: 107, height: 16, flexDirection: 'row', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={info.name}
+                        textStyle="u_bold"
+                        textOptions={{ fill: '#ffffff', fontSize: 11 }}
+                        name="name"
+                        verticalAlign="top"
+                    />
+                </Region>
+            )}
         >
-            {!collapsed && (
-                <Box layout={{ minWidth: 110, maxWidth: 110, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
-                    <Box
-                        cursor="pointer"
-                        onPointerTap={() => {
-                            openProfile(send, info.webId);
-                            onClose();
-                        }}
-                        layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24 }}
-                    >
-                        <ThemeText
-                            text={info.name}
-                            textStyle="u_bold"
-                            textOptions={{ fill: '#ffffff' }}
+            {showsSigns && (
+                <Box layout={{ flexDirection: 'row', flexWrap: 'wrap', width: ROW_WIDTH, height: SIGNS_GRID_HEIGHT, gap: 1, flexShrink: 0, overflow: 'hidden' }}>
+                    {SIGN_BUTTONS.map(({ key, icon, label }, index) => (
+                        <InfoBubbleMenuButton
+                            key={key}
+                            shape="grid"
+                            width={(index === 0) ? 34 : 33}
+                            height={25}
+                            buttonWidth={SIGN_BUTTON_WIDTH}
+                            caption={label}
+                            // `setImageAsset(icon, name, true)`: the picture is centred in the whole button.
+                            adornment={icon && (
+                                <Box layout={{ position: 'absolute', left: 0, top: 0, width: SIGN_BUTTON_WIDTH, height: SIGN_BUTTON_HEIGHT, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                    <ThemeImage
+                                        src={icon}
+                                        layout={{}}
+                                    />
+                                </Box>
+                            )}
+                            onPress={() => {
+                                send(new SignComposer({ signType: key }));
+                                onClose();
+                            }}
                         />
-                    </Box>
-                    <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
-                        {(mode === MODE_SIGNS) && (
-                            <Box layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}>
-                                {SIGN_BUTTONS.map(({ key, icon, label }) => (
-                                    <InfoBubbleMenuButton
-                                        key={key}
-                                        shape="grid"
-                                        width={34}
-                                        height={25}
-                                        caption={label}
-                                        onPress={() => {
-                                            send(new SignComposer({ signType: key }));
-                                            onClose();
-                                        }}
-                                    >
-                                        {icon && (
-                                            <ThemeImage
-                                                src={icon}
-                                                layout={{}}
-                                            />
-                                        )}
-                                    </InfoBubbleMenuButton>
-                                ))}
-                            </Box>
-                        )}
-                        {buttons[mode].filter(button => button.visible).map(button => (
-                            <InfoBubbleMenuButton
-                                key={button.key}
-                                caption={button.caption}
-                                disabled={button.enabled === false}
-                                onPress={() => press(button)}
-                            />
-                        ))}
-                    </Box>
+                    ))}
                 </Box>
             )}
-            <InfoBubbleMinimize
-                collapsed={collapsed}
-                onToggle={() => setCollapsed(!collapsed)}
-            />
-        </Bubble>
+            {visibleButtons.map(button => (
+                <InfoBubbleMenuButton
+                    key={button.key}
+                    width={ROW_WIDTH}
+                    caption={button.caption}
+                    arrow={SUBMENU_ROWS.includes(button.key) ? 'right' : ((button.key === 'back') ? 'left' : undefined)}
+                    arrowX={92}
+                    adornment={VIP_ICON_ROWS.includes(button.key) && (
+                        <Icon
+                            variant={14}
+                            layout={{ position: 'absolute', left: 88, top: 10 }}
+                        />
+                    )}
+                    disabled={button.enabled === false}
+                    onPress={() => press(button)}
+                />
+            ))}
+        </InfoBubbleMenuFrame>
     );
 };

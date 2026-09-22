@@ -1,9 +1,11 @@
 import { Container as PixiContainer } from 'pixi.js';
 import { useState } from 'react';
 
+import { getCollectiblePreviewIcon } from '#base/commands';
 import { NOTIFICATION_ASSETS, NotificationAssetName, NotificationItem } from '#base/context/notifications';
 import { useInterpolate, useTranslation } from '#base/context/system';
 import { Border, Box, Button, LayoutImage, Region, ThemeImage, ThemeText, useLayoutEvent } from '#base/theme';
+import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/collectibles/CollectiblesProductPreview';
 
 import { NOTIFICATION_SIDE_MARGIN } from './notificationStack';
 
@@ -31,6 +33,10 @@ export interface NotificationsBubbleProps {
 
 const BUBBLE_WIDTH = 190;
 
+/** The bubbles' unstretched bitmaps that take their image's size (`fit_size_to_contents`). */
+const FIT_BITMAP = { stretchedX: false, stretchedY: false, fitSizeToContents: true } as const;
+const TREASURE_HUNT_KEY_BITMAP = { ...FIT_BITMAP, rotation: 270 } as const;
+
 /** A library bitmap by its Flash name, or the URL the caller passed. */
 const imageSource = (image: string | undefined) => {
     if (!image) return undefined;
@@ -43,13 +49,19 @@ const imageSource = (image: string | undefined) => {
 /**
  * One notification bubble - `HabboNotificationItemView`'s window, in the layout its style names:
  * `notification_xml` (the black bubble with an icon), `notification_wired_xml`,
- * `notification_treasurehunt_xml` and `notification_friendonline_xml`. Geometry and text styles
+ * `notification_treasurehunt_xml`, `notification_friendonline_xml` and
+ * `notification_nft_opening_xml`. Geometry and text styles
  * are the layouts' own. Where it is and how faded comes from `NotificationsView`, which runs the
  * stack; this draws and forwards the pointer.
  *
  * `setNotificationIcon` pads a bitmap to a square before the 50x50 bitmap window shows it; here
- * the image sits centred in that box at its own size, which is the same picture for every icon
- * the library holds.
+ * the image sits centred in that box at its own size (the `notification_icon_static` bitmap's
+ * `pivot_point`), which is the same picture for every icon the library holds.
+ *
+ * The default bubble's text is the Volter theme's `regular` under `font_face` Volter Bold and
+ * `antialias_type` advanced - `bold` with that one var; the `id_regular` texts are `u_regular` at
+ * `font_size` 11 in white, which is what that style is. Every `word_wrap` width is the field's
+ * less Flash's 4px gutter.
  *
  * Every bubble is a direct child of the client's window layer, so that `zIndex` stacks it
  * against the frames the way Flash's single window layer did.
@@ -81,6 +93,7 @@ export const NotificationsBubble = ({ item, frame, zIndex, onHover, onClick, onS
                 />
             )}
             {(item.layout === 'treasure_hunt') && <TreasureHuntBubble item={item} />}
+            {(item.layout === 'nft_opening') && <NftOpeningBubble item={item} />}
             {(item.layout === 'friendonline') && (
                 <FriendOnlineBubble
                     item={item}
@@ -95,6 +108,7 @@ export const NotificationsBubble = ({ item, frame, zIndex, onHover, onClick, onS
 const BubbleIcon = ({ image }: { image: string | undefined }) => (
     <ThemeImage
         src={imageSource(image)}
+        bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
         layout={{ width: 50, height: 50 }}
     />
 );
@@ -117,7 +131,8 @@ const DefaultBubble = ({ item }: { item: NotificationItem }) => {
             <ThemeText
                 text={interpolate(item.text)}
                 textStyle="bold"
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 116 }}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 112 }}
+                flashFormat={{ antiAliasType: 'advanced' }}
                 verticalAlign="top"
                 layout={{ width: 116 }}
             />
@@ -177,9 +192,10 @@ const WiredBubble = ({ item, isDisplayed }: { item: NotificationItem; isDisplaye
             tintColor="#355477"
             layout={{ width: BUBBLE_WIDTH, flexDirection: 'column', paddingTop: 31, paddingBottom: 6, overflow: 'hidden' }}
         >
-            {/* `illumina_wired_bg_right` with `flip_x`, baked into the file; it hangs from the bottom edge. */}
+            {/* `illumina_wired_bg_right` at y -19, 160 high: anchored to the bottom edge, it hangs 81px under it. */}
             <ThemeImage
-                src={LayoutImage('notifications/notifications_wired_bg.png')}
+                src={LayoutImage('shared/illumina_wired_bg_right.png')}
+                bitmap={{ stretchedX: false, flipX: true, fitSizeToContents: true }}
                 alpha={0.3}
                 layout={{ position: 'absolute', left: 0, bottom: -81, width: 240, height: 160 }}
             />
@@ -191,7 +207,7 @@ const WiredBubble = ({ item, isDisplayed }: { item: NotificationItem; isDisplaye
             <ThemeText
                 text={interpolate(item.text)}
                 textStyle="id_regular"
-                textOptions={{ wordWrap: true, wordWrapWidth: 174, align: 'center' }}
+                textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
                 verticalAlign="top"
                 layout={{ width: 174, marginLeft: 8 }}
             />
@@ -239,7 +255,7 @@ const TreasureHuntBubble = ({ item }: { item: NotificationItem }) => {
             <ThemeText
                 text={interpolate(item.text)}
                 textStyle="id_regular"
-                textOptions={{ wordWrap: true, wordWrapWidth: 119 }}
+                textOptions={{ wordWrap: true, wordWrapWidth: 115 }}
                 verticalAlign="top"
                 layout={{ width: 119 }}
             />
@@ -250,19 +266,83 @@ const TreasureHuntBubble = ({ item }: { item: NotificationItem }) => {
                         </Box>
                     )
                 : (
-                        // `mysterybox_key_base` / `_overlay` at `rotation="270"`, baked into the files.
+                        // `treasure_hunt_image`: `mysterybox_key_base` / `_overlay` turned 270 degrees.
                         <Box layout={{ position: 'absolute', left: 10, top: 33, width: 39, height: 39 }}>
                             <ThemeImage
-                                src={LayoutImage('notifications/notifications_treasure_hunt_key_base.png')}
+                                src={LayoutImage('room-ui/mysterybox_key_base.png')}
+                                bitmap={TREASURE_HUNT_KEY_BITMAP}
                                 tint="#f0b834"
                                 layout={{ position: 'absolute', left: 0, top: 0 }}
                             />
                             <ThemeImage
-                                src={LayoutImage('notifications/notifications_treasure_hunt_key_overlay.png')}
+                                src={LayoutImage('room-ui/mysterybox_key_overlay.png')}
+                                bitmap={TREASURE_HUNT_KEY_BITMAP}
                                 layout={{ position: 'absolute', left: 0, top: 0 }}
                             />
                         </Box>
                     )}
+        </Border>
+    );
+};
+
+/** The `product_icon` widget of the `nft_opening` bubble - `product_icon.xml` in its 40 x 40 box. */
+const NFT_OPENING_ICON_SLOTS: CollectiblesPreviewSlots = {
+    productPreview: { left: -3, top: 0, width: 46, height: 40 },
+    badge: { left: 0, top: 0, width: 40, height: 40, zoom: 1 },
+    unknown: { left: 11, top: 11, width: 18, height: 18, src: LayoutImage('shared/collectables_icon_curator_stamp_small.png'), stretched: true },
+    // `pet_image:direction` south: 3, so 135 degrees; the widget's minimum height makes it 48 high.
+    pet: { left: -4, top: -2, width: 48, height: 48, zoom: 1, shrinkOnOverflow: true, direction: 135 },
+};
+
+/**
+ * `notification_nft_opening_xml`, 190x110 (`showNftOpeningNotification`): the reward box title
+ * over the collectible's `product_icon` (`ProductIconWidget.previewImage` of the extra data's
+ * `product`), the text, and the `rarity_text` button strip reading `collectibles.item.rarity` and
+ * the rarity, tinted with the extra data's `rarity_color`.
+ */
+const NftOpeningBubble = ({ item }: { item: NotificationItem }) => {
+    const t = useTranslation();
+    const interpolate = useInterpolate();
+    const { product, rarity, rarityColor } = item.options;
+
+    return (
+        <Border
+            variant="2"
+            tintColor="#006154"
+            layout={{ width: BUBBLE_WIDTH, height: 110 }}
+        >
+            <BubbleHeader
+                title={t('collectibles.reward_box.notif.title')}
+                color="#012723"
+                centered={false}
+            />
+            <Region
+                name="icon_widget"
+                layout={{ position: 'absolute', left: 9, top: 31, width: 40, height: 40 }}
+            >
+                <CollectiblesProductPreview
+                    preview={getCollectiblePreviewIcon(product ?? null)}
+                    slots={NFT_OPENING_ICON_SLOTS}
+                />
+            </Region>
+            <ThemeText
+                text={interpolate(item.text)}
+                textStyle="u_regular"
+                textOptions={{ fill: '#ffffff', fontSize: 11, wordWrap: true, wordWrapWidth: 111 }}
+                name="nft_prize_description"
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 65, top: 29, width: 115 }}
+            />
+            <Box layout={{ position: 'absolute', left: 6, top: 80, width: 178, height: 25 }}>
+                <Button
+                    variant="3"
+                    name="rarity_text"
+                    tintColor={`#${((rarityColor ?? 0xf5d634) & 0xffffff).toString(16).padStart(6, '0')}`}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: 178, height: 25, minWidth: 178 }}
+                >
+                    {`${t('collectibles.item.rarity', '')}: ${rarity ?? ''}`}
+                </Button>
+            </Box>
         </Border>
     );
 };
@@ -280,12 +360,13 @@ const FriendOnlineBubble = ({ item, onSwipe }: { item: NotificationItem; onSwipe
             <Box layout={{ marginTop: 12, height: 34, flexDirection: 'row', alignItems: 'flex-start', gap: 5, paddingLeft: 8, paddingRight: 16, paddingTop: 7 }}>
                 <ThemeImage
                     src={LayoutImage('notifications/notification_friendonline_left.png')}
-                    layout={{ position: 'absolute', left: 0, top: 0 }}
+                    bitmap={{ stretchedX: false, stretchedY: false }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: 7, height: 34 }}
                 />
                 {/* The layout runs the middle piece 4px past the pill, under the circle. */}
                 <ThemeImage
                     src={LayoutImage('notifications/notification_friendonline_middle.png')}
-                    stretch={true}
+                    bitmap={{ stretchedY: false }}
                     layout={{ position: 'absolute', left: 7, right: -4, top: 0, height: 34 }}
                 />
                 <Region
@@ -296,6 +377,7 @@ const FriendOnlineBubble = ({ item, onSwipe }: { item: NotificationItem; onSwipe
                 >
                     <ThemeImage
                         src={LayoutImage('notifications/notification_friendonline_slide.png')}
+                        bitmap={FIT_BITMAP}
                         layout={{ position: 'absolute', left: 2, top: 6 }}
                     />
                 </Region>
@@ -303,11 +385,13 @@ const FriendOnlineBubble = ({ item, onSwipe }: { item: NotificationItem; onSwipe
                     text={interpolate(item.text)}
                     textStyle="u_regular"
                     textOptions={{ fill: '#cfcfcf' }}
+                    verticalAlign="top"
                 />
             </Box>
             <Box layout={{ width: 43, height: 58, flexShrink: 0 }}>
                 <ThemeImage
                     src={LayoutImage('notifications/notification_friendonline_circle_inner.png')}
+                    bitmap={FIT_BITMAP}
                     layout={{ position: 'absolute', left: -10, top: 3 }}
                 />
                 <Box layout={{ position: 'absolute', left: -8, top: 4 }}>
@@ -315,6 +399,7 @@ const FriendOnlineBubble = ({ item, onSwipe }: { item: NotificationItem; onSwipe
                 </Box>
                 <ThemeImage
                     src={LayoutImage('notifications/notification_friendonline_circle.png')}
+                    bitmap={FIT_BITMAP}
                     layout={{ position: 'absolute', left: -10, top: 3 }}
                 />
             </Box>

@@ -38,7 +38,7 @@ export const InfostandPet = ({ objectData, onClose }: { objectData: ISimpleRoomO
             figure={userData.figure}
             posture={userData.petPosture}
             name={userData.name}
-            canRespect={petRespectLeft > 0}
+            respectLeft={petRespectLeft}
             onRespect={() => {
                 send(new RespectPetComposer({ petId }));
                 // The server only answers a respect that failed, so the count is spent here.

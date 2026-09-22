@@ -1,8 +1,9 @@
 import { useCatalogStoreApi } from '../useCatalogStoreApi';
 
 /**
- * Zustand actions are created once and never change, so they are read off the store rather than
- * subscribed to: a component using these re-renders for nothing.
+ * The catalogue store's actions, every slice's. Zustand actions are created once and never
+ * change, so they are read off the store rather than subscribed to: a component using these
+ * re-renders for nothing.
  */
 export const useCatalogActions = () => {
     const state = useCatalogStoreApi().getState();
@@ -12,16 +13,15 @@ export const useCatalogActions = () => {
         setOffersToNodes: state.setOffersToNodes,
         setActiveNodes: state.setActiveNodes,
         setOpenNodes: state.setOpenNodes,
+        setRequestedPage: state.setRequestedPage,
+        setSearchResult: state.setSearchResult,
         setIsBusy: state.setIsBusy,
         setActivePageId: state.setActivePageId,
         setActivePage: state.setActivePage,
-        setActiveOffer: state.setActiveOffer,
+        setForceRefresh: state.setForceRefresh,
         setFrontPageItems: state.setFrontPageItems,
-        setRequestedPage: state.setRequestedPage,
-        setPurchaseOptions: state.setPurchaseOptions,
         setActivePurchase: state.setActivePurchase,
         setIsPurchasing: state.setIsPurchasing,
-        setSearchResult: state.setSearchResult,
         resetCatalog: state.resetCatalog,
     };
 };

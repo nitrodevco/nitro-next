@@ -8,7 +8,7 @@
  */
 
 /** Which hand-written layout draws a style: the XML's `customlayout`, `default` when it names none. */
-export type NotificationLayoutName = 'default' | 'friendonline' | 'treasure_hunt' | 'wired';
+export type NotificationLayoutName = 'default' | 'friendonline' | 'nft_opening' | 'treasure_hunt' | 'wired';
 
 export interface NotificationStyleConfig {
     /** `icon`: the library bitmap shown when the caller passes no image of its own. */
@@ -25,9 +25,9 @@ export interface NotificationStyleConfig {
  * with callers and no style. They are left out of `NotificationStyleName` so that a caller here
  * finds out at compile time instead.
  *
- * `nft_opening` is the one style of the XML that is not here: its layout is built around the
- * `product_icon` window widget and an `IProductDisplayInfo` handed over in the extra data, both
- * of which belong to the collectibles catalogue, which has not been ported.
+ * `nft_opening` is the collectibles' (`CollectiblesController.onRedeemLootBoxStateEvent`): its
+ * layout draws the product in a `product_icon` widget and the rarity strip from the extra data
+ * (`NotificationOptions.product` / `rarity` / `rarityColor`).
  */
 export const NOTIFICATION_STYLES = {
     achievement: { internalLink: 'questengine/achievements' },
@@ -37,6 +37,7 @@ export const NOTIFICATION_STYLES = {
     friendonline: { layout: 'friendonline' },
     treasure_hunt: { layout: 'treasure_hunt' },
     wired: { layout: 'wired' },
+    nft_opening: { layout: 'nft_opening' },
     friendoffline: { internalLink: 'friendlist/open' },
     thirdpartyfriendonline: { internalLink: 'friendlist/open' },
     thirdpartyfriendoffline: { internalLink: 'friendlist/open' },
@@ -74,6 +75,7 @@ export const NOTIFICATION_VIEWS: Record<NotificationLayoutName, NotificationView
     friendonline: { timeFadeIn: 800, timeDisplay: 8000, timeFadeOut: 800, timeSwipeOut: 300, distanceSwipeOut: 340, height: 60 },
     treasure_hunt: { timeFadeIn: 800, timeDisplay: 15000, timeFadeOut: 800, timeSwipeOut: 300, distanceSwipeOut: 340, height: 90 },
     wired: { timeFadeIn: 800, timeDisplay: 10000, timeFadeOut: 800, timeSwipeOut: 300, distanceSwipeOut: 340 },
+    nft_opening: { timeFadeIn: 800, timeDisplay: 10000, timeFadeOut: 800, timeSwipeOut: 300, distanceSwipeOut: 340, height: 110 },
 };
 
 /**

@@ -1,6 +1,7 @@
 import { ChangeUserNameResultMessageCode } from '@nitrodevco/nitro-api';
 import { AccountPreferencesEventMessage, ChangeUserNameResultMessage, EmailStatusResultEventMessage, FigureUpdateEventMessage, GetUserNftChatStylesComposer, NoobnessLevelMessage, PetRespectFailedMessage, UserNameChangedMessage, UserNftChatStylesMessage, UserObjectMessage, UserPurchasableChatStyleChangedMessage, UserPurchasableChatStylesMessage, UserRightsMessage } from '@nitrodevco/nitro-packets';
 
+import { clampChatFontSizeMode } from '#base/chat';
 import { WebSocketConnection } from '#base/context/communication';
 import { userStore } from '#base/context/user';
 
@@ -74,7 +75,8 @@ export const registerUserInfoHandlers = ({ send, subscribe }: WebSocketConnectio
             setChatPreferences({
                 preferredChatStyle: data.preferedChatStyle,
                 freeFlowChatDisabled: data.freeFlowChatDisabled,
-                chatSizePreference: data.chatSizePreference,
+                // `HabboFreeFlowChat.onAccountPreferences`: `clampChatFontSizeMode(chatSizePreference)`.
+                chatSizePreference: clampChatFontSizeMode(data.chatSizePreference),
                 chatMode: data.chatMode,
                 chatBubbleWidth: data.chatBubbleWidth,
                 chatScrollSpeed: data.chatScrollSpeed,

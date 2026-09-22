@@ -45,7 +45,8 @@ export interface FloorPlanEditorViewProps {
 }
 
 /**
- * The floor plan editor - `BCFloorPlanEditor`, on the `floor_plan_editor_bc` layout (662x600). The
+ * The floor plan editor - `BCFloorPlanEditor`, on the `floor_plan_editor_bc` layout (662x600, frame
+ * style 3, margins 0/33/0/0; read from the decompiled client, as the bundles do not carry it). The
  * map on the left is drawn on with the five tools above it; the panel on the right holds the door
  * direction, the two thickness menus, the fixed wall height and the isometric preview.
  *
@@ -80,6 +81,15 @@ const DRAW_MODE_IMAGES: Record<FloorPlanDrawMode, string> = {
     increase_height: 'window-manager/floor_plan_editor_raise_tile.png',
     decrease_height: 'window-manager/floor_plan_editor_sink_tile.png',
     set_enter_tile: 'window-manager/floor_plan_editor_enter_tile.png',
+};
+
+/** Each tool's `static_bitmap` in its button: the layout nudges them a pixel or four apart. */
+const DRAW_MODE_IMAGE_OFFSETS: Record<FloorPlanDrawMode, [ number, number ]> = {
+    add_tile: [ 5, 0 ],
+    remove_tile: [ 5, 1 ],
+    increase_height: [ 6, 1 ],
+    decrease_height: [ 6, 4 ],
+    set_enter_tile: [ 5, 1 ],
 };
 
 /** `buttons_itemlist` puts a divider after the second and the fourth tool. */
@@ -142,11 +152,12 @@ export const FloorPlanEditorView = ({
                 dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                 onClose={onClose}
                 centered
+                margins={[ 0, 33, 0, 0 ]}
                 layout={{ width: 662, height: 600, minWidth: 662, maxWidth: 1380, minHeight: 600, maxHeight: 900 }}
             >
                 <Region
                     backgroundColor="#4e4844"
-                    layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 50 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50 }}
                 >
                     <Region
                         backgroundColor="#2d2724"
@@ -154,12 +165,14 @@ export const FloorPlanEditorView = ({
                     >
                         <ThemeImage
                             src={LayoutImage('window-manager/floor_plan_editor_logo.png')}
+                            bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center', fitSizeToContents: true }}
                             layout={{ position: 'absolute', left: 9, width: 38, top: 5, height: 38 }}
                         />
                         <ThemeText
                             text={t('floor.plan.editor.subtitle')}
                             textStyle="u_small"
                             textOptions={{ fill: '#ffffff' }}
+                            verticalAlign="top"
                             layout={{ position: 'absolute', left: 74, width: 115, top: 9, height: 15 }}
                         />
                     </Region>
@@ -169,7 +182,7 @@ export const FloorPlanEditorView = ({
                     variant="3"
                     name="heightmap_border"
                     tintColor="#bdbdb5"
-                    layout={{ position: 'absolute', left: 10, right: 296, top: 57, bottom: 54 }}
+                    layout={{ position: 'absolute', left: 10, right: 308, top: 57, bottom: 62 }}
                 >
                     <Region
                         name="controls_container"
@@ -178,6 +191,7 @@ export const FloorPlanEditorView = ({
                         <ThemeText
                             text={t('floor.plan.editor.draw.mode')}
                             textStyle="u_regular"
+                            verticalAlign="top"
                             layout={{ position: 'absolute', left: 0, width: 161, top: 1, height: 17 }}
                         />
                         <Region
@@ -195,16 +209,19 @@ export const FloorPlanEditorView = ({
                                 >
                                     <ThemeImage
                                         src={LayoutImage(DRAW_MODE_IMAGES[mode])}
-                                        layout={{ position: 'absolute', left: 5, top: 1, width: 40, height: 40 }}
+                                        bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                                        layout={{ position: 'absolute', left: DRAW_MODE_IMAGE_OFFSETS[mode][0], top: DRAW_MODE_IMAGE_OFFSETS[mode][1], width: 40, height: 40 }}
                                     />
                                 </ContainerButton>
                             ))}
                             <ThemeImage
                                 src={LayoutImage('friend-bar/landing_view_reception_horizontal.png')}
+                                bitmap={{ stretchedX: false }}
                                 layout={{ position: 'absolute', left: 122, top: 0, width: 2, height: 42 }}
                             />
                             <ThemeImage
                                 src={LayoutImage('friend-bar/landing_view_reception_horizontal.png')}
+                                bitmap={{ stretchedX: false }}
                                 layout={{ position: 'absolute', left: 256, top: 0, width: 2, height: 42 }}
                             />
                         </Region>
@@ -214,7 +231,10 @@ export const FloorPlanEditorView = ({
                         >
                             <ThemeText
                                 text={t('floor.plan.editor.tile.height')}
+                                markup
+                                textStyle="u_regular"
                                 name="tile_height_text"
+                                verticalAlign="top"
                                 layout={{ position: 'absolute', left: 0, width: 156, top: 4, height: 16 }}
                             />
                             <FloorPlanSlider
@@ -268,6 +288,7 @@ export const FloorPlanEditorView = ({
                     >
                         <ThemeImage
                             src={LayoutImage('shared/roomtools_magnifier.png')}
+                            bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
                             layout={{ position: 'absolute', left: -4, width: 30, top: -3, height: 30 }}
                         />
                     </Region>
@@ -277,7 +298,7 @@ export const FloorPlanEditorView = ({
                     variant="3"
                     name="preview_border"
                     tintColor="#bdbdb5"
-                    layout={{ position: 'absolute', right: -5, width: 289, top: 57, bottom: 53 }}
+                    layout={{ position: 'absolute', right: 7, width: 289, top: 57, bottom: 61 }}
                 >
                     <Region
                         name="enterdirection_container"
@@ -285,6 +306,8 @@ export const FloorPlanEditorView = ({
                     >
                         <ThemeText
                             text={t('floor.plan.editor.enter.direction')}
+                            textStyle="u_regular"
+                            verticalAlign="top"
                             layout={{ position: 'absolute', left: 7, width: 120, top: 4, height: 17, maxWidth: 120 }}
                         />
                         <ContainerButton
@@ -321,11 +344,14 @@ export const FloorPlanEditorView = ({
                     </Region>
                     <ThemeImage
                         src={LayoutImage('friend-bar/landing_view_reception_horizontal.png')}
+                        bitmap={{ stretchedX: false }}
                         layout={{ position: 'absolute', left: 142, top: 3, width: 3, height: 97 }}
                     />
                     <Region layout={{ position: 'absolute', left: 146, top: 3, width: 128, height: 99 }}>
                         <ThemeText
                             text={t('floor.plan.editor.room.options')}
+                            textStyle="u_regular"
+                            verticalAlign="top"
                             layout={{ position: 'absolute', left: 14, width: 110, top: 4, height: 17, maxWidth: 110 }}
                         />
                         <Dropmenu
@@ -361,14 +387,15 @@ export const FloorPlanEditorView = ({
                             name="walls_fixed_height_enabled_checkbox"
                             selected={wallHeightEnabled}
                             onPointerTap={() => setWallHeightState({ enabled: !wallHeightEnabled, forHeight: fixedWallsHeight })}
-                            layout={{ width: 18, height: 17, flexShrink: 0 }}
+                            layout={{ width: 18, height: 17, marginTop: 7, flexShrink: 0 }}
                         />
                         <ThemeText
                             text={t('floor.editor.wall.height')}
                             textStyle="u_regular"
                             name="wall_height_text"
                             alpha={wallHeightEnabled ? 1 : 0.6}
-                            layout={{ width: 105, height: 17, flexShrink: 0 }}
+                            verticalAlign="top"
+                            layout={{ width: 105, height: 17, marginTop: 6, flexShrink: 0 }}
                         />
                         <ThemeText
                             text={String(wallHeightValue + 1)}
@@ -376,7 +403,8 @@ export const FloorPlanEditorView = ({
                             textOptions={{ fill: '#5f5f5f', align: 'center' }}
                             name="wall_height_number"
                             alpha={wallHeightEnabled ? 1 : 0.6}
-                            layout={{ width: 25, height: 17, flexShrink: 0, maxWidth: 25 }}
+                            verticalAlign="top"
+                            layout={{ width: 25, height: 17, marginTop: 6, flexShrink: 0, maxWidth: 25 }}
                         />
                         <FloorPlanSlider
                             steps={FLOOR_PLAN_WALL_HEIGHT_LIMIT}
@@ -393,7 +421,7 @@ export const FloorPlanEditorView = ({
                             <ThemeImage
                                 name="wall_height_slider"
                                 src={LayoutImage('toolbar/icons_toolbar_divider.png')}
-                                stretch
+                                bitmap={{ stretchedY: false, pivot: 'center left' }}
                                 layout={{ position: 'absolute', left: 0, top: 0, width: 111, height: 30 }}
                             />
                         </FloorPlanSlider>
@@ -417,7 +445,7 @@ export const FloorPlanEditorView = ({
 
                 <Region
                     name="main_buttons"
-                    layout={{ position: 'absolute', left: 10, right: -3, bottom: 1, height: 40 }}
+                    layout={{ position: 'absolute', left: 10, right: 9, bottom: 9, height: 40 }}
                 >
                     <Region
                         name="left_buttons"

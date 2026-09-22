@@ -15,7 +15,9 @@ export interface FloorPlanImportExportViewProps {
 
 /**
  * The floor plan editor's import/export dialog - `ImportExportDialog`, on the
- * `floor_plan_export_import` layout. The map as text, to copy out of or paste into.
+ * `floor_plan_export_import` layout (379x374, frame style 3, margins 1/30/1/1). The map as text,
+ * to copy out of or paste into. The layout's two scrollbars on `data` are left out: the port's
+ * `TextInput` scrolls itself and exposes no scroll position for a bar to drive.
  *
  * Its save is not the editor's: Flash sends the pasted text with the entry point and the two
  * thicknesses but leaves the fixed wall height off the packet entirely, so the room keeps whatever
@@ -35,17 +37,22 @@ export const FloorPlanImportExportView = ({ modelData, receivedModel, canSave, o
             dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             centered
+            margins={[ 1, 30, 1, 1 ]}
             layout={{ width: 379, height: 374, minWidth: 379, minHeight: 374 }}
         >
             <Border
                 variant="105"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 8, right: 11, top: 12, bottom: 52 }}
+                layout={{ position: 'absolute', left: 8, right: 21, top: 12, bottom: 62 }}
             >
                 <TextInput
                     value={value}
                     onChange={setValue}
                     multiline
+                    fontFamily="Courier"
+                    flashPlacement
+                    backgroundColor={null}
+                    focusedBackgroundColor={null}
                     layout={{ position: 'absolute', left: 0, right: 1, top: 1, bottom: 2 }}
                 />
             </Border>
@@ -54,7 +61,7 @@ export const FloorPlanImportExportView = ({ modelData, receivedModel, canSave, o
                 name="revert"
                 tintColor="#bbbbbb"
                 onPointerTap={() => setValue(receivedModel)}
-                layout={{ position: 'absolute', left: -3, width: 191, bottom: -10, height: 49, maxWidth: 191 }}
+                layout={{ position: 'absolute', left: -3, width: 191, bottom: 0, height: 49, maxWidth: 191 }}
             >
                 {t('floor.plan.editor.revert.to.last.received.map')}
             </Button>
@@ -64,7 +71,7 @@ export const FloorPlanImportExportView = ({ modelData, receivedModel, canSave, o
                 tintColor="#bbbbbb"
                 disabled={!canSave}
                 onPointerTap={() => onSave(value)}
-                layout={{ position: 'absolute', right: -7, width: 73, bottom: -10, height: 49, maxWidth: 73 }}
+                layout={{ position: 'absolute', right: 3, width: 73, bottom: 0, height: 49, maxWidth: 73 }}
             >
                 {t('floor.plan.editor.save')}
             </Button>

@@ -1,15 +1,8 @@
 import { useTranslation } from '#base/context/system';
-import { Border, Box, Button, CheckBox, Frame, ThemeText } from '#base/theme';
+import { Border, Button, CheckBox, Frame, Region, ThemeText } from '#base/theme';
 
 /** Which of the area's switches is being flipped. */
 export type AreaHideOption = 'invisible' | 'wallItems' | 'inverted';
-
-/** The three switches the area offers, in the order the layout stacks them. */
-const OPTIONS: { key: AreaHideOption; labelKey: string }[] = [
-    { key: 'invisible', labelKey: 'widget.areahide.options.invisibility' },
-    { key: 'wallItems', labelKey: 'widget.areahide.options.wallitems' },
-    { key: 'inverted', labelKey: 'widget.areahide.options.invert' },
-];
 
 export interface FurnitureAreaHideViewProps {
     /** The tiles currently marked, so the dialog can say whether there is an area at all. */
@@ -29,14 +22,21 @@ export interface FurnitureAreaHideViewProps {
 }
 
 /**
- * The area-hide controls, on the `area_hide_ui` layout (292x334): mark an area on the floor,
- * then say what should happen inside it. Selecting happens in the room itself, not in here - the
- * dialog only starts and clears it.
+ * The area-hide controls, on the `area_hide_ui` layout (292x334) that
+ * `AreaHideFurniWidget.createWindow` builds and centres: mark an area on the floor, then say what
+ * should happen inside it. Selecting happens in the room itself, not in here - the dialog only
+ * starts and clears it.
  *
- * The layout's `hidearea_info` text (`${widget.areahide.info}`) is not drawn: it is
- * `visible="false"` in `area_hide_ui` and `AreaHideFurniWidget` never shows it (it only dims it with
- * the rest of `_textNames`). The select and clear buttons are captioned as the layout's
- * `select_button` / `clear_button` are, `${widget.areahide.area_selection.select|clear}`.
+ * The `tab_content` item list is laid out flat: its invisible `header_container` (whose
+ * `hidearea_info` Flash never shows) takes no room, then the 5px `spacer`, `area_container` and
+ * `saturation_container` sit at the offsets the list gives them. The buttons carry
+ * `expand_to_accommodate_children`, so `ButtonController` sizes them to their caption
+ * (`width = 0` on `WE_CHILD_RESIZED`) rather than to the width the layout editor saved;
+ * `on_off_button` also aligns right, so it grows leftwards from its right edge. While the area is
+ * on, `AreaHideFurniWidget.disableContents` fades every text and checkbox to a blend of 0.5.
+ *
+ * Flash hides `apply_button` (`AUTO_SAVE`) and sends every change as it is made; this port keeps
+ * the button, because the widget sends its draft only on Apply.
  */
 export const FurnitureAreaHideView = ({
     width, length, invisible, wallItems, inverted, isOn,
@@ -44,98 +44,133 @@ export const FurnitureAreaHideView = ({
 }: FurnitureAreaHideViewProps) => {
     const t = useTranslation();
     const hasArea = ((width > 0) && (length > 0));
-    const values: Record<AreaHideOption, boolean> = { invisible, wallItems, inverted };
+    const blend = (isOn ? 0.5 : 1);
+
+    const checkbox = (key: AreaHideOption, selected: boolean) => (
+        <Region
+            alpha={blend}
+            layout={{ position: 'absolute', left: 1, top: 0, width: 18, height: 18 }}
+        >
+            <CheckBox
+                variant="0"
+                disabled={isOn}
+                selected={selected}
+                onPointerTap={() => onToggleOption(key, !selected)}
+                layout={{ width: 18, height: 18 }}
+            />
+        </Region>
+    );
+
+    const text = (caption: string, top: number, width: number, height: number, info = false) => (
+        <ThemeText
+            text={caption}
+            textStyle="u_small"
+            textOptions={{ ...(info && { fill: '#999999' }), wordWrap: true, wordWrapWidth: width - 4 }}
+            clip
+            alpha={blend}
+            verticalAlign="top"
+            layout={{ position: 'absolute', left: 20, top, width, height }}
+        />
+    );
 
     return (
         <Frame
             variant="3"
-            id="furniture-area-hide"
+            id="areahide_ui"
             caption={t('widget.areahide.title')}
             tintColor="#67a3bf"
             dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
-            defaultPosition={{ x: 100, y: 60 }}
+            centered
             rememberPosition={false}
-            layout={{ position: 'absolute', width: 292, height: 334 }}
+            resizeDirection="none"
+            margins={[ 6, 25, 6, 7 ]}
+            layout={{ width: 292, height: 334, minHeight: 0 }}
         >
             <Border
                 variant="100"
                 backgroundColor="#ffffff"
-                layout={{ flex: 1, flexDirection: 'column', gap: 6, padding: 6 }}
+                layout={{ position: 'absolute', left: 3, top: 16, width: 275, height: 250, overflow: 'hidden' }}
             >
-                <ThemeText
-                    text={t('widget.areahide.area_selection')}
-                    textStyle="u_small"
-                    flashFormat={{ bold: true }}
-                />
-                <ThemeText
-                    text={t('widget.areahide.area_selection.info')}
-                    textStyle="u_small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 268 }}
-                    verticalAlign="top"
-                    layout={{ width: 268, height: 32 }}
-                />
-                <Box layout={{ flexDirection: 'row', gap: 4 }}>
-                    <Button
-                        variant="0"
-                        disabled={isOn}
-                        onPointerTap={onSelect}
-                        layout={{ flex: 1, height: 24 }}
-                    >
-                        {t('widget.areahide.area_selection.select')}
-                    </Button>
-                    <Button
-                        variant="0"
-                        disabled={isOn}
-                        onPointerTap={onClear}
-                        layout={{ flex: 1, height: 24 }}
-                    >
-                        {t('widget.areahide.area_selection.clear')}
-                    </Button>
-                </Box>
-                {OPTIONS.map(option => (
-                    <Box
-                        key={option.key}
-                        layout={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}
-                    >
-                        <CheckBox
+                <Region layout={{ position: 'absolute', left: 6, top: 7, width: 260, height: 98, overflow: 'hidden' }}>
+                    <ThemeText
+                        text={t('widget.areahide.area_selection')}
+                        textStyle="u_small"
+                        flashFormat={{ bold: true }}
+                        alpha={blend}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, top: 0, width: 158, height: 15 }}
+                    />
+                    <ThemeText
+                        text={t('widget.areahide.area_selection.info')}
+                        textStyle="u_small"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 258 }}
+                        clip
+                        alpha={blend}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, top: 20, width: 262, height: 40 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 0, top: 66, width: 260, height: 25, overflow: 'hidden', flexDirection: 'row', gap: 12 }}>
+                        <Button
                             variant="0"
                             disabled={isOn}
-                            selected={values[option.key]}
-                            onPointerTap={() => onToggleOption(option.key, !values[option.key])}
-                            layout={{ width: 18, height: 18 }}
-                        />
-                        <ThemeText
-                            text={t(option.labelKey)}
-                            textOptions={{ fill: '#000000' }}
-                        />
-                    </Box>
-                ))}
-                <ThemeText
-                    text={t('widget.areahide.options.invert.info')}
-                    textStyle="u_small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 268 }}
-                    verticalAlign="top"
-                    layout={{ width: 268, height: 32 }}
-                />
+                            onPointerTap={onSelect}
+                            layout={{ height: 24, flexShrink: 0 }}
+                        >
+                            {t('widget.areahide.area_selection.select')}
+                        </Button>
+                        <Button
+                            variant="0"
+                            disabled={isOn}
+                            onPointerTap={onClear}
+                            layout={{ height: 24, flexShrink: 0 }}
+                        >
+                            {t('widget.areahide.area_selection.clear')}
+                        </Button>
+                    </Region>
+                </Region>
+                <Region layout={{ position: 'absolute', left: 6, top: 105, width: 262, height: 143 }}>
+                    <ThemeText
+                        text={t('widget.areahide.options')}
+                        textStyle="u_small"
+                        flashFormat={{ bold: true }}
+                        alpha={blend}
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 0, top: 0, width: 123, height: 15 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 0, top: 20, width: 262, height: 123 }}>
+                        <Region layout={{ position: 'absolute', left: 0, top: 0, width: 262, height: 55 }}>
+                            {checkbox('wallItems', wallItems)}
+                            {text(t('widget.areahide.options.wallitems'), 0, 240, 15)}
+                        </Region>
+                        <Region layout={{ position: 'absolute', left: 0, top: 20, width: 262, height: 43, overflow: 'hidden' }}>
+                            {checkbox('inverted', inverted)}
+                            {text(t('widget.areahide.options.invert'), 0, 240, 15)}
+                            {text(t('widget.areahide.options.invert.info'), 16, 242, 30, true)}
+                        </Region>
+                        <Region layout={{ position: 'absolute', left: 0, top: 68, width: 262, height: 55, overflow: 'hidden' }}>
+                            {checkbox('invisible', invisible)}
+                            {text(t('widget.areahide.options.invisibility'), 0, 240, 15)}
+                            {text(t('widget.areahide.options.invisibility.info'), 16, 242, 40, true)}
+                        </Region>
+                    </Region>
+                </Region>
             </Border>
-            <Box layout={{ flexDirection: 'row', gap: 4, marginTop: 3 }}>
-                <Button
-                    variant="0"
-                    disabled={isOn || !hasArea}
-                    onPointerTap={onApply}
-                    layout={{ width: 165, height: 24 }}
-                >
-                    {t('widget.areahide.button.apply')}
-                </Button>
-                <Button
-                    variant="0"
-                    onPointerTap={onToggle}
-                    layout={{ flex: 1, height: 24 }}
-                >
-                    {t(isOn ? 'widget.areahide.button.off' : 'widget.areahide.button.on')}
-                </Button>
-            </Box>
+            <Button
+                variant="0"
+                disabled={isOn || !hasArea}
+                onPointerTap={onApply}
+                layout={{ position: 'absolute', left: 4, top: 272, height: 24 }}
+            >
+                {t('widget.areahide.button.apply')}
+            </Button>
+            <Button
+                variant="0"
+                onPointerTap={onToggle}
+                layout={{ position: 'absolute', right: 3, top: 272, height: 24 }}
+            >
+                {t(isOn ? 'widget.areahide.button.off' : 'widget.areahide.button.on')}
+            </Button>
         </Frame>
     );
 };

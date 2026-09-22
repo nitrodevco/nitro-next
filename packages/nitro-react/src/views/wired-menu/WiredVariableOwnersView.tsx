@@ -9,6 +9,9 @@
  * The info text is a literal in the layout (it has no localization key), and so it is here. The
  * layout's `searching_icon` is left out: `onPageRequested`, the only thing that shows it, is never
  * called by this window. The reference server (turbo-cloud) does not implement these packets.
+ *
+ * Every text is style 3 without a `text_style` var (`u_regular`); the keys add `bold`, and
+ * `info_text` is an `html` window (markup, `leading` 1).
  */
 import type { IWiredUserVariablesElement, IWiredUserVariablesPage, IWiredVariable } from '@nitrodevco/nitro-packets';
 import { useRef, useState } from 'react';
@@ -30,6 +33,8 @@ import { wiredVariableValueCell } from './wiredVariableValueCell';
 const REQUEST_PAGE_RATELIMIT = 280;
 /** The header above `middle`. */
 const HEADER_HEIGHT = 117;
+/** The frame's `margin_*` vars: the content box starts under the 33px title bar. */
+const FRAME_MARGINS = [ 0, 33, 0, 0 ] as const;
 /** `info_text`'s caption, as the layout spells it. */
 const INFO_TEXT = 'This is a tool to manage all users that hold a permanent variable.\rFor variables that are shared with other rooms, there is a possible 20 second synchronization delay.';
 
@@ -122,8 +127,8 @@ export const WiredVariableOwnersView = ({ page, variable }: WiredVariableOwnersV
     const boldText = (key: string, left: number, top: number) => (
         <ThemeText
             text={loc(key)}
-            textStyle="u_bold"
-            textOptions={{ fill: '#000000' }}
+            textStyle="u_regular"
+            flashFormat={{ bold: true }}
             verticalAlign="top"
             layout={{ position: 'absolute', left, top, height: 17 }}
         />
@@ -141,6 +146,7 @@ export const WiredVariableOwnersView = ({ page, variable }: WiredVariableOwnersV
             rememberPosition={false}
             onClose={closeWiredVariableOwners}
             layout={{ position: 'absolute', width: 700, height: 508, minWidth: 700, maxWidth: 700, minHeight: 380, maxHeight: 700 }}
+            margins={FRAME_MARGINS}
             contentLayout={{ flexDirection: 'column' }}
         >
             <Box layout={{ width: 700, height: HEADER_HEIGHT, flexShrink: 0 }}>
@@ -151,23 +157,24 @@ export const WiredVariableOwnersView = ({ page, variable }: WiredVariableOwnersV
                     <ThemeText
                         text={INFO_TEXT.replace(/\r/g, '\n')}
                         textStyle="u_regular"
-                        textOptions={{ fill: '#000000', align: 'center', wordWrap: true, wordWrapWidth: 596 }}
-                        verticalAlign="middle"
+                        textOptions={{ align: 'center', wordWrap: true, wordWrapWidth: 596 }}
+                        flashFormat={{ leading: 1 }}
+                        markup
+                        verticalAlign="top"
                         layout={{ position: 'absolute', left: 1, top: 3, width: 600, height: 32 }}
                     />
                 </Border>
                 <Box layout={{ position: 'absolute', left: 15, top: 55, height: 20, flexDirection: 'row', gap: 2 }}>
                     <ThemeText
                         text={loc('wiredmenu.variable_management.variable_name')}
-                        textStyle="u_bold"
-                        textOptions={{ fill: '#000000' }}
+                        textStyle="u_regular"
+                        flashFormat={{ bold: true }}
                         verticalAlign="top"
                         layout={{ height: 17 }}
                     />
                     <ThemeText
                         text={variable.variableName}
                         textStyle="u_regular"
-                        textOptions={{ fill: '#000000' }}
                         verticalAlign="top"
                         layout={{ height: 17 }}
                     />

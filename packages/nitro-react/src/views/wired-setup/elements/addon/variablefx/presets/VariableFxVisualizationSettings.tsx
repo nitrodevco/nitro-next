@@ -190,6 +190,7 @@ export const VariableFxVisualizationSettings = ({ state, previewKey, ctx, onChan
 
     return (
         <WiredSection
+            keepsFirstSplitter
             title="${wiredfurni.params.variablefx.visualization.style}"
             titleYOffset={style.namedDropdownOffset}
             headerOptionLeft={(

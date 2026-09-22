@@ -69,7 +69,7 @@ export const ILLUMINA_WIRED_STYLE: WiredStyle = {
         dropdown: { variant: '100', width: 149, height: 22 },
         checkbox: { variant: '101', width: 19, height: 21 },
         radioButton: { variant: '100', width: 12, height: 16 },
-        expandCollapse: { width: 16, height: 12, offsetY: 2, arrowY: 1, arrowTint: '#999999', upAsset: 'wired_volter_uparrow', downAsset: 'wired_volter_downarrow' },
+        expandCollapse: { width: 16, height: 12, offsetY: 2, arrowY: 1, arrowTint: '#999999', upAsset: 'wired_volter_uparrow', downAsset: 'wired_volter_downarrow', backgroundColor: null },
         iconButton: {
             variant: '102', size: 20, iconTint: '#7f7f7f', iconSize: 12,
             icons: { left: { icon: 2, x: 5, y: 5 }, right: { icon: 3, x: 5, y: 5 }, up: { icon: 1, x: 6, y: 5 }, down: { icon: 0, x: 6, y: 6 } },

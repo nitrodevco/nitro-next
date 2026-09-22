@@ -72,7 +72,6 @@ export const RoomQuizWidget = () => {
         <>
             <RoomQuizView
                 content={quiz.content}
-                secondsLeft={quiz.secondsLeft}
                 showResult={quiz.answered || quiz.finished || (quiz.secondsLeft <= 0)}
                 likes={quiz.answerCounts[QUIZ_VALUE_LIKE] ?? 0}
                 dislikes={quiz.answerCounts[QUIZ_VALUE_DISLIKE] ?? 0}

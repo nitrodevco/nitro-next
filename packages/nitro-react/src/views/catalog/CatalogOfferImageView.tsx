@@ -1,92 +1,142 @@
-import { IPurchasableOffer, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AvatarGenderType, FurnitureTypeEnum, IObjectData, IPurchasableOffer, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
+import { GetChatStyleLibrary } from '#base/chat';
+import { habbiconPreviewAssetName } from '#base/commands';
+import { PetImageRequest } from '#base/context/catalog';
 import { useCatalogOfferProduct } from '#base/hooks';
+import { LayoutImage, ThemeImage, useAvatarImageTexture } from '#base/theme';
+import { PRODUCT_IMAGES } from '#base/utils';
 
+import { pixelEffectIcon, SUBSCRIPTION_PRODUCT_ICON } from './catalogProductIcons';
 import { useFurnitureImageTexture } from './useFurnitureImageTexture';
+import { usePetImageTexture } from './usePetImageTexture';
 
 /**
- * Flash `catalog/viewer/§_-L1t§.PRODUCT_IMAGES`: offers (by localization id) whose preview is a
- * fixed catalogue picture instead of their product. Checked against Flash by
- * `scripts/drift/constants.py`.
+ * The `PRODUCT_IMAGES` pictures the client ships, by picture name. Flash draws a listed offer's
+ * picture only when its asset library has it and the product otherwise; the `ctlg_pic_*` pictures
+ * are in no bundle of this revision, and `events_confirm_purchase` is a GIF the port's bundles
+ * cannot carry, so for every listed offer but the snowwar tokens Flash and the port draw the
+ * product.
  */
-const PRODUCT_IMAGES: Record<string, string> = {
-    deal01: 'ctlg_pic_deal01',
-    deal02: 'ctlg_pic_deal02',
-    deal03: 'ctlg_pic_deal03',
-    deal04: 'ctlg_pic_deal04',
-    deal05: 'ctlg_pic_deal05',
-    deal06: 'ctlg_pic_deal06',
-    deal07: 'ctlg_pic_deal07',
-    deal08: 'ctlg_pic_deal08',
-    deal09: 'ctlg_pic_deal09',
-    deal10: 'ctlg_pic_deal10',
-    deal97: 'ctlg_pic_deal97',
-    deal98: 'ctlg_pic_deal98',
-    deal99: 'ctlg_pic_deal99',
-    noob_set_1: 'ctlg_pic_noob_set_1',
-    noob_set_2: 'ctlg_pic_noob_set_2',
-    noob_set_3: 'ctlg_pic_noob_set_3',
-    noob_set_4: 'ctlg_pic_noob_set_4',
-    noob_set_5: 'ctlg_pic_noob_set_5',
-    noob_set_6: 'ctlg_pic_noob_set_6',
-    'a0 deal100': 'ctlg_pic_a0_deal100',
-    'a0 raredaffodilrug': 'ctlg_pic_a0_raredaffodilrug',
-    'a2 slp': 'ctlg_pic_a2_slp',
-    'A2 tlp 20': 'ctlg_pic_A2_tlp_20',
-    DEAL_HC_1: 'ctlg_pic_hc_deal01',
-    DEAL_HC_2: 'ctlg_pic_hc_deal02',
-    DEAL_HC_3: 'ctlg_pic_hc_deal03',
-    hween09_ghost: 'ctlg_pic_hween09_ghost',
-    ads_twi_mist: 'ctlg_pic_ads_twi_mist',
-    party_lights: 'ctlg_pic_party_lights',
-    xmas_snow: 'ctlg_pic_xmas_snow',
-    wf_deal1: 'ctlg_pic_deal_wired_pswdoor',
-    wf_deal2: 'ctlg_pic_deal_wired_swtchdoor',
-    wf_deal3: 'ctlg_pic_deal_wired_coopdoor',
-    wf_deal4: 'ctlg_pic_deal_wired_rmtdoor',
-    wf_deal5: 'ctlg_pic_deal_wired_wlcmmsg',
-    wf_deal6: 'ctlg_pic_deal_wired_pswtele',
-    wf_deal7: 'ctlg_pic_deal_wired_dircntrl',
-    wf_deal8: 'ctlg_pic_deal_wired_mvngfurni',
-    wf_deal9: 'ctlg_pic_deal_wired_flshfires',
-    qt_val11_heartlights: 'ctlg_pic_qt_val11_heartlights',
-    GET_SNOWWAR_TOKENS: 'snowwar_tokens_10',
-    GET_SNOWWAR_TOKENS2: 'snowwar_tokens_10',
-    GET_SNOWWAR_TOKENS3: 'snowwar_tokens_10',
-    room_ad_plus_badge: 'events_confirm_purchase',
+const SHIPPED_PRODUCT_IMAGES: Record<string, string> = {
+    snowwar_tokens_10: LayoutImage('catalog/snowwar_tokens_10.png'),
 };
 
 export interface CatalogOfferImageViewProps {
     offer: IPurchasableOffer;
+    stuffData?: IObjectData;
+    /** `showConfirmationDialog`'s `param2`: the pets widgets' pet picture, rendered here and shown instead of the product's. */
+    previewImage?: PetImageRequest;
 }
 
 /**
- * The product preview of the purchase confirmation (`PurchaseConfirmationDialog`): the offer's
- * furniture image. Flash shows the `PRODUCT_IMAGES` picture instead for the offers listed there;
- * most of those pictures (`ctlg_pic_*`) come with the catalogue's own asset library, which the
- * port does not load, so for those offers this renders nothing rather than the wrong product.
+ * The product picture of the purchase confirmation - `PurchaseConfirmationDialog.showConfirmationDialog`
+ * into `product_image`, centred in its 126x152 bitmap (`setImage`): the offer's `PRODUCT_IMAGES`
+ * picture when one ships, else the picture the caller passed (the pets widgets' pet preview),
+ * else - for an offer with a product (a game token offer has none, and shows nothing) - by product type - a floor or wall furni rendered by the room engine
+ * facing 90 degrees at 64 (`getFurnitureImage` / `getWallItemImage`), an effect's icon, the club
+ * icon, a chat style's selector preview, a bot's figure facing 3, or a habbicon's preview.
+ *
+ * Not exact: Flash renders the floor furni with the purchase's stuff data and the bot waving
+ * (`wave`, `gest sml`); the port's furni texture takes no stuff data and its avatar texture no
+ * actions, so the furni shows its default state and the bot stands.
  */
-export const CatalogOfferImageView = ({ offer }: CatalogOfferImageViewProps) => {
+export const CatalogOfferImageView = ({ offer, previewImage }: CatalogOfferImageViewProps) => {
     const product = useCatalogOfferProduct(offer);
-    const hardCodedImage = PRODUCT_IMAGES[offer.localizationId];
-    const skip = !product || (hardCodedImage && hardCodedImage.length > 0);
+    const shippedImage = SHIPPED_PRODUCT_IMAGES[PRODUCT_IMAGES[offer.localizationId] ?? ''];
+    const productType = product?.productType;
+    const isFurni = !shippedImage && !previewImage && ((productType === FurnitureTypeEnum.Floor) || (productType === FurnitureTypeEnum.Wall));
 
     const { texture, width, height } = useFurnitureImageTexture(
-        skip ? undefined : product.furnitureData.className,
-        skip ? undefined : product.furnitureData.colorIndex,
+        product?.furnitureData && isFurni ? product.furnitureData.className : undefined,
+        product?.furnitureData && isFurni ? product.furnitureData.colorIndex : undefined,
         2,
         RoomGeometryScaleType.ZoomedIn,
-        skip ? undefined : parseInt(product.extraParam),
+        (isFurni && product) ? parseInt(product.extraParam) : undefined,
     );
+    const petTexture = usePetImageTexture(shippedImage ? undefined : previewImage);
+    const bot = useAvatarImageTexture((!shippedImage && !previewImage && (productType === FurnitureTypeEnum.Robot)) ? product?.extraParam : undefined, AvatarGenderType.Male, { direction: 3 });
 
-    if (skip || !texture) return null;
+    if (shippedImage) {
+        return (
+            <ThemeImage
+                src={shippedImage}
+                bitmap={{ stretchedX: false, stretchedY: false }}
+            />
+        );
+    }
 
-    return (
-        <pixiSprite
-            texture={texture}
-            width={width}
-            height={height}
-            layout={{}}
-        />
-    );
+    if (!product) return null;
+
+    if (previewImage) {
+        if (!petTexture) return null;
+
+        return (
+            <pixiSprite
+                texture={petTexture}
+                layout={{}}
+            />
+        );
+    }
+
+    switch (product.productType) {
+        case FurnitureTypeEnum.Floor:
+        case FurnitureTypeEnum.Wall:
+            if (!texture) return null;
+
+            return (
+                <pixiSprite
+                    texture={texture}
+                    width={width}
+                    height={height}
+                    layout={{}}
+                />
+            );
+        case FurnitureTypeEnum.Effect:
+            return (
+                <ThemeImage
+                    src={pixelEffectIcon(product.classId)}
+                    bitmap={{ stretchedX: false, stretchedY: false }}
+                />
+            );
+        case FurnitureTypeEnum.HabboClub:
+            return (
+                <ThemeImage
+                    src={SUBSCRIPTION_PRODUCT_ICON}
+                    bitmap={{ stretchedX: false, stretchedY: false }}
+                />
+            );
+        case FurnitureTypeEnum.ChatStyle: {
+            const preview = GetChatStyleLibrary().getStyle(parseInt(product.extraParam))?.selectorPreviewTexture;
+
+            if (!preview) return null;
+
+            return (
+                <pixiSprite
+                    texture={preview}
+                    layout={{}}
+                />
+            );
+        }
+        case FurnitureTypeEnum.Robot:
+            if (!bot.texture) return null;
+
+            return (
+                <pixiSprite
+                    texture={bot.texture}
+                    width={bot.width}
+                    height={bot.height}
+                    layout={{}}
+                />
+            );
+        case FurnitureTypeEnum.Habbicon:
+            return (
+                <ThemeImage
+                    src={habbiconPreviewAssetName(parseInt(product.extraParam))}
+                    bitmap={{ stretchedX: false, stretchedY: false }}
+                />
+            );
+    }
+
+    return null;
 };

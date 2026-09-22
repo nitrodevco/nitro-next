@@ -22,16 +22,22 @@ const DASH_WIDTH = 8;
 const MAX_LABEL_WIDTH = 30;
 
 export interface VariableFxValueRangeProps {
+    /** `visible = VariableFxEditorMetadata.categoryUsesValueRange(categoryId)` - hidden, the section keeps its place in the frame's list. */
+    visible: boolean;
     min: number;
     max: number;
     onChange: (min: number, max: number) => void;
 }
 
-export const VariableFxValueRange = ({ min, max, onChange }: VariableFxValueRangeProps) => {
+export const VariableFxValueRange = ({ visible, min, max, onChange }: VariableFxValueRangeProps) => {
     const style = useWiredStyle();
 
     return (
-        <WiredSection title="${wiredfurni.params.variablefx.value_range}">
+        <WiredSection
+            keepsFirstSplitter
+            title="${wiredfurni.params.variablefx.value_range}"
+            visible={visible}
+        >
             <WiredSimpleList>
                 <WiredText
                     text="${wiredfurni.params.variablefx.value_range.info}"

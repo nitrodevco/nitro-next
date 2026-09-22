@@ -47,6 +47,8 @@ export interface RoomPreviewerApi {
     /** Furniture controls: turn the floor item to its next allowed direction / advance its state. */
     changeObjectDirection: () => void;
     changeObjectState: () => void;
+    /** Flash `RoomPreviewer.addViewOffset`: shifts where the object is centred (the catalogue lifts a limited edition 15px). */
+    setViewOffset: (x: number, y: number) => void;
 }
 
 /**
@@ -447,6 +449,10 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         return PREVIEW_OBJECT_ID;
     };
 
+    const setViewOffset = (x: number, y: number) => {
+        previewData.current.previewOffset = { x, y };
+    };
+
     const placedAvatar = () => room?.getRoomObject(PREVIEW_OBJECT_ID, RoomObjectCategoryEnum.Unit);
 
     const applyAvatar = (figure: string, gender?: string, effect: number = 0) => {
@@ -621,5 +627,5 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         };
     }, [ room ]);
 
-    return { room, addAvatar, updateAvatar, rotateAvatar, addFloorItem, addWallItem, changeObjectDirection, changeObjectState };
+    return { room, addAvatar, updateAvatar, rotateAvatar, addFloorItem, addWallItem, changeObjectDirection, changeObjectState, setViewOffset };
 };

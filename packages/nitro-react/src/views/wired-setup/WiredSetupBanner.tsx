@@ -10,8 +10,9 @@
  */
 import { Box, LayoutImage, Region, ThemeImage } from '#base/theme';
 
-/** Both banner bitmaps are 240x160. */
+/** Both banner bitmaps are 240x160 windows (`banner_left`'s art is 114 wide, drawn at its top left). */
 const BANNER_BITMAP_WIDTH = 240;
+const BANNER_BITMAP_HEIGHT = 160;
 
 export interface WiredSetupBannerProps {
     width: number;
@@ -22,8 +23,9 @@ export const WiredSetupBanner = ({ width, height }: WiredSetupBannerProps) => (
     <Box layout={{ position: 'absolute', left: 1, top: 1, width, height, overflow: 'hidden' }}>
         <ThemeImage
             src={LayoutImage('window-manager/illumina_wired_bg_left.png')}
+            bitmap={{ stretchedX: false, stretchedY: false }}
             alpha={0.1}
-            layout={{ position: 'absolute', left: 0, top: 0 }}
+            layout={{ position: 'absolute', left: 0, top: 0, width: BANNER_BITMAP_WIDTH, height: BANNER_BITMAP_HEIGHT }}
         />
         <Region
             backgroundColor="#000000"
@@ -32,8 +34,9 @@ export const WiredSetupBanner = ({ width, height }: WiredSetupBannerProps) => (
         />
         <ThemeImage
             src={LayoutImage('shared/illumina_wired_bg_right.png')}
+            bitmap={{ stretchedX: false, stretchedY: false }}
             alpha={0.12}
-            layout={{ position: 'absolute', left: width - BANNER_BITMAP_WIDTH, top: -19 }}
+            layout={{ position: 'absolute', left: width - BANNER_BITMAP_WIDTH, top: -19, width: BANNER_BITMAP_WIDTH, height: BANNER_BITMAP_HEIGHT }}
         />
     </Box>
 );

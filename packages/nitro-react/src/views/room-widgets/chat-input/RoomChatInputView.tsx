@@ -1,30 +1,32 @@
 import { ClubLevelEnum, SecurityLevelEnum } from '@nitrodevco/nitro-api';
-import { CancelTypingComposer, ChatComposer, SetChatStylePreferenceComposer, ShoutComposer, StartTypingComposer, WhisperComposer } from '@nitrodevco/nitro-packets';
+import { CancelTypingComposer, ChatComposer, ShoutComposer, StartTypingComposer, WhisperComposer } from '@nitrodevco/nitro-packets';
+import { Container as PixiContainer } from 'pixi.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { IChatStyle, isNftChatStyle, isStaticChatStyle } from '#base/chat';
-import { runWiredChatCommand } from '#base/commands';
+import { runWiredChatCommand, setChatFontSizeMode, setPreferredChatStyle } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { roomStore, useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
 import { useConfigValue, useFriendBarWidth, useToolbarAreaWidth, useTranslation } from '#base/context/system';
-import { useOwnClubLevel, useOwnIsAmbassador, useOwnSecurityLevel, useRoomToolsCollapsed, useUserActions, useUserStore } from '#base/context/user';
+import { useOwnClubLevel, useOwnIsAmbassador, useOwnSecurityLevel, useRoomToolsCollapsed, useUserStore } from '#base/context/user';
 import { useChatStyles, useViewportSize } from '#base/hooks';
-import { Border, Box, Icon, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Border, Box, getGlobalRect, GlobalRect, Icon, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 import { roomToolsRight } from '#base/views/room-widgets/room-tools/roomToolsGeometry';
 
 import { ChatStyleSelectorView } from './ChatStyleSelectorView';
 
 /** `RoomChatInputView.updatePosition` - the gap kept from whatever sits left of the chat bar. */
 const LEFT_MARGIN = 12;
-/** The bar's own size: the field, the gap and the habbicon button. */
-const CHAT_BAR_WIDTH = 451;
-const CHAT_BAR_HEIGHT = 39;
-/** `ToolbarView`'s height; the bar is centred in it when it sits there. */
-const TOOLBAR_HEIGHT = 54;
+/** `bubblecont`, the window `updatePosition` places: 471 wide. */
+const BUBBLECONT_WIDTH = 471;
 /** The room the centred bar must leave the toolbar's icons on top of its own margin - `updatePosition`'s `+ 100`. */
 const TOOLBAR_CLEARANCE = 100;
-/** Where the bar goes when it does not fit in the toolbar: one toolbar height up (Flash: `height - 160` against `height - 104`). */
-const ABOVE_TOOLBAR_OFFSET = 56;
+/** `bubblecont.y`: `height - 104` in the toolbar, `height - 160` above it. */
+const BUBBLECONT_FROM_BOTTOM_IN_TOOLBAR = 104;
+const BUBBLECONT_FROM_BOTTOM_ABOVE_TOOLBAR = 160;
+/** `chat_input_container`'s y in `bubblecont`, and the height of the row it draws (the `styles` region's 39). */
+const CHAT_INPUT_CONTAINER_Y = 60;
+const CHAT_INPUT_ROW_HEIGHT = 39;
 /** The Flash `chat_input` field: Ubuntu 17, 100 characters. */
 const MAX_CHARS = 100;
 /** `_typingTimer` / `_idleTimer` - typing is announced after a second of it, withdrawn after ten idle. */
@@ -51,7 +53,6 @@ export const RoomChatInputView = () => {
     const { clearChatInputContent } = useRoomChatActions();
     const preferredChatStyle = useUserStore(x => x.preferredChatStyle);
     const chatSizePreference = useUserStore(x => x.chatSizePreference);
-    const { setPreferredChatStyle } = useUserActions();
     const clubLevel = useOwnClubLevel();
     const securityLevel = useOwnSecurityLevel();
     const isAmbassador = useOwnIsAmbassador();
@@ -59,7 +60,8 @@ export const RoomChatInputView = () => {
     const purchasableChatStyles = useUserStore(x => x.purchasableChatStyles);
     const selectedAvatarId = useRoomStore(x => x.selectedAvatarId);
     const selectedAvatarName = useRoomStore(x => x.usersByRoomObjectId[selectedAvatarId]?.name ?? '');
-    const customStylesEnabled = useConfigValue<boolean>('custom.chat.styles.enabled') ?? true;
+    const customStylesEnabled = useConfigValue<boolean>('custom.chat.styles.enabled') === true;
+    const habbiconsEnabled = useConfigValue<boolean>('habbicons.enabled') === true;
     const disabledStyles = useConfigValue<string>('disabled.custom.chat.styles') ?? '';
     // The bar starts where the room tools end, as `RoomToolsWidget.getWidgetAreaWidth` told it to.
     const roomToolsCollapsed = useRoomToolsCollapsed();
@@ -70,7 +72,9 @@ export const RoomChatInputView = () => {
     const [ value, setValue ] = useState('');
     const [ focused, setFocused ] = useState(false);
     const [ floodRemaining, setFloodRemaining ] = useState(0);
-    const [ stylesOpen, setStylesOpen ] = useState(false);
+    // Where the `styles` button is on screen while its menu is open (the menu floats above it), or null while it is shut.
+    const [ stylesAnchor, setStylesAnchor ] = useState<GlobalRect | null>(null);
+    const stylesButtonRef = useRef<PixiContainer | null>(null);
     const [ selectedStyleId, setSelectedStyleId ] = useState(NO_STYLE_SELECTED);
 
     const isTypingRef = useRef(false);
@@ -145,10 +149,6 @@ export const RoomChatInputView = () => {
         return styles;
     }, [ allStyles, customStylesEnabled, disabledStyles, securityLevel, clubLevel, isAmbassador, nftChatStyles, purchasableChatStyles ]);
 
-    const highlightedStyleId = (selectedStyleId !== NO_STYLE_SELECTED)
-        ? selectedStyleId
-        : (pickableStyles.some(style => style.id === preferredChatStyle) ? preferredChatStyle : (pickableStyles[0]?.id ?? 0));
-
     const sendTypingStatus = () => {
         if (isFloodBlocked) return;
 
@@ -212,12 +212,14 @@ export const RoomChatInputView = () => {
 
         if ((Date.now() - stylesClosedAtRef.current) < 250) return;
 
-        setStylesOpen(open => !open);
+        const button = stylesButtonRef.current;
+
+        setStylesAnchor((stylesAnchor || !button) ? null : getGlobalRect(button));
     };
 
     const closeStyles = () => {
         stylesClosedAtRef.current = Date.now();
-        setStylesOpen(false);
+        setStylesAnchor(null);
     };
 
     /** `_Str_21815` - Enter. */
@@ -254,10 +256,8 @@ export const RoomChatInputView = () => {
         let styleId = preferredChatStyle;
 
         if (customStylesEnabled && (selectedStyleId !== NO_STYLE_SELECTED)) {
-            if (selectedStyleId !== preferredChatStyle) {
-                setPreferredChatStyle(selectedStyleId);
-                send(new SetChatStylePreferenceComposer({ param1: selectedStyleId, chatFontSizeMode: chatSizePreference }));
-            }
+            // `ChatInputWidgetHandler`: `freeFlowChat.preferedChatStyle = styleId`, which sends the font size mode with it.
+            if (selectedStyleId !== preferredChatStyle) setPreferredChatStyle(send, selectedStyleId);
 
             styleId = selectedStyleId;
         }
@@ -378,66 +378,35 @@ export const RoomChatInputView = () => {
     if (!room) return null;
 
     /*
-     * `RoomChatInputView.updatePosition`: the bar sits centred in the toolbar when the toolbar's
-     * icons and the friend bar leave it the room; otherwise it moves up one toolbar height and
-     * starts right of the room tools - still centred if the centre is clear of them.
+     * `RoomChatInputView.updatePosition`: `bubblecont` sits centred in the toolbar when the
+     * toolbar's icons and the friend bar leave it the room; otherwise it moves up to
+     * `height - 160` and starts right of the room tools - still centred if the centre is clear of
+     * them. The row drawn here is its `chat_input_container`, 60 down.
      */
-    const centredLeft = ~~((viewportWidth / 2) - (CHAT_BAR_WIDTH / 2));
-    const fitsInToolbar = ((viewportWidth - toolbarAreaWidth - friendBarWidth) > (CHAT_BAR_WIDTH + LEFT_MARGIN))
+    const centredLeft = ~~((viewportWidth / 2) - (BUBBLECONT_WIDTH / 2));
+    const fitsInToolbar = ((viewportWidth - toolbarAreaWidth - friendBarWidth) > (BUBBLECONT_WIDTH + LEFT_MARGIN))
         && (centredLeft >= (toolbarAreaWidth + LEFT_MARGIN + TOOLBAR_CLEARANCE))
-        && ((centredLeft + CHAT_BAR_WIDTH) <= (viewportWidth - friendBarWidth));
+        && ((centredLeft + BUBBLECONT_WIDTH) <= (viewportWidth - friendBarWidth));
     const left = fitsInToolbar ? centredLeft : Math.max(centredLeft, roomToolsRight(roomToolsCollapsed) + LEFT_MARGIN);
-    const bottom = ~~((TOOLBAR_HEIGHT - CHAT_BAR_HEIGHT) / 2) + (fitsInToolbar ? 0 : ABOVE_TOOLBAR_OFFSET);
+    const bottom = (fitsInToolbar ? BUBBLECONT_FROM_BOTTOM_IN_TOOLBAR : BUBBLECONT_FROM_BOTTOM_ABOVE_TOOLBAR) - CHAT_INPUT_CONTAINER_Y - CHAT_INPUT_ROW_HEIGHT;
 
     return (
-        <Box layout={{ position: 'absolute', left, bottom, width: CHAT_BAR_WIDTH, height: CHAT_BAR_HEIGHT, flex: 1, gap: 5 }}>
+        <Box layout={{ position: 'absolute', left, bottom, width: BUBBLECONT_WIDTH, height: CHAT_INPUT_ROW_HEIGHT }}>
             <Border
                 variant="8"
+                name="input_border"
                 tintColor="#e5e5e5"
-                layout={{ width: 400, height: 38, flexDirection: 'row', alignItems: 'center' }}
+                layout={{ position: 'absolute', left: 11, width: 400, top: 0, height: 38 }}
             >
-                <Region
-                    name="styles"
-                    onPointerTap={toggleStyles}
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 39, justifyContent: 'center' }}
-                >
-                    <ThemeImage
-                        name="style_bg"
-                        src={LayoutImage('room-ui/common_chat_style_block.png')}
-                        layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 38 }}
-                    />
-                    <ThemeImage
-                        name="style_icon"
-                        src={LayoutImage('room-ui/common_chat_styles.png')}
-                        layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 17, top: 10, height: 19 }}
-                    />
-                    <Icon
-                        variant="7"
-                        dynamicStyle="brightness_and_shadow_under"
-                        tintColor="#4c4c4c"
-                        layout={{ position: 'absolute', left: 10, width: 10, alignSelf: 'center', height: 5 }}
-                    />
-                    {stylesOpen && (
-                        <ChatStyleSelectorView
-                            styles={pickableStyles}
-                            selectedStyleId={highlightedStyleId}
-                            onSelect={(styleId) => {
-                                setSelectedStyleId(styleId);
-                                setStylesOpen(false);
-                            }}
-                            onClose={closeStyles}
-                        />
-                    )}
-                </Region>
                 {isFloodBlocked && (
-                    // `block_text`'s own vars in `chatinput_window_new_xml`, over the default
-                    // `regular` style: Ubuntu bold 14 in advanced anti-aliasing, unkerned, red.
                     <ThemeText
                         name="block_text"
                         text={t('chat.input.alert.flood', 'You are talking too fast. Wait %time% seconds.', { time: String(floodRemaining) })}
-                        textOptions={{ fill: '#ff0000', fontFamily: 'UbuntuBold', fontSize: 14 }}
-                        flashFormat={{ antiAliasType: 'advanced', sharpness: 0, thickness: 0, kerning: false }}
-                        layout={{ position: 'absolute', left: 10, top: 9, width: 325, height: 23 }}
+                        textOptions={{ fill: '#ff0000', fontFamily: 'Ubuntu', fontSize: 14 }}
+                        flashFormat={{ bold: true, antiAliasType: 'advanced' }}
+                        clip
+                        verticalAlign="top"
+                        layout={{ position: 'absolute', left: 10, width: 325, top: 9, height: 23 }}
                     />
                 )}
                 {!isFloodBlocked && (
@@ -454,40 +423,90 @@ export const RoomChatInputView = () => {
                         fontFamily="Ubuntu"
                         fontSize={17}
                         textColor="#000000"
-                        backgroundColor=""
-                        focusedBackgroundColor=""
-                        layout={{ marginLeft: 60, width: 326, height: 24 }}
+                        flashPlacement
+                        alwaysShowSelection
+                        backgroundColor={null}
+                        focusedBackgroundColor={null}
+                        layout={{ position: 'absolute', left: 50, width: 326, top: 7, height: 24 }}
                     />
                 )}
             </Border>
             <Region
-                dynamicStyle="lifted_hover"
-                layout={{ width: 41, height: 38 }}
+                ref={stylesButtonRef}
+                name="styles"
+                onPointerTap={toggleStyles}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 39 }}
             >
-                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
-                    <ThemeImage
-                        name="chat_extra_bg"
-                        src={LayoutImage('room-ui/habbicons_sticky_note.png')}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 38 }}
+                <ThemeImage
+                    name="style_bg"
+                    src={LayoutImage('room-ui/common_chat_style_block.png')}
+                    bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                    layout={{ position: 'absolute', left: 0, top: 0 }}
+                />
+                <ThemeImage
+                    name="style_icon"
+                    src={LayoutImage('room-ui/common_chat_styles.png')}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center', etchingColor: 0x48000000, fitSizeToContents: true }}
+                    dynamicRole="icon"
+                    layout={{ position: 'absolute', left: 25, top: 10 }}
+                />
+                <Icon
+                    variant="7"
+                    dynamicStyle="brightness_and_shadow_under"
+                    tintColor="#4c4c4c"
+                    layout={{ position: 'absolute', left: 10, width: 10, top: 17, height: 5 }}
+                />
+                {stylesAnchor && (
+                    <ChatStyleSelectorView
+                        anchor={stylesAnchor}
+                        styles={pickableStyles}
+                        selectedStyleId={selectedStyleId}
+                        // `gridItemWindowProc` only selects: the menu stays open until a click lands
+                        // outside it (`hideIfClickAway`).
+                        onSelect={styleId => setSelectedStyleId(styleId)}
+                        fontSizeMode={chatSizePreference}
+                        onSelectFontSize={mode => setChatFontSizeMode(send, mode)}
+                        onClose={closeStyles}
                     />
-                    {/* <ThemeImage
-                        name="chat_extra_set_icon"
-                        src={srcChatExtraSetIcon}
-                        tint={tintChatExtraSetIcon}
-                        layout={{ position: 'absolute', left: 3, width: 30, top: 3, height: 30 }}
-                    /> */}
-                    <ThemeImage
-                        name="chat_extra_icon"
-                        src={LayoutImage('room-ui/habbicons_clip.png')}
-                        layout={{ position: 'absolute', right: 0, width: 18, top: 2, height: 15 }}
-                    />
-                    <ThemeImage
-                        name="chat_extra_bg"
-                        src={LayoutImage('room-ui/habbicons_sticky_note2.png')}
-                        layout={{ position: 'absolute', right: 5, width: 12, bottom: 0, height: 12 }}
-                    />
-                </Region>
+                )}
             </Region>
+            {/*
+              * `chat_extra_button` opens the habbicon selector, which is not ported. Flash shows it
+              * only under `habbicons.enabled` (`RoomChatInputView.habbiconsEnabled`). Its
+              * `chat_extra_set_icon` starts hidden (`createWindow`) and is left out.
+              */}
+            {habbiconsEnabled && (
+                <Region
+                    name="chat_extra_button"
+                    dynamicStyle="lifted_hover"
+                    layout={{ position: 'absolute', left: 427, width: 41, top: 0, height: 38 }}
+                >
+                    <Region
+                        dynamicRole="icon"
+                        layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 38 }}
+                    >
+                        <ThemeImage
+                            name="chat_extra_bg"
+                            src={LayoutImage('room-ui/habbicons_sticky_note.png')}
+                            bitmap={{ stretchedX: false, stretchedY: false, etchingColor: 0x48000000, fitSizeToContents: true }}
+                            layout={{ position: 'absolute', left: 0, top: 0 }}
+                        />
+                        <ThemeImage
+                            name="chat_extra_icon"
+                            src={LayoutImage('room-ui/habbicons_clip.png')}
+                            bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center', etchingColor: 0x48000000, fitSizeToContents: true }}
+                            layout={{ position: 'absolute', left: 23, top: 2 }}
+                        />
+                        <ThemeImage
+                            name="chat_extra_bg"
+                            src={LayoutImage('room-ui/habbicons_sticky_note2.png')}
+                            bitmap={{ stretchedX: false, stretchedY: false, etchingColor: 0x48000000, fitSizeToContents: true }}
+                            layout={{ position: 'absolute', left: 24, top: 26 }}
+                        />
+                    </Region>
+                </Region>
+            )}
         </Box>
     );
 };

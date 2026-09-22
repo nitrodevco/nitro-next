@@ -1,7 +1,9 @@
 /**
- * `wired_setup.uibuilder.presets.AssetButtonPreset` - the style's `asset_button`: a 25px
- * container button around one bitmap (the movement and rotation pickers, the floor editor's
- * tools). Static width: the template's.
+ * `wired_setup.uibuilder.presets.AssetButtonPreset` - the style's `asset_button`: a container
+ * button around one bitmap (the movement and rotation pickers, the floor editor's tools). The
+ * bitmap sits at its natural size at the template's inset, top left (no `pivot_point`), and the
+ * button takes the bitmap's size plus the template's margins - see `useWiredAssetButtonSize`.
+ * Static width: that size.
  *
  * `selected` shows the way `updateVisuals` does it: the volters keep a selected button in its
  * hovered face, the other styles keep it pressed. Unlike the mini button, a press on a selected
@@ -13,9 +15,9 @@
  * `disable()`, so the button fades by the style's rule - the face to 0.5 and the icon, through its
  * own `#icon` rule, to 0.25. The kit's half-blend applies only to a template without a style.
  */
-import { BackgroundLayer, Box, ContainerButton, LayoutImage, ThemeImage } from '#base/theme';
-import { resolveWiredAssetName } from '#base/wired';
+import { BackgroundLayer, Box, ContainerButton, ThemeImage } from '#base/theme';
 
+import { useWiredAssetButtonSize, wiredAssetButtonSource } from './useWiredAssetButtonSize';
 import { useWiredCaption } from './useWiredCaption';
 import { useWiredDisabled, wiredDisabledAlpha } from './useWiredDisabled';
 import { wiredPressedLayer } from './wiredPressedLayers';
@@ -40,11 +42,12 @@ export const WiredAssetButton = ({ asset, tooltip, selected = false, onPress, di
     const isDisabled = useWiredDisabled(disabled);
     const template = style.templates.assetButton;
     const pressedLayer = (selected && !style.isVolter) ? wiredPressedLayer(template.variant) : undefined;
+    const size = useWiredAssetButtonSize(style, asset);
 
     return (
         <Box
             alpha={template.dynamicStyle ? undefined : wiredDisabledAlpha(isDisabled)}
-            layout={{ width: template.size, height: template.size, flexShrink: 0 }}
+            layout={{ width: size.width, height: size.height, flexShrink: 0 }}
         >
             <ContainerButton
                 variant={template.variant}
@@ -53,15 +56,15 @@ export const WiredAssetButton = ({ asset, tooltip, selected = false, onPress, di
                 disabled={isDisabled}
                 tooltip={tooltip ? caption(tooltip) : undefined}
                 onPointerTap={onPress}
-                layout={{ position: 'relative', width: template.size, height: template.size }}
+                layout={{ position: 'relative', width: size.width, height: size.height }}
             >
                 {pressedLayer && <BackgroundLayer layer={pressedLayer} />}
-                <Box layout={{ position: 'absolute', left: template.assetInset, top: template.assetInset, width: template.assetSize, height: template.assetSize, justifyContent: 'center', alignItems: 'center' }}>
-                    <ThemeImage
-                        src={LayoutImage(`wired/${resolveWiredAssetName(style, asset)}.png`)}
-                        dynamicRole="icon"
-                    />
-                </Box>
+                <ThemeImage
+                    src={wiredAssetButtonSource(style, asset)}
+                    dynamicRole="icon"
+                    eventMode="none"
+                    layout={{ position: 'absolute', left: template.assetInset, top: template.assetInset }}
+                />
             </ContainerButton>
         </Box>
     );

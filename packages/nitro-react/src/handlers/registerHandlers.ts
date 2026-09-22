@@ -1,8 +1,14 @@
 import { WebSocketConnection } from '#base/context/communication';
 
-import { registerInventoryFurniHandlers } from './inventory';
+import { bridgeRecyclerRoomSession, registerCatalogPlacementHandlers, registerCatalogRecyclerHandlers, registerCatalogRentHandlers, registerCatalogVoucherHandlers, registerTargetedOfferHandlers } from './catalog';
+import { bridgeCollectiblesInventoryAndPurse, registerCollectiblesHandlers } from './collectibles';
+import { registerEarningsHandlers } from './earnings';
+import { registerGameTokensHandlers } from './game-tokens';
+import { registerHabbiconHandlers } from './habbicons';
+import { registerInventoryBadgesHandlers, registerInventoryFurniHandlers, registerInventoryMarketplaceHandlers } from './inventory';
 import { registerNavigatorHandlers, registerRoomQueueHandlers } from './navigator';
 import { registerNotificationHandlers } from './notifications';
+import { bridgeOfferCenter, registerOfferCenterHandlers } from './offer-center';
 import {
     registerRoomAreaHideHandlers, registerRoomBotHandlers, registerRoomChatHandlers, registerRoomConfigurationItemsHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
     registerRoomDirectoryHandlers, registerRoomDoorbellHandlers, registerRoomFloorPlanHandlers, registerRoomFriendFurniHandlers, registerRoomFriendRequestHandlers,
@@ -11,6 +17,7 @@ import {
     registerRoomPresentHandlers, registerRoomQuizHandlers, registerRoomRentableSpaceHandlers, registerRoomSettingsHandlers,
     registerRoomUserHandlers, registerRoomVariableFxHandlers, registerRoomYoutubeHandlers,
 } from './room';
+import { registerSpecialItemsHandlers } from './special-items';
 import { registerAvatarEditorHandlers, registerAvatarEffectsHandlers, registerMessengerHandlers, registerUserInfoHandlers, registerUserSocialHandlers, registerWalletHandlers } from './user';
 import { bridgeWiredRoomLifecycle, registerWiredEnvironmentHandlers, registerWiredMenuHandlers, registerWiredPermissionsHandlers, registerWiredSetupHandlers, registerWiredVariablesHandlers, registerWiredWebApiKeyHandlers } from './wired';
 import { bridgeWiredTradingLifecycle, registerSelfDonationHandlers, registerWiredChestHandlers, registerWiredContractHandlers, registerWiredTradeHandlers, registerWiredTransactionHandlers, registerWiredTransactionNotificationHandlers } from './wired-trading';
@@ -67,6 +74,22 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerAvatarEditorHandlers(socket),
         registerMessengerHandlers(socket),
         registerWalletHandlers(socket),
+        // The catalogue's voucher answers - alerts only, whichever catalogue window is open.
+        registerCatalogVoucherHandlers(socket),
+        // The vault's income rewards (`EarningsController`), after the wallet whose duckets its claims weigh.
+        registerEarningsHandlers(socket),
+        // `HabboCatalog`'s session-long parts outside the catalogue window: the special items
+        // display's claim, the snowwar token offers, and the offer centre (built with the club centre).
+        registerSpecialItemsHandlers(socket),
+        registerGameTokensHandlers(socket),
+        registerOfferCenterHandlers(socket),
+        bridgeOfferCenter(),
+        // The targeted offers (`OfferController`): asked for once the user object is in.
+        registerTargetedOfferHandlers(socket),
+        // The rent and buyout confirmation the infostand and the inventory open, and a dropped
+        // offer's bought item placed where it was dropped.
+        registerCatalogRentHandlers(socket),
+        registerCatalogPlacementHandlers(socket),
         // Wired: the setup dialog, the room's wired environment, the variables cache and the permissions.
         registerWiredSetupHandlers(socket),
         registerWiredEnvironmentHandlers(socket),
@@ -86,6 +109,17 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerSelfDonationHandlers(socket),
         bridgeWiredTradingLifecycle(socket),
         registerInventoryFurniHandlers(socket),
+        registerInventoryBadgesHandlers(socket),
+        // The inventory's marketplace model (`MarketplaceModel`) and the catalogue's recycler (`RecyclerLogic`,
+        // which the inventory reaches too), with the room session ending that empties the recycler.
+        registerInventoryMarketplaceHandlers(socket),
+        registerCatalogRecyclerHandlers(socket),
+        bridgeRecyclerRoomSession(),
+        // The habbicon controller (`HabbiconController`, a component `HabboCatalog` attaches for the session).
+        registerHabbiconHandlers(socket),
+        // The collectibles hub (`CollectiblesController`, attached for the session), after the inventory and wallet it reads.
+        registerCollectiblesHandlers(socket),
+        bridgeCollectiblesInventoryAndPurse(socket),
     ];
 
     return () => {

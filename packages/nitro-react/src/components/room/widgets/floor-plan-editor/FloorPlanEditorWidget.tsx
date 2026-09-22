@@ -55,7 +55,7 @@ export const FloorPlanEditorWidget = () => {
     const perks = useNavigatorStore(x => x.perks);
     const buildersClubSecondsLeft = useUserStore(x => x.buildersClubSecondsLeft);
 
-    const { hideWindow, showAlert } = useWindowActions();
+    const { hideWindow, showSimpleAlert } = useWindowActions();
     const { decreaseBuildersClubSecondsLeft } = useUserActions();
     const { setFloorPlanRows, setFloorPlanReceivedModel, setFloorPlanEntryPoint, setFloorPlanEntryPointDir, setFloorPlanThickness, setFloorPlanFixedWallsHeight } = useRoomFloorPlanActions();
 
@@ -113,7 +113,8 @@ export const FloorPlanEditorWidget = () => {
                 if (alertedFor === receivedModel) return;
 
                 setAlertedFor(receivedModel);
-                showAlert(t('floor.plan.editor.alert'), t('floor.plan.editor.size.limit.exceeded'));
+                // `FloorPlanCache`: `simpleAlert("${floor.plan.editor.alert}", null, "${floor.plan.editor.size.limit.exceeded}")`.
+                showSimpleAlert({ caption: t('floor.plan.editor.alert'), message: t('floor.plan.editor.size.limit.exceeded') });
             }}
             onEntryPointDirChange={setFloorPlanEntryPointDir}
             onThicknessChange={(nextWallThickness: RoomThicknessType, nextFloorThickness: RoomThicknessType) => setFloorPlanThickness(nextWallThickness, nextFloorThickness)}

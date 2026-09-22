@@ -25,45 +25,47 @@ export const PerformingActionView: WiredElementView<PerformingActionConditionFor
                 caption="${wiredfurni.tooltip.action}"
             />
         </WiredSection>
-        {(form.action === PERFORMING_ACTION_SIGN) && (
-            <WiredSection title="${wiredfurni.params.sign_selection}">
-                <WiredCheckboxGroup
-                    options={[ {
-                        id: 0,
-                        label: '${wiredfurni.params.sign_filter}',
-                        selected: form.signFilter,
-                        extraUnder: (
-                            <WiredDropdown
-                                options={SIGN_OPTIONS}
-                                selected={form.sign}
-                                onSelect={sign => setForm({ sign })}
-                                caption="${wiredfurni.tooltip.sign}"
-                            />
-                        ),
-                    } ]}
-                    onToggle={(_, signFilter) => setForm({ signFilter })}
-                />
-            </WiredSection>
-        )}
-        {(form.action === PERFORMING_ACTION_DANCE) && (
-            <WiredSection title="${wiredfurni.params.dance_selection}">
-                <WiredCheckboxGroup
-                    options={[ {
-                        id: 0,
-                        label: '${wiredfurni.params.dance_filter}',
-                        selected: form.danceFilter,
-                        extraUnder: (
-                            <WiredDropdown
-                                options={DANCE_OPTIONS}
-                                selected={form.dance}
-                                onSelect={dance => setForm({ dance })}
-                                caption="${wiredfurni.tooltip.dance}"
-                            />
-                        ),
-                    } ]}
-                    onToggle={(_, danceFilter) => setForm({ danceFilter })}
-                />
-            </WiredSection>
-        )}
+        <WiredSection
+            title="${wiredfurni.params.sign_selection}"
+            visible={form.action === PERFORMING_ACTION_SIGN}
+        >
+            <WiredCheckboxGroup
+                options={[ {
+                    id: 0,
+                    label: '${wiredfurni.params.sign_filter}',
+                    selected: form.signFilter,
+                    extraUnder: (
+                        <WiredDropdown
+                            options={SIGN_OPTIONS}
+                            selected={form.sign}
+                            onSelect={sign => setForm({ sign })}
+                            caption="${wiredfurni.tooltip.sign}"
+                        />
+                    ),
+                } ]}
+                onToggle={(_, signFilter) => setForm({ signFilter })}
+            />
+        </WiredSection>
+        <WiredSection
+            title="${wiredfurni.params.dance_selection}"
+            visible={form.action === PERFORMING_ACTION_DANCE}
+        >
+            <WiredCheckboxGroup
+                options={[ {
+                    id: 0,
+                    label: '${wiredfurni.params.dance_filter}',
+                    selected: form.danceFilter,
+                    extraUnder: (
+                        <WiredDropdown
+                            options={DANCE_OPTIONS}
+                            selected={form.dance}
+                            onSelect={dance => setForm({ dance })}
+                            caption="${wiredfurni.tooltip.dance}"
+                        />
+                    ),
+                } ]}
+                onToggle={(_, danceFilter) => setForm({ danceFilter })}
+            />
+        </WiredSection>
     </>
 );

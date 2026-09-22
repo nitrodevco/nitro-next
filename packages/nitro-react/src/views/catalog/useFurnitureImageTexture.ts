@@ -1,4 +1,4 @@
-import { RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
+import { IObjectData, RoomGeometryScaleType, StringDataType, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { Texture } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
@@ -28,7 +28,14 @@ export const useFurnitureImageTexture = (
     direction: number = 2,
     scale: RoomGeometryScaleType,
     extra: number = 0,
+    /**
+     * A `StringArrayStuffData` to render the furni with (the catalogue's guild furni icons pass
+     * `[ '0', guildId, badgeCode, color1, color2 ]`); without it the engine's legacy data is used.
+     */
+    stringStuffData?: readonly string[],
 ): FurnitureImageTexture => {
+    // The stuff data as one value the effect can depend on; the effect rebuilds the array from it.
+    const stuffDataKey = stringStuffData ? JSON.stringify(stringStuffData) : undefined;
     const [ texture, setTexture ] = useState<Texture | undefined>(undefined);
     // Every texture handed to state and not destroyed yet, and the most recent of them.
     const ownedRef = useRef<Set<Texture>>(new Set());
@@ -38,6 +45,14 @@ export const useFurnitureImageTexture = (
         if (!type) return;
 
         let cancelled = false;
+        let objectData: IObjectData | undefined = undefined;
+
+        if (stuffDataKey !== undefined) {
+            const data = new StringDataType();
+
+            data.setValue(JSON.parse(stuffDataKey) as string[]);
+            objectData = data;
+        }
 
         const adopt = (next: Texture | undefined) => {
             if (!next) return;
@@ -61,12 +76,13 @@ export const useFurnitureImageTexture = (
             scale,
             { imageReady: () => { }, imageFailed: () => { }, textureReady: adopt },
             extra,
+            objectData,
         ).then(adopt);
 
         return () => {
             cancelled = true;
         };
-    }, [ type, colorIndex, direction, scale, extra ]);
+    }, [ type, colorIndex, direction, scale, extra, stuffDataKey ]);
 
     /*
      * After each commit, `texture` is what the sprite shows. Everything else owned is either a

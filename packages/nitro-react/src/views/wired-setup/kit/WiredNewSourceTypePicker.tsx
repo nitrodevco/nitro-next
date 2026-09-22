@@ -15,7 +15,10 @@
  * `disabled` context still greys it out and stops it taking input.
  *
  * Each button template is `dynamic_style="button"` around its `#icon` type image, so the icon is
- * etched, brightens on hover and sinks a pixel when pressed.
+ * etched, brightens on hover and sinks a pixel when pressed. The type image is
+ * `fit_size_to_contents` with `reflect_horizontal_resize_to_parent`, so setting its asset widens
+ * (or narrows) the button by what the bitmap is wider than the template's - a users icon on the
+ * left button makes it 18 wide.
  */
 import { useState } from 'react';
 
@@ -26,8 +29,12 @@ import { getTypeNameForSource, newSourceTypeOptionColor, newSourceTypeSplitterCo
 import { useWiredDisabled, wiredDisabledAlpha } from './useWiredDisabled';
 import { useWiredStyle } from './WiredStyleContext';
 
-/** The heights of `wired_styles_illumina_icon_source_*` - Flash reads the loaded bitmap's height. */
+/** The sizes of `wired_styles_illumina_icon_source_*` - Flash reads the loaded bitmap's. */
 const ICON_HEIGHTS: Readonly<Record<string, number>> = { furni: 11, users: 10, context: 10, global: 7 };
+const ICON_WIDTHS: Readonly<Record<string, number>> = { furni: 7, users: 8, context: 8, global: 7 };
+
+/** The `type_image` width in the left, middle and right button templates of `wired_style_illumina_xml`. */
+const TEMPLATE_ICON_WIDTH = { left: 7, middle: 8, right: 7 };
 
 export interface WiredNewSourceTypePickerProps {
     /** `SourceTypeSelectorParam.ids`. */
@@ -61,7 +68,9 @@ export const WiredNewSourceTypePicker = ({ options, selected, onSelect, disabled
                 const isFirst = (index === 0);
                 const isLast = !isFirst && (index === (segments.length - 1));
                 const variant = isFirst ? template.leftVariant : (isLast ? template.rightVariant : template.middleVariant);
-                const width = isFirst ? template.leftWidth : (isLast ? template.rightWidth : template.middleWidth);
+                const templateWidth = isFirst ? template.leftWidth : (isLast ? template.rightWidth : template.middleWidth);
+                const templateIconWidth = isFirst ? TEMPLATE_ICON_WIDTH.left : (isLast ? TEMPLATE_ICON_WIDTH.right : TEMPLATE_ICON_WIDTH.middle);
+                const width = templateWidth + ((ICON_WIDTHS[name] ?? templateIconWidth) - templateIconWidth);
                 const iconX = isFirst ? template.leftIconX : (isLast ? template.rightIconX : template.middleIconX);
                 const iconY = Math.trunc(((template.height + 1) / 2) - (((ICON_HEIGHTS[name] ?? template.height) + 1) / 2));
                 const next = segments[index + 1];
@@ -82,6 +91,8 @@ export const WiredNewSourceTypePicker = ({ options, selected, onSelect, disabled
                     >
                         <ThemeImage
                             src={LayoutImage(`wired/${template.assetPrefix}${name}.png`)}
+                            // `type_image` / `type_icon_bitmap`: unstretched, the window sized to its bitmap.
+                            bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
                             dynamicRole="icon"
                             eventMode="none"
                             layout={{ position: 'absolute', left: iconX, top: iconY }}

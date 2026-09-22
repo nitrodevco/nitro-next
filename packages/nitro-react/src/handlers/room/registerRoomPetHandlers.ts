@@ -1,6 +1,7 @@
 import { RoomObjectUserType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import { ConfirmBreedingRequestEventMessage, ConfirmBreedingResultEventMessage, GoToBreedingNestFailureEventMessage, IPetFigureData, NestBreedingSuccessEventMessage, PetBreedingEventMessage, PetBreedingResultEventMessage, PetCommandsMessage, PetExperienceMessage, PetFigureUpdateMessage, PetInfoMessage, PetLevelUpdateMessage, PetPlacingErrorMessage, PetStatusUpdateMessage } from '@nitrodevco/nitro-packets';
 
+import { removeBreedingPetsWaitingConfirmationAlert } from '#base/commands';
 import { WebSocketConnection } from '#base/context/communication';
 import { getRoom, roomStore } from '#base/context/room';
 import { systemStore } from '#base/context/system';
@@ -53,6 +54,17 @@ export const registerRoomPetHandlers = ({ subscribe }: WebSocketConnection) => {
         const { showAlert, getLocalizationValue } = systemStore.getState();
 
         showAlert(getLocalizationValue(titleKey), getLocalizationValue(messageKey));
+    };
+
+    /** `AvatarInfoWidget`'s `RWPPBE_CONFIRM_PET_BREEDING_RESULT`: a `simpleAlert` under `breedpets.confirmation.alert.title`. */
+    const nestBreedingAlert = (subtitleKey: string, messageKey: string) => {
+        const { showSimpleAlert, getLocalizationValue } = systemStore.getState();
+
+        showSimpleAlert({
+            caption: getLocalizationValue('breedpets.confirmation.alert.title'),
+            subtitle: getLocalizationValue(subtitleKey),
+            message: getLocalizationValue(messageKey),
+        });
     };
 
     const petObjectId = (petId: number) => roomStore.getState().getUserByWebId(petId, RoomObjectUserType.Pet)?.objectId ?? -1;
@@ -123,6 +135,7 @@ export const registerRoomPetHandlers = ({ subscribe }: WebSocketConnection) => {
                     return;
                 case PLANT_BREEDING_CANCELLED:
                     closePlantBreeding(own, other);
+                    removeBreedingPetsWaitingConfirmationAlert();
                     alert('breedpets.cancel.notification.title', 'breedpets.cancel.notification.text');
             }
         }),
@@ -141,15 +154,15 @@ export const registerRoomPetHandlers = ({ subscribe }: WebSocketConnection) => {
                     setNestBreeding(undefined);
                     return;
                 case NEST_RESULT_NO_NEST:
-                    alert('breedpets.confirmation.alert.nonest.head', 'breedpets.confirmation.alert.nonest.desc');
+                    nestBreedingAlert('breedpets.confirmation.alert.nonest.head', 'breedpets.confirmation.alert.nonest.desc');
                     setNestBreeding(undefined);
                     return;
                 case NEST_RESULT_PETS_MISSING:
-                    alert('breedpets.confirmation.alert.petsmissing.head', 'breedpets.confirmation.alert.petsmissing.desc');
+                    nestBreedingAlert('breedpets.confirmation.alert.petsmissing.head', 'breedpets.confirmation.alert.petsmissing.desc');
                     setNestBreeding(undefined);
                     return;
                 case NEST_RESULT_NAME_INVALID:
-                    alert('breedpets.confirmation.alert.name.invalid.head', 'breedpets.confirmation.alert.name.invalid.desc');
+                    nestBreedingAlert('breedpets.confirmation.alert.name.invalid.head', 'breedpets.confirmation.alert.name.invalid.desc');
                     setNestBreedingNameRejected();
             }
         }),
@@ -158,12 +171,27 @@ export const registerRoomPetHandlers = ({ subscribe }: WebSocketConnection) => {
             setNestBreedingSuccess({ petId: data.petId, rarityCategory: data.rarityCategory });
         }),
 
-        // `IncomingMessages.onGoToBreedingNestFailure`; Flash also offered the catalogue page for nests or food.
+        /*
+         * The inventory's `IncomingMessages.onGoToBreedingNestFailure`: a `simpleAlert` whose link
+         * opens the catalogue on the page for nests (`getNest`), or for food when the pet is too
+         * tired (`getFood`) - the page the `gotobreedingnestfailure.catalogpage.*` property names.
+         */
         on(GoToBreedingNestFailureEventMessage, (data) => {
-            const { showAlert, getLocalizationValue } = systemStore.getState();
-            const hint = getLocalizationValue((data.reason === NEST_FAILURE_TOO_TIRED) ? 'gotobreedingnestfailure.getfood' : 'gotobreedingnestfailure.getnest');
+            const { showSimpleAlert, getLocalizationValue } = systemStore.getState();
+            const food = (data.reason === NEST_FAILURE_TOO_TIRED);
 
-            showAlert(getLocalizationValue('gotobreedingnestfailure.caption'), `${getLocalizationValue('gotobreedingnestfailure.subtitle')}\n${getLocalizationValue(`gotobreedingnestfailure.message.${data.reason}`)}\n${hint}`);
+            showSimpleAlert({
+                caption: getLocalizationValue('gotobreedingnestfailure.caption'),
+                subtitle: getLocalizationValue('gotobreedingnestfailure.subtitle'),
+                message: getLocalizationValue(`gotobreedingnestfailure.message.${data.reason}`),
+                linkTitle: getLocalizationValue(food ? 'gotobreedingnestfailure.getfood' : 'gotobreedingnestfailure.getnest'),
+                onLink: () => {
+                    const { config, showWindow } = systemStore.getState();
+                    const pageName = config[food ? 'gotobreedingnestfailure.catalogpage.food' : 'gotobreedingnestfailure.catalogpage.nests'];
+
+                    showWindow('catalog', { pageName: (typeof pageName === 'string') ? pageName : '' });
+                },
+            });
         }),
     ]);
 };

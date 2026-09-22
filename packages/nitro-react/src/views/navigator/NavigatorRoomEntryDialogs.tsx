@@ -5,14 +5,14 @@ import { goToRoom } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useInterpolate, useTranslation } from '#base/context/system';
-import { Border, Box, Button, Frame, Region, TextInput, ThemeText } from '#base/theme';
+import { Button, Frame, Region, TextInput, ThemeText } from '#base/theme';
 
 const DIALOG_POSITION = { position: 'absolute', top: 120, left: 320 } as const;
 
 /**
- * Port of the Flash navigator's room-entry popups: `GuestRoomDoorbell` (doorbell_xml, 3013),
- * `GuestRoomPasswordInput` (passwd_input_xml, 3000) and the `SimpleAlertView` the cant-connect
- * / generic-error handlers raise. Lives outside the navigator window so it stays up after the
+ * Port of the Flash navigator's room-entry popups: `GuestRoomDoorbell` (`doorbell_xml`),
+ * `GuestRoomPasswordInput` (`password_input_xml`, layout "passwd_input") and the `SimpleAlertView`
+ * (`nav_simple_alert_xml`) the cant-connect / generic-error handlers raise. Lives outside the navigator window so it stays up after the
  * navigator closes (Flash builds them on the desktop, not inside the navigator frame).
  */
 export const NavigatorRoomEntryDialogs = () => {
@@ -57,37 +57,54 @@ export const NavigatorRoomEntryDialogs = () => {
                 tintColor="#418db0"
                 dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                 onClose={cancel}
+                resizeDirection="none"
+                margins={[ 6, 25, 6, 7 ]}
                 layout={{ ...DIALOG_POSITION, width: 270, height: 182, minWidth: 270, minHeight: 182 }}
             >
                 <ThemeText
+                    name="room_name"
                     text={interpolate(room.name)}
-                    layout={{ position: 'absolute', left: 10, width: 64, top: 14, height: 17 }}
+                    textOptions={{ fontFamily: 'Ubuntu', fontSize: 12 }}
+                    flashFormat={{ bold: true, antiAliasType: 'advanced' }}
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 10, top: 14 }}
                 />
                 <ThemeText
+                    name="info"
                     text={info}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
+                    textOptions={{ fontFamily: 'Ubuntu', fontSize: 12, wordWrap: true, wordWrapWidth: 236 }}
+                    flashFormat={{ antiAliasType: 'advanced' }}
+                    clip
                     verticalAlign="top"
-                    layout={{ position: 'absolute', left: 10, right: 8, top: 35, bottom: 40 }}
+                    layout={{ position: 'absolute', left: 10, right: 8, top: 35, bottom: 49 }}
                 />
                 <Region
                     backgroundColor="#eaece8"
                     layout={{ position: 'absolute', left: 10, width: 240, top: 108, height: 36 }}
                 >
                     <Region
+                        name="cancel_region"
                         onPointerTap={cancel}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, right: 154, top: 0, bottom: 0 }}
+                        layout={{ position: 'absolute', left: 0, width: 86, top: 0, height: 36 }}
                     >
                         <ThemeText
+                            name="cancel"
                             text={waiting ? t('navigator.doorbell.button.cancel.entering') : t('generic.cancel')}
-                            layout={{ position: 'absolute', left: 3, top: 8, height: 17 }}
+                            textOptions={{ fontFamily: 'Ubuntu', fontSize: 12 }}
+                            flashFormat={{ underline: true, antiAliasType: 'advanced' }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 3, top: 8 }}
                         />
                     </Region>
                     {!waiting && (
                         <Button
                             variant="3"
+                            name="ring"
                             onPointerTap={ring}
-                            layout={{ position: 'absolute', right: 5, width: 190, top: 4, height: 28 }}
+                            // 190 wide in the layout, but a button fits its caption (`ButtonController`'s
+                            // `WE_CHILD_RESIZED` -> `width = 0`), keeping its right edge (on_resize_align_right).
+                            layout={{ position: 'absolute', right: 5, top: 4, height: 28 }}
                         >
                             {t('navigator.doorbell.button.ring')}
                         </Button>
@@ -116,16 +133,25 @@ export const NavigatorRoomEntryDialogs = () => {
                 tintColor="#418db0"
                 dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                 onClose={closeDialog}
+                resizeDirection="none"
+                margins={[ 6, 25, 6, 7 ]}
                 layout={{ ...DIALOG_POSITION, width: 237, height: 217, minWidth: 237, minHeight: 217 }}
             >
                 <ThemeText
+                    name="room_name"
                     text={interpolate(room.name)}
-                    textStyle="u_bold"
+                    textOptions={{ fontFamily: 'Ubuntu', fontSize: 12 }}
+                    flashFormat={{ bold: true, antiAliasType: 'advanced' }}
+                    clip
+                    verticalAlign="top"
                     layout={{ position: 'absolute', left: 10, width: 176, top: 16, height: 16 }}
                 />
                 <ThemeText
+                    name="info"
                     text={mode === 'password_retry' ? t('navigator.password.retryinfo') : t('navigator.password.info')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
+                    textOptions={{ fontFamily: 'Ubuntu', fontSize: 12, wordWrap: true, wordWrapWidth: 201 }}
+                    flashFormat={{ antiAliasType: 'advanced' }}
+                    clip
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 10, width: 205, top: 35, height: 68 }}
                 />
@@ -133,6 +159,8 @@ export const NavigatorRoomEntryDialogs = () => {
                     text={t('navigator.password.enter')}
                     textOptions={{ fontFamily: 'Ubuntu', fontSize: 12 }}
                     flashFormat={{ antiAliasType: 'advanced' }}
+                    clip
+                    verticalAlign="top"
                     layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21 }}
                 />
                 <TextInput
@@ -140,26 +168,41 @@ export const NavigatorRoomEntryDialogs = () => {
                     value={password}
                     onChange={setPassword}
                     onEnter={tryPassword}
+                    fontFamily="Ubuntu"
+                    fontSize={12}
+                    flashPlacement
+                    border="#000000"
+                    alwaysShowSelection
+                    backgroundColor={null}
+                    focusedBackgroundColor={null}
                     layout={{ position: 'absolute', left: 113, width: 100, top: 107, height: 19 }}
                 />
                 <Region
                     backgroundColor="#eaece8"
-                    layout={{ position: 'absolute', left: 10, width: 207, top: 142, height: 34 }}
+                    layout={{ position: 'absolute', left: 10, width: 207, top: 142, height: 34, overflow: 'hidden' }}
                 >
                     <Region
+                        name="cancel_region"
                         onPointerTap={closeDialog}
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 0, width: 83, top: 5, height: 26 }}
                     >
                         <ThemeText
+                            name="cancel"
                             text={t('generic.cancel')}
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 17 }}
+                            textOptions={{ fontFamily: 'Ubuntu', fontSize: 12 }}
+                            flashFormat={{ underline: true, antiAliasType: 'advanced' }}
+                            verticalAlign="top"
+                            layout={{ position: 'absolute', left: 0, top: 3 }}
                         />
                     </Region>
                     <Button
                         variant="3"
+                        name="try"
                         onPointerTap={tryPassword}
-                        layout={{ position: 'absolute', left: 110, width: 92, top: 3, height: 28 }}
+                        // 188 wide in the layout, but a button fits its caption (`ButtonController`'s
+                        // `WE_CHILD_RESIZED` -> `width = 0`).
+                        layout={{ position: 'absolute', left: 110, top: 3, height: 28 }}
                     >
                         {t('navigator.password.button.try')}
                     </Button>
@@ -173,29 +216,36 @@ export const NavigatorRoomEntryDialogs = () => {
 
         return (
             <Frame
-                variant="0"
+                variant="3"
                 id="navigator-alert"
                 caption={t(alert.titleKey)}
+                tintColor="#418db0"
+                dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
                 onClose={() => setAlert(undefined)}
-                defaultPosition={{ x: 360, y: 160 }}
-                layout={{ position: 'absolute', width: 240 }}
+                // `AlertView`: centred on the desktop (`Util.getLocationRelativeTo`).
+                centered
+                rememberPosition={false}
+                resizeDirection="none"
+                margins={[ 6, 25, 6, 7 ]}
+                layout={{ position: 'absolute', width: 193, height: 157, minWidth: 193, minHeight: 157 }}
             >
-                <Border layout={{ minHeight: 80, paddingLeft: 9, paddingRight: 9, paddingTop: 6, paddingBottom: 6 }}>
-                    <ThemeText
-                        layout={{ flex: 1 }}
-                        text={t(alert.messageKey)}
-                        textStyle="regular"
-                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 210 }}
-                    />
-                </Border>
-                <Box layout={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 3 }}>
-                    <Button
-                        layout={{ height: 22, minWidth: 60 }}
-                        onPointerTap={() => setAlert(undefined)}
-                    >
-                        {t('generic.ok')}
-                    </Button>
-                </Box>
+                <ThemeText
+                    name="body_text"
+                    text={t(alert.messageKey)}
+                    textStyle="regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 156 }}
+                    clip
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: 12, width: 160, top: 14, height: 78 }}
+                />
+                <Button
+                    variant="3"
+                    name="ok"
+                    onPointerTap={() => setAlert(undefined)}
+                    layout={{ position: 'absolute', left: 62, width: 60, top: 97, height: 22, minWidth: 60, maxWidth: 60 }}
+                >
+                    {t('generic.ok')}
+                </Button>
             </Frame>
         );
     };

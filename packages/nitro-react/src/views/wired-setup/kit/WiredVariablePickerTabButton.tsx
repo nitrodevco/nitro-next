@@ -13,7 +13,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Border, Box, LayoutImage, Region, ThemeImage } from '#base/theme';
+import { Border, LayoutImage, Region, ThemeImage } from '#base/theme';
 import { WiredVariablePickerTab } from '#base/wired';
 
 /** `TabButtonView.SELECTED_BG` / `HOVER_BG` / `NONE_BG` and the shadow colour that goes with each. */
@@ -47,12 +47,13 @@ export const WiredVariablePickerTabButton = ({ tab, width, active, onPress }: Wi
                 tintColor={colors.fill}
                 layout={{ position: 'absolute', left: 0, top: 0, width, height: 20 }}
             >
-                <Box layout={{ width, height: 18, alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeImage
-                        src={LayoutImage(`wired/${tab.asset}.png`)}
-                        alpha={colors.blend}
-                    />
-                </Box>
+                {/* `button_img`: unstretched at the centre pivot of the button less its 2px shadow. */}
+                <ThemeImage
+                    src={LayoutImage(`wired/${tab.asset}.png`)}
+                    alpha={colors.blend}
+                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width, height: 18 }}
+                />
             </Border>
             <Region
                 backgroundColor={colors.shadow}

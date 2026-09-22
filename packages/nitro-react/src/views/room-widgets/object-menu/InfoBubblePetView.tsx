@@ -1,9 +1,11 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Box, Bubble, ThemeText } from '#base/theme';
+import { Box, CheckBox, ContainerButton, Region, ThemeText } from '#base/theme';
 
 import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
+import { InfoBubbleMenuFrame } from './InfoBubbleMenuFrame';
+import { OWN_PET_MENU_GEOMETRY, PET_MENU_GEOMETRY } from './InfoBubbleMenuGeometry';
 
 /** What the pet's menu can be asked to do. */
 export type PetMenuAction
@@ -48,13 +50,55 @@ export interface InfoBubblePetViewProps {
     onClose: () => void;
 }
 
+/** The pet menus' rows are 101 wide; a row with a checkbox is 40 high. */
+const ROW_WIDTH = 101;
+const ROW_HEIGHT = 26;
+const TOGGLE_ROW_HEIGHT = 40;
+
+/** The rows of a permission toggle - `toggle_riding_permission` and `toggle_breeding_permission`. */
+const TOGGLE_ROWS: PetMenuAction[] = [ 'toggle_riding_permission', 'toggle_breeding_permission' ];
+
+/**
+ * A 40-high toggle row of `own_pet_menu`: a `container_button` at (-3, -4) 107x46 holding a style 1
+ * checkbox at 9,17 and a `u_regular` 11 label at 26 (y 3 for riding, 0 for breeding), 78 wide,
+ * wrapping onto up to three lines.
+ */
+const ToggleRow = ({ caption, checked, labelTop, onPress }: { caption: string; checked: boolean; labelTop: number; onPress: () => void }) => (
+    <Box layout={{ width: ROW_WIDTH, height: TOGGLE_ROW_HEIGHT, flexShrink: 0, overflow: 'hidden' }}>
+        <ContainerButton
+            variant="3"
+            tintColor="#2d2a27"
+            onPointerTap={onPress}
+            layout={{ position: 'absolute', left: -3, top: -4, width: 107, height: 46 }}
+        >
+            <CheckBox
+                variant="1"
+                selected={checked}
+                layout={{ position: 'absolute', left: 9, top: 17 }}
+            />
+            <ThemeText
+                text={caption}
+                textStyle="u_regular"
+                textOptions={{ fill: '#ffffff', fontSize: 11, wordWrap: true, wordWrapWidth: 74 }}
+                name="label"
+                verticalAlign="top"
+                layout={{ position: 'absolute', left: 26, top: labelTop }}
+            />
+        </ContainerButton>
+    </Box>
+);
+
 /**
  * The menu behind a pet, on the `pet_menu` / `own_pet_menu` layouts. Which entries appear depends
  * on what the pet is - a horse is mounted and saddled, a monsterplant is harvested and revived -
  * which is what `OwnPetMenuView`'s four modes decided.
  *
  * Training is not a packet: a command is spoken at the pet, so picking one sends `<name> <command>`
- * as ordinary chat, exactly as `RoomWidgetPetCommandMessage` did.
+ * as ordinary chat, exactly as `RoomWidgetPetCommandMessage` did. Flash trains in a window of its
+ * own (`PetCommandTool`); here the commands are the menu's rows, with a way back.
+ *
+ * Its owner gets `own_pet_menu`, anyone else `pet_menu`: the name centred in a 28-high header,
+ * the rows in the layout's child order below the rule, and the `minimize` arrow.
  */
 export const InfoBubblePetView = ({
     name, isOwner, canRespect, respectsLeft, isMountable, isRiding, hasSaddle, ridingPermissionOpen,
@@ -62,84 +106,117 @@ export const InfoBubblePetView = ({
 }: InfoBubblePetViewProps) => {
     const t = useTranslation();
     const [ showCommands, setShowCommands ] = useState(false);
+    const [ collapsed, setCollapsed ] = useState(false);
 
+    // In the layout's child order.
     const entries: { key: PetMenuAction; label: string; visible: boolean }[] = [
+        { key: 'mount', label: t('infostand.button.mount'), visible: isOwner && isMountable && !isRiding },
+        { key: 'toggle_riding_permission', label: t('infostand.button.toggle_riding_permission'), visible: isOwner && isMountable },
+        { key: 'dismount', label: t('infostand.button.dismount'), visible: isRiding },
         { key: 'respect', label: t('infostand.button.petrespect', '', { count: String(respectsLeft) }), visible: canRespect },
         { key: 'train', label: t('infostand.button.train', 'Train'), visible: isOwner && !!commands.length },
-        { key: 'mount', label: t('infostand.button.mount'), visible: isOwner && isMountable && !isRiding },
-        { key: 'dismount', label: t('infostand.button.dismount'), visible: isRiding },
+        { key: 'pick_up', label: t('infostand.button.pickup'), visible: isOwner && !isRiding },
         { key: 'saddle_off', label: t('infostand.button.saddleoff'), visible: isOwner && isMountable && hasSaddle && !isRiding },
-        {
-            key: 'toggle_riding_permission',
-            // Flash drew a checkbox beside these; the tick stands in for it.
-            label: `${t('infostand.button.toggle_riding_permission')}${ridingPermissionOpen ? ' ✓' : ''}`,
-            visible: isOwner && isMountable,
-        },
-        {
-            key: 'toggle_breeding_permission',
-            label: `${t('infostand.button.toggle_breeding_permission')}${hasBreedingPermission ? ' ✓' : ''}`,
-            visible: isOwner && canBreed,
-        },
         { key: 'breed', label: t('infostand.button.breed'), visible: isOwner && canStartBreeding },
         { key: 'harvest', label: t('infostand.button.harvest'), visible: isOwner && canHarvest },
         { key: 'revive', label: t('infostand.button.revive'), visible: isOwner && canRevive },
-        { key: 'pick_up', label: t('infostand.button.pickup'), visible: isOwner && !isRiding },
+        { key: 'toggle_breeding_permission', label: t('infostand.button.toggle_breeding_permission'), visible: isOwner && canBreed },
         { key: 'wired_inspect', label: t('infostand.button.wired_inspect'), visible: showWiredInspect },
     ];
 
+    const visibleEntries = entries.filter(entry => entry.visible);
+    const rowHeights = showCommands
+        ? [ ...commands.map(() => ROW_HEIGHT), ROW_HEIGHT ]
+        : visibleEntries.map(entry => (TOGGLE_ROWS.includes(entry.key) ? TOGGLE_ROW_HEIGHT : ROW_HEIGHT));
+
+    const act = (action: PetMenuAction) => {
+        // Training opens the command list rather than doing anything itself.
+        if (action === 'train') {
+            setShowCommands(true);
+
+            return;
+        }
+
+        onAction(action);
+        onClose();
+    };
+
     return (
-        <Bubble
-            variant="0"
-            tintColor="#6e6b67"
-            layout={{ flexDirection: 'column' }}
-        >
-            <Box layout={{ minWidth: 110, maxWidth: 110, flexDirection: 'column', marginLeft: 1, marginRight: 1 }}>
-                <Box layout={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: 24, maxHeight: 24 }}>
+        <InfoBubbleMenuFrame
+            geometry={isOwner ? OWN_PET_MENU_GEOMETRY : PET_MENU_GEOMETRY}
+            rowHeights={rowHeights}
+            collapsed={collapsed}
+            onToggleCollapsed={() => setCollapsed(!collapsed)}
+            header={(
+                // `profile_link` at 0,-1, 107x28, the name centred both ways and wrapping.
+                <Region
+                    name="profile_link"
+                    layout={{ position: 'absolute', left: 0, top: -1, width: 107, height: 28, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+                >
                     <ThemeText
                         text={name}
                         textStyle="u_bold"
-                        textOptions={{ fill: '#ffffff' }}
+                        textOptions={{ fill: '#ffffff', fontSize: 11, align: 'center', wordWrap: true, wordWrapWidth: 103 }}
+                        name="name"
+                        verticalAlign="top"
                     />
-                </Box>
-                <Box layout={{ flexDirection: 'column', width: '100%', gap: 1 }}>
-                    {showCommands
-                        ? (
-                                <>
-                                    {commands.map(command => (
-                                        <InfoBubbleMenuButton
-                                            key={command.id}
-                                            caption={command.label}
-                                            onPress={() => {
-                                                onCommand(command.label);
-                                                onClose();
-                                            }}
-                                        />
-                                    ))}
-                                    <InfoBubbleMenuButton
-                                        caption={t('generic.back')}
-                                        onPress={() => setShowCommands(false)}
-                                    />
-                                </>
-                            )
-                        : entries.filter(entry => entry.visible).map(entry => (
-                                <InfoBubbleMenuButton
-                                    key={entry.key}
-                                    caption={entry.label}
-                                    onPress={() => {
-                                    // Training opens the command list rather than doing anything itself.
-                                        if (entry.key === 'train') {
-                                            setShowCommands(true);
+                </Region>
+            )}
+        >
+            {showCommands && (
+                <>
+                    {commands.map(command => (
+                        <InfoBubbleMenuButton
+                            key={command.id}
+                            width={ROW_WIDTH}
+                            caption={command.label}
+                            onPress={() => {
+                                onCommand(command.label);
+                                onClose();
+                            }}
+                        />
+                    ))}
+                    <InfoBubbleMenuButton
+                        width={ROW_WIDTH}
+                        caption={t('generic.back')}
+                        onPress={() => setShowCommands(false)}
+                    />
+                </>
+            )}
+            {!showCommands && visibleEntries.map((entry) => {
+                if (entry.key === 'toggle_riding_permission') {
+                    return (
+                        <ToggleRow
+                            key={entry.key}
+                            caption={entry.label}
+                            checked={ridingPermissionOpen}
+                            labelTop={3}
+                            onPress={() => act(entry.key)}
+                        />
+                    );
+                }
 
-                                            return;
-                                        }
+                if (entry.key === 'toggle_breeding_permission') {
+                    return (
+                        <ToggleRow
+                            key={entry.key}
+                            caption={entry.label}
+                            checked={hasBreedingPermission}
+                            labelTop={0}
+                            onPress={() => act(entry.key)}
+                        />
+                    );
+                }
 
-                                        onAction(entry.key);
-                                        onClose();
-                                    }}
-                                />
-                            ))}
-                </Box>
-            </Box>
-        </Bubble>
+                return (
+                    <InfoBubbleMenuButton
+                        key={entry.key}
+                        width={ROW_WIDTH}
+                        caption={entry.label}
+                        onPress={() => act(entry.key)}
+                    />
+                );
+            })}
+        </InfoBubbleMenuFrame>
     );
 };

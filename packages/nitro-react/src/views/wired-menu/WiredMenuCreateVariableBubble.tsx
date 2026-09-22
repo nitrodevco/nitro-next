@@ -1,7 +1,8 @@
 /**
  * The `create_var_bubble` of the inspection tab and of the variable management detail window:
  * a variable picker (`NewVariablePicker` on a `search_tree_dropdown`, in the user's wired style)
- * over a value field, and "create". The value field is disabled for a variable without a value,
+ * over a value field, and "create", in a style 7 bubble whose pointer points down at "add"
+ * (`pointer_offset` 5). The value field is disabled for a variable without a value,
  * "create" until a variable is picked (`onChangeCreateVariable`). Closing it on a click elsewhere
  * is the owner's `windowProcedure` (see `isWithinContainer`), which is why the bubble takes a ref.
  */
@@ -46,14 +47,14 @@ export const WiredMenuCreateVariableBubble = ({ variables, filter, target, roomI
         >
             <Bubble
                 variant="7"
-                usePointer={false}
+                margins={[ 8, 8, 8, 8 ]}
+                pointerOffset={5}
                 layout={{ width: 186, height: 145 }}
             >
-                <Box layout={{ position: 'absolute', left: 14, top: 14, width: 158, height: 42 }}>
+                <Box layout={{ position: 'absolute', left: 6, top: 6, width: 158, height: 42 }}>
                     <ThemeText
                         text={t('wiredmenu.inspection.select_variable', 'wiredmenu.inspection.select_variable')}
                         textStyle="u_regular"
-                        textOptions={{ fill: '#000000' }}
                         flashFormat={{ bold: true }}
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
@@ -74,12 +75,11 @@ export const WiredMenuCreateVariableBubble = ({ variables, filter, target, roomI
                 <Box
                     alpha={valueDisabled ? 0.5 : 1}
                     eventMode={valueDisabled ? 'none' : 'auto'}
-                    layout={{ position: 'absolute', left: 14, top: 60, width: 158, height: 42 }}
+                    layout={{ position: 'absolute', left: 6, top: 52, width: 158, height: 42 }}
                 >
                     <ThemeText
                         text={t('wiredmenu.inspection.select_value', 'wiredmenu.inspection.select_value')}
                         textStyle="u_regular"
-                        textOptions={{ fill: '#000000' }}
                         flashFormat={{ bold: true }}
                         verticalAlign="top"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 17 }}
@@ -92,13 +92,17 @@ export const WiredMenuCreateVariableBubble = ({ variables, filter, target, roomI
                             value={valueText}
                             onChange={value => setValueText(value.replace(/[^0-9-]/g, ''))}
                             textStyle="u_regular"
+                            flashPlacement
+                            restrict={'0-9\\-'}
+                            backgroundColor={null}
+                            focusedBackgroundColor={null}
                             layout={{ position: 'absolute', left: 5, top: 3, width: 71, height: 17 }}
                         />
                     </Border>
                 </Box>
                 <Box
                     alpha={selected ? 1 : 0.5}
-                    layout={{ position: 'absolute', left: 14, top: 108, width: 158, height: 25 }}
+                    layout={{ position: 'absolute', left: 6, top: 100, width: 158, height: 25 }}
                 >
                     <Button
                         variant="3"

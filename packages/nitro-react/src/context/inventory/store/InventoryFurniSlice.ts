@@ -18,8 +18,9 @@
  *
  * Not ported: the unseen item tracker (`UnseenItemsMessage`) - an item it names moves its group
  * to the top of the grid; without it every new group goes to the bottom, as Flash does for an
- * item the tracker does not name. The rentables category, the recycler and the marketplace,
- * which add their own locks, do not exist in this client.
+ * item the tracker does not name. The rentables category does not exist in this client. The
+ * recycler (`RecyclerModel`) and the marketplace (`MarketplaceModel`) lock items by strip id
+ * through `setFurniItemLocks`, and `updateFurniLocks` counts their items with the trade's.
  */
 import { IFurniListAddOrUpdateFurni } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';
@@ -53,6 +54,11 @@ type Actions = {
     selectFurniGroup: (groupId: number) => void;
     /** `FurniModel.updateItemLocks` with the room item ids every lock source holds; none is `removeAllLocks`. */
     updateFurniLocks: (lockedRefs: number[]) => void;
+    /**
+     * `GroupItem.addLockTo` / `removeLockFrom` / `lockAllSellable` / `removeLocks`: the items with
+     * these strip ids are locked or unlocked - what the recycler and the marketplace lock by hand.
+     */
+    setFurniItemLocks: (itemIds: readonly number[], locked: boolean) => void;
     /** `FurniModel.resetUnseenItems`: no group is new any more. */
     resetFurniUnseenItems: () => void;
 };
@@ -282,6 +288,20 @@ export const createInventoryFurniSlice: StateCreator<InventoryFurniSlice, [], []
             changed = true;
 
             return { ...group, items: group.items.map(item => ((item.locked === refs.has(item.ref)) ? item : { ...item, locked: refs.has(item.ref) })) };
+        });
+
+        return changed ? { furniGroups: groups } : x;
+    }),
+    setFurniItemLocks: (itemIds, locked) => set((x) => {
+        const ids = new Set(itemIds);
+        let changed = false;
+
+        const groups = x.furniGroups.map((group) => {
+            if (!group.items.some(item => ids.has(item.id) && (item.locked !== locked))) return group;
+
+            changed = true;
+
+            return { ...group, items: group.items.map(item => ((ids.has(item.id) && (item.locked !== locked)) ? { ...item, locked } : item)) };
         });
 
         return changed ? { furniGroups: groups } : x;

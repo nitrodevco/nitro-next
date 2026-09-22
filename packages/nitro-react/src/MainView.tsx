@@ -7,9 +7,16 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useIsLandingViewVisible } from '#base/context/system';
 
 import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorComponent, RoomWrapper, ToolbarOtherSettingsComponent, WalletComponent, WiredChestComponent, WiredContractComponent, WiredMenuComponent, WiredRewardNotificationsComponent, WiredSelfDonationComponent, WiredSetupComponent, WiredTradeComponent, WiredTransactionsComponent } from './components';
+import { TargetedOfferComponent } from './components/catalog/TargetedOfferComponent';
+import { CollectiblesComponent } from './components/collectibles';
+import { EarningsComponent } from './components/earnings';
+import { HabbiconsComponent } from './components/habbicons';
+import { OfferCenterComponent } from './components/offer-center';
+import { SpecialItemsComponent } from './components/special-items';
 import { registerHandlers } from './handlers';
 import { useRegisterHandlers } from './hooks';
-import { Box, TooltipLayer } from './theme';
+import { Box, ModalLayer, TooltipLayer } from './theme';
+import { TargetedOfferMinimizedView } from './views/catalog/targeted-offers/TargetedOfferMinimizedView';
 import { HotelView } from './views/hotel-view/HotelView';
 import { NotificationsExtensionAnchor } from './views/notifications/NotificationsExtensionAnchor';
 import { NotificationsView } from './views/notifications/NotificationsView';
@@ -60,7 +67,8 @@ export const MainView = () => {
                     position: 'absolute',
                     top: 0,
                     right: 0,
-                    marginRight: 6,
+                    // The purse's right edge at `desktop.width - 3` (the extension grid's own inset).
+                    marginRight: 3,
                     width: 230,
                     flex: 1,
                     flexDirection: 'column',
@@ -76,11 +84,13 @@ export const MainView = () => {
                     }}
                     >
                         <ActivityPointsView />
+                        <TargetedOfferMinimizedView />
                     </Box>
                     <NotificationsExtensionAnchor />
                 </Box>
                 <AvatarEditorComponent />
                 <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
+                <CatalogWrapper catalogType={CatalogTypeEnum.BuildersClub} />
                 <InventoryComponent />
                 <FriendListWrapper />
                 <MessengerComponent />
@@ -94,12 +104,20 @@ export const MainView = () => {
                 <WiredTradeComponent />
                 <WiredSelfDonationComponent />
                 <WiredRewardNotificationsComponent />
+                <EarningsComponent />
+                <SpecialItemsComponent />
+                <CollectiblesComponent />
+                <HabbiconsComponent />
+                <OfferCenterComponent />
+                <TargetedOfferComponent />
                 <ToolbarView />
                 <ToolbarOtherSettingsComponent />
                 {/* Drawn after the toolbar because it sits inside it when it fits; it renders nothing outside a room. */}
                 <RoomChatInputView />
                 <NotificationsView />
                 <SystemDialogsView />
+                {/* Context 3: every `ModalDialog` is moved in here, over the windows and their popups. */}
+                <ModalLayer />
                 <TooltipLayer />
             </Box>
         </>

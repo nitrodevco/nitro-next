@@ -1,7 +1,9 @@
 import { ICatalogNode } from '@nitrodevco/nitro-api';
 
+import { getCatalogNodesByOfferId } from '#base/commands';
 import { useCatalogStore } from '#base/context/catalog';
 
+/** Finding nodes in the catalogue index - `CatalogNavigator.getNodeById`, `getNodeByName`, `getNodesByOfferId`. */
 export const useCatalogNodeActions = () => {
     const rootNode = useCatalogStore(x => x.rootNode);
     const offersToNodes = useCatalogStore(x => x.offersToNodes);
@@ -33,20 +35,7 @@ export const useCatalogNodeActions = () => {
         return undefined;
     };
 
-    const getNodesByOfferId = (offerId: number, flag: boolean = false): ICatalogNode[] => {
-        if (flag) {
-            const nodes: ICatalogNode[] = [];
-            const offerNodes = offersToNodes[offerId];
-
-            if (offerNodes?.length) {
-                for (const node of offerNodes) {
-                    if (node.visible) nodes.push(node);
-                }
-            }
-        }
-
-        return offersToNodes[offerId] ?? [];
-    };
+    const getNodesByOfferId = (offerId: number, onlyVisible: boolean = false) => getCatalogNodesByOfferId(offersToNodes, offerId, onlyVisible);
 
     return { isNodeActive, getNodeByPageId, getNodeByPageName, getNodesByOfferId };
 };

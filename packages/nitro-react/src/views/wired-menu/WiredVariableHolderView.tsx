@@ -105,10 +105,11 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
     const boldText = (key: string) => (
         <ThemeText
             text={t(key, key)}
-            textStyle="u_bold"
-            textOptions={{ fill: '#000000' }}
+            textStyle="u_regular"
+            flashFormat={{ bold: true }}
+            clip
             verticalAlign="top"
-            layout={{ position: 'absolute', left: 0, top: 0, height: 19 }}
+            layout={{ position: 'absolute', left: 0, top: 0, width: 188, height: 19 }}
         />
     );
 
@@ -125,6 +126,7 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
             onClose={closeWiredVariableHolder}
             onPointerTap={onWindowTap}
             layout={{ position: 'absolute', width: 339, height: 512, minWidth: 339, maxWidth: 339, minHeight: 400, maxHeight: 650 }}
+            margins={[ 0, 33, 0, 0 ]}
         >
             <Box layout={{ position: 'absolute', left: 18, top: 7, width: 303, height: 57 }}>
                 <Border
@@ -134,8 +136,10 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
                     <ThemeText
                         text={t('wiredmenu.variable_management_detail.info', 'wiredmenu.variable_management_detail.info')}
                         textStyle="u_regular"
-                        textOptions={{ fill: '#000000', align: 'center', wordWrap: true, wordWrapWidth: 214 }}
-                        verticalAlign="middle"
+                        textOptions={{ align: 'center', wordWrap: true, wordWrapWidth: 214 }}
+                        flashFormat={{ leading: 1 }}
+                        markup
+                        verticalAlign="top"
                         layout={{ position: 'absolute', left: 5, top: 12, width: 218, height: 32 }}
                     />
                 </Border>
@@ -182,14 +186,17 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
                     <TextInput
                         value={infoText.replace(/\r/g, '\n')}
                         onChange={() => {}}
-                        onKeyDown={() => true}
                         multiline
                         textStyle="u_regular"
+                        flashPlacement
+                        editable={false}
+                        backgroundColor={null}
+                        focusedBackgroundColor={null}
                         layout={{ position: 'absolute', left: 6, top: 6, width: 182, height: 80 }}
                     />
                 </Border>
             </Box>
-            <Box layout={{ position: 'absolute', left: 18, top: 196, width: 303, bottom: 18 }}>
+            <Box layout={{ position: 'absolute', left: 18, top: 196, width: 303, bottom: 18, overflow: 'hidden' }}>
                 {boldText('wiredmenu.variable_management_detail.variables')}
                 <Box layout={{ position: 'absolute', left: 0, top: 20, width: 303, bottom: 34 }}>
                     <WiredTableView
