@@ -54,7 +54,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  * from that one component bundle of `scripts/flash-js-resources`.
  */
 const SKIN_DIR = join(__dirname, 'flash-js-resources', 'habbo-window-manager-com');
-const OUT_DIR = join(__dirname, '../public/assets/theme');
+/**
+ * `SKIN_OUT_DIR` writes somewhere else - a scratch folder the shipped art can be diffed against,
+ * which is how a hand-cut sheet is checked before the cut replaces it.
+ */
+const OUT_DIR = process.env.SKIN_OUT_DIR ?? join(__dirname, '../public/assets/theme');
 
 interface Job {
     /** Theme component folder under public/assets/theme. */
@@ -106,7 +110,52 @@ const pieceName = (entity: string) => entity.replace(/_/g, '-');
  */
 const CURVES = [ 'button_center_left_curve', 'button_center_right_curve' ];
 
+/**
+ * The scrollbar lift's `grd` - the grip - is a 7px column the layout tiles down (or across) the
+ * middle of the bar, so it cannot sit in the bar's nine-slice: it is cut as a piece and the theme
+ * tiles it (`Tiled`).
+ */
+const GRIP = [ 'grd' ];
+
+
 const JOBS: Job[] = [
+    // The classic buttons. Their `pressed` template is its own art - white on the black skin, the
+    // inverted face on the default one - and a state with no file draws nothing at all, which is
+    // how the black button went dark with no border while it was held.
+    { component: 'button', style: '0', skin: 'habbo_skin_button_default' },
+    { component: 'button', style: '1', skin: 'habbo_skin_button_default_black' },
+    { component: 'button', style: '3', skin: 'habbo_skin_button_shiny_default' },
+    { component: 'button', style: '4', skin: 'habbo_skin_button_shiny_black' },
+    // Not the classic thick buttons (styles 0-2): their layout puts the right column at x 4, over
+    // the 1px centre, so the natural-size composite has no centre column to stretch. Their sheets
+    // are the nine templates laid side by side (4+1+4), which `theme_skin.py` holds to the skin.
+    { component: 'buttonthick', style: '3', skin: 'habbo_skin_button_shiny_thick' },
+    { component: 'buttonthick', style: '4', skin: 'habbo_skin_button_shiny_thick_black' },
+    { component: 'containerbutton', style: '4', skin: 'habbo_skin_button_shiny_large' },
+    // A group skin's `pressed` state is its `selected` template, so `selected` is the one file.
+    // The `_white` group skins (style 2) cut exactly the style 0 regions, so they have no files.
+    { component: 'buttongroupleft', style: '0', skin: 'habbo_skin_button_group_left', states: [ 'default', 'selected', 'disabled', 'hovering' ] },
+    { component: 'buttongroupleft', style: '1', skin: 'habbo_skin_button_group_left_black', states: [ 'default', 'selected', 'disabled', 'hovering' ] },
+    { component: 'buttongroupcenter', style: '0', skin: 'habbo_skin_button_group_center', states: [ 'default', 'selected', 'disabled', 'hovering' ] },
+    { component: 'buttongroupcenter', style: '1', skin: 'habbo_skin_button_group_center_black', states: [ 'default', 'selected', 'disabled', 'hovering' ] },
+    { component: 'buttongroupright', style: '0', skin: 'habbo_skin_button_group_right', states: [ 'default', 'selected', 'disabled', 'hovering' ] },
+    { component: 'buttongroupright', style: '1', skin: 'habbo_skin_button_group_right_black', states: [ 'default', 'selected', 'disabled', 'hovering' ] },
+    // The tracks: a stretched strip, drawn `pressed` while the pointer is held on it and
+    // `disabled` (the `passive` template) while the scrollbar is disabled.
+    { component: 'scrollbarslidertrackvertical', style: '0', skin: 'habbo_skin_scrollbar', layout: 'scrollbar_track_vertical' },
+    { component: 'scrollbarslidertrackvertical', style: '1', skin: 'habbo_skin_scrollbar_black', layout: 'scrollbar_track_vertical_black' },
+    { component: 'scrollbarslidertrackvertical', style: '3', skin: 'habbo_skin_scrollbar_3', layout: 'scrollbar_track_vertical_3' },
+    { component: 'scrollbarslidertrackhorizontal', style: '0', skin: 'habbo_skin_scrollbar', layout: 'scrollbar_track_horizontal' },
+    { component: 'scrollbarslidertrackhorizontal', style: '1', skin: 'habbo_skin_scrollbar_black', layout: 'scrollbar_track_horizontal_black' },
+    { component: 'scrollbarslidertrackhorizontal', style: '3', skin: 'habbo_skin_scrollbar_3', layout: 'scrollbar_track_horizontal_3' },
+    // Not the ubuntu lift (style 3): its 16px `grd` tiles over the 20px band the middle stretches
+    // over, so the natural-size composite repeats every 20px where the client repeats every 16.
+    // Its sheets are cap + one grip tile + cap (5 + 16 + 5), which the theme tiles (`repeat 'y'`),
+    // and its `disabled` template is empty - the lift is not drawn at all.
+    { component: 'scrollbarsliderbarvertical', style: '0', skin: 'habbo_skin_scrollbar', layout: 'scrollbar_lift_vertical', exclude: GRIP },
+    { component: 'scrollbarsliderbarvertical', style: '1', skin: 'habbo_skin_scrollbar_black', layout: 'scrollbar_lift_vertical_black', exclude: GRIP },
+    { component: 'scrollbarsliderbarhorizontal', style: '0', skin: 'habbo_skin_scrollbar', layout: 'scrollbar_lift_horizontal', exclude: GRIP },
+    { component: 'scrollbarsliderbarhorizontal', style: '1', skin: 'habbo_skin_scrollbar_black', layout: 'scrollbar_lift_horizontal_black', exclude: GRIP },
     // A border skin also carries an `active` state - the focused window's. `Border` has no such
     // state (`ThemeVariant` is one layer, not a state map), so only `default` is cut.
     { component: 'border', style: '11', skin: 'habbo_skin_border_slot_2' },
@@ -284,8 +333,12 @@ const fileFor = (dir: string, name: string, ext: string): string => {
 
 const sheets = new Map<string, Awaited<ReturnType<typeof loadImage>>>();
 
-/** The skins name the classic sheet `habbo_blue_skin_png`; the image dump has it as `habbo_skin_blue_png`. */
-const SHEET_ALIASES: Record<string, string> = { habbo_blue_skin_png: 'habbo_skin_blue_png' };
+/**
+ * A sheet whose bundle file is not its asset name. None today: the component bundles carry the
+ * classic sheet under the `habbo_blue_skin_png` the skins name (the old image dump's
+ * `habbo_skin_blue_png` spelling is gone with the dump).
+ */
+const SHEET_ALIASES: Record<string, string> = {};
 
 const sheetFor = async (asset: string) => {
     let sheet = sheets.get(asset);

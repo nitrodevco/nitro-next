@@ -1,7 +1,7 @@
 /**
  * The client's `<icon style="N">`: template `icon_N` of `habbo_skin_icon_set_xml`, one rect of
  * the SWF's `habbo_icons_png` - bundled as the theme asset `icon-set-src` (see
- * `utils/themeUrls.ts`) and cut by `utils/iconSetFrames.ts`. That sheet and its rects are the
+ * `utils/themeAssets.ts`) and cut by `utils/iconSetFrames.ts`. That sheet and its rects are the
  * authority on what a style shows and how big it is; the numbering is the skin's own, so a call
  * site names the style the Flash layout names, never a made-up word for the picture.
  *

@@ -112,11 +112,11 @@ export type CloseButtonProps = ThemeProps<CloseButtonVariant>;
 
 export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, CloseButtonProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'closeButton', variants: CLOSE_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, stopsPropagation: true, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'closeButton', variants: CLOSE_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, stopsPropagation: true, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
         // A plain sprite skin with nothing layered over it is the sprite itself - one node, no Box.

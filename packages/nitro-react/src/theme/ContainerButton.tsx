@@ -7,7 +7,7 @@ import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect }
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
 import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
-import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, buttonPlainVariant, classicButtonVariant, roundedButtonVariant, shinyButtonVariant } from './utils/buttonVariants';
+import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_103_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, classicButtonVariant, roundedButtonVariant, shinyButtonVariant } from './utils/buttonVariants';
 
 export type ContainerButtonVariant = ThemeVariant | ThemeWithStatesVariant;
 
@@ -71,7 +71,7 @@ const CONTAINER_BUTTON_VARIANTS: ThemeVariants<ContainerButtonVariant> = {
     101: { ...BUTTON_100_VARIANT, tintColor: '#bbbbbb' },
     // illumina plain / unetched
     102: BUTTON_102_VARIANT,
-    103: buttonPlainVariant('button-103', false),
+    103: BUTTON_103_VARIANT,
     // illumina multi-left / multi-right / multi-middle
     104: multiVariant('104', 4, 0),
     105: multiVariant('105', 0, 4),
@@ -100,11 +100,11 @@ export interface ContainerButtonProps extends ThemeProps<ContainerButtonVariant>
  */
 export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContainerButtonProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'containerButton', variants: CONTAINER_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled, selected, interactive: !!dynamicStyle,
+            cascadeKey: 'containerButton', variants: CONTAINER_BUTTON_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, selected, interactive: !!dynamicStyle,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
         const hostEffect = useHostDynamicStyleEffect(dynamicStyle, state);

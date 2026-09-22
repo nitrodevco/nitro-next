@@ -17,7 +17,16 @@ export type HeaderVariant = ThemeVariant & {
     captionAt?: { left: number; top: number };
     /** Where the window layout pins `header_button_close`, from the header's top right, instead of centring it on the right edge. */
     closeAt?: { right: number; top: number };
+    /**
+     * The close button style of the layout's `header_button_help`, for the window layouts that
+     * have one (`habbo_window_layout_header_3` and `_7`: style 4, left of the close button in
+     * the `_CONTROLS` item list, whose `spacing` is 5).
+     */
+    helpButton?: string;
 };
+
+/** `spacing` of the header layouts' `_CONTROLS` item list. */
+const CONTROLS_SPACING = 5;
 
 const HEADER_0_VARIANT: HeaderVariant = {
     layer: Tiled('header-0-default-src'),
@@ -77,6 +86,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
         },
         textStyle: 'u_frame_title',
         textColor: '#ffffff',
+        helpButton: '4',
     },
     4: {
         layer: Stretch('header-3-default-src'),
@@ -100,6 +110,7 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
         },
         textStyle: 'u_frame_title',
         textColor: '#000000',
+        helpButton: '4',
     },
     /*
      * illumina light (`illumina_light_frame`, and `illumina_light_frame_wired` for frame 102): a
@@ -169,15 +180,22 @@ export interface HeaderProps extends ThemeProps<HeaderVariant> {
     onClose?: () => void;
     /** Shows the skin's menu button, for the variants whose skin has one (`menuButton`). */
     onMenu?: () => void;
+    /**
+     * `FrameController.helpPage`: a page other than '' shows the layout's `header_button_help`
+     * (for the variants that have one, `helpButton`), and a click on it hands the page to
+     * `onHelp` - `helpButtonProcedure`, whose callback the window manager sets to `openHelpPage`.
+     */
+    helpPage?: string;
+    onHelp?: (page: string) => void;
 }
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, caption, onClose, onMenu,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, caption, onClose, onMenu, helpPage, onHelp,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor,
+            cascadeKey: 'header', variants: HEADER_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
@@ -201,11 +219,27 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                         )}
                     </Box>
                 );
+        // `helpPage`'s setter: the help button is visible while there is a page. The item list it
+        // shares with the close button keeps its right edge (`on_resize_align_right`), so the help
+        // button sits `spacing` left of the close button.
+        const helpNode = (config.helpButton && helpPage) && (
+            <CloseButton
+                variant={config.helpButton}
+                onPointerTap={() => onHelp?.(helpPage)}
+                layout={{ marginRight: CONTROLS_SPACING }}
+            />
+        );
         const closeNode = config.closeAt
-            ? <Box layout={{ position: 'absolute', right: config.closeAt.right, top: config.closeAt.top }}><CloseButton onPointerTap={onClose} /></Box>
+            ? (
+                    <Box layout={{ position: 'absolute', right: config.closeAt.right, top: config.closeAt.top, flexDirection: 'row' }}>
+                        {helpNode}
+                        <CloseButton onPointerTap={onClose} />
+                    </Box>
+                )
             : (
                     <Box layout={{ position: 'absolute', right: 0, paddingLeft: 2, flexDirection: 'row', alignItems: 'center' }}>
                         { config.needsBgChip && <ColorLayer color={resolvedTint} /> }
+                        {helpNode}
                         <CloseButton onPointerTap={onClose} />
                     </Box>
                 );

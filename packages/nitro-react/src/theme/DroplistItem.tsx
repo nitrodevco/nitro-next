@@ -34,11 +34,11 @@ export interface DroplistItemProps extends ThemeProps<DroplistItemVariant> {
 
 export const DroplistItem: ForwardRefExoticComponent<DroplistItemProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistItemProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, selected, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'droplistItem', variants: DROPLIST_ITEM_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, selected,
+            cascadeKey: 'droplistItem', variants: DROPLIST_ITEM_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, selected,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

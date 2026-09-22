@@ -3,8 +3,9 @@
  * by drawing it onto its own `<canvas>`. A drop shadow is the same block rendered once more in
  * the shadow's colour and composited underneath, so the two targets bake identical pixels.
  */
-import { FlashTextBlock, FlashTextBlockOptions, FlashTextRun, renderTextBlock } from './flashTextBlock';
+import { FlashTextBlock, FlashTextBlockOptions, FlashTextLine, FlashTextRun, renderTextBlock } from './flashTextBlock';
 import { FlashTextFormat, normalizeFlashTextFormat } from './flashTextFormat';
+import { FlashTextLink } from './flashTextMarkup';
 import { FlashTextRenderer } from './FlashTextRenderer';
 
 export interface FlashTextShadow {
@@ -29,6 +30,11 @@ export interface FlashTextCanvas {
     lineHeight: number;
     baseline: number;
     gutter: number;
+    /** The block's lines and their `align` shifts, in the canvas's own space - see `flashTextCharIndexAtPoint`. */
+    lineLayout: FlashTextLine[];
+    lineOffsets: number[];
+    /** The `<a href>` ranges of a markup text (`parseFlashTextMarkupWithLinks`), for `flashTextLinkAtPoint`. */
+    links?: FlashTextLink[];
 }
 
 const toShadowFormat = (format: FlashTextFormat, color: number): FlashTextFormat => ({ ...format, color, colorTransform: null, etchingColor: null, etchingPosition: null });
@@ -94,5 +100,5 @@ export const renderFlashTextCanvas = (content: string | readonly FlashTextRun[],
     FlashTextRenderer.unpremultiply(pixels);
     context.putImageData(new ImageData(pixels, width, height), 0, 0);
 
-    return { canvas, width, height, textWidth: block.textWidth, textHeight: block.textHeight, lineHeight: block.lineHeight, baseline: block.baseline, gutter: block.gutter };
+    return { canvas, width, height, textWidth: block.textWidth, textHeight: block.textHeight, lineHeight: block.lineHeight, baseline: block.baseline, gutter: block.gutter, lineLayout: block.lineLayout, lineOffsets: block.lineOffsets };
 };

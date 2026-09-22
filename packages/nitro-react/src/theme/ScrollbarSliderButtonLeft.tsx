@@ -55,9 +55,9 @@ export interface ScrollbarSliderButtonLeftProps extends ThemeProps<ScrollbarSlid
  * `useHoldToRepeat` (see ScrollbarHorizontal.tsx), spread in as the pointer handlers.
  */
 export const ScrollbarSliderButtonLeft: ForwardRefExoticComponent<ScrollbarSliderButtonLeftProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderButtonLeftProps>(
-    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { config, handlers, resolvedLayer, resolvedTint } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderButtonLeft', variants: SCROLLBAR_SLIDER_BUTTON_LEFT_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled,
+            cascadeKey: 'scrollbarSliderButtonLeft', variants: SCROLLBAR_SLIDER_BUTTON_LEFT_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

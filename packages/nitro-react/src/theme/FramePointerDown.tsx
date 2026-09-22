@@ -16,9 +16,9 @@ const FRAME_POINTER_DOWN_VARIANTS: ThemeVariants<FramePointerDownVariant> = {
 export type FramePointerDownProps = ThemeProps<FramePointerDownVariant>;
 
 export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, FramePointerDownProps>(
-    ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
-            cascadeKey: 'framePointerDown', variants: FRAME_POINTER_DOWN_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor,
+            cascadeKey: 'framePointerDown', variants: FRAME_POINTER_DOWN_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 

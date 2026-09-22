@@ -1,63 +1,15 @@
-import { NineSlice } from './layer';
-import { ButtonGroupComponentProps, ButtonGroupVariant, createButtonGroupComponent, ThemeVariants } from './utils';
+import { ButtonGroupComponentProps, ButtonGroupVariant, buttonGroupVariant, createButtonGroupComponent, ThemeVariants, windowLayout } from './utils';
 
+/**
+ * `button_group_center` - the rows of `habbo_element_description_xml`. The `_white` skin (style 2)
+ * cuts exactly style 0's regions, and style 100 is the style 0 skin on the illumina plain button's
+ * layout, so both draw style 0's files.
+ */
 export const BUTTON_GROUP_CENTER_VARIANTS: ThemeVariants<ButtonGroupVariant> = {
-    // default
-    0: {
-        states: {
-            default: NineSlice('buttongroupcenter-0-default-src', 1, 3, 3, 3),
-            hovering: NineSlice('buttongroupcenter-0-hovering-src', 1, 3, 3, 3),
-            selected: NineSlice('buttongroupcenter-0-selected-src', 1, 3, 3, 3),
-            disabled: NineSlice('buttongroupcenter-0-disabled-src', 1, 3, 3, 3),
-        },
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-        textStyle: 'button_regular',
-    },
-    // black
-    1: {
-        states: {
-            default: NineSlice('buttongroupcenter-1-default-src', 1, 3, 3, 3),
-            hovering: NineSlice('buttongroupcenter-1-hovering-src', 2, 3, 3, 3),
-            selected: NineSlice('buttongroupcenter-1-selected-src', 1, 3, 3, 3),
-            disabled: NineSlice('buttongroupcenter-1-disabled-src', 1, 3, 3, 3),
-        },
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-        textStyle: 'button_regular', textColor: '#ffffff',
-    },
-    // white (default/selected/disabled reuse '0' art; hover gets its own '2'-specific asset)
-    2: {
-        states: {
-            default: NineSlice('buttongroupcenter-0-default-src', 1, 3, 3, 3),
-            hovering: NineSlice('buttongroupcenter-2-hovering-src', 2, 3, 3, 3),
-            selected: NineSlice('buttongroupcenter-0-selected-src', 1, 3, 3, 3),
-            disabled: NineSlice('buttongroupcenter-0-disabled-src', 1, 3, 3, 3),
-        },
-        layout: {
-            paddingLeft: 8, paddingTop: 4, paddingRight: 8, paddingBottom: 4,
-            minWidth: 20, minHeight: 22,
-        },
-        textStyle: 'button_regular',
-    },
-    // landing view / IL button size (reuses '0' art, no hover-thinning)
-    100: {
-        states: {
-            default: NineSlice('buttongroupcenter-0-default-src', 1, 3, 3, 3),
-            hovering: NineSlice('buttongroupcenter-0-hovering-src', 1, 3, 3, 3),
-            selected: NineSlice('buttongroupcenter-0-selected-src', 1, 3, 3, 3),
-            disabled: NineSlice('buttongroupcenter-0-disabled-src', 1, 3, 3, 3),
-        },
-        layout: {
-            paddingLeft: 13, paddingTop: 3, paddingRight: 13, paddingBottom: 3,
-            minWidth: 28, minHeight: 28,
-        },
-        textStyle: 'il_button',
-    },
+    0: { ...buttonGroupVariant('buttongroupcenter-0', 1), ...windowLayout('habbo_window_layout_button') },
+    1: { ...buttonGroupVariant('buttongroupcenter-1', 1), ...windowLayout('habbo_window_layout_button_black') },
+    2: { ...buttonGroupVariant('buttongroupcenter-0', 1), ...windowLayout('habbo_window_layout_button') },
+    100: { ...buttonGroupVariant('buttongroupcenter-0', 1), ...windowLayout('illumina_light_button_plain') },
 };
 
 export type ButtonGroupCenterProps = ButtonGroupComponentProps;

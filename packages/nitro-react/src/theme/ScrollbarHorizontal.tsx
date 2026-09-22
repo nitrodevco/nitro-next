@@ -21,12 +21,6 @@ export interface ScrollbarHorizontalProps {
     scrollOffset?: number;
     thumbSize: number;
     thumbOffset: number;
-    /** Unlike ScrollbarVertical.tsx (whose DOM source has its aria-disabled wiring commented
-     *  out entirely), DOM's ScrollbarHorizontal actively sets
-     *  `aria-disabled={!controller.scrollable || controller.atStart}`/`atEnd` on its buttons -
-     *  preserved here as a real asymmetry between the two orientations, not "fixed" to match. */
-    atStart: boolean;
-    atEnd: boolean;
     scrollable: boolean;
     onTrackPointerDown: (event: FederatedPointerEvent) => void;
     onThumbPointerDown: (event: FederatedPointerEvent) => void;
@@ -35,12 +29,20 @@ export interface ScrollbarHorizontalProps {
     variant?: string;
     defaultVariant?: string;
     tintColor?: string;
+    /**
+     * What happens once the content fits. `true` (the default) removes the scrollbar, as
+     * `ScrollableItemListWindow` / `ScrollableItemGridWindow` hide theirs. `false` keeps it, the
+     * way a layout's own `scrollbar_*` window stays: `ScrollBarController.updateLiftSizeAndPosition`
+     * disables it and every `_INTERNAL` part, so the buttons, the track and the lift - grown to
+     * the whole track - draw their `disabled` art and take no input.
+     */
+    hideWhenDisabled?: boolean;
     layout?: BoxLayout;
 }
 
 export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarHorizontalProps>(
     (
-        { trackRef, thumbSize, thumbOffset, atStart, atEnd, scrollable, onTrackPointerDown, onThumbPointerDown, stepBackward, stepForward, variant, defaultVariant, tintColor, layout },
+        { trackRef, thumbSize, thumbOffset, scrollable, onTrackPointerDown, onThumbPointerDown, stepBackward, stepForward, variant, defaultVariant, tintColor, hideWhenDisabled = true, layout },
         ref,
     ) => {
         const { resolvedVariant, ownCascade } = useResolvedVariant('scrollbarHorizontal', variant, defaultVariant);
@@ -52,8 +54,9 @@ export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalP
         // step scroll position - dropped for the same reason noted in ScrollbarVertical.tsx
         // (Pixi containers aren't natively keyboard-focusable).
 
-        // DOM's `invisible w-0! pointer-events-none` collapse when `!controller.scrollable`.
-        if (!scrollable) return null;
+        const disabled = !scrollable;
+
+        if (disabled && hideWhenDisabled) return null;
 
         return (
             <Box
@@ -63,7 +66,7 @@ export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalP
                 <VariantCascadeProvider map={ownCascade}>
                     <ScrollbarSliderButtonLeft
                         defaultVariant={resolvedVariant}
-                        disabled={atStart}
+                        disabled={disabled}
                         layout={{ flexShrink: 0 }}
                         onPointerDown={holdLeft.onPointerDown}
                         onPointerUp={holdLeft.onPointerUp}
@@ -72,13 +75,22 @@ export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalP
                     <ScrollbarSliderTrackHorizontal
                         ref={node => trackRef(node)}
                         defaultVariant={resolvedVariant}
+                        disabled={disabled}
                         onPointerDown={onTrackPointerDown}
                     >
                         {/* See ScrollbarVertical.tsx's identical guard - `thumbSize` can briefly
                             read 0 on the first measure tick after becoming scrollable, and
                             mounting the thumb's `NineSliceSprite` at zero size leaves it
                             permanently invisible once resized on the next tick. */}
-                        {thumbSize > 0 && (
+                        {disabled && (
+                            <ScrollbarSliderBarHorizontal
+                                defaultVariant={resolvedVariant}
+                                tintColor={tintColor}
+                                disabled
+                                layout={{ top: 0, height: '100%', left: 0, width: '100%' }}
+                            />
+                        )}
+                        {!disabled && thumbSize > 0 && (
                             <ScrollbarSliderBarHorizontal
                                 defaultVariant={resolvedVariant}
                                 tintColor={tintColor}
@@ -89,7 +101,7 @@ export const ScrollbarHorizontal: ForwardRefExoticComponent<ScrollbarHorizontalP
                     </ScrollbarSliderTrackHorizontal>
                     <ScrollbarSliderButtonRight
                         defaultVariant={resolvedVariant}
-                        disabled={atEnd}
+                        disabled={disabled}
                         layout={{ flexShrink: 0 }}
                         onPointerDown={holdRight.onPointerDown}
                         onPointerUp={holdRight.onPointerUp}

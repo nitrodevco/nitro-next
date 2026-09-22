@@ -55,6 +55,9 @@ export interface FlashTextBlock {
     textWidth: number;
     textHeight: number;
     gutter: number;
+    /** The laid-out lines, and how far each one is shifted right inside the gutters by `align` - what a hit test reads. */
+    lineLayout: FlashTextLine[];
+    lineOffsets: number[];
 }
 
 /** The width of `text` in `format`, or `null` when it cannot be measured. */
@@ -301,15 +304,15 @@ export const renderTextBlock = (content: string | readonly FlashTextRun[], forma
     const height = Math.max(1, (lines.length - 1) * lineHeight + Math.ceil(metrics.ascent + metrics.descent) + gutter * 2);
     const pixels = new Uint8ClampedArray(width * height * 4);
     const innerWidth = width - gutter * 2;
+    const lineOffsets = lines.map(line => ((align === 'center') ? Math.floor((innerWidth - line.width) / 2) : (align === 'right') ? Math.floor(innerWidth - line.width) : 0));
 
     renderedLines.forEach((renderedSegments, lineIndex) => {
-        const lineWidth = lines[lineIndex].width;
-        const lineX = (align === 'center') ? Math.floor((innerWidth - lineWidth) / 2) : (align === 'right') ? Math.floor(innerWidth - lineWidth) : 0;
+        const lineX = lineOffsets[lineIndex];
 
         for (const { segment, rendered } of renderedSegments) {
             if (rendered.retainedPixels) blitPremultiplied(rendered.retainedPixels, rendered.width, rendered.height, pixels, width, height, lineX + Math.round(segment.x), lineIndex * lineHeight);
         }
     });
 
-    return { width, height, pixels, lines: lines.map(line => line.text), lineHeight, baseline: metrics.baseline + gutter, textWidth, textHeight: lines.length * lineHeight, gutter };
+    return { width, height, pixels, lines: lines.map(line => line.text), lineHeight, baseline: metrics.baseline + gutter, textWidth, textHeight: lines.length * lineHeight, gutter, lineLayout: lines, lineOffsets };
 };

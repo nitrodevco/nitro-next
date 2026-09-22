@@ -13,6 +13,8 @@ const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderTra
     0: {
         states: {
             default: Stretch('scrollbarslidertrackvertical-0-default-src'),
+            pressed: Stretch('scrollbarslidertrackvertical-0-pressed-src'),
+            disabled: Stretch('scrollbarslidertrackvertical-0-disabled-src'),
         },
         layout: {
             minWidth: 17, minHeight: 1,
@@ -21,6 +23,8 @@ const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderTra
     1: {
         states: {
             default: Stretch('scrollbarslidertrackvertical-1-default-src'),
+            pressed: Stretch('scrollbarslidertrackvertical-1-pressed-src'),
+            disabled: Stretch('scrollbarslidertrackvertical-1-disabled-src'),
         },
         layout: {
             minWidth: 17, minHeight: 1,
@@ -29,6 +33,7 @@ const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderTra
     3: {
         states: {
             default: Stretch('scrollbarslidertrackvertical-3-default-src'),
+            pressed: Stretch('scrollbarslidertrackvertical-3-pressed-src'),
             disabled: Stretch('scrollbarslidertrackvertical-3-disabled-src'),
         },
         layout: {
@@ -60,11 +65,11 @@ export interface ScrollbarSliderTrackVerticalProps extends ThemeProps<ScrollbarS
 
 export const ScrollbarSliderTrackVertical: ForwardRefExoticComponent<ScrollbarSliderTrackVerticalProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScrollbarSliderTrackVerticalProps>(
     ({
-        variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, disabled, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, disabled, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tooltip, tintColor, textStyle, textColor, disabled,
+            cascadeKey: 'scrollbarSliderTrackVertical', variants: SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
 
