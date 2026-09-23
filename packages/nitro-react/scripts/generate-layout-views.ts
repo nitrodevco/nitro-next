@@ -744,6 +744,11 @@ const RUNTIME_IMAGES: { name: string; component: string }[] = [
     'avatar_editor_tabs_bottom_shoes', 'avatar_editor_tabs_bottom_accessories', 'avatar_editor_tabs_icon_misc_pets', 'avatar_editor_tabs_icon_misc_misc',
     'avatar_editor_wardrobe_empty_slot', 'avatar_editor_editor_clr_13x21_2', 'avatar_editor_editor_clr_13x21_3',
 ].map(name => ({ name, component: 'avatar-editor' }))).concat([
+    // `SoundSettingsItem.updateSoundIcons` swaps each volume row's mute and full-volume icons
+    // between the white and the coloured pair as the row's volume reaches zero; the layout names
+    // only the white ones, so the coloured pair has nothing naming it statically.
+    'toolbar_memenu_settings_sounds_on_color', 'toolbar_memenu_settings_sounds_off_color',
+].map(name => ({ name, component: 'toolbar' }))).concat([
     // The placeholder every badge draws while it loads: `AchievementController`,
     // `AchievementsResolutionController` and the two resolution views all set
     // `assetUri = "common_loading_icon"`, and the room logics send it as the `loading_icon`

@@ -22,5 +22,6 @@ export * from './themeAssets';
 export * from './themeSprites';
 export * from './ThemeVariant';
 export * from './VariantConfig';
+export * from './windowLayer';
 export * from './windowLayouts';
 export * from './wrapTextChildren';

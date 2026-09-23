@@ -18,7 +18,7 @@ import {
     registerRoomUserHandlers, registerRoomVariableFxHandlers, registerRoomYoutubeHandlers,
 } from './room';
 import { registerSpecialItemsHandlers } from './special-items';
-import { registerAvatarEditorHandlers, registerAvatarEffectsHandlers, registerMessengerHandlers, registerUserInfoHandlers, registerUserSocialHandlers, registerWalletHandlers } from './user';
+import { registerAvatarEditorHandlers, registerAvatarEffectsHandlers, registerMessengerHandlers, registerUserInfoHandlers, registerUserSocialHandlers, registerWalletHandlers, registerWordFilterHandlers } from './user';
 import { bridgeWiredRoomLifecycle, registerWiredEnvironmentHandlers, registerWiredMenuHandlers, registerWiredPermissionsHandlers, registerWiredSetupHandlers, registerWiredVariablesHandlers, registerWiredWebApiKeyHandlers } from './wired';
 import { bridgeWiredTradingLifecycle, registerSelfDonationHandlers, registerWiredChestHandlers, registerWiredContractHandlers, registerWiredTradeHandlers, registerWiredTransactionHandlers, registerWiredTransactionNotificationHandlers } from './wired-trading';
 
@@ -74,6 +74,8 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerAvatarEditorHandlers(socket),
         registerMessengerHandlers(socket),
         registerWalletHandlers(socket),
+        // The account's own word filter, whose list the settings window asks for when it opens.
+        registerWordFilterHandlers(socket),
         // The catalogue's voucher answers - alerts only, whichever catalogue window is open.
         registerCatalogVoucherHandlers(socket),
         // The vault's income rewards (`EarningsController`), after the wallet whose duckets its claims weigh.

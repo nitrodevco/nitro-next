@@ -33,6 +33,15 @@ export interface RegionProps extends ThemeProps<RegionVariant> {
     alpha?: number;
     /** Greys the region out through its `dynamicStyle`'s disabled rule and stops its pointer events. */
     disabled?: boolean;
+    /**
+     * The `input_event_processor` flag (1): this region is a mouse target in its own right, with
+     * no handler of its own. Pixi only treats a container as a target where the `eventMode`
+     * inherited down the hit-test walk is already `static`/`dynamic` (`EventBoundary._isInteractive`),
+     * so a `passive` region under nothing interactive is *skipped* and the press carries on to the
+     * next sibling - which, for a window drawn over the room, is the room canvas, and the press
+     * becomes a room drag. A window whose Flash layout carries the flag says so here instead.
+     */
+    interactive?: boolean;
     /** A `#icon` / `#bg` tag under a `dynamicStyle` host: that host's child rule moves and tints this region. */
     dynamicRole?: DynamicStyleRole;
     /**
@@ -74,14 +83,14 @@ export interface RegionProps extends ThemeProps<RegionVariant> {
  */
 export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, RegionProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, zIndex, visible, dropShadow, dynamicStyle, dynamicRole, backgroundColor, backgroundAlpha, cursor, blendMode, alpha, disabled, dragTarget = false, dragTrigger = false, boundToParentRect, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, zIndex, visible, dropShadow, dynamicStyle, dynamicRole, backgroundColor, backgroundAlpha, cursor, blendMode, alpha, disabled, interactive = false, dragTarget = false, dragTrigger = false, boundToParentRect, children,
         onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const drag = useDragTarget(dragTarget, { boundToParentRect });
         const startDrag = useDragTrigger(dragTrigger, drag.controller);
         const onPointerDown = compose(onPointerDownProp, startDrag);
         const { ownCascade, config, state, handlers, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
-            cascadeKey: 'region', variants: REGION_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, interactive: !!dynamicStyle,
+            cascadeKey: 'region', variants: REGION_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, interactive: interactive || !!dynamicStyle,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
         const hostEffect = useHostDynamicStyleEffect(dynamicStyle, state);

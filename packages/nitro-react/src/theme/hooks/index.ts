@@ -14,3 +14,4 @@ export * from './useRevealWhenSettled';
 export * from './useRowVirtualizer';
 export * from './useScrollController';
 export * from './useThemeVariant';
+export * from './useWindowActivation';

@@ -5,7 +5,9 @@ import { createUserEffectsSlice, UserEffectsSlice } from './UserEffectsSlice';
 import { createUserFriendsSlice, UserFriendsSlice } from './UserFriendsSlice';
 import { createUserInfoSlice, UserInfoSlice } from './UserInfoSlice';
 import { createUserSocialSlice, UserSocialSlice } from './UserSocialSlice';
+import { createUserSoundSettingsSlice, UserSoundSettingsSlice } from './UserSoundSettingsSlice';
 import { createUserWalletSlice, UserWalletSlice } from './UserWalletSlice';
+import { createUserWordFilterSlice, UserWordFilterSlice } from './UserWordFilterSlice';
 
 type State = {
     tags: string[];
@@ -127,7 +129,7 @@ const initialState: State = {
     buildersClubMaxFurniLimit: 0,
 };
 
-export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice & UserEffectsSlice & UserSocialSlice;
+export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice & UserEffectsSlice & UserSocialSlice & UserSoundSettingsSlice & UserWordFilterSlice;
 
 export const createUserStore = () => createStore<UserStore>()((set, get, store) => ({
     ...initialState,
@@ -165,6 +167,8 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
     ...createUserWalletSlice(set, get, store),
     ...createUserEffectsSlice(set, get, store),
     ...createUserSocialSlice(set, get, store),
+    ...createUserSoundSettingsSlice(set, get, store),
+    ...createUserWordFilterSlice(set, get, store),
 }));
 
 /**

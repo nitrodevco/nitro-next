@@ -5,9 +5,11 @@
  * folds the list away (`toggleSettingVisibility`).
  *
  * Flash lists sound, Discord (with `discord.enabled`), chat, other and the word filter (with
- * `user.custom.filter.enabled`). Only "other" has a window in this client
- * (`ToolbarOtherSettingsView`); the sound, chat and word filter windows and the Discord link are
- * not ported, so their rows are left out rather than shown doing nothing.
+ * `user.custom.filter.enabled`); `PurseView` builds all five. Discord is the one row that opens no
+ * window of its own - `openDiscordSettingsWindow` raises the `discord/settings/open` link event.
+ *
+ * The panel itself is a mouse target (`interactive`), so a press on the gaps between its rows is
+ * swallowed rather than reaching the room canvas drawn under it.
  */
 import { Border, Box, Region, ThemeText } from '#base/theme';
 
@@ -31,7 +33,10 @@ export const ToolbarSettingsView = ({ entries }: { entries: ToolbarSettingsEntry
     const height = (PADDING * 2) + (entries.length * ROW_HEIGHT) + (Math.max(0, entries.length - 1) * SPACING);
 
     return (
-        <Region layout={{ position: 'relative', width: PANEL_WIDTH, height, flexShrink: 0, marginBottom: GRID_SPACING }}>
+        <Region
+            interactive
+            layout={{ position: 'relative', width: PANEL_WIDTH, height, flexShrink: 0, marginBottom: GRID_SPACING }}
+        >
             <Border
                 variant="6"
                 tintColor="#55534e"

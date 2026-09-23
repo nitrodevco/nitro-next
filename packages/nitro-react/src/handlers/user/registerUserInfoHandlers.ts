@@ -3,7 +3,7 @@ import { AccountPreferencesEventMessage, ChangeUserNameResultMessage, EmailStatu
 
 import { clampChatFontSizeMode } from '#base/chat';
 import { WebSocketConnection } from '#base/context/communication';
-import { userStore } from '#base/context/user';
+import { SOUND_VOLUME_SCALE, userStore } from '#base/context/user';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
@@ -14,7 +14,7 @@ import { on, subscribeAll } from '../packetSubscriptions';
  * respects down, since the server only reports a failure.
  */
 export const registerUserInfoHandlers = ({ send, subscribe }: WebSocketConnection) => {
-    const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects, setChatPreferences, setUiFlags, setRoomCameraFollowDisabled, setRoomInvitesIgnored, setOnlineIndicatorPreference, setUserInfo, setName, setFigure, setEmailVerified, setNftChatStyles, setPurchasableChatStyles, setPurchasableChatStyleOwned } = userStore.getState();
+    const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects, setChatPreferences, setSoundVolumes, setUiFlags, setRoomCameraFollowDisabled, setRoomInvitesIgnored, setOnlineIndicatorPreference, setUserInfo, setName, setFigure, setEmailVerified, setNftChatStyles, setPurchasableChatStyles, setPurchasableChatStyleOwned } = userStore.getState();
 
     return subscribeAll(subscribe, [
         on(FigureUpdateEventMessage, (data) => {
@@ -69,6 +69,16 @@ export const registerUserInfoHandlers = ({ send, subscribe }: WebSocketConnectio
 
         on(AccountPreferencesEventMessage, (data) => {
             setUiFlags(data.uiFlags);
+            /*
+             * `HabboSoundManagerFlash10.onSoundSettingsEvent`: each percentage is scaled back to
+             * 0..1, and a `uiVolume` of exactly 1 is read as 100 - an old stored value that would
+             * otherwise mute the client's own sounds to a hundredth.
+             */
+            setSoundVolumes(
+                ((data.uiVolume === 1) ? SOUND_VOLUME_SCALE : data.uiVolume) / SOUND_VOLUME_SCALE,
+                data.furniVolume / SOUND_VOLUME_SCALE,
+                data.traxVolume / SOUND_VOLUME_SCALE,
+            );
             setRoomCameraFollowDisabled(data.roomCameraFollowDisabled);
             setRoomInvitesIgnored(data.roomInvitesIgnored);
             setOnlineIndicatorPreference(data.onlineIndicatorPreference);

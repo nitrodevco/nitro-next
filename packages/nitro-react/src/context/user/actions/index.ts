@@ -2,3 +2,4 @@
 export * from './useUserActions';
 export * from './useUserMessengerActions';
 export * from './useUserSocialActions';
+export * from './useUserWordFilterActions';

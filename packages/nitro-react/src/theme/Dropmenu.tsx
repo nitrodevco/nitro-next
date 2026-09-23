@@ -23,6 +23,7 @@ import { DropmenuFrame } from './DropmenuFrame';
 import { DropmenuItem } from './DropmenuItem';
 import { FloatingPopup } from './FloatingPopup';
 import { placeExpandedDropmenu } from './utils/dropmenuPlacement';
+import { expandSides } from './utils/expandSides';
 import { getGlobalRect } from './utils/getGlobalRect';
 import { TextStyleKey } from './utils/textStyles';
 
@@ -32,6 +33,38 @@ const DEFAULT_ITEM_HEIGHT = 19;
 const ARROW_SPACE = 24;
 /** How long after an outside press closed the view a tap on the menu is taken as that same press. */
 const REOPEN_GUARD_MS = 300;
+
+/**
+ * Where the caller's `layout` - the closed menu's box - goes. Its placement is the box's own: left
+ * on the frame, a `position: 'absolute'` placed the *frame* inside a box that stayed in its
+ * parent's flow, so in a container of absolutely placed fields every menu but the first sat a
+ * box-width to the right of its layout rect and the third was clipped away entirely (the room
+ * settings' maximum visitors and trade menus). Its size goes on both, the frame filling the box
+ * it is given, and what is left shapes the menu itself - its caption's padding, how that caption
+ * is aligned - so it stays on the frame.
+ */
+const MENU_BOX_KEYS = new Set([ 'position', 'left', 'top', 'right', 'bottom', 'marginLeft', 'marginTop', 'marginRight', 'marginBottom', 'flexGrow', 'flexShrink', 'flexBasis', 'alignSelf' ]);
+const MENU_SIZE_KEYS = new Set([ 'width', 'height', 'minWidth', 'minHeight', 'maxWidth', 'maxHeight' ]);
+
+const splitMenuLayout = (layout: BoxLayout | undefined): { box: BoxLayout; frame: BoxLayout } => {
+    const box: Record<string, unknown> = { flexShrink: 0, flexDirection: 'row' };
+    const frame: Record<string, unknown> = { flexGrow: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 4, paddingRight: ARROW_SPACE };
+
+    // The shorthands first, so a caller's `padding` clears the arrow's space instead of losing to it.
+    for (const [ key, value ] of Object.entries(expandSides(layout) ?? {})) {
+        if (MENU_BOX_KEYS.has(key)) {
+            box[key] = value;
+
+            continue;
+        }
+
+        frame[key] = value;
+
+        if (MENU_SIZE_KEYS.has(key)) box[key] = value;
+    }
+
+    return { box, frame };
+};
 
 export interface DropmenuOption {
     key: Key;
@@ -86,6 +119,7 @@ export const Dropmenu = ({
     const [ open, setOpen ] = useState<OpenMenu | null>(null);
     // Placed again from the current options, so a `keepOpen` pick that lists more re-fits the view.
     const placement = open ? placeExpandedDropmenu(open.anchor, options.length * itemHeight, open.desktop) : null;
+    const { box: boxLayout, frame: frameLayout } = splitMenuLayout(layout);
 
     const close = () => {
         setOpen(null);
@@ -131,7 +165,7 @@ export const Dropmenu = ({
                 alpha={disabled ? 0.5 : 1}
                 visible={visible}
                 zIndex={zIndex}
-                layout={{ flexShrink: 0, flexGrow: layout?.flexGrow, width: layout?.width, height: layout?.height, flexDirection: 'row' }}
+                layout={boxLayout}
             >
                 <DropmenuFrame
                     ref={anchorRef}
@@ -142,7 +176,7 @@ export const Dropmenu = ({
                     textStyle={textStyle}
                     textColor={textColor}
                     onPointerTap={toggle}
-                    layout={{ flexGrow: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 4, paddingRight: ARROW_SPACE, ...layout }}
+                    layout={frameLayout}
                 >
                     {captionContent ?? caption}
                 </DropmenuFrame>

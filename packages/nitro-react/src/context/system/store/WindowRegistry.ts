@@ -43,6 +43,15 @@ export type WindowRegistry = {
     /** The toolbar's "other settings" (`OtherSettingsView`), from the settings list under the purse. */
     toolbar_other_settings: NoWindowParams;
 
+    /** The toolbar's sound settings (`SoundSettingsView`), from the settings list under the purse. */
+    toolbar_sound_settings: NoWindowParams;
+
+    /** The toolbar's chat settings (`ChatSettingsView`), from the settings list under the purse. */
+    toolbar_chat_settings: NoWindowParams;
+
+    /** The toolbar's word filter (`WordFilterSettingsView`), from the settings list under the purse. */
+    toolbar_word_filter: NoWindowParams;
+
     /** The vault (`EarningsView`), from `habboUI/open/vault` - the purse's earnings button or the new earnings bubble. */
     earnings: NoWindowParams;
 

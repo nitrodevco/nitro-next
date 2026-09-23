@@ -40,7 +40,7 @@ import { ReactNode, useCallback, useEffect, useId, useLayoutEffect, useRef, useS
 import { Box } from './Box';
 import { useChildBounds, useLayoutSize, useRevealWhenSettled } from './hooks';
 import { ColorLayer } from './layer';
-import { getModalLayer, getModalStack, markModalDialogContainer, pushModal, removeModal, setModalLayer, subscribeModalLayer } from './utils';
+import { getModalLayer, getModalStack, markModalDialogContainer, pushModal, removeModal, setModalLayer, subscribeModalLayer, WindowPlacedContext } from './utils';
 
 /** Above every frame (from 100 up) and floating popup (90000), below the tooltip layer (100000). */
 const MODAL_Z_INDEX = 95000;
@@ -144,7 +144,12 @@ export const ModalDialog = ({ children }: ModalDialogProps) => {
                     eventMode="passive"
                     layout={{ position: 'absolute', left: x, top: y }}
                 >
-                    {children}
+                    {/* The dialog is placed on context 3's desktop: a `Frame` in here is this
+                      * modal's window and stays in its container, rather than moving itself onto
+                      * the window layer the way a frame mounted loose over the room does. */}
+                    <WindowPlacedContext.Provider value={true}>
+                        {children}
+                    </WindowPlacedContext.Provider>
                 </Box>
             </Box>
         </Box>

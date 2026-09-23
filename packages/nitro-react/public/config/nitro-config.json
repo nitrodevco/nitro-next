@@ -196,6 +196,8 @@
     "relationship.status.enabled": true,
     "respect.replenish_cost_duckets": 20,
     "room.camera.follow_user": true,
+    "discord.enabled": true,
+    "user.custom.filter.enabled": true,
     "sms.identity.verification.button.enabled": true,
     "sms.identity.verification.enabled": false,
     "stories.image_url_base": "http://habbo-stories-content.s3.amazonaws.com/",

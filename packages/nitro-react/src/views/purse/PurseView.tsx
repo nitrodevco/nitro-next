@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { openClientLink } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useEarningsStore } from '#base/context/earnings';
-import { useTranslation, useWindowActions } from '#base/context/system';
+import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { Border, Box, ContainerButton, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
 
@@ -34,6 +34,16 @@ export const PurseView = () => {
     const t = useTranslation();
     const { showWindow } = useWindowActions();
     const [ settingsVisible, setSettingsVisible ] = useState(false);
+    // `SettingsExtension`'s two optional rows: `getBoolean` defaults to false, so a hotel that
+    // does not set the key does not get the row.
+    const discordEnabled = useConfigValue<boolean>('discord.enabled') === true;
+    const wordFilterEnabled = useConfigValue<boolean>('user.custom.filter.enabled') === true;
+
+    /** Every pick opens its window and folds the list away (`toggleSettingVisibility`). */
+    const openSetting = (open: () => void) => () => {
+        open();
+        setSettingsVisible(false);
+    };
 
     // `purse_itemlist`'s three rows, in the layout's order.
     const kinds = [
@@ -212,13 +222,35 @@ export const PurseView = () => {
             {settingsVisible && (
                 <ToolbarSettingsView entries={[
                     {
+                        key: 'sound',
+                        label: t('widget.memenu.settings.audio', 'Sound settings'),
+                        onSelect: openSetting(() => showWindow('toolbar_sound_settings')),
+                    },
+                    ...(discordEnabled
+                        ? [ {
+                                key: 'discord',
+                                label: t('widget.memenu.settings.discord', 'Discord settings'),
+                                // `openDiscordSettingsWindow` is a link event, not a window of its own.
+                                onSelect: openSetting(() => openClientLink(send, 'discord/settings/open')),
+                            } ]
+                        : []),
+                    {
+                        key: 'chat',
+                        label: t('widget.memenu.settings.chat', 'Chat settings'),
+                        onSelect: openSetting(() => showWindow('toolbar_chat_settings')),
+                    },
+                    {
                         key: 'other',
                         label: t('widget.memenu.settings.other', 'Other settings'),
-                        onSelect: () => {
-                            showWindow('toolbar_other_settings');
-                            setSettingsVisible(false);
-                        },
+                        onSelect: openSetting(() => showWindow('toolbar_other_settings')),
                     },
+                    ...(wordFilterEnabled
+                        ? [ {
+                                key: 'word_filter',
+                                label: t('word_filter.settings.title', 'Word filter'),
+                                onSelect: openSetting(() => showWindow('toolbar_word_filter')),
+                            } ]
+                        : []),
                 ]}
                 />
             )}

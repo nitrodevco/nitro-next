@@ -5,3 +5,4 @@ export * from './registerMessengerHandlers';
 export * from './registerUserInfoHandlers';
 export * from './registerUserSocialHandlers';
 export * from './registerWalletHandlers';
+export * from './registerWordFilterHandlers';

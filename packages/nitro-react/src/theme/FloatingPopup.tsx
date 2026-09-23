@@ -20,7 +20,7 @@ import { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } 
 
 import { Box, BoxLayout } from './Box';
 import { useRevealWhenSettled } from './hooks';
-import { isModalDialogContainer } from './utils';
+import { isModalDialogContainer, WindowPlacedContext } from './utils';
 
 /** Above every frame (their z-indices count up from 100), below the tooltip layer (100000). */
 const POPUP_Z_INDEX = 90000;
@@ -110,7 +110,11 @@ export const FloatingPopup = ({ x, y, onOutsideClick, layout, children }: Floati
             eventMode="static"
             layout={{ position: 'absolute', left: 0, top: 0, ...layout }}
         >
-            {children}
+            {/* The popup places itself, so a `Frame` in here is part of it and stays where it is
+              * rendered rather than moving itself onto the window layer. */}
+            <WindowPlacedContext.Provider value={true}>
+                {children}
+            </WindowPlacedContext.Provider>
         </Box>
     );
 

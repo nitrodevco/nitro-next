@@ -8,6 +8,9 @@
  * from the settings list under the purse (`ToolbarSettingsView`), placed as Flash placed it: at
  * the top of the desktop, 200 pixels from its right edge. The online indicator menu is the layout's
  * style 0 `dropmenu`, picked by index.
+ *
+ * The window is a mouse target in its own right (`interactive`, the layout's `input_event_processor`
+ * on its border), so a press on its background stops there instead of falling through to the room.
  */
 import { useState } from 'react';
 
@@ -16,7 +19,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { useWiredStore } from '#base/context/wired';
-import { Border, Box, Button, CheckBox, Dropmenu, Region, ThemeText } from '#base/theme';
+import { Border, Box, Button, CheckBox, Dropmenu, Region, ThemeText, useWindowActivation } from '#base/theme';
 
 /** `me_menu_other_settings` - the window, and the itemlist its rows sit in (`spacing` 7). */
 const WINDOW_WIDTH = 242;
@@ -58,6 +61,7 @@ const CheckRow = ({ label, labelWidth, selected, onToggle }: CheckRowProps) => (
 
 export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) => {
     const t = useTranslation();
+    const { zIndex, onPointerDown } = useWindowActivation('toolbar_other_settings');
     const { send } = useWebSocketContext();
     const roomInvitesIgnored = useUserStore(x => x.roomInvitesIgnored);
     const cameraFollowDisabled = useUserStore(x => x.isRoomCameraFollowDisabled);
@@ -81,7 +85,12 @@ export const ToolbarOtherSettingsView = ({ onClose }: { onClose: () => void }) =
     ];
 
     return (
-        <Region layout={{ position: 'absolute', top: 0, right: RIGHT_MARGIN, width: WINDOW_WIDTH + 1, height: WINDOW_HEIGHT + 1 }}>
+        <Region
+            interactive
+            zIndex={zIndex}
+            onPointerDown={onPointerDown}
+            layout={{ position: 'absolute', top: 0, right: RIGHT_MARGIN, width: WINDOW_WIDTH + 1, height: WINDOW_HEIGHT + 1 }}
+        >
             <Border
                 variant="6"
                 tintColor="#79756e"

@@ -495,6 +495,8 @@ export * from './Poll/QuestionAnsweredEventMessage';
 export * from './Poll/QuestionEventMessage';
 export * from './Poll/QuestionFinishedEventMessage';
 export * from './Preferences/AccountPreferencesEventMessage';
+export * from './Preferences/GetCustomFilterResultMessage';
+export * from './Preferences/ModifyCustomFilterResultMessage';
 export * from './Quest/CommunityGoalHallOfFameMessage';
 export * from './Quest/CommunityGoalProgressMessage';
 export * from './Quest/ConcurrentUsersGoalProgressMessage';

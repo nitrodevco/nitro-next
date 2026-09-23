@@ -3,5 +3,7 @@ export * from './UserEffectsSlice';
 export * from './UserFriendsSlice';
 export * from './UserInfoSlice';
 export * from './UserSocialSlice';
+export * from './UserSoundSettingsSlice';
 export * from './UserStore';
 export * from './UserWalletSlice';
+export * from './UserWordFilterSlice';
