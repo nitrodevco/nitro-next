@@ -1,5 +1,5 @@
 import { AvatarActionStateType, AvatarFigurePartType, AvatarGenderType, IRoomUserData, IVector3D, PetType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
-import { AvatarEffectMessage, BlockUserUpdateMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser, SleepMessage, UseObjectMessage, UserChangeMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from '@nitrodevco/nitro-packets';
+import { AvatarEffectMessage, BlockUserUpdateMessage, CarryObjectMessage, DanceMessage, ExpressionMessage, IRoomAvatar, IRoomAvatarBot, IRoomAvatarPet, IRoomAvatarRentableBot, IRoomAvatarUser, SleepMessage, UseObjectMessage, UserChangeMessage, UserObjectMessage, UserRemoveMessage, UsersMessage, UserTypingMessage, UserUpdateMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { getRoom, roomStore } from '#base/context/room';
@@ -290,6 +290,28 @@ export const registerRoomUserHandlers = ({ subscribe }: WebSocketConnection) => 
             const user = Object.values(roomStore.getState().usersByRoomObjectId).find(x => (x.webID === data.userId) && (x.userType === RoomObjectUserType.User));
 
             if (user) room.updateRoomObjectUserBlocked(user.objectId, data.result === 1);
+        }),
+
+        /*
+         * `RoomMessageHandler` keeps the own user id off `UserObjectEvent` (`§_-78b4fe§`) and
+         * reads it in `onUsers`; here that id is `userStore.userId`. The user object is the answer
+         * to the `InfoRetrieveComposer` `MainView` sends, and that send waits behind every packet
+         * queued while the UI mounted - so a room whose `Users` sat in that queue is entered with
+         * the id still -1, and `onUsers`' own-user branch is missed for the whole session. Adopting
+         * the avatar when the user object lands keeps `ownRoomIndex` and the avatar's `own_user`
+         * flag right whichever order the two arrive in.
+         */
+        on(UserObjectMessage, (data) => {
+            const room = getRoom();
+
+            if (!room) return;
+
+            const own = roomStore.getState().getUserByWebId(data.userInfo.userId, RoomObjectUserType.User);
+
+            if (!own || (roomStore.getState().ownRoomIndex === own.objectId)) return;
+
+            setOwnRoomIndex(own.objectId);
+            room.updateRoomObjectUserOwn(own.objectId);
         }),
 
         on(UserRemoveMessage, (data) => {

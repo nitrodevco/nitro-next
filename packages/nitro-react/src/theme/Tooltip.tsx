@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
-import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+import { expandSides, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
 
 export type TooltipVariant = ThemeVariant;
 
@@ -32,7 +32,7 @@ export const Tooltip: ForwardRefExoticComponent<TooltipProps & RefAttributes<Pix
             <Box
                 ref={ref}
                 visible={visible}
-                layout={{ ...config.layout, ...layout }}
+                layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 {...handlers}
             >
                 {resolvedLayer && (

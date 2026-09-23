@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { useThemeVariant } from './hooks';
 import { Stretch } from './layer';
 import { ThemeImage } from './ThemeImage';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
+import { expandSides, ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 
 export type ScrollbarSliderButtonDownVariant = ThemeWithStatesVariant;
 
@@ -68,7 +68,7 @@ export const ScrollbarSliderButtonDown: ForwardRefExoticComponent<ScrollbarSlide
                 textureKey={resolvedLayer.textureKey}
                 tint={resolvedTint}
                 {...handlers}
-                layout={{ ...config.layout, ...layout }}
+                layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
             />
         );
     },

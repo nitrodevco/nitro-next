@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from './cascade';
 import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
-import { ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+import { expandSides, ThemeProps, ThemeVariant, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_103_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, classicButtonVariant, roundedButtonVariant, shinyButtonVariant } from './utils/buttonVariants';
 
 export type ContainerButtonVariant = ThemeVariant | ThemeWithStatesVariant;
@@ -113,7 +113,7 @@ export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & R
             <Box
                 ref={ref}
                 visible={visible}
-                layout={{ ...config.layout, ...layout }}
+                layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 {...dynamicStyleBoxProps(hostEffect)}
                 {...handlers}
             >

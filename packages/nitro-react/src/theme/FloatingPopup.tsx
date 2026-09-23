@@ -7,7 +7,7 @@
  * sub menu of the wired variable picker reaches past the window's edge, so the popup cannot stay
  * where React mounts it. `@pixi/react` has no portal, so the popup's container is moved, after
  * mount, into the screen-sized layer all windows live in (the ancestor right under the stage)
- * and handed back before React unmounts it; React only ever talks to the container itself
+ * (or, inside a `ModalDialog`, into that modal's container) and handed back before React unmounts it; React only ever talks to the container itself
  * (`removeChild` destroys it wherever it is), never to its position in the display list.
  *
  * `x` / `y` are screen coordinates - take them from `getGlobalRect(anchor)` in the handler that
@@ -20,6 +20,7 @@ import { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } 
 
 import { Box, BoxLayout } from './Box';
 import { useRevealWhenSettled } from './hooks';
+import { isModalDialogContainer } from './utils';
 
 /** Above every frame (their z-indices count up from 100), below the tooltip layer (100000). */
 const POPUP_Z_INDEX = 90000;
@@ -74,7 +75,9 @@ export const FloatingPopup = ({ x, y, onOutsideClick, layout, children }: Floati
 
         let layer: Container = host;
 
-        while (layer.parent?.parent) layer = layer.parent;
+        // Inside a modal dialog the popup stays in that modal's container, over its dialog - which
+        // is above the window layer's popups - as Flash adds it to context 3's own desktop.
+        while (layer.parent?.parent && !isModalDialogContainer(layer)) layer = layer.parent;
 
         layer.addChild(popup);
 

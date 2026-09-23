@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from './cascade';
 import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
-import { shinyButtonVariant, ThemeProps, ThemeVariants, ThemeWithStatesVariant, windowLayout, wrapTextChildren } from './utils';
+import { expandSides, shinyButtonVariant, ThemeProps, ThemeVariants, ThemeWithStatesVariant, windowLayout, wrapTextChildren } from './utils';
 
 export type ButtonThickVariant = ThemeWithStatesVariant;
 
@@ -75,8 +75,8 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    ...config.layout,
-                    ...layout,
+                    ...expandSides(config.layout),
+                    ...expandSides(layout),
                 }}
                 {...dynamicStyleBoxProps(hostEffect)}
                 {...handlers}

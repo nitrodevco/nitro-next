@@ -10,7 +10,7 @@ import { useWiredShowInspectButton } from '#base/context/wired';
 import { TRADE_REASON_ROOM, TRADE_REASON_SHUTDOWN, useRoomUserData } from '#base/hooks';
 import { Box, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
 
-import { InfoBubbleMenuButton, MENU_MODERATION_COLOR } from './InfoBubbleMenuButton';
+import { InfoBubbleMenuButton } from './InfoBubbleMenuButton';
 import { InfoBubbleMenuFrame } from './InfoBubbleMenuFrame';
 import { AVATAR_MENU_GEOMETRY } from './InfoBubbleMenuGeometry';
 
@@ -42,8 +42,6 @@ const ROW_HEIGHT = 26;
 const GRID_CELL_WIDTH = 45;
 const GRID_HEIGHT = 25;
 
-/** The rows the layout tags `moderate` or `ambassador` - their labels are `0xff8133`. */
-const MODERATION_ROWS = [ 'kick', 'mute', 'mute_2min', 'mute_5min', 'mute_10min', 'ban_with_duration', 'ban_hour', 'ban_day', 'perm_ban', 'give_rights', 'remove_rights', 'unignore', 'ignore', 'ambassador_alert', 'ambassador_kick', 'ambassador_mute_15min', 'ambassador_mute_60min', 'ambassador_mute_18hour', 'ambassador_mute_36hour', 'ambassador_mute_72hour', 'ambassador_unmute' ];
 /** The rows carrying `arrow_right` - each opens a sub-page. */
 const SUBMENU_ROWS = [ 'relationship', 'mute', 'ban_with_duration', 'moderate', 'ambassador' ];
 
@@ -209,6 +207,7 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
                         <InfoBubbleMenuButton
                             key={relationship}
                             shape="grid"
+                            recolorsOnHover={false}
                             width={GRID_CELL_WIDTH}
                             height={GRID_HEIGHT}
                             onPress={() => {
@@ -231,7 +230,9 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
                     key={button.key}
                     width={ROW_WIDTH}
                     caption={button.caption}
-                    captionColor={MODERATION_ROWS.includes(button.key) ? MENU_MODERATION_COLOR : undefined}
+                    // `AvatarMenuView._buttonEventProc` takes `WME_OVER` for its own tracking and
+                    // never reaches `ButtonMenuView`'s, so this menu alone leaves its rows dark.
+                    recolorsOnHover={false}
                     arrow={SUBMENU_ROWS.includes(button.key) ? 'right' : ((button.key === 'actions') ? 'left' : undefined)}
                     tooltip={(button.key === 'trade') ? tradeTooltip : undefined}
                     adornment={(button.key === 'replenish_respect') && (

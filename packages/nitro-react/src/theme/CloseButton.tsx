@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
 import { ThemeImage } from './ThemeImage';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
+import { expandSides, ThemeProps, ThemeVariants, ThemeWithStatesVariant } from './utils';
 
 export type CloseButtonVariant = ThemeWithStatesVariant;
 
@@ -130,7 +130,7 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
                     stretch
                     visible={visible}
                     {...handlers}
-                    layout={{ ...config.layout, ...layout }}
+                    layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 />
             );
         }
@@ -142,8 +142,8 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
                 layout={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    ...config.layout,
-                    ...layout,
+                    ...expandSides(config.layout),
+                    ...expandSides(layout),
                 }}
                 {...handlers}
             >

@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
 import { ThemeImage } from './ThemeImage';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+import { expandSides, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
 
@@ -93,7 +93,7 @@ export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAt
                     tint={resolvedTint}
                     stretch
                     {...handlers}
-                    layout={{ ...config.layout, ...layout }}
+                    layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 />
             );
         }
@@ -101,7 +101,7 @@ export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAt
         return (
             <Box
                 ref={ref}
-                layout={{ ...config.layout, ...layout }}
+                layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 {...handlers}
             >
                 {resolvedLayer && (

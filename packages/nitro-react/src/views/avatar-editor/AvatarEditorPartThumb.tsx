@@ -1,4 +1,5 @@
 import { IPartColor } from '@nitrodevco/nitro-api';
+import { AlphaFilter } from 'pixi.js';
 import { useState } from 'react';
 
 import { PartThumbnailRequest, usePartThumbnail } from '#base/hooks';
@@ -22,6 +23,15 @@ export interface AvatarEditorPartThumbProps {
 const CELL = 50;
 
 const CENTERED = { stretchedX: false, stretchedY: false, pivot: 'center' } as const;
+
+/**
+ * `AvatarEditorGridPartItem`: a part that cannot be worn is drawn at a fifth of its alpha - the
+ * whole thumbnail's, the way Flash fades the one bitmap it composed. A container's `alpha`
+ * multiplies into each child separately instead, so every colour layer fades on its own and their
+ * edges show through one another wherever two overlap. A filter renders the layers together and
+ * fades the result. One instance for every cell: a filter keeps no state about what it is on.
+ */
+const DISABLED_FILTER = new AlphaFilter({ alpha: 0.2 });
 
 /**
  * One part of the parts grid - the `thumb_template` row of the `AvatarEditorContent` layout,
@@ -69,7 +79,7 @@ export const AvatarEditorPartThumb = ({ selected, part, setType, colors, usesCol
             )}
             {thumbnail && (
                 <Box
-                    alpha={disabled ? 0.2 : 1}
+                    filters={disabled ? DISABLED_FILTER : undefined}
                     layout={{ position: 'absolute', left: Math.trunc((CELL - thumbnail.width) / 2), top: Math.trunc((CELL - thumbnail.height) / 2), width: thumbnail.width, height: thumbnail.height }}
                 >
                     {thumbnail.layers.map((layer, index) => (

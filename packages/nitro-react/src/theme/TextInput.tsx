@@ -2,7 +2,7 @@ import { CanvasTextMetrics, Container as PixiContainer, FederatedPointerEvent, T
 import { forwardRef, ForwardRefExoticComponent, RefAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Box, BoxLayout } from './Box';
-import { flashTextCaretRect, flashTextSelectionRects, HABBO_TEXT_STYLES, normalizeFlashTextFormat } from './font/flash-text';
+import { FLASH_TEXT_GUTTER, flashTextCaretRect, FlashTextFieldOverrides, flashTextSelectionRects, HABBO_TEXT_STYLES, normalizeFlashTextFormat } from './font/flash-text';
 import { useLayoutSize, useOutsideClick } from './hooks';
 import { ColorLayer } from './layer';
 import { ThemeText } from './ThemeText';
@@ -32,14 +32,102 @@ export interface TextInputProps {
     fontSize?: number;
     /** A theme text style (rendered Flash-exact) for the value; `fontSize`/`fontFamily` override it with native canvas text. */
     textStyle?: TextStyleKey;
+    /** A Flash input's `TextField` vars over its style (`antialias_type`, `sharpness`, `thickness`, ...) - see `ThemeText`. */
+    flashFormat?: FlashTextFieldOverrides;
     fontFamily?: string;
     textColor?: string;
-    backgroundColor?: string;
-    focusedBackgroundColor?: string;
+    /** The fill behind the field; `null` for none - a Flash input fills only as any window does. */
+    backgroundColor?: string | null;
+    /** The fill while focused; `null` for none. */
+    focusedBackgroundColor?: string | null;
     selectionColor?: string;
     caretColor?: string;
     layout?: BoxLayout;
+    /**
+     * The `TextField` `border` var with its `border_color`: a 1px rectangle on the field's own
+     * edge, inside its box - `TextField` strokes `drawRect(.5, .5, width - 1, height - 1)`, and
+     * `TextController` shrinks the field by that pixel so the border stays within the window.
+     */
+    border?: string;
+    /**
+     * `TextField.restrict`: the characters the user may enter - ranges (`a-z`), `^` switching
+     * between accepting and excluding what follows (a leading `^` accepts everything else), `\`
+     * escaping `-`, `^` or `\`. Typed and pasted characters outside it are dropped; a value set
+     * from outside is not filtered, as in Flash. See `parseFlashRestrict`.
+     */
+    restrict?: string;
+    /** `false` for a field that shows and selects its text but cannot be edited (a non-`input` `TextField`); no caret. */
+    editable?: boolean;
+    /**
+     * `TextField.alwaysShowSelection`: the selection stays drawn while the field is not focused,
+     * in the grey Sulake's `TextField` uses for it (`#888888` at 35%).
+     */
+    alwaysShowSelection?: boolean;
+    /**
+     * Places the text the way a Flash input window does (`TextFieldController`: the `TextField`
+     * is the whole window): at the field's top-left, inside its 2px gutter, with no vertical
+     * centring and no padding of the box's own. Off, a single line is centred with 2px padding.
+     */
+    flashPlacement?: boolean;
 }
+
+interface RestrictRule {
+    accept: boolean;
+    from: number;
+    to: number;
+}
+
+/**
+ * `TextField.restrict` as a character test; `null` (everything allowed) for no restriction, and
+ * `''` allows nothing, as in Flash. The last rule a character matches decides; one that no rule
+ * matches is accepted only when the string starts with `^`.
+ */
+const parseFlashRestrict = (restrict: string | undefined): ((char: string) => boolean) | null => {
+    if (restrict === undefined) return null;
+
+    const rules: RestrictRule[] = [];
+    const chars = Array.from(restrict);
+    const acceptByDefault = (chars[0] === '^');
+    let accept = true;
+
+    for (let index = 0; index < chars.length; index++) {
+        let char = chars[index];
+
+        if (char === '^') {
+            accept = !accept;
+
+            continue;
+        }
+
+        if (char === '\\' && index + 1 < chars.length) char = chars[++index];
+
+        const from = char.codePointAt(0) ?? 0;
+        let to = from;
+
+        if (chars[index + 1] === '-' && index + 2 < chars.length) {
+            index += 2;
+
+            let end = chars[index];
+
+            if (end === '\\' && index + 1 < chars.length) end = chars[++index];
+
+            to = end.codePointAt(0) ?? from;
+        }
+
+        rules.push({ accept, from: Math.min(from, to), to: Math.max(from, to) });
+    }
+
+    return (char: string) => {
+        const code = char.codePointAt(0) ?? 0;
+        let allowed = acceptByDefault;
+
+        for (const rule of rules) {
+            if (code >= rule.from && code <= rule.to) allowed = rule.accept;
+        }
+
+        return allowed;
+    };
+};
 
 interface CaretGeometry {
     x: number;
@@ -57,6 +145,9 @@ interface SelectionRect {
 /** The blink period of a native caret (~530ms on, ~530ms off). */
 const CARET_BLINK_MS = 530;
 const PADDING_X = 2;
+/** `alwaysShowSelection`'s colour while the field is not focused - Sulake's `TextField` draws `#888888` at 35%. */
+const UNFOCUSED_SELECTION_COLOR = '#888888';
+const UNFOCUSED_SELECTION_ALPHA = 0.35;
 /** Caret placement on click scans prefix widths; a huge value would make that scan noticeable, so it's capped. */
 const MAX_CLICK_SCAN = 500;
 
@@ -93,7 +184,7 @@ const hiddenInputStyle: Partial<CSSStyleDeclaration> = {
  * to someone - and a caller can intercept keys (`onKeyDown`) before the browser edits.
  */
 export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TextInputProps>(
-    ({ value, onChange, onEnter, onKeyDown, focused: controlledFocused, onFocusChange, placeholder, placeholderColor = '#999999', maxLength, multiline = false, password = false, fontSize = 12, textStyle, fontFamily, textColor = '#000000', backgroundColor = '#ffffff', focusedBackgroundColor = '#eef6ff', selectionColor = '#b4d5fe', caretColor, layout }, ref) => {
+    ({ value, onChange, onEnter, onKeyDown, focused: controlledFocused, onFocusChange, placeholder, placeholderColor = '#999999', maxLength, multiline = false, password = false, fontSize = 12, textStyle, fontFamily, textColor = '#000000', backgroundColor = '#ffffff', focusedBackgroundColor = '#eef6ff', selectionColor = '#b4d5fe', caretColor, layout, border, restrict, editable = true, alwaysShowSelection = false, flashPlacement = false, flashFormat: fieldFormat }, ref) => {
         const [ internalFocused, setInternalFocused ] = useState(false);
         const [ boxNode, setBoxNode ] = useState<PixiContainer | null>(null);
         const [ selection, setSelection ] = useState({ start: value.length, end: value.length });
@@ -108,6 +199,9 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
         const onKeyDownRef = useRef(onKeyDown);
         const onFocusChangeRef = useRef(onFocusChange);
         const maxLengthRef = useRef(maxLength);
+        const restrictTest = useMemo(() => parseFlashRestrict(restrict), [ restrict ]);
+        const restrictRef = useRef(restrictTest);
+        const paddingX = flashPlacement ? 0 : PADDING_X;
 
         useEffect(() => {
             focusedRef.current = focused;
@@ -116,6 +210,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             onKeyDownRef.current = onKeyDown;
             onFocusChangeRef.current = onFocusChange;
             maxLengthRef.current = maxLength;
+            restrictRef.current = restrictTest;
         });
 
         const setFocused = useCallback((next: boolean) => {
@@ -131,6 +226,9 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
         // The inner text area follows the box's laid-out width (the box may be inset-sized); works on both render targets.
         const { width: boxWidth } = useLayoutSize(boxNode);
         const innerWidth = Math.max(0, boxWidth - (PADDING_X * 2));
+        // How far the caret may run before a single line scrolls: the box less its padding, or
+        // with Flash placement the whole field less the gutter the text keeps on its right.
+        const viewWidth = flashPlacement ? Math.max(0, boxWidth - FLASH_TEXT_GUTTER) : innerWidth;
 
         const readSelection = useCallback(() => {
             const input = inputRef.current;
@@ -159,10 +257,30 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
 
             if (maxLengthRef.current !== undefined) input.maxLength = maxLengthRef.current;
 
-            const onInput = () => {
+            const onInput = (event?: Event) => {
+                // An IME composition is filtered once it is committed (`compositionend`).
+                if ((event instanceof InputEvent) && event.isComposing) return;
+
+                const allowed = restrictRef.current;
+
+                if (allowed) {
+                    // A line break is the multiline field's own, not a typed character.
+                    const keep = (char: string) => (char === '\n') || allowed(char);
+                    const filtered = Array.from(input.value).filter(keep).join('');
+
+                    if (filtered !== input.value) {
+                        const caret = input.selectionEnd ?? input.value.length;
+                        const before = Array.from(input.value.slice(0, caret)).filter(keep).join('').length;
+
+                        input.value = filtered;
+                        input.setSelectionRange(before, before);
+                    }
+                }
+
                 onChangeRef.current(input.value);
                 readSelection();
             };
+            const onCompositionEnd = () => onInput();
 
             const onKey = (event: KeyboardEvent) => {
                 if (onKeyDownRef.current?.(event)) {
@@ -199,6 +317,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             };
 
             input.addEventListener('input', onInput);
+            input.addEventListener('compositionend', onCompositionEnd);
             input.addEventListener('keydown', onKey);
             input.addEventListener('keyup', readSelection);
             input.addEventListener('mouseup', readSelection);
@@ -210,6 +329,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
 
             return () => {
                 input.removeEventListener('input', onInput);
+                input.removeEventListener('compositionend', onCompositionEnd);
                 input.removeEventListener('keydown', onKey);
                 input.removeEventListener('keyup', readSelection);
                 input.removeEventListener('mouseup', readSelection);
@@ -221,6 +341,13 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                 if (inputRef.current === input) inputRef.current = null;
             };
         }, [ multiline, password, readSelection, setFocused ]);
+
+        // A read-only field still focuses and selects - `TextField.type` `dynamic` with `selectable`.
+        useEffect(() => {
+            const input = inputRef.current;
+
+            if (input) input.readOnly = !editable;
+        }, [ editable, multiline, password ]);
 
         useEffect(() => {
             const input = inputRef.current;
@@ -269,7 +396,10 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
         }, [ focused, value, selection ]);
 
         // A named theme style renders Flash-exact; a size/family override falls back to native canvas text (see ThemeText).
-        const flashFormat = useMemo(() => (textStyle ? normalizeFlashTextFormat(HABBO_TEXT_STYLES[textStyle]) : undefined), [ textStyle ]);
+        // The field's own vars go over its style, as `TextController.setTextFormatting` layers them;
+        // compared by value, since a view writes them as an object literal.
+        const fieldKey = fieldFormat ? JSON.stringify(fieldFormat) : '';
+        const flashFormat = useMemo(() => (textStyle ? normalizeFlashTextFormat({ ...HABBO_TEXT_STYLES[textStyle], ...(fieldKey ? JSON.parse(fieldKey) as FlashTextFieldOverrides : {}) }) : undefined), [ textStyle, fieldKey ]);
         const wrapWidth = Math.max(1, innerWidth);
         const textOptions = useMemo<TextStyleOptions>(() => ({
             fill: textColor,
@@ -349,10 +479,11 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
         const selectionStart = Math.min(selection.start, value.length);
         const selectionEnd = Math.min(selection.end, value.length);
         const caret = useMemo(() => measureCaret(displayValue, selectionEnd), [ measureCaret, displayValue, selectionEnd ]);
-        const selectionRects = useMemo(() => (focused ? measureSelection(displayValue, Math.min(selectionStart, selectionEnd), Math.max(selectionStart, selectionEnd)) : []), [ focused, measureSelection, displayValue, selectionStart, selectionEnd ]);
+        const showSelection = focused || alwaysShowSelection;
+        const selectionRects = useMemo(() => (showSelection ? measureSelection(displayValue, Math.min(selectionStart, selectionEnd), Math.max(selectionStart, selectionEnd)) : []), [ showSelection, measureSelection, displayValue, selectionStart, selectionEnd ]);
 
         // Single-line: slide the text left so the caret stays inside the box.
-        const scrollX = (!multiline && innerWidth > 0 && caret.x > (innerWidth - 1)) ? (caret.x - (innerWidth - 1)) : 0;
+        const scrollX = (!multiline && viewWidth > 0 && caret.x > (viewWidth - 1)) ? (caret.x - (viewWidth - 1)) : 0;
 
         /** A click lands the caret on the nearest glyph boundary. */
         const onPointerTap = (event: FederatedPointerEvent) => {
@@ -364,7 +495,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             if (!input || !node || !value.length) return;
 
             const local = event.getLocalPosition(node);
-            const targetX = (local.x - PADDING_X) + scrollX;
+            const targetX = (local.x - paddingX) + scrollX;
             const limit = Math.min(value.length, MAX_CLICK_SCAN);
 
             let bestIndex = value.length;
@@ -392,6 +523,8 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             }, 0);
         };
 
+        const fill = focused ? focusedBackgroundColor : backgroundColor;
+
         return (
             <Box
                 ref={(node) => {
@@ -403,15 +536,36 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                 cursor="text"
                 onPointerTap={onPointerTap}
                 // Yoga defaults to a row, so the vertical axis is the cross axis: `alignItems` centres a single line.
-                layout={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: multiline ? 'flex-start' : 'center', paddingLeft: PADDING_X, paddingRight: PADDING_X, overflow: 'hidden', ...layout }}
+                layout={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: (multiline || flashPlacement) ? 'flex-start' : 'center', paddingLeft: paddingX, paddingRight: paddingX, overflow: 'hidden', ...layout }}
             >
-                <ColorLayer color={focused ? focusedBackgroundColor : backgroundColor} />
+                {fill && <ColorLayer color={fill} />}
+                {border && (
+                    <>
+                        <ColorLayer
+                            color={border}
+                            layout={{ position: 'absolute', left: 0, top: 0, right: 0, height: 1 }}
+                        />
+                        <ColorLayer
+                            color={border}
+                            layout={{ position: 'absolute', left: 0, bottom: 0, right: 0, height: 1 }}
+                        />
+                        <ColorLayer
+                            color={border}
+                            layout={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 1 }}
+                        />
+                        <ColorLayer
+                            color={border}
+                            layout={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: 1 }}
+                        />
+                    </>
+                )}
                 {/* `ThemeText` renders nothing for an empty value, so the line height keeps this box (and the caret) centred. */}
                 <Box layout={{ position: 'relative', flexDirection: 'row', marginLeft: -scrollX, flexShrink: 0, minWidth: 1, minHeight: Math.max(1, caret.height) }}>
                     {selectionRects.map((rect, index) => (
                         <ColorLayer
                             key={index}
-                            color={selectionColor}
+                            color={focused ? selectionColor : UNFOCUSED_SELECTION_COLOR}
+                            alpha={focused ? undefined : UNFOCUSED_SELECTION_ALPHA}
                             layout={{ position: 'absolute', left: rect.x, top: rect.y, width: rect.width, height: rect.height }}
                         />
                     ))}
@@ -419,8 +573,9 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                         text={showPlaceholder ? placeholder : displayValue}
                         textStyle={textStyle ?? DEFAULT_TEXT_STYLE}
                         textOptions={showPlaceholder ? { ...textOptions, fill: placeholderColor } : textOptions}
+                        flashFormat={fieldFormat}
                     />
-                    {focused && caretVisible && (
+                    {focused && editable && caretVisible && (
                         <ColorLayer
                             color={caretColor ?? textColor}
                             layout={{ position: 'absolute', left: caret.x, top: caret.y, width: 1, height: Math.max(1, caret.height) }}

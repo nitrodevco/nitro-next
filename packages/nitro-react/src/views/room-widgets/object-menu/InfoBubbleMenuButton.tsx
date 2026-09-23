@@ -17,7 +17,7 @@
  *   than the cell, with the same tint; its content is centred over the button in a 17px band at
  *   y 7 - a `u_bold` number, or a bitmap.
  */
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { Box, ContainerButton, Icon, ThemeText } from '#base/theme';
 
@@ -27,8 +27,28 @@ const SHAPES = {
     grid: { variant: '0', top: -3, extraWidth: 4, extraHeight: 4, contentTop: 7 },
 } as const;
 
-/** The label colour of the `moderate` and `ambassador` rows. */
-export const MENU_MODERATION_COLOR = '#ff8133';
+/**
+ * `ContextInfoView.BUTTON_COLOR_DEFAULT` (`0xff2d2a27`) and `BUTTON_COLOR_HOVER` (`0xff48a4cd`):
+ * `ButtonMenuView._buttonEventProc` colours the row's `button` window itself on `WME_OVER` and
+ * puts it back on `WME_OUT`, rather than the skin carrying a hovered state - so the row's whole
+ * bar turns blue under the pointer. Only a menu that lets `WME_OVER` through to it does that, so
+ * `recolorsOnHover` says whether this one does.
+ *
+ * Flash's other branch - `0xff993300` for a row tagged `moderate` - is not carried: the one menu
+ * with `moderate` rows is `AvatarMenuView`, the very menu that never reaches this code.
+ */
+const BUTTON_TINT = '#2d2a27';
+const BUTTON_HOVER_TINT = '#48a4cd';
+
+/**
+ * `ButtonMenuView.showButton` sets every row's `label` colour as it shows it: `obf_Kt`
+ * (`0xffffff`) for an enabled row, `obf_DA` (`0x585553`) for one it disables or greys out. It
+ * runs over each row the menu displays, so the `text_color="0xff8133"` the layout gives the
+ * `moderate` and `ambassador` rows never survives into the client - the labels are white there
+ * like every other row, which is why the port drew an orange the client does not.
+ */
+const LABEL_COLOR = '#ffffff';
+const LABEL_DISABLED_COLOR = '#585553';
 
 export interface InfoBubbleMenuButtonProps {
     /** Which layout shape this row is - the full-width action list, or a cell of a grid. */
@@ -40,8 +60,12 @@ export interface InfoBubbleMenuButtonProps {
     buttonWidth?: number;
     /** Already translated. Drawn as the layout's `u_regular` 11 (action) / `u_bold` (grid) label. */
     caption?: string;
-    /** The label's `text_color`: white, or `MENU_MODERATION_COLOR`. */
-    captionColor?: string;
+    /**
+     * Whether the row takes the hover colour - whether its menu lets `WME_OVER` reach
+     * `ButtonMenuView._buttonEventProc`. Every menu does but `AvatarMenuView`, which handles
+     * `OVER` itself (only to log a tracking event) and never calls `super`.
+     */
+    recolorsOnHover?: boolean;
     /** `arrow_right` (icon style 5) on a row that opens a sub-page, `arrow_left` (style 4) on the way back. */
     arrow?: 'right' | 'left';
     /** The right arrow's x in the button: `width - 9` in every layout but `own_avatar_menu`, which puts it at 92. */
@@ -55,21 +79,27 @@ export interface InfoBubbleMenuButtonProps {
     onPress: () => void;
 }
 
-export const InfoBubbleMenuButton = ({ shape = 'action', width = '100%', height = 26, buttonWidth, caption, captionColor = '#ffffff', arrow, arrowX, children, adornment, tooltip, disabled, onPress }: InfoBubbleMenuButtonProps) => {
+export const InfoBubbleMenuButton = ({ shape = 'action', width = '100%', height = 26, buttonWidth, caption, recolorsOnHover = true, arrow, arrowX, children, adornment, tooltip, disabled, onPress }: InfoBubbleMenuButtonProps) => {
+    const [ hovered, setHovered ] = useState(false);
     const { variant, top, extraWidth, extraHeight, contentTop } = SHAPES[shape];
     // A row of a known width places the button and its label by number; a percentage row by its edges.
     const fixed = (typeof width === 'number');
     const buttonSpan = fixed ? { left: -3, width: buttonWidth ?? (width + extraWidth) } : { left: -3, right: 3 - extraWidth };
     const labelInset = (shape === 'action') ? 3 : 0;
     const labelSpan = fixed ? { left: labelInset, width: (shape === 'action') ? width : (buttonWidth ?? (width + extraWidth)) } : { left: labelInset, right: labelInset };
+    // A disabled row is never a mouse target in Flash, so it never takes the hover colour either.
+    const tintColor = (hovered && recolorsOnHover && !disabled) ? BUTTON_HOVER_TINT : BUTTON_TINT;
+    const captionColor = disabled ? LABEL_DISABLED_COLOR : LABEL_COLOR;
 
     return (
         <Box layout={{ width, height, flexShrink: 0, overflow: 'hidden' }}>
             <ContainerButton
                 variant={variant}
-                tintColor="#2d2a27"
+                tintColor={tintColor}
                 tooltip={tooltip}
                 disabled={disabled}
+                onPointerOver={() => setHovered(true)}
+                onPointerOut={() => setHovered(false)}
                 onPointerTap={disabled ? undefined : onPress}
                 layout={{ position: 'absolute', ...buttonSpan, top, height: height + extraHeight }}
             >

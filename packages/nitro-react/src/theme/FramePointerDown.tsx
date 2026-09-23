@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
 import { ThemeImage } from './ThemeImage';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+import { expandSides, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 export type FramePointerDownVariant = ThemeVariant;
 
@@ -32,7 +32,7 @@ export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps &
                     tint={resolvedTint}
                     stretch
                     {...handlers}
-                    layout={{ ...config.layout, ...layout }}
+                    layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 />
             );
         }
@@ -40,7 +40,7 @@ export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps &
         return (
             <Box
                 ref={ref}
-                layout={{ ...config.layout, ...layout }}
+                layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 {...handlers}
             >
                 {resolvedLayer && (

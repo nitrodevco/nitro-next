@@ -1,4 +1,5 @@
 export * from './useAvatarImageTexture';
+export * from './useChildBounds';
 export * from './useFlashTextCanvas';
 export * from './useFrameDrag';
 export * from './useFrameResize';
@@ -7,6 +8,7 @@ export * from './useInteractionState';
 export * from './useLayoutEvent';
 export * from './useOutsideClick';
 export * from './usePixiTexture';
+export * from './useReflectResizeHost';
 export * from './useResolvedVariant';
 export * from './useRevealWhenSettled';
 export * from './useRowVirtualizer';

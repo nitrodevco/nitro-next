@@ -5,7 +5,7 @@ import { Box, BoxLayout } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Composite, CompositePiece, Stretch } from './layer';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+import { expandSides, ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 export type RadioButtonVariant = ThemeWithStatesVariant;
 
@@ -97,8 +97,8 @@ export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttrib
                 layout={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    ...config.layout,
-                    ...layout,
+                    ...expandSides(config.layout),
+                    ...expandSides(layout),
                 }}
                 {...handlers}
             >

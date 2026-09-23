@@ -4,10 +4,12 @@ import { forwardRef, Ref } from 'react';
 import { useConfigValue } from '#base/context/system';
 
 import { BoxLayout } from './Box';
+import { useDragTrigger } from './drag/useDragTrigger';
 import { useDynamicStyleEffect } from './dynamicstyle';
-import { getCroppedTexture, getMirroredTexture, getTextureGreyscale, getTextureSilhouette, usePixiTexture, useTextureFromUrl } from './hooks';
+import { FlashBitmap } from './FlashBitmap';
+import { alphaAt, getCroppedTexture, getMirroredTexture, getTextureAlpha, getTextureGreyscale, getTextureSilhouette, usePixiTexture, useTextureFromUrl } from './hooks';
 import { useTooltipHandlers } from './tooltip/useTooltipHandlers';
-import { compose, cursorForHandlers, DynamicStyleRole, insetStretchAxes, multiplyAlphas, multiplyTints, resolveEventMode, SpriteFrame, ThemeLayoutMeta } from './utils';
+import { compose, cursorForHandlers, DynamicStyleRole, FlashBitmapVars, insetStretchAxes, multiplyAlphas, multiplyTints, resolveEventMode, SpriteFrame, ThemeLayoutMeta } from './utils';
 
 export interface ImageProps extends ThemeLayoutMeta {
     /**
@@ -53,11 +55,31 @@ export interface ImageProps extends ThemeLayoutMeta {
     /** The Flash `BLEND_<mode>` tag on a bitmap. */
     blendMode?: BLEND_MODES;
     /**
+     * Draw this as a Flash bitmap window (`static_bitmap` / `bitmap`) with these variables:
+     * `layout` is the window's box, and the image is placed, scaled, tiled, mirrored, turned,
+     * etched and clipped inside it exactly as `BitmapDataRenderer.draw` does - see `FlashBitmap`.
+     * An omitted variable is the client's default, so `bitmap={{}}` stretches the image over its
+     * box. `width`, `height`, `stretch`, `scale*` and `showLoadingPlaceholder` do not apply.
+     */
+    bitmap?: FlashBitmapVars;
+    /**
      * A `#icon` / `#bg` tag under a `dynamicStyle` host: the host's child rule for its current
      * state applies - the etching (a solid copy drawn under the bitmap at an offset), the
      * colour transform and the nudge. See utils/dynamicStyles.ts.
      */
     dynamicRole?: DynamicStyleRole;
+    /**
+     * The window's `mouseThreshold` (0-255, `WindowController.testLocalPointHitAgainstAlpha`):
+     * above 0 a point hits only where the drawn pixel's alpha is at least this much, so a
+     * press on the transparent part of an icon falls through to what is behind it. 0 or absent
+     * is the plain box.
+     */
+    hitThreshold?: number;
+    /**
+     * The `mouse_dragging_trigger` flag (257): pressing the image drags the nearest enclosing
+     * `Region` with `dragTarget` - see theme/drag.
+     */
+    dragTrigger?: boolean;
     eventMode?: EventMode;
     cursor?: string;
     /**
@@ -102,14 +124,18 @@ const WHITE = '#ffffff';
  * that flat amount, where a tint could only multiply).
  */
 export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
-    src, textureKey, texture: ownTexture, frame, width, height, stretch, scale = 1, scaleX = 1, scaleY = 1, zIndex, tint, alpha, greyscale, blendMode, dynamicRole, tooltip, eventMode, cursor,
-    onPointerOver: onPointerOverProp, onPointerOut: onPointerOutProp, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    src, textureKey, texture: ownTexture, frame, width, height, stretch, scale = 1, scaleX = 1, scaleY = 1, zIndex, tint, alpha, greyscale, blendMode, bitmap, dynamicRole, hitThreshold: hitThresholdProp = 0, dragTrigger = false, tooltip, tooltipDelay, eventMode, cursor,
+    onPointerOver: onPointerOverProp, onPointerOut: onPointerOutProp, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
     showLoadingPlaceholder, layout, visible,
 }, ref) => {
     // A tooltip hovers like any handler would, but on its own it doesn't make the image read as clickable.
-    const tooltipHandlers = useTooltipHandlers(tooltip);
+    const tooltipHandlers = useTooltipHandlers(tooltip, tooltipDelay);
     const onPointerOver = compose(tooltipHandlers.onPointerOver, onPointerOverProp);
     const onPointerOut = compose(tooltipHandlers.onPointerOut, onPointerOutProp);
+    const startDrag = useDragTrigger(dragTrigger);
+    const onPointerDown = compose(onPointerDownProp, startDrag);
+    // `set mouseThreshold` caps it at 255.
+    const hitThreshold = Math.min(255, hitThresholdProp);
     const themeTexture = usePixiTexture(ownTexture ? undefined : textureKey);
     const urlTexture = useTextureFromUrl(ownTexture || textureKey ? undefined : src);
     const baseTexture = ownTexture ?? themeTexture ?? urlTexture;
@@ -132,7 +158,34 @@ export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
     const texture = mirror(shadedTexture);
     const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 
-    if (!texture) return null;
+    if (!texture || !shadedTexture) return null;
+
+    if (bitmap) {
+        return (
+            <FlashBitmap
+                ref={ref}
+                texture={shadedTexture}
+                vars={bitmap}
+                tint={tint}
+                greyscale={greyscale}
+                alpha={alpha}
+                blendMode={blendMode}
+                effect={effect}
+                layout={layout}
+                visible={visible}
+                zIndex={zIndex}
+                hitThreshold={hitThreshold}
+                eventMode={resolvedEventMode}
+                cursor={cursor ?? cursorForHandlers(resolvedEventMode, { onPointerTap })}
+                onPointerOver={onPointerOver}
+                onPointerOut={onPointerOut}
+                onPointerDown={onPointerDown}
+                onPointerUp={onPointerUp}
+                onPointerUpOutside={onPointerUpOutside}
+                onPointerTap={onPointerTap}
+            />
+        );
+    }
 
     // Silhouettes are alpha shapes, so they come from the colour source - one per texture,
     // whether or not the sprite is drawn grey.
@@ -152,6 +205,22 @@ export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
     const objectFit = explicitSize ? 'fill' : 'none';
     const renderWidth = (width ?? texture.width) * scale * Math.abs(scaleX);
     const renderHeight = (height ?? texture.height) * scale * Math.abs(scaleY);
+    // The sprite's local space is its texture's (the layout scales the sprite, not the texture),
+    // so a point is a texel of the drawn - possibly mirrored - texture; its alpha is read off the
+    // unmirrored one, whose alpha the grey copy shares. Outside the texture nothing hits, as
+    // `BitmapData.hitTest` finds nothing off its bitmap; a source a canvas can't read keeps the
+    // sprite's own rect.
+    const sourceAlpha = (hitThreshold > 0 && colourTexture) ? getTextureAlpha(colourTexture) : undefined;
+    const hitArea = sourceAlpha && {
+        contains: (x: number, y: number): boolean => {
+            if (x < 0 || y < 0 || x >= texture.width || y >= texture.height) return false;
+
+            const u = flipX ? (texture.width - x) : x;
+            const v = flipY ? (texture.height - y) : y;
+
+            return alphaAt(sourceAlpha, u, v) >= hitThreshold;
+        },
+    };
     const sprite = (spriteLayout: typeof layout, nudged: boolean) => (
         <pixiSprite
             ref={ref as Ref<never>}
@@ -163,6 +232,7 @@ export const ThemeImage = forwardRef<PixiContainer, ImageProps>(({
             blendMode={blendMode}
             eventMode={resolvedEventMode}
             cursor={resolvedCursor}
+            hitArea={hitArea || undefined}
             onPointerOver={onPointerOver}
             onPointerOut={onPointerOut}
             onPointerDown={onPointerDown}

@@ -17,6 +17,11 @@ type State = {
      * used as a visitor would: no rights, no moving furni, no use of furni a visitor may not use.
      */
     playTestMode: boolean;
+    /**
+     * `RoomSession.ownUserRoomId` - which room object you stand as, from `Users` or from the user
+     * object, whichever names you last. Handlers and commands read it here; React asks
+     * `useOwnRoomObjectId`, which resolves it by web id and so never lags either packet.
+     */
     ownRoomIndex: number;
     allowPets: boolean;
     isGuildRoom: boolean;

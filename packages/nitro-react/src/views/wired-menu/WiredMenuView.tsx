@@ -4,8 +4,9 @@
  * the body the active tab fills, with the translucent `loading_view` over it (and "loading" in the
  * caption) while the tab waits for its data (`WiredMenuDefaultTab.updateLoadingState`).
  *
- * Only enabled tabs get a button, and the buttons share the row's width equally (`alignTabs`):
- * the info tab is disabled, so five tabs of 100.
+ * Only enabled tabs get a button, and the buttons share the strip equally (`alignTabs`, which sets
+ * each to `tabItem.parent.width / enabled`): the info tab is disabled, so five tabs across the
+ * `_SELECTOR` - the context's 500 less the 8 it is inset by at either end, not the 500 itself.
  *
  * Being up is being viewed: mounting marks the menu as viewed and starts the active tab
  * (`show` -> `startViewing`), a tab switch stops one tab and starts the next (`setActiveTab`), and
@@ -83,8 +84,6 @@ export const WiredMenuView = () => {
     // After the tab has started: a link may select another tab and act on it.
     useWiredMenuLinkRequest();
 
-    const tabWidth = FRAME_WIDTH / ENABLED_TABS.length;
-
     return (
         <Frame
             variant="3"
@@ -102,13 +101,15 @@ export const WiredMenuView = () => {
                 variant="3"
                 layout={{ position: 'absolute', left: 0, top: 2, width: FRAME_WIDTH, height: 30, overflow: 'hidden' }}
             >
-                {ENABLED_TABS.map((tab, index) => (
+                {ENABLED_TABS.map(tab => (
                     <TabButton
                         key={tab.id}
                         variant="3"
                         selected={tab.id === activeTab}
                         onPointerTap={() => selectWiredMenuTab(tab.id)}
-                        layout={{ position: 'absolute', left: index * tabWidth, top: 0, width: tabWidth, height: 32 }}
+                        // `alignTabs` divides `tabItem.parent.width` - the `_SELECTOR`'s, which is
+                        // the strip less the 8 it starts and ends at, not the frame's own width.
+                        layout={{ flexGrow: 1, flexBasis: 0, height: 32 }}
                     >
                         {t(`wiredmenu.${tab.id}.tab`, `wiredmenu.${tab.id}.tab`)}
                     </TabButton>

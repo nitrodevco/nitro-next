@@ -370,7 +370,11 @@ export const WiredSetupView = ({ setup }: WiredSetupViewProps) => {
             >
                 <Box
                     ref={setContentNode}
-                    layout={{ flexDirection: 'column', alignItems: 'stretch', width: contentWidth, flexShrink: 0 }}
+                    // Absolute, because the frame's height is this box's: in flow it would be sized
+                    // against the content area's own height, which is the frame's less the margins -
+                    // the window would open at its minimum, measure 0 and never grow (see `Frame`'s
+                    // `marginsLayout`). Yoga sizes an absolute child by its own content instead.
+                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', alignItems: 'stretch', width: contentWidth, flexShrink: 0 }}
                 >
                     {body}
                 </Box>

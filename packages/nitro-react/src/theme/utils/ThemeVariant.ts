@@ -50,8 +50,8 @@ export type ThemeBase = {
      * the one a call site passes alike - which is what keeps the wired dialog's
      * `_frame.color = style.frameColor` (`FramePreset`) from darkening the illumina light
      * frame the client never tints. A skin where only *some* entities are `colorize="false"`
-     * is not this: those pieces are cut into their own sheet and drawn as an untinted
-     * `overlay` (see `scripts/extract-skin-assets.ts`).
+     * is not this: those pieces are cut into their own sheet and drawn as an untinted `overlay`
+     * or `plain` (see `scripts/extract-skin-assets.ts`).
      */
     colorize?: boolean;
     textStyle?: TextStyleKey;
@@ -61,6 +61,15 @@ export type ThemeBase = {
 
 export type ThemeVariant = {
     layer?: BackgroundLayerConfig;
+    /**
+     * The skin's `colorize="false"` pieces, cut into their own sheet by
+     * `scripts/extract-skin-assets.ts` and drawn over `layer` without the window's colour - what
+     * `BitmapSkinRenderer.draw` does for an entity the client copies rather than tints. A variant
+     * whose untinted pieces are all it has puts them in `overlay` instead (the leaderboard
+     * frames); this is for one that needs both, as the ubuntu frames do - a tinted title bar, the
+     * pale body under it, and a shine over the two.
+     */
+    plain?: BackgroundLayerConfig;
     overlay?: BackgroundLayerConfig;
 } & ThemeBase;
 
@@ -105,6 +114,7 @@ export type ThemeResult<T extends AnyThemeVariant = AnyThemeVariant> = {
     state: InteractionState;
     handlers: InteractionHandlers;
     resolvedLayer: BackgroundLayerConfig | undefined;
+    resolvedPlain: BackgroundLayerConfig | undefined;
     resolvedOverlay: BackgroundLayerConfig | undefined;
     resolvedShadow: DropShadowConfig | undefined;
     resolvedTint: string | undefined;

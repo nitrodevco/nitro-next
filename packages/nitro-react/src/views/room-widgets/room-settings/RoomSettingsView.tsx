@@ -3,7 +3,7 @@ import { IFlatCategory, IFlatController, IMessengerFriend, RoomSettingsDataEvent
 import { ReactNode, useState } from 'react';
 
 import { useConfigValue, useTranslation } from '#base/context/system';
-import { Border, Box, Button, ButtonThick, CheckBox, Dropmenu, Frame, Icon, RadioButton, Region, ScrollArea, TabButton, TabContext, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Border, Box, Button, ButtonThick, CheckBox, Dropmenu, Frame, Icon, RadioButton, Region, ScrollArea, TabButton, TabContent, TabContext, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
 export interface RoomSettingsViewProps {
     settings: RoomSettingsDataEventMessageType;
@@ -1050,6 +1050,17 @@ export const RoomSettingsView = ({
                 name="tab_context"
                 layout={{ position: 'absolute', left: -6, top: 3, width: 354, height: 32, overflow: 'hidden' }}
             >
+                {/*
+                  * `habbo_window_layout_tab_context_3`'s own `tab_content`, at y 30 and stretching
+                  * with the context: where the context is only as tall as its 32px buttons, the two
+                  * rows of it that show are the line across the bottom of the tab strip. The
+                  * variant's `minHeight` keeps the band at its own top slice and the context crops
+                  * it, rather than squeezing 15 rows of art into 2.
+                  */}
+                <TabContent
+                    variant="3"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 30, bottom: 0, padding: 0, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, marginTop: 0 }}
+                />
                 {TABS.map((index, position) => (
                     <TabButton
                         key={index}

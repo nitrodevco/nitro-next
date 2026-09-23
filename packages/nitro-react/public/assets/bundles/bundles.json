@@ -4,8 +4,8 @@
       "name": "theme",
       "mode": "atlas",
       "sheet": {
-        "width": 791,
-        "height": 823
+        "width": 835,
+        "height": 801
       },
       "assets": {
         "theme-border-0-default": "theme/border/0-default.png",
@@ -318,7 +318,10 @@
         "theme-frame-103-default": "theme/frame/103-default.png",
         "theme-frame-200-default": "theme/frame/200-default.png",
         "theme-frame-3-default": "theme/frame/3-default.png",
+        "theme-frame-3-default-plain": "theme/frame/3-default-plain.png",
         "theme-frame-3-default-shine": "theme/frame/3-default-shine.png",
+        "theme-frame-7-default": "theme/frame/7-default.png",
+        "theme-frame-7-default-plain": "theme/frame/7-default-plain.png",
         "theme-framepointer-down-7-default": "theme/framepointer/down-7-default.png",
         "theme-header-0-default": "theme/header/0-default.png",
         "theme-header-0-default-shine": "theme/header/0-default-shine.png",
@@ -755,8 +758,11 @@
         "theme/frame/10007-default.png",
         "theme/frame/103-default.png",
         "theme/frame/200-default.png",
+        "theme/frame/3-default-plain.png",
         "theme/frame/3-default-shine.png",
         "theme/frame/3-default.png",
+        "theme/frame/7-default-plain.png",
+        "theme/frame/7-default.png",
         "theme/framepointer/down-7-default.png",
         "theme/header/0-default-shine.png",
         "theme/header/0-default.png",
@@ -883,7 +889,7 @@
         "theme/tabcontent/3-default.png",
         "theme/tooltip/0-default.png"
       ],
-      "sources": "0a63fe7205b99acb"
+      "sources": "c44d879d88f2af4b"
     },
     {
       "name": "chat-styles",

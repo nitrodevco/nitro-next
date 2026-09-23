@@ -54,7 +54,8 @@ export interface FrameDragOptions {
     /**
      * Opens the frame centered in the viewport - the Flash `window.center()`. A frame whose
      * height follows its content is not its final size on the first layout, so it is centered
-     * again on every resize until it is first pressed; after that it stays where it is.
+     * again on every resize while it is still hidden (`useRevealWhenSettled`); once it shows, or
+     * is pressed, it stays where it is.
      */
     centered?: boolean;
     /**
@@ -120,7 +121,11 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
     }, []);
 
     useLayoutEvent(frameNode, () => {
-        if (!centeringRef.current || !frameNode) return;
+        // `window.center()` is a one-off: the frame follows its size into place while it is still
+        // hidden, and once it is on screen a later change of size (content arriving, a section
+        // opening) leaves it where it is, as `RoomInfoViewCtrl.layoutContent` resizes a window
+        // it centred once.
+        if (!centeringRef.current || !frameNode || revealed) return;
 
         const rect = getGlobalRect(frameNode);
 

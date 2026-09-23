@@ -5,7 +5,7 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+import { expandSides, ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 export type DroplistItemVariant = ThemeWithStatesVariant;
 
@@ -45,7 +45,7 @@ export const DroplistItem: ForwardRefExoticComponent<DroplistItemProps & RefAttr
         return (
             <Box
                 ref={ref}
-                layout={{ ...config.layout, ...layout }}
+                layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 {...handlers}
             >
                 {resolvedLayer && (

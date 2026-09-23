@@ -7,7 +7,7 @@ import { CloseButton } from './CloseButton';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, ColorLayer, NineSlice, Stretch, Tiled } from './layer';
 import { ThemeText } from './ThemeText';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+import { expandSides, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 export type HeaderVariant = ThemeVariant & {
     needsBgChip?: boolean;
@@ -15,6 +15,13 @@ export type HeaderVariant = ThemeVariant & {
     menuButton?: { variant: string; left: number; top: number };
     /** Where the window layout pins the title (`header_title_text`), from the header's top left, instead of centring it. */
     captionAt?: { left: number; top: number };
+    /**
+     * The title's own `y` and height where the layout centres it horizontally but fixes it
+     * vertically - `header_title_text` is `relative_horizontal_scale_center` with
+     * `relative_vertical_scale_fixed` in `habbo_window_layout_header_3` and `_7`, at `y="2"` and
+     * 15 tall. Without it the title centres in the header's box, which is not the same place.
+     */
+    captionBand?: { top: number; height: number };
     /** Where the window layout pins `header_button_close`, from the header's top right, instead of centring it on the right edge. */
     closeAt?: { right: number; top: number };
     /**
@@ -77,15 +84,23 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
         textStyle: 'frame_title',
         textColor: '#ffffff',
     },
+    /*
+     * `habbo_window_layout_frame_3` puts `titlebar` at (6, 6) 50 wide in a 64 wide template - 6 in
+     * from the left, 8 from the right - and 27 tall, so it ends at 33 where the frame's tinted top
+     * slice does. Its own layout (`habbo_window_layout_header_3`) then fixes `header_title_text`
+     * at `y="2"`, 15 tall, centred across the bar.
+     */
     3: {
         layout: {
             position: 'relative',
-            height: 33,
-            marginLeft: 9,
-            marginRight: 9,
+            marginTop: 6,
+            marginLeft: 6,
+            marginRight: 8,
+            height: 27,
         },
         textStyle: 'u_frame_title',
         textColor: '#ffffff',
+        captionBand: { top: 2, height: 15 },
         helpButton: '4',
     },
     4: {
@@ -100,16 +115,19 @@ const HEADER_VARIANTS: ThemeVariants<HeaderVariant> = {
         textStyle: 'u_frame_title',
         textColor: '#ffffff',
     },
+    // `habbo_window_layout_frame_7` places its `titlebar` exactly as `_3` does, and its own layout
+    // fixes the title at the same `y="2"`, 15 tall.
     7: {
         layout: {
-            minHeight: 33,
-            paddingLeft: 8,
-            paddingTop: 4,
-            paddingRight: 8,
-            paddingBottom: 4,
+            position: 'relative',
+            marginTop: 6,
+            marginLeft: 6,
+            marginRight: 8,
+            height: 27,
         },
         textStyle: 'u_frame_title',
         textColor: '#000000',
+        captionBand: { top: 2, height: 15 },
         helpButton: '4',
     },
     /*
@@ -210,9 +228,20 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
         const titleNode = config.captionAt
             ? title && <Box layout={{ position: 'absolute', left: config.captionAt.left, top: config.captionAt.top }}>{title}</Box>
             : (
-                    <Box layout={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                    <Box layout={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: config.captionBand ? 'flex-start' : 'center', width: '100%', height: '100%' }}>
                         {title && (
-                            <Box layout={{ position: 'relative', alignItems: 'center', paddingLeft: 6, paddingRight: 6, height: '100%' }}>
+                            <Box layout={{
+                                position: 'relative',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                paddingLeft: 6,
+                                paddingRight: 6,
+                                // Centred across the header, but at the layout's own `y` down it.
+                                ...(config.captionBand
+                                    ? { marginTop: config.captionBand.top, height: config.captionBand.height }
+                                    : { height: '100%' }),
+                            }}
+                            >
                                 { config.needsBgChip && <ColorLayer color={resolvedTint} /> }
                                 {title}
                             </Box>
@@ -253,8 +282,8 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    ...config.layout,
-                    ...layout,
+                    ...expandSides(config.layout),
+                    ...expandSides(layout),
                 }}
                 {...handlers}
             >

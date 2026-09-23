@@ -5,9 +5,15 @@ import { Box } from './Box';
 import { usePixiTexture, useThemeVariant } from './hooks';
 import { BackgroundLayer, Stretch } from './layer';
 import { ThemeImage } from './ThemeImage';
-import { ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+import { expandSides, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
 
 export type ScalerVariant = ThemeVariant;
+
+/**
+ * Over the content area (20), because `_FRAME_SCALER` is the last child of every frame's
+ * window layout - the content's own background drew over the corner otherwise.
+ */
+const SCALER_Z_INDEX = 30;
 
 const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
     x: 'ew-resize',
@@ -16,37 +22,45 @@ const CURSOR_BY_DIRECTION: Record<ScalerDirection, string> = {
     none: 'default',
 };
 
+/*
+ * The layout is where the frame's window layout puts `_FRAME_SCALER`, as insets from the frame's
+ * own edges: `habbo_window_layout_frame` has it at (25, 25) 15x15 of 40x40 and `_3` at (41, 40)
+ * 20x20 of 64x64. Each is tagged `_COLORIZE`, so the piece takes the window's colour, which
+ * `Frame` hands down; `habbo_skin_scaler`'s `shine` is the one piece left out of it
+ * (`colorize="false"`), so it is an untinted overlay.
+ *
+ * Written out per style rather than built by a helper: `theme_skin.py` reads these tables for the
+ * texture key each layer names, and a helper's parameter hides it.
+ */
 const SCALER_VARIANTS: ThemeVariants<ScalerVariant> = {
     0: {
         layer: Stretch('scaler-0-default-src'),
         overlay: Stretch('scaler-0-default-shine-src'),
-        zIndex: 20,
-        layout: {
-            right: 0,
-            bottom: 0,
-        },
+        layout: { position: 'absolute', right: 0, bottom: 0, width: 15, height: 15 },
     },
     1: {
         layer: Stretch('scaler-0-default-src'),
         overlay: Stretch('scaler-0-default-shine-src'),
+        layout: { position: 'absolute', right: 0, bottom: 0, width: 15, height: 15 },
     },
     2: {
         layer: Stretch('scaler-0-default-src'),
         overlay: Stretch('scaler-0-default-shine-src'),
+        layout: { position: 'absolute', right: 0, bottom: 0, width: 15, height: 15 },
     },
     3: {
         layer: Stretch('scaler-3-default-src'),
-        layout: {
-            position: 'absolute',
-            right: 3,
-            bottom: 4,
-            width: 20,
-            height: 20,
-        },
+        layout: { position: 'absolute', right: 3, bottom: 4, width: 20, height: 20 },
     },
-    // Style 4 is `habbo_skin_scaler_3` as well, so it draws style 3's piece.
+    /*
+     * Style 4 is `habbo_skin_scaler_3` as well, so it draws style 3's piece - and so does a style 7
+     * frame, which cascades to this style: Flash has no scaler row of its own for 7, only a taller
+     * frame template (`habbo_window_layout_frame_7`) that sits the same piece 13 up from its
+     * bottom instead of 4.
+     */
     4: {
         layer: Stretch('scaler-3-default-src'),
+        layout: { position: 'absolute', right: 3, bottom: 4, width: 20, height: 20 },
     },
     // `renderer="null"`: a scaler with no art, as big as its layout makes it
     100: {
@@ -85,7 +99,7 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
                     tint={resolvedTint}
                     stretch
                     visible={visible}
-                    zIndex={config.zIndex}
+                    zIndex={config.zIndex ?? SCALER_Z_INDEX}
                     {...handlers}
                     cursor={CURSOR_BY_DIRECTION[direction]}
                     layout={{ position: 'absolute', ...config.layout, ...layout }}
@@ -98,13 +112,13 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
             <Box
                 ref={ref}
                 visible={visible}
-                zIndex={config.zIndex}
+                zIndex={config.zIndex ?? SCALER_Z_INDEX}
                 layout={{
                     position: 'absolute',
                     width: skinTexture?.width,
                     height: skinTexture?.height,
-                    ...config.layout,
-                    ...layout,
+                    ...expandSides(config.layout),
+                    ...expandSides(layout),
                 }}
                 {...handlers}
                 cursor={CURSOR_BY_DIRECTION[direction]}

@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from './cascade';
 import { dynamicStyleBoxProps, useDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, ColorLayer, Composite, CompositePiece, HsvNineSlice, NineSlice } from './layer';
-import { DynamicStyleRole, FillLayout, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
+import { DynamicStyleRole, expandSides, FillLayout, ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
 
 /**
  * A border skin. `colorize: false` (on `ThemeBase`, honoured by `useThemeVariant`) marks a skin
@@ -207,7 +207,7 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
             <Box
                 ref={ref}
                 visible={visible}
-                layout={{ ...config.layout, ...layout }}
+                layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 {...dynamicStyleBoxProps(roleEffect, ownGraphicContext ? blend : undefined)}
                 {...handlers}
             >

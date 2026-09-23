@@ -221,12 +221,8 @@ interface Element {
     params: number;
     dropShadow: DropShadow | undefined;
     children: Element[];
-    /**
-     * The layout never configured any anchoring (no `relative_*_scale_*` bits, no `<scale>`
-     * other than `fixed`), so the element's anchors are inferred from its geometry - see
-     * `inferAnchor`. Layouts whose designer did set anchors are trusted as designed.
-     */
-    infer: boolean;
+    /** `<var key><value><Array>` vars (a dropmenu's `item_array`), their strings in order. */
+    arrays: Record<string, string[]>;
 }
 
 /**
@@ -265,11 +261,28 @@ const parseDropShadow = (node: XmlNode | undefined): DropShadow | undefined => {
     return shadow;
 };
 
-const toElement = (node: XmlNode): Element => {
+/**
+ * `WindowParser.parseSingleWindowEntity`: a window with no `style` of its own takes its parent's
+ * (`parent ? parent.style : 0`), so the text and skin defaults of a child follow the window it
+ * sits in. The inherited id is written into the element's attributes, which is what every later
+ * reader of `style` - the variant, the default text style - then sees.
+ */
+const toElement = (node: XmlNode, parentStyle?: string): Element => {
     const vars: Record<string, string> = {};
+    const attrs = (node.attrs.style === undefined && parentStyle !== undefined) ? { ...node.attrs, style: parentStyle } : node.attrs;
     const variables = node.children.find(child => child.tag === 'variables');
 
-    for (const variable of variables?.children ?? []) if (variable.tag === 'var' && variable.attrs.key) vars[variable.attrs.key] = variable.attrs.value ?? '';
+    const arrays: Record<string, string[]> = {};
+
+    for (const variable of variables?.children ?? []) {
+        if (variable.tag !== 'var' || !variable.attrs.key) continue;
+
+        vars[variable.attrs.key] = variable.attrs.value ?? '';
+
+        const array = variable.children.find(child => child.tag === 'value')?.children.find(child => child.tag === 'Array');
+
+        if (array) arrays[variable.attrs.key] = array.children.filter(child => child.tag === 'var').map(child => child.attrs.value ?? '');
+    }
 
     const scaleNode = node.children.find(child => child.tag === 'scale');
     const childrenNode = node.children.find(child => child.tag === 'children');
@@ -284,13 +297,13 @@ const toElement = (node: XmlNode): Element => {
 
     return {
         tag: node.tag,
-        attrs: node.attrs,
+        attrs,
         vars,
         scale,
         params,
         dropShadow: parseDropShadow(node.children.find(child => child.tag === 'filters')),
-        infer: false,
-        children: (childrenNode?.children ?? []).map(toElement),
+        arrays,
+        children: (childrenNode?.children ?? []).map(child => toElement(child, attrs.style)),
     };
 };
 
@@ -313,13 +326,58 @@ const hexColor = (value: string | undefined): string | undefined => {
     return `#${digits.slice(-6).padStart(6, '0').toLowerCase()}`;
 };
 
-const decode = (value: string): string => {
-    try {
-        return decodeURIComponent(value.replace(/\+/g, ' ')).replace(/\r/g, '');
-    } catch {
-        return value;
-    }
+/**
+ * A colour attribute as `WindowParser` reads it: `0x...` through `parseInt(value, 16)`, anything
+ * else through `uint()`, both wrapped to 32 bits. `0x0999999` is therefore `0x00999999`, and a
+ * ten-digit `0xffff000000` is `0xff000000`.
+ */
+const flashColor = (value: string): number => {
+    const parsed = (value.charAt(1) === 'x') ? parseInt(value, 16) : Number(value);
+
+    return Number.isFinite(parsed) ? (parsed % 0x100000000) >>> 0 : 0;
 };
+
+/** The windows that draw through a `TextField` of their own - every text type but `label`. */
+const TEXT_FIELD_TAGS = new Set([ 'text', 'formatted_text', 'html', 'link', 'input', 'password' ]);
+
+/**
+ * The solid fill `WindowRendererItem.render` puts behind a window, or nothing. A window fills
+ * only with `background` on, and then in its *whole* ARGB colour (`set color`: `_fillColor =
+ * background ? color : color & 0xFFFFFF`) - so a six-digit colour, whose alpha byte is 0, fills
+ * nothing at all, and `background="true" color="0x00"` is transparent, not black. A `background`
+ * window is the one type that fills by default: `BackgroundController` sets `background = true`
+ * and `color = 0xFFFFFFFF` before the XML's attributes land.
+ */
+const fillOf = (el: Element): { color: string; alpha: number } | undefined => {
+    const background = (el.attrs.background !== undefined) ? el.attrs.background === 'true' : el.tag === 'background';
+
+    if (!background) return undefined;
+
+    // A text field (`TextController` / `TextFieldController`) also turns on its `TextField`'s own
+    // background, drawn opaque in the RGB of `color` - white when the layout names no colour.
+    if (TEXT_FIELD_TAGS.has(el.tag)) {
+        const rgb = (el.attrs.color !== undefined) ? (flashColor(el.attrs.color) & 0xFFFFFF) : 0xFFFFFF;
+
+        return { color: `#${rgb.toString(16).padStart(6, '0')}`, alpha: 1 };
+    }
+
+    const argb = (el.attrs.color !== undefined) ? flashColor(el.attrs.color) : ((el.tag === 'background') ? 0xFFFFFFFF : 0x00FFFFFF);
+    const alpha = argb >>> 24;
+
+    if (!alpha) return undefined;
+
+    return { color: `#${(argb & 0xFFFFFF).toString(16).padStart(6, '0')}`, alpha: Math.round((alpha / 255) * 1000) / 1000 };
+};
+
+/**
+ * AS3 `unescape`, which `WindowParser` runs over every caption, name and tag list: `%XX` is one
+ * Latin-1 code unit and `%uXXXX` one UTF-16 unit, anything malformed stays as written, and `+`
+ * is a plus - `decodeURIComponent` turned the sixteen `"+"` captions into spaces and gave up on
+ * `%F6` and `%u2019` altogether.
+ */
+const decode = (value: string): string => value
+    .replace(/%u([0-9a-f]{4})|%([0-9a-f]{2})/gi, (_, wide: string | undefined, narrow: string | undefined) => String.fromCharCode(parseInt(wide ?? narrow ?? '0', 16)))
+    .replace(/\r/g, '');
 
 const quote = (value: string): string => `'${value.replace(/\\/g, '\\\\').replace(/'/g, '\\\'').replace(/\n/g, '\\n').replace(/\r/g, '')}'`;
 
@@ -659,6 +717,25 @@ const pickImage = (name: string, key: string, files: string[], declared: { width
 const RUNTIME_IMAGES: { name: string; component: string }[] = [
     'gohome', 'dance', 'clothes', 'effects', 'badges', 'wave', 'settings', 'credits', 'minimail', 'profile', 'achievements', 'compass', 'lighthouse',
 ].flatMap(name => [ `${name}_white`, `${name}_color` ]).map(name => ({ name, component: 'room-ui' })).concat([
+    // The dimmer and background colour widgets draw these from code (`DimmerFurniWidget` /
+    // `BackgroundColorFurniWidget`): the slider base and button, the colour grid's frame, button
+    // and selection, and the picture the dimmer shows while it is off.
+    'dimmer_slider_base', 'dimmer_slider_button', 'dimmer_color_frame', 'dimmer_color_button', 'dimmer_color_selected', 'dimmer_info',
+    // The pet infostand's respect button and skill levels (`InfoStandPetView`).
+    'icon_petrespect', 'pet_skill_level_0', 'pet_skill_level_1', 'pet_skill_level_2', 'pet_skill_level_3', 'pet_skill_level_4',
+    // The plant breeding window's backdrop (`PlantBreedingView`) and the effects list's hover art
+    // (`EffectView`), both set from code.
+    'breed_pets_preview_bg', 'memenu_fx_play', 'memenu_fx_pause',
+].map(name => ({ name, component: 'room-ui' }))).concat([
+    // The room info card's buttons and tag chips - `HabboNavigator.prepareButton` and the tag
+    // renderer take them from the navigator's own library, so they file under it.
+    'remove_rights', 'make_home', 'home', 'favourite', 'make_favourite', 'thumb_up', 'tag_l', 'tag_m', 'tag_r',
+    'tag_l_reactive', 'tag_m_reactive', 'tag_r_reactive',
+].map(name => ({ name, component: 'navigator' }))).concat([
+    // `FriendListTabsView.refreshHeader` draws the white arrows on every tab header but the
+    // friends tab's (the black pair is named by the layouts).
+    'friendlist_arrow_down_white', 'friendlist_arrow_right_white',
+].map(name => ({ name, component: 'friend-list' }))).concat([
     // AvatarEditor tab icons: the layouts reference the `_off` state, TabUtils.setElementImage()
     // strips `_off` for the active one; plus the runtime-only swatch/slot art the editor code loads.
     'avatar_editor_tabs_gender_male', 'avatar_editor_tabs_gender_female', 'avatar_editor_tabs_head_hair', 'avatar_editor_tabs_head_hats',
@@ -679,7 +756,56 @@ const RUNTIME_IMAGES: { name: string; component: string }[] = [
 ]).concat([
     'floor_plan_editor_add_tile', 'floor_plan_editor_remove_tile', 'floor_plan_editor_raise_tile',
     'floor_plan_editor_sink_tile', 'floor_plan_editor_enter_tile',
-].map(name => ({ name, component: 'window-manager' })));
+    // The hotel broadcast's `simpleAlert` illustration (`IncomingMessages.onBroadcastMessageEvent`
+    // and `HotelAlertTool` pass it as the `illustration` bitmap's `assetUri`).
+    'illumina_alert_illustrations_frank_neutral',
+].map(name => ({ name, component: 'window-manager' }))).concat([
+    // `HabboCatalog.getSubscriptionProductIcon`: the club product's icon, drawn from code by
+    // `HabboCatalogUtils.displayProductIcon` (the offer centre's reward rows).
+    { name: 'icon_hc', component: 'catalog' },
+]).concat([
+    // `BuilderCatalogWidget.updateButtons`: the placement strip's error icon per refusing status
+    // (`builderWidget` names only `icons_builder_error_full`, which the others replace from code).
+    'icons_builder_error_furnilimit', 'icons_builder_error_notroom', 'icons_builder_error_room',
+    'icons_builder_error_grouproom', 'icons_builder_error_userinroom',
+].map(name => ({ name, component: 'catalog' }))).concat([
+    // `ClubExtendConfirmationDialog`: the credit icon of the normal price and the saving, and the
+    // seven frames of your price's spinning coin (`icon_credit_0` .. `icon_credit_6`).
+    'icon_credit_0', 'icon_credit_1', 'icon_credit_2', 'icon_credit_3', 'icon_credit_4', 'icon_credit_5', 'icon_credit_6',
+    // `BundleProductContainer`'s icon, which a bundle offer's product container draws (the club gifts).
+    'ctlg_pic_deal_icon_narrow',
+    // `club_center`'s `special_amount_icon` names `hc_center_icon_credits`, the embedded file of the
+    // published `hc_center_hc_center_icon_credits` (`HabboWindowManagerCom`), which the view draws.
+    'hc_center_hc_center_icon_credits',
+].map(name => ({ name, component: 'catalog' }))).concat([
+    // `PurchaseConfirmationDialog.updateUnknownSenderAvatarImage`: the head a moderator's gift
+    // shows when they hide their face, and `PRODUCT_IMAGES`' one picture the catalogue library
+    // ships (`showConfirmationDialog` draws it for the snowwar token offers).
+    'gift_incognito', 'snowwar_tokens_10',
+].map(name => ({ name, component: 'catalog' }))).concat([
+    // `ItemGridCatalogWidget.select` / the pets' colour events: the colour grid's cell art
+    // (`ColourGridCatalogWidget.createColorContainer`), the product view's bundle picture
+    // (`ctlg_dyndeal_background`) and the grid items' badge add-on (`ProductContainer.setAddOnIcon`).
+    'ctlg_clr_27x22_1', 'ctlg_clr_27x22_2', 'ctlg_clr_27x22_3', 'ctlg_clr_40x32_1', 'ctlg_clr_40x32_2', 'ctlg_clr_40x32_3',
+    'ctlg_dyndeal_background', 'catalog_icon_badge_included',
+    // `ProductContainer.setAddOnIcon`'s other add-on: a two-product offer carrying the ninja disappear effect.
+    'catalog_icon_ninja_effect_included',
+    // `HabboCatalogUtils.showExtraOnProduct`'s chat style background, set from code over `badgeDisplayWidget`.
+    'catalogue_chatstyle_background',
+].map(name => ({ name, component: 'catalog' }))).concat([
+    // The recycler: `RecyclerCatalogWidget.renderSlotGraphics`' slot art, the blush
+    // `FrankRecyclerEmotion` picks besides the template's heart, and the level stars
+    // `RecyclerPrizesCatalogWidget` sets by level (`star_small_<STAR_LEVELS>`; its layout names gold).
+    'ctlg_recycler_slot_bg', 'franks_emotions_blush',
+    'star_small_bronze', 'star_small_silver', 'star_small_diamond', 'star_small_ruby', 'star_small_pink', 'star_small_green', 'star_small_grey',
+].map(name => ({ name, component: 'catalog' }))).concat([
+    // `LimitedItemGridOverlayWidget`: the metal plaque behind a limited item's number, set from code.
+    { name: 'unique_item_label_plaque_metal', component: 'window-manager' },
+]).concat([
+    // `HabboCatalog.getMintTokenProductIcon`: the picture the purchase confirmation of a mint
+    // token pack shows (`PurchaseConfirmationDialog.showConfirmationDialog`, product type `MINT_TOKEN`).
+    { name: 'minting_token_large', component: 'catalog' },
+]);
 
 /**
  * Records that `component` draws `outName`, which the `scripts/images` file `source` holds (a
@@ -799,7 +925,7 @@ interface FileContext {
     imports: Set<string>;
     /** Placeholder tokens of shared catalog widgets this file renders (resolved to real names after every layout is generated). */
     sharedImports: Set<string>;
-    scrollTargets: Map<string, 'vertical' | 'horizontal'>;
+    scrollTargets: Map<string, ScrollTarget>;
     warnings: string[];
     /** The extracted sub-components (row templates, complex named regions) - each becomes its own file. */
     subComponents: { name: string; code: string }[];
@@ -819,9 +945,9 @@ interface EmitContext {
     imports: Set<string>;
     usesTranslation: boolean;
     props: Map<string, string>;
-    states: { name: string }[];
+    states: { name: string; initial?: string }[];
     propCounts: Map<string, number>;
-    scrollTargets: Map<string, 'vertical' | 'horizontal'>;
+    scrollTargets: Map<string, ScrollTarget>;
     warnings: string[];
 }
 
@@ -838,6 +964,8 @@ interface ParentBox {
     direction?: 'row' | 'column';
     /** A wrapping grid - its cells keep both sizes. */
     wrap?: boolean;
+    /** A `boxsizer`: children sit at its padding on the cross axis, and a `relative(N)` tag shares the free space. */
+    sizer?: boolean;
     /** The root of a row-template sub-component also merges the caller's own `layout` prop. */
     spreadLayout?: boolean;
     /** The root of a shared widget: placement comes entirely from the caller's `layout`, only the flex/clipping extras stay. */
@@ -848,21 +976,6 @@ interface ParentBox {
 
 const INDENT = '    ';
 
-/** Did the designer configure any anchoring in this tree (scale bits or a non-`fixed` `<scale>`)? */
-const hasConfiguredAnchors = (el: Element): boolean => (el.params & (PARAM.H_MASK | PARAM.V_MASK)) !== 0
-    || [ el.scale?.horizontal, el.scale?.vertical ].some(value => value === 'strech' || value === 'move' || value === 'center')
-    || el.children.some(hasConfiguredAnchors);
-
-/** Layouts with no configured anchors infer them from geometry (`inferAnchor`); configured ones are trusted as designed. */
-const markAnchorInference = (elements: Element[]): void => {
-    const infer = !elements.some(hasConfiguredAnchors);
-    const mark = (el: Element) => {
-        el.infer = infer;
-        el.children.forEach(mark);
-    };
-
-    elements.forEach(mark);
-};
 
 /** `${friendbar.requests.title}` -> `t('friendbar.requests.title')`; plain text stays a literal. */
 const captionExpr = (ctx: EmitContext, raw: string | undefined): string | undefined => {
@@ -929,119 +1042,159 @@ const PARAM = {
     SHRINK_TO_CHILDREN: 16384, EXPAND_TO_CHILDREN: 131072,
     ALIGN_RIGHT: 262144, ALIGN_H_CENTER: 786432, ALIGN_H_MASK: 786432,
     ALIGN_BOTTOM: 1048576, ALIGN_V_MIDDLE: 3145728, ALIGN_V_MASK: 3145728,
+    SCALING_H: 4096, SCALING_V: 8192, SCALING_TARGET: 65536,
     REFLECT_H: 4194304, REFLECT_V: 8388608,
     FORCE_CLIPPING: 1073741824,
+    DRAG_TRIGGER: 256, DRAG_TARGET: 32768, BOUND_TO_PARENT: 32,
 } as const;
+
+/**
+ * `WindowController.update` on a press: a window with `mouse_dragging_trigger` walks up to the
+ * first ancestor-or-self with `mouse_dragging_target` and drags it. A frame does that through
+ * its own header already, so only the other windows need the props.
+ */
+const dragProps = (el: Element, options: { target: boolean }): string[] => [
+    ...((options.target && el.tag !== 'frame' && (el.params & PARAM.DRAG_TARGET)) ? [ 'dragTarget' ] : []),
+    // `setRectangle`'s `bound_to_parent_rect` clamp keeps a dragged window inside its parent.
+    ...((options.target && el.tag !== 'frame' && (el.params & PARAM.DRAG_TARGET) && (el.params & PARAM.BOUND_TO_PARENT)) ? [ 'boundToParentRect' ] : []),
+    ...(((el.params & PARAM.DRAG_TRIGGER) && (el.params & PARAM.INPUT)) ? [ 'dragTrigger' ] : []),
+];
+
+/**
+ * `treshold`: a window with a graphic hit-tests its own rendered pixels, taking the press only
+ * where alpha reaches it (`validateLocalPointIntersection`); 0 is the plain rect. A missing
+ * attribute is the element row's default, 10 for a bitmap. Only a window that takes input
+ * (`input_event_processor`) is ever a target, so only those need it.
+ */
+const hitThresholdProp = (el: Element): string[] => {
+    if (!(el.params & PARAM.INPUT)) return [];
+
+    const threshold = Math.min(255, (el.attrs.treshold !== undefined) ? num(el.attrs.treshold) : 10);
+
+    return threshold > 0 ? [ `hitThreshold={${threshold}}` ] : [];
+};
 
 type Anchor = 'fixed' | 'move' | 'strech' | 'center';
 
 /**
- * How an element follows its parent's resize on one axis. `<scale>` (the tool-exported form)
- * wins where present; otherwise the `relative_*_scale_*` bits, then the `on_resize_align_*`
- * bits (right/bottom == move, center/middle == center) - both of which the Flash window
- * manager treated as "keep this edge/centre at the same distance".
+ * How an element follows its parent's resize on one axis (`WindowController.updateScaleRelativeToParent`):
+ * the `<scale>` a skin template writes, else the `relative_*_scale_*` bits - `strech` grows with
+ * the parent, `move` keeps its distance from the far edge, `center` re-centres. Nothing else
+ * anchors a window: the `on_resize_align_*` bits only say which edge stays put when the element
+ * resizes *itself* (see `resizeAlign`), and an element with no bits is `fixed`, whatever its
+ * geometry suggests.
  */
-const anchor = (el: Element, parent: ParentBox, axis: 'h' | 'v'): Anchor => {
+const anchor = (el: Element, _parent: ParentBox, axis: 'h' | 'v'): Anchor => {
     const explicit = axis === 'h' ? el.scale?.horizontal : el.scale?.vertical;
-    const params = el.params;
 
     if (explicit === 'strech' || explicit === 'move' || explicit === 'center') return explicit;
     if (explicit === 'fixed') return 'fixed';
 
-    const scale = params & (axis === 'h' ? PARAM.H_MASK : PARAM.V_MASK);
+    const scale = el.params & (axis === 'h' ? PARAM.H_MASK : PARAM.V_MASK);
 
     if (scale === (axis === 'h' ? PARAM.H_CENTER : PARAM.V_CENTER)) return 'center';
     if (scale === (axis === 'h' ? PARAM.H_STRECH : PARAM.V_STRECH)) return 'strech';
     if (scale === (axis === 'h' ? PARAM.H_MOVE : PARAM.V_MOVE)) return 'move';
 
-    const align = params & (axis === 'h' ? PARAM.ALIGN_H_MASK : PARAM.ALIGN_V_MASK);
-
-    if (align === (axis === 'h' ? PARAM.ALIGN_H_CENTER : PARAM.ALIGN_V_MIDDLE)) return 'center';
-    if (align === (axis === 'h' ? PARAM.ALIGN_RIGHT : PARAM.ALIGN_BOTTOM)) return 'move';
-
-    if (el.infer) return inferAnchor(el, parent, axis);
-
-    // Even in a designed layout, a box that exactly fills its parent's axis (a content
-    // container as wide as the window) was clearly meant to fill it.
-    return fillsAxis(el, parent, axis) && !RIGID_TAGS.has(el.tag) ? 'strech' : 'fixed';
-};
-
-/** The element's box covers the parent's whole axis (to the pixel). */
-const fillsAxis = (el: Element, parent: ParentBox, axis: 'h' | 'v'): boolean => {
-    const size = axis === 'h' ? parent.width : parent.height;
-    const start = num(el.attrs[axis === 'h' ? 'x' : 'y']);
-    const extent = num(el.attrs[axis === 'h' ? 'width' : 'height']);
-
-    return size > 0 && start === 0 && extent === size;
-};
-
-/** How far from a parent edge an element may sit and still count as touching it. */
-const ANCHOR_SLACK = 12;
-
-/** How unequal an element's two margins may be for it to still count as centred. */
-const CENTER_SLACK = 8;
-
-/** Elements whose art can't stretch without distorting - they may move or centre, never grow. */
-const RIGID_TAGS = new Set([ 'bitmap', 'static_bitmap', 'icon', 'iconbutton', 'checkbox', 'radiobutton', 'closebutton', 'display_object_wrapper', 'selector', 'shape' ]);
-
-/**
- * Anchors for a layout that never configured any: the Flash tool defaulted every element to
- * `fixed`, which only mattered when the window could be resized (and most couldn't). Read the
- * intent off the geometry instead - an element that spans its parent's axis stretches with it,
- * one that hugs the far edge moves with it, one sitting in the middle stays centred.
- */
-const inferAnchor = (el: Element, parent: ParentBox, axis: 'h' | 'v'): Anchor => {
-    const size = axis === 'h' ? parent.width : parent.height;
-    const start = num(el.attrs[axis === 'h' ? 'x' : 'y']);
-    const extent = num(el.attrs[axis === 'h' ? 'width' : 'height']);
-    const end = size - start - extent;
-
-    if (size <= 0 || extent <= 0) return 'fixed';
-
-    const spans = start <= ANCHOR_SLACK && Math.abs(end) <= ANCHOR_SLACK && extent >= size / 2;
-
-    if (spans) return RIGID_TAGS.has(el.tag) ? 'fixed' : 'strech';
-    if (Math.abs(end) <= ANCHOR_SLACK && start > ANCHOR_SLACK) return 'move';
-    if (Math.abs(start - end) <= CENTER_SLACK && start > ANCHOR_SLACK) return 'center';
-
     return 'fixed';
 };
 
-/** Spans the cross axis of a flow parent: the row/cell takes the list's width (or height) instead of a fixed one. */
-const spansCrossAxis = (el: Element, parent: ParentBox, axis: 'h' | 'v'): boolean => {
-    if (!el.infer || parent.wrap || RIGID_TAGS.has(el.tag)) return false;
-    if (parent.direction !== (axis === 'h' ? 'column' : 'row')) return false;
+/**
+ * `WindowController.setRectangle`'s `on_resize_align_*`: when a window changes size without
+ * moving - a text fitting its caption, a bitmap fitting its asset - `right` keeps its right edge
+ * where it was (`x -= dw`), `center` its centre (`x += dw / 2`), and the default its left edge.
+ */
+const resizeAlign = (el: Element, axis: 'h' | 'v'): 'start' | 'center' | 'end' => {
+    const align = el.params & (axis === 'h' ? PARAM.ALIGN_H_MASK : PARAM.ALIGN_V_MASK);
 
-    const size = axis === 'h' ? parent.width : parent.height;
-    const extent = num(el.attrs[axis === 'h' ? 'width' : 'height']);
+    if (align === (axis === 'h' ? PARAM.ALIGN_H_CENTER : PARAM.ALIGN_V_MIDDLE)) return 'center';
+    if (align === (axis === 'h' ? PARAM.ALIGN_RIGHT : PARAM.ALIGN_BOTTOM)) return 'end';
 
-    return size > 0 && extent >= size - ANCHOR_SLACK;
+    return 'start';
 };
 
 /**
- * Which axes a root window may be resized on. The Flash limits (`width_min == width_max`) lock
- * an axis; everything else stays resizable, floored at the design size unless the XML sets a
- * smaller minimum.
+ * The axes a root frame can be resized on. `FrameController.setupScaling` shows its scaler only
+ * with a scaling flag - `mouse_scaling_target` for both axes, the horizontal or vertical trigger
+ * for one - so a frame without one is the size the layout gives it, and nothing drags it larger.
  */
-const rootSizing = (el: Element): { fields: Record<string, string | number | undefined>; resizeDirection?: string } => {
+const rootSizing = (el: Element): { fields: Record<string, string | number | undefined>; resizeDirection: string } => {
     const width = num(el.attrs.width);
     const height = num(el.attrs.height);
-    const minWidth = el.attrs.width_min ? num(el.attrs.width_min) : width;
-    const minHeight = el.attrs.height_min ? num(el.attrs.height_min) : height;
-    const maxWidth = el.attrs.width_max ? num(el.attrs.width_max) : undefined;
-    const maxHeight = el.attrs.height_max ? num(el.attrs.height_max) : undefined;
-    const lockedH = maxWidth !== undefined && maxWidth <= minWidth;
-    const lockedV = maxHeight !== undefined && maxHeight <= minHeight;
-    const fields = { width, height, minWidth, maxWidth, minHeight, maxHeight };
+    const both = !!(el.params & PARAM.SCALING_TARGET);
+    const horizontal = both || !!(el.params & PARAM.SCALING_H);
+    const vertical = both || !!(el.params & PARAM.SCALING_V);
+    const fields = {
+        width,
+        height,
+        minWidth: el.attrs.width_min ? num(el.attrs.width_min) : undefined,
+        maxWidth: el.attrs.width_max ? num(el.attrs.width_max) : undefined,
+        minHeight: el.attrs.height_min ? num(el.attrs.height_min) : undefined,
+        maxHeight: el.attrs.height_max ? num(el.attrs.height_max) : undefined,
+    };
 
-    return { fields, resizeDirection: lockedH && lockedV ? 'none' : lockedH ? 'y' : lockedV ? 'x' : undefined };
+    return { fields, resizeDirection: (horizontal && vertical) ? 'all' : horizontal ? 'x' : vertical ? 'y' : 'none' };
 };
 
-/** Insets of the Flash `frame` skin around its content: 6px sides, a 33px header and 8px bottom. */
-const FRAME_CONTENT_INSET = { h: 12, v: 41 };
+/**
+ * Each frame style's content margins - `left, top, right, bottom` of the `_CONTENT` container in
+ * the window layout its `habbo_element_description` row names (`FrameController.margins`). A
+ * frame's `margin_*` vars override them one by one (`FrameController.set properties`), and its
+ * children are placed from that content box.
+ */
+const FRAME_MARGINS: Map<string, [ number, number, number, number ]> = (() => {
+    const margins = new Map<string, [ number, number, number, number ]>();
+    const dir = join(RESOURCE_DIR, 'habbo-window-manager-com');
+    const description = existsSync(join(dir, 'habbo_element_description.xml')) ? parseXml(readFileSync(join(dir, 'habbo_element_description.xml'), 'utf8')) : undefined;
+    const rows: XmlNode[] = [];
+    const collect = (node: XmlNode) => {
+        if (node.tag === 'window' && node.attrs.type === 'frame') rows.push(node);
+        node.children.forEach(collect);
+    };
+
+    if (description) collect(description);
+
+    for (const row of rows) {
+        const file = join(dir, (row.attrs.window_layout ?? '').replace(/_xml$/, '.xml'));
+
+        if (!row.attrs.window_layout || !existsSync(file)) continue;
+
+        const layout = parseXml(readFileSync(file, 'utf8'));
+        let content: XmlNode | undefined;
+        const find = (node: XmlNode) => {
+            if (!content && /(^|,)\s*_CONTENT\s*(,|$)/.test(node.attrs.tags ?? '')) content = node;
+            node.children.forEach(find);
+        };
+
+        if (!layout) continue;
+
+        find(layout);
+
+        if (!content) continue;
+
+        const x = num(content.attrs.x);
+        const y = num(content.attrs.y);
+
+        margins.set(row.attrs.style, [ x, y, num(layout.attrs.width) - x - num(content.attrs.width), num(layout.attrs.height) - y - num(content.attrs.height) ]);
+    }
+
+    return margins;
+})();
+
+/** A frame's content margins: its style's, with any `margin_*` var of its own over them. */
+const frameMargins = (el: Element): [ number, number, number, number ] => {
+    const [ left, top, right, bottom ] = FRAME_MARGINS.get(el.attrs.style ?? '0') ?? FRAME_MARGINS.get('0') ?? [ 0, 0, 0, 0 ];
+    const own = (key: string, fallback: number) => ((el.vars[key] !== undefined) ? num(el.vars[key]) : fallback);
+
+    return [ own('margin_left', left), own('margin_top', top), own('margin_right', right), own('margin_bottom', bottom) ];
+};
 
 /** The box a frame's children are placed in (the XML positions them from the content edge, not the frame edge). */
-const frameContentBox = (el: Element): ParentBox => ({ width: num(el.attrs.width) - FRAME_CONTENT_INSET.h, height: num(el.attrs.height) - FRAME_CONTENT_INSET.v, flow: false, name: el.attrs.name });
+const frameContentBox = (el: Element): ParentBox => {
+    const [ left, top, right, bottom ] = frameMargins(el);
+
+    return { width: num(el.attrs.width) - left - right, height: num(el.attrs.height) - top - bottom, flow: false, name: el.attrs.name };
+};
 
 /**
  * True when this element's own box will hold an absolutely-positioned child whose horizontal
@@ -1054,15 +1207,120 @@ const frameContentBox = (el: Element): ParentBox => ({ width: num(el.attrs.width
  * own `alignSelf` covers it.
  */
 const centersHChild = (el: Element, box: ParentBox = selfBox(el)): boolean => box.width > 0
-    && el.children.some(child => anchor(child, box, 'h') === 'center');
+    && el.children.some(child => anchor(child, box, 'h') === 'center' || (sizesItself(child, 'h') && anchor(child, box, 'h') === 'fixed' && resizeAlign(child, 'h') === 'center'));
+
+/**
+ * A leaf whose own size follows its content on this axis - a text or bitmap flagged to reflect
+ * its resize to its parent - the one kind of window `on_resize_align_*` re-places.
+ */
+const sizesItself = (el: Element, axis: 'h' | 'v'): boolean => ownSizeAxes(el)[axis];
+
+/**
+ * The axes a window resizes itself on, which is what `on_resize_align_*` then re-places:
+ *
+ * - a `label` always fits its text (`TextLabelController.refreshTextImage`);
+ * - a text with `auto_size` other than `none` fits its text: `left` on both axes, `center` and
+ *   `right` on the height only (`TextController.refreshTextImage`), and a wrapping field keeps its
+ *   width and grows down;
+ * - a bitmap with `fit_size_to_contents` takes its bitmap's size.
+ */
+const ownSizeAxes = (el: Element): { h: boolean; v: boolean } => {
+    if (el.tag === 'label') return { h: true, v: true };
+    if (TEXT_TAGS.has(el.tag)) {
+        const autoSize = el.vars.auto_size ?? 'none';
+
+        if (autoSize === 'none') return { h: false, v: false };
+
+        return { h: autoSize === 'left' && !flashBool(el.vars.word_wrap), v: true };
+    }
+    if (el.tag === 'bitmap' || el.tag === 'static_bitmap') {
+        const fits = flashBool(el.vars.fit_size_to_contents);
+
+        return { h: fits, v: fits };
+    }
+
+    return { h: false, v: false };
+};
+
+/** A `relative(N)` tag's N - the child's share of a box sizer's free space - or 0. */
+const relativeShare = (el: Element): number => {
+    const tag = [ ...tagSet(el) ].map(value => /^relative\((\d+(?:\.\d+)?)\)$/.exec(value)).find(Boolean);
+
+    return tag ? Number(tag[1]) : 0;
+};
+
+/**
+ * A `boxsizer` (`BoxSizerController.arrangeChildren`): its visible children in a row (a column
+ * with `vertical`), the first at the padding, each next one `spacing` after the last, all at the
+ * cross-axis padding. It never sizes itself or a child's cross axis. Defaults are the
+ * controller's own fields (spacing 5, padding 8) - every layout writes all three anyway.
+ */
+const boxSizerLayout = (el: Element): { direction: 'row' | 'column'; fields: Record<string, string | number | undefined> } => {
+    const direction = flashBool(el.vars.vertical) ? 'column' : 'row';
+    const spacing = num(el.vars.spacing, 5);
+    const paddingH = num(el.vars.padding_horizontal, 8);
+    const paddingV = num(el.vars.padding_vertical, 8);
+
+    return {
+        direction,
+        fields: {
+            flexDirection: `'${direction}'`,
+            alignItems: '\'flex-start\'',
+            gap: spacing || undefined,
+            paddingLeft: paddingH || undefined,
+            paddingRight: paddingH || undefined,
+            paddingTop: paddingV || undefined,
+            paddingBottom: paddingV || undefined,
+        },
+    };
+};
+
+/** A child's XML rect reaches outside `box`. */
+const overflowsBox = (child: Element, box: ParentBox): boolean => {
+    const x = num(child.attrs.x);
+    const y = num(child.attrs.y);
+
+    return x < 0 || y < 0 || (x + num(child.attrs.width)) > box.width || (y + num(child.attrs.height)) > box.height;
+};
+
+/**
+ * Whether a window cuts off what its children draw past its edges. `clipping` is on for every
+ * window unless the XML says `false` (`WindowModel`), and `WindowRenderer.childRectToClippedDrawRegion`
+ * clips each child drawing into a shared graphic context (`use_parent_graphic_context`) to every
+ * clipping ancestor; a child with its own context escapes it unless it is `force_clipping`. So the
+ * box clips when a child it would clip actually reaches outside it - measured on the XML geometry,
+ * since a clip nothing crosses changes no pixel and costs a mask. An item list's items fill its
+ * internal container, which the list clips the same way unless it grows to fit them.
+ */
+const clipsChildren = (el: Element): boolean => {
+    if (el.attrs.clipping === 'false') return false;
+
+    const box = selfBox(el);
+    const list = LIST_TAGS[el.tag] ? listDirection(el) : undefined;
+
+    if (list) {
+        if (list.scroll || bool(el.vars.resize_on_item_update)) return false;
+
+        const spacing = num(el.vars.spacing);
+        const items = el.children.filter(child => child.attrs.visible !== 'false' && !SKIPPED_TAGS.has(child.tag));
+        const main = list.direction === 'column' ? 'height' : 'width';
+        const extent = items.reduce((sum, child) => sum + num(child.attrs[main]), 0) + (Math.max(0, items.length - 1) * spacing);
+
+        return !list.wrap && extent > box[main];
+    }
+
+    return el.children.some(child => !!(child.params & (PARAM.PARENT_GC | PARAM.FORCE_CLIPPING)) && child.attrs.visible !== 'false' && overflowsBox(child, box));
+};
 
 const centerExtra = (el: Element, box?: ParentBox): Record<string, string | undefined> => ({ justifyContent: centersHChild(el, box) ? '\'center\'' : undefined });
 
 interface BoxLayoutOptions {
-    /** `reflect_*_resize_to_parent` leaf (a text or bitmap): size to content on that axis instead of the XML box. */
+    /** A leaf (text or bitmap) placed at its own box: the axes it sizes itself on (`ownSizeAxes`) drop the XML size. */
     autoSize?: boolean;
     /** The element lays its children out in flow (a list), so `expand/resize_to_accommodate_children` can be honoured. */
     growsWithChildren?: boolean;
+    /** The axis a list sizes to its items on (`resize_on_item_update`), so the XML size is dropped there. */
+    contentAxis?: 'width' | 'height';
 }
 
 /** Absolute placement from x/y/width/height + the anchoring bits, or flow sizing in a list. */
@@ -1072,8 +1330,9 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
     const width = num(el.attrs.width);
     const height = num(el.attrs.height);
     const fields: Record<string, string | number | undefined> = {};
-    const autoWidth = !!options.autoSize && !!(el.params & PARAM.REFLECT_H);
-    const autoHeight = !!options.autoSize && !!(el.params & PARAM.REFLECT_V);
+    // A window that sizes itself (`ownSizeAxes`) takes no XML size on that axis.
+    const autoWidth = !!options.autoSize && ownSizeAxes(el).h;
+    const autoHeight = !!options.autoSize && ownSizeAxes(el).v;
     // `expand_to_accommodate_children` only ever grows, so the XML box becomes a minimum;
     // `resize_to_accommodate_children` (expand + shrink) frees the size entirely. Only
     // meaningful where children actually contribute to the flex size (a list's rows) - a box
@@ -1081,7 +1340,7 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
     const expands = !!options.growsWithChildren && !!(el.params & PARAM.EXPAND_TO_CHILDREN);
     const shrinks = expands && !!(el.params & PARAM.SHRINK_TO_CHILDREN);
     const sizeField = (axis: 'width' | 'height', value: number, auto: boolean) => {
-        if (auto || shrinks) return;
+        if (auto || shrinks || options.contentAxis === axis) return;
 
         if (expands) fields[axis === 'width' ? 'minWidth' : 'minHeight'] = value;
         else fields[axis] = value;
@@ -1090,11 +1349,25 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
     if (parent.omitPlacement) {
         fields.position = '\'absolute\'';
     } else if (parent.flow) {
-        // A row as wide as its list (a cell as tall as its strip) follows the list's size.
-        if (spansCrossAxis(el, parent, 'h') && !autoWidth) fields.alignSelf = '\'stretch\'';
+        // `ItemListController.updateScrollAreaRegion` sets only an item's main-axis coordinate
+        // (`y` down a vertical list, `x` along a horizontal one); the other stays the item's own,
+        // so a row the layout puts at x 1 sits one pixel in. A grid places both.
+        // `BoxSizerController.calculateSpaceForRelatives`: a `relative(N)` child takes N shares of
+        // what the fixed children and the spacing leave, on the sizer's axis.
+        const share = parent.sizer ? relativeShare(el) : 0;
+        const mainAxis = parent.direction === 'column' ? 'height' : 'width';
+
+        if (share) {
+            fields.flexGrow = share;
+            fields.flexBasis = 0;
+        } else {
+            sizeField(mainAxis, mainAxis === 'width' ? width : height, mainAxis === 'width' ? autoWidth : autoHeight);
+        }
+
+        if (mainAxis === 'width') sizeField('height', height, autoHeight);
         else sizeField('width', width, autoWidth);
-        if (spansCrossAxis(el, parent, 'v') && !autoHeight) fields.alignSelf = '\'stretch\'';
-        else sizeField('height', height, autoHeight);
+        if (!parent.wrap && !parent.sizer && parent.direction === 'column' && x) fields.marginLeft = x;
+        if (!parent.wrap && !parent.sizer && parent.direction === 'row' && y) fields.marginTop = y;
         fields.flexShrink = 0;
     } else {
         fields.position = '\'absolute\'';
@@ -1126,6 +1399,16 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
             }
 
             sizeField('width', width, autoWidth);
+        } else if (autoWidth && resizeAlign(el, 'h') === 'end' && parent.width > 0) {
+            fields.right = parent.width - x - width;
+        } else if (autoWidth && resizeAlign(el, 'h') === 'center' && parent.width > 0) {
+            // The parent centres it (`centersHChild`), shifted by its design offset.
+            const offset = x + width / 2 - parent.width / 2;
+
+            if (offset) {
+                fields.marginLeft = offset;
+                fields.marginRight = -offset;
+            }
         } else {
             fields.left = x;
             sizeField('width', width, autoWidth);
@@ -1151,6 +1434,17 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
             }
 
             sizeField('height', height, autoHeight);
+        } else if (autoHeight && resizeAlign(el, 'v') === 'end' && parent.height > 0) {
+            fields.bottom = parent.height - y - height;
+        } else if (autoHeight && resizeAlign(el, 'v') === 'center' && parent.height > 0) {
+            const offset = y + height / 2 - parent.height / 2;
+
+            fields.alignSelf = '\'center\'';
+
+            if (offset) {
+                fields.marginTop = offset;
+                fields.marginBottom = -offset;
+            }
         } else {
             fields.top = y;
             sizeField('height', height, autoHeight);
@@ -1161,7 +1455,7 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
     if (el.attrs.width_max) fields.maxWidth = num(el.attrs.width_max);
     if (el.attrs.height_min) fields.minHeight = num(el.attrs.height_min);
     if (el.attrs.height_max) fields.maxHeight = num(el.attrs.height_max);
-    if (el.attrs.clipping === 'true' || (el.params & PARAM.FORCE_CLIPPING)) fields.overflow = '\'hidden\'';
+    if (clipsChildren(el)) fields.overflow = '\'hidden\'';
 
     const literal = layoutLiteral({ ...fields, ...extra });
 
@@ -1194,6 +1488,8 @@ const metaProps = (ctx: EmitContext, el: Element): string[] => {
     const tooltip = captionExpr(ctx, el.vars.tool_tip_caption);
 
     if (tooltip) props.push(jsxAttr('tooltip', tooltip));
+    // `WindowToolTipAgent.begin` waits the window's own `tool_tip_delay` (500 by default).
+    if (tooltip && el.vars.tool_tip_delay !== undefined && num(el.vars.tool_tip_delay, 500) !== 500) props.push(`tooltipDelay={${num(el.vars.tool_tip_delay)}}`);
     // A name `DynamicStyleManager` does not define resolves to a bare `DynamicStyle` with no rules,
     // so only its five (`DYNAMIC_STYLES` in theme/utils/dynamicStyles.ts) are emitted.
     if (el.attrs.dynamic_style && DYNAMIC_STYLE_NAMES.has(el.attrs.dynamic_style)) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
@@ -1300,25 +1596,15 @@ const dynamicRoleProp = (el: Element): string[] => {
     return role ? [ `dynamicRole="${role.slice(1)}"` ] : [];
 };
 
-/**
- * The alpha byte of a Flash colour attribute (`0xffa1a19b` -> 255; `0x0666666`, `0x666666` ->
- * 0). The client fills a skinned window's buffer with the *whole* colour, so a set byte paints
- * an opaque fill under the skin. More than eight digits wrap like its `uint()` cast does.
- */
-const colorAlphaByte = (value: string | undefined): number => {
-    if (!value) return 0;
-
-    const digits = value.replace(/^0x/i, '').replace(/[^0-9a-f]/gi, '');
-
-    if (digits.length <= 6) return 0;
-
-    return parseInt(digits.slice(-8).padStart(8, '0').slice(0, 2), 16);
-};
-
 /** Boolean configuration flags a page puts on a catalog widget slot. */
 const widgetFlagProps = (el: Element): string[] => [ ...tagSet(el) ].map(tag => WIDGET_FLAGS[tag]).filter(Boolean);
 
-const dropShadowProp = (el: Element): string[] => (el.dropShadow ? [ `dropShadow={${layoutLiteral({ ...el.dropShadow, color: el.dropShadow.color ? quote(el.dropShadow.color) : undefined })}}` ] : []);
+/**
+ * `WindowController.set filters` applies a filter only to a window with a graphic context of its
+ * own (`if(hasGraphicsContext())`): on one drawing into its parent's (`use_parent_graphic_context`)
+ * the `<DropShadowFilter>` is dropped. A frame always has its own (`FrameController` clears the flag).
+ */
+const dropShadowProp = (el: Element): string[] => ((el.dropShadow && (el.tag === 'frame' || !(el.params & PARAM.PARENT_GC))) ? [ `dropShadow={${layoutLiteral({ ...el.dropShadow, color: el.dropShadow.color ? quote(el.dropShadow.color) : undefined })}}` ] : []);
 
 const variantProp = (el: Element): string[] => (el.attrs.style !== undefined ? [ `variant="${el.attrs.style}"` ] : []);
 
@@ -1381,7 +1667,8 @@ const LIST_TAGS: Record<string, { direction: 'row' | 'column'; wrap?: boolean; s
     itemgrid_vertical: { direction: 'row', wrap: true },
     scrollable_itemlist_vertical: { direction: 'column', scroll: 'vertical' },
     scrollable_itemgrid_vertical: { direction: 'row', wrap: true, scroll: 'vertical' },
-    selector_list: { direction: 'column' },
+    // `SelectorListController.updateSelectableRegion`: a row unless `vertical`; see `listDirection`.
+    selector_list: { direction: 'row' },
 };
 
 const AUTO_SIZE_JUSTIFY: Record<string, string> = { left: '\'flex-start\'', center: '\'center\'', right: '\'flex-end\'' };
@@ -1494,17 +1781,26 @@ const textFormatVars = (el: Element): { options: Record<string, string | number 
 const textElement = (ctx: EmitContext, el: Element, parentName?: string): { props: string[]; hasText: boolean; wordWrap: boolean; autoSize: string } => {
     const caption = captionExpr(ctx, el.attrs.caption);
     const textStyle = resolveTextStyle(el.vars.text_style) ?? themeTextStyle(el);
+    // A `label` (`TextLabelController`) reads only its style, colour and margins, draws through
+    // one cached single-line field per style, and sizes itself to the text in both directions.
+    const label = el.tag === 'label';
+    const autoSizeVar = label ? 'left' : (el.vars.auto_size ?? 'none');
     // `setTextColor` records the colour and `setTextFormatting` re-applies the style over it
     // whenever that record is falsy, so `text_color="0x0"` is the style's colour, not black.
-    const fill = varApplies('text_color', el.vars.text_color) ? hexColor(el.vars.text_color) : undefined;
-    const wordWrap = !!(bool(el.vars.word_wrap) || bool(el.vars.multiline));
+    // A label sets its colour whenever the var is there (`0x0` is black); a text re-applies its
+    // style over a falsy one.
+    const fill = (label ? el.vars.text_color !== undefined : varApplies('text_color', el.vars.text_color)) ? hexColor(el.vars.text_color) : undefined;
+    // `word_wrap` alone wraps; `multiline` only lets an input take Enter (a Flash `TextField`
+    // breaks at an explicit line break either way).
+    const wordWrap = !label && flashBool(el.vars.word_wrap);
     const autoSize = el.vars.auto_size && AUTO_SIZE_JUSTIFY[el.vars.auto_size] ? el.vars.auto_size : 'left';
-    const format = textFormatVars(el);
+    const format = label ? { options: {}, flash: {} } : textFormatVars(el);
     const textOptions: Record<string, string | number | undefined> = {
         fill: textColorExpr(ctx, el, fill),
         ...format.options,
         wordWrap: wordWrap ? 'true' : undefined,
-        wordWrapWidth: wordWrap && !(el.params & PARAM.REFLECT_H) ? num(el.attrs.width) : undefined,
+        // A `TextField` wraps inside its 2px gutter on either side, so at the field's width less 4.
+        wordWrapWidth: wordWrap ? num(el.attrs.width) - textMargins(el)[0] - textMargins(el)[2] - 4 : undefined,
         align: autoSize !== 'left' ? quote(autoSize) : undefined,
     };
     const props: string[] = [];
@@ -1518,6 +1814,23 @@ const textElement = (ctx: EmitContext, el: Element, parentName?: string): { prop
     if (textStyle !== 'regular') props.push(`textStyle="${textStyle}"`);
     if (Object.values(textOptions).some(value => value !== undefined)) props.push(`textOptions={${layoutLiteral(textOptions)}}`);
     if (Object.values(format.flash).some(value => value !== undefined)) props.push(`flashFormat={${layoutLiteral(format.flash)}}`);
+    // `formatted_text` and `html` put their caption into `htmlText`.
+    if (el.tag === 'formatted_text' || el.tag === 'html') props.push('markup');
+    // `auto_size="none"` (the default) forces the field to the window's box, so what does not
+    // fit is cut off; with `overflow_replace` the caption is shortened to fit instead, which
+    // `refreshTextImage` does for `none` and `right` only.
+    if (!label && autoSizeVar === 'none') props.push('clip');
+    if (!label && el.vars.overflow_replace && (autoSizeVar === 'none' || autoSizeVar === 'right')) {
+        const [ left, top, right, bottom ] = textMargins(el);
+
+        props.push(`overflowReplace={${layoutLiteral({
+            replace: quote(decode(el.vars.overflow_replace)),
+            width: num(el.attrs.width) - left - right,
+            height: num(el.attrs.height) - top - bottom,
+            marginX: left + right,
+            marginY: top + bottom,
+        })}}`);
+    }
     props.push(...dynamicRoleProp(el));
     if (hasText) ctx.imports.add('ThemeText');
 
@@ -1562,14 +1875,36 @@ const fillsHost = (child: Element, host: Element): boolean =>
  */
 /** Does a text/bitmap box need a `Region` of its own (something only a container can carry)? */
 const needsRegion = (ctx: EmitContext, box: Element, el: Element, host: Element | undefined): boolean => {
-    if (box.dropShadow || box.attrs.blend) return true;
+    if (dropShadowProp(box).length || box.attrs.blend) return true;
     if (el.tag === 'link') return true;
     if (host && (host.tag === 'region' || host.tag === 'container') && host.attrs.name && (host.params & PARAM.INPUT)) return true;
+    if (textMargins(el).some(Boolean)) return true;
 
-    const bgColor = hexColor(box.attrs.color);
-
-    return !!(bgColor && (box.attrs.background === 'true' || box.tag === 'background' || box.tag === 'gradient'));
+    return !!fillOf(box);
 };
+
+/** A text's `textMargins` as the padding of the box that holds it - only the sides that have one. */
+const marginPadding = (el: Element): Record<string, number | undefined> => {
+    const [ left, top, right, bottom ] = textMargins(el);
+
+    return { paddingLeft: left || undefined, paddingTop: top || undefined, paddingRight: right || undefined, paddingBottom: bottom || undefined };
+};
+
+/** A window's `fillOf` as `Region` props, the colour overridable where a `RECOLORABLE_*` tag says so. */
+const fillProps = (ctx: EmitContext, el: Element): string[] => {
+    const fill = fillOf(el);
+
+    if (!fill) return [];
+
+    return [ jsxAttr('backgroundColor', recolorExpr(ctx, el, fill.color)!), ...(fill.alpha < 1 ? [ `backgroundAlpha={${fill.alpha}}` ] : []) ];
+};
+
+/**
+ * A text's `margins` (`TextController`'s `margin_left/top/right/bottom`, all 0 by default): the
+ * `TextField` sits that far inside the window. Left, top, right, bottom.
+ */
+const textMargins = (el: Element): [ number, number, number, number ] =>
+    [ num(el.vars.margin_left), num(el.vars.margin_top), num(el.vars.margin_right), num(el.vars.margin_bottom) ];
 
 const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, host?: Element): string[] => {
     const box = host ?? el;
@@ -1582,7 +1917,8 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
         const props = [
             ...textProps,
             ...metaProps(ctx, box),
-            ...(wordWrap ? [ 'verticalAlign="top"' ] : []),
+            // `TextSkinRenderer` / `LabelRenderer` draw the field at the top margin, never centred.
+            'verticalAlign="top"',
             `layout={${boxLayout(box, parent, {}, { autoSize: !host })}}`,
         ];
 
@@ -1598,7 +1934,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
         ...dropShadowProp(box),
         ...(host ? blendProp(host) : []),
         ...((!host || !(host.params & PARAM.PARENT_GC)) ? alphaProp(box) : []),
-        `layout={${boxLayout(box, parent, { flexDirection: '\'row\'', alignItems: wordWrap ? '\'flex-start\'' : '\'center\'', justifyContent: AUTO_SIZE_JUSTIFY[autoSize] }, { autoSize: !host })}}`,
+        `layout={${boxLayout(box, parent, { flexDirection: '\'row\'', alignItems: '\'flex-start\'', justifyContent: AUTO_SIZE_JUSTIFY[autoSize], ...marginPadding(el) }, { autoSize: !host })}}`,
     ];
 
     if (el.tag === 'link') {
@@ -1609,9 +1945,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
         regionProps.push('cursor="pointer"');
     }
 
-    const bgColor = hexColor(box.attrs.color);
-
-    if (bgColor && (box.attrs.background === 'true' || box.tag === 'background' || box.tag === 'gradient')) regionProps.push(jsxAttr('backgroundColor', recolorExpr(ctx, box, bgColor)!));
+    regionProps.push(...fillProps(ctx, box));
 
     // A text with no style/options of its own is a bare child - the Region wraps it in a
     // default-styled ThemeText itself.
@@ -1632,6 +1966,43 @@ const declaredBitmapSize = (el: Element): { width: number; height: number } | un
     const height = num(el.attrs.height);
 
     return width > 0 && height > 0 ? { width, height } : undefined;
+};
+
+/** A `Boolean` var as `XMLPropertyArrayParser` reads one: `"true"`, or an integer above 0. */
+const flashBool = (value: string | undefined): boolean => value !== undefined && (value === 'true' || Math.trunc(Number(value)) > 0);
+
+const PIVOT_NAMES = new Set([ 'top left', 'top center', 'top right', 'center left', 'center', 'center right', 'bottom left', 'bottom center', 'bottom right' ]);
+
+/**
+ * A bitmap window's `BitmapDataController` vars as `ThemeImage`'s `bitmap` object - only the ones
+ * that differ from the defaults every theme gives (`ThemeManager`: stretched on both axes, zoom 1,
+ * `top left`, no wrap, flip, turn or etching), since `FlashBitmap` fills in the same defaults. An
+ * unknown pivot name is left out: the client's `PivotPoint` lookup finds nothing for it.
+ */
+const bitmapVars = (el: Element): string => {
+    const v = el.vars;
+    const fields: Record<string, string | number | undefined> = {};
+    const flag = (key: string, field: string, fallback: boolean) => {
+        if (v[key] !== undefined && flashBool(v[key]) !== fallback) fields[field] = String(!fallback);
+    };
+    const number = (key: string, field: string, fallback: number) => {
+        if (v[key] !== undefined && Number.isFinite(Number(v[key])) && Number(v[key]) !== fallback) fields[field] = Number(v[key]);
+    };
+
+    flag('stretched_x', 'stretchedX', true);
+    flag('stretched_y', 'stretchedY', true);
+    number('zoom_x', 'zoomX', 1);
+    number('zoom_y', 'zoomY', 1);
+    if (v.pivot_point && PIVOT_NAMES.has(v.pivot_point) && v.pivot_point !== 'top left') fields.pivot = quote(v.pivot_point);
+    flag('wrap_x', 'wrapX', false);
+    flag('wrap_y', 'wrapY', false);
+    flag('flip_x', 'flipX', false);
+    flag('flip_y', 'flipY', false);
+    number('rotation', 'rotation', 0);
+    if (v.etching_color !== undefined && flashColor(v.etching_color)) fields.etchingColor = `0x${flashColor(v.etching_color).toString(16).toUpperCase().padStart(8, '0')}`;
+    flag('fit_size_to_contents', 'fitSizeToContents', false);
+
+    return Object.keys(fields).length ? layoutLiteral(fields) : '{}';
 };
 
 const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, host?: Element): string[] => {
@@ -1658,10 +2029,9 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     if (override && src) props.push(`src={${override} ?? ${src}}`);
     else props.push(jsxAttr('src', override ?? src ?? 'undefined'));
 
-    if (bool(el.vars.stretched_x) || bool(el.vars.fit_size_to_contents) === false) props.push(`width={${num(el.attrs.width)}}`);
-    if (bool(el.vars.stretched_y) || bool(el.vars.fit_size_to_contents) === false) props.push(`height={${num(el.attrs.height)}}`);
+    props.push(`bitmap={${bitmapVars(el)}}`);
     // `BitmapDataRenderer`: the bitmap drawn as luminance, then multiplied by the window colour.
-    if (bool(el.vars.greyscale)) props.push('greyscale');
+    if (flashBool(el.vars.greyscale)) props.push('greyscale');
 
     const tint = hexColor(el.attrs.color);
 
@@ -1671,9 +2041,12 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     if (tintOverride && tintExpr) props.push(`tint={${tintOverride} ?? ${tintExpr}}`);
     else if (tintOverride) props.push(`tint={${tintOverride}}`);
     else if (tintExpr) props.push(jsxAttr('tint', tintExpr));
-    props.push(...blendProp(el), ...alphaProp(el), ...dynamicRoleProp(el));
+    props.push(...blendProp(el), ...alphaProp(el), ...dynamicRoleProp(el), ...hitThresholdProp(el), ...dragProps(el, { target: false }));
 
     ctx.imports.add('ThemeImage');
+    // `fit_size_to_contents` gives the window the bitmap's size (`FlashBitmap` sets it from the
+    // texture); a reflect bit then carries that resize to the parent, and the resize alignment
+    // decides which edge stays put.
     props.push(`layout={${boxLayout(host ?? el, parent, {}, { autoSize: !host })}}`);
 
     // Only a drop shadow needs a Region around the image.
@@ -1686,9 +2059,17 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     return wrap('Region', [ ...dropShadowProp(el), `layout={${boxLayout(el, parent)}}` ], indent, image);
 };
 
-const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
+/** A list's flow, with a selector list's `vertical` var turning it into a column. */
+const listDirection = (el: Element): { direction: 'row' | 'column'; wrap?: boolean; scroll?: 'vertical' | 'horizontal' } => {
     const list = LIST_TAGS[el.tag];
-    const scroll = list.scroll ?? (el.attrs.name ? ctx.scrollTargets.get(el.attrs.name) : undefined);
+
+    return (el.tag === 'selector_list' && flashBool(el.vars.vertical)) ? { ...list, direction: 'column' } : list;
+};
+
+const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
+    const list = listDirection(el);
+    const target = el.attrs.name ? ctx.scrollTargets.get(el.attrs.name) : undefined;
+    const scroll = list.scroll ?? target?.orientation;
     const spacing = num(el.vars.spacing);
     const flowLayout: Record<string, string | number | undefined> = {
         flexDirection: `'${list.direction}'`,
@@ -1700,12 +2081,18 @@ const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 
     const innerParent: ParentBox = { ...selfBox(el, true), direction: list.direction, wrap: !!list.wrap };
     const meta = [ ...metaProps(ctx, el), ...dropShadowProp(el) ];
-    const background = el.attrs.background === 'true' && hexColor(el.attrs.color) ? [ `backgroundColor="${hexColor(el.attrs.color)!}"` ] : [];
+    const background = fillProps(ctx, el);
     const contentIndent = scroll ? indent + INDENT : indent;
     const children = emitListChildren(ctx, el, innerParent, contentIndent + INDENT);
 
     if (!scroll) {
-        return wrap('Region', [ ...meta, ...background, `layout={${boxLayout(el, parent, flowLayout, { growsWithChildren: true })}}` ], indent, children);
+        // `resize_on_item_update` sets the reflect flag of the list's internal container on the
+        // main axis, and the container is sized to its items on every arrange - so the list
+        // takes exactly its items' extent, larger or smaller than the layout drew it.
+        const fitsItems = flashBool(el.vars.resize_on_item_update);
+        const layout = boxLayout(el, parent, flowLayout, { growsWithChildren: true, contentAxis: fitsItems ? (list.direction === 'column' ? 'height' : 'width') : undefined });
+
+        return wrap('Region', [ ...meta, ...background, `layout={${layout}}` ], indent, children);
     }
 
     ctx.imports.add('ScrollArea');
@@ -1717,7 +2104,40 @@ const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
         children,
     );
 
-    return wrap('ScrollArea', [ `orientation="${scroll}"`, `layout={${boxLayout(el, parent)}}` ], indent, content);
+    // A `scrollable_*` list hides its bar while the items fit; a list a layout's own `scrollbar_*`
+    // window drives keeps that window, disabled (`ScrollBarController.updateLiftSizeAndPosition`).
+    const keepsDisabledBar = !list.scroll ? [ 'hideDisabledScrollbar={false}' ] : [];
+
+    // A layout's own scrollbar beside the list: the ScrollArea spans both rects, the list's
+    // viewport and the bar each placed at its own inside it, and the bar takes its window's style.
+    if (target && target.parent?.children.includes(el) && !parent.flow) {
+        const rect = (item: Element) => ({ x: num(item.attrs.x), y: num(item.attrs.y), width: num(item.attrs.width), height: num(item.attrs.height) });
+        const own = rect(el);
+        const bar = rect(target.bar);
+        const union = { x: Math.min(own.x, bar.x), y: Math.min(own.y, bar.y) };
+        const span = {
+            ...union,
+            width: Math.max(own.x + own.width, bar.x + bar.width) - union.x,
+            height: Math.max(own.y + own.height, bar.y + bar.height) - union.y,
+        };
+        const spanEl: Element = { ...el, attrs: { ...el.attrs, x: String(span.x), y: String(span.y), width: String(span.width), height: String(span.height) } };
+        const at = (box: { x: number; y: number; width: number; height: number }) => layoutLiteral({ position: '\'absolute\'', left: box.x - span.x, top: box.y - span.y, width: box.width, height: box.height });
+
+        return wrap('ScrollArea', [
+            `orientation="${scroll}"`,
+            ...(target.bar.attrs.style !== undefined ? [ `variant="${target.bar.attrs.style}"` ] : []),
+            ...keepsDisabledBar,
+            `layout={${boxLayout(spanEl, parent)}}`,
+            `viewportLayout={${at(own)}}`,
+            `scrollbarLayout={${at(bar)}}`,
+        ], indent, content);
+    }
+
+    // A `scrollable_*` list's own `style` is its scrollbar's skin (`ScrollableItemListWindow` builds
+    // the bar in the list's style).
+    const listVariant = (list.scroll && el.attrs.style !== undefined) ? [ `variant="${el.attrs.style}"` ] : [];
+
+    return wrap('ScrollArea', [ `orientation="${scroll}"`, ...listVariant, ...keepsDisabledBar, `layout={${boxLayout(el, parent)}}` ], indent, content);
 };
 
 /**
@@ -1751,9 +2171,17 @@ const emitListChildren = (ctx: EmitContext, list: Element, parent: ParentBox, in
 
     const templates = named.map(child => generateSubComponent(ctx.file, child, parent));
     const fallback = templates.map(name => `${indent}${INDENT}<${name} />`);
-    const rest = list.children.filter(child => !named.includes(child)).flatMap(child => emit(ctx, child, parent, indent));
+    const slotLines = [ `${indent}{${slot} ?? (`, ...(fallback.length === 1 ? fallback : [ `${indent}${INDENT}<>`, ...fallback.map(line => INDENT + line), `${indent}${INDENT}</>` ]), `${indent})}` ];
+    const first = list.children.indexOf(named[0]);
 
-    return [ `${indent}{${slot} ?? (`, ...(fallback.length === 1 ? fallback : [ `${indent}${INDENT}<>`, ...fallback.map(line => INDENT + line), `${indent}${INDENT}</>` ]), `${indent})}`, ...rest ];
+    // The list keeps its XML order (a list draws and flows its children in that order): the
+    // unnamed children before the first template stay before the slot, the rest after it.
+    return list.children.flatMap((child, index) => {
+        if (index === first) return slotLines;
+        if (named.includes(child)) return [];
+
+        return emit(ctx, child, parent, indent);
+    });
 };
 
 const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined, indent: string): string[] => {
@@ -1777,12 +2205,16 @@ const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined,
 
         const sizing = rootSizing(el);
 
-        if (sizing.resizeDirection) props.push(`resizeDirection="${sizing.resizeDirection}"`);
+        if (sizing.resizeDirection !== 'all') props.push(`resizeDirection="${sizing.resizeDirection}"`);
         props.push(`layout={${layoutLiteral(sizing.fields).replace(/ \}$/, ', ...layout }')}}`);
     } else {
         props.push(`onClose={${handlerProp(ctx, el, 'frameClose')}}`);
         props.push(`layout={${boxLayout(el, parent)}}`);
     }
+
+    props.push(`margins={[ ${frameMargins(el).join(', ')} ]}`);
+    // A frame is dragged by its header only when it is a `mouse_dragging_target`.
+    if (!(el.params & PARAM.DRAG_TARGET)) props.push('draggable={false}');
 
     // Children go straight into the Frame's ContentArea: an absolutely positioned child is
     // placed from its parent's padding edge in both Yoga and CSS, so no relative wrapper is
@@ -1797,8 +2229,10 @@ const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined,
 
 const emitInput = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
     const stateName = uniqueProp(ctx, `${camel(el.attrs.name || 'input')}Value`);
+    // The caption is the field's initial text (`WindowParser` -> `caption` -> `text`), localized.
+    const initial = captionExpr(ctx, el.attrs.caption);
 
-    ctx.states.push({ name: stateName });
+    ctx.states.push({ name: stateName, initial });
     ctx.imports.add('TextInput');
 
     const props = [
@@ -1807,12 +2241,31 @@ const emitInput = (ctx: EmitContext, el: Element, parent: ParentBox, indent: str
     ];
 
     if (el.vars.max_chars) props.push(`maxLength={${num(el.vars.max_chars)}}`);
-    if (bool(el.vars.multiline)) props.push('multiline');
+    if (flashBool(el.vars.multiline)) props.push('multiline');
+    // `password` windows show bullets (`display_as_password`, on by default for the type).
+    if (el.tag === 'password' || flashBool(el.vars.display_as_password)) props.push('password');
 
-    const textColor = hexColor(el.vars.text_color);
+    const textStyle = resolveTextStyle(el.vars.text_style) ?? themeTextStyle(el);
+    const textColor = varApplies('text_color', el.vars.text_color) ? hexColor(el.vars.text_color) : undefined;
+    const format = textFormatVars(el);
 
+    if (textStyle !== 'regular') props.push(`textStyle="${textStyle}"`);
+    if (format.options.fontFamily) props.push(`fontFamily={${format.options.fontFamily}}`);
+    if (format.options.fontSize) props.push(`fontSize={${format.options.fontSize}}`);
     if (textColor) props.push(`textColor="${textColor}"`);
-    if (el.attrs.background === 'true' && hexColor(el.attrs.color)) props.push(`backgroundColor="${hexColor(el.attrs.color)!}"`);
+
+    // The TextField is the whole window: text at its 2px gutter, never centred.
+    props.push('flashPlacement');
+    if (flashBool(el.vars.border)) props.push(`border="${hexColor(el.vars.border_color ?? '0x0')}"`);
+    if (el.vars.restrict) props.push(`restrict=${jsxStr(decode(el.vars.restrict))}`);
+    if (el.vars.editable !== undefined && !flashBool(el.vars.editable)) props.push('editable={false}');
+    if (flashBool(el.vars.always_show_selection)) props.push('alwaysShowSelection');
+
+    // An input fills only as any window does (`fillOf`), and the same with or without focus.
+    const fill = fillOf(el);
+
+    if (fill) props.push(`backgroundColor="${fill.color}"`, `focusedBackgroundColor="${fill.color}"`);
+    else props.push('backgroundColor={null}', 'focusedBackgroundColor={null}');
 
     props.push(`layout={${boxLayout(el, parent)}}`);
 
@@ -2093,11 +2546,37 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
                 slotChild = [ `${childIndent}{${slot}}` ];
             }
 
+            // `GradientController`: two ARGB stops along `direction`, drawn over the whole window.
+            if (tag === 'gradient') {
+                ctx.imports.add('Gradient');
+
+                const gradientProps = [
+                    ...metaProps(ctx, el),
+                    ...(el.vars.color1 !== undefined ? [ `color1={0x${flashColor(el.vars.color1).toString(16).toUpperCase().padStart(8, '0')}}` ] : []),
+                    ...(el.vars.color2 !== undefined ? [ `color2={0x${flashColor(el.vars.color2).toString(16).toUpperCase().padStart(8, '0')}}` ] : []),
+                    ...(el.vars.mode === 'radial' ? [ 'mode="radial"' ] : []),
+                    ...(el.vars.direction && el.vars.direction !== 'down' ? [ `direction="${el.vars.direction}"` ] : []),
+                    ...alphaProp(el),
+                    ...blendProp(el),
+                    `layout={${boxLayout(el, parent, centerExtra(el))}}`,
+                ];
+
+                return wrap('Gradient', gradientProps, indent, emitChildren(ctx, el, selfBox(el), childIndent));
+            }
+
             ctx.imports.add('Region');
 
-            const props = [ ...metaProps(ctx, el), ...dropShadowProp(el), ...blendProp(el), ...dynamicRoleProp(el) ];
-            const color = hexColor(el.attrs.color);
-            if (color && (el.attrs.background === 'true' || tag === 'background' || tag === 'gradient')) props.push(jsxAttr('backgroundColor', recolorExpr(ctx, el, color)!));
+            const props = [ ...metaProps(ctx, el), ...dropShadowProp(el), ...blendProp(el), ...dynamicRoleProp(el), ...dragProps(el, { target: true }) ];
+
+            if (tag === 'boxsizer') {
+                const sizer = boxSizerLayout(el);
+                const sizerParent: ParentBox = { ...selfBox(el, true), direction: sizer.direction, sizer: true };
+
+                props.push(...fillProps(ctx, el));
+
+                return wrap('Region', [ ...props, `layout={${boxLayout(el, parent, sizer.fields)}}` ], indent, el.children.flatMap(child => emit(ctx, child, sizerParent, childIndent)));
+            }
+            props.push(...fillProps(ctx, el));
             // Only a container with its own graphic context composites at its `blend`.
             if (!(el.params & PARAM.PARENT_GC)) props.push(...alphaProp(el));
 
@@ -2106,18 +2585,20 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             // MeMenuMainView.as/FriendRequestsTab.as listening for WME_CLICK on them by name.
             if ((tag === 'region' || tag === 'container') && el.attrs.name && (el.params & PARAM.INPUT)) {
                 props.push(`onPointerTap={${handlerProp(ctx, el, 'region')}}`);
-                props.push('cursor="pointer"');
+                // `MouseEventProcessor` shows an interactive window's state cursor unless `interactive_cursor_disabled`.
+                props.push(flashBool(el.vars.interactive_cursor_disabled) ? 'cursor="default"' : 'cursor="pointer"');
             }
 
             return wrap('Region', [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, [ ...slotChild, ...emitChildren(ctx, el, selfBox(el), childIndent) ]);
         }
         case 'border': {
-            const alphaByte = colorAlphaByte(el.attrs.color);
-            const fill = hexColor(el.attrs.color);
+            // The skin's buffer is filled with the window's colour before the skin draws over it
+            // (`WindowRendererItem.render`), which is the ARGB colour only with `background` on.
+            const fill = fillOf(el);
             const extra = [
                 ...(el.attrs.blend ? [ `blend={${num(el.attrs.blend)}}` ] : []),
-                ...(alphaByte > 0 && fill ? [ `backgroundColor="${fill}"` ] : []),
-                ...(alphaByte > 0 && alphaByte < 255 && fill ? [ `backgroundAlpha={${Math.round((alphaByte / 255) * 100) / 100}}` ] : []),
+                ...(fill ? [ `backgroundColor="${fill.color}"` ] : []),
+                ...(fill && fill.alpha < 1 ? [ `backgroundAlpha={${fill.alpha}}` ] : []),
             ];
 
             // `background="true"` turns the client's skin colourising off (`BitmapSkinRenderer.draw`): the colour then only fills.
@@ -2143,9 +2624,14 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             return emitThemed(ctx, 'IconButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], none);
         case 'closebutton':
             return emitThemed(ctx, 'CloseButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'close')}}` ], none);
+        // Only the illumina checkboxes and radio button have a `window_layout` - a label beside the
+        // box. The classic ones (styles 0-2) are the 15px box alone and draw no caption.
         case 'checkbox':
-        case 'radiobutton':
-            return emitThemed(ctx, tag === 'checkbox' ? 'CheckBox' : 'RadioButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], captionOnly);
+        case 'radiobutton': {
+            const labelled = num(el.attrs.style) >= 100 && num(el.attrs.style) < 200;
+
+            return emitThemed(ctx, tag === 'checkbox' ? 'CheckBox' : 'RadioButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], labelled ? captionOnly : none);
+        }
         case 'tab_button':
         case 'tab_container_button': {
             const selected = ctx.tabSelectedProp && el.attrs.name ? [ `selected={${ctx.tabSelectedProp} === ${quote(el.attrs.name)}}` ] : [];
@@ -2172,16 +2658,42 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         }
         case 'tab_content':
             return emitThemed(ctx, 'TabContent', el, parent, indent, [], childrenOnly);
-        case 'dropmenu':
-            return emitThemed(ctx, 'Dropmenu', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'dropmenu')}}` ], captionOnly);
+        case 'dropmenu': {
+            // `item_array` populates the menu (`DropMenuController.populate`): one item per string,
+            // its index the item id, and nothing selected.
+            const items = el.arrays.item_array;
+
+            if (!items?.length) return emitThemed(ctx, 'Dropmenu', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'dropmenu')}}` ], captionOnly);
+
+            const selectProp = uniqueProp(ctx, `onSelect${pascal(el.attrs.name || 'dropmenu')}`);
+
+            ctx.props.set(selectProp, '(index: number) => void');
+
+            const labels = items.map(item => captionExpr(ctx, item) ?? '\'\'');
+
+            return emitThemed(ctx, 'Dropmenu', el, parent, indent, [
+                `options={[ ${labels.join(', ')} ].map((label, index) => ({ key: index, label, onSelect: () => ${selectProp}?.(index) }))}`,
+            ], captionOnly);
+        }
         case 'droplist':
             return emitThemed(ctx, 'Droplist', el, parent, indent, [], captionOnly);
         case 'bubble': {
             const direction = el.vars.direction?.split('_')[0];
             const pointer = direction && [ 'up', 'down', 'left', 'right' ].includes(direction) ? [ `pointer="${direction}"` ] : [];
 
+            // `margin_*` place the content (`FrameController.margins`), `pointer_offset` the pointer.
+            // The content box is `habbo_window_layout_bubble(_7)`'s `_CONTENT` rect (8 all round,
+            // 8/8/10/10 for style 7) under any `margin_*` of the bubble's own - always passed, so the
+            // bubble is laid out as the Flash window rather than around its content.
+            const defaults = el.attrs.style === '7' ? [ 8, 8, 10, 10 ] : [ 8, 8, 8, 8 ];
+            const [ left, top, right, bottom ] = [ 'margin_left', 'margin_top', 'margin_right', 'margin_bottom' ].map((key, index) => num(el.vars[key], defaults[index]));
+            const bubbleMargins = [ `margins={[ ${[ left, top, right, bottom ].join(', ')} ]}` ];
+            const offset = num(el.vars.pointer_offset) ? [ `pointerOffset={${num(el.vars.pointer_offset)}}` ] : [];
+            // The children sit in the content box, as a frame's do.
+            const contentBox: ParentBox = { width: num(el.attrs.width) - left - right, height: num(el.attrs.height) - top - bottom, flow: false, name: el.attrs.name };
+
             // A bubble has its own graphic context: its `blend` fades the whole bubble.
-            return emitThemed(ctx, 'Bubble', el, parent, indent, [ ...pointer, ...alphaProp(el) ], childrenOnly);
+            return emitThemed(ctx, 'Bubble', el, parent, indent, [ ...pointer, ...bubbleMargins, ...offset, ...alphaProp(el) ], ci => emitChildren(ctx, el, contentBox, ci));
         }
         case 'icon':
             return emitThemed(ctx, 'Icon', el, parent, indent, [ ...alphaProp(el), ...dynamicRoleProp(el) ], none);
@@ -2218,6 +2730,9 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             if (stroke) props.push(`strokeColor="${stroke}"`);
             if (el.vars.stroke_thickness) props.push(`strokeThickness={${num(el.vars.stroke_thickness)}}`);
             if (el.vars.radius) props.push(`radius={${num(el.vars.radius)}}`);
+            // `ShapeSkinRenderer`: a non-zero shade derives the stroke from the fill (`HsvLayerColor`).
+            if (num(el.vars.stroke_hsv_shade)) props.push(`strokeHsvShade={${num(el.vars.stroke_hsv_shade)}}`);
+            props.push(...alphaProp(el), ...blendProp(el));
 
             props.push(`layout={${boxLayout(el, parent)}}`);
 
@@ -2236,17 +2751,25 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
 // File assembly
 // ---------------------------------------------------------------------------------------------
 
-const collectScrollTargets = (el: Element, targets: Map<string, 'vertical' | 'horizontal'>) => {
+/** A layout's `scrollbar_*` window, by the name of the list its `scrollable` var drives. */
+interface ScrollTarget {
+    orientation: 'vertical' | 'horizontal';
+    bar: Element;
+    /** The window holding the bar - the list shares it when the two can be placed side by side. */
+    parent?: Element;
+}
+
+const collectScrollTargets = (el: Element, targets: Map<string, ScrollTarget>, parent?: Element) => {
     if ((el.tag === 'scrollbar_vertical' || el.tag === 'scrollbar_horizontal') && el.vars.scrollable) {
-        targets.set(el.vars.scrollable, el.tag === 'scrollbar_vertical' ? 'vertical' : 'horizontal');
+        targets.set(el.vars.scrollable, { orientation: el.tag === 'scrollbar_vertical' ? 'vertical' : 'horizontal', bar: el, parent });
     }
 
-    for (const child of el.children) collectScrollTargets(child, targets);
+    for (const child of el.children) collectScrollTargets(child, targets, el);
 };
 
 const THEME_IMPORTS = new Set([
     'Border', 'BoxLayout', 'Bubble', 'BubblePointer', 'Button', 'ButtonGroupCenter', 'ButtonGroupLeft', 'ButtonGroupRight', 'ButtonThick', 'CheckBox', 'CloseButton',
-    'ContainerButton', 'Droplist', 'Dropmenu', 'Frame', 'FramePointerDown', 'Header', 'Icon', 'RadioButton', 'Region', 'Scaler', 'ScrollArea',
+    'ContainerButton', 'Droplist', 'Dropmenu', 'Frame', 'FramePointerDown', 'Gradient', 'Header', 'Icon', 'RadioButton', 'Region', 'Scaler', 'ScrollArea',
     'ScrollbarSliderBarHorizontal', 'ScrollbarSliderBarVertical', 'ScrollbarSliderButtonDown', 'ScrollbarSliderButtonLeft', 'ScrollbarSliderButtonRight',
     'ScrollbarSliderButtonUp', 'ScrollbarSliderTrackHorizontal', 'ScrollbarSliderTrackVertical', 'Shape', 'TabButton', 'TabContent', 'TabContext',
     'TextInput', 'ThemeImage', 'ThemeText', 'WidgetSlot',
@@ -2283,7 +2806,7 @@ const assembleComponent = (ctx: EmitContext, componentName: string, doc: string,
     lines.push(`export const ${componentName} = (${propEntries.length ? `{ ${destructured} }: ${propsName}` : ''}) => {`);
 
     if (ctx.usesTranslation) lines.push(`${INDENT}const t = useTranslation();`);
-    for (const state of ctx.states) lines.push(`${INDENT}const [ ${state.name}, set${pascal(state.name)} ] = useState('');`);
+    for (const state of ctx.states) lines.push(`${INDENT}const [ ${state.name}, set${pascal(state.name)} ] = useState(${state.initial ?? '\'\''});`);
     if (ctx.usesTranslation || ctx.states.length) lines.push('');
 
     lines.push(`${INDENT}return (`, ...body, `${INDENT});`, '};', '');
@@ -2358,16 +2881,15 @@ const assembleImports = (imports: Set<string>, sharedImports: Set<string>): stri
 const generateComponent = (componentName: string, sourceFile: string, root: XmlNode, folder: string): GeneratedComponent => {
     const windows = root.children.filter(child => child.tag === 'window');
     const elements = windows.flatMap(window => window.children.flatMap((child) => {
-        if (child.tag === 'children') return child.children.map(toElement);
+        if (child.tag === 'children') return child.children.map(node => toElement(node));
         if (child.tag === 'filters' || child.tag === 'variables' || child.tag === 'scale') return [];
 
         return [ toElement(child) ];
     }));
-    const file: FileContext = { componentName, folder, imports: new Set(), sharedImports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {} };
+    const file: FileContext = { componentName, folder, imports: new Set(), sharedImports: new Set(), scrollTargets: new Map<string, ScrollTarget>(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {} };
     const ctx = createEmitContext(file);
 
     for (const el of elements) collectScrollTargets(el, ctx.scrollTargets);
-    markAnchorInference(elements);
 
     const width = num(root.attrs.width);
     const height = num(root.attrs.height);

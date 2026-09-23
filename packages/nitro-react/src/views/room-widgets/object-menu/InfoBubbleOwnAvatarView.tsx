@@ -47,12 +47,35 @@ const SIGN_BUTTONS: { key: number; icon?: string; label?: string }[] = [
     { key: 14, icon: LayoutImage('room-ui/sign_icon_14.png') }, { key: 17, icon: LayoutImage('room-ui/sign_icon_17.png') }, { key: 16, icon: LayoutImage('room-ui/sign_icon_16.png') },
 ];
 
-/** `own_avatar_menu`'s rows are 103 wide; the sign grid is 103x152 of 25-high cells, the first 34 wide and the rest 33, each over a 39-wide button. */
+/** `own_avatar_menu`'s rows are 103 wide; the sign grid is 103 wide with 25-high cells, each over a 39-wide button. */
 const ROW_WIDTH = 103;
 const ROW_HEIGHT = 26;
-const SIGNS_GRID_HEIGHT = 152;
+const SIGN_CELL_HEIGHT = 25;
 const SIGN_BUTTON_WIDTH = 39;
 const SIGN_BUTTON_HEIGHT = 29;
+
+/**
+ * `signs_grid` is an `itemgrid_vertical` with `spacing="1"` and `scale_to_fit_items="true"`: its
+ * three columns are stretched to the grid's own 103, not left at the 34/33/33 its cells are
+ * authored with. Those sum to 102 with the spacing, which leaves a pixel of the menu showing down
+ * the right edge and - the 34 being the first cell rather than the first column - puts every row
+ * after the first a pixel out of step with it. 101 over three columns is 33 with 2 over, and the
+ * leading columns take the remainder, which is what makes the authored `sign_1` the wide one.
+ */
+const SIGN_COLUMNS = 3;
+const SIGN_SPACING = 1;
+const SIGN_CELL_WIDTHS = ((content: number) => Array.from(
+    { length: SIGN_COLUMNS },
+    (_, column) => Math.floor(content / SIGN_COLUMNS) + ((column < (content % SIGN_COLUMNS)) ? 1 : 0),
+))(ROW_WIDTH - (SIGN_SPACING * (SIGN_COLUMNS - 1)));
+/**
+ * The grid is as tall as the rows it holds - 155, six 25s a pixel apart, which is where the layout
+ * puts them (`sign_14`, the last row, at y 130). The `signs_grid` element itself is declared 152,
+ * three short of its own cells: keeping that cut the bottom row off, which reads as the row being
+ * spaced differently from the rest. The menu's height follows the grid, so it grows by the three.
+ */
+const SIGN_ROWS = Math.ceil(SIGN_BUTTONS.length / SIGN_COLUMNS);
+const SIGNS_GRID_HEIGHT = (SIGN_ROWS * SIGN_CELL_HEIGHT) + ((SIGN_ROWS - 1) * SIGN_SPACING);
 
 /** The rows carrying `arrow_right` (at 92) - each opens a sub-page. */
 const SUBMENU_ROWS = [ 'expressions', 'dance_menu', 'signs', 'more' ];
@@ -198,8 +221,8 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
                         <InfoBubbleMenuButton
                             key={key}
                             shape="grid"
-                            width={(index === 0) ? 34 : 33}
-                            height={25}
+                            width={SIGN_CELL_WIDTHS[index % SIGN_COLUMNS]}
+                            height={SIGN_CELL_HEIGHT}
                             buttonWidth={SIGN_BUTTON_WIDTH}
                             caption={label}
                             // `setImageAsset(icon, name, true)`: the picture is centred in the whole button.

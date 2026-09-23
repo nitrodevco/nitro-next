@@ -199,6 +199,15 @@ const JOBS: Job[] = [
     { component: 'closebutton', style: '103', skin: 'illumina_purple_skin_button_frame_close' },
     { component: 'closebutton', style: '10000', skin: 'habbo_skin_button_close_leaderboard' },
     { component: 'frame', style: '103', skin: 'illumina_purple_skin_frame' },
+    /*
+     * The ubuntu frames: only `top_left` / `top_right` carry the window's colour, and the six
+     * `center_*` / `bottom_*` pieces that draw the pale body down the sides and across the bottom
+     * are `colorize="false"`. Without a job here the sheet was cut from the colorizing entities
+     * alone, so every style 3, 4 and 7 window shipped with a title bar and nothing else - the
+     * white band under the title bar and the light edges were simply absent.
+     */
+    { component: 'frame', style: '3', skin: 'habbo_skin_frame_3', plainOverlay: 'sheet' },
+    { component: 'frame', style: '7', skin: 'habbo_skin_frame_7', plainOverlay: 'sheet' },
     // Every leaderboard frame is a tintable border around six `colorize="false"` panel pieces
     // (`bottom_*` / `center_*`, the light body the badge list sits on).
     { component: 'frame', style: '10000', skin: 'habbo_skin_frame_leaderboard_all', plainOverlay: 'sheet' },

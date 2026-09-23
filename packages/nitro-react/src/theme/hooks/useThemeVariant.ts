@@ -28,6 +28,8 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
 
     const resolvedLayer = statesConfig.states ? resolveByState(statesConfig.states, state, selected) : layerConfig.layer;
     const resolvedOverlay = statesConfig.overlays ? resolveByState(statesConfig.overlays, state, selected) : layerConfig.overlay;
+    // The skin's untintable pieces, which no state swaps: one sheet, drawn over the tinted layer.
+    const resolvedPlain = layerConfig.plain;
     const resolvedShadow = (dropShadow === false) ? undefined : (dropShadow ?? config.dropShadow);
     // `colorize: false` is a skin the client never tints at all (see `ThemeBase.colorize`), so
     // neither the variant's own tint nor the one a call site passes reaches its art.
@@ -38,5 +40,5 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
     const resolvedTextStyle = textStyle ?? config.textStyle ?? themeDefaultTextStyle(resolvedVariant);
     const resolvedTextColor = textColor ?? config.textColor;
 
-    return { resolvedVariant, ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedShadow, resolvedTint, resolvedTextStyle, resolvedTextColor };
+    return { resolvedVariant, ownCascade, config, state, handlers, resolvedLayer, resolvedPlain, resolvedOverlay, resolvedShadow, resolvedTint, resolvedTextStyle, resolvedTextColor };
 };

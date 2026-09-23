@@ -5,7 +5,7 @@ import { Box, BoxLayout } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer, NineSlice } from './layer';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
+import { expandSides, ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
 
 export type TabButtonVariant = ThemeWithStatesVariant;
 
@@ -116,8 +116,8 @@ export const TabButton: ForwardRefExoticComponent<TabButtonProps & RefAttributes
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    ...config.layout,
-                    ...layout,
+                    ...expandSides(config.layout),
+                    ...expandSides(layout),
                 }}
                 {...handlers}
             >

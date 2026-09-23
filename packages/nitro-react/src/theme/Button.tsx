@@ -6,7 +6,7 @@ import { VariantCascadeProvider } from './cascade';
 import { dynamicStyleBoxProps, DynamicStyleProvider, useHostDynamicStyleEffect } from './dynamicstyle';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer } from './layer';
-import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_103_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, ButtonVariant, classicButtonVariant, shinyButtonVariant, ThemeProps, ThemeVariants, windowLayout, wrapTextChildren } from './utils';
+import { BUTTON_100_VARIANT, BUTTON_102_VARIANT, BUTTON_103_VARIANT, BUTTON_104_VARIANT, BUTTON_105_VARIANT, BUTTON_106_VARIANT, BUTTON_200_VARIANT, ButtonVariant, classicButtonVariant, expandSides, shinyButtonVariant, ThemeProps, ThemeVariants, windowLayout, wrapTextChildren } from './utils';
 
 /**
  * `Button` variants - the `type="button"` rows of `habbo_element_description_xml`, keyed by
@@ -71,8 +71,8 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    ...config.layout,
-                    ...layout,
+                    ...expandSides(config.layout),
+                    ...expandSides(layout),
                 }}
                 {...dynamicStyleBoxProps(hostEffect)}
                 {...handlers}

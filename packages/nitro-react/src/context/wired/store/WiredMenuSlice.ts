@@ -26,7 +26,11 @@ export const WIRED_MENU_TAB_INFO = 'info';
 /** `WiredMenuTabConfig` - `isCreateImmediately` and `isReusable` are `true` for every tab, so only `isEnabled` tells them apart. */
 export interface WiredMenuTabConfig {
     id: string;
-    /** `isEnabled`: the info tab is built but disabled, so its button is hidden and the others share its width. */
+    /**
+     * `isEnabled`: the info tab is built but disabled, so `WiredMenuView.alignTabs` gives it
+     * `width = 0` and hides it, then divides the strip between the rest - whatever widths the
+     * layout authored them at.
+     */
     enabled: boolean;
 }
 

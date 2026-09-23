@@ -163,11 +163,13 @@ export const NavigatorView = () => {
             resizeDirection="y"
             onClose={hide}
         >
-            <Border
-                variant="3"
-                tintColor="#eceae0"
-                layout={{ position: 'absolute', left: -3, right: -2, top: -3, bottom: 14 }}
-            />
+            {/*
+              * The layout's `border` at (-3, -3) is not drawn: its `color="0x0eceae0"` carries an
+              * alpha of `00`, so the client paints none of it - and its art is an opaque white box,
+              * which is why drawing it here covered the frame's own edge columns with pale. What
+              * fills that area in the client is the frame's `center_center` piece, one of the
+              * `colorize="false"` frame bodies the port now ships.
+              */}
             <Region
                 name="white_background"
                 backgroundColor="#ffffff"
@@ -292,8 +294,16 @@ export const NavigatorView = () => {
                         tooltipDelay={1000}
                         selected={topLevelContext?.searchCode === context.searchCode}
                         onPointerTap={() => selectContext(context.searchCode)}
-                        // `top_view_select_tab_button` is 88 wide and grows round a longer caption (`resizeToAccommodateChildren`).
-                        layout={{ minWidth: 88, height: 32, flexShrink: 0 }}
+                        /*
+                         * Each tab is as wide as its own caption, not the 88 its template is:
+                         * `TopViewSelector_2.refresh` clones `top_view_select_tab_button` per
+                         * top-level search and sets only the caption, and `TabButtonController.update`
+                         * answers every `WE_CHILD_RESIZED` with `resizeToAccommodateChildren`, which
+                         * fits the button to its label - narrower as readily as wider. The label's
+                         * own `margins` (10 either side in `habbo_window_layout_tab_button_3`) are
+                         * the variant's padding, so the caption plus 20 is the width.
+                         */
+                        layout={{ height: 32, flexShrink: 0 }}
                     >
                         {t(`navigator.toplevelview.${context.searchCode}`)}
                     </TabButton>

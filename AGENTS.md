@@ -211,6 +211,29 @@ like `BoxPixi` used to mean it had a DOM twin. `Pixi` in a name is the library
   that opened it - or past a window, which clips its content anyway - is a `FloatingPopup` (the
   window layer, whole-area hit testing, `onOutsideClick`), placed with `getGlobalRect(anchor)`.
   An absolutely positioned child of a small box draws but answers only where it overlaps the box.
+- A passive `Box` is still a hit *target*: `EventBoundary.hitTestFn` reports a hit for any
+  container carrying a `hitArea`, and the mode it tests is the one inherited from the nearest
+  interactive ancestor, not the container's own. So a box that covers a sibling swallows that
+  sibling's presses - a frame's `_CONTENT` lying over the header stopped the avatar editor being
+  dragged. A window Flash never makes a mouse target (no `input_event_processor`; it builds its
+  candidates with `groupParameterFilteredChildrenUnderPoint`) is `pointerTransparent`, which drops
+  the `hitArea` and lets the press through to what is drawn beneath.
+- **Every window clips its children.** `WindowModel._clipping` is `true` and `WindowController`
+  extends it, so the default is on; `WindowRenderer` intersects each child against the parent's
+  rectangle and clamps a negative offset to 0. Across the client's layouts `clipping="false"` is
+  written 162 times - always on a feature's own container, never on a frame's content area. Do not
+  read `WindowParser`'s `param1.clipping !== true`, which is the serialiser's "omit the default"
+  test, as the runtime default: that mistake moved every frame's content and had to be undone.
+- **Yoga resolves an edge by specificity, not by order**: `Left` beats `Horizontal` beats `All`,
+  and `@pixi/layout`'s `applyStyle` just walks the style object calling one setter per key. So
+  `{ ...config.layout, ...layout }` does not let a caller's `padding: 0` clear a variant's
+  `paddingLeft: 8` - both reach Yoga and the longhand wins. Merge through `expandSides`, which
+  expands the `padding` / `margin` / `inset` shorthands first so the later layer simply wins.
+- **Insets alone do not size a leaf.** `@pixi/layout` defaults a leaf's size to `intrinsic` - its
+  texture's own - so `left/top/right/bottom` on a `BackgroundLayer`, a nine-slice or the clipping
+  `Graphics` leaves it at the sheet's size wherever the box is: a bubble drew a small blob of skin
+  in its corner, and a 1x1 mask hid a whole frame. Put the insets on a plain container and let the
+  art fill it (`FillLayout`), or state the size.
 - A drop menu is the theme's `Dropmenu`: `caption`, `options` (each with its own `onSelect`,
   `keepOpen` for an entry that lists more). It opens Flash's expanded view over itself, fits it on
   the screen and scrolls it (`placeExpandedDropmenu`), and closes on a pick or an outside press.
@@ -619,6 +642,7 @@ accumulate as "known noise"; that is how seventeen missing variable keys went un
 | Class constants mirrored whole outside nitro-api (`AvatarVisualization`, `AnimationFrame`, `LayerData`, the Variable FX tables and paint colours) and module tables copied out of a Flash array or switch (post-it colours, pet/bot placing and friend list error texts, visitor steps, thumbnail `DRAW_ORDER`, `PRODUCT_IMAGES`, dimmer colours, trophy themes, mannequin clothing, ...) | the `.as` class or method named in each docblock | by hand; `constants.py` reads both sides and compares them. A file whose docblock names `drift/constants.py` is left out of `enums.py`; add a table to `constants.py` when you carry a new one |
 | `public/assets/chat-styles/<assetId>/chat_definition.json` and its `*.png`; `ChatMarkup.ts` palettes, `ChatConstants.ts` bubble widths | `chatstyles_xml`, every `style_<assetId>_regpoints` and bitmap of `HabboFreeFlowChatCom.as` (read as `ChatStyleLibrary.as` reads them); `ChatMarkup.as`, `ChatBubbleWidth.as` | by hand, bitmaps copied from the SWF images; `chat_styles.py` diffs every style's flags, regpoints keys and pixels, a regpoints key the library starts reading, the palettes and the width mapping |
 | The theme's skin tables: every `*_VARIANTS` table under `nitro-react/src/theme`, `theme/utils/windowLayouts.ts`, `theme/utils/iconSetFrames.ts` + `public/assets/images/icon-set.png`, and `TEXT_STYLES` in `theme/utils/textStyles.ts` | the `(type, style)` rows of `habbo_element_description_xml`, the window layouts they name (`HabboWindowManagerCom.as`), `habbo_skin_icon_set_xml` + `habbo_icons_png`, `styles_css` | by hand, art cut from the skin sheets (`scripts/extract-skin-assets.ts`, then `yarn build-asset-bundles`); `theme_skin.py` diffs the style ids per type, button layouts, frame minimum sizes, row tints, icon rects and pixels, and holds `TEXT_STYLES` to deriving its entries from `HABBO_TEXT_STYLES`, `TextStyleKey` to being `HabboTextStyleName`, and every `textStyle` prop in the tree to a style that table has. A style left out or added goes in `known.THEME_STYLES_NOT_PORTED` / `THEME_STYLES_PORT_ONLY` |
+| `nitro-react/src/context/catalog/page/CatalogLayouts.ts` (which widgets each layout code creates, the layout widths and aliases), `CatalogWidgetEnum`, the `PageLocalization` tables, and the slots each registered layout view draws | `CatalogPage.createWidgets`'s walk over each `layout_*_xml`, the layouts' manifest refs, `CatalogWidgetEnum.as`, `PageLocalization.as` | by hand; `catalog_layouts.py` holds the tables to the layout XML and manifest, the enum to Flash's `createWidget` cases and each registered layout view's slots to its layout, and `constants.py` the localization tables |
 | `nitro-react/src/theme/utils/dynamicStyles.ts` - the hover/press/disabled effects a layout names with `dynamic_style` (`lifted_hover`, `brightness_and_shadow_under`, `_gentle`, `reward_track_item`, `button`), and the generator's `DYNAMIC_STYLE_NAMES` | `DynamicStyleManager.fillStyleTable()` and `DynamicStyle`'s constructor defaults | by hand; `dynamic_styles.py` compares every style's effective rule for the host and each `#icon` / `#bg` child in every state, through the port's own `resolveDynamicStyleRule`. A name the port lacks draws nothing and fails nothing - that is how `button` went missing |
 | The text keys the port asks for (`t('...')`, `'${...}'`) | the embedded `default_localizations` + the hotel's external texts (nitro-tools `gamedata/DefaultLocalizations_en.json`, `ExternalTexts.json`) and the keys Flash's classes and layouts name | `localization_keys.py` reports a key in neither file that no Flash class or layout names |
 
@@ -668,7 +692,12 @@ Rules that come out of that:
   window's colour, so it never goes into a sheet the theme tints. Where only some of a layout's
   entities carry the flag, `extract-skin-assets.ts`'s `plainOverlay` cuts them out - `'sheet'` for
   a same-size `-plain` sheet, `'pieces'` for one PNG per entity when the layout moves or centres
-  it - and the variant draws them as an untinted `overlay` (`ThemeWithStatesVariant.overlays`);
+  it - and the variant draws them as an untinted `overlay` (`ThemeWithStatesVariant.overlays`), or
+  as `plain` where it needs all three at once, as the ubuntu frames do: a tinted title bar, the
+  pale body under it and a shine over both. A skin with no job at all loses those pieces entirely
+  rather than mistinting them - `habbo_skin_frame_3` and `_7` had none, so every style 3, 4 and 7
+  window shipped a title bar with no sides or bottom, and the drift suite's own check passed
+  because the variant's shine already satisfied "has an untinted layer";
   `exclude` does the same for a *colorizing* entity a nine-slice cannot carry. Where **every**
   entity carries it the skin is simply never tinted: the variant says `colorize: false`
   (`ThemeBase`, honoured by `useThemeVariant`), and a `tintColor` a call site passes is dropped
