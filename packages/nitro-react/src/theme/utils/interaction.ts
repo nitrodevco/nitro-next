@@ -101,7 +101,7 @@ export const resolveEventMode = (explicit: EventMode | undefined, handlers: Poin
 export const hasClickHandler = (handlers: PointerHandlerDetection): boolean => !!handlers.onPointerTap;
 
 /** A hit target in either renderer: the modes Pixi tests against, and the ones DOM maps to `pointer-events: auto`. */
-const isHitTarget = (eventMode: EventMode | undefined): boolean => eventMode === 'static' || eventMode === 'dynamic';
+export const isHitTarget = (eventMode: EventMode | undefined): boolean => eventMode === 'static' || eventMode === 'dynamic';
 
 /**
  * The cursor an element shows when its caller hasn't named one of its own. The pointer is the

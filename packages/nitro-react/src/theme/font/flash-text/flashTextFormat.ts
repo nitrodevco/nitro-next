@@ -73,3 +73,28 @@ export const DEFAULT_FLASH_TEXT_FORMAT: Readonly<FlashTextFormat> = Object.freez
 });
 
 export const normalizeFlashTextFormat = (format?: Partial<FlashTextFormat> | null): FlashTextFormat => ({ ...DEFAULT_FLASH_TEXT_FORMAT, ...(format ?? {}) });
+
+/**
+ * A named style's format with an element's own overrides layered on, the way
+ * `TextController.setTextFormatting` layers them: the style first, then the `TextField` vars it
+ * declares, then `font_face` - a face alias adds its weight and slant, it does not clear them,
+ * since Flash's `font_face` sets the family and leaves `bold` / `italic` to their own vars -
+ * then `font_size` and `text_color`.
+ *
+ * The one place the rasterizer (`useFlashTextCanvas`) and the caret and selection geometry a
+ * `TextInput` measures read, so what is drawn and what is measured cannot drift apart.
+ */
+export const resolveFlashTextFormat = ({ style, field, face, fontSize, color }: {
+    style?: Partial<FlashTextFormat>;
+    field?: FlashTextFieldOverrides;
+    face?: FlashTextFace;
+    fontSize?: number;
+    /** `0xRRGGBB`. */
+    color?: number;
+}): FlashTextFormat => normalizeFlashTextFormat({
+    ...style,
+    ...(field ?? {}),
+    ...(face ? { fontFamily: face.fontFamily, ...(face.bold ? { bold: true } : {}), ...(face.italic ? { italic: true } : {}) } : {}),
+    ...((fontSize !== undefined) ? { fontSize } : {}),
+    ...((color !== undefined) ? { color } : {}),
+});

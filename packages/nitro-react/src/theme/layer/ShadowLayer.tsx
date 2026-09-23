@@ -12,10 +12,11 @@ import { BackgroundLayerConfig } from './BackgroundLayer';
  * every frame, which for a window-sized frame was the single largest GPU allocation the UI
  * made. Two bakes, one draw each:
  *
- * - Given the host's nine-slice skin (`layer`), the shadow is that skin's own silhouette,
- *   blurred and offset, drawn as a nine-slice through the same slicing - so it follows the
- *   art's rounded corners exactly like the filter did (the corners are in the corner slices,
- *   the straight runs stretch). One recoloured slice per skin + shadow settings.
+ * - Given the host's nine-slice skin (`layer`, with its untintable `plain` pieces over it), the
+ *   shadow is that skin's own silhouette, blurred and offset, drawn as a nine-slice through the
+ *   same slicing - so it follows the art's rounded corners exactly like the filter did (the
+ *   corners are in the corner slices, the straight runs stretch). One recoloured slice per
+ *   skin + shadow settings.
  * - Without a skin (a region, a composite), the shadow is of the box's rectangle.
  *
  * Flash's defaults apply where the layout left an attribute out (`WindowParser`): no offset,
@@ -25,6 +26,8 @@ import { BackgroundLayerConfig } from './BackgroundLayer';
 export type ShadowLayerProps = DropShadowConfig & {
     /** The host's skin, when it has one - a nine-slice casts the shadow of its art. */
     layer?: BackgroundLayerConfig;
+    /** The host's untintable pieces (`ThemeVariant.plain`), which are part of the same shape - see `skinShadowKeys`. */
+    plain?: BackgroundLayerConfig;
 };
 
 const FLASH_DEFAULTS = { distance: 0, angle: 45, color: '#000000', alpha: 1, blur: 0 };
@@ -110,9 +113,24 @@ const skinEffect = ({ color, alpha, blur }: ResolvedShadow, pad: number): ThemeS
 
 type NineSliceSkin = Extract<BackgroundLayerConfig, { kind: 'nineSlice' }>;
 
-const SkinShadow = ({ skin, shadow }: { skin: NineSliceSkin; shadow: ResolvedShadow }) => {
+/**
+ * The sheets the silhouette is taken from. A skin's shape is not always in one of them: the
+ * ubuntu frames (`habbo_skin_frame_3`, `_7`) keep the title bar in the colorizing sheet and the
+ * whole body - rounded bottom corners included - in the `colorize="false"` one, cut to the same
+ * size and metrics beside it. Flash filtered the rendered window, so both are drawn over one
+ * another before the silhouette is blurred; shadowing the colorizing sheet alone cast a
+ * square-bottomed shadow under a round-bottomed window. A `plain` sliced differently is not the
+ * same shape stretched the same way, so it is left out rather than unioned wrongly.
+ */
+const skinShadowKeys = (skin: NineSliceSkin, plain: BackgroundLayerConfig | undefined): string[] => (
+    ((plain?.kind === 'nineSlice') && (plain.leftWidth === skin.leftWidth) && (plain.topHeight === skin.topHeight) && (plain.rightWidth === skin.rightWidth) && (plain.bottomHeight === skin.bottomHeight))
+        ? [ skin.textureKey, plain.textureKey ]
+        : [ skin.textureKey ]
+);
+
+const SkinShadow = ({ skin, plain, shadow }: { skin: NineSliceSkin; plain?: BackgroundLayerConfig; shadow: ResolvedShadow }) => {
     const pad = Math.ceil(shadow.blur / 2);
-    const texture = usePixiEffectTexture(skin.textureKey, skinEffect(shadow, pad));
+    const texture = usePixiEffectTexture(skinShadowKeys(skin, plain), skinEffect(shadow, pad));
 
     if (!texture) return null;
 
@@ -162,13 +180,14 @@ const RectShadow = ({ shadow }: { shadow: ResolvedShadow }) => {
 };
 
 /** Render as the FIRST child of the box it shadows, so everything else draws over it. */
-export const ShadowLayer = ({ layer, ...config }: ShadowLayerProps) => {
+export const ShadowLayer = ({ layer, plain, ...config }: ShadowLayerProps) => {
     const shadow = resolve(config);
 
     if (layer?.kind === 'nineSlice') {
         return (
             <SkinShadow
                 skin={layer}
+                plain={plain}
                 shadow={shadow}
             />
         );

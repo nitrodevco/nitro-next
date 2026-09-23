@@ -3,6 +3,13 @@ import { createStore } from 'zustand';
 
 import { buildFigureString, faceOnlyFigureString, FigureParts, normalizeGender, parseFigureString } from './figureString';
 
+/**
+ * How many wardrobe slots there are - `WardrobeModel.availableSlots`, which reads the hotel's
+ * `avatareditor.wardrobe.slots` and falls back to 10.
+ */
+export const WARDROBE_SLOTS_KEY = 'avatareditor.wardrobe.slots';
+export const DEFAULT_WARDROBE_SLOTS = 10;
+
 /** One wardrobe slot as the server sends it (`WardrobeMessage`). */
 export type AvatarEditorWardrobeOutfit = {
     figure: string;

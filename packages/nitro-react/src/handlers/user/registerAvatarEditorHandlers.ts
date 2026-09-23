@@ -1,12 +1,10 @@
 import { FigureSetIdsEventMessage, WardrobeMessage } from '@nitrodevco/nitro-packets';
 
-import { avatarEditorStore, AvatarEditorWardrobeOutfit, normalizeGender } from '#base/context/avatar-editor';
+import { avatarEditorStore, AvatarEditorWardrobeOutfit, DEFAULT_WARDROBE_SLOTS, normalizeGender, WARDROBE_SLOTS_KEY } from '#base/context/avatar-editor';
 import { WebSocketConnection } from '#base/context/communication';
 import { systemStore } from '#base/context/system';
 
 import { on, subscribeAll } from '../packetSubscriptions';
-
-const DEFAULT_WARDROBE_SLOTS = 14;
 
 /**
  * Feeds the avatar editor from the server - Flash's `AvatarEditorMessageHandler`: the sellable
@@ -23,7 +21,7 @@ export const registerAvatarEditorHandlers = ({ subscribe }: WebSocketConnection)
         }),
 
         on(WardrobeMessage, (data) => {
-            const maxSlots = Number(systemStore.getState().config['avatar.wardrobe.max.slots']) || DEFAULT_WARDROBE_SLOTS;
+            const maxSlots = Number(systemStore.getState().config[WARDROBE_SLOTS_KEY]) || DEFAULT_WARDROBE_SLOTS;
             const wardrobe: AvatarEditorWardrobeOutfit[] = Array.from({ length: maxSlots }, () => null);
 
             for (const outfit of data.outfits) {

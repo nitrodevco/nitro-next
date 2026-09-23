@@ -121,6 +121,25 @@ export const browserFaceOverride = (textStyle: TextStyleKey, face: FlashTextFace
 export const DEFAULT_TEXT_STYLE: TextStyleKey = 'regular';
 
 /**
+ * The style the exact renderer draws a text in: a raw `fontFamily` / `fontSize` override is
+ * still that style's own Flash format with the face or size swapped in - a Flash layout's
+ * `font_face` and `font_size` vars are exactly that, applied over the style the way
+ * `TextController.setTextFormatting` applies them - so an override keeps rendering exactly
+ * (`useFlashTextCanvas` folds them into the format). `undefined` only for a family none of the
+ * captured faces covers, or a non-numeric size; that text falls back to the browser's own.
+ *
+ * `ThemeText` decides what to draw with this and `TextInput` decides what to measure its caret
+ * and selection in with it, so the drawn glyphs and the geometry over them cannot disagree.
+ */
+export const resolveFlashStyle = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined): TextStyleKey | undefined => {
+    if (textOptions?.fontSize !== undefined && typeof textOptions.fontSize !== 'number') return undefined;
+
+    if (textOptions?.fontFamily && !flashFaceOverride(textOptions.fontFamily)) return undefined;
+
+    return textStyle ?? DEFAULT_TEXT_STYLE;
+};
+
+/**
  * The style a window of this `style` id starts its text from. `TextController`'s constructor
  * takes its style name from `ThemeManager.getPropertyDefaults(style)` - the property defaults of
  * the first real theme covering that id - and the three real themes name different ones:

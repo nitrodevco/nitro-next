@@ -3,7 +3,7 @@ import { forwardRef, Fragment, useState } from 'react';
 
 import { BoxLayout } from './Box';
 import { alphaAt, getTextureAlpha, getTextureRotated, getTextureSilhouette, useLayoutSize } from './hooks';
-import { DynamicStyleEffect, FlashBitmapVars, multiplyAlphas, multiplyTints, PIVOT_POINTS } from './utils';
+import { DynamicStyleEffect, FlashBitmapVars, isHitTarget, multiplyAlphas, multiplyTints, PIVOT_POINTS } from './utils';
 
 export interface FlashBitmapProps {
     /** The bitmap, already cropped and greyed as the window asked. */
@@ -185,9 +185,22 @@ export const FlashBitmap = forwardRef<PixiContainer, FlashBitmapProps>(({
 
         return Math.round((own + (etched * (1 - own))) * 255);
     };
-    // `testLocalPointHitAgainstAlpha`: nothing hits an empty window; with a threshold the point
-    // has to be inside the window (`x <= width`, `y <= height`) and on a buffer pixel whose alpha
-    // is at least the threshold (`BitmapData.hitTest`); a buffer that can't be read keeps the box.
+    /*
+     * `testLocalPointHitAgainstAlpha`: nothing hits an empty window; with a threshold the point
+     * has to be inside the window (`x <= width`, `y <= height`) and on a buffer pixel whose alpha
+     * is at least the threshold (`BitmapData.hitTest`); a buffer that can't be read keeps the box.
+     *
+     * A bitmap that is not a mouse target gets no hit area at all. Flash's `static_bitmap` carries
+     * `input_event_processor` only where its layout says so (the wardrobe toggle's `wardrobe_icon`
+     * is `params="16"` - none), and `MouseEventProcessor` never considers a window without it, so
+     * the press reaches the button drawn underneath. Pixi is the other way round: `hitTestFn`
+     * reports a hit for ANY container carrying a `hitArea` once the mode inherited down the walk
+     * is interactive - which inside a frame it always is, the frame itself being draggable - and
+     * the empty path it returns for a passive one still ends the parent's sibling loop. So an
+     * unconditional rectangle here made every decorative bitmap swallow the presses of whatever
+     * it was drawn over: the avatar editor's wardrobe button could not be clicked at all. Same
+     * rule, and same reason, as `Box`'s `pointerTransparent`.
+     */
     const hitArea = (hitThreshold > 0 && sourceAlpha)
         ? {
                 contains: (x: number, y: number): boolean => {
@@ -201,7 +214,7 @@ export const FlashBitmap = forwardRef<PixiContainer, FlashBitmapProps>(({
                     return bufferAlphaAt(px, py) >= hitThreshold;
                 },
             }
-        : new Rectangle(0, 0, width, height);
+        : (isHitTarget(eventMode) ? new Rectangle(0, 0, width, height) : undefined);
 
     const sprite = (key: string, spriteTexture: Texture, x: number, y: number, props: { tint?: string; alpha?: number; blendMode?: BLEND_MODES }) => (
         <pixiSprite

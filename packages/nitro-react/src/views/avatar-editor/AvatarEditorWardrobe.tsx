@@ -22,8 +22,13 @@ const COLUMN_GAP = 4;
 const COLUMN_TOP = 3;
 const COLUMN_HEIGHT = 412;
 const ROW_GAP = 3;
-/** `WardrobeModel`: the first five slots need Habbo Club, the ones after need VIP. */
-const CLUB_SLOTS = 5;
+/**
+ * `WardrobeModel.isSlotEnabled` asks `sessionData.hasClub` for the first five slots and
+ * `sessionData.hasVip` for the ones after - but `HabboClubLevelEnum.HasClub` and `HasVip` are
+ * both `clubLevel >= 1`, so every slot is open at club level 1 and none below it. Splitting the
+ * two apart (reading `hasVip` as `ClubLevelEnum.Vip`) locked slots 6 and up for everyone.
+ */
+const usableAtClubLevel = ClubLevelEnum.Club;
 
 /**
  * The wardrobe side panel - the Flash `WardrobeView` on the `avatareditor_wardrobe` layout
@@ -31,15 +36,15 @@ const CLUB_SLOTS = 5;
  * its `header` (the title and the HC icon 10px apart, centred where the layout's 186px list was)
  * and the style 4 border holding `slots_columns_list`. `WardrobeView` clones one
  * `slots_column_template` per seven slots and fills them in order, so slot `n` is in column
- * `n / 7`. The Flash view split its slots into a club list and a VIP list; here the same gating
- * decides which slots are usable.
+ * `n / 7`. `WardrobeModel` splits its slots into a club group and a VIP group; both resolve to
+ * the same club-level test - see `usableAtClubLevel`.
  */
 export const AvatarEditorWardrobe = ({ slots, slotCount, clubLevel, onSave, onLoad }: AvatarEditorWardrobeProps) => {
     const t = useTranslation();
     const count = Math.max(slotCount, slots.length);
     const columnCount = Math.ceil(count / SLOTS_PER_COL);
 
-    const isUsable = (index: number): boolean => ((index < CLUB_SLOTS) ? (clubLevel >= ClubLevelEnum.Club) : (clubLevel >= ClubLevelEnum.Vip));
+    const isUsable = clubLevel >= usableAtClubLevel;
 
     const renderSlot = (index: number) => {
         const outfit = slots[index] ?? null;
@@ -49,7 +54,7 @@ export const AvatarEditorWardrobe = ({ slots, slotCount, clubLevel, onSave, onLo
                 key={index}
                 figure={outfit?.figure}
                 gender={outfit?.gender}
-                usable={isUsable(index)}
+                usable={isUsable}
                 onSet={() => onSave(index)}
                 onGet={() => outfit && onLoad(index, outfit)}
             />
@@ -78,11 +83,23 @@ export const AvatarEditorWardrobe = ({ slots, slotCount, clubLevel, onSave, onLo
                         verticalAlign="top"
                         layout={{ height: 17, flexShrink: 0 }}
                     />
-                    <Icon
-                        variant="13"
+                    {/*
+                      * The icon's own window, 18x15, with `icon_13`'s 16x16 region drawn at its top
+                      * left and clipped by it - which is what `BitmapSkinRenderer.draw` does for a
+                      * template whose entity states no `<scale>`. Sizing the icon itself to 18x15
+                      * instead centred a 16px texture in a 15px box, and the half pixel that left
+                      * sampled the row above the region - which in `habbo_icons_png` is solid - as
+                      * a line over the icon.
+                      */}
+                    <Region
                         name="hc_icon"
-                        layout={{ width: 18, height: 15, flexShrink: 0 }}
-                    />
+                        layout={{ width: 18, height: 15, flexShrink: 0, overflow: 'hidden' }}
+                    >
+                        <Icon
+                            variant="13"
+                            layout={{ position: 'absolute', left: 0, top: 0, width: 16, height: 16 }}
+                        />
+                    </Region>
                 </Region>
                 <Border
                     variant="4"

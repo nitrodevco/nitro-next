@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useIsLandingViewVisible } from '#base/context/system';
 
-import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorComponent, RoomWrapper, ToolbarOtherSettingsComponent, WalletComponent, WiredChestComponent, WiredContractComponent, WiredMenuComponent, WiredRewardNotificationsComponent, WiredSelfDonationComponent, WiredSetupComponent, WiredTradeComponent, WiredTransactionsComponent } from './components';
+import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MessengerComponent, NavigatorComponent, RoomWrapper, ToolbarChatSettingsComponent, ToolbarOtherSettingsComponent, ToolbarSoundSettingsComponent, ToolbarWordFilterComponent, WalletComponent, WiredChestComponent, WiredContractComponent, WiredMenuComponent, WiredRewardNotificationsComponent, WiredSelfDonationComponent, WiredSetupComponent, WiredTradeComponent, WiredTransactionsComponent } from './components';
 import { TargetedOfferComponent } from './components/catalog/TargetedOfferComponent';
 import { CollectiblesComponent } from './components/collectibles';
 import { EarningsComponent } from './components/earnings';
@@ -15,7 +15,7 @@ import { OfferCenterComponent } from './components/offer-center';
 import { SpecialItemsComponent } from './components/special-items';
 import { registerHandlers } from './handlers';
 import { useRegisterHandlers } from './hooks';
-import { Box, ModalLayer, TooltipLayer } from './theme';
+import { Box, ModalLayer, TooltipLayer, WindowLayer } from './theme';
 import { TargetedOfferMinimizedView } from './views/catalog/targeted-offers/TargetedOfferMinimizedView';
 import { HotelView } from './views/hotel-view/HotelView';
 import { NotificationsExtensionAnchor } from './views/notifications/NotificationsExtensionAnchor';
@@ -52,17 +52,8 @@ export const MainView = () => {
         <>
             <RoomWrapper />
             {landingViewVisible && <HotelView />}
-            <Box
-                sortableChildren={true}
-                layout={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    overflow: 'hidden',
-                }}
-            >
+            {/* Window context 1's desktop: every window is drawn and ordered in here. */}
+            <WindowLayer>
                 <Box layout={{
                     position: 'absolute',
                     top: 0,
@@ -112,6 +103,9 @@ export const MainView = () => {
                 <TargetedOfferComponent />
                 <ToolbarView />
                 <ToolbarOtherSettingsComponent />
+                <ToolbarSoundSettingsComponent />
+                <ToolbarChatSettingsComponent />
+                <ToolbarWordFilterComponent />
                 {/* Drawn after the toolbar because it sits inside it when it fits; it renders nothing outside a room. */}
                 <RoomChatInputView />
                 <NotificationsView />
@@ -119,7 +113,7 @@ export const MainView = () => {
                 {/* Context 3: every `ModalDialog` is moved in here, over the windows and their popups. */}
                 <ModalLayer />
                 <TooltipLayer />
-            </Box>
+            </WindowLayer>
         </>
     );
 };

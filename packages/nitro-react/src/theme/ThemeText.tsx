@@ -8,7 +8,7 @@ import { useDynamicStyleEffect } from './dynamicstyle';
 import { DEFAULT_FLASH_TEXT_FORMAT, FlashTextFieldOverrides, parseFlashTextMarkup } from './font/flash-text';
 import { FlashText } from './font/FlashText';
 import { FlashTextCanvasConfig, FlashTextOverflowReplace, useFlashTextCanvas } from './hooks/useFlashTextCanvas';
-import { browserFaceOverride, DEFAULT_TEXT_STYLE, DynamicStyleRole, flashFaceOverride, getPixiTextStyle, insetStretchAxes, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
+import { browserFaceOverride, DEFAULT_TEXT_STYLE, DynamicStyleRole, flashFaceOverride, getPixiTextStyle, insetStretchAxes, resolveFlashStyle, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
 
 export type TextConfig = {
     text: string;
@@ -59,20 +59,6 @@ export type TextConfig = {
 
 /** The resolved config the renderers take: the effect already folded into colour, opacity and offset. */
 type TextRenderConfig = TextConfig & { x?: number; y?: number };
-
-/** The style the exact renderer draws in: a raw `fontFamily`/`fontSize` override is still that
- *  style's own Flash format with the face or size swapped in - a Flash layout's `font_face` and
- *  `font_size` vars are exactly that, applied over the style the way
- *  `TextController.setTextFormatting` applies them - so an override keeps rendering exactly
- *  (`useFlashTextCanvas` folds them into the format). Only a family none of the captured faces
- *  covers, or a non-numeric size, falls through to native rendering. */
-const resolveFlashStyle = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOptions | undefined) => {
-    if (textOptions?.fontSize !== undefined && typeof textOptions.fontSize !== 'number') return undefined;
-
-    if (textOptions?.fontFamily && !flashFaceOverride(textOptions.fontFamily)) return undefined;
-
-    return textStyle ?? DEFAULT_TEXT_STYLE;
-};
 
 /** `TextStyleOptions.dropShadow` is `boolean | Partial<TextDropShadow>` (Pixi's own native
  *  `pixiText` fills in its defaults internally) - the Flash text renderer needs a complete config

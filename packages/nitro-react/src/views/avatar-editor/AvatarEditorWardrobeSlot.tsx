@@ -18,9 +18,13 @@ const CENTERED = { stretchedX: false, stretchedY: false, pivot: 'center' } as co
  * as Flash's `WardrobeSlot.updateView`: the translucent style 3 border, the `set_button` arrow
  * while the slot is usable, the `get_button` arrow while it is usable and holds a look, the look
  * itself centred in the 22x48 `image` (`zoom.enabled` renders it at half size) and the
- * `get_figure` region over it. Flash draws `avatar_editor_wardrobe_empty_slot` into `image` for
- * an empty or locked slot; that bitmap is not among the port's assets, so such a slot shows the
- * border alone.
+ * `get_figure` region over it.
+ *
+ * An empty or locked slot shows the border alone, as the client's does: `updateView` asks the
+ * window manager for `avatar_editor_wardrobe_empty_slot`, and the library publishes that bitmap
+ * as `avatar_editor_wardrobe_wardrobe_empty_slot` (`HabboWindowManagerCom`, the embedded
+ * `wardrobe_empty_slot_png` under its own `avatar_editor_wardrobe` prefix), so the lookup finds
+ * nothing and `updateView` returns before it draws anything. Not a gap in the port's assets.
  */
 export const AvatarEditorWardrobeSlot = ({ figure, gender = AvatarGenderType.Male, usable, onSet, onGet }: AvatarEditorWardrobeSlotProps) => {
     const hasFigure = !!figure;

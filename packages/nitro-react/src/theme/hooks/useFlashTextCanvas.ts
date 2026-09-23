@@ -1,7 +1,7 @@
 import { Color, TextDropShadow } from 'pixi.js';
 import { useMemo } from 'react';
 
-import { FLASH_TEXT_GUTTER, FlashTextCanvas, FlashTextFace, FlashTextFieldOverrides, FlashTextFormat, FlashTextLayoutOptions, flashTextLineHeight, FlashTextRenderer, FlashTextRun, HABBO_TEXT_STYLES, HabboTextStyleName, layoutFlashTextBlock, normalizeFlashTextFormat, parseFlashTextMarkupWithLinks, renderFlashTextCanvas } from '../font/flash-text';
+import { FLASH_TEXT_GUTTER, FlashTextCanvas, FlashTextFace, FlashTextFieldOverrides, FlashTextFormat, FlashTextLayoutOptions, flashTextLineHeight, FlashTextRenderer, FlashTextRun, HABBO_TEXT_STYLES, HabboTextStyleName, layoutFlashTextBlock, parseFlashTextMarkupWithLinks, renderFlashTextCanvas, resolveFlashTextFormat } from '../font/flash-text';
 import { flashFaceOverride } from '../utils/textStyles';
 
 /**
@@ -174,14 +174,12 @@ export const useFlashTextCanvas = (text: string, habboKey: HabboTextStyleName | 
 
         // The style first, then the element's own vars over it, exactly as
         // `TextController.setTextFormatting` layers them.
-        const format = normalizeFlashTextFormat({
-            ...HABBO_TEXT_STYLES[habboKey],
-            ...(fieldKey ? JSON.parse(fieldKey) as FlashTextFieldOverrides : {}),
-            // A face alias adds its weight and slant, it does not clear them: Flash's `font_face`
-            // sets the family and leaves `bold` / `italic` to their own vars.
-            ...(faceFamily ? { fontFamily: faceFamily, ...(faceBold ? { bold: true } : {}), ...(faceItalic ? { italic: true } : {}) } : {}),
-            ...(fontSize !== undefined ? { fontSize } : {}),
-            ...(color ? { color: new Color(color).toNumber() } : {}),
+        const format = resolveFlashTextFormat({
+            style: HABBO_TEXT_STYLES[habboKey],
+            field: fieldKey ? JSON.parse(fieldKey) as FlashTextFieldOverrides : undefined,
+            face: faceFamily ? { fontFamily: faceFamily, bold: !!faceBold, italic: !!faceItalic } : undefined,
+            fontSize,
+            color: color ? new Color(color).toNumber() : undefined,
         });
         const shadow = (shadowColor !== undefined && shadowAngle !== undefined && shadowDistance !== undefined)
             ? { color: shadowColor, alpha: shadowAlpha ?? 1, offsetX: Math.round(Math.cos(shadowAngle) * shadowDistance), offsetY: Math.round(Math.sin(shadowAngle) * shadowDistance) }

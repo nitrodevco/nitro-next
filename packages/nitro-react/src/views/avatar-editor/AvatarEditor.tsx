@@ -3,7 +3,7 @@ import { GetWardrobeComposer, SaveWardrobeOutfitComposer, SetClothingChangeDataC
 import { useEffect, useRef, useState } from 'react';
 
 import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
-import { useAvatarEditorActions, useAvatarEditorStore } from '#base/context/avatar-editor';
+import { DEFAULT_WARDROBE_SLOTS, useAvatarEditorActions, useAvatarEditorStore, WARDROBE_SLOTS_KEY } from '#base/context/avatar-editor';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useTranslation, useWindowParams } from '#base/context/system';
 import { useOwnClubLevel, useUserStore } from '#base/context/user';
@@ -148,7 +148,7 @@ export const AvatarEditor = () => {
     usePartThumbnailLifetime();
 
     const previewerRef = useRef<RoomPreviewerHandle>(null);
-    const maxWardrobeSlots = useConfigValue<number>('avatar.wardrobe.max.slots') ?? 14;
+    const maxWardrobeSlots = useConfigValue<number>(WARDROBE_SLOTS_KEY) ?? DEFAULT_WARDROBE_SLOTS;
     const t = useTranslation();
     const { send } = useWebSocketContext();
 

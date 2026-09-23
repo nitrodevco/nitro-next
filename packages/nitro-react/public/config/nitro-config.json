@@ -60,7 +60,7 @@
     "room.enter.info.collapse.delay": 5000,
     "poll.word.quiz.result.view.seconds": 4,
     "poll.word.quiz.answer.bubble.seconds": 3,
-    "avatar.wardrobe.max.slots": 14,
+    "avatareditor.wardrobe.slots": 14,
     "log.debug": false,
     "log.warn": false,
     "log.error": false,

@@ -73,11 +73,17 @@ export const getStandaloneThemeTexture = (key: string | undefined): Texture | un
 
 /**
  * A theme sprite with a `ThemeSliceEffect` applied (a silhouette, a drop shadow) as its own
- * texture, cut out of the decoded atlas once per key + effect and kept.
+ * texture, cut out of the decoded atlas once per key + effect and kept. Several keys are the
+ * one shape their sheets are drawn over one another as - a skin's colorizing art and its
+ * untintable pieces, which `ShadowLayer` shadows together.
  */
-export const getThemeEffectTexture = (key: string | undefined, effect: ThemeSliceEffect): Texture | undefined => (key
-    ? getOrBuildTexture(`theme:effect:${key}|${themeSliceEffectId(effect)}`, () => getThemeSliceCanvas(key, effect))
-    : undefined);
+export const getThemeEffectTexture = (key: string | readonly string[] | undefined, effect: ThemeSliceEffect): Texture | undefined => {
+    const keys = (typeof key === 'string') ? [ key ] : key;
+
+    if (!keys?.length) return undefined;
+
+    return getOrBuildTexture(`theme:effect:${keys.join('+')}|${themeSliceEffectId(effect)}`, () => getThemeSliceCanvas(keys, effect));
+};
 
 /**
  * A copy of any loaded texture's frame on a 2D canvas, for a per-pixel derivation. Needs a
@@ -456,4 +462,4 @@ export const usePixiTexture = (themeKey: string | undefined, options?: PixiTextu
     : getThemeTexture(themeKey));
 
 /** A theme key with an effect applied, as a texture - cut out of the sheet once per key + effect. */
-export const usePixiEffectTexture = (themeKey: string | undefined, effect: ThemeSliceEffect): Texture | undefined => getThemeEffectTexture(themeKey, effect);
+export const usePixiEffectTexture = (themeKey: string | readonly string[] | undefined, effect: ThemeSliceEffect): Texture | undefined => getThemeEffectTexture(themeKey, effect);

@@ -1,5 +1,5 @@
 import { Container as PixiContainer } from 'pixi.js';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useContext, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { VariantCascadeProvider } from './cascade';
@@ -8,7 +8,7 @@ import { Header } from './Header';
 import { ChildBounds, ReflectResizeContext, useChildBounds, useFrameDrag, useFrameResize, useReflectResizeHost, useThemeVariant } from './hooks';
 import { BackgroundLayer, Composite, CompositePiece, NineSlice, ShadowLayer } from './layer';
 import { Scaler, ScalerDirection } from './Scaler';
-import { compose, DropShadowConfig, expandSides, ThemeProps, ThemeVariant, ThemeVariants } from './utils';
+import { compose, DropShadowConfig, expandSides, getWindowLayer, subscribeWindowLayer, ThemeProps, ThemeVariant, ThemeVariants, WindowPlacedContext } from './utils';
 
 export type FrameVariant = ThemeVariant;
 
@@ -25,6 +25,13 @@ const BLUE_FRAME_SHINE = Composite([
 
 const FRAME_3_SHINE = NineSlice('frame-3-default-shine-src', 10, 33, 10, 10);
 
+/**
+ * `habbo_window_layout_frame`, the 40x40 template styles 0, 1 and 2 share. It insets nothing of
+ * its own: `titlebar` sits at (6, 6) - which is the header variant's own margin - and
+ * `_FRAME_SCALER` at (25, 25) 15x15, flush with the frame's bottom right corner. A frame padding
+ * here is in front of both, and the 2px one this carried put the title bar, and the resize
+ * corner, two pixels in from where the client draws them.
+ */
 const FRAME_0_VARIANT: FrameVariant = {
     layer: NineSlice('frame-0-default-src', 13, 13, 13, 13),
     overlay: BLUE_FRAME_SHINE,
@@ -32,8 +39,6 @@ const FRAME_0_VARIANT: FrameVariant = {
     layout: {
         minWidth: 40,
         minHeight: 40,
-        paddingTop: 2,
-        paddingBottom: 2,
     },
 };
 
@@ -308,6 +313,19 @@ export const Frame = ({
     onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
 }: FrameProps) => {
     const { frameRef, attachFrame, offset, zIndex, revealed, onPointerDown, onHeaderPointerDown } = useFrameDrag(id, { defaultPosition, remember: rememberPosition, centered, onPositionChange });
+    /*
+     * A window belongs on the window desktop, whoever built it - `buildFromXML(xml, 1)`. A frame
+     * mounted outside the layer (every room widget's dialog is mounted over the room canvas) has
+     * its container moved in after mount and handed back before React unmounts it, the way
+     * `ModalDialog` and `FloatingPopup` move theirs; React only ever talks to the container
+     * itself, never to where it sits in the display list. Left where it is mounted, its z-index
+     * sorts against nothing and it can neither be raised past another window nor pushed behind
+     * one. A frame already on a desktop - every window of the client's own, and a frame nested
+     * inside one - stays exactly where it is rendered.
+     */
+    const placed = useContext(WindowPlacedContext);
+    const windowLayer = useSyncExternalStore(subscribeWindowLayer, getWindowLayer);
+    const hostRef = useRef<PixiContainer>(null);
     const { ownCascade, config, handlers, resolvedLayer, resolvedPlain, resolvedOverlay, resolvedShadow, resolvedTint } = useThemeVariant({
         cascadeKey: 'frame', variants: FRAME_VARIANTS, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, dropShadow, onPointerOver, onPointerOut, onPointerDown: compose(onPointerDown, onPointerDownProp), onPointerUp, onPointerUpOutside, onPointerTap,
     });
@@ -336,74 +354,103 @@ export const Frame = ({
         ...((height !== undefined) && { height }),
     };
 
+    useLayoutEffect(() => {
+        const host = hostRef.current;
+        const frame = frameRef.current;
+
+        if (placed || !windowLayer || !host || !frame) return;
+
+        windowLayer.addChild(frame);
+
+        return () => {
+            if (!host.destroyed && !frame.destroyed) host.addChild(frame);
+        };
+    }, [ placed, windowLayer, frameRef ]);
+
+    const frame = (
+        <WindowPlacedContext.Provider value={true}>
+            <Box
+                ref={attachFrame}
+                x={offset.dx}
+                y={offset.dy}
+                zIndex={zIndex}
+                renderable={revealed}
+                {...handlers}
+                layout={{
+                    // A window sits on its desktop at its own rectangle, never in a sibling's flow -
+                    // in flow, every window that opens beside it would push it along.
+                    position: 'absolute',
+                    flexDirection: 'column',
+                    minWidth,
+                    minHeight,
+                    width: minWidth,
+                    height: minHeight,
+                    ...expandSides(config.layout),
+                    ...expandSides(layout),
+                    ...sizeLayout,
+                    ...(size && { width: size.width, height: size.height }),
+                }}
+            >
+                { resolvedShadow && (
+                    <ShadowLayer
+                        {...resolvedShadow}
+                        layer={resolvedLayer}
+                        plain={resolvedPlain}
+                    />
+                ) }
+                { resolvedLayer && (
+                    <BackgroundLayer
+                        layer={resolvedLayer}
+                        tintColor={resolvedTint}
+                    />
+                ) }
+                {/* The skin's `colorize="false"` pieces, over the tinted art and under the shine. */}
+                { resolvedPlain && <BackgroundLayer layer={resolvedPlain} /> }
+                { resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} /> }
+                { backdrop }
+                <VariantCascadeProvider map={ownCascade}>
+                    <ReflectResizeContext.Provider value={reflectRegistry}>
+                        <Header
+                            caption={caption}
+                            tintColor={resolvedTint}
+                            onClose={onClose}
+                            onMenu={onMenu}
+                            helpPage={helpPage}
+                            onHelp={onHelp}
+                            onPointerDown={draggable ? onHeaderPointerDown : undefined}
+                        />
+                        <ContentArea
+                            ref={setContentNode}
+                            // Its children are cropped by the frame, not by this box: the margins are
+                            // how far past its own edges they may reach on each side. See `ContentArea`.
+                            clipOutset={margins}
+                            layout={margins ? { ...contentLayout, ...marginsLayout(margins, fitWidth, fitHeight, contentBounds) } : contentLayout}
+                        >
+                            {children}
+                        </ContentArea>
+                        <Scaler
+                            // `_FRAME_SCALER` is tagged `_COLORIZE` in every frame's window layout, so
+                            // the corner takes the window's own colour as the header does.
+                            tintColor={resolvedTint}
+                            direction={resizeDirection}
+                            onPointerDown={onScalerPointerDown}
+                        />
+                    </ReflectResizeContext.Provider>
+                </VariantCascadeProvider>
+            </Box>
+        </WindowPlacedContext.Provider>
+    );
+
+    if (placed) return frame;
+
     return (
         <Box
-            ref={attachFrame}
-            x={offset.dx}
-            y={offset.dy}
-            zIndex={zIndex}
-            renderable={revealed}
-            {...handlers}
-            layout={{
-                // A window sits on its desktop at its own rectangle, never in a sibling's flow -
-                // in flow, every window that opens beside it would push it along.
-                position: 'absolute',
-                flexDirection: 'column',
-                minWidth,
-                minHeight,
-                width: minWidth,
-                height: minHeight,
-                ...expandSides(config.layout),
-                ...expandSides(layout),
-                ...sizeLayout,
-                ...(size && { width: size.width, height: size.height }),
-            }}
+            ref={hostRef}
+            // Only ever a mount point: the frame is moved out of here into the window layer, and
+            // handed back before React unmounts it.
+            layout={{ position: 'absolute', left: 0, top: 0, width: 0, height: 0 }}
         >
-            { resolvedShadow && (
-                <ShadowLayer
-                    {...resolvedShadow}
-                    layer={resolvedLayer}
-                />
-            ) }
-            { resolvedLayer && (
-                <BackgroundLayer
-                    layer={resolvedLayer}
-                    tintColor={resolvedTint}
-                />
-            ) }
-            {/* The skin's `colorize="false"` pieces, over the tinted art and under the shine. */}
-            { resolvedPlain && <BackgroundLayer layer={resolvedPlain} /> }
-            { resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} /> }
-            { backdrop }
-            <VariantCascadeProvider map={ownCascade}>
-                <ReflectResizeContext.Provider value={reflectRegistry}>
-                    <Header
-                        caption={caption}
-                        tintColor={resolvedTint}
-                        onClose={onClose}
-                        onMenu={onMenu}
-                        helpPage={helpPage}
-                        onHelp={onHelp}
-                        onPointerDown={draggable ? onHeaderPointerDown : undefined}
-                    />
-                    <ContentArea
-                        ref={setContentNode}
-                        // Its children are cropped by the frame, not by this box: the margins are
-                        // how far past its own edges they may reach on each side. See `ContentArea`.
-                        clipOutset={margins}
-                        layout={margins ? { ...contentLayout, ...marginsLayout(margins, fitWidth, fitHeight, contentBounds) } : contentLayout}
-                    >
-                        {children}
-                    </ContentArea>
-                    <Scaler
-                        // `_FRAME_SCALER` is tagged `_COLORIZE` in every frame's window layout, so
-                        // the corner takes the window's own colour as the header does.
-                        tintColor={resolvedTint}
-                        direction={resizeDirection}
-                        onPointerDown={onScalerPointerDown}
-                    />
-                </ReflectResizeContext.Provider>
-            </VariantCascadeProvider>
+            {frame}
         </Box>
     );
 };

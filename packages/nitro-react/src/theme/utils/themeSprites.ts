@@ -69,13 +69,13 @@ export const themeSliceEffectId = (effect: ThemeSliceEffect): string => {
  * Closes a partly painted skin downwards: every empty row below the last painted one repeats
  * that row.
  *
- * A window skin does not have to paint its whole sheet. The ubuntu frames' `3-default.png` is
- * 26x55 sliced 10/33/10/10, and only its top 33 rows - the title bar - carry any pixels: the
- * nine-slice's middle and bottom bands are empty, because the window's body and its outline
- * are drawn by the content area underneath. Shadowing that silhouette as-is gives a shadow
- * beside the title bar that stops dead where the window carries on, while Flash filtered the
- * whole window and cast one down its full height. A fully painted sheet (`0-default.png`, and
- * every rounded-all-round skin) has no empty rows and is left exactly as it was.
+ * A window skin does not have to paint its whole sheet, and the shadow is of the window, not of
+ * one sheet - Flash filtered the rendered window and cast a shadow down its full height. The
+ * skin's own sheets are unioned before this runs (`ShadowLayer`), which is what closes the
+ * ubuntu frames, whose colorizing sheet holds only the title bar and whose `-plain` sheet holds
+ * the body; this is left for a sheet taller than any of its art - `frame-7`'s 64x73 template,
+ * whose bottom 9 rows no sheet paints - so the shadow still reaches the window's own bottom
+ * instead of stopping short of it. A sheet painted to its last row is left exactly as it was.
  */
 const extendLastPaintedRow = (ctx: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number, pad: number): void => {
     const image = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
@@ -106,11 +106,21 @@ const extendLastPaintedRow = (ctx: CanvasRenderingContext2D, canvasWidth: number
     ctx.putImageData(image, 0, 0);
 };
 
+/** The rect of the sheet a slice occupies - `ThemeSprite` without its key. */
+export type SliceRect = Pick<ThemeSprite, 'x' | 'y' | 'width' | 'height'>;
+
 /**
- * Draws the rect `(sx, sy, width, height)` of `source` onto a fresh canvas with `effect`
- * applied - the one recolour routine every atlas slice and effect texture shares.
+ * Draws `slices` of `source`, stacked on one another at the first one's size, onto a fresh
+ * canvas with `effect` applied - the one recolour routine every atlas slice and effect texture
+ * shares. All but the shadow pass a single rect; a shadow passes every sheet the skin is drawn
+ * from, so the silhouette it blurs is the whole window's shape (see `getThemeSliceCanvas`).
  */
-export const renderSliceEffect = (source: CanvasImageSource, sx: number, sy: number, width: number, height: number, effect: ThemeSliceEffect): HTMLCanvasElement | undefined => {
+export const renderSliceEffect = (source: CanvasImageSource, slices: readonly SliceRect[], effect: ThemeSliceEffect): HTMLCanvasElement | undefined => {
+    const [ first ] = slices;
+
+    if (!first) return undefined;
+
+    const { width, height } = first;
     const pad = (effect.kind === 'shadow') ? effect.pad : 0;
     const canvas = document.createElement('canvas');
 
@@ -121,7 +131,11 @@ export const renderSliceEffect = (source: CanvasImageSource, sx: number, sy: num
 
     if (!ctx) return undefined;
 
-    ctx.drawImage(source, sx, sy, width, height, pad, pad, width, height);
+    const drawSlices = () => {
+        for (const slice of slices) ctx.drawImage(source, slice.x, slice.y, slice.width, slice.height, pad, pad, slice.width, slice.height);
+    };
+
+    drawSlices();
 
     // Before the silhouette is taken, so the window's body casts a shadow too.
     if (effect.kind === 'shadow') extendLastPaintedRow(ctx, canvas.width, canvas.height, pad);
@@ -132,7 +146,7 @@ export const renderSliceEffect = (source: CanvasImageSource, sx: number, sy: num
         ctx.fillStyle = effect.color;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.globalCompositeOperation = 'destination-in';
-        ctx.drawImage(source, sx, sy, width, height, pad, pad, width, height);
+        drawSlices();
     } else if (effect.kind === 'silhouette' || effect.kind === 'shadow') {
         ctx.globalCompositeOperation = 'source-in';
         ctx.fillStyle = effect.color;
@@ -157,18 +171,23 @@ export const renderSliceEffect = (source: CanvasImageSource, sx: number, sy: num
 /**
  * A canvas holding one theme sprite cut out of the atlas, optionally recoloured. Synchronous
  * (the atlas is already decoded), so a first render never flashes without its chrome.
+ *
+ * Several keys are drawn over one another at the first one's size, for a skin whose shape is
+ * spread over more than one sheet - the shadow's silhouette (see `ShadowLayer`). Every key has
+ * to resolve, so a sheet the atlas has not registered yields nothing rather than half a shape.
  */
-export const getThemeSliceCanvas = (key: string, effect: ThemeSliceEffect = { kind: 'plain' }): HTMLCanvasElement | undefined => {
-    const sprite = sprites.get(key);
+export const getThemeSliceCanvas = (key: string | readonly string[], effect: ThemeSliceEffect = { kind: 'plain' }): HTMLCanvasElement | undefined => {
+    const keys = (typeof key === 'string') ? [ key ] : key;
+    const slices = keys.map(name => sprites.get(name)).filter((sprite): sprite is ThemeSprite => !!sprite);
 
-    if (!atlas || !sprite) return undefined;
+    if (!atlas || (slices.length !== keys.length) || !slices.length) return undefined;
 
-    const cacheKey = `${key}|${themeSliceEffectId(effect)}`;
+    const cacheKey = `${keys.join('+')}|${themeSliceEffectId(effect)}`;
     const cached = sliceCanvases.get(cacheKey);
 
     if (cached) return cached;
 
-    const canvas = renderSliceEffect(atlas.image, sprite.x, sprite.y, sprite.width, sprite.height, effect);
+    const canvas = renderSliceEffect(atlas.image, slices, effect);
 
     if (!canvas) return undefined;
 

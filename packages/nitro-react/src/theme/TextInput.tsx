@@ -2,11 +2,11 @@ import { CanvasTextMetrics, Container as PixiContainer, FederatedPointerEvent, T
 import { forwardRef, ForwardRefExoticComponent, RefAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Box, BoxLayout } from './Box';
-import { FLASH_TEXT_GUTTER, flashTextCaretRect, FlashTextFieldOverrides, flashTextSelectionRects, HABBO_TEXT_STYLES, normalizeFlashTextFormat } from './font/flash-text';
+import { FLASH_TEXT_GUTTER, flashTextCaretRect, FlashTextFieldOverrides, flashTextSelectionRects, HABBO_TEXT_STYLES, resolveFlashTextFormat } from './font/flash-text';
 import { useLayoutSize, useOutsideClick } from './hooks';
 import { ColorLayer } from './layer';
 import { ThemeText } from './ThemeText';
-import { DEFAULT_TEXT_STYLE, getPixiTextStyle, TextStyleKey } from './utils';
+import { DEFAULT_TEXT_STYLE, flashFaceOverride, getPixiTextStyle, resolveFlashStyle, TextStyleKey } from './utils';
 
 export interface TextInputProps {
     value: string;
@@ -30,7 +30,12 @@ export interface TextInputProps {
     /** Masks the value with bullets (the Flash `display_as_password` text field). */
     password?: boolean;
     fontSize?: number;
-    /** A theme text style (rendered Flash-exact) for the value; `fontSize`/`fontFamily` override it with native canvas text. */
+    /**
+     * A theme text style for the value, `regular` when none is named - a Flash layout's
+     * `text_style` var. `fontSize` / `fontFamily` are its `font_size` / `font_face` vars, folded
+     * into that style's format the way `ThemeText` folds them, so an override still renders
+     * exactly; only a family none of the captured faces covers falls back to canvas text.
+     */
     textStyle?: TextStyleKey;
     /** A Flash input's `TextField` vars over its style (`antialias_type`, `sharpness`, `thickness`, ...) - see `ThemeText`. */
     flashFormat?: FlashTextFieldOverrides;
@@ -175,7 +180,8 @@ const hiddenInputStyle: Partial<CSSStyleDeclaration> = {
  * IME composition - with none of the per-keystroke window listeners the earlier version had to
  * re-attach on every render (the lag). The Pixi side only mirrors: the value through
  * `ThemeText`, the selection as a highlight, and a blinking caret positioned from real glyph
- * metrics (canvas text metrics for a native font, the Flash text layout for a themed style).
+ * metrics - the Flash text layout wherever `ThemeText` draws the value exactly, canvas text
+ * metrics only where it falls back to the browser's own text.
  * A click places the caret at the nearest glyph boundary, and a single-line field scrolls
  * horizontally to keep the caret in view once the text outgrows the box.
  *
@@ -395,11 +401,9 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             return () => clearInterval(interval);
         }, [ focused, value, selection ]);
 
-        // A named theme style renders Flash-exact; a size/family override falls back to native canvas text (see ThemeText).
         // The field's own vars go over its style, as `TextController.setTextFormatting` layers them;
         // compared by value, since a view writes them as an object literal.
         const fieldKey = fieldFormat ? JSON.stringify(fieldFormat) : '';
-        const flashFormat = useMemo(() => (textStyle ? normalizeFlashTextFormat({ ...HABBO_TEXT_STYLES[textStyle], ...(fieldKey ? JSON.parse(fieldKey) as FlashTextFieldOverrides : {}) }) : undefined), [ textStyle, fieldKey ]);
         const wrapWidth = Math.max(1, innerWidth);
         const textOptions = useMemo<TextStyleOptions>(() => ({
             fill: textColor,
@@ -408,10 +412,29 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             ...((!textStyle && fontFamily) ? { fontFamily } : {}),
             ...(multiline ? { wordWrap: true, wordWrapWidth: wrapWidth, breakWords: true } : {}),
         }), [ textColor, textStyle, fontSize, fontFamily, multiline, wrapWidth ]);
+        /*
+         * The format the value below is actually drawn in. `ThemeText` renders every field
+         * exactly - a style it names or `regular` otherwise, with the `font_face` / `font_size`
+         * overrides in `textOptions` folded into that format, not dropped to canvas text - so
+         * the caret and the selection have to be measured in the same format or they land in
+         * the browser's metrics while the glyphs are in Flash's: two pixels of `TextField`
+         * gutter out before the first character, and drifting further with every one after it.
+         * `undefined` only where `ThemeText` itself cannot render exactly (`resolveFlashStyle`):
+         * a family none of the captured faces covers.
+         */
+        const flashStyle = resolveFlashStyle(textStyle, textOptions);
+        const flashFormat = useMemo(() => (flashStyle
+            ? resolveFlashTextFormat({
+                    style: HABBO_TEXT_STYLES[flashStyle],
+                    field: fieldKey ? JSON.parse(fieldKey) as FlashTextFieldOverrides : undefined,
+                    face: flashFaceOverride(textOptions.fontFamily),
+                    fontSize: (typeof textOptions.fontSize === 'number') ? textOptions.fontSize : undefined,
+                })
+            : undefined), [ flashStyle, textOptions, fieldKey ]);
 
         const measureStyle = useMemo(() => getPixiTextStyle(textStyle ?? DEFAULT_TEXT_STYLE, textOptions), [ textStyle, textOptions ]);
 
-        /** Caret geometry in the text's own space - the Flash text layout for a themed style, canvas metrics for a native font. */
+        /** Caret geometry in the text's own space - the Flash text layout wherever the value renders exactly (its 2px `TextField` gutter included), canvas metrics only where it does not. */
         const measureCaret = useCallback((text: string, index: number): CaretGeometry => {
             index = Math.max(0, Math.min(index, text.length));
 

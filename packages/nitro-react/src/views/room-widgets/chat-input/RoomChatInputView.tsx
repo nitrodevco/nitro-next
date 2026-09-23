@@ -422,6 +422,10 @@ export const RoomChatInputView = () => {
                         maxLength={MAX_CHARS}
                         fontFamily="Ubuntu"
                         fontSize={17}
+                        // `chat_input`'s own `antialias_type` var. Without it the field falls back
+                        // to `regular`'s `normal`, which the exact renderer has only for the
+                        // Volter faces - so Ubuntu 17 dropped to the browser's canvas text.
+                        flashFormat={{ antiAliasType: 'advanced' }}
                         textColor="#000000"
                         flashPlacement
                         alwaysShowSelection

@@ -742,7 +742,11 @@ const RUNTIME_IMAGES: { name: string; component: string }[] = [
     'avatar_editor_tabs_head_accessories', 'avatar_editor_tabs_head_eyewear', 'avatar_editor_tabs_head_face_accessories', 'avatar_editor_tabs_top_shirt',
     'avatar_editor_tabs_top_jacket', 'avatar_editor_tabs_top_prints', 'avatar_editor_tabs_top_accessories', 'avatar_editor_tabs_bottom_trousers',
     'avatar_editor_tabs_bottom_shoes', 'avatar_editor_tabs_bottom_accessories', 'avatar_editor_tabs_icon_misc_pets', 'avatar_editor_tabs_icon_misc_misc',
-    'avatar_editor_wardrobe_empty_slot', 'avatar_editor_editor_clr_13x21_2', 'avatar_editor_editor_clr_13x21_3',
+    // `WardrobeSlot.updateView` asks for `avatar_editor_wardrobe_empty_slot`, which no library
+    // publishes: HabboWindowManagerCom files that bitmap under its own prefix, as
+    // `avatar_editor_wardrobe_wardrobe_empty_slot`, so the client's own lookup finds nothing and
+    // an empty slot draws its border alone. Not copied, because nothing can draw it.
+    'avatar_editor_editor_clr_13x21_2', 'avatar_editor_editor_clr_13x21_3',
 ].map(name => ({ name, component: 'avatar-editor' }))).concat([
     // `SoundSettingsItem.updateSoundIcons` swaps each volume row's mute and full-volume icons
     // between the white and the coloured pair as the row's volume reaches zero; the layout names
@@ -2258,6 +2262,11 @@ const emitInput = (ctx: EmitContext, el: Element, parent: ParentBox, indent: str
     if (format.options.fontFamily) props.push(`fontFamily={${format.options.fontFamily}}`);
     if (format.options.fontSize) props.push(`fontSize={${format.options.fontSize}}`);
     if (textColor) props.push(`textColor="${textColor}"`);
+    // The `TextField` vars Pixi has no vocabulary for, exactly as a `<text>` carries them. An
+    // input drops them at its peril: `chat_input`'s `antialias_type="advanced"` left out put the
+    // field on `regular`'s `normal`, which is exact for the Volter faces alone, so its Ubuntu 17
+    // fell all the way back to the browser's canvas text.
+    if (Object.values(format.flash).some(value => value !== undefined)) props.push(`flashFormat={${layoutLiteral(format.flash)}}`);
 
     // The TextField is the whole window: text at its 2px gutter, never centred.
     props.push('flashPlacement');
