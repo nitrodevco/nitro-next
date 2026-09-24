@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { searchAvatar } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useFriendsActions } from '#base/context/friend';
 import { useTranslation } from '#base/context/system';
 import { Border, ContainerButton, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
@@ -8,10 +11,14 @@ import { Border, ContainerButton, LayoutImage, Region, TextInput, ThemeImage, Th
  * `0x848484` border at (5, 5) with the white, black-bordered `search_str` input and the style-0
  * `search_but` container button 7 from the right. `SearchView.onSearchStrInput` cuts the input
  * at 25 characters. The button's `<bitmap name="search">` is filled with the friend list's
- * `search_png` library bitmap - not an icon-set style.
+ * `search_png` library bitmap - not an icon-set style. The button and Enter search
+ * (`onSearchButtonClick`, `onSearchStrInput`'s char 13 - both `searchAvatar`).
  */
 export const FriendListSearchFooter = () => {
     const [ value, setValue ] = useState('');
+    const { send } = useWebSocketContext();
+    const { tooltipHandlers } = useFriendsActions();
+    const searchHover = tooltipHandlers('friendlist.tip.search');
     const t = useTranslation();
 
     return (
@@ -27,6 +34,7 @@ export const FriendListSearchFooter = () => {
                 <TextInput
                     value={value}
                     onChange={setValue}
+                    onEnter={() => searchAvatar(send, value)}
                     maxLength={25}
                     flashPlacement
                     border="#000000"
@@ -37,6 +45,10 @@ export const FriendListSearchFooter = () => {
                 />
                 <ContainerButton
                     variant="0"
+                    name="search_but"
+                    onPointerOver={searchHover.onMouseEnter}
+                    onPointerOut={searchHover.onMouseLeave}
+                    onPointerTap={() => searchAvatar(send, value)}
                     layout={{ position: 'absolute', right: 7, top: 5, width: 70, height: 21, overflow: 'hidden' }}
                 >
                     <ThemeImage

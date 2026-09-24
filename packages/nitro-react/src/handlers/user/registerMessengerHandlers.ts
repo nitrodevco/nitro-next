@@ -1,4 +1,4 @@
-import { AcceptFriendResultMessage, ConsoleMessageHistoryMessage, FindFriendsProcessResultMessage, FollowFriendErrorCodeType, FollowFriendFailedMessage, FriendListErrorCodeType, FriendListFragmentMessage, FriendListUpdateMessage, FriendNotificationMessage, FriendRequestsMessage, HabboSearchResultMessage, InstantMessageErrorMessage, MessengerErrorMessage, MessengerInitMessage, MiniMailNewMessage, MiniMailUnreadCountMessage, NewConsoleMessageMessage, NewFriendRequestMessage, RoomInviteErrorMessage, RoomInviteMessage } from '@nitrodevco/nitro-packets';
+import { AcceptFriendResultMessage, FindFriendsProcessResultMessage, FollowFriendErrorCodeType, FollowFriendFailedMessage, FriendListErrorCodeType, FriendListFragmentMessage, FriendListUpdateMessage, FriendRequestsMessage, HabboSearchResultMessage, MessengerErrorMessage, MessengerInitMessage, NewFriendRequestMessage, RoomInviteErrorMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { systemStore } from '#base/context/system';
@@ -7,9 +7,11 @@ import { userStore } from '#base/context/user';
 import { on, subscribeAll } from '../packetSubscriptions';
 
 /**
- * The friend list and the console - Flash's `HabboFriendList` and `HabboMessenger` message
- * handlers: the initial fragments, updates, requests, searches, room invites and the messages
- * themselves. The friend data lives in the user store because the room widgets read it too.
+ * The friend list - Flash's `HabboFriendList` message handlers: the initial fragments, updates,
+ * requests, the search tab's results and the errors the list reports. The friend data lives in the
+ * user store because the room widgets read it too. The console's own packets (conversations,
+ * their history, instant message errors, room invites, mini mail) wait for `HabboMessenger`, which
+ * is not ported - `known.HANDLERS_UNHANDLED` lists them rather than empty listeners here.
  */
 /**
  * `HabboFriendList.showAlertView`: the text a friend list error code is explained with, for a
@@ -38,14 +40,11 @@ const showFriendListError = (errorCode: number, clientMessageId: number = 0) => 
 };
 
 export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) => {
-    const { setFriendLimits, setFriendCategories, processFriends, processFriendUpdates, processFriendRequests } = userStore.getState();
+    const { setFriendLimits, setFriendCategories, processFriends, processFriendUpdates, processFriendRequests, setSearchResults } = userStore.getState();
 
     return subscribeAll(subscribe, [
         on(AcceptFriendResultMessage, (data) => {
             for (const failure of data.failures) showFriendListError(failure.errorCode);
-        }),
-
-        on(ConsoleMessageHistoryMessage, (data) => {
         }),
 
         // `HabboFriendBarView.onFindFriendsNotification`: `notify`, which is the plain alert with its ok button.
@@ -93,20 +92,14 @@ export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) =>
             if (data.updates && data.updates.length > 0) processFriendUpdates(data.updates);
         }),
 
-        on(FriendNotificationMessage, (data) => {
-        }),
-
         on(FriendRequestsMessage, (data) => {
             if (!data.requests.length) return;
 
             processFriendRequests(data.requests);
         }),
 
-        on(HabboSearchResultMessage, (data) => {
-        }),
-
-        on(InstantMessageErrorMessage, (data) => {
-        }),
+        // `HabboFriendList.onHabboSearchResult`: `AvatarSearchResults.searchReceived`, which redraws the search tab.
+        on(HabboSearchResultMessage, data => setSearchResults(data.friends, data.others)),
 
         // `HabboFriendList.onMessengerError`.
         on(MessengerErrorMessage, data => showFriendListError(data.errorCode, data.clientMessageId)),
@@ -117,15 +110,6 @@ export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) =>
             if (data.friendCategories) setFriendCategories(data.friendCategories);
         }),
 
-        on(MiniMailNewMessage, (data) => {
-        }),
-
-        on(MiniMailUnreadCountMessage, (data) => {
-        }),
-
-        on(NewConsoleMessageMessage, (data) => {
-        }),
-
         on(NewFriendRequestMessage, (data) => {
             processFriendRequests([ data.request ]);
         }),
@@ -133,9 +117,6 @@ export const registerMessengerHandlers = ({ subscribe }: WebSocketConnection) =>
         // `HabboFriendList.onRoomInviteError`: shown raw, the recipients joined the way `Util.arrayToString` does.
         on(RoomInviteErrorMessage, (data) => {
             friendListAlert(systemStore.getState().getLocalizationValue('friendlist.alert.title'), `Received room invite error: errorCode: ${data.errorCode}, recipients: ${data.failedRecipients.join(', ')}`);
-        }),
-
-        on(RoomInviteMessage, (data) => {
         }),
     ]);
 };

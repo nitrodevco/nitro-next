@@ -33,7 +33,7 @@ export const UserUpdateParser = (wrapper: IMessageDataWrapper): IRoomAvatarUpdat
         if (pieces[0] === '') continue;
 
         if (pieces.length >= 2) {
-            switch (piece) {
+            switch (piece as AvatarActionStateType) {
                 case AvatarActionStateType.Walk: {
                     const values = pieces[1].split(',');
 

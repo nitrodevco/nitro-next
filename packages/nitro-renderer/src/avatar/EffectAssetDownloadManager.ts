@@ -17,9 +17,12 @@ export class EffectAssetDownloadManager {
     private _currentDownloads: EffectAssetDownloadLibrary[] = [];
     private _libraryNames: string[] = [];
     private _isReady: boolean = false;
+    /** Flash's `LIBRARY_LOADED` event: `AvatarRenderManager` registers the library's aliases. */
+    private _onLibraryLoaded: ((libraryName: string) => void) | undefined;
 
-    constructor(structure: AvatarStructure) {
+    constructor(structure: AvatarStructure, onLibraryLoaded: ((libraryName: string) => void) | undefined = undefined) {
         this._structure = structure;
+        this._onLibraryLoaded = onLibraryLoaded;
     }
 
     public processEffectMap(data: IEffectMapLibrary[], assetUrl: string): void {
@@ -156,6 +159,8 @@ export class EffectAssetDownloadManager {
 
     private onLibraryComplete(library: EffectAssetDownloadLibrary): void {
         if (!library) return;
+
+        if (library.isLoaded) this._onLibraryLoaded?.(library.libraryName);
 
         const loadedEffects: number[] = [];
 

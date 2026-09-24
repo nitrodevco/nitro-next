@@ -20,6 +20,7 @@ export * from './clientLinkCommands';
 export * from './collectiblesCommands';
 export * from './earningsCommands';
 export * from './floorPlanCommands';
+export * from './friendListCommands';
 export * from './gameTokensCommands';
 export * from './groupCommands';
 export * from './habbiconCommands';

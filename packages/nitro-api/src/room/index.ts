@@ -52,7 +52,6 @@ export * from './object/IRoomMapMask';
 export * from './object/IRoomObject';
 export * from './object/IRoomObjectController';
 export * from './object/IRoomObjectModel';
-export * from './object/IRoomObjectModelController';
 export * from './object/IRoomObjectSpriteData';
 export * from './object/IRoomObjectUpdateMessage';
 export * from './object/logic/IRoomObjectEventHandler';

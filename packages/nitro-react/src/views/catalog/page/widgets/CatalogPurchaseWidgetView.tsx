@@ -266,6 +266,8 @@ export const CatalogPurchaseWidgetView = ({ page, tags }: CatalogWidgetProps) =>
                                 textStyle="u_regular"
                                 textOptions={{ fill: '#ffffff', align: 'center' }}
                                 flashFormat={{ bold: true }}
+                                verticalAlign="top"
+                                layout={{ position: 'absolute', left: 0, width: 160, top: 3, height: 17 }}
                             />
                         </ContainerButton>
                     </Box>

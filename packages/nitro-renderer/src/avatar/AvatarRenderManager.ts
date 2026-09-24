@@ -28,8 +28,9 @@ export class AvatarRenderManager implements IAvatarRenderManager {
     constructor() {
         this._structure = new AvatarStructure();
         this._aliasCollection = new AssetAliasCollection();
-        this._avatarAssetDownloadManager = new AvatarAssetDownloadManager(this._structure);
-        this._effectAssetDownloadManager = new EffectAssetDownloadManager(this._structure);
+        // Flash `onAvatarAssetsLibraryReady` / `onEffectAssetsLibraryReady`: a library's aliases count from the moment it loads
+        this._avatarAssetDownloadManager = new AvatarAssetDownloadManager(this._structure, name => this._aliasCollection.onAvatarAssetsLibraryReady(name));
+        this._effectAssetDownloadManager = new EffectAssetDownloadManager(this._structure, name => this._aliasCollection.onAvatarAssetsLibraryReady(name));
         this._placeHolderFigure = undefined;
         this._blockedFigure = undefined;
     }
@@ -44,6 +45,8 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         this._structure.initFigureData(HabboAvatarFigureDataDefault);
         // Flash `registerBuiltInAnimations`: the animations embedded in the client rather than in an effect library
         this._structure.registerAnimations(HabboAvatarBuiltInAnimations);
+        // Flash builds the alias collection with `init()`: the aliases of every library already loaded
+        this._aliasCollection.init();
     }
 
     /** `avatar.actions.url`, applied over the baked-in set - see `init`. */

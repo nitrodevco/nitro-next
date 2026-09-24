@@ -8,10 +8,10 @@ import { MessengerFriendParser } from './MessengerFriendParser';
 export const MessengerUpdateParser = (wrapper: IMessageDataWrapper): IMessengerUpdate => {
     const actionType = wrapper.readInt();
 
-    let friendId = -1;
+    let friendId: number;
     let friend: IMessengerFriend | undefined = undefined;
 
-    if (actionType === FriendListUpdateActionType.Removed) friendId = wrapper.readInt();
+    if (actionType === Number(FriendListUpdateActionType.Removed)) friendId = wrapper.readInt();
     else {
         friend = MessengerFriendParser(wrapper);
 

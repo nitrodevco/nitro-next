@@ -13,6 +13,7 @@ const actions = {
     processFriendUpdates: state.processFriendUpdates,
     processFriendRequests: state.processFriendRequests,
     removeFriendRequests: state.removeFriendRequests,
+    setSearchResults: state.setSearchResults,
 };
 
 export const useUserMessengerActions = () => actions;

@@ -30,6 +30,19 @@ export class AssetAliasCollection {
         }
     }
 
+    /** Flash `onAvatarAssetsLibraryReady`: the aliases of one library that has just loaded, over any of the same name. */
+    public onAvatarAssetsLibraryReady(libraryName: string): void {
+        const aliases = GetAssetManager().getCollection(libraryName)?.data?.aliases;
+
+        if (!aliases) return;
+
+        for (const alias of aliases) {
+            const assetAlias = new AssetAlias(alias);
+
+            this._aliases.set(assetAlias.name, assetAlias);
+        }
+    }
+
     public hasAlias(name: string): boolean {
         return !!this._aliases.get(name);
     }

@@ -1,3 +1,4 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { CfhSanctionTypeDataParser, ICfhSanctionTypeData } from '../Data/CfhSanctionTypeDataParser';
@@ -10,16 +11,10 @@ export type CfhSanctionMessageType = {
 
 export class CfhSanctionMessage implements IIncomingPacket<CfhSanctionMessageType> {
     public parse(wrapper: IMessageDataWrapper): CfhSanctionMessageType {
-        const packet: CfhSanctionMessageType = {
-            issueId: 0,
-            accountId: 0,
-            sanctionType: {} as any,
-        };
+        const issueId = wrapper.readInt();
+        const accountId = wrapper.readInt();
+        const sanctionType = CfhSanctionTypeDataParser(wrapper);
 
-        packet.issueId = wrapper.readInt();
-        packet.accountId = wrapper.readInt();
-        packet.sanctionType = CfhSanctionTypeDataParser(wrapper);
-
-        return packet;
+        return { issueId, accountId, sanctionType };
     }
 }

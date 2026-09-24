@@ -92,9 +92,7 @@ export class AnimationData {
                 const frame = layerData.addFrameSequence(loopCount, isSequenceRandom);
 
                 if (animationSequence.frames) {
-                    for (const key in animationSequence.frames) {
-                        const animationFrame = animationSequence.frames[key];
-
+                    for (const animationFrame of animationSequence.frames) {
                         if (!animationFrame) {
                             layerData.dispose();
 

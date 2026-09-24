@@ -1,3 +1,4 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { BreedingPetInfoParser, IBreedingPetInfo } from '../../Data/BreedingPetInfoParser';
@@ -13,24 +14,20 @@ export type ConfirmBreedingRequestEventMessageType = {
 
 export class ConfirmBreedingRequestEventMessage implements IIncomingPacket<ConfirmBreedingRequestEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): ConfirmBreedingRequestEventMessageType {
-        const packet: ConfirmBreedingRequestEventMessageType = {
-            nestId: 0,
-            pet1: {} as any,
-            pet2: {} as any,
-            rarityCategories: [],
-            resultPetType: 0,
-        };
+        const nestId = wrapper.readInt();
+        const pet1 = BreedingPetInfoParser(wrapper);
+        const pet2 = BreedingPetInfoParser(wrapper);
+        const rarityCategories: IRarityCategoryData[] = [];
 
-        packet.nestId = wrapper.readInt();
-        packet.pet1 = BreedingPetInfoParser(wrapper);
-        packet.pet2 = BreedingPetInfoParser(wrapper);
-        let v1 = wrapper.readInt();
-        while (v1 > 0) {
-            packet.rarityCategories.push(RarityCategoryDataParser(wrapper));
-            v1--;
+        let count = wrapper.readInt();
+
+        while (count > 0) {
+            rarityCategories.push(RarityCategoryDataParser(wrapper));
+            count--;
         }
-        packet.resultPetType = wrapper.readInt();
 
-        return packet;
+        const resultPetType = wrapper.readInt();
+
+        return { nestId, pet1, pet2, rarityCategories, resultPetType };
     }
 }

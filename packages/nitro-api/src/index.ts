@@ -284,7 +284,6 @@ export * from './room/object/IRoomMapMask';
 export * from './room/object/IRoomObject';
 export * from './room/object/IRoomObjectController';
 export * from './room/object/IRoomObjectModel';
-export * from './room/object/IRoomObjectModelController';
 export * from './room/object/IRoomObjectSpriteData';
 export * from './room/object/IRoomObjectUpdateMessage';
 export * from './room/object/logic/IRoomObjectEventHandler';

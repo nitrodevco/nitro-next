@@ -413,7 +413,8 @@ export class AvatarVisualization
                         else if (dd > 7) dd -= 8;
 
                         const assetName = `${this._avatarImage.getScale()}_${spriteData.member}_${dd}_${frameNumber}`;
-                        const asset = GetAssetManager().getAsset(assetName);
+                        // Flash `AvatarImage.getAsset`: through the avatar's alias collection, so an effect's aliased sprites draw
+                        const asset = this._avatarImage.getAsset(assetName);
 
                         if (!asset || !asset.texture) continue;
 

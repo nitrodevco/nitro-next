@@ -42,6 +42,11 @@ export interface RegionProps extends ThemeProps<RegionVariant> {
      * becomes a room drag. A window whose Flash layout carries the flag says so here instead.
      */
     interactive?: boolean;
+    /**
+     * A region that is no mouse target of its own, only a frame for its children - see `Box`'s
+     * `pointerTransparent`. Not for a region with handlers, `interactive` or a `dynamicStyle`.
+     */
+    pointerTransparent?: boolean;
     /** A `#icon` / `#bg` tag under a `dynamicStyle` host: that host's child rule moves and tints this region. */
     dynamicRole?: DynamicStyleRole;
     /**
@@ -83,7 +88,7 @@ export interface RegionProps extends ThemeProps<RegionVariant> {
  */
 export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, RegionProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, zIndex, visible, dropShadow, dynamicStyle, dynamicRole, backgroundColor, backgroundAlpha, cursor, blendMode, alpha, disabled, interactive = false, dragTarget = false, dragTrigger = false, boundToParentRect, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, zIndex, visible, dropShadow, dynamicStyle, dynamicRole, backgroundColor, backgroundAlpha, cursor, blendMode, alpha, disabled, interactive = false, pointerTransparent, dragTarget = false, dragTrigger = false, boundToParentRect, children,
         onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const drag = useDragTarget(dragTarget, { boundToParentRect });
@@ -119,6 +124,7 @@ export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiC
                 zIndex={zIndex}
                 visible={visible}
                 blendMode={blendMode}
+                pointerTransparent={pointerTransparent}
                 layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
                 {...boxProps}
                 // A drag target's move rides on top of any dynamic style nudge.

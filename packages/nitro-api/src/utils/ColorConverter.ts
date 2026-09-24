@@ -40,8 +40,10 @@ export class ColorConverter {
         );
     }
 
-    public static getHex(x: any) {
-        return isNaN(x) ? '00' : ColorConverter.HEX_DIGITS[(x - (x % 16)) / 16] + ColorConverter.HEX_DIGITS[x % 16];
+    public static getHex(x: string | number | undefined) {
+        const value = Number(x);
+
+        return isNaN(value) ? '00' : ColorConverter.HEX_DIGITS[(value - (value % 16)) / 16] + ColorConverter.HEX_DIGITS[value % 16];
     }
 
     public static int2rgb(color: number): string {
@@ -97,9 +99,9 @@ export class ColorConverter {
         const saturation = ((hslValue >> 8) & 0xff) / 0xff;
         const lightness = (hslValue & 0xff) / 0xff;
 
-        let red = 0;
-        let green = 0;
-        let blue = 0;
+        let red: number;
+        let green: number;
+        let blue: number;
 
         if (saturation > 0) {
             const t2 = lightness < 0.5 ? lightness * (1 + saturation) : lightness + saturation - lightness * saturation;

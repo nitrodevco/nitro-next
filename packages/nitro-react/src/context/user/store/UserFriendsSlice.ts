@@ -1,4 +1,4 @@
-import { FriendListUpdateActionType, IFriendRequest, IMessengerCategory, IMessengerFriend, IMessengerUpdate } from '@nitrodevco/nitro-packets';
+import { FriendListUpdateActionType, IFriendRequest, IMessengerCategory, IMessengerFriend, IMessengerSearchResult, IMessengerUpdate } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';
 
 type State = {
@@ -8,6 +8,9 @@ type State = {
     categories: IMessengerCategory[];
     friends: Record<number, IMessengerFriend>;
     requests: Record<number, IFriendRequest>;
+    /** `AvatarSearchResults.friends` / `others`: the last `HabboSearchResultMessage`. */
+    searchFriends: IMessengerSearchResult[];
+    searchOthers: IMessengerSearchResult[];
 };
 
 type Actions = {
@@ -18,10 +21,14 @@ type Actions = {
     processFriendRequests: (requests: IFriendRequest[]) => void;
     /** Drops requests the user has answered (accept/decline) without waiting for the server's next friend-list update. */
     removeFriendRequests: (playerIds: number[]) => void;
+    /** `AvatarSearchResults.searchReceived`. */
+    setSearchResults: (friends: IMessengerSearchResult[], others: IMessengerSearchResult[]) => void;
 };
 
 /**
- * The friend list as the server sends it - limits, categories, friends and requests. On the
+ * The friend list as the server sends it - limits, categories, friends and requests - and the
+ * search tab's last results (Flash's `AvatarSearchResults`; which of them were asked to be
+ * friends is `UserSocialSlice.sentFriendRequestIds`, the same record the infostand reads). On the
  * user store rather than the friend list window's, because the room widgets read it too.
  */
 export const UserFriendsSlice: State = {
@@ -31,6 +38,8 @@ export const UserFriendsSlice: State = {
     categories: [],
     friends: {},
     requests: {},
+    searchFriends: [],
+    searchOthers: [],
 };
 
 export type UserFriendsSlice = State & Actions;
@@ -39,6 +48,7 @@ export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], User
     ...UserFriendsSlice,
     setFriendLimits: (userFriendLimit: number, normalFriendLimit: number, extendedFriendLimit: number) => set({ userFriendLimit, normalFriendLimit, extendedFriendLimit }),
     setFriendCategories: (categories: IMessengerCategory[]) => set({ categories }),
+    setSearchResults: (searchFriends: IMessengerSearchResult[], searchOthers: IMessengerSearchResult[]) => set({ searchFriends, searchOthers }),
     processFriends: (friends: IMessengerFriend[]) => set((x) => {
         const updates = friends.reduce((acc, data) => ({
             ...acc,

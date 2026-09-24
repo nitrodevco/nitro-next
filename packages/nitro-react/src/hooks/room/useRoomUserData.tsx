@@ -94,6 +94,7 @@ export const useRoomUserData = (objectId: number): AvatarInfo | undefined => {
     const isIgnored = useUserStore(x => !!userData && x.ignoredUserIds.includes(userData.webID));
     const friend = useUserStore(x => (userData ? x.friends[userData.webID] : undefined));
     const requestSent = useUserStore(x => !!userData && x.sentFriendRequestIds.includes(userData.webID));
+    const friendListFull = useUserStore(x => Object.keys(x.friends).length >= x.userFriendLimit);
     const groupBadge = useUserStore(x => (userData ? (x.groupBadges[userData.groupId] ?? '') : ''));
     // `InfoStandWidgetHandler.isActivityDisplayEnabled`: `getBoolean`, so off unless the hotel sets it.
     const activityDisplayEnabled = useConfigValue<boolean>('activity.point.display.enabled') === true;
@@ -133,8 +134,8 @@ export const useRoomUserData = (objectId: number): AvatarInfo | undefined => {
         isBlocked: !isOwnUser && isBlocked,
         isIgnored: !isOwnUser && isIgnored,
         isFriend: !!friend,
-        // `FriendList.canBeAskedForAFriend`: not yourself, not already a friend, not already asked.
-        canBeAskedAsFriend: !isOwnUser && !friend && !requestSent,
+        // `HabboFriendList.canBeAskedForAFriend`: not yourself, not already a friend, not already asked, and room on the friend list.
+        canBeAskedAsFriend: !isOwnUser && !friend && !requestSent && !friendListFull,
         relationshipStatus: friend ? Number(friend.relationshipType) : 0,
         canBeKicked: false,
         canBeBanned: false,

@@ -10,11 +10,11 @@ import { on, subscribeAll } from '../packetSubscriptions';
 /**
  * Who you are - Flash's `SessionDataManager`: the user object at login, figure and name changes,
  * rights, noobness level, email status, the account preferences and the chat styles the account
- * owns (NFT and bought ones, which the chat input's style picker offers). Also counts pet
- * respects down, since the server only reports a failure.
+ * owns (NFT and bought ones, which the chat input's style picker offers). Also gives a pet respect
+ * back when the server refuses one (`onPetRespectFailed`): the respect was spent when it was sent.
  */
 export const registerUserInfoHandlers = ({ send, subscribe }: WebSocketConnection) => {
-    const { setRights, setNoobnessLevel, increasePetRespects, decreasePetRespects, setChatPreferences, setSoundVolumes, setUiFlags, setRoomCameraFollowDisabled, setRoomInvitesIgnored, setOnlineIndicatorPreference, setUserInfo, setName, setFigure, setEmailVerified, setNftChatStyles, setPurchasableChatStyles, setPurchasableChatStyleOwned } = userStore.getState();
+    const { setRights, setNoobnessLevel, increasePetRespects, setChatPreferences, setSoundVolumes, setUiFlags, setRoomCameraFollowDisabled, setRoomInvitesIgnored, setOnlineIndicatorPreference, setUserInfo, setName, setFigure, setEmailVerified, setNftChatStyles, setPurchasableChatStyles, setPurchasableChatStyleOwned } = userStore.getState();
 
     return subscribeAll(subscribe, [
         on(FigureUpdateEventMessage, (data) => {
@@ -47,9 +47,8 @@ export const registerUserInfoHandlers = ({ send, subscribe }: WebSocketConnectio
             setRights(data.clubLevel, data.securityLevel, data.isAmbassador);
         }),
 
-        on(PetRespectFailedMessage, (data) => {
-            decreasePetRespects();
-        }),
+        // `SessionDataManager.onPetRespectFailed`: the respect `givePetRespect` took is returned.
+        on(PetRespectFailedMessage, () => increasePetRespects()),
 
         on(ChangeUserNameResultMessage, (data) => {
             if (data.resultCode !== ChangeUserNameResultMessageCode.NameOk) return;

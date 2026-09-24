@@ -26,6 +26,11 @@ const NO_TAGS: readonly string[] = [];
  * gives a widget. The slot draws the container at its layout rect and mounts the widget the
  * registry has for the name inside it; with none (a widget the port has not got yet) it stays an
  * empty container, which is what Flash shows for a widget whose `init()` fails.
+ *
+ * The container is no mouse target of its own (`params="16"`, no `input_event_processor`), so it is
+ * `pointerTransparent`: a laid-out box is still a hit target, and the slots a layout lists after the
+ * purchase widget and over it - `default_3x3`'s `soldLtdItemsWidget` and `builderWidget` cover the
+ * whole of it - took every press on the buy and gift buttons, drawn or not.
  */
 export const CatalogWidgetSlot = ({ page, name, tags = NO_TAGS, layout, visible = true, children }: CatalogWidgetSlotProps) => {
     const Widget = CATALOG_WIDGET_VIEWS[name];
@@ -35,6 +40,7 @@ export const CatalogWidgetSlot = ({ page, name, tags = NO_TAGS, layout, visible 
             name={name}
             visible={visible}
             layout={layout}
+            pointerTransparent
         >
             {Widget && (
                 <Widget

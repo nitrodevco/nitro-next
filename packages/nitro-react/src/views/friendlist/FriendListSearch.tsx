@@ -1,7 +1,9 @@
 import { IMessengerSearchResult } from '@nitrodevco/nitro-packets';
 
-import { useTranslation } from '#base/context/system';
-import { useFriends } from '#base/context/user';
+import { askForAFriend, openProfile, showFriendLimitReachedAlert, showFriendRequestSentAlert } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useConfigValue, useTranslation } from '#base/context/system';
+import { useOwnUserId, useUserStore } from '#base/context/user';
 import { Accordion, ScrollArea } from '#base/theme';
 
 import { FriendListGroup } from './components/FriendListGroup';
@@ -18,7 +20,7 @@ export interface FriendListSearchProps {
 }
 
 interface FriendListSearchGroupData {
-    value: string;
+    value: 'friends' | 'others';
     caption: string;
     emptyCaption: string;
     results: IMessengerSearchResult[];
@@ -27,21 +29,37 @@ interface FriendListSearchGroupData {
 /**
  * The search tab (tab 3, `SearchView`): `hdr_search`, `0xefefef` caption text, a `0xb6b6b6`
  * `tab_content`, and one list of the friends caption, the friends found, the others caption and
- * the others found, shaded by their index in it (`SearchView.refreshShading`). The tab is named
- * `${generic.search}` (`FriendListTabs`).
+ * the others found (`refreshList`, from the last `HabboSearchResultMessage` -
+ * `AvatarSearchResults`), shaded by their index in it (`SearchView.refreshShading`). The tab is
+ * named `${generic.search}` (`FriendListTabs`).
+ *
+ * A friend found gets the chat button while online, or always where the hotel keeps messages
+ * (`isMessagesPersisted`); anyone else found gets the ask-for-friend button unless it is the user or
+ * someone already asked. Asking goes through `askForAFriend` and answers with its alert
+ * (`onAskForFriendButtonClick`); a row opens the extended profile (`onSearchEntry`). The chat
+ * button starts a conversation in Flash's messenger, which is not ported, so it does nothing.
  */
 export const FriendListSearch = ({ value }: FriendListSearchProps) => {
-    const friends = useFriends();
+    const searchFriends = useUserStore(x => x.searchFriends);
+    const searchOthers = useUserStore(x => x.searchOthers);
+    const sentFriendRequestIds = useUserStore(x => x.sentFriendRequestIds);
+    const ownUserId = useOwnUserId();
+    const messagesPersisted = useConfigValue<boolean>('friend_list.persistent_message_status.enabled') === true;
+    const { send } = useWebSocketContext();
     const t = useTranslation();
 
-    const groups = [
-        { value: 'friends', caption: 'friendlist.search.friendscaption', emptyCaption: 'friendlist.search.nofriendsfound', results: [] },
-        { value: 'others', caption: 'friendlist.search.otherscaption', emptyCaption: 'friendlist.search.noothersfound', results: [] },
-    ] as FriendListSearchGroupData[];
+    const groups: FriendListSearchGroupData[] = [
+        { value: 'friends', caption: 'friendlist.search.friendscaption', emptyCaption: 'friendlist.search.nofriendsfound', results: searchFriends },
+        { value: 'others', caption: 'friendlist.search.otherscaption', emptyCaption: 'friendlist.search.noothersfound', results: searchOthers },
+    ];
 
     const getCaption = (group: FriendListSearchGroupData) => (group.results.length < 1 ? group.emptyCaption : group.caption);
-    const isFriend = (result: IMessengerSearchResult) => !!Object.values(friends).find(friend => friend.playerId === result.playerId);
     const captionIndex = (groupIndex: number) => (groupIndex === 0 ? 0 : groups[0].results.length + 1);
+
+    const askForFriend = (result: IMessengerSearchResult) => {
+        if (askForAFriend(send, result.playerId, result.name)) showFriendRequestSentAlert(result.name);
+        else showFriendLimitReachedAlert();
+    };
 
     return (
         <FriendListTab
@@ -74,9 +92,11 @@ export const FriendListSearch = ({ value }: FriendListSearchProps) => {
                             {group.results.map((result: IMessengerSearchResult, i: number) => (
                                 <FriendListSearchItem
                                     key={result.playerId}
-                                    isFriend={isFriend(result)}
-                                    showAvatarHead={isFriend(result) && result.isOnline}
                                     result={result}
+                                    showStartChat={(group.value === 'friends') && (result.isOnline || messagesPersisted)}
+                                    showAskForFriend={(group.value === 'others') && (result.playerId !== ownUserId) && !sentFriendRequestIds.includes(result.playerId)}
+                                    onAskForFriend={() => askForFriend(result)}
+                                    onPress={() => openProfile(send, result.playerId)}
                                     zebraColor={rowShading(captionIndex(groupIndex) + 1 + i)}
                                 />
                             ))}

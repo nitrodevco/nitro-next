@@ -2638,9 +2638,11 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             return emitThemed(ctx, component, el, parent, indent, extra, captionAndButtonChildren);
         }
         // A container button's face is its children - the client never rendered its own
-        // `caption` (the skin has no label), so only the children are emitted.
+        // `caption` (the skin has no label), so only the children are emitted. Each keeps its own
+        // rect: `ContainerButton` lays its children out as a `container` does and centres nothing,
+        // so a text emitted bare, as a `Button` caption is, lost its box and drew at the corner.
         case 'container_button':
-            return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], buttonChildren);
+            return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], childrenOnly);
         // `iconbutton` has its own skin per intent (style 3 plus, 4 minus) and draws no children.
         case 'iconbutton':
             return emitThemed(ctx, 'IconButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], none);
