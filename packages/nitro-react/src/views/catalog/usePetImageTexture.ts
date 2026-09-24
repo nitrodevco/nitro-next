@@ -40,6 +40,8 @@ export const usePetImageTexture = (request: PetImageRequest | undefined, onImage
     const type = request ? GetRoomContentLoader().getPetNameForType(request.typeId) : undefined;
     const value = request ? petImageValue(request) : '';
     const direction = request?.direction ?? 0;
+    // `getPetImage`'s last argument: a monster plant is drawn at the growth stage its level names.
+    const posture = request?.posture ?? '';
 
     useEffect(() => {
         onImageReadyRef.current = onImageReady;
@@ -79,12 +81,17 @@ export const usePetImageTexture = (request: PetImageRequest | undefined, onImage
                     if (!cancelled) onImageReadyRef.current?.();
                 },
             },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            posture || undefined,
         ).then(adopt);
 
         return () => {
             cancelled = true;
         };
-    }, [ type, value, direction ]);
+    }, [ type, value, direction, posture ]);
 
     useEffect(() => {
         for (const owned of ownedRef.current) {

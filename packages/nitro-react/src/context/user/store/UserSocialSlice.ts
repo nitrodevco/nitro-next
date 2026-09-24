@@ -1,4 +1,3 @@
-import { IHabboGroupDetails } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';
 
 /**
@@ -11,8 +10,6 @@ type State = {
     blockedUserIds: number[];
     /** Group id against the badge code it is drawn from. */
     groupBadges: Record<number, string>;
-    /** Groups whose details have arrived, by id - enough to name a group furni's group. */
-    groupDetailsById: Record<number, IHabboGroupDetails>;
     /** Asked this session; the friend button is not offered twice. */
     sentFriendRequestIds: number[];
 };
@@ -25,7 +22,6 @@ type Actions = {
     /** `BlockedUsersManager.onBlockUpdate`: 1 blocked, 0 unblocked. */
     applyBlockUpdate: (result: number, userId: number) => void;
     mergeGroupBadges: (badges: Map<number, string>) => void;
-    setGroupDetails: (details: IHabboGroupDetails) => void;
     markFriendRequestSent: (userId: number) => void;
     /** `SessionDataManager.giveRespect` counts the respect down as it sends it. */
     spendRespect: () => void;
@@ -35,7 +31,6 @@ export const UserSocialSliceInitialState: State = {
     ignoredUserIds: [],
     blockedUserIds: [],
     groupBadges: {},
-    groupDetailsById: {},
     sentFriendRequestIds: [],
 };
 
@@ -65,7 +60,6 @@ export const createUserSocialSlice: StateCreator<UserSocialSlice, [], [], State 
         return { blockedUserIds: (result === 1) ? [ ...without, userId ] : without };
     }),
     mergeGroupBadges: badges => set(x => ({ groupBadges: { ...x.groupBadges, ...Object.fromEntries(badges) } })),
-    setGroupDetails: details => set(x => ({ groupDetailsById: { ...x.groupDetailsById, [details.groupId]: details } })),
     markFriendRequestSent: userId => set(x => (x.sentFriendRequestIds.includes(userId) ? x : { sentFriendRequestIds: [ ...x.sentFriendRequestIds, userId ] })),
     spendRespect: () => set(x => ({ respectLeft: Math.max(0, x.respectLeft - 1) })),
 });

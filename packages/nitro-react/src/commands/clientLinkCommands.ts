@@ -1,5 +1,5 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
-import { ForwardToSomeRoomComposer } from '@nitrodevco/nitro-packets';
+import { ForwardToSomeRoomComposer, GetHabboGroupDetailsComposer } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { systemStore, WindowParams } from '#base/context/system';
@@ -224,6 +224,18 @@ export const openClientLink = (send: Send, link: string) => {
             }
 
             break;
+        }
+        /*
+         * `HabboGroupsManager.linkReceived`: group/<id> opens that group's details window. Sent
+         * here rather than through `openGroupInfo` so the link router keeps importing commands one
+         * way only - `groupCommands` raises links, it does not answer them.
+         */
+        case 'group': {
+            const groupId = parseInt(parts[1] ?? '', 10);
+
+            if (groupId > 0) send(new GetHabboGroupDetailsComposer({ groupId, openDetails: true }));
+
+            return;
         }
         // `CollectiblesController.linkReceived`: `collectibles/open`; anything else under it does nothing.
         case 'collectibles': {

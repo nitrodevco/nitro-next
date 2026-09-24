@@ -3,6 +3,7 @@ export * from './catalog';
 export * from './collectibles';
 export * from './earnings';
 export * from './game-tokens';
+export * from './groups';
 export * from './habbicons';
 export * from './inventory';
 export * from './navigator';

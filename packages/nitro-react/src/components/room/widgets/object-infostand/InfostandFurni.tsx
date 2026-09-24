@@ -1,12 +1,13 @@
 import { CrackableDataType, FurniId, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, MapDataType, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
-import { GetHabboGroupDetailsComposer, GetSongInfoComposer, SetObjectDataComposer } from '@nitrodevco/nitro-packets';
+import { GetSongInfoComposer, SetObjectDataComposer } from '@nitrodevco/nitro-packets';
 import { useEffect } from 'react';
 
-import { openClientLink, openProfile, openRentConfirmationWindow } from '#base/commands';
+import { openClientLink, openGroupInfo, openProfile, openRentConfirmationWindow, requestGroupDetails } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
+import { useGroupStore } from '#base/context/groups';
 import { useOwnControllerLevel, useRoom, useRoomStore } from '#base/context/room';
 import { useConfigValue, useSystemActions } from '#base/context/system';
-import { useOwnSecurityLevel, useOwnUserId, useUserStore } from '#base/context/user';
+import { useOwnSecurityLevel, useOwnUserId } from '#base/context/user';
 import { useWiredShowInspectButton } from '#base/context/wired';
 import { useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify, useSecondsClock } from '#base/hooks';
 import { InfostandFurniDetails, InfostandFurniView } from '#base/views/room-widgets/object-infostand/InfostandFurniView';
@@ -44,7 +45,7 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
     const showWiredInspectButton = useWiredShowInspectButton();
     const nowPlayingSongId = useRoomStore(x => x.nowPlayingSongId);
     const songInfoById = useRoomStore(x => x.songInfoById);
-    const groupDetails = useUserStore(x => (furniData?.groupId ? x.groupDetailsById[furniData.groupId] : undefined));
+    const groupDetails = useGroupStore(x => (furniData?.groupId ? x.detailsById[furniData.groupId] : undefined));
     const useButtonEnabled = useConfigValue<boolean>('infostand.use.button.enabled') ?? true;
     const clockMs = useSecondsClock();
     const { modifyRoomObject } = useRoomObjectModify();
@@ -62,7 +63,7 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
     useEffect(() => {
         if (groupId <= 0) return;
 
-        send(new GetHabboGroupDetailsComposer({ groupId, openDetails: false }));
+        requestGroupDetails(send, groupId);
     }, [ groupId, send ]);
 
     // A disk or a playing jukebox names its song; the names only come on request.
@@ -172,7 +173,7 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
             onExtend={() => furniData.furnitureData && openRentConfirmationWindow(send, furniData.furnitureData, false, objectId)}
             onBuyout={() => furniData.furnitureData && openRentConfirmationWindow(send, furniData.furnitureData, true, objectId)}
             onOpenOwner={() => (furniData.ownerId > 0) && openProfile(send, furniData.ownerId)}
-            onOpenGroup={() => send(new GetHabboGroupDetailsComposer({ groupId, openDetails: true }))}
+            onOpenGroup={() => openGroupInfo(send, groupId)}
             onSaveBranding={values => send(new SetObjectDataComposer({ objectId, data: new Map(values.map(({ key, value }) => [ key, value.split('\t').join('') ])) }))}
             onClose={onClose}
         />

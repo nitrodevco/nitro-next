@@ -4,8 +4,9 @@ import { bridgeRecyclerRoomSession, registerCatalogPlacementHandlers, registerCa
 import { bridgeCollectiblesInventoryAndPurse, registerCollectiblesHandlers } from './collectibles';
 import { registerEarningsHandlers } from './earnings';
 import { registerGameTokensHandlers } from './game-tokens';
+import { registerGroupHandlers } from './groups';
 import { registerHabbiconHandlers } from './habbicons';
-import { registerInventoryBadgesHandlers, registerInventoryFurniHandlers, registerInventoryMarketplaceHandlers } from './inventory';
+import { registerInventoryBadgesHandlers, registerInventoryBotsHandlers, registerInventoryFurniHandlers, registerInventoryMarketplaceHandlers, registerInventoryPetsHandlers, registerInventoryTradingHandlers } from './inventory';
 import { registerNavigatorHandlers, registerRoomQueueHandlers } from './navigator';
 import { registerNotificationHandlers } from './notifications';
 import { bridgeOfferCenter, registerOfferCenterHandlers } from './offer-center';
@@ -70,6 +71,8 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerNotificationHandlers(socket),
         registerUserInfoHandlers(socket),
         registerUserSocialHandlers(socket),
+        // Groups: the details cache the infostand also reads, and every group window's own answers.
+        registerGroupHandlers(socket),
         registerAvatarEffectsHandlers(socket),
         registerAvatarEditorHandlers(socket),
         registerMessengerHandlers(socket),
@@ -112,6 +115,10 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         bridgeWiredTradingLifecycle(socket),
         registerInventoryFurniHandlers(socket),
         registerInventoryBadgesHandlers(socket),
+        registerInventoryPetsHandlers(socket),
+        registerInventoryBotsHandlers(socket),
+        // The user-to-user trade, after the furni list whose locks its item lists re-read.
+        registerInventoryTradingHandlers(socket),
         // The inventory's marketplace model (`MarketplaceModel`) and the catalogue's recycler (`RecyclerLogic`,
         // which the inventory reaches too), with the room session ending that empties the recycler.
         registerInventoryMarketplaceHandlers(socket),

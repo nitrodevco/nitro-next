@@ -10,6 +10,7 @@ import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComp
 import { TargetedOfferComponent } from './components/catalog/TargetedOfferComponent';
 import { CollectiblesComponent } from './components/collectibles';
 import { EarningsComponent } from './components/earnings';
+import { GroupCreatedComponent, GroupHcRequiredComponent, GroupInfoComponent, GroupManagementComponent, GroupMembersComponent, GroupRoomInfoComponent } from './components/groups';
 import { HabbiconsComponent } from './components/habbicons';
 import { OfferCenterComponent } from './components/offer-center';
 import { SpecialItemsComponent } from './components/special-items';
@@ -77,6 +78,8 @@ export const MainView = () => {
                         <ActivityPointsView />
                         <TargetedOfferMinimizedView />
                     </Box>
+                    {/* `GroupRoomInfoCtrl` docks the banner in this column, under the quest tracker and event card. */}
+                    <GroupRoomInfoComponent />
                     <NotificationsExtensionAnchor />
                 </Box>
                 <AvatarEditorComponent />
@@ -97,6 +100,11 @@ export const MainView = () => {
                 <WiredRewardNotificationsComponent />
                 <EarningsComponent />
                 <SpecialItemsComponent />
+                <GroupInfoComponent />
+                <GroupMembersComponent />
+                <GroupManagementComponent />
+                <GroupCreatedComponent />
+                <GroupHcRequiredComponent />
                 <CollectiblesComponent />
                 <HabbiconsComponent />
                 <OfferCenterComponent />
