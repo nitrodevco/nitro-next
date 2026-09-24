@@ -814,7 +814,15 @@ const RUNTIME_IMAGES: { name: string; component: string }[] = [
     // `HabboCatalog.getMintTokenProductIcon`: the picture the purchase confirmation of a mint
     // token pack shows (`PurchaseConfirmationDialog.showConfirmationDialog`, product type `MINT_TOKEN`).
     { name: 'minting_token_large', component: 'catalog' },
-]);
+]).concat([
+    // The badge editor's own art, which its controllers load by name through
+    // `HabboGroupsManager.getButtonImage` rather than from a layout: the empty and add-a-part
+    // placeholders and the selection frame (`BadgeEditorPartItem`, `BadgeSelectPartCtrl`), the
+    // position picker and its grid (`BadgeLayerCtrl.createWindow`) and the colour swatch's three
+    // pieces (`ColorGridCtrl.createAndAttach`).
+    'badge_part_add', 'badge_part_empty', 'badge_part_picker', 'position_grid', 'position_picker',
+    'color_chooser_bg', 'color_chooser_fg', 'color_chooser_selected',
+].map(name => ({ name, component: 'groups' })));
 
 /**
  * Records that `component` draws `outName`, which the `scripts/images` file `source` holds (a

@@ -1,6 +1,7 @@
 ﻿export class RoomId {
     public static TEMP_ROOM_CATALOG: number = 1;
     public static TEMP_ROOM_AVATAR_EDITOR: number = 2;
+    public static TEMP_ROOM_INVENTORY: number = 3;
     public static TEMP_ROOM_COUNTER: number = 0;
 
     private static PREVIEW_ROOM_ID_BASE: number = 0x7FFF0000;

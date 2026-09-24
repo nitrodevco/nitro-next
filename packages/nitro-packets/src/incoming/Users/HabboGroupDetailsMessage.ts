@@ -1,6 +1,18 @@
 // Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
+/** `HabboGroupDetailsData.TYPE_*` - who may join, and which `grouptype_icon_<n>` the details window shows. */
+export const GUILD_TYPE_REGULAR = 0;
+export const GUILD_TYPE_EXCLUSIVE = 1;
+export const GUILD_TYPE_PRIVATE = 2;
+export const GUILD_TYPE_LARGE = 3;
+export const GUILD_TYPE_OPEN_LARGE = 4;
+
+/** `HabboGroupDetailsData` membership status. */
+export const GUILD_MEMBERSHIP_NONE = 0;
+export const GUILD_MEMBERSHIP_MEMBER = 1;
+export const GUILD_MEMBERSHIP_REQUESTED = 2;
+
 /** A group as `HabboGroupDetailsMessage` describes it. */
 export interface IHabboGroupDetails {
     groupId: number;
@@ -56,3 +68,15 @@ export class HabboGroupDetailsMessage implements IIncomingPacket<HabboGroupDetai
         };
     }
 }
+
+/** `HabboGroupDetailsData.joiningAllowed`. */
+export const isGuildJoiningAllowed = (details: IHabboGroupDetails): boolean =>
+    (Number(details.status) === GUILD_MEMBERSHIP_NONE) && ((Number(details.type) === GUILD_TYPE_REGULAR) || (Number(details.type) === GUILD_TYPE_OPEN_LARGE));
+
+/** `HabboGroupDetailsData.requestMembershipAllowed`. */
+export const isGuildMembershipRequestAllowed = (details: IHabboGroupDetails): boolean =>
+    (Number(details.status) === GUILD_MEMBERSHIP_NONE) && (Number(details.type) === GUILD_TYPE_EXCLUSIVE);
+
+/** `HabboGroupDetailsData.leaveAllowed`. */
+export const isGuildLeaveAllowed = (details: IHabboGroupDetails): boolean =>
+    details.isGuild && !details.isOwner && (Number(details.status) === GUILD_MEMBERSHIP_MEMBER);

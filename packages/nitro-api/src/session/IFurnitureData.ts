@@ -26,6 +26,10 @@ export interface IFurnitureData {
     readonly canStandOn: boolean;
     readonly canSitOn: boolean;
     readonly canLayOn: boolean;
+    /** Furnidata `canputstuffon`: the inventory's tiles-or-rugs filter asks for it (`isTilesOrRugs`). */
+    readonly canPutStuffOn: boolean;
+    /** Furnidata `height`: the furni's own height in tiles, which the tiles-or-rugs filter caps at 0.2. */
+    readonly height: number;
     readonly excludeDynamic: boolean;
     readonly furniLine: string;
     readonly environment: string;

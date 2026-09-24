@@ -165,6 +165,7 @@ export * from './catalog/ICatalogRequestedPage';
 export * from './catalog/ICatalogSearchResult';
 export * from './catalog/IProduct';
 export * from './catalog/IPurchasableOffer';
+export * from './communication/enums/BadgeRarity';
 export * from './communication/enums/ClientDeviceCategoryEnum';
 export * from './communication/enums/ClientPlatformEnum';
 export * from './communication/EvaWireDataWrapper';
