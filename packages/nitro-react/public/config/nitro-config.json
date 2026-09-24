@@ -70,6 +70,7 @@
     "log.error": false,
     "log.events": false,
     "log.packets": false,
+    "renderer.color.space": "display-p3",
     "renderer.petTypes": [
         "dog",
         "cat",
