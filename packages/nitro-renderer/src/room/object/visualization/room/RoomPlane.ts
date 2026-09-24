@@ -1,6 +1,5 @@
 import {
     IAssetPlaneVisualizationLayer,
-    IAssetRoomVisualizationData,
     IMaskEntry,
     IRoomGeometry,
     IRoomPlane,
@@ -9,16 +8,28 @@ import {
 import { Container, Matrix, Point, RenderTexture, Sprite, Texture, TilingSprite } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
-import { TexturePool, TextureUtils } from '#renderer/utils';
+import { ExtendedSprite, TexturePool, TextureUtils } from '#renderer/utils';
 
 import { RoomGeometry } from '../../../utils';
 import { PlaneMaskManager } from './mask';
+import { IPlaneRasterizer } from './rasterizer/IPlaneRasterizer';
+import { releasePlaneCanvas } from './rasterizer/PlaneCanvas';
 import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
 import { RoomPlaneRectangleMask } from './RoomPlaneRectangleMask';
-import { Randomizer } from './utils';
+import { PlaneBitmapData, Randomizer } from './utils';
 
-type PlaneDataType = keyof IAssetRoomVisualizationData;
+type PlaneDataType = 'floorData' | 'wallData';
 
+/**
+ * One plane of the room - a floor, wall or landscape face - and the texture it is drawn with. Ports
+ * Flash `RoomPlane`.
+ *
+ * A plane with a rasterizer (the landscapes, `LandscapeRasterizer`) gets its texture from it the way
+ * Flash's `getTexture` does: one per texture identifier, kept until the rasterizer's time stamp on it
+ * runs out, which is how an animated landscape is drawn again every half second. Walls and floors
+ * have no rasterizer yet - `WallRasterizer` and `FloorRasterizer` are not ported - and tile the first
+ * cell of their material instead (`getTextureAndColorForPlane`).
+ */
 export class RoomPlane implements IRoomPlane {
     public static readonly HORIZONTAL_ANGLE_DEFAULT = 45;
     public static readonly VERTICAL_ANGLE_DEFAULT = 30;
@@ -35,9 +46,6 @@ export class RoomPlane implements IRoomPlane {
             new Vector3d(-10, 0, 0),
         ),
     };
-
-    // Kept (even if not used in this file) because some callers/assets rely on this constant.
-    private static readonly LANDSCAPE_COLOR = 0x0082f0;
 
     public static readonly TYPE_UNDEFINED = 0;
     public static readonly TYPE_WALL = 1;
@@ -91,12 +99,16 @@ export class RoomPlane implements IRoomPlane {
     private _rectangleMasks: RoomPlaneRectangleMask[] = [];
     private _maskChanged = false;
 
-    private _planeSprite: TilingSprite | undefined = undefined;
+    private _planeSprite: Sprite | TilingSprite | undefined = undefined;
     private _planeTexture: RenderTexture | undefined = undefined;
     private _maskTexture: RenderTexture | undefined = undefined;
 
     private _planeOffsetX = 0;
     private _planeOffsetY = 0;
+
+    private _rasterizer: IPlaneRasterizer | undefined = undefined;
+    private _textures: Map<string, PlaneBitmapData> = new Map();
+    private _activeTexture: PlaneBitmapData | undefined = undefined;
 
     constructor(
         origin: IVector3D,
@@ -145,6 +157,8 @@ export class RoomPlane implements IRoomPlane {
     public dispose(): void {
         if (this._disposed) return;
 
+        this.resetTextureCache();
+
         this._planeSprite?.destroy();
         this._planeSprite = undefined;
 
@@ -161,7 +175,7 @@ export class RoomPlane implements IRoomPlane {
         this._disposed = true;
     }
 
-    public update(geometry: IRoomGeometry, _timeSinceStartMs: number): boolean {
+    public update(geometry: IRoomGeometry, timeSinceStartMs: number): boolean {
         if (!geometry || this._disposed) return false;
 
         let geometryChanged = false;
@@ -173,6 +187,8 @@ export class RoomPlane implements IRoomPlane {
         }
 
         if (geometryChanged) {
+            this._activeTexture = undefined;
+
             const result = this.updateVisibilityAndCorners(geometry);
 
             if (result === false) return false;
@@ -180,95 +196,30 @@ export class RoomPlane implements IRoomPlane {
             if (result === true) return true;
         }
 
-        if (geometryChanged || (this._canBeVisible && this._maskChanged)) {
-            const planeGeometry = RoomPlane.PLANE_GEOMETRY[geometry.scale];
-
-            let width = Math.floor(this._leftSide.length);
-            let height = Math.floor(this._rightSide.length);
-
-            const { texture, color } = this.getTextureAndColorForPlane(this._id!, this._type, planeGeometry);
-
-            switch (this._type) {
-                case RoomPlane.TYPE_FLOOR: {
-                    const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, height, 0));
-                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(width, 0, 0));
-
-                    let x = 0;
-                    let y = 0;
-
-                    if (origin && yEnd && xEnd) {
-                        width = Math.round(Math.abs(origin.x - xEnd.x));
-                        height = Math.round(Math.abs(origin.x - yEnd.x));
-
-                        const pixelsPerUnit = Math.abs(
-                            origin.x - planeGeometry.getScreenPoint(new Vector3d(1, 0, 0)).x,
-                        );
-
-                        x = this._textureOffsetX * pixelsPerUnit;
-                        y = this._textureOffsetY * pixelsPerUnit;
-                    }
-
-                    if (x !== 0 || y !== 0) {
-                        while (x < 0) x += texture.width;
-                        while (y < 0) y += texture.height;
-                    }
-
-                    this._planeOffsetX = ((x % texture.width) + texture.width) % texture.width;
-                    this._planeOffsetY = ((y % texture.height) + texture.height) % texture.height;
-                    break;
-                }
-
-                case RoomPlane.TYPE_WALL: {
-                    const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, 0, height));
-                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(0, width, 0));
-
-                    if (origin && yEnd && xEnd) {
-                        width = Math.round(Math.abs(origin.x - xEnd.x));
-                        height = Math.round(Math.abs(origin.y - yEnd.y));
-                    }
-
-                    this._planeOffsetX = this._textureOffsetX * texture.width;
-                    this._planeOffsetY = this._textureOffsetY * texture.height;
-                    break;
-                }
-
-                case RoomPlane.TYPE_LANDSCAPE: {
-                    const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
-                    const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, 0, 1));
-                    const xEnd = planeGeometry.getScreenPoint(new Vector3d(0, 1, 0));
-
-                    if (origin && yEnd && xEnd) {
-                        width = Math.round(Math.abs(((origin.x - xEnd.x) * width)));
-                        height = Math.round(Math.abs(((origin.y - yEnd.y) * height)));
-                    }
-
-                    const renderOffsetX = Math.trunc(this._textureOffsetX * Math.abs(origin.x - xEnd.x));
-                    const renderOffsetY = Math.trunc(this._textureOffsetY * Math.abs(origin.y - yEnd.y));
-                    const _renderMaxX = Math.trunc(this._textureMaxX * Math.abs((origin.x - xEnd.x)));
-                    const _renderMaxY = Math.trunc(this._textureMaxY * Math.abs((origin.y - yEnd.y)));
-
-                    this._planeOffsetX = renderOffsetX;
-                    this._planeOffsetY = renderOffsetY;
-                    break;
-                }
-            }
-
-            if (width < 1) width = 1;
-            if (height < 1) height = 1;
+        if (geometryChanged || this.needsNewTexture(geometry, timeSinceStartMs)) {
+            let width = 1;
+            let height = 1;
 
             Randomizer.setSeed(this._randomSeed);
 
             if (this._planeSprite) this._planeSprite.destroy();
 
-            this._planeSprite = new TilingSprite({
-                texture,
-                width,
-                height,
-                tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
-                tint: color,
-            });
+            this._planeSprite = undefined;
+
+            if (this._rasterizer) {
+                const texture = this.getTexture(geometry, timeSinceStartMs);
+
+                if (!texture) return false;
+
+                width = texture.width;
+                height = texture.height;
+
+                this._planeSprite = new Sprite(texture);
+            } else {
+                ({ width, height } = this.createTiledPlaneSprite(geometry));
+            }
+
+            if (!this._planeSprite) return false;
 
             if (this._planeTexture && (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height)) {
                 TexturePool.releaseTexture(this._planeTexture);
@@ -302,10 +253,171 @@ export class RoomPlane implements IRoomPlane {
                 clear: true,
             });
 
+            // The texture is drawn over in place, so a hit map built from what it held is stale.
+            ExtendedSprite.removeHitmap(this._planeTexture.source);
+
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * The wall and floor sprite: the first cell of the plane's material tiled over it, shifted by the
+     * plane's texture offset, until `WallRasterizer` and `FloorRasterizer` are ported.
+     *
+     * The size comes from the sides' exact lengths in `PLANE_GEOMETRY`, as Flash's wall and floor
+     * planes (`§_-e1B§`, `§_-RZ§`) take it, so the texture is exactly its on-screen corners and a mask
+     * cut into it keeps its bitmap's size. Rounding the lengths down once stood in for the z scale
+     * `RoomGeometry` did not apply; it only came close, and left a wall's door hole a different
+     * height from the landscape's behind it.
+     */
+    private createTiledPlaneSprite(geometry: IRoomGeometry): { width: number; height: number } {
+        const planeGeometry = RoomPlane.PLANE_GEOMETRY[geometry.scale];
+
+        let width = this._leftSide.length;
+        let height = this._rightSide.length;
+
+        const { texture, color } = this.getTextureAndColorForPlane(this._id!, this._type, planeGeometry);
+
+        switch (this._type) {
+            case RoomPlane.TYPE_FLOOR: {
+                const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, height, 0));
+                const xEnd = planeGeometry.getScreenPoint(new Vector3d(width, 0, 0));
+
+                let x = 0;
+                let y = 0;
+
+                if (origin && yEnd && xEnd) {
+                    width = Math.round(Math.abs(origin.x - xEnd.x));
+                    height = Math.round(Math.abs(origin.x - yEnd.x));
+
+                    const pixelsPerUnit = Math.abs(
+                        origin.x - planeGeometry.getScreenPoint(new Vector3d(1, 0, 0)).x,
+                    );
+
+                    x = this._textureOffsetX * pixelsPerUnit;
+                    y = this._textureOffsetY * pixelsPerUnit;
+                }
+
+                if (x !== 0 || y !== 0) {
+                    while (x < 0) x += texture.width;
+                    while (y < 0) y += texture.height;
+                }
+
+                this._planeOffsetX = ((x % texture.width) + texture.width) % texture.width;
+                this._planeOffsetY = ((y % texture.height) + texture.height) % texture.height;
+                break;
+            }
+
+            case RoomPlane.TYPE_WALL: {
+                const origin = planeGeometry.getScreenPoint(new Vector3d(0, 0, 0));
+                const yEnd = planeGeometry.getScreenPoint(new Vector3d(0, 0, height));
+                const xEnd = planeGeometry.getScreenPoint(new Vector3d(0, width, 0));
+
+                if (origin && yEnd && xEnd) {
+                    width = Math.round(Math.abs(origin.x - xEnd.x));
+                    height = Math.round(Math.abs(origin.y - yEnd.y));
+                }
+
+                this._planeOffsetX = this._textureOffsetX * texture.width;
+                this._planeOffsetY = this._textureOffsetY * texture.height;
+                break;
+            }
+        }
+
+        if (width < 1) width = 1;
+        if (height < 1) height = 1;
+
+        this._planeSprite = new TilingSprite({
+            texture,
+            width,
+            height,
+            tilePosition: { x: this._planeOffsetX, y: this._planeOffsetY },
+            tint: color,
+        });
+
+        return { width, height };
+    }
+
+    /**
+     * Flash `RoomPlane.needsNewTexture`: the masks changed, or the rasterizer's texture for this
+     * scale and side is missing or past its time stamp.
+     */
+    private needsNewTexture(geometry: IRoomGeometry, timeSinceStartMs: number): boolean {
+        if (!this._canBeVisible) return false;
+
+        if (this._maskChanged) return true;
+
+        if (!this._rasterizer) return false;
+
+        const texture = this._activeTexture ?? this._textures.get(this.getTextureIdentifier(geometry.scale));
+
+        return !texture || ((texture.timeStamp >= 0) && (timeSinceStartMs > texture.timeStamp));
+    }
+
+    private getTextureIdentifier(scale: number): string {
+        return this._rasterizer ? this._rasterizer.getTextureIdentifier(scale, this._normal) : String(scale);
+    }
+
+    /** Flash `RoomPlane.getTexture`: the rasterizer's texture for the plane, drawn again when it has run out. */
+    private getTexture(geometry: IRoomGeometry, timeSinceStartMs: number): Texture | undefined {
+        if (!this._rasterizer) return undefined;
+
+        const identifier = this.getTextureIdentifier(geometry.scale);
+
+        if (this.needsNewTexture(geometry, timeSinceStartMs)) {
+            const previous = this._textures.get(identifier)?.texture;
+            const bitmapData = this._rasterizer.render(
+                (previous instanceof RenderTexture) ? previous : undefined,
+                this._id ?? '',
+                this._leftSide.length * geometry.scale,
+                this._rightSide.length * geometry.scale,
+                geometry.scale,
+                geometry.getCoordinatePosition(this._normal),
+                true,
+                this._textureOffsetX,
+                this._textureOffsetY,
+                this._textureMaxX,
+                this._textureMaxY,
+                timeSinceStartMs,
+            );
+
+            if (bitmapData) this.cacheTexture(identifier, bitmapData);
+        }
+
+        this._activeTexture = this._activeTexture ?? this._textures.get(identifier);
+
+        return this._activeTexture?.texture;
+    }
+
+    private cacheTexture(identifier: string, bitmapData: PlaneBitmapData): void {
+        const existing = this._textures.get(identifier);
+
+        if (existing) {
+            if (existing.texture !== bitmapData.texture) this.releaseTexture(existing.texture);
+
+            existing.dispose();
+        }
+
+        this._textures.set(identifier, bitmapData);
+        this._activeTexture = bitmapData;
+    }
+
+    private resetTextureCache(): void {
+        for (const bitmapData of this._textures.values()) {
+            this.releaseTexture(bitmapData.texture);
+
+            bitmapData.dispose();
+        }
+
+        this._textures.clear();
+        this._activeTexture = undefined;
+    }
+
+    private releaseTexture(texture: Texture | undefined): void {
+        if (texture instanceof RenderTexture) releasePlaneCanvas(texture);
     }
 
     private updateVisibilityAndCorners(geometry: IRoomGeometry): boolean | undefined {
@@ -353,12 +465,7 @@ export class RoomPlane implements IRoomPlane {
     }
 
     private getTextureAndColorForPlane(planeId: string, planeType: number, planeGeometry: IRoomGeometry) {
-        const dataType: PlaneDataType
-            = planeType === RoomPlane.TYPE_FLOOR
-                ? 'floorData'
-                : planeType === RoomPlane.TYPE_WALL
-                    ? 'wallData'
-                    : 'landscapeData';
+        const dataType: PlaneDataType = (planeType === RoomPlane.TYPE_FLOOR) ? 'floorData' : 'wallData';
 
         const roomCollection = GetAssetManager().getCollection('room');
         const planeVisualizationData = roomCollection?.data?.roomVisualization?.[dataType];
@@ -367,10 +474,7 @@ export class RoomPlane implements IRoomPlane {
 
         if (!plane) plane = planeVisualizationData?.planes?.find(p => p.id === 'default');
 
-        const planeVisualization
-            = (dataType === 'landscapeData' ? plane?.animatedVisualization : plane?.visualizations)?.find(
-                v => v.size === planeGeometry.scale,
-            ) ?? null;
+        const planeVisualization = plane?.visualizations?.find(v => v.size === planeGeometry.scale) ?? null;
 
         const planeLayer = planeVisualization?.allLayers?.[0] as IAssetPlaneVisualizationLayer | undefined;
         const materialId = planeLayer?.materialId;
@@ -378,9 +482,9 @@ export class RoomPlane implements IRoomPlane {
 
         // `PlaneRasterizer`: a layer names a material, the material's cells name the texture, and the
         // texture (`PlaneTexture.getPlaneTextureBitmap`) picks its bitmap by the plane's normal. Walls and
-        // floors happen to use one id for both; landscapes do not, so the material cannot be skipped.
-        // Only the first cell is drawn - the cell matrix itself (columns, repeat modes, extra items) and
-        // the layers above the first are the rasterizers' job, which are not ported.
+        // floors happen to use one id for both, but the material is not skipped. Only the first cell is
+        // drawn - the cell matrix itself (columns, repeat modes, extra items) and the layers above the
+        // first are `WallRasterizer`'s and `FloorRasterizer`'s job, which are not ported.
         const inNormalRange = (range: { normalMinX?: number; normalMaxX?: number; normalMinY?: number; normalMaxY?: number }) =>
             this._normal.x >= (range.normalMinX ?? -1)
             && this._normal.x <= (range.normalMaxX ?? 1)
@@ -612,6 +716,10 @@ export class RoomPlane implements IRoomPlane {
     }
 
     public set canBeVisible(flag: boolean) {
+        if (flag === this._canBeVisible) return;
+
+        if (!this._canBeVisible) this.resetTextureCache();
+
         this._canBeVisible = flag;
     }
 
@@ -661,7 +769,14 @@ export class RoomPlane implements IRoomPlane {
 
     public set id(value: string) {
         if (value === this._id) return;
+
+        this.resetTextureCache();
+
         this._id = value;
+    }
+
+    public set rasterizer(value: IPlaneRasterizer | undefined) {
+        this._rasterizer = value;
     }
 
     public set maskManager(value: PlaneMaskManager) {

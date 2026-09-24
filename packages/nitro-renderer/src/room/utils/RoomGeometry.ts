@@ -26,6 +26,12 @@ export class RoomGeometry implements IRoomGeometry {
     constructor(scale: RoomGeometryScaleType, direction: IVector3D, location: IVector3D, depth: IVector3D | undefined = undefined) {
         this.scale = scale;
 
+        // Flash sets `z_scale = 1` here, through the setter, so every geometry - not only the room
+        // canvas's, which `Room.getRoomCanvas` sets again - folds `_zScaleInternal` into its z. The
+        // plane rasterizers size their textures in a geometry of their own; without it a wall's
+        // texture came out taller than its corners and was squeezed onto them, masks and all.
+        this.zScale = 1;
+
         this.location.assign(location);
 
         this.setLocation(new Vector3d(location.x, location.y, location.z));

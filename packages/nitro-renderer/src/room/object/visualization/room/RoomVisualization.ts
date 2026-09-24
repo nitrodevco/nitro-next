@@ -428,6 +428,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
                                 ? RoomVisualization.LANDSCAPE_COLOR_SIDE
                                 : RoomVisualization.LANDSCAPE_COLOR_BOTTOM;
 
+                    if (this._data) plane.rasterizer = this._data.landscapeRasterizer;
+
                     landscapeOffsetX = landscapeOffsetX + leftSide.length;
                 }
 
