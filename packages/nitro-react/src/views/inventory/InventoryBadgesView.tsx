@@ -11,9 +11,13 @@
  * - A badge is picked by pressing its thumb in either grid (`setBadgeSelected`), and the button
  *   then puts it on or takes it off (`toggleBadgeWearing` -> `saveBadgeSelection`, which tells the
  *   server). Five is the cap (`MAX_ACTIVE_BADGE_COUNT`), so the button is dead for a sixth.
- * - The rarity menu lists the rarity ids the owned badges actually use
- *   (`getAvailableRareBadgeRarityIds`) under an "all" entry, and the search box matches a badge's
- *   name and description.
+ * - Three things narrow the grid (`BadgeGridView.passFilter`): `filter.options` by kind - all, the
+ *   badges that are not achievements, or only those (an achievement is one whose code carries the
+ *   `ACH_` prefix); `filter.rarity` by tier, which lists only the *standalone* tiers the owned
+ *   badges use (`refreshAvailableRareBadgeRarityIds`) with an "all" entry and, where any badge
+ *   falls below that bar, one "common" entry covering all of them; and the search box, which
+ *   matches a badge's name and description. The rarity menu is dead until it has more than two
+ *   entries (`isBadgeRarityFilterEnabled`).
  *
  * Not ported: the 200-item pages under `inactive_items` (`item_grid_pages`, the grid scrolls
  * instead), `badgeOwnerCount` beside the rarity tag, the unseen item marks, and
@@ -25,8 +29,9 @@ import { useEffect, useState } from 'react';
 import { requestInventoryBadgesIfEmpty, toggleInventoryBadgeWearing } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    getInventoryBadgeRarityIds, getInventoryBadges,
-    INVENTORY_BADGES_ACTIVE, INVENTORY_BADGES_INACTIVE, INVENTORY_MAX_ACTIVE_BADGES, InventoryBadge, useInventoryBadgesActions, useInventoryStore,
+    getInventoryBadgeRarityIds, getInventoryBadges, INVENTORY_BADGE_FILTER_ACHIEVEMENTS, INVENTORY_BADGE_FILTER_ALL, INVENTORY_BADGE_FILTER_NORMAL,
+    INVENTORY_BADGE_RARITY_ALL, INVENTORY_BADGE_RARITY_COMMON, INVENTORY_BADGES_ACTIVE, INVENTORY_BADGES_INACTIVE, INVENTORY_MAX_ACTIVE_BADGES,
+    InventoryBadge, isInventoryBadgeRarityFilterEnabled, passInventoryBadgeFilter, useInventoryBadgesActions, useInventoryStore,
 } from '#base/context/inventory';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { Border, Box, Button, Dropmenu, DropmenuOption, InfiniteGrid, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
@@ -36,9 +41,6 @@ import { InventoryOptionsContainer } from './InventoryOptionsContainer';
 /** `Badge`'s thumb is the same 42x42 frame the furni thumbs use, with the same two ground colours. */
 const THUMB_SIZE = 42;
 const THUMB_COLOR = '#cccccc';
-
-/** `filter.rarity`'s "everything" entry. */
-const RARITY_ALL = -1;
 
 interface BadgeThumbProps {
     badge: InventoryBadge;
@@ -84,37 +86,69 @@ export const InventoryBadgesView = () => {
     const badgeUrl = useConfigValue<string>('badge.asset.url') ?? '';
     // `BadgesModel.isUncommonBadgeRarityEnabled`: without it the uncommon tier is shown as common.
     const uncommonRarityEnabled = useConfigValue<boolean>('badge_rarity.uncommon') === true;
-    const [ rarityFilter, setRarityFilter ] = useState(RARITY_ALL);
+    const [ kindFilter, setKindFilter ] = useState(INVENTORY_BADGE_FILTER_ALL);
+    const [ rarityFilter, setRarityFilter ] = useState(INVENTORY_BADGE_RARITY_ALL);
     const [ searchText, setSearchText ] = useState('');
 
     useEffect(() => {
         requestInventoryBadgesIfEmpty(send);
     }, [ send ]);
 
-    const matches = (badge: InventoryBadge) => {
-        if ((rarityFilter !== RARITY_ALL) && (badge.rarityId !== rarityFilter)) return false;
+    const { rarityIds, hasCommonGroup } = getInventoryBadgeRarityIds(badges, uncommonRarityEnabled);
+    const rarityEntries = [ INVENTORY_BADGE_RARITY_ALL, ...(hasCommonGroup ? [ INVENTORY_BADGE_RARITY_COMMON ] : []), ...rarityIds ];
+    // `updateBadgeRarityFilterOptions`: a menu too short to be worth using is forced back to "all".
+    const rarityEnabled = isInventoryBadgeRarityFilterEnabled(rarityEntries);
+    const effectiveRarity = rarityEnabled ? rarityFilter : INVENTORY_BADGE_RARITY_ALL;
 
-        if (!searchText) return true;
-
-        const needle = searchText.toLowerCase();
-
-        return t(`badge_name_${badge.code}`, badge.code).toLowerCase().includes(needle) || t(`badge_desc_${badge.code}`, '').toLowerCase().includes(needle);
-    };
+    const matches = (badge: InventoryBadge) => passInventoryBadgeFilter(
+        badge,
+        kindFilter,
+        effectiveRarity,
+        uncommonRarityEnabled,
+        searchText,
+        t(`badge_name_${badge.code}`, badge.code),
+        t(`badge_desc_${badge.code}`, ''),
+    );
 
     const inactiveBadges = getInventoryBadges(badges, wornBadgeCodes, INVENTORY_BADGES_INACTIVE).filter(matches);
     const activeBadges = getInventoryBadges(badges, wornBadgeCodes, INVENTORY_BADGES_ACTIVE);
 
-    // `getBadgeRarityFilterLabel`: the tier's own text, or its number where the tier has none.
+    /** `getBadgeFilterLabel`: everything, the badges that are not achievements, or only those. */
+    const kindLabel = (kind: number) => {
+        switch (kind) {
+            case INVENTORY_BADGE_FILTER_NORMAL:
+                return t('inventory.badges.filter.normal_badges');
+            case INVENTORY_BADGE_FILTER_ACHIEVEMENTS:
+                return t('inventory.badges.filter.achievements');
+            default:
+                return t('inventory.badges.filter.all');
+        }
+    };
+
+    const kindOptions: DropmenuOption[] = [ INVENTORY_BADGE_FILTER_ALL, INVENTORY_BADGE_FILTER_NORMAL, INVENTORY_BADGE_FILTER_ACHIEVEMENTS ].map(kind => ({
+        key: kind,
+        label: kindLabel(kind),
+        selected: kindFilter === kind,
+        onSelect: () => setKindFilter(kind),
+    }));
+
+    /** `getBadgeRarityFilterLabel`: the two entries that are not a tier, then the tier's own text. */
     const rarityLabel = (rarity: number) => {
+        if (rarity === INVENTORY_BADGE_RARITY_ALL) return t('inventory.badges.filter.rarity.all');
+
+        if (rarity === INVENTORY_BADGE_RARITY_COMMON) return t('inventory.badges.filter.rarity.common');
+
         const key = getBadgeRarityLabelKey(rarity, uncommonRarityEnabled);
 
         return key ? t(key, String(rarity)) : String(rarity);
     };
 
-    const rarityOptions: DropmenuOption[] = [
-        { key: RARITY_ALL, label: t('inventory.badges.filter.rarity.all'), selected: rarityFilter === RARITY_ALL, onSelect: () => setRarityFilter(RARITY_ALL) },
-        ...getInventoryBadgeRarityIds(badges).map(rarity => ({ key: rarity, label: rarityLabel(rarity), selected: rarityFilter === rarity, onSelect: () => setRarityFilter(rarity) })),
-    ];
+    const rarityOptions: DropmenuOption[] = rarityEntries.map(rarity => ({
+        key: rarity,
+        label: rarityLabel(rarity),
+        selected: effectiveRarity === rarity,
+        onSelect: () => setRarityFilter(rarity),
+    }));
 
     const selectedBadge = badges.find(badge => badge.code === selectedBadgeCode);
     const isWorn = !!selectedBadge && wornBadgeCodes.includes(selectedBadge.code);
@@ -126,11 +160,14 @@ export const InventoryBadgesView = () => {
             <InventoryOptionsContainer
                 filterText={searchText}
                 onFilterTextChange={setSearchText}
+                filterCaption={kindLabel(kindFilter)}
+                filterOptions={kindOptions}
             />
             <Dropmenu
                 variant="0"
-                caption={(rarityFilter === RARITY_ALL) ? t('inventory.badges.filter.rarity.all') : rarityLabel(rarityFilter)}
+                caption={rarityLabel(effectiveRarity)}
                 options={rarityOptions}
+                disabled={!rarityEnabled}
                 layout={{ position: 'absolute', left: 274, top: 2, width: 119, height: 21 }}
             />
             <Region layout={{ position: 'absolute', left: 0, top: 27, width: 328, height: 143, overflow: 'hidden' }}>

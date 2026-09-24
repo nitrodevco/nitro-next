@@ -256,6 +256,8 @@ export const InventoryFurniView = () => {
     const floorItems = useSystemStore(x => x.floorItems);
     const wallItems = useSystemStore(x => x.wallItems);
     const multiItemTrading = useConfigValue<boolean>('multi.item.trading.enabled') ?? false;
+    // `HabboInventory.web3tradeEnabled`: without it a trade never hides the NFT furni.
+    const web3TradeEnabled = useConfigValue<boolean>('web3trade.enabled') === true;
     const marketplaceEnabled = useInventoryStore(x => x.marketplaceConfiguration.isEnabled);
     const recyclerRunning = useInventoryStore(x => x.recyclerState === INVENTORY_RECYCLER_STATE_ACTIVE);
     const safetyLocked = useUserStore(x => x.accountSafetyLocked);
@@ -309,11 +311,16 @@ export const InventoryFurniView = () => {
 
         if (!passInventoryFurniFilter(filterMain, filterType, filterText, { group, furniData: getFurniData(group), ...texts, chestName: getStuffDataChestName(group.stuffData) })) return false;
 
+        const className = getFurniData(group)?.className ?? '';
+
+        // `FurniModel.subCategorySwitch('trading')`: opening a user-to-user trade turns `showingNfts`
+        // off, so the furni grid drops NFT furni for as long as the trade runs - a collectible is
+        // offered from the collectibles page, not this one. `'empty'` turns it back on.
+        if (userTradeActive && web3TradeEnabled && (className.indexOf('nft_') === 0)) return false;
+
         // `FurniGridView.setFilterByWired`: while a wired trade runs the grid also drops what the
         // requirement refuses, and every NFT furni.
         if (!wiredTradeRunning) return true;
-
-        const className = getFurniData(group)?.className ?? '';
 
         return (className.indexOf('nft_') !== 0) && canOfferInventoryFurniToWiredTrade(requirement, group, className);
     });

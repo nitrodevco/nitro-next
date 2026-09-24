@@ -1,8 +1,8 @@
 import { AvatarGenderType, ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
-import { ChangeMottoComposer, GetHabboGroupDetailsComposer } from '@nitrodevco/nitro-packets';
+import { ChangeMottoComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useState } from 'react';
 
-import { openProfile, RELATIONSHIP_BOBBA, RELATIONSHIP_HEART, RELATIONSHIP_SMILE, requestUserDetails } from '#base/commands';
+import { openProfile, RELATIONSHIP_BOBBA, RELATIONSHIP_HEART, RELATIONSHIP_SMILE, requestUserDetails, showGroupBadgeInfo } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation } from '#base/context/system';
@@ -212,8 +212,8 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
                         <InfostandBadgeView
                             code={info.groupBadge}
                             group
-                            // `RoomWidgetGetBadgeDetailsMessage`: the group's own details.
-                            onPress={info.groupId ? () => send(new GetHabboGroupDetailsComposer({ groupId: info.groupId, openDetails: true })) : undefined}
+                            // `HabboGroupsManager.showGroupBadgeInfo`: the group's own window.
+                            onPress={info.groupId ? () => showGroupBadgeInfo(send, info.groupId) : undefined}
                             layout={{ position: 'absolute', left: 131, top: 1 }}
                         />
                     </Box>

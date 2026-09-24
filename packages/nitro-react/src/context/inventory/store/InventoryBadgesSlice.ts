@@ -21,6 +21,7 @@
  * `badgeCodes` stays the plain code list the catalogue's badge display page reads through
  * `HabboInventory.getAllMyBadgeIds`.
  */
+import { isBadgeRarityStandaloneTier } from '@nitrodevco/nitro-api';
 import { IInventoryBadge } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';
 
@@ -141,5 +142,62 @@ export const getInventoryBadges = (badges: readonly InventoryBadge[], wornBadgeC
     return badges.filter(badge => !wornBadgeCodes.includes(badge.code));
 };
 
-/** `BadgesModel.getAvailableRareBadgeRarityIds`: the rarity ids the owned badges actually use, ascending. */
-export const getInventoryBadgeRarityIds = (badges: readonly InventoryBadge[]): number[] => [ ...new Set(badges.map(badge => badge.rarityId)) ].sort((a, b) => a - b);
+/** `BadgeGridView.passFilter`'s badge kinds, as `filter.options` lists them. */
+export const INVENTORY_BADGE_FILTER_ALL = 0;
+export const INVENTORY_BADGE_FILTER_NORMAL = 1;
+export const INVENTORY_BADGE_FILTER_ACHIEVEMENTS = 2;
+
+/** `passFilter`: an achievement badge is one whose code carries this prefix. */
+const ACHIEVEMENT_BADGE_PREFIX = 'ACH_';
+
+/** `filter.rarity`'s two entries that are not a tier: everything, and the tiers folded into "common". */
+export const INVENTORY_BADGE_RARITY_ALL = -1;
+export const INVENTORY_BADGE_RARITY_COMMON = -2;
+
+/** `BadgesModel.isStandaloneBadgeRarity`: a tier with a tag of its own rather than one shown as common. */
+export const isInventoryBadgeRarityStandalone = (rarityId: number, uncommonEnabled: boolean): boolean => isBadgeRarityStandaloneTier(rarityId, uncommonEnabled);
+
+/**
+ * `BadgesModel.refreshAvailableRareBadgeRarityIds`: only the *standalone* tiers the owned badges
+ * use get an entry of their own, ascending; every badge below that bar is counted into the one
+ * "common" group instead, which is what `hasCommonGroup` reports.
+ */
+export const getInventoryBadgeRarityIds = (badges: readonly InventoryBadge[], uncommonEnabled: boolean): { rarityIds: number[]; hasCommonGroup: boolean } => {
+    const rarityIds = new Set<number>();
+    let hasCommonGroup = false;
+
+    for (const badge of badges) {
+        if (!isInventoryBadgeRarityStandalone(badge.rarityId, uncommonEnabled)) hasCommonGroup = true;
+        else rarityIds.add(badge.rarityId);
+    }
+
+    return { rarityIds: [ ...rarityIds ].sort((a, b) => a - b), hasCommonGroup };
+};
+
+/**
+ * `BadgeGridView.passFilter`: the kind menu, the rarity menu and the search box, all three of which
+ * a badge has to pass. The rarity's "common" entry keeps exactly the badges no standalone tier
+ * claims.
+ */
+export const passInventoryBadgeFilter = (badge: InventoryBadge, kind: number, rarityId: number, uncommonEnabled: boolean, text: string, name: string, description: string): boolean => {
+    const isAchievement = badge.code.startsWith(ACHIEVEMENT_BADGE_PREFIX);
+
+    if ((kind === INVENTORY_BADGE_FILTER_NORMAL) && isAchievement) return false;
+
+    if ((kind === INVENTORY_BADGE_FILTER_ACHIEVEMENTS) && !isAchievement) return false;
+
+    if (rarityId === INVENTORY_BADGE_RARITY_COMMON) {
+        if (isInventoryBadgeRarityStandalone(badge.rarityId, uncommonEnabled)) return false;
+    } else if ((rarityId !== INVENTORY_BADGE_RARITY_ALL) && (badge.rarityId !== rarityId)) {
+        return false;
+    }
+
+    if (!text) return true;
+
+    const needle = text.toLowerCase();
+
+    return name.toLowerCase().includes(needle) || description.toLowerCase().includes(needle);
+};
+
+/** `BadgesView.isBadgeRarityFilterEnabled`: the rarity menu only does anything past two entries. */
+export const isInventoryBadgeRarityFilterEnabled = (rarityIds: readonly number[]): boolean => rarityIds.length > 2;

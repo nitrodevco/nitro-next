@@ -54,6 +54,7 @@
     "multi.item.trading.enabled": true,
     "trading.commiterror.enabled": true,
     "trading.warning.enabled": true,
+    "web3trade.enabled": true,
     "currency.icon.url": "currency-%type%_%size%",
     "fps.limit": 60,
     "socket.url": "ws://localhost:9001",

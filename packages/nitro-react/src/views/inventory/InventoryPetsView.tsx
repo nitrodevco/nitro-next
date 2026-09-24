@@ -156,14 +156,19 @@ export const InventoryPetsView = () => {
     const availableTypes = [ ...new Set(pets.map(pet => pet.figureData.typeId)) ].sort((a, b) => a - b);
     // `isRarityFilterEnabled`: the rarity menu only does anything for the monster plant.
     const rarityEnabled = typeFilter === PET_TYPE_MONSTERPLANT;
+    // `getAvailableRarityFilterIds`: the monster plants' own levels, and a pet with no level at all
+    // (a negative one) is not a tier the menu offers.
     const availableRarities = rarityEnabled
-        ? [ ...new Set(pets.filter(pet => pet.figureData.typeId === PET_TYPE_MONSTERPLANT).map(pet => pet.rarityLevel)) ].sort((a, b) => a - b)
+        ? [ ...new Set(pets.filter(pet => (pet.figureData.typeId === PET_TYPE_MONSTERPLANT) && (pet.rarityLevel >= 0)).map(pet => pet.rarityLevel)) ].sort((a, b) => a - b)
         : [];
+    // `updateRarityFilterOptions`: off the monster plant the menu holds nothing but "all", so that
+    // is what it filters by however it was left.
+    const effectiveRarity = rarityEnabled ? rarityFilter : FILTER_ALL;
 
     const visiblePets = pets.filter((pet) => {
         if ((typeFilter !== FILTER_ALL) && (pet.figureData.typeId !== typeFilter)) return false;
 
-        if (rarityEnabled && (rarityFilter !== FILTER_ALL) && (pet.rarityLevel !== rarityFilter)) return false;
+        if ((effectiveRarity !== FILTER_ALL) && (pet.rarityLevel !== effectiveRarity)) return false;
 
         return !searchText || pet.name.toLowerCase().includes(searchText.toLowerCase());
     });
@@ -175,8 +180,8 @@ export const InventoryPetsView = () => {
 
     // `getRarityFilterLabel`: the "all" entry is a text, every other one is just its number.
     const rarityOptions: DropmenuOption[] = [
-        { key: FILTER_ALL, label: t('inventory.pets.filter.rarity.all'), selected: rarityFilter === FILTER_ALL, onSelect: () => setRarityFilter(FILTER_ALL) },
-        ...availableRarities.map(rarity => ({ key: rarity, label: String(rarity), selected: rarityFilter === rarity, onSelect: () => setRarityFilter(rarity) })),
+        { key: FILTER_ALL, label: t('inventory.pets.filter.rarity.all'), selected: effectiveRarity === FILTER_ALL, onSelect: () => setRarityFilter(FILTER_ALL) },
+        ...availableRarities.map(rarity => ({ key: rarity, label: String(rarity), selected: effectiveRarity === rarity, onSelect: () => setRarityFilter(rarity) })),
     ];
 
     const selectedPet = pets.find(pet => pet.id === selectedPetId);
@@ -194,9 +199,8 @@ export const InventoryPetsView = () => {
             />
             <Dropmenu
                 variant="0"
-                caption={(rarityFilter === FILTER_ALL) ? t('inventory.pets.filter.rarity.all') : String(rarityFilter)}
+                caption={(effectiveRarity === FILTER_ALL) ? t('inventory.pets.filter.rarity.all') : String(effectiveRarity)}
                 options={rarityOptions}
-                disabled={!rarityEnabled}
                 layout={{ position: 'absolute', left: 274, top: 2, width: 119, height: 21 }}
             />
             <Region layout={{ position: 'absolute', left: 0, top: 27, width: 274, bottom: 3, overflow: 'hidden' }}>
