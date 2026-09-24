@@ -2,7 +2,7 @@ import { MouseEventType, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObje
 import { ClickCharacterComposer, ClickFurniComposer, MoveAvatarComposer } from '@nitrodevco/nitro-packets';
 
 import { useWebSocketContext } from '#base/context/communication';
-import { useRoom, useRoomIsPlayingGame, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomStore } from '#base/context/room';
+import { useRoom, useRoomIsPlayingGame, useRoomMouseActions, useRoomPlacedObject, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
 
 import { useRoomCursorUpdate } from './useRoomCursorUpdate';
 import { useRoomEventDispatcher } from './useRoomEventDispatcher';
@@ -27,6 +27,7 @@ export const useRoomEventHandler = () => {
     // `getActiveRoomIsPlayingGame`, which the room's wired click settings can switch on as well.
     const isPlayingGame = useRoomIsPlayingGame();
     const { getMouseEventId, setMouseEventId } = useRoomMouseActions();
+    const { setPlacedObject } = useRoomSelectedObjectActions();
     const { selectAvatar, selectObject, deselectObject } = useRoomObjectSelect();
     const { canManipulateFurniture, modifyRoomObject } = useRoomObjectModify();
     const { handleObjectMove } = useRoomObjectMove();
@@ -220,6 +221,13 @@ export const useRoomEventHandler = () => {
     ], (event) => {
         if (!placedObject) return;
 
+        // The placement ghost is added to the room too, and under the very id the placement was
+        // started with (`handleObjectPlace`'s `addFurnitureFloorByTypeId`) - it is re-added every
+        // time the pointer crosses to a tile it does not fit on. Selecting on that would show the
+        // infostand for something nobody has placed yet, so a live placement is left alone: only
+        // the object the server puts in the room afterwards is selected.
+        if (selectedObject?.operation === RoomObjectOperationType.OBJECT_PLACE) return;
+
         // `RoomEngine.addObjectFurniture` / `addObjectWallItem`: a floor item was placed under its negative inventory id, a wall item is compared as is.
         const category = Number(event.category);
         const floor = Number(RoomObjectCategoryEnum.Floor);
@@ -229,6 +237,11 @@ export const useRoomEventHandler = () => {
             : ((category === wall) && (placedObject.objectId === event.objectId) && (Number(placedObject.category) === wall));
 
         if (!placed) return;
+
+        // One shot: the placement is over, and a later ghost that happens to reuse the id must not
+        // match it again (nothing else cleared this, so every placement after the first selected
+        // its own ghost the moment it appeared).
+        setPlacedObject(undefined);
 
         selectObject(event.objectId, event.category);
     });

@@ -116,6 +116,9 @@ export const getInventoryFurniUnlockedCount = (group: InventoryFurniGroup): numb
 /** `GroupItem.getTradeableCount`. */
 export const getInventoryFurniTradeableCount = (group: InventoryFurniGroup, unlockedOnly: boolean = true): number => group.items.filter(item => item.tradeable && (!unlockedOnly || !item.locked)).length;
 
+/** `GroupItem.getRecyclableCount`: the recyclable items no trade has locked. */
+export const getInventoryFurniRecyclableCount = (group: InventoryFurniGroup): number => group.items.filter(item => item.recyclable && !item.locked).length;
+
 /** `GroupItem.getOneForTrade` (without `selectedItemIndex`, see the docblock). */
 export const getInventoryFurniOneForTrade = (group: InventoryFurniGroup): InventoryFurniItem | undefined => group.items.find(item => !item.locked && item.tradeable);
 

@@ -1,10 +1,10 @@
 /**
  * The inventory's furni page - Flash `inventory/furni/FurniView` with `FurniGridView` and the
  * `GroupItem` thumbs (`inventory_thumb_xml`), on the `furni` region (468x261) of
- * `inventory_xml`: `options_container` on top with `placement.options` (274,2) beside
- * `filter.options`; `grid_container` (0,27 284x231) holding the `item_grid` (284x221, 42x42
- * thumbs 2 apart); `preview_container` (290,27 180x237) with the `furni_preview_widget` (5,0
- * 170x130) and the bottom-anchored `preview_element_list` (spacing 1): `furni_name` (bold,
+ * `inventory_xml`: `options_container` on top with the `filter` search box, `filter.options` and
+ * `placement.options` (274,2); `grid_container` (0,27 284x231) holding the `item_grid` (284x221,
+ * 42x42 thumbs 2 apart); `preview_container` (290,27 180x237) with the `furni_preview_widget`
+ * (5,0 170x130) and the bottom-anchored `preview_element_list` (spacing 1): `furni_name` (bold,
  * wrapped at 190), `furni_description` (at most 45 high), the 12px `spacer`, then the buttons
  * `updateActionButtons` adds back in its order.
  *
@@ -17,15 +17,19 @@
  *   `updateSelectionVisual`): the unlocked count from 2 up, the icon faded to 0.2 when every item
  *   is locked in a trade, a green ground while the group is new, the outline when selected. A
  *   press selects it (`WME_DOWN`).
- * - While a wired trade runs (`FurniModel.isTradingOpen` on the `wired_trading` sub page) the
- *   grid shows what the trade's requirement accepts and no NFT furni
- *   (`FurniGridView.setFilterByWired`), and the buttons are `offertotrade_cnt` - only with
- *   `multi.item.trading.enabled` - and `offertotrade_btn` (`inventory.trading.offer`), enabled
- *   when the selection has an unlocked item and its last item is tradeable
- *   (`FurniView.updateActionButtons`). The offer is `FurniModel.requestSelectedFurniToTrading`
- *   with the amount field's value, at least 1, and the field shows what was offered afterwards.
- * - Otherwise the buttons are `placeinroom_btn`, which does nothing yet: placing furni in the room
- *   (`requestSelectedFurniPlacement`, the room engine's object mover) is not ported; then, for a
+ * - The grid is narrowed by three things at once (`FurniGridView.passFilter`, see
+ *   `InventoryFurniFilterSlice`): the main dropmenu, the type dropmenu whose options follow it, and
+ *   the search box, which matches a group's name, description or chest name.
+ * - While a trade runs - the user-to-user trade (`TradingModel`) or a wired one on the
+ *   `wired_trading` sub page - the grid also shows only what that trade accepts, and the buttons
+ *   are `offertotrade_cnt` (only with `multi.item.trading.enabled`) and `offertotrade_btn`
+ *   (`inventory.trading.offer`), enabled when the selection has an unlocked item and its last item
+ *   is tradeable (`FurniView.updateActionButtons`). The offer is
+ *   `FurniModel.requestSelectedFurniToTrading` with the amount field's value, at least 1, and the
+ *   field shows what was offered afterwards.
+ * - Otherwise the buttons are `placeinroom_btn`, which places the selection in the room
+ *   (`requestSelectedFurniPlacement`): a wallpaper, floor or landscape is applied to the room
+ *   outright, anything else becomes the placement ghost the user drops on a tile; then, for a
  *   rented item that is not in a room (`flatId` -1) whose furni data allows it, `extendrent_btn`
  *   (`rentCouldBeUsedForBuyout`) and `buyrenteditem_btn` (`purchaseCouldBeUsedForBuyout`), which
  *   open the catalogue's rent window for the strip id (`FurniModel.extendRentPeriod` /
@@ -41,34 +45,31 @@
  *   selection's item into the recycler (`HabboInventory.recycleSelectedFurni`); during a trade it
  *   offers one item instead (`requestCurrentActionOnSelection`).
  *
- * Not ported: the text filter and what the two filter dropmenus choose (they show the captions
- * `populateFilterOptions` selects - main `all`, type `any` - and list nothing), the 200-item
- * pages and their `item_grid_pages` / `items.shown` row (the grid scrolls instead), the room
- * previewer (the preview is the furni's own picture, centred in the widget's box) with its
- * `nextItemButton` / `viewItemButton`, `furni_extra` (rarity, chest name, rent time), the rarity,
- * limited, chest and rent overlays, the tradeable and recyclable counters, the `goto_room`
- * and `use` buttons, `placeinroom_btn`'s disabling outside a private room, and a double
- * click's placement (`requestSelectedFurniPlacement`). A song disk
- * (category 8) is named by its furni, not by its song. The grid is the theme's `InfiniteGrid` in its
- * `itemGrid` mode - Flash's `ItemGridController`: 42px thumbs 2px apart both ways, the 17px
- * scrollbar flush at the `item_grid`'s right edge.
+ * Not ported: the 200-item pages and their `item_grid_pages` / `items.shown` row (the grid scrolls
+ * instead), `furni_extra` (rarity, chest name, rent time), the rarity, limited, chest and rent
+ * overlays, the `goto_room` and `use` buttons, and
+ * `placeinroom_btn`'s disabling outside a private room. A song disk (category 8) is named by its
+ * furni, not by its song. The grid is the theme's `InfiniteGrid` in its `itemGrid` mode - Flash's
+ * `ItemGridController`: 42px thumbs 2px apart both ways, the 17px scrollbar flush at the
+ * `item_grid`'s right edge.
  */
-import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { IFurnitureData } from '@nitrodevco/nitro-api';
 import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { checkFurniInventoryInitialization, checkMarketplaceInitialization, offerSelectedFurniToTrade, openRentConfirmationWindow, recycleSelectedInventoryFurni, requestSelectedFurniSelling } from '#base/commands';
+import { cancelInventoryFurniInMover, checkFurniInventoryInitialization, checkMarketplaceInitialization, offerSelectedFurniToTrade, openRentConfirmationWindow, recycleSelectedInventoryFurni, requestSelectedFurniPlacement, requestSelectedFurniSelling } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    canOfferInventoryFurniToWiredTrade, getInventoryFurniUnlockedCount, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_FURNI_MIN_ITEMS_TO_SHOW_COUNTER, INVENTORY_RECYCLER_STATE_ACTIVE, InventoryFurniGroup, isInventoryFurniGroupWallItem, peekInventoryFurni,
-    useInventoryFurniActions, useInventoryStore,
+    canOfferInventoryFurniToWiredTrade, getInventoryFurniRecyclableCount, getInventoryFurniTradeableCount, getInventoryFurniTypeFilters, getInventoryFurniUnlockedCount, getStuffDataChestName, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_FURNI_MAIN_FILTERS,
+    INVENTORY_FURNI_MIN_ITEMS_TO_SHOW_COUNTER, INVENTORY_RECYCLER_STATE_ACTIVE, InventoryFurniGroup, isInventoryFurniGroupWallItem,
+    passInventoryFurniFilter, peekInventoryFurni, useInventoryFurniActions, useInventoryStore,
 } from '#base/context/inventory';
 import { useConfigValue, useSystemStore, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { useWiredTradingStore } from '#base/context/wired-trading';
-import { Border, Box, Button, Dropmenu, InfiniteGrid, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
+import { Border, Box, Button, Dropmenu, DropmenuOption, InfiniteGrid, LayoutImage, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
 
+import { InventoryFurniPreview } from './InventoryFurniPreview';
 import { InventoryOptionsContainer } from './InventoryOptionsContainer';
 
 const THUMB_SIZE = 42;
@@ -80,21 +81,56 @@ const THUMB_LOCKED_ALPHA = 0.2;
 /** `inventory_thumb_xml`: the `number_container` fill and the `number` text colour. */
 const COUNT_COLOR = '#2f6982';
 
-/** The group's furni data (`GroupItem.furniData`). */
-const useGroupFurniData = (group: InventoryFurniGroup | undefined) => {
-    const floorItems = useSystemStore(x => x.floorItems);
-    const wallItems = useSystemStore(x => x.wallItems);
-
-    if (!group) return undefined;
-
-    return (isInventoryFurniGroupWallItem(group) ? wallItems : floorItems)[group.typeId];
-};
-
 /** `GroupItem.initImage`: the wall item's icon with its stuff data, or the floor item's. */
 const getGroupIconUrl = (group: InventoryFurniGroup): string => {
     const engine = GetRoomEngine();
 
     return (isInventoryFurniGroupWallItem(group) ? engine.getFurnitureWallIconUrl(group.typeId, group.stuffData.getLegacyString() || undefined) : engine.getFurnitureFloorIconUrl(group.typeId)) ?? '';
+};
+
+interface FurniCountIconProps {
+    count: number;
+    /** The two rows' icons are different widths, and their numbers sit clear of them. */
+    iconWidth: number;
+    numberLeft: number;
+    /** The asset for "you have some" and the greyed one for "you have none". */
+    icon: string;
+    noIcon: string;
+    tooltipSome: string;
+    tooltipNone: string;
+}
+
+/**
+ * One row of `icons_element_list` (52x16) - `updateItemView`'s `tradeable_info_region` and
+ * `recyclable_info_region`: how many of the group may be traded or recycled, beside an icon that
+ * greys out at none. At none the number is hidden and the tooltip says so instead.
+ *
+ * Flash puts a white `GlowFilter` behind the number; the port draws it plain.
+ */
+const FurniCountIcon = ({ count, iconWidth, numberLeft, icon, noIcon, tooltipSome, tooltipNone }: FurniCountIconProps) => {
+    const t = useTranslation();
+    const some = count > 0;
+
+    return (
+        <Region
+            tooltip={t(some ? tooltipSome : tooltipNone)}
+            layout={{ width: 52, height: 16, flexShrink: 0 }}
+        >
+            <ThemeImage
+                src={LayoutImage(`shared/${some ? icon : noIcon}.png`)}
+                bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                layout={{ position: 'absolute', left: 0, top: 0, width: iconWidth, height: 16 }}
+            />
+            {some && (
+                <ThemeText
+                    text={String(count)}
+                    textStyle="u_regular"
+                    verticalAlign="top"
+                    layout={{ position: 'absolute', left: numberLeft, top: 1 }}
+                />
+            )}
+        </Region>
+    );
 };
 
 interface FurniThumbProps {
@@ -105,6 +141,10 @@ interface FurniThumbProps {
     onSelect: (groupId: number) => void;
     /** `WME_DOUBLE_CLICK` -> `FurniModel.requestCurrentActionOnSelection`. */
     onAction: () => void;
+    /** `WME_OUT` while the thumb is held: the drag becomes a placement. Returns whether one started. */
+    onDragOut: () => boolean;
+    /** `WME_UP` -> `cancelFurniInMover`: letting go over the thumb puts back anything on its way out. */
+    onRelease: () => void;
 }
 
 /**
@@ -119,18 +159,35 @@ interface FurniThumbProps {
  * `TextField` white (no `color`, so `TextField.backgroundColor` stays white): blue digits on
  * white, framed by the container's one blue pixel on the left and top.
  */
-const FurniThumb = ({ group, selected, showRecyclable, onSelect, onAction }: FurniThumbProps) => {
+const FurniThumb = ({ group, selected, showRecyclable, onSelect, onAction, onDragOut, onRelease }: FurniThumbProps) => {
     const unlockedCount = getInventoryFurniUnlockedCount(group);
     const iconUrl = getGroupIconUrl(group);
     // `GroupItem.getRecyclableCount`.
     const recyclable = showRecyclable && group.items.some(item => item.recyclable && !item.locked);
+    // `GroupItem.§_-F1a§`: the thumb is being held, so leaving it is a drag rather than a hover.
+    const held = useRef(false);
 
     return (
         <Region
             cursor="pointer"
-            onPointerDown={() => onSelect(group.id)}
+            onPointerDown={() => {
+                onSelect(group.id);
+                held.current = true;
+            }}
+            onPointerUp={() => {
+                held.current = false;
+                onRelease();
+            }}
+            // `WME_OUT`: dragging off a held thumb takes the item into the room.
+            onPointerOut={() => {
+                if (!held.current) return;
+
+                if (onDragOut()) held.current = false;
+            }}
             // A pointer tap's `detail` is its click count: the second one is Flash's `WME_DOUBLE_CLICK`.
             onPointerTap={(event) => {
+                held.current = false;
+
                 if (event.detail === 2) onAction();
             }}
             layout={{ position: 'relative', width: THUMB_SIZE, height: THUMB_SIZE }}
@@ -184,30 +241,17 @@ const FurniThumb = ({ group, selected, showRecyclable, onSelect, onAction }: Fur
     );
 };
 
-/** `furni_preview_widget`, standing in for the room previewer: the furni at 64 facing 90 degrees. */
-const FurniPreview = ({ group }: { group: InventoryFurniGroup }) => {
-    const furniData = useGroupFurniData(group);
-    const { texture, width, height } = useFurnitureImageTexture(furniData?.className, furniData?.colorIndex ?? 0, 2, RoomGeometryScaleType.ZoomedIn, 0);
-
-    if (!texture) return null;
-
-    return (
-        <pixiSprite
-            texture={texture}
-            width={width}
-            height={height}
-            layout={{}}
-        />
-    );
-};
-
 export const InventoryFurniView = () => {
     const { send } = useWebSocketContext();
     const t = useTranslation();
     const groups = useInventoryStore(x => x.furniGroups);
     const selectedGroupId = useInventoryStore(x => x.furniSelectedGroupId);
     const listInitialized = useInventoryStore(x => x.furniListInitialized);
-    const tradeRunning = useWiredTradingStore(x => x.tradeRunning);
+    const filterMain = useInventoryStore(x => x.furniFilterMain);
+    const filterType = useInventoryStore(x => x.furniFilterType);
+    const filterText = useInventoryStore(x => x.furniFilterText);
+    const userTradeActive = useInventoryStore(x => x.tradingActive);
+    const wiredTradeRunning = useWiredTradingStore(x => x.tradeRunning);
     const requirement = useWiredTradingStore(x => x.tradeRequirement);
     const floorItems = useSystemStore(x => x.floorItems);
     const wallItems = useSystemStore(x => x.wallItems);
@@ -215,9 +259,12 @@ export const InventoryFurniView = () => {
     const marketplaceEnabled = useInventoryStore(x => x.marketplaceConfiguration.isEnabled);
     const recyclerRunning = useInventoryStore(x => x.recyclerState === INVENTORY_RECYCLER_STATE_ACTIVE);
     const safetyLocked = useUserStore(x => x.accountSafetyLocked);
-    const { selectFurniGroup, resetFurniUnseenItems } = useInventoryFurniActions();
+    const { selectFurniGroup, resetFurniUnseenItems, setFurniFilterMain, setFurniFilterType, setFurniFilterText } = useInventoryFurniActions();
     // `offertotrade_cnt`'s caption.
     const [ offerCount, setOfferCount ] = useState('1');
+
+    // `HabboInventory.activeTradingModel`: either trade puts the page into its trading shape.
+    const tradeRunning = userTradeActive || wiredTradeRunning;
 
     useEffect(() => {
         checkFurniInventoryInitialization(send);
@@ -233,21 +280,58 @@ export const InventoryFurniView = () => {
 
     const selectedGroup = groups.find(group => group.id === selectedGroupId);
     const selectedItem = selectedGroup ? peekInventoryFurni(selectedGroup) : undefined;
-    const selectedFurniData = useGroupFurniData(selectedGroup);
 
-    const visibleGroups = tradeRunning
-        ? groups.filter((group) => {
-                const className = (isInventoryFurniGroupWallItem(group) ? wallItems : floorItems)[group.typeId]?.className ?? '';
+    /** `GroupItem.furniData`. */
+    const getFurniData = (group: InventoryFurniGroup): IFurnitureData | undefined => (isInventoryFurniGroupWallItem(group) ? wallItems : floorItems)[group.typeId];
 
-                return (className.indexOf('nft_') !== 0) && canOfferInventoryFurniToWiredTrade(requirement, group, className);
-            })
-        : groups;
+    /** `GroupItem.getFurniItemName` / `getFurniItemDesc`: a poster by its poster id, anything else by its furni data. */
+    const getGroupTexts = (group: InventoryFurniGroup): { name: string; description: string } => {
+        const item = peekInventoryFurni(group);
 
-    // `GroupItem.getFurniItemName` / `getFurniItemDesc`: a poster by its poster id, anything else by its furni data.
-    const isPoster = selectedGroup?.category === INVENTORY_FURNI_CATEGORY_POSTER;
-    const posterId = selectedItem?.stuffData.getLegacyString() ?? '';
-    const name = !selectedItem ? '' : (isPoster ? t(`poster_${posterId}_name`) : (selectedFurniData?.localizedName ?? ''));
-    const description = !selectedItem ? '' : (isPoster ? t(`poster_${posterId}_desc`) : (selectedFurniData?.description ?? ''));
+        if (!item) return { name: '', description: '' };
+
+        if (group.category === INVENTORY_FURNI_CATEGORY_POSTER) {
+            const posterId = item.stuffData.getLegacyString();
+
+            return { name: t(`poster_${posterId}_name`), description: t(`poster_${posterId}_desc`) };
+        }
+
+        const furniData = getFurniData(group);
+
+        return { name: furniData?.localizedName ?? '', description: furniData?.description ?? '' };
+    };
+
+    const selectedFurniData = selectedGroup ? getFurniData(selectedGroup) : undefined;
+    const { name, description } = selectedGroup ? getGroupTexts(selectedGroup) : { name: '', description: '' };
+
+    const visibleGroups = groups.filter((group) => {
+        const texts = getGroupTexts(group);
+
+        if (!passInventoryFurniFilter(filterMain, filterType, filterText, { group, furniData: getFurniData(group), ...texts, chestName: getStuffDataChestName(group.stuffData) })) return false;
+
+        // `FurniGridView.setFilterByWired`: while a wired trade runs the grid also drops what the
+        // requirement refuses, and every NFT furni.
+        if (!wiredTradeRunning) return true;
+
+        const className = getFurniData(group)?.className ?? '';
+
+        return (className.indexOf('nft_') !== 0) && canOfferInventoryFurniToWiredTrade(requirement, group, className);
+    });
+
+    /** `populateFilterOptions` / `populateTypeFilterOptions`: the ids name their own texts. */
+    const mainFilterOptions: DropmenuOption[] = INVENTORY_FURNI_MAIN_FILTERS.map(id => ({
+        key: id,
+        label: t(`inventory.furni.filter.main.${id}`),
+        selected: id === filterMain,
+        onSelect: () => setFurniFilterMain(id),
+    }));
+
+    const typeFilterOptions: DropmenuOption[] = getInventoryFurniTypeFilters(filterMain).map(id => ({
+        key: id,
+        label: t(`inventory.furni.filter.type.${id}`),
+        selected: id === filterType,
+        onSelect: () => setFurniFilterType(id),
+    }));
 
     const canOffer = tradeRunning && !!selectedGroup && !!selectedItem && (getInventoryFurniUnlockedCount(selectedGroup) > 0) && selectedItem.tradeable;
 
@@ -265,11 +349,20 @@ export const InventoryFurniView = () => {
         if (selectedItem && selectedFurniData) openRentConfirmationWindow(send, selectedFurniData, isBuyout, -1, selectedItem.id);
     };
 
-    // `FurniModel.requestCurrentActionOnSelection`: into the recycler while it runs, else into the
-    // trade while one runs; placing in the room is not ported.
+    // `FurniModel.requestCurrentActionOnSelection`: into the recycler while it runs, into the trade
+    // while one runs, else placed in the room. A double click never applies a room paper.
     const onCurrentAction = () => {
         if (recyclerRunning) recycleSelectedInventoryFurni();
         else if (tradeRunning) offerSelectedFurniToTrade(send, 1);
+        else requestSelectedFurniPlacement(send, true);
+    };
+
+    // `GroupItem.itemEventProc`'s `WME_OUT`: dragging off a held thumb places the item, unless a
+    // trade is open - there a drag means nothing and the thumb stays held.
+    const onThumbDragOut = (): boolean => {
+        if (tradeRunning) return false;
+
+        return requestSelectedFurniPlacement(send, true);
     };
 
     const onOffer = () => {
@@ -284,10 +377,16 @@ export const InventoryFurniView = () => {
         <Region layout={{ position: 'absolute', left: 0, top: 0, width: 468, bottom: 0, overflow: 'hidden' }}>
             {showPage && (
                 <>
-                    <InventoryOptionsContainer filterCaption={t('inventory.furni.filter.main.all')} />
+                    <InventoryOptionsContainer
+                        filterText={filterText}
+                        onFilterTextChange={setFurniFilterText}
+                        filterCaption={t(`inventory.furni.filter.main.${filterMain}`)}
+                        filterOptions={mainFilterOptions}
+                    />
                     <Dropmenu
                         variant="0"
-                        caption={t('inventory.furni.filter.type.any')}
+                        caption={t(`inventory.furni.filter.type.${filterType}`)}
+                        options={typeFilterOptions}
                         layout={{ position: 'absolute', left: 274, top: 2, width: 119, height: 21 }}
                     />
                     <Region layout={{ position: 'absolute', left: 0, top: 27, width: 284, bottom: 3, overflow: 'hidden' }}>
@@ -304,20 +403,45 @@ export const InventoryFurniView = () => {
                                         showRecyclable={recyclerRunning}
                                         onSelect={selectFurniGroup}
                                         onAction={onCurrentAction}
+                                        onDragOut={onThumbDragOut}
+                                        onRelease={cancelInventoryFurniInMover}
                                     />
                                 )}
                             />
                         </Box>
                     </Region>
                     <Region layout={{ position: 'absolute', left: 290, top: 27, width: 180, bottom: -3 }}>
-                        <Box layout={{ position: 'absolute', left: 5, right: 5, top: 0, bottom: 107, minHeight: 50, alignItems: 'center', justifyContent: 'center' }}>
+                        <Box layout={{ position: 'absolute', left: 5, right: 5, top: 0, bottom: 107, minHeight: 50 }}>
                             {selectedGroup && (
-                                <FurniPreview
+                                <InventoryFurniPreview
                                     key={selectedGroup.id}
                                     group={selectedGroup}
+                                    layout={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }}
                                 />
                             )}
                         </Box>
+                        {selectedGroup && (
+                            <Box layout={{ position: 'absolute', left: 0, top: 0, width: 52, height: 34, flexDirection: 'column' }}>
+                                <FurniCountIcon
+                                    count={getInventoryFurniTradeableCount(selectedGroup)}
+                                    iconWidth={40}
+                                    numberLeft={33}
+                                    icon="inventory_furni_trade_icon"
+                                    noIcon="inventory_furni_no_trade_icon"
+                                    tooltipSome="inventory.furni.preview.tradeable_amount"
+                                    tooltipNone="inventory.furni.preview.not_tradeable"
+                                />
+                                <FurniCountIcon
+                                    count={getInventoryFurniRecyclableCount(selectedGroup)}
+                                    iconWidth={28}
+                                    numberLeft={18}
+                                    icon="inventory_furni_recycle_icon"
+                                    noIcon="inventory_furni_no_recycle_icon"
+                                    tooltipSome="inventory.furni.preview.recyclable_amount"
+                                    tooltipNone="inventory.furni.preview.not_recyclable"
+                                />
+                            </Box>
+                        )}
                         <Box layout={{ position: 'absolute', left: 0, right: 0, bottom: 2, flexDirection: 'column', alignItems: 'flex-start', gap: 1 }}>
                             <ThemeText
                                 text={name}
@@ -340,7 +464,9 @@ export const InventoryFurniView = () => {
                             {notInRoom && !tradeRunning && (
                                 <Button
                                     variant="3"
+                                    name="placeinroom_btn"
                                     textStyle="button_shiny_regular"
+                                    onPointerTap={() => requestSelectedFurniPlacement(send)}
                                     layout={{ width: 180, height: 22, flexShrink: 0 }}
                                 >
                                     {t('inventory.furni.placetoroom')}

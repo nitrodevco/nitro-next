@@ -2,7 +2,8 @@
  * The inventory window - Flash `InventoryMainView` over `inventory_xml`: a style 3 frame (490x342,
  * content margins 6/35/6/6, width fixed, height down to 300) whose `top_content` holds the
  * `tabs` tab context, the `empty_container` and `loading_container` a page shows while it has
- * nothing to list, and the `contentArea` (5,35 468x261) the selected page draws in.
+ * nothing to list, and the `contentArea` (5,35 468x261) the selected page draws in, with
+ * `subContentArea` (0,301) under it for the trade.
  *
  * - The frame opens at `DEFAULT_VIEW_LOCATION` (120,150) and scales only with
  *   `inventory.allow.scaling` (`getWindow`'s `setParamFlag(65536, ...)`).
@@ -11,15 +12,16 @@
  *   10 left and right, the text 7 down, `u_regular` from the Ubuntu theme) and they are laid
  *   left to right (`SelectorListController.updateSelectableRegion`).
  * - `getWindow` re-adds the tabs in layout order - furni, collectibles, rentables, pets, badges,
- *   bots. The port has four of those pages and keeps them all: `collectibles` (web3 trading),
- *   `rentables` (`duckets.enabled` without `mergeRentFurni`) are not ported, and `bots` shows only
- *   with `inventory.bots.enabled`, as it does in Flash.
+ *   bots. The port has five of those pages and keeps them all: `rentables` (`duckets.enabled`
+ *   without `mergeRentFurni`) is not ported, and `bots` shows only with `inventory.bots.enabled`,
+ *   as it does in Flash.
  * - `empty_container` / `loading_container` follow `FurniView.updateContainerVisibility` on the
  *   furni page - loading until the list has arrived, empty while it holds nothing - and the
- *   empty page's `open_catalog_btn` opens the catalog (`InventoryMainView.windowEventProc`). The
- *   pets, bots and badges pages have no data yet, so they never show either.
- *
- * Not ported: `subContentArea` (the trading view Flash docks under the pages).
+ *   empty page's `open_catalog_btn` opens the catalog (`InventoryMainView.windowEventProc`).
+ * - While a trade runs it is docked in `subContentArea` and the window grows by exactly its height
+ *   (`TradingView.resizeWindow` -> `InventoryMainView.resizeToFitContents`). Leaving the furni page
+ *   cancels the trade (`TradingModel.categorySwitch` / `subCategorySwitch`), and closing the window
+ *   closes it (`closingInventoryView`).
  */
 import { useInventoryStore } from '#base/context/inventory';
 import { useConfigValue, useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context/system';
@@ -27,16 +29,25 @@ import { Button, Frame, LayoutImage, Region, TabButton, TabContent, TabContext, 
 
 import { InventoryBadgesView } from './InventoryBadgesView';
 import { InventoryBotsView } from './InventoryBotsView';
+import { InventoryCollectiblesView } from './InventoryCollectiblesView';
 import { InventoryFurniView } from './InventoryFurniView';
 import { InventoryPetsView } from './InventoryPetsView';
+import { InventoryTradingDock } from './trading/InventoryTradingDock';
+import { useInventoryTradingDockHeight } from './trading/inventoryTradingLayout';
 
-export type InventoryViewWindowParams = { tab?: 'furni' | 'pets' | 'bots' | 'badges' };
+export type InventoryViewWindowParams = { tab?: 'furni' | 'collectibles' | 'pets' | 'bots' | 'badges' };
 
 type InventoryTab = NonNullable<WindowParams<'inventory'>['tab']>;
+
+/** `inventory_xml`: `top_content` is 478x301, and `subContentArea` starts where it ends. */
+const TOP_CONTENT_HEIGHT = 301;
+/** The frame's own height with nothing docked - its 35/6 margins around `top_content`. */
+const FRAME_HEIGHT = 342;
 
 /** The ported tabs in `inventory_xml`'s order, with their captions. */
 const TABS: readonly { id: InventoryTab; caption: string }[] = [
     { id: 'furni', caption: 'inventory.furni' },
+    { id: 'collectibles', caption: 'inventory.collectibles' },
     { id: 'pets', caption: 'inventory.furni.tab.pets' },
     { id: 'badges', caption: 'inventory.badges' },
     { id: 'bots', caption: 'inventory.bots' },
@@ -50,6 +61,7 @@ export const InventoryView = () => {
     const botsEnabled = useConfigValue<boolean>('inventory.bots.enabled') === true;
     const furniListInitialized = useInventoryStore(x => x.furniListInitialized);
     const furniCount = useInventoryStore(x => x.furniGroups.length);
+    const dockedHeight = useInventoryTradingDockHeight();
 
     // `FurniView.setViewToState`: 1 loading, 2 empty, 3 the page.
     const furniLoading = (activeTab === 'furni') && !furniListInitialized;
@@ -65,10 +77,10 @@ export const InventoryView = () => {
             resizeDirection={allowScaling ? 'y' : 'none'}
             defaultPosition={{ x: 120, y: 150 }}
             onClose={() => toggleWindow('inventory')}
-            layout={{ position: 'absolute', width: 490, height: 342, minWidth: 490, maxWidth: 490, minHeight: 300 }}
+            layout={{ position: 'absolute', width: 490, height: FRAME_HEIGHT + dockedHeight, minWidth: 490, maxWidth: 490, minHeight: 300 + dockedHeight }}
             margins={[ 6, 35, 6, 6 ]}
         >
-            <Region layout={{ position: 'absolute', left: 0, top: 0, width: 478, bottom: 0 }}>
+            <Region layout={{ position: 'absolute', left: 0, top: 0, width: 478, height: TOP_CONTENT_HEIGHT }}>
                 <TabContent
                     variant="3"
                     layout={{ position: 'absolute', left: 0, top: 30, width: 478, bottom: 0, marginTop: 0, padding: 0 }}
@@ -130,13 +142,18 @@ export const InventoryView = () => {
                         layout={{ position: 'absolute', left: 6, top: 27, width: 264, bottom: 6 }}
                     />
                 )}
-                <Region layout={{ position: 'absolute', left: 5, top: 35, width: 468, bottom: 5 }}>
+                <Region layout={{ position: 'absolute', left: 5, top: 35, width: 468, height: 261 }}>
                     {(activeTab === 'furni') && <InventoryFurniView />}
+                    {(activeTab === 'collectibles') && <InventoryCollectiblesView />}
                     {(activeTab === 'pets') && <InventoryPetsView />}
                     {(activeTab === 'badges') && <InventoryBadgesView />}
                     {(activeTab === 'bots') && <InventoryBotsView />}
                 </Region>
             </Region>
+            <InventoryTradingDock
+                activeTab={activeTab}
+                top={TOP_CONTENT_HEIGHT}
+            />
         </Frame>
     );
 };

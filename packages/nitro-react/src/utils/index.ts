@@ -23,5 +23,6 @@ export * from './localizationParameters';
 export * from './marketplace';
 export * from './petTypeFromFigure';
 export * from './targetedOfferTimeLeft';
+export * from './tradingNameScam';
 export * from './wiredChestItems';
 export * from './wiredTransactions';

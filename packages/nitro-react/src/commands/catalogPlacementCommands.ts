@@ -72,9 +72,10 @@ const setCatalogWindowVisible = (store: CatalogStoreApi, visible: boolean) => {
  * selected object in `OBJECT_PLACE` at (-100, -100), and the overlay icon is made for it but
  * hidden until the pointer leaves the room. Not in a public room (`room_is_public`). The
  * inventory's placements (`HabboInventory.requestSelectedFurniToMover`) pass the item's stuff
- * data as well.
+ * data as well, and a monster plant dragged in from the pets page passes the posture its growth
+ * stage names (`PetsModel.placePetToRoom`).
  */
-export const initializeRoomObjectInsert = (source: string, objectId: number, category: RoomObjectCategoryEnum, typeId: number, instanceData: string | undefined, stuffData?: IObjectData): boolean => {
+export const initializeRoomObjectInsert = (source: string, objectId: number, category: RoomObjectCategoryEnum, typeId: number, instanceData: string | undefined, stuffData?: IObjectData, posture?: string): boolean => {
     const room = getRoom();
 
     if (!room || (room.getRoomValue<number>(RoomObjectVariableEnum.RoomIsPublic) ?? 0) !== 0) return false;
@@ -83,7 +84,7 @@ export const initializeRoomObjectInsert = (source: string, objectId: number, cat
 
     cancelRoomObjectInsert();
     setObjectPlacementSource(source);
-    setSelectedObject(new SelectedRoomObjectData(objectId, category, RoomObjectOperationType.OBJECT_PLACE, new Vector3d(-100, -100), new Vector3d(0), typeId, instanceData, stuffData, -1, -1, undefined));
+    setSelectedObject(new SelectedRoomObjectData(objectId, category, RoomObjectOperationType.OBJECT_PLACE, new Vector3d(-100, -100), new Vector3d(0), typeId, instanceData, stuffData, -1, -1, posture));
 
     void (async () => {
         await room.setRoomOverlayIconSprite(typeId, category, false, instanceData ?? '');
@@ -99,7 +100,7 @@ export const initializeRoomObjectInsert = (source: string, objectId: number, cat
  * being placed or moved goes back - a placed ghost is removed, a moved object returns to where it
  * was - and nothing is selected for an operation any more.
  */
-const cancelRoomObjectInsert = () => {
+export const cancelRoomObjectInsert = () => {
     const room = getRoom();
     const { selectedObject, setSelectedObject } = roomStore.getState();
 

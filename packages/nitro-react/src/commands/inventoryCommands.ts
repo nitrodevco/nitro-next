@@ -4,18 +4,21 @@
  * `HabboInventory.checkCategoryInitilization`), `updateItemLocks` and
  * `requestSelectedFurniToTrading`. Each sends its packet and writes `inventoryStore`.
  *
- * The only trading model in this client is the wired trade (`WiredTradingModel`); the
- * user-to-user trade (`TradingModel`) does not exist, so `activeTradingModel` is the wired trade
- * while it runs and nothing otherwise.
+ * `HabboInventory.activeTradingModel` is the user-to-user trade (`TradingModel`) while one runs,
+ * the wired trade (`WiredTradingModel`) while that one does, and nothing otherwise - in that
+ * order, as Flash checks them.
  */
-import { RequestFurniInventoryComposer, RequestFurniInventoryWhenNotInRoomComposer } from '@nitrodevco/nitro-packets';
+import { RoomObjectCategoryEnum, RoomObjectPlacementSource } from '@nitrodevco/nitro-api';
+import { RequestFurniInventoryComposer, RequestFurniInventoryWhenNotInRoomComposer, RequestRoomPropertySetComposer } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
-import { getInventoryFurniItemsForTrade, INVENTORY_TRADE_MAX_ITEMS, inventoryStore } from '#base/context/inventory';
+import { getInventoryFurniItemsForTrade, getInventoryFurniUnlockedCount, INVENTORY_TRADE_MAX_ITEMS, InventoryFurniItem, inventoryStore, peekInventoryFurni } from '#base/context/inventory';
 import { getRoom } from '#base/context/room';
 import { systemStore } from '#base/context/system';
 import { wiredTradingStore } from '#base/context/wired-trading';
 
+import { cancelRoomObjectInsert, initializeRoomObjectInsert } from './catalogPlacementCommands';
+import { offerSelectedFurniToUserTrade } from './inventoryTradingCommands';
 import { requestAddItemsToWiredTrade } from './wiredTradingCommands';
 
 type Send = WebSocketConnection['send'];
@@ -30,8 +33,15 @@ export const checkFurniInventoryInitialization = (send: Send) => {
     requestFurniInventory(send);
 };
 
-/** `WiredTradingModel.getOwnItemIdsInTrade` through `HabboInventory.activeTradingModel`: none unless the trade runs. */
+/**
+ * `activeTradingModel.getOwnItemIdsInTrade`: the room item ids the running trade holds of the
+ * user's own - the user-to-user trade's if one runs, else the wired trade's, else none.
+ */
 const getOwnItemRefsInTrade = (): number[] => {
+    const { tradingActive, tradingOwnUser } = inventoryStore.getState();
+
+    if (tradingActive) return tradingOwnUser.groups.flatMap(group => group.items.map(item => item.ref));
+
     const { tradeRunning, tradeItems } = wiredTradingStore.getState();
 
     if (!tradeRunning || !tradeItems) return [];
@@ -73,6 +83,9 @@ export const offerSelectedFurniToTrade = (send: Send, count: number): number | u
 
     if (!items.length) return undefined;
 
+    // `activeTradingModel`: the user-to-user trade takes precedence, and has its own offer command.
+    if (inventoryStore.getState().tradingActive) return offerSelectedFurniToUserTrade(send, count);
+
     if (!wiredTradingStore.getState().tradeRunning) return 1;
 
     const itemIds = items.map(item => item.id);
@@ -88,4 +101,91 @@ export const offerSelectedFurniToTrade = (send: Send, count: number): number | u
     requestAddItemsToWiredTrade(send, itemIds);
 
     return itemIds.length;
+};
+
+/** `FurnitureItem` categories that are room papers rather than placeable furni. */
+const CATEGORY_WALLPAPER = 2;
+const CATEGORY_FLOOR = 3;
+const CATEGORY_LANDSCAPE = 4;
+const CATEGORY_POSTER = 6;
+
+/**
+ * `HabboInventory.requestSelectedFurniToMover`: the item becomes the room's placement ghost. A
+ * poster carries its poster id as the instance data and no stuff data; anything else carries its
+ * `extra` and its stuff data.
+ */
+const requestSelectedFurniToMover = (item: InventoryFurniItem): boolean => {
+    const category = item.isWallItem ? RoomObjectCategoryEnum.Wall : RoomObjectCategoryEnum.Floor;
+    const started = (item.category === CATEGORY_POSTER)
+        ? initializeRoomObjectInsert(RoomObjectPlacementSource.INVENTORY, item.id, category, item.typeId, item.stuffData.getLegacyString())
+        : initializeRoomObjectInsert(RoomObjectPlacementSource.INVENTORY, item.id, category, item.typeId, String(item.extra), item.stuffData);
+
+    if (started) hideInventoryForPlacement();
+
+    return started;
+};
+
+/**
+ * `GroupItem.itemEventProc`'s `WME_UP` -> `FurniModel.cancelFurniInMover`: letting go of a thumb
+ * without having dragged off it puts back whatever was on its way into the room, and the window
+ * with it - nothing is going to be placed, so nothing is waiting for `REOE_PLACED`.
+ */
+export const cancelInventoryFurniInMover = () => {
+    cancelRoomObjectInsert();
+    returnInventoryAfterPlacement();
+};
+
+/**
+ * The window covers the room the ghost is dropped into, so every page that starts a placement hides
+ * it and marks the mover as ours (`PetsModel.placePetToRoom`'s `§_-ih§` and its twins).
+ */
+export const hideInventoryForPlacement = () => {
+    inventoryStore.getState().setInventoryMoverRequested(true);
+    systemStore.getState().hideWindow('inventory');
+};
+
+/**
+ * `onObjectPlaced`: the item is in the room, so the window comes back and the flag is cleared. Does
+ * nothing unless the inventory is the one that started the placement - the catalogue's own drags
+ * end here too, and they restore their own window.
+ */
+export const returnInventoryAfterPlacement = () => {
+    const { inventoryMoverRequested, setInventoryMoverRequested } = inventoryStore.getState();
+
+    if (!inventoryMoverRequested) return;
+
+    setInventoryMoverRequested(false);
+    systemStore.getState().showWindow('inventory');
+};
+
+/**
+ * `FurniModel.requestSelectedFurniPlacement`: puts the selected group's item into the room - the
+ * three room papers by asking the server to apply them (`RequestRoomPropertySet`), everything else
+ * by starting a placement the user drops on a tile.
+ *
+ * `isDoubleClick` is Flash's first argument: a double click never applies a paper, it only places
+ * furni. Nothing happens for an empty selection, a group whose every item is locked in a trade, or
+ * a rented item that is already standing in a room.
+ */
+export const requestSelectedFurniPlacement = (send: Send, isDoubleClick: boolean = false): boolean => {
+    const { furniGroups, furniSelectedGroupId } = inventoryStore.getState();
+    const group = furniGroups.find(furniGroup => furniGroup.id === furniSelectedGroupId);
+
+    if (!group || (getInventoryFurniUnlockedCount(group) === 0)) return false;
+
+    const item = peekInventoryFurni(group);
+
+    if (!item) return false;
+
+    if (item.isRented && (item.flatId > -1)) return false;
+
+    if ((item.category === CATEGORY_WALLPAPER) || (item.category === CATEGORY_FLOOR) || (item.category === CATEGORY_LANDSCAPE)) {
+        if (isDoubleClick) return false;
+
+        send(new RequestRoomPropertySetComposer({ itemId: item.id }));
+
+        return true;
+    }
+
+    return requestSelectedFurniToMover(item);
 };

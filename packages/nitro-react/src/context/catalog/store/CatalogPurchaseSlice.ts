@@ -37,6 +37,8 @@ export interface PetImageRequest {
     readonly direction: number;
     /** `null` in Flash when none are passed: then no part count is written at all. */
     readonly customParts?: readonly IPetCustomPart[];
+    /** `getPetImage`'s posture: a monster plant's growth stage (`grw<level>` / `std`). */
+    readonly posture?: string;
 }
 
 /** What `showPurchaseConfirmation` hands the dialog (`PurchaseConfirmationDialog.showOffer`). */

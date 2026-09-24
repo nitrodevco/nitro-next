@@ -3057,6 +3057,8 @@
         "shared-illumina_wired_bg_right": "shared/illumina_wired_bg_right.png",
         "shared-inventory_furni_no_recycle_icon": "shared/inventory_furni_no_recycle_icon.png",
         "shared-inventory_furni_no_trade_icon": "shared/inventory_furni_no_trade_icon.png",
+        "shared-inventory_furni_recycle_icon": "shared/inventory_furni_recycle_icon.png",
+        "shared-inventory_furni_trade_icon": "shared/inventory_furni_trade_icon.png",
         "shared-inventory_thumb_selected_outline": "shared/inventory_thumb_selected_outline.png",
         "shared-newnavigator_default_room": "shared/newnavigator_default_room.png",
         "shared-newnavigator_icon_usercount": "shared/newnavigator_icon_usercount.png",
@@ -3792,6 +3794,8 @@
         "shared/illumina_wired_bg_right.png",
         "shared/inventory_furni_no_recycle_icon.png",
         "shared/inventory_furni_no_trade_icon.png",
+        "shared/inventory_furni_recycle_icon.png",
+        "shared/inventory_furni_trade_icon.png",
         "shared/inventory_thumb_selected_outline.png",
         "shared/newnavigator_default_room.png",
         "shared/newnavigator_icon_usercount.png",
@@ -3936,7 +3940,7 @@
         "window-manager/unique_item_large_background_wide.png",
         "window-manager/unique_item_sold_out_label.png"
       ],
-      "sources": "1baa19bdf50e185f"
+      "sources": "0e10701c1b1a8430"
     },
     {
       "name": "fonts",

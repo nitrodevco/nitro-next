@@ -8,6 +8,7 @@ export * from './useRoomEventHandler';
 export * from './useRoomFloorPlanDrawing';
 export * from './useRoomFurnitureActionHandler';
 export * from './useRoomFurnitureData';
+export * from './useRoomInventoryPlacementHandler';
 export * from './useRoomIsInitialized';
 export * from './useRoomMapping';
 export * from './useRoomMouse';

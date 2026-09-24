@@ -1,10 +1,13 @@
 /**
- * The request half of Flash `HabboInventory.getAllMyBadgeIds`: the first time it finds the badge
- * model empty, it asks the server for the list once (`§_-iL§`, then
- * `BadgesModel.requestInitialization`). The answer half - the owned codes minus the ones asked to
- * leave out - is a read of `inventoryStore`'s `badgeCodes`, which the caller takes with a selector.
+ * What the inventory's badges page does - the parts of Flash `inventory/badges/BadgesModel` that
+ * talk to the server: `requestInitialization` (through `HabboInventory.getAllMyBadgeIds`, which
+ * asks once while the model is empty) and `saveBadgeSelection`, which follows every change to the
+ * worn badges.
+ *
+ * The answer half - the owned codes minus the ones asked to leave out - is a read of
+ * `inventoryStore`'s `badgeCodes`, which the caller takes with a selector.
  */
-import { GetBadgesComposer } from '@nitrodevco/nitro-packets';
+import { GetBadgesComposer, SetActivatedBadgesComposer } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { inventoryStore } from '#base/context/inventory';
@@ -19,4 +22,15 @@ export const requestInventoryBadgesIfEmpty = (send: Send) => {
 
     setBadgesRequested();
     send(new GetBadgesComposer({}));
+};
+
+/** `BadgesModel.saveBadgeSelection`: the worn badges, in the order they are worn. */
+export const saveInventoryBadgeSelection = (send: Send) => send(new SetActivatedBadgesComposer({ badgeCodes: inventoryStore.getState().wornBadgeCodes }));
+
+/** `BadgesModel.toggleBadgeWearing`: put one on or take it off, then tell the server. */
+export const toggleInventoryBadgeWearing = (send: Send, code: string) => {
+    const { toggleBadgeWearing } = inventoryStore.getState();
+
+    toggleBadgeWearing(code);
+    saveInventoryBadgeSelection(send);
 };
