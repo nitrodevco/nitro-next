@@ -1,0 +1,56 @@
+{
+  "revision": "WIN63-202609091217-117204808",
+  "states": [
+    "own profile with selected badges",
+    "other user with populated groups and relationships",
+    "no groups",
+    "private profile",
+    "blocked profile"
+  ],
+  "feature": "user-profile",
+  "sources": [
+    {
+      "root": "NITRO_LAYOUT_ROOT",
+      "kind": "layout",
+      "path": "1198_new_extended_profile_xml$36220c362962d21300057f06bc2d5b88461739672.bin",
+      "sha256": "caa0d5728413e3349b0de0c5cd958f4d81b0bf6df0dce17bbc2fc4e5f6793bfa"
+    },
+    {
+      "root": "NITRO_LAYOUT_ROOT",
+      "kind": "layout",
+      "path": "1190_no_groups_xml.bin",
+      "sha256": "c9e854a5060c7e805140f96177deace67bcf7a6c4a82fbe4e8ca73cf0ff92abb"
+    },
+    {
+      "root": "NITRO_LAYOUT_ROOT",
+      "kind": "layout",
+      "path": "1201_group_entry_xml.bin",
+      "sha256": "2980719f2029cf53e36e300e08d9b128099ec416f66963e59f4296075c502811"
+    },
+    {
+      "root": "NITRO_AS3_ROOT",
+      "kind": "controller",
+      "path": "com/sulake/habbo/groups/ExtendedProfileWindowCtrl.as",
+      "sha256": "2964c11d927d2e3dbe28345073c92c552882df45c1757de0ad1da35485acf502"
+    },
+    {
+      "root": "NITRO_AS3_ROOT",
+      "kind": "controller",
+      "path": "com/sulake/habbo/window/widgets/AvatarImageWidget.as",
+      "sha256": "05b001a05c6f7f0d7d44ba7bdebb3d36b0b25eb4fa62b5c7e5b12f9f2a352648"
+    },
+    {
+      "root": "NITRO_AS3_ROOT",
+      "kind": "controller",
+      "path": "com/sulake/habbo/groups/GroupDetailsCtrl.as",
+      "sha256": "0dcb139ba818e7d55df951bd1ed28da212784d075a9deceddbadcd831272f266"
+    }
+  ],
+  "contracts": [
+    "Frame 521x537; margins 3/36/3/3; centered initially",
+    "Avatar cropped image retains horizontal center; relationship heads retain bottom edge",
+    "Empty groups hides list and scrollbar; uses full no_groups layout",
+    "Use shared GroupDetailsView; preserve GroupDetailsCtrl gating",
+    "Use sRGB; matching locale, device scale and data for visual comparisons"
+  ]
+}

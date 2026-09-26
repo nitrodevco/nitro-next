@@ -70,7 +70,7 @@
     "log.error": false,
     "log.events": false,
     "log.packets": false,
-    "renderer.color.space": "display-p3",
+    "renderer.color.space": "srgb",
     "renderer.petTypes": [
         "dog",
         "cat",
@@ -123,6 +123,7 @@
     "habbicons.hash": "28301bf1919b636af584cd96d00021eb",
     "handitem.give.enabled": true,
     "image.library.url": "//images.habbo.com/c_images/",
+    "image.library.questing.url": "//images.habbo.com/c_images/Quests/",
     "image.library.badgepart.url": "//images.habbo.com/c_images/Badgeparts/",
     "groupMembers.enabled": true,
     "group.deletion.enabled": true,

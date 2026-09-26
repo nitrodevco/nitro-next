@@ -19,6 +19,7 @@ const actions = {
     setHomeRoomId: state.setHomeRoomId,
     startRoomSession: state.startRoomSession,
     endRoomSession: state.endRoomSession,
+    showConfirm: state.showConfirm,
 };
 
 export const useSystemActions = () => actions;

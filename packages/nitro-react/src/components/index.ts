@@ -14,6 +14,7 @@ export * from './offer-center';
 export * from './room';
 export * from './special-items';
 export * from './toolbar';
+export * from './user-profile';
 export * from './wallet';
 export * from './wired';
 export * from './wired-trading';

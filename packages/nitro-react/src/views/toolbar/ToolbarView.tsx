@@ -17,11 +17,11 @@ import { QuitComposer } from '@nitrodevco/nitro-packets';
 import { Container as PixiContainer } from 'pixi.js';
 import { useState } from 'react';
 
-import { goToHomeRoom, openClientLink, toggleCatalog } from '#base/commands';
+import { goToHomeRoom, openClientLink, openProfile, toggleCatalog } from '#base/commands';
 import { AvatarImage } from '#base/components';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useIsLandingViewVisible, useSystemActions, useTranslation } from '#base/context/system';
-import { useOwnUserFigure, useOwnUserGender } from '#base/context/user';
+import { useOwnUserFigure, useOwnUserGender, useOwnUserId } from '#base/context/user';
 import { useWiredShowToolbarMenuButton } from '#base/context/wired';
 import { Border, LayoutImage, Region, ThemeImage, useLayoutEvent } from '#base/theme';
 
@@ -70,6 +70,7 @@ export const ToolbarView = () => {
     const [ rightSideCollapsed, setRightSideCollapsed ] = useState(false);
     const ownFigure = useOwnUserFigure();
     const ownGender = useOwnUserGender();
+    const ownUserId = useOwnUserId();
     const { toggleWindow, endRoomSession, setToolbarWidths } = useSystemActions();
     // The two groups are measured for the chat bar, which fits itself between them - `toolBarAreaWidth` / `friendBarWidth`.
     const [ leftGroup, setLeftGroup ] = useState<PixiContainer | null>(null);
@@ -274,7 +275,7 @@ export const ToolbarView = () => {
                 <ToolbarExtendedMenu
                     height={ME_MENU_HEIGHT}
                     buttons={[
-                        { icon: 'me_menu_me_profile', caption: t('widget.memenu.profile') },
+                        { icon: 'me_menu_me_profile', caption: t('widget.memenu.profile'), action: () => openProfile(send, ownUserId) },
                         { icon: 'me_menu_me_rooms', caption: t('widget.memenu.myrooms') },
                         { icon: 'me_menu_me_clothing', caption: t('widget.memenu.editavatar'), action: () => toggleWindow('avatar_editor') },
                         { icon: 'me_menu_me_forums', caption: t('widget.memenu.forums') },

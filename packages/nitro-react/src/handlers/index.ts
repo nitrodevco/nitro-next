@@ -14,5 +14,6 @@ export * from './registerHandlers';
 export * from './room';
 export * from './special-items';
 export * from './user';
+export * from './user-profile';
 export * from './wired';
 export * from './wired-trading';

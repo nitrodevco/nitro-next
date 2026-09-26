@@ -31,7 +31,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const RESOURCE_DIR = join(__dirname, 'flash-js-resources');
+const RESOURCE_DIR = process.env.NITRO_FLASH_RESOURCES ?? join(__dirname, 'flash-js-resources');
 
 /**
  * `scripts/flash-js-resources/<component>/` - one client library's asset bundle as `flash-js`
@@ -61,7 +61,7 @@ const resourcePath = (file: string): string => join(RESOURCE_DIR, file);
  * layout's art under the right component.
  */
 const REVISION = JSON.parse(readFileSync(join(__dirname, '../public/config/nitro-config.json'), 'utf8'))['production.version'];
-const AS3_ROOT = join('D:', 'Habbo', REVISION, 'scripts-deob');
+const AS3_ROOT = process.env.NITRO_AS3_ROOT ?? join('D:', 'Habbo', REVISION, 'scripts-deob');
 /**
  * The converted layouts, beside the XML they come from. They are read while a view is written
  * by hand, never imported by the app, so they stay out of `src` (and out of the typecheck).
@@ -3029,6 +3029,59 @@ const layoutFolder = (usage: As3Usage | undefined): string => {
 // ---------------------------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------------------------
+
+/** Read-only evidence from the same parser and rules used to generate the reference views. */
+if (process.argv[2] === '--report') {
+    const file = process.argv[3];
+
+    if (!file) throw new Error('Usage: generate-layout-views.ts --report <layout.xml>');
+
+    const bytes = readFileSync(file);
+    const root = parseXml(bytes.toString('utf8'));
+
+    if (root?.tag !== 'layout') throw new Error(`Not a Flash layout: ${file}`);
+
+    const generated = generateComponent('ReferenceLayout', file, root, 'unassigned');
+    const controls: object[] = [];
+    const review = new Set<string>(generated.warnings);
+    const visit = (el: Element, parent: ParentBox, path: string): void => {
+        const id = `${path}/${el.attrs.name ?? el.tag}`;
+
+        controls.push({
+            path: id, type: el.tag, attributes: el.attrs, variables: el.vars,
+            arrays: el.arrays, filters: el.dropShadow, params: el.params,
+            clipping: el.attrs.clipping !== 'false',
+            textStyle: TEXT_TAGS.has(el.tag) ? resolveTextStyle(el.vars.text_style) ?? themeTextStyle(el) : undefined,
+            parentResize: [ anchor(el, parent, 'h'), anchor(el, parent, 'v') ],
+            selfResize: [ resizeAlign(el, 'h'), resizeAlign(el, 'v') ],
+        });
+        if (el.tag === 'widget') review.add(`${id}: runtime widget; read its AS3 controller for sizing and contents`);
+        if (LIST_TAGS[el.tag]) review.add(`${id}: item list; verify runtime contents, spacing, autosizing and scrolling`);
+        if (el.attrs.visible === 'false') review.add(`${id}: initially hidden; identify the controller state that reveals it`);
+        for (const child of el.children) visit(child, { width: num(el.attrs.width), height: num(el.attrs.height), flow: !!LIST_TAGS[el.tag] }, id);
+    };
+
+    for (const window of root.children.filter(child => child.tag === 'window')) {
+        for (const node of window.children.flatMap(child => child.tag === 'children' ? child.children : [ child ])) {
+            if ([ 'filters', 'variables', 'scale' ].includes(node.tag)) continue;
+            visit(toElement(node), { width: num(root.attrs.width), height: num(root.attrs.height), flow: false }, '');
+        }
+    }
+    for (const name of unresolvedImages) review.add(`Unresolved image: ${name}`);
+    for (const name of ambiguousImages.keys()) review.add(`Ambiguous image: ${name}`);
+    for (const face of unportedFaces.keys()) review.add(`Unported font: ${face}`);
+    if (!RESOURCE_COMPONENTS.length) review.add('Resource libraries unavailable: asset ownership and skin templates are unverified');
+    console.log(JSON.stringify({
+        revision: REVISION, sha256: createHash('sha256').update(bytes).digest('hex'), layout: root.attrs,
+        controls, review: [ ...review ].sort(),
+        limitation: 'Static source evidence, not a proof of rendered equivalence. Variables retain source order and values; controller mutations require review.',
+    }, null, 2));
+    process.exit(0);
+}
+
+if (!RESOURCE_COMPONENTS.length || !existsSync(AS3_ROOT)) {
+    throw new Error('Missing reference inputs. Set NITRO_FLASH_RESOURCES and NITRO_AS3_ROOT before generation. No output was changed.');
+}
 
 rmSync(OUT_DIR, { recursive: true, force: true });
 mkdirSync(OUT_DIR, { recursive: true });

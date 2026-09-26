@@ -14,6 +14,7 @@ import { GroupCreatedComponent, GroupHcRequiredComponent, GroupInfoComponent, Gr
 import { HabbiconsComponent } from './components/habbicons';
 import { OfferCenterComponent } from './components/offer-center';
 import { SpecialItemsComponent } from './components/special-items';
+import { UserProfileComponent } from './components/user-profile';
 import { registerHandlers } from './handlers';
 import { useRegisterHandlers } from './hooks';
 import { Box, ModalLayer, TooltipLayer, WindowLayer } from './theme';
@@ -105,6 +106,7 @@ export const MainView = () => {
                 <GroupManagementComponent />
                 <GroupCreatedComponent />
                 <GroupHcRequiredComponent />
+                <UserProfileComponent />
                 <CollectiblesComponent />
                 <HabbiconsComponent />
                 <OfferCenterComponent />

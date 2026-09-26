@@ -34,3 +34,4 @@ public/config/*.json
 **/scripts/binaryData
 **/scripts/images
 **/scripts/**/*
+!packages/nitro-react/scripts/generate-layout-views.ts
