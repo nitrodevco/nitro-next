@@ -1,6 +1,8 @@
 import { AlphaTolerance, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RenderTexture } from 'pixi.js';
 
+import { TextureUtils } from '#renderer/utils';
+
 import { IAvatarAddition } from './IAvatarAddition';
 
 export class GameClickTargetAddition implements IAvatarAddition {
@@ -15,7 +17,7 @@ export class GameClickTargetAddition implements IAvatarAddition {
 
     public dispose(): void {
         if (this._asset) {
-            this._asset.destroy(true);
+            TextureUtils.destroyTexture(this._asset);
 
             this._asset = undefined;
         }

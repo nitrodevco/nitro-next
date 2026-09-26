@@ -1,7 +1,7 @@
 import { IRoomObjectSprite } from '@nitrodevco/nitro-api';
 import { Texture } from 'pixi.js';
 
-import { GetTickerTime } from '#renderer/utils';
+import { GetTickerTime, TextureUtils } from '#renderer/utils';
 
 import { createTransparentBitmap, disposeBitmap, getBitmapContext, VariableFxBitmap } from '../variablefx/rendering/VariableFxBitmap';
 import { IStackedAddition } from './IStackedAddition';
@@ -332,7 +332,7 @@ export class StackedAdditionStack {
         const bitmap = this._bitmap!;
 
         if (!this._texture || this._texture.source.resource !== bitmap) {
-            this._texture?.destroy(true);
+            if (this._texture) TextureUtils.destroyTexture(this._texture);
             this._texture = Texture.from(bitmap, true);
             this._texture.label = 'variable_fx_stack';
         } else {
@@ -348,7 +348,7 @@ export class StackedAdditionStack {
 
     private disposeBitmap(): void {
         if (this._texture) {
-            this._texture.destroy(true);
+            TextureUtils.destroyTexture(this._texture);
             this._texture = undefined;
         }
 

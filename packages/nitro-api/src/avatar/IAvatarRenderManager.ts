@@ -17,7 +17,7 @@ export interface IAvatarRenderManager {
     processEffectMap(data: IEffectMapLibrary[], assetUrl: string);
     createFigureContainer(figure: string): IAvatarFigureContainer;
     isFigureContainerReady(container: IAvatarFigureContainer): boolean;
-    createAvatarImage(figure: string, size: AvatarScaleType, gender: AvatarGenderType, listener: IAvatarImageListener, effectListener?: IAvatarEffectListener): IAvatarImage | undefined;
+    createAvatarImage(figure: string, size: AvatarScaleType, gender: AvatarGenderType | undefined, listener: IAvatarImageListener, effectListener?: IAvatarEffectListener): IAvatarImage | undefined;
     createAvatarImageAsync(figure: string, size: AvatarScaleType, gender: AvatarGenderType): Promise<IAvatarImage | undefined>;
     /** The generic placeholder figure rendered in place of an ignored user. */
     createBlockedAvatarImage(figure: string, size: AvatarScaleType): IAvatarImage;

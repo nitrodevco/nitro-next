@@ -7,6 +7,44 @@ import { TexturePool } from './TexturePool';
 const REDUCED_TEXTURE_SHARPEN = 8;
 
 export class TextureUtils {
+    /** Containers whose render groups draw room textures (`RoomSpriteCanvas`'s): `destroyTexture` rebuilds their batches. */
+    private static _batchOwners: Set<Container> = new Set();
+
+    /** Registers a container whose sprites draw textures that `destroyTexture` may destroy. */
+    public static watchBatches(container: Container): void {
+        this._batchOwners.add(container);
+    }
+
+    public static unwatchBatches(container: Container): void {
+        this._batchOwners.delete(container);
+    }
+
+    /**
+     * Destroys a texture that a room may have drawn. Pixi v8 keeps each render group's batches - and
+     * the texture sources a batch binds - until the group's structure changes; a sprite moved onto a
+     * texture whose source is already in its batch (`Texture.EMPTY`, another frame of the same sheet)
+     * changes nothing structural, so the old source stays in the cached bind group. Destroyed, that
+     * source is bound again on the next draw and Pixi throws (`addressModeU` of null), which stops the
+     * ticker - a mannequin whose outfit changed froze its room. So every watched group is rebuilt first.
+     */
+    public static destroyTexture(texture: Texture, destroySource: boolean = true): void {
+        if (!texture || texture.destroyed) return;
+
+        for (const container of this._batchOwners) {
+            if (container.destroyed) {
+                this._batchOwners.delete(container);
+
+                continue;
+            }
+
+            const group = container.renderGroup ?? container.parentRenderGroup;
+
+            if (group) group.structureDidChange = true;
+        }
+
+        texture.destroy(destroySource);
+    }
+
     public static generateTexture(options: GenerateTextureOptions | Container) {
         return this.getRenderer().textureGenerator.generateTexture(options);
     }

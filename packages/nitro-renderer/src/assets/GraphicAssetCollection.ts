@@ -8,6 +8,8 @@ import {
 } from '@nitrodevco/nitro-api';
 import { Texture, TextureSource } from 'pixi.js';
 
+import { TextureUtils } from '#renderer/utils';
+
 import { GraphicAsset } from './GraphicAsset';
 import { GraphicAssetPalette } from './GraphicAssetPalette';
 
@@ -150,7 +152,7 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
                 || asset.texture.frame.width !== asset.texture.source.width
                 || asset.texture.frame.height !== asset.texture.source.height;
 
-            if (!isSubTexture) asset.texture.destroy(true);
+            if (!isSubTexture) TextureUtils.destroyTexture(asset.texture);
         }
 
         asset.recycle();

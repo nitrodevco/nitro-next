@@ -113,10 +113,15 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._master.addChild(display);
 
             this._display = display;
+
+            // Its sprites draw room textures; one destroyed must not stay in a cached batch.
+            TextureUtils.watchBatches(display);
         }
     }
 
     public dispose(): void {
+        if (this._display) TextureUtils.unwatchBatches(this._display);
+
         this.cleanSprites(0, true);
 
         if (this._geometry) {

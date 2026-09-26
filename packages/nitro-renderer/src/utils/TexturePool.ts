@@ -3,6 +3,7 @@ import { RenderTexture } from 'pixi.js';
 
 import { ExtendedSprite } from './ExtendedSprite';
 import { GetTicker } from './GetTicker';
+import { TextureUtils } from './TextureUtils';
 
 export class TexturePool {
     private static _texturePool: Record<number, Record<number, RenderTexture[]>> = {};
@@ -95,7 +96,8 @@ export class TexturePool {
 
                         ExtendedSprite.removeHitmap(source);
 
-                        if (!texture.destroyed) texture.destroy();
+                        // Through `TextureUtils`: a pooled avatar image may still be in a room's cached batch.
+                        TextureUtils.destroyTexture(texture);
 
                         if (!source.destroyed) source.destroy();
 

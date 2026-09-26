@@ -25,7 +25,7 @@ export class AvatarVisualizationData implements IObjectVisualizationData {
     public createAvatarImage(
         figure: string,
         size: RoomGeometryScaleType,
-        gender: AvatarGenderType,
+        gender: AvatarGenderType | undefined,
         avatarListener: IAvatarImageListener,
         effectListener: IAvatarEffectListener | undefined = undefined,
         blocked: boolean = false,

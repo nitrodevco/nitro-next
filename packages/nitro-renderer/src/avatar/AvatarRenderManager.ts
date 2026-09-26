@@ -85,7 +85,7 @@ export class AvatarRenderManager implements IAvatarRenderManager {
         return this._avatarAssetDownloadManager.isAvatarFigureContainerReady(container);
     }
 
-    public createAvatarImage(figure: string, size: AvatarScaleType, gender: AvatarGenderType, listener: IAvatarImageListener, effectListener: IAvatarEffectListener | undefined = undefined): IAvatarImage | undefined {
+    public createAvatarImage(figure: string, size: AvatarScaleType, gender: AvatarGenderType | undefined, listener: IAvatarImageListener, effectListener: IAvatarEffectListener | undefined = undefined): IAvatarImage | undefined {
         const container = new AvatarFigureContainer(figure);
 
         if (gender) this.validateAvatarFigure(container, gender);
