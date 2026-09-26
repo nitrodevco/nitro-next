@@ -1,3 +1,4 @@
+/** Renders Flash `AvatarImageWidget.refresh` figures as shared Pixi textures, including its cropped-image mode. */
 import { AvatarGenderType, AvatarScaleType, AvatarSetType, IAvatarImage } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager, TexturePool, TextureUtils } from '@nitrodevco/nitro-renderer';
 import { RenderTexture, Texture } from 'pixi.js';
@@ -15,6 +16,7 @@ interface AvatarRenderRequest {
     figure: string;
     gender: AvatarGenderType;
     headOnly: boolean;
+    cropped: boolean;
     direction: number;
     scale: number;
 }
@@ -30,7 +32,7 @@ interface AvatarRender {
 
 const renders = new Map<string, AvatarRender>();
 
-const renderKey = ({ figure, gender, headOnly, direction, scale }: AvatarRenderRequest) => `${figure}|${gender}|${headOnly ? 1 : 0}|${direction}|${scale}`;
+const renderKey = ({ figure, gender, headOnly, cropped, direction, scale }: AvatarRenderRequest) => `${figure}|${gender}|${headOnly ? 1 : 0}|${cropped ? 1 : 0}|${direction}|${scale}`;
 
 const releaseRender = (render: AvatarRender) => {
     if (render.reduced) TexturePool.releaseTexture(render.reduced);
@@ -44,7 +46,7 @@ const releaseRender = (render: AvatarRender) => {
 const drawRender = (key: string, render: AvatarRender) => {
     releaseRender(render);
 
-    const { figure, gender, headOnly, direction, scale } = render.request;
+    const { figure, gender, headOnly, cropped, direction, scale } = render.request;
     // The imager calls back when a download it started lands; the render is redrawn then, once
     // the current call has returned, and only while someone is still showing it.
     const redraw = () => queueMicrotask(() => {
@@ -69,7 +71,7 @@ const drawRender = (key: string, render: AvatarRender) => {
 
     avatarImage.setDirection(setType, direction);
 
-    const full = avatarImage.getImage(setType, false, 1);
+    const full = cropped ? avatarImage.getCroppedImage(setType, false, 1) : avatarImage.getImage(setType, false, 1);
 
     render.reduced = (full && scale !== 1) ? TextureUtils.createReducedTexture(full, scale) : undefined;
 
@@ -127,12 +129,12 @@ const subscribeRender = (request: AvatarRenderRequest, onChange: () => void) => 
 export const useAvatarImageTexture = (
     figure: string | undefined,
     gender: AvatarGenderType,
-    { headOnly = false, direction = 0, scale = 1 }: { headOnly?: boolean; direction?: number; scale?: number } = {},
+    { headOnly = false, cropped = false, direction = 0, scale = 1 }: { headOnly?: boolean; cropped?: boolean; direction?: number; scale?: number } = {},
 ): AvatarImageTexture => {
-    const subscribe = (onChange: () => void) => (figure ? subscribeRender({ figure, gender, headOnly, direction, scale }, onChange) : () => {});
+    const subscribe = (onChange: () => void) => (figure ? subscribeRender({ figure, gender, headOnly, cropped, direction, scale }, onChange) : () => {});
 
     // Nothing is drawn by reading: the first render shows nothing until the subscription has drawn it.
-    const getSnapshot = () => (figure ? (renders.get(renderKey({ figure, gender, headOnly, direction, scale }))?.result ?? EMPTY) : EMPTY);
+    const getSnapshot = () => (figure ? (renders.get(renderKey({ figure, gender, headOnly, cropped, direction, scale }))?.result ?? EMPTY) : EMPTY);
 
     return useSyncExternalStore(subscribe, getSnapshot);
 };

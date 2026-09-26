@@ -4,10 +4,10 @@
  * `HabboGroupDetailsMessage` fills the details cache, the details window and the room banner at
  * once, so the infostand's group name and the group window read the same record.
  *
- * Not carried here: the extended profile's four subscriptions (`ExtendedProfileMessage`,
- * `ExtendedProfileChangedMessage`, `RelationshipStatusInfoMessage`, `HabboUserBadgesMessage`) go to
- * `ExtendedProfileWindowCtrl`, which is the user profile window and is not ported; the badges and
- * relationships are already read by `registerRoomInfostandHandlers` for the avatar menu.
+ * The extended profile's four subscriptions (`ExtendedProfileMessage`,
+ * `ExtendedProfileChangedMessage`, `RelationshipStatusInfoMessage`, `HabboUserBadgesMessage`) are
+ * handled by `registerProfileHandlers`, the port of `ExtendedProfileWindowCtrl`; the badges and
+ * relationships are also read by `registerRoomInfostandHandlers` for the avatar menu.
  * `ScrSendUserInfoMessage` only re-drew the confirm step's VIP panel, which reads the club level
  * from `userStore` as it renders, and `UserObjectMessage` only kept the avatar id, which
  * `userStore` holds.

@@ -19,6 +19,8 @@ export type WindowRegistry = {
     friendlist_invite: NoWindowParams;
     friendlist_remove_confirmation: NoWindowParams;
     messenger: NoWindowParams;
+    /** The user's extended profile (`ExtendedProfileWindowCtrl` in `HabboGroupsManager`). */
+    user_profile: { userId?: number };
 
     inventory: InventoryViewWindowParams;
 
