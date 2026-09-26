@@ -720,6 +720,16 @@ Rules that come out of that:
 
 ## Verifying
 
+For a new or substantially changed window, follow `tools/layout-reference.md` before
+writing the view. Pin the layout and controller hashes in `tools/references/<window>.json`,
+generate its compact report with `tools/layout-reference.mjs`, and resolve its review
+items against AS3 and matching official JS. Reuse the report in subsequent work instead
+of rediscovering the reference tree. The profile manifest is the first worked example.
+The report checks source provenance and static layout rules; it does not prove visual
+equivalence. Inspect the manifest's populated, empty and gated states against matching
+official captures before claiming 1:1. Never automatically update reference hashes or
+approve screenshot baselines to make a check pass.
+
 - Typecheck and lint are necessary, not sufficient. For UI, load it: the dev server is
   `yarn dev` on port 3000, and packets can be replayed against the client without a server by
   delivering them through the socket layer. Look at the result before reporting it works.
