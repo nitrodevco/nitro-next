@@ -68,6 +68,11 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         if (palettes) this.definePalettes(palettes);
     }
 
+    /**
+     * Flash `GraphicAssetCollection.getAssetWithPalette`: an asset that does not use a palette is
+     * returned as it is - a pet's shadow (`dog_64_sd_*`, `lion_64_sd_*`) is one, and dropping it
+     * left those pets without a shadow.
+     */
     public getAssetWithPalette(name: string, paletteId: number): IGraphicAsset | undefined {
         const saveName = name + '@' + paletteId;
 
@@ -77,7 +82,7 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
         asset = this.getAsset(name);
 
-        if (!asset || !asset.texture || !asset.usesPalette) return undefined;
+        if (!asset || !asset.usesPalette || !asset.texture) return asset;
 
         const palette = this.getPalette(paletteId);
 
