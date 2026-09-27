@@ -736,9 +736,9 @@ Rules that come out of that:
 
 ## Verifying
 
-For a new or substantially changed window, follow `tools/layout-reference.md` before
+For a new or substantially changed window, follow `tools/layout/layout-reference.md` before
 writing the view. Pin the layout and controller hashes in `tools/references/<window>.json`,
-generate its compact report with `tools/layout-reference.mjs`, and resolve its review
+generate its compact report with `tools/layout/layout-reference.mjs`, and resolve its review
 items against AS3 and matching official JS. Reuse the report in subsequent work instead
 of rediscovering the reference tree. The profile manifest is the first worked example.
 The report checks source provenance and static layout rules; it does not prove visual

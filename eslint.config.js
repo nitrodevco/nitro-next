@@ -46,6 +46,7 @@ const config = [
             '**/.turbo/**',
             '**/.vite/**',
             '**/coverage/**',
+            'tools/local/**',
             '**/*.d.ts',
             '**/eslint.config.js',
             '**/postcss.config.js',
@@ -145,6 +146,12 @@ const config = [
             'react-hooks/exhaustive-deps': 'off',
             'react/react-in-jsx-scope': 'off',
         },
+    },
+    {
+        // This Node generator is outside the application TypeScript project.
+        // Keep syntax and style checks without requiring an application build context.
+        ...tseslint.configs.disableTypeChecked,
+        files: ['packages/nitro-react/scripts/generate-barrels.ts'],
     },
 ];
 

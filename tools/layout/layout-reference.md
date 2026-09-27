@@ -7,7 +7,7 @@ inputs and a compact report. It does not introduce a second layout engine.
 ```powershell
 $env:NITRO_AS3_ROOT = 'C:/Habbo/reference/WIN63-202609091217-117204808/scripts-deob'
 $env:NITRO_LAYOUT_ROOT = 'C:/Habbo/reference/WIN63-202609091217-117204808/layouts'
-node tools/layout-reference.mjs tools/references/user-profile.json tmp/profile-reference.json
+node tools/layout/layout-reference.mjs tools/references/user-profile.json tmp/profile-reference.json
 ```
 
 Read `tmp/profile-reference.json.md` first. Consult the JSON for a specific control's
@@ -35,7 +35,7 @@ For each new window:
 4. Reuse theme controls and existing shared views. Keep geometry and style choices
    traceable to a named control or documented controller mutation.
 5. Render the states early. Use the real entry point and packet path first; fixtures
-   can then exercise visual states. See `profile-visual-check.md` for the existing fixture.
+   can then exercise visual states. See [profile checks](../browser/profile-visual-check.md) for the existing fixture.
 6. Compare official and Nitro captures with matching state, locale, scale and window
    bounds. Inspect overlays/differences; never automatically approve a new baseline.
    Record screenshot paths, unresolved differences and actual checks in the handoff.

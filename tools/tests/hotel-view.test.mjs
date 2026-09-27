@@ -8,7 +8,7 @@ import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
 
 const load = (path, dependencies = {}) => {
-    const source = readFileSync(new URL(`../packages/${path}.ts`, import.meta.url), 'utf8');
+    const source = readFileSync(new URL(`../../packages/${path}.ts`, import.meta.url), 'utf8');
     const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
     const exports = {};
 
@@ -35,11 +35,11 @@ const config = {
     'landing.view.hidden.background_left.uri': 'must-not-load.png',
 };
 
-const layoutPath = new URL('../packages/nitro-react/scripts/hotel-reference/landing_view_default_dynamic_layout.xml', import.meta.url);
+const layoutPath = new URL('../../packages/nitro-react/scripts/hotel-reference/landing_view_default_dynamic_layout.xml', import.meta.url);
 
 await test('background table matches the pinned SWF layout', { skip: !existsSync(layoutPath) && 'Local SWF extraction unavailable' }, () => {
     const xml = readFileSync(layoutPath);
-    const manifest = JSON.parse(readFileSync(new URL('./references/hotel-view.json', import.meta.url), 'utf8'));
+    const manifest = JSON.parse(readFileSync(new URL('../references/hotel-view.json', import.meta.url), 'utf8'));
     const source = manifest.sources.find(item => item.path === 'landing_view_default_dynamic_layout.xml');
 
     assert.equal(createHash('sha256').update(xml).digest('hex'), source.sha256, 'Reference changed: review before repinning');

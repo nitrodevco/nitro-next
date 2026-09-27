@@ -26,8 +26,8 @@ shipped. The manifest pins the layout, official evidence and AS3 controller/pars
 ```powershell
 $env:NITRO_HOTEL_REFERENCE_ROOT = (Resolve-Path packages/nitro-react/scripts/hotel-reference).Path
 $env:NITRO_AS3_ROOT = 'E:/Development/Habbo/SWF Sources/WIN63-202609091217-117204808/scripts-deob'
-node tools/layout-reference.mjs tools/references/hotel-view.json tmp/hotel-reference-report.json
-node --test tools/hotel-view.test.mjs
+node tools/layout/layout-reference.mjs tools/references/hotel-view.json tmp/hotel-reference-report.json
+node --test tools/tests/hotel-view.test.mjs
 ```
 
 The tests compare the initial background table to the pinned XML when those local

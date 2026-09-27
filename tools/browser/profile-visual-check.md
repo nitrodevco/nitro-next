@@ -29,7 +29,7 @@ From the repository root, with an authenticated `agent-browser` session named `n
 and My Profile already open:
 
 ```powershell
-$fixture = node tools/profile-visual-fixture.mjs populated --base64
+$fixture = node tools/browser/profile-visual-fixture.mjs populated --base64
 agent-browser --session nitro eval -b $fixture
 agent-browser --session nitro screenshot populated.png
 ```
@@ -78,7 +78,7 @@ window.WebSocket = class extends WebSocket {
 Authenticate normally, then execute:
 
 ```powershell
-$checks = node tools/profile-packet-check.mjs --base64
+$checks = node tools/browser/profile-packet-check.mjs --base64
 agent-browser --session nitro eval -b $checks
 ```
 

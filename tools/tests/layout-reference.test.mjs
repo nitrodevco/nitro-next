@@ -8,7 +8,7 @@ import { join, resolve } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-const repo = fileURLToPath(new URL('../', import.meta.url));
+const repo = fileURLToPath(new URL('../../', import.meta.url));
 const revision = JSON.parse(readFileSync(resolve(repo, 'packages/nitro-react/public/config/nitro-config.json'), 'utf8'))['production.version'];
 
 await test('profile text defaults and avatar self-resize anchors come from the generator; drift preserves prior evidence', () => {
@@ -24,7 +24,7 @@ await test('profile text defaults and avatar self-resize anchors come from the g
         writeFileSync(source, xml);
         writeFileSync(manifestPath, JSON.stringify(manifest));
 
-        const run = () => spawnSync(process.execPath, [ 'tools/layout-reference.mjs', manifestPath, output ], { cwd: repo, encoding: 'utf8', env: { ...process.env, NITRO_TEST_REFERENCE: root } });
+        const run = () => spawnSync(process.execPath, [ 'tools/layout/layout-reference.mjs', manifestPath, output ], { cwd: repo, encoding: 'utf8', env: { ...process.env, NITRO_TEST_REFERENCE: root } });
         const first = run();
 
         assert.equal(first.status, 0, first.stderr);

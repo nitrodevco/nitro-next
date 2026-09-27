@@ -8,11 +8,11 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const repo = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const [ manifestPath, outputPath ] = process.argv.slice(2);
 
 if (!manifestPath || !outputPath) {
-    throw new Error('Usage: node tools/layout-reference.mjs <manifest.json> <report.json>');
+    throw new Error('Usage: node tools/layout/layout-reference.mjs <manifest.json> <report.json>');
 }
 
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));

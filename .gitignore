@@ -35,3 +35,7 @@ public/config/*.json
 **/scripts/images
 **/scripts/**/*
 !packages/nitro-react/scripts/generate-layout-views.ts
+!packages/nitro-react/scripts/generate-barrels.ts
+
+# Personal helpers stay local; shared developer tools remain tracked.
+/tools/local/

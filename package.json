@@ -7,6 +7,7 @@
         "packages/*"
     ],
     "scripts": {
+        "test:tools": "node --test tools/tests/*.test.mjs",
         "build": "npx update-browserslist-db@latest && yarn workspaces foreach --all -pt run build",
         "typecheck": "yarn workspaces foreach --all -pt run typecheck",
         "lint": "eslint .",

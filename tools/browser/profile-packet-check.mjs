@@ -97,7 +97,7 @@ const run = async (root, knownBrokenParser) => {
     }
 };
 
-const root = `/@fs/${fileURLToPath(new URL('../', import.meta.url)).replaceAll('\\', '/').replace(/\/$/, '')}`;
+const root = `/@fs/${fileURLToPath(new URL('../../', import.meta.url)).replaceAll('\\', '/').replace(/\/$/, '')}`;
 const expression = `(${run.toString()})(${JSON.stringify(root)}, ${process.argv.includes('--known-broken-parser')})`;
 
 console.log(process.argv.includes('--base64') ? Buffer.from(expression).toString('base64') : expression);
