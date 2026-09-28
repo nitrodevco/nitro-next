@@ -231,7 +231,7 @@ export const RoomCanvas = () => {
         const handlePointerEvent = (event: FederatedPointerEvent) => {
             if (!room) return;
 
-            let eventType = event.type;
+            let eventType = event.type === 'tap' ? 'click' : event.type;
 
             if (eventType === 'click') {
                 if (lastClick) {
@@ -288,6 +288,7 @@ export const RoomCanvas = () => {
         };
 
         container.on('click', handlePointerEvent);
+        container.on('tap', handlePointerEvent);
         container.on('pointermove', handlePointerEvent);
         container.on('pointerdown', handlePointerEvent);
         container.on('pointerup', handlePointerEvent);
@@ -298,6 +299,7 @@ export const RoomCanvas = () => {
             GetTicker().remove(tick);
 
             container.off('click', handlePointerEvent);
+            container.off('tap', handlePointerEvent);
             container.off('pointermove', handlePointerEvent);
             container.off('pointerdown', handlePointerEvent);
             container.off('pointerup', handlePointerEvent);

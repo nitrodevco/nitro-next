@@ -170,6 +170,7 @@ const hiddenInputStyle: Partial<CSSStyleDeclaration> = {
     outline: 'none',
     resize: 'none',
     overflow: 'hidden',
+    fontSize: '16px',
     zIndex: '-1',
 };
 
@@ -318,6 +319,9 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             };
 
             const onBlur = () => setFocused(false);
+            const keepFocusOnCanvas = (event: MouseEvent) => {
+                if (document.activeElement === input && event.target instanceof HTMLCanvasElement) event.preventDefault();
+            };
             const onSelectionChange = () => {
                 if (document.activeElement === input) readSelection();
             };
@@ -330,6 +334,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
             input.addEventListener('select', readSelection);
             input.addEventListener('blur', onBlur);
             document.addEventListener('selectionchange', onSelectionChange);
+            document.addEventListener('mousedown', keepFocusOnCanvas, true);
             document.body.appendChild(input);
             inputRef.current = input;
 
@@ -342,6 +347,7 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
                 input.removeEventListener('select', readSelection);
                 input.removeEventListener('blur', onBlur);
                 document.removeEventListener('selectionchange', onSelectionChange);
+                document.removeEventListener('mousedown', keepFocusOnCanvas, true);
                 input.remove();
 
                 if (inputRef.current === input) inputRef.current = null;
@@ -512,6 +518,8 @@ export const TextInput: ForwardRefExoticComponent<TextInputProps & RefAttributes
         const onPointerTap = (event: FederatedPointerEvent) => {
             const input = inputRef.current;
             const node = boxRef.current;
+
+            if (input && editable && document.activeElement !== input) input.focus({ preventScroll: true });
 
             setFocused(true);
 
