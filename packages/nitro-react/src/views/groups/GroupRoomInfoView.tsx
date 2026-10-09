@@ -22,8 +22,9 @@ const CONTRACTED_HEIGHT = 25;
 
 /**
  * The banner a group's base room shows - `group_room_info`, drawn by `GroupRoomInfoCtrl`. Flash
- * docks it in the toolbar's extension column, under the quest tracker and the event card; here it
- * is a child of that same column.
+ * docks it in the toolbar's extension column before the quest timer, the quest tracker and the event
+ * card (`attachExtension("room_group_info", ..., -1, ["next_quest_timer", "quest_tracker",
+ * "event_info_window"])` inserts it at the first of those); here it is a child of that same column.
  */
 export const GroupRoomInfoView = ({ details, expanded, onToggle, onInfo, onJoin, onManage }: GroupRoomInfoViewProps) => {
     const t = useTranslation();
@@ -35,7 +36,8 @@ export const GroupRoomInfoView = ({ details, expanded, onToggle, onInfo, onJoin,
     if (joinSentFor && (joinSentFor !== details)) setJoinSentFor(undefined);
 
     return (
-        <Region layout={{ width: 195, height: expanded ? EXPANDED_HEIGHT : CONTRACTED_HEIGHT }}>
+        // 2 below what is over it, `extension_grid`'s spacing.
+        <Region layout={{ width: 195, height: expanded ? EXPANDED_HEIGHT : CONTRACTED_HEIGHT, marginTop: 2, flexShrink: 0 }}>
             <ThemeImage
                 name={expanded ? 'bg_expanded' : 'bg_contracted'}
                 src={expanded ? `${imageLibraryUrl}guilds/group_bg.png` : `${imageLibraryUrl}Events/event_bg_contracted.png`}

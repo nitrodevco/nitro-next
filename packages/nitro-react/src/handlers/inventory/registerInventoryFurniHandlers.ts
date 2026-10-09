@@ -9,6 +9,9 @@
  * - `onFurniListRemove`: an item the list held going resets the furni page's unseen items
  *   (`FurniModel.resetUnseenItems`), whichever page is showing - `ResetUnseenItems` for category 1
  *   when anything in it was new.
+ * - `FurniModel.initListImages` starts its 50 ms timer once the list is in; from then on every
+ *   200 ms (`onImageUpdateTimerEvent`) a rented item whose time has run out leaves the list, the
+ *   inventory open or not.
  * - `onFurniListInvalidate`: the list is no longer current; it is asked for again straight away
  *   while the inventory is open (`setInventoryCategoryInit('furni', false)`), otherwise when the
  *   furni page next opens.
@@ -30,8 +33,13 @@ import { on, subscribeAll } from '../packetSubscriptions';
 
 type Fragment = Map<number, IFurniListAddOrUpdateFurni>;
 
+/** `onImageUpdateTimerEvent`: the 50 ms ticks add up to a check every 200 ms. */
+const RENT_EXPIRY_CHECK_INTERVAL_MS = 200;
+
 export const registerInventoryFurniHandlers = ({ send, subscribe }: WebSocketConnection) => {
-    const { insertFurniture, addOrUpdateFurni, removeFurni, invalidateFurni, updatePostItCount } = inventoryStore.getState();
+    const { insertFurniture, addOrUpdateFurni, removeFurni, removeExpiredRentedFurni, invalidateFurni, updatePostItCount } = inventoryStore.getState();
+    // `FurniModel.§_-Qa§`, the image update timer.
+    let imageUpdateTimer: ReturnType<typeof setInterval> | undefined;
     // `IncomingMessages.§_-M1Y§`: the fragments of the list on its way in.
     let fragments: (Fragment | undefined)[] | undefined;
 
@@ -47,7 +55,7 @@ export const registerInventoryFurniHandlers = ({ send, subscribe }: WebSocketCon
         return new Map(fragments.flatMap(received => [ ...(received ?? []) ]));
     };
 
-    return subscribeAll(subscribe, [
+    const unsubscribe = subscribeAll(subscribe, [
         on(FurniListEventMessage, (data) => {
             const furni = addFragment(data.furniFragment, data.totalFragments, data.fragmentNo);
 
@@ -55,6 +63,7 @@ export const registerInventoryFurniHandlers = ({ send, subscribe }: WebSocketCon
 
             insertFurniture(furni);
             fragments = undefined;
+            imageUpdateTimer ??= setInterval(removeExpiredRentedFurni, RENT_EXPIRY_CHECK_INTERVAL_MS);
             // `insertFurniture` re-reads the locks when it added items; reading them again when it did not changes nothing.
             updateInventoryFurniLocks();
         }),
@@ -80,4 +89,9 @@ export const registerInventoryFurniHandlers = ({ send, subscribe }: WebSocketCon
 
         on(WiredTradeCompletedMessage, () => removeAllInventoryFurniLocks()),
     ]);
+
+    return () => {
+        unsubscribe();
+        clearInterval(imageUpdateTimer);
+    };
 };

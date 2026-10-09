@@ -9,8 +9,9 @@
  *
  * The bundled layout adds a `graphics_settings` block under the options (a renderer menu and an
  * "Apply and reload" button) that neither Flash nor the JavaScript client fills in and nothing in
- * this client backs, so it is hidden and the window is drawn as the Flash revision's layout is:
- * 239 high, `back_btn` at y 203.
+ * this client backs, so it is hidden. The official client (official-20261009/settings-other.png) draws the
+ * window with the options list as high as its rows - the unshown phone reset button takes no room - so
+ * it is 203 high with `back_btn` at y 167, 36 less than the full layout's.
  */
 import { useState } from 'react';
 
@@ -22,9 +23,9 @@ import { useWiredStore } from '#base/context/wired';
 
 import { ToolbarSettingsWindow } from './ToolbarSettingsWindow';
 
-/** The Flash revision's `me_menu_other_settings`, without the `graphics_settings` block: its height and `back_btn`'s y. */
-const WINDOW_HEIGHT = 239;
-const BACK_BUTTON_Y = 203;
+/** The official window: its height and `back_btn`'s y (measured, `Back` at y 181 on the 1008x729 capture). */
+const WINDOW_HEIGHT = 203;
+const BACK_BUTTON_Y = 167;
 
 /** `phone.verification.status` / `phone.collection.status` values the reset button tests. */
 const PHONE_STATUS_DONE = 2;

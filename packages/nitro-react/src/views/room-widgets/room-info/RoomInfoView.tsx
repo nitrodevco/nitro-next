@@ -4,10 +4,10 @@
  * opened `center()`ed): what the room is, who owns it, how it is rated, and whatever the viewer is
  * allowed to do about any of that.
  *
- * `refresh` hides every child of the frame's content (`Util.hideChildren`), so `embed_info`
- * (`refreshEmbed`, behind `embed.showInRoomInfo`) and `public_space_details` stay hidden; the
- * bindings are what `prepareWindow`, `refreshRoomDetails` and `refreshButtons` set, and `arrange`
- * is their geometry in the order the AS3 does it:
+ * `refresh` hides every child of the frame's content (`Util.hideChildren`), so `public_space_details`
+ * stays hidden and `embed_info` shows only while `refreshEmbed` puts it back; the bindings are what
+ * `prepareWindow`, `refreshRoomDetails`, `refreshEmbed` and `refreshButtons` set, and `arrange` is
+ * their geometry in the order the AS3 does it:
  *
  * - `prepareWindow`: `Util.layoutChildrenInArea(owner_name_cont, 1000, 10, 2, 5)` lays the owner
  *   caption, its eye and the name in a row from x 5, 2 apart; `setupLabelAndValue` sizes the rating
@@ -19,6 +19,12 @@
  *   after the rating, the tags (`TagRenderer.refreshTags`), `Util.moveChildrenToColumn(room_details,
  *   [room_name, owner_name_cont, rating_cont, ranking_cont, padding_cont, tags, room_desc,
  *   thumbnail_container], room_name.y, 0)` and `room_details` as high as its lowest point.
+ * - `refreshEmbed` (with `embed.showInRoomInfo`): "Link to this room" and its `icon_weblink`; a click
+ *   on it (`onEmbedInfo`) opens or folds the `navigator.embed.info` text and the field with the
+ *   room's link (`getEmbedData`: `navigator.embed.src` with `roomId`). `prepareWindow` sizes the
+ *   text to `textHeight + 5` and puts the field 2 under it; `refreshEmbed` makes the container its
+ *   lowest point plus 5 without the region, and the region as high as the field's y while open, or
+ *   the whole container while folded.
  * - `layoutButtons`: the visible buttons of `buttons_cont` stacked 3 apart in their order, the
  *   container hidden when none shows and as high as its lowest point; `layoutContent` stacks
  *   `room_details` and `buttons_cont` 3 apart and makes the window the content's lowest point plus 45.
@@ -33,30 +39,26 @@
  * `txt` `textWidth + 5` wide and the tag 3 wider; `refreshTags` packs them 14 high across the
  * content's width from the container's x (`layoutChildrenInArea(tags, width - tags.x, 14)`) and
  * `tagProcedure` swaps `bg_l` / `bg_m` / `bg_r` for `tag_<piece>_reactive` under the pointer.
- * `add_thumbnail_region` (the camera, with the `NAVIGATOR_ROOM_THUMBNAIL_CAMERA` perk) and
- * `guild_info` (`GuildInfoCtrl`) are not drawn: neither has anything behind it in the port.
+ * `prepareWindow` shows `thumbnail_container` only with the `NAVIGATOR_ROOM_THUMBNAIL_CAMERA` perk,
+ * and its `add_thumbnail_region` to whoever may edit the room's settings: a click opens the room
+ * thumbnail camera (`onAddRoomThumbnail`: `roomThumbnailCamera/open`) and closes this window.
+ *
+ * `GuildInfoCtrl.refresh` adds a `guild_info_xml` clone named `guild_info` to the content: in a
+ * group's room it shows the group's badge and `navigator.guildbase` with the group's name, and a
+ * click on it asks for the group's details (`GetHabboGroupDetailsMessageComposer(groupId, true)`),
+ * which open the group's window; in any other room it is hidden. `layoutContent` puts it at x 11.
  *
  * `layoutButtons` stacks seven buttons: `room_settings_button`, `raid_protection_settings_button`,
  * `room_filter_button`, `floor_plan_editor_button`, `staff_pick_button`, `room_report_button`,
- * `room_muteall_button`. The port shows the four whose windows it has - settings, the floor plan
- * editor, staff pick and mute all. The three it hides, and what each still needs:
- *
- * - `raid_protection_settings_button` (`${raid.protection.settings.button}`, new in
- *   WIN63-202609091217-117204808) opens `navigator/raidprotection/<roomId>`, and
- *   `RoomInfoViewCtrl.refreshRaidProtectionButton` shows it only while
- *   `RaidProtectionSettingsController.isFeatureEnabled` (config `raid.protection.enabled`) and
- *   `canManage(flatId)` - the latter true only after a `RaidProtectionCapabilityMessage` for the
- *   live current room said so. The window behind it is the `raid_protection_settings` layout
- *   (430 x 488: a warning card, an enable checkbox with detection-sensitivity/action/ban-duration
- *   dropmenus, a guard card with duration and sensitivity, the incident status line, cancel and
- *   save), driven by `RaidProtectionSettingsController` and `RaidProtectionSettingsData`.
- *   `nitro-packets` has the five headers (`IncomingHeader.RaidProtectionCapabilityMessage` 734,
- *   `RaidProtectionSettingsMessage` 3553, `RaidProtectionSettingsResultMessage` 3620,
- *   `OutgoingHeader.GetRaidProtectionSettingsComposer` 206,
- *   `SaveRaidProtectionSettingsComposer` 2687) but none of the five classes, so nothing can set
- *   the capability and the button could only ever be hidden. It is ported when those exist.
- * - `room_report_button` (hidden unless `room.report.enabled`) needs report/help, which is not
- *   ported.
+ * `room_muteall_button`. The port shows the six whose windows it has - settings, raid protection,
+ * the room filter, the floor plan editor, staff pick and mute all. `raid_protection_settings_button`
+ * (`refreshRaidProtectionButton`) shows while the hotel has `raid.protection.enabled` and the server
+ * said the user may manage the room (`RaidProtectionSettingsController.canManage`); a click opens
+ * `navigator/raidprotection/<roomId>` and closes this window. `room_filter_button` shows to whoever
+ * may edit the room's settings while the hotel has `room.custom.filter.enabled`, and opens the
+ * room's word filter (`roomFilterCtrl.startRoomFilterEdit`) and closes this window.
+ * `room_report_button` shows while the hotel has `room.report.enabled` and reports the room
+ * (`onRoomReport`: `habboHelp.reportRoom`), closing this window.
  */
 import { useState } from 'react';
 
@@ -74,6 +76,21 @@ export interface RoomInfoViewProps {
     /** Zero when the room has no place in the rankings yet. */
     ranking: number;
     thumbnailUrl: string;
+    /** `NAVIGATOR_ROOM_THUMBNAIL_CAMERA`: without the perk `prepareWindow` hides the thumbnail. */
+    showThumbnail: boolean;
+    /** The perk and `canEditRoomSettings`: `add_thumbnail_region` shows. */
+    canAddThumbnail: boolean;
+    onAddThumbnail: () => void;
+    /** `embed.showInRoomInfo`. */
+    showEmbed: boolean;
+    /** `getEmbedData`: the room's link. */
+    embedSrc: string;
+    /** `GuestRoomData.habboGroupId`, under 1 for a room with no group. */
+    groupId: number;
+    groupName: string;
+    /** The group badge's image url. */
+    groupBadgeUrl: string;
+    onGroupInfo: () => void;
     isHome: boolean;
     isFavourite: boolean;
     /** Your own rooms are never favourited, so neither button is offered on them. */
@@ -90,6 +107,10 @@ export interface RoomInfoViewProps {
     allInRoomMuted: boolean;
     /** `roomSession.roomControllerLevel >= 1` - anyone with rights in the room may edit its floor plan. */
     canEditFloorPlan: boolean;
+    /** `refreshRaidProtectionButton`: the feature is on and the server let the user manage the room. */
+    canManageRaidProtection: boolean;
+    /** `room.report.enabled`. */
+    canReport: boolean;
     /** Only offered where rights were given rather than owned. */
     canRemoveRights: boolean;
     onOpenOwnerProfile: () => void;
@@ -99,8 +120,9 @@ export interface RoomInfoViewProps {
     onMakeHome: () => void;
     onRemoveRights: () => void;
     onRoomSettings: () => void;
-    /** `onRoomFilterButtonClick`: the room's word filter, and this panel closes. */
+    onRaidProtection: () => void;
     onRoomFilter: () => void;
+    onReport: () => void;
     onFloorPlanEditor: () => void;
     onToggleStaffPick: () => void;
     onMuteAll: () => void;
@@ -111,6 +133,9 @@ const LIBRARY = 'habbo-navigator-com';
 
 /** `layoutContent`: the window is the content's lowest point plus this. */
 const WINDOW_EXTRA_HEIGHT = 45;
+
+/** `layoutContent`: `guild_info.x = 11`. */
+const GUILD_INFO_X = 11;
 
 /** `layoutContent` / `layoutButtons`: `moveChildrenToColumn(..., 3)`. */
 const COLUMN_SPACING = 3;
@@ -206,18 +231,21 @@ const setupLabelAndValue = (find: TemplateWindows['find'], container: string, ca
 const tagPiece = (piece: 'l' | 'm' | 'r', hovered: boolean) => LayoutImage(`${LIBRARY}/tag_${piece}${hovered ? '_reactive' : ''}.png`);
 
 export const RoomInfoView = ({
-    roomName, description, ownerName, showOwner, tags, rating, ranking, thumbnailUrl,
-    isHome, isFavourite, canFavourite, canRate, canEditRoomSettings, canEditRoomFilter, canStaffPick, isStaffPicked,
-    canMuteAll, allInRoomMuted, canEditFloorPlan, canRemoveRights,
+    roomName, description, ownerName, showOwner, tags, rating, ranking, thumbnailUrl, showThumbnail, canAddThumbnail, onAddThumbnail, showEmbed, embedSrc, groupId, groupName, groupBadgeUrl, onGroupInfo,
+    isHome, isFavourite, canFavourite, canRate, canEditRoomSettings, canStaffPick, isStaffPicked,
+    canMuteAll, allInRoomMuted, canEditFloorPlan, canManageRaidProtection, canEditRoomFilter, canReport, canRemoveRights,
     onOpenOwnerProfile, onSelectTag, onRate, onToggleFavourite, onMakeHome, onRemoveRights,
-    onRoomSettings, onRoomFilter, onFloorPlanEditor, onToggleStaffPick, onMuteAll, onClose,
+    onRoomSettings, onRaidProtection, onRoomFilter, onReport, onFloorPlanEditor, onToggleStaffPick, onMuteAll, onClose,
 }: RoomInfoViewProps) => {
     const t = useTranslation();
     const tagTemplate = useTemplate(`${LIBRARY}/iro_tag_xml`);
+    const guildTemplate = useTemplate(`${LIBRARY}/guild_info_xml`);
     // `RoomDetailsCtrl.onEntry`: the owner's eye while the pointer is over the owner row.
     const [ ownerHovered, setOwnerHovered ] = useState(false);
     // `tagProcedure`: the tag under the pointer.
     const [ hoveredTag, setHoveredTag ] = useState(-1);
+    // `_embedExpanded`.
+    const [ embedExpanded, setEmbedExpanded ] = useState(false);
     // `prepareWindow`: `_window.center()`, once.
     const frame = useTemplateFrame({ id: 'room-info', centered: true, rememberPosition: false, resizeDirection: 'none', onClose });
 
@@ -251,9 +279,28 @@ export const RoomInfoView = ({
             }))
         : [];
 
+    // `GuildInfoCtrl.refresh`: added to the content once, shown in a group's room.
+    const guildItems: TemplateItem[] = guildTemplate
+        ? [ {
+                key: 'guild_info',
+                from: guildTemplate,
+                bindings: {
+                    '': { visible: groupId >= 1, onPointerTap: onGroupInfo },
+                    guild_base_txt: { caption: t('navigator.guildbase', '', { groupName }) },
+                    guild_badge: { asset: groupBadgeUrl },
+                },
+            } ]
+        : [];
+
     const bindings: TemplateBindings = {
+        event_window: { added: guildItems },
         // `refresh`: `Util.hideChildren(_window.content)`, and only the room details and buttons come back.
-        embed_info: { visible: false },
+        // `refreshEmbed`.
+        embed_info: { visible: showEmbed },
+        icon_weblink: { asset: LayoutImage(`${LIBRARY}/icon_weblink.png`) },
+        embed_info_txt: { visible: embedExpanded },
+        embed_src_txt: { visible: embedExpanded, caption: embedSrc },
+        embed_info_region: { onPointerTap: () => setEmbedExpanded(!embedExpanded) },
         public_space_details: { visible: false },
 
         // `refreshRoomDetails`.
@@ -273,8 +320,9 @@ export const RoomInfoView = ({
         rating_txt: { caption: String(rating) },
         ranking_cont: { visible: ranking > 0 },
         ranking_txt: { caption: String(ranking) },
+        thumbnail_container: { visible: showThumbnail },
         thumbnail_image: thumbnailUrl.length ? { asset: thumbnailUrl } : {},
-        add_thumbnail_region: { visible: false },
+        add_thumbnail_region: { visible: canAddThumbnail, onPointerTap: onAddThumbnail },
 
         // `prepareWindow`'s and `refreshRoomDetails`' `refreshButton`s.
         remove_rights_region: { visible: canRemoveRights, onPointerTap: onRemoveRights },
@@ -288,9 +336,9 @@ export const RoomInfoView = ({
         make_favourite: { asset: LayoutImage(`${LIBRARY}/make_favourite.png`) },
 
         // `refreshButtons`; `layoutButtons` hides the container when none of them shows.
-        buttons_cont: { visible: canEditRoomSettings || canEditFloorPlan || canStaffPick || canMuteAll },
+        buttons_cont: { visible: canEditRoomSettings || canManageRaidProtection || canEditRoomFilter || canEditFloorPlan || canStaffPick || canReport || canMuteAll },
         room_settings_button: { visible: canEditRoomSettings, onPointerTap: onRoomSettings },
-        raid_protection_settings_button: { visible: false },
+        raid_protection_settings_button: { visible: canManageRaidProtection, onPointerTap: onRaidProtection },
         room_filter_button: { visible: canEditRoomFilter, onPointerTap: onRoomFilter },
         floor_plan_editor_button: { visible: canEditFloorPlan, onPointerTap: onFloorPlanEditor },
         staff_pick_button: {
@@ -298,7 +346,7 @@ export const RoomInfoView = ({
             caption: t(isStaffPicked ? 'navigator.staffpicks.unpick' : 'navigator.staffpicks.pick'),
             onPointerTap: onToggleStaffPick,
         },
-        room_report_button: { visible: false },
+        room_report_button: { visible: canReport, onPointerTap: onReport },
         room_muteall_button: {
             visible: canMuteAll,
             caption: allInRoomMuted ? '${navigator.muteall_on}' : '${navigator.muteall_off}',
@@ -346,6 +394,21 @@ export const RoomInfoView = ({
         moveChildrenToColumn(details, ROOM_DETAILS_COLUMN, name?.y ?? 0, 0);
         details.setHeight(getLowestPoint(details));
 
+        // `prepareWindow` and `refreshEmbed`.
+        const embed = find('embed_info');
+        const embedText = find('embed_info_txt');
+        const embedSrcField = find('embed_src_txt');
+        const embedRegion = find('embed_info_region');
+
+        if (embed && embed.visible && embedText && embedSrcField && embedRegion) {
+            embedText.setHeight(embedText.textHeight + 5);
+            embedSrcField.setY(embedText.y + embedText.height + 2);
+            embedRegion.visible = false;
+            embed.setHeight(getLowestPoint(embed) + 5);
+            embedRegion.visible = true;
+            embedRegion.setHeight(embedExpanded ? embedSrcField.y : embed.height);
+        }
+
         // `layoutButtons`.
         const buttons = find('buttons_cont');
 
@@ -356,6 +419,7 @@ export const RoomInfoView = ({
 
         // `layoutContent`.
         moveChildrenToColumn(content, CONTENT_COLUMN, 0, COLUMN_SPACING);
+        find('guild_info')?.setX(GUILD_INFO_X);
         window.setHeight(getLowestPoint(content) + WINDOW_EXTRA_HEIGHT);
     };
 

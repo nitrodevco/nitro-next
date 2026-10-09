@@ -3,5 +3,6 @@ export * from './ChatFlowContext';
 export * from './useChatAvatarHead';
 export * from './useChatBackgroundTexture';
 export * from './useChatBubbleText';
+export * from './useChatBubbleVisual';
 export * from './useChatPetFace';
 export * from './useChatStyle';

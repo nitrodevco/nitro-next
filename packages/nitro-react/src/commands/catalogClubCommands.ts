@@ -66,11 +66,14 @@ const findCatalogNode = (node: ICatalogNode | undefined, match: (node: ICatalogN
  * (`noCreditsConfirmDialogEventProcessor` -> `resetPlacedOfferData`).
  */
 export const showNotEnoughCreditsAlert = () => {
-    systemStore.getState().showConfirm(t('catalog.alert.notenough.title'), t('catalog.alert.notenough.credits.description'), () => {
-        const url = hotelConfig().configString('web.shop.relativeUrl');
+    systemStore.getState().showConfirm(t('catalog.alert.notenough.title'), t('catalog.alert.notenough.credits.description'), () => openCreditsHabblet(), { onClose: () => resetPlacedOfferData() });
+};
 
-        if (url.length) window.open(url, 'habboMain');
-    }, { onClose: () => resetPlacedOfferData() });
+/** `openCreditsHabblet`: the web shop, `web.shop.relativeUrl` (`HabboWebTools.openWebPageAndMinimizeClient`). */
+export const openCreditsHabblet = () => {
+    const url = hotelConfig().configString('web.shop.relativeUrl');
+
+    if (url.length) window.open(url, 'habboMain');
 };
 
 /**

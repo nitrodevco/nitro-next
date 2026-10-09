@@ -1,12 +1,18 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type QuestCompletedMessageType = object;
+import { IQuestMessageData, QuestMessageDataParser } from './QuestsMessage';
 
+export type QuestCompletedMessageType = {
+    quest: IQuestMessageData;
+    showDialog: boolean;
+};
+
+/** Flash `QuestCompletedMessageParser`: the quest, then `showDialog`. */
 export class QuestCompletedMessage implements IIncomingPacket<QuestCompletedMessageType> {
     public parse(wrapper: IMessageDataWrapper): QuestCompletedMessageType {
-        const packet: QuestCompletedMessageType = {
-        };
+        const quest = QuestMessageDataParser(wrapper);
 
-        return packet;
+        return { quest, showDialog: wrapper.readBoolean() };
     }
 }

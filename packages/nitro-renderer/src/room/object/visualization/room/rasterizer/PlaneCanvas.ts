@@ -1,4 +1,4 @@
-import { Container, Rectangle, RenderTexture, Sprite, Texture } from 'pixi.js';
+import { Container, Filter, Rectangle, RenderTexture, Sprite, Texture, TextureSource } from 'pixi.js';
 
 import { TexturePool, TextureUtils } from '#renderer/utils';
 
@@ -10,6 +10,59 @@ import { PlaneColorFilter } from './PlaneColorFilter';
  * is a pooled `RenderTexture`, `fillRect(rect, 0x00FFFFFF)` is a clearing render, and
  * `copyPixels(..., mergeAlpha = true)` is a sprite rendered over what the canvas already holds.
  */
+
+/** Copies onto one canvas waiting for a single render pass (`batchPlaneCanvas`). */
+interface PlaneCanvasBatch {
+    canvas: RenderTexture;
+    container: Container;
+    sources: Set<TextureSource>;
+    textures: Texture[];
+    filters: Filter[];
+}
+
+let batch: PlaneCanvasBatch | undefined;
+
+/** Draws the copies `batchPlaneCanvas` collected, in their order, in one pass. */
+const flushPlaneCanvasBatch = (): void => {
+    const pending = batch;
+
+    if (!pending) return;
+
+    batch = undefined;
+
+    if (pending.container.children.length) TextureUtils.getRenderer().render({ container: pending.container, target: pending.canvas, clear: false });
+
+    pending.container.destroy({ children: true });
+
+    for (const filter of pending.filters) filter.destroy();
+    for (const texture of pending.textures) texture.destroy(false);
+};
+
+/**
+ * Draws the batched copies first when a canvas they draw on or draw from is about to be redrawn:
+ * a cell with extra items redraws its one canvas for every place it is copied to.
+ */
+const flushPlaneCanvasBatchFor = (canvas: Texture): void => {
+    if (batch && ((batch.canvas.source === canvas.source) || batch.sources.has(canvas.source))) flushPlaneCanvasBatch();
+};
+
+/**
+ * Runs `draw` with every `copyToPlaneCanvas` onto `canvas` collected and drawn in one render
+ * pass at the end. Each copy is a sprite blended over what the canvas holds, so drawing them in
+ * order in one pass gives the same pixels as one pass each; a column or matrix tiles dozens of
+ * cells, and a pass per cell made a room's first rasterization hundreds of passes.
+ */
+export const batchPlaneCanvas = <T>(canvas: RenderTexture, draw: () => T): T => {
+    flushPlaneCanvasBatch();
+
+    batch = { canvas, container: new Container(), sources: new Set(), textures: [], filters: [] };
+
+    try {
+        return draw();
+    } finally {
+        flushPlaneCanvasBatch();
+    }
+};
 
 /** A cleared canvas of at least 1x1, taken from the texture pool. */
 export const createPlaneCanvas = (width: number, height: number): RenderTexture => {
@@ -46,6 +99,8 @@ export const preparePlaneSampling = (texture: RenderTexture): RenderTexture => {
 
 /** `fillRect(rect, 0x00FFFFFF)`: every pixel transparent. */
 export const clearPlaneCanvas = (canvas: RenderTexture): void => {
+    flushPlaneCanvasBatchFor(canvas);
+
     TextureUtils.getRenderer().render({ container: new Container(), target: canvas, clear: true });
 };
 
@@ -85,6 +140,19 @@ export const copyToPlaneCanvas = (canvas: RenderTexture, texture: Texture, x: nu
 
     if (filter) sprite.filters = [ filter ];
 
+    // Reading the canvas being batched onto needs what is already queued on it.
+    if (batch && (batch.canvas.source === texture.source)) flushPlaneCanvasBatch();
+
+    if (batch && (batch.canvas === canvas)) {
+        batch.container.addChild(sprite);
+        batch.sources.add(texture.source);
+
+        if (filter) batch.filters.push(filter);
+        if (source !== texture) batch.textures.push(source);
+
+        return;
+    }
+
     drawOnPlaneCanvas(canvas, sprite);
 
     filter?.destroy();
@@ -110,6 +178,8 @@ export const createFlippedPlaneTexture = (texture: Texture): RenderTexture => {
 
 /** Renders a display tree onto the canvas and destroys the tree (never the textures it shows). */
 export const drawOnPlaneCanvas = (canvas: RenderTexture, container: Container, clear: boolean = false): void => {
+    flushPlaneCanvasBatchFor(canvas);
+
     TextureUtils.getRenderer().render({ container, target: canvas, clear });
 
     container.destroy({ children: true });

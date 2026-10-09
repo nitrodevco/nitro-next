@@ -24,9 +24,20 @@ import { createInventoryRecyclerSlice, InventoryRecyclerSlice } from './Inventor
 import { createInventoryTradingSlice, InventoryTradingSlice } from './InventoryTradingSlice';
 import { createInventoryUnseenSlice, InventoryUnseenSlice } from './InventoryUnseenSlice';
 
-export type InventoryStore = InventoryFurniSlice & InventoryFurniFilterSlice & InventoryBadgesSlice & InventoryPetsSlice & InventoryBotsSlice & InventoryTradingSlice & InventoryPlacementSlice & InventoryMarketplaceSlice & InventoryRecyclerSlice & InventoryUnseenSlice;
+/**
+ * `InventoryMainView.categoryViewId`: the page the window last showed, which the toolbar's click
+ * brings back (`onHabboToolbarEvent` toggles that category; a collectibles page toggles furni).
+ */
+interface InventoryLastPageSlice {
+    lastPage: 'furni' | 'pets' | 'bots' | 'badges';
+    setLastPage: (lastPage: InventoryLastPageSlice['lastPage']) => void;
+}
+
+export type InventoryStore = InventoryLastPageSlice & InventoryFurniSlice & InventoryFurniFilterSlice & InventoryBadgesSlice & InventoryPetsSlice & InventoryBotsSlice & InventoryTradingSlice & InventoryPlacementSlice & InventoryMarketplaceSlice & InventoryRecyclerSlice & InventoryUnseenSlice;
 
 export const createInventoryStore = () => createStore<InventoryStore>()((set, get, store) => ({
+    lastPage: 'furni',
+    setLastPage: lastPage => set({ lastPage }),
     ...createInventoryFurniSlice(set, get, store),
     ...createInventoryFurniFilterSlice(set, get, store),
     ...createInventoryBadgesSlice(set, get, store),

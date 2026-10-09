@@ -23,6 +23,8 @@ interface QuestProgressBarProps {
     caption: (progress: number, limit: number) => string;
     /** `set visible`: the bar's `progress_bar_cont`. */
     visible?: boolean;
+    /** `isUpdating` gone false: the fill has reached the amount (`DailyTaskView.update` waits for it). */
+    onSettled?: () => void;
 }
 
 /** `ProgressBar.getProgressWidth`. */
@@ -34,15 +36,17 @@ const PROGRESS_TEXT_X_OFFSET = 3;
 /** `ProgressBar.CONTAINER_SPACING`: the container is this much wider than the track. */
 const CONTAINER_SPACING = 10;
 
-export const QuestProgressBar = ({ x, y, width, current, max, levelKey, scoreAtStartOfLevel, caption, visible = true }: QuestProgressBarProps) => {
+export const QuestProgressBar = ({ x, y, width, current, max, levelKey, scoreAtStartOfLevel, caption, visible = true, onSettled }: QuestProgressBarProps) => {
     const target = progressWidth(width, current, max);
     const [ shown, setShown ] = useState(target);
     const [ start, setStart ] = useState(target);
     const previous = useRef({ levelKey, max });
     const shownRef = useRef(shown);
+    const onSettledRef = useRef(onSettled);
 
     useEffect(() => {
         shownRef.current = shown;
+        onSettledRef.current = onSettled;
     });
 
     useEffect(() => {
@@ -54,6 +58,7 @@ export const QuestProgressBar = ({ x, y, width, current, max, levelKey, scoreAtS
         if (reset) {
             setShown(target);
             setStart(target);
+            onSettledRef.current?.();
 
             return undefined;
         }
@@ -73,9 +78,11 @@ export const QuestProgressBar = ({ x, y, width, current, max, levelKey, scoreAtS
             setShown(currentWidth);
 
             if (currentWidth !== target) frame = requestAnimationFrame(step);
+            else onSettledRef.current?.();
         };
 
         if (currentWidth !== target) frame = requestAnimationFrame(step);
+        else onSettledRef.current?.();
 
         return () => cancelAnimationFrame(frame);
     }, [ target, levelKey, max ]);

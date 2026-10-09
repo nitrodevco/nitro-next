@@ -16,7 +16,7 @@
  * refusal: Flash's `WE_SELECT` + `preventWindowOperation` is simply not acting).
  */
 import { Container as PixiContainer } from 'pixi.js';
-import { Key, ReactNode, useRef, useState } from 'react';
+import { Key, ReactNode, useEffect, useRef, useState } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { DropmenuFrame } from './DropmenuFrame';
@@ -102,6 +102,8 @@ export interface DropmenuProps {
     zIndex?: number;
     /** `WE_EXPANDED` / `WE_COLLAPSE`. */
     onOpenChange?: (open: boolean) => void;
+    /** `IDropMenuWindow.openMenu`: a new value opens the list, as the menu's code opens it. */
+    openRequest?: number;
 }
 
 interface OpenMenu {
@@ -111,7 +113,7 @@ interface OpenMenu {
 
 export const Dropmenu = ({
     variant, defaultVariant, tooltip, tintColor, textStyle, textColor, caption = '', captionContent, options = [], disabled = false,
-    itemHeight: itemHeightProp, layout, visible, zIndex, onOpenChange,
+    itemHeight: itemHeightProp, layout, visible, zIndex, onOpenChange, openRequest,
 }: DropmenuProps) => {
     const anchorRef = useRef<PixiContainer>(null);
     // Set while the press that just closed the view from outside may still end as a tap on the menu.
@@ -152,6 +154,19 @@ export const Dropmenu = ({
         });
         onOpenChange?.(true);
     };
+
+    // `openMenu`: opened by its code, not by a click on it - on the next frame, placed where the menu is then.
+    const handledOpenRequest = useRef(openRequest);
+
+    useEffect(() => {
+        if (openRequest === handledOpenRequest.current) return;
+
+        handledOpenRequest.current = openRequest;
+
+        if (!open) requestAnimationFrame(() => {
+            if (anchorRef.current) toggle();
+        });
+    });
 
     const pick = (option: DropmenuOption) => {
         if (option.disabled) return;

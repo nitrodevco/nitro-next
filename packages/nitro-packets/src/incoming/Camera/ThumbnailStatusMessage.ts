@@ -1,12 +1,18 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type ThumbnailStatusMessageType = object;
+/** `ThumbnailStatusMessageParser`: ok unless the body says otherwise; an empty body is a success. */
+export type ThumbnailStatusMessageType = {
+    isOk: boolean;
+    isRenderLimitHit: boolean;
+};
 
 export class ThumbnailStatusMessage implements IIncomingPacket<ThumbnailStatusMessageType> {
     public parse(wrapper: IMessageDataWrapper): ThumbnailStatusMessageType {
-        const packet: ThumbnailStatusMessageType = {
-        };
+        if (!wrapper.bytesAvailable) return { isOk: true, isRenderLimitHit: false };
 
-        return packet;
+        const isOk = wrapper.readBoolean();
+        const isRenderLimitHit = wrapper.readBoolean();
+
+        return { isOk, isRenderLimitHit };
     }
 }

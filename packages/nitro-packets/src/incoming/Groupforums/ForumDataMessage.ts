@@ -1,12 +1,14 @@
+// Body filled by hand from the AS3 parser (`groupforums/ForumDataMessageParser`).
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type ForumDataMessageType = object;
+import { ExtendedForumDataParser, IExtendedForumData } from './Data/ForumDataParser';
+
+export type ForumDataMessageType = {
+    forumData: IExtendedForumData;
+};
 
 export class ForumDataMessage implements IIncomingPacket<ForumDataMessageType> {
     public parse(wrapper: IMessageDataWrapper): ForumDataMessageType {
-        const packet: ForumDataMessageType = {
-        };
-
-        return packet;
+        return { forumData: ExtendedForumDataParser(wrapper) };
     }
 }

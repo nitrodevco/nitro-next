@@ -30,10 +30,11 @@
  * Every text is style 3 with no `text_style` var, which the Ubuntu theme reads as `u_regular`;
  * `column_name` adds `bold` and `element_link` `underline` over it.
  *
- * Not carried over, on purpose: `manageRowViews` and its row pool (`LAZY_CHUNKING`,
- * `SCROLL_BUFFER`, `DeBouncer`). It exists to avoid building window trees for rows far off
- * screen; every row here is mounted, since the theme's `ScrollArea` owns its scroll position and
- * a page is 25-50 rows.
+ * `manageRowViews`: only the rows in view are mounted, the window widened by `SCROLL_BUFFER_MINIMAL`
+ * and rounded out to `LAZY_CHUNKING` rows (`visibleRangeFirstIndex` / `visibleRangeLastIndex`), with
+ * a spacer above and below standing in for the rest, as Flash's first and last list items do. The
+ * contract element picker lists every furni type (18,000 rows), which mounted at once froze the
+ * client. Not carried over: the row pool and the `DeBouncer`; React reuses the cells by key.
  */
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
@@ -79,6 +80,24 @@ const HIGHLIGHT_STEP_MS = 16;
 const HIGHLIGHT_STEPS = Math.trunc(500 / HIGHLIGHT_STEP_MS);
 const HIGHLIGHT_MAX_BLEND = 0.35;
 const HIGHLIGHT_COLOR = '#4fbce3';
+
+/** `TableView.LAZY_CHUNKING`: the mounted range starts and ends on a multiple of this many rows. */
+const LAZY_CHUNKING = 30;
+/** `TableView.scrollBuffer` outside the minimal resources mode (`SCROLL_BUFFER_MINIMAL`): extra rows before the first in view. */
+const SCROLL_BUFFER = 2;
+
+/** `TableView.visibleRangeFirstIndex` / `visibleRangeLastIndex`: the rows to mount, both ends included. */
+const getWiredTableVisibleRange = (rowCount: number, scrollTop: number, viewportHeight: number): [ number, number ] => {
+    const firstInView = Math.trunc(scrollTop / ROW_HEIGHT);
+    let first = Math.trunc(Math.min(firstInView - 1, rowCount - (viewportHeight / ROW_HEIGHT)));
+
+    first -= SCROLL_BUFFER + (first % LAZY_CHUNKING);
+
+    const lastInView = Math.trunc((scrollTop + viewportHeight) / ROW_HEIGHT);
+    const last = Math.min(lastInView + 1, rowCount - 1);
+
+    return [ Math.max(0, first), last + (SCROLL_BUFFER + LAZY_CHUNKING - (last % LAZY_CHUNKING)) ];
+};
 
 const LINK_COLOR = '#0000ee';
 const EMPTY_TEXT_COLOR = '#333333';
@@ -388,6 +407,7 @@ export const WiredTableView = <T extends object>({ columns, rows, getRowId, getC
     const [ lostSelectedId, setLostSelectedId ] = useState<string | null>(null);
     const [ selectionLosses, setSelectionLosses ] = useState(0);
     const [ rowHasFocus, setRowHasFocus ] = useState(false);
+    const [ scrollTop, setScrollTop ] = useState(0);
     const listRef = useRef<PixiContainer | null>(null);
     const rowsRef = useRef<PixiContainer | null>(null);
     const hoveredId = useRef<string | null>(null);
@@ -463,6 +483,10 @@ export const WiredTableView = <T extends object>({ columns, rows, getRowId, getC
     const isScrollBarVisible = (contents.height > 0) && ((rows.length * ROW_HEIGHT) > listHeight);
     const rowWidth = Math.max(0, Math.trunc(contents.width) - (isScrollBarVisible ? SCROLLBAR_OFFSET : 0));
     const cellWidths = columns.map(column => Math.trunc(rowWidth * column.widthFactor));
+    // TableView.manageRowViews: the rows in view and the spacers standing in for the rest.
+    const [ firstRow, lastRow ] = getWiredTableVisibleRange(rows.length, scrollTop, listHeight);
+    const topSpace = firstRow * ROW_HEIGHT;
+    const bottomSpace = Math.max(0, rows.length - 1 - lastRow) * ROW_HEIGHT;
 
     return (
         <Border
@@ -496,6 +520,7 @@ export const WiredTableView = <T extends object>({ columns, rows, getRowId, getC
                         ref={listRef}
                         variant={scrollVariant}
                         scrollResetKey={scrollResetKey}
+                        onScrollChange={setScrollTop}
                         layout={{ flex: 1, gap: SCROLLBAR_OFFSET - SCROLLBAR_WIDTH }}
                         contentLayout={{ position: 'relative', width: '100%', flexDirection: 'column' }}
                     >
@@ -503,7 +528,9 @@ export const WiredTableView = <T extends object>({ columns, rows, getRowId, getC
                             ref={rowsRef}
                             layout={{ width: rowWidth, flexDirection: 'column', flexShrink: 0 }}
                         >
-                            {rows.map((row, index) => {
+                            {(topSpace > 0) && <Box layout={{ width: rowWidth, height: topSpace, flexShrink: 0 }} />}
+                            {rows.slice(firstRow, lastRow + 1).map((row, offset) => {
+                                const index = firstRow + offset;
                                 const id = getRowId(row);
                                 const isSelected = canSelect && (id === selectedId);
                                 // TableRowView.updateColor
@@ -552,6 +579,7 @@ export const WiredTableView = <T extends object>({ columns, rows, getRowId, getC
                                     </Region>
                                 );
                             })}
+                            {(bottomSpace > 0) && <Box layout={{ width: rowWidth, height: bottomSpace, flexShrink: 0 }} />}
                         </Box>
                     </ScrollArea>
                 )}

@@ -1,3 +1,6 @@
+import type { IMyCfhReportStatus, ISanctionStatusEntry } from '@nitrodevco/nitro-packets';
+
+import type { HelpReportEntry } from '#base/commands/helpCommands';
 import type { WiredMenuWindowParams } from '#base/context/wired';
 import type { AvatarEditorViewWindowParams } from '#base/views/avatar-editor/AvatarEditor';
 import type { CatalogViewWindowParams } from '#base/views/catalog/CatalogView';
@@ -12,6 +15,8 @@ import type { RoomSettingsViewWindowParams } from '#base/views/room-widgets/room
  */
 export type WindowRegistry = {
     achievements: NoWindowParams;
+    /** The quest list (`QuestsList`), from the progression menu or a `questengine/quests` link. */
+    quests: NoWindowParams;
     avatar_editor: AvatarEditorViewWindowParams;
     catalog: CatalogViewWindowParams;
     /** The Builders Club catalogue (`toggleCatalog("BUILDERS_CLUB")`) - see `getCatalogWindowName`. */
@@ -34,6 +39,9 @@ export type WindowRegistry = {
     /** `RoomFilterCtrl`: the word filter of the room in `roomFilterFlatId`. */
     room_filter: NoWindowParams;
 
+    /** The room thumbnail camera (`RoomThumbnailCameraWidget`), from the room info panel's `roomThumbnailCamera/open`. */
+    room_thumbnail_camera: NoWindowParams;
+
     /** The floor plan editor (`BCFloorPlanEditor`), opened from the room info panel. */
     floor_plan_editor: NoWindowParams;
 
@@ -53,6 +61,9 @@ export type WindowRegistry = {
     /** The toolbar's "other settings" (`OtherSettingsView`), from the settings list under the purse. */
     toolbar_other_settings: NoWindowParams;
 
+    /** The room camera's viewfinder (`CameraViewFinder`), from the toolbar's camera icon. */
+    camera: NoWindowParams;
+
     /** The toolbar's sound settings (`SoundSettingsView`), from the settings list under the purse. */
     toolbar_sound_settings: NoWindowParams;
 
@@ -61,6 +72,13 @@ export type WindowRegistry = {
 
     /** The toolbar's word filter (`WordFilterSettingsView`), from the settings list under the purse. */
     toolbar_word_filter: NoWindowParams;
+
+    /** The help window (`HelpView`), from the purse's help button - `HabboHelp.toggleNewHelpWindow`. */
+    help: { entry?: HelpReportEntry; openedAt?: number };
+    /** `SanctionInfo`, opened by the `SanctionStatusEvent` that answers the help window's sanction status link. */
+    help_sanction_info: { sanctions?: ISanctionStatusEntry[]; openedAt?: number };
+    /** `MyReportStatus`, opened by the answer to the help window's reports status link. */
+    help_my_reports: { reports?: IMyCfhReportStatus[]; openedAt?: number };
 
     /** The vault (`EarningsView`), from `habboUI/open/vault` - the purse's earnings button or the new earnings bubble. */
     earnings: NoWindowParams;

@@ -28,9 +28,10 @@ export const CollectiblesInfoTab = () => {
             name="infoContainer"
             layout={{ position: 'absolute', left: 0, width: 390, top: 125, height: 419 }}
         >
+            {/* Not clipped: `info_desc` and `transfer_desc` (480 wide) run past the 390 wide background, as on the official client (collectibles-info.png). */}
             <Region
                 name="category_content_background"
-                layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden' }}
+                layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400 }}
             >
                 <Region
                     name="category_collector_header_region"

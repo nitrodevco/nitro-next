@@ -19,6 +19,7 @@ import { RoomPollWidget } from './poll/RoomPollWidget';
 import { RoomQuizWidget } from './quiz/RoomQuizWidget';
 import { RoomAdWidget } from './room-ad/RoomAdWidget';
 import { RoomInfoWidget } from './room-info/RoomInfoWidget';
+import { RoomThumbnailCameraWidget } from './room-thumbnail-camera/RoomThumbnailCameraWidget';
 import { RoomToolsWidget } from './room-tools/RoomToolsWidget';
 import { RoomSpectatorModeWidget } from './spectator/RoomSpectatorModeWidget';
 
@@ -40,6 +41,7 @@ export const RoomWidgets = () => {
             <RoomQuizWidget />
             <RoomFriendRequestWidget />
             <RoomInfoWidget />
+            <RoomThumbnailCameraWidget />
             <FloorPlanEditorWidget />
             <RoomBotSkillConfigurationWidget />
             <RoomPetBreedMenuWidget />

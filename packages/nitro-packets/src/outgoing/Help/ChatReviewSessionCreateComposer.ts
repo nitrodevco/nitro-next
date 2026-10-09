@@ -1,12 +1,18 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
-export type ChatReviewSessionCreateComposerType = object;
+/** `ChatReviewSessionCreateMessageComposer(reportedUserId, roomId)`. */
+export type ChatReviewSessionCreateComposerType = {
+    reportedUserId: number;
+    roomId: number;
+};
 
 export class ChatReviewSessionCreateComposer implements IOutgoingPacket<ChatReviewSessionCreateComposerType> {
     public constructor(private params: ChatReviewSessionCreateComposerType) { }
 
     public compose(): (number | string | boolean)[] {
         return [
+            this.params.reportedUserId,
+            this.params.roomId,
         ];
     }
 }

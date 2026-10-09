@@ -17,14 +17,15 @@
  *   one page `item_grid_pages` lists a clone of its first item per page, the current page's number
  *   red, a hovered one red too.
  * - A thumb (`GroupItem`): `BG_COLOR` green while the group is new, the unlocked count from 2 up,
- *   the icon faded to 0.2 with nothing unlocked, the recycle mark while the recycler runs, the
+ *   the icon faded to 0.2 with nothing unlocked, the recycle mark while the recycler runs, the rent
+ *   mark (`updateRentStateVisual`, ending under `purchase.rent.warning_duration_seconds`), the
  *   limited, rarity or chest plaque (`updateItemImageVisual`) and the selection `outline`.
  *   `itemEventProc`: a press selects it; leaving it held drags the furni into the room (not during a
  *   trade); letting go puts back anything on its way out; a double click is
  *   `requestCurrentActionOnSelection`.
  * - `updateActionView`: the room previewer (`InventoryFurniPreview`), the tradeable and recyclable
  *   counts with their icons and tooltips, the limited and rarity plaques, the name, description and
- *   `furni_extra` (the rarity, or the chest's name).
+ *   `furni_extra` (the rarity, or the chest's name; a rented item's time, `updateRentedItem`).
  * - `updateActionButtons`: `preview_element_list`'s buttons, re-added in its order - place in room
  *   (disabled outside a room), extend rent and buy out (a rented item not in a room), go to room (an
  *   item in a room), the amount field (`multi.item.trading.enabled`) and offer button while a trade
@@ -32,8 +33,9 @@
  *   lock, no trade, not an external image). `furni_preview_region` places the furni too.
  *
  * Not ported: `use_btn`, `nextItemButton` / `viewItemButton` (`showUseProductSelection`, which the
- * room engine does not offer), `rent_state` and the rent expiry text (the inventory does not hold
- * an item's rent period), an external image's own description, and the page numbers' underline.
+ * room engine does not offer), an external image's own description, and the page numbers' underline.
+ * A rented item whose time has run out leaves the list (`onImageUpdateTimerEvent`) in
+ * `registerInventoryFurniHandlers`.
  */
 import { IFurnitureData, MapDataType } from '@nitrodevco/nitro-api';
 import { useEffect, useRef, useState } from 'react';
@@ -41,24 +43,32 @@ import { useEffect, useRef, useState } from 'react';
 import { cancelInventoryFurniInMover, checkFurniInventoryInitialization, checkMarketplaceInitialization, goToRoom, offerSelectedFurniToTrade, openRentConfirmationWindow, recycleSelectedInventoryFurni, requestSelectedFurniPlacement, requestSelectedFurniSelling } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    canOfferInventoryFurniToWiredTrade, getInventoryFurniRecyclableCount, getInventoryFurniTradeableCount, getInventoryFurniTypeFilters, getInventoryFurniUnlockedCount, getStuffDataChestName, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_FURNI_MAIN_FILTERS, INVENTORY_RECYCLER_STATE_ACTIVE, InventoryFurniGroup, isInventoryFurniGroupWallItem, passInventoryFurniFilter, peekInventoryFurni, useInventoryFurniActions, useInventoryStore,
+    canOfferInventoryFurniToWiredTrade, getInventoryFurniRecyclableCount, getInventoryFurniSecondsToExpiration, getInventoryFurniTradeableCount, getInventoryFurniTypeFilters, getInventoryFurniUnlockedCount, getStuffDataChestName, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_FURNI_MAIN_FILTERS, INVENTORY_RECYCLER_STATE_ACTIVE, InventoryFurniGroup, isInventoryFurniGroupWallItem, passInventoryFurniFilter, peekInventoryFurni, useInventoryFurniActions, useInventoryStore,
 } from '#base/context/inventory';
 import { useRoom } from '#base/context/room';
 import { useConfigValue, useSystemStore, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { useWiredTradingStore } from '#base/context/wired-trading';
 import { TemplateBindings, TemplateItem, TemplateWindow } from '#base/theme';
+import { GetFriendlyTime } from '#base/utils';
 import { CatalogLimitedItemPreviewOverlayView } from '#base/views/catalog/page/widgets/CatalogLimitedItemPreviewOverlayView';
 
 import { InventoryFurniPreview } from './InventoryFurniPreview';
 import { findInventoryElement, INVENTORY_GRID_PAGE_SIZE, inventoryGridPageCount, inventoryGridPageItems, InventoryPage, InventoryPageContext, inventoryPagePath, inventoryPageState, inventoryTemplateId, NO_INVENTORY_PAGE } from './inventoryPage';
-import { inventoryFurniThumbBindings } from './inventoryThumbs';
+import { DEFAULT_RENT_WARNING_SECONDS, inventoryFurniThumbBindings } from './inventoryThumbs';
 
 /** `updateActionView`'s icons, by whether there are any to trade or recycle. */
 const TRADE_ICON = 'habbo-window-manager-com-inventory_furni_trade_icon';
 const NO_TRADE_ICON = 'habbo-window-manager-com-inventory_furni_no_trade_icon';
 const RECYCLE_ICON = 'habbo-window-manager-com-inventory_furni_recycle_icon';
 const NO_RECYCLE_ICON = 'habbo-window-manager-com-inventory_furni_no_recycle_icon';
+
+/**
+ * How often a started rent's time left is read again. Flash reads it every 200 ms
+ * (`onImageUpdateTimerEvent`), but its text counts in whole seconds at the finest, and a read
+ * re-renders the page.
+ */
+const RENT_UPDATE_INTERVAL_MS = 1000;
 
 /** The room layout papers' categories - wallpaper, floor and landscape - which a press on the preview does not place. */
 const ROOM_LAYOUT_CATEGORIES = [ 2, 3, 4 ];
@@ -85,6 +95,7 @@ export const useInventoryFurniPage = ({ active, templates }: InventoryPageContex
     const marketplaceEnabled = useInventoryStore(x => x.marketplaceConfiguration.isEnabled);
     const recyclerRunning = useInventoryStore(x => x.recyclerState === INVENTORY_RECYCLER_STATE_ACTIVE);
     const safetyLocked = useUserStore(x => x.accountSafetyLocked);
+    const rentWarningSeconds = useConfigValue<number>('purchase.rent.warning_duration_seconds') ?? DEFAULT_RENT_WARNING_SECONDS;
     // `FurniModel.isPrivateRoom`: every room session is a private room.
     const inRoom = !!useRoom();
     const { selectFurniGroup, setFurniFilterMain, setFurniFilterType, setFurniFilterText } = useInventoryFurniActions();
@@ -98,6 +109,14 @@ export const useInventoryFurniPage = ({ active, templates }: InventoryPageContex
     const [ hoveredPage, setHoveredPage ] = useState(-1);
     // `GroupItem.§_-F1a§`: the thumb being held, so leaving it is a drag rather than a hover.
     const heldGroup = useRef<number>(-1);
+    // Bumped to read the selected item's rent again (`updateRentedItem`).
+    const [ , setRentReads ] = useState(0);
+    const selectedPeek = (() => {
+        const group = groups.find(entry => entry.id === selectedGroupId);
+
+        return group ? peekInventoryFurni(group) : undefined;
+    })();
+    const rentCounting = active && !!selectedPeek?.isRented && selectedPeek.hasRentPeriodStarted;
 
     // `HabboInventory.activeTradingModel`: either trade puts the page into its trading shape.
     const tradeRunning = userTradeActive || wiredTradeRunning;
@@ -113,6 +132,15 @@ export const useInventoryFurniPage = ({ active, templates }: InventoryPageContex
         checkFurniInventoryInitialization(send);
         checkMarketplaceInitialization(send);
     }, [ active, send ]);
+
+    // `onImageUpdateTimerEvent` -> `updateRentedItem`: a started rent's time left is shown counting down.
+    useEffect(() => {
+        if (!rentCounting) return;
+
+        const timer = setInterval(() => setRentReads(reads => reads + 1), RENT_UPDATE_INTERVAL_MS);
+
+        return () => clearInterval(timer);
+    }, [ rentCounting ]);
 
     if (!active) return NO_INVENTORY_PAGE;
 
@@ -180,7 +208,7 @@ export const useInventoryFurniPage = ({ active, templates }: InventoryPageContex
                 key: String(group.id),
                 from: thumbTemplate,
                 bindings: {
-                    ...inventoryFurniThumbBindings(group, { selected: group.id === selectedGroupId, unseen: group.hasUnseenItems, showRecyclable: recyclerRunning }),
+                    ...inventoryFurniThumbBindings(group, { selected: group.id === selectedGroupId, unseen: group.hasUnseenItems, showRecyclable: recyclerRunning, rentWarningSeconds }),
                     '': {
                         onPointerDown: () => {
                             selectFurniGroup(group.id);
@@ -256,13 +284,17 @@ export const useInventoryFurniPage = ({ active, templates }: InventoryPageContex
         [ 'sell_btn', canSell, { '': { onPointerTap: () => requestSelectedFurniSelling(send) } } ],
     ];
 
-    // `furni_extra`: the rarity, or the chest's name.
+    // `furni_extra`: the rarity, or the chest's name - then `updateRentedItem`: a rented item's time
+    // left once its period has started, its whole period before.
     const stuffData = selectedItem?.stuffData;
-    const extraText = (!stuffData)
+    const rentText = selectedItem?.isRented
+        ? t(selectedItem.hasRentPeriodStarted ? 'inventory.rent.expiration' : 'inventory.rent.inactive', '', { time: GetFriendlyTime(t, getInventoryFurniSecondsToExpiration(selectedItem)) })
+        : undefined;
+    const extraText = rentText ?? ((!stuffData)
         ? ''
         : (stuffData.rarityLevel >= 0)
                 ? (((stuffData instanceof MapDataType) && (stuffData.getValue('rarity') !== undefined)) ? t('inventory.rarity', '', { rarity: String(stuffData.rarityLevel) }) : '')
-                : (getStuffDataChestName(stuffData) ? t('inventory.chest_name', '', { chest_name: getStuffDataChestName(stuffData) }) : '');
+                : (getStuffDataChestName(stuffData) ? t('inventory.chest_name', '', { chest_name: getStuffDataChestName(stuffData) }) : ''));
 
     // `preview_element_list`: its texts, then `updateActionButtons`' buttons in the order it adds them.
     const previewItems: TemplateItem[] = [

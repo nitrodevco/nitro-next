@@ -14,10 +14,11 @@ export type FriendListTabHeaderColors = readonly [ upper: string, lower: string,
 
 export interface FriendListTabProps {
     value: string;
-    /** The tab's name (`FriendListTab.name`); the header reads `name (count)`. */
+    /** The tab's name (`FriendListTab.name`); the header reads `name (count)` in the AS3, and
+     * only `name` on the friends and search tabs of the official client (official-20261009/friends.png). */
     caption: string;
-    /** `ITabView.getEntryCount`. */
-    count: number;
+    /** `ITabView.getEntryCount`; left out where the official header shows the name alone. */
+    count?: number;
     tooltip?: string;
     headerColors: FriendListTabHeaderColors;
     /** `FriendListLaf.getTabTextColor` for this tab. */
@@ -75,7 +76,7 @@ export const FriendListTab = ({ value, caption, count, tooltip = '', headerColor
                         />
                         <Box layout={{ position: 'absolute', left: 4, top: 0, flexDirection: 'row', alignItems: 'flex-start' }}>
                             <ThemeText
-                                text={`${t(caption)} (${count})`}
+                                text={(count === undefined) ? t(caption) : `${t(caption)} (${count})`}
                                 textStyle="regular"
                                 textOptions={{ fill: textColor }}
                                 flashFormat={{ antiAliasType: 'advanced' }}

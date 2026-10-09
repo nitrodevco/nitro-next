@@ -247,18 +247,9 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         if (!avatarCanvas) return undefined;
 
-        if (this._isCachedImage || !this._image || this._image.width !== avatarCanvas.width || this._image.height !== avatarCanvas.height) {
-            if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
-
-            this._image = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
-            this._isCachedImage = false;
-        }
-
         this.disposeCroppedTopImage();
 
         this._topCropY = -1;
-
-        if (!this._image) return undefined;
 
         const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
         const container = this.beginSetContainer();
@@ -291,6 +282,24 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         this.endSetContainer(container);
 
+        // A frame that goes into the full image cache is drawn once, straight into its cache
+        // texture, and shown from there - what the next request for it gets anyway.
+        const cachedImage = (cacheKey && isCachable && (scale === 1)) ? TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height) : undefined;
+
+        if (cachedImage) {
+            if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
+
+            this._image = cachedImage;
+            this._isCachedImage = true;
+        } else if (this._isCachedImage || !this._image || this._image.width !== avatarCanvas.width || this._image.height !== avatarCanvas.height) {
+            if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
+
+            this._image = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
+            this._isCachedImage = false;
+        }
+
+        if (!this._image) return undefined;
+
         TextureUtils.getRenderer().render({
             target: this._image,
             container,
@@ -299,7 +308,9 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         this._changes = false;
 
-        if (cacheKey && isCachable) {
+        if (cachedImage && cacheKey) {
+            this.cacheFullImage(cacheKey, cachedImage, this._topCropY);
+        } else if (cacheKey && isCachable) {
             const imageClone = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
 
             if (imageClone) {

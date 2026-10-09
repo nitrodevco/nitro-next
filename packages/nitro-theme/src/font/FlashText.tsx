@@ -25,6 +25,12 @@ export interface FlashTextProps {
     clipWidth?: number;
     clipHeight?: number;
     /**
+     * Which part of a line too wide for `clipWidth` stays: a centred or right-aligned field wider than
+     * its window is drawn at `width / 2 - field / 2` or `width - field` (`TextSkinRenderer.draw`), so
+     * its middle or its right end shows. The left end otherwise.
+     */
+    clipAlign?: 'left' | 'center' | 'right';
+    /**
      * Clip at the box `layout` resolves to on an axis `clipWidth` / `clipHeight` leave open - a
      * text that spans its parent (`'100%'`, or two insets) - read back once Yoga has sized it.
      */
@@ -45,7 +51,7 @@ const linkText = (href: string) => (href.startsWith('event:') ? href.substring(6
  * Flash-exact text as one sprite. The bitmap is shown 1:1 with nearest-neighbour sampling: the
  * rasterizer already grid-fitted every glyph to whole pixels, and any resampling would undo it.
  */
-export const FlashText = ({ rendered, layout, visible, alpha, x, y, clipWidth: ownClipWidth, clipHeight: ownClipHeight, clip = false, onLink }: FlashTextProps) => {
+export const FlashText = ({ rendered, layout, visible, alpha, x, y, clipWidth: ownClipWidth, clipHeight: ownClipHeight, clipAlign = 'left', clip = false, onLink }: FlashTextProps) => {
     const [ node, setNode ] = useState<PixiSprite | null>(null);
     const measured = useLayoutSize(node);
     // A box the layout sizes (not a number, not left to the texture) is known only after layout.
@@ -65,8 +71,10 @@ export const FlashText = ({ rendered, layout, visible, alpha, x, y, clipWidth: o
         if (width === created.width && height === created.height) return created;
 
         // A frame over the same source: cropping costs no copy, and `destroy(true)` still frees it.
-        return new Texture({ source: created.source, frame: new Rectangle(0, 0, width, height) });
-    }, [ rendered, clipWidth, clipHeight ]);
+        const left = (clipAlign === 'center') ? Math.ceil((created.width - width) / 2) : (clipAlign === 'right') ? (created.width - width) : 0;
+
+        return new Texture({ source: created.source, frame: new Rectangle(left, 0, width, height) });
+    }, [ rendered, clipWidth, clipHeight, clipAlign ]);
 
     useEffect(() => () => destroyOwnedTexture(texture), [ texture ]);
 
@@ -75,7 +83,8 @@ export const FlashText = ({ rendered, layout, visible, alpha, x, y, clipWidth: o
     const linkAt = (event: FederatedPointerEvent) => {
         const point = event.getLocalPosition(event.currentTarget);
 
-        return flashTextLinkAtPoint(rendered, point.x, point.y);
+        // A cropped field shows its bitmap from `frame.x` on.
+        return flashTextLinkAtPoint(rendered, point.x + texture.frame.x, point.y);
     };
     const onLinkTap = (event: FederatedPointerEvent) => {
         const href = linkAt(event);

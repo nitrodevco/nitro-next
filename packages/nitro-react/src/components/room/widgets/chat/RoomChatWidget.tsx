@@ -2,6 +2,7 @@ import { useRoom } from '#base/context/room';
 import { useUserStore } from '#base/context/user';
 
 import { ChatFlowProvider } from './ChatFlowProvider';
+import { ChatHistoryTray } from './ChatHistoryTray';
 import { RoomChatBubbles } from './RoomChatBubbles';
 
 /**
@@ -20,6 +21,7 @@ export const RoomChatWidget = () => {
     return (
         <ChatFlowProvider>
             <RoomChatBubbles />
+            <ChatHistoryTray />
         </ChatFlowProvider>
     );
 };

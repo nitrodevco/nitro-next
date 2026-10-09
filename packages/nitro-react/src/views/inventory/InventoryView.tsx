@@ -38,7 +38,7 @@ import { useEffect, useMemo } from 'react';
 
 import { resetInventoryUnseenCounters } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { UnseenItemCategory, useInventoryStore, useInventoryUnseenItemCount } from '#base/context/inventory';
+import { inventoryStore, UnseenItemCategory, useInventoryStore, useInventoryUnseenItemCount } from '#base/context/inventory';
 import { useConfigValue, useSystemActions, useWindowParams, WindowParams } from '#base/context/system';
 import { useWiredTradingStore } from '#base/context/wired-trading';
 import { LayoutWindow, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplate, useTemplateLibrary } from '#base/theme';
@@ -109,6 +109,11 @@ export const InventoryView = () => {
         resizeDirection: (allowScaling && !docked) ? 'y' as const : 'none' as const,
         onClose: () => toggleWindow('inventory'),
     }), [ allowScaling, docked, toggleWindow ]);
+
+    // `categoryViewId`: the toolbar reopens the window on this page.
+    useEffect(() => {
+        if (activeTab !== 'collectibles') inventoryStore.getState().setLastPage(activeTab);
+    }, [ activeTab ]);
 
     // `resetUnseenCounters(previous tab)` on a switch, and the showing page's `closingInventoryView` on close.
     useEffect(() => () => resetInventoryUnseenCounters(send, activeTab), [ send, activeTab ]);

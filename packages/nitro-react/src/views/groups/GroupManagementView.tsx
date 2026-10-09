@@ -122,6 +122,8 @@ export const GroupManagementView = ({
             dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="none"
+            // `prepare`: `_window.center()` as the window is first built.
+            centered
             layout={{ width: 392, height: 497 }}
             margins={[ 0, 33, 0, 3 ]}
         >

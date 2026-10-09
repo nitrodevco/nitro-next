@@ -1,6 +1,7 @@
 /**
- * `BonusRarePromoWidget`: `bonus_rare_promo` - the rare every so many credits spent buys, and how
- * far the user is from the next one (`BonusRareInfoMessage`, asked for by `registerHotelViewHandlers`).
+ * `BonusRarePromoWidget`: `habbo-friend-bar-com/bonus_rare_promo_xml` - the rare every so many
+ * credits spent buys, and how far the user is from the next one (`BonusRareInfoMessage`, asked for
+ * by `registerHotelViewHandlers`).
  *
  * The widget keeps its place in the grid but is hidden until the server has named a rare
  * (`productClassId` -1 until then), and its texts and bar are only filled once the rare's product
@@ -8,14 +9,18 @@
  * the credits already spent towards it (`setProgress` over `bar_a_bkg`'s 292), and the status says
  * how many are still to go. The picture is the hotel's `landing.view.bonus.rare.image.uri`.
  *
+ * The layout sizes the row: `buy_button` is as wide as its caption, `button_container`
+ * (`accommodate` resize) takes the button's width, and the `scale_to_fit_items` item list - with the
+ * border round it (`reflectToParent`) - ends where the button does.
+ *
  * The button is Flash's `openCreditsHabblet`, which opens the hotel's web shop
  * (`web.shop.relativeUrl`) beside the client; the port has no hotel web page to open it under - see
  * `purchaseCredits` in `commands/targetedOfferCommands.ts` - so it is drawn and does nothing.
  */
-import { hotelViewProperty, useConfigData, useSystemStore, useTranslation } from '#base/context/system';
-import { Border, Box, Button, ColorableTextFormat, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
+import { hotelViewColorableBindings, HotelViewCommonSettings, hotelViewProperty, useConfigData, useSystemStore, useTranslation } from '#base/context/system';
+import { Box, TemplateBindings, TemplateWindow, TemplateWindows } from '#base/theme';
 
-/** `bonus_rare_promo`'s size. */
+/** `bonus_rare_promo`'s size, which the grid keeps while the widget is hidden. */
 const WIDTH = 602;
 const HEIGHT = 75;
 
@@ -23,16 +28,18 @@ const HEIGHT = 75;
 const BAR_FILL_X = 4;
 const BAR_FILL_WIDTH = 292;
 
+/** The text the hotel's widget settings colour. */
+const COLORABLE = [ 'header' ] as const;
+
 export interface HotelViewBonusRareWidgetProps {
-    colorable: ColorableTextFormat;
+    settings: HotelViewCommonSettings;
 }
 
-export const HotelViewBonusRareWidget = ({ colorable }: HotelViewBonusRareWidgetProps) => {
+export const HotelViewBonusRareWidget = ({ settings }: HotelViewBonusRareWidgetProps) => {
     const bonusRare = useSystemStore(x => x.hotelViewBonusRare);
     const product = useSystemStore(x => x.productData[bonusRare?.productType ?? '']);
     const config = useConfigData();
     const t = useTranslation();
-    const configString = (key: string) => hotelViewProperty(config, key);
 
     if (!bonusRare) return (
         <Box
@@ -41,106 +48,33 @@ export const HotelViewBonusRareWidget = ({ colorable }: HotelViewBonusRareWidget
         />
     );
 
-    const visible = bonusRare.productClassId !== -1;
     const total = bonusRare.totalCoinsForBonus;
     const spent = total - bonusRare.coinsStillRequiredToBuy;
-    const fill = product && (total > 0) ? Math.trunc((spent / total) * BAR_FILL_WIDTH) : 0;
+    const fill = (product && (total > 0)) ? Math.trunc((spent / total) * BAR_FILL_WIDTH) : 0;
+
+    const bindings: TemplateBindings = hotelViewColorableBindings(settings, COLORABLE, {
+        '': { visible: bonusRare.productClassId !== -1 },
+        preview: { visible: false },
+        promo_image: { visible: !!product, asset: hotelViewProperty(config, 'landing.view.bonus.rare.image.uri') },
+        header: { visible: !!product, caption: product ? t('landing.view.bonus.rare.header', '', { rarename: product.name, amount: String(total) }) : '' },
+        progress_bar_cont: { visible: !!product },
+        status: { caption: t('landing.view.bonus.rare.status', '', { amount: String(bonusRare.coinsStillRequiredToBuy), total: String(total) }) },
+        bar_a_c: { visible: fill > 0 },
+    });
+
+    /** `setProgress`: the fill as wide as the share spent, its end just after it. */
+    const arrange = ({ find }: TemplateWindows) => {
+        find('bar_a_c')?.setWidth(fill);
+        find('bar_a_r')?.setX(BAR_FILL_X + fill);
+    };
 
     return (
-        <Box
-            visible={visible}
-            layout={{ width: WIDTH, height: HEIGHT, flexShrink: 0 }}
-        >
-            <Border
-                variant="105"
-                blend={0.2}
-                layout={{ position: 'absolute', left: 1, top: 5, width: 600, height: 63 }}
+        <Box layout={{ width: WIDTH, height: HEIGHT, flexShrink: 0 }}>
+            <TemplateWindow
+                id="habbo-friend-bar-com/bonus_rare_promo_xml"
+                bindings={bindings}
+                arrange={arrange}
             />
-            <Region
-                name="teaser_image_container"
-                layout={{ position: 'absolute', left: 1, top: 5, width: 96, height: 63 }}
-            >
-                {product && (
-                    <ThemeImage
-                        name="promo_image"
-                        src={configString('landing.view.bonus.rare.image.uri')}
-                        bitmap={{ pivot: 'center', stretchedX: false, stretchedY: false }}
-                        layout={{ position: 'absolute', left: 8, top: -9, width: 80, height: 80 }}
-                    />
-                )}
-            </Region>
-            <Region
-                name="mid_container"
-                layout={{ position: 'absolute', left: 97, top: 5, width: 304, height: 53 }}
-            >
-                {product && (
-                    <>
-                        <ThemeText
-                            name="header"
-                            text={t('landing.view.bonus.rare.header', '', { rarename: product.name, amount: String(total) })}
-                            textStyle="u_headline_medium"
-                            textOptions={{ ...(colorable.fill ? { fill: colorable.fill } : {}), align: 'center' }}
-                            flashFormat={colorable.flashFormat}
-                            verticalAlign="top"
-                            layout={{ position: 'absolute', left: 0, width: 304, top: 5, alignItems: 'center' }}
-                        />
-                        <Region
-                            name="progress_bar_cont"
-                            layout={{ position: 'absolute', left: 2, top: 30, width: 302, height: 23 }}
-                        >
-                            <ThemeImage
-                                name="bar_l"
-                                src={LayoutImage('habbo-window-manager-com/achievement_ach_progressbar1.png')}
-                                bitmap={{}}
-                                layout={{ position: 'absolute', left: 0, top: 0, width: 4, height: 23 }}
-                            />
-                            <ThemeImage
-                                name="bar_c"
-                                src={LayoutImage('habbo-window-manager-com/achievement_ach_progressbar2.png')}
-                                bitmap={{}}
-                                layout={{ position: 'absolute', left: 4, top: 0, width: 291, height: 23 }}
-                            />
-                            <ThemeImage
-                                name="bar_r"
-                                src={LayoutImage('habbo-window-manager-com/achievement_ach_progressbar3.png')}
-                                bitmap={{}}
-                                layout={{ position: 'absolute', left: 295, top: 0, width: 4, height: 23 }}
-                            />
-                            {fill > 0 && (
-                                <ThemeImage
-                                    name="bar_a_c"
-                                    src={LayoutImage('habbo-window-manager-com/achievement_ach_progressbar4.png')}
-                                    bitmap={{}}
-                                    layout={{ position: 'absolute', left: BAR_FILL_X, top: 3, width: fill, height: 17 }}
-                                />
-                            )}
-                            <ThemeImage
-                                name="bar_a_r"
-                                src={LayoutImage('habbo-window-manager-com/achievement_ach_progressbar5.png')}
-                                bitmap={{}}
-                                layout={{ position: 'absolute', left: fill + BAR_FILL_X, top: 3, width: 2, height: 17 }}
-                            />
-                            <ThemeText
-                                name="status"
-                                text={t('landing.view.bonus.rare.status', '', { amount: String(bonusRare.coinsStillRequiredToBuy), total: String(total) })}
-                                // No `text_style` var: the style 0 window's `regular`, with the layout's Ubuntu 12 bold over it.
-                                textStyle="regular"
-                                textOptions={{ fontFamily: 'Ubuntu', fontSize: 12, fill: '#ffffff', align: 'center' }}
-                                flashFormat={{ bold: true, antiAliasType: 'advanced', etchingColor: 0x50000000, etchingPosition: 'bottom-right' }}
-                                verticalAlign="top"
-                                layout={{ position: 'absolute', left: 0, width: 302, top: 3, alignItems: 'center' }}
-                            />
-                        </Region>
-                    </>
-                )}
-            </Region>
-            <Button
-                variant="100"
-                name="buy_button"
-                layout={{ position: 'absolute', left: 401, top: 10, width: 200, height: 51 }}
-            >
-                {t('landing.view.bonus.rare.open.credits.page')}
-            </Button>
         </Box>
     );
 };

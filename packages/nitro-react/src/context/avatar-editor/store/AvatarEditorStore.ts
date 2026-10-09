@@ -1,4 +1,5 @@
 import { AvatarEditorCategory, AvatarEditorSetType, AvatarFigurePartType, AvatarGenderType } from '@nitrodevco/nitro-api';
+import type { INftWardrobeItem } from '@nitrodevco/nitro-packets';
 import { createStore } from 'zustand';
 
 import { buildFigureString, faceOnlyFigureString, FigureParts, normalizeGender, parseFigureString } from './figureString';
@@ -31,6 +32,20 @@ type State = {
     /** Wardrobe slots, 1-based server slots stored 0-based; `null` = empty slot. */
     wardrobe: AvatarEditorWardrobeOutfit[];
     wardrobeVisible: boolean;
+    /** `NftAvatarsModel.nftAvatars`: the user's NFT outfits (`UserNftWardrobeMessage`). */
+    nftOutfits: INftWardrobeItem[];
+    /** `HabboAvatarEditor._setNftOutfit`: the NFT outfit picked in the editor, which a save wears. */
+    selectedNftOutfitId: string | null;
+    /** `HabboAvatarEditor.setNftOutfit`: the look before the NFT outfit was picked, put back away from the NFT tab (`loadRollbackFigure`). */
+    nftRollbackFigure: string;
+    nftRollbackGender: string;
+    /**
+     * `UserNftWardrobeSelectionMessage`: the worn NFT outfit's token id (`null` until the server says,
+     * and again after a save - `hasNftOutfit`), and the look to show away from the NFT tab.
+     */
+    nftCurrentTokenId: string | null;
+    nftFallbackFigure: string;
+    nftFallbackGender: string;
 };
 
 type Actions = {
@@ -49,6 +64,11 @@ type Actions = {
     setFigureSetIds: (figureSetIds: number[], boundFurnitureNames: string[]) => void;
     setWardrobe: (wardrobe: AvatarEditorWardrobeOutfit[]) => void;
     setWardrobeSlot: (index: number, outfit: AvatarEditorWardrobeOutfit) => void;
+    setNftOutfits: (nftOutfits: INftWardrobeItem[]) => void;
+    setSelectedNftOutfitId: (selectedNftOutfitId: string | null) => void;
+    /** `HabboAvatarEditor.setNftOutfit`: picks the outfit and keeps the current look to roll back to. */
+    setNftOutfit: (id: string) => void;
+    setNftSelection: (currentTokenId: string | null, fallbackFigure?: string, fallbackGender?: string) => void;
 };
 
 const initialState: State = {
@@ -72,6 +92,13 @@ const initialState: State = {
     boundFurnitureNames: [],
     wardrobe: [],
     wardrobeVisible: true,
+    nftOutfits: [],
+    selectedNftOutfitId: null,
+    nftRollbackFigure: '',
+    nftRollbackGender: '',
+    nftCurrentTokenId: null,
+    nftFallbackFigure: '',
+    nftFallbackGender: '',
 };
 
 export type AvatarEditorStore = State & Actions & {
@@ -137,6 +164,14 @@ export const createAvatarEditorStore = () => createStore<AvatarEditorStore>()((s
     setGender: gender => set({ gender }),
     setFigureSetIds: (figureSetIds, boundFurnitureNames) => set({ figureSetIds, boundFurnitureNames }),
     setWardrobe: wardrobe => set({ wardrobe }),
+    setNftOutfits: nftOutfits => set({ nftOutfits }),
+    setSelectedNftOutfitId: selectedNftOutfitId => set({ selectedNftOutfitId }),
+    setNftOutfit: id => set(state => ({ selectedNftOutfitId: id, nftRollbackFigure: state.figure, nftRollbackGender: state.gender })),
+    setNftSelection: (nftCurrentTokenId, nftFallbackFigure, nftFallbackGender) => set(state => ({
+        nftCurrentTokenId,
+        nftFallbackFigure: nftFallbackFigure ?? state.nftFallbackFigure,
+        nftFallbackGender: nftFallbackGender ?? state.nftFallbackGender,
+    })),
     setWardrobeSlot: (index, outfit) => set((state) => {
         const wardrobe = [ ...state.wardrobe ];
 

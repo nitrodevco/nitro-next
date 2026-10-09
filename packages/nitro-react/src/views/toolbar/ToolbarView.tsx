@@ -36,11 +36,14 @@ import { GetTicker } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer, Ticker } from 'pixi.js';
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
-import { goToHomeRoom, openClientLink, openProfile, showOwnRooms, toggleCatalog } from '#base/commands';
+import { goToHomeRoom, openClientLink, openProfile, showOwnRooms, showQuests, startTakingPhoto, toggleCatalog } from '#base/commands';
 import { unseenSkipped, useAchievementsStore } from '#base/context/achievements';
 import { useWebSocketContext } from '#base/context/communication';
-import { useInventoryUnseenTotalCount } from '#base/context/inventory';
+import { getUnseenDailyTasksCount, useDailyTasksStore } from '#base/context/daily-tasks';
+import { useGroupStore } from '#base/context/groups';
+import { inventoryStore, useInventoryUnseenTotalCount } from '#base/context/inventory';
 import { useMessengerStore } from '#base/context/messenger';
+import { getRewardTrackClaimableCount, useRewardTrackStore } from '#base/context/reward-track';
 import { useOwnRoomObjectId } from '#base/context/room';
 import { ToolbarTransitionIcon, useConfigValue, useIsLandingViewVisible, useSystemActions, useSystemStore, useTranslation } from '#base/context/system';
 import { PerkCodes, useOwnPerkAllowed, useOwnUserFigure, useOwnUserGender, useOwnUserId } from '#base/context/user';
@@ -206,9 +209,14 @@ export const ToolbarView = () => {
     const dailyTasksEnabled = useConfigValue<boolean>('dailytasks.enabled') === true;
     const unseenInventoryCount = useInventoryUnseenTotalCount();
     const unseenMiniMailCount = useMessengerStore(x => x.miniMailUnreadCount);
+    const unreadForumsCount = useGroupStore(x => x.unreadForumsCount);
     const skippedBadges = useConfigValue<string>('toolbar.unseen_notification.skipped_badge_ids');
     // `broadcastUnseenAchievementsCount`: unseen entries whose badge is not skipped.
+    // `UnseenDailyTasksCountUpdateEvent`: the tasks done and not claimed.
+    const unseenDailyTasks = useDailyTasksStore(x => getUnseenDailyTasksCount(x.tasks));
     const unseenAchievements = useAchievementsStore(x => x.unseen.filter(entry => !unseenSkipped(entry.badgeId, skippedBadges === undefined ? [] : skippedBadges.split(','))).length);
+    // `UnseenRewardTrackRewardsCountUpdateEvent`: the reward tracks' prizes that can be claimed.
+    const claimableRewardTrackPrizes = useRewardTrackStore(x => getRewardTrackClaimableCount(x.tracks));
     const { attachTarget: attachInventoryTarget, lift: inventoryLift } = useToolbarTransitionTarget('HTIE_ICON_INVENTORY');
     const { attachTarget: attachMeMenuTarget, lift: meMenuLift } = useToolbarTransitionTarget('HTIE_ICON_MEMENU');
 
@@ -302,7 +310,8 @@ export const ToolbarView = () => {
             onPointerTap: iconClick(undefined, 'progression'),
             children: (
                 <UnseenItemCounterView
-                    count={unseenAchievements}
+                    // `unseenProgMenuCount`: the achievements', the daily tasks' and the reward tracks' claimable prizes (`BottomBarLeft`).
+                    count={unseenAchievements + unseenDailyTasks + claimableRewardTrackPrizes}
                     layout={{ position: 'absolute', right: 0, top: 0 }}
                 />
             ),
@@ -312,7 +321,8 @@ export const ToolbarView = () => {
         CATALOGUE: { onPointerTap: iconClick(() => toggleCatalog(CatalogTypeEnum.Normal)) },
         BUILDER: { onPointerTap: iconClick(() => toggleCatalog(CatalogTypeEnum.BuildersClub)) },
         INVENTORY: {
-            onPointerTap: iconClick(() => toggleWindow('inventory')),
+            // `InventoryMainView.onHabboToolbarEvent`: the page it last showed.
+            onPointerTap: iconClick(() => toggleWindow('inventory', { tab: inventoryStore.getState().lastPage })),
             children: (
                 <>
                     {/* `icons_toolbar_inventory`'s box: what transitions land on. */}
@@ -337,9 +347,9 @@ export const ToolbarView = () => {
                         pointerTransparent
                         layout={{ position: 'absolute', left: 0, top: 0, width: 45, height: 45 }}
                     />
-                    {/* `setUnseenItemCount('HTIE_ICON_MEMENU', unseenMeMenuCount)`: unread mini mail (the forums' count is not ported). */}
+                    {/* `setUnseenItemCount('HTIE_ICON_MEMENU', unseenMeMenuCount)`: unread mini mail and unread forums. */}
                     <UnseenItemCounterView
-                        count={unseenMiniMailCount}
+                        count={unseenMiniMailCount + unreadForumsCount}
                         layout={{ position: 'absolute', right: 0, top: 0 }}
                     />
                 </>
@@ -347,7 +357,7 @@ export const ToolbarView = () => {
         },
         icon_me_menu: meMenuIcon ? { asset: meMenuIcon } : { visible: false },
         WIRED_MENU: { onPointerTap: iconClick(() => toggleWindow('wired_menu')) },
-        CAMERA: { onPointerTap: iconClick() },
+        CAMERA: { onPointerTap: iconClick(startTakingPhoto) },
     };
 
     for (const toggle of toggles) {
@@ -434,7 +444,7 @@ export const ToolbarView = () => {
                         // `onSubMenuItemClick('rooms')`: `navigator.showOwnRooms()`.
                         { name: 'rooms', visible: true, action: () => showOwnRooms(send) },
                         { name: 'clothes', visible: true, action: () => openClientLink(send, 'avatareditor/open') },
-                        { name: 'forums', visible: true, action: () => openClientLink(send, 'groupforum/list/my') },
+                        { name: 'forums', visible: true, action: () => openClientLink(send, 'groupforum/list/my'), unseenCount: unreadForumsCount },
                         { name: 'collectibles', visible: classicCollectiblesHubEnabled && collectiblesHubEnabled, action: () => openClientLink(send, 'collectibles/open') },
                     ]}
                     onClose={() => setOpenMenu(undefined)}
@@ -444,11 +454,13 @@ export const ToolbarView = () => {
                 <ToolbarExtendedMenu
                     templateId="habbo-toolbar-com/prog_menu_view_xml"
                     items={[
-                        { name: 'dailytasks', visible: dailyTasksEnabled, action: () => openClientLink(send, 'dailytasks/open') },
-                        { name: 'quests', visible: !hideQuests },
+                        { name: 'dailytasks', visible: dailyTasksEnabled, action: () => openClientLink(send, 'dailytasks/open'), unseenCount: unseenDailyTasks },
+                        // `onSubMenuItemClick('quests')`: `questEngine.showQuests()`.
+                        { name: 'quests', visible: !hideQuests, action: () => showQuests(send) },
                         { name: 'achievements', visible: true, action: () => openClientLink(send, 'questengine/achievements'), unseenCount: unseenAchievements },
-                        { name: 'leaderboards', visible: true },
-                        { name: 'introduction', visible: true, action: () => openClientLink(send, 'reward_track/open/introduction') },
+                        // `onSubMenuItemClick('leaderboards')`: the badge leaderboard's link (`groups/_-ge.getLink(0, -1, 0)`).
+                        { name: 'leaderboards', visible: true, action: () => openClientLink(send, 'badge_leaderboard/0/-1/0') },
+                        { name: 'introduction', visible: true, action: () => openClientLink(send, 'reward_track/open/introduction'), unseenCount: claimableRewardTrackPrizes },
                     ]}
                     onClose={() => setOpenMenu(undefined)}
                 />

@@ -30,6 +30,7 @@ export * from './localizationData';
 export * from './localizationParameters';
 export * from './marketplace';
 export * from './petTypeFromFigure';
+export * from './renderRoomMessage';
 export * from './RetainedCache';
 export * from './roomEventExtension';
 export * from './targetedOfferTimeLeft';

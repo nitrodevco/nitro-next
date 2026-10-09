@@ -209,6 +209,7 @@ const RenderedText = (props: TextRenderConfig) => {
                 clipWidth={(clip && typeof layout?.width === 'number') ? layout.width : undefined}
                 clipHeight={(clip && typeof layout?.height === 'number') ? layout.height : undefined}
                 clip={clip}
+                clipAlign={(textOptions?.align === 'center' || textOptions?.align === 'right') ? textOptions.align : undefined}
                 onLink={onLink}
                 layout={{ objectPosition: textObjectPosition(textOptions?.align, verticalAlign), ...layout }}
             />

@@ -11,12 +11,18 @@
  * `games_icon_enabled`, `games_container` and `agency_container` without `wired.game_earnings`,
  * and `wiredchest_container` until a status has wired chest rewards in it
  * (`onIncomeRewardDataReceived`). The item list closes the gap a hidden row leaves
- * (`ItemListController.updateScrollAreaRegion` places only the visible items). Elements the layout
+ * (`ItemListController.updateScrollAreaRegion` places only the visible items) and, with
+ * `resize_on_item_update` and `reflectToParent`, gets shorter by each hidden row, the content area and
+ * the frame with it - `claim_all_btn` moving up. The constructor centres the window first, at the
+ * layout's full height, so the shorter window keeps that top. Elements the layout
  * builds invisible and no code shows (the other currency of a one-currency row) are left out.
  *
  * A category's row carries only its amounts and its claim button: Flash's `windowProcedure`
  * answers nothing else in it, so a click on a row opens no other system.
  */
+import { GetRenderer } from '@nitrodevco/nitro-renderer';
+import { useState } from 'react';
+
 import { claimEarnings } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { EARNINGS_ALL_CATEGORIES, EARNINGS_CLAIM_ALL_BUTTON, EARNINGS_REWARD_CATEGORIES, EarningsCategoryValues, earningsCategoryValues, earningsClaimButtonName, EarningsRewardCategoryName, useEarningsStore } from '#base/context/earnings';
@@ -27,6 +33,9 @@ import { Border, Button, ButtonThick, Frame, Icon, LayoutImage, Region, ThemeIma
 const FRAME_WIDTH = 422;
 const FRAME_HEIGHT = 536;
 const FRAME_MARGINS = [ 6, 35, 6, 6 ] as const;
+/** A row's height and the list's `spacing`: what a hidden row takes off the window. */
+const ROW_HEIGHT = 34;
+const ROW_SPACING = 3;
 
 /** Where one amount of a row sits in its extended border: its icon's x; the count is 25 further right. */
 interface EarningsRowAmount {
@@ -220,6 +229,14 @@ export const EarningsView = ({ onClose }: EarningsViewProps) => {
         }
     };
 
+    // `_window.center()`, before any row is hidden: centred at the layout's full size.
+    const [ position ] = useState(() => {
+        const { width, height } = GetRenderer().screen;
+
+        return { x: Math.trunc((width - FRAME_WIDTH) / 2), y: Math.trunc((height - FRAME_HEIGHT) / 2) };
+    });
+    const hiddenRows = ROWS.filter(row => !isRowVisible(row.name)).length;
+
     return (
         <Frame
             variant="3"
@@ -230,10 +247,10 @@ export const EarningsView = ({ onClose }: EarningsViewProps) => {
             dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
             onClose={onClose}
             resizeDirection="none"
-            centered
+            defaultPosition={position}
             rememberPosition={false}
             margins={FRAME_MARGINS}
-            layout={{ width: FRAME_WIDTH, height: FRAME_HEIGHT }}
+            layout={{ width: FRAME_WIDTH, height: FRAME_HEIGHT - (hiddenRows * (ROW_HEIGHT + ROW_SPACING)) }}
         >
             <Region
                 name="earningsContentArea"

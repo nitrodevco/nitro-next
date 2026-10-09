@@ -22,7 +22,7 @@
  * same way.
  */
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
-import { Graphics as PixiGraphics } from 'pixi.js';
+import { Container as PixiContainer, Graphics as PixiGraphics, RenderLayer } from 'pixi.js';
 import { createContext, memo, ReactNode, useContext, useEffect, useLayoutEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
 import { Border } from '../Border';
@@ -48,7 +48,7 @@ import { RadioButton } from '../RadioButton';
 import { Region, RegionProps } from '../Region';
 import { Scaler } from '../Scaler';
 import { ScrollArea } from '../ScrollArea';
-import { Shape } from '../Shape';
+import { Shape, ShapeKind } from '../Shape';
 import { TabButton } from '../TabButton';
 import { TabContent } from '../TabContent';
 import { TabContext } from '../TabContext';
@@ -134,6 +134,9 @@ const flashColor = (value: TemplateValue | undefined): { hex: string; alpha: num
 
     return { hex: `#${padded.slice(-6).toLowerCase()}`, alpha };
 };
+
+/** `ShapeController.normalizeShape`'s kinds; any other is a rectangle. */
+const SHAPE_KINDS = new Set([ 'rectangle', 'round_rectangle', 'ellipse', 'rhombus' ]);
 
 /** A colour as the `0xAARRGGBB` number Flash's `uint(...)` makes of it. */
 const flashUint = (value: TemplateValue | undefined): number | undefined => {
@@ -301,6 +304,286 @@ const ScrollLinksContext = createContext<ScrollLinks>({ scrollbars: new Map(), s
 /** Whether nothing in a window's subtree is a display object of its own: all of it draws into its parent's graphic context. */
 const drawsIntoParentOnly = (element: TemplateElement): boolean => templateUsesParentGraphics(element) && element.children.every(drawsIntoParentOnly);
 
+type DisplayRect = { x: number; y: number; width: number; height: number };
+
+const displayRects = new WeakMap<TemplateElement, DisplayRect[]>();
+
+/**
+ * Where a window has display objects of its own, in its parent's space: all of it when it has its
+ * own graphic context, else its descendants that do - its face goes into the parent's context.
+ */
+const displayRectsOf = (element: TemplateElement): DisplayRect[] => {
+    let rects = displayRects.get(element);
+
+    if (rects) return rects;
+
+    const collect = (window: TemplateElement, x: number, y: number, out: DisplayRect[]) => {
+        for (const child of window.children) {
+            if (templateUsesParentGraphics(child)) collect(child, x + child.x, y + child.y, out);
+            else out.push({ x: x + child.x, y: y + child.y, width: child.width, height: child.height });
+        }
+
+        return out;
+    };
+
+    rects = templateUsesParentGraphics(element) ? collect(element, element.x, element.y, []) : [ { x: element.x, y: element.y, width: element.width, height: element.height } ];
+    displayRects.set(element, rects);
+
+    return rects;
+};
+
+const overlaps = (element: TemplateElement, rects: DisplayRect[]) => rects.some(rect => (element.x < (rect.x + rect.width)) && (rect.x < (element.x + element.width)) && (element.y < (rect.y + rect.height)) && (rect.y < (element.y + element.height)));
+
+/**
+ * The order a window's children draw in. What draws into the window's own graphic context lies
+ * under every display object over it, so a child whose whole subtree draws into the context goes
+ * under an earlier sibling's display objects where it meets them - a later sibling's border
+ * cannot cover a region inside an earlier container (`bottom_bar_left`'s border over its arrows'
+ * regions). Elsewhere it keeps its place, over the earlier sibling's face drawn into the same
+ * context (the badges page's `filter.rarity` over `options_container`).
+ *
+ * A child drawn into the context with windows of their own under it goes there too, `split`: only
+ * what it draws into the context moves, while those windows - child contexts nested in its own
+ * (`WindowController.addChild`) - stay over the earlier sibling's. The reward track's `rewards`
+ * panel lies under `cutout`'s profile and curve, its prizes and bar over them.
+ *
+ * Only a sibling with a context of its own is a display object to go under. One drawn into the
+ * context itself stays under the later child, as the one bitmap draws them in tree order, and its
+ * own-context windows are `lifted` over it instead: drawn after the last such child they meet.
+ */
+const childDrawOrder = (element: TemplateElement): { order: number[]; moved: Set<number>; split: Set<number>; lifted: Map<number, number> } => {
+    const order: number[] = [];
+    const moved = new Set<number>();
+    const split = new Set<number>();
+    const lifted = new Map<number, number>();
+
+    element.children.forEach((child, index) => {
+        if (!templateUsesParentGraphics(child)) {
+            order.push(index);
+
+            return;
+        }
+
+        // An earlier sibling drawn into the context itself, with windows of their own under it: its
+        // face stays under this child, in tree order in the one bitmap, and only those windows rise
+        // over it - `club_center_xml`'s post-it over the blue box, under its link.
+        element.children.forEach((earlier, earlierIndex) => {
+            if ((earlierIndex < index) && templateUsesParentGraphics(earlier) && !drawsIntoParentOnly(earlier) && overlaps(child, displayRectsOf(earlier))) lifted.set(earlierIndex, index);
+        });
+
+        const under = order.findIndex(earlier => !templateUsesParentGraphics(element.children[earlier]) && overlaps(child, displayRectsOf(element.children[earlier])));
+
+        if (under < 0) {
+            order.push(index);
+        } else {
+            order.splice(under, 0, index);
+            moved.add(index);
+
+            if (!drawsIntoParentOnly(child)) split.add(index);
+        }
+    });
+
+    return { order, moved, split, lifted };
+};
+
+/**
+ * Where a press lands is the window tree's business, not the drawing's: `MouseEventProcessor` takes
+ * the windows under the point that process input (`groupParameterFilteredChildrenUnderPoint(point,
+ * list, 1)`, in tree order) and tries the last first, so a later sibling takes the press over an
+ * earlier one wherever they meet - whichever of them draws on top. Pixi hits in the order it draws,
+ * so the children stay in tree order and a child `childDrawOrder` moves under an earlier sibling is
+ * only drawn there, through a `RenderLayer` placed before that sibling (which hit testing ignores):
+ * `sanction_info_xml`'s `ok_button` draws under `faq_link`'s display object and still takes the
+ * press where the link's box covers it.
+ *
+ * `drawOrder` is the order of `indices` (a subset of the children) as they draw. A moved child that
+ * still draws after every child before it in the tree is in place and needs no layer. A `split` one's
+ * windows with a context of their own draw at its place in the tree, through a layer of their own
+ * (`ClipEscapeContext`) - or through `escape`, the one a clipping ancestor's mask gives, past it.
+ */
+const treeOrderedChildren = (drawOrder: number[], moved: Set<number>, views: Map<number, ReactNode>, layers: (slot: number) => RenderLayer, split: Set<number>, escape: RenderLayer | undefined, lifted: ReadonlyMap<number, number> = NO_LIFTS): ReactNode[] => {
+    const slots = new Map<number, number[]>();
+    const relayered = new Map<number, number>();
+
+    drawOrder.forEach((index, position) => {
+        if (!moved.has(index)) return;
+
+        const next = drawOrder.slice(position + 1).find(later => !moved.has(later));
+
+        if ((next === undefined) || (next > index)) return;
+
+        slots.set(next, [ ...(slots.get(next) ?? []), index ]);
+        relayered.set(index, next);
+    });
+
+    const liftedHere = [ ...lifted ].filter(([ index, after ]) => drawOrder.includes(index) && drawOrder.includes(after));
+
+    if (!relayered.size && !liftedHere.length) return drawOrder.map(index => views.get(index));
+
+    // A lifted child's windows with a context of their own draw through a layer placed after the
+    // last sibling drawn into the context over it (or through `escape`, past a clipping mask).
+    const liftLayers = new Map(liftedHere.map(([ index ]) => [ index, escape ?? layers(liftSlot(index)) ]));
+    const liftSlots = new Map<number, number[]>();
+
+    if (!escape) liftedHere.forEach(([ index, after ]) => liftSlots.set(after, [ ...(liftSlots.get(after) ?? []), index ]));
+
+    const viewOf = (index: number) => {
+        const layer = liftLayers.get(index);
+
+        return layer
+            ? (
+                    <ClipEscapeContext.Provider
+                        key={`lifted:${index}`}
+                        value={layer}
+                    >
+                        {views.get(index)}
+                    </ClipEscapeContext.Provider>
+                )
+            : views.get(index);
+    };
+    const out: ReactNode[] = [];
+    const pushLiftSlots = (after: number) => liftSlots.get(after)?.forEach(index => out.push(
+        <DrawSlot
+            key={`lift-slot:${index}`}
+            layer={layers(liftSlot(index))}
+        />,
+    ));
+
+    for (const index of [ ...drawOrder ].sort((a, b) => a - b)) {
+        if (slots.has(index)) {
+            out.push(
+                <DrawSlot
+                    key={`draw-slot:${index}`}
+                    layer={layers(index)}
+                />,
+            );
+        }
+
+        const slot = relayered.get(index);
+
+        if (slot === undefined) {
+            out.push(viewOf(index));
+            pushLiftSlots(index);
+            continue;
+        }
+
+        // A lifted child's own-context windows go through its lift layer, after this split one's place.
+        const ownContexts = (split.has(index) && !liftLayers.has(index)) ? (escape ?? layers(splitSlot(index))) : undefined;
+
+        out.push(
+            <DrawnIn
+                key={`drawn-in:${index}`}
+                layer={layers(slot)}
+            >
+                {ownContexts ? <ClipEscapeContext.Provider value={ownContexts}>{views.get(index)}</ClipEscapeContext.Provider> : viewOf(index)}
+            </DrawnIn>,
+        );
+
+        if (ownContexts && !escape) {
+            out.push(
+                <DrawSlot
+                    key={`split-slot:${index}`}
+                    layer={ownContexts}
+                />,
+            );
+        }
+
+        pushLiftSlots(index);
+    }
+
+    return out;
+};
+
+/** A `RenderLayer` at its place among its siblings: what is attached to it draws here. */
+const DrawSlot = ({ layer }: { layer: RenderLayer }) => {
+    const [ node, setNode ] = useState<PixiContainer | null>(null);
+
+    useEffect(() => {
+        if (!node) return;
+
+        node.addChild(layer);
+
+        return () => {
+            node.removeChild(layer);
+        };
+    }, [ node, layer ]);
+
+    return (
+        <Box
+            ref={setNode}
+            pointerTransparent
+            eventMode="none"
+            layout={{ position: 'absolute', left: 0, top: 0, width: 0, height: 0 }}
+        />
+    );
+};
+
+/** A child at its place in the tree, for hit testing, drawn through `layer`. */
+const DrawnIn = ({ layer, children }: { layer: RenderLayer; children: ReactNode }) => {
+    const [ node, setNode ] = useState<PixiContainer | null>(null);
+
+    useEffect(() => {
+        if (!node) return;
+
+        layer.attach(node);
+
+        return () => {
+            layer.detach(node);
+        };
+    }, [ node, layer ]);
+
+    return (
+        <Box
+            ref={setNode}
+            pointerTransparent
+            layout={FILL}
+        >
+            {children}
+        </Box>
+    );
+};
+
+/**
+ * The layer a clipping window draws its escaping descendants through, for the windows under its mask.
+ * Flash masks only what is drawn into a window's own graphic context: `GraphicContext.setDrawRegion`
+ * puts the clip on `getDisplayObject()` (its drawn bitmap), while each child context is added beside
+ * it (`addChildContext`), unmasked, and `WindowRenderer.childRectToClippedDrawRegion` clips a window's
+ * drawing by its ancestors only while each draws into its parent's (`use_parent_graphic_context`). So a
+ * window with a context of its own anywhere under a clipping window - its direct children and those
+ * deeper down - draws uncut: the HC tab's `chat_flood_sensitivity`
+ * drop menu, inside `tab_container_4` (which draws into `content_container`'s context and reaches
+ * 26 px past it). Such a window stays in the tree, where hit testing finds it, and draws through this
+ * layer, which sits after the mask; below it the context is cleared, as its subtree is in its own.
+ */
+const ClipEscapeContext = createContext<RenderLayer | undefined>(undefined);
+
+/** The key of a clipping window's escape layer among its draw layers, apart from every child slot. */
+const ESCAPE_SLOT = -1;
+
+/** The key of a `split` child's own-context layer among its parent's draw layers. */
+const splitSlot = (index: number) => -2 - index;
+
+/** The key of a lifted child's own-context layer, apart from the split ones. */
+const liftSlot = (index: number) => -1000000 - index;
+
+const NO_LIFTS: ReadonlyMap<number, number> = new Map();
+
+/** The render layers of one window's children, by the sibling they draw before; made once each. */
+const useDrawLayers = () => {
+    const [ layers ] = useState(() => new Map<number, RenderLayer>());
+
+    return (slot: number) => {
+        let layer = layers.get(slot);
+
+        if (!layer) {
+            layer = new RenderLayer();
+            layers.set(slot, layer);
+        }
+
+        return layer;
+    };
+};
+
 /**
  * The checkbox and radio button styles whose `habbo_element_description` entry has a `window_layout`
  * with a `_CAPTION_TEXT` field (`CheckBoxController.set caption` writes the caption there): the
@@ -381,14 +664,25 @@ const textOf = (element: TemplateElement, rect: TemplateRect, context: Context, 
 
     if (!text) return null;
 
-    // `TextLabelController`: a label draws its text inside its margins.
-    const margins = label ? templateTextMargins(element) : undefined;
+    // `TextLabelController`: a label draws its text inside its margins. A text's field goes at its
+    // margins too (`TextSkinRenderer.draw`: `tx = margins.left`, `ty = margins.top`), the field as
+    // wide as the window less them - but a centred one is centred on the whole window.
+    const ownMargins = templateTextMargins(element);
+    const margins = (!label && autoSize === 'center') ? { ...ownMargins, left: 0, right: 0 } : ownMargins;
+    const fieldWidth = Math.max(0, rect.width - margins.left - margins.right);
+    const markup = (binding?.htmlText !== undefined) || isMarkupTemplateText(element);
+    // Each window draws into a buffer of its own size (`WindowRendererItem.render`), so a field wider
+    // than its window - a centred or right-aligned one, which keeps its window's width
+    // (`TextController.refreshTextImage`) - is cut at the window's edges: the effects widget's
+    // centred one-line `no_effects` text. Masked only when it overflows, to keep masks few.
+    const clipped = !label && ((autoSize === 'none') || ((measureTemplateText(element, text, wordWrap ? fieldWidth : undefined, markup)?.width ?? 0) > fieldWidth));
     // `TextController.background`: the `TextField` fills its rect in its `backgroundColor` - the
     // window's colour (`set color`), white when it has none. A label has no field background.
     // A binding's `color` is the text's colour (`textColor` above), so it fills the field only when
     // the binding itself asks for a background: the infostand's white name over its dark `color`. A
     // binding's `backgroundColor` is the window's colour apart from the text's (`roc_room_thumbnail`'s
-    // `tile_size_txt`, whose code sets both), and fills the field whatever the layout says.
+    // `tile_size_txt`, whose code sets both), and fills the field whatever the layout says: also a
+    // forum quote's grey field (`MessageListView.addTextBlock`: `color = 0xFFCCCCCC`, `background = true`).
     const background = label
         ? undefined
         : (binding?.backgroundColor !== undefined)
@@ -399,16 +693,15 @@ const textOf = (element: TemplateElement, rect: TemplateRect, context: Context, 
         <ThemeText
             text={text}
             textStyle={style}
-            textOptions={{ fill: color, fontFamily, fontSize: templateFontSize(element), wordWrap: wordWrap || undefined, wordWrapWidth: wordWrap ? templateWrapWidth(rect.width) : undefined, align }}
+            textOptions={{ fill: color, fontFamily, fontSize: templateFontSize(element), wordWrap: wordWrap || undefined, wordWrapWidth: wordWrap ? templateWrapWidth(fieldWidth) : undefined, align }}
             flashFormat={flash.etchingColor ? { ...flash, etchingPosition: flash.etchingPosition ?? 'bottom' } : flash}
-            markup={(binding?.htmlText !== undefined) || isMarkupTemplateText(element) || undefined}
-            clip={!label && autoSize === 'none' ? true : undefined}
-            crop={binding?.crop ? rect.width : undefined}
+            markup={markup || undefined}
+            onLink={binding?.onLink}
+            clip={clipped || undefined}
+            crop={binding?.crop ? fieldWidth : undefined}
             dynamicRole={dynamicRoleOf(element)}
             verticalAlign="top"
-            layout={margins
-                ? { position: 'absolute', left: margins.left, top: margins.top, width: Math.max(0, rect.width - margins.left - margins.right), height: Math.max(0, rect.height - margins.top - margins.bottom) }
-                : { position: 'absolute', left: 0, top: 0, width: rect.width, height: rect.height }}
+            layout={{ position: 'absolute', left: margins.left, top: margins.top, width: fieldWidth, height: Math.max(0, rect.height - margins.top - margins.bottom) }}
         />
     );
 
@@ -747,6 +1040,7 @@ const ownFaceOf = (element: TemplateElement, rect: TemplateRect, context: Contex
                                 selected: index === selection,
                                 onSelect: () => binding?.onSelect?.(index),
                             }))}
+                            openRequest={binding?.openRequest}
                             layout={FILL}
                         />
                     )
@@ -786,13 +1080,21 @@ const ownFaceOf = (element: TemplateElement, rect: TemplateRect, context: Contex
                 />
             );
         }
+        // `ShapeController`, drawn by `ShapeSkinRenderer`: its `shape`, `radius` and stroke vars in its
+        // colour - the code's over the layout's - where a colour with no alpha byte draws opaque.
         case 'shape': {
-            const color = flashColor(element.color);
+            const color = flashUint(binding?.color ?? element.color);
+            const strokeColor = flashUint(element.vars.stroke_color);
+            const kind = flashString(element.vars.shape);
 
             return (
                 <Shape
-                    color={color?.hex}
-                    alpha={color?.alpha}
+                    shape={(kind && SHAPE_KINDS.has(kind)) ? kind as ShapeKind : undefined}
+                    color={(color === undefined) ? undefined : `#${color.toString(16).padStart(8, '0')}`}
+                    strokeColor={(strokeColor === undefined) ? undefined : `#${strokeColor.toString(16).padStart(8, '0')}`}
+                    strokeThickness={Number(element.vars.stroke_thickness ?? 0) || 0}
+                    strokeHsvShade={Number(element.vars.stroke_hsv_shade ?? 0) || 0}
+                    radius={Number(element.vars.radius ?? 0) || 0}
                     layout={FILL}
                 />
             );
@@ -954,6 +1256,8 @@ interface ElementViewProps {
 const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementViewProps) => {
     const state = useSyncExternalStore(context.store.subscribe, () => context.store.get(element));
     const scrollLinks = useContext(ScrollLinksContext);
+    const drawLayers = useDrawLayers();
+    const clipEscape = useContext(ClipEscapeContext);
     const binding = state?.binding;
     const rect: TemplateRect = state?.rect ?? element;
     // A list's `show` decides for its items; otherwise the binding, over the layout.
@@ -1012,16 +1316,8 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
     const list = TEMPLATE_LISTS[element.tag];
     const childFlow = FLOWS[element.tag];
     const show = list ? binding?.show : undefined;
-    /*
-     * The order the children draw in: what is drawn into this window's own graphic context lies
-     * under every display object over it, so a child whose whole subtree draws into the context
-     * goes first - a later sibling's border cannot cover a region inside an earlier container
-     * (`bottom_bar_left`'s border over its arrows' regions). A flow lays its children out in their
-     * order, so its children keep it.
-     */
-    const drawOrder = element.children.map((_, index) => index);
-
-    if (!childFlow && (element.tag !== 'selector')) drawOrder.sort((a, b) => Number(!drawsIntoParentOnly(element.children[a])) - Number(!drawsIntoParentOnly(element.children[b])));
+    // The order the children draw in (`childDrawOrder`). A flow lays its children out in their order, so its children keep it.
+    const { order: drawOrder, moved, split, lifted } = (!childFlow && (element.tag !== 'selector')) ? childDrawOrder(element) : { order: element.children.map((_, index) => index), moved: new Set<number>(), split: new Set<number>(), lifted: new Map<number, number>() };
 
     const childViews = drawOrder.map((index) => {
         const child = element.children[index];
@@ -1057,7 +1353,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                             ))}
                         </Box>
                     )
-                : childViews}
+                : treeOrderedChildren(drawOrder, moved, new Map(drawOrder.map((index, position) => [ index, childViews[position] ])), drawLayers, split, clipEscape, lifted)}
             {binding?.children}
         </>
     );
@@ -1066,7 +1362,9 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
      * The face and the children, as a window that clips draws them: its mask cuts only what is drawn
      * into its own graphic context - its face, the children with `use_parent_graphic_context`, and
      * what its code adds - while a child with a context of its own lies over all of that, uncut
-     * (`templateUsesParentGraphics`).
+     * (`templateUsesParentGraphics`), drawn through the escape layer (`ClipEscapeContext`). Every
+     * child stays under the mask in the tree, which cuts presses as Flash's clipping window does:
+     * `groupParameterFilteredChildrenUnderPoint` looks at no child of a clipping window outside it.
      */
     const drawn = (face: ReactNode) => {
         if (!rect.clip || element.tag === 'selector') {
@@ -1078,7 +1376,9 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
             );
         }
 
-        const ownContext = (index: number) => !templateUsesParentGraphics(element.children[drawOrder[index]]);
+        const views = new Map(drawOrder.map((index, position) => [ index, childViews[position] ]));
+        // Under an outer mask already, its escaping windows draw through the outer one's layer, past both.
+        const escapeLayer = clipEscape ?? drawLayers(ESCAPE_SLOT);
 
         return (
             <>
@@ -1086,11 +1386,13 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                     pointerTransparent
                     layout={{ ...FILL, overflow: 'hidden' }}
                 >
-                    {face}
-                    {childViews.filter((_, index) => !ownContext(index))}
-                    {binding?.children}
+                    <ClipEscapeContext.Provider value={escapeLayer}>
+                        {face}
+                        {treeOrderedChildren(drawOrder, moved, views, drawLayers, split, escapeLayer, lifted)}
+                        {binding?.children}
+                    </ClipEscapeContext.Provider>
                 </Box>
-                {childViews.filter((_, index) => ownContext(index))}
+                {!clipEscape && <DrawSlot layer={escapeLayer} />}
             </>
         );
     };
@@ -1174,7 +1476,8 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
         const frame = (
             <Frame
                 id={window?.id ?? `${context.idPrefix}${id}`}
-                variant={element.style}
+                // `IFrameWindow.style`, as its code sets it (`BadgeLeaderboardView.setFrameStyle`).
+                variant={binding?.style ?? element.style}
                 caption={captionOf(element, context, binding)}
                 tintColor={tintOf(element, binding)}
                 margins={element.margins ?? [ 0, 0, 0, 0 ]}
@@ -1193,8 +1496,8 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                 draggable={!!window && (window.draggable ?? true)}
                 onClose={window?.onClose}
                 closeButtonVisible={window?.closeButtonVisible}
-                // `FrameController`'s `help_page` property: a page shows the header's help button.
-                helpPage={flashString(element.vars.help_page)}
+                // `FrameController`'s `help_page` property, or the `helpPage` its code sets: a page shows the header's help button.
+                helpPage={binding?.helpPage ?? flashString(element.vars.help_page)}
                 onHelp={window?.onHelp}
                 resizeDirection={resizeDirection}
                 onResize={resizeDirection !== 'none' ? context.onFrameResize : undefined}
@@ -1288,6 +1591,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                     orientation="vertical"
                     variant={scrollbar?.style}
                     hideDisabledScrollbar={binding?.autoHideScrollBar ?? true}
+                    scrollV={binding?.scrollV}
                     layout={{ position: 'absolute', left: 0, top: 0, width: rect.width, height: rect.height, gap: 0 }}
                     viewportLayout={{ position: 'absolute', left: viewport.x, top: viewport.y, width: viewport.width, height: viewport.height }}
                     scrollbarLayout={scrollbar
@@ -1342,7 +1646,26 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
     );
 };
 
-const ElementView = memo(ElementContent);
+/**
+ * An element as its parent holds it: drawn through the clip escape layer when it has a graphic
+ * context of its own under a clipping window's mask (`ClipEscapeContext`). An item of a list's flow
+ * keeps its place in the flow.
+ */
+const ElementEscape = (props: ElementViewProps) => {
+    const clipEscape = useContext(ClipEscapeContext);
+
+    if (!clipEscape || props.flow || templateUsesParentGraphics(props.element)) return <ElementContent {...props} />;
+
+    return (
+        <DrawnIn layer={clipEscape}>
+            <ClipEscapeContext.Provider value={undefined}>
+                <ElementContent {...props} />
+            </ClipEscapeContext.Provider>
+        </DrawnIn>
+    );
+};
+
+const ElementView = memo(ElementEscape);
 
 /**
  * A `selector`'s child: `SelectorController.select` moves the window it selects to the top of its
@@ -1481,6 +1804,7 @@ export const TemplateView = ({ template, resolveText, imageUrl, bindings, showHi
         scrollTargets: scrollLinks.scrollTargets,
         autoHideScrollBarOf: element => byElement.get(element)?.autoHideScrollBar ?? true,
         spacingOf: element => byElement.get(element)?.spacing,
+        verticalSpacingOf: element => byElement.get(element)?.verticalSpacing,
         setupOf: element => setups.get(element),
         buttonLabelOf,
         bitmapSizeOf,

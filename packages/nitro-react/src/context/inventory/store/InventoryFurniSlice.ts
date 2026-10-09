@@ -13,6 +13,8 @@
  *   (19), which stack by rarity level, and chests (24, 25), which stack only while empty and
  *   unnamed. Groupable items stack by type and wall/floor, posters (6) also by poster id and
  *   guild furni (17) by equal stuff data.
+ * - `onImageUpdateTimerEvent` (`removeExpiredRentedFurni`): a rented item whose time has run out
+ *   leaves the list.
  * - The locks: `updateItemLocks` marks the items whose room item id is in a running trade,
  *   `removeAllLocks` clears them.
  *
@@ -36,7 +38,7 @@ import { IFurniListAddOrUpdateFurni } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';
 
 import {
-    createInventoryFurniItem, getInventoryFurniTotalCount, getStuffDataChestName, getStuffDataContentsCount, INVENTORY_FURNI_CATEGORY_CHEST_BROWN, INVENTORY_FURNI_CATEGORY_CHEST_GOLD, INVENTORY_FURNI_CATEGORY_GUILD_FURNI,
+    createInventoryFurniItem, getInventoryFurniSecondsToExpiration, getInventoryFurniTotalCount, getStuffDataChestName, getStuffDataContentsCount, INVENTORY_FURNI_CATEGORY_CHEST_BROWN, INVENTORY_FURNI_CATEGORY_CHEST_GOLD, INVENTORY_FURNI_CATEGORY_GUILD_FURNI,
     INVENTORY_FURNI_CATEGORY_POST_IT, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_FURNI_CATEGORY_RARE, InventoryFurniGroup, InventoryFurniItem, isInventoryFurniGroupGroupable, isInventoryFurniGroupWallItem,
 } from './InventoryFurniGroup';
 import { addUnseenItemIds, InventoryUnseenSlice, isUnseenItem, UnseenItemCategory, UnseenItemIds } from './InventoryUnseenSlice';
@@ -62,6 +64,11 @@ type Actions = {
      * `onFurniListRemove` goes on to `resetUnseenItems` (`resetInventoryFurniUnseenItems`).
      */
     removeFurni: (stripId: number) => boolean;
+    /**
+     * `FurniModel.onImageUpdateTimerEvent`: every group whose first item is a rented one whose time has
+     * run out is removed (`removeFurni`); how many went.
+     */
+    removeExpiredRentedFurni: () => number;
     /**
      * `FurniModel.updatePostItCount`: a post-it stack's sheets left after one was stuck to a wall -
      * the item's legacy stuff data holds the count.
@@ -370,6 +377,23 @@ export const createInventoryFurniSlice: StateCreator<InventoryFurniSlice & Inven
         set({ furniGroups: draft.groups, furniSelectedGroupId: keepSelection(draft.groups, x.furniSelectedGroupId) });
 
         return true;
+    },
+    removeExpiredRentedFurni: () => {
+        const x = get();
+        const expired = x.furniGroups
+            .map(group => group.items[0])
+            .filter(item => item && item.isRented && item.hasRentPeriodStarted && (getInventoryFurniSecondsToExpiration(item) <= 0))
+            .map(item => item.id);
+
+        if (!expired.length) return 0;
+
+        const draft = new FurniGroupsDraft(x.furniGroups);
+
+        for (const stripId of expired) removeItem(draft, stripId);
+
+        set({ furniGroups: draft.groups, furniSelectedGroupId: keepSelection(draft.groups, x.furniSelectedGroupId) });
+
+        return expired.length;
     },
     updatePostItCount: (stripId, count) => set((x) => {
         const draft = new FurniGroupsDraft(x.furniGroups);

@@ -29,9 +29,11 @@
  * `NavigatorView.update` closes it once it has been up for 4 s, on the first second-tick the mouse
  * is not over it; there is no outside-click close.
  *
- * Not ported: `report_container` / `report_region` (`room.report.enabled`, and not your own room:
- * `habboHelp.reportRoom`) - the report/help subsystem does not exist in this client, so the entry
- * stays hidden rather than doing nothing. And the `browse.openroominfo` event log `showAt` tracks.
+ * - the report entry (`report_container` / `report_region`) under `room.report.enabled` and not in
+ *   the user's own room: `reportRegionProcedure` reports the room (`habboHelp.reportRoom`) and
+ *   closes the popup.
+ *
+ * Not ported: the `browse.openroominfo` event log `showAt` tracks.
  */
 import { RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 import { AddFavouriteRoomComposer, DeleteFavouriteRoomComposer, IRoomInfo, UpdateHomeRoomComposer } from '@nitrodevco/nitro-packets';
@@ -40,6 +42,7 @@ import { Container as PixiContainer } from 'pixi.js';
 import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { openGroupInfo, openProfile, searchRoomTag } from '#base/commands';
+import { reportRoom } from '#base/commands/helpCommands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useGroupStore } from '#base/context/groups';
 import { useNavigatorStore } from '#base/context/navigator';
@@ -138,6 +141,7 @@ export const NavigatorRoomInfoPopup = ({ room, x, y, serial, onClose }: Navigato
     const thumbnailUrlBase = useConfigValue<string>('navigator.thumbnail.url_base') ?? '';
     const groupBadgeUrl = useConfigValue<string>('badge.asset.group.url') ?? '';
     const rankingEnabled = useConfigValue<boolean>('room.ranking.enabled') === true;
+    const roomReportEnabled = useConfigValue<boolean>('room.report.enabled') === true;
     const officialThumbnailsInAmazon = useConfigValue<boolean>('new.navigator.official.room.thumbnails.in.amazon') === true;
     const { showWindow } = useWindowActions();
     const { send } = useWebSocketContext();
@@ -249,7 +253,14 @@ export const NavigatorRoomInfoPopup = ({ room, x, y, serial, onClose }: Navigato
                 onClose();
             },
         },
-        report_container: { visible: false },
+        report_container: { visible: roomReportEnabled && !isOwnRoom },
+        report_region: {
+            visible: roomReportEnabled && !isOwnRoom,
+            onPointerTap: () => {
+                reportRoom(room.roomId, room.name);
+                onClose();
+            },
+        },
 
         tag_list: {
             items: tagRegion

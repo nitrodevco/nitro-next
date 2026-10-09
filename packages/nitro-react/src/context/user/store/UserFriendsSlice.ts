@@ -17,6 +17,8 @@ type State = {
     /** `AvatarSearchResults.friends` / `others`: the last `HabboSearchResultMessage`. */
     searchFriends: IMessengerSearchResult[];
     searchOthers: IMessengerSearchResult[];
+    /** `SearchView.refreshList` has run: before the first answer the list holds no rows at all. */
+    searchResultsReceived: boolean;
     /**
      * `FriendRequestsView._SafeStr_4889` set: the requests tab's list has been built once
      * (`fillList`), after which every tab click lets the answered requests go (`tabClicked`).
@@ -64,6 +66,7 @@ export const UserFriendsSlice: State = {
     friendBarNotifications: {},
     searchFriends: [],
     searchOthers: [],
+    searchResultsReceived: false,
     friendRequestsListShown: false,
 };
 
@@ -73,7 +76,7 @@ export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], User
     ...UserFriendsSlice,
     setFriendLimits: (userFriendLimit: number, normalFriendLimit: number, extendedFriendLimit: number) => set({ userFriendLimit, normalFriendLimit, extendedFriendLimit }),
     setFriendCategories: (categories: IMessengerCategory[]) => set({ categories }),
-    setSearchResults: (searchFriends: IMessengerSearchResult[], searchOthers: IMessengerSearchResult[]) => set({ searchFriends, searchOthers }),
+    setSearchResults: (searchFriends: IMessengerSearchResult[], searchOthers: IMessengerSearchResult[]) => set({ searchFriends, searchOthers, searchResultsReceived: true }),
     processFriends: (friends: IMessengerFriend[]) => set((x) => {
         const updates = friends.reduce((acc, data) => ({
             ...acc,

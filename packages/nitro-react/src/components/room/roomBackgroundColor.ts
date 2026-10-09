@@ -82,3 +82,6 @@ export const DisposeRoomBackgroundColor = () => {
     transitioner = undefined;
     backdropColor = 0;
 };
+
+/** `RoomDesktop.roomBackgroundColor`: the toner's colour as it shows now, 0 without one. */
+export const GetRoomBackgroundColor = () => backdropColor;

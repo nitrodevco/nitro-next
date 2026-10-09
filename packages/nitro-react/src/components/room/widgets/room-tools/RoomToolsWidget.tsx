@@ -2,10 +2,11 @@ import { RateFlatComposer, SetUIFlagsComposer } from '@nitrodevco/nitro-packets'
 import { useEffect, useState } from 'react';
 
 import { forwardToRoom, searchRoomTag } from '#base/commands';
+import { chatHistoryStore } from '#base/context/chat-history';
 import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
-import { UiFlagEnum, useRoomToolsCollapsed, useUserActions } from '#base/context/user';
+import { UiFlagEnum, useRoomToolsCollapsed, useUserActions, useUserStore } from '#base/context/user';
 import { useRoomZoom } from '#base/hooks';
 import { RoomShareView } from '#base/views/room-widgets/room-tools/RoomShareView';
 import { ROOM_TOOLS_INFO_MARGIN, roomToolsRight } from '#base/views/room-widgets/room-tools/roomToolsGeometry';
@@ -34,6 +35,7 @@ export const RoomToolsWidget = () => {
     const roomVisitIndex = useNavigatorStore(x => x.roomVisitIndex);
     const canRateCurrentRoom = useNavigatorStore(x => x.canRateCurrentRoom);
     const collapsed = useRoomToolsCollapsed();
+    const freeFlowChatDisabled = useUserStore(x => x.freeFlowChatDisabled);
     const { setUiFlag } = useUserActions();
     const { stepRoomVisitHistory, setRoomRating } = useNavigatorActions();
     const { toggleWindow } = useWindowActions();
@@ -99,6 +101,13 @@ export const RoomToolsWidget = () => {
             onPress: () => toggleWindow('room_info'),
         },
     ];
+
+    // `RoomToolsWidget`: `setChatHistoryButton(freeFlowChat != null)` - the history belongs to the free flow chat.
+    if (!freeFlowChatDisabled) buttons.push({
+        key: 'button_chat_history',
+        // `toggleVisibility`.
+        onPress: () => chatHistoryStore.getState().toggleOpen(),
+    });
 
     if (canRateCurrentRoom) buttons.push({
         key: 'button_like',

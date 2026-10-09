@@ -128,6 +128,9 @@ const createTradingItem = (data: ITradingItemListData): InventoryFurniItem => ({
     recyclable: false,
     sellable: false,
     isRented: false,
+    rentSeconds: -1,
+    rentReceivedAt: 0,
+    hasRentPeriodStarted: false,
     // A trade's item list carries no room id: an item in a trade is not in a room.
     flatId: -1,
     locked: false,

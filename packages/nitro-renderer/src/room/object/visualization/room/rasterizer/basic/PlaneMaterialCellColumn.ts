@@ -1,7 +1,7 @@
 import { IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 import { RenderTexture } from 'pixi.js';
 
-import { clearPlaneCanvas, copyToPlaneCanvas, createPlaneCanvas, releasePlaneCanvas } from '../PlaneCanvas';
+import { batchPlaneCanvas, clearPlaneCanvas, copyToPlaneCanvas, createPlaneCanvas, releasePlaneCanvas } from '../PlaneCanvas';
 import { PlaneMaterialCell } from './PlaneMaterialCell';
 
 /**
@@ -115,26 +115,28 @@ export class PlaneMaterialCellColumn {
 
         if (!this._cells.length) return this._cachedBitmapData;
 
-        switch (this._repeatMode) {
-            case PlaneMaterialCellColumn.REPEAT_MODE_NONE:
-                this.renderRepeatNone(normal);
-                break;
-            case PlaneMaterialCellColumn.REPEAT_MODE_BORDERS:
-                this.renderRepeatBorders(normal);
-                break;
-            case PlaneMaterialCellColumn.REPEAT_MODE_CENTER:
-                this.renderRepeatCenter(normal);
-                break;
-            case PlaneMaterialCellColumn.REPEAT_MODE_FIRST:
-                this.renderRepeatFirst(normal);
-                break;
-            case PlaneMaterialCellColumn.REPEAT_MODE_LAST:
-                this.renderRepeatLast(normal);
-                break;
-            default:
-                this.renderRepeatAll(normal, offsetX, offsetY);
-                break;
-        }
+        batchPlaneCanvas(this._cachedBitmapData, () => {
+            switch (this._repeatMode) {
+                case PlaneMaterialCellColumn.REPEAT_MODE_NONE:
+                    this.renderRepeatNone(normal);
+                    break;
+                case PlaneMaterialCellColumn.REPEAT_MODE_BORDERS:
+                    this.renderRepeatBorders(normal);
+                    break;
+                case PlaneMaterialCellColumn.REPEAT_MODE_CENTER:
+                    this.renderRepeatCenter(normal);
+                    break;
+                case PlaneMaterialCellColumn.REPEAT_MODE_FIRST:
+                    this.renderRepeatFirst(normal);
+                    break;
+                case PlaneMaterialCellColumn.REPEAT_MODE_LAST:
+                    this.renderRepeatLast(normal);
+                    break;
+                default:
+                    this.renderRepeatAll(normal, offsetX, offsetY);
+                    break;
+            }
+        });
 
         return this._cachedBitmapData;
     }

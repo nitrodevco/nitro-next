@@ -10,4 +10,5 @@ export * from './RoomRotatingEffect';
 export * from './RoomShakingEffect';
 export * from './SelectedRoomObjectData';
 export * from './SortableSprite';
+export * from './SpriteDataCollector';
 export * from './TileObjectMap';

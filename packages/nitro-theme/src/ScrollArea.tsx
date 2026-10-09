@@ -33,6 +33,17 @@ export interface ScrollAreaProps {
      * been laid out and the end is the new one.
      */
     scrollEndKey?: unknown;
+    /**
+     * Where the vertical scroll goes, 0 (top) to 1 (bottom) of its range - Flash's `scrollV` on a
+     * scrollable list. Applied whenever it changes, two frames on, as `scrollEndKey` is, so content
+     * set with it has been laid out.
+     */
+    scrollV?: number;
+    /**
+     * The vertical scroll offset, whenever it changes - for a list that mounts only the rows in
+     * view (`WiredTableView`, Flash `TableView.manageRowViews`).
+     */
+    onScrollChange?: (offset: number) => void;
     layout?: BoxLayout;
     viewportLayout?: BoxLayout;
     /**
@@ -55,7 +66,7 @@ export interface ScrollAreaProps {
  */
 export const ScrollArea = forwardRef<PixiContainer, ScrollAreaProps>(
     (
-        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, scrollResetKey, scrollEndKey, hideDisabledScrollbar = true, layout, viewportLayout, scrollbarLayout, contentLayout, children },
+        { orientation = 'vertical', variant, defaultVariant, tintColor, step, minThumbSize, reachThreshold, onReachStart, onReachEnd, scrollResetKey, scrollEndKey, scrollV, onScrollChange, hideDisabledScrollbar = true, layout, viewportLayout, scrollbarLayout, contentLayout, children },
         ref,
     ) => {
         const showVertical = orientation === 'vertical' || orientation === 'both';
@@ -91,6 +102,12 @@ export const ScrollArea = forwardRef<PixiContainer, ScrollAreaProps>(
             horizontalScrollTo(0);
         }, [ scrollResetKey, verticalScrollTo, horizontalScrollTo ]);
 
+        const verticalOffset = vertical.scrollOffset;
+
+        useEffect(() => {
+            onScrollChange?.(verticalOffset);
+        }, [ verticalOffset, onScrollChange ]);
+
         useEffect(() => {
             if (scrollEndKey === undefined) return;
 
@@ -104,6 +121,22 @@ export const ScrollArea = forwardRef<PixiContainer, ScrollAreaProps>(
                 cancelAnimationFrame(second);
             };
         }, [ scrollEndKey, verticalScrollTo ]);
+
+        const verticalScrollToRatio = vertical.scrollToRatio;
+
+        useEffect(() => {
+            if (scrollV === undefined) return;
+
+            let second = 0;
+            const first = requestAnimationFrame(() => {
+                second = requestAnimationFrame(() => verticalScrollToRatio(scrollV));
+            });
+
+            return () => {
+                cancelAnimationFrame(first);
+                cancelAnimationFrame(second);
+            };
+        }, [ scrollV, verticalScrollToRatio ]);
 
         // Only used by the 'both' branch below - kept unconditional since hooks can't be
         // called conditionally.

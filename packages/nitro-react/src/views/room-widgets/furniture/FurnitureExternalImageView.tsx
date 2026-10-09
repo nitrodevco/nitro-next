@@ -9,6 +9,10 @@ export interface FurnitureExternalImageViewProps {
     /** Milliseconds since the epoch; 0 for a photo that never carried one. */
     time: number;
     caption: string;
+    /** `showWithRoomObject`: `reportButtonContainer` shows for a poster, or for a selfie under `stories.report.selfie.enabled`. */
+    reportVisible: boolean;
+    /** `reportButton`: `openReportImage`. */
+    onReport: () => void;
     onClose: () => void;
 }
 
@@ -32,12 +36,13 @@ const EMPTY_IMAGE_SIZE = 322;
  *
  * `loadPhoto` names the sender and the date only for a photo that has a sender (`senderNameButton`
  * hidden otherwise, by `clearImage`). `captionContainer` stays hidden, as Flash never shows it.
- * What this port leaves out: the report and remove buttons of `buttonContainer` (the help flow and
- * `deleteCard` confirmation are not ported), the next and previous buttons (they browse the room's
+ * `reportButton` reports the photo (`openReportImage`, `HabboHelp.startPhotoReportingInNewCfhFlow`).
+ * What this port leaves out: the remove button of `buttonContainer` (the `deleteCard` confirmation is
+ * not ported), the next and previous buttons (they browse the room's
  * other wall items of the same type, which the widget does not list), the sender's name opening
  * their profile, the moderator's name copy (`name_copy_wrapper`) and the share area.
  */
-export const FurnitureExternalImageView = ({ imageUrl, creatorName, time, onClose }: FurnitureExternalImageViewProps) => {
+export const FurnitureExternalImageView = ({ imageUrl, creatorName, time, reportVisible, onReport, onClose }: FurnitureExternalImageViewProps) => {
     const viewport = useViewportSize();
     const texture = useTextureFromUrl(imageUrl || undefined);
     const date = new Date(time);
@@ -114,7 +119,8 @@ export const FurnitureExternalImageView = ({ imageUrl, creatorName, time, onClos
                         </>
                     ),
                 },
-                reportButtonContainer: { visible: false },
+                reportButtonContainer: { visible: reportVisible },
+                reportButton: { onPointerTap: onReport },
                 removeButtonContainer: { visible: false },
                 closebutton: { onPointerTap: onClose },
                 previousButton: { visible: false },

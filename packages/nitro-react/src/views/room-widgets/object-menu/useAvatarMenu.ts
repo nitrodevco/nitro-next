@@ -2,6 +2,7 @@ import { ISimpleRoomObjectData, RoomControllerLevelEnum } from '@nitrodevco/nitr
 import { useState } from 'react';
 
 import { ambassadorAlert, askForAFriend, banUser, giveRights, ignoreUser, kickUser, muteUser, openClientLink, openProfile, passCarryItem, RELATIONSHIP_BOBBA, RELATIONSHIP_HEART, RELATIONSHIP_NONE, RELATIONSHIP_SMILE, replenishRespect, respectUser, setRelationship, startTrading, takeRights, unignoreUser, unmuteUser, whisperUser } from '#base/commands';
+import { reportUser } from '#base/commands/helpCommands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useOwnRoomObjectId, useRoomIsPlayingGame, useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation } from '#base/context/system';
@@ -61,6 +62,7 @@ export const useAvatarMenu = (objectData: ISimpleRoomObjectData, onClose: () => 
     const relationshipsEnabled = useConfigValue<boolean>('relationship.status.enabled') === true;
     const replenishCost = useConfigValue<number>('respect.replenish_cost_duckets') ?? 50;
     const showWiredInspect = useWiredShowInspectButton();
+    const reportShown = useConfigValue<boolean>('infostand.report.show') === true;
     const t = useTranslation();
     const { send } = useWebSocketContext();
 
@@ -87,6 +89,8 @@ export const useAvatarMenu = (objectData: ISimpleRoomObjectData, onClose: () => 
             action('relationship', t('infostand.link.relationship'), relationshipsEnabled && info.isFriend && !isBlocked, toMode(MODE_RELATIONSHIP), true),
             action('unignore', t('infostand.button.unignore'), info.isIgnored && !isBlocked, () => unignoreUser(send, webId)),
             action('ignore', t('infostand.button.ignore'), !info.isIgnored && !isBlocked, () => ignoreUser(send, webId)),
+            // `RWUAM_REPORT_CFH_OTHER`: `HabboHelp.reportUser`, the report flow on this user's chat lines.
+            action('report', t('infostand.button.report'), reportShown && !isBlocked, () => reportUser(webId)),
             action('moderate', t('infostand.link.moderate'), canModerate, toMode(MODE_MODERATE), true),
             action('pass_handitem', t('avatar.widget.pass_hand_item'), handItemGiveEnabled && (ownCarryItem > 0) && (ownCarryItem < MAX_CARRY_ITEM), () => passCarryItem(send, webId)),
             action('ambassador', t('infostand.link.ambassador'), isAmbassador, toMode(MODE_AMBASSADOR), true),

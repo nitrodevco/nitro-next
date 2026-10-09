@@ -3,20 +3,25 @@ import { WebSocketConnection } from '#base/context/communication';
 import { registerAchievementHandlers } from './achievements';
 import { bridgeRecyclerRoomSession, registerCatalogPlacementHandlers, registerCatalogRecyclerHandlers, registerCatalogRentHandlers, registerCatalogVoucherHandlers, registerTargetedOfferHandlers } from './catalog';
 import { bridgeCollectiblesInventoryAndPurse, registerCollectiblesHandlers } from './collectibles';
+import { registerDailyTasksHandlers } from './daily-tasks';
 import { registerEarningsHandlers } from './earnings';
 import { registerGameTokensHandlers } from './game-tokens';
-import { registerGroupHandlers } from './groups';
+import { registerBadgeLeaderboardHandlers, registerGroupForumHandlers, registerGroupHandlers } from './groups';
 import { registerHabbiconHandlers } from './habbicons';
+import { registerHelpHandlers } from './help';
 import { registerInventoryBadgesHandlers, registerInventoryBotsHandlers, registerInventoryFurniHandlers, registerInventoryMarketplaceHandlers, registerInventoryPetsHandlers, registerInventoryTradingHandlers, registerInventoryUnseenHandlers } from './inventory';
-import { registerNavigatorHandlers, registerRoomQueueHandlers } from './navigator';
+import { registerNavigatorHandlers, registerRaidProtectionHandlers, registerRoomQueueHandlers } from './navigator';
 import { registerAlertDialogHandlers, registerNotificationHandlers, registerSingularNotificationHandlers } from './notifications';
 import { bridgeOfferCenter, registerOfferCenterHandlers } from './offer-center';
+import { registerQuestHandlers } from './quests';
+import { registerRewardTrackHandlers } from './reward-track';
 import {
     registerRoomAreaHideHandlers, registerRoomBotHandlers, registerRoomBuildersClubHandlers, registerRoomChatHandlers, registerRoomConfigurationItemsHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
     registerRoomDirectoryHandlers, registerRoomDoorbellHandlers, registerRoomFloorPlanHandlers, registerRoomFriendFurniHandlers, registerRoomFriendRequestHandlers,
     registerRoomFurnitureHandlers, registerRoomGenericErrorHandlers, registerRoomGuildFurniHandlers, registerRoomInfostandHandlers, registerRoomJukeboxHandlers, registerRoomLinkHandlers, registerRoomMappingHandlers,
-    registerRoomMysteryBoxHandlers, registerRoomPermissionsHandlers, registerRoomPetHandlers, registerRoomPetPackageHandlers, registerRoomPollHandlers, registerRoomPresentHandlers, registerRoomQuizHandlers, registerRoomRentableSpaceHandlers, registerRoomSettingsHandlers,
+    registerRoomMysteryBoxHandlers, registerRoomPermissionsHandlers, registerRoomPetHandlers, registerRoomPetPackageHandlers, registerRoomPollHandlers, registerRoomPresentHandlers, registerRoomPurchasableClothingHandlers, registerRoomQuizHandlers, registerRoomRentableSpaceHandlers, registerRoomSettingsHandlers,
     registerRoomSpamWallHandlers,
+    registerRoomThumbnailCameraHandlers,
     registerRoomUserHandlers, registerRoomVariableFxHandlers, registerRoomYoutubeHandlers,
 } from './room';
 import { bridgeSoundManager, registerSoundManagerHandlers } from './sound';
@@ -53,6 +58,7 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerRoomPetHandlers(socket),
         registerRoomPetPackageHandlers(socket),
         registerRoomSpamWallHandlers(socket),
+        registerRoomThumbnailCameraHandlers(socket),
         registerRoomPollHandlers(socket),
         registerRoomQuizHandlers(socket),
         registerRoomSettingsHandlers(socket),
@@ -74,9 +80,12 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerRoomLinkHandlers(socket),
         registerRoomMysteryBoxHandlers(socket),
         registerRoomPresentHandlers(socket),
+        registerRoomPurchasableClothingHandlers(socket),
         registerRoomRentableSpaceHandlers(socket),
         registerRoomYoutubeHandlers(socket),
         registerNavigatorHandlers(socket),
+        // `RaidProtectionSettingsController`, after the navigator handlers whose current room it checks.
+        registerRaidProtectionHandlers(socket),
         registerRoomQueueHandlers(socket),
         // The server's own bubbles and alerts, after the room and navigator listeners that may raise one.
         registerNotificationHandlers(socket),
@@ -89,6 +98,12 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerProfileHandlers(socket),
         // Groups: the details cache the infostand also reads, and every group window's own answers.
         registerGroupHandlers(socket),
+        // The group forums' unread count, polled for the me menu.
+        registerGroupForumHandlers(socket),
+        // `DailyTasksController`, a component of the quest engine.
+        registerDailyTasksHandlers(socket),
+        // `BadgeLeaderboardController`, a component of the groups manager.
+        registerBadgeLeaderboardHandlers(socket),
         registerAvatarEffectsHandlers(socket),
         registerAvatarEditorHandlers(socket),
         registerMessengerHandlers(socket),
@@ -135,6 +150,9 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerInventoryFurniHandlers(socket),
         registerInventoryBadgesHandlers(socket),
         registerAchievementHandlers(socket),
+        // `RewardTrackController`, a component of the quest engine: the tracks the server sends unasked.
+        registerRewardTrackHandlers(socket),
+        registerQuestHandlers(socket),
         registerInventoryPetsHandlers(socket),
         registerInventoryBotsHandlers(socket),
         registerInventoryUnseenHandlers(socket),
@@ -147,6 +165,7 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         bridgeRecyclerRoomSession(),
         // The habbicon controller (`HabbiconController`, a component `HabboCatalog` attaches for the session).
         registerHabbiconHandlers(socket),
+        registerHelpHandlers(socket),
         // The collectibles hub (`CollectiblesController`, attached for the session), after the inventory and wallet it reads.
         registerCollectiblesHandlers(socket),
         bridgeCollectiblesInventoryAndPurse(socket),

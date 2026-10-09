@@ -72,7 +72,6 @@ export const FriendListFriends = ({ value }: FriendListFriendsProps) => {
         <FriendListTab
             value={value}
             caption="friendlist.friends"
-            count={onlineFriends.length}
             headerColors={[ '#8adaff', '#59bfff', '#295f82' ]}
             textColor="#000000"
             contentBackgroundColor="#ffffff"

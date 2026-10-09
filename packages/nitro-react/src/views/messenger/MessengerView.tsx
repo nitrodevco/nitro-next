@@ -13,11 +13,12 @@
  * - `input_widget`: `MessengerInput`, sending through `MainView.onInput`.
  *
  * Not drawn yet: `habbicon_button` and its picker (`MessengerHabbiconPicker`) - sending habbicons
- * comes with the habbicon picker; received habbicons are shown. The report button draws and does
- * nothing: the call-for-help flow (`HabboHelp.reportUserFromIM`) is not ported. The frame is not
+ * comes with the habbicon picker; received habbicons are shown. The report button reports the
+ * conversation (`HabboMessenger.reportUser` -> `HabboHelp.reportUserFromIM`). The frame is not
  * resizable: `MainView` re-lays its items on `WE_RESIZE`, and the port keeps the layout's size.
  */
 import { followMessengerConversation, getMessengerFriend, hideMessenger, hideMessengerConversation, openMessengerConversationProfile, requestMessengerHistory, selectMessengerConversation, sendMessengerMessage } from '#base/commands';
+import { reportUserFromIM } from '#base/commands/helpCommands';
 import { AvatarImage } from '#base/components/AvatarImage';
 import { useWebSocketContext } from '#base/context/communication';
 import {
@@ -331,6 +332,7 @@ export const MessengerView = () => {
                 variant="102"
                 textStyle="il_button"
                 tooltip={t('messenger.window.button.report.tooltip')}
+                onPointerTap={() => reportUserFromIM(selectedChatId)}
                 // The layout's 193 is its maximum: the `button_strip` item fits its caption. `height_max`
                 // 20 holds it under the style's own 28px minimum.
                 layout={{ position: 'absolute', left: 66, top: 57, height: 20, minHeight: 20, maxHeight: 20, maxWidth: 193 }}

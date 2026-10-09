@@ -1,7 +1,8 @@
 import { RoomChatTypeEnum, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { ChatMessage, FloodControlMessage, HandItemReceivedMessage, IChatLink, PetRespectNotificationEventMessage, PetSupplementedNotificationEventMessage, RemainingMutePeriodMessage, RespectNotificationMessage, RoomChatSettingsMessage, ShoutMessage, SpecialSystemChatMessage, WhisperMessage } from '@nitrodevco/nitro-packets';
+import { ChatMessage, CloseConnectionMessage, FloodControlMessage, GetGuestRoomResultMessage, HandItemReceivedMessage, IChatLink, PetRespectNotificationEventMessage, PetSupplementedNotificationEventMessage, RemainingMutePeriodMessage, RespectNotificationMessage, RoomChatSettingsMessage, RoomEntryInfoMessage, ShoutMessage, SpecialSystemChatMessage, WhisperMessage } from '@nitrodevco/nitro-packets';
 
 import { createChatBubbleId } from '#base/chat';
+import { chatHistoryStore } from '#base/context/chat-history';
 import { WebSocketConnection } from '#base/context/communication';
 import { getRoom, roomStore } from '#base/context/room';
 
@@ -45,7 +46,7 @@ export const registerRoomChatHandlers = ({ subscribe }: WebSocketConnection) => 
 
         lastAddedChatMs = now;
 
-        addChatBubble({
+        const bubble = {
             id: createChatBubbleId(),
             roomId: room.roomId,
             objectId,
@@ -56,7 +57,14 @@ export const registerRoomChatHandlers = ({ subscribe }: WebSocketConnection) => 
             userLocation: roomObject?.getLocation(),
             timestamp: now + chatFakeMsIncrementor,
             extraParam,
-        });
+        };
+
+        // `ChatBubbleFactory.getHistoryLineEntry` draws the line from who spoke it then: a user's
+        // name and figure are kept with it, as the history outlives the room's user list.
+        const speaker = roomStore.getState().usersByRoomObjectId[objectId];
+
+        chatHistoryStore.getState().insertChat((speaker?.userType === RoomObjectUserType.User) ? { ...bubble, forcedUserName: speaker.name, forcedFigure: speaker.figure } : bubble);
+        addChatBubble(bubble);
     };
 
     const addSpokenChat = (objectId: number, text: string, chatType: RoomChatTypeEnum, styleId: number, links: IChatLink[]) => {
@@ -70,6 +78,13 @@ export const registerRoomChatHandlers = ({ subscribe }: WebSocketConnection) => 
     };
 
     return subscribeAll(subscribe, [
+        // `HabboFreeFlowChat.onRoomEnter` / `onGuestRoomData`: the first room data after an entry is the history's room change line.
+        on(RoomEntryInfoMessage, () => chatHistoryStore.getState().resetRoomChange()),
+
+        on(GetGuestRoomResultMessage, data => chatHistoryStore.getState().insertRoomChange(data.roomInfo.name)),
+
+        on(CloseConnectionMessage, () => chatHistoryStore.getState().reset()),
+
         on(ChatMessage, (data) => {
             addSpokenChat(data.objectId, data.text, RoomChatTypeEnum.Speak, data.styleId, data.links);
         }),

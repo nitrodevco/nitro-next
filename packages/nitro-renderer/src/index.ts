@@ -406,6 +406,7 @@ export * from './room/utils/RoomRotatingEffect';
 export * from './room/utils/RoomShakingEffect';
 export * from './room/utils/SelectedRoomObjectData';
 export * from './room/utils/SortableSprite';
+export * from './room/utils/SpriteDataCollector';
 export * from './room/utils/TileObjectMap';
 export * from './session/pet/PetCustomPart';
 export * from './session/pet/PetFigureData';

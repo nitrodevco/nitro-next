@@ -108,3 +108,10 @@ export const showConnectionClosed = (reason: number, reasonName = '') => {
 
     showAlert(title, message, { modal: true });
 };
+
+/**
+ * `HabboToolbar.reboot` (the purse's `logout_button`): `CoreComponentContext.reboot` stops the core
+ * and the AIR client's `onCoreReboot` exits with code 1 for its launcher to start it again. The
+ * hosted client starts again by loading its page again.
+ */
+export const rebootClient = () => window.location.reload();

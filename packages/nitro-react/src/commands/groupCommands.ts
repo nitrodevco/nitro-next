@@ -5,9 +5,7 @@
  * `context/groups`; every function here takes the socket, because the manager is a component and
  * these are its methods.
  *
- * Two things Flash does that the port cannot yet:
- * - `openGroupForum` raises a `groupforum/<id>` link, which no window answers here - the group
- *   forums are not ported, as `FurnitureGuildMenuWidget` also records.
+ * One thing Flash does that the port cannot yet:
  * - the creation wizard's "create a room" link calls `startRoomCreation`, which opens the
  *   navigator's room-creation view; that view is not ported either, so the link is not offered.
  *
@@ -99,10 +97,7 @@ export const showGroupBases = (send: Send) => {
 /** `GroupDetailsCtrl.onBuyFurni` -> `openCatalog(CATALOG_PAGE_GROUP_FURNITURE)`. */
 export const openGroupFurniCatalog = () => systemStore.getState().showWindow('catalog', { pageName: 'guild_custom_furni' });
 
-/**
- * `HabboGroupsManager.openGroupForum`: a `groupforum/<id>` link. Nothing answers it yet - the
- * group forums are not ported - so the link is raised and logged as any unknown one is.
- */
+/** `HabboGroupsManager.openGroupForum`: a `groupforum/<id>` link, which `GroupForumController` answers. */
 export const openGroupForum = (send: Send, groupId: number) => openClientLink(send, `groupforum/${groupId}`);
 
 /** `GroupDetailsCtrl.onDeleteGuild` + `onDeleteGuildConfirmation`. */

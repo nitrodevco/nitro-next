@@ -10,6 +10,7 @@ const state = inventoryStore.getState();
  */
 const actions = {
     selectBadge: state.selectBadge,
+    markBadgeThumbWindows: state.markBadgeThumbWindows,
 };
 
 export const useInventoryBadgesActions = () => actions;

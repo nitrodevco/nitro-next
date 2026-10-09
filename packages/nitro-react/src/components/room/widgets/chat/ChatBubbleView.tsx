@@ -1,18 +1,13 @@
-import { AvatarGenderType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { Container as PixiContainer, FederatedPointerEvent, Graphics, Rectangle, Sprite, Texture } from 'pixi.js';
+import { Container as PixiContainer, FederatedPointerEvent, Graphics, Rectangle, Sprite } from 'pixi.js';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
-import { buildChatBubbleMarkup, ChatBubbleData, ChatBubbleMotion, chatFontSizeScale, computeChatBubbleLayout, resolveChatBubbleText, scaleChatFontSize } from '#base/chat';
-import { useRoom, useRoomChatActions, useRoomStore } from '#base/context/room';
-import { useTranslation } from '#base/context/system';
-import { useUserStore } from '#base/context/user';
-import { useChatAvatarHead, useChatBackgroundTexture, useChatBubbleText, useChatFlow, useChatPetFace, useChatStyle } from '#base/hooks';
+import { ChatBubbleData, ChatBubbleMotion } from '#base/chat';
+import { useRoomChatActions } from '#base/context/room';
+import { useChatBubbleVisual, useChatFlow } from '#base/hooks';
 
 interface ChatBubbleViewProps {
     data: ChatBubbleData;
 }
-
-const EMPTY_LINKS: never[] = [];
 
 /**
  * One chat bubble - the visual half of the Flash `PooledChatBubble`, composed from hooks: the
@@ -29,71 +24,7 @@ const EMPTY_LINKS: never[] = [];
 export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
     const { host, addBubble, removeBubble, maxBubbleWidth: maxWidth, selectBubbleUser } = useChatFlow();
     const { removeChatBubble } = useRoomChatActions();
-    const t = useTranslation();
-    const room = useRoom();
-    const style = useChatStyle(data.styleId);
-    const liveUserData = useRoomStore(x => x.usersByRoomObjectId[data.objectId]);
-    // Flash built the bubble once from the speaker; one who leaves the room keeps their name, head and colour.
-    const [ userData, setUserData ] = useState(liveUserData);
-
-    if (liveUserData && (liveUserData !== userData)) setUserData(liveUserData);
-    const chatSizePreference = useUserStore(x => x.chatSizePreference);
-    // `recreate` read the scale once; the state keeps the mode this bubble was built with.
-    const [ builtWithSizePreference ] = useState(chatSizePreference);
-    const fontSizeScale = chatFontSizeScale(builtWithSizePreference);
-    const displayFontSizeScale = chatFontSizeScale(chatSizePreference);
-
-    const isPet = (userData?.userType === RoomObjectUserType.Pet);
-    const userName = data.forcedUserName ?? userData?.name ?? '';
-    const figure = data.forcedFigure ?? (isPet ? undefined : userData?.figure);
-    const petPosture = isPet ? (room?.getRoomObject(data.objectId, RoomObjectCategoryEnum.Unit)?.model.getValue<string>(RoomObjectVariableEnum.FigurePosture) ?? undefined) : undefined;
-
-    const head = useChatAvatarHead(figure, userData?.gender ?? AvatarGenderType.Male);
-    const pet = useChatPetFace(isPet ? userData?.figure : undefined, petPosture);
-    // `ChatBubbleFactory.getNewChatBubble`: the style's icon, else a forced figure's head, a user's head or a pet's face - bots get none.
-    const isForced = !!(data.forcedFigure || data.forcedUserName);
-    const faceTexture = style?.iconTexture ?? ((isForced || (userData?.userType === RoomObjectUserType.User)) ? head.texture : (isPet ? pet.texture : undefined));
-    const color = data.forcedColor ?? (isPet ? pet.color : head.chestColor) ?? 0xffffff;
-
-    const text = useMemo(() => resolveChatBubbleText(data, userName, t), [ data, userName, t ]);
-    const content = useMemo(() => (style ? buildChatBubbleMarkup(text, userName, data.chatType, style, data.links ?? EMPTY_LINKS) : undefined), [ style, text, userName, data.chatType, data.links ]);
-
-    const margins = style?.textFieldMargins;
-    const wrapWidth = margins ? ((maxWidth - margins.x) - margins.width) : maxWidth;
-    const render = useChatBubbleText(content?.markup ?? '', style?.fontFace ?? 'Ubuntu', scaleChatFontSize(style?.fontSize, fontSizeScale), style?.textColor ?? 0, wrapWidth);
-
-    const layout = useMemo(() => (style
-        ? computeChatBubbleLayout({
-                style,
-                textWidth: render?.textWidth ?? 0,
-                textHeight: render?.textHeight ?? 0,
-                lineCount: render?.lineCount ?? 1,
-                maxWidth,
-                pointerHeight: style.pointerTexture?.height ?? 0,
-                faceWidth: faceTexture?.width,
-                faceHeight: faceTexture?.height,
-                fontSizeScale,
-                displayFontSizeScale,
-            })
-        : undefined), [ style, render, maxWidth, faceTexture, fontSizeScale, displayFontSizeScale ]);
-
-    const backgroundTexture = useChatBackgroundTexture(style, color);
-
-    // Flash kept the bottom rows of an over-tall head: a sub-frame of the head texture, owned here.
-    const shownFaceTexture = useMemo(() => {
-        if (!faceTexture || !layout?.face) return undefined;
-
-        if (layout.face.cropTop <= 0) return faceTexture;
-
-        return new Texture({
-            source: faceTexture.source,
-            frame: new Rectangle(faceTexture.frame.x, faceTexture.frame.y + layout.face.cropTop, faceTexture.width, layout.face.height),
-        });
-    }, [ faceTexture, layout ]);
-
-    useEffect(() => () => {
-        if (shownFaceTexture && (shownFaceTexture !== faceTexture)) shownFaceTexture.destroy(false);
-    }, [ shownFaceTexture, faceTexture ]);
+    const { style, layout, backgroundTexture, shownFaceTexture, render, content } = useChatBubbleVisual(data, maxWidth);
 
     const hitArea = useMemo(() => (layout ? new Rectangle(0, 0, layout.width, layout.height) : null), [ layout ]);
 

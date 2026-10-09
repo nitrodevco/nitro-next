@@ -12,6 +12,7 @@ import { ExtendedSprite, TexturePool, TextureUtils } from '#renderer/utils';
 
 import { RoomGeometry } from '../../../utils';
 import { PlaneMaskManager } from './mask';
+import { PlaneTextureCache } from './PlaneTextureCache';
 import { IPlaneRasterizer } from './rasterizer/IPlaneRasterizer';
 import { acquirePlaneTarget, copyToPlaneCanvas, createPlaneCanvas, fillPlaneCanvas, preparePlaneSampling, releasePlaneCanvas, releasePlaneTarget } from './rasterizer/PlaneCanvas';
 import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
@@ -78,6 +79,8 @@ export class RoomPlane implements IRoomPlane {
     private _drawnGeometryUpdateId = -1;
     private _offset: Point = new Point();
     private _relativeDepth = 0;
+    /** The plane this one is a piece of, whose depth it takes (`setDepthGeometry`). */
+    private _depthCorners: IVector3D[] | undefined = undefined;
     private _color = 0;
     private _coloredTexture: RenderTexture | undefined;
     private _textureColor: number = -1;
@@ -121,6 +124,9 @@ export class RoomPlane implements IRoomPlane {
 
     private _rasterizer: IPlaneRasterizer | undefined = undefined;
     private _textures: Map<string, PlaneBitmapData> = new Map();
+    /** The room's shared textures, and the key of the one `_planeTexture` is when it is shared. */
+    private _sharedTextureCache: PlaneTextureCache | undefined = undefined;
+    private _sharedTextureKey: string | undefined = undefined;
     private _activeTexture: PlaneBitmapData | undefined = undefined;
 
     constructor(
@@ -175,10 +181,7 @@ export class RoomPlane implements IRoomPlane {
         this._planeSprite?.destroy();
         this._planeSprite = undefined;
 
-        if (this._planeTexture) {
-            releasePlaneTarget(this._planeTexture);
-            this._planeTexture = undefined;
-        }
+        this.releasePlaneTexture();
 
         if (this._maskTexture) {
             TexturePool.releaseTexture(this._maskTexture);
@@ -227,6 +230,29 @@ export class RoomPlane implements IRoomPlane {
             this._rasterPending = false;
             this._drawnGeometryUpdateId = geometry.updateId;
 
+            const sharedKey = this.getSharedTextureKey(geometry);
+            const sharedTexture = sharedKey ? this._sharedTextureCache?.get(sharedKey) : undefined;
+
+            if (sharedKey && sharedTexture) {
+                if (this._planeTexture !== sharedTexture) {
+                    this.releasePlaneTexture();
+
+                    this._planeTexture = sharedTexture;
+                }
+
+                // The tint comes from the cache too, so a copy of its own would only hold memory.
+                releasePlaneCanvas(this._coloredTexture);
+                this._coloredTexture = undefined;
+
+                this._sharedTextureKey = sharedKey;
+                this._textureColor = -1;
+
+                return true;
+            }
+
+            // A shared texture is never drawn over: this plane draws into one of its own.
+            if (this._sharedTextureCache?.owns(this._planeTexture)) this.releasePlaneTexture();
+
             let width = 1;
             let height = 1;
 
@@ -252,11 +278,7 @@ export class RoomPlane implements IRoomPlane {
 
             if (!this._planeSprite) return false;
 
-            if (this._planeTexture && (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height)) {
-                releasePlaneTarget(this._planeTexture);
-
-                this._planeTexture = undefined;
-            }
+            if (this._planeTexture && (this._planeTexture.width !== this._width || this._planeTexture.height !== this._height)) this.releasePlaneTexture();
 
             if (!this._planeTexture) this._planeTexture = acquirePlaneTarget(this._width, this._height);
 
@@ -296,6 +318,11 @@ export class RoomPlane implements IRoomPlane {
 
             // The texture is drawn over in place, so a hit map built from what it held is stale.
             ExtendedSprite.removeHitmap(this._planeTexture.source);
+
+            // Only a texture that never runs out (no animation) is worth sharing.
+            if (sharedKey && this._activeTexture && (this._activeTexture.timeStamp < 0) && this._sharedTextureCache?.add(sharedKey, this._planeTexture)) {
+                this._sharedTextureKey = sharedKey;
+            }
 
             return true;
         }
@@ -372,6 +399,9 @@ export class RoomPlane implements IRoomPlane {
 
         if (this._maskChanged) return true;
 
+        // A shared texture is drawn already and never runs out; the plane's own cache stays empty.
+        if (this._sharedTextureKey && this._planeTexture && !this._planeTexture.destroyed) return false;
+
         if (!this._rasterizer) return this._tiledTypeChanged;
 
         const texture = this._activeTexture ?? this._textures.get(this.getTextureIdentifier(geometry.scale));
@@ -442,7 +472,62 @@ export class RoomPlane implements IRoomPlane {
         this._activeTexture = bitmapData;
     }
 
+    /**
+     * The client's key for a plane whose finished texture can be shared (`PlaneTextureCache`): a
+     * floor plane no bigger than a tile each way, with nothing masked out of it. Everything its
+     * drawing depends on is in the key, so two planes with one key would draw the same pixels.
+     */
+    private getSharedTextureKey(geometry: IRoomGeometry): string | undefined {
+        const cache = this._sharedTextureCache;
+
+        if (!cache || !this._rasterizer || (this._type !== RoomPlane.TYPE_FLOOR) || this._isHighlighter) return undefined;
+
+        if (this._bitmapMasks.length || this._rectangleMasks.length) return undefined;
+
+        if ((this._leftSide.length > 1) || (this._rightSide.length > 1)) return undefined;
+
+        const normal = geometry.getCoordinatePosition(this._normal);
+
+        return [
+            cache.getRasterizerId(this._rasterizer),
+            this._id ?? '',
+            geometry.scale,
+            this._hasTexture,
+            this._leftSide.length,
+            this._rightSide.length,
+            normal?.x,
+            normal?.y,
+            normal?.z,
+            this._textureOffsetX,
+            this._textureOffsetY,
+            this._textureMaxX,
+            this._textureMaxY,
+            this._width,
+            this._height,
+            this._cornerA.x,
+            this._cornerA.y,
+            this._cornerB.x,
+            this._cornerB.y,
+            this._cornerC.x,
+            this._cornerC.y,
+            this._cornerD.x,
+            this._cornerD.y,
+        ].join('|');
+    }
+
+    /** Lets go of the finished texture: back to the pool if it is the plane's own, kept if it is shared. */
+    private releasePlaneTexture(): void {
+        if (this._planeTexture && !this._sharedTextureCache?.owns(this._planeTexture)) releasePlaneTarget(this._planeTexture);
+
+        this._planeTexture = undefined;
+        this._sharedTextureKey = undefined;
+        this._textureColor = -1;
+    }
+
     private resetTextureCache(): void {
+        // What the shared texture was drawn from has changed: the next pass looks again.
+        this._sharedTextureKey = undefined;
+
         for (const bitmapData of this._textures.values()) {
             this.releaseTexture(bitmapData.texture);
 
@@ -482,8 +567,10 @@ export class RoomPlane implements IRoomPlane {
         this.updateCorners(geometry);
 
         let relativeDepth
-            = Math.max(this._cornerA.z, this._cornerB.z, this._cornerC.z, this._cornerD.z)
-                - geometry.getScreenPosition(this._origin).z;
+            = (this._depthCorners
+                ? Math.max(...this._depthCorners.map(corner => geometry.getScreenPosition(corner)?.z ?? 0))
+                : Math.max(this._cornerA.z, this._cornerB.z, this._cornerC.z, this._cornerD.z))
+            - geometry.getScreenPosition(this._origin).z;
 
         switch (this._type) {
             case RoomPlane.TYPE_FLOOR:
@@ -905,7 +992,26 @@ export class RoomPlane implements IRoomPlane {
     }
 
     public set rasterizer(value: IPlaneRasterizer | undefined) {
+        if (value !== this._rasterizer) this._sharedTextureKey = undefined;
+
         this._rasterizer = value;
+    }
+
+    /**
+     * A piece of a longer plane (`RoomVisualization.splitFloorPlane`) sorts as the whole plane
+     * did: its depth comes from the whole plane's corners, not its own.
+     */
+    public setDepthGeometry(location: IVector3D, leftSide: IVector3D, rightSide: IVector3D): void {
+        this._depthCorners = [
+            location,
+            Vector3d.sum(location, leftSide),
+            Vector3d.sum(location, rightSide),
+            Vector3d.sum(Vector3d.sum(location, leftSide), rightSide),
+        ];
+    }
+
+    public set sharedTextureCache(value: PlaneTextureCache | undefined) {
+        this._sharedTextureCache = value;
     }
 
     public set maskManager(value: PlaneMaskManager) {
@@ -923,6 +1029,18 @@ export class RoomPlane implements IRoomPlane {
     /** RoomSpriteCanvas.getColoredBitmapData: cache the quantized tint until this plane changes. */
     public getColoredTexture(color: number): Texture | undefined {
         if (!this._planeTexture || color === 0xFFFFFF) return this._planeTexture;
+
+        if (this._sharedTextureKey && this._sharedTextureCache) {
+            const planeTexture = this._planeTexture;
+
+            return this._sharedTextureCache.getColored(this._sharedTextureKey, color, () => {
+                const colored = preparePlaneSampling(createPlaneCanvas(planeTexture.width, planeTexture.height));
+
+                copyToPlaneCanvas(colored, planeTexture, 0, 0, undefined, color);
+
+                return colored;
+            });
+        }
 
         if (this._coloredTexture && (this._coloredTexture.width !== this._width || this._coloredTexture.height !== this._height)) {
             releasePlaneCanvas(this._coloredTexture);

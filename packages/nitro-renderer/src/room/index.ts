@@ -280,3 +280,4 @@ export * from './utils/RoomRotatingEffect';
 export * from './utils/RoomShakingEffect';
 export * from './utils/SelectedRoomObjectData';
 export * from './utils/SortableSprite';
+export * from './utils/SpriteDataCollector';

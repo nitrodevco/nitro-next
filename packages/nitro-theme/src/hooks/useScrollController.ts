@@ -21,6 +21,8 @@ export interface ScrollController {
     stepForward: () => void;
     /** Jumps to an absolute offset (clamped to the scrollable range); `scrollTo(0)` is "back to the start". */
     scrollTo: (offset: number) => void;
+    /** Jumps to `ratio` (0 to 1) of the scrollable range as it is laid out now. */
+    scrollToRatio: (ratio: number) => void;
 }
 
 const DEFAULT_STEP = 24;
@@ -211,6 +213,9 @@ export const useScrollController = ({
         setScrollOffset(next);
     }, []);
 
+    /** Scrolls to `ratio` (0 to 1) of the scroll range as it is now laid out. */
+    const scrollToRatio = useCallback((ratio: number) => scrollTo(ratio * metricsRef.current.scrollMax), [ scrollTo ]);
+
     return {
         viewportRef: setViewportNode,
         contentRef: setContentNode,
@@ -227,5 +232,6 @@ export const useScrollController = ({
         stepBackward,
         stepForward,
         scrollTo,
+        scrollToRatio,
     };
 };

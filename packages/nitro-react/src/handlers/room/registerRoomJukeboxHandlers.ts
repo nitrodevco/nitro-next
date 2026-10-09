@@ -1,20 +1,24 @@
 import { IRoomWidgetRequest, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
-import { GetSongInfoComposer, ITraxSongInfoSong, JukeboxSongDisksMessage, NowPlayingMessage, PlayListMessage, TraxSongInfoMessage, UserSongDisksInventoryMessage } from '@nitrodevco/nitro-packets';
+import { GetSongInfoComposer, ITraxSongInfoSong, JukeboxSongDisk, JukeboxSongDisksMessage, NowPlayingMessage, TraxSongInfoMessage, UserSongDisksInventoryMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { roomStore } from '#base/context/room';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
-/** Everything the playlist editor is told, gathered from the five messages that tell it. */
+/**
+ * Everything the playlist editor is told, gathered from the four messages that tell it. Each one
+ * lands on its own, so until all have arrived any of these can still be missing.
+ */
 export type JukeboxData = {
     /** Your own disks: the disk id against the song on it. */
-    songDisks: Record<number, number>;
-    maxLength: number;
-    playList: { id: number; songName: string; creator: string; length: number }[];
+    songDisks?: Record<number, number>;
+    maxLength?: number;
+    /** The disks in the jukebox, in playing order (`JukeboxSongDisksMessage`, not the sound machine's `PlayListMessage`). */
+    playList?: JukeboxSongDisk[];
     /** Whatever names the client has been told, by song id. */
-    songs: Record<number, ITraxSongInfoSong>;
-    nowPlayingSongId: number;
+    songs?: Record<number, ITraxSongInfoSong>;
+    nowPlayingSongId?: number;
 };
 
 /**
@@ -50,12 +54,8 @@ export const registerRoomJukeboxHandlers = ({ send, subscribe }: WebSocketConnec
         }),
 
         on(JukeboxSongDisksMessage, (data) => {
-            merge({ maxLength: data.maxLength });
-            requestMissingSongs(Object.values(data.songDisks));
-        }),
-
-        on(PlayListMessage, (data) => {
-            merge({ playList: data.playList });
+            merge({ maxLength: data.maxLength, playList: data.songDisks });
+            requestMissingSongs(data.songDisks.map(disk => disk.songId));
         }),
 
         // Names arrive in batches, and two batches can land between renders, so the map is built

@@ -71,7 +71,7 @@ const toNativeRenderOptions = (format: FlashTextFormat): NativeRenderOptions => 
         size: format.fontSize,
         color: format.color & 0xFFFFFF,
         antiAliasType: format.antiAliasType,
-        gridFitType: format.gridFitType,
+        gridFitType: (isAdvanced && format.gridFitType === 'subpixel') ? 'pixel' : format.gridFitType,
         thickness: format.thickness,
         sharpness: format.sharpness,
         kerning: format.kerning,
@@ -141,7 +141,7 @@ const unsupportedReason = (format: FlashTextFormat, text: string): string | null
     if (!GRID_FIT_TYPES.includes(format.gridFitType)) return `grid fit ${format.gridFitType}`;
 
     if (format.antiAliasType === 'advanced') {
-        if (format.gridFitType !== 'pixel') return `advanced text with grid fit ${format.gridFitType}`;
+        if (format.gridFitType === 'none') return `advanced text with grid fit ${format.gridFitType}`;
     } else if (format.antiAliasType !== 'normal' || !entry.font.fontKey?.toLowerCase().includes('volter')) {
         // Normal anti-aliasing is only exact for the line-only outlines of the Volter faces.
         return `${format.antiAliasType} anti-aliasing on ${format.fontFamily}`;

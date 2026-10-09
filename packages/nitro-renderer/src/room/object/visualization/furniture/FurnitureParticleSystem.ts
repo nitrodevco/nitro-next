@@ -7,7 +7,7 @@ import {
     Vector3d,
 } from '@nitrodevco/nitro-api';
 import { AdvancedMap } from '@nitrodevco/nitro-api';
-import { AlphaFilter, Graphics, Matrix, Sprite, Texture } from 'pixi.js';
+import { AlphaFilter, Container, Graphics, Matrix, Sprite, Texture } from 'pixi.js';
 
 import { TextureUtils } from '../../../../utils';
 import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
@@ -28,15 +28,17 @@ export class FurnitureParticleSystem {
     private _scaleMultiplier: number = 1;
     private _blackOverlay: Graphics;
     private _blackOverlayAlphaTransform: AlphaFilter = new AlphaFilter({ alpha: 1 });
-    private _particleColorTransform: AlphaFilter = new AlphaFilter();
     private _identityMatrix: Matrix = new Matrix();
-    private _translationMatrix: Matrix = new Matrix();
     private _blend: number = 1;
     private _bgColor: number = 0xff000000;
     private _emptySprite: Sprite;
-    private _particleSprite: Sprite = new Sprite();
-    /** Whether `_particleSprite` carries the fade filter: Pixi copies the list on every `filters` write, so it is only written on a change. */
-    private _particleSpriteFaded: boolean = false;
+    /**
+     * One pooled sprite per live particle, drawn into the canvas in a single render pass a frame.
+     * Drawing each particle with its own render (and a fade filter on top) cost a gift's 150-particle
+     * burst ~150 render passes a frame.
+     */
+    private _particleLayer: Container = new Container();
+    private _particleSprites: Sprite[] = [];
     private _isDone: boolean = false;
 
     constructor(visualization: AnimatedFurnitureVisualization) {
@@ -54,10 +56,10 @@ export class FurnitureParticleSystem {
 
         if (this._emptySprite) this._emptySprite.destroy();
 
-        if (this._particleSprite) this._particleSprite.destroy();
+        this._particleLayer.destroy({ children: true });
+        this._particleSprites = [];
 
         this._blackOverlayAlphaTransform.destroy();
-        this._particleColorTransform.destroy();
     }
 
     /**
@@ -149,11 +151,17 @@ export class FurnitureParticleSystem {
         }
     }
 
-    private setParticleSpriteFaded(faded: boolean): void {
-        if (this._particleSpriteFaded === faded) return;
+    private getParticleSprite(index: number): Sprite {
+        let sprite = this._particleSprites[index];
 
-        this._particleSpriteFaded = faded;
-        this._particleSprite.filters = faded ? [ this._particleColorTransform ] : [];
+        if (!sprite) {
+            sprite = new Sprite(Texture.EMPTY);
+
+            this._particleSprites.push(sprite);
+            this._particleLayer.addChild(sprite);
+        }
+
+        return sprite;
     }
 
     public updateAnimation(): void {
@@ -175,65 +183,41 @@ export class FurnitureParticleSystem {
 
             if (!this._canvasTexture) this.updateCanvas();
 
-            this.clearCanvas();
+            const particles = this._currentEmitter.particles;
 
-            for (const particle of this._currentEmitter.particles) {
+            for (let i = 0; i < particles.length; i++) {
+                const particle = particles[i];
                 const tx = this._centerX + (((particle.x - particle.z) * k) / 10) * this._scaleMultiplier;
                 const ty
                     = this._centerY
                         - offsetY
                         + (((particle.y + (particle.x + particle.z) / 2) * k) / 10) * this._scaleMultiplier;
                 const asset = particle.getAsset();
+                const sprite = this.getParticleSprite(i);
 
-                this._particleSprite.texture = Texture.EMPTY;
-                this._particleSprite.tint = 0xffffff;
-                this._particleSprite.width = 1;
-                this._particleSprite.height = 1;
-                this._particleSprite.x = 0;
-                this._particleSprite.y = 0;
+                sprite.visible = true;
 
                 if (asset && asset.texture) {
-                    this._particleSprite.texture = asset.texture;
-                    this._particleSprite.width = asset.texture.width;
-                    this._particleSprite.height = asset.texture.height;
-
-                    if (particle.fade && particle.alphaMultiplier < 1) {
-                        this._translationMatrix.identity();
-                        this._translationMatrix.translate(tx + asset.offsetX, ty + asset.offsetY);
-
-                        this._particleColorTransform.alpha = particle.alphaMultiplier;
-
-                        this.setParticleSpriteFaded(true);
-
-                        if (this._canvasTexture)
-                            TextureUtils.writeToTexture(
-                                this._particleSprite,
-                                this._canvasTexture,
-                                false,
-                                this._translationMatrix,
-                            );
-                    } else {
-                        this.setParticleSpriteFaded(false);
-
-                        this._particleSprite.x = tx + asset.offsetX;
-                        this._particleSprite.y = ty + asset.offsetY;
-
-                        if (this._canvasTexture)
-                            TextureUtils.writeToTexture(this._particleSprite, this._canvasTexture, false);
-                    }
+                    sprite.texture = asset.texture;
+                    sprite.x = tx + asset.offsetX;
+                    sprite.y = ty + asset.offsetY;
+                    // The fade is Flash's alpha-only colour transform: on one sprite that is its alpha.
+                    sprite.alpha = (particle.fade && particle.alphaMultiplier < 1) ? particle.alphaMultiplier : 1;
                 } else {
-                    this._particleSprite.tint = 0xffffff;
-                    this._particleSprite.x = tx - 1;
-                    this._particleSprite.y = ty - 1;
-                    this._particleSprite.width = 2;
-                    this._particleSprite.height = 2;
-
-                    if (this._canvasTexture)
-                        TextureUtils.writeToTexture(this._particleSprite, this._canvasTexture, false);
+                    // A frame with no asset draws nothing, as before (an empty texture).
+                    sprite.texture = Texture.EMPTY;
+                    sprite.x = tx - 1;
+                    sprite.y = ty - 1;
+                    sprite.alpha = 1;
                 }
             }
 
-            if (!this._currentEmitter.particles.length) {
+            for (let i = particles.length; i < this._particleSprites.length; i++) this._particleSprites[i].visible = false;
+
+            // Clears the canvas and draws every particle in the one pass.
+            if (this._canvasTexture) TextureUtils.writeToTexture(this._particleLayer, this._canvasTexture, true);
+
+            if (!particles.length) {
                 this._isDone = true;
 
                 return;

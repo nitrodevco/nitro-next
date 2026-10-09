@@ -7,7 +7,9 @@
  * (`onSubMenuItemClick`), whatever the item does. A region's unseen count is the window manager's
  * counter, 5 in from the region's right and top (`getUnseenItemCounter`).
  *
- * The window sits at x 3 with its bottom on the bottom bar's top (`reposition`).
+ * The window sits at x 3 with its bottom on the bottom bar's top (`reposition`). It is built in window
+ * context 2 (`buildFromXML(xml, 2)`), whose desktop is over context 1's windows - the chat input
+ * among them, which the menu covers where they meet.
  */
 import { useState } from 'react';
 
@@ -20,6 +22,9 @@ const BAR_HEIGHT = 46;
 /** `windowProcedure`'s caption colours. */
 const TEXT_COLOR_HOVER = 0x21cff4;
 const TEXT_COLOR = 0xffffff;
+
+/** Context 2: over every frame (from 100), under the floating popups (90000) and the modal layer (95000). */
+const SUB_MENU_Z_INDEX = 80000;
 
 /** `getUnseenItemCounter`: the counter's right and top inset in its region. */
 const COUNTER_INSET = 5;
@@ -71,7 +76,10 @@ export const ToolbarExtendedMenu = ({ templateId, items, height, onClose }: Tool
     }
 
     return (
-        <Box layout={{ position: 'absolute', left: 3, bottom: BAR_HEIGHT }}>
+        <Box
+            zIndex={SUB_MENU_Z_INDEX}
+            layout={{ position: 'absolute', left: 3, bottom: BAR_HEIGHT }}
+        >
             <TemplateWindow
                 id={templateId}
                 bindings={bindings}

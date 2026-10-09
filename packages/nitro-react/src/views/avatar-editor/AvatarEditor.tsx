@@ -5,11 +5,24 @@
  *
  * - `createWindow`: `avatar_name` is the user's name. `mainTabs` keeps only the available
  *   categories, in layout order (later tabs move left into a removed one's place): generic, head,
- *   torso, legs, hot looks, and effects only with `effects.in.avatar.editor`, misc only with
- *   `clothing.misc.tab.enabled`. The `nfts` tab is not kept - nothing in the port feeds it.
+ *   torso, legs, hot looks, the NFT outfits (`nfts`), and effects only with
+ *   `effects.in.avatar.editor`, misc only with `clothing.misc.tab.enabled`.
  * - `setViewToCategory`: `contentArea` shows the selected category's `<category>_content`; the
  *   parts grid (`AvatarEditorGridView`, `grid_container`) shows for the part categories, not for
- *   hot looks or effects; `effectParamsContainer` only on effects.
+ *   hot looks, NFT outfits or effects; `effectParamsContainer` only on effects.
+ * - `NftAvatarsModel` / `NftAvatarsView`: the user's NFT outfits (`GetUserNftWardrobeMessageComposer`,
+ *   asked as the editor opens) fill `nfts`, one `Outfit` each (`NftOutfit`: the look facing 4 at the
+ *   bottom of `bitmap`, `button` and `outfit_gradient` in its contract's colours, brighter while
+ *   picked). Picking one (`selectNftAvatar`) loads its look and names it in `collectible_avatar_info`
+ *   (`NftWardrobeParamView`: its contract's name and `#id` in the contract's colour), and a save then
+ *   wears it (`SaveUserNftWardrobeMessageComposer` and `GetSelectedNftWardrobeOutfitMessageComposer`)
+ *   instead of sending the figure.
+ * - `HabboAvatarEditor.onUserNftWardrobeMessage` (`GetSelectedNftWardrobeOutfitMessageComposer`, asked
+ *   as the editor opens): with an NFT outfit worn the editor shows the server's fallback look away from
+ *   the NFT tab. `windowEventProc`'s `WE_SELECTED` swaps the look as the tab changes: to the worn NFT
+ *   outfit on the NFT tab (and on effects), to the fallback look elsewhere, or - with none worn - back
+ *   to the look from before an outfit was picked (`loadRollbackFigure`). On the NFT tab `wardrobe` is
+ *   disabled and the side content closed.
  * - The category views (`BodyView`, `HeadView`, ...): each sub tab's `BITMAP` is its `_off` art
  *   unless it is the current one or under the pointer (`TabUtils.setElementImage`); the gender tabs
  *   light the editing gender, and pressing one changes it.
@@ -27,20 +40,20 @@
  *
  * Not ported: `avatar_name_change` (`premium.name.change.enabled`, `AvatarEditorNameChangeView`),
  * the hot looks and effects lists - the port has no data for them, so their headers show over an
- * empty page and `effectParamsContainer` stays hidden - and `collectible_avatar_info` (an NFT outfit).
+ * empty page and `effectParamsContainer` stays hidden.
  */
 import { AvatarEditorCategory, AvatarFigurePartType, AvatarGenderType, RoomId } from '@nitrodevco/nitro-api';
-import { GetWardrobeComposer, SaveWardrobeOutfitComposer, SetClothingChangeDataComposer, UpdateFigureDataComposer } from '@nitrodevco/nitro-packets';
+import { GetSelectedNftWardrobeOutfitComposer, GetUserNftWardrobeComposer, GetWardrobeComposer, INftWardrobeItem, SaveUserNftWardrobeComposer, SaveWardrobeOutfitComposer, SetClothingChangeDataComposer, UpdateFigureDataComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useMemo, useState } from 'react';
 
 import { hasAvatarEditorInvalidClubItems, hasAvatarEditorInvalidSellableItems, openClubCenter, stripAvatarEditorClubItems, stripAvatarEditorInvalidSellableItems } from '#base/commands';
 import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
-import { DEFAULT_WARDROBE_SLOTS, useAvatarEditorActions, useAvatarEditorStore, WARDROBE_SLOTS_KEY } from '#base/context/avatar-editor';
+import { DEFAULT_WARDROBE_SLOTS, normalizeGender, useAvatarEditorActions, useAvatarEditorStore, WARDROBE_SLOTS_KEY } from '#base/context/avatar-editor';
 import { useWebSocketContext } from '#base/context/communication';
-import { useConfigValue, useSystemActions, useWindowParams } from '#base/context/system';
+import { useConfigValue, useSystemActions, useTranslation, useWindowParams } from '#base/context/system';
 import { useOwnClubLevel, useUserStore } from '#base/context/user';
 import { AvatarEditorColorData, AvatarEditorPartData, useAvatarEditorData, usePartThumbnailLifetime, useWindowVisibility } from '#base/hooks';
-import { TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows } from '#base/theme';
+import { TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useAvatarImageTexture, useTemplate } from '#base/theme';
 import { firstSelectableColorId } from '#base/utils';
 
 import { AvatarEditorPartImage } from './AvatarEditorPartImage';
@@ -70,7 +83,52 @@ const CATEGORIES: readonly { category: AvatarEditorCategory; setting?: string }[
     { category: AvatarEditorCategory.Misc, setting: 'clothing.misc.tab.enabled' },
     { category: AvatarEditorCategory.HotLooks },
     { category: AvatarEditorCategory.Effects, setting: 'effects.in.avatar.editor' },
+    { category: AvatarEditorCategory.Nfts },
 ];
+
+/** `NftOutfit.initNftColors`: `button`'s colour and `outfit_gradient`'s, each plain and picked (`0` for no gradient). */
+const NFT_OUTFIT_COLORS: Record<string, [ number, number, number, number ]> = {
+    'habbo:avatar': [ 0xFFFF6800, 0xFFFF8823, 0, 0 ],
+    'habbo:clothes': [ 0xFFA09AB3, 0xFFB3ADC5, 0, 0 ],
+    'habbo:avatar_genesis': [ 0xFF1D97A7, 0xFF3CA9B9, 0xFF9430B3, 0xFFA84BC3 ],
+};
+const NFT_OUTFIT_DEFAULT_COLORS: [ number, number, number, number ] = [ 0xFFFFFFFF, 0xFFFFFFFF, 0, 0 ];
+
+/** `NftWardrobeParamView.getLocalizedCollectionName` / `getCollectionTextColor`: `avatar_info_text`'s name and colour per contract. */
+const NFT_COLLECTION_NAMES: Record<string, string> = {
+    'habbo:avatar': 'wardrobe.token.avatar.name',
+    'habbo:clothes': 'wardrobe.token.clothing.name',
+    'habbo:avatar_genesis': 'wardrobe.token.crafted_avatar.name',
+};
+const NFT_COLLECTION_TEXT_COLORS: Record<string, number> = {
+    'habbo:avatar': 0xFF8823,
+    'habbo:clothes': 0xB3ADC5,
+    'habbo:avatar_genesis': 0x1ACAE1,
+};
+const NFT_COLLECTION_DEFAULT_TEXT_COLOR = 0xFFFFFF;
+
+/** `Outfit` (35x60): `OutfitView.update` puts the look at the bottom, centred. */
+const OUTFIT_WIDTH = 35;
+const OUTFIT_HEIGHT = 60;
+/** `Outfit.update`: the look faces 4. */
+const OUTFIT_DIRECTION = 4;
+
+/** An NFT outfit's look in its `Outfit`'s `bitmap`. */
+const NftOutfitImage = ({ outfit, zoom }: { outfit: INftWardrobeItem; zoom: boolean }) => {
+    const avatar = useAvatarImageTexture(outfit.figureString, normalizeGender(outfit.gender), { direction: OUTFIT_DIRECTION, scale: zoom ? 0.5 : 1 });
+
+    if (!avatar.texture) return null;
+
+    return (
+        <pixiSprite
+            texture={avatar.texture}
+            eventMode="none"
+            x={Math.trunc((OUTFIT_WIDTH - avatar.width) / 2)}
+            y={OUTFIT_HEIGHT - avatar.height}
+            layout={false}
+        />
+    );
+};
 
 /** Each category's sub tabs (`<category>_content`'s regions) and the set type each switches to - `HeadView.switchCategory` and its kin. */
 const CATEGORY_TABS: Partial<Record<AvatarEditorCategory, readonly { tab: string; setType: AvatarFigurePartType }[]>> = {
@@ -164,6 +222,12 @@ const SIDE_CONTAINER_X = 487;
 const WARDROBE_WIDTH = 182;
 const EMPTY_SIDE_WIDTH = 1;
 
+/** `AvatarEditorGridView.GET_MORE`, its icon (`camera_zoom_in`) and a hover id no part has. */
+const GET_MORE = 'GET_MORE';
+const GET_MORE_ICON = 'habbo-window-manager-com-camera_zoom_in';
+const GET_MORE_ID = -2;
+const OFFICIAL_SELLABLE_SUPPORT = true;
+
 const DEFAULT_FIGURES: Partial<Record<AvatarGenderType, string>> = {
     [AvatarGenderType.Male]: 'hr-100.hd-180-7.ch-215-66.lg-270-79.sh-305-62.ha-1002-70.wa-2007',
     [AvatarGenderType.Female]: 'hr-515-33.hd-600-1.ch-635-70.lg-716-66-62.sh-735-68',
@@ -184,7 +248,18 @@ export const AvatarEditor = () => {
     const gender = useAvatarEditorStore(x => x.gender);
     const figureSetIds = useAvatarEditorStore(x => x.figureSetIds);
     const activeSetType = activeSubType[activeCategory];
-    const { setActiveCategory, setActiveSubType, setWardrobeVisible, setWardrobeSlot, loadFigure, setPart, removePart, setColors, setGender } = useAvatarEditorActions();
+    const { setActiveCategory, setActiveSubType, setWardrobeVisible, setWardrobeSlot, loadFigure, setPart, removePart, setColors, setGender, setSelectedNftOutfitId, setNftOutfit, setNftSelection } = useAvatarEditorActions();
+    const nftOutfits = useAvatarEditorStore(x => x.nftOutfits);
+    const selectedNftOutfitId = useAvatarEditorStore(x => x.selectedNftOutfitId);
+    const nftCurrentTokenId = useAvatarEditorStore(x => x.nftCurrentTokenId);
+    const nftFallbackFigure = useAvatarEditorStore(x => x.nftFallbackFigure);
+    const nftFallbackGender = useAvatarEditorStore(x => x.nftFallbackGender);
+    const nftRollbackFigure = useAvatarEditorStore(x => x.nftRollbackFigure);
+    const nftRollbackGender = useAvatarEditorStore(x => x.nftRollbackGender);
+    // `NftWardrobeParamView`: the outfit `collectible_avatar_info` names, until the category changes.
+    const [ nftInfoOutfit, setNftInfoOutfit ] = useState<INftWardrobeItem | null>(null);
+    const outfitTemplate = useTemplate(`${LIBRARY}/Outfit`);
+    const zoom = useConfigValue<boolean>('zoom.enabled') === true;
     const { parts, palettes } = useAvatarEditorData(activeSetType);
     const { hide } = useWindowVisibility('avatar_editor');
     const miscEnabled = useConfigValue<boolean>('clothing.misc.tab.enabled') === true;
@@ -192,7 +267,11 @@ export const AvatarEditor = () => {
     const maxWardrobeSlots = useConfigValue<number>(WARDROBE_SLOTS_KEY) ?? DEFAULT_WARDROBE_SLOTS;
     // `startSellablePurchase`: the catalogue page `catalog.clothes.page` names.
     const clothesPage = useConfigValue<string>('catalog.clothes.page');
+    // `generateDataContent`: the `GET_MORE` thumb with `avatareditor.support.sellablefurni`. This hotel
+    // leaves it unset; the official one shows the thumb (editor-plus.png, avatareditor.png), so unset is on.
+    const sellableSupport = useConfigValue<boolean>('avatareditor.support.sellablefurni') ?? OFFICIAL_SELLABLE_SUPPORT;
     const { showWindow } = useSystemActions();
+    const t = useTranslation();
     // The sub tab, part and colour under the pointer (`WME_OVER` / `WME_OUT`).
     const [ hoveredTab, setHoveredTab ] = useState<string | null>(null);
     const [ hoveredPart, setHoveredPart ] = useState<number | null>(null);
@@ -268,11 +347,14 @@ export const AvatarEditor = () => {
      * `saveCurrentSelection()` then `manager.close()`. While the editor dresses a booth the look
      * belongs to that furni: it keeps one outfit per gender, and the gender travels with the look.
      */
+    /** `catalog.openCatalogPage(catalog.clothes.page)`: without the page, the catalogue as it opens (its front page). */
+    const openClothesPage = () => showWindow('catalog', { pageName: clothesPage ?? '' });
+
     const saveFigure = () => {
         setSaveLocked(true);
 
         if (hasAvatarEditorInvalidSellableItems()) {
-            if (clothesPage) showWindow('catalog', { pageName: clothesPage });
+            openClothesPage();
 
             return;
         }
@@ -283,8 +365,19 @@ export const AvatarEditor = () => {
             return;
         }
 
-        if (clothingChange) send(new SetClothingChangeDataComposer({ objectId: clothingChange.objectId, gender, figure }));
-        else send(new UpdateFigureDataComposer({ figure, gender }));
+        if (clothingChange) {
+            send(new SetClothingChangeDataComposer({ objectId: clothingChange.objectId, gender, figure }));
+        } else if (selectedNftOutfitId !== null) {
+            // `saveCurrentSelection`: a picked NFT outfit is worn by its id, and the worn one asked for again.
+            send(new SaveUserNftWardrobeComposer({ id: selectedNftOutfitId }));
+            send(new GetSelectedNftWardrobeOutfitComposer({}));
+            setSelectedNftOutfitId(null);
+        } else {
+            send(new UpdateFigureDataComposer({ figure, gender }));
+        }
+
+        // `hasNftOutfit()`: the worn outfit is forgotten until the server answers again.
+        if (!clothingChange && (nftCurrentTokenId !== null)) setNftSelection(null);
 
         hide();
     };
@@ -326,6 +419,79 @@ export const AvatarEditor = () => {
         loadFigure(ownFigure || DEFAULT_FIGURES[ownGender] || '', ownGender, true);
     }, [ ownFigure, ownGender, !!clothingChange ]);
 
+    // `HabboAvatarEditor.init`'s `sendGetSelectedNftWardrobeOutfitMessage` and
+    // `NftAvatarsModel.requestNftAvatars`, as the editor's categories are made.
+    useEffect(() => {
+        send(new GetSelectedNftWardrobeOutfitComposer({}));
+        send(new GetUserNftWardrobeComposer({}));
+    }, []);
+
+    /** `NftAvatarsModel.selectNftAvatar`: an outfit with a look is put on, remembered for the save and named. */
+    const selectNftOutfit = (outfit: INftWardrobeItem) => {
+        if (outfit.figureString === '') return;
+
+        setNftOutfit(outfit.id);
+        loadFigure(outfit.figureString, normalizeGender(outfit.gender));
+        setNftInfoOutfit(outfit);
+    };
+
+    /** `HabboAvatarEditor.loadNftFigure`: the picked outfit, else the worn one (which it then picks). */
+    const loadNftFigure = () => {
+        if (selectedNftOutfitId !== null) {
+            const picked = nftOutfits.find(outfit => outfit.id === selectedNftOutfitId);
+
+            if (picked) loadFigure(picked.figureString, normalizeGender(picked.gender));
+
+            return;
+        }
+
+        if (nftCurrentTokenId === null) return;
+
+        const worn = nftOutfits.find(outfit => outfit.tokenId === nftCurrentTokenId);
+
+        if (!worn) return;
+
+        setNftOutfit(worn.id);
+        loadFigure(worn.figureString, normalizeGender(worn.gender));
+    };
+
+    /**
+     * `AvatarEditorView.windowEventProc`'s `WE_SELECTED`, then `setViewToCategory`: the look follows
+     * the tab while an NFT outfit is worn or picked (not for hot looks or effects, except that effects
+     * show the worn outfit). The NFT tab closes the side content.
+     */
+    const selectCategory = (category: AvatarEditorCategory) => {
+        if (category === shownCategory) return;
+
+        const hasNftOutfit = nftCurrentTokenId !== null;
+        const isNfts = category === AvatarEditorCategory.Nfts;
+        let fallback = false;
+        let rollback = false;
+        let nft = false;
+
+        if ((category !== AvatarEditorCategory.Effects) && (category !== AvatarEditorCategory.HotLooks)) {
+            if (hasNftOutfit && isNfts) nft = true;
+            else if (hasNftOutfit) fallback = true;
+            else if ((selectedNftOutfitId !== null) && !isNfts) rollback = true;
+        }
+
+        if (hasNftOutfit && (category === AvatarEditorCategory.Effects)) nft = true;
+
+        setActiveCategory(category);
+        setNftInfoOutfit(null);
+
+        if (isNfts) setWardrobeVisible(false);
+
+        if (fallback) {
+            // `loadFallbackFigure`: only a look that is not empty.
+            if (nftFallbackFigure !== '') loadFigure(nftFallbackFigure, nftFallbackGender);
+        } else if (rollback) {
+            loadFigure(nftRollbackFigure, nftRollbackGender);
+        } else if (nft) {
+            loadNftFigure();
+        }
+    };
+
     // The wardrobe is asked for once; the store keeps it across openings.
     useEffect(() => {
         if (!wardrobe.length) send(new GetWardrobeComposer({}));
@@ -339,15 +505,42 @@ export const AvatarEditor = () => {
     }).map(({ category }) => category);
     // A category whose tab is gone falls back to the first.
     const shownCategory = categories.includes(activeCategory) ? activeCategory : categories[0];
-    const showGrid = (shownCategory !== AvatarEditorCategory.HotLooks) && (shownCategory !== AvatarEditorCategory.Effects);
+    const showGrid = (shownCategory !== AvatarEditorCategory.HotLooks) && (shownCategory !== AvatarEditorCategory.Effects) && (shownCategory !== AvatarEditorCategory.Nfts);
     // `setSideContent`: the content reaches `sideContainer`'s right edge - the wardrobe's width with it,
     // 1 with nothing in it - so the name banner ends where the frame's right border begins.
     const contentWidth = SIDE_CONTAINER_X + (wardrobeVisible ? WARDROBE_WIDTH : EMPTY_SIDE_WIDTH);
 
+    const nftItems: TemplateItem[] = outfitTemplate
+        ? nftOutfits.map((outfit) => {
+                const [ background, activeBackground, gradient, activeGradient ] = NFT_OUTFIT_COLORS[outfit.contractKey] ?? NFT_OUTFIT_DEFAULT_COLORS;
+                const active = outfit.id === selectedNftOutfitId;
+
+                return {
+                    key: outfit.id,
+                    from: outfitTemplate,
+                    bindings: {
+                        '': { onPointerTap: () => selectNftOutfit(outfit) },
+                        // `OutfitView`: a look-less outfit's button is disabled.
+                        button: { color: active ? activeBackground : background, disabled: outfit.figureString === '' },
+                        outfit_gradient: { visible: gradient !== 0, color: active ? activeGradient : gradient },
+                        bitmap: {
+                            children: (
+                                <NftOutfitImage
+                                    outfit={outfit}
+                                    zoom={zoom}
+                                />
+                            ),
+                        },
+                    },
+                };
+            })
+        : [];
+
     const viewBindings: TemplateBindings = {
         avatar_name: { caption: name },
         // `setSideContent('wardrobe')` / `'nothing'`.
-        wardrobe: { onPointerTap: () => setWardrobeVisible(!wardrobeVisible) },
+        // `setViewToCategory`: disabled on the NFT tab.
+        wardrobe: { disabled: shownCategory === AvatarEditorCategory.Nfts, onPointerTap: () => setWardrobeVisible(!wardrobeVisible) },
         sideContainer: {
             children: wardrobeVisible && (
                 <AvatarEditorWardrobe
@@ -364,7 +557,7 @@ export const AvatarEditor = () => {
             items: categories.map(category => ({
                 key: category,
                 from: `mainTabs/${category}`,
-                bindings: { '': { selected: category === shownCategory, onPointerTap: () => setActiveCategory(category) } },
+                bindings: { '': { selected: category === shownCategory, onPointerTap: () => selectCategory(category) } },
             })),
         },
 
@@ -376,8 +569,18 @@ export const AvatarEditor = () => {
         } ])),
         ...Object.fromEntries(GENDER_TABS.map(({ tab, gender: tabGender, icon }) => [ `generic_content/${tab}/#BITMAP`, { asset: subTabAsset(icon, (gender === tabGender) || (hoveredTab === `generic/${tab}`)) } ])),
 
+        // `NftAvatarsView.update` - the grid, not the tab of the same name.
+        'nfts_content/nfts': { items: nftItems },
+
         effectParamsContainer: { visible: false },
-        collectible_avatar_info: { visible: false },
+        // `NftWardrobeParamView.updateView`: the contract's name (`null` for one it does not know) and the outfit's id.
+        collectible_avatar_info: { visible: nftInfoOutfit !== null },
+        avatar_info_text: nftInfoOutfit
+            ? {
+                    caption: `${(nftInfoOutfit.contractKey in NFT_COLLECTION_NAMES) ? t(NFT_COLLECTION_NAMES[nftInfoOutfit.contractKey]) : 'null'} #${nftInfoOutfit.id}`,
+                    color: NFT_COLLECTION_TEXT_COLORS[nftInfoOutfit.contractKey] ?? NFT_COLLECTION_DEFAULT_TEXT_COLOR,
+                }
+            : {},
         grid_container: { visible: showGrid },
     };
 
@@ -445,9 +648,28 @@ export const AvatarEditor = () => {
         };
     });
 
-    const hasParts = parts.length > 0;
+    // `GET_MORE`: the last thumb, `camera_zoom_in` centred in it; a click opens the clothes page (`onGridItemClicked`).
+    if (sellableSupport) {
+        thumbs.push({
+            key: GET_MORE,
+            from: 'thumb_template',
+            bindings: {
+                '': {
+                    onPointerTap: openClothesPage,
+                    onPointerOver: () => setHoveredPart(GET_MORE_ID),
+                    onPointerOut: () => setHoveredPart(current => ((current === GET_MORE_ID) ? null : current)),
+                },
+                '#BG_COLOR': { visible: hoveredPart === GET_MORE_ID, alpha: HOVER_ALPHA },
+                bitmap: { asset: GET_MORE_ICON, pivot: 'center' },
+                '#CLUB_ICON': { visible: false },
+                '#SELLABLE_ICON': { visible: false },
+            },
+        });
+    }
+
+    const hasParts = thumbs.length > 0;
     // `showPalettes(colorLayerCount)`: none without parts.
-    const layers = hasParts ? palettes.length : 0;
+    const layers = parts.length ? palettes.length : 0;
 
     const bindings: TemplateBindings = {
         ...viewBindings,

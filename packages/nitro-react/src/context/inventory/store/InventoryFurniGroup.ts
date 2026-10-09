@@ -29,6 +29,10 @@ export interface InventoryFurniItem {
     recyclable: boolean;
     sellable: boolean;
     isRented: boolean;
+    /** `secondsToExpiration` as the packet gave it (-1 when not rented) and when it arrived (`expirationTimeStamp`). */
+    rentSeconds: number;
+    rentReceivedAt: number;
+    hasRentPeriodStarted: boolean;
     flatId: number;
     /** `locked`: in a trade (`FurniModel.updateItemLocks`). */
     locked: boolean;
@@ -74,9 +78,24 @@ export const createInventoryFurniItem = (data: IFurniListAddOrUpdateFurni, locke
     recyclable: data.isRecyclable,
     sellable: data.isSellable,
     isRented: !!data.isRented,
+    rentSeconds: data.secondsToExpiration,
+    rentReceivedAt: data.expirationTimeStamp,
+    hasRentPeriodStarted: data.hasRentPeriodStarted,
     flatId: data.flatId,
     locked,
 });
+
+/**
+ * `FurnitureItem.secondsToExpiration`: -1 when the packet gave none; a period that has started
+ * counts down from when the packet arrived, never below 0; one that has not stays as it came.
+ */
+export const getInventoryFurniSecondsToExpiration = (item: InventoryFurniItem, now: number = Date.now()): number => {
+    if (item.rentSeconds === -1) return -1;
+
+    if (!item.hasRentPeriodStarted) return item.rentSeconds;
+
+    return Math.max(0, Math.trunc(item.rentSeconds - ((now - item.rentReceivedAt) / 1000)));
+};
 
 /** `IStuffData.contentsCount`: only a map stuff data carries one (`MapStuffData`). */
 export const getStuffDataContentsCount = (stuffData: IObjectData): number => {

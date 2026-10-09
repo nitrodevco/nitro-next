@@ -8,7 +8,7 @@ import { ITradeNftAsset } from '@nitrodevco/nitro-packets';
 import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 
 import {
-    getInventoryFurniRecyclableCount, getInventoryFurniUnlockedCount, getStuffDataContentsCount, INVENTORY_FURNI_CATEGORY_CHEST_BROWN, INVENTORY_FURNI_CATEGORY_CHEST_GOLD, INVENTORY_FURNI_MIN_ITEMS_TO_SHOW_COUNTER, InventoryFurniGroup,
+    getInventoryFurniRecyclableCount, getInventoryFurniSecondsToExpiration, getInventoryFurniUnlockedCount, getStuffDataContentsCount, INVENTORY_FURNI_CATEGORY_CHEST_BROWN, INVENTORY_FURNI_CATEGORY_CHEST_GOLD, INVENTORY_FURNI_MIN_ITEMS_TO_SHOW_COUNTER, InventoryFurniGroup,
     isInventoryFurniGroupWallItem,
 } from '#base/context/inventory';
 import { LayoutImage, TemplateBindings } from '#base/theme';
@@ -21,6 +21,9 @@ import { inventoryThumbLook } from './inventoryPage';
 
 /** `updateItemCountVisual` / `unlockedAssetCountChanged`: the icon's blend with nothing unlocked. */
 const LOCKED_ALPHA = 0.2;
+
+/** `updateRentStateVisual`'s `purchase.rent.warning_duration_seconds` when the config has none. */
+export const DEFAULT_RENT_WARNING_SECONDS = 172800;
 
 /** `CollectibleGroupedItem.unlockedAssetCountChanged`: the count shows from 2 up. */
 const MIN_NFT_ITEMS_TO_SHOW_COUNTER = 2;
@@ -46,16 +49,33 @@ export interface InventoryFurniThumbState {
     unseen: boolean;
     /** `showRecyclable`: the recycler runs. */
     showRecyclable: boolean;
+    /** `purchase.rent.warning_duration_seconds`: a started rent with less left than this shows as ending. */
+    rentWarningSeconds?: number;
 }
+
+/**
+ * `updateRentStateVisual`: a rented group's mark - not started, ending within the warning time,
+ * or started; nothing for a group that is not rented (`GroupItem.isRented` reads its first item).
+ */
+const rentStateAsset = (group: InventoryFurniGroup, warningSeconds: number): string | undefined => {
+    const item = group.items[0];
+
+    if (!item?.isRented) return undefined;
+
+    if (!item.hasRentPeriodStarted) return 'habbo-window-manager-com-inventory_thumb_rent_not_started';
+
+    return (getInventoryFurniSecondsToExpiration(item) < warningSeconds) ? 'habbo-window-manager-com-inventory_thumb_rent_ending' : 'habbo-window-manager-com-inventory_thumb_rent_started';
+};
 
 /**
  * `GroupItem.initWindow`'s visuals: `BG_COLOR` and the `outline`; the icon, faded with nothing
  * unlocked, and the unlocked count from 2 up (`updateItemCountVisual`); the recycle mark
- * (`updateRecycleStatusVisual`); the first plaque that applies - a limited edition's, a rarity's, a
+ * (`updateRecycleStatusVisual`); the rent mark (`updateRentStateVisual`); the first plaque that applies - a limited edition's, a rarity's, a
  * chest's (`updateItemImageVisual`).
  */
-export const inventoryFurniThumbBindings = (group: InventoryFurniGroup, { selected, unseen, showRecyclable }: InventoryFurniThumbState): TemplateBindings => {
+export const inventoryFurniThumbBindings = (group: InventoryFurniGroup, { selected, unseen, showRecyclable, rentWarningSeconds = DEFAULT_RENT_WARNING_SECONDS }: InventoryFurniThumbState): TemplateBindings => {
     const unlocked = getInventoryFurniUnlockedCount(group);
+    const rentState = rentStateAsset(group, rentWarningSeconds);
     const unique = group.stuffData.uniqueNumber > 0;
     const rare = !unique && (group.stuffData.rarityLevel >= 0);
     const chest = (!unique && !rare) ? chestColorOf(group) : undefined;
@@ -66,6 +86,7 @@ export const inventoryFurniThumbBindings = (group: InventoryFurniGroup, { select
         number_container: { visible: unlocked >= INVENTORY_FURNI_MIN_ITEMS_TO_SHOW_COUNTER },
         number: { caption: String(unlocked) },
         recyclable_container: { visible: showRecyclable && (getInventoryFurniRecyclableCount(group) > 0) },
+        rent_state: rentState ? { visible: true, asset: rentState } : { visible: false },
         unique_item_background_bitmap: { visible: unique },
         unique_item_overlay_container: unique ? { visible: true, children: <CatalogLimitedItemGridOverlayView serialNumber={group.stuffData.uniqueNumber} /> } : { visible: false },
         rarity_item_overlay_container: rare ? { visible: true, children: <CatalogRarityItemGridOverlayView rarityLevel={group.stuffData.rarityLevel} /> } : { visible: false },

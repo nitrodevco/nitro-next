@@ -69,14 +69,15 @@ export class RoomObjectCache {
             for (const sprite of sprites) {
                 if (!sprite) continue;
 
-                if (sprite.sprite.spriteType !== RoomObjectSpriteTypeEnum.RoomPlane && sprite.sprite.name !== '') {
+                // `RoomObjectCache.getSortableSpriteList`: the sprites with a library asset name, by it.
+                if (sprite.sprite.spriteType !== RoomObjectSpriteTypeEnum.RoomPlane && !!sprite.sprite.libraryAssetName) {
                     const data = new RoomObjectSpriteData();
 
                     data.objectId = item.objectId;
-                    data.x = sprite.x;
-                    data.y = sprite.y;
+                    data.x = Math.round(sprite.x);
+                    data.y = Math.round(sprite.y);
                     data.z = sprite.z;
-                    data.name = sprite.sprite.name || '';
+                    data.name = sprite.sprite.libraryAssetName;
                     data.flipH = sprite.sprite.flipH;
                     data.alpha = sprite.sprite.alpha;
                     data.color = sprite.sprite.color.toString();
@@ -92,14 +93,14 @@ export class RoomObjectCache {
 
                     if (
                         (isSkewed
-                            || sprite.name.indexOf('%image.library.url%') >= 0
-                            || sprite.name.indexOf('%group.badge.url%') >= 0)
+                            || data.name.indexOf('%image.library.url%') >= 0
+                            || data.name.indexOf('%group.badge.url%') >= 0)
                         && data.width <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR
                         && data.height <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR
                     ) {
                         // data.color = Canvas._Str_23439(sprite.sprite.texture).toString();
 
-                        if (sprite.sprite.name.indexOf('external_image_wallitem') === 0) {
+                        if (data.type.indexOf('external_image_wallitem') === 0) {
                             data.frame = true;
                         }
                     }

@@ -24,6 +24,15 @@
  *   its own order, capped at `INVENTORY_MAX_ACTIVE_BADGES`, and the server is told about it by
  *   `inventoryBadgeCommands.saveInventoryBadgeSelection` (`saveBadgeSelection`).
  *
+ * - A thumb's look follows `Badge.isSelected`'s setter, which colours `BG_COLOR` (green while
+ *   unseen) and shows `outline` only on the selected one - but only on a window that exists. The
+ *   window is made the first time the badge goes into a grid (`Badge.window`), and nothing sets its
+ *   look then, so a fresh thumb keeps the layout's: grey and outlined. The constructor's
+ *   `isSelected = false` and the first `forceSelection` run before any window does, so every thumb
+ *   opens outlined until the next `setBadgeSelected` (a click) reaches the windows made by then
+ *   (`badgeThumbWindows` / `badgeThumbLooks`). An unseen mark that changes on a made window
+ *   (`set isUnseen`) re-applies that thumb's look.
+ *
  * `badgeCodes` stays the plain code list the catalogue's badge display page reads through
  * `HabboInventory.getAllMyBadgeIds`.
  */
@@ -40,6 +49,12 @@ export const INVENTORY_MAX_ACTIVE_BADGES = 5;
 export const INVENTORY_BADGES_ALL = -1;
 export const INVENTORY_BADGES_INACTIVE = 0;
 export const INVENTORY_BADGES_ACTIVE = 1;
+
+/** What `Badge.set isSelected` puts on its window: `BG_COLOR` by the mark, `outline` by the selection. */
+export interface InventoryBadgeThumbLook {
+    selected: boolean;
+    unseen: boolean;
+}
 
 /** Flash `inventory/badges/Badge`, without the window it carries. */
 export interface InventoryBadge {
@@ -63,6 +78,10 @@ type State = {
     selectedBadgeCode: string;
     /** `GetBadges` has been sent by `getAllMyBadgeIds`. */
     badgesRequested: boolean;
+    /** The badges whose thumb window has been made (`Badge.window`). */
+    badgeThumbWindows: string[];
+    /** The look `set isSelected` last put on a made thumb; none while it keeps the layout's. */
+    badgeThumbLooks: Record<string, InventoryBadgeThumbLook>;
 };
 
 type Actions = {
@@ -79,6 +98,8 @@ type Actions = {
     setBadgesRequested: () => void;
     /** `BadgesModel.resetUnseenItems`' own half: every badge's `isUnseen` goes false. */
     resetBadgesUnseen: () => void;
+    /** `Badge.window`: the thumbs the grids have now made. */
+    markBadgeThumbWindows: (codes: readonly string[]) => void;
 };
 
 export const InventoryBadgesSliceInitialState: State = {
@@ -87,6 +108,8 @@ export const InventoryBadgesSliceInitialState: State = {
     wornBadgeCodes: [],
     selectedBadgeCode: '',
     badgesRequested: false,
+    badgeThumbWindows: [],
+    badgeThumbLooks: {},
 };
 
 export type InventoryBadgesSlice = State & Actions;
@@ -111,8 +134,8 @@ export const createInventoryBadgesSlice: StateCreator<InventoryBadgesSlice & Inv
             else badges.push(toBadge(badge, false));
         }
 
-        // `resetBadges` clears the worn list and the selection with the badges themselves.
-        set({ badges, badgeCodes: badges.map(badge => badge.code), wornBadgeCodes: [], selectedBadgeCode: '' });
+        // `resetBadges` clears the worn list and the selection with the badges themselves - and their windows.
+        set({ badges, badgeCodes: badges.map(badge => badge.code), wornBadgeCodes: [], selectedBadgeCode: '', badgeThumbWindows: [], badgeThumbLooks: {} });
     },
     updateBadge: (incoming, wear) => set((x) => {
         const index = x.badges.findIndex(held => held.code === incoming.badgeCode);
@@ -146,6 +169,7 @@ export const createInventoryBadgesSlice: StateCreator<InventoryBadgesSlice & Inv
             badgeCodes: badges.map(badge => badge.code),
             wornBadgeCodes: x.wornBadgeCodes.filter(worn => worn !== code),
             selectedBadgeCode: (x.selectedBadgeCode === code) ? '' : x.selectedBadgeCode,
+            badgeThumbWindows: x.badgeThumbWindows.filter(made => made !== code),
         };
     }),
     toggleBadgeWearing: code => set((x) => {
@@ -158,9 +182,29 @@ export const createInventoryBadgesSlice: StateCreator<InventoryBadgesSlice & Inv
 
         return { wornBadgeCodes: [ ...x.wornBadgeCodes, code ] };
     }),
-    selectBadge: selectedBadgeCode => set({ selectedBadgeCode }),
+    // `setBadgeSelected`: every badge's `isSelected`, which reaches only the thumbs already made.
+    selectBadge: selectedBadgeCode => set(x => ({
+        selectedBadgeCode,
+        badgeThumbLooks: Object.fromEntries(x.badgeThumbWindows.map(code => [ code, { selected: code === selectedBadgeCode, unseen: !!x.badges.find(badge => badge.code === code)?.isUnseen } ])),
+    })),
     setBadgesRequested: () => set({ badgesRequested: true }),
-    resetBadgesUnseen: () => set(x => (x.badges.some(badge => badge.isUnseen) ? { badges: x.badges.map(badge => (badge.isUnseen ? { ...badge, isUnseen: false } : badge)) } : x)),
+    resetBadgesUnseen: () => set((x) => {
+        if (!x.badges.some(badge => badge.isUnseen)) return x;
+
+        // `set isUnseen` on a changed mark re-applies that thumb's look, if it has been made.
+        const badgeThumbLooks = { ...x.badgeThumbLooks };
+
+        for (const badge of x.badges) {
+            if (badge.isUnseen && x.badgeThumbWindows.includes(badge.code)) badgeThumbLooks[badge.code] = { selected: badge.code === x.selectedBadgeCode, unseen: false };
+        }
+
+        return { badges: x.badges.map(badge => (badge.isUnseen ? { ...badge, isUnseen: false } : badge)), badgeThumbLooks };
+    }),
+    markBadgeThumbWindows: codes => set((x) => {
+        const made = codes.filter(code => !x.badgeThumbWindows.includes(code));
+
+        return made.length ? { badgeThumbWindows: [ ...x.badgeThumbWindows, ...made ] } : x;
+    }),
 });
 
 /** `BadgesModel.getBadges(filter)`. */

@@ -142,6 +142,10 @@ const MAX_TAGS = 2;
 /** `disableWindow` / `enableWindow`: a disabled window is blended to half. */
 const DISABLED_ALPHA = 0.5;
 
+/** `getHelpPageWithTab`: tab 4's help page; every other tab has none. */
+const HELP_PAGE_TAB = 4;
+const HELP_PAGE = 'chat/options';
+
 /** `TextFieldManager.displayError`: a refused field's `textBackgroundColor` (`0xFFF18F9B`). */
 const ERROR_BACKGROUND = 0xf18f9b;
 
@@ -267,6 +271,8 @@ export const RoomSettingsView = ({
     const doorMode = Number(settings.doorMode);
 
     const bindings: TemplateBindings = {
+        // `refresh` / `switchToTab`: `_window.helpPage = getHelpPageWithTab(_currentTab)` - the chat options page on tab 4.
+        '': { helpPage: (tab === HELP_PAGE_TAB) ? HELP_PAGE : '' },
         ...Object.fromEntries(TABS.flatMap(index => [
             [ `tab_${index}`, { visible: !isTabRemoved(index), selected: tab === index, onPointerTap: () => onChangeTab(index) } ],
             [ `tab_container_${index}`, { visible: tab === index } ],

@@ -11,6 +11,8 @@ const state = singularNotificationStore.getState();
 const actions = {
     closeMotdNotification: state.closeMotdNotification,
     closeClubGiftNotification: state.closeClubGiftNotification,
+    markNewFeatureNotificationOpened: state.markNewFeatureNotificationOpened,
+    closeNewFeatureNotification: state.closeNewFeatureNotification,
 };
 
 export const useSingularNotificationActions = () => actions;

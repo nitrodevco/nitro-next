@@ -2,6 +2,7 @@ import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, Room
 import { ReactNode, useState } from 'react';
 
 import { useOwnRoomObjectId, useRoom, useRoomBotsActions, useRoomFurnitureContextMenu, useRoomIsPlayingGame, useRoomIsSpectating, useRoomObjectIdByWebId, useRoomStore } from '#base/context/room';
+import { useUserStore } from '#base/context/user';
 import { useWiredStore } from '#base/context/wired';
 import { useRoomEventDispatcher } from '#base/hooks';
 import { FurnitureContextMenuView } from '#base/views/room-widgets/furniture/FurnitureContextMenuView';
@@ -34,6 +35,9 @@ export const RoomObjectMenuWidget = () => {
     const [ selectedData, setSelectedData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
     const [ hoverData, setHoverData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
     const room = useRoom();
+    const nameChangeAllowed = useUserStore(x => x.nameChangeAllowed);
+    // `RWAIE_AVATAR_INFO`: the own user's name over their avatar from the moment they are in the room.
+    const [ dismissedEntryKey, setDismissedEntryKey ] = useState<string | undefined>(undefined);
     const ownRoomObjectId = useOwnRoomObjectId();
     const contextMenu = useRoomFurnitureContextMenu();
     const isDecorating = useRoomStore(x => x.isDecorating);
@@ -66,6 +70,10 @@ export const RoomObjectMenuWidget = () => {
 
     const onClose = () => setSelectedData(undefined);
 
+    // `dispatchOwnAvatarInfo` -> `updateUserView(own, allowNameChange false)`: `AvatarContextInfoButtonView` over the own avatar, once per room entry until something else is selected. A user who may change the name gets the minimised menu selected instead.
+    const entryKey = (room && !isSpectating && !nameChangeAllowed && (ownRoomObjectId >= 0)) ? `${room.roomId}:${ownRoomObjectId}` : undefined;
+    const entryData: ISimpleRoomObjectData | undefined = (entryKey && (entryKey !== dismissedEntryKey)) ? { objectId: ownRoomObjectId, category: RoomObjectCategoryEnum.Unit } : undefined;
+
     useRoomEventDispatcher(RoomWidgetUpdateRoomObjectEvent.OBJECT_DESELECTED, () => setSelectedData(undefined));
 
     useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>([ RoomWidgetUpdateRoomObjectEvent.USER_REMOVED, RoomWidgetUpdateRoomObjectEvent.FURNI_REMOVED ], (event) => {
@@ -75,6 +83,7 @@ export const RoomObjectMenuWidget = () => {
     useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>(RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED, (event) => {
         setSelectedData({ objectId: event.objectId, category: event.category });
         setHoverData(undefined);
+        setDismissedEntryKey(entryKey);
         setHeldMenuIndex((hasClickUserWired && (Number(event.category) === Number(RoomObjectCategoryEnum.Unit))) ? event.objectId : undefined);
     });
 
@@ -193,7 +202,7 @@ export const RoomObjectMenuWidget = () => {
                     <DecorateModeBubbleView />
                 </RoomObjectMenuBubble>
             )}
-            {(hoverData && !isDecorating) ? (!isSpectating && <RoomObjectMenuNameBubble objectData={hoverData} />) : renderSelected()}
+            {(hoverData && !isDecorating) ? (!isSpectating && <RoomObjectMenuNameBubble objectData={hoverData} />) : (renderSelected() ?? ((entryData && !selectedData && !isDecorating) ? <RoomObjectMenuNameBubble objectData={entryData} /> : null))}
         </>
     );
 };

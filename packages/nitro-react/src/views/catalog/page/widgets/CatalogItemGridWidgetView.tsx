@@ -206,6 +206,8 @@ export const CatalogItemGridWidgetView = ({ page, tags }: CatalogWidgetProps) =>
         template: 'itemGridWidget',
         bindings: {
             itemGrid: {
+                // `init`: `_itemGrid.verticalSpacing = 0` - the rows touch, the columns keep the layout's spacing.
+                verticalSpacing: 0,
                 items: content.gridOffers.map(offer => catalogGridItem(offer, String(offer.offerId), {
                     templates,
                     config,

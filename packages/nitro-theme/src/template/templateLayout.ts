@@ -79,6 +79,8 @@ export interface TemplateLayoutInput {
     setupOf?: (element: TemplateElement) => ((windowOf: (element: TemplateElement) => LayoutWindow | undefined) => void) | undefined;
     /** An item list's `IItemListWindow.spacing` as its code sets it, over the layout's `spacing`. */
     spacingOf?: (element: TemplateElement) => number | undefined;
+    /** An item grid's `IItemGridWindow.verticalSpacing` as its code sets it: the gap between its rows. */
+    verticalSpacingOf?: (element: TemplateElement) => number | undefined;
     /** A scrollable list's `IScrollableListWindow.autoHideScrollBar`: `false` keeps its scrollbar while its items fit. */
     autoHideScrollBarOf?: (element: TemplateElement) => boolean;
     /**
@@ -751,7 +753,7 @@ class LabelWindow extends LayoutWindow {
 
 /**
  * `TextController`: with an `auto_size` other than `none` the field follows the text - `left` takes
- * its width and height, `center` and `right` its height - and a resize from outside is followed by
+ * its width (unless it wraps) and height, `center` and `right` its height - and a resize from outside is followed by
  * one (`setRectangle` sets `autoSize` to `none` and back, which refreshes).
  */
 class TextWindow extends LayoutWindow {
@@ -805,10 +807,11 @@ class TextWindow extends LayoutWindow {
 
         this._refreshing = true;
 
-        const fieldWidth = Math.floor(field.width);
-        const fieldHeight = Math.floor(field.height);
         const innerWidth = this.width - margins.horizontal;
         const innerHeight = this.height - margins.vertical;
+        // A word-wrapped `TextField` keeps its width under `autoSize`, only its height follows the text.
+        const fieldWidth = wraps ? innerWidth : Math.floor(field.width);
+        const fieldHeight = Math.floor(field.height);
 
         if (fieldWidth !== innerWidth && autoSize === 'left') this.setRectangle(this.x, this.y, fieldWidth + margins.horizontal, fieldHeight + margins.vertical);
         if (fieldHeight !== innerHeight) this.setHeight(fieldHeight + margins.vertical);
@@ -909,7 +912,7 @@ class ListWindow extends LayoutWindow {
     protected readonly _horizontal: boolean;
     protected _spacing: number;
     private readonly _autoArrange: boolean;
-    private readonly _scaleToFit: boolean;
+    private _scaleToFit: boolean;
     private _length = 0;
     private _breadth = 0;
     private _arranging = false;
@@ -948,6 +951,11 @@ class ListWindow extends LayoutWindow {
     /** `IItemListWindow.spacing`: the gap between items, for the items placed from now on. */
     public set spacing(spacing: number) {
         this._spacing = spacing;
+    }
+
+    /** `IItemListWindow.scaleToFitItems`: whether the list's breadth grows to its widest item. */
+    public set scaleToFitItems(scaleToFit: boolean) {
+        this._scaleToFit = scaleToFit;
     }
 
     /** `ItemListController.addListItemAt`. */
@@ -1073,9 +1081,17 @@ class ListContainer extends LayoutWindow {
  */
 class GridWindow extends ListWindow {
     private _rebuilding = false;
+    private _verticalSpacing: number | undefined;
 
     constructor(element: TemplateElement, rect: TemplateRect, param: number, parent?: LayoutWindow, spacing?: number) {
         super(element, rect, param, parent, { horizontal: true, scaleToFit: true, reflectHorizontal: false, spacing });
+    }
+
+    /** `ItemGridController.verticalSpacing`: the columns' own spacing, the rows' gap, from then on over `spacing`. */
+    public set verticalSpacing(spacing: number) {
+        this._verticalSpacing = spacing;
+
+        for (const column of this.columns) column.spacing = spacing;
     }
 
     /** `ItemGridController.update`: resized, the grid is rebuilt at its new width (`shouldRebuildGridOnResize`, on by default). */
@@ -1171,9 +1187,9 @@ class GridWindow extends ListWindow {
         if (item.y + item.height > target.height) target.setHeight(item.y + item.height);
     }
 
-    /** `ItemGridController._Str_14060`: a column, sized to its first item, spaced as the grid. */
+    /** `ItemGridController.addColumnForItem`: a column, sized to its first item, spaced by the grid's `verticalSpacing` if set, else its `spacing`. */
     private addColumn(item: LayoutWindow): void {
-        const column = new ListWindow(undefined, { x: 0, y: 0, width: Math.max(item.width, 0), height: Math.max(item.height, 0) }, P.parentGraphics, undefined, { spacing: this._spacing });
+        const column = new ListWindow(undefined, { x: 0, y: 0, width: Math.max(item.width, 0), height: Math.max(item.height, 0) }, P.parentGraphics, undefined, { spacing: this._verticalSpacing ?? this._spacing });
 
         this.addListItem(column);
         column.addListItem(item);
@@ -1204,21 +1220,6 @@ class FrameWindow extends LayoutWindow {
 }
 
 /**
- * The properties `ScrollableItemListWindow` / `ScrollableItemGridWindow.set properties` hand to the
- * inner list or grid they wrap (`_itemGrid.spacing = value` ...).
- */
-const FORWARDED_LIST_VARS = [ 'spacing', 'scale_to_fit_items', 'resize_on_item_update', 'inverse_resize_on_item_update', 'auto_arrange_items' ] as const;
-
-/** The skin's inner list with the scrollable list's own forwarded properties over its vars. */
-const withForwardedListVars = (part: TemplateElement, owner: TemplateElement): TemplateElement => {
-    const forwarded = FORWARDED_LIST_VARS.filter(key => owner.vars[key] !== undefined);
-
-    if (!forwarded.length) return part;
-
-    return { ...part, vars: { ...part.vars, ...Object.fromEntries(forwarded.map(key => [ key, owner.vars[key] ])) } };
-};
-
-/**
  * `ScrollableItemListWindow` / `ScrollableItemGridWindow`: built from its window layout (`skin`) - an
  * inner list (`_ITEMLIST` / `_ITEMGRID`) and a scrollbar (`_SCROLLBAR`) made at the layout's size,
  * then resized to its own rect, which moves and stretches them by their params. Its XML children go
@@ -1233,10 +1234,7 @@ class ScrollableWindow extends LayoutWindow {
         // The `WindowController` constructor: at the window layout's size, its parts built in it...
         super(element, { x: 0, y: 0, width: skin.width, height: skin.height }, param);
 
-        for (const skinPart of skin.elements) {
-            const isList = !!(skinPart.tags?.includes('_ITEMLIST') || skinPart.tags?.includes('_ITEMGRID'));
-            // `set properties`: the list's own properties go on to the inner list or grid.
-            const part = isList ? withForwardedListVars(skinPart, element) : skinPart;
+        for (const part of skin.elements) {
             const window = createWindow(part, { x: part.x, y: part.y, width: part.width, height: part.height }, templateParamBits(part), undefined, input);
 
             window.skinPart = true;
@@ -1251,6 +1249,16 @@ class ScrollableWindow extends LayoutWindow {
                 const spacing = input.spacingOf?.(element) ?? (typeof element.vars.spacing === 'number' ? int(element.vars.spacing) : undefined);
 
                 if (spacing !== undefined) window.spacing = spacing;
+
+                // `set properties` hands `scale_to_fit_items` on the same way (`_itemList.scaleToFitItems`).
+                // Its other forwarded keys - `resize_on_item_update`, `inverse_resize_on_item_update`,
+                // `auto_arrange_items` - are set on no scrollable list in the client's layouts.
+                if (element.vars.scale_to_fit_items !== undefined) window.scaleToFitItems = flashBool(element.vars.scale_to_fit_items);
+
+                // `ScrollableItemGridWindow.verticalSpacing` goes on to its grid (`_itemGrid.verticalSpacing`).
+                const verticalSpacing = input.verticalSpacingOf?.(element);
+
+                if ((verticalSpacing !== undefined) && (window instanceof GridWindow)) window.verticalSpacing = verticalSpacing;
             }
             if (part.tags?.includes('_SCROLLBAR')) this._scrollbar = window;
         }

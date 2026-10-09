@@ -1,17 +1,19 @@
 import { createStore } from 'zustand';
 
 import { createGroupDetailsSlice, GroupDetailsSlice } from './GroupDetailsSlice';
+import { createGroupForumSlice, GroupForumSlice } from './GroupForumSlice';
 import { createGroupManagementSlice, GroupManagementSlice } from './GroupManagementSlice';
 import { createGroupMembersSlice, GroupMembersSlice } from './GroupMembersSlice';
 import { createGroupRoomInfoSlice, GroupRoomInfoSlice } from './GroupRoomInfoSlice';
 
-export type GroupStore = GroupDetailsSlice & GroupMembersSlice & GroupManagementSlice & GroupRoomInfoSlice;
+export type GroupStore = GroupDetailsSlice & GroupMembersSlice & GroupManagementSlice & GroupRoomInfoSlice & GroupForumSlice;
 
 export const createGroupStore = () => createStore<GroupStore>()((set, get, store) => ({
     ...createGroupDetailsSlice(set, get, store),
     ...createGroupMembersSlice(set, get, store),
     ...createGroupManagementSlice(set, get, store),
     ...createGroupRoomInfoSlice(set, get, store),
+    ...createGroupForumSlice(set, get, store),
 }));
 
 /**

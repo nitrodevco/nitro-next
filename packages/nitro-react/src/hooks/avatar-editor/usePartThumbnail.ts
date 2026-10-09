@@ -1,6 +1,6 @@
 import { AvatarFigurePartType, AvatarGenderType, AvatarScaleType, AvatarSetType, IAvatarImage, IFigurePartSet, IGraphicAsset, IPartColor } from '@nitrodevco/nitro-api';
-import { GetAvatarRenderManager, TexturePool, TextureUtils } from '@nitrodevco/nitro-renderer';
-import { Rectangle, RenderTexture, Sprite, Texture } from 'pixi.js';
+import { GetAvatarRenderManager, TexturePool } from '@nitrodevco/nitro-renderer';
+import { RenderTexture, Texture } from 'pixi.js';
 import { useEffect, useSyncExternalStore } from 'react';
 
 import { useAvatarEditorStore } from '#base/context/avatar-editor';
@@ -14,8 +14,8 @@ import { useAvatarEditorStore } from '#base/context/avatar-editor';
  *
  * Faces (`hd`) are the exception: the skin tone is a real palette swap rather than a tint, so
  * each face is rendered through the avatar imager as a head-only avatar (`hd-<id>-<colours>`,
- * the old `getFigureStringWithFace`), trimmed to its opaque pixels and kept as one small render
- * texture. The imager instance itself is disposed immediately - only the trimmed texture stays.
+ * the old `getFigureStringWithFace`), cropped to its head parts (`getCroppedImage`) and kept as one small render
+ * texture. The imager instance itself is disposed immediately - only the cropped texture stays.
  *
  * Thumbnails are requested per grid cell (`usePartThumbnail`), not per set type: the grid is
  * virtualised, so a part's libraries only start downloading once its cell has actually been
@@ -143,51 +143,22 @@ const headPending = new Map<string, Promise<PartThumbnail | undefined>>();
 /** The head-only figure a face cell renders: this face id with the figure's current skin colours. */
 const headFigureOf = (partId: number, colors: (IPartColor | undefined)[]): string => [ HEAD_SET_TYPE, partId, ...colors.flatMap(color => (color ? [ color.id ] : [])) ].join('-');
 
-/** Bounding box of the non-transparent pixels, or undefined for a fully transparent texture. */
-const opaqueBounds = (texture: Texture): Rectangle | undefined => {
-    const { pixels, width, height } = TextureUtils.getPixels(texture);
-
-    let minX = width;
-    let minY = height;
-    let maxX = -1;
-    let maxY = -1;
-
-    for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-            if (!pixels[(((y * width) + x) * 4) + 3]) continue;
-
-            if (x < minX) minX = x;
-            if (x > maxX) maxX = x;
-            if (y < minY) minY = y;
-            if (y > maxY) maxY = y;
-        }
-    }
-
-    return maxX < 0 ? undefined : new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
-};
-
-/** Copies the imager's head render into its own trimmed texture; the imager (and its part cache) is released before returning. */
+/**
+ * The imager's head render as its own texture: `BodyModel.updateIconImage` used
+ * `getCroppedImage("head")`, the union of the head parts' rects, so no pixels are read back.
+ * The imager (and its part cache) is released before returning.
+ */
 const captureHead = (avatarImage: IAvatarImage): HeadThumbnail | undefined => {
     try {
         if (avatarImage.isPlaceholder()) return undefined;
 
-        const full = avatarImage.getImage(AvatarSetType.Head, false);
-        const bounds = full && opaqueBounds(full);
-
-        if (!full || !bounds) return undefined;
-
-        const texture = TexturePool.createRenderTexture(bounds.width, bounds.height);
+        const texture = avatarImage.getCroppedImage(AvatarSetType.Head, false);
 
         if (!texture) return undefined;
 
-        const sprite = new Sprite(new Texture({ source: full.source, frame: bounds }));
-
-        TextureUtils.getRenderer().render({ target: texture, container: sprite, clear: true });
-        sprite.destroy({ texture: true, textureSource: false });
-
         return {
             texture,
-            thumbnail: { layers: [ { texture, x: 0, y: 0, colorLayerIndex: 0 } ], width: bounds.width, height: bounds.height },
+            thumbnail: { layers: [ { texture, x: 0, y: 0, colorLayerIndex: 0 } ], width: texture.width, height: texture.height },
         };
     } finally {
         avatarImage.dispose();

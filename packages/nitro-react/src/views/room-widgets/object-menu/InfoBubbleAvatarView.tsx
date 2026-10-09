@@ -25,8 +25,8 @@ const RELATIONSHIP_CELLS = [ 'relationship_heart', 'relationship_smile', 'relati
  * `updateButtons` hides every row of `buttons` and shows each mode's rows its conditions pass - the
  * relationship grid in the relationship mode (`showButtonGrid`). A row's click is on its `button`.
  * `AvatarMenuView.buttonEventProc` takes `WME_OVER` for its own tracking and never passes it on, so
- * its rows keep their colour under the pointer. The layout's `blow`, `perform`, `report` and
- * `donate_*` rows are not offered: the port has no action behind them.
+ * its rows keep their colour under the pointer. The layout's `blow`, `perform` and `donate_*` rows
+ * are not offered: the port has no action behind them.
  */
 export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarViewProps) => {
     const menu = useAvatarMenu(objectData, onClose);

@@ -3,6 +3,7 @@ export * from './mask/PlaneMaskBitmap';
 export * from './mask/PlaneMaskManager';
 export * from './mask/PlaneMaskVisualization';
 export * from './PlaneDrawingData';
+export * from './PlaneTextureCache';
 export * from './rasterizer/animated/AnimationItem';
 export * from './rasterizer/animated/LandscapePlane';
 export * from './rasterizer/animated/LandscapeRasterizer';

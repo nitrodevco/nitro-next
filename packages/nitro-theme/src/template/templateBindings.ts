@@ -71,8 +71,15 @@ export interface TemplateBinding {
     disableSection?: boolean;
     /** A tab button's or a checkbox's `ISelectableWindow.select()` / `unselect()`. */
     selected?: boolean;
+    /** A frame's `helpPage` as its code sets it, over the layout's `help_page` var: a page shows the help button. */
+    helpPage?: string;
     /** `WME_CLICK`; the event's `currentTarget` is the element's window (`getGlobalRectangle`). */
     onPointerTap?: (event: FederatedPointerEvent) => void;
+    /**
+     * A markup text's click on an `<a href>`'s glyphs, and only there, with the link (`HTMLTextController.immediateClickHandler`'s
+     * `WindowLinkEvent.link`: an `event:` link without its prefix).
+     */
+    onLink?: (link: string) => void;
     /**
      * `WME_DOUBLE_CLICK`: a second click on the element within `DOUBLE_CLICK_MS` of the first. Both
      * clicks are still `onPointerTap`s, as Flash sends `WME_CLICK` for each before the double click.
@@ -109,8 +116,16 @@ export interface TemplateBinding {
     backgroundColor?: number;
     /** An item list's `spacing` between its items, over the layout's (`IItemListWindow.spacing`). */
     spacing?: number;
+    /** An item grid's `verticalSpacing` between its rows, over its `spacing` (`IItemGridWindow.verticalSpacing`). */
+    verticalSpacing?: number;
     /** A scrollable list's `autoHideScrollBar`: `false` keeps its scrollbar, disabled, while its items fit. */
     autoHideScrollBar?: boolean;
+    /**
+     * A scrollable list's `IScrollableWindow.scrollV`: where its vertical scroll is, 0 at the top to
+     * 1 at the bottom (`RewardTrackTaskDetailsView.scrollActiveLevelIntoView`). Applied each time it
+     * changes, once the list has laid out the items bound with it.
+     */
+    scrollV?: number;
     /** An input taking the focus (`WE_FOCUSED`). */
     onFocus?: () => void;
     /** A text's etching colour (`ITextWindow.etchingColor`), `0xAARRGGBB`; 0 for none. */
@@ -132,6 +147,8 @@ export interface TemplateBinding {
     selection?: number;
     /** A drop menu's entry picked (`WE_SELECTED`). */
     onSelect?: (index: number) => void;
+    /** A drop menu's `openMenu()`: a new value opens its list, as its code opens it. */
+    openRequest?: number;
     /**
      * A list's items that show, by name; every other item of the list is hidden. The AS3 pattern of
      * hiding every list item and showing some (`AvatarMenuView.updateButtons`).
@@ -394,7 +411,7 @@ export const bindElements = (targets: ReadonlyMap<string, TemplateElement>, bind
 };
 
 /** The handlers a binding carries: each is handed to the element as one stable function that calls the latest. */
-const HANDLERS = [ 'onPointerTap', 'onDoubleClick', 'onPointerOver', 'onPointerOut', 'onPointerDown', 'onPointerUp', 'onChange', 'onEnter', 'onKeyDown', 'onBlur', 'onFocus', 'onSelect' ] as const;
+const HANDLERS = [ 'onPointerTap', 'onDoubleClick', 'onPointerOver', 'onPointerOut', 'onPointerDown', 'onPointerUp', 'onChange', 'onEnter', 'onKeyDown', 'onBlur', 'onFocus', 'onSelect', 'onLink' ] as const;
 
 type TemplateHandler = typeof HANDLERS[number];
 
@@ -420,8 +437,11 @@ export const sameTemplateBinding = (a: TemplateBinding | undefined, b: TemplateB
         && a.disabled === b.disabled
         && a.disableSection === b.disableSection
         && a.selected === b.selected
+        && a.helpPage === b.helpPage
         && a.autoHideScrollBar === b.autoHideScrollBar
+        && a.scrollV === b.scrollV
         && a.spacing === b.spacing
+        && a.verticalSpacing === b.verticalSpacing
         && a.italic === b.italic
         && a.underline === b.underline
         && a.crop === b.crop
@@ -432,6 +452,7 @@ export const sameTemplateBinding = (a: TemplateBinding | undefined, b: TemplateB
         && a.etchingColor === b.etchingColor
         && a.etchingPosition === b.etchingPosition
         && a.selection === b.selection
+        && a.openRequest === b.openRequest
         && (a.options === b.options || (!!a.options && !!b.options && a.options.length === b.options.length && a.options.every((option, index) => option === b.options?.[index])))
         && a.children === b.children
         && a.keepMounted === b.keepMounted

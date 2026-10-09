@@ -10,8 +10,7 @@
  * arrives while the window is closed (and for every mini mail), `HBST_message_sent` for the first
  * message sent into a conversation that holds nothing but notices.
  *
- * Not carried: `reportUser` - the call-for-help flow is not ported, so the report
- * button draws and does nothing; and `MainView`'s incremental rendering (`scrollBack` renders the
+ * `reportUser` is `helpCommands.reportUserFromIM`. Not carried: `MainView`'s incremental rendering (`scrollBack` renders the
  * newest 21 entries and more as the list is scrolled up) - every entry is rendered, and a scroll
  * to the top asks for older history instead, the one effect of it the user sees.
  */

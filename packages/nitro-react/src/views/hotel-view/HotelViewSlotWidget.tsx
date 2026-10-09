@@ -5,7 +5,7 @@
  * arrives, or when it is empty, the container is its empty 250x30 `widget_container_widget`.
  */
 import {
-    hotelViewCodeWidget, hotelViewColorableFormat, HotelViewCommonSettings, hotelViewPaneWidths, hotelViewSlotSchedule, isWideHotelViewSlot, LandingViewWidgetType, PORTED_LANDING_VIEW_WIDGETS, useConfigData, useSystemStore,
+    hotelViewCodeWidget, HotelViewCommonSettings, hotelViewPaneWidths, hotelViewSlotSchedule, isWideHotelViewSlot, LandingViewWidgetType, PORTED_LANDING_VIEW_WIDGETS, useConfigData, useSystemStore,
 } from '#base/context/system';
 import { Box } from '#base/theme';
 
@@ -62,7 +62,7 @@ export const HotelViewSlotWidget = ({ type, slot, code, settings }: HotelViewSlo
                 />
             );
         case LandingViewWidgetType.BONUSRARE:
-            return <HotelViewBonusRareWidget colorable={hotelViewColorableFormat(settings)} />;
+            return <HotelViewBonusRareWidget settings={settings} />;
         case LandingViewWidgetType.PROMOARTICLE:
             return <HotelViewPromoArticleWidget width={width} />;
         case LandingViewWidgetType.COMMUNITYGOAL:

@@ -1,5 +1,6 @@
 import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
+import { reportPhoto } from '#base/commands/helpCommands';
 import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useConfigValue } from '#base/context/system';
 import { FurnitureExternalImageView } from '#base/views/room-widgets/furniture/FurnitureExternalImageView';
@@ -20,6 +21,9 @@ export const FurnitureExternalImageWidget = () => {
     const room = useRoom();
     const { closeRoomWidget } = useRoomWidgetActions();
     const imageUrlBase = useConfigValue<string>('stories.image_url_base') ?? '';
+    // `ExternalImageWidgetHandler.isSelfieReportingEnabled`.
+    const selfieReportingConfig = useConfigValue<string | boolean>('stories.report.selfie.enabled');
+    const selfieReportingEnabled = (selfieReportingConfig === 'true') || (selfieReportingConfig === true);
 
     if (!request || !room) return null;
 
@@ -37,6 +41,10 @@ export const FurnitureExternalImageWidget = () => {
             creatorName={photo.creatorName}
             time={photo.time}
             caption={photo.caption}
+            reportVisible={(roomObject.type === PHOTO_POSTER_TYPE) || selfieReportingEnabled}
+            // `openReportImage`: the sender, their name, the photo's extra data id (none for a photo that
+            // carries its own url) and the wall item.
+            onReport={() => reportPhoto(photo.creatorId, photo.creatorName, '', request.objectId)}
             onClose={() => closeRoomWidget(RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE)}
         />
     );

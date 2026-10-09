@@ -13,6 +13,11 @@ export interface FurnitureUseProductViewProps {
     confirmKey: string;
     /** Whatever is being used, or who it is being used on: an image, an avatar, a plant. */
     preview?: ReactNode;
+    /** The frame and controller templates, for a product with its own (`createWindow`); the shampoo's by default. */
+    frameTemplate?: string;
+    contentTemplate?: string;
+    /** The controller element the preview goes in: `preview_image`, or the clothing's `avatar_preview` widget. */
+    previewSlot?: string;
     onConfirm: () => void;
     onCancel: () => void;
 }
@@ -28,25 +33,27 @@ const CONTENT_TEMPLATE = 'habbo-room-ui-com/use_product_controller_shampoo_xml';
  * what it will do in `description` and `info`, `cancel_text` and `save_button`.
  *
  * The port's callers name the texts rather than the layouts, so this draws the plain frame with the
- * shampoo controller - the shape the pet products, the seed and the clothing controllers share
- * element for element - and binds the caller's caption, texts and confirm verb over it, with the
- * caller's preview in `preview_image`. `save_button` confirms and `cancel_text` and the header close
+ * shampoo controller by default - the shape the pet products and the seed share element for
+ * element - and binds the caller's caption, texts and confirm verb over it, with the caller's
+ * preview in `preview_image`. A product whose view builds other templates names them (the clothing:
+ * `use_product_widget_frame_plant_seed_xml` and `use_product_controller_purchasable_clothing_xml`,
+ * its preview in `avatar_preview`). `save_button` confirms and `cancel_text` and the header close
  * cancel (`onMouseClick`). Not carried: the seed's own frame and baked-in preview bitmaps, the
- * clothing controller's `avatar_preview` widget, the monsterplant products' item-list frames and
- * controllers (`use_product_widget_frame_monsterplant*_xml`), the `name` / `productName` parameters
- * Flash registers for the texts, and `preview_image_region` selecting the pet in the room.
+ * monsterplant products' item-list frames and controllers (`use_product_widget_frame_monsterplant*_xml`),
+ * the `name` / `productName` parameters Flash registers for the texts, and `preview_image_region`
+ * selecting the pet in the room.
  */
 export const FurnitureUseProductView = ({
-    captionKey, descriptionKey, infoKey, confirmKey, preview, onConfirm, onCancel,
+    captionKey, descriptionKey, infoKey, confirmKey, preview, frameTemplate = FRAME_TEMPLATE, contentTemplate = CONTENT_TEMPLATE, previewSlot = 'preview_image', onConfirm, onCancel,
 }: FurnitureUseProductViewProps) => {
-    const content = useTemplate(CONTENT_TEMPLATE);
+    const content = useTemplate(contentTemplate);
     const frame = useTemplateFrame({ id: 'use-product', centered: true, rememberPosition: false, onClose: onCancel });
 
     if (!content) return null;
 
     return (
         <TemplateWindow
-            id={FRAME_TEMPLATE}
+            id={frameTemplate}
             frame={frame}
             bindings={{
                 '': {
@@ -56,7 +63,7 @@ export const FurnitureUseProductView = ({
                         from: content,
                         bindings: {
                             save_button: { caption: `\${${confirmKey}}`, onPointerTap: onConfirm },
-                            preview_image: { children: preview },
+                            [previewSlot]: { children: preview },
                             description: { caption: `\${${descriptionKey}}` },
                             info: infoKey ? { caption: `\${${infoKey}}` } : { visible: false },
                             cancel_text: { onPointerTap: onCancel },

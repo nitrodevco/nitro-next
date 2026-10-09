@@ -2,7 +2,7 @@ import { IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 import { Point, Rectangle, RenderTexture, Texture } from 'pixi.js';
 
 import { Randomizer } from '../../utils';
-import { clearPlaneCanvas, copyToPlaneCanvas, createPlaneCanvas, fillPlaneCanvas, releasePlaneCanvas } from '../PlaneCanvas';
+import { batchPlaneCanvas, clearPlaneCanvas, copyToPlaneCanvas, createPlaneCanvas, fillPlaneCanvas, releasePlaneCanvas } from '../PlaneCanvas';
 import { PlaneMaterialCell } from './PlaneMaterialCell';
 import { PlaneMaterialCellColumn } from './PlaneMaterialCellColumn';
 
@@ -203,28 +203,23 @@ export class PlaneMaterialCellMatrix {
 
         if (!columns.length) return canvas ?? this._cachedBitmapData;
 
-        let maxHeight = 0;
-
-        switch (this._repeatMode) {
-            case PlaneMaterialCellMatrix.REPEAT_MODE_BORDERS:
-                maxHeight = this.renderRepeatBorders(this._cachedBitmapData, columns);
-                break;
-            case PlaneMaterialCellMatrix.REPEAT_MODE_CENTER:
-                maxHeight = this.renderRepeatCenter(this._cachedBitmapData, columns);
-                break;
-            case PlaneMaterialCellMatrix.REPEAT_MODE_FIRST:
-                maxHeight = this.renderRepeatFirst(this._cachedBitmapData, columns);
-                break;
-            case PlaneMaterialCellMatrix.REPEAT_MODE_LAST:
-                maxHeight = this.renderRepeatLast(this._cachedBitmapData, columns);
-                break;
-            case PlaneMaterialCellMatrix.REPEAT_MODE_RANDOM:
-                maxHeight = this.renderRepeatRandom(this._cachedBitmapData, columns);
-                break;
-            default:
-                maxHeight = this.renderRepeatAll(this._cachedBitmapData, columns);
-                break;
-        }
+        const cache = this._cachedBitmapData;
+        const maxHeight = batchPlaneCanvas(cache, () => {
+            switch (this._repeatMode) {
+                case PlaneMaterialCellMatrix.REPEAT_MODE_BORDERS:
+                    return this.renderRepeatBorders(cache, columns);
+                case PlaneMaterialCellMatrix.REPEAT_MODE_CENTER:
+                    return this.renderRepeatCenter(cache, columns);
+                case PlaneMaterialCellMatrix.REPEAT_MODE_FIRST:
+                    return this.renderRepeatFirst(cache, columns);
+                case PlaneMaterialCellMatrix.REPEAT_MODE_LAST:
+                    return this.renderRepeatLast(cache, columns);
+                case PlaneMaterialCellMatrix.REPEAT_MODE_RANDOM:
+                    return this.renderRepeatRandom(cache, columns);
+                default:
+                    return this.renderRepeatAll(cache, columns);
+            }
+        });
 
         this._cachedBitmapHeight = maxHeight;
 

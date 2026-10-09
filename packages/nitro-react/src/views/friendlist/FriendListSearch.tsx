@@ -42,6 +42,7 @@ interface FriendListSearchGroupData {
 export const FriendListSearch = ({ value }: FriendListSearchProps) => {
     const searchFriends = useUserStore(x => x.searchFriends);
     const searchOthers = useUserStore(x => x.searchOthers);
+    const searchResultsReceived = useUserStore(x => x.searchResultsReceived);
     const sentFriendRequestIds = useUserStore(x => x.sentFriendRequestIds);
     const ownUserId = useOwnUserId();
     const messagesPersisted = useConfigValue<boolean>('friend_list.persistent_message_status.enabled') === true;
@@ -65,7 +66,6 @@ export const FriendListSearch = ({ value }: FriendListSearchProps) => {
         <FriendListTab
             value={value}
             caption="generic.search"
-            count={groups[0].results.length + groups[1].results.length}
             headerColors={[ '#6b6b6b', '#555555', '#333333' ]}
             textColor="#efefef"
             contentBackgroundColor="#b6b6b6"
@@ -81,7 +81,8 @@ export const FriendListSearch = ({ value }: FriendListSearchProps) => {
                     unwrapped
                     alwaysOpen
                 >
-                    {groups.map((group, groupIndex) => (
+                    {/* `refreshList` runs on an answer; until then the list has no rows. */}
+                    {(searchResultsReceived ? groups : []).map((group, groupIndex) => (
                         <FriendListGroup
                             key={group.value}
                             value={group.value}
