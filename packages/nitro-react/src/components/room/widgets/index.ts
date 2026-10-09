@@ -16,6 +16,7 @@ export * from './room-ad';
 export * from './room-info';
 export * from './room-queue';
 export * from './room-settings';
+export * from './room-thumbnail-camera';
 export * from './room-tools';
 export * from './RoomWidgets';
 export * from './spectator';

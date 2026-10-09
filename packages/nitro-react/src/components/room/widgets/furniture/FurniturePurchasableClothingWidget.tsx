@@ -35,8 +35,10 @@ const figureWithFurniClothing = (furnitureData: IFurnitureData | undefined, figu
 /**
  * Binding a set of clothes to your figure - `PurchasableClothingConfirmationView`, opened for the
  * furni's owner only (`FurnitureContextMenuWidgetHandler` asks `isOwnerOfFurniture`). Clothing the
- * user has bound before is simply put on, with no dialog and the furni kept; otherwise the dialog
- * shows the user wearing it, and "Use & Bind Clothing" redeems the furni.
+ * user has bound before is simply put on, with no dialog and the furni kept. Otherwise the
+ * `use_product_widget_frame_plant_seed` frame, captioned `useproduct.widget.title.bind_clothing`,
+ * holds `use_product_controller_purchasable_clothing` with the furni's name in its texts and the
+ * user wearing the clothes in `avatar_preview`; "Use & Bind Clothing" redeems the furni.
  */
 export const FurniturePurchasableClothingWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG);
@@ -72,24 +74,30 @@ export const FurniturePurchasableClothingWidget = () => {
 
     if (!request || !furnitureData || !isOwner || isBound) return null;
 
+    const name = furnitureData.localizedName;
+
     return (
         <FurnitureUseProductView
             frameTemplate="habbo-room-ui-com/use_product_widget_frame_plant_seed_xml"
-            contentTemplate="habbo-room-ui-com/use_product_controller_purchasable_clothing_xml"
-            previewSlot="avatar_preview"
-            captionKey="useproduct.widget.title.bind_clothing"
-            descriptionKey="useproduct.widget.text.bind_clothing"
-            infoKey="useproduct.widget.info.bind_clothing"
-            confirmKey="useproduct.widget.bind_clothing"
-            // `AvatarImageWidget`: the full, uncropped large figure facing `southeast`, from the widget's corner.
-            preview={(
-                <AvatarImage
-                    figure={newFigure}
-                    gender={sex}
-                    direction={2}
-                    layout={{ position: 'absolute', left: 0, top: 0 }}
-                />
-            )}
+            controllerTemplate="habbo-room-ui-com/use_product_controller_purchasable_clothing_xml"
+            caption="${useproduct.widget.title.bind_clothing}"
+            parameters={{
+                'useproduct.widget.title.bind_clothing': { name },
+                'useproduct.widget.text.bind_clothing': { productName: name },
+            }}
+            bindings={{
+                // `AvatarImageWidget`: the full, uncropped large figure facing `southeast`, from the widget's corner.
+                avatar_preview: {
+                    children: (
+                        <AvatarImage
+                            figure={newFigure}
+                            gender={sex}
+                            direction={2}
+                            layout={{ position: 'absolute', left: 0, top: 0 }}
+                        />
+                    ),
+                },
+            }}
             onConfirm={() => {
                 redeemPurchasableClothing(send, request.objectId, furnitureData.className, newFigure, sex);
                 onClose();

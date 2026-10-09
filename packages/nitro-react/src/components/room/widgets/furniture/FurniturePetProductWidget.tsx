@@ -1,53 +1,62 @@
-import { FurnitureSpecialType, IRoomUserData, RoomObjectUserType, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { FurnitureSpecialType, IRoomUserData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectWidgetRequestEvent, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
 import { CustomizePetWithFurniComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomStore, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useOwnUserId } from '#base/context/user';
-import { useRoomFurnitureData } from '#base/hooks';
-import { FurniturePetPickerView } from '#base/views/room-widgets/furniture/FurniturePetPickerView';
+import { useRoomEventDispatcher, useRoomFurnitureData, useRoomObjectSelect } from '#base/hooks';
+import { LayoutImage, ThemeImage } from '#base/theme';
+import { usePetImageTexture } from '#base/views/catalog/usePetImageTexture';
 import { FurnitureUseProductView } from '#base/views/room-widgets/furniture/FurnitureUseProductView';
+import { petProductPreview } from '#base/views/room-widgets/furniture/petProductPreview';
+import { UseProductMenuRow, UseProductMenuView } from '#base/views/room-widgets/furniture/UseProductMenuView';
 
-/** Rebreeding is only offered from this level up; below it the plant is fertilised instead. */
+import { RoomObjectMenuBubble } from '../object-menu/RoomObjectMenuBubble';
+
+/** `AvatarInfoWidgetHandler`: rebreeding is offered from this level up; below it the plant is fertilised instead. */
 const REBREED_LEVEL = 7;
 
-/** What each kind of pet product calls itself, by the special type the furni data carries. */
-const PRODUCT_TEXTS: Partial<Record<FurnitureSpecialType, { captionKey: string; infoKey: string; confirmKey: string }>> = {
-    [FurnitureSpecialType.PetShampoo]: {
-        captionKey: 'useproduct.widget.title', infoKey: 'useproduct.widget.info.shampoo', confirmKey: 'useproduct.widget.use',
-    },
-    [FurnitureSpecialType.PetCustomPart]: {
-        captionKey: 'useproduct.widget.title', infoKey: 'useproduct.widget.info.custompart', confirmKey: 'useproduct.widget.use',
-    },
-    [FurnitureSpecialType.PetCustomPartShampoo]: {
-        captionKey: 'useproduct.widget.title', infoKey: 'useproduct.widget.info.custompartshampoo', confirmKey: 'useproduct.widget.use',
-    },
-    [FurnitureSpecialType.PetSaddle]: {
-        captionKey: 'useproduct.widget.title', infoKey: 'useproduct.widget.info.saddle', confirmKey: 'useproduct.widget.use',
-    },
-    [FurnitureSpecialType.MonsterplantRevival]: {
-        captionKey: 'useproduct.widget.title.monsterplant', infoKey: 'useproduct.widget.info.revive_monsterplant', confirmKey: 'useproduct.widget.revive',
-    },
-    [FurnitureSpecialType.MonsterplantRebreed]: {
-        captionKey: 'useproduct.widget.title.monsterplant_rebreed', infoKey: 'useproduct.widget.info.rebreed_monsterplant', confirmKey: 'useproduct.widget.rebreed',
-    },
-    [FurnitureSpecialType.MonsterplantFertilize]: {
-        captionKey: 'useproduct.widget.title.monsterplant_fertilize', infoKey: 'useproduct.widget.info.fertilize_monsterplant', confirmKey: 'useproduct.widget.fertilize',
-    },
+/** `use_product_preview_bg`: the preview's backdrop, the pet centred over it (`updatePreviewImage`). */
+const PREVIEW_WIDTH = 122;
+const PREVIEW_HEIGHT = 130;
+
+interface ProductMode {
+    /** `UseProductView.updateButtons`: the bubble's row. */
+    row: UseProductMenuRow;
+    /** `UseProductConfirmationView.setWindowContent` / `createWindow`. */
+    frame: string;
+    controller: string;
+}
+
+const frame = (name: string) => `habbo-room-ui-com/${name}_xml`;
+
+/** Each pet product by the furni category it carries. */
+const PRODUCT_MODES: Partial<Record<FurnitureSpecialType, ProductMode>> = {
+    [FurnitureSpecialType.PetShampoo]: { row: 'use_product_shampoo', frame: frame('use_product_widget_frame'), controller: frame('use_product_controller_shampoo') },
+    [FurnitureSpecialType.PetCustomPart]: { row: 'use_product_custom_part', frame: frame('use_product_widget_frame'), controller: frame('use_product_controller_custom_part') },
+    [FurnitureSpecialType.PetCustomPartShampoo]: { row: 'use_product_custom_part_shampoo', frame: frame('use_product_widget_frame'), controller: frame('use_product_controller_custom_part_shampoo') },
+    [FurnitureSpecialType.PetSaddle]: { row: 'use_product_saddle', frame: frame('use_product_widget_frame'), controller: frame('use_product_controller_saddle') },
+    [FurnitureSpecialType.MonsterplantRevival]: { row: 'revive_monsterplant', frame: frame('use_product_widget_frame_monsterplant'), controller: frame('use_product_controller_revive_monsterplant') },
+    [FurnitureSpecialType.MonsterplantRebreed]: { row: 'rebreed_monsterplant', frame: frame('use_product_widget_frame_monsterplant_rebreed'), controller: frame('use_product_controller_rebreed_monsterplant') },
+    [FurnitureSpecialType.MonsterplantFertilize]: { row: 'fertilize_monsterplant', frame: frame('use_product_widget_frame_monsterplant_fertilize'), controller: frame('use_product_controller_fertilize_monsterplant') },
 };
 
 /** A pet's own type is the first number of its figure, which is what a product is cut for. */
 const petTypeId = (user: IRoomUserData): number => parseInt((user.figure ?? '').split(' ')[0], 10);
 
 /**
- * Using a product on a pet - shampoo, a saddle, a monsterplant's revival. Flash put a bubble
- * over every pet the product would work on; the same filtering happens here, and the ones that
- * survive it are offered as a list.
+ * Using a product on a pet - shampoo, a custom part, a saddle, a monsterplant's revival, rebreed or
+ * fertiliser. `AvatarInfoWidgetHandler` puts a `UseProductView` bubble over every pet the product
+ * would work on (`showUseProductMenuForItems`): the product's owner's pets of the type it is cut
+ * for, and for the plant products only a dead plant to revive, a grown one that cannot breed to
+ * rebreed, and a growing one to fertilise. A saddled pet's bubble offers to replace its saddle.
+ * Deselecting takes the bubbles down.
  *
- * A product only ever reaches a pet of the type it was made for, belonging to whoever owns the
- * product, and the three monsterplant products each have their own condition on top - reviving
- * a plant that is not dead, or rebreeding one too young, is not offered at all.
+ * Picking one opens `UseProductConfirmationView` for that pet (`showUseProductConfirmation`), its
+ * frame and controller the product's own: the pet as the product would leave it over
+ * `use_product_preview_bg` (`petProductPreview`), the pet's and product's names in the texts, and
+ * a click on the picture selecting the pet in the room. Confirming sends the product to the pet.
  */
 export const FurniturePetProductWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.PET_PRODUCT_MENU);
@@ -55,39 +64,102 @@ export const FurniturePetProductWidget = () => {
     const users = useRoomStore(x => x.usersByRoomObjectId);
     const ownUserId = useOwnUserId();
     const { closeRoomWidget } = useRoomWidgetActions();
+    const { selectObject } = useRoomObjectSelect();
     const { send } = useWebSocketContext();
-    const [ selectedPetId, setSelectedPetId ] = useState<number | undefined>(undefined);
-    const [ lastObjectId, setLastObjectId ] = useState<number>(-1);
+    const [ chosen, setChosen ] = useState<{ objectId: number; petObjectId: number } | undefined>(undefined);
 
     const objectId = request?.objectId ?? -1;
-
-    if (objectId !== lastObjectId) {
-        setLastObjectId(objectId);
-        setSelectedPetId(undefined);
-    }
-
     const onClose = () => closeRoomWidget(RoomObjectWidgetRequestEvent.PET_PRODUCT_MENU);
+    const chosenPet = (chosen && (chosen.objectId === objectId)) ? users[chosen.petObjectId] : undefined;
+
+    // `RWROUE_OBJECT_DESELECTED`: `removeUseProductViews` - the bubbles, not an open confirmation.
+    useRoomEventDispatcher(RoomWidgetUpdateRoomObjectEvent.OBJECT_DESELECTED, () => {
+        if (request && !chosenPet) onClose();
+    });
+
+    const preview = usePetImageTexture((chosenPet && furnitureData?.furnitureData) ? petProductPreview(furnitureData.furnitureData.specialType, furnitureData.furnitureData.customParams ?? '', chosenPet) : undefined);
 
     if (!request || !furnitureData?.furnitureData) return null;
 
     // Flash refuses outright unless the product is yours.
     if (furnitureData.ownerId !== ownUserId) return null;
 
-    const specialType = furnitureData.furnitureData.specialType;
-    const texts = PRODUCT_TEXTS[specialType];
+    const product = furnitureData.furnitureData;
+    const mode = PRODUCT_MODES[product.specialType];
 
-    if (!texts) return null;
+    if (!mode) return null;
 
-    const productPetType = parseInt((furnitureData.furnitureData.customParams ?? '').split(' ')[0], 10);
+    if (chosenPet) {
+        const parameters = {
+            'useproduct.widget.title': { name: chosenPet.name },
+            'useproduct.widget.title.monsterplant': { name: chosenPet.name },
+            'useproduct.widget.title.monsterplant_rebreed': { name: chosenPet.name },
+            'useproduct.widget.title.monsterplant_fertilize': { name: chosenPet.name },
+            'useproduct.widget.monsterplant.plant.name': { name: chosenPet.name },
+            'useproduct.widget.monsterplant.plant.raritylevel': { level: String(chosenPet.rarityLevel) },
+            'useproduct.widget.monsterplant.plant.description': { name: chosenPet.ownerName },
+            'useproduct.widget.text.saddle': { productName: product.localizedName },
+            'useproduct.widget.text.custompart': { productName: product.localizedName },
+            'useproduct.widget.text.custompartshampoo': { productName: product.localizedName },
+            'useproduct.widget.text.shampoo': { productName: product.localizedName },
+            'useproduct.widget.text.revive_monsterplant': { productName: product.localizedName },
+        };
+
+        return (
+            <FurnitureUseProductView
+                frameTemplate={mode.frame}
+                controllerTemplate={mode.controller}
+                fitToContent
+                parameters={parameters}
+                bindings={{
+                    // `updatePreviewImage`: `use_product_preview_bg`, and the pet centred over it.
+                    preview_image: {
+                        children: (
+                            <>
+                                <ThemeImage
+                                    src={LayoutImage('habbo-room-ui-com/use_product_preview_bg.png')}
+                                    bitmap={{ stretchedX: false, stretchedY: false }}
+                                    eventMode="none"
+                                    layout={{ position: 'absolute', left: 0, top: 0, width: PREVIEW_WIDTH, height: PREVIEW_HEIGHT }}
+                                />
+                                {preview && (
+                                    <pixiSprite
+                                        texture={preview}
+                                        eventMode="none"
+                                        layout={{
+                                            position: 'absolute',
+                                            left: Math.trunc((PREVIEW_WIDTH - preview.width) / 2),
+                                            top: Math.trunc((PREVIEW_HEIGHT - preview.height) / 2),
+                                            width: preview.width,
+                                            height: preview.height,
+                                        }}
+                                    />
+                                )}
+                            </>
+                        ),
+                    },
+                    // `selectItemFromRoom`: the pet the dialog is about.
+                    preview_image_region: { onPointerTap: () => selectObject(chosenPet.objectId, RoomObjectCategoryEnum.Unit) },
+                }}
+                onConfirm={() => {
+                    send(new CustomizePetWithFurniComposer({ objectId: request.objectId, petId: chosenPet.webID }));
+                    onClose();
+                }}
+                onCancel={onClose}
+            />
+        );
+    }
+
+    const productPetType = parseInt((product.customParams ?? '').split(' ')[0], 10);
 
     const pets = Object.values(users).filter((user) => {
-        if (user.userType !== RoomObjectUserType.Pet) return false;
+        if (Number(user.userType) !== Number(RoomObjectUserType.Pet)) return false;
 
         if (user.ownerId !== ownUserId) return false;
 
         if (petTypeId(user) !== productPetType) return false;
 
-        switch (specialType) {
+        switch (product.specialType) {
             case FurnitureSpecialType.MonsterplantRevival:
                 return user.canRevive;
             case FurnitureSpecialType.MonsterplantRebreed:
@@ -99,30 +171,22 @@ export const FurniturePetProductWidget = () => {
         }
     });
 
-    if (!pets.length) return null;
-
-    const selected = pets.find(pet => pet.webID === selectedPetId);
-
-    if (!selected) {
-        return (
-            <FurniturePetPickerView
-                pets={pets.map(pet => ({ petId: pet.webID, name: pet.name }))}
-                onSelect={setSelectedPetId}
-                onClose={onClose}
-            />
-        );
-    }
-
     return (
-        <FurnitureUseProductView
-            captionKey={texts.captionKey}
-            descriptionKey={texts.infoKey}
-            confirmKey={texts.confirmKey}
-            onConfirm={() => {
-                send(new CustomizePetWithFurniComposer({ objectId: request.objectId, petId: selected.webID }));
-                onClose();
-            }}
-            onCancel={onClose}
-        />
+        <>
+            {pets.map(pet => (
+                <RoomObjectMenuBubble
+                    key={pet.objectId}
+                    objectData={{ objectId: pet.objectId, category: RoomObjectCategoryEnum.Unit }}
+                    userType={RoomObjectUserType.Pet}
+                >
+                    <UseProductMenuView
+                        name={pet.name}
+                        // `UseProductItem.replace`: a saddle for a pet that already wears one.
+                        row={((product.specialType === FurnitureSpecialType.PetSaddle) && pet.hasSaddle) ? 'replace_product_saddle' : mode.row}
+                        onUse={() => setChosen({ objectId, petObjectId: pet.objectId })}
+                    />
+                </RoomObjectMenuBubble>
+            ))}
+        </>
     );
 };

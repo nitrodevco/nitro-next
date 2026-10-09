@@ -9,6 +9,7 @@ export * from './earnings';
 export * from './FurnitureImage';
 export * from './groups';
 export * from './habbicons';
+export * from './help';
 export * from './hotel-view';
 export * from './inventory';
 export * from './messenger';
