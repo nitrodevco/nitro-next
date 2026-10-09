@@ -106,8 +106,8 @@ export const CameraView = () => {
     const { hideWindow, showAlert } = useWindowActions();
     const getLocalizationValue = useSystemStore(x => x.getLocalizationValue);
     const { zIndex, onPointerDown } = useWindowActivation('camera');
-    // `_window.center()`.
-    const position = { x: Math.max(0, Math.floor((window.innerWidth - WINDOW_WIDTH) / 2)), y: Math.max(0, Math.floor((window.innerHeight - HEIGHT_WITHOUT_SLOTS) / 2)) };
+    // `_window.center()`: the window is its layout's 340 x 536 whether or not `slot_container` shows.
+    const position = { x: Math.max(0, Math.floor((window.innerWidth - WINDOW_WIDTH) / 2)), y: Math.max(0, Math.floor((window.innerHeight - WINDOW_FULL_HEIGHT) / 2)) };
     const [ , redraw ] = useState(0);
     const [ active, setActive ] = useState(0);
     const [ preview, setPreview ] = useState(false);
