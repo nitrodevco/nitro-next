@@ -11,23 +11,27 @@ interface QuestsState {
     quests: IQuestMessageData[];
     /** `setOpenOnQuestsEvent`: the next `QuestsMessage` opens the window. */
     openOnQuests: boolean;
+    /** `QuestCompleted`: the quest its dialog is up for, if it is. */
+    completed: IQuestMessageData | null;
 }
 
 interface QuestsActions {
     reset: () => void;
     setQuests: (quests: IQuestMessageData[]) => void;
     setOpenOnQuests: (openOnQuests: boolean) => void;
+    setCompleted: (completed: IQuestMessageData | null) => void;
 }
 
 export type QuestsStore = QuestsState & QuestsActions;
 
-const initialState: QuestsState = { quests: [], openOnQuests: false };
+const initialState: QuestsState = { quests: [], openOnQuests: false, completed: null };
 
 export const createQuestsStore = () => createStore<QuestsStore>()(set => ({
     ...initialState,
     reset: () => set(initialState),
     setQuests: quests => set({ quests }),
     setOpenOnQuests: openOnQuests => set({ openOnQuests }),
+    setCompleted: completed => set({ completed }),
 }));
 
 export const questsStore = createQuestsStore();

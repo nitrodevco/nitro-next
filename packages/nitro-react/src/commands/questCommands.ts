@@ -2,7 +2,7 @@
  * What the quest list does - Flash's `quest/QuestsList` and the `HabboQuestEngine` calls it makes:
  * `onToolbarClick` (and `showQuests` over it), `onQuests`, `onAcceptQuest` and `onCancelQuest`.
  */
-import { AcceptQuestComposer, GetQuestsComposer, IQuestMessageData, RejectQuestComposer } from '@nitrodevco/nitro-packets';
+import { AcceptQuestComposer, GetQuestsComposer, IQuestMessageData, OpenQuestTrackerComposer, RejectQuestComposer } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { questsStore } from '#base/context/quests';
@@ -66,3 +66,39 @@ export const acceptQuest = (send: Send, questId: number) => send(new AcceptQuest
 
 /** `QuestsList.onCancelQuest`: the entry's `cancel_region`; also an expired seasonal quest still accepted (`refreshEntry`). */
 export const rejectQuest = (send: Send, questId: number) => send(new RejectQuestComposer({ questId }));
+
+/** `QuestCompleted`'s `_SafeStr_V16`: `update` shows the prepared dialog this long after `onQuestCompleted`. */
+const COMPLETED_DIALOG_DELAY_MS = 2000;
+
+let completedDialogTimer: ReturnType<typeof setTimeout> | undefined;
+
+/** `QuestCompleted.close`, which `onQuest` and `onQuestCancelled` call: the dialog goes. */
+export const closeQuestCompleted = () => {
+    clearTimeout(completedDialogTimer);
+    completedDialogTimer = undefined;
+    questsStore.getState().setCompleted(null);
+};
+
+/** `QuestCompleted.onQuestCompleted`: with `showDialog`, the dialog for the quest, two seconds on. */
+export const onQuestCompleted = (quest: IQuestMessageData, showDialog: boolean) => {
+    if (!showDialog) return;
+
+    clearTimeout(completedDialogTimer);
+    completedDialogTimer = setTimeout(() => {
+        completedDialogTimer = undefined;
+        questsStore.getState().setCompleted(quest);
+    }, COMPLETED_DIALOG_DELAY_MS);
+};
+
+/** `QuestCompleted.onNextQuest` (its `close` tag too): the dialog goes and the tracker is asked for. */
+export const nextQuest = (send: Send) => {
+    closeQuestCompleted();
+    send(new OpenQuestTrackerComposer({}));
+};
+
+/** `QuestCompleted.onMoreQuests`: the dialog goes and the quest list opens on the next `QuestsMessage`. */
+export const moreQuests = (send: Send) => {
+    closeQuestCompleted();
+    questsStore.getState().setOpenOnQuests(true);
+    requestQuests(send);
+};
