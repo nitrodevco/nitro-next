@@ -100,10 +100,6 @@ the layouts are the library's in `scripts/flash-js-resources`.
 | Groups and profile | `views/groups`, `UserProfileView` | `habbo-groups-com`: `group_info_window`, `group_management_window`, `badge_editor`, `guild_members_window`, `group_created_window`, `club_required`, `new_extended_profile` |
 | Collectibles, habbicons, offer centre, special items | `views/collectibles`, `views/habbicons`, `OfferCenterView`, `SpecialItemsView` | `habbo-catalog-com`: `collectible_view`, `collectible_reward`, `habbicon_view`, `habbicon_purchase_confirmation`, `offer_center`, `special_items_display` |
 | Wired menu, chests and transactions | `views/wired-menu`, `views/wired-trading/chests`, `views/wired-trading/transactions` | `habbo-user-defined-room-events-com`: `wired_menu_view`, `logs_overview`, `error_info_view`, `variables_management_*`, `chest_*`, `transaction_*` |
-| Inventory leftovers | `InventoryMarketplaceView`, `InventoryTradingDock` | `habbo-inventory-com` |
-| Earnings | `EarningsView` | `habbo-catalog-com`: `vault_view` |
-| Room UI: engraving | `FurnitureEngravingView` | `habbo-room-ui-com`: `habboween_engraving`, `lovelock_engraving`, `wildwest_engraving` |
-| Purse | `ActivityPointsView` | `habbo-toolbar-com`: `purse_indicator_*` |
 
 The chat bar is drawn from `chatinput_window_new` but keeps the client's own text field in
 `chat_input`'s place, for the command completion the port adds to it.
