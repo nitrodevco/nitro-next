@@ -24,7 +24,7 @@ import { GetRenderer, SpriteDataCollector } from '@nitrodevco/nitro-renderer';
 import { Rectangle } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
-import { CameraPhoto, editPhoto, isRoomUnfit } from '#base/commands';
+import { CameraPhoto, editPhoto, isRoomUnfit, openClientLink } from '#base/commands';
 import { GetRoomBackgroundColor } from '#base/components';
 import { useWebSocketContext } from '#base/context/communication';
 import { getRoom, useRoom } from '#base/context/room';
@@ -52,8 +52,6 @@ const EMPTY_SLOT_COLOR = '#d2d2d2';
 const HEIGHT_WITHOUT_SLOTS = 462;
 const WINDOW_WIDTH = 340;
 const WINDOW_FULL_HEIGHT = 536;
-/** The header skin's close button, in window coordinates (measured on the drawn window). */
-const HEADER_CLOSE = { x: 317, y: 11, size: 20 };
 
 interface Slot {
     image: HTMLCanvasElement;
@@ -300,17 +298,9 @@ export const CameraView = () => {
                 />
             ),
         },
-        // `header_button_close` (`hide`): the header's drawn close button has no handler of its own for a window that is no frame.
-        '': {
-            helpPage: 'camera',
-            children: (
-                <Region
-                    cursor="pointer"
-                    onPointerTap={() => hideWindow('camera')}
-                    layout={{ position: 'absolute', left: HEADER_CLOSE.x, top: HEADER_CLOSE.y, width: HEADER_CLOSE.size, height: HEADER_CLOSE.size }}
-                />
-            ),
-        },
+        // `WME_CLICK` on the header's buttons: `header_button_close` hides, `header_button_help` opens `habbopages/camera`.
+        header_button_close: { onPointerTap: () => hideWindow('camera') },
+        header_button_help: { onPointerTap: () => openClientLink(send, 'habbopages/camera') },
         slot_container: { visible: slotsShown },
         camera_crosshair: { visible: !preview },
         delete_photo_button: { visible: preview, onPointerTap: clearCurrentSlot },

@@ -563,6 +563,39 @@ const DrawnIn = ({ layer, children }: { layer: RenderLayer; children: ReactNode 
  */
 const ClipEscapeContext = createContext<RenderLayer | undefined>(undefined);
 
+/** The colour of the nearest window above that carries one (`IWindow.color`), for a child drawn in it. */
+const ParentTintContext = createContext<string | undefined>(undefined);
+
+/**
+ * A template's own `header` window - a captioned container's (`camera_interface_xml`'s `bgBorder`),
+ * not a frame's, which `Frame` draws. Flash builds it from its style's header layout
+ * (`habbo_window_layout_header_3`): the title, and in its `_CONTROLS` list the `header_button_help`
+ * and `header_button_close` windows, both shown - no `FrameController` hides the help button by a
+ * `helpPage` - and clicked as the window's code handles them by name (`CameraViewFinder`'s
+ * `WME_CLICK` on `header_button_close` / `header_button_help`): their bindings (`headerClose` /
+ * `headerHelp`). Drawn at the element's own rect: the variant's margins place a frame's header
+ * inside its frame (`frame_3`'s titlebar at 6, 6), which this one is not. It takes its container's
+ * colour - inferred: the camera's `bgBorder` is `0x555555`, exactly its art's header strip, over
+ * which the official client shows no header skin of its own (r2-camera.png).
+ */
+const TemplateHeader = ({ variant, caption, tintColor, binding }: { variant?: string; caption?: string; tintColor?: string; binding?: TemplateBinding }) => {
+    const parentTint = useContext(ParentTintContext);
+    const help = binding?.headerHelp;
+
+    return (
+        <Header
+            variant={variant}
+            caption={caption}
+            tintColor={tintColor ?? parentTint}
+            closeButtonVisible={binding?.headerClose?.visible ?? true}
+            onClose={binding?.headerClose?.onPointerTap}
+            helpButtonVisible={help?.visible ?? true}
+            onHelp={help?.onPointerTap && (() => help.onPointerTap?.())}
+            layout={{ ...FILL, margin: 0, marginLeft: 0, marginTop: 0, marginRight: 0, marginBottom: 0 }}
+        />
+    );
+};
+
 /** The key of a clipping window's escape layer among its draw layers, apart from every child slot. */
 const ESCAPE_SLOT = -1;
 
@@ -874,10 +907,11 @@ const ownFaceOf = (element: TemplateElement, rect: TemplateRect, context: Contex
             />
         );
         case 'header': return (
-            <Header
+            <TemplateHeader
                 variant={variant}
                 caption={caption}
-                layout={FILL}
+                tintColor={tintColor}
+                binding={binding}
             />
         );
         case 'button': return (
@@ -1264,6 +1298,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
     const scrollLinks = useContext(ScrollLinksContext);
     const drawLayers = useDrawLayers();
     const clipEscape = useContext(ClipEscapeContext);
+    const parentTint = useContext(ParentTintContext);
     const binding = state?.binding;
     const rect: TemplateRect = state?.rect ?? element;
     // A list's `show` decides for its items; otherwise the binding, over the layout.
@@ -1339,8 +1374,10 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
             />
         );
     });
+    // The window's colour, for a child drawn with it (a captioned container's header).
+    const ownTint = tintOf(element, binding);
     const children = (
-        <>
+        <ParentTintContext.Provider value={ownTint ?? parentTint}>
             {element.tag === 'selector'
                 ? (
                         <Box
@@ -1361,7 +1398,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                     )
                 : treeOrderedChildren(drawOrder, moved, new Map(drawOrder.map((index, position) => [ index, childViews[position] ])), drawLayers, split, clipEscape, lifted)}
             {binding?.children}
-        </>
+        </ParentTintContext.Provider>
     );
 
     /**

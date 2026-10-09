@@ -63,11 +63,17 @@ export interface HeaderProps extends ThemeProps<HeaderVariant> {
      */
     helpPage?: string;
     onHelp?: (page: string) => void;
+    /**
+     * Whether the help button shows, over `helpPage`: a header of its own, a captioned container's
+     * (`camera_interface_xml`), has no `FrameController` to hide its layout's `header_button_help`,
+     * so it shows unless its window's code hides it.
+     */
+    helpButtonVisible?: boolean;
 }
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, caption, onClose, closeButtonVisible = true, closeVariant, onMenu, helpPage, onHelp,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, caption, onClose, closeButtonVisible = true, closeVariant, onMenu, helpPage, onHelp, helpButtonVisible,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<HeaderVariant>({
@@ -127,10 +133,10 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
         // `helpPage`'s setter: the help button is visible while there is a page. The item list it
         // shares with the close button keeps its right edge (`on_resize_align_right`), so the help
         // button sits `spacing` left of the close button.
-        const helpNode = (config.helpButton && helpPage) && (
+        const helpNode = (config.helpButton && (helpButtonVisible ?? !!helpPage)) && (
             <CloseButton
                 variant={config.helpButton}
-                onPointerTap={() => onHelp?.(helpPage)}
+                onPointerTap={() => onHelp?.(helpPage ?? '')}
                 layout={{ marginRight: CONTROLS_SPACING }}
             />
         );
