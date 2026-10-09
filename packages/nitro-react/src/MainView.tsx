@@ -18,7 +18,7 @@ import { HelpComponent } from './components/help';
 import { HotelViewComponent } from './components/hotel-view';
 import { MotdNotificationComponent } from './components/notifications';
 import { OfferCenterComponent } from './components/offer-center';
-import { QuestsComponent } from './components/quests';
+import { QuestsComponent, QuestTrackerComponent } from './components/quests';
 import { RoomEffectsWidget } from './components/room/widgets/effects/RoomEffectsWidget';
 import { RoomSettingsWidget } from './components/room/widgets/room-settings';
 import { SpecialItemsComponent } from './components/special-items';
@@ -114,6 +114,8 @@ export const MainView = () => {
                         </Box>
                         {/* `GroupRoomInfoCtrl` docks the banner in this column, before the quest tracker and the event card. */}
                         <GroupRoomInfoComponent />
+                        {/* `QuestController`'s trackers dock here, after the group banner and before the event card. */}
+                        <QuestTrackerComponent />
                         {/* `RoomEventInfoCtrl` docks the room's event card here, under the group banner. */}
                         <NavigatorRoomEventInfoComponent />
                         <NotificationsExtensionAnchor />

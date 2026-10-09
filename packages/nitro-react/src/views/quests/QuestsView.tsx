@@ -19,10 +19,11 @@ import { useQuestsStore } from '#base/context/quests';
 import { useConfigData, useSystemActions, useTranslation } from '#base/context/system';
 import { useOwnHasClub } from '#base/context/user';
 import { useViewportSize } from '#base/hooks';
-import { Template, TemplateItem, TemplateWindow, TemplateWindows, useTemplateFrame, useTemplateLibrary } from '#base/theme';
+import { Template, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplateFrame, useTemplateLibrary } from '#base/theme';
 import { getCurrencyIconStyle, GetFriendlyTime } from '#base/utils';
 
-const LIBRARY = 'habbo-quest-engine-com';
+export const QUEST_LIBRARY = 'habbo-quest-engine-com';
+const LIBRARY = QUEST_LIBRARY;
 
 /** The `Quests` layout's size, which `_window.center()` centres. */
 const WINDOW_WIDTH = 512;
@@ -43,13 +44,13 @@ const REWARD_SPACING = 3;
 const REWARD_ROW = [ 'reward_caption_txt', 'reward_amount_txt', 'currency_icon' ];
 
 /** `HabboQuestEngine._SafeStr_nK`: the quests whose picture is the `_a` one. */
-const QUESTS_WITH_PROMPTS = [ 'MOVEITEM', 'ENTEROTHERSROOM', 'CHANGEFIGURE', 'FINDLIFEGUARDTOWER', 'SCRATCHAPET' ];
+export const QUESTS_WITH_PROMPTS = [ 'MOVEITEM', 'ENTEROTHERSROOM', 'CHANGEFIGURE', 'FINDLIFEGUARDTOWER', 'SCRATCHAPET' ];
 
 type Translate = ReturnType<typeof useTranslation>;
 
 /** `QuestMessageData.getCampaignLocalizationKey` / `getQuestLocalizationKey`. */
-const campaignKey = (quest: IQuestMessageData) => `quests.${quest.campaignCode}`;
-const questKey = (quest: IQuestMessageData) => `${campaignKey(quest)}.${quest.localizationCode}`;
+export const campaignKey = (quest: IQuestMessageData) => `quests.${quest.campaignCode}`;
+export const questKey = (quest: IQuestMessageData) => `${campaignKey(quest)}.${quest.localizationCode}`;
 
 /** `QuestMessageData.secondsLeft`: what was left when it arrived, less the seconds since. */
 const secondsLeft = (quest: IQuestMessageData, now: number) => ((quest.secondsLeft <= 0) ? 0 : quest.secondsLeft - Math.floor((now - quest.receiveTime) / 1000));
@@ -116,6 +117,8 @@ const arrangeCampaign = (sizes: EntrySizes) => (windows: TemplateWindows) => {
 
 const arrangeQuest = (sizes: EntrySizes, rewardShown: boolean) => (windows: TemplateWindows) => {
     const quest = windows.root();
+
+    quest?.setHeight(sizes.quest.height);
     const cancelRegion = windows.find('cancel_region');
     const cancelText = windows.find('cancel_txt');
 
@@ -142,19 +145,25 @@ const arrangeArrows = (sizes: EntrySizes) => (windows: TemplateWindows) => {
     arrows.setY(Math.floor((sizes.quest.height - arrows.height) / 2) + 1);
 };
 
-interface EntryContext {
+export interface EntryContext {
     templates: Record<string, Template>;
     config: Record<string, unknown>;
     t: Translate;
     now: number;
     onAccept: (questId: number) => void;
     onCancel: (questId: number) => void;
+    /** `QuestDetails.openDetails`' extras on the `Quest` window: the hint and the link (`QuestsList` keeps both hidden). */
+    questBindings?: TemplateBindings;
+    arrangeQuestExtra?: (windows: TemplateWindows) => void;
+    /** `openDetails`: what the hint and the link add to the `Quest` panel's height (`quest_container.height += ...`), the entry and the campaign tile following (`setEntryHeight`). */
+    questExtraHeight?: number;
 }
 
 /** One quest's `QuestEntry`, as `refreshEntry` fills it. */
-const questEntry = (quest: IQuestMessageData, index: number, { templates, config, t, now, onAccept, onCancel }: EntryContext): TemplateItem => {
+export const questEntry = (quest: IQuestMessageData, index: number, { templates, config, t, now, onAccept, onCancel, questBindings, arrangeQuestExtra, questExtraHeight = 0 }: EntryContext): TemplateItem => {
     const { accepted } = quest;
-    const sizes: EntrySizes = { campaign: templates[`${LIBRARY}/Campaign`], quest: templates[`${LIBRARY}/Quest`] };
+    const questTemplate = templates[`${LIBRARY}/Quest`];
+    const sizes: EntrySizes = { campaign: templates[`${LIBRARY}/Campaign`], quest: questExtraHeight ? { ...questTemplate, height: questTemplate.height + questExtraHeight } : questTemplate };
     // `QuestMessageData.completedCampaign`.
     const completedCampaign = quest.id < 1;
     // `refreshReward(waitPeriodSeconds < 1, ...)`.
@@ -189,7 +198,10 @@ const questEntry = (quest: IQuestMessageData, index: number, { templates, config
                     {
                         key: 'quest',
                         from: sizes.quest,
-                        arrange: arrangeQuest(sizes, rewardShown),
+                        arrange: (windows) => {
+                            arrangeQuest(sizes, rewardShown)(windows);
+                            arrangeQuestExtra?.(windows);
+                        },
                         bindings: {
                             '': { visible: !completedCampaign, color: accepted ? 0xf3deb8 : 0xc8c8c8 },
                             // `refreshEntryQuestDetails`: `getQuestRowTitle`, `getQuestDesc`.
@@ -216,6 +228,7 @@ const questEntry = (quest: IQuestMessageData, index: number, { templates, config
                             link_region: { visible: false },
                             delay_desc_txt: { visible: false },
                             delay_txt: { visible: false },
+                            ...questBindings,
                         },
                     },
                     { key: 'completed', from: templates[`${LIBRARY}/CampaignCompleted`], arrange: arrangeCompleted(sizes), bindings: { '': { visible: completedCampaign } } },
