@@ -55,7 +55,7 @@ import { TabContext } from '../TabContext';
 import { TextInput } from '../TextInput';
 import { ImageProps, ThemeImage } from '../ThemeImage';
 import { ThemeText } from '../ThemeText';
-import { ButtonVariant, FLASH_INVERT_COLOR, FlashBitmapVars, flashBlendMode, themeVariantOf, WindowPlacedContext } from '../utils';
+import { ButtonVariant, FLASH_INVERT_COLOR, FlashBitmapVars, flashBlendMode, ThemeVariant, themeVariantOf, WindowPlacedContext } from '../utils';
 import { localizeCaption } from './localizeCaption';
 import { isMarkupTemplateText, measureTemplateText, templateFontSize, templateTextFormat, templateTextStyle, templateWrapWidth } from './measureTemplateText';
 import { resolveTemplateNames, TemplateBinding, TemplateBindings, TemplateBindingStore, TemplateExpander, TemplateWindows } from './templateBindings';
@@ -174,6 +174,12 @@ const FLOWS: Record<string, Flow> = Object.fromEntries(Object.entries(TEMPLATE_L
     .map(([ tag, list ]) => [ tag, { direction: list.direction, wrap: !!list.wrap } ]));
 
 const TEXT_TAGS = new Set([ 'text', 'label', 'formatted_text', 'html', 'link' ]);
+/**
+ * The tab windows, whose skin is their own style's: a layout's `style="0"` is left out of the
+ * template, and a tab without one is style 0 - as `templateSkinKey` and the caption layout take it -
+ * not the tab skin a frame around it hands down (the group editor's tabs, drawn style 3).
+ */
+const TAB_TAGS = new Set([ 'tab_context', 'tab_button' ]);
 const BITMAP_TAGS = new Set([ 'bitmap', 'static_bitmap' ]);
 
 /** The flag a bitmap var turns from its default, as `FlashBitmapVars` takes it. */
@@ -745,7 +751,7 @@ const faceOf = (element: TemplateElement, rect: TemplateRect, context: Context, 
 };
 
 const ownFaceOf = (element: TemplateElement, rect: TemplateRect, context: Context, binding: TemplateBinding | undefined, content?: ReactNode): ReactNode => {
-    const variant = binding?.style ?? element.style;
+    const variant = binding?.style ?? element.style ?? (TAB_TAGS.has(element.tag) ? '0' : undefined);
     const tintColor = tintOf(element, binding);
     const caption = captionOf(element, context, binding);
     // A caption as plain text: the component draws it in its variant's text style (`wrapTextChildren`).
@@ -1535,6 +1541,10 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
         const skin = context.skins?.[templateSkinKey(element.tag, element.style)];
         const content = skin?.elements.find(part => part.tags?.includes('_CONTENT'));
         const contentRect = (skin && content) ? skinPartRect(content, skin, rect) : undefined;
+        const contentVariant = content?.style ?? element.style ?? '0';
+        // A content part squeezed under its skin's least height (the collectibles hub's, 2 of the
+        // style 3 skin's 15) is cut at its rect, as a window clips what it draws - not drawn taller.
+        const contentMinHeight = Number(themeVariantOf<ThemeVariant>('tabContent', contentVariant)?.layout?.minHeight) || 0;
 
         return (
             <Box
@@ -1543,13 +1553,27 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                 alpha={ownAlpha}
             >
                 {content && contentRect && (contentRect.width > 0) && (contentRect.height > 0) && (
-                    <TabContent
-                        variant={content.style ?? element.style}
-                        layout={{ position: 'absolute', left: contentRect.x, top: contentRect.y, width: contentRect.width, height: contentRect.height, marginTop: 0, padding: 0 }}
-                    />
+                    (contentRect.height < contentMinHeight)
+                        ? (
+                                <Box
+                                    pointerTransparent
+                                    layout={{ position: 'absolute', left: contentRect.x, top: contentRect.y, width: contentRect.width, height: contentRect.height, overflow: 'hidden' }}
+                                >
+                                    <TabContent
+                                        variant={contentVariant}
+                                        layout={{ position: 'absolute', left: 0, top: 0, width: contentRect.width, height: contentMinHeight, marginTop: 0, padding: 0 }}
+                                    />
+                                </Box>
+                            )
+                        : (
+                                <TabContent
+                                    variant={contentVariant}
+                                    layout={{ position: 'absolute', left: contentRect.x, top: contentRect.y, width: contentRect.width, height: contentRect.height, marginTop: 0, padding: 0 }}
+                                />
+                            )
                 )}
                 <TabContext
-                    variant={element.style}
+                    variant={element.style ?? '0'}
                     layout={FILL}
                 >
                     {children}
