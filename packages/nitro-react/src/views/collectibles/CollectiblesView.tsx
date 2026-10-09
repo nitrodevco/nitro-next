@@ -12,10 +12,12 @@
  * The collector profile and levels containers are never shown (their tabs are hidden), so they are
  * not drawn. Every tab was built with the hub; only the selected one is drawn here.
  */
+import { useState } from 'react';
+
 import { selectCollectiblesTab } from '#base/commands';
 import { COLLECTIBLES_TAB_COLLECTIONS, COLLECTIBLES_TAB_INFO, COLLECTIBLES_TAB_MINT, COLLECTIBLES_TAB_REWARDS, COLLECTIBLES_TAB_SHOP, COLLECTIBLES_TAB_TRANSFER, useCollectiblesStore } from '#base/context/collectibles';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
-import { Box, Frame, TabButton, TabContext } from '#base/theme';
+import { Box, Frame, TemplateWindow, TemplateWindows } from '#base/theme';
 
 import { CollectiblesCollectionsTab } from './CollectiblesCollectionsTab';
 import { CollectiblesHeaderView } from './CollectiblesHeaderView';
@@ -25,18 +27,42 @@ import { CollectiblesRewardsTab } from './CollectiblesRewardsTab';
 import { CollectiblesShopTab } from './CollectiblesShopTab';
 import { CollectiblesTransferTab } from './CollectiblesTransferTab';
 
+/** The layout the tab row is drawn from: `TabButtonController` sizes each tab to its caption. */
+const TEMPLATE = 'habbo-catalog-com/collectible_view_xml';
+
 /** The window's width - `centerTabLayout` centres the tabs on half of it. */
 const WINDOW_WIDTH = 500;
 
-/** The tab buttons in the layout's order, with their widths and the captions `CollectiblesView` gives them. */
+/** The tab buttons `refresh` can show, with the captions `CollectiblesView` gives them. */
 const TABS = [
-    { name: COLLECTIBLES_TAB_REWARDS, width: 72, caption: 'collectibles.claim.title', flag: undefined },
-    { name: COLLECTIBLES_TAB_COLLECTIONS, width: 87, caption: 'collectibles.collections.title', flag: undefined },
-    { name: COLLECTIBLES_TAB_SHOP, width: 52, caption: 'collectibles.shop.title', flag: 'nft.shop.enabled' },
-    { name: COLLECTIBLES_TAB_MINT, width: 66, caption: 'shop.minting.title', flag: 'nft.minting.enabled' },
-    { name: COLLECTIBLES_TAB_TRANSFER, width: 70, caption: 'collectibles.transfer', flag: 'collectibles.transfer.enabled' },
-    { name: COLLECTIBLES_TAB_INFO, width: 46, caption: 'collectibles.info.title', flag: undefined },
+    { name: COLLECTIBLES_TAB_REWARDS, caption: 'collectibles.claim.title', flag: undefined },
+    { name: COLLECTIBLES_TAB_COLLECTIONS, caption: 'collectibles.collections.title', flag: undefined },
+    { name: COLLECTIBLES_TAB_SHOP, caption: 'collectibles.shop.title', flag: 'nft.shop.enabled' },
+    { name: COLLECTIBLES_TAB_MINT, caption: 'shop.minting.title', flag: 'nft.minting.enabled' },
+    { name: COLLECTIBLES_TAB_TRANSFER, caption: 'collectibles.transfer', flag: 'collectibles.transfer.enabled' },
+    { name: COLLECTIBLES_TAB_INFO, caption: 'collectibles.info.title', flag: undefined },
 ] as const;
+
+/**
+ * `centerTabLayout`: a hidden tab is made 0 wide, and the selector goes to the middle of the window
+ * less half the visible tabs' width (an int). Returns that width.
+ */
+const centerTabLayout = ({ find }: TemplateWindows): number => {
+    const selector = find(COLLECTIBLES_TAB_REWARDS)?.parent;
+
+    if (!selector) return 0;
+
+    let width = 0;
+
+    for (const tab of selector.children) {
+        if (tab.visible) width += tab.width;
+        else tab.setWidth(0);
+    }
+
+    selector.setX(Math.trunc((WINDOW_WIDTH / 2) - (width / 2)));
+
+    return width;
+};
 
 export const CollectiblesView = () => {
     const t = useTranslation();
@@ -47,10 +73,8 @@ export const CollectiblesView = () => {
     const transferEnabled = useConfigValue<boolean>('collectibles.transfer.enabled') === true;
 
     const flags: Record<string, boolean> = { 'nft.shop.enabled': shopEnabled, 'nft.minting.enabled': mintingEnabled, 'collectibles.transfer.enabled': transferEnabled };
-    const tabs = TABS.filter(tab => !tab.flag || flags[tab.flag]);
-    const tabsWidth = tabs.reduce((width, tab) => width + tab.width, 0);
-    // `selector.x = window.width / 2 - width / 2`, an int.
-    const tabsLeft = Math.trunc((WINDOW_WIDTH / 2) - (tabsWidth / 2));
+    // `tab_bg` darkens the row once the visible tabs are wider than 350.
+    const [ tabsWidth, setTabsWidth ] = useState(0);
 
     return (
         <Frame
@@ -67,27 +91,19 @@ export const CollectiblesView = () => {
             margins={[ 6, 35, 6, 6 ]}
         >
             <CollectiblesHeaderView tabBackgroundVisible={tabsWidth > 350} />
-            <TabContext
-                variant="3"
-                name="top_view_select_tab_context"
-                tintColor="#dfdfe1"
-                layout={{ position: 'absolute', left: -5, width: 498, top: 89, height: 34 }}
-            >
-                <Box layout={{ position: 'absolute', left: tabsLeft, top: 0, height: 32, flexDirection: 'row' }}>
-                    {tabs.map(tab => (
-                        <TabButton
-                            key={tab.name}
-                            variant="3"
-                            name={tab.name}
-                            selected={currentTab === tab.name}
-                            onPointerTap={() => selectCollectiblesTab(tab.name)}
-                            layout={{ width: tab.width, height: 32, flexShrink: 0 }}
-                        >
-                            {t(tab.caption)}
-                        </TabButton>
-                    ))}
-                </Box>
-            </TabContext>
+            <Box layout={{ position: 'absolute', left: -5, top: 89 }}>
+                <TemplateWindow
+                    id={TEMPLATE}
+                    part="top_view_select_tab_context"
+                    bindings={Object.fromEntries(TABS.map(tab => [ tab.name, {
+                        visible: !tab.flag || flags[tab.flag],
+                        caption: `\${${tab.caption}}`,
+                        selected: currentTab === tab.name,
+                        onPointerTap: () => selectCollectiblesTab(tab.name),
+                    } ]))}
+                    arrange={windows => setTabsWidth(centerTabLayout(windows))}
+                />
+            </Box>
             {(currentTab === COLLECTIBLES_TAB_MINT) && <CollectiblesMintingTab />}
             {(currentTab === COLLECTIBLES_TAB_COLLECTIONS) && <CollectiblesCollectionsTab />}
             {(currentTab === COLLECTIBLES_TAB_SHOP) && <CollectiblesShopTab />}

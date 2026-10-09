@@ -1,12 +1,18 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type CameraPublishStatusMessageType = object;
+/** `CameraPublishStatusMessageParser`: ok, the seconds to wait, and on success the published photo's id when the body has it. */
+export type CameraPublishStatusMessageType = {
+    isOk: boolean;
+    secondsToWait: number;
+    extraDataId: string;
+};
 
 export class CameraPublishStatusMessage implements IIncomingPacket<CameraPublishStatusMessageType> {
     public parse(wrapper: IMessageDataWrapper): CameraPublishStatusMessageType {
-        const packet: CameraPublishStatusMessageType = {
-        };
+        const isOk = wrapper.readBoolean();
+        const secondsToWait = wrapper.readInt();
+        const extraDataId = (isOk && wrapper.bytesAvailable) ? wrapper.readString() : '';
 
-        return packet;
+        return { isOk, secondsToWait, extraDataId };
     }
 }

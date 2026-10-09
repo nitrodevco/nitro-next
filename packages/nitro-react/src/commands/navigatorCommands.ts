@@ -187,6 +187,24 @@ export const refreshNavigatorSearch = (send: Send) => {
 };
 
 /**
+ * `HabboNewNavigator.toggle` - the toolbar's navigator icon (`HTIE_ICON_NAVIGATOR`): the window
+ * shown or hidden, and when shown, the last search sent again past the cache (`performLastSearch`),
+ * so the counts are the hotel's now rather than the list's from whenever it was last fetched.
+ */
+export const toggleNavigator = (send: Send) => {
+    const { visibleWindows, showWindow, hideWindow } = systemStore.getState();
+
+    if (visibleWindows.navigator) {
+        hideWindow('navigator');
+
+        return;
+    }
+
+    showWindow('navigator');
+    refreshNavigatorSearch(send);
+};
+
+/**
  * `HabboNewNavigator.goBack` - a block's `category_back`: the search before this one, which is not
  * added to the history again when it answers.
  */

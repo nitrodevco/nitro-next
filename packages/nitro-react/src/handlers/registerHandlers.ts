@@ -16,6 +16,7 @@ import { bridgeOfferCenter, registerOfferCenterHandlers } from './offer-center';
 import { registerQuestHandlers } from './quests';
 import { registerRewardTrackHandlers } from './reward-track';
 import {
+    registerCameraHandlers,
     registerRoomAreaHideHandlers, registerRoomBotHandlers, registerRoomBuildersClubHandlers, registerRoomChatHandlers, registerRoomConfigurationItemsHandlers, registerRoomCraftingHandlers, registerRoomDataHandlers, registerRoomDimmerHandlers,
     registerRoomDirectoryHandlers, registerRoomDoorbellHandlers, registerRoomFloorPlanHandlers, registerRoomFriendFurniHandlers, registerRoomFriendRequestHandlers,
     registerRoomFurnitureHandlers, registerRoomGenericErrorHandlers, registerRoomGuildFurniHandlers, registerRoomInfostandHandlers, registerRoomJukeboxHandlers, registerRoomLinkHandlers, registerRoomMappingHandlers,
@@ -58,6 +59,7 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerRoomPetHandlers(socket),
         registerRoomPetPackageHandlers(socket),
         registerRoomSpamWallHandlers(socket),
+        registerCameraHandlers(socket),
         registerRoomThumbnailCameraHandlers(socket),
         registerRoomPollHandlers(socket),
         registerRoomQuizHandlers(socket),

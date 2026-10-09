@@ -34,14 +34,10 @@ type State = {
     hasClickUserWired: boolean;
     /**
      * `WiredEnvironment.achievements` - `achievementsInRoom`: the `ProgressAchievement` box's
-     * dropdown (`WiredElementContext.achievementsInRoom`). Flash has two more readers, both in
-     * subsystems this client does not have yet: the quest engine's `AchievementController`
-     * (`achievementIsVisible` lists only the `WF_<name>` achievements named here in the
-     * `wired_games` category) and the room tools' `button_achievements`, shown while this list is
+     * dropdown (`WiredElementContext.achievementsInRoom`), the achievements window's `wired_games`
+     * category (`AchievementController.achievementIsVisible` lists only the `WF_<name>`
+     * achievements named here) and the room tools' `button_achievements`, shown while this list is
      * not empty (`WIRED_ACHIEVEMENTS_UPDATED`) and opening `questengine/achievements/wired_games`.
-     * When the achievements window is ported, both read this field; the button belongs in
-     * `RoomToolsWidget`'s list before "settings" (the layout's order is zoom, achievements,
-     * settings, chat history, like, camera, share).
      */
     wiredAchievements: string[];
     /** `§_-Gx§` as the server sent it; `clickUserOption` is what applies. */

@@ -3,12 +3,16 @@ import { GetRenderer, GetTicker } from '@nitrodevco/nitro-renderer';
 import { FederatedPointerEvent, FederatedWheelEvent, Graphics, Rectangle, Ticker } from 'pixi.js';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { ignoreUser } from '#base/commands';
 import { ChatHistoryEntry, chatHistoryStore, useChatHistoryStore } from '#base/context/chat-history';
+import { useWebSocketContext } from '#base/context/communication';
 import { useRoom } from '#base/context/room';
+import { useSystemStore, useTranslation } from '#base/context/system';
+import { useUserStore } from '#base/context/user';
 import { easeOutCubic, useRoomObjectSelect, useTween } from '#base/hooks';
 
 import { useChatHistoryTexture } from './chatHistoryAssets';
-import { ChatHistoryEntryMeasure, ChatHistoryEntryView } from './ChatHistoryEntryView';
+import { CHAT_HISTORY_LEFT_MARGIN, ChatHistoryEntryMeasure, ChatHistoryEntryView } from './ChatHistoryEntryView';
 
 /** `ChatHistoryTray._openedWidth`: `350 + 62 + 1`. */
 const OPENED_WIDTH = 413;
@@ -17,6 +21,8 @@ const ANIMATION_DURATION_MS = 140;
 /** `TRAY_TOOLBAR_BOTTOM_MARGIN` / `TRAY_HANDLE_OFFSET_FROM_BOTTOM`. */
 const TOOLBAR_BOTTOM_MARGIN = 50;
 const HANDLE_OFFSET_FROM_BOTTOM = 215;
+/** `moveIgnore`: the ignore icon goes this far right of its line. */
+const IGNORE_ICON_GAP = 5;
 /** `ENTRY_DEFAULT_BOTTOM_PADDING`: the latest line rests this far above the view's bottom. */
 const DEFAULT_BOTTOM_PADDING = 300;
 /** `ChatHistoryScrollView.MOST_RECENT_HISTORY_BOTTOM_PADDING_THRESHOLD`. */
@@ -71,10 +77,12 @@ const useScreenSize = () => {
  * `height - overlap.y - 8` apart, newest at the bottom, with the view scrolled so the latest rests 300
  * above the bottom (`scrollToBottom`); the wheel, a drag or the scroll bar's thumb scroll it, a
  * history pulled past either end springs back (`startSpringbackIfNeeded`), and a new line scrolls
- * to the latest while the view is at the most recent chats. A tap on a line selects its speaker.
+ * to the latest while the view is at the most recent chats. A tap on a line selects its speaker
+ * and puts the `close_x` ignore icon beside it (`moveIgnore`), when its speaker can be ignored and
+ * is not yet; a tap on the icon asks to ignore them (`hitIgnore`).
  *
- * Not carried: the ignore icon the scroll view draws beside a line, and the room engine's
- * `mouseEventsDisabledLeftToX` - the panel and its handle take the pointer themselves.
+ * Not carried: the room engine's `mouseEventsDisabledLeftToX` - the panel and its handle take the
+ * pointer themselves.
  */
 export const ChatHistoryTray = () => {
     const room = useRoom();
@@ -101,6 +109,12 @@ export const ChatHistoryTray = () => {
     const scrollToBottomPending = useRef(false);
     const lastEntryCount = useRef(entries.length);
     const [ clipMask, setClipMask ] = useState<Graphics | null>(null);
+    // `_-21L`: the line the ignore icon is beside.
+    const [ ignoreEntryId, setIgnoreEntryId ] = useState<number | undefined>(undefined);
+    const ignoredUserIds = useUserStore(x => x.ignoredUserIds);
+    const showConfirm = useSystemStore(x => x.showConfirm);
+    const { send } = useWebSocketContext();
+    const t = useTranslation();
 
     useEffect(() => {
         selectObjectRef.current = selectObject;
@@ -130,7 +144,7 @@ export const ChatHistoryTray = () => {
                 for (const [ key, value ] of batch) {
                     const known = previous.get(key);
 
-                    if (!known || (known.height !== value.height) || (known.overlapY !== value.overlapY)) changed = true;
+                    if (!known || (known.height !== value.height) || (known.overlapY !== value.overlapY) || (known.width !== value.width)) changed = true;
                 }
 
                 if (!changed) return previous;
@@ -360,11 +374,35 @@ export const ChatHistoryTray = () => {
     };
 
     const onEntryTap = useCallback((entry: ChatHistoryEntry) => {
-        // `selectAvatar(roomId, userIndex)`: only a speaker of the room that is up can be selected.
-        if (dragged.current || (entry.kind !== 'chat') || (entry.data.roomId !== room?.roomId)) return;
+        if (dragged.current || (entry.kind !== 'chat')) return;
 
-        selectObjectRef.current(entry.data.objectId, RoomObjectCategoryEnum.Unit);
-    }, [ room ]);
+        // `moveIgnore`: beside a line whose speaker can be ignored and is not yet, else nowhere.
+        setIgnoreEntryId((entry.ignore && !ignoredUserIds.includes(entry.ignore.webId)) ? entry.id : undefined);
+
+        // `selectAvatar(roomId, userIndex)`: only a speaker of the room that is up can be selected.
+        if (entry.data.roomId === room?.roomId) selectObjectRef.current(entry.data.objectId, RoomObjectCategoryEnum.Unit);
+    }, [ room, ignoredUserIds ]);
+
+    const closeIcon = useChatHistoryTexture('close_x');
+    // `deactivateView` takes the icon down with the lines.
+    const ignoreEntry = active ? entries.find(entry => entry.id === ignoreEntryId) : undefined;
+    const ignoreTarget = (ignoreEntry?.kind === 'chat') ? ignoreEntry.ignore : undefined;
+    const ignoreMeasure = ignoreEntry && measures.get(ignoreEntry.id);
+    const ignoreY = ignoreEntry && positions.get(ignoreEntry.id);
+
+    /** `hitIgnore`: confirms with a modal, and ignores the speaker on OK; the icon goes either way. */
+    const onIgnoreTap = (event: FederatedPointerEvent) => {
+        event.stopPropagation();
+
+        if (!ignoreTarget) return;
+
+        const done = () => setIgnoreEntryId(undefined);
+
+        showConfirm(t('chat.ignore_user.confirm.title'), t('chat.ignore_user.confirm.info', '', { username: ignoreTarget.userName }), () => {
+            ignoreUser(send, ignoreTarget.webId);
+            done();
+        }, { modal: true, onCancel: done });
+    };
 
     // `ChatHistoryScrollBar.updateThumbTrack`.
     const barTexture = useChatHistoryTexture('scrollbar_back');
@@ -421,6 +459,17 @@ export const ChatHistoryTray = () => {
                                 onTap={onEntryTap}
                             />
                         ))}
+                        {closeIcon && ignoreTarget && ignoreMeasure?.width !== undefined && (ignoreY !== undefined) && (
+                            <pixiSprite
+                                texture={closeIcon}
+                                x={CHAT_HISTORY_LEFT_MARGIN + ignoreMeasure.width + IGNORE_ICON_GAP}
+                                y={Math.round(ignoreY + ((ignoreMeasure.height - closeIcon.height) / 2))}
+                                eventMode="static"
+                                cursor="pointer"
+                                onPointerDown={(event: FederatedPointerEvent) => event.stopPropagation()}
+                                onPointerTap={onIgnoreTap}
+                            />
+                        )}
                     </pixiContainer>
                 </pixiContainer>
             )}
