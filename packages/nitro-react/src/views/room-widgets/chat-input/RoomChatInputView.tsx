@@ -328,6 +328,9 @@ export const RoomChatInputView = () => {
         }
 
         lastContentRef.current = next;
+        // Enter can land before React has rendered the last keystroke (the field's `input` event is
+        // a native one, so its update is not flushed synchronously): `sendChat` must see this text.
+        valueRef.current = next;
         setReplacementCursor(null);
         setValue(next);
     };
