@@ -1581,7 +1581,13 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
         const contentVariant = content?.style ?? element.style ?? '0';
         // A content part squeezed under its skin's least height (the collectibles hub's, 2 of the
         // style 3 skin's 15) is cut at its rect, as a window clips what it draws - not drawn taller.
-        const contentMinHeight = Number(themeVariantOf<ThemeVariant>('tabContent', contentVariant)?.layout?.minHeight) || 0;
+        // A nine-slice skin's least height is its top and bottom pieces (style 0's border_white: 6 +
+        // 6), as Flash's layout drawer keeps those at their size: the group editor's 1 px content
+        // part shows the skin's top row, 60% black over what lies under (official #48463d), not the
+        // white a nine-slice squashed to 1 px samples.
+        const contentConfig = themeVariantOf<ThemeVariant>('tabContent', contentVariant);
+        const contentLayer = contentConfig?.layer;
+        const contentMinHeight = Number(contentConfig?.layout?.minHeight) || ((contentLayer?.kind === 'nineSlice') ? (contentLayer.topHeight + contentLayer.bottomHeight) : 0);
 
         return (
             <Box
