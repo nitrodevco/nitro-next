@@ -42,7 +42,9 @@ import { ActivityPointsView } from './views/purse/ActivityPointsView';
 import { PurseTemplateView } from './views/purse/PurseTemplateView';
 import { RewardTrackPremiumConfirmationView } from './views/reward-track/RewardTrackPremiumConfirmationView';
 import { RewardTrackView } from './views/reward-track/RewardTrackView';
+import { CameraPhotoLabView } from './views/room-widgets/camera/CameraPhotoLabView';
 import { CameraView } from './views/room-widgets/camera/CameraView';
+import { PhotoPurchaseConfirmationView } from './views/room-widgets/camera/PhotoPurchaseConfirmationView';
 import { RoomChatInputView } from './views/room-widgets/chat-input/RoomChatInputView';
 import { SystemDialogsView } from './views/system/SystemDialogsView';
 import { TemplatePreviewView } from './views/system/TemplatePreviewView';
@@ -149,6 +151,8 @@ export const MainView = () => {
                     <GroupForumDialogs />
                     {/* `CameraWidget`'s viewfinder: drawn only while shown, its photos kept. */}
                     <CameraView />
+                    <CameraPhotoLabView />
+                    <PhotoPurchaseConfirmationView />
                     {/* `DailyTasksController`'s two windows: drawn only while shown. */}
                     <DailyTasksView />
                     {/* `BadgeLeaderboardController`: drawn only while shown. */}
