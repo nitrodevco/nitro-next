@@ -3,7 +3,7 @@ import { Texture } from 'pixi.js';
 
 import { LayoutImage, useTextureFromUrl } from '#base/theme';
 
-type ChatHistoryAsset = 'tray_bar' | 'tray_handle_open' | 'tray_handle_close' | 'room_change' | 'scrollbar_back' | 'scrollbar_thumb';
+type ChatHistoryAsset = 'tray_bar' | 'tray_handle_open' | 'tray_handle_close' | 'room_change' | 'scrollbar_back' | 'scrollbar_thumb' | 'close_x';
 
 /**
  * The bitmaps of the free flow chat library the history tray draws (`tray_bar`, `room_change`,

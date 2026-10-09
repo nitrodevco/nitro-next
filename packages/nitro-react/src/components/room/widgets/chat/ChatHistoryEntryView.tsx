@@ -23,6 +23,8 @@ export interface ChatHistoryEntryMeasure {
     height: number;
     /** `IChatHistoryEntryBitmap.overlap.y`. */
     overlapY: number;
+    /** A chat line's bitmap width (`62 + bubble.width`), which its ignore icon goes 5 right of. */
+    width?: number;
 }
 
 interface ChatHistoryEntryViewProps {
@@ -43,7 +45,7 @@ const ChatLineEntry = ({ entry, y, onMeasure, onTap }: ChatHistoryEntryViewProps
 
     // `new BitmapData(62 + bubble.width, bubble.height)`, stacked by `height - overlap.y - 8`.
     useLayoutEffect(() => {
-        if (style && layout) onMeasure(entry.id, { height: Math.round(layout.bubbleHeight), overlapY: style.overlap.y });
+        if (style && layout) onMeasure(entry.id, { height: Math.round(layout.bubbleHeight), overlapY: style.overlap.y, width: CHAT_HISTORY_TIMESTAMP_WIDTH + Math.round(layout.bubbleWidth) });
     }, [ entry.id, style, layout, onMeasure ]);
 
     if (!style || !layout || !backgroundTexture) return null;
