@@ -3,7 +3,7 @@ import { CancelTypingComposer, ChatComposer, ShoutComposer, StartTypingComposer,
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { IChatStyle, isNftChatStyle, isStaticChatStyle } from '#base/chat';
-import { openHabbiconHub, requestChatCommandSuggestions, resetUnseenHabbicons, runRoomChatCommand, runWiredChatCommand, setChatFontSizeMode, setPreferredChatStyle, triggerHabbicon } from '#base/commands';
+import { openHabbiconHub, requestChatCommandSuggestions, resetUnseenHabbicons, runRoomChatCommand, runWiredChatCommand, setChatFontSizeMode, setPreferredChatStyle, triggerHabbicon, withSelectedAvatarName } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { HabbiconsStore, useHabbiconsStore } from '#base/context/habbicons';
 import { getUnseenItemCount, UnseenItemCategory, useInventoryStore } from '#base/context/inventory';
@@ -405,7 +405,8 @@ export const RoomChatInputView = () => {
                 break;
         }
 
-        const message = parts.join(' ');
+        // `:command x`: the selected avatar's name for the x.
+        const message = withSelectedAvatarName(parts.join(' '));
 
         let styleId = preferredChatStyle;
 
