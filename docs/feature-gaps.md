@@ -95,7 +95,7 @@ the layouts are the library's in `scripts/flash-js-resources`.
 
 | Area | Views | Layouts |
 |---|---|---|
-| Hotel view | `views/hotel-view`, except the expiring page, next limited rare and community goal widgets | `habbo-friend-bar-com`: `landing_view_*`, `dynamic_widget_grid`, `generic_widget`, `element_*`, `bonus_rare_promo`, `promo_article` |
+| Hotel view | `views/hotel-view`, except the bonus rare, expiring page, next limited rare and community goal widgets | `habbo-friend-bar-com`: `landing_view_*`, `dynamic_widget_grid`, `generic_widget`, `element_*`, `promo_article` |
 | Friend list and messenger | `views/friendlist`, `views/messenger` | `habbo-friend-list-com`, `habbo-messenger-com` |
 | Groups and profile | `views/groups`, `UserProfileView` | `habbo-groups-com`: `group_info_window`, `group_management_window`, `badge_editor`, `guild_members_window`, `group_created_window`, `club_required`, `new_extended_profile` |
 | Collectibles, habbicons, offer centre, special items | `views/collectibles`, `views/habbicons`, `OfferCenterView`, `SpecialItemsView` | `habbo-catalog-com`: `collectible_view`, `collectible_reward`, `habbicon_view`, `habbicon_purchase_confirmation`, `offer_center`, `special_items_display` |
