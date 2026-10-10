@@ -53,7 +53,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useSystemActions, useTranslation, useWindowParams } from '#base/context/system';
 import { useOwnClubLevel, useUserStore } from '#base/context/user';
 import { AvatarEditorColorData, AvatarEditorPartData, useAvatarEditorData, usePartThumbnailLifetime, useWindowVisibility } from '#base/hooks';
-import { TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useAvatarImageTexture, useTemplate } from '#base/theme';
+import { TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, ThemeImage, useAvatarImageTexture, useTemplate } from '#base/theme';
 import { firstSelectableColorId } from '#base/utils';
 
 import { AvatarEditorPartImage } from './AvatarEditorPartImage';
@@ -647,7 +647,16 @@ export const AvatarEditor = () => {
                     onPointerOut: () => setHoveredPart(current => ((current === GET_MORE_ID) ? null : current)),
                 },
                 '#BG_COLOR': { visible: hoveredPart === GET_MORE_ID, alpha: HOVER_ALPHA },
-                bitmap: { asset: GET_MORE_ICON, pivot: 'center' },
+                // `updateThumbVisualization` copies the icon unscaled into the bitmap's centre; the layout's bitmap stretches.
+                bitmap: {
+                    children: (
+                        <ThemeImage
+                            src={GET_MORE_ICON}
+                            bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+                            layout={{ position: 'absolute', left: 0, width: '100%', top: 0, height: '100%' }}
+                        />
+                    ),
+                },
                 '#CLUB_ICON': { visible: false },
                 '#SELLABLE_ICON': { visible: false },
             },
