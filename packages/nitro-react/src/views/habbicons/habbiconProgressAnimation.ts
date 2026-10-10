@@ -143,20 +143,3 @@ export const getHabbiconProgressWidths = (anim: HabbiconProgressAnimation, maxWi
 
     return { progress, fill: Math.max(0, fill), highlight: Math.max(0, fill - 2) };
 };
-
-/** A bar's size and look in `habbicon_view.xml`: its `background` shape's colour and radius, and its `highlight` gradient's height and blend. */
-export interface HabbiconProgressBarGeometry {
-    width: number;
-    height: number;
-    radius: number;
-    backgroundColor: string;
-    highlightHeight: number;
-    highlightAlpha: number;
-}
-
-/** `album_progress_bar`. */
-export const HABBICON_ALBUM_PROGRESS_BAR: HabbiconProgressBarGeometry = { width: 304, height: 18, radius: 6, backgroundColor: '#17394d', highlightHeight: 6, highlightAlpha: 0.1 };
-/** `set_progress_bar`. */
-export const HABBICON_SET_PROGRESS_BAR: HabbiconProgressBarGeometry = { width: 154, height: 16, radius: 6, backgroundColor: '#4d5d66', highlightHeight: 5, highlightAlpha: 0.09 };
-/** `set_row_progress_bar`. */
-export const HABBICON_SET_ROW_PROGRESS_BAR: HabbiconProgressBarGeometry = { width: 69, height: 12, radius: 4, backgroundColor: '#4d5d66', highlightHeight: 4, highlightAlpha: 0.08 };

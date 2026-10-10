@@ -1,8 +1,7 @@
 /**
- * `HabbiconView` - the habbicon hub, `habbicon_view.xml` (560x570, style 3, `#418db0`, content
- * margins 3,36,3,3): the `album_background`, the album header, the three tabs over a 1px white
- * `tabs_bg`, the all sets tab (the set rail and the selected set's page) or the tray of the owned /
- * favourited tab, and the item popup's layer over all of it.
+ * `HabbiconView` - the habbicon hub, `habbicon_view.xml` (centred when built): the album header,
+ * the three tabs, the all sets tab (the set rail and the selected set's page) or the tray of the
+ * owned / favourited tab, and the item popup's layer over all of it.
  *
  * The album is `buildAlbumFromController` over the controller's shop data. How the hub follows the
  * controller's events (`onControllerDataUpdated`):
@@ -16,6 +15,10 @@
  * Where Flash patched only the changed parts of the old model (and left the tiles of a bulk shop
  * refresh as they were), the hub here draws every part from the current data; the two agree once
  * each change has been applied.
+ *
+ * `HabbiconAlbumHeaderView.refresh`: the owned and completed counts, the album progress bar and
+ * `habbicon_book.album_progress.count`. `HabbiconTabView`: the tab buttons, the same tab again
+ * doing nothing (`onTabSelected`).
  *
  * Flash builds the view once and keeps it; the store keeps its tab and set (`HabbiconHubSlice`).
  * Opening it again after it was closed starts from a whole rebuild, which is where a set added
@@ -32,16 +35,16 @@ import { useEffect, useRef, useState } from 'react';
 
 import { claimHabbicon, favoriteHabbicon, getHabbiconInfo, openHabbiconPurchaseConfirmation, unfavoriteHabbicon } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { buildHabbiconAlbum, findHabbiconEntryByHabbiconId, findHabbiconSetByCollectionId, HabbiconAlbumModel, HabbiconEntryModel, HabbiconPopupMode, HabbiconPopupModeName, HabbiconSetModel, HabbiconTabMode, HabbiconTabModeName, hasHabbiconPrice, useHabbiconHubActions, useHabbiconsStore } from '#base/context/habbicons';
-import { useTranslation } from '#base/context/system';
-import { Border, Frame, getGlobalRect, Region, TabButton, TabContext } from '#base/theme';
+import { buildHabbiconAlbum, findHabbiconEntryByHabbiconId, findHabbiconSetByCollectionId, getHabbiconAlbumProgressRatio, HabbiconAlbumModel, HabbiconEntryModel, HabbiconPopupMode, HabbiconPopupModeName, HabbiconSetModel, HabbiconTabMode, HabbiconTabModeName, hasHabbiconPrice, resolveHabbiconPopupMode, useHabbiconHubActions, useHabbiconsStore } from '#base/context/habbicons';
+import { useConfigData, useTranslation } from '#base/context/system';
+import { Box, getGlobalRect, TemplateRect, TemplateWindow, useTemplateFrame } from '#base/theme';
 
-import { HabbiconAlbumHeaderView } from './HabbiconAlbumHeaderView';
-import { HabbiconCollectionTrayView } from './HabbiconCollectionTrayView';
-import { getHabbiconPopupHeight, placeHabbiconPopup } from './habbiconPopupPlacement';
-import { HabbiconPopupView } from './HabbiconPopupView';
-import { HabbiconSetPageView } from './HabbiconSetPageView';
-import { HabbiconSetRailView } from './HabbiconSetRailView';
+import { arrangeHabbiconTrayGroups, habbiconCollectionTrayBindings } from './habbiconCollectionTrayBindings';
+import { habbiconPopupBindings, placeHabbiconPopup } from './habbiconPopupBindings';
+import { HabbiconProgressBarView } from './HabbiconProgressBarView';
+import { habbiconSetPageBindings } from './habbiconSetPageBindings';
+import { habbiconSetRailItems } from './habbiconSetRailItems';
+import { HABBICON_VIEW_TEMPLATE, hideHabbiconProgressBar } from './habbiconTemplate';
 
 /** The popup ignores presses this soon after it opened (`showForTile`'s `getTimer() + 75`). */
 const POPUP_PRESS_GRACE_MS = 75;
@@ -49,8 +52,11 @@ const POPUP_PRESS_GRACE_MS = 75;
 interface HabbiconPopupState {
     /** The active tile's entry id. */
     tileId: string;
+    /** The tile's own window, for the outside-press test (`isPointInsideAnyTile`). */
+    tileNode: PixiContainer;
     /** The tile's rect relative to the popup layer, when it was clicked. */
     tile: { x: number; y: number; width: number; height: number };
+    /** When it was shown, on `performance.now()`'s clock. */
     shownAt: number;
 }
 
@@ -72,16 +78,22 @@ const canvasPoint = (event: PointerEvent, canvas: HTMLCanvasElement) => {
     return { x: event.clientX - rect.left, y: event.clientY - rect.top };
 };
 
+const contains = (rect: { x: number; y: number; width: number; height: number }, point: { x: number; y: number }) => (point.x >= rect.x) && (point.y >= rect.y) && (point.x < (rect.x + rect.width)) && (point.y < (rect.y + rect.height));
+
 export const HabbiconView = ({ onClose }: { onClose: () => void }) => {
     const { send } = useWebSocketContext();
     const t = useTranslation();
+    const config = useConfigData();
     const tab = useHabbiconsStore(x => x.hubTab);
     const collectionId = useHabbiconsStore(x => x.hubCollectionId);
     const collections = useHabbiconsStore(x => x.shopCollections);
     const nameKeys = useHabbiconsStore(x => x.nameKeys);
     const collectionIcons = useHabbiconsStore(x => x.collectionIcons);
+    const previews = useHabbiconsStore(x => x.previews);
+    const lockedPreviews = useHabbiconsStore(x => x.lockedPreviews);
     const change = useHabbiconsStore(x => x.change);
     const { setHubTab, setHubCollectionId } = useHabbiconHubActions();
+    const frame = useTemplateFrame({ id: 'HabbiconHub', centered: true, onClose });
     const album = buildHabbiconAlbum(collections, { nameKeys, collectionIcons, localize: (key, fallback) => t(key, fallback) });
 
     // `refreshWholeAlbum` - the sets the rail was built with, and how many times it was.
@@ -90,9 +102,12 @@ export const HabbiconView = ({ onClose }: { onClose: () => void }) => {
     const [ seenChangeSeq, setSeenChangeSeq ] = useState(change.seq);
     const [ trayRevision, setTrayRevision ] = useState(0);
     const [ popup, setPopup ] = useState<HabbiconPopupState | undefined>(undefined);
-    const layerRef = useRef<PixiContainer | null>(null);
-    const popupNodeRef = useRef<PixiContainer | null>(null);
-    const tileNodeRef = useRef<PixiContainer | null>(null);
+    // `WME_OVER` / `WME_OUT`: the tile and the rail row under the pointer (`updateLook`).
+    const [ hoveredTileId, setHoveredTileId ] = useState<string | undefined>(undefined);
+    const [ hoveredCollectionId, setHoveredCollectionId ] = useState(0);
+    // The popup layer's origin, and the popup's rect in it as `positionPopup` placed it.
+    const [ layerNode, setLayerNode ] = useState<PixiContainer | null>(null);
+    const popupRectRef = useRef<TemplateRect | undefined>(undefined);
 
     if (change.seq !== seenChangeSeq) {
         setSeenChangeSeq(change.seq);
@@ -142,9 +157,18 @@ export const HabbiconView = ({ onClose }: { onClose: () => void }) => {
             if (!canvas || (performance.now() <= (popup.shownAt + POPUP_PRESS_GRACE_MS))) return;
 
             const point = canvasPoint(event, canvas);
-            const inside = (node: PixiContainer | null) => !!node && node.getBounds().containsPoint(point.x, point.y);
+            const popupRect = popupRectRef.current;
 
-            if (!inside(popupNodeRef.current) && !inside(tileNodeRef.current)) setPopup(undefined);
+            if (layerNode && !layerNode.destroyed && popupRect) {
+                const origin = getGlobalRect(layerNode);
+
+                if (contains({ ...popupRect, x: origin.x + popupRect.x, y: origin.y + popupRect.y }, point)) return;
+            }
+
+            // `isPointInsideAnyTile`.
+            if (!popup.tileNode.destroyed && contains(getGlobalRect(popup.tileNode), point)) return;
+
+            setPopup(undefined);
         };
         const onWheel = () => setPopup(undefined);
 
@@ -155,23 +179,23 @@ export const HabbiconView = ({ onClose }: { onClose: () => void }) => {
             window.removeEventListener('pointerdown', onPointerDown);
             window.removeEventListener('wheel', onWheel, { capture: true });
         };
-    }, [ popup ]);
+    }, [ popup, layerNode ]);
 
     /** `onTileClicked`. */
     const onTileClick = (entry: HabbiconEntryModel, event: FederatedPointerEvent) => {
         const tileNode = event.currentTarget;
-        const layer = layerRef.current;
 
-        if (!layer) return;
+        if (!layerNode) return;
 
         if (!entry.isReward && !entry.owned && !entry.claimable) getHabbiconInfo(send, entry.habbiconId);
 
         const tileRect = getGlobalRect(tileNode);
-        const layerRect = getGlobalRect(layer);
+        const layerRect = getGlobalRect(layerNode);
 
-        tileNodeRef.current = tileNode;
-        setPopup({ tileId: entry.id, tile: { x: tileRect.x - layerRect.x, y: tileRect.y - layerRect.y, width: tileRect.width, height: tileRect.height }, shownAt: performance.now() });
+        setPopup({ tileId: entry.id, tileNode, tile: { x: tileRect.x - layerRect.x, y: tileRect.y - layerRect.y, width: tileRect.width, height: tileRect.height }, shownAt: event.timeStamp });
     };
+
+    const onTileHover = (entry: HabbiconEntryModel, hovered: boolean) => setHoveredTileId(current => (hovered ? entry.id : ((current === entry.id) ? undefined : current)));
 
     /** `onPopupActionClicked`. */
     const onPopupAction = (entry: HabbiconEntryModel, mode: HabbiconPopupModeName) => {
@@ -212,109 +236,91 @@ export const HabbiconView = ({ onClose }: { onClose: () => void }) => {
     };
 
     const allSets = (tab === HabbiconTabMode.ALL_SETS);
-    const popupPosition = (popup && popupEntry) ? placeHabbiconPopup(popup.tile, getHabbiconPopupHeight(popupEntry)) : undefined;
+    const tileCallbacks = { activeTileId: popup?.tileId, hoveredTileId, onTileClick, onTileHover };
 
     return (
-        <Frame
-            variant="3"
-            id="habbicon-hub"
-            caption={t('habbicon_book.title')}
-            tintColor="#418db0"
-            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
-            resizeDirection="none"
-            centered
-            onClose={onClose}
-            margins={[ 3, 36, 3, 3 ]}
-            layout={{ position: 'absolute', width: 560, height: 570 }}
-        >
-            <Border
-                variant="3"
-                tintColor="#d7d1be"
-                layout={{ position: 'absolute', left: 0, top: 0, width: 554, height: 530 }}
-            />
-            <HabbiconAlbumHeaderView
-                stats={album.stats}
-                animate
-                resetKey={String(albumRevision)}
-            />
-            <Region
-                backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 7, top: 144, width: 540, height: 1 }}
-            />
-            <TabContext
-                variant="3"
-                tintColor="#0fffff"
-                layout={{ position: 'absolute', left: 7, top: 113, width: 540, height: 33 }}
-            >
-                <TabButton
-                    variant="3"
-                    selected={allSets}
-                    onPointerTap={() => selectTab(HabbiconTabMode.ALL_SETS)}
-                    layout={{ position: 'absolute', left: 0, top: 0, width: 64, height: 32 }}
-                >
-                    {t('habbicon_book.tab.all_sets')}
-                </TabButton>
-                <TabButton
-                    variant="3"
-                    selected={tab === HabbiconTabMode.OWNED}
-                    onPointerTap={() => selectTab(HabbiconTabMode.OWNED)}
-                    layout={{ position: 'absolute', left: 64, top: 0, width: 64, height: 32 }}
-                >
-                    {t('habbicon_book.tab.owned')}
-                </TabButton>
-                <TabButton
-                    variant="3"
-                    selected={tab === HabbiconTabMode.FAVOURITED}
-                    onPointerTap={() => selectTab(HabbiconTabMode.FAVOURITED)}
-                    layout={{ position: 'absolute', left: 128, top: 0, width: 82, height: 32 }}
-                >
-                    {t('habbicon_book.tab.favourited')}
-                </TabButton>
-            </TabContext>
-            {allSets && (
-                <Region layout={{ position: 'absolute', left: 7, top: 146, width: 540, height: 380 }}>
-                    <HabbiconSetRailView
-                        sets={railSets}
-                        activeCollectionId={selectedSet?.collectionId ?? 0}
-                        animate
-                        resetKey={String(albumRevision)}
-                        onSelect={selectSet}
-                    />
-                    <HabbiconSetPageView
-                        set={selectedSet}
-                        animate
-                        resetKey={`${albumRevision}:${selectedSet?.collectionId ?? 0}`}
-                        activeTileId={popup?.tileId}
-                        onTileClick={onTileClick}
-                    />
-                </Region>
-            )}
-            {!allSets && (
-                <HabbiconCollectionTrayView
-                    tab={tab}
-                    groups={(tab === HabbiconTabMode.FAVOURITED) ? album.favouriteGroups : album.ownedGroups}
-                    resetKey={`${tab}:${trayRevision}`}
-                    activeTileId={popup?.tileId}
-                    onTileClick={onTileClick}
-                />
-            )}
-            <Region
-                ref={layerRef}
-                layout={{ position: 'absolute', left: 0, top: 102, width: 560, height: 428 }}
-            >
-                {popupEntry && popupPosition && (
-                    <HabbiconPopupView
-                        entry={popupEntry}
-                        x={popupPosition.x}
-                        y={popupPosition.y}
-                        onAction={onPopupAction}
-                        onBuy={onPopupBuy}
-                        popupRef={(node) => {
-                            popupNodeRef.current = node;
-                        }}
-                    />
-                )}
-            </Region>
-        </Frame>
+        <TemplateWindow
+            id={HABBICON_VIEW_TEMPLATE}
+            frame={frame}
+            bindings={{
+                // `HabbiconAlbumHeaderView.refresh`.
+                owned_habbicons_value: { caption: String(album.stats.ownedHabbicons) },
+                sets_completed_value: { caption: String(album.stats.completedSets) },
+                album_progress_bar: {
+                    children: (
+                        <HabbiconProgressBarView
+                            part="album_progress_bar"
+                            ratio={getHabbiconAlbumProgressRatio(album.stats)}
+                            animate
+                            resetKey={String(albumRevision)}
+                        />
+                    ),
+                },
+                ...hideHabbiconProgressBar('album_progress_bar'),
+                album_progress_text: { caption: t('habbicon_book.album_progress.count', '', { collected: String(album.stats.collected), total: String(album.stats.total) }) },
+                // `HabbiconTabView`.
+                tab_all_sets: { selected: allSets, onPointerTap: () => selectTab(HabbiconTabMode.ALL_SETS) },
+                tab_owned: { selected: tab === HabbiconTabMode.OWNED, onPointerTap: () => selectTab(HabbiconTabMode.OWNED) },
+                tab_favourited: { selected: tab === HabbiconTabMode.FAVOURITED, onPointerTap: () => selectTab(HabbiconTabMode.FAVOURITED) },
+                // `refreshActiveTabContent`.
+                all_sets_container: { visible: allSets },
+                tray_container: { visible: !allSets },
+                ...(allSets && {
+                    set_rail_list: {
+                        items: habbiconSetRailItems({
+                            sets: railSets,
+                            activeCollectionId: selectedSet?.collectionId ?? 0,
+                            hoveredCollectionId,
+                            previews,
+                            animate: true,
+                            resetKey: String(albumRevision),
+                            onSelect: selectSet,
+                            onHover: (set, hovered) => setHoveredCollectionId(current => (hovered ? set.collectionId : ((current === set.collectionId) ? 0 : current))),
+                        }),
+                    },
+                    ...habbiconSetPageBindings({
+                        set: selectedSet,
+                        t,
+                        send,
+                        config,
+                        previews,
+                        lockedPreviews,
+                        animate: true,
+                        resetKey: `${albumRevision}:${selectedSet?.collectionId ?? 0}`,
+                        ...tileCallbacks,
+                    }),
+                }),
+                ...(!allSets && habbiconCollectionTrayBindings({
+                    tab,
+                    groups: (tab === HabbiconTabMode.FAVOURITED) ? album.favouriteGroups : album.ownedGroups,
+                    t,
+                    previews,
+                    lockedPreviews,
+                    resetKey: `${tab}:${trayRevision}`,
+                    ...tileCallbacks,
+                })),
+                habbicon_popup_layer: {
+                    children: (
+                        <Box
+                            ref={setLayerNode}
+                            pointerTransparent
+                            layout={{ position: 'absolute', left: 0, top: 0, width: 0, height: 0 }}
+                        />
+                    ),
+                },
+                ...habbiconPopupBindings({
+                    entry: popupEntry,
+                    mode: resolveHabbiconPopupMode(popupEntry),
+                    t,
+                    config,
+                    onAction: onPopupAction,
+                    onBuy: onPopupBuy,
+                }),
+            }}
+            arrange={(windows) => {
+                arrangeHabbiconTrayGroups(windows);
+                popupRectRef.current = (popup && popupEntry) ? placeHabbiconPopup(windows, popup.tile) : undefined;
+            }}
+        />
     );
 };

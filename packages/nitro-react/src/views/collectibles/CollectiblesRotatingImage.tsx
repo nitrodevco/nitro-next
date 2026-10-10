@@ -4,7 +4,8 @@
  * `loading_icon` of a tab that is waiting (90 degrees a second, `§_-S2D§`). Flash adds the angle in
  * the tab's `update` and redraws the bitmap turned about its centre (`BitmapDataRenderer`'s
  * `rotation`); here the sprite is turned by the ticker directly, so nothing re-renders and no
- * texture is made per angle.
+ * texture is made per angle. It is drawn in the template's bitmap window, in place of its face
+ * (`rotatingBitmapBinding`).
  *
  * `stretched` is the bitmap's `stretched_x` / `stretched_y`: the image fills the box, or sits at
  * its own size in the middle of it (`pivot_point` center).

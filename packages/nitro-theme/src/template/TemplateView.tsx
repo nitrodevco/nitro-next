@@ -1151,12 +1151,15 @@ const ownFaceOf = (element: TemplateElement, rect: TemplateRect, context: Contex
 
             return options
                 ? (
-                        // `DropMenuController`: the entries its code populates, the selected one its caption.
+                        // `DropMenuController`: the entries its code populates, the selected one its caption - unless
+                        // its code sets the caption after selecting (a long entry cut short, `CollectionsTab.activeWallet`).
+                        // A colour its code sets tints it (`walletSelection.color`).
                         <Dropmenu
                             variant={variant}
+                            tintColor={binding?.color !== undefined ? tintColor : undefined}
                             tooltip={tooltipOf(element, context, binding)}
                             disabled={binding?.disabled}
-                            caption={context.resolveText(options[selection])}
+                            caption={context.resolveText(binding?.caption ?? options[selection])}
                             options={options.map((option, index) => ({
                                 key: index,
                                 label: context.resolveText(option),
@@ -1746,6 +1749,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                     hideDisabledScrollbar={binding?.autoHideScrollBar ?? true}
                     scrollV={binding?.scrollV}
                     scrollEndKey={binding?.scrollEndKey}
+                    scrollResetKey={binding?.scrollResetKey}
                     onReachStart={binding?.onReachStart}
                     layout={{ position: 'absolute', left: 0, top: 0, width: rect.width, height: rect.height, gap: 0 }}
                     viewportLayout={{ position: 'absolute', left: viewport.x, top: viewport.y, width: viewport.width, height: viewport.height }}

@@ -174,6 +174,11 @@ export interface TemplateBinding {
      */
     scrollEndKey?: unknown;
     /**
+     * A scrollable list scrolled back to its start whenever this changes - code that sets `scrollV = 0`
+     * each time it fills the list anew (`HabbiconCollectionTrayView.refresh`).
+     */
+    scrollResetKey?: unknown;
+    /**
      * A scrollable list scrolled to its top: what code does when the list's `_CONTAINER` moves there
      * (`MainView`'s `WE_RELOCATED`, which pages in older entries).
      */
@@ -544,6 +549,7 @@ export const sameTemplateBinding = (a: TemplateBinding | undefined, b: TemplateB
         && a.autoHideScrollBar === b.autoHideScrollBar
         && a.scrollV === b.scrollV
         && a.scrollEndKey === b.scrollEndKey
+        && a.scrollResetKey === b.scrollResetKey
         && a.spacing === b.spacing
         && a.verticalSpacing === b.verticalSpacing
         && a.italic === b.italic

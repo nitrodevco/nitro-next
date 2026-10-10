@@ -31,12 +31,10 @@ answer yet.
 
 | Feature | What is missing | Packet areas |
 |---|---|---|
-| Messenger and friend bar | Conversations and their history, instant-message errors, mini mail, friend notifications, room invites, the conversation's habbicon picker (`MessengerHabbiconPicker`). The friend list is ported. The friend bar is ported (`views/friend-bar`); Turbo only sends its room event notifications, as it has no achievements, quests or games to send the others for. | `FriendList` |
 | Moderation tool | Issues, chat logs, room and user info, room visits, sanctions. No window, no store, and nothing sends its requests. | `Moderation`, `Moderator` |
 | Help, call for help and guides | Reporting a user or room (the navigator's room info bubble keeps its report entry hidden until this exists), pending calls, guide sessions, chat review, the safety quiz. | `Help`, `Callforhelp` |
-| Quests and talent track | Daily and seasonal quests, community goals and talent track levels. The achievement browser, score and standard award packets are implemented; see [achievement client](achievements.md). | `Quest`, `Talent` |
+| Talent track and the daily quest | Talent track levels, and the hotel view's `dailyquest` widget. The quest list, details, tracker and completed dialog are ported (`views/quests`), community goals are the hotel view's; the achievement browser, score and standard award packets are implemented - see [achievement client](achievements.md). | `Quest`, `Talent` |
 | Game centre | SnowWar (it needs the game engine), game directory, leaderboards, weekly rewards. `commands/gameTokensCommands.ts` has nothing that calls it. | `Game` |
-| Group forums | Forum list, threads, posts, moderation, unread counts. Group info, management and profiles are ported (`GroupInfoView`'s `show_forum_link`). | `Groupforums` |
 | Room camera | Taking, buying and publishing photos, thumbnails, photo competitions. The mannequin and plane code note the missing camera render (`FurnitureMannequinVisualization`, `RoomPlane`). | `Camera` |
 | Campaign calendar | The advent calendar and its doors, and the seasonal daily offer that shares it. | `Campaign`, `Catalog` |
 | New user experience | The gift offer, the initial room choice, the tutorial script. | `Nux` |
@@ -56,7 +54,9 @@ answer yet.
 | Crafting | Secret recipes (`CraftSecretComposer`, `GetCraftingRecipesAvailableComposer`). | |
 | Badges | Requesting a badge (`RequestABadgeComposer`). | |
 | Inventory | Merged rentable furni (the `rentables` tab) and a rented item's rent state and expiry, the `use_btn` and paging through an external image wall item (`showUseProductSelection`), the achievement score under the badges. | `useInventoryFurniPage`, `useInventoryBadgesPage`, `InventoryView` |
-| Wired | The hover popup in the wired trade view, and the limited-edition plaque on chest item icons. | `WiredTradeView`, `WiredChestItemCell` |
+| Messenger | The conversation's habbicon picker (`MessengerHabbiconPicker`), and resizing the window. Turbo only sends the friend bar's room event notifications, as it has no achievements, quests or games to send the others for. | `MessengerView` |
+| Group forums | Scrolling to the message a link names. | `GroupForumView` |
+| Wired | The limited-edition plaque on chest item icons. | `WiredChestItemCell` |
 | Notifications | The new-feature window, the moderation disclaimer, the notification feed. `ClubGiftSelectedEventMessage` and `PetReceivedMessage` have empty stub parsers. | `NotificationStore`, `registerAlertDialogHandlers` |
 | Purse | What clicking the currency icons opens. | `PurseView` |
 | Hotel view | The widget types `PORTED_LANDING_VIEW_WIDGETS` leaves out: the avatar image, the catalogue promos, daily quest, the competition prizes and hall of fame, the moderation, talents, Habbo Way and safety quiz promos, and the room hopper. The promo article draws only its first article's text, not its `promo_article` window. The generic widget leaves out its title, image, room, badge, habblet, VIP, community goal, daily quest and concurrent-user elements. The expiring page widget is not asked again when an invisible catalogue page is visited (`CATALOG_INVISIBLE_PAGE_VISITED`), the next limited rare's buttons open its page without picking the offer, and the community goal keeps `goal_info` at its layout height. What the ported widgets wait on from the server is under [Hotel view: Turbo and the admin panel](#hotel-view-turbo-and-the-admin-panel). | `HotelViewWidgets`, `HotelViewGenericWidget`, `HotelViewPromoArticleWidget` |
@@ -87,27 +87,23 @@ tab, as raw JSON. Where each widget stands:
 
 ## Views not yet drawn from their Flash template
 
-These windows work but are hand-placed: theme components laid out by number rather than drawn
-from the Flash layout through `TemplateWindow`. Converting one means binding what its Flash code
-does to the layout's named windows, as the catalogue, inventory, achievements, infostand and room
-object menus already do. A view counts here when it draws theme components and loads no template;
-the layouts are the library's in `scripts/flash-js-resources`.
-
-| Area | Views | Layouts |
-|---|---|---|
-| Collectibles, habbicons, offer centre, special items | `views/collectibles` (only the `CollectiblesView` shell is templated), `views/habbicons`, `OfferCenterView`, `SpecialItemsView` | `habbo-catalog-com`: `collectible_view`, `collectible_reward`, `habbicon_view`, `habbicon_purchase_confirmation`, `offer_center`, `special_items_display` |
+None: every window whose Flash layout is in the bundles draws from it through `TemplateWindow`,
+binding what its Flash code does to the layout's named windows. A view would count here when it
+draws theme components and loads no template although a layout for it exists; the layouts are the
+library's in `scripts/flash-js-resources`. What Flash builds in code (a table, a previewer, a
+rotating image) is drawn by the port's own components inside the layout's containers.
 
 The chat bar is drawn from `chatinput_window_new` but keeps the client's own text field in
 `chat_input`'s place, for the command completion the port adds to it.
 
 No layout to convert to, so these stay hand-placed: the wired setup editor and the wired trading
 frame (`views/wired-setup`, `views/wired-common`, `WiredTradingFrame` and the chest settings and
-notification settings windows on it - Flash builds them in code from `UbuntuPresetManager`, and
-the `wired_style_*` templates are already read by the wired styles), the floor plan editor (its layout is not in the bundles) and the loading screen. In the
-room UI, also the pet picker (`FurniturePetPickerView`: Flash floats a `use_product_menu` bubble
-over each pet instead of opening a window), the room ad tooltip (built
-with `createWindow`), the chat command suggestions (the port's own) and `PetPortraitView` (a
-picture the breeding windows draw into their bitmaps).
+notification settings windows on it - Flash builds them in code from `UbuntuPresetManager`, and the
+`wired_style_*` templates are already read by the wired styles), the floor plan editor (its layout
+is not in the bundles) and the loading screen. In the room UI, also the pet picker
+(`FurniturePetPickerView`: Flash floats a `use_product_menu` bubble over each pet instead of opening
+a window), the room ad tooltip (built with `createWindow`), the chat command suggestions (the port's
+own) and `PetPortraitView` (a picture the breeding windows draw into their bitmaps).
 
 ## Not gaps
 

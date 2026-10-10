@@ -59,6 +59,8 @@ await test('bindings are the same when every value is, show by its names and han
     assert.ok(!sameTemplateBinding({ show: [ 'a', 'b' ] }, { show: [ 'b', 'a' ] }));
     assert.ok(!sameTemplateBinding({ onPointerTap: () => 1 }, {}));
     assert.ok(!sameTemplateBinding({ visible: true }, undefined));
+    assert.ok(sameTemplateBinding({ scrollResetKey: 'owned:1' }, { scrollResetKey: 'owned:1' }));
+    assert.ok(!sameTemplateBinding({ scrollResetKey: 'owned:1' }, { scrollResetKey: 'owned:2' }));
 });
 
 await test('the store keeps an unchanged binding the same object and does not notify', () => {

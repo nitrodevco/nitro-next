@@ -1,75 +1,57 @@
 /**
  * What a wired trade asks for - Flash `inventory/wired_trading/requirements/WiredTradeRequirementsView`
- * with `offerings/OfferingRequirementsView`, `OfferingRuleView` and `OfferingNodeView`, drawn in
- * the `trade_requirements_bubble` of `inventory_trading_wired_xml` (a style 7 bubble window, 430
- * wide, content margins 8 on every side, `bubble_contents` at 13,7 of the content area):
+ * with `offerings/OfferingRequirementsView`, `OfferingRuleView` and `OfferingNodeView`, drawn from
+ * the `trade_requirements_bubble` of `inventory_trading_wired_xml`:
  *
- * - the title (`inventory.wired_trading.requirements.title` with the trade type), the 1px
- *   `bubble_title_spacing`, then the 180 high `offerings` row, all 6 apart;
- * - "you give" beside "you get" (the latter only for a trade, or a payment with a receive text),
- *   180 wide each - 122 when both sides `canMinimalizeWidth` (every rule a single node, or a custom
- *   text whose `textWidth` is at most 100) - with the vertical `separator` widget between them.
- *   `resizeRequirementContainers`: the border is the taller side's active element plus 2 x 18,
- *   at least 80, and the container 26 more; the active element sits in the middle of it. A side
- *   lists its rules ("or" before every one but the first, two nodes a row 3 apart, "&" before
- *   every node but the first, "Nx" above one, the furni's `product_icon` or the credits icon; a
- *   lone rule of a `Rules` requirement centred, `OfferingRuleView.center`), or for the "any"
- *   requirement types the matching sentence, or the custom text;
- * - whether the offer meets it (`requirementsStateUpdated`): the multiplier sentence, "met"
- *   (numbered for the automatic multiplier), or "not met", with a check or cross; the grey
- *   container grows with its text (`resizeHtml`: 15px a line plus 2, reflected to the parent);
- * - the automatic multiplier's hint, and for a payment with a receive text the red disclaimer.
- *
- * The bubble's height follows `bubble_contents` (reflected to the parent: the list plus 35).
- * `highlightRefresh` (an overridden trade) fades the style 2 `#4fbce3` `highlight_border` in and
- * out over 500 ms (`highlight`: a 16 ms timer, `easeInOutCubic` towards 0.35).
+ * - `requirementsUpdated`: the title with the trade type; "you give" in `you_give_container` and,
+ *   for a trade or a payment with a receive text, "you get" in `you_get_container` with the
+ *   `offering_containers_separator` between them - each a clone of `offering_requirements_template`.
+ * - `OfferingRequirementsView.initializeUI`: for the "any" requirement types the give side shows
+ *   the matching `any_*_text`; otherwise a side lists its rules in `rules_list` (clones of
+ *   `rule_template`), or shows its custom text. `OfferingRuleView` puts "or" before every rule but
+ *   the first and the nodes two a row (clones of `rule_node_columns_template`); `OfferingNodeView`
+ *   puts "&" before every node but the first, "Nx" for more than one, and the furni's
+ *   `product_icon` or the credits icon.
+ * - `resizeRequirementContainers` (the `arrange`): both sides 180 wide - 122 when both
+ *   `canMinimalizeWidth` (every rule a single node, or a custom text whose `textWidth` is at most
+ *   100) - and as high as the taller side's active element plus 2 x 18, at least 80, plus the
+ *   template's margins round `requirements_definition`; the active element centred in it
+ *   (`centerActiveElement`), and a lone rule of a `Rules` requirement centred across
+ *   (`OfferingRuleView.center`).
+ * - `requirementsStateUpdated`: the multiplier sentence, "met" (numbered for the automatic
+ *   multiplier), or "not met", with a check or cross; the automatic multiplier's hint; and for a
+ *   payment with a receive text the red disclaimer. Each html is `resizeHtml`ed to 15px a line plus 2.
+ * - `highlightRefresh` (an overridden trade) fades `highlight_border` in and out over 500 ms
+ *   (`highlight`: a 16 ms timer, `easeInOutCubic` towards 0.35), then hides it.
  */
 import type { ITradeRequirement, ITradeRequirementNode, ITradeRequirementRule } from '@nitrodevco/nitro-packets';
 import { TradeRequirementNodeType, TradeRequirementRulesType, TradeRequirementType } from '@nitrodevco/nitro-packets';
-import { Container as PixiContainer } from 'pixi.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { useWiredChestItemIconUrl } from '#base/hooks';
-import { Border, Box, Bubble, LayoutImage, Region, ThemeImage, ThemeText, useLayoutSize } from '#base/theme';
+import { LayoutImage, LayoutWindow, measureTemplateText, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows } from '#base/theme';
 import { isWiredTradePaymentOnly } from '#base/utils';
+import { inventoryTemplateId } from '#base/views/inventory/inventoryPage';
+import { ChestItemIcon } from '#base/views/wired-trading/chests/WiredChestFurniContentsView';
 
-const BUBBLE_WIDTH = 430;
-/** `bubble_contents` at 13,7 of the content area (8 in) and the bubble's 20px below it. */
-const BUBBLE_EXTRA_HEIGHT = 35;
-const CONTENTS_WIDTH = 390;
-const CONTENTS_SPACING = 6;
-const TITLE_HEIGHT = 17;
-const TITLE_SPACING_HEIGHT = 1;
-const OFFERINGS_HEIGHT = 180;
+const TEMPLATE = inventoryTemplateId('inventory_trading_wired_xml');
+
 /** `WiredTradeRequirementsView.NORMAL_BORDER_WIDTH` / `MINIMALIZED_BORDER_WIDTH` / `MIN_BORDER_HEIGHT` / `BORDER_TOP_BOTTOM_OFFSET`. */
 const NORMAL_BORDER_WIDTH = 180;
 const MINIMALIZED_BORDER_WIDTH = 122;
 const MIN_BORDER_HEIGHT = 80;
 const BORDER_TOP_BOTTOM_OFFSET = 18;
-/** `_offeringBorderMargins`: the template's 179 less `requirements_definition`'s 153. */
-const OFFERING_BORDER_MARGINS = 26;
-/** `requirements_definition` at y 24 of the template. */
-const REQUIREMENTS_BORDER_TOP = 24;
-const SEPARATOR_WIDTH = 30;
 /** `OfferingRuleView.MAX_COLS`. */
 const MAX_COLS = 2;
-const NODE_HEIGHT = 40;
-/** `rule_nodes_rows`' spacing. */
-const ROW_SPACING = 3;
 /** `OfferingRequirementsView.initializeUI`: a custom text this narrow lets the sides shrink. */
 const MINIMALIZE_TEXT_WIDTH = 100;
-/** `requirements_met_container`: 30 high around a 16 high `req_met_text` at 5,7. */
-const MET_CONTAINER_HEIGHT = 30;
-const MET_TEXT_HEIGHT = 16;
+/** `resizeHtml`: `numLines * 15 + 2`. */
+const HTML_LINE_HEIGHT = 15;
+const HTML_EXTRA_HEIGHT = 2;
 /** `highlight`: 500 ms in 16 ms steps, blend towards 0.35. */
 const HIGHLIGHT_DELAY = 16;
 const HIGHLIGHT_STEPS = Math.trunc(500 / HIGHLIGHT_DELAY);
 const HIGHLIGHT_MAX = 0.35;
-/** A text's own gutter: 2px each side of a `TextField`. */
-const TEXT_GUTTER = 4;
-/** `resizeHtml`: `numLines * 15 + 2`. */
-const HTML_LINE_HEIGHT = 15;
 
 /** `WiredTradeRequirementsView.easeInOutCubic` - which, despite its name, overshoots below 0 at the end. */
 const easeInOutCubic = (step: number, start: number, change: number, steps: number) => {
@@ -78,69 +60,42 @@ const easeInOutCubic = (step: number, start: number, change: number, steps: numb
     return start + (change * (-((t * 1.75) - 0.7) * ((t * 1.75) - 0.7) + 1));
 };
 
-/** `resizeHtml` from a text's natural height: its lines, 15px each, plus 2. */
-const htmlHeight = (naturalHeight: number) => (Math.max(1, Math.round((naturalHeight - TEXT_GUTTER) / HTML_LINE_HEIGHT)) * HTML_LINE_HEIGHT) + 2;
+/** The window `OfferingRequirementsView.initializeUI` shows - its `§_-t2§` - by name; undefined for none. */
+const getActiveElement = (requirementType: TradeRequirementType, rules: ITradeRequirementRule[] | undefined, text: string | undefined, give: boolean): string | undefined => {
+    const type = Number(requirementType);
 
-/** `rule_nodes_rows`' height: 40 a row, 3 between. */
-const ruleHeight = (rule: ITradeRequirementRule) => {
-    const rows = Math.ceil(rule.nodes.length / MAX_COLS);
+    if ((type !== Number(TradeRequirementType.Rules)) && give) {
+        if (type === Number(TradeRequirementType.AnyCoins)) return 'any_coins_text';
+        if (type === Number(TradeRequirementType.AnyFurni)) return 'any_furni_text';
+        if (type === Number(TradeRequirementType.AnyAll)) return 'any_all_text';
 
-    return (rows > 0) ? ((rows * NODE_HEIGHT) + ((rows - 1) * ROW_SPACING)) : 0;
+        return undefined;
+    }
+
+    if (rules && rules.length) return 'rules_list';
+    if (text) return 'custom_text';
+
+    return undefined;
 };
 
-/** `OfferingNodeView` on `rule_node_template`: "&", "Nx" and the 36x36 `rule_icon`, 1 apart. */
-const OfferingNode = ({ node, index }: { node: ITradeRequirementNode; index: number }) => {
+/** `OfferingNodeView.initializeUI` on a clone of `rule_node_template`. */
+const nodeItem = (node: ITradeRequirementNode, index: number): TemplateItem => {
     const isFurni = (Number(node.type) === Number(TradeRequirementNodeType.Furni));
-    const iconUrl = useWiredChestItemIconUrl(isFurni ? node.itemType : undefined);
 
-    return (
-        <Box layout={{ flexDirection: 'row', height: NODE_HEIGHT, gap: 1, flexShrink: 0 }}>
-            {(index > 0) && (
-                <ThemeText
-                    text="&"
-                    textStyle="u_regular"
-                    verticalAlign="top"
-                    layout={{ height: 17, marginTop: 11, flexShrink: 0 }}
-                />
-            )}
-            {(node.amount > 1) && (
-                <ThemeText
-                    text={`${node.amount}x`}
-                    textStyle="u_regular"
-                    verticalAlign="top"
-                    layout={{ height: 17, marginTop: 11, flexShrink: 0 }}
-                />
-            )}
-            <Region layout={{ width: 36, height: 36, flexShrink: 0, overflow: 'hidden' }}>
-                {isFurni && (
-                    // `furni_icon`: a 40x40 `product_icon` at 0,0, cut at the 36x36 `rule_icon`.
-                    <Box layout={{ position: 'absolute', left: 0, top: 0, width: 40, height: 40, alignItems: 'center', justifyContent: 'center' }}>
-                        {(iconUrl !== '') && <ThemeImage src={iconUrl} />}
-                    </Box>
-                )}
-                {!isFurni && (
-                    <ThemeImage
-                        src={LayoutImage('habbo-window-manager-com/pursearea_credits_icon2.png')}
-                        bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
-                        layout={{ position: 'absolute', left: 0, top: 2, width: 32, height: 36 }}
-                    />
-                )}
-            </Region>
-        </Box>
-    );
+    return {
+        key: `node-${index}`,
+        from: 'rule_node_template',
+        bindings: {
+            furni_icon: { visible: isFurni, children: (isFurni && node.itemType) ? <ChestItemIcon itemType={node.itemType} /> : undefined },
+            coin_icon: { visible: Number(node.type) === Number(TradeRequirementNodeType.Coin) },
+            and_text: { visible: index > 0 },
+            amount_text: { visible: node.amount > 1, ...((node.amount > 1) && { caption: `${node.amount}x` }) },
+        },
+    };
 };
 
-interface OfferingRuleProps {
-    rule: ITradeRequirementRule;
-    index: number;
-    width: number;
-    /** `OfferingRuleView.center`: the rows centred in the list's width, not at 32. */
-    centered: boolean;
-}
-
-/** `OfferingRuleView` on `rule_template`: "or" in a 32 wide column, then the node rows. */
-const OfferingRule = ({ rule, index, width, centered }: OfferingRuleProps) => {
-    const t = useTranslation();
+/** `OfferingRuleView.initializeUI` on a clone of `rule_template`: "or" after the first, the nodes `MAX_COLS` a row. */
+const ruleItem = (rule: ITradeRequirementRule, index: number): TemplateItem => {
     const rows: ITradeRequirementNode[][] = [];
 
     rule.nodes.forEach((node, nodeIndex) => {
@@ -149,152 +104,117 @@ const OfferingRule = ({ rule, index, width, centered }: OfferingRuleProps) => {
         rows[rows.length - 1].push(node);
     });
 
-    const nodeRows = (
-        <Box layout={{ flexDirection: 'column', gap: ROW_SPACING }}>
-            {rows.map((row, rowIndex) => (
-                <Box
-                    key={rowIndex}
-                    layout={{ flexDirection: 'row', height: NODE_HEIGHT, gap: 1, flexShrink: 0 }}
-                >
-                    {row.map((node, columnIndex) => (
-                        <OfferingNode
-                            key={columnIndex}
-                            node={node}
-                            index={(rowIndex * MAX_COLS) + columnIndex}
-                        />
-                    ))}
-                </Box>
-            ))}
-        </Box>
-    );
-
-    return (
-        <Region layout={{ width, height: ruleHeight(rule), flexShrink: 0 }}>
-            {(index > 0) && (
-                <Region
-                    alpha={0.5}
-                    layout={{ position: 'absolute', left: 0, width: 32, top: 11, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={t('inventory.wired_trading.requirements.or')}
-                        textStyle="u_regular"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-            )}
-            {centered
-                ? (
-                        <Box layout={{ position: 'absolute', left: 0, top: 0, width, flexDirection: 'row', justifyContent: 'center' }}>
-                            {nodeRows}
-                        </Box>
-                    )
-                : (
-                        <Box layout={{ position: 'absolute', left: 32, top: 0 }}>
-                            {nodeRows}
-                        </Box>
-                    )}
-        </Region>
-    );
+    return {
+        key: `rule-${index}`,
+        from: 'rule_template',
+        bindings: {
+            or_text: { visible: index > 0 },
+            rule_nodes_rows: {
+                items: rows.map((row, rowIndex): TemplateItem => ({
+                    key: `row-${rowIndex}`,
+                    from: 'rule_node_columns_template',
+                    bindings: { '': { items: row.map((node, column) => nodeItem(node, (rowIndex * MAX_COLS) + column)) } },
+                })),
+            },
+        },
+    };
 };
 
-interface OfferingSideProps {
-    requirementType: TradeRequirementType;
+/** `OfferingRequirementsView.initialize` on a clone of `offering_requirements_template`. */
+const offeringItem = (give: boolean, active: string | undefined, rules: ITradeRequirementRule[] | undefined, text: string | undefined, title: string): TemplateItem => ({
+    key: give ? 'give' : 'get',
+    from: 'offering_requirements_template',
+    bindings: {
+        offerings_title: { caption: title },
+        any_coins_text: { visible: active === 'any_coins_text' },
+        any_furni_text: { visible: active === 'any_furni_text' },
+        any_all_text: { visible: active === 'any_all_text' },
+        rules_list: { visible: active === 'rules_list', items: (active === 'rules_list') ? (rules ?? []).map(ruleItem) : [] },
+        custom_text: { visible: active === 'custom_text', ...((active === 'custom_text') && { caption: text }) },
+    },
+});
+
+/** An item list's items (`getListItemAt`): the windows in its `_CONTAINER`. */
+const listItems = (window: LayoutWindow | undefined): LayoutWindow[] => ((window && ('container' in window) && (window.container instanceof LayoutWindow)) ? window.container.children : []);
+
+/** A window's direct child by its element's name. */
+const childNamed = (window: LayoutWindow | undefined, name: string) => window?.children.find(child => child.element?.name === name);
+
+/** `TextField.numLines`: its text's height in lines of the field's style. */
+const numLines = (window: LayoutWindow): number => {
+    const lineHeight = window.element ? (measureTemplateText(window.element, 'X', undefined)?.textHeight ?? 0) : 0;
+
+    return (lineHeight > 0) ? Math.max(1, Math.round(window.textHeight / lineHeight)) : 1;
+};
+
+/** `resizeHtml`. */
+const resizeHtml = (window: LayoutWindow | undefined) => window?.setHeight((numLines(window) * HTML_LINE_HEIGHT) + HTML_EXTRA_HEIGHT);
+
+/** One side as the arrange measures it: its container, the offering clone in it, and what its view knows. */
+interface OfferingSide {
+    container: string;
+    active: string | undefined;
     rules: ITradeRequirementRule[] | undefined;
-    text: string | undefined;
-    give: boolean;
-    width: number;
-    borderHeight: number;
-    /** The sentence or custom text's natural height, measured by the parent. */
-    textHeight: number;
-    textRef: (node: PixiContainer | null) => void;
+    /** `OfferingRuleView.center` applies: a `Rules` requirement with one rule. */
+    centerRule: boolean;
 }
 
-/** What `OfferingRequirementsView.initializeUI` shows: `any_*_text`, `rules_list` or `custom_text`. */
-const getActiveElement = (requirementType: TradeRequirementType, rules: ITradeRequirementRule[] | undefined, text: string | undefined, give: boolean): 'any' | 'rules' | 'custom' | null => {
-    if ((Number(requirementType) !== Number(TradeRequirementType.Rules)) && give) return 'any';
-    if (rules && rules.length) return 'rules';
-    if (text) return 'custom';
+/**
+ * `requirementsStateUpdated`'s `resizeHtml`s and `resizeRequirementContainers`, after each
+ * `OfferingRuleView.initializeUI` (the rule as wide as its offering, as high as its rows).
+ */
+const arrangeFor = (give: OfferingSide, get: OfferingSide | undefined) => ({ find }: TemplateWindows) => {
+    resizeHtml(find('req_met_text'));
+    resizeHtml(find('additional_text'));
+    resizeHtml(find('disclaimer_text'));
 
-    return null;
+    const sides = [ give, ...(get ? [ get ] : []) ].map((side) => {
+        const container = find(side.container);
+        const view = container?.children[0];
+        const border = view && find(`${side.container}/requirements_definition`);
+        const rulesList = view && find(`${side.container}/rules_list`);
+
+        for (const rule of listItems(rulesList)) {
+            rule.setWidth(view?.width ?? rule.width);
+            rule.setHeight(childNamed(rule, 'rule_nodes_rows')?.height ?? rule.height);
+        }
+
+        const active = side.active ? find(`${side.container}/${side.active}`) : undefined;
+        // `canMinimalizeWidth`: every rule a single node, or the custom text narrow enough.
+        const canMinimalize = ((side.active === 'rules_list') && !!side.rules?.every(rule => rule.nodes.length === 1))
+            || ((side.active === 'custom_text') && !!active && (active.textWidth <= MINIMALIZE_TEXT_WIDTH));
+
+        return { side, container, view, border, rulesList, active, canMinimalize };
+    });
+
+    const [ giveSide, getSide ] = sides;
+    const width = (getSide && giveSide.canMinimalize && getSide.canMinimalize) ? MINIMALIZED_BORDER_WIDTH : NORMAL_BORDER_WIDTH;
+    const borderHeight = Math.max(MIN_BORDER_HEIGHT, Math.max(...sides.map(({ active }) => active?.height ?? 0)) + (2 * BORDER_TOP_BOTTOM_OFFSET));
+
+    find('offering_containers_separator')?.setHeight(borderHeight);
+
+    for (const { side, container, view, border, rulesList, active } of sides) {
+        if (!container || !view || !border) continue;
+
+        // `_offeringBorderMargins`: the template's height round its `requirements_definition`.
+        const margins = (view.element && border.element) ? (view.element.height - border.element.height) : 0;
+
+        container.setWidth(width);
+        container.setHeight(borderHeight + margins);
+        // `initializeStretchingWithParent`: the clone as large as its container.
+        view.setRectangle(0, 0, container.width, container.height);
+
+        // `centerActiveElement`.
+        if (active) active.setY(Math.trunc((border.height / 2) - (active.height / 2)));
+
+        if (side.centerRule && rulesList) {
+            const rows = childNamed(listItems(rulesList)[0], 'rule_nodes_rows');
+            const colsWidth = Math.max(0, ...listItems(rows).map(row => row.width));
+
+            rows?.setX(Math.trunc(((border.width - (rulesList.x * 2)) / 2) - (colsWidth / 2)));
+        }
+    }
 };
-
-/** `offering_requirements_template` as `OfferingRequirementsView` fills it. */
-const OfferingSide = ({ requirementType, rules, text, give, width, borderHeight, textHeight, textRef }: OfferingSideProps) => {
-    const t = useTranslation();
-    const type = Number(requirementType);
-    const active = getActiveElement(requirementType, rules, text, give);
-    const activeHeight = (active === 'rules') ? (rules ?? []).reduce((sum, rule) => sum + ruleHeight(rule), 0) : textHeight;
-    // `centerActiveElement`.
-    const activeTop = Math.trunc((borderHeight / 2) - (activeHeight / 2));
-    let anyKey = 'inventory.wired_trading.requirements.donation.all';
-
-    if (type === Number(TradeRequirementType.AnyCoins)) anyKey = 'inventory.wired_trading.requirements.donation.coins';
-    else if (type === Number(TradeRequirementType.AnyFurni)) anyKey = 'inventory.wired_trading.requirements.donation.furni';
-
-    return (
-        <Region layout={{ width, height: borderHeight + OFFERING_BORDER_MARGINS, flexShrink: 0 }}>
-            <ThemeText
-                text={t(give ? 'inventory.wired_trading.requirements.offering' : 'inventory.wired_trading.requirements.receiving')}
-                textStyle="u_regular"
-                textOptions={{ align: 'center' }}
-                flashFormat={{ bold: true }}
-                verticalAlign="top"
-                layout={{ position: 'absolute', left: 0, width, top: 0, height: 17 }}
-            />
-            <Border
-                variant="0"
-                tintColor="#f7f7f7"
-                layout={{ position: 'absolute', left: 0, width, top: REQUIREMENTS_BORDER_TOP, height: borderHeight }}
-            >
-                {(active === 'any') && (
-                    <Box
-                        ref={textRef}
-                        alpha={0.6}
-                        layout={{ position: 'absolute', left: 10, width: width - 20, top: activeTop }}
-                    >
-                        <ThemeText
-                            text={t(anyKey)}
-                            textStyle="u_regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: width - 20 - TEXT_GUTTER }}
-                            verticalAlign="top"
-                        />
-                    </Box>
-                )}
-                {(active === 'rules') && (
-                    <Box layout={{ position: 'absolute', left: 1, width: width - 2, top: activeTop, flexDirection: 'column' }}>
-                        {(rules ?? []).map((rule, index) => (
-                            <OfferingRule
-                                key={index}
-                                rule={rule}
-                                index={index}
-                                width={width - 2}
-                                centered={(type === Number(TradeRequirementType.Rules)) && ((rules ?? []).length === 1)}
-                            />
-                        ))}
-                    </Box>
-                )}
-                {(active === 'custom') && (
-                    <Box
-                        ref={textRef}
-                        alpha={0.6}
-                        layout={{ position: 'absolute', left: 10, width: width - 20, top: activeTop, flexDirection: 'row', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={text ?? ''}
-                            textStyle="u_regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: width - 20 - TEXT_GUTTER, align: 'center' }}
-                            flashFormat={{ bold: true }}
-                            verticalAlign="top"
-                        />
-                    </Box>
-                )}
-            </Border>
-        </Region>
-    );
-};
-
-/** Whether every rule is a single node - one half of `canMinimalizeWidth`. */
-const isMinimalizable = (rules: ITradeRequirementRule[] | undefined) => !!rules && (rules.length > 0) && rules.every(rule => rule.nodes.length === 1);
 
 export interface WiredTradeRequirementsViewProps {
     requirement: ITradeRequirement;
@@ -309,23 +229,6 @@ export const WiredTradeRequirementsView = ({ requirement, tradeTypeName, canAcce
     const [ highlighting, setHighlighting ] = useState(false);
     const [ highlightStep, setHighlightStep ] = useState(0);
     const [ highlightFor, setHighlightFor ] = useState(highlightCount);
-    const [ giveTextNode, setGiveTextNode ] = useState<PixiContainer | null>(null);
-    const [ getTextNode, setGetTextNode ] = useState<PixiContainer | null>(null);
-    const [ customWidthNode, setCustomWidthNode ] = useState<PixiContainer | null>(null);
-    const [ metTextNode, setMetTextNode ] = useState<PixiContainer | null>(null);
-    const [ additionalTextNode, setAdditionalTextNode ] = useState<PixiContainer | null>(null);
-    const [ disclaimerTextNode, setDisclaimerTextNode ] = useState<PixiContainer | null>(null);
-    const giveTextHeight = useLayoutSize(giveTextNode).height;
-    const getTextHeight = useLayoutSize(getTextNode).height;
-    const customTextWidth = useLayoutSize(customWidthNode).width;
-    const metTextHeight = htmlHeight(useLayoutSize(metTextNode).height);
-    const additionalTextHeight = htmlHeight(useLayoutSize(additionalTextNode).height);
-    const disclaimerTextHeight = htmlHeight(useLayoutSize(disclaimerTextNode).height);
-    const rules = requirement.rules;
-    const isPayment = isWiredTradePaymentOnly(requirement);
-    const showGet = !isPayment || (requirement.youGetText.length > 0);
-    const giveRules = rules?.definition.youGiveRule;
-    const getRules = rules?.definition.youGetRule ? [ rules.definition.youGetRule ] : [];
 
     if (highlightFor !== highlightCount) {
         setHighlightFor(highlightCount);
@@ -346,160 +249,53 @@ export const WiredTradeRequirementsView = ({ requirement, tradeTypeName, canAcce
         };
     }, [ highlighting, highlightFor ]);
 
+    const { rules } = requirement;
+    const isPayment = isWiredTradePaymentOnly(requirement);
+    const showGet = !isPayment || (requirement.youGetText.length > 0);
+    const giveRules = rules?.definition.youGiveRule;
+    const youGetRule = rules?.definition.youGetRule;
+    const getRules = useMemo(() => (youGetRule ? [ youGetRule ] : []), [ youGetRule ]);
+    const isRulesType = (Number(requirement.type) === Number(TradeRequirementType.Rules));
     const giveActive = getActiveElement(requirement.type, giveRules, undefined, true);
     const getActive = getActiveElement(requirement.type, getRules, requirement.youGetText, false);
-    // `canMinimalizeWidth` of each side: every rule a single node, or a custom text no wider than 100.
-    const canMinimalize = (active: ReturnType<typeof getActiveElement>, list: ITradeRequirementRule[] | undefined) => ((active === 'rules') && isMinimalizable(list)) || ((active === 'custom') && ((customTextWidth - TEXT_GUTTER) <= MINIMALIZE_TEXT_WIDTH));
-    const narrow = showGet && canMinimalize(giveActive, giveRules) && canMinimalize(getActive, getRules);
-    const sideWidth = narrow ? MINIMALIZED_BORDER_WIDTH : NORMAL_BORDER_WIDTH;
-    // `minBorderHeight`: the active element's height.
-    const minHeight = (active: ReturnType<typeof getActiveElement>, list: ITradeRequirementRule[] | undefined, textHeight: number) => {
-        if (active === 'rules') return (list ?? []).reduce((sum, rule) => sum + ruleHeight(rule), 0);
-        if (active) return textHeight;
-
-        return 0;
-    };
-    const borderHeight = Math.max(MIN_BORDER_HEIGHT, Math.max(minHeight(giveActive, giveRules, giveTextHeight), showGet ? minHeight(getActive, getRules, getTextHeight) : 0) + (2 * BORDER_TOP_BOTTOM_OFFSET));
+    const rulesType = rules ? Number(rules.type) : undefined;
+    const isAuto = (rulesType === Number(TradeRequirementRulesType.AutoMultiplier));
 
     let metText = t(canAccept ? 'inventory.wired_trading.requirements.indicator.met' : 'inventory.wired_trading.requirements.indicator.not_met');
 
-    if (rules && (Number(rules.type) === Number(TradeRequirementRulesType.Multiplier))) metText = t('inventory.wired_trading.requirements.indicator.multi', '', { times: String(rules.multiplier), amount: String(extra) });
-    else if (canAccept && rules && (Number(rules.type) === Number(TradeRequirementRulesType.AutoMultiplier)) && (extra > 1)) metText = t('inventory.wired_trading.requirements.indicator.met_numbered', '', { amount: String(extra) });
+    if (rules && (rulesType === Number(TradeRequirementRulesType.Multiplier))) metText = t('inventory.wired_trading.requirements.indicator.multi', '', { times: String(rules.multiplier), amount: String(extra) });
+    else if (canAccept && isAuto && (extra > 1)) metText = t('inventory.wired_trading.requirements.indicator.met_numbered', '', { amount: String(extra) });
 
-    const isAuto = !!rules && (Number(rules.type) === Number(TradeRequirementRulesType.AutoMultiplier));
-    const autoHintKey = isPayment ? 'inventory.wired_trading.requirements.auto_mode_hint_payment' : 'inventory.wired_trading.requirements.auto_mode_hint_trade';
     const showDisclaimer = isPayment && showGet;
-    // `req_met_text` reflects its growth to the container.
-    const metContainerHeight = MET_CONTAINER_HEIGHT + (metTextHeight - MET_TEXT_HEIGHT);
-    const contentsHeight = TITLE_HEIGHT + CONTENTS_SPACING + TITLE_SPACING_HEIGHT + CONTENTS_SPACING + OFFERINGS_HEIGHT + CONTENTS_SPACING + metContainerHeight
-        + (isAuto ? (CONTENTS_SPACING + additionalTextHeight) : 0)
-        + (showDisclaimer ? (CONTENTS_SPACING + disclaimerTextHeight) : 0);
-    const bubbleHeight = contentsHeight + BUBBLE_EXTRA_HEIGHT;
+    const arrange = useMemo(() => arrangeFor(
+        { container: 'you_give_container', active: giveActive, rules: giveRules, centerRule: isRulesType && (giveRules?.length === 1) },
+        showGet ? { container: 'you_get_container', active: getActive, rules: getRules, centerRule: isRulesType && (getRules.length === 1) } : undefined,
+    ), [ giveActive, giveRules, getActive, getRules, isRulesType, showGet ]);
+
+    const bindings: TemplateBindings = {
+        bubble_title: { caption: t('inventory.wired_trading.requirements.title', '', { type: tradeTypeName }) },
+        highlight_border: { visible: highlighting, blend: highlighting ? easeInOutCubic(highlightStep, 0, HIGHLIGHT_MAX, HIGHLIGHT_STEPS) : 0 },
+        you_give_container: { items: [ offeringItem(true, giveActive, giveRules, undefined, t('inventory.wired_trading.requirements.offering')) ] },
+        offering_containers_separator: { visible: showGet },
+        you_get_container: { visible: showGet, items: showGet ? [ offeringItem(false, getActive, getRules, requirement.youGetText, t('inventory.wired_trading.requirements.receiving')) ] : [] },
+        req_met_text: { caption: metText },
+        req_met_icon: { asset: LayoutImage(canAccept ? 'habbo-window-manager-com/common_check_mark.png' : 'habbo-window-manager-com/common_cross_mark.png') },
+        additional_text: {
+            visible: isAuto,
+            ...(isAuto && { caption: t(isPayment ? 'inventory.wired_trading.requirements.auto_mode_hint_payment' : 'inventory.wired_trading.requirements.auto_mode_hint_trade', '', { amount: String(rules?.autoMultiplierMax ?? 0) }) }),
+        },
+        disclaimer_text: {
+            visible: showDisclaimer,
+            ...(showDisclaimer && { caption: t('inventory.wired_trading.requirements.receive_text_disclaimer', '', { you_get_name: t('inventory.wired_trading.requirements.receiving') }) }),
+        },
+    };
 
     return (
-        <Bubble
-            variant="7"
-            pointer="left"
-            margins={[ 8, 8, 8, 8 ]}
-            layout={{ width: BUBBLE_WIDTH, height: bubbleHeight }}
-        >
-            {highlighting && (
-                <Border
-                    variant="2"
-                    tintColor="#4fbce3"
-                    blend={Math.max(0, easeInOutCubic(highlightStep, 0, HIGHLIGHT_MAX, HIGHLIGHT_STEPS))}
-                    layout={{ position: 'absolute', left: 0, top: 0, width: 415, height: bubbleHeight - 15 }}
-                />
-            )}
-            <Box layout={{ position: 'absolute', left: 13, top: 7, width: CONTENTS_WIDTH, flexDirection: 'column', gap: CONTENTS_SPACING }}>
-                <Region
-                    alpha={0.5}
-                    layout={{ width: CONTENTS_WIDTH, height: TITLE_HEIGHT, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={t('inventory.wired_trading.requirements.title', '', { type: tradeTypeName })}
-                        textStyle="u_regular"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Box layout={{ width: 0, height: TITLE_SPACING_HEIGHT, flexShrink: 0 }} />
-                <Region layout={{ width: CONTENTS_WIDTH, height: OFFERINGS_HEIGHT, flexShrink: 0, flexDirection: 'row', justifyContent: 'center', overflow: 'hidden' }}>
-                    <OfferingSide
-                        requirementType={requirement.type}
-                        rules={giveRules}
-                        text={undefined}
-                        give
-                        width={sideWidth}
-                        borderHeight={borderHeight}
-                        textHeight={giveTextHeight}
-                        textRef={setGiveTextNode}
-                    />
-                    {showGet && (
-                        <>
-                            {/* `offering_containers_separator`: `SeparatorWidget` tiles `illumina_light_separator_vertical` down the middle (x = width / 2 - 1). */}
-                            <Box layout={{ width: SEPARATOR_WIDTH, height: borderHeight, marginTop: REQUIREMENTS_BORDER_TOP, flexShrink: 0 }}>
-                                <ThemeImage
-                                    src={LayoutImage('habbo-window-manager-com/illumina_light_separator_vertical.png')}
-                                    bitmap={{ stretchedX: false, stretchedY: false, wrapY: true }}
-                                    layout={{ position: 'absolute', left: (SEPARATOR_WIDTH / 2) - 1, top: 0, width: 2, height: borderHeight }}
-                                />
-                            </Box>
-                            <OfferingSide
-                                requirementType={requirement.type}
-                                rules={getRules}
-                                text={requirement.youGetText}
-                                give={false}
-                                width={sideWidth}
-                                borderHeight={borderHeight}
-                                textHeight={getTextHeight}
-                                textRef={setGetTextNode}
-                            />
-                        </>
-                    )}
-                </Region>
-                <Region
-                    backgroundColor="#d9d9d9"
-                    layout={{ width: CONTENTS_WIDTH, height: metContainerHeight, flexShrink: 0 }}
-                >
-                    <Region layout={{ position: 'absolute', left: 5, top: 7, width: 342, height: metTextHeight, overflow: 'hidden' }}>
-                        <Box ref={setMetTextNode}>
-                            <ThemeText
-                                text={metText}
-                                textStyle="u_regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 342 - TEXT_GUTTER }}
-                                markup
-                                verticalAlign="top"
-                            />
-                        </Box>
-                    </Region>
-                    <ThemeImage
-                        src={LayoutImage(canAccept ? 'habbo-window-manager-com/common_check_mark.png' : 'habbo-window-manager-com/common_cross_mark.png')}
-                        bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
-                        layout={{ position: 'absolute', left: 359, top: 0, width: 30, height: 30 }}
-                    />
-                </Region>
-                {isAuto && (
-                    <Region layout={{ width: CONTENTS_WIDTH, height: additionalTextHeight, flexShrink: 0, overflow: 'hidden' }}>
-                        <Box ref={setAdditionalTextNode}>
-                            <ThemeText
-                                text={t(autoHintKey, '', { amount: String(rules?.autoMultiplierMax ?? 1) })}
-                                textStyle="u_regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: CONTENTS_WIDTH - TEXT_GUTTER }}
-                                markup
-                                verticalAlign="top"
-                            />
-                        </Box>
-                    </Region>
-                )}
-                {showDisclaimer && (
-                    <Region layout={{ width: CONTENTS_WIDTH, height: disclaimerTextHeight, flexShrink: 0, overflow: 'hidden' }}>
-                        <Box ref={setDisclaimerTextNode}>
-                            <ThemeText
-                                text={t('inventory.wired_trading.requirements.receive_text_disclaimer', '', { you_get_name: t('inventory.wired_trading.requirements.receiving') })}
-                                textStyle="u_regular"
-                                textOptions={{ fill: '#bf272a', wordWrap: true, wordWrapWidth: CONTENTS_WIDTH - TEXT_GUTTER }}
-                                markup
-                                verticalAlign="top"
-                            />
-                        </Box>
-                    </Region>
-                )}
-            </Box>
-            {/* `customText.textWidth`, read unwrapped for `canMinimalizeWidth`; never drawn. */}
-            {(getActive === 'custom') && (
-                <Box
-                    ref={setCustomWidthNode}
-                    alpha={0}
-                    eventMode="none"
-                    layout={{ position: 'absolute', left: 0, top: 0 }}
-                >
-                    <ThemeText
-                        text={requirement.youGetText}
-                        textStyle="u_regular"
-                        flashFormat={{ bold: true }}
-                    />
-                </Box>
-            )}
-        </Bubble>
+        <TemplateWindow
+            id={TEMPLATE}
+            part="trade_requirements_bubble"
+            bindings={bindings}
+            arrange={arrange}
+        />
     );
 };
