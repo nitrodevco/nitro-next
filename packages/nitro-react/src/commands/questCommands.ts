@@ -107,7 +107,7 @@ export const moreQuests = (send: Send) => {
 /* ---- QuestTracker and QuestDetails, as QuestController hands the packets to them ---- */
 
 /** Flash runs `update` once a frame at its 24 fps: `QuestTracker.update`'s completed tick plays one `_SafeStr_N17` frame per update. */
-const FRAME_MS = 1000 / 24;
+export const TRACKER_FRAME_MS = 1000 / 24;
 /** `QuestTracker._SafeStr_N17`: the `success_pic_N` frames the completed tick shows, one per update. */
 export const TRACKER_SUCCESS_FRAMES = [ 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 4 ];
 /** `COMPLETION_CLOSE_DELAY_IN_MSECS`: `CLOSE_WAIT` after the tick. */
@@ -178,7 +178,7 @@ export const onQuestCompletedMessage = (send: Send, quest: IQuestMessageData, sh
 
             send(new OpenQuestTrackerComposer({}));
             trackerTimers.set(chainCode, setTimeout(() => hideTracker(chainCode), NEXT_QUEST_WAIT_MS));
-        }, (TRACKER_SUCCESS_FRAMES.length * FRAME_MS) + COMPLETION_CLOSE_DELAY_MS));
+        }, (TRACKER_SUCCESS_FRAMES.length * TRACKER_FRAME_MS) + COMPLETION_CLOSE_DELAY_MS));
     }
 
     if (!details || (details.id === quest.id)) closeQuestDetails();

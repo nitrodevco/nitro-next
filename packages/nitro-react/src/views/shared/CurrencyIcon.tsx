@@ -14,7 +14,7 @@ import { useConfigData } from '#base/context/system';
 import { BoxLayout, Icon } from '#base/theme';
 import { getCurrencyIconStyle } from '#base/utils';
 
-export interface CatalogCurrencyIconProps {
+export interface CurrencyIconProps {
     /** The activity point type, `-1` for credits. */
     type: number;
     /** `getIconStyleFor`'s third argument: the 22px icons of the price displays, not the grid's 14px ones. */
@@ -24,7 +24,7 @@ export interface CatalogCurrencyIconProps {
     layout?: BoxLayout;
 }
 
-export const CatalogCurrencyIcon = ({ type, big, combo = false, layout }: CatalogCurrencyIconProps) => {
+export const CurrencyIcon = ({ type, big, combo = false, layout }: CurrencyIconProps) => {
     const config = useConfigData();
 
     return (

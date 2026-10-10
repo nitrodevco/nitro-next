@@ -13,7 +13,7 @@
  */
 import { closeRaidProtection, RAID_PROTECTION_ACTION_KICK, RAID_PROTECTION_ACTION_VALUES, RAID_PROTECTION_BAN_DURATION_VALUES, RAID_PROTECTION_GUARD_DURATION_VALUES, RAID_PROTECTION_SENSITIVITY_VALUES, requestRaidProtectionSave } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { RaidProtectionDraft, raidProtectionStore, useRaidProtectionStore } from '#base/context/raid-protection';
+import { RaidProtectionDraft, useRaidProtectionActions, useRaidProtectionStore } from '#base/context/raid-protection';
 import { useTranslation } from '#base/context/system';
 import { TemplateBindings, TemplateWindow, useTemplateFrame } from '#base/theme';
 
@@ -33,6 +33,7 @@ const section = (disabled: boolean) => ({ disabled, alpha: disabled ? DISABLED_A
 
 export const RaidProtectionSettingsView = () => {
     const view = useRaidProtectionStore(x => x.view);
+    const { setDraft } = useRaidProtectionActions();
     const saveOutstanding = useRaidProtectionStore(x => x.saveOutstanding);
     const { send } = useWebSocketContext();
     const t = useTranslation();
@@ -41,7 +42,7 @@ export const RaidProtectionSettingsView = () => {
     if (!view) return null;
 
     const { settings, draft } = view;
-    const change = (changes: Partial<RaidProtectionDraft>) => raidProtectionStore.getState().setDraft(changes);
+    const change = (changes: Partial<RaidProtectionDraft>) => setDraft(changes);
     // `refreshState`.
     const protectionOff = !draft.enabled;
     const banOff = protectionOff || (draft.actionType === RAID_PROTECTION_ACTION_KICK);

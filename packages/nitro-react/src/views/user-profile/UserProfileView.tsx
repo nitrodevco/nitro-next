@@ -10,7 +10,7 @@ import { AvatarImage } from '#base/components/AvatarImage';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { Border, Button, ContainerButton, Frame, Icon, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { getBadgeName, GetFriendlyTime } from '#base/utils';
-import { GroupBadgeImage } from '#base/views/groups/GroupBadgeImage';
+import { GroupBadgeImage } from '#base/views/shared/GroupBadgeImage';
 
 import { UserProfileGroupDetailsView } from './UserProfileGroupDetailsView';
 

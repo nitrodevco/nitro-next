@@ -14,7 +14,7 @@ import { BuyMarketplaceTokensComposer, GetMarketplaceCanMakeOfferComposer, GetMa
 import { WebSocketConnection } from '#base/context/communication';
 import { INVENTORY_FURNI_CATEGORY_POSTER, InventoryFurniGroup, InventoryFurniItem, inventoryStore } from '#base/context/inventory';
 import { systemStore } from '#base/context/system';
-import { MARKETPLACE_FURNI_TYPE_FLOOR, MARKETPLACE_FURNI_TYPE_WALL, MARKETPLACE_STATS_CATEGORY_FLOOR, MARKETPLACE_STATS_CATEGORY_UNIQUE, MARKETPLACE_STATS_CATEGORY_WALL, MarketplaceItemStats } from '#base/utils';
+import { MARKETPLACE_FURNI_TYPE_FLOOR, MARKETPLACE_FURNI_TYPE_WALL, MARKETPLACE_MAKE_OFFER_RESULT_OK, MARKETPLACE_STATS_CATEGORY_FLOOR, MARKETPLACE_STATS_CATEGORY_UNIQUE, MARKETPLACE_STATS_CATEGORY_WALL, MarketplaceItemStats } from '#base/utils';
 
 type Send = WebSocketConnection['send'];
 
@@ -28,9 +28,6 @@ const CAN_MAKE_OFFER_NO_TRADING_PASS = 3;
 const CAN_MAKE_OFFER_NO_TOKENS = 4;
 const CAN_MAKE_OFFER_CANCELLED = 5;
 const CAN_MAKE_OFFER_TRADING_LOCK = 6;
-
-/** `MarketplaceMakeOfferResult`'s success. */
-const MAKE_OFFER_RESULT_OK = 1;
 
 /** `bulkOfferLimit`: `marketplace.bulkOfferLimit`, 500 when unset. */
 const getBulkOfferLimit = () => {
@@ -206,7 +203,7 @@ export const makeMarketplaceOffer = (send: Send, price: number, amount: number) 
 };
 
 /** `endOfferMaking` -> `MarketplaceView.showResult`: `result.title.success` or `.failure`, and `inventory.marketplace.result.<n>`. */
-export const endMarketplaceOfferMaking = (result: number) => showMarketplaceAlert((result === MAKE_OFFER_RESULT_OK) ? 'inventory.marketplace.result.title.success' : 'inventory.marketplace.result.title.failure', `inventory.marketplace.result.${result}`);
+export const endMarketplaceOfferMaking = (result: number) => showMarketplaceAlert((result === MARKETPLACE_MAKE_OFFER_RESULT_OK) ? 'inventory.marketplace.result.title.success' : 'inventory.marketplace.result.title.failure', `inventory.marketplace.result.${result}`);
 
 /** `setItemStats`: only the stats of the furni the dialog asked about reach it. */
 export const setMarketplaceOfferItemStats = (stats: MarketplaceItemStats) => {

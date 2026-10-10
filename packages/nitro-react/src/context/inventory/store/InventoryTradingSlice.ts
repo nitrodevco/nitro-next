@@ -23,7 +23,7 @@ import { AvatarGenderType, IObjectData, StringDataType } from '@nitrodevco/nitro
 import { ITradeNftAsset, ITradingItemListData } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';
 
-import { InventoryFurniGroup, InventoryFurniItem } from './InventoryFurniGroup';
+import { INVENTORY_FURNI_CATEGORY_GUILD_FURNI, INVENTORY_FURNI_CATEGORY_POSTER, InventoryFurniGroup, InventoryFurniItem } from './InventoryFurniGroup';
 
 /** `TradingModel.TRADING_STATE_*`. */
 export const INVENTORY_TRADING_STATE_READY = 0;
@@ -107,9 +107,9 @@ const getGuildFurniType = (typeId: number, stuffData: IObjectData): string => {
 const getTradingGroupKey = (data: ITradingItemListData, isExternalImage: boolean): string => {
     if (!data.isGroupable || isExternalImage) return `itemid${data.itemId}`;
 
-    if (data.category === 6) return `${data.itemTypeId}poster${data.stuffData.getLegacyString()}`;
+    if (data.category === INVENTORY_FURNI_CATEGORY_POSTER) return `${data.itemTypeId}poster${data.stuffData.getLegacyString()}`;
 
-    if (data.category === 17) return getGuildFurniType(data.itemTypeId, data.stuffData);
+    if (data.category === INVENTORY_FURNI_CATEGORY_GUILD_FURNI) return getGuildFurniType(data.itemTypeId, data.stuffData);
 
     return `${data.itemType}${data.itemTypeId}`;
 };

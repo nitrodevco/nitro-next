@@ -41,7 +41,7 @@ const initialState: State = {
  */
 export type FriendsStore = State & Actions;
 
-export const createFriendsStore = () => createStore<FriendsStore>()((set, get, store) => ({
+export const createFriendsStore = () => createStore<FriendsStore>()(set => ({
     ...initialState,
     setTooltip: (tooltip: string) => set({ tooltip }),
     setListSearchValue: (listSearchValue: string) => set({ listSearchValue }),

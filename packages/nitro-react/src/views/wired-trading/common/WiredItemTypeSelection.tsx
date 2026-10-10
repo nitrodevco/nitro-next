@@ -24,7 +24,7 @@ import { useState } from 'react';
 import { useSystemStore, useTranslation } from '#base/context/system';
 import { useWiredChestItemIconUrl } from '#base/hooks';
 import { Border, Box, ThemeImage } from '#base/theme';
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '#base/views/wired-common/WiredTableView';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 import { WiredFloatVertically } from '#base/views/wired-setup/kit/WiredFloatVertically';
 import { WiredNamedTextInput } from '#base/views/wired-setup/kit/WiredNamedTextInput';
 import { WiredSection } from '#base/views/wired-setup/kit/WiredSection';
@@ -122,13 +122,13 @@ export const WiredItemTypeSelection = ({ selected, onSelect, resetKey }: WiredIt
     const rows = (text.length < MIN_SEARCH_LENGTH) ? allFurnis : allFurnis.filter(row => matches(row, text));
     const selectedCode = getWiredItemTypeCode(selected, floorItems, wallItems);
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'furni_name', title: t('wiredcontracts.element.itemtype.col.furni_name'), widthFactor: 0.5, alignment: 'left' },
         { id: 'furni_code', title: t('wiredcontracts.element.itemtype.col.furni_code'), widthFactor: 0.3, alignment: 'left' },
         { id: 'furni_type', title: t('wiredcontracts.element.itemtype.col.furni_type'), widthFactor: 0.2, alignment: 'left' },
     ];
 
-    const getCell = (row: ItemTypeRow, columnId: string): WiredTableCell => {
+    const getCell = (row: ItemTypeRow, columnId: string): TableCell => {
         switch (columnId) {
             case 'furni_name': return { text: row.localizedName, inspectable: true };
             case 'furni_code': return { text: row.code, inspectable: true };
@@ -154,7 +154,7 @@ export const WiredItemTypeSelection = ({ selected, onSelect, resetKey }: WiredIt
                 width={150}
             />
             <Box layout={{ height: TABLE_HEIGHT, flexShrink: 0, alignSelf: 'stretch' }}>
-                <WiredTableView
+                <TableView
                     columns={columns}
                     rows={rows}
                     getRowId={rowId}

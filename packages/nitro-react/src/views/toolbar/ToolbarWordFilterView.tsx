@@ -17,18 +17,9 @@ import { useEffect, useState } from 'react';
 import { addToCustomFilter, removeFromCustomFilter, requestCustomFilter } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useUserStore, useUserWordFilterActions } from '#base/context/user';
-import { useTemplate } from '#base/theme';
+import { useFilterWordRows } from '#base/views/shared/useFilterWordRows';
 
 import { ToolbarSettingsWindow } from './ToolbarSettingsWindow';
-
-/** `refreshBadWords` gives every visible row this height, not the 18 its layout declares. */
-const ROW_HEIGHT = 20;
-
-/** `WordFilterSettingsView.getBgColor`. */
-const ROW_COLOR_SELECTED = 0x9ab8d9;
-const ROW_COLOR_HOVERED = 0xb6d9ff;
-const ROW_COLOR_ODD = 0xffffff;
-const ROW_COLOR_EVEN = 0xe9e9e1;
 
 export const ToolbarWordFilterView = ({ onClose }: { onClose: () => void }) => {
     const { send } = useWebSocketContext();
@@ -36,8 +27,7 @@ export const ToolbarWordFilterView = ({ onClose }: { onClose: () => void }) => {
     const selectedWordIndex = useUserStore(x => x.selectedWordIndex);
     const { setSelectedWordIndex } = useUserWordFilterActions();
     const [ word, setWord ] = useState('');
-    const [ hoveredIndex, setHoveredIndex ] = useState(-1);
-    const item = useTemplate('habbo-toolbar-com/custom_word_filter_item_xml');
+    const rows = useFilterWordRows({ rowTemplate: 'habbo-toolbar-com/custom_word_filter_item_xml', textName: 'text', words: filteredWords, selectedIndex: selectedWordIndex, onSelect: setSelectedWordIndex });
 
     // `prepareWindow`: the window asks for the list as it opens.
     useEffect(() => requestCustomFilter(send), [ send ]);
@@ -45,14 +35,6 @@ export const ToolbarWordFilterView = ({ onClose }: { onClose: () => void }) => {
     /** `onAddWordClick`: the field is cleared only where the word was actually sent. */
     const onAdd = () => {
         if (addToCustomFilter(send, word)) setWord('');
-    };
-
-    // `getBgColor`: the selection wins over the hover, and the hover over the row's own stripe.
-    const rowColor = (index: number) => {
-        if (index === selectedWordIndex) return ROW_COLOR_SELECTED;
-        if (index === hoveredIndex) return ROW_COLOR_HOVERED;
-
-        return ((index % 2) !== 0) ? ROW_COLOR_ODD : ROW_COLOR_EVEN;
     };
 
     return (
@@ -65,22 +47,7 @@ export const ToolbarWordFilterView = ({ onClose }: { onClose: () => void }) => {
                 remove_btn: { onPointerTap: () => removeFromCustomFilter(send) },
                 back_btn: { onPointerTap: onClose },
                 wordlist: {
-                    items: item
-                        ? filteredWords.map((filtered, index) => ({
-                                key: filtered,
-                                from: item,
-                                bindings: {
-                                    '': { color: rowColor(index), background: true },
-                                    bg_region: {
-                                        onPointerTap: () => setSelectedWordIndex(index),
-                                        onPointerOver: () => setHoveredIndex(index),
-                                        onPointerOut: () => setHoveredIndex(current => ((current === index) ? -1 : current)),
-                                    },
-                                    text: { caption: filtered },
-                                },
-                                arrange: ({ root }) => root()?.setHeight(ROW_HEIGHT),
-                            }))
-                        : [],
+                    items: rows,
                 },
             }}
         />

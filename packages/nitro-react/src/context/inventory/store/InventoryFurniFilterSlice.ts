@@ -19,7 +19,7 @@
 import { IFurnitureData } from '@nitrodevco/nitro-api';
 import { StateCreator } from 'zustand';
 
-import { InventoryFurniGroup, isInventoryFurniGroupWallItem, peekInventoryFurni } from './InventoryFurniGroup';
+import { INVENTORY_FURNI_CATEGORY_FLOOR, INVENTORY_FURNI_CATEGORY_LANDSCAPE, INVENTORY_FURNI_CATEGORY_WALLPAPER, InventoryFurniGroup, isInventoryFurniGroupWallItem, isRoomLayoutCategory, peekInventoryFurni } from './InventoryFurniGroup';
 
 /** `FurniView.MAIN_FILTER_IDS`, in the order the dropmenu lists them. */
 export const INVENTORY_FURNI_MAIN_FILTERS = [ 'all', 'floor_items', 'wall_items', 'room_layout' ] as const;
@@ -45,10 +45,7 @@ export const getInventoryFurniTypeFilters = (main: InventoryFurniMainFilter): re
     }
 };
 
-/** The `FurnitureItem` categories the room layout papers use (`§_-72Z§.isWallpaper` / `isFloor` / `isLandscape`). */
-const CATEGORY_WALLPAPER = 2;
-const CATEGORY_FLOOR = 3;
-const CATEGORY_LANDSCAPE = 4;
+/** The other `FurnitureItem` categories the filters name. */
 const CATEGORY_STICKIE = 5;
 const CATEGORY_CREDIT_FURNI = 12;
 const CATEGORY_CLOTHES = 23;
@@ -65,7 +62,7 @@ export type InventoryFurniFilterContext = {
 const hasCategory = (group: InventoryFurniGroup, ...categories: number[]): boolean => categories.includes(group.category);
 
 /** `§_-72Z§.isRoomLayout`. */
-const isRoomLayout = (group: InventoryFurniGroup): boolean => hasCategory(group, CATEGORY_WALLPAPER, CATEGORY_FLOOR, CATEGORY_LANDSCAPE);
+const isRoomLayout = (group: InventoryFurniGroup): boolean => isRoomLayoutCategory(group.category);
 
 /** `§_-72Z§.isTilesOrRugs`: a flat, walk-on, multi-tile floor piece - with two class names carved out by hand. */
 const isTilesOrRugs = (furniData: IFurnitureData | undefined): boolean => {
@@ -139,11 +136,11 @@ const passTypeFilter = (type: InventoryFurniTypeFilter, group: InventoryFurniGro
         case 'paintings':
             return className.startsWith('diamond_painting');
         case 'floors':
-            return hasCategory(group, CATEGORY_FLOOR);
+            return hasCategory(group, INVENTORY_FURNI_CATEGORY_FLOOR);
         case 'wallpapers':
-            return hasCategory(group, CATEGORY_WALLPAPER);
+            return hasCategory(group, INVENTORY_FURNI_CATEGORY_WALLPAPER);
         case 'landscape':
-            return hasCategory(group, CATEGORY_LANDSCAPE);
+            return hasCategory(group, INVENTORY_FURNI_CATEGORY_LANDSCAPE);
         default:
             return true;
     }

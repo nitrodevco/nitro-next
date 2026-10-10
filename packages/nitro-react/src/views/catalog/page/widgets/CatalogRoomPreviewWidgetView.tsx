@@ -4,10 +4,9 @@ import { useRef, useState } from 'react';
 
 import { requestSelectedItemToMover } from '#base/commands';
 import { CatalogWidgetEventEnum, CatalogWidgetUpdateRoomPreviewEvent, useCatalogStoreApi } from '#base/context/catalog';
-import { useCatalogWidgetEvent } from '#base/hooks';
+import { useCatalogWidgetEvent, useRoomEngineTexture } from '#base/hooks';
 import { Box } from '#base/theme';
 
-import { useRoomEngineTexture } from '../../useRoomEngineTexture';
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { useCatalogWidgetView } from '../catalogWidgetView';
 

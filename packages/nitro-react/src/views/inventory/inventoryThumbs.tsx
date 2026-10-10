@@ -12,8 +12,8 @@ import {
     isInventoryFurniGroupWallItem,
 } from '#base/context/inventory';
 import { LayoutImage, TemplateBindings } from '#base/theme';
-import { CatalogLimitedItemGridOverlayView } from '#base/views/catalog/page/widgets/CatalogLimitedItemGridOverlayView';
-import { CatalogRarityItemGridOverlayView } from '#base/views/catalog/page/widgets/CatalogRarityItemGridOverlayView';
+import { LimitedItemGridOverlayView } from '#base/views/shared/LimitedItemGridOverlayView';
+import { RarityItemGridOverlayView } from '#base/views/shared/RarityItemGridOverlayView';
 
 import { ChestItemGridOverlayView, ChestOverlayColor } from './ChestItemGridOverlayView';
 import { InventoryNftIcon } from './InventoryNftIcon';
@@ -88,8 +88,8 @@ export const inventoryFurniThumbBindings = (group: InventoryFurniGroup, { select
         recyclable_container: { visible: showRecyclable && (getInventoryFurniRecyclableCount(group) > 0) },
         rent_state: rentState ? { visible: true, asset: rentState } : { visible: false },
         unique_item_background_bitmap: { visible: unique },
-        unique_item_overlay_container: unique ? { visible: true, children: <CatalogLimitedItemGridOverlayView serialNumber={group.stuffData.uniqueNumber} /> } : { visible: false },
-        rarity_item_overlay_container: rare ? { visible: true, children: <CatalogRarityItemGridOverlayView rarityLevel={group.stuffData.rarityLevel} /> } : { visible: false },
+        unique_item_overlay_container: unique ? { visible: true, children: <LimitedItemGridOverlayView serialNumber={group.stuffData.uniqueNumber} /> } : { visible: false },
+        rarity_item_overlay_container: rare ? { visible: true, children: <RarityItemGridOverlayView rarityLevel={group.stuffData.rarityLevel} /> } : { visible: false },
         chest_overlay_container: chest
             ? {
                     visible: true,

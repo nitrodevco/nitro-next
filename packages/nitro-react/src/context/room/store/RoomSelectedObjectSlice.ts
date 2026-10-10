@@ -49,7 +49,7 @@ export const RoomSelectedObjectSliceInitialState: State = {
 
 export type RoomSelectedObjectSlice = State & Actions;
 
-export const createRoomSelectedObjectSlice: StateCreator<RoomSelectedObjectSlice, [], [], RoomSelectedObjectSlice> = (set, get, store) => ({
+export const createRoomSelectedObjectSlice: StateCreator<RoomSelectedObjectSlice, [], [], RoomSelectedObjectSlice> = (set, get) => ({
     ...RoomSelectedObjectSliceInitialState,
     getSelectedObject: () => get().selectedObject,
     setSelectedAvatarId: (id: number) => set({ selectedAvatarId: id }),

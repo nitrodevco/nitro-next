@@ -4,6 +4,9 @@ import { useState } from 'react';
 
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { FloatingPopup, getGlobalRect, TemplateBindings, TemplateWindow, TemplateWindows, useAvatarImageTexture } from '#base/theme';
+import { isHandItem } from '#base/utils';
+
+import { arrangeInfostandButtons } from './infostandButtons';
 
 export interface InfostandBotViewProps {
     objectData: ISimpleRoomObjectData;
@@ -29,7 +32,6 @@ export interface InfostandBotViewProps {
 
 /** `InfoStandWidgetHandler.handleGetBotInfoMessage` / `handleGetRentableBotInfoMessage`: every bot's one badge. */
 const BOT_BADGE = 'BOT';
-const MAX_CARRY_ITEM = 999999;
 
 /** `InfoStandBotView.setMotto`: the field `textHeight + 5` high within these, its container 3 taller. */
 const MIN_MOTTO_HEIGHT = 23;
@@ -41,11 +43,6 @@ const TEXT_PADDING = 5;
 
 /** `updateWindow`: the border is the element list's height plus 20. */
 const BORDER_PADDING = 20;
-
-/** `InfoStandRentableBotView.BUTTONS_MAX_WIDTH` / `BUTTON_HEIGHT` / `BUTTON_MARGIN`. */
-const BUTTONS_MAX_WIDTH = 250;
-const BUTTON_HEIGHT = 25;
-const BUTTON_MARGIN = 5;
 
 /** `button_list`'s `CMD_BUTTON_REGION`s in the layout's order, each holding its `CMD_BUTTON` of the same name. */
 const BUTTON_REGIONS = [ 'whisper', 'ignore', 'unignore', 'move', 'rotate', 'pick' ] as const;
@@ -79,7 +76,7 @@ export const InfostandBotView = ({ rentable, name, motto, figure, gender, ownerN
     const [ badgeDetails, setBadgeDetails ] = useState<{ x: number; y: number } | null>(null);
 
     // `setCarryItem`: the text and its spacer shown only for a real hand item.
-    const carriesItem = (carryItem > 0) && (carryItem < MAX_CARRY_ITEM);
+    const carriesItem = isHandItem(carryItem);
     const handItemText = carriesItem ? t('infostand.text.handitem', '', { item: t(`handitem${carryItem}`, `handitem${carryItem}`) }) : '';
     const botBadge = badgeUrl.replace('%badgename%', BOT_BADGE);
 
@@ -218,37 +215,8 @@ export const InfostandBotView = ({ rentable, name, motto, figure, gender, ownerN
         const buttons = find('button_list');
 
         if (buttons) {
-            // `createWindow`: each button's region as wide as its button.
-            for (const key of BUTTON_REGIONS) {
-                const region = find(`button_list/${key}`);
-                const button = find(`button_list/${key}/${key}`);
-
-                if (region && button) region.setWidth(button.width);
-            }
-
-            // `arrangeButtons`: the shown regions, last first, laid right to left from the right edge,
-            // a new row when one does not fit.
-            buttons.setWidth(BUTTONS_MAX_WIDTH);
-
-            let right = BUTTONS_MAX_WIDTH;
-            let top = 0;
-
-            for (const key of [ ...BUTTON_REGIONS ].reverse()) {
-                const region = find(`button_list/${key}`);
-
-                if (!region?.visible) continue;
-
-                if ((right - region.width) < 0) {
-                    right = BUTTONS_MAX_WIDTH;
-                    top += BUTTON_HEIGHT + BUTTON_MARGIN;
-                }
-
-                region.setX(right - region.width);
-                region.setY(top);
-                right = region.x - BUTTON_MARGIN;
-            }
-
-            buttons.setHeight(top + BUTTON_HEIGHT);
+            // `createWindow` and `arrangeButtons`: the shown regions, last first.
+            arrangeInfostandButtons(buttons, find, [ ...BUTTON_REGIONS ].reverse(), key => `button_list/${key}/${key}`);
         }
 
         // `updateWindow`: the window as wide as the wider of the border and the buttons, the narrower

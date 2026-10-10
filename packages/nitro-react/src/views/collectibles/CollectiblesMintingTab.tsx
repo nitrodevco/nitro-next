@@ -22,12 +22,12 @@ import { useTranslation } from '#base/context/system';
 import { useSecondsClock } from '#base/hooks';
 import { Border, Button, Dropmenu, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
+import { CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { CollectiblesPreviewBackground } from './CollectiblesCollectionView';
 import { CollectiblesItemCell } from './CollectiblesItemCell';
 import { CollectiblesLoadingView } from './CollectiblesLoadingView';
 import { COLLECTIBLES_HUB_PREVIEW_SLOTS } from './collectiblesPreviewSlots';
-import { CollectiblesProductPreview } from './CollectiblesProductPreview';
 import { CollectiblesProgressBar } from './CollectiblesProgressBar';
 
 /** The minting previewer's windows: `product_preview`, `avatar_image_widget` and `placeholder_image`. */

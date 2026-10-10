@@ -1,11 +1,12 @@
-import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomObjectController, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { FurnitureUsagePolicyEnum, IObjectData, IRoom, IRoomPreviewerData, IVector3D, LegacyDataType, RoomEngineObjectEvent, RoomGeometryScaleType, RoomId, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { GetAvatarRenderManager, GetRoomEngine, GetTicker, GetTickerTime } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer, PointData } from 'pixi.js';
 import { RefObject, useEffect, useLayoutEffect, useRef } from 'react';
 
-import { useRoomMapping } from './useRoomMapping';
+import { createRoomMapForSize, getValidRoomObjectDirection } from '#base/utils';
 
-const PREVIEW_OBJECT_ID: number = 1;
+/** The id of the one object a previewer room shows. */
+export const ROOM_PREVIEWER_OBJECT_ID = 1;
 const PREVIEW_OBJECT_LOCATION_X: number = 2;
 const PREVIEW_OBJECT_LOCATION_Y: number = 2;
 const ALLOWED_IMAGE_CUT: number = 0.5;
@@ -71,11 +72,11 @@ export type RoomPreviewerTarget = PixiContainer;
  * room is uninitialized, so reading this during render is idempotent - the room outlives any one
  * previewer, which is why there is nothing to hold in state.
  */
-const getPreviewerRoom = (roomId: number, createMapForSize: ReturnType<typeof useRoomMapping>['createMapForSize']): IRoom => {
+const getPreviewerRoom = (roomId: number): IRoom => {
     const room = GetRoomEngine().createRoom(RoomId.makeRoomPreviewerId(roomId));
 
     if (!room.isInitialized) {
-        const map = createMapForSize(7);
+        const map = createRoomMapForSize(7);
 
         if (map.wallGeometry) room.setLegacyGeometry(map.wallGeometry);
 
@@ -98,8 +99,7 @@ const getPreviewerRoom = (roomId: number, createMapForSize: ReturnType<typeof us
  * the screen differs, see `RoomPreviewerTarget`.
  */
 export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPreviewerTarget | null>, { transparent = false, scale, showWalls = false, showFloor = false, anchor }: RoomPreviewerOptions = {}): RoomPreviewerApi => {
-    const { createMapForSize } = useRoomMapping();
-    const room: IRoom | undefined = getPreviewerRoom(roomId, createMapForSize);
+    const room: IRoom | undefined = getPreviewerRoom(roomId);
     const mountedMasterRef = useRef<PixiContainer | undefined>(undefined);
     const avatarDirection = useRef(AVATAR_DEFAULT_DIRECTION);
     // The object the consumer last asked for. A room can be recreated empty on a `roomId` change,
@@ -132,37 +132,12 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         anchorRef.current = ((anchorX !== undefined) && (anchorY !== undefined)) ? { x: anchorX, y: anchorY } : undefined;
     }, [ anchorX, anchorY ]);
 
-    const getValidRoomObjectDirection = (roomObject: IRoomObjectController, forward: boolean) => {
-        if (!roomObject?.model) return 0;
-
-        const allowedDirections: number[] = roomObject.type === RoomObjectUserTypeName.MonsterPlant
-            ? roomObject.model.getValue<number[]>(RoomObjectVariableEnum.PetAllowedDirections)
-            : roomObject.model.getValue<number[]>(RoomObjectVariableEnum.FurnitureAllowedDirections);
-
-        const direction = roomObject.getDirection().x;
-
-        if (!allowedDirections?.length) return direction;
-
-        let dirIndex = allowedDirections.indexOf(direction);
-
-        if (dirIndex < 0) {
-            const insertAt = allowedDirections.findIndex(d => direction <= d);
-            dirIndex = insertAt < 0 ? 0 : insertAt;
-        }
-
-        dirIndex = forward
-            ? (dirIndex + 1) % allowedDirections.length
-            : (dirIndex - 1 + allowedDirections.length) % allowedDirections.length;
-
-        return allowedDirections[dirIndex];
-    };
-
     const changeObjectDirection = () => {
         if (!room) return;
 
         const { objectCategory } = previewData.current;
 
-        const roomObject = room.getRoomObject(PREVIEW_OBJECT_ID, objectCategory);
+        const roomObject = room.getRoomObject(ROOM_PREVIEWER_OBJECT_ID, objectCategory);
 
         if (!roomObject) return;
 
@@ -173,7 +148,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
                 const loc = new Vector3d(PREVIEW_OBJECT_LOCATION_X, PREVIEW_OBJECT_LOCATION_Y);
                 const dir = new Vector3d(direction, direction, direction);
 
-                room.updateRoomObjectFloor(PREVIEW_OBJECT_ID, loc, dir, 0);
+                room.updateRoomObjectFloor(ROOM_PREVIEWER_OBJECT_ID, loc, dir, 0);
                 return;
             }
         }
@@ -188,7 +163,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         previewData.current.autoStateChange = false;
 
-        if (objectCategory !== RoomObjectCategoryEnum.Unit) room.updateRoomObjectState(PREVIEW_OBJECT_ID, objectCategory);
+        if (objectCategory !== RoomObjectCategoryEnum.Unit) room.updateRoomObjectState(ROOM_PREVIEWER_OBJECT_ID, objectCategory);
 
         updateRoomPreview();
     };
@@ -203,7 +178,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         if (time > (autoStateChangeTime + AUTOMATIC_STATE_CHANGE_INTERVAL)) {
             previewData.current.autoStateChangeTime = time;
 
-            room.updateRoomObjectState(PREVIEW_OBJECT_ID, objectCategory);
+            room.updateRoomObjectState(ROOM_PREVIEWER_OBJECT_ID, objectCategory);
         }
     };
 
@@ -308,7 +283,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         const { objectCategory, previewWidth, previewHeight, previewRectangle } = previewData.current;
 
-        const bounds = room.getRoomObjectBoundingRectangle(PREVIEW_OBJECT_ID, objectCategory);
+        const bounds = room.getRoomObjectBoundingRectangle(ROOM_PREVIEWER_OBJECT_ID, objectCategory);
 
         if (!bounds) return;
 
@@ -361,7 +336,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         // Anchored: the object's location moved onto the anchor, whatever its bounds.
         if (anchorPoint) {
-            const location = room.getRoomObjectScreenLocation(PREVIEW_OBJECT_ID, previewData.current.objectCategory);
+            const location = room.getRoomObjectScreenLocation(ROOM_PREVIEWER_OBJECT_ID, previewData.current.objectCategory);
 
             if (!location) return;
 
@@ -393,9 +368,9 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
     const resetRoomPreview = (flag: boolean) => {
         if (!room) return;
 
-        room.removeRoomObjectFloor(PREVIEW_OBJECT_ID);
-        room.removeRoomObjectWall(PREVIEW_OBJECT_ID);
-        room.removeRoomObjectUser(PREVIEW_OBJECT_ID);
+        room.removeRoomObjectFloor(ROOM_PREVIEWER_OBJECT_ID);
+        room.removeRoomObjectWall(ROOM_PREVIEWER_OBJECT_ID);
+        room.removeRoomObjectUser(ROOM_PREVIEWER_OBJECT_ID);
 
         if (!flag) updateRoomPreview();
 
@@ -415,18 +390,18 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         previewData.current.objectCategory = RoomObjectCategoryEnum.Floor;
         previewData.current.objectData = '';
 
-        if (!room.addFurnitureFloorByTypeId(PREVIEW_OBJECT_ID, classId, new Vector3d(PREVIEW_OBJECT_LOCATION_X, PREVIEW_OBJECT_LOCATION_Y), direction, 0, objectData, NaN, -1, FurnitureUsagePolicyEnum.Nobody, -1, '', false, -1)) return -1;
+        if (!room.addFurnitureFloorByTypeId(ROOM_PREVIEWER_OBJECT_ID, classId, new Vector3d(PREVIEW_OBJECT_LOCATION_X, PREVIEW_OBJECT_LOCATION_Y), direction, 0, objectData, NaN, -1, FurnitureUsagePolicyEnum.Nobody, -1, '', false, -1)) return -1;
 
         previewData.current.autoStateChangeTime = GetTickerTime();
         previewData.current.autoStateChange = true;
 
-        const roomObject = room.getRoomObject(PREVIEW_OBJECT_ID, previewData.current.objectCategory);
+        const roomObject = room.getRoomObject(ROOM_PREVIEWER_OBJECT_ID, previewData.current.objectCategory);
 
         if (roomObject && extra) roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExtras, extra);
 
         updateRoomPreview();
 
-        return PREVIEW_OBJECT_ID;
+        return ROOM_PREVIEWER_OBJECT_ID;
     };
 
     const addWallItem = (classId: number, direction: IVector3D, objectData: string) => {
@@ -434,7 +409,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         if (!room) return -1;
 
-        if (previewData.current.objectCategory === RoomObjectCategoryEnum.Floor && previewData.current.objectType === classId && previewData.current.objectData === objectData) return PREVIEW_OBJECT_ID;
+        if (previewData.current.objectCategory === RoomObjectCategoryEnum.Floor && previewData.current.objectType === classId && previewData.current.objectData === objectData) return ROOM_PREVIEWER_OBJECT_ID;
 
         resetRoomPreview(false);
 
@@ -442,14 +417,14 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         previewData.current.objectCategory = RoomObjectCategoryEnum.Wall;
         previewData.current.objectData = objectData;
 
-        if (!room.addFurnitureWallByTypeId(PREVIEW_OBJECT_ID, classId, new Vector3d(0.5, 2.3, 1.8), direction, 0, objectData, -1, FurnitureUsagePolicyEnum.Nobody, -1, '', false)) return -1;
+        if (!room.addFurnitureWallByTypeId(ROOM_PREVIEWER_OBJECT_ID, classId, new Vector3d(0.5, 2.3, 1.8), direction, 0, objectData, -1, FurnitureUsagePolicyEnum.Nobody, -1, '', false)) return -1;
 
         previewData.current.autoStateChangeTime = GetTickerTime();
         previewData.current.autoStateChange = true;
 
         updateRoomPreview();
 
-        return PREVIEW_OBJECT_ID;
+        return ROOM_PREVIEWER_OBJECT_ID;
     };
 
     const addAvatar = (figure: string, effect: number = 0, gender?: string) => {
@@ -465,25 +440,25 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         const degrees = avatarDirection.current * 45;
 
-        if (!room.addRoomObjectUser(PREVIEW_OBJECT_ID, new Vector3d(PREVIEW_OBJECT_LOCATION_X, PREVIEW_OBJECT_LOCATION_Y), new Vector3d(degrees), degrees, RoomObjectUserType.User, figure)) return -1;
+        if (!room.addRoomObjectUser(ROOM_PREVIEWER_OBJECT_ID, new Vector3d(PREVIEW_OBJECT_LOCATION_X, PREVIEW_OBJECT_LOCATION_Y), new Vector3d(degrees), degrees, RoomObjectUserType.User, figure)) return -1;
 
         previewData.current.autoStateChangeTime = GetTickerTime();
         previewData.current.autoStateChange = true;
 
-        room.updateRoomObjectUserGesture(PREVIEW_OBJECT_ID, 1);
-        room.updateRoomObjectUserEffect(PREVIEW_OBJECT_ID, effect);
-        room.updateRoomObjectUserPosture(PREVIEW_OBJECT_ID, 'std');
+        room.updateRoomObjectUserGesture(ROOM_PREVIEWER_OBJECT_ID, 1);
+        room.updateRoomObjectUserEffect(ROOM_PREVIEWER_OBJECT_ID, effect);
+        room.updateRoomObjectUserPosture(ROOM_PREVIEWER_OBJECT_ID, 'std');
 
         updateRoomPreview();
 
-        return PREVIEW_OBJECT_ID;
+        return ROOM_PREVIEWER_OBJECT_ID;
     };
 
     const setViewOffset = (x: number, y: number) => {
         previewData.current.previewOffset = { x, y };
     };
 
-    const placedAvatar = () => room?.getRoomObject(PREVIEW_OBJECT_ID, RoomObjectCategoryEnum.Unit);
+    const placedAvatar = () => room?.getRoomObject(ROOM_PREVIEWER_OBJECT_ID, RoomObjectCategoryEnum.Unit);
 
     const applyAvatar = (figure: string, gender?: string, effect: number = 0) => {
         if (!room) return;
@@ -496,8 +471,8 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         requested.current = { kind: 'avatar', figure, gender, effect };
 
-        room.updateRoomObjectUserFigure(PREVIEW_OBJECT_ID, figure, gender);
-        room.updateRoomObjectUserEffect(PREVIEW_OBJECT_ID, effect);
+        room.updateRoomObjectUserFigure(ROOM_PREVIEWER_OBJECT_ID, figure, gender);
+        room.updateRoomObjectUserEffect(ROOM_PREVIEWER_OBJECT_ID, effect);
     };
 
     const updateAvatar = (figure: string, gender?: string, effect: number = 0) => {
@@ -532,7 +507,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
 
         const degrees = avatarDirection.current * 45;
 
-        room.updateRoomObjectUserDirection(PREVIEW_OBJECT_ID, new Vector3d(degrees), degrees);
+        room.updateRoomObjectUserDirection(ROOM_PREVIEWER_OBJECT_ID, new Vector3d(degrees), degrees);
     };
 
     /** Keeps the room's master container (advanced by the engine tick) parented under the node. */
@@ -640,7 +615,7 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         // `RoomPreviewer.onRoomObjectAdded`, on both `REOE_ADDED` and `REOE_CONTENT_UPDATED`: a
         // wall item only knows its size once its asset has loaded, so it is placed again then.
         const onObjectEvent = (event: RoomEngineObjectEvent) => {
-            if (!event || (event.objectId !== PREVIEW_OBJECT_ID) || (event.category !== previewData.current.objectCategory)) return;
+            if (!event || (event.objectId !== ROOM_PREVIEWER_OBJECT_ID) || (event.category !== previewData.current.objectCategory)) return;
 
             previewData.current.previewRectangle = undefined;
 

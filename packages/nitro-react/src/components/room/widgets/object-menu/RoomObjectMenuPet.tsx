@@ -9,7 +9,7 @@ import { useConfigValue, useSystemActions, useTranslation } from '#base/context/
 import { useOwnUserId, useUserActions, useUserStore } from '#base/context/user';
 import { useWiredShowInspectButton } from '#base/context/wired';
 import { useRoomObjectModify, useRoomUserData } from '#base/hooks';
-import { petTypeFromFigure } from '#base/utils';
+import { isHandItem, petTypeFromFigure } from '#base/utils';
 import { InfoBubblePetView, PetMenuAction } from '#base/views/room-widgets/object-menu/InfoBubblePetView';
 
 /** `PetInfo.accessRights` - one means anyone in the room may ride it. */
@@ -26,9 +26,6 @@ const NEST_BREEDING_TYPES: Record<number, string> = {
 
 /** `pet.command.46`: what a nest-bred pet is told to start breeding. */
 const BREED_COMMAND = 46;
-
-/** A carried item id at or above this is not something that can be handed on. */
-const MAX_CARRY_ITEM = 999999;
 
 /** `updateButtons`: `treat` is enabled while the plant's energy is under this share of its maximum. */
 const TREAT_ENERGY_RATIO = 0.98;
@@ -150,7 +147,7 @@ export const RoomObjectMenuPet = ({ objectData, onClose }: { objectData: ISimple
             canTreat={isMonsterplant && !!info && !info.canRevive}
             treatEnabled={!!info && ((info.energy / info.maxEnergy) < TREAT_ENERGY_RATIO)}
             canCompost={isMonsterplant && !!info?.canRevive && compostingEnabled && isRoomOwner}
-            canPassHandItem={handItemGivePetEnabled && (ownCarryItem > 0) && (ownCarryItem < MAX_CARRY_ITEM)}
+            canPassHandItem={handItemGivePetEnabled && isHandItem(ownCarryItem)}
             canStartBreeding={canStartBreeding}
             showWiredInspect={showWiredInspect}
             commands={commands.map(id => ({ id, label: t(`pet.command.${id}`, String(id)) }))}

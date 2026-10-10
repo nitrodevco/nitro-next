@@ -25,7 +25,7 @@ import { useState } from 'react';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { Box, GlobalRect, LayoutImage, TemplateBindings, TemplateWindow, useTemplateFrame } from '#base/theme';
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '#base/views/wired-common/WiredTableView';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 
 const TEMPLATE = 'habbo-help-com/my_reports_xml';
 
@@ -87,7 +87,7 @@ export const MyReportsView = ({ reports, onClose }: MyReportsViewProps) => {
     const shown = shownRow ? rows.find(row => row.id === shownRow.id) : undefined;
     const shownRect = shownRow?.rect;
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'report_date', title: t('report.status.col.report_date'), widthFactor: 0.26, alignment: 'left' },
         { id: 'account', title: t('report.status.col.reported_account'), widthFactor: 0.18, alignment: 'left' },
         { id: 'reason', title: t('report.status.col.reason'), widthFactor: 0.38, alignment: 'left' },
@@ -103,7 +103,7 @@ export const MyReportsView = ({ reports, onClose }: MyReportsViewProps) => {
     };
 
     /** `ReportStatusTableObject.getTableCell`. */
-    const getCell = (report: IMyCfhReportStatus, columnId: string): WiredTableCell => {
+    const getCell = (report: IMyCfhReportStatus, columnId: string): TableCell => {
         const deleted = !report.reportedAccountName;
 
         switch (columnId) {
@@ -150,7 +150,7 @@ export const MyReportsView = ({ reports, onClose }: MyReportsViewProps) => {
     const bindings: TemplateBindings = {
         reports_table_cont: {
             children: (
-                <WiredTableView
+                <TableView
                     columns={columns}
                     rows={rows}
                     getRowId={row => String(row.id)}

@@ -17,10 +17,10 @@ import { formatCollectiblesDate, useCollectiblesStore, wrapBaseItem } from '#bas
 import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import { Border, Button, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { getCollectibleItemColoring, toCollectiblesCssColor } from './collectiblesColors';
 import { CollectiblesLoadingView } from './CollectiblesLoadingView';
-import { CollectiblesProductPreview } from './CollectiblesProductPreview';
 
 /** One claim's `item_template`. */
 const CollectiblesRewardItem = ({ claim }: { claim: INftClaim }) => {

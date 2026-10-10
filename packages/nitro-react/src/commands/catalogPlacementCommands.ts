@@ -26,7 +26,7 @@
  * `param11`) is not in the port's room placement; the builders club's repeated drop still starts
  * the next drag, the ghost just starts at its default direction.
  */
-import { CatalogPricingModelEnum, CatalogTypeEnum, FurnitureTypeEnum, IObjectData, IPurchasableOffer, LegacyDataType, RoomControllerLevelEnum, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { CatalogPricingModelEnum, CatalogTypeEnum, FurnitureTypeEnum, IObjectData, IPurchasableOffer, ISelectedRoomObjectData, LegacyDataType, RoomControllerLevelEnum, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectPlacementSource, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { BuildersClubPlaceRoomItemComposer, BuildersClubPlaceWallItemComposer, PlaceObjectComposer } from '@nitrodevco/nitro-packets';
 import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 import { StoreApi } from 'zustand';
@@ -34,19 +34,14 @@ import { StoreApi } from 'zustand';
 import { CATALOG_SEARCH_PAGE_ID, CatalogStore, CatalogWidgetEventEnum, getCatalogWindowName } from '#base/context/catalog';
 import { CatalogPlacedObjectPurchaseData, catalogPurchaseStore, ICatalogDragAndDropReceiver } from '#base/context/catalog-purchase';
 import { WebSocketConnection } from '#base/context/communication';
-import { getRoom, roomStore } from '#base/context/room';
+import { getRoom, getRoomPatterns, roomStore } from '#base/context/room';
 import { systemStore } from '#base/context/system';
-import { getOfferProduct } from '#base/utils';
+import { getOfferProduct, setObjectAlphaMultiplier } from '#base/utils';
 
 import { BUILDER_FURNI_PLACEABLE_STATUS_OKAY, getBuilderFurniPlaceableStatusForOffer } from './catalogBuildersClubCommands';
 
 type Send = WebSocketConnection['send'];
 type CatalogStoreApi = StoreApi<CatalogStore>;
-
-/** `updateRoom`'s defaults when the room has no pattern of its own yet. */
-const DEFAULT_WALL_TYPE = '101';
-const DEFAULT_FLOOR_TYPE = '101';
-const DEFAULT_LANDSCAPE_TYPE = '1.1';
 
 /** The furni classes that change a room plane instead of being an object in it. */
 const ROOM_PLANE_CLASSES = [ 'floor', 'wallpaper', 'landscape' ];
@@ -100,9 +95,15 @@ export const initializeRoomObjectInsert = (source: string, objectId: number, cat
  * being placed or moved goes back - a placed ghost is removed, a moved object returns to where it
  * was - and nothing is selected for an operation any more.
  */
-export const cancelRoomObjectInsert = () => {
+export const cancelRoomObjectInsert = () => resetSelectedRoomObject(roomStore.getState().selectedObject);
+
+/**
+ * `RoomObjectEventHandler.resetSelectedObjectData`: a moved object goes back where it was (one
+ * moved straight to a spot, `OBJECT_MOVE_TO`, stays) at full alpha, a placed ghost is removed, and
+ * nothing is selected for an operation any more.
+ */
+export const resetSelectedRoomObject = (selectedObject: ISelectedRoomObjectData | undefined) => {
     const room = getRoom();
-    const { selectedObject, setSelectedObject } = roomStore.getState();
 
     if (!room || !selectedObject) return;
 
@@ -117,7 +118,7 @@ export const cancelRoomObjectInsert = () => {
                 roomObject.setDirection(selectedObject.dir);
             }
 
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
+            setObjectAlphaMultiplier(roomObject, 1);
         }
 
         if (selectedObject.category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(selectedObject.objectId, true);
@@ -135,7 +136,7 @@ export const cancelRoomObjectInsert = () => {
         }
     }
 
-    setSelectedObject(undefined);
+    roomStore.getState().setSelectedObject(undefined);
 };
 
 /**
@@ -147,9 +148,7 @@ const updateRoom = (type: string, pattern: string) => {
 
     if (!room) return;
 
-    const wallType = room.getRoomValue<string>(RoomObjectVariableEnum.RoomWallType) || DEFAULT_WALL_TYPE;
-    const floorType = room.getRoomValue<string>(RoomObjectVariableEnum.RoomFloorType) || DEFAULT_FLOOR_TYPE;
-    const landscapeType = room.getRoomValue<string>(RoomObjectVariableEnum.RoomLandscapeType) || DEFAULT_LANDSCAPE_TYPE;
+    const { wallType, floorType, landscapeType } = getRoomPatterns();
 
     switch (type) {
         case 'floor':

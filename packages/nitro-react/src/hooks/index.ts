@@ -3,6 +3,7 @@ export * from './avatar-editor';
 export * from './catalog';
 export * from './communication';
 export * from './events';
+export * from './groups';
 export * from './logic';
 export * from './navigator';
 export * from './room';

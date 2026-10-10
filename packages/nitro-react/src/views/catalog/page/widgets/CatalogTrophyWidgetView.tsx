@@ -3,11 +3,10 @@ import { useState } from 'react';
 
 import { CatalogWidgetEventEnum } from '#base/context/catalog';
 import { useConfigData } from '#base/context/system';
-import { useCatalogWidgetEvent } from '#base/hooks';
+import { useCatalogWidgetEvent, useFurnitureImageTexture } from '#base/hooks';
 import { ThemeImage, useTemplateLibrary } from '#base/theme';
 import { getOfferProduct } from '#base/utils';
 
-import { useFurnitureImageTexture } from '../../useFurnitureImageTexture';
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { CATALOG_LIBRARY } from '../catalogTemplates';
 import { useCatalogWidgetView } from '../catalogWidgetView';

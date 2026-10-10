@@ -8,6 +8,7 @@
  * and `arrange` name elements by their full path from the window (`inventoryPagePath`), so they
  * can be merged with the window's own.
  */
+import type { WindowParams } from '#base/context/system';
 import { findTemplateChild, Template, TemplateBindings, TemplateElement, TemplateItem, TemplateWindows } from '#base/theme';
 
 export interface InventoryPage {
@@ -29,7 +30,7 @@ export interface InventoryPageContext {
     templates: Record<string, Template>;
 }
 
-export type InventoryPageName = 'furni' | 'collectibles' | 'pets' | 'bots' | 'badges';
+export type InventoryPageName = NonNullable<WindowParams<'inventory'>['tab']>;
 
 /** The library every inventory window is built from (`HabboInventoryCom`). */
 export const INVENTORY_LIBRARY = 'habbo-inventory-com';

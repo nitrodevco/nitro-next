@@ -1,13 +1,28 @@
+import type { AvatarGenderType } from '@nitrodevco/nitro-api';
 import type { IMyCfhReportStatus, ISanctionStatusEntry } from '@nitrodevco/nitro-packets';
 
-import type { HelpReportEntry } from '#base/commands/helpCommands';
+import type { CatalogRoomAdExtension } from '#base/context/catalog';
+import type { HelpReportEntry } from '#base/context/help';
 import type { WiredMenuWindowParams } from '#base/context/wired';
-import type { AvatarEditorViewWindowParams } from '#base/views/avatar-editor/AvatarEditor';
-import type { CatalogViewWindowParams } from '#base/views/catalog/CatalogView';
-import type { FriendListViewWindowParams } from '#base/views/friendlist/FriendListView';
-import type { InventoryViewWindowParams } from '#base/views/inventory/InventoryView';
-import type { NavigatorViewWindowParams } from '#base/views/navigator/NavigatorView';
-import type { RoomSettingsViewWindowParams } from '#base/views/room-widgets/room-settings/RoomSettingsView';
+
+/**
+ * How the avatar editor is opened. A clothing-change booth borrows it to dress itself: the outfit it
+ * already holds is loaded instead of the user's own look, and saving writes back to that furni.
+ * Anything else opens the editor on the user, which is the ordinary case and needs no params.
+ */
+type AvatarEditorWindowParams = {
+    clothingChange?: {
+        objectId: number;
+        figure: string;
+        gender: AvatarGenderType;
+    };
+};
+
+/**
+ * The catalogue opened on a page (by id or name) or an offer; `roomAdExtension`: the room ad page
+ * opened in extended mode (`openRoomAdCatalogPageInExtendedMode`).
+ */
+type CatalogWindowParams = { pageId?: number; pageName?: string; offerId?: number; roomAdExtension?: CatalogRoomAdExtension };
 
 /**
  * Every window the client can show, with the parameters it is opened with - `showWindow(name,
@@ -17,25 +32,31 @@ export type WindowRegistry = {
     achievements: NoWindowParams;
     /** The quest list (`QuestsList`), from the progression menu or a `questengine/quests` link. */
     quests: NoWindowParams;
-    avatar_editor: AvatarEditorViewWindowParams;
-    catalog: CatalogViewWindowParams;
+    avatar_editor: AvatarEditorWindowParams;
+    catalog: CatalogWindowParams;
     /** The Builders Club catalogue (`toggleCatalog("BUILDERS_CLUB")`) - see `getCatalogWindowName`. */
-    builders_catalog: CatalogViewWindowParams;
+    builders_catalog: CatalogWindowParams;
 
-    friendlist: FriendListViewWindowParams;
+    /** The friend list opened on a tab (`''` all closed). */
+    friendlist: { tab?: '' | 'friends' | 'requests' | 'search' };
     friendlist_invite: NoWindowParams;
     friendlist_remove_confirmation: NoWindowParams;
     /** The user's extended profile (`ExtendedProfileWindowCtrl` in `HabboGroupsManager`). */
     user_profile: { userId?: number };
 
-    inventory: InventoryViewWindowParams;
+    /** The page the inventory opens on (`categoryViewId`). */
+    inventory: { tab?: 'furni' | 'collectibles' | 'pets' | 'bots' | 'badges' };
 
     /** The avatar's effects wardrobe, opened from the avatar's own menu in the room. */
     avatar_effects: NoWindowParams;
 
     /** The room info panel and the room settings behind it, both opened from the room tools. */
     room_info: NoWindowParams;
-    room_settings: RoomSettingsViewWindowParams;
+    /**
+     * `startRoomSettingsEdit` / `startRoomSettingsEditFromNavigator`: with no `roomId` the window edits
+     * the room you are standing in; the navigator's room info popup names another room and its group.
+     */
+    room_settings: { roomId?: number; groupId?: number };
     /** `RoomFilterCtrl`: the word filter of the room in `roomFilterFlatId`. */
     room_filter: NoWindowParams;
 
@@ -45,7 +66,8 @@ export type WindowRegistry = {
     /** The floor plan editor (`BCFloorPlanEditor`), opened from the room info panel. */
     floor_plan_editor: NoWindowParams;
 
-    navigator: NavigatorViewWindowParams;
+    /** The navigator, searching `searchCode` when given. */
+    navigator: { searchCode?: string };
     /** Messenger conversations (`MessengerView`), opened from the toolbar. */
     messenger: NoWindowParams;
 

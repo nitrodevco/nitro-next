@@ -3,13 +3,11 @@ import { AvatarGenderType, FurnitureTypeEnum, IObjectData, IPurchasableOffer, Ro
 import { GetChatStyleLibrary } from '#base/chat';
 import { habbiconPreviewAssetName } from '#base/commands';
 import { PetImageRequest } from '#base/context/catalog';
-import { useCatalogOfferProduct } from '#base/hooks';
+import { useCatalogOfferProduct, useFurnitureImageTexture, usePetImageTexture } from '#base/hooks';
 import { LayoutImage, ThemeImage, useAvatarImageTexture } from '#base/theme';
 import { PRODUCT_IMAGES } from '#base/utils';
 
 import { pixelEffectIcon, SUBSCRIPTION_PRODUCT_ICON } from './catalogProductIcons';
-import { useFurnitureImageTexture } from './useFurnitureImageTexture';
-import { usePetImageTexture } from './usePetImageTexture';
 
 /**
  * The `PRODUCT_IMAGES` pictures the client ships, by picture name. Flash draws a listed offer's

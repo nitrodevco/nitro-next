@@ -51,7 +51,7 @@ import { useUserStore } from '#base/context/user';
 import { useWiredTradingStore } from '#base/context/wired-trading';
 import { TemplateBindings, TemplateItem, TemplateWindow } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
-import { CatalogLimitedItemPreviewOverlayView } from '#base/views/catalog/page/widgets/CatalogLimitedItemPreviewOverlayView';
+import { LimitedItemPreviewOverlayView } from '#base/views/shared/LimitedItemPreviewOverlayView';
 
 import { InventoryFurniPreview } from './InventoryFurniPreview';
 import { findInventoryElement, INVENTORY_GRID_PAGE_SIZE, inventoryGridPageCount, inventoryGridPageItems, InventoryPage, InventoryPageContext, inventoryPagePath, inventoryPageState, inventoryTemplateId, NO_INVENTORY_PAGE } from './inventoryPage';
@@ -375,7 +375,7 @@ export const useInventoryFurniPage = ({ active, templates }: InventoryPageContex
                 ? {
                         visible: true,
                         children: (
-                            <CatalogLimitedItemPreviewOverlayView
+                            <LimitedItemPreviewOverlayView
                                 serialNumber={stuffData.uniqueNumber}
                                 seriesSize={stuffData.uniqueSeries}
                             />

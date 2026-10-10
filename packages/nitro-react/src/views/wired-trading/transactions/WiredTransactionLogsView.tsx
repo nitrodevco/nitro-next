@@ -28,10 +28,10 @@ import { useTranslation } from '#base/context/system';
 import { WIRED_TRANSACTION_PAGE_SIZE } from '#base/context/wired-trading';
 import { TemplateWindow } from '#base/theme';
 import { summarizeWiredTransaction } from '#base/utils';
+import { TableCell, TableColumn } from '#base/views/shared/table/TableView';
 import { useWiredPagedTableTemplate } from '#base/views/wired-common/useWiredPagedTableState';
 import { useWiredPageRequests } from '#base/views/wired-common/useWiredPageRequests';
 import { calculateLastPage } from '#base/views/wired-common/wiredPaging';
-import { WiredTableCell, WiredTableColumn } from '#base/views/wired-common/WiredTableView';
 
 /** `WiredTransactionLogsView.REQUEST_PAGE_RATELIMIT`: this view's own, not `PagedTableView`'s 200. */
 const REQUEST_PAGE_RATELIMIT = 280;
@@ -66,7 +66,7 @@ export const WiredTransactionLogsView = ({ logs, onClose }: WiredTransactionLogs
 
     const loc = (key: string) => t(key, key);
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'type', title: loc('wiredchests.logs.col.type'), widthFactor: 0.17 },
         { id: 'timestamp', title: loc('wiredchests.logs.col.timestamp'), widthFactor: 0.15 },
         { id: 'username', title: loc('wiredchests.logs.col.username'), widthFactor: 0.14 },
@@ -77,7 +77,7 @@ export const WiredTransactionLogsView = ({ logs, onClose }: WiredTransactionLogs
     ];
 
     /** `TransactionTableObject.getTableCell`. */
-    const getCell = (info: IWiredTransactionInfo, columnId: string): WiredTableCell => {
+    const getCell = (info: IWiredTransactionInfo, columnId: string): TableCell => {
         switch (columnId) {
             case 'type': return { text: t(`wired_transactions.type.${info.transactionType}`) };
             case 'timestamp': return { text: info.readableTimestamp };

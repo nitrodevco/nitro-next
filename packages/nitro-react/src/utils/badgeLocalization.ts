@@ -43,3 +43,6 @@ export const getBadgeDesc = (t: Translate, code: string, pointLimits: Record<str
 
     return (text === key) ? '' : text;
 };
+
+/** `§_-ge§.shouldShowOwnerCount`: a badge's owner count is shown between 1 and 999. */
+export const shouldShowBadgeOwnerCount = (ownerCount: number | undefined): boolean => (ownerCount !== undefined) && (ownerCount > 0) && (ownerCount < 1000);

@@ -26,10 +26,9 @@ import { useState } from 'react';
 import { withdrawWiredChestItems } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useWiredTradingStore } from '#base/context/wired-trading';
-import { useWiredChestItemFurniData, useWiredChestItemIconUrl, useWiredChestItemName, useWiredChestItemNameResolver } from '#base/hooks';
+import { useFurnitureImageTexture, useWiredChestItemFurniData, useWiredChestItemIconUrl, useWiredChestItemName, useWiredChestItemNameResolver } from '#base/hooks';
 import { TemplateItem, TemplateWindow, TemplateWindows, ThemeImage } from '#base/theme';
 import { WiredChestItemGroup } from '#base/utils';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 
 /** `FurniChestView.§_-u11§`: the search bar shows from this many groups. */
 const SEARCH_THRESHOLD = 31;

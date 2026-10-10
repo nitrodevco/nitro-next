@@ -4,7 +4,7 @@
  * the normal catalogue, and `catalog_ubuntu` (no tabs, 15px taller) for the Builders Club one,
  * as `useNonTabbedCatalog("BUILDERS_CLUB")` answers - and `toggleCatalog(type)` shows one and
  * hides the other. Here each is a registered window (`WindowRegistry`), opened with the same
- * params (`CatalogViewWindowParams`).
+ * params (`WindowParams<'catalog'>`).
  */
 import { CatalogTypeEnum } from '@nitrodevco/nitro-api';
 

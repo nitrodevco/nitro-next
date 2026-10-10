@@ -59,19 +59,6 @@ import { firstSelectableColorId } from '#base/utils';
 import { AvatarEditorPartImage } from './AvatarEditorPartImage';
 import { AvatarEditorWardrobe } from './AvatarEditorWardrobe';
 
-/**
- * How the editor is opened. A clothing-change booth borrows it to dress itself: the outfit it
- * already holds is loaded instead of the user's own look, and saving writes back to that furni.
- * Anything else opens the editor on the user, which is the ordinary case and needs no params.
- */
-export type AvatarEditorViewWindowParams = {
-    clothingChange?: {
-        objectId: number;
-        figure: string;
-        gender: AvatarGenderType;
-    };
-};
-
 const LIBRARY = 'habbo-avatar-editor-com';
 
 /** `AvatarEditorView._allCategories` in `mainTabs`' order; effects and misc each behind a setting. */

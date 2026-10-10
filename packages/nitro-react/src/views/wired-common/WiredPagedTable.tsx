@@ -39,11 +39,11 @@
  */
 
 import { Box, BoxLayout, ContainerButton, Icon, TextInput, ThemeText } from '#base/theme';
+import { TableView, TableViewProps } from '#base/views/shared/table/TableView';
 
 import { usePagedTableState } from './useWiredPagedTableState';
 import { WiredPageRequests } from './useWiredPageRequests';
 import { restrictPageInput } from './wiredPaging';
-import { WiredTableView, WiredTableViewProps } from './WiredTableView';
 
 /** `footer` and the `pagination` row in it. */
 const FOOTER_HEIGHT = 60;
@@ -99,7 +99,7 @@ const PageButton = ({ arrow, arrowLefts, disabled, onClick }: PageButtonProps) =
     </ContainerButton>
 );
 
-export interface WiredPagedTableProps<T extends object> extends Omit<WiredTableViewProps<T>, 'layout'> {
+export interface WiredPagedTableProps<T extends object> extends Omit<TableViewProps<T>, 'layout'> {
     /** `currentPage()`: 1-based, `-1` while no page has arrived. */
     currentPage: number;
     /** `totalEntries()`, for the paging text and - with `pageSize` - the last page. */
@@ -137,7 +137,7 @@ export const WiredPagedTable = <T extends object>(props: WiredPagedTableProps<T>
     return (
         <Box layout={{ flex: 1, minWidth: 0, minHeight: 0, flexDirection: 'column', ...layout }}>
             <Box layout={{ flex: 1, minHeight: 0, flexDirection: 'column', paddingLeft: tableSideInset, paddingRight: tableSideInset }}>
-                <WiredTableView
+                <TableView
                     {...tableProps}
                     scrollResetKey={scrollResetKey ?? currentPage}
                 />

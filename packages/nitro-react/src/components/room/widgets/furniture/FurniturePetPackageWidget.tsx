@@ -5,9 +5,8 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { PetPackageData } from '#base/handlers';
+import { PET_PACKAGE_WIDGET } from '#base/utils';
 import { FurnitureBannerDialogView } from '#base/views/room-widgets/furniture/FurnitureBannerDialogView';
-
-import { PET_PACKAGE_WIDGET } from './furnitureWidgetData';
 
 /**
  * Naming the pet inside an unopened package, on the `petpackage_new` layout that

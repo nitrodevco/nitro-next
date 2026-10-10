@@ -5,7 +5,7 @@ import { HabbiconState, useHabbiconsStore } from '#base/context/habbicons';
 import { isUnseenItem, UnseenItemCategory, useInventoryStore } from '#base/context/inventory';
 import { useTranslation } from '#base/context/system';
 import { Box, FloatingPopup, GlobalRect, Region, TemplateBindings, TemplateItem, TemplateWindow } from '#base/theme';
-import { UnseenItemCounterView } from '#base/views/system/UnseenItemCounterView';
+import { UnseenItemCounterView } from '#base/views/shared/UnseenItemCounterView';
 
 const TEMPLATE = 'habbo-room-ui-com/habbiconselector_menu_xml';
 

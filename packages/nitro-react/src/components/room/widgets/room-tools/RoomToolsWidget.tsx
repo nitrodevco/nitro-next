@@ -2,7 +2,7 @@ import { RateFlatComposer, SetUIFlagsComposer } from '@nitrodevco/nitro-packets'
 import { useEffect, useState } from 'react';
 
 import { forwardToRoom, openClientLink, searchRoomTag } from '#base/commands';
-import { chatHistoryStore } from '#base/context/chat-history';
+import { useChatHistoryActions } from '#base/context/chat-history';
 import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
@@ -31,6 +31,7 @@ const LIKE_POINTS = 1;
 export const RoomToolsWidget = () => {
     const t = useTranslation();
     const { send } = useWebSocketContext();
+    const { toggleOpen: toggleChatHistory } = useChatHistoryActions();
     const currentRoomInfo = useNavigatorStore(x => x.enteredRoom?.info);
     const roomVisitHistory = useNavigatorStore(x => x.roomVisitHistory);
     const roomVisitIndex = useNavigatorStore(x => x.roomVisitIndex);
@@ -117,7 +118,7 @@ export const RoomToolsWidget = () => {
     if (!freeFlowChatDisabled) buttons.push({
         key: 'button_chat_history',
         // `toggleVisibility`.
-        onPress: () => chatHistoryStore.getState().toggleOpen(),
+        onPress: toggleChatHistory,
     });
 
     if (canRateCurrentRoom) buttons.push({

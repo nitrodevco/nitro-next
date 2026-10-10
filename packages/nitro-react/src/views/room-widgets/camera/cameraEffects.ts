@@ -3,6 +3,12 @@
  * order that `camera.available.effects` names, each with the camera achievement level it needs, and
  * how each draws over a picture (`CameraPhotoLab.renderAllEffects`, `createFxButton`).
  */
+/** The photo's size: the viewfinder, the lab and the purchase confirmation all work on a 320 x 320 picture. */
+export const CAMERA_IMAGE_SIZE = 320;
+
+/** A camera bitmap of the window manager's library (`habbo-window-manager-com`), as the layouts name it. */
+export const cameraAsset = (name: string) => `habbo-window-manager-com-${name}`;
+
 export type CameraEffectType = 'colormatrix' | 'composite' | 'frame';
 
 export interface CameraEffectDefinition {

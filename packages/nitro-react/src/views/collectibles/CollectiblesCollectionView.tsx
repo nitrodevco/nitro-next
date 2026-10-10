@@ -25,11 +25,11 @@ import { useTranslation } from '#base/context/system';
 import { useSecondsClock } from '#base/hooks';
 import { Border, Button, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
+import { CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { toCollectiblesCssColor } from './collectiblesColors';
 import { CollectiblesItemCell } from './CollectiblesItemCell';
 import { COLLECTIBLES_BG_STAR_ROTATE_SPEED, COLLECTIBLES_HUB_PREVIEW_SLOTS } from './collectiblesPreviewSlots';
-import { CollectiblesProductPreview } from './CollectiblesProductPreview';
 import { CollectiblesProgressBar } from './CollectiblesProgressBar';
 import { CollectiblesRotatingImage } from './CollectiblesRotatingImage';
 

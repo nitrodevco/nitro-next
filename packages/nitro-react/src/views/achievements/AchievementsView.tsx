@@ -20,10 +20,11 @@ import { useWiredStore } from '#base/context/wired';
 import { useViewportSize } from '#base/hooks';
 import { LayoutWindow, TemplateWindow, TemplateWindows, useTemplateFrame } from '#base/theme';
 import { getBadgeDesc, getBadgeName, getCurrencyIconStyle } from '#base/utils';
+import { getLowestPoint, moveWindowsToRow, QUEST_REWARD_ROW, QUEST_REWARD_SPACING } from '#base/views/shared/flashWindowUtils';
+import { QuestProgressBar } from '#base/views/shared/QuestProgressBar';
 
 import { AchievementCategoryEntry, CATEGORY_HEIGHT, CATEGORY_WIDTH } from './AchievementCategoryEntry';
 import { ACHIEVEMENT_HEIGHT, ACHIEVEMENT_WIDTH, AchievementEntry } from './AchievementEntry';
-import { QuestProgressBar } from './QuestProgressBar';
 
 // `AchievementController` constants.
 const CATEGORIES_COLUMN_COUNT = 3;
@@ -43,9 +44,6 @@ const TOTAL_PROGRESS_BAR_LOC = { x: 72, y: 1 };
 const WINDOW_BOTTOM_SPACING = 45;
 /** `moveAllChildrenToColumn(_window.content, 0, 4)`. */
 const CONTENT_SPACING = 4;
-/** `HabboQuestEngine.refreshReward`'s `moveChildrenToRow` spacing. */
-const REWARD_SPACING = 3;
-const REWARD_ROW = [ 'reward_caption_txt', 'reward_amount_txt', 'currency_icon' ];
 /** The `Achievements` layout's width, which `_window.center()` centres. */
 const WINDOW_WIDTH = 389;
 /** `refreshMouseOver(-999)`: no tile hovered. */
@@ -58,19 +56,6 @@ const moveAllChildrenToColumn = (window: LayoutWindow, y: number, spacing: numbe
 
         child.setY(y);
         y += child.height + spacing;
-    }
-};
-
-/** `AchievementController.getLowestPoint`: the bottom of the lowest visible child. */
-const getLowestPoint = (window: LayoutWindow) => window.children.reduce((lowest, child) => (child.visible ? Math.max(lowest, child.y + child.height) : lowest), 0);
-
-/** `HabboQuestEngine.moveChildrenToRow`: each visible window after the last, from `x`, `spacing` apart. */
-const moveChildrenToRow = (windows: (LayoutWindow | undefined)[], x: number, spacing: number) => {
-    for (const window of windows) {
-        if (!window?.visible) continue;
-
-        window.setX(x);
-        x += window.width + spacing;
     }
 };
 
@@ -161,7 +146,7 @@ export const AchievementsView = ({ onClose }: { onClose: () => void }) => {
 
         const caption = find('achievement_cont/reward_caption_txt');
 
-        if (rewardShown && caption) moveChildrenToRow(REWARD_ROW.map(name => find(`achievement_cont/${name}`)), caption.x, REWARD_SPACING);
+        if (rewardShown && caption) moveWindowsToRow(QUEST_REWARD_ROW.map(name => find(`achievement_cont/${name}`)), caption.x, QUEST_REWARD_SPACING);
 
         moveAllChildrenToColumn(content, 0, CONTENT_SPACING);
         window.setHeight(getLowestPoint(content) + WINDOW_BOTTOM_SPACING);

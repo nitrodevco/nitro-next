@@ -6,28 +6,16 @@
  * 1 whispers, 0 talks; the width is -1 (the room's default) to 2.
  */
 import type { WiredElementDefinition } from '../../WiredElement';
-import { getWiredInt } from '../../WiredTriggerable';
 import { ActionTypeCodes } from './actionCodes';
 import { botActionType } from './BotActionType';
-import { BOT_STRING_PARAM_DELIMITER, splitBotMessageParam } from './BotTalk';
+import { BotTalkActionForm, createBotTalkForm, readBotTalkIntParams, readBotTalkStringParam } from './BotTalk';
 
-export interface BotTalkDirectToAvatarActionForm {
-    botName: string;
-    message: string;
-    /** 1 whispers, 0 talks. */
-    mode: number;
-    bubbleWidth: number;
-}
-
-export const botTalkDirectToAvatarAction: WiredElementDefinition<BotTalkDirectToAvatarActionForm> = {
+/** `BotTalkDirectToAvatar`'s body is `BotTalk`'s with another radio: the form and params are that action's. */
+export const botTalkDirectToAvatarAction: WiredElementDefinition<BotTalkActionForm> = {
     ...botActionType,
     holder: 'action',
     code: ActionTypeCodes.BOT_TALK_DIRECT_TO_AVTR,
-    createForm: triggerable => ({
-        ...splitBotMessageParam(triggerable.stringParam),
-        mode: getWiredInt(triggerable, 0),
-        bubbleWidth: getWiredInt(triggerable, 1),
-    }),
-    readStringParam: form => form.botName + BOT_STRING_PARAM_DELIMITER + form.message,
-    readIntParams: form => [ form.mode, form.bubbleWidth ],
+    createForm: createBotTalkForm,
+    readStringParam: readBotTalkStringParam,
+    readIntParams: readBotTalkIntParams,
 };

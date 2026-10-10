@@ -14,10 +14,8 @@ import { AvatarImage } from '#base/components/AvatarImage';
 import { useRoom, useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { WiredInspectionPreview } from '#base/context/wired';
-import { useChatPetFace } from '#base/hooks';
+import { useChatPetFace, useFurnitureImageTexture } from '#base/hooks';
 import { Border, Box, ContainerButton, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
-
-import { useFurnitureImageTexture } from '../catalog/useFurnitureImageTexture';
 
 const BORDER_WIDTH = 141;
 const BORDER_HEIGHT = 225;

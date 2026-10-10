@@ -42,7 +42,7 @@ export const RoomStackingHeightMapSliceInitialState: State = {
 
 export type RoomStackingHeightMapSlice = State & Actions;
 
-export const createRoomStackingHeightMapSlice: StateCreator<RoomStackingHeightMapSlice, [], [], RoomStackingHeightMapSlice> = (set, get, store) => ({
+export const createRoomStackingHeightMapSlice: StateCreator<RoomStackingHeightMapSlice, [], [], RoomStackingHeightMapSlice> = (set, get) => ({
     ...RoomStackingHeightMapSliceInitialState,
     setHeightMap: (width: number, height: number, heights: number[], stackingBlocked: boolean[], validTiles: boolean[]) => {
         set({ width, height, heights, stackingBlocked, validTiles });

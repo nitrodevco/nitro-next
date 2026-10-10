@@ -21,21 +21,19 @@ import { RenderRoomComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { closePhotoLab, openPhotoPurchase, returnToViewfinder, useCameraStore } from '#base/commands';
-import { achievementsStore, useAchievementsStore } from '#base/context/achievements';
+import { AchievementCategory, useAchievementsStore } from '#base/context/achievements';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useSystemStore } from '#base/context/system';
 import { TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplate, useTemplateFrame } from '#base/theme';
 import { buildRenderRoomMessageData } from '#base/utils';
 
-import { CameraEffectDefinition, cloneCanvas, drawEffect, getAvailableEffects, loadEffectImage, zoomCanvas } from './cameraEffects';
+import { CAMERA_IMAGE_SIZE, cameraAsset, CameraEffectDefinition, cloneCanvas, drawEffect, getAvailableEffects, loadEffectImage, zoomCanvas } from './cameraEffects';
 import { CanvasPicture } from './CanvasPicture';
 
 const TEMPLATE = 'habbo-room-ui-com/camera_editor_xml';
 const FILTER_BUTTON = 'habbo-room-ui-com/camera_filterbutton_xml';
 const TYPE_BUTTON = 'habbo-room-ui-com/camera_typebutton_xml';
-const ASSET = (name: string) => `habbo-window-manager-com-${name}`;
 
-const IMAGE_SIZE = 320;
 /** `camera_filterbutton_xml`'s `content`. */
 const THUMB_SIZE = 56;
 /** `slider_movement_area` (312) less `slider_button` (24): `CameraFxStrengthSlider.getScale`. */
@@ -55,9 +53,7 @@ interface EffectState {
 const strengthOf = (state: EffectState | undefined) => (state?.value ?? (SLIDER_SCALE / 2)) / SLIDER_SCALE;
 
 /** `HabboQuestEngine.getAchievementLevel(category, "ACH_CameraPhotoCount")`. */
-const getCameraAchievementLevel = () => {
-    const categories = achievementsStore.getState().categories;
-
+const getCameraAchievementLevel = (categories: AchievementCategory[] | undefined) => {
     for (const code of [ 'explore', 'archive' ]) {
         const achievement = categories?.find(category => category.code === code)?.achievements.find(entry => entry.badgeId.indexOf('ACH_CameraPhotoCount') === 0);
         const level = achievement ? (achievement.finalLevel ? achievement.level : Math.max(0, achievement.level - 1)) : 0;
@@ -96,8 +92,8 @@ const CameraPhotoLab = ({ visible }: { visible: boolean }) => {
     const filterButton = useTemplate(FILTER_BUTTON);
     const typeButton = useTemplate(TYPE_BUTTON);
     // Re-read as the achievements arrive (`ensureAchievementsInitialized`).
-    useAchievementsStore(x => x.categories);
-    const level = getCameraAchievementLevel();
+    const categories = useAchievementsStore(x => x.categories);
+    const level = getCameraAchievementLevel(categories);
     const effects = useMemo(() => getAvailableEffects(availableEffects), [ availableEffects ]);
     const [ images, setImages ] = useState<Map<string, HTMLImageElement | undefined>>(new Map());
     const [ states, setStates ] = useState<Map<string, EffectState>>(new Map());
@@ -334,7 +330,7 @@ const CameraPhotoLab = ({ visible }: { visible: boolean }) => {
         from: typeButton!,
         bindings: {
             '': { tooltip: type, onPointerTap: () => setFilterType(type) },
-            icon: { asset: ASSET(icon) },
+            icon: { asset: cameraAsset(icon) },
             active_border: { visible: filterType === type },
         },
         arrange: ({ root }) => {
@@ -364,14 +360,14 @@ const CameraPhotoLab = ({ visible }: { visible: boolean }) => {
             <CanvasPicture
                 canvas={rendered}
                 transient
-                size={IMAGE_SIZE}
+                size={CAMERA_IMAGE_SIZE}
             />
         ), onPointerTap: deselect },
         item_grid: { spacing: 7, items: ready ? effects.filter(entry => entry.type === filterType).map(filterItem) : [] },
         slider_container: { visible: sliderShown },
-        slider_base: { asset: ASSET('camera_fx_slider_bottom_active') },
+        slider_base: { asset: cameraAsset('camera_fx_slider_bottom_active') },
         slider_button: {
-            asset: ASSET('camera_fx_slider_button'),
+            asset: cameraAsset('camera_fx_slider_button'),
             onPointerDown: (event) => {
                 dragStart.current = { x: event.clientX, value: sliderValue };
                 setDragValue(sliderValue);

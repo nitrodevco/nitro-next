@@ -1,8 +1,7 @@
 import { GROUP_MAX_DESCRIPTION_LENGTH, GROUP_MAX_NAME_LENGTH, GroupManagementSession } from '#base/context/groups';
 import { useTranslation } from '#base/context/system';
 import { Border, Dropmenu, Region, TextInput, ThemeText } from '#base/theme';
-
-import { GroupBadgeImage } from './GroupBadgeImage';
+import { GroupBadgeImage } from '#base/views/shared/GroupBadgeImage';
 
 export interface GroupManagementIdentityStepProps {
     session: GroupManagementSession;

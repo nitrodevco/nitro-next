@@ -23,9 +23,8 @@ import { useCollectiblesStore } from '#base/context/collectibles';
 import { useWebSocketContext } from '#base/context/communication';
 import { useSystemStore, useTranslation } from '#base/context/system';
 import { Border, Box, Button, ButtonThick, Frame, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
-import { CatalogCurrencyIcon } from '#base/views/catalog/CatalogCurrencyIcon';
-
-import { CollectiblesPreviewSlots, CollectiblesProductPreview } from './CollectiblesProductPreview';
+import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
+import { CurrencyIcon } from '#base/views/shared/CurrencyIcon';
 
 /** The content itemlist's rows: the 171px product block, then the buttons, `spacing` 10 apart. */
 const PRODUCT_BLOCK_HEIGHT = 171;
@@ -146,7 +145,7 @@ export const CollectiblesPurchaseConfirmationView = () => {
                                     verticalAlign="top"
                                     layout={{ marginTop: 1 }}
                                 />
-                                <CatalogCurrencyIcon
+                                <CurrencyIcon
                                     type={shownPrice.unit}
                                     big
                                 />

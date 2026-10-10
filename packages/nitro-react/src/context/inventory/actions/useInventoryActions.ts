@@ -1,0 +1,14 @@
+import { inventoryStore } from '../store/InventoryStore';
+
+const state = inventoryStore.getState();
+
+/**
+ * Zustand actions are created once and never change, so they are read off the store a single
+ * time here rather than subscribed to: a component using these re-renders for nothing. The
+ * window-wide ones; each page has its own (`useInventoryFurniActions`, ...).
+ */
+const actions = {
+    setLastPage: state.setLastPage,
+};
+
+export const useInventoryActions = () => actions;

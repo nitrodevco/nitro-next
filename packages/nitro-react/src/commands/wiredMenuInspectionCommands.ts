@@ -16,15 +16,11 @@ import { VariableExtraSourceTypes, WiredGetVariablesForObjectComposer, WiredSetO
 import { WebSocketConnection } from '#base/context/communication';
 import { getRoom } from '#base/context/room';
 import { getWiredHasWritePermission, WIRED_INSPECTION_STATE_AWAITING_VARIABLES, WIRED_INSPECTION_STATE_DISPLAYING, WIRED_INSPECTION_STATE_FETCHING, WIRED_INSPECTION_STATE_NOTHING, WIRED_MENU_ERROR_INSPECTION_FAILED, WIRED_MENU_TAB_INSPECTION, WiredInspectionPreview, WiredStore, wiredStore, WiredVariableValueRow } from '#base/context/wired';
-import { addToVariablePickerHistory, getIntFromString, sortVariables, WIRED_INT_MIN } from '#base/wired';
+import { addToVariablePickerHistory, getIntFromString, sortVariables, WIRED_INT_MIN, WIRED_SOURCE_FURNI, WIRED_SOURCE_USER } from '#base/wired';
 
 import { getAllWiredVariables } from './wiredSynchronizerCommands';
 
 type Send = WebSocketConnection['send'];
-
-/** `WiredInputSourcePicker._-Y2L` (furni) and `USER_SOURCE`. */
-const FURNI_SOURCE = 0;
-const USER_SOURCE = 1;
 
 /** `WiredMenuInspectionTab.POLL_VARIABLES_MS`. */
 const POLL_VARIABLES_MS = 500;
@@ -40,8 +36,8 @@ const isViewing = (): boolean => {
 
 /** `getObjectIdForType` - the user's room index, the furni's id (negative for a wall item), or 0 for the globals. */
 const getObjectIdForType = (data: IWiredObjectInspectionData): number => {
-    if (Number(data.type) === USER_SOURCE) return data.userIndex ?? 0;
-    if (Number(data.type) === FURNI_SOURCE) return data.objectId ?? 0;
+    if (Number(data.type) === WIRED_SOURCE_USER) return data.userIndex ?? 0;
+    if (Number(data.type) === WIRED_SOURCE_FURNI) return data.objectId ?? 0;
 
     return 0;
 };
@@ -97,7 +93,7 @@ const onDataChanged = (previous: IWiredObjectInspectionData | null, next: IWired
 
     if (!next) clearWiredInspectionHighlights();
 
-    if (next && (inspectionHighlightingFor !== -1) && ((Number(next.type) !== FURNI_SOURCE) || (next.objectId !== inspectionHighlightingFor))) clearWiredInspectionHighlights();
+    if (next && (inspectionHighlightingFor !== -1) && ((Number(next.type) !== WIRED_SOURCE_FURNI) || (next.objectId !== inspectionHighlightingFor))) clearWiredInspectionHighlights();
 
     if (!previous || !next || (Number(previous.type) !== Number(next.type)) || (previous.objectId !== next.objectId) || (previous.userIndex !== next.userIndex)) patch({ inspectionCreateBubble: false });
 };
@@ -131,10 +127,10 @@ const updatePreviewUI = () => {
     let preview: WiredInspectionPreview = inspectionPreview;
 
     if (inspectionType === Number(VariableExtraSourceTypes.GLOBAL_SOURCE)) preview = { kind: 'global' };
-    else if ((inspectionType !== FURNI_SOURCE) && (inspectionType !== USER_SOURCE)) preview = { kind: 'none' };
-    else if (inspectionState === WIRED_INSPECTION_STATE_NOTHING) preview = { kind: (inspectionType === FURNI_SOURCE) ? 'furni_instructions' : 'user_instructions' };
+    else if ((inspectionType !== WIRED_SOURCE_FURNI) && (inspectionType !== WIRED_SOURCE_USER)) preview = { kind: 'none' };
+    else if (inspectionState === WIRED_INSPECTION_STATE_NOTHING) preview = { kind: (inspectionType === WIRED_SOURCE_FURNI) ? 'furni_instructions' : 'user_instructions' };
     else if ((inspectionState === WIRED_INSPECTION_STATE_DISPLAYING) && inspectionData) {
-        preview = (inspectionType === FURNI_SOURCE) ? { kind: 'furni', objectId: inspectionData.objectId ?? 0 } : { kind: 'user', userIndex: inspectionData.userIndex ?? 0 };
+        preview = (inspectionType === WIRED_SOURCE_FURNI) ? { kind: 'furni', objectId: inspectionData.objectId ?? 0 } : { kind: 'user', userIndex: inspectionData.userIndex ?? 0 };
     }
 
     patch({ inspectionPreview: preview });
@@ -247,17 +243,17 @@ const inspect = (send: Send, sourceType: number, id: number, forced: boolean) =>
 
     const { inspectionData } = wiredStore.getState();
 
-    if (inspectionData && (Number(inspectionData.type) === sourceType) && (((sourceType === FURNI_SOURCE) ? inspectionData.objectId : inspectionData.userIndex) === id)) return;
+    if (inspectionData && (Number(inspectionData.type) === sourceType) && (((sourceType === WIRED_SOURCE_FURNI) ? inspectionData.objectId : inspectionData.userIndex) === id)) return;
 
     patch({ inspectionState: WIRED_INSPECTION_STATE_FETCHING });
     requestVariablesForObject(send, sourceType, id);
 };
 
 /** `inspectFurni` - `stuffId` is negative for a wall item. */
-export const inspectWiredFurni = (send: Send, stuffId: number, forced: boolean = false) => inspect(send, FURNI_SOURCE, stuffId, forced);
+export const inspectWiredFurni = (send: Send, stuffId: number, forced: boolean = false) => inspect(send, WIRED_SOURCE_FURNI, stuffId, forced);
 
 /** `inspectUser` - by room index. */
-export const inspectWiredUser = (send: Send, roomIndex: number, forced: boolean = false) => inspect(send, USER_SOURCE, roomIndex, forced);
+export const inspectWiredUser = (send: Send, roomIndex: number, forced: boolean = false) => inspect(send, WIRED_SOURCE_USER, roomIndex, forced);
 
 /** `WiredMenuController.furniSelected` - the menu is built and on the inspection tab. */
 export const wiredMenuFurniSelected = (send: Send, stuffId: number) => {

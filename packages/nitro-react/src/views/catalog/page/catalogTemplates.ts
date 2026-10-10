@@ -1,7 +1,8 @@
 /** The catalogue's window templates: Flash's `habbo-catalog-com` library, and the page layouts in it. */
-import { Template } from '@nitrodevco/nitro-theme';
+import { Template, TemplateElement } from '@nitrodevco/nitro-theme';
 
-import { resolveCatalogLayout } from '#base/context/catalog';
+import { CatalogPage, resolveCatalogLayout } from '#base/context/catalog';
+import { findTemplateChild } from '#base/theme';
 
 export const CATALOG_LIBRARY = 'habbo-catalog-com';
 
@@ -15,4 +16,16 @@ export const resolveCatalogPageTemplate = (templates: Record<string, Template> |
     if (!templates || !name) return undefined;
 
     return [ catalogTemplateId(`layout_${name}`), catalogTemplateId(`old_layout_${name}`) ].find(id => templates[id]);
+};
+
+/**
+ * `removeListItemAt(0)`: the row the page's layout holds as the first item of its list, the
+ * prototype every offer's row is cloned from (`BuilderAddonsCatalogWidget`,
+ * `BuilderLoyaltyCatalogWidget`).
+ */
+export const findCatalogListPrototype = (templates: Record<string, Template> | undefined, page: CatalogPage, list: string): TemplateElement | undefined => {
+    const templateId = resolveCatalogPageTemplate(templates, page.layoutCode);
+    const template = (templates && templateId) ? templates[templateId] : undefined;
+
+    return template ? findTemplateChild(template.elements, list)?.children[0] : undefined;
 };

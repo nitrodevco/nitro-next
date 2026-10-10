@@ -46,8 +46,6 @@ import { isRepeatedEnter } from './navigatorEnterGuard';
 import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, getUserCountColor, ROW_BASE_COLOR } from './NavigatorRoomEntryUtils';
 import { NavigatorRoomInfoPopup } from './NavigatorRoomInfoPopup';
 
-export type NavigatorViewWindowParams = { searchCode?: string };
-
 /**
  * `NavigatorView.showRoomInfoBubbleAt(room, x, y, hover)`: `x` / `y` are the screen point the
  * bubble's pointer goes to. A click toggles the bubble; a hover (`hover`) only moves one already up.

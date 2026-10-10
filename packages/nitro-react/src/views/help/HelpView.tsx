@@ -35,9 +35,9 @@ import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import type { ICallForHelpTopic } from '@nitrodevco/nitro-packets';
 import { useEffect, useState } from 'react';
 
-import { collectSelectedChatEntries, collectSelectedImEntries, HelpReportEntry, requestCfhReportsStatus, requestSanctionStatus, submitCallForHelp } from '#base/commands/helpCommands';
+import { confirmHelpReportedUser, forgetUnlistedReportedUser, hasSelectedHelpLines, requestCfhReportsStatus, requestSanctionStatus, selectHelpReportedUser, startHelpReport, submitCallForHelp, toggleHelpChatLine, toggleHelpImLine } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { helpStore, HelpUserItem, useHelpStore } from '#base/context/help';
+import { HelpReportEntry, HelpUserItem, useHelpStore } from '#base/context/help';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { ModalDialog, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useAvatarImageTexture, useTemplateFrame } from '#base/theme';
@@ -159,48 +159,16 @@ export const HelpView = ({ entry, onClose }: HelpViewProps) => {
     const reportedUserName = reportedUser?.userName ?? storedReportedUserName;
 
     /** `populateUsers`' side effect: a reported user who is not listed is forgotten. */
-    const listUsers = (): boolean => {
-        if (!listedUsers.some(user => user.userId === helpStore.getState().reportedUserId)) {
-            helpStore.getState().setReportedUserId(-1);
-            helpStore.getState().setReportedRoomId(-1);
-        }
+    const listUsers = (): boolean => forgetUnlistedReportedUser(listedUsers.map(user => user.userId));
 
-        return listedUsers.length > 0;
-    };
-
-    // `openWindow` (`deselectChatEntries`), then the entry's own start.
+    // `openWindow`, then the entry's own start - closed again with an alert when the report cannot go on.
     useEffect(() => {
-        helpStore.getState().deselectChatItems();
+        const error = startHelpReport(entry, listedUsers.map(user => user.userId));
 
-        if (entry === 'user') {
-            // `userChatLinesAvailable`: `populateUsers`, which forgets a reported user with no lines.
-            if (!listUsers() || (helpStore.getState().reportedUserId <= 0)) {
-                alert('help.cfh.error.no_user_data');
-                onClose();
+        if (!error) return;
 
-                return;
-            }
-
-            helpStore.getState().setHoldPurges(true);
-        }
-
-        if ((entry === 'photo') && (helpStore.getState().reportedUserId === -1)) {
-            // `showReasons(9)`: `verifyUserSelected`.
-            alert('guide.bully.request.usermissing');
-            onClose();
-
-            return;
-        }
-
-        if (entry === 'im') {
-            // `populateInstantMessages`, and with nothing to list `help.cfh.error.no_user_data`.
-            helpStore.getState().setImHoldPurges(true);
-
-            if (!(helpStore.getState().imItems.find(([ chatId ]) => chatId === helpStore.getState().reportedUserId)?.[1].length)) {
-                alert('help.cfh.error.no_user_data');
-                onClose();
-            }
-        }
+        alert(error);
+        onClose();
         // Once, as the window opens.
     }, []);
 
@@ -211,38 +179,17 @@ export const HelpView = ({ entry, onClose }: HelpViewProps) => {
     };
 
     /** `selectUserToReport`. */
-    const selectUser = (user: HelpUserItem) => {
-        helpStore.getState().setReportedUserId(user.userId);
-        helpStore.getState().setReportedRoomId(user.roomId);
-    };
+    const selectUser = (user: HelpUserItem) => selectHelpReportedUser(user.userId, user.roomId);
 
     /** `populateChatMessage`: the reported user's lines (every line with nobody reported), never the user's own. */
     const chatLines = chatItems.filter(item => ((reportedUserId > 0) ? (item.userId === reportedUserId) : true) && (item.userId !== ownUserId));
     /** `populateInstantMessages`: the reported conversation's messages. */
     const imLines = imItems.find(([ chatId ]) => chatId === reportedUserId)?.[1] ?? [];
 
-    /** `onInstantMessageEntryEvent`. */
-    const toggleImLine = (index: number) => {
-        const item = imLines.find(line => line.index === index);
-
-        if (item) helpStore.getState().setImItemSelected(reportedUserId, index, !item.selected);
-    };
-
     /** `populateReasons`. */
     const showReasons = () => {
         setRoomReportButton(false);
         setContainer('reason_container');
-    };
-
-    /** `onChatEntryEvent`. */
-    const toggleChatLine = (index: number) => {
-        const item = helpStore.getState().chatItems.find(entry => entry.index === index);
-
-        if (!item) return;
-
-        if (!item.selected && (item.roomId !== helpStore.getState().reportedRoomId)) helpStore.getState().setReportedRoomId(item.roomId);
-
-        helpStore.getState().setChatItemSelected(index, !item.selected);
     };
 
     /** `populateTopics`: the category's topics in the reason list, or false when it has none. */
@@ -308,13 +255,11 @@ export const HelpView = ({ entry, onClose }: HelpViewProps) => {
         switch (container) {
             case 'users_container':
                 // `verifyUserSelected`.
-                if (helpStore.getState().reportedUserId === -1) {
+                if (!confirmHelpReportedUser()) {
                     alert('guide.bully.request.usermissing');
                     break;
                 }
 
-                // `populateChatMessage` holds the purges, and nothing lets them go again.
-                helpStore.getState().setHoldPurges(true);
                 setContainer('chat_container');
                 break;
             case 'message_container':
@@ -322,7 +267,7 @@ export const HelpView = ({ entry, onClose }: HelpViewProps) => {
                 break;
             case 'chat_container':
                 // `verifySelectedChatLines`: the lines `collectSelectedEntries` would send for this mode.
-                if (!((entry === 'im') ? collectSelectedImEntries(helpStore.getState().reportedUserId) : collectSelectedChatEntries()).length) {
+                if (!hasSelectedHelpLines(entry)) {
                     alert('help.cfh.error.chatmissing');
                     break;
                 }
@@ -370,16 +315,16 @@ export const HelpView = ({ entry, onClose }: HelpViewProps) => {
                 key: `im_${item.index}`,
                 from: 'chat_prototype',
                 bindings: {
-                    chat_text: { caption: item.text, onPointerTap: () => toggleImLine(item.index) },
-                    chat_check: { selected: item.selected, onPointerTap: () => toggleImLine(item.index) },
+                    chat_text: { caption: item.text, onPointerTap: () => toggleHelpImLine(item.index) },
+                    chat_check: { selected: item.selected, onPointerTap: () => toggleHelpImLine(item.index) },
                 },
             }))
         : chatLines.map(item => ({
                 key: String(item.index),
                 from: 'chat_prototype',
                 bindings: {
-                    chat_text: { caption: item.text, onPointerTap: () => toggleChatLine(item.index) },
-                    chat_check: { selected: item.selected, onPointerTap: () => toggleChatLine(item.index) },
+                    chat_text: { caption: item.text, onPointerTap: () => toggleHelpChatLine(item.index) },
+                    chat_check: { selected: item.selected, onPointerTap: () => toggleHelpChatLine(item.index) },
                 },
                 arrange: fitListText('chat_text', 0),
             }));

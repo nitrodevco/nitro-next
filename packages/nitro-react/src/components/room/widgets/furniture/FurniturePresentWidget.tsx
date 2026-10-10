@@ -6,9 +6,8 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useWindowActions } from '#base/context/system';
 import { useOwnUserId } from '#base/context/user';
+import { PRESENT_OPENED_WIDGET, PresentOpenedData } from '#base/utils';
 import { FurniturePresentView } from '#base/views/room-widgets/furniture/FurniturePresentView';
-
-import { PRESENT_OPENED_WIDGET, PresentOpenedData } from './furnitureWidgetData';
 
 /**
  * A wrapped gift - the `showInterface` half of `PresentFurniWidget`. The note and the sender come

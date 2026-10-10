@@ -1,5 +1,6 @@
 /**
- * `triggerconfs/PerformAction.buildInputs` (and the identical `selectors/§_-O21§.buildInputs`) -
+ * `triggerconfs/PerformAction.buildInputs` (and the identical `selectors/§_-O21§.buildInputs` and
+ * `conditions/§_-eU§.buildInputs`) -
  * the action dropdown, then, only for the sign or the dance action, a section whose checkbox
  * narrows it to one sign (0 to 17) or one dance (1 to 4) chosen in the dropdown under it.
  * Picking another action clears that filter (`onActionSelected` -> `updateExtraSections()`).

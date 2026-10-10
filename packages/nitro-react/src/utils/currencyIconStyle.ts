@@ -1,3 +1,6 @@
+/** The silver currency's type - the unit every price in silver is given in. */
+export const CURRENCY_TYPE_SILVER = 1000;
+
 /**
  * The icon-set style of a currency's icon, as the purse's
  * `§_-u1R§.getIconStyleFor(type, catalog, big, combo)` (`com/sulake/habbo/catalog/purse`), which
@@ -49,7 +52,7 @@ export const getCurrencyIconStyle = (type: number, config: Record<string, unknow
         return big ? 53 : 54;
     }
 
-    if (type === 1000) return big ? 56 : 57;
+    if (type === CURRENCY_TYPE_SILVER) return big ? 56 : 57;
     if (type === 1001) return big ? 70 : 71;
 
     if ((type >= 101) && (type <= 105)) {

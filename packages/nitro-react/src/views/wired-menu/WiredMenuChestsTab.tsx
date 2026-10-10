@@ -14,8 +14,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import { useWiredHasWritePermission, useWiredIsRoomOwnerOrStaff, useWiredStore } from '#base/context/wired';
 import { Border, Box, Button, ThemeText } from '#base/theme';
-
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '../wired-common/WiredTableView';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 
 const ChestButton = ({ label, disabled, onPress, left, top, width }: { label: string; disabled: boolean; onPress: () => void; left: number; top: number; width: number }) => (
     <Box
@@ -44,7 +43,7 @@ export const WiredMenuChestsTab = () => {
     const loc = (key: string) => t(key, '');
     const logs = preview ?? [];
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'type', title: loc('wiredmenu.chests.room_logs.column.type'), widthFactor: 0.28 },
         { id: 'username', title: loc('wiredmenu.chests.room_logs.column.username'), widthFactor: 0.24 },
         { id: 'withdraws', title: loc('wiredmenu.chests.room_logs.column.withdraws'), widthFactor: 0.24 },
@@ -60,7 +59,7 @@ export const WiredMenuChestsTab = () => {
         return t('wiredmenu.chests.room_logs.furni_and_coins', '', { amount: String(furni), amount2: String(coins) });
     };
 
-    const getCell = (info: IWiredTransactionInfo, columnId: string): WiredTableCell => {
+    const getCell = (info: IWiredTransactionInfo, columnId: string): TableCell => {
         switch (columnId) {
             case 'type': return { text: t(`wiredmenu.chests.transaction.type.${info.transactionType}`, `wiredmenu.chests.transaction.type.${info.transactionType}`) };
             case 'username': return { type: 'link', text: info.userName, inspectable: true, onLinkClick: () => openWiredUserProfile(send, info.userId) };
@@ -132,7 +131,7 @@ export const WiredMenuChestsTab = () => {
                     eventMode={logs.length ? 'auto' : 'none'}
                     layout={{ position: 'absolute', left: 0, top: 20, width: 472, height: 168 }}
                 >
-                    <WiredTableView
+                    <TableView
                         columns={columns}
                         rows={logs}
                         getRowId={info => String(info.transactionId)}

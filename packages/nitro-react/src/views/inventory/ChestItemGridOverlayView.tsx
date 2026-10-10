@@ -1,5 +1,5 @@
 import { LayoutImage, TemplateWindow } from '#base/theme';
-import { GlyphNumber } from '#base/views/room-widgets/object-infostand/UniqueItemPlaqueView';
+import { LimitedItemNumber } from '#base/views/shared/LimitedItemNumber';
 
 /** `ChestItemGridOverlayWidget.COLOR_SILVER` / `COLOR_GOLD` / `COLOR_BROWN`. */
 export type ChestOverlayColor = 'silver' | 'gold' | 'brown';
@@ -27,7 +27,7 @@ export const ChestItemGridOverlayView = ({ contentsCount, color }: ChestItemGrid
             chest_plaque_bitmap: { asset: LayoutImage(`habbo-window-manager-com/chest_overlay_${color}_plaque.png`) },
             chest_plaque_number_bitmap: {
                 children: (
-                    <GlyphNumber
+                    <LimitedItemNumber
                         value={contentsCount}
                         width={NUMBER_WIDTH}
                         layout={{ left: 0, top: 0 }}

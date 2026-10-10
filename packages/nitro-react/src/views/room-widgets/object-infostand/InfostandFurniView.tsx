@@ -2,11 +2,10 @@ import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { useState } from 'react';
 
 import { useConfigValue, useTranslation } from '#base/context/system';
+import { useFurnitureImageTexture } from '#base/hooks';
 import { findTemplateChild, LayoutImage, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, ThemeImage, useTemplate } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
-
-import { useFurnitureImageTexture } from '../../catalog/useFurnitureImageTexture';
-import { UniqueItemPlaqueView } from './UniqueItemPlaqueView';
+import { LimitedItemPreviewOverlayView } from '#base/views/shared/LimitedItemPreviewOverlayView';
 
 /** `PickupMode` values the pickup button reads. */
 const PICKUP_NONE = 0;
@@ -220,7 +219,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
         unique_item_overlay_container: { visible: !!details.uniqueSerial },
         unique_item_plaque_widget: {
             children: details.uniqueSerial && (
-                <UniqueItemPlaqueView
+                <LimitedItemPreviewOverlayView
                     serialNumber={details.uniqueSerial.number}
                     seriesSize={details.uniqueSerial.series}
                     layout={{ left: 0, top: 0 }}

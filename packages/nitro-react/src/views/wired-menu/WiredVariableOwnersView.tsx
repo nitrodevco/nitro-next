@@ -20,11 +20,11 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import { WIRED_VARIABLE_MANAGEMENT_PAGE_SIZE } from '#base/context/wired';
 import { TemplateWindow } from '#base/theme';
+import { TableCell, TableColumn } from '#base/views/shared/table/TableView';
 
 import { useWiredPagedTableTemplate } from '../wired-common/useWiredPagedTableState';
 import { useWiredPageRequests } from '../wired-common/useWiredPageRequests';
 import { calculateLastPage } from '../wired-common/wiredPaging';
-import { WiredTableCell, WiredTableColumn } from '../wired-common/WiredTableView';
 import { wiredVariableValueCell } from './wiredVariableValueCell';
 
 /** `VariableManagementOverviewView.REQUEST_PAGE_RATELIMIT`. */
@@ -90,7 +90,7 @@ export const WiredVariableOwnersView = ({ page, variable }: WiredVariableOwnersV
 
     const loc = (key: string) => t(key, key);
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'usertype', title: loc('wiredmenu.variable_management.col.usertype'), widthFactor: 0.1 },
         { id: 'name', title: loc('wiredmenu.variable_management.col.name'), widthFactor: 0.18 },
         { id: 'creation_time', title: loc('wiredmenu.variable_management.col.creation_time'), widthFactor: 0.21 },
@@ -100,7 +100,7 @@ export const WiredVariableOwnersView = ({ page, variable }: WiredVariableOwnersV
     ];
 
     // `VariableManagementOverviewTableObject.getTableCell`.
-    const getCell = (element: IWiredUserVariablesElement, columnId: string): WiredTableCell => {
+    const getCell = (element: IWiredUserVariablesElement, columnId: string): TableCell => {
         switch (columnId) {
             case 'usertype': return { text: loc(`wiredfurni.params.usertype.${element.entityType}`) };
             case 'name': return (element.entityType === 1)

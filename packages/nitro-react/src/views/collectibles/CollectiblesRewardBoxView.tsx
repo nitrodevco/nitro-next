@@ -16,10 +16,10 @@ import { getCollectibleProductName, showNextCollectiblesReward } from '#base/com
 import { getCollectibleRarityColor, useCollectiblesStore, wrapBaseItem } from '#base/context/collectibles';
 import { useTranslation } from '#base/context/system';
 import { Border, Button, Frame, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
+import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { toCollectiblesCssColor } from './collectiblesColors';
 import { COLLECTIBLES_BG_STAR_ROTATE_SPEED } from './collectiblesPreviewSlots';
-import { CollectiblesPreviewSlots, CollectiblesProductPreview } from './CollectiblesProductPreview';
 import { CollectiblesRotatingImage } from './CollectiblesRotatingImage';
 
 /** The effect previewer's temporary room for the reward box's `product_image`. */

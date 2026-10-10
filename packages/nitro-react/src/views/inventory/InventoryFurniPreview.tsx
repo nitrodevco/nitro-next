@@ -14,24 +14,14 @@
  * Not ported: `nextItemButton` / `viewItemButton`, which page through an external image wall item's
  * pictures, and the limited-edition and rarity overlays the widget draws over the preview.
  */
-import { IObjectData, RoomId, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { IObjectData, RoomId, Vector3d } from '@nitrodevco/nitro-api';
 import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
 import { RoomPreviewer, RoomPreviewerHandle } from '#base/components';
-import { InventoryFurniGroup, isInventoryFurniGroupWallItem, peekInventoryFurni } from '#base/context/inventory';
-import { getRoom } from '#base/context/room';
+import { INVENTORY_FURNI_CATEGORY_FLOOR, INVENTORY_FURNI_CATEGORY_LANDSCAPE, INVENTORY_FURNI_CATEGORY_WALLPAPER, InventoryFurniGroup, isInventoryFurniGroupWallItem, isRoomLayoutCategory, peekInventoryFurni } from '#base/context/inventory';
+import { getRoomPatterns } from '#base/context/room';
 import { BoxLayout } from '#base/theme';
-
-/** `FurniView.updateItemView`'s fallbacks when the room the user is in has no pattern of its own. */
-const DEFAULT_WALL_TYPE = '101';
-const DEFAULT_FLOOR_TYPE = '101';
-const DEFAULT_LANDSCAPE_TYPE = '1.1';
-
-/** The `FurnitureItem` categories of the three room layout papers. */
-const CATEGORY_WALLPAPER = 2;
-const CATEGORY_FLOOR = 3;
-const CATEGORY_LANDSCAPE = 4;
 
 /** `addWallItemIntoRoom` / `addFurnitureIntoRoom` both place at 90 degrees. */
 const PREVIEW_DIRECTION = new Vector3d(90, 0, 0);
@@ -62,21 +52,18 @@ const getPreviewRequest = (group: InventoryFurniGroup): PreviewRequest | undefin
 
     if (!item) return undefined;
 
-    const activeRoom = getRoom();
-    const wallType = activeRoom?.getRoomValue<string>(RoomObjectVariableEnum.RoomWallType) || DEFAULT_WALL_TYPE;
-    const floorType = activeRoom?.getRoomValue<string>(RoomObjectVariableEnum.RoomFloorType) || DEFAULT_FLOOR_TYPE;
-    const landscapeType = activeRoom?.getRoomValue<string>(RoomObjectVariableEnum.RoomLandscapeType) || DEFAULT_LANDSCAPE_TYPE;
+    const { wallType, floorType, landscapeType } = getRoomPatterns();
 
-    if ((item.category === CATEGORY_WALLPAPER) || (item.category === CATEGORY_FLOOR) || (item.category === CATEGORY_LANDSCAPE)) {
+    if (isRoomLayoutCategory(item.category)) {
         const pattern = group.stuffData.getLegacyString();
 
         // The paper being previewed replaces whichever of the three it is.
         return {
             kind: 'room_layout',
-            floorType: (item.category === CATEGORY_FLOOR) ? pattern : floorType,
-            wallType: (item.category === CATEGORY_WALLPAPER) ? pattern : wallType,
-            landscapeType: (item.category === CATEGORY_LANDSCAPE) ? pattern : landscapeType,
-            withWindow: item.category === CATEGORY_LANDSCAPE,
+            floorType: (item.category === INVENTORY_FURNI_CATEGORY_FLOOR) ? pattern : floorType,
+            wallType: (item.category === INVENTORY_FURNI_CATEGORY_WALLPAPER) ? pattern : wallType,
+            landscapeType: (item.category === INVENTORY_FURNI_CATEGORY_LANDSCAPE) ? pattern : landscapeType,
+            withWindow: item.category === INVENTORY_FURNI_CATEGORY_LANDSCAPE,
         };
     }
 

@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { closeGroupForumCompose, getGroupForumSinceLastPost, GROUP_FORUM_MESSAGE_MAX_LENGTH, GROUP_FORUM_POST_COOLDOWN_MS, GROUP_FORUM_SUBJECT_MAX_LENGTH, openClientLink, postGroupForumMessage, postGroupForumThread } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { GroupForumCompose, groupStore } from '#base/context/groups';
+import { GroupForumCompose, useGroupActions } from '#base/context/groups';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { TemplateBindings, TemplateWindow, useTemplateFrame } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
@@ -41,6 +41,7 @@ interface Fields {
 export const GroupForumComposeView = ({ compose }: { compose: GroupForumCompose }) => {
     const t = useTranslation();
     const { send } = useWebSocketContext();
+    const { setForumCompose } = useGroupActions();
     const groupBadgeUrl = useConfigValue<string>('badge.asset.group.url') ?? '';
     const position = { x: Math.max(0, Math.min(compose.x, window.innerWidth - WINDOW_WIDTH)), y: compose.y };
     const frame = useTemplateFrame({ id: 'group_forum_compose', defaultPosition: position, rememberPosition: false, resizeDirection: 'all', onClose: closeGroupForumCompose });
@@ -141,7 +142,7 @@ export const GroupForumComposeView = ({ compose }: { compose: GroupForumCompose 
     const onPost = () => {
         if (posting || validate()) return;
 
-        groupStore.getState().setForumCompose({ ...compose, posting: true });
+        setForumCompose({ ...compose, posting: true });
 
         if (thread) postGroupForumMessage(send, forum.groupId, thread.threadId, fields.message);
         else postGroupForumThread(send, forum.groupId, fields.subject, fields.message);

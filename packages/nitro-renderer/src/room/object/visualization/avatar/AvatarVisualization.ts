@@ -78,8 +78,6 @@ export class AvatarVisualization
     private static BLOCKED_AVATAR_COLOR: number = 0x666666;
 
     /** Flash `GlowFilter(0xFFFFFF, 1, 6, 6)` around a highlighted avatar. */
-    /** One empty list for every un-highlighted avatar: a fresh `[]` each frame counted as a sprite change. */
-    private static readonly NO_FILTERS: Filter[] = [];
     private static HIGHLIGHT_FILTERS: Filter[] | undefined = undefined;
     /**
      * Flash `VARIABLE_HOLDER_FILTER`: the tint and inner glow the wired menu puts on the avatars

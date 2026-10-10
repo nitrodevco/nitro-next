@@ -21,6 +21,9 @@ export const PET_AVAILABLE_COLORS: readonly (readonly number[])[] = [
     [ 13421772, 11447982, 16751331, 10149119, 16763290, 16743786 ],
 ];
 
+/** `PetsCatalogWidget` sells the pet types below this, `NewPetsCatalogWidget` this one and up. */
+export const CATALOG_NEW_PETS_FIRST_TYPE = 8;
+
 /**
  * `getPetTypeIndexFromProduct`: the digits the localization id ends in (`a0 pet12` -> 12), 0 for
  * an empty id and -1 when the digits are the whole id.

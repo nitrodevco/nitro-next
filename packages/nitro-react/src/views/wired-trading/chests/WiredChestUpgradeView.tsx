@@ -21,8 +21,8 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useConfigData, useSystemStore, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { WiredChestUpgradeRequest } from '#base/context/wired-trading';
+import { useFurnitureImageTexture } from '#base/hooks';
 import { TemplateWindow, ThemeImage } from '#base/theme';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 
 /** `getActivityPointsForType(5)`: diamonds. */
 const DIAMONDS_TYPE = 5;

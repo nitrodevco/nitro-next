@@ -22,12 +22,12 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation, useWindowActions } from '#base/context/system';
 import { WIRED_ROOM_LOGS_FRAME_ID, WIRED_ROOM_LOGS_PAGE_SIZE } from '#base/context/wired';
 import { TemplateWindow } from '#base/theme';
+import { TableCell, TableColumn } from '#base/views/shared/table/TableView';
 import { uintToHexColor } from '#base/wired';
 
 import { useWiredPagedTableTemplate } from '../wired-common/useWiredPagedTableState';
 import { useWiredPageRequests } from '../wired-common/useWiredPageRequests';
 import { calculateLastPage } from '../wired-common/wiredPaging';
-import { WiredTableCell, WiredTableColumn } from '../wired-common/WiredTableView';
 
 /** `WiredRoomLogListView.REQUEST_PAGE_RATELIMIT` / `REFRESH_TIME`. */
 const REQUEST_PAGE_RATELIMIT = 190;
@@ -117,7 +117,7 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
         return () => clearInterval(timer);
     }, [ autoRefresh, refreshEpoch ]);
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'timestamp', title: t('wiredmenu.logs_overview.col.timestamp', 'wiredmenu.logs_overview.col.timestamp'), widthFactor: 0.2 },
         { id: 'source', title: t('wiredmenu.logs_overview.col.source', 'wiredmenu.logs_overview.col.source'), widthFactor: 0.08 },
         { id: 'level', title: t('wiredmenu.logs_overview.col.level', 'wiredmenu.logs_overview.col.level'), widthFactor: 0.08 },
@@ -125,7 +125,7 @@ export const WiredRoomLogsView = ({ page, pageRequested }: WiredRoomLogsViewProp
     ];
 
     // `WiredRoomLogListTableObject.getTableCell`.
-    const getCell = (entry: IWiredLogEntry, columnId: string): WiredTableCell => {
+    const getCell = (entry: IWiredLogEntry, columnId: string): TableCell => {
         const textColor = LEVEL_COLORS[entry.logLevel];
 
         switch (columnId) {

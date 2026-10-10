@@ -6,14 +6,13 @@
  */
 import type { IWiredVariable } from '@nitrodevco/nitro-packets';
 
+import type { TableTextCell } from '#base/views/shared/table/TableView';
 import { uintToHexColor, variableValueWithString, WIRED_INT_MAX, WIRED_INT_MIN } from '#base/wired';
-
-import type { WiredTableTextCell } from '../wired-common/WiredTableView';
 
 /** `16734003` - the colour of the "flash restriction" cell. */
 const FLASH_RESTRICTION_COLOR = uintToHexColor(16734003);
 
-export const wiredVariableValueCell = (variable: IWiredVariable, value: number, translate: (key: string) => string, highlightChanges: boolean, canModify: boolean): WiredTableTextCell => {
+export const wiredVariableValueCell = (variable: IWiredVariable, value: number, translate: (key: string) => string, highlightChanges: boolean, canModify: boolean): TableTextCell => {
     if (!variable.hasValue) return { text: '' };
 
     if ((value === WIRED_INT_MAX) || (value === WIRED_INT_MIN)) {

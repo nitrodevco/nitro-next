@@ -1,10 +1,10 @@
 /** Room canvas lifecycle and input bridge, including RoomEngine camera updates on each render tick. */
-import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent, RoomObjectOperationType, RoomRenderedEvent } from '@nitrodevco/nitro-api';
+import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent, RoomRenderedEvent } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetRoomStage, GetTicker, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
 import { FederatedPointerEvent, Ticker } from 'pixi.js';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
-import { roomStore, useRoom, useRoomMouseActions, useRoomStore } from '#base/context/room';
+import { getRoomObjectBeingPlaced, useRoom, useRoomMouseActions, useRoomStore } from '#base/context/room';
 import { useRoomCamera } from '#base/hooks';
 
 import { touchPlacementDrop } from './touchPlacementDrop';
@@ -25,13 +25,7 @@ const DRAG_THRESHOLD: number = 15;
  * drops it where the ghost is. A finger has no hover, so for it the press puts the ghost under the
  * finger, dragging moves it rather than the room, and lifting drops it there.
  */
-const isTouchPlacing = (event: FederatedPointerEvent) => {
-    if (event.pointerType !== 'touch') return false;
-
-    const operation = roomStore.getState().selectedObject?.operation;
-
-    return (operation === RoomObjectOperationType.OBJECT_PLACE) || (operation === RoomObjectOperationType.OBJECT_MOVE);
-};
+const isTouchPlacing = (event: FederatedPointerEvent) => (event.pointerType === 'touch') && !!getRoomObjectBeingPlaced();
 
 export const RoomCanvas = () => {
     const room = useRoom();
@@ -311,10 +305,9 @@ export const RoomCanvas = () => {
          */
         const dropWhereLifted = (x: number, y: number) => {
             GetTicker().addOnce(() => {
-                const selected = roomStore.getState().selectedObject;
-                const operation = selected?.operation;
+                const selected = getRoomObjectBeingPlaced();
 
-                if (!selected || ((operation !== RoomObjectOperationType.OBJECT_PLACE) && (operation !== RoomObjectOperationType.OBJECT_MOVE))) return;
+                if (!selected) return;
 
                 dispatchMouseEvent(x, y, MouseEventType.MOUSE_MOVE, false, false, false, false);
 

@@ -64,6 +64,7 @@ import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
 import { LayoutImage, LayoutWindow, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplate, useTemplateFrame } from '#base/theme';
+import { getLowestPoint, layoutChildrenInArea } from '#base/views/shared/flashWindowUtils';
 
 export interface RoomInfoViewProps {
     roomName: string;
@@ -159,9 +160,6 @@ const CONTENT_COLUMN = [ 'room_details', 'public_space_details', 'guild_info', '
 
 const childNamed = (window: LayoutWindow, name: string) => window.children.find(child => child.element?.name === name);
 
-/** `Util.getLowestPoint`: the lowest bottom of the visible children. */
-const getLowestPoint = (window: LayoutWindow) => window.children.reduce((lowest, child) => (child.visible ? Math.max(lowest, child.y + child.height) : lowest), 0);
-
 /** `Util.moveChildrenToColumn`: the named visible children with a height, from `y` down, `spacing` apart. */
 const moveChildrenToColumn = (window: LayoutWindow, names: readonly string[], y: number, spacing: number) => {
     for (const name of names) {
@@ -180,24 +178,6 @@ const moveChildrenToRow = (window: LayoutWindow, names: readonly string[], x: nu
         const child = childNamed(window, name);
 
         if (!child || !child.visible) continue;
-
-        child.setX(x);
-        child.setY(y);
-        x += child.width + spacing;
-    }
-};
-
-/** `Util.layoutChildrenInArea`: the visible children in rows `width` wide, `rowHeight` apart, `spacing` between, the first from `x`. */
-const layoutChildrenInArea = (window: LayoutWindow, width: number, rowHeight: number, spacing = 0, x = 0) => {
-    let y = 0;
-
-    for (const child of window.children) {
-        if (!child.visible) continue;
-
-        if ((x > 0) && ((x + child.width) > width)) {
-            x = 0;
-            y += rowHeight;
-        }
 
         child.setX(x);
         child.setY(y);

@@ -14,16 +14,12 @@ import { GetPetInventoryComposer, PlacePetComposer } from '@nitrodevco/nitro-pac
 import { WebSocketConnection } from '#base/context/communication';
 import { inventoryStore } from '#base/context/inventory';
 import { roomStore } from '#base/context/room';
+import { getMonsterPlantPosture } from '#base/utils';
 
 import { initializeRoomObjectInsert } from './catalogPlacementCommands';
 import { hideInventoryForPlacement } from './inventoryCommands';
 
 type Send = WebSocketConnection['send'];
-
-/** `PetData.typeId` of the monster plant, whose look depends on how grown it is. */
-const PET_TYPE_MONSTERPLANT = 16;
-/** A monster plant at this level or above is fully grown (`std`); below it, `grw<level>`. */
-const MONSTERPLANT_GROWN_LEVEL = 7;
 
 /** `PetsModel.requestPetInventory`. */
 export const requestPetInventory = (send: Send) => send(new GetPetInventoryComposer({}));
@@ -59,9 +55,7 @@ export const placeInventoryPetToRoom = (send: Send, petId: number): boolean => {
     const figure = getInventoryPetFigureString(pet.figureData);
 
     if (isRoomOwner) {
-        const posture = (pet.figureData.typeId === PET_TYPE_MONSTERPLANT)
-            ? ((pet.level >= MONSTERPLANT_GROWN_LEVEL) ? 'std' : `grw${pet.level}`)
-            : undefined;
+        const posture = getMonsterPlantPosture(pet.figureData.typeId, pet.level);
 
         // The mover's object id is the pet's own, negated, so it can never be a real room object.
         // The insert's type is the room object's user type, not the pet's own breed id.

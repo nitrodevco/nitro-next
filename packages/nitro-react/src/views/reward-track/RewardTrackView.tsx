@@ -37,9 +37,9 @@ import {
 import { useConfigData, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplateFrame } from '#base/theme';
+import { ProductIconView } from '#base/views/shared/ProductIconView';
 
 import { buildRewardTrackPrizeLayout } from './rewardTrackPrizeLayout';
-import { RewardTrackProductIcon } from './RewardTrackProductIcon';
 import { RewardTrackBarTarget, useRewardTrackBars } from './rewardTrackProgressBar';
 
 const TEMPLATE = 'habbo-quest-engine-com/reward_track_main_xml';
@@ -177,7 +177,15 @@ const RewardTrackWindow = ({ track }: { track: RewardTrack }) => {
                         if (isRewardTrackPrizeClaimable(prize, track)) claimRewardTrackPrize(send, track.id, prize.id);
                     },
                 },
-                product_icon: { children: <RewardTrackProductIcon prize={prize} /> },
+                product_icon: {
+                    children: (
+                        <ProductIconView
+                            productTypeId={prize.productItemTypeId}
+                            itemTypeId={prize.rewardTypeId}
+                            extraParams={prize.extraParams}
+                        />
+                    ),
+                },
                 quantity_container: { visible: prize.rewardAmount > 1 },
                 'quantity_container/@0': { caption: String(prize.rewardAmount), setCaptionAfterBuild: true },
                 claimed_icon: { visible: claimed },

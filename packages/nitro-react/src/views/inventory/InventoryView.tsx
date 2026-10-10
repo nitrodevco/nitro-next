@@ -38,10 +38,11 @@ import { useEffect, useMemo } from 'react';
 
 import { resetInventoryUnseenCounters } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { inventoryStore, UnseenItemCategory, useInventoryStore, useInventoryUnseenItemCount } from '#base/context/inventory';
+import { UnseenItemCategory, useInventoryActions, useInventoryStore, useInventoryUnseenItemCount } from '#base/context/inventory';
 import { useConfigValue, useSystemActions, useWindowParams, WindowParams } from '#base/context/system';
 import { useWiredTradingStore } from '#base/context/wired-trading';
-import { LayoutWindow, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplate, useTemplateLibrary } from '#base/theme';
+import { TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplate, useTemplateLibrary } from '#base/theme';
+import { getLowestPoint } from '#base/views/shared/flashWindowUtils';
 
 import { INVENTORY_LIBRARY, InventoryPage, InventoryPageName, inventoryPagePath, inventoryTemplateId } from './inventoryPage';
 import { InventoryTradingDock } from './trading/InventoryTradingDock';
@@ -51,8 +52,6 @@ import { useInventoryBotsPage } from './useInventoryBotsPage';
 import { useInventoryCollectiblesPage } from './useInventoryCollectiblesPage';
 import { useInventoryFurniPage } from './useInventoryFurniPage';
 import { useInventoryPetsPage } from './useInventoryPetsPage';
-
-export type InventoryViewWindowParams = { tab?: InventoryPageName };
 
 type InventoryTab = NonNullable<WindowParams<'inventory'>['tab']>;
 
@@ -75,9 +74,6 @@ const VERTICAL_STRETCH = 2048;
 const DEFAULT_VIEW_LOCATION = { x: 120, y: 150 };
 
 const COUNTER_TEMPLATE = 'habbo-window-manager-com/unseen_item_counter_xml';
-
-/** `Util.getLowestPoint`: the bottom of the lowest visible child with a height. */
-const lowestPoint = (window: LayoutWindow) => window.children.reduce((lowest, child) => ((child.visible && child.height > 0) ? Math.max(lowest, child.y + child.height) : lowest), 0);
 
 export const InventoryView = () => {
     const { tab: activeTab = 'furni' } = useWindowParams('inventory');
@@ -111,9 +107,11 @@ export const InventoryView = () => {
     }), [ allowScaling, docked, toggleWindow ]);
 
     // `categoryViewId`: the toolbar reopens the window on this page.
+    const { setLastPage } = useInventoryActions();
+
     useEffect(() => {
-        if (activeTab !== 'collectibles') inventoryStore.getState().setLastPage(activeTab);
-    }, [ activeTab ]);
+        if (activeTab !== 'collectibles') setLastPage(activeTab);
+    }, [ activeTab, setLastPage ]);
 
     // `resetUnseenCounters(previous tab)` on a switch, and the showing page's `closingInventoryView` on close.
     useEffect(() => () => resetInventoryUnseenCounters(send, activeTab), [ send, activeTab ]);
@@ -204,7 +202,7 @@ export const InventoryView = () => {
         top.setParamFlag(VERTICAL_STRETCH, false);
         sub.setY(top.y + top.height + SUB_CONTENT_GAP);
         sub.setHeight(dockHeight);
-        window.setHeight(window.height - sub.parent.height + lowestPoint(sub.parent));
+        window.setHeight(window.height - sub.parent.height + getLowestPoint(sub.parent, true));
     };
 
     return (

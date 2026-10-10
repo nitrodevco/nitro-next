@@ -11,6 +11,8 @@ export interface PetFaceOptions {
     scale?: RoomGeometryScaleType;
     /** In eighths of a turn, as the room counts directions. */
     direction?: number;
+    /** Only the head and hair layers (`RoomEngine.getPetImage` without its full-body flag). */
+    headOnly?: boolean;
 }
 
 export interface ChatPetFace {
@@ -49,12 +51,14 @@ const storeFace = (cacheKey: string, texture: Texture) => {
  * `getRoomObjectPetImage` route would read that texture back as a base64 `<img>` and upload
  * it a second time. The `type`/`value` pair is what `Room.getRoomObjectPetImageArgs` builds.
  */
-const renderPetFace = (figureData: PetFigureData, posture: string | undefined, scale: RoomGeometryScaleType, direction: number): Promise<Texture | undefined> => {
+const renderPetFace = (figureData: PetFigureData, posture: string | undefined, scale: RoomGeometryScaleType, direction: number, headOnly: boolean): Promise<Texture | undefined> => {
     const type = GetRoomContentLoader().getPetNameForType(figureData.typeId);
 
     if (!type) return Promise.resolve(undefined);
 
     let value = `${figureData.typeId} ${figureData.paletteId} ${figureData.color.toString(16)}`;
+
+    if (headOnly) value = `${value} head`;
 
     value = `${value} ${figureData.customParts.length}`;
 
@@ -63,19 +67,21 @@ const renderPetFace = (figureData: PetFigureData, posture: string | undefined, s
     return GetRoomEngine().getGenericRoomObjectTexture(type, value, new Vector3d(direction * 45), scale, undefined, 0, undefined, 0, 0, posture ?? '');
 };
 
-/** `ChatBubbleFactory._Str_2641`'s defaults: the whole pet at the zoomed-out (32px) scale, facing direction 2. */
+/** `ChatBubbleFactory.getPetImage`'s scale and direction: the zoomed-out (32px) scale, facing direction 2. */
 const DEFAULT_SCALE = RoomGeometryScaleType.ZoomedOut;
 const DEFAULT_DIRECTION = 2;
 
 /**
  * A pet drawn by the room engine, cached across everything that shows one. The chat bubble takes
- * the defaults; the infostand asks for a bigger render, which is a different cache entry.
+ * the scale and direction defaults and asks for the head only; the infostand asks for a bigger
+ * whole-body render, which is a different cache entry.
  */
 export const useChatPetFace = (figure: string | undefined, posture: string | undefined, options?: PetFaceOptions): ChatPetFace => {
     const scale = options?.scale ?? DEFAULT_SCALE;
     const direction = options?.direction ?? DEFAULT_DIRECTION;
+    const headOnly = options?.headOnly ?? false;
     const room = useRoom();
-    const cacheKey = `${figure}|${posture ?? ''}|${scale}|${direction}`;
+    const cacheKey = `${figure}|${posture ?? ''}|${scale}|${direction}|${headOnly ? 'head' : 'full'}`;
     const canRender = !!room && !!figure;
 
     // The shared face cache is the source of truth; a hit is moved to the back, the most recent end.
@@ -93,7 +99,7 @@ export const useChatPetFace = (figure: string | undefined, posture: string | und
         let promise = pending.get(cacheKey);
 
         if (!promise) {
-            promise = renderPetFace(new PetFigureData(figure), posture, scale, direction).then((texture) => {
+            promise = renderPetFace(new PetFigureData(figure), posture, scale, direction, headOnly).then((texture) => {
                 if (!texture) return undefined;
 
                 texture.source.scaleMode = 'nearest';

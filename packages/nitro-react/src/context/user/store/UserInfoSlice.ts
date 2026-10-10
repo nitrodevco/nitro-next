@@ -38,7 +38,7 @@ export const UserInfoSlice: State = {
 
 export type UserInfoSlice = State & Actions;
 
-export const createUserInfoSlice: StateCreator<UserInfoSlice, [], [], UserInfoSlice> = (set, get, store) => ({
+export const createUserInfoSlice: StateCreator<UserInfoSlice, [], [], UserInfoSlice> = set => ({
     ...UserInfoSlice,
     setUserInfo: (userInfo: IUserInfo) => set({ ...userInfo }),
     setName: (name: string, nameChangeAllowed: boolean) => set({ name, nameChangeAllowed }),

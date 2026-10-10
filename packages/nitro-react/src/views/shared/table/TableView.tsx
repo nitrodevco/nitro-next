@@ -42,7 +42,7 @@ import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from '#base/context/system';
 import { Border, Box, BoxLayout, getGlobalRect, GlobalRect, Region, ScrollArea, TextInput, ThemeImage, ThemeText, useLayoutSize, useOutsideClick } from '#base/theme';
 
-import { fitTableText, measureTableText } from './wiredTableText';
+import { fitTableText, measureTableText } from './tableText';
 
 /** `element_text` / `element_link` / `element_input` / `column_name`: style 3 without a `text_style` var. */
 const CELL_TEXT_STYLE = 'u_regular';
@@ -103,21 +103,21 @@ const LINK_COLOR = '#0000ee';
 const EMPTY_TEXT_COLOR = '#333333';
 
 /** `TableColumn`'s fourth argument. Flash stores `"left"` as `autoSize = "none"`. */
-export type WiredTableAlignment = 'left' | 'center' | 'right';
+export type TableAlignment = 'left' | 'center' | 'right';
 
 /** `TableColumn`. */
-export interface WiredTableColumn {
+export interface TableColumn {
     id: string;
     /** `columnName`, already translated. */
     title: string;
     /** `widthFactor`: the share of the row width, 0-1. The factors of a table add up to 1. */
     widthFactor: number;
     /** `"center"` when omitted, as in Flash. */
-    alignment?: WiredTableAlignment;
+    alignment?: TableAlignment;
 }
 
 /** `TableCell.setExtraBtn(assetUri, callback)`: the 20x20 bitmap at the cell's right edge. */
-export interface WiredTableExtraButton {
+export interface TableExtraButton {
     /** The image, e.g. `LayoutImage('habbo-window-manager-com/icons_info_grey.png')`. */
     src: string;
     /** Without one the button shows no hand cursor (`interactiveCursorDisabled`). */
@@ -125,7 +125,7 @@ export interface WiredTableExtraButton {
 }
 
 /** `TableCell` of type 0 (text) or 1 (link). */
-export interface WiredTableTextCell {
+export interface TableTextCell {
     /** `'text'` when omitted. */
     type?: 'text' | 'link';
     /** `contents`. */
@@ -144,32 +144,32 @@ export interface WiredTableTextCell {
     highlightOnChange?: boolean;
     /** `tooltipText`. Without one a shortened text cell shows its full text. */
     tooltip?: string;
-    extraButton?: WiredTableExtraButton;
+    extraButton?: TableExtraButton;
 }
 
 /** What a `custom` cell's renderer is told about the box it fills. */
-export interface WiredTableCellRenderInfo {
+export interface TableCellRenderInfo {
     width: number;
     height: number;
     selected: boolean;
 }
 
 /** Arbitrary content in a cell. The content lives inside the row, so a press on it selects the row unless it stops the event. */
-export interface WiredTableCustomCell {
+export interface TableCustomCell {
     type: 'custom';
-    render: (info: WiredTableCellRenderInfo) => ReactNode;
+    render: (info: TableCellRenderInfo) => ReactNode;
     tooltip?: string;
 }
 
-export type WiredTableCell = WiredTableTextCell | WiredTableCustomCell;
+export type TableCell = TableTextCell | TableCustomCell;
 
-export interface WiredTableViewProps<T extends object> {
-    columns: readonly WiredTableColumn[];
+export interface TableViewProps<T extends object> {
+    columns: readonly TableColumn[];
     rows: readonly T[];
     /** `ITableObject.identifier`. */
     getRowId: (row: T) => string;
     /** `ITableObject.getTableCell(columnId)`. */
-    getCell: (row: T, columnId: string) => WiredTableCell;
+    getCell: (row: T, columnId: string) => TableCell;
     /** `initialize`'s second argument: the title row and its splitter. On by default. */
     showHeader?: boolean;
     /** `initialize`'s third argument: whether a press selects the row. On by default. */
@@ -209,7 +209,7 @@ const isReadOnlyKey = (event: KeyboardEvent): boolean => {
 };
 
 interface TitleCellProps {
-    column: WiredTableColumn;
+    column: TableColumn;
     width: number;
 }
 
@@ -235,8 +235,8 @@ const TitleCell = ({ column, width }: TitleCellProps) => {
 };
 
 interface CellProps {
-    cell: WiredTableTextCell;
-    alignment: WiredTableAlignment;
+    cell: TableTextCell;
+    alignment: TableAlignment;
     width: number;
     onEdit: (value: string) => void;
 }
@@ -400,7 +400,7 @@ const TextCell = ({ cell, alignment, width, onEdit }: CellProps) => {
     );
 };
 
-export const WiredTableView = <T extends object>({ columns, rows, getRowId, getCell, showHeader = true, canSelect = true, selectedId: controlledSelectedId, emptyText, scrollResetKey, scrollVariant, onRowClicked, onRowSelected, onRowHovered, onCellEdit, layout }: WiredTableViewProps<T>) => {
+export const TableView = <T extends object>({ columns, rows, getRowId, getCell, showHeader = true, canSelect = true, selectedId: controlledSelectedId, emptyText, scrollResetKey, scrollVariant, onRowClicked, onRowSelected, onRowHovered, onCellEdit, layout }: TableViewProps<T>) => {
     const t = useTranslation();
     const [ contentsNode, setContentsNode ] = useState<PixiContainer | null>(null);
     const [ ownSelectedId, setOwnSelectedId ] = useState<string | null>(null);

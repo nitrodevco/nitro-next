@@ -192,6 +192,34 @@ export const RoomObjectMenuWidget = () => {
         return null;
     };
 
+    const renderUnitBubble = () => {
+        if (hoverData && !isDecorating) {
+            if (isSpectating) return null;
+
+            return (
+                <RoomObjectMenuNameBubble
+                    key="hover"
+                    objectData={hoverData}
+                />
+            );
+        }
+
+        const selected = renderSelected();
+
+        if (selected) return selected;
+
+        if (!entryData || selectedData || isDecorating) return null;
+
+        // The entry name fades like any other; once gone it stays gone for this entry.
+        return (
+            <RoomObjectMenuNameBubble
+                key="entry"
+                objectData={entryData}
+                onClose={() => setDismissedEntryKey(entryKey)}
+            />
+        );
+    };
+
     return (
         <>
             {isDecorating && !isSpectating && (ownRoomObjectId >= 0) && (
@@ -202,7 +230,7 @@ export const RoomObjectMenuWidget = () => {
                     <DecorateModeBubbleView />
                 </RoomObjectMenuBubble>
             )}
-            {(hoverData && !isDecorating) ? (!isSpectating && <RoomObjectMenuNameBubble objectData={hoverData} />) : (renderSelected() ?? ((entryData && !selectedData && !isDecorating) ? <RoomObjectMenuNameBubble objectData={entryData} /> : null))}
+            {renderUnitBubble()}
         </>
     );
 };

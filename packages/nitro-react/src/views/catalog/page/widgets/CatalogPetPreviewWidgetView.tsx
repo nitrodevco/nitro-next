@@ -4,11 +4,10 @@ import { useState } from 'react';
 
 import { CatalogWidgetEventEnum, PetImageRequest } from '#base/context/catalog';
 import { useConfigData, useTranslation } from '#base/context/system';
-import { useCatalogWidgetEvent } from '#base/hooks';
+import { useCatalogWidgetEvent, usePetImageTexture } from '#base/hooks';
 import { ThemeImage, useTemplateLibrary } from '#base/theme';
 import { getOfferProduct } from '#base/utils';
 
-import { usePetImageTexture } from '../../usePetImageTexture';
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { CATALOG_LIBRARY } from '../catalogTemplates';
 import { useCatalogWidgetView } from '../catalogWidgetView';

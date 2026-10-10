@@ -26,7 +26,7 @@ import { Container as PixiContainer } from 'pixi.js';
 import { useEffect, useState } from 'react';
 
 import { refreshBuilderStatus, updateBuilderStatus } from '#base/commands';
-import { CATALOG_HEADER_DESCRIPTION, CATALOG_HEADER_IMAGE, CatalogPage, CatalogRoomAdExtension, getCatalogPageImage, getCatalogPageText, getCatalogWindowName, isNonTabbedCatalog, useCatalogStore, useCatalogStoreApi } from '#base/context/catalog';
+import { CATALOG_HEADER_DESCRIPTION, CATALOG_HEADER_IMAGE, CatalogPage, getCatalogPageImage, getCatalogPageText, getCatalogWindowName, isNonTabbedCatalog, useCatalogStore, useCatalogStoreApi } from '#base/context/catalog';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { useCatalogNavigation, useWindowVisibility } from '#base/hooks';
 import { Box, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useLayoutSize, useTemplateLibrary } from '#base/theme';
@@ -35,9 +35,6 @@ import { GetFriendlyTime } from '#base/utils';
 import { useCatalogSearch } from './navigation/useCatalogSearch';
 import { CatalogPageView } from './page/CatalogPageView';
 import { CATALOG_LIBRARY, catalogTemplateId, resolveCatalogPageTemplate } from './page/catalogTemplates';
-
-/** `roomAdExtension`: the room ad page opened in extended mode (`openRoomAdCatalogPageInExtendedMode`). */
-export type CatalogViewWindowParams = { pageId?: number; pageName?: string; offerId?: number; roomAdExtension?: CatalogRoomAdExtension };
 
 /** `createWindowState`: the Builders Club window is this much taller (`mainContainer.height += 15`). */
 const BUILDERS_CLUB_EXTRA_HEIGHT = 15;

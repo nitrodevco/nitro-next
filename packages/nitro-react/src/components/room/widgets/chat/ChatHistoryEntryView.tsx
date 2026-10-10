@@ -1,10 +1,11 @@
-import { Graphics, Rectangle } from 'pixi.js';
-import { memo, useLayoutEffect, useState } from 'react';
+import { Rectangle } from 'pixi.js';
+import { memo, useLayoutEffect } from 'react';
 
 import { CHAT_BUBBLE_WIDTH_NORMAL } from '#base/chat';
 import { ChatHistoryEntry } from '#base/context/chat-history';
 import { useChatBubbleText, useChatBubbleVisual } from '#base/hooks';
 
+import { ChatBubbleBody } from './ChatBubbleBody';
 import { useChatHistoryTexture } from './chatHistoryAssets';
 
 /** `_SafeStr_174.LEFT_MARGIN` / `TIMESTAMP_FIXED_WIDTH`: an entry sits 3 in, its bubble 62 right of that. */
@@ -41,7 +42,6 @@ const useTimestamp = (time: string) => useChatBubbleText(`<i>${time}</i>`, 'Ubun
 const ChatLineEntry = ({ entry, y, onMeasure, onTap }: ChatHistoryEntryViewProps & { entry: Extract<ChatHistoryEntry, { kind: 'chat' }> }) => {
     const { style, layout, backgroundTexture, shownFaceTexture, render } = useChatBubbleVisual(entry.data, CHAT_BUBBLE_WIDTH_NORMAL);
     const timestamp = useTimestamp(entry.time);
-    const [ clipMask, setClipMask ] = useState<Graphics | null>(null);
 
     // `new BitmapData(62 + bubble.width, bubble.height)`, stacked by `height - overlap.y - 8`.
     useLayoutEffect(() => {
@@ -74,67 +74,13 @@ const ChatLineEntry = ({ entry, y, onMeasure, onTap }: ChatHistoryEntryViewProps
                 x={CHAT_HISTORY_TIMESTAMP_WIDTH}
                 eventMode="none"
             >
-                <pixiNineSliceSprite
-                    texture={backgroundTexture}
-                    leftWidth={style.nineSliceBorders.leftWidth}
-                    topHeight={style.nineSliceBorders.topHeight}
-                    rightWidth={style.nineSliceBorders.rightWidth}
-                    bottomHeight={style.nineSliceBorders.bottomHeight}
-                    width={layout.width}
-                    height={layout.height}
-                    roundPixels
-                    eventMode="none"
+                <ChatBubbleBody
+                    style={style}
+                    layout={layout}
+                    backgroundTexture={backgroundTexture}
+                    shownFaceTexture={shownFaceTexture}
+                    render={render}
                 />
-                {layout.emblem && (
-                    <pixiSprite
-                        texture={layout.emblem.texture}
-                        x={layout.emblem.x}
-                        y={layout.emblem.y}
-                        roundPixels
-                        eventMode="none"
-                    />
-                )}
-                {(layout.pointerY !== undefined) && style.pointerTexture && (
-                    // `ChatBubble`: the pointer's x is `max(getPointerLeftMargin(28), min(15, ...))`, so always the left margin.
-                    <pixiSprite
-                        texture={style.pointerTexture}
-                        x={layout.pointerMarginLeft}
-                        y={layout.pointerY}
-                        roundPixels
-                        eventMode="none"
-                    />
-                )}
-                {layout.face && shownFaceTexture && (
-                    <pixiSprite
-                        texture={shownFaceTexture}
-                        x={layout.face.x}
-                        y={layout.face.y}
-                        roundPixels
-                        eventMode="none"
-                    />
-                )}
-                {render && (
-                    <pixiSprite
-                        texture={render.texture}
-                        x={layout.textX}
-                        y={layout.textY}
-                        mask={layout.clip ? clipMask : null}
-                        roundPixels
-                        eventMode="none"
-                    />
-                )}
-                {layout.clip && (
-                    <pixiGraphics
-                        ref={setClipMask}
-                        x={layout.textX}
-                        y={layout.textY}
-                        eventMode="none"
-                        draw={(graphics: Graphics) => {
-                            graphics.clear();
-                            graphics.rect(0, 0, layout.clip?.width ?? 0, layout.clip?.height ?? 0).fill(0xffffff);
-                        }}
-                    />
-                )}
             </pixiContainer>
         </pixiContainer>
     );

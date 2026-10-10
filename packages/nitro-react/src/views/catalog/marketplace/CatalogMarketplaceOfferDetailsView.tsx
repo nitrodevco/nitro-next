@@ -4,9 +4,9 @@ import { useCatalogStore } from '#base/context/catalog';
 import { useSystemStore, useTranslation } from '#base/context/system';
 import { TemplateWindow, ThemeImage } from '#base/theme';
 import { getMarketplaceOfferTexts, isMarketplaceUniqueLimitedItem, MarketplaceOfferData, resolveMarketplaceStatsCategory } from '#base/utils';
+import { LimitedItemPreviewOverlayView } from '#base/views/shared/LimitedItemPreviewOverlayView';
+import { RarityItemGridOverlayView } from '#base/views/shared/RarityItemGridOverlayView';
 
-import { CatalogLimitedItemPreviewOverlayView } from '../page/widgets/CatalogLimitedItemPreviewOverlayView';
-import { CatalogRarityItemGridOverlayView } from '../page/widgets/CatalogRarityItemGridOverlayView';
 import { CatalogMarketplaceOfferImageView } from './CatalogMarketplaceOfferImageView';
 import { getMarketplaceChartTexture, isMarketplaceChartAvailable } from './marketplaceChart';
 
@@ -87,7 +87,7 @@ export const CatalogMarketplaceOfferDetailsView = ({ offer, safetyLocked, onBack
                     ? {
                             visible: true,
                             children: (
-                                <CatalogLimitedItemPreviewOverlayView
+                                <LimitedItemPreviewOverlayView
                                     serialNumber={offer.stuffData?.uniqueNumber ?? 0}
                                     seriesSize={offer.stuffData?.uniqueSeries ?? 0}
                                 />
@@ -95,7 +95,7 @@ export const CatalogMarketplaceOfferDetailsView = ({ offer, safetyLocked, onBack
                         }
                     : { visible: false },
                 rarity_item_overlay_widget: (rarityLevel >= 0)
-                    ? { visible: true, children: <CatalogRarityItemGridOverlayView rarityLevel={rarityLevel} /> }
+                    ? { visible: true, children: <RarityItemGridOverlayView rarityLevel={rarityLevel} /> }
                     : { visible: false },
                 item_price: { caption: t('catalog.marketplace.offer_details.price', '', { price: String(offer.price) }) },
                 average_price: { caption: t('catalog.marketplace.offer_details.average_price', '', { days: String(averagePricePeriod), average: (offer.averagePrice === 0) ? ' - ' : String(offer.averagePrice) }) },

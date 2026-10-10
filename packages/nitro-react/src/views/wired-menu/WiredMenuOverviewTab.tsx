@@ -12,8 +12,8 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import { useWiredHasWritePermission, useWiredStore } from '#base/context/wired';
 import { Box, Button, ContainerButton, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '../wired-common/WiredTableView';
 import { WiredMenuTypePicker } from './WiredMenuTypePicker';
 
 /** `MAX_TEXT_CONNECTIONS` - a variable with more texts than this shows none. */
@@ -94,12 +94,12 @@ export const WiredMenuOverviewTab = () => {
     const textKeys = connector ? [ ...connector.keys() ].sort((a, b) => a - b) : [];
     const texts: TextRow[] = (connector && (textKeys.length <= MAX_TEXT_CONNECTIONS)) ? textKeys.map(value => ({ value, text: connector.get(value) ?? '' })) : [];
 
-    const listColumns: WiredTableColumn[] = [ { id: 'variable', title: '', widthFactor: 1, alignment: 'left' } ];
-    const propertyColumns: WiredTableColumn[] = [
+    const listColumns: TableColumn[] = [ { id: 'variable', title: '', widthFactor: 1, alignment: 'left' } ];
+    const propertyColumns: TableColumn[] = [
         { id: 'property', title: loc('wiredmenu.variable_overview.properties.column.property'), widthFactor: 0.52, alignment: 'left' },
         { id: 'value', title: loc('wiredmenu.variable_overview.properties.column.value'), widthFactor: 0.48, alignment: 'left' },
     ];
-    const textColumns: WiredTableColumn[] = [
+    const textColumns: TableColumn[] = [
         { id: 'value', title: loc('wiredmenu.variable_overview.text.column.value'), widthFactor: 0.2, alignment: 'left' },
         { id: 'text', title: loc('wiredmenu.variable_overview.text.column.text'), widthFactor: 0.8, alignment: 'right' },
     ];
@@ -108,7 +108,7 @@ export const WiredMenuOverviewTab = () => {
     const canManage = canManageWiredVariable(selected);
     const canDelete = canDeleteWiredVariable(selected, hasWritePermission);
 
-    const propertyCell = (row: PropertyRow, columnId: string): WiredTableCell => ((columnId === 'property')
+    const propertyCell = (row: PropertyRow, columnId: string): TableCell => ((columnId === 'property')
         ? { text: t(`wiredmenu.variable_overview.properties.${row.key}`, `wiredmenu.variable_overview.properties.${row.key}`) }
         : { text: row.value, inspectable: row.inspectable });
 
@@ -127,7 +127,7 @@ export const WiredMenuOverviewTab = () => {
                     text={t('wiredmenu.variable_overview.picker', 'wiredmenu.variable_overview.picker')}
                     width={165}
                 />
-                <WiredTableView
+                <TableView
                     columns={listColumns}
                     rows={listed}
                     getRowId={variable => variable.variableId}
@@ -198,7 +198,7 @@ export const WiredMenuOverviewTab = () => {
                     text={t('wiredmenu.variable_overview.properties', 'wiredmenu.variable_overview.properties')}
                     width={188}
                 />
-                <WiredTableView
+                <TableView
                     columns={propertyColumns}
                     rows={properties}
                     getRowId={row => row.key}
@@ -216,7 +216,7 @@ export const WiredMenuOverviewTab = () => {
                     eventMode={hasTexts ? 'auto' : 'none'}
                     layout={{ position: 'absolute', left: 0, top: 20, width: 256, height: 115 }}
                 >
-                    <WiredTableView
+                    <TableView
                         columns={textColumns}
                         rows={texts}
                         getRowId={row => String(row.value)}

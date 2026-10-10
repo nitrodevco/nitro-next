@@ -2,7 +2,8 @@ import { GetTicker } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
 import { LayoutImage, TemplateWindow, ThemeImage } from '#base/theme';
-import { GlyphNumber } from '#base/views/room-widgets/object-infostand/UniqueItemPlaqueView';
+
+import { LimitedItemNumber } from './LimitedItemNumber';
 
 /** `LimitedItemGridOverlayWidget.SHINE_INTERVAL_MS` / `SHINE_LENGTH_MS`. */
 const SHINE_INTERVAL_MS = 10000;
@@ -55,7 +56,7 @@ const usePlaqueShineOffset = () => {
     return offset;
 };
 
-export interface CatalogLimitedItemGridOverlayViewProps {
+export interface LimitedItemGridOverlayViewProps {
     /** `serialNumber` - the catalogue gives it the series size (`enableLimitedItemLayout`). */
     serialNumber: number;
 }
@@ -68,7 +69,7 @@ export interface CatalogLimitedItemGridOverlayViewProps {
  * `set serialNumber` fills `unique_item_overlay_plaque_number_bitmap` with
  * `LimitedItemNumberBitmap.createBitmap`.
  */
-export const CatalogLimitedItemGridOverlayView = ({ serialNumber }: CatalogLimitedItemGridOverlayViewProps) => {
+export const LimitedItemGridOverlayView = ({ serialNumber }: LimitedItemGridOverlayViewProps) => {
     const offset = usePlaqueShineOffset();
 
     return (
@@ -86,7 +87,7 @@ export const CatalogLimitedItemGridOverlayView = ({ serialNumber }: CatalogLimit
                 },
                 unique_item_overlay_plaque_number_bitmap: {
                     children: (
-                        <GlyphNumber
+                        <LimitedItemNumber
                             value={serialNumber}
                             width={NUMBER_WIDTH}
                             layout={{ left: 0, top: 0 }}

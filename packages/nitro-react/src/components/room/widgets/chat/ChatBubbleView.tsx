@@ -1,9 +1,11 @@
-import { Container as PixiContainer, FederatedPointerEvent, Graphics, Rectangle, Sprite } from 'pixi.js';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Container as PixiContainer, FederatedPointerEvent, Rectangle, Sprite } from 'pixi.js';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { ChatBubbleData, ChatBubbleMotion } from '#base/chat';
 import { useRoomChatActions } from '#base/context/room';
 import { useChatBubbleVisual, useChatFlow } from '#base/hooks';
+
+import { ChatBubbleBody } from './ChatBubbleBody';
 
 interface ChatBubbleViewProps {
     data: ChatBubbleData;
@@ -30,7 +32,6 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
 
     const containerRef = useRef<PixiContainer | null>(null);
     const pointerRef = useRef<Sprite | null>(null);
-    const [ clipMask, setClipMask ] = useState<Graphics | null>(null);
 
     const motion = useMemo(() => new ChatBubbleMotion({
         data,
@@ -82,67 +83,15 @@ export const ChatBubbleView = ({ data }: ChatBubbleViewProps) => {
             hitArea={hitArea}
             onPointerTap={onPointerTap}
         >
-            <pixiNineSliceSprite
-                texture={backgroundTexture}
-                leftWidth={style.nineSliceBorders.leftWidth}
-                topHeight={style.nineSliceBorders.topHeight}
-                rightWidth={style.nineSliceBorders.rightWidth}
-                bottomHeight={style.nineSliceBorders.bottomHeight}
-                width={layout.width}
-                height={layout.height}
-                roundPixels
-                eventMode="none"
+            <ChatBubbleBody
+                style={style}
+                layout={layout}
+                backgroundTexture={backgroundTexture}
+                shownFaceTexture={shownFaceTexture}
+                render={render}
+                textAlpha={content?.alpha}
+                pointerRef={pointerRef}
             />
-            {layout.emblem && (
-                <pixiSprite
-                    texture={layout.emblem.texture}
-                    x={layout.emblem.x}
-                    y={layout.emblem.y}
-                    roundPixels
-                    eventMode="none"
-                />
-            )}
-            {(layout.pointerY !== undefined) && style.pointerTexture && (
-                // Positioned by the motion handle (`updatePointerPosition`), never through props.
-                <pixiSprite
-                    ref={pointerRef}
-                    texture={style.pointerTexture}
-                    roundPixels
-                    eventMode="none"
-                />
-            )}
-            {layout.face && shownFaceTexture && (
-                <pixiSprite
-                    texture={shownFaceTexture}
-                    x={layout.face.x}
-                    y={layout.face.y}
-                    roundPixels
-                    eventMode="none"
-                />
-            )}
-            {render && (
-                <pixiSprite
-                    texture={render.texture}
-                    x={layout.textX}
-                    y={layout.textY}
-                    alpha={content?.alpha ?? 1}
-                    mask={layout.clip ? clipMask : null}
-                    roundPixels
-                    eventMode="none"
-                />
-            )}
-            {layout.clip && (
-                <pixiGraphics
-                    ref={setClipMask}
-                    x={layout.textX}
-                    y={layout.textY}
-                    eventMode="none"
-                    draw={(graphics: Graphics) => {
-                        graphics.clear();
-                        graphics.rect(0, 0, layout.clip?.width ?? 0, layout.clip?.height ?? 0).fill(0xffffff);
-                    }}
-                />
-            )}
         </pixiContainer>
     );
 };

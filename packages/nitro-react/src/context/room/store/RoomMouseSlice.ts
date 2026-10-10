@@ -28,7 +28,7 @@ export const RoomMouseSliceInitialState: State = {
 
 export type RoomMouseSlice = State & Actions;
 
-export const createRoomMouseSlice: StateCreator<RoomMouseSlice, [], [], RoomMouseSlice> = (set, get, store) => ({
+export const createRoomMouseSlice: StateCreator<RoomMouseSlice, [], [], RoomMouseSlice> = (set, get) => ({
     ...RoomMouseSliceInitialState,
     getMouseEventId: (category: RoomObjectCategoryEnum, type: string) => {
         return get().eventIds.get(category)?.get(type);

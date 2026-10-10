@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { groupMemberPageCount } from '#base/context/groups';
 import { useTranslation } from '#base/context/system';
 import { ContainerButton, Dropmenu, Frame, Icon, Region, TextInput, ThemeText } from '#base/theme';
+import { GroupBadgeImage } from '#base/views/shared/GroupBadgeImage';
 
-import { GroupBadgeImage } from './GroupBadgeImage';
 import { GroupMemberEntry } from './GroupMemberEntry';
 
 export interface GroupMembersViewProps {

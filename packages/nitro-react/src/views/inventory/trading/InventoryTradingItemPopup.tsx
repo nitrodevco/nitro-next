@@ -20,8 +20,8 @@
  */
 import { CollectiblePreview } from '#base/context/collectibles';
 import { FloatingPopup, LayoutImage, TemplateBindings, TemplateWindow, TemplateWindows, useTextureFromUrl } from '#base/theme';
-import { CatalogLimitedItemPreviewOverlayView } from '#base/views/catalog/page/widgets/CatalogLimitedItemPreviewOverlayView';
-import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/collectibles/CollectiblesProductPreview';
+import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
+import { LimitedItemPreviewOverlayView } from '#base/views/shared/LimitedItemPreviewOverlayView';
 
 /** `ItemPopupCtrl.BOUNDS_MARGIN`: how far the popup sits into the slot it points at. */
 const BOUNDS_MARGIN = -5;
@@ -109,7 +109,7 @@ export const InventoryTradingItemPopup = ({ anchor, name, content, onDismiss }: 
                     ? {
                             visible: true,
                             children: (
-                                <CatalogLimitedItemPreviewOverlayView
+                                <LimitedItemPreviewOverlayView
                                     serialNumber={content.uniqueSerialNumber}
                                     seriesSize={content.uniqueSeriesSize}
                                 />

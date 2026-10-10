@@ -17,8 +17,7 @@ import { useWiredHasReadPermission, useWiredHasWritePermission, useWiredStore } 
 import { useSecondsClock } from '#base/hooks';
 import { Border, Box, Button, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
-
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '../wired-common/WiredTableView';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 
 const COLOR_RED = 'ff5733';
 const COLOR_ORANGE = 'BD7800';
@@ -87,7 +86,7 @@ export const WiredMenuMonitorTab = () => {
 
     const panicking = !!stats && !!errors && isFrankPanicking(stats, errors);
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'type', title: loc('wiredmenu.monitor.column.type'), widthFactor: 0.33 },
         { id: 'category', title: loc('wiredmenu.monitor.column.category'), widthFactor: 0.22 },
         { id: 'quantity', title: loc('wiredmenu.monitor.column.occurrences'), widthFactor: 0.15 },
@@ -95,7 +94,7 @@ export const WiredMenuMonitorTab = () => {
     ];
 
     // `ErrorDataTableObject.getTableCell`.
-    const getCell = (error: IWiredErrorLogsError, columnId: string): WiredTableCell => {
+    const getCell = (error: IWiredErrorLogsError, columnId: string): TableCell => {
         switch (columnId) {
             case 'type': return { type: 'link', text: error.errorName, onLinkClick: () => showWiredErrorInfo(error) };
             case 'category': return { text: error.category };
@@ -184,7 +183,7 @@ export const WiredMenuMonitorTab = () => {
                     verticalAlign="top"
                     layout={{ position: 'absolute', left: 0, top: 0, width: 106, height: 19 }}
                 />
-                <WiredTableView
+                <TableView
                     columns={columns}
                     rows={errors ?? []}
                     getRowId={error => String(error.errorId)}

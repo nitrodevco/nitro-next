@@ -9,13 +9,10 @@ import { useWebSocketContext } from '#base/context/communication';
 import { INVENTORY_FURNI_CATEGORY_POSTER, useInventoryStore } from '#base/context/inventory';
 import { useRoomStore, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useSystemStore, useTranslation, useWindowActions } from '#base/context/system';
-import { useRoomEventDispatcher, useRoomObjectModify, useRoomObjectSelect } from '#base/hooks';
+import { useFurnitureImageTexture, usePetImageTexture, useRoomEventDispatcher, useRoomObjectModify, useRoomObjectSelect } from '#base/hooks';
 import { LayoutImage } from '#base/theme';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
-import { usePetImageTexture } from '#base/views/catalog/usePetImageTexture';
+import { PRESENT_OPENED_WIDGET, PresentOpenedData } from '#base/utils';
 import { FurniturePresentOpenedIcon, FurniturePresentOpenedView } from '#base/views/room-widgets/furniture/FurniturePresentOpenedView';
-
-import { PRESENT_OPENED_WIDGET, PresentOpenedData } from './furnitureWidgetData';
 
 /** `FurniturePresentWidgetHandler`'s furni class names a wall item can change the room with. */
 const SPACES_CLASS_NAMES = [ 'floor', 'landscape', 'wallpaper' ];

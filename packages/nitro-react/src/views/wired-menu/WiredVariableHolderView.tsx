@@ -22,16 +22,15 @@ import { useTranslation } from '#base/context/system';
 import { useWiredHasWritePermission, useWiredStore, WiredVariableValueRow } from '#base/context/wired';
 import { useChatPetFace } from '#base/hooks';
 import { Border, Box, Button, Frame, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
-import { sortVariables } from '#base/wired';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
+import { sortVariables, WIRED_SOURCE_USER } from '#base/wired';
 
 import { WiredLoadingIcon } from '../wired-common/WiredLoadingIcon';
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '../wired-common/WiredTableView';
 import { WiredMenuCreateVariableBubble } from './WiredMenuCreateVariableBubble';
 import { isWithinContainer } from './wiredMenuPointer';
+import { WiredVariableActionButtons } from './WiredVariableActionButtons';
 import { wiredVariableValueCell } from './wiredVariableValueCell';
 
-/** `WiredInputSourcePicker.USER_SOURCE` - the bubble's picker lists user variables. */
-const USER_SOURCE = 1;
 /** `RoomObjectUserType` as the packets carry it. */
 const ENTITY_USER = 1;
 const ENTITY_PET = 2;
@@ -69,12 +68,12 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
         .filter(variable => !variable.isInvisible)
         .map(variable => ({ variable, value: values.get(variable.variableId) ?? 0 }));
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'variable', title: t('wiredmenu.inspection.variables.variable', 'wiredmenu.inspection.variables.variable'), widthFactor: 0.65, alignment: 'left' },
         { id: 'value', title: t('wiredmenu.inspection.variables.value', 'wiredmenu.inspection.variables.value'), widthFactor: 0.35, alignment: 'right' },
     ];
 
-    const getCell = (row: WiredVariableValueRow, columnId: string): WiredTableCell => ((columnId === 'variable')
+    const getCell = (row: WiredVariableValueRow, columnId: string): TableCell => ((columnId === 'variable')
         ? { text: row.variable.variableName, inspectable: true, textFieldValue: row.variable.variableName }
         : wiredVariableValueCell(row.variable, row.value, key => t(key, key), false, hasWritePermission && row.variable.hasValue && row.variable.canWriteValue));
 
@@ -199,7 +198,7 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
             <Box layout={{ position: 'absolute', left: 18, top: 196, width: 303, bottom: 18, overflow: 'hidden' }}>
                 {boldText('wiredmenu.variable_management_detail.variables')}
                 <Box layout={{ position: 'absolute', left: 0, top: 20, width: 303, bottom: 34 }}>
-                    <WiredTableView
+                    <TableView
                         columns={columns}
                         rows={rows}
                         getRowId={row => row.variable.variableId}
@@ -211,40 +210,19 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
                         }}
                     />
                 </Box>
-                <Box layout={{ position: 'absolute', left: 0, bottom: 0, width: 303, height: 25, flexDirection: 'row', gap: 13 }}>
-                    <Box
-                        alpha={canDelete ? 1 : 0.5}
-                        layout={{ width: 145, height: 25 }}
-                    >
-                        <Button
-                            variant="3"
-                            disabled={!canDelete}
-                            onPointerTap={() => deleteWiredHolderVariable(send)}
-                            layout={{ width: 145, height: 25 }}
-                        >
-                            {t('wiredmenu.inspection.delete', 'wiredmenu.inspection.delete')}
-                        </Button>
-                    </Box>
-                    <Box
-                        ref={addButtonRef}
-                        alpha={canAdd ? 1 : 0.5}
-                        layout={{ width: 145, height: 25 }}
-                    >
-                        <Button
-                            variant="3"
-                            disabled={!canAdd}
-                            onPointerTap={() => toggleWiredHolderCreateBubble(send)}
-                            layout={{ width: 145, height: 25 }}
-                        >
-                            {t('wiredmenu.inspection.add', 'wiredmenu.inspection.add')}
-                        </Button>
-                    </Box>
-                </Box>
+                <WiredVariableActionButtons
+                    canDelete={canDelete}
+                    canAdd={canAdd}
+                    onDelete={() => deleteWiredHolderVariable(send)}
+                    onAdd={() => toggleWiredHolderCreateBubble(send)}
+                    addButtonRef={addButtonRef}
+                    layout={{ bottom: 0, height: 25 }}
+                />
                 {createBubble && (
                     <WiredMenuCreateVariableBubble
                         variables={createVariables}
                         filter={variableFilter}
-                        target={USER_SOURCE}
+                        target={WIRED_SOURCE_USER}
                         roomId={roomId}
                         bubbleRef={bubbleRef}
                         onCreate={(variable, valueText) => createWiredHolderVariable(send, variable, valueText)}

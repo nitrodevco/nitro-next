@@ -21,18 +21,17 @@ import { RoomPlane } from './RoomPlane';
 import { RoomVisualizationData } from './RoomVisualizationData';
 
 export class RoomVisualization extends RoomObjectSpriteVisualization implements IPlaneVisualization {
-    private static readonly NO_FILTERS: Filter[] = [];
-    private static FLOOR_COLOR: number = 0xffffff as const;
-    private static FLOOR_COLOR_LEFT: number = 0xdddddd as const;
-    private static FLOOR_COLOR_RIGHT: number = 0xbbbbbb as const;
-    private static WALL_COLOR_TOP: number = 0xffffff as const;
-    private static WALL_COLOR_SIDE: number = 0xcccccc as const;
-    private static WALL_COLOR_BOTTOM: number = 0x999999 as const;
-    private static WALL_COLOR_BORDER: number = 0x999999 as const;
-    private static LANDSCAPE_COLOR_TOP: number = 0xffffff as const;
-    private static LANDSCAPE_COLOR_SIDE: number = 0xcccccc as const;
-    private static LANDSCAPE_COLOR_BOTTOM: number = 0x999999 as const;
-    private static ROOM_DEPTH_OFFSET: number = 1000 as const;
+    private static FLOOR_COLOR: number = 0xffffff;
+    private static FLOOR_COLOR_LEFT: number = 0xdddddd;
+    private static FLOOR_COLOR_RIGHT: number = 0xbbbbbb;
+    private static WALL_COLOR_TOP: number = 0xffffff;
+    private static WALL_COLOR_SIDE: number = 0xcccccc;
+    private static WALL_COLOR_BOTTOM: number = 0x999999;
+    private static WALL_COLOR_BORDER: number = 0x999999;
+    private static LANDSCAPE_COLOR_TOP: number = 0xffffff;
+    private static LANDSCAPE_COLOR_SIDE: number = 0xcccccc;
+    private static LANDSCAPE_COLOR_BOTTOM: number = 0x999999;
+    private static ROOM_DEPTH_OFFSET: number = 1000;
 
     protected _data: RoomVisualizationData | undefined = undefined;
 
@@ -748,7 +747,7 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
      * rest are drawn in the next frames - every plane still takes its geometry each pass, so its
      * visibility and screen rectangle (and the room's bounds) are right from the first.
      */
-    public static PLANE_RASTER_BUDGET_MS: number = 12;
+    private static readonly PLANE_RASTER_BUDGET_MS: number = 12;
 
     protected updatePlanes(
         geometry: IRoomGeometry,

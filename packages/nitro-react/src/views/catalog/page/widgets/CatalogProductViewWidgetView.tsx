@@ -6,16 +6,16 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { productImageWidgetPreview, requestSelectedItemToMover } from '#base/commands';
 import { AvatarImage, RoomPreviewer, RoomPreviewerHandle } from '#base/components';
-import { CatalogWidgetBundleDisplayExtraInfoEvent, CatalogWidgetEventEnum, CatalogWidgetSpinnerEvent, getCatalogPageImage, getCatalogPageText, SelectProductEvent, useCatalogStore, useCatalogStoreApi } from '#base/context/catalog';
+import { CatalogWidgetEventEnum, CatalogWidgetSpinnerEvent, getCatalogPageImage, getCatalogPageText, SelectProductEvent, useCatalogStoreApi } from '#base/context/catalog';
 import { COLLECTIBLE_PREVIEW_EASTER_EGG_INITIAL, COLLECTIBLE_PRODUCT_TYPE_CHAT_STYLE, CollectiblePreview, CollectiblePreviewEasterEgg, CollectibleProductInfo } from '#base/context/collectibles';
 import { useHabbiconsStore } from '#base/context/habbicons';
-import { getRoom } from '#base/context/room';
+import { getRoomPatterns } from '#base/context/room';
 import { useConfigData, useConfigValue, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
-import { useCatalogWidgetEvent } from '#base/hooks';
+import { ROOM_PREVIEWER_OBJECT_ID, useCatalogWidgetEvent } from '#base/hooks';
 import { Box, Region, ThemeImage, useLayoutSize, useTemplateLibrary } from '#base/theme';
 import { getOfferProduct, PRODUCT_IMAGES } from '#base/utils';
-import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/collectibles/CollectiblesProductPreview';
+import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { CATALOG_LIBRARY } from '../catalogTemplates';
@@ -23,9 +23,7 @@ import { fitWidgetView, useCatalogWidgetView } from '../catalogWidgetView';
 import { bundleProductItem } from './catalogGridItem';
 import { priceBoxItem } from './catalogPrice';
 import { productExtraItem } from './catalogProductExtra';
-
-/** `ExtraInfoItemData.TYPE_RESET_MESSAGE`: the row `setBundleInfoWidgetToOffer` resets the bundle info with. */
-const EXTRA_INFO_TYPE_RESET_MESSAGE = 5;
+import { useProductQuantityWidgets } from './useProductQuantityWidgets';
 
 /** `ProductViewCatalogWidget`'s preview modes. */
 const PREVIEW_MODE_NONE = 0;
@@ -58,13 +56,6 @@ const PREVIEW_OBJECT_LOCATION = new Vector3d(2, 2, 0);
 const PREVIEW_WALL_ITEM_LOCATION = new Vector3d(0.5, 2.3, 1.8);
 const PREVIEW_SIT_OFFSETS = new Vector3d(2, 2, 0.55);
 const PREVIEW_LAY_OFFSETS = new Vector3d(1, 1, 0.8);
-/** The room previewer's one object. */
-const PREVIEW_OBJECT_ID = 1;
-
-/** `onPreviewProduct`'s room types when the room the user is in has none. */
-const DEFAULT_WALL_TYPE = '101';
-const DEFAULT_FLOOR_TYPE = '101';
-const DEFAULT_LANDSCAPE_TYPE = '1.1';
 
 const normalizeAvatarDirection = (direction: number) => {
     const value = direction % 8;
@@ -274,13 +265,10 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
     const [ zoomTarget, setZoomTarget ] = useState(0);
     const lastSelection = useRef<SelectProductEvent | undefined>(undefined);
     const overrideStuffData = useRef<IObjectData | undefined>(undefined);
-    const totalPriceWidgetInitialized = useRef(false);
     const pressed = useRef(false);
     const previewerRef = useRef<RoomPreviewerHandle>(null);
-    const multiplePurchaseEnabled = (useConfigValue<boolean>('catalog.multiple.purchase.enabled') === true) && !page.isBuilderPage;
+    const applyQuantityWidgets = useProductQuantityWidgets(page);
     const catalogImageUrl = useConfigValue<string>('asset.urls.catalog') ?? '';
-    const ruleset = useCatalogStore(x => x.bundleDiscountRuleset);
-    const flatPriceSteps = useCatalogStore(x => x.bundleDiscountFlatPriceSteps);
     const store = useCatalogStoreApi();
     const ownFigure = useUserStore(x => x.figure);
     const ownGender = useUserStore(x => x.sex);
@@ -289,7 +277,6 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
     const badgeUrl = useConfigValue<string>('badge.asset.url') ?? '';
     const t = useTranslation();
     const roomCanvasEnabled = !tags.includes('NO_ROOM_CANVAS');
-    const bundleDiscountEnabled = !page.isBuilderPage;
     const product = offer ? getOfferProduct(offer) : undefined;
 
     /** `applyPreviewAvatarDirection`. */
@@ -300,7 +287,7 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
 
         const location = getPreviewAvatarLocation(next.action);
 
-        room.updateRoomObjectUser(PREVIEW_OBJECT_ID, location, location, false, 0, new Vector3d(next.direction * 45), next.headDirection * 45);
+        room.updateRoomObjectUser(ROOM_PREVIEWER_OBJECT_ID, location, location, false, 0, new Vector3d(next.direction * 45), next.headDirection * 45);
     };
 
     /** `applyPreviewAvatarAction`. */
@@ -309,29 +296,29 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
 
         if (!room) return;
 
-        room.updateRoomObjectUserAction(PREVIEW_OBJECT_ID, RoomObjectVariableEnum.FigureDance, 0);
-        room.updateRoomObjectUserAction(PREVIEW_OBJECT_ID, RoomObjectVariableEnum.FigureExpression, 0);
+        room.updateRoomObjectUserAction(ROOM_PREVIEWER_OBJECT_ID, RoomObjectVariableEnum.FigureDance, 0);
+        room.updateRoomObjectUserAction(ROOM_PREVIEWER_OBJECT_ID, RoomObjectVariableEnum.FigureExpression, 0);
 
         switch (next.action) {
             case PREVIEW_ACTION_WALK:
-                room.updateRoomObjectUserPosture(PREVIEW_OBJECT_ID, 'mv');
+                room.updateRoomObjectUserPosture(ROOM_PREVIEWER_OBJECT_ID, 'mv');
                 break;
             case PREVIEW_ACTION_DANCE:
-                room.updateRoomObjectUserPosture(PREVIEW_OBJECT_ID, 'std');
-                room.updateRoomObjectUserAction(PREVIEW_OBJECT_ID, RoomObjectVariableEnum.FigureDance, 1);
+                room.updateRoomObjectUserPosture(ROOM_PREVIEWER_OBJECT_ID, 'std');
+                room.updateRoomObjectUserAction(ROOM_PREVIEWER_OBJECT_ID, RoomObjectVariableEnum.FigureDance, 1);
                 break;
             case PREVIEW_ACTION_SIT:
-                room.updateRoomObjectUserPosture(PREVIEW_OBJECT_ID, 'sit');
+                room.updateRoomObjectUserPosture(ROOM_PREVIEWER_OBJECT_ID, 'sit');
                 break;
             case PREVIEW_ACTION_LAY:
-                room.updateRoomObjectUserPosture(PREVIEW_OBJECT_ID, 'lay');
+                room.updateRoomObjectUserPosture(ROOM_PREVIEWER_OBJECT_ID, 'lay');
                 break;
             case PREVIEW_ACTION_WAVE:
-                room.updateRoomObjectUserPosture(PREVIEW_OBJECT_ID, 'std');
-                room.updateRoomObjectUserAction(PREVIEW_OBJECT_ID, RoomObjectVariableEnum.FigureExpression, AvatarActionStateTypeUtilities.getExpressionId(AvatarActionStateType.Wave));
+                room.updateRoomObjectUserPosture(ROOM_PREVIEWER_OBJECT_ID, 'std');
+                room.updateRoomObjectUserAction(ROOM_PREVIEWER_OBJECT_ID, RoomObjectVariableEnum.FigureExpression, AvatarActionStateTypeUtilities.getExpressionId(AvatarActionStateType.Wave));
                 break;
             default:
-                room.updateRoomObjectUserPosture(PREVIEW_OBJECT_ID, 'std');
+                room.updateRoomObjectUserPosture(ROOM_PREVIEWER_OBJECT_ID, 'std');
         }
 
         applyPreviewAvatarDirection(next);
@@ -364,45 +351,15 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
         const selected = event.offer;
         const selectedProduct = getOfferProduct(selected);
         const previewer = previewerRef.current;
-        const bulk = multiplePurchaseEnabled && selected.bundlePurchaseAllowed && totalPriceWidgetInitialized.current;
 
         lastSelection.current = event;
 
         setOffer(selected);
 
-        if (bulk) {
-            // `setSpinnerToBundleRuleset`, then `setBundleInfoWidgetToOffer`.
-            page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.RESET, value: 1, skipSteps: bundleDiscountEnabled ? flatPriceSteps : undefined });
-            page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.SHOW, value: 1 });
+        // `setSpinnerToBundleRuleset` and `setBundleInfoWidgetToOffer`, or both hidden.
+        const bulk = applyQuantityWidgets(selected);
 
-            if (ruleset) page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.SET_MAX, value: ruleset.maxPurchaseSize });
-
-            page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.SET_MIN, value: 1 });
-            page.events.dispatchEvent({
-                type: CatalogWidgetBundleDisplayExtraInfoEvent.RESET,
-                id: -1,
-                data: {
-                    type: EXTRA_INFO_TYPE_RESET_MESSAGE,
-                    text: '',
-                    quantity: 0,
-                    priceCredits: selected.priceInCredits,
-                    priceActivityPoints: selected.priceInActivityPoints,
-                    activityPointType: selected.activityPointType,
-                    priceSilver: selected.priceInSilver,
-                    badgeCode: selected.badgeCode ?? '',
-                    achievementCode: '',
-                    discountPriceCredits: 0,
-                    discountPriceActivityPoints: 0,
-                },
-            });
-
-            setPriceBox(undefined);
-        } else {
-            page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.HIDE, value: 1 });
-            page.events.dispatchEvent({ type: CatalogWidgetBundleDisplayExtraInfoEvent.HIDE, id: -1 });
-
-            setPriceBox(page.isBuilderPage ? undefined : { seasonal: page.acceptSeasonCurrencyAsCredits });
-        }
+        setPriceBox((bulk || page.isBuilderPage) ? undefined : { seasonal: page.acceptSeasonCurrencyAsCredits });
 
         setProductImagePreview(undefined);
 
@@ -464,10 +421,7 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
                 const specialType = selectedProduct.furnitureData.specialType;
 
                 if ((specialType === FurnitureSpecialType.WallPaper) || (specialType === FurnitureSpecialType.Floor) || (specialType === FurnitureSpecialType.Landscape)) {
-                    const activeRoom = getRoom();
-                    const wallType = activeRoom?.getRoomValue<string>(RoomObjectVariableEnum.RoomWallType) || DEFAULT_WALL_TYPE;
-                    const floorType = activeRoom?.getRoomValue<string>(RoomObjectVariableEnum.RoomFloorType) || DEFAULT_FLOOR_TYPE;
-                    const landscapeType = activeRoom?.getRoomValue<string>(RoomObjectVariableEnum.RoomLandscapeType) || DEFAULT_LANDSCAPE_TYPE;
+                    const { wallType, floorType, landscapeType } = getRoomPatterns();
 
                     previewer.room.updateRoomPlaneVisibilities(true, true);
                     previewer.room.updateRoomPlaneType(
@@ -543,16 +497,12 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
         if (priceBox) setPriceBox({ seasonal: false });
     });
 
-    useCatalogWidgetEvent(page, CatalogWidgetEventEnum.TOTAL_PRICE_WIDGET_INITIALIZED, () => {
-        totalPriceWidgetInitialized.current = true;
-    });
-
     // `onFloorFurnitureRotationAvailabilityFrame`: whether the floor item can turn, checked every frame.
     useEffect(() => {
         if (previewMode !== PREVIEW_MODE_FLOOR_FURNITURE) return;
 
         const check = () => {
-            const directions = previewerRef.current?.room?.getRoomObject(PREVIEW_OBJECT_ID, RoomObjectCategoryEnum.Floor)?.model.getValue<number[]>(RoomObjectVariableEnum.FurnitureAllowedDirections);
+            const directions = previewerRef.current?.room?.getRoomObject(ROOM_PREVIEWER_OBJECT_ID, RoomObjectCategoryEnum.Floor)?.model.getValue<number[]>(RoomObjectVariableEnum.FurnitureAllowedDirections);
 
             setCanRotateFloor(!!directions && (directions.length > 1));
         };
@@ -628,7 +578,7 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
             }
             case PREVIEW_MODE_FLOOR_FURNITURE: {
                 // `rotatePreviewFurniture(delta > 0)` through `getValidPreviewFurnitureDirection`.
-                const roomObject = room.getRoomObject(PREVIEW_OBJECT_ID, RoomObjectCategoryEnum.Floor);
+                const roomObject = room.getRoomObject(ROOM_PREVIEWER_OBJECT_ID, RoomObjectCategoryEnum.Floor);
                 const directions = roomObject?.model.getValue<number[]>(RoomObjectVariableEnum.FurnitureAllowedDirections);
 
                 if (!roomObject || !directions?.length) return;
@@ -651,7 +601,7 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
             }
             case PREVIEW_MODE_WALL_ITEM: {
                 // `rotatePreviewWallItem`: mirror between 90 and 180, and move along the other wall.
-                const roomObject = room.getRoomObject(PREVIEW_OBJECT_ID, RoomObjectCategoryEnum.Wall);
+                const roomObject = room.getRoomObject(ROOM_PREVIEWER_OBJECT_ID, RoomObjectCategoryEnum.Wall);
 
                 if (!roomObject) return;
 
@@ -665,7 +615,7 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
                 const z = (!isNaN(sizeZ) && !isNaN(centerZ)) ? (((3.6 - sizeZ) / 2) + centerZ) : roomObject.getLocation().z;
                 const nowMirrored = (direction === 180);
 
-                room.updateRoomObjectWallLocation(PREVIEW_OBJECT_ID, new Vector3d(nowMirrored ? PREVIEW_WALL_ITEM_LOCATION.y : PREVIEW_WALL_ITEM_LOCATION.x, nowMirrored ? PREVIEW_WALL_ITEM_LOCATION.x : PREVIEW_WALL_ITEM_LOCATION.y, z));
+                room.updateRoomObjectWallLocation(ROOM_PREVIEWER_OBJECT_ID, new Vector3d(nowMirrored ? PREVIEW_WALL_ITEM_LOCATION.y : PREVIEW_WALL_ITEM_LOCATION.x, nowMirrored ? PREVIEW_WALL_ITEM_LOCATION.x : PREVIEW_WALL_ITEM_LOCATION.y, z));
                 return;
             }
         }

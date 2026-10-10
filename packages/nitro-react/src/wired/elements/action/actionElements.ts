@@ -15,8 +15,7 @@ import { BotChangeFigureView } from '#base/views/wired-setup/elements/action/Bot
 import { BotFollowAvatarView } from '#base/views/wired-setup/elements/action/BotFollowAvatarView';
 import { BotGiveHandItemView } from '#base/views/wired-setup/elements/action/BotGiveHandItemView';
 import { BotMoveView } from '#base/views/wired-setup/elements/action/BotMoveView';
-import { BotTalkDirectToAvatarView } from '#base/views/wired-setup/elements/action/BotTalkDirectToAvatarView';
-import { BotTalkView } from '#base/views/wired-setup/elements/action/BotTalkView';
+import { BotTalkDirectToAvatarView, BotTalkView } from '#base/views/wired-setup/elements/action/BotTalkView';
 import { BotTeleportView } from '#base/views/wired-setup/elements/action/BotTeleportView';
 import { ChangeVariableView } from '#base/views/wired-setup/elements/action/ChangeVariableView';
 import { ChatView } from '#base/views/wired-setup/elements/action/ChatView';

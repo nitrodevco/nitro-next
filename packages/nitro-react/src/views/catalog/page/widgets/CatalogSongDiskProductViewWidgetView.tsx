@@ -1,25 +1,23 @@
 import { FurnitureSpecialType, FurnitureTypeEnum, IPurchasableOffer, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { TemplateItem } from '@nitrodevco/nitro-theme';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { playSongDiskPreview, requestOfficialSongId, requestSongInfoWithoutSamples, stopSongDiskPreview } from '#base/commands';
-import { CatalogWidgetBundleDisplayExtraInfoEvent, CatalogWidgetEventEnum, CatalogWidgetSpinnerEvent, useCatalogStore } from '#base/context/catalog';
+import { CatalogWidgetEventEnum, useCatalogStore } from '#base/context/catalog';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomStore } from '#base/context/room';
 import { useConfigData, useConfigValue, useTranslation } from '#base/context/system';
-import { useCatalogWidgetEvent } from '#base/hooks';
+import { useCatalogWidgetEvent, useFurnitureImageTexture } from '#base/hooks';
 import { ThemeImage, useTemplateLibrary } from '#base/theme';
 import { getOfferProduct } from '#base/utils';
 
-import { useFurnitureImageTexture } from '../../useFurnitureImageTexture';
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { CATALOG_LIBRARY } from '../catalogTemplates';
 import { useCatalogWidgetView } from '../catalogWidgetView';
 import { priceBoxItem } from './catalogPrice';
 import { productExtraItem } from './catalogProductExtra';
+import { useProductQuantityWidgets } from './useProductQuantityWidgets';
 
-/** `ExtraInfoItemData.TYPE_RESET_MESSAGE`: the row `setBundleInfoWidgetToOffer` resets the bundle info with. */
-const EXTRA_INFO_TYPE_RESET_MESSAGE = 5;
 /** `onPreviewProduct`'s still image: `getFurnitureImage` / `getWallItemImage` at direction 90, scale 64. */
 const PREVIEW_DIRECTION = 90;
 
@@ -64,8 +62,7 @@ export const CatalogSongDiskProductViewWidgetView = ({ page }: CatalogWidgetProp
     const [ officialSongId, setOfficialSongId ] = useState('');
     const [ playPreviewVisible, setPlayPreviewVisible ] = useState(false);
     const [ showPrice, setShowPrice ] = useState(true);
-    const totalPriceWidgetInitialized = useRef(false);
-    const multiplePurchaseEnabled = (useConfigValue<boolean>('catalog.multiple.purchase.enabled') === true) && !page.isBuilderPage;
+    const applyQuantityWidgets = useProductQuantityWidgets(page);
     const templates = useTemplateLibrary(CATALOG_LIBRARY);
     const config = useConfigData();
     const badgeUrl = useConfigValue<string>('badge.asset.url') ?? '';
@@ -97,33 +94,7 @@ export const CatalogSongDiskProductViewWidgetView = ({ page }: CatalogWidgetProp
         setOffer(selected);
 
         // `ProductViewCatalogWidget.onPreviewProduct`: the quantity widgets.
-        if (multiplePurchaseEnabled && selected.bundlePurchaseAllowed && totalPriceWidgetInitialized.current) {
-            page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.RESET, value: 1 });
-            page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.SHOW, value: 1 });
-            page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.SET_MIN, value: 1 });
-            page.events.dispatchEvent({
-                type: CatalogWidgetBundleDisplayExtraInfoEvent.RESET,
-                id: -1,
-                data: {
-                    type: EXTRA_INFO_TYPE_RESET_MESSAGE,
-                    text: '',
-                    quantity: 0,
-                    priceCredits: selected.priceInCredits,
-                    priceActivityPoints: selected.priceInActivityPoints,
-                    activityPointType: selected.activityPointType,
-                    priceSilver: selected.priceInSilver,
-                    badgeCode: selected.badgeCode ?? '',
-                    achievementCode: '',
-                    discountPriceCredits: 0,
-                    discountPriceActivityPoints: 0,
-                },
-            });
-            setShowPrice(false);
-        } else {
-            page.events.dispatchEvent({ type: CatalogWidgetSpinnerEvent.HIDE, value: 1 });
-            page.events.dispatchEvent({ type: CatalogWidgetBundleDisplayExtraInfoEvent.HIDE, id: -1 });
-            setShowPrice(true);
-        }
+        setShowPrice(!applyQuantityWidgets(selected));
 
         // `SongDiskProductViewCatalogWidget.onSelectProduct`.
         const extraParam = selectedProduct?.extraParam ?? '';
@@ -145,10 +116,6 @@ export const CatalogSongDiskProductViewWidgetView = ({ page }: CatalogWidgetProp
         }
 
         setPlayPreviewVisible(true);
-    });
-
-    useCatalogWidgetEvent(page, CatalogWidgetEventEnum.TOTAL_PRICE_WIDGET_INITIALIZED, () => {
-        totalPriceWidgetInitialized.current = true;
     });
 
     // `getSongLength`: a song the cache does not know is asked for.

@@ -1,14 +1,9 @@
 import { BreedPetsComposer } from '@nitrodevco/nitro-packets';
 
-import { showBreedingPetsWaitingConfirmationAlert } from '#base/commands';
+import { BREED_ACCEPT, BREED_ASK, BREED_CANCEL, showBreedingPetsWaitingConfirmationAlert } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomPetsActions, useRoomStore } from '#base/context/room';
 import { BreedingPlant, PlantBreedingView } from '#base/views/room-widgets/pets/PlantBreedingView';
-
-/** `BreedPetsMessageComposer`'s first argument. */
-const BREED_ASK = 0;
-const BREED_CANCEL = 1;
-const BREED_ACCEPT = 2;
 
 /**
  * Two monsterplants about to breed - `BreedMonsterPlantsConfirmationView`. Proposing sends the

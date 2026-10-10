@@ -1,9 +1,10 @@
-import { RoomGeometryScaleType, RoomObjectVariableEnum, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
 import { FloorHeightMapMessage, HeightMapMessage, HeightMapMessageType, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from '@nitrodevco/nitro-packets';
-import { LegacyWallGeometry, RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
+import { RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
 
 import { WebSocketConnection } from '#base/context/communication';
 import { getRoom, roomStore } from '#base/context/room';
+import { buildRoomWallGeometry } from '#base/utils';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
@@ -155,23 +156,7 @@ export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) 
         planeParser.initializeFromTileData(wallHeight);
         planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ + planeParser.wallHeight);
 
-        const wallGeometry = new LegacyWallGeometry();
-
-        wallGeometry.scale = RoomGeometryScaleType.ZoomedIn;
-        wallGeometry.initialize(width, height, planeParser.floorHeight);
-
-        let wallY = height - 1;
-
-        while (wallY >= 0) {
-            let wallX = width - 1;
-
-            while (wallX >= 0) {
-                wallGeometry.setHeight(wallX, wallY, planeParser.getTileHeight(wallX, wallY));
-                wallX--;
-            }
-
-            wallY--;
-        }
+        const wallGeometry = buildRoomWallGeometry(planeParser, width, height);
 
         const mapData = planeParser.getMapData();
 

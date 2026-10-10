@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 import { redeemPurchasableClothing } from '#base/commands';
 import { AvatarImage } from '#base/components';
-import { avatarEditorStore } from '#base/context/avatar-editor';
+import { useAvatarEditorStore } from '#base/context/avatar-editor';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useOwnUserId, useUserStore } from '#base/context/user';
@@ -45,6 +45,7 @@ export const FurniturePurchasableClothingWidget = () => {
     const roomFurniture = useRoomFurnitureData(request?.objectId ?? -1, request?.category ?? 0);
     const ownUserId = useOwnUserId();
     const figure = useUserStore(x => x.figure);
+    const boundFurnitureNames = useAvatarEditorStore(x => x.boundFurnitureNames);
     const sex = useUserStore(x => x.sex);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
@@ -52,7 +53,7 @@ export const FurniturePurchasableClothingWidget = () => {
     const furnitureData = roomFurniture?.furnitureData;
     const newFigure = furnitureData ? figureWithFurniClothing(furnitureData, figure, sex) : figure;
     const isOwner = !!roomFurniture && (roomFurniture.ownerId === ownUserId);
-    const isBound = !!furnitureData && avatarEditorStore.getState().boundFurnitureNames.includes(furnitureData.className);
+    const isBound = !!furnitureData && boundFurnitureNames.includes(furnitureData.className);
 
     const onClose = () => closeRoomWidget(RoomObjectWidgetRequestEvent.PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG);
 

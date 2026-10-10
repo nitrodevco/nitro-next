@@ -3,19 +3,11 @@ import { useState } from 'react';
 import { addRoomFilterWord, closeRoomFilter, removeRoomFilterWord } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
-import { TemplateWindow, useTemplate, useTemplateFrame } from '#base/theme';
+import { TemplateWindow, useTemplateFrame } from '#base/theme';
+import { useFilterWordRows } from '#base/views/shared/useFilterWordRows';
 
 const TEMPLATE = 'habbo-navigator-com/iro_room_filter_framed_xml';
 const ROW_TEMPLATE = 'habbo-navigator-com/ros_badword_xml';
-
-/** `refreshBadWords`: every row that holds a word is this high. */
-const ROW_HEIGHT = 20;
-
-/** `RoomFilterCtrl.getBgColor`. */
-const ROW_COLOR_SELECTED = 0x9ab8d9;
-const ROW_COLOR_HOVERED = 0xb6d9ff;
-const ROW_COLOR_ODD = 0xffffff;
-const ROW_COLOR_EVEN = 0xe9e9e1;
 
 /** The add field's text as the layout has it, and as `onAddWordClick` puts it back. */
 const ADD_WORD_DEFAULT = 'bobba';
@@ -39,17 +31,9 @@ export const NavigatorRoomFilterView = () => {
     const selectedIndex = useNavigatorStore(x => x.roomFilterSelectedIndex);
     const { setRoomFilterSelectedIndex } = useNavigatorActions();
     const { send } = useWebSocketContext();
-    const row = useTemplate(ROW_TEMPLATE);
     const frame = useTemplateFrame({ id: 'navigator_room_filter', centered: true, onClose: closeRoomFilter });
     const [ word, setWord ] = useState(ADD_WORD_DEFAULT);
-    const [ hoveredIndex, setHoveredIndex ] = useState(-1);
-
-    const rowColor = (index: number) => {
-        if (index === selectedIndex) return ROW_COLOR_SELECTED;
-        if (index === hoveredIndex) return ROW_COLOR_HOVERED;
-
-        return ((index % 2) !== 0) ? ROW_COLOR_ODD : ROW_COLOR_EVEN;
-    };
+    const rows = useFilterWordRows({ rowTemplate: ROW_TEMPLATE, textName: 'badword_txt', words, selectedIndex, onSelect: setRoomFilterSelectedIndex });
 
     const onAdd = () => {
         addRoomFilterWord(send, word);
@@ -65,22 +49,7 @@ export const NavigatorRoomFilterView = () => {
                 badword_add_btn: { onPointerTap: onAdd },
                 badword_remove_btn: { onPointerTap: () => removeRoomFilterWord(send) },
                 badwords_itemlist: {
-                    items: row
-                        ? words.map((filtered, index) => ({
-                                key: filtered,
-                                from: row,
-                                bindings: {
-                                    '': { color: rowColor(index), background: true },
-                                    bg_region: {
-                                        onPointerTap: () => setRoomFilterSelectedIndex(index),
-                                        onPointerOver: () => setHoveredIndex(index),
-                                        onPointerOut: () => setHoveredIndex(current => ((current === index) ? -1 : current)),
-                                    },
-                                    badword_txt: { caption: filtered },
-                                },
-                                arrange: ({ root }) => root()?.setHeight(ROW_HEIGHT),
-                            }))
-                        : [],
+                    items: rows,
                 },
             }}
         />

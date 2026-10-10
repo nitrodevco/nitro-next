@@ -29,22 +29,21 @@ import { GetRoomBackgroundColor } from '#base/components';
 import { useWebSocketContext } from '#base/context/communication';
 import { getRoom, useRoom } from '#base/context/room';
 import { useConfigValue, useIsWindowVisible, useSystemStore, useWindowActions } from '#base/context/system';
-import { PerkCodes, useOwnPerkAllowed, userStore } from '#base/context/user';
+import { PerkCodes, useOwnPerkAllowed, useUserStore } from '#base/context/user';
 import { GetSoundManager, HabboSoundTypesEnum } from '#base/sound';
 import { Region, TemplateBindings, TemplateWindow, TemplateWindows, useWindowActivation } from '#base/theme';
 
+import { CAMERA_IMAGE_SIZE, cameraAsset } from './cameraEffects';
 import { CanvasPicture } from './CanvasPicture';
 
 const TEMPLATE = 'habbo-room-ui-com/camera_interface_xml';
-const ASSET = (name: string) => `habbo-window-manager-com-${name}`;
 
 const NUMBER_OF_SLOTS = 5;
 /** `registerUpdateReceiver(this, 100)`. */
 const UPDATE_INTERVAL_MS = 100;
 /** `_-wG`. */
 const FLASH_MS = 350;
-/** The viewfinder is 320 x 320, a slot's picture drawn at (width - 2) / 320 in its 58 x 58. */
-const IMAGE_SIZE = 320;
+/** A slot is 58 x 58, its picture drawn at (width - 2) / `CAMERA_IMAGE_SIZE`. */
 const SLOT_SIZE = 58;
 /** `clearCurrentSlot`'s grey. */
 const EMPTY_SLOT_COLOR = '#d2d2d2';
@@ -63,15 +62,15 @@ interface Slot {
 const newCanvas = (color?: string) => {
     const canvas = document.createElement('canvas');
 
-    canvas.width = IMAGE_SIZE;
-    canvas.height = IMAGE_SIZE;
+    canvas.width = CAMERA_IMAGE_SIZE;
+    canvas.height = CAMERA_IMAGE_SIZE;
 
     if (color) {
         const context = canvas.getContext('2d');
 
         if (context) {
             context.fillStyle = color;
-            context.fillRect(0, 0, IMAGE_SIZE, IMAGE_SIZE);
+            context.fillRect(0, 0, CAMERA_IMAGE_SIZE, CAMERA_IMAGE_SIZE);
         }
     }
 
@@ -115,6 +114,7 @@ export const CameraView = () => {
     const [ flashAlpha, setFlashAlpha ] = useState(0);
     const refresh = () => redraw(version => version + 1);
     const room = useRoom();
+    const securityLevel = useUserStore(x => x.securityLevel);
     const { send } = useWebSocketContext();
     const cameraAllowed = useOwnPerkAllowed(PerkCodes.Camera);
     const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
@@ -138,7 +138,7 @@ export const CameraView = () => {
             const { x, y } = node.getGlobalPosition();
 
             try {
-                const { pixels, width, height } = GetRenderer().extract.pixels({ target: stage, frame: new Rectangle(Math.round(x), Math.round(y), IMAGE_SIZE, IMAGE_SIZE), resolution: 1 });
+                const { pixels, width, height } = GetRenderer().extract.pixels({ target: stage, frame: new Rectangle(Math.round(x), Math.round(y), CAMERA_IMAGE_SIZE, CAMERA_IMAGE_SIZE), resolution: 1 });
                 const context = liveCanvas.getContext('2d');
 
                 context?.putImageData(new ImageData(new Uint8ClampedArray(pixels), width, height), 0, 0);
@@ -198,7 +198,7 @@ export const CameraView = () => {
     const addToCurrentSlot = (image: HTMLCanvasElement, render: Slot['render']) => {
         slots = slots.map((slot, index) => ((index === active) ? { image, empty: false, render } : slot));
 
-        const next = slots.findIndex(slot => slot.empty);
+        const next = nextEmpty();
 
         if (next >= 0) {
             setActive(next);
@@ -235,7 +235,7 @@ export const CameraView = () => {
         if (!current || !canvas || !imageNode) return undefined;
 
         const { x, y } = imageNode.getGlobalPosition();
-        const viewport = new Rectangle(Math.round(x), Math.round(y), IMAGE_SIZE, IMAGE_SIZE);
+        const viewport = new Rectangle(Math.round(x), Math.round(y), CAMERA_IMAGE_SIZE, CAMERA_IMAGE_SIZE);
         const collector = new SpriteDataCollector(current, canvas, imageLibraryUrl, groupBadgeUrl);
 
         return {
@@ -243,7 +243,7 @@ export const CameraView = () => {
             modifiers: collector.getRoomRenderingModifiers(),
             planes: collector.getRoomPlanes(viewport, GetRoomBackgroundColor()),
             roomId: current.roomId,
-            topSecurityLevel: userStore.getState().securityLevel,
+            topSecurityLevel: securityLevel,
             time: Date.now(),
         };
     };
@@ -283,7 +283,7 @@ export const CameraView = () => {
             children: (
                 <CanvasPicture
                     canvas={shown}
-                    size={IMAGE_SIZE}
+                    size={CAMERA_IMAGE_SIZE}
                     onNode={setImageNode}
                 />
             ),
@@ -294,7 +294,7 @@ export const CameraView = () => {
                 <Region
                     backgroundColor="#ffffff"
                     alpha={flashAlpha}
-                    layout={{ position: 'absolute', left: 0, top: 0, width: IMAGE_SIZE, height: IMAGE_SIZE }}
+                    layout={{ position: 'absolute', left: 0, top: 0, width: CAMERA_IMAGE_SIZE, height: CAMERA_IMAGE_SIZE }}
                 />
             ),
         },
@@ -308,7 +308,7 @@ export const CameraView = () => {
         buyButtonBg: { visible: preview },
         photo_date: { visible: false },
         photo_roomname: { visible: false },
-        release_bitmap: { asset: ASSET(releaseAsset) },
+        release_bitmap: { asset: cameraAsset(releaseAsset) },
         button_release: {
             onPointerOver: () => setShutter('hi'),
             onPointerOut: () => setShutter('normal'),
@@ -330,7 +330,7 @@ export const CameraView = () => {
             ),
         };
         bindings[`chooseSlotButton_${index}`] = { onPointerTap: () => onSlotArrow(index) };
-        bindings[`slotImage_${index}`] = { asset: ASSET((index === active) ? 'camera_arrow_green' : 'camera_arrow_gray') };
+        bindings[`slotImage_${index}`] = { asset: cameraAsset((index === active) ? 'camera_arrow_green' : 'camera_arrow_gray') };
     }
 
     /** `setActiveSlot`: the border over the slot's button and the delete button at its top right corner. */

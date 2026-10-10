@@ -3,9 +3,8 @@ import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevc
 import { reportPhoto } from '#base/commands/helpCommands';
 import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { useConfigValue } from '#base/context/system';
+import { parsePhotoData, resolvePhotoUrl } from '#base/utils';
 import { FurnitureExternalImageView } from '#base/views/room-widgets/furniture/FurnitureExternalImageView';
-
-import { parsePhotoData, resolvePhotoUrl } from './furnitureWidgetData';
 
 /** Posters keep their picture at the root of the image host; selfies live a folder deeper. */
 const PHOTO_POSTER_TYPE = 'photo_poster';

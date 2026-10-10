@@ -18,7 +18,7 @@ import {
 
 import { WebSocketConnection } from '#base/context/communication';
 import {
-    canAddToTrading, getInventoryFurniItemsForTrade, INVENTORY_TRADE_MAX_ITEMS, INVENTORY_TRADING_COUNTDOWN_SECONDS, INVENTORY_TRADING_STATE_CANCELLED,
+    canAddToTrading, getInventoryFurniItemsForTrade, INVENTORY_FURNI_CATEGORY_GUILD_FURNI, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_TRADE_MAX_ITEMS, INVENTORY_TRADING_COUNTDOWN_SECONDS, INVENTORY_TRADING_STATE_CANCELLED,
     INVENTORY_TRADING_STATE_COMPLETED, INVENTORY_TRADING_STATE_CONFIRMED, INVENTORY_TRADING_STATE_CONFIRMING,
     INVENTORY_TRADING_STATE_COUNTDOWN, INVENTORY_TRADING_STATE_READY, INVENTORY_TRADING_STATE_RUNNING, InventoryFurniGroup, InventoryFurniItem, inventoryStore, InventoryTradingUserSetup, isWeb3Trading, peekInventoryFurni,
 } from '#base/context/inventory';
@@ -31,9 +31,9 @@ type Send = WebSocketConnection['send'];
 
 /** `TradingModel.getGuildFurniType`-shaped key: what `canAddItemToTrade` compares an offer against. */
 const getTradeStackKey = (item: Pick<InventoryFurniItem, 'isWallItem' | 'typeId' | 'category' | 'stuffData'>): string => {
-    if (item.category === 6) return `${item.typeId}poster${item.stuffData.getLegacyString()}`;
+    if (item.category === INVENTORY_FURNI_CATEGORY_POSTER) return `${item.typeId}poster${item.stuffData.getLegacyString()}`;
 
-    if (item.category === 17) return String(item.typeId);
+    if (item.category === INVENTORY_FURNI_CATEGORY_GUILD_FURNI) return String(item.typeId);
 
     return `${item.isWallItem ? 'I' : 'S'}${item.typeId}`;
 };

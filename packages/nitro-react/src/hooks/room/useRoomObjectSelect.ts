@@ -1,12 +1,11 @@
-import { ISelectedRoomObjectData, RoomEngineObjectEvent, RoomObjectCategoryEnum, RoomObjectOperationType } from '@nitrodevco/nitro-api';
+import { RoomEngineObjectEvent, RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
 import { LookToComposer } from '@nitrodevco/nitro-packets';
 import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
 
+import { resetSelectedRoomObject } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomIsPlayingGame, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
 import { useWiredStore } from '#base/context/wired';
-
-import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 /**
  * Selecting and deselecting room objects and avatars -
@@ -20,8 +19,7 @@ export const useRoomObjectSelect = () => {
     const selectedAvatarId = useRoomStore(x => x.selectedAvatarId);
     const selectedObjectId = useRoomStore(x => x.selectedObjectId);
     const selectedObjectCategory = useRoomStore(x => x.selectedObjectCategory);
-    const { setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory, setSelectedObject } = useRoomSelectedObjectActions();
-    const { setObjectAlphaMultiplier } = useRoomObjectValidation();
+    const { setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory } = useRoomSelectedObjectActions();
     const hasClickUserWired = useWiredStore(x => x.hasClickUserWired);
     const { send } = useWebSocketContext();
 
@@ -105,40 +103,8 @@ export const useRoomObjectSelect = () => {
         setSelectedObjectCategory(RoomObjectCategoryEnum.Minimum);
     };
 
-    const resetSelectedObject = (selectedObject: ISelectedRoomObjectData | undefined) => {
-        if (!room || !selectedObject) return;
-
-        room.removeRoomOverlayIconSprite();
-
-        if (selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE || selectedObject.operation === RoomObjectOperationType.OBJECT_MOVE_TO) {
-            const roomObject = room.getRoomObject(selectedObject.objectId, selectedObject.category);
-
-            if (roomObject) {
-                if (selectedObject.operation !== RoomObjectOperationType.OBJECT_MOVE_TO) {
-                    roomObject.setLocation(selectedObject.loc);
-                    roomObject.setDirection(selectedObject.dir);
-                }
-
-                setObjectAlphaMultiplier(roomObject, 1);
-            }
-
-            if (selectedObject.category === RoomObjectCategoryEnum.Wall) room.updateRoomObjectMask(selectedObject.objectId, true);
-        } else if (selectedObject.operation === RoomObjectOperationType.OBJECT_PLACE) {
-            switch (selectedObject.category) {
-                case RoomObjectCategoryEnum.Floor:
-                    room.removeRoomObjectFloor(selectedObject.objectId);
-                    break;
-                case RoomObjectCategoryEnum.Wall:
-                    room.removeRoomObjectWall(selectedObject.objectId);
-                    break;
-                case RoomObjectCategoryEnum.Unit:
-                    room.removeRoomObject(selectedObject.objectId, RoomObjectCategoryEnum.Unit);
-                    break;
-            }
-        }
-
-        setSelectedObject(undefined);
-    };
+    /** `resetSelectedObjectData` - see `resetSelectedRoomObject`. */
+    const resetSelectedObject = resetSelectedRoomObject;
 
     return { selectObject, selectAvatar, deselectObject, resetSelectedObject };
 };

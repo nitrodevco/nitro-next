@@ -4,9 +4,8 @@ import { goToRoom } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
 import { RoomLinkData } from '#base/handlers';
+import { readFurnitureLink } from '#base/utils';
 import { FurnitureRoomLinkView } from '#base/views/room-widgets/furniture/FurnitureRoomLinkView';
-
-import { readFurnitureLink } from './furnitureWidgetData';
 
 /**
  * A teleport that leads to another room. The request handler asks the navigator about the room

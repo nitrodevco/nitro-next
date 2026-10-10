@@ -3,9 +3,8 @@ import { RemoveItemComposer, SetItemDataComposer } from '@nitrodevco/nitro-packe
 
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomStore, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { parseStickieData } from '#base/utils';
 import { FurnitureStickieView } from '#base/views/room-widgets/furniture/FurnitureStickieView';
-
-import { parseStickieData } from './furnitureWidgetData';
 
 /**
  * The post-it dialog, and the one widget that proves the bridge runs in both directions: a save

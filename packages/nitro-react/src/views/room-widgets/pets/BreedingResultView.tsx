@@ -1,8 +1,8 @@
 import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
+import { useFurnitureImageTexture } from '#base/hooks';
 import { Box, TemplateBindings, TemplateWindow } from '#base/theme';
 
-import { useFurnitureImageTexture } from '../../catalog/useFurnitureImageTexture';
 import { BREED_PREVIEW_BACKGROUND } from './breedingWindow';
 
 /** One seed a breeding produced, or the empty place of one. */

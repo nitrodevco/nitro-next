@@ -12,12 +12,6 @@ import { NavigatorErrorPopup } from '#base/views/navigator/NavigatorErrorPopup';
 
 import { BANNED_USER_TEMPLATE, FLAT_CONTROLLER_TEMPLATE, FRIEND_TEMPLATE, userRowItem } from './roomSettingsUserRows';
 
-/**
- * `startRoomSettingsEdit` / `startRoomSettingsEditFromNavigator`: with no `roomId` the window edits
- * the room you are standing in; the navigator's room info popup names another room and its group.
- */
-export type RoomSettingsViewWindowParams = { roomId?: number; groupId?: number };
-
 export interface RoomSettingsViewProps {
     settings: RoomSettingsDataEventMessageType;
     /** `navigator.data.allCategories` - every category the client knows, unfiltered. */
@@ -82,8 +76,9 @@ const TEMPLATE = 'habbo-navigator-com/ros_room_settings_xml';
 /** `navigator.roomsettings.tab.N` - the five tabs, `tab_1` to `tab_5`. */
 const TABS = [ 1, 2, 3, 4, 5 ];
 
-const TAB_ACCESS = 2;
-const TAB_RIGHTS = 3;
+/** The access and rights tabs - the two that need a list from the server, and that the navigator's view removes. */
+export const ROOM_SETTINGS_TAB_ACCESS = 2;
+export const ROOM_SETTINGS_TAB_RIGHTS = 3;
 
 /** `UserListCtrl.DISPLAY_LIMIT`: neither user list ever draws more rows than this. */
 const DISPLAY_LIMIT = 200;
@@ -203,7 +198,7 @@ export const RoomSettingsView = ({
     const [ hoveredRow, setHoveredRow ] = useState<string>();
     const [ hoveredEye, setHoveredEye ] = useState<string>();
 
-    const isTabRemoved = (index: number) => removeTabsForNavigatorView && ((index === TAB_ACCESS) || (index === TAB_RIGHTS));
+    const isTabRemoved = (index: number) => removeTabsForNavigatorView && ((index === ROOM_SETTINGS_TAB_ACCESS) || (index === ROOM_SETTINGS_TAB_RIGHTS));
     const visibleTabCount = TABS.filter(index => !isTabRemoved(index)).length;
 
     /** `TextFieldManager.displayError`'s popup over a field, in that field's parent's coordinates. */

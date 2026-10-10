@@ -18,7 +18,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { formatHabbiconPrice, getHabbiconPriceCurrency, HabbiconEntryModel, HabbiconSetModel, useHabbiconsStore } from '#base/context/habbicons';
 import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, Region, ThemeImage, ThemeText } from '#base/theme';
-import { CatalogCurrencyIcon } from '#base/views/catalog/CatalogCurrencyIcon';
+import { CurrencyIcon } from '#base/views/shared/CurrencyIcon';
 
 /** `createHabbiconBitmap`'s stand-in: `new BitmapData(40, 40, false, 0x8f8f8f)`. */
 const MISSING_PREVIEW_COLOR = '#8f8f8f';
@@ -125,7 +125,7 @@ export const HabbiconRewardPanelView = ({ set }: { set: HabbiconSetModel | undef
                             verticalAlign="top"
                             layout={{ marginTop: 5, flexShrink: 0 }}
                         />
-                        <CatalogCurrencyIcon
+                        <CurrencyIcon
                             type={getHabbiconPriceCurrency(set.priceActivityPoints, set.activityPointType)}
                             big={false}
                             layout={{ width: 16, height: 16, marginTop: 7, flexShrink: 0 }}

@@ -4,8 +4,7 @@
  * turning star's speed.
  */
 import { LayoutImage } from '#base/theme';
-
-import type { CollectiblesPreviewSlots } from './CollectiblesProductPreview';
+import type { CollectiblesPreviewSlots } from '#base/views/shared/CollectiblesProductPreview';
 
 /** `CollectionsTab.BG_STAR_ROTATE_SPEED`. */
 export const COLLECTIBLES_BG_STAR_ROTATE_SPEED = 20;

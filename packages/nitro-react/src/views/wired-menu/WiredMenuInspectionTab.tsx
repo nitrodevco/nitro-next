@@ -17,17 +17,17 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useRoom } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { useWiredHasWritePermission, useWiredStore, WIRED_INSPECTION_STATE_NOTHING, WiredVariableValueRow } from '#base/context/wired';
-import { Box, Button, ThemeText } from '#base/theme';
+import { Box, ThemeText } from '#base/theme';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
+import { WIRED_SOURCE_FURNI } from '#base/wired';
 
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '../wired-common/WiredTableView';
 import { WiredMenuCheckOption } from './WiredMenuCheckOption';
 import { WiredMenuCreateVariableBubble } from './WiredMenuCreateVariableBubble';
 import { WiredMenuInspectionPreview } from './WiredMenuInspectionPreview';
 import { isWithinContainer } from './wiredMenuPointer';
 import { WiredMenuTypePicker } from './WiredMenuTypePicker';
+import { WiredVariableActionButtons } from './WiredVariableActionButtons';
 import { wiredVariableValueCell } from './wiredVariableValueCell';
-
-const FURNI_SOURCE = 0;
 
 export const WiredMenuInspectionTab = () => {
     const t = useTranslation();
@@ -49,12 +49,12 @@ export const WiredMenuInspectionTab = () => {
 
     const loc = (key: string) => t(key, '');
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: 'variable', title: loc('wiredmenu.inspection.variables.variable'), widthFactor: 0.65, alignment: 'left' },
         { id: 'value', title: loc('wiredmenu.inspection.variables.value'), widthFactor: 0.35, alignment: 'right' },
     ];
 
-    const getCell = (row: WiredVariableValueRow, columnId: string): WiredTableCell => ((columnId === 'variable')
+    const getCell = (row: WiredVariableValueRow, columnId: string): TableCell => ((columnId === 'variable')
         ? { text: row.variable.variableName, inspectable: true, textFieldValue: row.variable.variableName }
         : wiredVariableValueCell(row.variable, row.value, key => t(key, key), highlightChanges, hasWritePermission));
 
@@ -65,7 +65,7 @@ export const WiredMenuInspectionTab = () => {
     const canAdd = inspectsHolder;
 
     // `updatePreviewUI`: the highlight button is there for furni, and on for a furni that is configured in wired boxes.
-    const canHighlight = !!data && (Number(data.type) === FURNI_SOURCE) && !!data.configuredInWireds.length;
+    const canHighlight = !!data && (Number(data.type) === WIRED_SOURCE_FURNI) && !!data.configuredInWireds.length;
 
     // `variableFilter`: what the object may be given and does not hold yet.
     const variableFilter = (variable: IWiredVariable) => variable.canCreateAndDelete && (!data || !data.variableValues.has(variable.variableId));
@@ -101,7 +101,7 @@ export const WiredMenuInspectionTab = () => {
                 />
                 <WiredMenuInspectionPreview
                     preview={preview}
-                    showHighlightButton={type === FURNI_SOURCE}
+                    showHighlightButton={type === WIRED_SOURCE_FURNI}
                     highlightEnabled={canHighlight}
                     onHighlight={toggleWiredInspectionHighlights}
                 />
@@ -132,7 +132,7 @@ export const WiredMenuInspectionTab = () => {
                     eventMode={(state === WIRED_INSPECTION_STATE_NOTHING) ? 'none' : 'auto'}
                     layout={{ position: 'absolute', left: 0, top: 20, width: 303, height: 297 }}
                 >
-                    <WiredTableView
+                    <TableView
                         columns={columns}
                         rows={rows}
                         getRowId={row => row.variable.variableId}
@@ -145,35 +145,14 @@ export const WiredMenuInspectionTab = () => {
                         layout={{ width: 303, height: 297, flex: 0 }}
                     />
                 </Box>
-                <Box layout={{ position: 'absolute', left: 0, top: 326, width: 303, height: 30, flexDirection: 'row', gap: 13 }}>
-                    <Box
-                        alpha={canDelete ? 1 : 0.5}
-                        layout={{ width: 145, height: 25 }}
-                    >
-                        <Button
-                            variant="3"
-                            disabled={!canDelete}
-                            onPointerTap={() => deleteWiredInspectedVariable(send)}
-                            layout={{ width: 145, height: 25 }}
-                        >
-                            {t('wiredmenu.inspection.delete', 'wiredmenu.inspection.delete')}
-                        </Button>
-                    </Box>
-                    <Box
-                        ref={addButtonRef}
-                        alpha={canAdd ? 1 : 0.5}
-                        layout={{ width: 145, height: 25 }}
-                    >
-                        <Button
-                            variant="3"
-                            disabled={!canAdd}
-                            onPointerTap={() => toggleWiredInspectionCreateBubble(send)}
-                            layout={{ width: 145, height: 25 }}
-                        >
-                            {t('wiredmenu.inspection.add', 'wiredmenu.inspection.add')}
-                        </Button>
-                    </Box>
-                </Box>
+                <WiredVariableActionButtons
+                    canDelete={canDelete}
+                    canAdd={canAdd}
+                    onDelete={() => deleteWiredInspectedVariable(send)}
+                    onAdd={() => toggleWiredInspectionCreateBubble(send)}
+                    addButtonRef={addButtonRef}
+                    layout={{ top: 326, height: 30 }}
+                />
                 {createBubble && (
                     <WiredMenuCreateVariableBubble
                         variables={createVariables}

@@ -26,7 +26,7 @@ import { useState } from 'react';
 
 import { useConfigValue, useSystemStore, useTranslation } from '#base/context/system';
 import { Box, BoxLayout, FloatingPopup, getGlobalRect, GlobalRect, Region, TemplateBindings, TemplateWindow, TemplateWindows, useLayoutSize, useTextureFromUrl } from '#base/theme';
-import { getBadgeDesc, getBadgeName } from '#base/utils';
+import { getBadgeDesc, getBadgeName, shouldShowBadgeOwnerCount } from '#base/utils';
 
 export interface InfostandBadgeViewProps {
     /** A badge code, or for a group badge the badge data string. */
@@ -52,9 +52,6 @@ const DETAILS_BOTTOM_SPACING = 6;
 
 /** `rarity.textColor = 16777215`. */
 const RARITY_TEXT_COLOR = 0xffffff;
-
-/** `§_-ge§.shouldShowOwnerCount`: an owner count is shown between 1 and 999. */
-const MAX_SHOWN_OWNER_COUNT = 1000;
 
 interface BadgeDetailsProps {
     anchor: GlobalRect;
@@ -133,7 +130,7 @@ export const InfostandBadgeView = ({ code, group = false, ownerCount, rarityId, 
 
         const badgeCode = code ?? '';
         const rarityLabel = (rarityId !== undefined) ? t(getBadgeRarityLabelKey(rarityId, uncommonRarityEnabled)) : undefined;
-        const showsOwnerCount = (ownerCount !== undefined) && (ownerCount > 0) && (ownerCount < MAX_SHOWN_OWNER_COUNT);
+        const showsOwnerCount = shouldShowBadgeOwnerCount(ownerCount);
 
         return {
             name: getBadgeName(t, badgeCode),

@@ -61,19 +61,21 @@ export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
     const maxStack = useRef<number>(INITIAL_MAX_STACK);
 
     const updateFade = (time: number) => {
-        if (!onClose || !isFading.current || !bubbleRef?.current) return;
+        if (!isFading.current || !bubbleRef?.current) return;
 
         fadeTime.current += time;
 
-        const newOpacity = ((1 - (fadeTime.current / FADE_LENGTH)) * 1);
+        const newOpacity = (1 - (fadeTime.current / FADE_LENGTH));
 
         if (newOpacity <= 0) {
+            bubbleRef.current.alpha = 0;
+
             if (onClose) onClose();
 
             return;
         }
 
-        bubbleRef.current.alpha = newOpacity ?? 0;
+        bubbleRef.current.alpha = newOpacity;
     };
 
     /** Returns false while the bubble has no measured size yet. */
@@ -130,13 +132,16 @@ export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
         if (updatePosition(bounds, location) && !isFading.current) bubbleRef.current.alpha = 1;
     });
 
+    // The fade counts down afresh for every object the bubble follows.
     useEffect(() => {
+        isFading.current = false;
+
         if (!fades) return;
 
         const timeout = setTimeout(() => isFading.current = true, FADE_DELAY);
 
         return () => clearTimeout(timeout);
-    }, [ fades ]);
+    }, [ fades, objectId, category ]);
 
     // A bubble moved to another object starts following it from scratch, out of sight until placed.
     // A layout effect, so the ticker cannot draw it at the origin before this runs.

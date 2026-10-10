@@ -7,10 +7,10 @@ import { CatalogPurchaseRequest, useCatalogStore, useCatalogStoreApi } from '#ba
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useSystemStore, useTranslation } from '#base/context/system';
 import { ClientGates, useClientGate, useOwnUserFigure, useOwnUserGender, useUserStore } from '#base/context/user';
+import { useFurnitureImageTexture } from '#base/hooks';
 import { Box, LayoutImage, TemplateWindow, ThemeImage, useAvatarImageTexture, useTemplateLibrary } from '#base/theme';
 
 import { CATALOG_LIBRARY, catalogTemplateId } from '../page/catalogTemplates';
-import { useFurnitureImageTexture } from '../useFurnitureImageTexture';
 
 /** `MAX_SUGGESTIONS`. */
 const MAX_SUGGESTIONS = 10;

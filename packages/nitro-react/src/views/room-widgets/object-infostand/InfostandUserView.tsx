@@ -8,6 +8,7 @@ import { useRoomStore } from '#base/context/room';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { useRoomUserData } from '#base/hooks';
 import { LayoutImage, TemplateBindings, TemplateWindow, TemplateWindows, ThemeImage, useAvatarImageTexture } from '#base/theme';
+import { isHandItem } from '#base/utils';
 
 import { InfostandBadgeView } from './InfostandBadgeView';
 
@@ -15,9 +16,6 @@ export interface InfostandUserViewProps {
     objectData: ISimpleRoomObjectData;
     onClose: () => void;
 }
-
-/** A carried item id at or above this is not a hand item with a name. */
-const MAX_CARRY_ITEM = 999999;
 
 /** `RelationshipStatusEnum.displayableStatuses`, in the order the infostand lists them. */
 const RELATIONSHIP_ROWS: { type: number; name: string }[] = [
@@ -140,7 +138,7 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
 
     const badgeInSlot = (slot: number) => info.badges.find(badge => badge.badgeIndex === (slot + 1));
     const showsCrocodile = info.motto.toLowerCase().includes(CROCODILE_MOTTO);
-    const carriesItem = (info.carryItem > 0) && (info.carryItem < MAX_CARRY_ITEM);
+    const carriesItem = isHandItem(info.carryItem);
     // `setMotto`: your own empty motto reads as the change prompt, in the edited colour.
     const showsMottoPrompt = info.isOwnUser && !info.motto.length;
     const showsBadgesRank = badgesRank >= 0;

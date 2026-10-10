@@ -5,7 +5,7 @@ import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 import { useWebSocketContext } from '#base/context/communication';
 import { roomStore, useRoom, useRoomSelectedObject, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
 import { useOwnIsAnyRoomController, useOwnUserId } from '#base/context/user';
-import { isFurnitureOwnedBy } from '#base/utils';
+import { getValidRoomObjectDirection, isFurnitureOwnedBy, setObjectAlphaMultiplier } from '#base/utils';
 
 import { useRoomObjectSelect } from './useRoomObjectSelect';
 import { useRoomObjectValidation } from './useRoomObjectValidation';
@@ -28,7 +28,7 @@ export const useRoomObjectModify = () => {
     const playTestMode = useRoomStore(x => x.playTestMode);
     const { setSelectedObject } = useRoomSelectedObjectActions();
     const { resetSelectedObject } = useRoomObjectSelect();
-    const { setObjectAlphaMultiplier, isValidLocation, getValidRoomObjectDirection } = useRoomObjectValidation();
+    const { isValidLocation } = useRoomObjectValidation();
     const { send } = useWebSocketContext();
 
     /**

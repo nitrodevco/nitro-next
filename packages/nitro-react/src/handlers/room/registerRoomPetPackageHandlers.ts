@@ -1,9 +1,9 @@
 import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
 import { OpenPetPackageRequestedMessage, OpenPetPackageResultMessage } from '@nitrodevco/nitro-packets';
 
-import { PET_PACKAGE_WIDGET } from '#base/components/room/widgets/furniture/furnitureWidgetData';
 import { WebSocketConnection } from '#base/context/communication';
 import { roomStore } from '#base/context/room';
+import { PET_PACKAGE_WIDGET } from '#base/utils';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 

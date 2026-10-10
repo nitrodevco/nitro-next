@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { closeRentConfirmation, confirmRentConfirmation } from '#base/commands';
 import { useCatalogPurchaseStore } from '#base/context/catalog-purchase';
 import { useWebSocketContext } from '#base/context/communication';
+import { useFurnitureImageTexture } from '#base/hooks';
 import { Box, TemplateWindow } from '#base/theme';
 
 import { catalogTemplateId } from '../page/catalogTemplates';
-import { useFurnitureImageTexture } from '../useFurnitureImageTexture';
 
 /**
  * Flash's `RentConfirmationWindow` on `rent_confirmation`, built when the server answers the rent

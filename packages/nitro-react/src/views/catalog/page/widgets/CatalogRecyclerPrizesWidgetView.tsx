@@ -8,8 +8,8 @@ import { requestRecyclerPrizeTable } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { RecyclerPrize, RecyclerPrizeLevel, useRecyclerStore } from '#base/context/recycler';
 import { useSystemStore, useTranslation } from '#base/context/system';
+import { useFurnitureImageTexture } from '#base/hooks';
 import { Box, ThemeImage, useTemplateLibrary } from '#base/theme';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 
 import { CATALOG_LIBRARY, catalogTemplateId } from '../catalogTemplates';
 import { useCatalogWidgetView } from '../catalogWidgetView';

@@ -2,11 +2,11 @@ import { NitroLogger, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, Room
 import { GetCraftableProductsComposer, GetGuestRoomComposer, GetGuildFurniContextMenuInfoComposer, GetJukeboxPlayListComposer, GetNowPlayingComposer, GetResolutionAchievementsComposer, GetUserSongDisksComposer, GetYoutubeDisplayStatusComposer, RentableSpaceStatusComposer, UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 
 import { openClientLink } from '#base/commands';
-import { PRESENT_OPENED_WIDGET, PresentOpenedData, readFurnitureLink } from '#base/components/room/widgets/furniture/furnitureWidgetData';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomStore, useRoomWidgetActions } from '#base/context/room';
 import { useTranslation, useWindowActions } from '#base/context/system';
 import { LayoutImage } from '#base/theme';
+import { PRESENT_OPENED_WIDGET, PresentOpenedData, readFurnitureLink } from '#base/utils';
 
 /**
  * The bridge between a room object asking for its dialog and the UI opening it - the Flash

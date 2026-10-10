@@ -1,10 +1,11 @@
 import { TemplateWindow } from '#base/theme';
-import { GlyphNumber } from '#base/views/room-widgets/object-infostand/UniqueItemPlaqueView';
+
+import { LimitedItemNumber } from './LimitedItemNumber';
 
 /** `rarity_item_overlay_plaque_number_bitmap`'s width, the slot the level is centred in. */
 const NUMBER_WIDTH = 24;
 
-export interface CatalogRarityItemGridOverlayViewProps {
+export interface RarityItemGridOverlayViewProps {
     /** `rarityLevel`. */
     rarityLevel: number;
 }
@@ -15,13 +16,13 @@ export interface CatalogRarityItemGridOverlayViewProps {
  * window. `set rarityLevel` fills `rarity_item_overlay_plaque_number_bitmap` with
  * `LimitedItemNumberBitmap.createBitmap`, as the limited plaque draws its number.
  */
-export const CatalogRarityItemGridOverlayView = ({ rarityLevel }: CatalogRarityItemGridOverlayViewProps) => (
+export const RarityItemGridOverlayView = ({ rarityLevel }: RarityItemGridOverlayViewProps) => (
     <TemplateWindow
         id="habbo-window-manager-com/rarity_item_overlay_griditem_xml"
         bindings={{
             rarity_item_overlay_plaque_number_bitmap: {
                 children: (
-                    <GlyphNumber
+                    <LimitedItemNumber
                         value={rarityLevel}
                         width={NUMBER_WIDTH}
                         layout={{ left: 0, top: 0 }}

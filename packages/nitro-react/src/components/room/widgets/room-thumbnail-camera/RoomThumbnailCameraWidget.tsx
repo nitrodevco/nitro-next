@@ -18,9 +18,9 @@ import { Matrix, Rectangle, RenderTexture, Sprite } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
 import { useWebSocketContext } from '#base/context/communication';
-import { roomStore, useRoom } from '#base/context/room';
+import { getRoom, useRoom } from '#base/context/room';
 import { useConfigValue, useIsWindowVisible, useWindowActions } from '#base/context/system';
-import { userStore } from '#base/context/user';
+import { useUserStore } from '#base/context/user';
 import { GetSoundManager, HabboSoundTypesEnum } from '#base/sound';
 import { TemplateWindow, useTemplateFrame } from '#base/theme';
 import { buildRenderRoomMessageData } from '#base/utils';
@@ -32,9 +32,9 @@ const TEMPLATE = 'habbo-room-ui-com/iro_room_thumbnail_camera_xml';
 /** `viewfinder`'s size in the layout. */
 const VIEWFINDER_SIZE = 110;
 
-/** `startTakingPhoto` / `onRoomZoomed`: the camera works at normal zoom and up, upright. */
+/** `startTakingPhoto` / `onRoomZoomed`: the camera works at normal zoom and up, upright - checked every frame. */
 const isNormalZoom = () => {
-    const canvas = roomStore.getState().room?.canvas;
+    const canvas = getRoom()?.canvas;
 
     return !canvas || ((canvas.scale >= 1) && !canvas.isFlipped);
 };
@@ -51,6 +51,8 @@ export const RoomThumbnailCameraWidget = () => {
 const RoomThumbnailCameraView = () => {
     const { hideWindow } = useWindowActions();
     const { send } = useWebSocketContext();
+    const room = useRoom();
+    const securityLevel = useUserStore(x => x.securityLevel);
     const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
     const groupBadgeUrl = useConfigValue<string>('group.badge.url') ?? '';
     const close = () => hideWindow('room_thumbnail_camera');
@@ -92,7 +94,6 @@ const RoomThumbnailCameraView = () => {
     const capture = async () => {
         GetSoundManager().playSound(HabboSoundTypesEnum.CAMERA_SHUTTER);
 
-        const room = roomStore.getState().room;
         const canvas = room?.canvas;
         const sprite = viewfinder.current;
 
@@ -107,7 +108,7 @@ const RoomThumbnailCameraView = () => {
 
         setSent(true);
 
-        const data = await buildRenderRoomMessageData({ planes, sprites, modifiers, roomId: room.roomId, topSecurityLevel: userStore.getState().securityLevel, time: Date.now() });
+        const data = await buildRenderRoomMessageData({ planes, sprites, modifiers, roomId: room.roomId, topSecurityLevel: securityLevel, time: Date.now() });
 
         send(new RenderRoomThumbnailComposer({ data }));
     };

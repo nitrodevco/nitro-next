@@ -17,16 +17,15 @@ import {
 } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useFriendsActions, useFriendsStore } from '#base/context/friend';
-import { useConfigValue, useSystemActions, useTranslation, useWindowParams } from '#base/context/system';
-import { useFriendRequests, useOfflineFriends, useOnlineFriends, useOwnUserId, userStore, useUserMessengerActions, useUserStore } from '#base/context/user';
+import { useConfigValue, useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context/system';
+import { useFriendRequests, useOfflineFriends, useOnlineFriends, useOwnUserId, useUserMessengerActions, useUserStore } from '#base/context/user';
 import { getGlobalRect, getStoredFramePosition, GlobalRect, LayoutWindow, TemplateBindings, TemplateFrameOptions, TemplateItem, TemplateWindow, TemplateWindows, useTemplate } from '#base/theme';
+import { getLowestPoint, layoutChildrenInArea } from '#base/views/shared/flashWindowUtils';
 
 import { buttonImage, FRIEND_LIST_PAGE_SIZE, FriendCategoryRow, friendListImage, FriendListTip, friendsTabRows, requestsTabRows, searchTabRows } from './friendListEntries';
 import { FriendListRelationshipChooser } from './FriendListRelationshipChooser';
 
-export type FriendListViewWindowParams = { tab?: '' | 'friends' | 'requests' | 'search' };
-
-type FriendListTabName = Exclude<FriendListViewWindowParams['tab'], '' | undefined>;
+type FriendListTabName = Exclude<WindowParams<'friendlist'>['tab'], '' | undefined>;
 
 const LIBRARY = 'habbo-friend-list-com';
 
@@ -61,28 +60,6 @@ const WINDOW_CHROME_HEIGHT = 62;
 /** `refreshScrollBarVisibility`: the list is 22 narrower while it scrolls; the rows are 20 high. */
 const SCROLLBAR_ROOM = 22;
 const ENTRY_HEIGHT = 20;
-
-/** `Util.getLowestPoint`: the bottom of a window's lowest visible child. */
-const lowestPoint = (window: LayoutWindow) => window.children.reduce((lowest, child) => (child.visible ? Math.max(lowest, child.y + child.height) : lowest), 0);
-
-/** `Util.layoutChildrenInArea`: the visible children left to right, wrapped onto rows of the given height. */
-const layoutChildrenInArea = (window: LayoutWindow, width: number, rowHeight: number) => {
-    let x = 0;
-    let y = 0;
-
-    for (const child of window.children) {
-        if (!child.visible) continue;
-
-        if ((x > 0) && ((x + child.width) > width)) {
-            x = 0;
-            y += rowHeight;
-        }
-
-        child.setX(x);
-        child.setY(y);
-        x += child.width;
-    }
-};
 
 /** `IItemListWindow.getListItemAt`: a list's items are its `container`'s children. */
 const listItems = (list: LayoutWindow): readonly LayoutWindow[] => (('container' in list) ? (list.container as LayoutWindow).children : list.children);
@@ -125,6 +102,7 @@ export const FriendListView = () => {
     const sentFriendRequestIds = useUserStore(x => x.sentFriendRequestIds);
     const ownUserId = useOwnUserId();
     const highlightedTabs = useUserStore(x => x.friendListTabsHighlighted);
+    const friendRequestsListShown = useUserStore(x => x.friendRequestsListShown);
     const { clearAnsweredFriendRequests, markFriendRequestsListShown, setFriendListTabHighlighted } = useUserMessengerActions();
 
     const messagesPersisted = useConfigValue<boolean>('friend_list.persistent_message_status.enabled') === true;
@@ -205,7 +183,7 @@ export const FriendListView = () => {
      * tab opens, or closes when it was the open one.
      */
     const clickTab = (name: FriendListTabName) => {
-        if (userStore.getState().friendRequestsListShown) clearAnsweredFriendRequests();
+        if (friendRequestsListShown) clearAnsweredFriendRequests();
 
         setRelationshipDropdownId(0);
         updateWindowParams('friendlist', { tab: (activeTab === name) ? '' : name });
@@ -486,8 +464,8 @@ export const FriendListView = () => {
 
                 if (pager?.visible) {
                     layoutChildrenInArea(pager, pager.width, 15);
-                    pager.setHeight(lowestPoint(pager));
-                    row.setHeight(Math.max(lowestPoint(row), ENTRY_HEIGHT));
+                    pager.setHeight(getLowestPoint(pager));
+                    row.setHeight(Math.max(getLowestPoint(row), ENTRY_HEIGHT));
                 }
             }
         }

@@ -1,8 +1,8 @@
 import { PresentOpenedMessage } from '@nitrodevco/nitro-packets';
 
-import { PRESENT_OPENED_WIDGET, PresentOpenedData } from '#base/components/room/widgets/furniture/furnitureWidgetData';
 import { WebSocketConnection } from '#base/context/communication';
 import { roomStore } from '#base/context/room';
+import { PRESENT_OPENED_WIDGET, PresentOpenedData } from '#base/utils';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 

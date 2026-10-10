@@ -12,13 +12,13 @@ import { useCollectiblesStore, wrapBaseItem } from '#base/context/collectibles';
 import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import { Border, Button, Icon, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { CollectiblesPreviewBackground } from './CollectiblesCollectionView';
 import { CollectiblesItemCell } from './CollectiblesItemCell';
 import { CollectiblesLoadingView } from './CollectiblesLoadingView';
 import { CollectiblesNavigationItem } from './CollectiblesNavigationItem';
 import { COLLECTIBLES_HUB_PREVIEW_SLOTS } from './collectiblesPreviewSlots';
-import { CollectiblesProductPreview } from './CollectiblesProductPreview';
 
 export const CollectiblesShopTab = () => {
     const t = useTranslation();

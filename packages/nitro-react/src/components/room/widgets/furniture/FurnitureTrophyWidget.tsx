@@ -1,9 +1,8 @@
 import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { parseTrophyData } from '#base/utils';
 import { FurnitureTrophyView } from '#base/views/room-widgets/furniture/FurnitureTrophyView';
-
-import { parseTrophyData } from './furnitureWidgetData';
 
 /**
  * The trophy engraving dialog. Everything it shows is already on the object: `furniture_data`

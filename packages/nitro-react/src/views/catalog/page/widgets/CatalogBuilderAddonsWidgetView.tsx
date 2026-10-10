@@ -1,25 +1,13 @@
-import { Template, TemplateElement } from '@nitrodevco/nitro-theme';
 import { useState } from 'react';
 
 import { hasBuilderSecondsLeft, showPurchaseConfirmation } from '#base/commands';
-import { CatalogPage, useCatalogStoreApi } from '#base/context/catalog';
+import { useCatalogStoreApi } from '#base/context/catalog';
 import { useSystemStore, useTranslation } from '#base/context/system';
-import { findTemplateChild, useTemplateLibrary } from '#base/theme';
+import { useTemplateLibrary } from '#base/theme';
 
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
-import { CATALOG_LIBRARY, resolveCatalogPageTemplate } from '../catalogTemplates';
+import { CATALOG_LIBRARY, findCatalogListPrototype } from '../catalogTemplates';
 import { useCatalogWidgetView } from '../catalogWidgetView';
-
-/**
- * `removeListItemAt(0)`: the row the page's layout holds as the first item of its list, the
- * prototype every offer's row is cloned from.
- */
-const findListPrototype = (templates: Record<string, Template> | undefined, page: CatalogPage, list: string): TemplateElement | undefined => {
-    const templateId = resolveCatalogPageTemplate(templates, page.layoutCode);
-    const template = (templates && templateId) ? templates[templateId] : undefined;
-
-    return template ? findTemplateChild(template.elements, list)?.children[0] : undefined;
-};
 
 /**
  * The Builders Club add-ons list - the `builderAddonsWidget` container of
@@ -39,7 +27,7 @@ export const CatalogBuilderAddonsWidgetView = ({ page }: CatalogWidgetProps) => 
     const productData = useSystemStore(x => x.productData);
     const t = useTranslation();
     const templates = useTemplateLibrary(CATALOG_LIBRARY);
-    const prototype = findListPrototype(templates, page, 'addons_list');
+    const prototype = findCatalogListPrototype(templates, page, 'addons_list');
 
     useCatalogWidgetView(prototype && {
         bindings: {

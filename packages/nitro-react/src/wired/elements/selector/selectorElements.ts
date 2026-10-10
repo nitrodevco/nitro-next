@@ -12,6 +12,7 @@
  * This file imports views, so it is kept out of the `#base/wired` barrel (see
  * `WiredElementRegistry`); inside `src/wired`, import by relative path.
  */
+import { UsersInGroupView } from '#base/views/wired-setup/elements/condition/ActorIsGroupMemberView';
 import { FurniByTypeView } from '#base/views/wired-setup/elements/selector/FurniByTypeView';
 import { FurniOnFurniView } from '#base/views/wired-setup/elements/selector/FurniOnFurniView';
 import { FurniWithAltitudeView } from '#base/views/wired-setup/elements/selector/FurniWithAltitudeView';
@@ -20,7 +21,6 @@ import { InNeighborhoodView } from '#base/views/wired-setup/elements/selector/In
 import { RemoteSelectorView } from '#base/views/wired-setup/elements/selector/RemoteSelectorView';
 import { UsersByNameView } from '#base/views/wired-setup/elements/selector/UsersByNameView';
 import { UsersByTypeView } from '#base/views/wired-setup/elements/selector/UsersByTypeView';
-import { UsersInGroupView } from '#base/views/wired-setup/elements/selector/UsersInGroupView';
 import { UsersInTeamView } from '#base/views/wired-setup/elements/selector/UsersInTeamView';
 import { UsersWithHanditemView } from '#base/views/wired-setup/elements/selector/UsersWithHanditemView';
 import { WithVariableView } from '#base/views/wired-setup/elements/selector/WithVariableView';

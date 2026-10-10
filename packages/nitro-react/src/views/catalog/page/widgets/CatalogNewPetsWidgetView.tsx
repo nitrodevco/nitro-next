@@ -1,23 +1,20 @@
 import { IPetCustomPart } from '@nitrodevco/nitro-api';
 import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { APPROVE_NAME_TYPE_PET, approveName, getSellablePetPalettes, purchaseWillBeGift, showPurchaseConfirmation } from '#base/commands';
+import { getSellablePetPalettes } from '#base/commands';
 import { CatalogSellablePetPalette, CatalogWidgetEventEnum, getCatalogPageText, PetImageRequest, useCatalogStore, useCatalogStoreApi } from '#base/context/catalog';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigData, useTranslation, useWindowActions } from '#base/context/system';
-import { useCatalogWidgetEvent } from '#base/hooks';
+import { useCatalogWidgetEvent, usePetImageTexture } from '#base/hooks';
 import { ThemeImage, useTemplateLibrary } from '#base/theme';
-import { getPetPurchaseParameter, getPetRaceLocalizationKey, getPetTypeIndexFromProduct, parseSellablePetPalettes, PET_NAME_ERRORS } from '#base/utils';
+import { CATALOG_NEW_PETS_FIRST_TYPE, getPetPurchaseParameter, getPetRaceLocalizationKey, getPetTypeIndexFromProduct, parseSellablePetPalettes } from '#base/utils';
 
-import { usePetImageTexture } from '../../usePetImageTexture';
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { CATALOG_LIBRARY } from '../catalogTemplates';
 import { useCatalogWidgetView } from '../catalogWidgetView';
 import { priceBoxItem } from './catalogPrice';
-
-/** The first pet type this page sells; `petsWidget` has the ones below. */
-const NEW_PETS_FIRST_TYPE = 8;
+import { usePetNamePurchase } from './usePetNamePurchase';
 
 /** `MAX_PALETTES`: the colour grid gets at most this many palettes' swatches. */
 const MAX_PALETTES = 20;
@@ -61,7 +58,7 @@ export const CatalogNewPetsWidgetView = ({ page }: CatalogWidgetProps) => {
     const firstOffer = page.offers[0];
     const productCode = firstOffer?.localizationId ?? '';
     const petType = firstOffer ? getPetTypeIndexFromProduct(productCode) : -1;
-    const initialised = !!firstOffer && (petType >= NEW_PETS_FIRST_TYPE);
+    const initialised = !!firstOffer && (petType >= CATALOG_NEW_PETS_FIRST_TYPE);
     const cachedPalettes = useCatalogStore(x => x.sellablePetPalettes[productCode]);
     const [ availablePalettes, setAvailablePalettes ] = useState<CatalogSellablePetPalette[] | undefined>(() => parseSellablePetPalettes(cachedPalettes, petType));
     const [ paletteIndex, setPaletteIndex ] = useState(() => ((availablePalettes && availablePalettes.length) ? 0 : -1));
@@ -69,7 +66,6 @@ export const CatalogNewPetsWidgetView = ({ page }: CatalogWidgetProps) => {
     const [ imageRequest, setImageRequest ] = useState<PetImageRequest | undefined>(undefined);
     const [ breedText, setBreedText ] = useState<string | undefined>(undefined);
     const [ priceShown, setPriceShown ] = useState(false);
-    const waitingForApproval = useRef(false);
     const store = useCatalogStoreApi();
     const { send } = useWebSocketContext();
     const { showAlert } = useWindowActions();
@@ -157,24 +153,17 @@ export const CatalogNewPetsWidgetView = ({ page }: CatalogWidgetProps) => {
         return getPetPurchaseParameter(name, availablePalettes[paletteIndex].paletteId, PET_COLOR);
     };
 
-    /** `onPurchase`: the buy button asks for the name's approval first. */
-    const onPurchase = () => {
-        if (getPurchaseParameters() === '') return;
-
-        waitingForApproval.current = true;
-
-        approveName(send, name, APPROVE_NAME_TYPE_PET);
-    };
-
-    const onPurchaseRef = useRef(onPurchase);
-
-    useEffect(() => {
-        onPurchaseRef.current = onPurchase;
+    const { overridePurchase } = usePetNamePurchase(page, {
+        initialised,
+        name,
+        offer: firstOffer,
+        getPurchaseParameters,
+        getPetImageRequest: () => getPetImageRequest(availablePalettes, paletteIndex),
     });
 
     /** `onWidgetsInitialized`: take the buy button, select the page's pet, send the palettes' swatches. */
     const onWidgetsInitialized = () => {
-        page.events.dispatchEvent({ type: CatalogWidgetEventEnum.PURCHASE_OVERRIDE, callback: () => onPurchaseRef.current() });
+        overridePurchase();
 
         if (firstOffer) page.events.dispatchEvent({ type: CatalogWidgetEventEnum.SELECT_PRODUCT, offer: firstOffer });
 
@@ -183,43 +172,12 @@ export const CatalogNewPetsWidgetView = ({ page }: CatalogWidgetProps) => {
 
     const petTexture = usePetImageTexture(imageRequest, () => onWidgetsInitialized());
 
-    /** `constructErrorMessage`: the reason's text, or its `.additionalInfo` text when the server said more. */
-    const constructErrorMessage = (reason: string, nameValidationInfo: string) => {
-        const key = `catalog.alert.petname.${reason}`;
-        const additionalInfo = t(`${key}.additionalInfo`, '', { additional_info: nameValidationInfo });
-
-        return (nameValidationInfo.length && additionalInfo.length) ? additionalInfo : t(key);
-    };
-
     useCatalogWidgetEvent(page, CatalogWidgetEventEnum.SELECT_PRODUCT, () => {
         if (initialised) updateImage(availablePalettes, paletteIndex);
     });
 
     useCatalogWidgetEvent(page, CatalogWidgetEventEnum.COLOUR_INDEX, (event) => {
         if (initialised) selectedPalette(availablePalettes, event.index);
-    });
-
-    useCatalogWidgetEvent(page, CatalogWidgetEventEnum.APPROVE_NAME_RESULT, (event) => {
-        if (!initialised || !waitingForApproval.current) return;
-
-        waitingForApproval.current = false;
-
-        if (event.result !== 0) purchaseWillBeGift(store, false);
-
-        const reason = PET_NAME_ERRORS[event.result];
-
-        if (reason) {
-            showAlert(t('catalog.alert.purchaseerror.title'), constructErrorMessage(reason, event.nameValidationInfo));
-
-            return;
-        }
-
-        const extraParameter = getPurchaseParameters();
-
-        if ((extraParameter === '') || !firstOffer) return;
-
-        // Flash passes `getPetImage()` as the eighth argument: the dialog shows the pet as picked.
-        showPurchaseConfirmation(store, firstOffer, page.pageId, extraParameter, 1, undefined, undefined, getPetImageRequest(availablePalettes, paletteIndex));
     });
 
     useCatalogWidgetEvent(page, CatalogWidgetEventEnum.WIDGETS_INITIALIZED, () => {

@@ -26,7 +26,6 @@ import { HasStackedFurnisView } from '#base/views/wired-setup/elements/condition
 import { HasVariableView } from '#base/views/wired-setup/elements/condition/HasVariableView';
 import { InputSourceQuantityView } from '#base/views/wired-setup/elements/condition/InputSourceQuantityView';
 import { LevelMatchesView } from '#base/views/wired-setup/elements/condition/LevelMatchesView';
-import { PerformingActionView } from '#base/views/wired-setup/elements/condition/PerformingActionView';
 import { StatesMatchView } from '#base/views/wired-setup/elements/condition/StatesMatchView';
 import { TeamHasScoreView } from '#base/views/wired-setup/elements/condition/TeamHasScoreView';
 import { TeamIsWinningView } from '#base/views/wired-setup/elements/condition/TeamIsWinningView';
@@ -38,6 +37,7 @@ import { UserCountInView } from '#base/views/wired-setup/elements/condition/User
 import { UserDirectionView } from '#base/views/wired-setup/elements/condition/UserDirectionView';
 import { VariableAgeView } from '#base/views/wired-setup/elements/condition/VariableAgeView';
 import { VariableValueView } from '#base/views/wired-setup/elements/condition/VariableValueView';
+import { PerformActionView } from '#base/views/wired-setup/elements/trigger/PerformActionView';
 
 import { defineWiredElement, type WiredElementEntry } from '../../WiredElement';
 import { actorHasHandItemCondition } from './ActorHasHandItem';
@@ -95,7 +95,7 @@ export const conditionElements: WiredElementEntry[] = [
     defineWiredElement(timeMatchesCondition, TimeMatchesView),
     defineWiredElement(dateMatchesCondition, DateMatchesView),
     defineWiredElement(teamIsWinningCondition, TeamIsWinningView),
-    defineWiredElement(performingActionCondition, PerformingActionView),
+    defineWiredElement(performingActionCondition, PerformActionView),
     defineWiredElement(teamHasScoreCondition, TeamHasScoreView),
     defineWiredElement(clockTimeMatchesCondition, ClockTimeMatchesView),
     defineWiredElement(furniHasAltitudeCondition, FurniHasAltitudeView),

@@ -51,6 +51,15 @@ export interface InventoryFurniGroup {
     hasUnseenItems: boolean;
 }
 
+/** The `FurnitureItem` categories of the three room layout papers (`§_-72Z§.isWallpaper` / `isFloor` / `isLandscape`). */
+export const INVENTORY_FURNI_CATEGORY_WALLPAPER = 2;
+export const INVENTORY_FURNI_CATEGORY_FLOOR = 3;
+export const INVENTORY_FURNI_CATEGORY_LANDSCAPE = 4;
+
+/** A room layout paper - previewed on the room's planes and applied rather than placed. */
+export const isRoomLayoutCategory = (category: number): boolean =>
+    (category === INVENTORY_FURNI_CATEGORY_WALLPAPER) || (category === INVENTORY_FURNI_CATEGORY_FLOOR) || (category === INVENTORY_FURNI_CATEGORY_LANDSCAPE);
+
 /** `FurnitureItem`'s categories the group rules name (`FurniModel.addOrUpdateItem`, `GroupItem.getTotalCount`). */
 export const INVENTORY_FURNI_CATEGORY_POST_IT = 5;
 export const INVENTORY_FURNI_CATEGORY_POSTER = 6;

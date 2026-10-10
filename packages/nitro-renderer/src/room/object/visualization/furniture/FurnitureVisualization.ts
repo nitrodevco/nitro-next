@@ -21,7 +21,6 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
     private static VARIABLE_FX_STACK_LAYER: number = 0;
     private static VARIABLE_FX_STACK_GAP: number = 4;
     private static VARIABLE_FX_MANAGER_UPDATE_ID_UNSET: number = -2;
-    private static NO_FILTERS: Filter[] = [];
 
     protected _data: FurnitureVisualizationData | undefined = undefined;
     protected _type: string | undefined = undefined;

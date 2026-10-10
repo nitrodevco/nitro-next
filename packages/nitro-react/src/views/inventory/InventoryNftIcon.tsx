@@ -7,7 +7,7 @@ import { ITradeNftAsset } from '@nitrodevco/nitro-packets';
 import { getCollectiblePreviewIcon } from '#base/commands';
 import { wrapBaseItem } from '#base/context/collectibles';
 import { LayoutImage } from '#base/theme';
-import { CollectiblesProductPreview } from '#base/views/collectibles/CollectiblesProductPreview';
+import { CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 /** The thumb's `nft_icon`: 40x40. */
 const ICON_SIZE = 40;

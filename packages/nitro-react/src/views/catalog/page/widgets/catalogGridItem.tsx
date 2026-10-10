@@ -20,14 +20,11 @@ import { CatalogPricingModelEnum, FurnitureTypeEnum, IProduct, IPurchasableOffer
 import { Template, TemplateBindings, TemplateItem } from '@nitrodevco/nitro-theme';
 import { FederatedPointerEvent } from 'pixi.js';
 
-import { EFFECT_CLASSID_NINJA_DISAPPEAR, getCurrencyIconStyle, getOfferProduct } from '#base/utils';
+import { CURRENCY_TYPE_SILVER, EFFECT_CLASSID_NINJA_DISAPPEAR, getCurrencyIconStyle, getOfferProduct } from '#base/utils';
+import { LimitedItemGridOverlayView } from '#base/views/shared/LimitedItemGridOverlayView';
 
 import { CatalogProductIconView } from '../../CatalogProductIconView';
 import { catalogTemplateId } from '../catalogTemplates';
-import { CatalogLimitedItemGridOverlayView } from './CatalogLimitedItemGridOverlayView';
-
-/** `§_-u1R§`'s silver unit, which `createCurrencyIndicators` asks the icon style for. */
-const UNIT_SILVER = 1000;
 
 /** `ItemGridCatalogWidget.select`: `border_outline`'s colour, in the normal catalogue and the builders club. */
 export const GRID_HILIGHT_NORMAL = 6538729;
@@ -113,7 +110,7 @@ export const catalogGridItem = (offer: IPurchasableOffer, key: string, options: 
         multiContainer: { visible: !!product && (product.productCount > 1) },
         multiCounter: { caption: product ? `x${product.productCount}` : '' },
         unique_item_background_bitmap: { visible: isLimited },
-        unique_item_overlay_container: isLimited && product ? { visible: true, children: <CatalogLimitedItemGridOverlayView serialNumber={product.uniqueSize} /> } : { visible: false },
+        unique_item_overlay_container: isLimited && product ? { visible: true, children: <LimitedItemGridOverlayView serialNumber={product.uniqueSize} /> } : { visible: false },
         unique_item_sold_out_bitmap: { visible: isLimited && !!product && (product.uniqueLeft === 0) },
     };
 
@@ -131,7 +128,7 @@ export const catalogGridItem = (offer: IPurchasableOffer, key: string, options: 
         } else {
             const [ amount, unit ] = (offer.priceInActivityPoints > 0)
                 ? [ offer.priceInActivityPoints, offer.activityPointType ]
-                : (offer.priceInSilver > 0) ? [ offer.priceInSilver, UNIT_SILVER ] : [ offer.priceInCredits, -1 ];
+                : (offer.priceInSilver > 0) ? [ offer.priceInSilver, CURRENCY_TYPE_SILVER ] : [ offer.priceInCredits, -1 ];
 
             bindings.amount_text_right = { caption: String(amount) };
             bindings.currency_indicator_bitmap_right = { style: String(getCurrencyIconStyle(unit, config, false)) };

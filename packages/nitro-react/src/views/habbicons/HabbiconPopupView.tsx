@@ -20,7 +20,7 @@ import { Container as PixiContainer } from 'pixi.js';
 import { formatHabbiconPrice, getHabbiconPriceCurrency, HabbiconEntryModel, HabbiconPopupMode, HabbiconPopupModeName, resolveHabbiconPopupMode } from '#base/context/habbicons';
 import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, Region, Shape, ThemeText } from '#base/theme';
-import { CatalogCurrencyIcon } from '#base/views/catalog/CatalogCurrencyIcon';
+import { CurrencyIcon } from '#base/views/shared/CurrencyIcon';
 
 import { HABBICON_POPUP_LIST_BOTTOM, HABBICON_POPUP_LIST_TOP, HABBICON_POPUP_POINTER_HEIGHT, HABBICON_POPUP_WIDTH, habbiconPopupParts } from './habbiconPopupPlacement';
 
@@ -115,7 +115,7 @@ export const HabbiconPopupView = ({ entry, x, y, onAction, onBuy, popupRef }: Ha
                                 verticalAlign="top"
                                 layout={{ marginTop: 6, flexShrink: 0 }}
                             />
-                            <CatalogCurrencyIcon
+                            <CurrencyIcon
                                 type={getHabbiconPriceCurrency(entry.priceActivityPoints, entry.activityPointType)}
                                 big={false}
                                 layout={{ width: 16, height: 16, marginTop: 8, flexShrink: 0 }}

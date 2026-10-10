@@ -25,10 +25,10 @@ import { AvatarGenderType, FurnitureTypeEnum, IProduct, RoomGeometryScaleType } 
 import { GetChatStyleLibrary } from '#base/chat';
 import { useHabbiconsStore } from '#base/context/habbicons';
 import { useConfigValue } from '#base/context/system';
+import { useFurnitureImageTexture } from '#base/hooks';
 import { Region, ThemeImage, useAvatarImageTexture } from '#base/theme';
 
 import { getFurniProductIconPlaceholder, getFurniProductIconUrl, pixelEffectIcon, SUBSCRIPTION_PRODUCT_ICON } from './catalogProductIcons';
-import { useFurnitureImageTexture } from './useFurnitureImageTexture';
 
 export interface CatalogProductIconViewProps {
     product: IProduct;

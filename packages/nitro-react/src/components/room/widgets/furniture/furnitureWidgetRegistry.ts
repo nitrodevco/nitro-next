@@ -1,6 +1,8 @@
 import { RoomObjectWidgetRequestEvent, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { ComponentType } from 'react';
 
+import { PET_PACKAGE_WIDGET, PRESENT_OPENED_WIDGET } from '#base/utils';
+
 import { FurnitureAreaHideWidget } from './FurnitureAreaHideWidget';
 import { FurnitureBackgroundColorWidget } from './FurnitureBackgroundColorWidget';
 import { FurnitureBadgeEngravingWidget } from './FurnitureBadgeEngravingWidget';
@@ -33,7 +35,6 @@ import { FurnitureStackHeightWidget } from './FurnitureStackHeightWidget';
 import { FurnitureStickieWidget } from './FurnitureStickieWidget';
 import { FurnitureTrophyWidget } from './FurnitureTrophyWidget';
 import { FurnitureVimeoWidget } from './FurnitureVimeoWidget';
-import { PET_PACKAGE_WIDGET, PRESENT_OPENED_WIDGET } from './furnitureWidgetData';
 import { FurnitureYoutubeWidget } from './FurnitureYoutubeWidget';
 
 /**

@@ -13,7 +13,8 @@
  * sends the id only while it is one of `ctx.guildMemberships` (`_groupDropdown.selected`).
  */
 import { WIRED_DROPDOWN_NO_SELECTION } from '../../common/expandableDropdown';
-import type { WiredElementDefinition } from '../../WiredElement';
+import type { WiredElementContext, WiredElementDefinition } from '../../WiredElement';
+import type { WiredTriggerable } from '../../WiredTriggerable';
 import { ConditionCodes } from './conditionCodes';
 
 /** `ActorIsGroupMember.REQUEST_TIMEOUT` - seconds between two group list requests. */
@@ -29,20 +30,26 @@ export interface ActorIsGroupMemberConditionForm {
     groupId: number;
 }
 
+/** `onEditStart` of `ActorIsGroupMember` and `selectors/UsersInGroup`: the picked group, or the room's. */
+export const createGroupMembershipForm = (triggerable: WiredTriggerable): ActorIsGroupMemberConditionForm => ({
+    groupType: (triggerable.stringParam !== '') ? ACTOR_IS_GROUP_MEMBER_PICKED_GROUP : ACTOR_IS_GROUP_MEMBER_ROOM_GROUP,
+    // `int(stringParam)`: anything that is not a number is 0.
+    groupId: (triggerable.stringParam === '') ? WIRED_DROPDOWN_NO_SELECTION : ((Number(triggerable.stringParam) | 0)),
+});
+
+/** `readStringParamFromForm` of both: the picked group's id while the dropdown has it selected, else empty. */
+export const readGroupMembershipStringParam = (form: ActorIsGroupMemberConditionForm, ctx: WiredElementContext): string => {
+    if (form.groupType !== ACTOR_IS_GROUP_MEMBER_PICKED_GROUP) return '';
+
+    if (!ctx.guildMemberships.some(guild => guild.groupId === form.groupId)) return '';
+
+    return form.groupId.toString();
+};
+
 export const actorIsGroupMemberCondition: WiredElementDefinition<ActorIsGroupMemberConditionForm> = {
     holder: 'condition',
     code: ConditionCodes.ACTOR_IS_GROUP_MEMBER,
     negativeCode: ConditionCodes.NOT_ACTOR_IS_GROUP_MEMBER,
-    createForm: triggerable => ({
-        groupType: (triggerable.stringParam !== '') ? ACTOR_IS_GROUP_MEMBER_PICKED_GROUP : ACTOR_IS_GROUP_MEMBER_ROOM_GROUP,
-        // `int(stringParam)`: anything that is not a number is 0.
-        groupId: (triggerable.stringParam === '') ? WIRED_DROPDOWN_NO_SELECTION : ((Number(triggerable.stringParam) | 0)),
-    }),
-    readStringParam: (form, ctx) => {
-        if (form.groupType !== ACTOR_IS_GROUP_MEMBER_PICKED_GROUP) return '';
-
-        if (!ctx.guildMemberships.some(guild => guild.groupId === form.groupId)) return '';
-
-        return form.groupId.toString();
-    },
+    createForm: createGroupMembershipForm,
+    readStringParam: readGroupMembershipStringParam,
 };

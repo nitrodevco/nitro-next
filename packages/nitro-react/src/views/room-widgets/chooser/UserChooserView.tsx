@@ -5,7 +5,7 @@ import { ChooserItem } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { useViewportSize } from '#base/hooks';
 import { TemplateWindow } from '#base/theme';
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '#base/views/wired-common/WiredTableView';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 
 /** `UsersView`'s columns. */
 const COLUMN_USER_NAME = 'name';
@@ -44,13 +44,13 @@ export const UserChooserView = ({ items, onChoose, onClose }: UserChooserViewPro
     const type = typeOfSelection(typeSelection);
     const rows = items.filter(item => (!needle.length || (item.lowerCaseName.indexOf(needle) !== -1)) && ((type <= 0) || (item.type === type)));
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: COLUMN_USER_NAME, title: t('new_user_chooser.col.name', 'new_user_chooser.col.name'), widthFactor: 0.65, alignment: 'left' },
         { id: COLUMN_TYPE, title: t('new_user_chooser.col.type', 'new_user_chooser.col.type'), widthFactor: 0.35, alignment: 'left' },
     ];
 
     // `UsersChooserTableObject.getTableCell`.
-    const getCell = (item: ChooserItem, columnId: string): WiredTableCell => ((columnId === COLUMN_USER_NAME)
+    const getCell = (item: ChooserItem, columnId: string): TableCell => ((columnId === COLUMN_USER_NAME)
         ? { text: item.name, inspectable: true }
         : { text: t(`new_user_chooser.usertype.${item.type}`) });
 
@@ -66,7 +66,7 @@ export const UserChooserView = ({ items, onChoose, onClose }: UserChooserViewPro
                 type_dropdown: { selection: typeSelection, onSelect: setTypeSelection },
                 table_container: {
                     children: (
-                        <WiredTableView
+                        <TableView
                             columns={columns}
                             rows={rows}
                             getRowId={item => `${item.type}-${item.id}`}

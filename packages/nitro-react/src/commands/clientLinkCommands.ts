@@ -4,7 +4,7 @@ import { ForwardToSomeRoomComposer, GetExtendedProfileByNameComposer, GetHabboGr
 import { WebSocketConnection } from '#base/context/communication';
 import { systemStore, WindowParams } from '#base/context/system';
 import { userStore } from '#base/context/user';
-import { getWiredHasReadPermission, getWiredMenuEnabled } from '#base/context/wired';
+import { getWiredHasReadPermission, getWiredMenuEnabled, WIRED_MENU_TAB_INSPECTION, WIRED_MENU_TAB_MONITOR, WIRED_MENU_TAB_OVERVIEW } from '#base/context/wired';
 
 import { openAchievements } from './achievementCommands';
 import { openBadgeLeaderboardLink } from './badgeLeaderboardCommands';
@@ -27,11 +27,6 @@ type Send = WebSocketConnection['send'];
 const TAB_LINK_SEARCH_CODES: Record<string, string> = { me: 'myworld_view' };
 
 const INVENTORY_TABS: WindowParams<'inventory'>['tab'][] = [ 'furni', 'pets', 'bots', 'badges' ];
-
-/** `WiredMenuTabConfigs.TAB_*_ID` - the wired menu tabs a link can route further into. */
-const WIRED_MENU_TAB_MONITOR = 'monitor';
-const WIRED_MENU_TAB_OVERVIEW = 'variable_overview';
-const WIRED_MENU_TAB_INSPECTION = 'inspection';
 
 /**
  * `WiredMenuController.linkReceived` - `wiredmenu/open[/<tab>[/...]]` and `wiredmenu/logs`, turned

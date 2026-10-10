@@ -12,31 +12,16 @@
  * save before `GuildMemberships` arrived, saves the room's group.
  */
 import type { WiredElementDefinition } from '../../WiredElement';
+import { ActorIsGroupMemberConditionForm, createGroupMembershipForm, readGroupMembershipStringParam } from '../condition/ActorIsGroupMember';
 import { SelectorCodes } from './selectorCodes';
 
 /** `REQUEST_TIMEOUT` - seconds between two `GetGuildMembershipsMessageComposer`. */
 export const USERS_IN_GROUP_REQUEST_TIMEOUT = 5;
 
-export interface UsersInGroupSelectorForm {
-    /** The radio: 0 the room's group, 1 the chosen group. */
-    groupType: number;
-    /** `§_-W5§` / `_groupDropdown.selectedId`, -1 none. */
-    groupId: number;
-}
-
-/** ActionScript's `int(string)` for a group id. */
-const parseGroupId = (text: string): number => {
-    const value = Number(text);
-
-    return Number.isNaN(value) ? 0 : (value | 0);
-};
-
-export const usersInGroupSelector: WiredElementDefinition<UsersInGroupSelectorForm> = {
+/** Its body is `conditions/ActorIsGroupMember`'s: the form, the param and the view are that condition's. */
+export const usersInGroupSelector: WiredElementDefinition<ActorIsGroupMemberConditionForm> = {
     holder: 'selector',
     code: SelectorCodes.USERS_IN_GROUP,
-    createForm: triggerable => ({
-        groupType: (triggerable.stringParam !== '') ? 1 : 0,
-        groupId: (triggerable.stringParam === '') ? -1 : parseGroupId(triggerable.stringParam),
-    }),
-    readStringParam: (form, ctx) => (((form.groupType !== 1) || !ctx.guildMemberships.some(guild => guild.groupId === form.groupId)) ? '' : form.groupId.toString()),
+    createForm: createGroupMembershipForm,
+    readStringParam: readGroupMembershipStringParam,
 };

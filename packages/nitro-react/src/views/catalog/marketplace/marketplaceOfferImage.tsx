@@ -1,9 +1,9 @@
 import { TemplateBindings } from '@nitrodevco/nitro-theme';
 
 import { isMarketplaceUniqueLimitedItem, MarketplaceOfferData } from '#base/utils';
+import { LimitedItemGridOverlayView } from '#base/views/shared/LimitedItemGridOverlayView';
+import { RarityItemGridOverlayView } from '#base/views/shared/RarityItemGridOverlayView';
 
-import { CatalogLimitedItemGridOverlayView } from '../page/widgets/CatalogLimitedItemGridOverlayView';
-import { CatalogRarityItemGridOverlayView } from '../page/widgets/CatalogRarityItemGridOverlayView';
 import { CatalogMarketplaceOfferImageView } from './CatalogMarketplaceOfferImageView';
 
 /**
@@ -32,10 +32,10 @@ export const marketplaceOfferImageBindings = (offer: MarketplaceOfferData, withE
         },
         'image_container/unique_item_background_bitmap': { visible: isLimited },
         'image_container/unique_item_overlay_widget': isLimited
-            ? { visible: true, children: <CatalogLimitedItemGridOverlayView serialNumber={offer.stuffData?.uniqueNumber ?? 0} /> }
+            ? { visible: true, children: <LimitedItemGridOverlayView serialNumber={offer.stuffData?.uniqueNumber ?? 0} /> }
             : { visible: false },
         'image_container/rarity_item_overlay_widget': (rarityLevel >= 0)
-            ? { visible: true, children: <CatalogRarityItemGridOverlayView rarityLevel={rarityLevel} /> }
+            ? { visible: true, children: <RarityItemGridOverlayView rarityLevel={rarityLevel} /> }
             : { visible: false },
     };
 };

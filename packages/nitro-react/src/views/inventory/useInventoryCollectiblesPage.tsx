@@ -29,7 +29,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { groupTradingNftInventory, InventoryCollectibleGroup, takeTradingNftAssetIds, useInventoryStore, useInventoryTradingActions } from '#base/context/inventory';
 import { useTranslation } from '#base/context/system';
 import { LayoutImage, TemplateItem } from '#base/theme';
-import { CollectiblesProductPreview } from '#base/views/collectibles/CollectiblesProductPreview';
+import { CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import {
     findInventoryElement, INVENTORY_GRID_PAGE_SIZE, inventoryGridPageCount, inventoryGridPageItems, InventoryPage, InventoryPageContext, inventoryPagePath, inventoryPageState, inventoryTemplateId, NO_INVENTORY_PAGE,

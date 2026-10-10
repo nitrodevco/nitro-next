@@ -33,8 +33,8 @@ import { claimSpecialItems } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { getSpecialItemPoint, getSpecialItemWindowPosition, SPECIAL_ITEMS_CLAIM_STATE_CLAIMABLE, SPECIAL_ITEMS_CLAIM_STATE_CLAIMED, SPECIAL_ITEMS_CLAIM_STATE_NOT_APPLICABLE, SpecialItem, useSpecialItemsActions, useSpecialItemsStore } from '#base/context/special-items';
 import { useTranslation } from '#base/context/system';
+import { useFurnitureImageTexture } from '#base/hooks';
 import { Border, Button, Frame, LayoutImage, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 
 /** The layout's frame size. */
 const WIDTH = 420;

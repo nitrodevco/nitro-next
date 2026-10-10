@@ -5,11 +5,11 @@ import { makeMarketplaceOffer, releaseMarketplaceOfferItems } from '#base/comman
 import { useWebSocketContext } from '#base/context/communication';
 import { INVENTORY_FURNI_CATEGORY_POSTER, InventoryFurniItem, useInventoryMarketplaceActions, useInventoryStore } from '#base/context/inventory';
 import { useSystemStore, useTranslation } from '#base/context/system';
+import { useFurnitureImageTexture } from '#base/hooks';
 import { Box, TemplateBindings, TemplateWindow } from '#base/theme';
 import { calculateMarketplaceFinalPrice } from '#base/utils';
-import { CatalogLimitedItemPreviewOverlayView } from '#base/views/catalog/page/widgets/CatalogLimitedItemPreviewOverlayView';
-import { CatalogRarityItemGridOverlayView } from '#base/views/catalog/page/widgets/CatalogRarityItemGridOverlayView';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
+import { LimitedItemPreviewOverlayView } from '#base/views/shared/LimitedItemPreviewOverlayView';
+import { RarityItemGridOverlayView } from '#base/views/shared/RarityItemGridOverlayView';
 
 /** `furni_image`'s size in the layout: the bitmap `setFurniImage` draws the picture into. */
 const FURNI_IMAGE_SIZE = 70;
@@ -165,7 +165,7 @@ export const InventoryMakeMarketplaceOfferView = ({ item, maxAmount }: Inventory
             ? {
                     visible: true,
                     children: (
-                        <CatalogLimitedItemPreviewOverlayView
+                        <LimitedItemPreviewOverlayView
                             serialNumber={item.stuffData.uniqueNumber}
                             seriesSize={item.stuffData.uniqueSeries}
                         />
@@ -174,7 +174,7 @@ export const InventoryMakeMarketplaceOfferView = ({ item, maxAmount }: Inventory
             : { visible: false },
         // `rarityLevel >= 0`: the rarity plaque.
         rarity_item_overlay_widget: (rarityLevel >= 0)
-            ? { visible: true, children: <CatalogRarityItemGridOverlayView rarityLevel={rarityLevel} /> }
+            ? { visible: true, children: <RarityItemGridOverlayView rarityLevel={rarityLevel} /> }
             : { visible: false },
         // `setText("furni_name" / "furni_desc", "${key}")`.
         furni_name: { caption: `\${${nameKey}}` },

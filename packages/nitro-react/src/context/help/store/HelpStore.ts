@@ -34,6 +34,14 @@ const IM_ITEMS_TO_PURGE = 5;
 const IM_PURGE_EVERY = 3;
 
 /** `ChatRegistryItem`. */
+/**
+ * Where a report opens the help window (`_-nL`, the reporting mode): `user` is
+ * `openReportingChatLineSelection` (mode -1), `room` is `openReportingContentReasonCategory(4)`, `im`
+ * is `openReportingIMSelection` (mode 3), `thread` and `message` are `openReportingContentReasonCategory(7)` and
+ * `(8)` (a group forum's thread or message) and `photo` is `openReportingContentReasonCategory(9)`.
+ */
+export type HelpReportEntry = 'user' | 'room' | 'im' | 'photo' | 'thread' | 'message';
+
 export interface HelpChatItem {
     index: number;
     roomId: number;

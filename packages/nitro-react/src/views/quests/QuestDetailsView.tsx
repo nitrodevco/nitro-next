@@ -19,7 +19,7 @@ import { useConfigData, useSystemActions, useTranslation } from '#base/context/s
 import { findTemplateChild, measureTemplateText, TemplateWindow, TemplateWindows, useTemplateFrame, useTemplateLibrary } from '#base/theme';
 import { configReader } from '#base/utils';
 
-import { campaignKey, EntryContext, QUEST_LIBRARY, questEntry, questKey } from './QuestsView';
+import { campaignKey, EntryContext, QUEST_LIBRARY, questEntry, questKey } from './questEntries';
 
 /** `QuestDetails._SafeStr_XM`: what the frame adds around the entry. */
 const FRAME_EXTRA_HEIGHT = 56;

@@ -18,7 +18,7 @@
 import { IPurchasableOffer } from '@nitrodevco/nitro-api';
 import { LayoutWindow, Template, TemplateBindings, TemplateItem } from '@nitrodevco/nitro-theme';
 
-import { calculateBundlePrice, getCurrencyIconStyle, getSeasonalCurrencyActivityPointType } from '#base/utils';
+import { calculateBundlePrice, CURRENCY_TYPE_SILVER, getCurrencyIconStyle, getSeasonalCurrencyActivityPointType } from '#base/utils';
 
 import { catalogTemplateId } from '../catalogTemplates';
 import { findLayoutChild } from '../catalogWidgetView';
@@ -29,8 +29,6 @@ const DEFAULT_ACTIVITY_POINTS_PRICE_COLOR = 0x89d3c8;
 const PRICE_COLOR_NO_ACTIVITY_POINTS = 0xe4c47d;
 const PRICE_COLOR_DUCKETS = 0xabc5d7;
 const PRICE_COLOR_SILVER = 0xf0f0f0;
-/** Silver as `getPriceArray` names it. */
-const UNIT_SILVER = 1000;
 /** `price_display` has room for two prices. */
 const PRICE_DISPLAY_SLOTS = 2;
 
@@ -59,7 +57,7 @@ export const getPriceArray = (offer: IPurchasableOffer, quantity: number, season
 
     if (offer.priceInActivityPoints > 0) prices.push({ amount: calculateBundlePrice(offer.bundlePurchaseAllowed, offer.priceInActivityPoints, quantity), unit: offer.activityPointType });
 
-    if (offer.priceInSilver > 0) prices.push({ amount: offer.priceInSilver, unit: UNIT_SILVER });
+    if (offer.priceInSilver > 0) prices.push({ amount: offer.priceInSilver, unit: CURRENCY_TYPE_SILVER });
 
     if (!prices.length) prices.push({ amount: 0, unit: -1 });
 

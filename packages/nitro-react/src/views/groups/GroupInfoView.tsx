@@ -4,8 +4,7 @@ import { useState } from 'react';
 
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { Border, ButtonThick, Frame, Icon, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
-
-import { GroupBadgeImage } from './GroupBadgeImage';
+import { GroupBadgeImage } from '#base/views/shared/GroupBadgeImage';
 
 export interface GroupInfoViewProps {
     details: IHabboGroupDetails;

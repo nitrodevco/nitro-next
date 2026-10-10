@@ -98,7 +98,7 @@ export const RoomSessionSliceInitialState: State = {
 
 export type RoomSessionSlice = State & Actions;
 
-export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], RoomSessionSlice> = (set, get, store) => ({
+export const createRoomSessionSlice: StateCreator<RoomSessionSlice, [], [], RoomSessionSlice> = set => ({
     ...RoomSessionSliceInitialState,
     setDoorMode: (mode: RoomDoorModeEnum) => set({ doorMode: mode }),
     setTradeMode: (mode: RoomTradeModeEnum) => set({ tradeMode: mode }),

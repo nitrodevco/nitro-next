@@ -15,9 +15,9 @@ import { useState } from 'react';
 import { getCollectiblePreviewIcon } from '#base/commands';
 import { CollectibleProductInfo } from '#base/context/collectibles';
 import { Border, LayoutImage, Region, ThemeImage, ThemeText } from '#base/theme';
+import { CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { getCollectibleItemColoring, toCollectiblesCssColor } from './collectiblesColors';
-import { CollectiblesProductPreview } from './CollectiblesProductPreview';
 
 /** `updateVisuals`' amount border: green once held, grey before. */
 const AMOUNT_BORDER_COMPLETE = 3374080;

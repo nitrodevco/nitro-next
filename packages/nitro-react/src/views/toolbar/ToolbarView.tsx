@@ -41,7 +41,7 @@ import { unseenSkipped, useAchievementsStore } from '#base/context/achievements'
 import { useWebSocketContext } from '#base/context/communication';
 import { getUnseenDailyTasksCount, useDailyTasksStore } from '#base/context/daily-tasks';
 import { useGroupStore } from '#base/context/groups';
-import { inventoryStore, useInventoryUnseenTotalCount } from '#base/context/inventory';
+import { useInventoryStore, useInventoryUnseenTotalCount } from '#base/context/inventory';
 import { useMessengerStore } from '#base/context/messenger';
 import { getRewardTrackClaimableCount, useRewardTrackStore } from '#base/context/reward-track';
 import { useOwnRoomObjectId } from '#base/context/room';
@@ -51,7 +51,7 @@ import { useWiredShowToolbarMenuButton } from '#base/context/wired';
 import { easeOutCubic, useRoomObjectSelect, useTween, useViewportSize } from '#base/hooks';
 import { Box, Region, Template, TemplateBindings, TemplateElement, TemplateWindow, TemplateWindows, useLayoutEvent, useTemplate } from '#base/theme';
 import { FriendBarView } from '#base/views/friend-bar/FriendBarView';
-import { UnseenItemCounterView } from '#base/views/system/UnseenItemCounterView';
+import { UnseenItemCounterView } from '#base/views/shared/UnseenItemCounterView';
 
 import { ToolbarExtendedMenu } from './ToolbarExtendedMenu';
 import { useMeMenuIcon } from './useMeMenuIcon';
@@ -197,6 +197,7 @@ export const ToolbarView = () => {
     const cameraAllowed = useOwnPerkAllowed(PerkCodes.Camera);
     const { send } = useWebSocketContext();
     const t = useTranslation();
+    const inventoryLastPage = useInventoryStore(x => x.lastPage);
     // `MeMenuNewController`: the guide (`guides.enabled` and the perk), talents (`talent.track.enabled`)
     // and collectibles (both hub flags) buttons; mini mail is always hidden.
     const guidesEnabled = useConfigValue<boolean>('guides.enabled') === true;
@@ -323,7 +324,7 @@ export const ToolbarView = () => {
         BUILDER: { onPointerTap: iconClick(() => toggleCatalog(CatalogTypeEnum.BuildersClub)) },
         INVENTORY: {
             // `InventoryMainView.onHabboToolbarEvent`: the page it last showed.
-            onPointerTap: iconClick(() => toggleWindow('inventory', { tab: inventoryStore.getState().lastPage })),
+            onPointerTap: iconClick(() => toggleWindow('inventory', { tab: inventoryLastPage })),
             children: (
                 <>
                     {/* `icons_toolbar_inventory`'s box: what transitions land on. */}

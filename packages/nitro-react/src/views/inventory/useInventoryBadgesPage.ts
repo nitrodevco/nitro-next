@@ -36,7 +36,7 @@ import {
 } from '#base/context/inventory';
 import { useConfigValue, useSystemStore, useTranslation } from '#base/context/system';
 import { TemplateItem } from '#base/theme';
-import { getBadgeDesc, getBadgeName } from '#base/utils';
+import { getBadgeDesc, getBadgeName, shouldShowBadgeOwnerCount } from '#base/utils';
 
 import {
     findInventoryElement, INVENTORY_GRID_PAGE_SIZE, inventoryGridPageCount, inventoryGridPageItems, InventoryPage, InventoryPageContext, inventoryPagePath, inventoryTemplateId, inventoryThumbLook, NO_INVENTORY_PAGE,
@@ -44,9 +44,6 @@ import {
 
 /** `BadgeGridView`'s kind filters, in `filter.options`' order. */
 const KIND_FILTERS = [ INVENTORY_BADGE_FILTER_ALL, INVENTORY_BADGE_FILTER_NORMAL, INVENTORY_BADGE_FILTER_ACHIEVEMENTS ];
-
-/** `§_-ge§.shouldShowOwnerCount`: an owner count is shown between 1 and 999. */
-const MAX_SHOWN_OWNER_COUNT = 1000;
 
 const page = (name?: string) => inventoryPagePath('badges', name);
 
@@ -215,7 +212,7 @@ export const useInventoryBadgesPage = ({ active, templates }: InventoryPageConte
             [page('badgeRarityTag')]: { visible: !!selectedBadge, color: selectedBadge ? getBadgeRarityWhiteBackgroundTagColor(selectedBadge.rarityId, uncommonRarityEnabled) : undefined },
             [page('badgeRarityBorder')]: { visible: !!selectedBadge, caption: rarityTag, setCaptionAfterBuild: true },
             [page('badgeRarity')]: { visible: !!selectedBadge, caption: rarityTag, color: 0xffffff, setCaptionAfterBuild: true },
-            [page('badgeOwnerCount')]: { visible: (ownerCount > 0) && (ownerCount < MAX_SHOWN_OWNER_COUNT), caption: t('badge.owner_count', '', { count: String(ownerCount) }) },
+            [page('badgeOwnerCount')]: { visible: shouldShowBadgeOwnerCount(ownerCount), caption: t('badge.owner_count', '', { count: String(ownerCount) }) },
             [page('wearBadge_button')]: {
                 caption: t(isWorn ? 'inventory.badges.clearbadge' : 'inventory.badges.wearbadge'),
                 disabled: !canToggle,

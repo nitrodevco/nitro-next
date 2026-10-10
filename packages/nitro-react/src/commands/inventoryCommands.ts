@@ -12,7 +12,7 @@ import { RoomEngineObjectPlacedEvent, RoomObjectCategoryEnum, RoomObjectPlacemen
 import { RequestFurniInventoryComposer, RequestFurniInventoryWhenNotInRoomComposer, RequestRoomPropertySetComposer } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
-import { findNextInventoryFurniToPlace, getInventoryFurniItemsForTrade, getInventoryFurniTotalCount, getInventoryFurniUnlockedCount, INVENTORY_FURNI_CATEGORY_POST_IT, INVENTORY_TRADE_MAX_ITEMS, InventoryFurniItem, inventoryStore, peekInventoryFurni } from '#base/context/inventory';
+import { findNextInventoryFurniToPlace, getInventoryFurniItemsForTrade, getInventoryFurniTotalCount, getInventoryFurniUnlockedCount, INVENTORY_FURNI_CATEGORY_POST_IT, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_TRADE_MAX_ITEMS, InventoryFurniItem, inventoryStore, isRoomLayoutCategory, peekInventoryFurni } from '#base/context/inventory';
 import { getRoom } from '#base/context/room';
 import { systemStore } from '#base/context/system';
 import { wiredTradingStore } from '#base/context/wired-trading';
@@ -103,12 +103,6 @@ export const offerSelectedFurniToTrade = (send: Send, count: number): number | u
     return itemIds.length;
 };
 
-/** `FurnitureItem` categories that are room papers rather than placeable furni. */
-const CATEGORY_WALLPAPER = 2;
-const CATEGORY_FLOOR = 3;
-const CATEGORY_LANDSCAPE = 4;
-const CATEGORY_POSTER = 6;
-
 /**
  * `HabboInventory.requestSelectedFurniToMover`: the item becomes the room's placement ghost. A
  * poster carries its poster id as the instance data and no stuff data; anything else carries its
@@ -116,7 +110,7 @@ const CATEGORY_POSTER = 6;
  */
 const requestSelectedFurniToMover = (item: InventoryFurniItem): boolean => {
     const category = item.isWallItem ? RoomObjectCategoryEnum.Wall : RoomObjectCategoryEnum.Floor;
-    const started = (item.category === CATEGORY_POSTER)
+    const started = (item.category === INVENTORY_FURNI_CATEGORY_POSTER)
         ? initializeRoomObjectInsert(RoomObjectPlacementSource.INVENTORY, item.id, category, item.typeId, item.stuffData.getLegacyString())
         : initializeRoomObjectInsert(RoomObjectPlacementSource.INVENTORY, item.id, category, item.typeId, String(item.extra), item.stuffData);
 
@@ -245,7 +239,7 @@ export const requestSelectedFurniPlacement = (send: Send, isDoubleClick: boolean
 
     if (item.isRented && (item.flatId > -1)) return false;
 
-    if ((item.category === CATEGORY_WALLPAPER) || (item.category === CATEGORY_FLOOR) || (item.category === CATEGORY_LANDSCAPE)) {
+    if (isRoomLayoutCategory(item.category)) {
         if (isDoubleClick) return false;
 
         send(new RequestRoomPropertySetComposer({ itemId: item.id }));

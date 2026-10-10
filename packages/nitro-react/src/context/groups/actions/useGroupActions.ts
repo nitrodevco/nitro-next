@@ -48,6 +48,7 @@ const actions = {
     toggleGroupRoomInfoExpanded: state.toggleGroupRoomInfoExpanded,
     closeGroupRoomInfo: state.closeGroupRoomInfo,
     setGroupCurrentRoom: state.setGroupCurrentRoom,
+    setForumCompose: state.setForumCompose,
 };
 
 export const useGroupActions = () => actions;

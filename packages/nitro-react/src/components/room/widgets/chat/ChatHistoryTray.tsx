@@ -4,7 +4,7 @@ import { FederatedPointerEvent, FederatedWheelEvent, Graphics, Rectangle, Ticker
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ignoreUser } from '#base/commands';
-import { ChatHistoryEntry, chatHistoryStore, useChatHistoryStore } from '#base/context/chat-history';
+import { ChatHistoryEntry, useChatHistoryActions, useChatHistoryStore } from '#base/context/chat-history';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoom } from '#base/context/room';
 import { useSystemStore, useTranslation } from '#base/context/system';
@@ -88,6 +88,7 @@ export const ChatHistoryTray = () => {
     const room = useRoom();
     const entries = useChatHistoryStore(x => x.entries);
     const open = useChatHistoryStore(x => x.open);
+    const { setOpen, toggleOpen } = useChatHistoryActions();
     const screen = useScreenSize();
     const { selectObject } = useRoomObjectSelect();
     const selectObjectRef = useRef(selectObject);
@@ -122,8 +123,8 @@ export const ChatHistoryTray = () => {
 
     // The history is the room's: leaving takes the tray with it.
     useEffect(() => () => {
-        chatHistoryStore.getState().setOpen(false);
-    }, []);
+        setOpen(false);
+    }, [ setOpen ]);
 
     const onMeasure = useCallback((id: number, measure: ChatHistoryEntryMeasure) => {
         const pending = pendingMeasures.current;
@@ -528,7 +529,7 @@ export const ChatHistoryTray = () => {
                     y={screen.height - HANDLE_OFFSET_FROM_BOTTOM}
                     eventMode="static"
                     cursor="pointer"
-                    onPointerTap={() => chatHistoryStore.getState().toggleOpen()}
+                    onPointerTap={toggleOpen}
                 />
             )}
         </pixiContainer>

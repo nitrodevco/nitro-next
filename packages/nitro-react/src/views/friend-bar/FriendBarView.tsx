@@ -40,7 +40,7 @@ import { FriendBarNotification, UiFlagEnum, useFriendBarCollapsed, useFriendBarF
 import { easeOutCubic, useTween, useViewportSize } from '#base/hooks';
 import { Region, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useOutsideClick, useTemplate } from '#base/theme';
 import { getBadgeName } from '#base/utils';
-import { UnseenItemCounterView } from '#base/views/system/UnseenItemCounterView';
+import { UnseenItemCounterView } from '#base/views/shared/UnseenItemCounterView';
 
 import { FRIEND_BAR_BOTTOM_OFFSET, FRIEND_BAR_COLLAPSE_MS, FRIEND_BAR_HEIGHT, FRIEND_BAR_TOOLS_WIDTH, friendBarWidth, layoutFriendBar, maxFriendBarTabs, pageFriendBar } from './friendBarLayout';
 import {

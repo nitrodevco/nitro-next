@@ -1,5 +1,5 @@
 /**
- * Text fitting for `WiredTableView` cells - the part of `com.sulake.core.window.components.TextController.refreshTextImage`
+ * Text fitting for `TableView` cells - the part of `com.sulake.core.window.components.TextController.refreshTextImage`
  * that `table_view_xml`'s `element_text` switches on with `overflow_replace="..."`.
  *
  * Flash only replaces an overflow when the field's `autoSize` is `none` or `right`, which for a

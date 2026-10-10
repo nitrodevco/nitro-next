@@ -21,11 +21,11 @@ export const registerRoomPermissionsHandlers = ({ subscribe }: WebSocketConnecti
             setControllerLevel(data.controllerLevel);
         }),
 
-        on(YouAreNotControllerMessage, (data) => {
+        on(YouAreNotControllerMessage, () => {
             setControllerLevel(RoomControllerLevelEnum.None);
         }),
 
-        on(YouAreOwnerMessage, (data) => {
+        on(YouAreOwnerMessage, () => {
             setIsRoomOwner(true);
         }),
 

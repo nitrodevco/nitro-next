@@ -20,13 +20,13 @@ import { useEffect, useState } from 'react';
 import { openClientLink, PhotoPurchaseState, returnToViewfinder, setPhotoPurchaseState, showNotEnoughActivityPointsAlert, showNotEnoughCreditsAlert, useCameraStore } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue } from '#base/context/system';
-import { userStore } from '#base/context/user';
+import { useUserStore } from '#base/context/user';
 import { TemplateBindings, TemplateWindow, useTemplateFrame } from '#base/theme';
 
+import { CAMERA_IMAGE_SIZE } from './cameraEffects';
 import { CanvasPicture } from './CanvasPicture';
 
 const TEMPLATE = 'habbo-room-ui-com/photo_purchase_confirmation_xml';
-const IMAGE_SIZE = 320;
 
 export const PhotoPurchaseConfirmationView = () => {
     const purchase = useCameraStore(x => x.purchase);
@@ -42,6 +42,8 @@ const PhotoPurchaseConfirmation = () => {
     const ducketPrice = useCameraStore(x => x.ducketPrice);
     const publishDucketPrice = useCameraStore(x => x.publishDucketPrice);
     const { send } = useWebSocketContext();
+    const ownCredits = useUserStore(x => x.credits);
+    const ownDuckets = useUserStore(x => x.activityPoints[0] ?? 0);
     const competitionEnabled = useConfigValue<boolean>('camera.competition.enabled') === true;
     const disclaimerEnabled = useConfigValue<boolean>('disclaimer.credit_spending.enabled') === true;
     const publishingEnabled = useConfigValue<boolean>('camera.photo.publishing.enabled') === true;
@@ -65,10 +67,10 @@ const PhotoPurchaseConfirmation = () => {
 
             const canvas = document.createElement('canvas');
 
-            canvas.width = IMAGE_SIZE;
-            canvas.height = IMAGE_SIZE;
+            canvas.width = CAMERA_IMAGE_SIZE;
+            canvas.height = CAMERA_IMAGE_SIZE;
 
-            const scale = IMAGE_SIZE / (image.width || IMAGE_SIZE);
+            const scale = CAMERA_IMAGE_SIZE / (image.width || CAMERA_IMAGE_SIZE);
 
             canvas.getContext('2d')?.drawImage(image, 0, 0, image.width * scale, image.height * scale);
             setPicture(canvas);
@@ -83,15 +85,13 @@ const PhotoPurchaseConfirmation = () => {
 
     /** `checkPurse`: duckets are activity point type 0. */
     const checkPurse = (credits: number, duckets: number) => {
-        const user = userStore.getState();
-
-        if (user.credits < credits) {
+        if (ownCredits < credits) {
             showNotEnoughCreditsAlert();
 
             return false;
         }
 
-        if ((user.activityPoints[0] ?? 0) < duckets) {
+        if (ownDuckets < duckets) {
             showNotEnoughActivityPointsAlert(0);
 
             return false;
@@ -131,7 +131,7 @@ const PhotoPurchaseConfirmation = () => {
             ? (
                     <CanvasPicture
                         canvas={picture}
-                        size={IMAGE_SIZE}
+                        size={CAMERA_IMAGE_SIZE}
                     />
                 )
             : undefined },

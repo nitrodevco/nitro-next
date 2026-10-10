@@ -25,6 +25,7 @@
  * Not ported: the thumbs' smaller scale for some types (`usePetImageTexture` draws at 64), and the
  * breeding dialogs, which are a feature of their own.
  */
+import { PetType } from '@nitrodevco/nitro-api';
 import { useEffect, useRef, useState } from 'react';
 
 import { checkPetInventoryInitialization, placeInventoryPetToRoom } from '#base/commands';
@@ -33,13 +34,11 @@ import { UnseenItemCategory, useInventoryPetsActions, useInventoryStore, useInve
 import { useRoomStore } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { TemplateItem } from '#base/theme';
-import { CatalogRarityItemGridOverlayView } from '#base/views/catalog/page/widgets/CatalogRarityItemGridOverlayView';
+import { RarityItemGridOverlayView } from '#base/views/shared/RarityItemGridOverlayView';
 
 import { InventoryPage, InventoryPageContext, inventoryPagePath, inventoryPageState, inventoryTemplateId, inventoryThumbLook, NO_INVENTORY_PAGE } from './inventoryPage';
 import { InventoryPetImage } from './InventoryPetImage';
 
-/** The monster plant's pet type, whose rarity the rarity menu filters and whose look follows its level. */
-const PET_TYPE_MONSTERPLANT = 16;
 /** `PetsGridItem`: a type drawn at direction 2 rather than 3. */
 const PET_TYPE_THUMB_DIRECTION_2 = 15;
 /** `PetsGridItem` / `updatePreview`'s directions, as `getPetImage` turns them into degrees (`* 45`). */
@@ -83,8 +82,8 @@ export const useInventoryPetsPage = ({ active, templates }: InventoryPageContext
     const typeIds = [ FILTER_ALL, ...[ ...new Set(pets.map(pet => pet.figureData.typeId)) ].sort((a, b) => a - b) ];
     const shownType = typeIds.includes(typeFilter) ? typeFilter : FILTER_ALL;
     // `isRarityFilterEnabled` / `getAvailableRarityFilterIds`: "all", then the monster plants' levels.
-    const rarityEnabled = shownType === PET_TYPE_MONSTERPLANT;
-    const rarityIds = [ FILTER_ALL, ...[ ...new Set(pets.filter(pet => (pet.figureData.typeId === PET_TYPE_MONSTERPLANT) && (pet.rarityLevel >= 0)).map(pet => pet.rarityLevel)) ].sort((a, b) => a - b) ];
+    const rarityEnabled = shownType === PetType.MONSTERPLANT;
+    const rarityIds = [ FILTER_ALL, ...[ ...new Set(pets.filter(pet => (pet.figureData.typeId === PetType.MONSTERPLANT) && (pet.rarityLevel >= 0)).map(pet => pet.rarityLevel)) ].sort((a, b) => a - b) ];
     const shownRarity = (rarityEnabled && rarityIds.includes(rarityFilter)) ? rarityFilter : FILTER_ALL;
 
     const typeLabel = (typeId: number) => t(`pet.type.${typeId}`);
@@ -124,7 +123,7 @@ export const useInventoryPetsPage = ({ active, templates }: InventoryPageContext
     const thumbTemplate = templates[inventoryTemplateId('inventory_thumb_xml')];
     const thumbs: TemplateItem[] = thumbTemplate
         ? visiblePets.map((pet) => {
-                const isMonsterplant = pet.figureData.typeId === PET_TYPE_MONSTERPLANT;
+                const isMonsterplant = pet.figureData.typeId === PetType.MONSTERPLANT;
                 const direction = (isMonsterplant || (pet.figureData.typeId === PET_TYPE_THUMB_DIRECTION_2)) ? MONSTERPLANT_DIRECTION : THUMB_DIRECTION;
 
                 return {
@@ -159,7 +158,7 @@ export const useInventoryPetsPage = ({ active, templates }: InventoryPageContext
                             ),
                         },
                         // `updateRarityOverlay`.
-                        rarity_item_overlay_container: (pet.rarityLevel >= 0) ? { visible: true, children: <CatalogRarityItemGridOverlayView rarityLevel={pet.rarityLevel} /> } : { visible: false },
+                        rarity_item_overlay_container: (pet.rarityLevel >= 0) ? { visible: true, children: <RarityItemGridOverlayView rarityLevel={pet.rarityLevel} /> } : { visible: false },
                     },
                 };
             })
@@ -210,7 +209,7 @@ export const useInventoryPetsPage = ({ active, templates }: InventoryPageContext
                     <InventoryPetImage
                         key={selectedPet.id}
                         pet={selectedPet}
-                        direction={(selectedPet.figureData.typeId === PET_TYPE_MONSTERPLANT) ? MONSTERPLANT_DIRECTION : PREVIEW_DIRECTION}
+                        direction={(selectedPet.figureData.typeId === PetType.MONSTERPLANT) ? MONSTERPLANT_DIRECTION : PREVIEW_DIRECTION}
                         width={PREVIEW_WIDTH}
                         height={PREVIEW_HEIGHT}
                     />

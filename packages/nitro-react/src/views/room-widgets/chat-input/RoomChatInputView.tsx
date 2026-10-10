@@ -14,7 +14,7 @@ import { useChatStyles, useViewportSize } from '#base/hooks';
 import { Box, findTemplateChild, GlobalRect, Template, TemplateWindow, TextInput, useTemplate } from '#base/theme';
 import { completeChatCommand, findInvalidArguments, IChatCommandCompletion, mergeChatCommands } from '#base/utils';
 import { roomToolsRight } from '#base/views/room-widgets/room-tools/roomToolsGeometry';
-import { UnseenItemCounterView } from '#base/views/system/UnseenItemCounterView';
+import { UnseenItemCounterView } from '#base/views/shared/UnseenItemCounterView';
 
 import { ChatCommandSuggestionsView } from './ChatCommandSuggestionsView';
 import { chatInputClientCommands } from './chatInputClientCommands';

@@ -14,7 +14,7 @@
 import { useState } from 'react';
 
 import { Box, TemplateBindings, TemplateWindow } from '#base/theme';
-import { UnseenItemCounterView } from '#base/views/system/UnseenItemCounterView';
+import { UnseenItemCounterView } from '#base/views/shared/UnseenItemCounterView';
 
 /** `BottomBarLeft`'s window height: the menu's bottom sits on its top. */
 const BAR_HEIGHT = 46;

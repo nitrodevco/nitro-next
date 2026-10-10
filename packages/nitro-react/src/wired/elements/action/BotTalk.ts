@@ -7,7 +7,7 @@
  * default) to 2, as `Chat`'s.
  */
 import type { WiredElementDefinition } from '../../WiredElement';
-import { getWiredInt } from '../../WiredTriggerable';
+import { getWiredInt, WiredTriggerable } from '../../WiredTriggerable';
 import { ActionTypeCodes } from './actionCodes';
 import { botActionType } from './BotActionType';
 
@@ -26,23 +26,33 @@ export const splitBotMessageParam = (stringParam: string): { botName: string; me
     };
 };
 
+/** The form of both bot talk actions, `BotTalk` and `BotTalkDirectToAvatar`. */
 export interface BotTalkActionForm {
     botName: string;
     message: string;
-    /** 0 talks, 1 shouts. */
+    /** The message radio: 0 talks, 1 shouts (`BotTalk`) or whispers (`BotTalkDirectToAvatar`). */
     mode: number;
     bubbleWidth: number;
 }
+
+/** `onEditStart` of both bot talk actions. */
+export const createBotTalkForm = (triggerable: WiredTriggerable): BotTalkActionForm => ({
+    ...splitBotMessageParam(triggerable.stringParam),
+    mode: getWiredInt(triggerable, 0),
+    bubbleWidth: getWiredInt(triggerable, 1),
+});
+
+/** `readStringParamFromForm` of both bot talk actions. */
+export const readBotTalkStringParam = (form: BotTalkActionForm): string => form.botName + BOT_STRING_PARAM_DELIMITER + form.message;
+
+/** `readIntParamsFromForm` of both bot talk actions. */
+export const readBotTalkIntParams = (form: BotTalkActionForm): number[] => [ form.mode, form.bubbleWidth ];
 
 export const botTalkAction: WiredElementDefinition<BotTalkActionForm> = {
     ...botActionType,
     holder: 'action',
     code: ActionTypeCodes.BOT_TALK,
-    createForm: triggerable => ({
-        ...splitBotMessageParam(triggerable.stringParam),
-        mode: getWiredInt(triggerable, 0),
-        bubbleWidth: getWiredInt(triggerable, 1),
-    }),
-    readStringParam: form => form.botName + BOT_STRING_PARAM_DELIMITER + form.message,
-    readIntParams: form => [ form.mode, form.bubbleWidth ],
+    createForm: createBotTalkForm,
+    readStringParam: readBotTalkStringParam,
+    readIntParams: readBotTalkIntParams,
 };

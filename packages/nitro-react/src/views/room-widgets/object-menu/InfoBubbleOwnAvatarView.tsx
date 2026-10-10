@@ -10,6 +10,7 @@ import { useOwnClubLevel, useUserStore } from '#base/context/user';
 import { useWiredShowInspectButton } from '#base/context/wired';
 import { useRoomUserData } from '#base/hooks';
 import { Box, LayoutImage, TemplateBindings, TemplateWindow, ThemeImage } from '#base/theme';
+import { isHandItem } from '#base/utils';
 
 import { useButtonMenu, useMinimizedMenu } from './useButtonMenu';
 
@@ -28,7 +29,6 @@ const MODE_SIGNS = 4;
 const SWIMMING_EFFECTS = [ 29, 30, 185 ];
 /** The horse-riding effect. */
 const RIDING_EFFECT = 77;
-const MAX_CARRY_ITEM = 999999;
 
 /** The rows whose button holds an arrow `icon`. */
 const ICON_ROWS = new Set([ 'expressions', 'dance_menu', 'signs', 'more', 'back' ]);
@@ -131,7 +131,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
             { key: 'dance', visible: !hasClub && !isDancing && !isRiding, enabled: !hasEffectOn, onPress: dance(1) },
             { key: 'dance_stop', visible: !hasClub && isDancing && !isRiding, onPress: dance(0) },
             { key: 'signs', visible: signsEnabled, staysOpen: true, onPress: toMode(MODE_SIGNS) },
-            { key: 'handitem', visible: handItemDropEnabled && (info.carryItem > 0) && (info.carryItem < MAX_CARRY_ITEM), onPress: () => dropCarryItem(send) },
+            { key: 'handitem', visible: handItemDropEnabled && isHandItem(info.carryItem), onPress: () => dropCarryItem(send) },
             { key: 'effects', visible: !effectsDisabled && !isRiding, onPress: () => toggleWindow('avatar_effects') },
             { key: 'wired_inspect', visible: showWiredInspect, onPress: () => openClientLink(send, `wiredmenu/open/inspection/1/${objectData.objectId}`) },
         ],

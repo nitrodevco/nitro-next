@@ -1,0 +1,216 @@
+/**
+ * The quest engine's list entries, shared by the quest list (`QuestsList`), the quest details
+ * (`QuestDetails`) and the tracker (`QuestTracker`): `QuestMessageData`'s localization keys, which
+ * quests have the prompt picture, and one quest's `QuestEntry` item - `createListEntry` and
+ * `setEntryHeight`'s geometry as its `arrange`, `refreshEntryDetails` / `refreshEntryQuestDetails`
+ * as its bindings.
+ */
+import type { IQuestMessageData } from '@nitrodevco/nitro-packets';
+
+import { useTranslation } from '#base/context/system';
+import { Template, TemplateBindings, TemplateItem, TemplateWindows } from '#base/theme';
+import { getCurrencyIconStyle, GetFriendlyTime } from '#base/utils';
+import { moveWindowsToRow, QUEST_REWARD_ROW, QUEST_REWARD_SPACING } from '#base/views/shared/flashWindowUtils';
+
+export const QUEST_LIBRARY = 'habbo-quest-engine-com';
+const LIBRARY = QUEST_LIBRARY;
+
+// `QuestsList` constants.
+const COL_SPACING = 5;
+const CANCEL_LINK_OFFSET_FROM_RIGHT = 10;
+const COMPLETION_TEXT_OFFSET_FROM_BOTTOM = 30;
+/** `setEntryHeight`'s campaign background inset. */
+const BG_INSET = 2;
+
+/** `HabboQuestEngine._SafeStr_nK`: the quests whose picture is the `_a` one. */
+export const QUESTS_WITH_PROMPTS = [ 'MOVEITEM', 'ENTEROTHERSROOM', 'CHANGEFIGURE', 'FINDLIFEGUARDTOWER', 'SCRATCHAPET' ];
+
+type Translate = ReturnType<typeof useTranslation>;
+
+/** `QuestMessageData.getCampaignLocalizationKey` / `getQuestLocalizationKey`. */
+export const campaignKey = (quest: IQuestMessageData) => `quests.${quest.campaignCode}`;
+export const questKey = (quest: IQuestMessageData) => `${campaignKey(quest)}.${quest.localizationCode}`;
+
+/** `QuestMessageData.secondsLeft`: what was left when it arrived, less the seconds since. */
+const secondsLeft = (quest: IQuestMessageData, now: number) => ((quest.secondsLeft <= 0) ? 0 : quest.secondsLeft - Math.floor((now - quest.receiveTime) / 1000));
+
+/** `refreshEntry`: a seasonal quest shows while its time lasts; any other always. */
+export const isEntryShown = (quest: IQuestMessageData, now: number) => !quest.isSeasonal || (secondsLeft(quest, now) >= 0);
+
+/**
+ * `createListEntry` and `setEntryHeight`, which add the `Campaign`, `Quest`, `CampaignCompleted` and
+ * `EntryArrows` windows to the `QuestEntry` and then size and place them. The template engine sets a
+ * clone up before the windows added to it exist, so each window does its own part from the layouts'
+ * sizes (the `Campaign` and `Quest` ones the code reads are their layouts', no text changes them):
+ * the cancel link as wide as its text, 10 in from the quest's right edge; the quest panel 5 right of
+ * the campaign tile, the entry as wide as both; the campaign tile as tall as the quest panel, its
+ * arrows on its right edge, halfway down; the counter 30 above its bottom and the lower background
+ * its bottom half. `refreshEntryDetails` puts a one-line campaign name at 12 and a two-line one at
+ * 2, and `refreshReward` lines the reward up from its caption.
+ */
+interface EntrySizes {
+    campaign: Template;
+    quest: Template;
+}
+
+const questX = ({ campaign }: EntrySizes) => campaign.width + COL_SPACING;
+
+const arrangeEntry = (sizes: EntrySizes) => (windows: TemplateWindows) => {
+    const entry = windows.root();
+
+    entry?.setWidth(questX(sizes) + sizes.quest.width);
+    entry?.setHeight(sizes.quest.height);
+};
+
+const arrangeCampaign = (sizes: EntrySizes) => (windows: TemplateWindows) => {
+    const campaign = windows.root();
+
+    if (!campaign) return;
+
+    campaign.setHeight(sizes.quest.height);
+    windows.find('completion_txt')?.setY(campaign.height - COMPLETION_TEXT_OFFSET_FROM_BOTTOM);
+
+    const bottom = windows.find('bg_bottom');
+
+    if (bottom) {
+        bottom.setHeight(Math.floor((campaign.height - (BG_INSET * 2)) / 2));
+        bottom.setY(BG_INSET + bottom.height);
+    }
+
+    const header = windows.find('campaign_header_txt');
+
+    header?.setY((header.height <= 17) ? 12 : 2);
+};
+
+const arrangeQuest = (sizes: EntrySizes, rewardShown: boolean) => (windows: TemplateWindows) => {
+    const quest = windows.root();
+
+    quest?.setHeight(sizes.quest.height);
+    const cancelRegion = windows.find('cancel_region');
+    const cancelText = windows.find('cancel_txt');
+
+    if (cancelRegion && cancelText) {
+        cancelRegion.setWidth(cancelText.width);
+        cancelRegion.setX(quest ? quest.width - cancelRegion.width - CANCEL_LINK_OFFSET_FROM_RIGHT : 0);
+    }
+
+    quest?.setX(questX(sizes));
+
+    const caption = windows.find('reward_caption_txt');
+
+    if (rewardShown && caption) moveWindowsToRow(QUEST_REWARD_ROW.map(name => windows.find(name)), caption.x, QUEST_REWARD_SPACING);
+};
+
+const arrangeCompleted = (sizes: EntrySizes) => (windows: TemplateWindows) => windows.root()?.setX(questX(sizes));
+
+const arrangeArrows = (sizes: EntrySizes) => (windows: TemplateWindows) => {
+    const arrows = windows.root();
+
+    if (!arrows) return;
+
+    arrows.setX(sizes.campaign.width - 2);
+    arrows.setY(Math.floor((sizes.quest.height - arrows.height) / 2) + 1);
+};
+
+export interface EntryContext {
+    templates: Record<string, Template>;
+    config: Record<string, unknown>;
+    t: Translate;
+    now: number;
+    onAccept: (questId: number) => void;
+    onCancel: (questId: number) => void;
+    /** `QuestDetails.openDetails`' extras on the `Quest` window: the hint and the link (`QuestsList` keeps both hidden). */
+    questBindings?: TemplateBindings;
+    arrangeQuestExtra?: (windows: TemplateWindows) => void;
+    /** `openDetails`: what the hint and the link add to the `Quest` panel's height (`quest_container.height += ...`), the entry and the campaign tile following (`setEntryHeight`). */
+    questExtraHeight?: number;
+}
+
+/** One quest's `QuestEntry`, as `refreshEntry` fills it. */
+export const questEntry = (quest: IQuestMessageData, index: number, { templates, config, t, now, onAccept, onCancel, questBindings, arrangeQuestExtra, questExtraHeight = 0 }: EntryContext): TemplateItem => {
+    const { accepted } = quest;
+    const questTemplate = templates[`${LIBRARY}/Quest`];
+    const sizes: EntrySizes = { campaign: templates[`${LIBRARY}/Campaign`], quest: questExtraHeight ? { ...questTemplate, height: questTemplate.height + questExtraHeight } : questTemplate };
+    // `QuestMessageData.completedCampaign`.
+    const completedCampaign = quest.id < 1;
+    // `refreshReward(waitPeriodSeconds < 1, ...)`.
+    const rewardShown = (quest.activityPointType >= 0) && (quest.rewardCurrencyAmount >= 1);
+    const pictureName = `${quest.campaignCode}_${quest.localizationCode}${quest.imageVersion}${QUESTS_WITH_PROMPTS.includes(quest.localizationCode) ? '_a' : ''}`.toLowerCase();
+
+    return {
+        key: String(index),
+        from: templates[`${LIBRARY}/QuestEntry`],
+        bindings: {
+            '': {
+                visible: isEntryShown(quest, now),
+                added: [
+                    {
+                        key: 'campaign',
+                        from: sizes.campaign,
+                        arrange: arrangeCampaign(sizes),
+                        bindings: {
+                            // `HabboQuestEngine.getCampaignName`: the key is its own fallback.
+                            campaign_header_txt: { caption: t(`${campaignKey(quest)}.name`, `${campaignKey(quest)}.name`) },
+                            completion_txt: { caption: `${quest.completedQuestsInCampaign}/${quest.questCountInCampaign}` },
+                            // `setupCampaignImage(entry, quest, true)`.
+                            campaign_pic_bitmap: { visible: true, asset: `\${image.library.questing.url}${quest.campaignCode}.png` },
+                            bg: { color: accepted ? 0xffc29d3b : 0xff646464 },
+                            bg_top: { color: accepted ? 0xffffd788 : 0xffbababa },
+                            bg_bottom: { color: accepted ? 0xffffc758 : 0xffababab },
+                            completion_bg_red_bitmap: { visible: !completedCampaign && (quest.completedQuestsInCampaign < 1) },
+                            completion_bg_blue_bitmap: { visible: !completedCampaign && (quest.completedQuestsInCampaign > 0) },
+                            completion_bg_green_bitmap: { visible: completedCampaign },
+                        },
+                    },
+                    {
+                        key: 'quest',
+                        from: sizes.quest,
+                        arrange: (windows) => {
+                            arrangeQuest(sizes, rewardShown)(windows);
+                            arrangeQuestExtra?.(windows);
+                        },
+                        bindings: {
+                            '': { visible: !completedCampaign, color: accepted ? 0xf3deb8 : 0xc8c8c8 },
+                            // `refreshEntryQuestDetails`: `getQuestRowTitle`, `getQuestDesc`.
+                            quest_header: { color: accepted ? 0xedb23a : 0x8d8d8d },
+                            quest_header_txt: { caption: t(`${questKey(quest)}.name`, `${questKey(quest)}.name`), color: accepted ? 0xffffff : 0x373737 },
+                            desc_txt: { caption: t(`${questKey(quest)}.desc`, `${questKey(quest)}.desc`) },
+                            timeleft_txt: {
+                                visible: quest.isSeasonal,
+                                caption: quest.isSeasonal ? GetFriendlyTime(t, secondsLeft(quest, now), '.short', 3) : undefined,
+                                color: accepted ? 0xffffff : 0x373737,
+                            },
+                            // `initHourglassIcon`: the library's `icon_hourglass_png`.
+                            hourglass_icon: { visible: quest.isSeasonal, asset: `${LIBRARY}-icon_hourglass` },
+                            cancel_txt: { visible: accepted },
+                            cancel_region: { visible: accepted, onPointerTap: () => onCancel(quest.id) },
+                            accept_button: { visible: !accepted, onPointerTap: () => onAccept(quest.id) },
+                            // `HabboQuestEngine.setupQuestImage`.
+                            quest_pic_bitmap: { asset: `\${image.library.questing.url}${pictureName}.png` },
+                            // `HabboQuestEngine.refreshReward` and `setupRewardImage`.
+                            reward_caption_txt: { visible: rewardShown },
+                            reward_amount_txt: { visible: rewardShown, caption: String(quest.rewardCurrencyAmount) },
+                            currency_icon: { visible: rewardShown, style: rewardShown ? String(getCurrencyIconStyle(quest.activityPointType, config, true)) : undefined },
+                            hint_txt: { visible: false },
+                            link_region: { visible: false },
+                            delay_desc_txt: { visible: false },
+                            delay_txt: { visible: false },
+                            ...questBindings,
+                        },
+                    },
+                    { key: 'completed', from: templates[`${LIBRARY}/CampaignCompleted`], arrange: arrangeCompleted(sizes), bindings: { '': { visible: completedCampaign } } },
+                    {
+                        key: 'arrows',
+                        from: templates[`${LIBRARY}/EntryArrows`],
+                        arrange: arrangeArrows(sizes),
+                        bindings: {
+                            arrow_0: { visible: !accepted },
+                            arrow_1: { visible: accepted },
+                        },
+                    },
+                ],
+            },
+        },
+        arrange: arrangeEntry(sizes),
+    };
+};

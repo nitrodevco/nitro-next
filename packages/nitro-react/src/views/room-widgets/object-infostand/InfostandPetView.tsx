@@ -6,6 +6,8 @@ import { useChatPetFace } from '#base/hooks';
 import { Box, CountdownWidget, LayoutImage, Region, TemplateBindings, TemplateWindow, TemplateWindows, ThemeImage } from '#base/theme';
 import { petTypeFromFigure } from '#base/utils';
 
+import { arrangeInfostandButtons } from './infostandButtons';
+
 export interface InfostandPetViewProps {
     objectData: ISimpleRoomObjectData;
     /** What the server has said about this pet, once it has been asked. */
@@ -60,11 +62,6 @@ const RARITY_PET_TYPES = [ 16, 26 ];
 
 /** `setSpecialSkillLevel`: only this pet type has a special skill. */
 const SKILL_PET_TYPE = 15;
-
-/** `InfoStandPetView.BUTTONS_MAX_WIDTH` / `BUTTON_HEIGHT` / `BUTTON_MARGIN`. */
-const BUTTONS_MAX_WIDTH = 250;
-const BUTTON_HEIGHT = 25;
-const BUTTON_MARGIN = 5;
 
 /** `updateWindow`: the border is the element list's height plus this. */
 const BORDER_PADDING = 20;
@@ -303,34 +300,8 @@ export const InfostandPetView = ({ info, figure, posture, name, respectLeft, isO
         const buttons = find('button_list');
 
         if (buttons) {
-            // `createWindow` / `onButtonResized`: each region as wide as its button.
-            for (const region of BUTTON_REGIONS) {
-                const button = find(`btn_${region}`);
-
-                if (button) find(`button_list/${region}`)?.setWidth(button.width);
-            }
-
-            // `arrangeButtons`: right to left from `BUTTONS_MAX_WIDTH`, a new row when one does not fit.
-            buttons.setWidth(BUTTONS_MAX_WIDTH);
-
-            let right = BUTTONS_MAX_WIDTH;
-            let top = 0;
-
-            for (const name of BUTTON_REGIONS) {
-                const region = find(`button_list/${name}`);
-
-                if (!region?.visible) continue;
-
-                if ((right - region.width) < 0) {
-                    right = BUTTONS_MAX_WIDTH;
-                    top += BUTTON_HEIGHT + BUTTON_MARGIN;
-                }
-
-                region.setRectangle(right - region.width, top, region.width, region.height);
-                right = region.x - BUTTON_MARGIN;
-            }
-
-            buttons.setHeight(top + BUTTON_HEIGHT);
+            // `createWindow` / `onButtonResized` and `arrangeButtons`, in child order.
+            arrangeInfostandButtons(buttons, find, BUTTON_REGIONS, name => `btn_${name}`);
         }
 
         // `updateWindow`: the list to its items, the border to the list, the window to them both.

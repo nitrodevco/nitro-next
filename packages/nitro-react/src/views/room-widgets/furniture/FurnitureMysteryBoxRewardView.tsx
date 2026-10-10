@@ -1,7 +1,7 @@
 import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
+import { useFurnitureImageTexture } from '#base/hooks';
 import { Box, ModalDialog, TemplateWindow, TemplateWindows, ThemeImage, useTemplateFrame } from '#base/theme';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 
 export interface FurnitureMysteryBoxRewardViewProps {
     /** The prize's furni class name, for a floor (`s`) or wall (`i`) item; nothing is drawn for other prizes. */

@@ -3,7 +3,7 @@ import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import { AVATAR_FACE_SIZE, AvatarFaceImage } from '#base/components';
 import { useConfigValue } from '#base/context/system';
 import { Box } from '#base/theme';
-import { GroupBadgeImage } from '#base/views/groups/GroupBadgeImage';
+import { GroupBadgeImage } from '#base/views/shared/GroupBadgeImage';
 
 /** The `face` bitmap's 20x20 slot (`focusUserFace(..., 20, 20)`). */
 const FACE_SIZE = 20;

@@ -3,8 +3,7 @@ import { useState } from 'react';
 
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { ButtonThick, Region, ThemeImage, ThemeText } from '#base/theme';
-
-import { GroupBadgeImage } from './GroupBadgeImage';
+import { GroupBadgeImage } from '#base/views/shared/GroupBadgeImage';
 
 export interface GroupRoomInfoViewProps {
     details: IHabboGroupDetails;

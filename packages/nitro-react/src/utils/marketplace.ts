@@ -38,6 +38,9 @@ export const MARKETPLACE_PURCHASE_CONFIRM_TYPE_NORMAL = 1;
 export const MARKETPLACE_PURCHASE_CONFIRM_TYPE_HIGHER = 2;
 export const MARKETPLACE_PURCHASE_CONFIRM_TYPE_3 = 3;
 
+/** `MarketplaceMakeOfferResult`'s success. */
+export const MARKETPLACE_MAKE_OFFER_RESULT_OK = 1;
+
 /** `MarketPlaceLogic.resolveStatsRequestCategory`'s answers: a floor item, a wall item, a limited item. */
 export const MARKETPLACE_STATS_CATEGORY_FLOOR = 1;
 export const MARKETPLACE_STATS_CATEGORY_WALL = 2;

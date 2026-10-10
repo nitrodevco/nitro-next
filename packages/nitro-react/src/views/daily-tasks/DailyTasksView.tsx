@@ -23,23 +23,20 @@
  */
 import type { IDailyTaskInfo, IDailyTaskReward } from '@nitrodevco/nitro-packets';
 import { DAILY_TASK_STATUS_ACTIVE, DAILY_TASK_STATUS_CLAIMED } from '@nitrodevco/nitro-packets';
-import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
 import { claimDailyTask, finishDailyTaskCompletion, getDailyTaskSecondsLeft, hideDailyTasks, isDailyTaskExpired, openClubCatalogPage, requestDailyTasks, showUnclaimedDailyTasks } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useDailyTasksStore } from '#base/context/daily-tasks';
-import { useHabbiconsStore } from '#base/context/habbicons';
-import { useConfigData, useInterpolate, useTranslation } from '#base/context/system';
+import { useInterpolate, useTranslation } from '#base/context/system';
 import { useOwnHasClub } from '#base/context/user';
-import { findTemplateChild, Region, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, themeIconFrame, ThemeImage, useTemplate, useTemplateFrame } from '#base/theme';
-import { getCurrencyIconStyle, GetFriendlyTime } from '#base/utils';
-import { QuestProgressBar } from '#base/views/achievements/QuestProgressBar';
-import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/collectibles/CollectiblesProductPreview';
+import { findTemplateChild, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplate, useTemplateFrame } from '#base/theme';
+import { GetFriendlyTime } from '#base/utils';
+import { ProductIconView } from '#base/views/shared/ProductIconView';
+import { QuestProgressBar } from '#base/views/shared/QuestProgressBar';
 
 const TEMPLATE = 'habbo-quest-engine-com/daily_tasks_xml';
 const UNCLAIMED_TEMPLATE = 'habbo-quest-engine-com/dailytasks_unclaimed_xml';
-const PRODUCT_ICON_TEMPLATE = 'habbo-window-manager-com/product_icon_xml';
 
 /** `DailyTaskView`'s colours: the task's ground, its title bar and its reward header. */
 const ACTIVE_COLORS = [ 15916471, 15511865, 15714445 ];
@@ -56,122 +53,6 @@ const MAX_VISIBLE_TASKS = 4;
 
 /** `new ProgressBar(.., progressBarContainer.width - 8, ..)`. */
 const PROGRESS_BAR_WIDTH = 102;
-
-/** `ProductIconWidget`'s product types, from the `productTypeId` the reward sends. */
-const PRODUCT_WALL = 0;
-const PRODUCT_FLOOR = 1;
-const PRODUCT_BADGE = 4;
-const PRODUCT_EFFECT = 2;
-const PRODUCT_CURRENCY = 8;
-const PRODUCT_CHAT_STYLE = 9;
-const PRODUCT_PET = 10;
-const PRODUCT_CLOTHING = 11;
-const PRODUCT_HABBICON = 12;
-
-/** `product_icon_xml`'s windows: the 46x40 `bitmap` at -3,0, the 48x48 `pet_image_widget` at -4,-2 facing south. */
-const PRODUCT_ICON_SLOTS: CollectiblesPreviewSlots = {
-    productPreview: { left: -3, top: 0, width: 46, height: 40 },
-    pet: { left: -4, top: -2, width: 48, height: 48, zoom: 1, shrinkOnOverflow: true, direction: 135 },
-};
-
-/** `habbiconResult`: the habbicon's preview, or a grey 40x40 square until the habbicon assets are in. */
-const HabbiconReward = ({ habbiconId }: { habbiconId: number }) => {
-    const preview = useHabbiconsStore(state => state.previews[habbiconId]);
-
-    if (!preview) {
-        return (
-            <Region
-                backgroundColor="#8f8f8f"
-                layout={{ position: 'absolute', left: 0, top: 0, width: 40, height: 40 }}
-            />
-        );
-    }
-
-    return (
-        <ThemeImage
-            texture={preview}
-            bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
-            layout={{ position: 'absolute', left: -3, top: 0, width: 46, height: 40 }}
-        />
-    );
-};
-
-/** `ProductIconWidget`'s previews the template's own windows do not draw here: an effect's icon, a chat style, a pet, a habbicon. */
-const rewardPreview = (reward: IDailyTaskReward) => {
-    const id = parseInt(reward.rewardTypeId, 10);
-
-    switch (reward.productItemTypeId) {
-        case PRODUCT_EFFECT:
-            return (
-                <CollectiblesProductPreview
-                    preview={{ kind: 'effect_icon', effectId: id }}
-                    slots={PRODUCT_ICON_SLOTS}
-                />
-            );
-        case PRODUCT_CHAT_STYLE:
-            return (
-                <CollectiblesProductPreview
-                    preview={{ kind: 'chat_style_selector', styleId: id }}
-                    slots={PRODUCT_ICON_SLOTS}
-                />
-            );
-        case PRODUCT_PET:
-            return (
-                <CollectiblesProductPreview
-                    preview={{ kind: 'pet', figure: reward.extraParams }}
-                    slots={PRODUCT_ICON_SLOTS}
-                />
-            );
-        case PRODUCT_HABBICON:
-            return <HabbiconReward habbiconId={id} />;
-        default:
-            return undefined;
-    }
-};
-
-/**
- * `RewardDisplayWrapper` in `product_icon_xml` (`ProductIconWidget.productInfo`): a currency's icon,
- * a badge, a furni's icon, an effect's icon, a chat style, a pet or a habbicon.
- */
-const RewardIcon = ({ reward }: { reward: IDailyTaskReward }) => {
-    const config = useConfigData();
-    const interpolate = useInterpolate();
-    const type = reward.productItemTypeId;
-    const bindings: TemplateBindings = {};
-    const iconStyle = (type === PRODUCT_CURRENCY) ? getCurrencyIconStyle(parseInt(reward.rewardTypeId, 10), config, true) : 0;
-
-    if (type === PRODUCT_CURRENCY) {
-        bindings.icon = { visible: iconStyle > 0, style: String(iconStyle) };
-    } else if (type === PRODUCT_BADGE) {
-        bindings.badge_image_widget = { visible: true, asset: interpolate('${badge.asset.url}').replace('%badgename%', reward.rewardTypeId) };
-    } else if ((type === PRODUCT_WALL) || (type === PRODUCT_FLOOR) || (type === PRODUCT_CLOTHING)) {
-        bindings.bitmap = { asset: rewardFurniIcon(type === PRODUCT_WALL, parseInt(reward.rewardTypeId, 10)) };
-    } else {
-        bindings[''] = { children: rewardPreview(reward) };
-    }
-
-    // `iconResult` -> `fitToSize`: the icon takes its own size, kept centred by its `align` params.
-    const arrange = ({ find }: TemplateWindows) => {
-        const icon = find('icon');
-        const frame = (iconStyle > 0) ? themeIconFrame(String(iconStyle)) : undefined;
-
-        if (!icon || !frame) return;
-
-        icon.setWidth(frame.width);
-        icon.setHeight(frame.height);
-    };
-
-    return (
-        <TemplateWindow
-            id={PRODUCT_ICON_TEMPLATE}
-            bindings={bindings}
-            arrange={arrange}
-        />
-    );
-};
-
-/** `getWallItemIcon` / `getFurnitureIcon` of the furni the reward names. */
-const rewardFurniIcon = (isWallItem: boolean, typeId: number): string => (isWallItem ? GetRoomEngine().getFurnitureWallIconUrl(typeId, undefined) : GetRoomEngine().getFurnitureFloorIconUrl(typeId)) ?? '';
 
 export const DailyTasksView = () => {
     const shown = useDailyTasksStore(x => x.shown);
@@ -218,7 +99,15 @@ export const DailyTasksView = () => {
         bindings: {
             reward_amount_border: { visible: reward.amount > 1 },
             reward_amount_text: { caption: `x${reward.amount}`, setCaptionAfterBuild: true },
-            reward_display_widget: { children: <RewardIcon reward={reward} /> },
+            reward_display_widget: {
+                children: (
+                    <ProductIconView
+                        productTypeId={reward.productItemTypeId}
+                        itemTypeId={reward.rewardTypeId}
+                        extraParams={reward.extraParams}
+                    />
+                ),
+            },
         },
         // Without the amount the icon is centred in its box.
         arrange: ({ find }) => {

@@ -54,7 +54,7 @@ export const UserWalletSlice: State = {
 
 export type UserWalletSlice = State & Actions;
 
-export const createUserWalletSlice: StateCreator<UserWalletSlice, [], [], UserWalletSlice> = (set, get, store) => ({
+export const createUserWalletSlice: StateCreator<UserWalletSlice, [], [], UserWalletSlice> = set => ({
     ...UserWalletSlice,
     setCredits: (credits: number) => set({ credits }),
     setEmeralds: (emeralds: number) => set({ emeralds }),

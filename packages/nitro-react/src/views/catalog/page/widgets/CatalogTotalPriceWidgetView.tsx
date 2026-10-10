@@ -5,13 +5,10 @@ import { useEffect, useState } from 'react';
 import { CatalogWidgetEventEnum, CatalogWidgetSpinnerEvent } from '#base/context/catalog';
 import { useConfigData, useConfigValue } from '#base/context/system';
 import { useCatalogWidgetEvent } from '#base/hooks';
-import { calculateBundlePrice, getCurrencyIconStyle, getSeasonalCurrencyActivityPointType } from '#base/utils';
+import { calculateBundlePrice, CURRENCY_TYPE_SILVER, getCurrencyIconStyle, getSeasonalCurrencyActivityPointType } from '#base/utils';
 
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { CatalogWidgetView, useCatalogWidgetView } from '../catalogWidgetView';
-
-/** Silver as `§_-u1R§.getIconStyleFor` names it. */
-const UNIT_SILVER = 1000;
 
 /** A total and the total before the bundle discount, for one `total_left` / `total_right`. */
 interface Total {
@@ -59,7 +56,7 @@ const totalPriceView = (offer: IPurchasableOffer | undefined, quantity: number, 
         const total = (offer.priceInSilver > 0) ? silver : points;
 
         bindings.amount_text_right = { caption: String(total.discounted) };
-        bindings.currency_indicator_bitmap_right = { style: String(getCurrencyIconStyle((offer.priceInActivityPoints > 0) ? offer.activityPointType : UNIT_SILVER, config, true)) };
+        bindings.currency_indicator_bitmap_right = { style: String(getCurrencyIconStyle((offer.priceInActivityPoints > 0) ? offer.activityPointType : CURRENCY_TYPE_SILVER, config, true)) };
         totals.total_left = total;
     }
 

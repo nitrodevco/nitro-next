@@ -6,11 +6,11 @@ import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
 import { TemplateBindings } from '#base/theme';
+import { TableView } from '#base/views/shared/table/TableView';
 
 import { useWiredPageRequests, WiredPageRequests } from './useWiredPageRequests';
 import type { WiredPagedTableProps } from './WiredPagedTable';
 import { calculateLastPage, clampInputPage, NO_PAGE, parseInputPage, restrictPageInput, splitPagingText } from './wiredPaging';
-import { WiredTableView } from './WiredTableView';
 
 /** `PagedTableView`'s paging state: the limiter, the paging text, the page field and the first / last page flags. */
 export const usePagedTableState = <T extends object>({ currentPage, totalEntries, pageSize, lastPage: givenLastPage, pagingTextKey, entriesToken, pageKey, requestPageRatelimit, samePageTimeout, pageLoadedOnRequest, requests: givenRequests, onRequestPage }: WiredPagedTableProps<T>) => {
@@ -77,7 +77,7 @@ export const useWiredPagedTableTemplate = <T extends object>(props: WiredPagedTa
             },
         },
         table: (
-            <WiredTableView
+            <TableView
                 {...tableProps}
                 scrollResetKey={scrollResetKey ?? currentPage}
                 layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}

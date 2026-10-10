@@ -7,21 +7,11 @@
 import { IPetCustomPart } from '@nitrodevco/nitro-api';
 
 import { InventoryPet } from '#base/context/inventory';
-import { usePetImageTexture } from '#base/views/catalog/usePetImageTexture';
+import { usePetImageTexture } from '#base/hooks';
+import { getMonsterPlantPosture } from '#base/utils';
 
-/** The monster plant's pet type, whose look follows its level. */
-const PET_TYPE_MONSTERPLANT = 16;
-/** A monster plant at this level or above is fully grown (`std`); below it, `grw<level>`. */
-const MONSTERPLANT_GROWN_LEVEL = 7;
 /** `getPetImage`'s `new Vector3d(direction * 45)`. */
 const DEGREES_PER_DIRECTION = 45;
-
-/** A monster plant is drawn at the growth stage its level names. */
-const getPetPosture = (pet: InventoryPet): string | undefined => {
-    if (pet.figureData.typeId !== PET_TYPE_MONSTERPLANT) return undefined;
-
-    return (pet.level >= MONSTERPLANT_GROWN_LEVEL) ? 'std' : `grw${pet.level}`;
-};
 
 /** `PetsView.getPetImage`'s figure: the flat triples the packet carries, as the image request wants them. */
 const getPetImageRequest = (pet: InventoryPet, direction: number) => {
@@ -37,7 +27,7 @@ const getPetImageRequest = (pet: InventoryPet, direction: number) => {
         color: parseInt(pet.figureData.color, 16) || 0,
         direction: direction * DEGREES_PER_DIRECTION,
         customParts: customParts.length ? customParts : undefined,
-        posture: getPetPosture(pet),
+        posture: getMonsterPlantPosture(pet.figureData.typeId, pet.level),
     };
 };
 

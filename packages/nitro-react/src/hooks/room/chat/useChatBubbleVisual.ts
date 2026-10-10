@@ -1,4 +1,5 @@
 import { AvatarGenderType, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { PetFigureData } from '@nitrodevco/nitro-renderer';
 import { Rectangle, Texture } from 'pixi.js';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -14,6 +15,9 @@ import { useChatPetFace } from './useChatPetFace';
 import { useChatStyle } from './useChatStyle';
 
 const EMPTY_LINKS: never[] = [];
+
+/** `ChatBubbleFactory.getPetImage` draws every pet's head alone except this type's (the cow). */
+const FULL_BODY_CHAT_PET_TYPE = 35;
 
 /**
  * Everything a chat bubble draws, from its data: the style's bitmaps, the speaker's head or the
@@ -43,7 +47,9 @@ export const useChatBubbleVisual = (data: ChatBubbleData, maxWidth: number) => {
     const petPosture = isPet ? (room?.getRoomObject(data.objectId, RoomObjectCategoryEnum.Unit)?.model.getValue<string>(RoomObjectVariableEnum.FigurePosture) ?? undefined) : undefined;
 
     const head = useChatAvatarHead(figure, userData?.gender ?? AvatarGenderType.Male);
-    const pet = useChatPetFace(isPet ? userData?.figure : undefined, petPosture);
+    const petFigure = isPet ? userData?.figure : undefined;
+    const petHeadOnly = !!petFigure && (new PetFigureData(petFigure).typeId !== FULL_BODY_CHAT_PET_TYPE);
+    const pet = useChatPetFace(petFigure, petPosture, { headOnly: petHeadOnly });
     // `ChatBubbleFactory.getNewChatBubble`: the style's icon, else a forced figure's head, a user's head or a pet's face - bots get none.
     const isForced = !!(data.forcedFigure || data.forcedUserName);
     const faceTexture = style?.iconTexture ?? ((isForced || (userData?.userType === RoomObjectUserType.User)) ? head.texture : (isPet ? pet.texture : undefined));

@@ -30,7 +30,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { formatHabbiconPrice, getHabbiconPriceCurrency, HABBICON_PRICE_CREDITS, HabbiconEntryModel, HabbiconPurchaseConfirmation, HabbiconSetModel, HabbiconState, useHabbiconsStore } from '#base/context/habbicons';
 import { useTranslation } from '#base/context/system';
 import { Border, Box, Button, ButtonThick, Frame, ReflectResize, Region, ThemeImage, ThemeText } from '#base/theme';
-import { CatalogCurrencyIcon } from '#base/views/catalog/CatalogCurrencyIcon';
+import { CurrencyIcon } from '#base/views/shared/CurrencyIcon';
 
 /** `RETRY_ENABLE_DELAY_MS`. */
 const RETRY_ENABLE_DELAY_MS = 500;
@@ -238,7 +238,7 @@ export const HabbiconPurchaseConfirmationView = ({ confirmation, onClose }: Habb
                                 verticalAlign="top"
                                 layout={{ marginTop: 1, flexShrink: 0 }}
                             />
-                            <CatalogCurrencyIcon
+                            <CurrencyIcon
                                 type={getHabbiconPriceCurrency(priceActivityPoints, activityPointType)}
                                 big
                                 layout={{ width: 22, height: 22, flexShrink: 0 }}

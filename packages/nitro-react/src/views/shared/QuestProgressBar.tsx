@@ -23,6 +23,8 @@ interface QuestProgressBarProps {
     caption: (progress: number, limit: number) => string;
     /** `set visible`: the bar's `progress_bar_cont`. */
     visible?: boolean;
+    /** `_hasFrame`: the track (`bar_l` / `bar_c` / `bar_r`) under the fill - the quest tracker's bar has none. */
+    hasFrame?: boolean;
     /** `isUpdating` gone false: the fill has reached the amount (`DailyTaskView.update` waits for it). */
     onSettled?: () => void;
 }
@@ -36,7 +38,7 @@ const PROGRESS_TEXT_X_OFFSET = 3;
 /** `ProgressBar.CONTAINER_SPACING`: the container is this much wider than the track. */
 const CONTAINER_SPACING = 10;
 
-export const QuestProgressBar = ({ x, y, width, current, max, levelKey, scoreAtStartOfLevel, caption, visible = true, onSettled }: QuestProgressBarProps) => {
+export const QuestProgressBar = ({ x, y, width, current, max, levelKey, scoreAtStartOfLevel, caption, visible = true, hasFrame = true, onSettled }: QuestProgressBarProps) => {
     const target = progressWidth(width, current, max);
     const [ shown, setShown ] = useState(target);
     const [ start, setStart ] = useState(target);
@@ -103,8 +105,12 @@ export const QuestProgressBar = ({ x, y, width, current, max, levelKey, scoreAtS
         if (!container || !track || !trackEnd || !background || !fill || !fillEnd || !text) return;
 
         container.setWidth(width + CONTAINER_SPACING);
-        track.setWidth(width);
-        trackEnd.setX(width + fill.x);
+
+        if (hasFrame) {
+            track.setWidth(width);
+            trackEnd.setX(width + fill.x);
+        }
+
         fill.setWidth(shown);
         fillEnd.setX(shown + fill.x);
         background.setWidth((fillEnd.x + fillEnd.width) - fill.x);
@@ -117,6 +123,9 @@ export const QuestProgressBar = ({ x, y, width, current, max, levelKey, scoreAtS
                 id="habbo-quest-engine-com/ProgressBar"
                 bindings={{
                     progress_bar_cont: { visible },
+                    bar_l: { visible: hasFrame },
+                    bar_c: { visible: hasFrame },
+                    bar_r: { visible: hasFrame },
                     bar_a_c: { alpha: blend },
                     progress_txt: { caption: caption(progress + scoreAtStartOfLevel, max + scoreAtStartOfLevel) },
                 }}

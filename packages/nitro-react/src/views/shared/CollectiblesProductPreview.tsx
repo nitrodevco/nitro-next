@@ -22,12 +22,10 @@ import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 import { RoomPreviewer } from '#base/components/room/RoomPreviewer';
 import { CollectiblePreview } from '#base/context/collectibles';
 import { useConfigValue } from '#base/context/system';
-import { useChatStyle } from '#base/hooks';
+import { useChatStyle, useCollectiblePetTexture, useFurnitureImageTexture } from '#base/hooks';
 import { BoxLayout, LayoutImage, Region, ThemeImage, useAvatarImageTexture, useTextureFromUrl } from '#base/theme';
-import { useFurnitureImageTexture } from '#base/views/catalog/useFurnitureImageTexture';
 
 import { CollectiblesChatBubblePreview } from './CollectiblesChatBubblePreview';
-import { useCollectiblePetTexture } from './useCollectiblePetTexture';
 
 export interface CollectiblesPreviewRect {
     left: number;

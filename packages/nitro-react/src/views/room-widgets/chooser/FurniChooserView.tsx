@@ -5,7 +5,7 @@ import { ChooserItem } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { useViewportSize } from '#base/hooks';
 import { TemplateWindow } from '#base/theme';
-import { WiredTableCell, WiredTableColumn, WiredTableView } from '#base/views/wired-common/WiredTableView';
+import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 
 /** `FurniView`'s columns. */
 const COLUMN_FURNI_NAME = 'name';
@@ -62,14 +62,14 @@ export const FurniChooserView = ({ items, onChoose, onClose }: FurniChooserViewP
     const words = search.toLowerCase().split(' ');
     const rows = items.filter(item => words.every(word => item.lowerCaseName.indexOf(word) !== -1) && ((selectedOwner === undefined) || ((chooserItemOwner(item) ?? '') === selectedOwner)));
 
-    const columns: WiredTableColumn[] = [
+    const columns: TableColumn[] = [
         { id: COLUMN_FURNI_NAME, title: t('new_furni_chooser.col.name', 'new_furni_chooser.col.name'), widthFactor: 0.5, alignment: 'left' },
         { id: COLUMN_FURNI_OWNER, title: t('new_furni_chooser.col.owner', 'new_furni_chooser.col.owner'), widthFactor: 0.25, alignment: 'left' },
         { id: COLUMN_ID, title: t('new_furni_chooser.col.id', 'new_furni_chooser.col.id'), widthFactor: 0.25, alignment: 'left' },
     ];
 
     // `FurniChooserTableObject.getTableCell`.
-    const getCell = (item: ChooserItem, columnId: string): WiredTableCell => {
+    const getCell = (item: ChooserItem, columnId: string): TableCell => {
         switch (columnId) {
             case COLUMN_FURNI_NAME:
                 return { text: item.name, inspectable: true };
@@ -101,7 +101,7 @@ export const FurniChooserView = ({ items, onChoose, onClose }: FurniChooserViewP
                 },
                 table_container: {
                     children: (
-                        <WiredTableView
+                        <TableView
                             columns={columns}
                             rows={rows}
                             getRowId={item => `${item.category}-${item.id}`}

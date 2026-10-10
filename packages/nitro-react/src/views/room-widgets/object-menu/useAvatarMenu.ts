@@ -9,6 +9,7 @@ import { useConfigValue, useTranslation } from '#base/context/system';
 import { useOwnIsAmbassador, useUserStore } from '#base/context/user';
 import { useWiredShowInspectButton } from '#base/context/wired';
 import { TRADE_REASON_ROOM, TRADE_REASON_SHUTDOWN, useRoomUserData } from '#base/hooks';
+import { isHandItem } from '#base/utils';
 
 /** `AvatarMenuView` modes. */
 export const MODE_ACTIONS = 1;
@@ -17,9 +18,6 @@ export const MODE_BAN = 4;
 export const MODE_MUTE = 5;
 export const MODE_RELATIONSHIP = 6;
 export const MODE_AMBASSADOR = 7;
-
-/** A carried item id at or above this is not something that can be handed on. */
-const MAX_CARRY_ITEM = 999999;
 
 /** The relationship grid's statuses, in the layout's cell order. */
 export const RELATIONSHIPS = [ RELATIONSHIP_HEART, RELATIONSHIP_SMILE, RELATIONSHIP_BOBBA ];
@@ -92,7 +90,7 @@ export const useAvatarMenu = (objectData: ISimpleRoomObjectData, onClose: () => 
             // `RWUAM_REPORT_CFH_OTHER`: `HabboHelp.reportUser`, the report flow on this user's chat lines.
             action('report', t('infostand.button.report'), reportShown && !isBlocked, () => reportUser(webId)),
             action('moderate', t('infostand.link.moderate'), canModerate, toMode(MODE_MODERATE), true),
-            action('pass_handitem', t('avatar.widget.pass_hand_item'), handItemGiveEnabled && (ownCarryItem > 0) && (ownCarryItem < MAX_CARRY_ITEM), () => passCarryItem(send, webId)),
+            action('pass_handitem', t('avatar.widget.pass_hand_item'), handItemGiveEnabled && isHandItem(ownCarryItem), () => passCarryItem(send, webId)),
             action('ambassador', t('infostand.link.ambassador'), isAmbassador, toMode(MODE_AMBASSADOR), true),
             // `RWUAM_WIRED_INSPECT`: the wired menu's inspection of this user.
             action('wired_inspect', t('infostand.button.wired_inspect'), showWiredInspect, () => openClientLink(send, `wiredmenu/open/inspection/1/${objectId}`)),

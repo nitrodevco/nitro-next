@@ -1,4 +1,4 @@
-import { IRoomObject, IRoomObjectController, ISelectedRoomObjectData, IVector3D, RoomGeometryScaleType, RoomObjectMouseEvent, RoomObjectUserTypeName, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomObject, ISelectedRoomObjectData, IVector3D, RoomGeometryScaleType, RoomObjectMouseEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
 import { useRoom, useRoomStackingHeightMapActions } from '#base/context/room';
 import { useSystemStore } from '#base/context/system';
@@ -13,19 +13,6 @@ export const useRoomObjectValidation = () => {
     const room = useRoom();
     const floorItems = useSystemStore(x => x.floorItems);
     const { getTileHeight, validateLocation } = useRoomStackingHeightMapActions();
-
-    /**
-     * `RoomObjectEventHandler.setObjectAlphaMultiplier`: a user or a rentable bot being placed
-     * fades through its own key, which the avatar visualization reads; everything else through
-     * the furniture one.
-     */
-    const setObjectAlphaMultiplier = (object: IRoomObjectController, multiplier: number) => {
-        if (!object) return;
-
-        const isAvatar = (object.type === RoomObjectUserTypeName.User) || (object.type === RoomObjectUserTypeName.RentableBot);
-
-        object.model.setValue(isAvatar ? RoomObjectVariableEnum.FigureAlphaMultiplier : RoomObjectVariableEnum.FurnitureAlphaMultiplier, multiplier);
-    };
 
     const getActiveSurfaceLocation = (roomObject: IRoomObject, event: RoomObjectMouseEvent) => {
         if (!room || !roomObject || !event) return undefined;
@@ -171,30 +158,5 @@ export const useRoomObjectValidation = () => {
         );
     };
 
-    const getValidRoomObjectDirection = (roomObject: IRoomObjectController, forward: boolean) => {
-        if (!roomObject?.model) return 0;
-
-        const allowedDirections: number[] = roomObject.type === RoomObjectUserTypeName.MonsterPlant
-            ? roomObject.model.getValue<number[]>(RoomObjectVariableEnum.PetAllowedDirections)
-            : roomObject.model.getValue<number[]>(RoomObjectVariableEnum.FurnitureAllowedDirections);
-
-        const direction = roomObject.getDirection().x;
-
-        if (!allowedDirections?.length) return direction;
-
-        let dirIndex = allowedDirections.indexOf(direction);
-
-        if (dirIndex < 0) {
-            const insertAt = allowedDirections.findIndex(d => direction <= d);
-            dirIndex = insertAt < 0 ? 0 : insertAt;
-        }
-
-        dirIndex = forward
-            ? (dirIndex + 1) % allowedDirections.length
-            : (dirIndex - 1 + allowedDirections.length) % allowedDirections.length;
-
-        return allowedDirections[dirIndex];
-    };
-
-    return { setObjectAlphaMultiplier, getActiveSurfaceLocation, validateFurnitureLocation, validateWallItemLocation, isValidLocation, getValidRoomObjectDirection };
+    return { getActiveSurfaceLocation, validateFurnitureLocation, validateWallItemLocation, isValidLocation };
 };

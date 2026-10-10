@@ -26,7 +26,7 @@ import { refreshMarketplaceOffers } from '#base/commands';
 import { CatalogStore } from '#base/context/catalog';
 import { WebSocketConnection } from '#base/context/communication';
 import { systemStore } from '#base/context/system';
-import { createMarketplaceItemStats, createMarketplaceOfferData, MARKETPLACE_PURCHASE_CONFIRM_TYPE_HIGHER } from '#base/utils';
+import { createMarketplaceItemStats, createMarketplaceOfferData, MARKETPLACE_MAKE_OFFER_RESULT_OK, MARKETPLACE_PURCHASE_CONFIRM_TYPE_HIGHER } from '#base/utils';
 
 import { on, subscribeAll } from '../packetSubscriptions';
 
@@ -35,9 +35,6 @@ const BUY_RESULT_OK = 1;
 const BUY_RESULT_NOT_AVAILABLE = 2;
 const BUY_RESULT_PRICE_CHANGED = 3;
 const BUY_RESULT_NOT_ENOUGH_CREDITS = 4;
-
-/** `MarketplaceMakeOfferResult`'s success. */
-const MAKE_OFFER_RESULT_OK = 1;
 
 export const registerCatalogMarketplaceHandlers = (store: StoreApi<CatalogStore>, { send, subscribe }: WebSocketConnection) => {
     const {
@@ -131,7 +128,7 @@ export const registerCatalogMarketplaceHandlers = (store: StoreApi<CatalogStore>
         on(MarketplaceConfigurationMessage, data => setMarketplaceAveragePricePeriod(data.averagePricePeriod)),
 
         on(MarketplaceMakeOfferResultMessage, (data) => {
-            if (data.result === MAKE_OFFER_RESULT_OK) refreshMarketplaceOffers(send, store);
+            if (data.result === MARKETPLACE_MAKE_OFFER_RESULT_OK) refreshMarketplaceOffers(send, store);
         }),
     ]);
 };

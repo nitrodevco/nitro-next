@@ -7,6 +7,8 @@ import { RoomObjectMenuBubble } from './RoomObjectMenuBubble';
 
 type RoomObjectInfoNameBubbleProps = {
     objectData: ISimpleRoomObjectData;
+    /** Called once the bubble has faded out. */
+    onClose?: () => void;
 };
 
 /**
@@ -14,7 +16,7 @@ type RoomObjectInfoNameBubbleProps = {
  * fades after a few seconds.
  */
 export const RoomObjectMenuNameBubble = (props: RoomObjectInfoNameBubbleProps) => {
-    const { objectData } = props;
+    const { objectData, onClose = undefined } = props;
     const nameData = useRoomObjectName(objectData);
 
     if (!nameData) return null;
@@ -24,6 +26,7 @@ export const RoomObjectMenuNameBubble = (props: RoomObjectInfoNameBubbleProps) =
             objectData={objectData}
             userType={nameData.userType}
             fades={true}
+            onClose={onClose}
         >
             <InfoBubbleNameView nameData={nameData} />
         </RoomObjectMenuBubble>

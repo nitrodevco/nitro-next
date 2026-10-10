@@ -4,10 +4,10 @@ import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
 
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoom, useRoomObjectPlacementSource, useRoomSelectedObject, useRoomSelectedObjectActions } from '#base/context/room';
+import { setObjectAlphaMultiplier } from '#base/utils';
 
 import { useRoomObjectMove } from './useRoomObjectMove';
 import { useRoomObjectSelect } from './useRoomObjectSelect';
-import { useRoomObjectValidation } from './useRoomObjectValidation';
 
 /**
  * Placing an object from the inventory, the catalogue or the infostand - `RoomObjectEventHandler.placeObject`
@@ -19,7 +19,6 @@ export const useRoomObjectPlace = () => {
     const selectedObject = useRoomSelectedObject();
     const objectPlacementSource = useRoomObjectPlacementSource();
     const { setSelectedObject, setPlacedObject } = useRoomSelectedObjectActions();
-    const { setObjectAlphaMultiplier } = useRoomObjectValidation();
     const { resetSelectedObject } = useRoomObjectSelect();
     const { handleFurnitureMove, handleWallItemMove } = useRoomObjectMove();
     const { send } = useWebSocketContext();

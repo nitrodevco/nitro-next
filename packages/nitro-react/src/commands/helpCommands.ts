@@ -19,7 +19,7 @@ import { GetConfigValue } from '@nitrodevco/nitro-api';
 import { CallForHelpComposer, CallForHelpFromForumMessageComposer, CallForHelpFromForumThreadComposer, CallForHelpFromIMComposer, CallForHelpFromPhotoComposer, ChatReviewSessionCreateComposer, GetCfhMyReportStatusComposer, GetMySanctionStatusComposer, ICallForHelpTopic, IgnoreUserComposer, RemoveFriendComposer } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
-import { helpStore } from '#base/context/help';
+import { HelpReportEntry, helpStore } from '#base/context/help';
 import { roomStore } from '#base/context/room';
 import { systemStore } from '#base/context/system';
 import { userStore } from '#base/context/user';
@@ -31,14 +31,6 @@ const TOPICS_WITHOUT_IGNORE_AND_UNFRIEND = [ 21 ];
 
 /** The topic `submitCallForHelp` hands to the guardians. */
 const BULLYING_TOPIC_NAME = 'bullying';
-
-/**
- * Where a report opens the help window (`_-nL`, the reporting mode): `user` is
- * `openReportingChatLineSelection` (mode -1), `room` is `openReportingContentReasonCategory(4)`, `im`
- * is `openReportingIMSelection` (mode 3), `thread` and `message` are `openReportingContentReasonCategory(7)` and
- * `(8)` (a group forum's thread or message) and `photo` is `openReportingContentReasonCategory(9)`.
- */
-export type HelpReportEntry = 'user' | 'room' | 'im' | 'photo' | 'thread' | 'message';
 
 /** `HabboHelp.reportUser`: the avatar menu's report (`RWUAM_REPORT_CFH_OTHER`). */
 export const reportUser = (userId: number) => {
@@ -96,6 +88,96 @@ export const reportGroupForumMessage = (groupId: number, threadId: number, messa
 export const collectSelectedImEntries = (userId: number): (number | string)[] => (helpStore.getState().imItems.find(([ chatId ]) => chatId === userId)?.[1] ?? [])
     .filter(item => item.selected)
     .flatMap(item => [ (item.userId < 0) ? Number(item.userName.split(':')[0]) : item.userId, item.text ]);
+
+/**
+ * `populateUsers`' side effect: a reported user who is not among `listedUserIds` is forgotten,
+ * room and all. Returns whether anybody is listed.
+ */
+export const forgetUnlistedReportedUser = (listedUserIds: number[]): boolean => {
+    const help = helpStore.getState();
+
+    if (!listedUserIds.includes(help.reportedUserId)) {
+        help.setReportedUserId(-1);
+        help.setReportedRoomId(-1);
+    }
+
+    return listedUserIds.length > 0;
+};
+
+/**
+ * `openWindow` (`deselectChatEntries`), then the report entry's own start: a user report needs a
+ * listed user with chat lines (`userChatLinesAvailable`) and holds the chat purges; a photo report
+ * needs its sender (`verifyUserSelected`); a messenger report holds the messenger purges and needs
+ * the conversation to have messages (`populateInstantMessages`). Returns the alert to close the
+ * window with when the report cannot go on.
+ */
+export const startHelpReport = (entry: HelpReportEntry | undefined, listedUserIds: number[]): string | undefined => {
+    const help = helpStore.getState();
+
+    help.deselectChatItems();
+
+    if (entry === 'user') {
+        if (!forgetUnlistedReportedUser(listedUserIds) || (helpStore.getState().reportedUserId <= 0)) return 'help.cfh.error.no_user_data';
+
+        help.setHoldPurges(true);
+    }
+
+    if ((entry === 'photo') && (help.reportedUserId === -1)) return 'guide.bully.request.usermissing';
+
+    if (entry === 'im') {
+        help.setImHoldPurges(true);
+
+        const { imItems, reportedUserId } = helpStore.getState();
+
+        if (!(imItems.find(([ chatId ]) => chatId === reportedUserId)?.[1].length)) return 'help.cfh.error.no_user_data';
+    }
+
+    return undefined;
+};
+
+/** `selectUserToReport`. */
+export const selectHelpReportedUser = (userId: number, roomId: number) => {
+    helpStore.getState().setReportedUserId(userId);
+    helpStore.getState().setReportedRoomId(roomId);
+};
+
+/**
+ * `verifyUserSelected`, then `populateChatMessage`, which holds the purges - nothing lets them go
+ * again. Returns whether a user is picked.
+ */
+export const confirmHelpReportedUser = (): boolean => {
+    const help = helpStore.getState();
+
+    if (help.reportedUserId === -1) return false;
+
+    help.setHoldPurges(true);
+
+    return true;
+};
+
+/** `onChatEntryEvent`: a line ticked or unticked; ticking one from another room reports that room. */
+export const toggleHelpChatLine = (index: number) => {
+    const help = helpStore.getState();
+    const item = help.chatItems.find(entry => entry.index === index);
+
+    if (!item) return;
+
+    if (!item.selected && (item.roomId !== help.reportedRoomId)) help.setReportedRoomId(item.roomId);
+
+    help.setChatItemSelected(index, !item.selected);
+};
+
+/** `onInstantMessageEntryEvent`: a message of the reported conversation ticked or unticked. */
+export const toggleHelpImLine = (index: number) => {
+    const { imItems, reportedUserId, setImItemSelected } = helpStore.getState();
+    const item = imItems.find(([ chatId ]) => chatId === reportedUserId)?.[1].find(line => line.index === index);
+
+    if (item) setImItemSelected(reportedUserId, index, !item.selected);
+};
+
+/** `verifySelectedChatLines`: whether `collectSelectedEntries` would send anything for this report. */
+export const hasSelectedHelpLines = (entry: HelpReportEntry | undefined): boolean =>
+    ((entry === 'im') ? collectSelectedImEntries(helpStore.getState().reportedUserId) : collectSelectedChatEntries()).length > 0;
 
 /** `HabboHelp.ignoreAndUnfriendReportedUser`. */
 const ignoreAndUnfriendReportedUser = (send: Send, topicId: number) => {

@@ -30,7 +30,7 @@ export const RoomCameraSliceInitialState: State = {
 
 export type RoomCameraSlice = State & Actions;
 
-export const createRoomCameraSlice: StateCreator<RoomCameraSlice, [], [], RoomCameraSlice> = (set, get, store) => ({
+export const createRoomCameraSlice: StateCreator<RoomCameraSlice, [], [], RoomCameraSlice> = set => ({
     ...RoomCameraSliceInitialState,
     setTargetId: (id: number) => set({ targetId: id }),
     setTargetCategory: (category: RoomObjectCategoryEnum) => set({ targetCategory: category }),

@@ -7,7 +7,7 @@ import { AvatarFaceImage } from '#base/components';
 import { NOTIFICATION_ASSETS, NotificationAssetName, NotificationItem, NotificationLayoutName } from '#base/context/notifications';
 import { useInterpolate, useTranslation } from '#base/context/system';
 import { Box, LayoutImage, measureTemplateText, TemplateBindings, TemplateWindow, TemplateWindows, useLayoutEvent } from '#base/theme';
-import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/collectibles/CollectiblesProductPreview';
+import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { NOTIFICATION_SIDE_MARGIN } from './notificationStack';
 

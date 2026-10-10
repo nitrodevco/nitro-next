@@ -26,6 +26,7 @@ const actions = {
     setPurchasableChatStyleOwned: state.setPurchasableChatStyleOwned,
     setBuildersClubSubscription: state.setBuildersClubSubscription,
     decreaseBuildersClubSecondsLeft: state.decreaseBuildersClubSecondsLeft,
+    setLastWornEffect: state.setLastWornEffect,
 };
 
 export const useUserActions = () => actions;
