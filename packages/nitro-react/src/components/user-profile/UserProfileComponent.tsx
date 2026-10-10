@@ -3,7 +3,7 @@ import { BlockUserComposer, DeselectFavouriteHabboGroupComposer, SelectFavourite
 
 import { askForAFriend, canBeAskedForAFriend, openClientLink, openProfile, requestGroupDetails, searchRoomsByOwner, showGroupBases } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { useConfigValue, useIsWindowVisible, useSystemActions, useWindowParams } from '#base/context/system';
+import { useConfigValue, useIsWindowVisible, useSystemActions, useWindowActions, useWindowParams } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { useProfileActions, useProfileStore } from '#base/context/user-profile';
 import { UserProfileView } from '#base/views/user-profile/UserProfileView';
@@ -15,6 +15,7 @@ export const UserProfileComponent = () => {
     const badges = useProfileStore(state => state.badges);
     const relationships = useProfileStore(state => state.relationships);
     const { getLocalizationValue, hideWindow, showConfirm, showWindow } = useSystemActions();
+    const { showAlert } = useWindowActions();
     const { send } = useWebSocketContext();
     const ownUserId = useUserStore(state => state.userId);
     const isBlocked = useUserStore(state => state.blockedUserIds.includes(profile?.userId ?? -1));
@@ -22,6 +23,7 @@ export const UserProfileComponent = () => {
     const canAskForFriend = useUserStore(state => !!profile && canBeAskedForAFriend(profile.userId, state));
     const { markFriendRequestSent } = useProfileActions();
     const activityDisplayEnabled = useConfigValue<boolean>('activity.point.display.enabled') === true;
+    const relationshipsEnabled = useConfigValue<boolean>('relationship.status.enabled') === true;
 
     if (!visible || !profile || !userId || (profile.userId !== userId)) return null;
 
@@ -33,6 +35,7 @@ export const UserProfileComponent = () => {
             relationships={relationships}
             ownUserId={ownUserId}
             activityDisplayEnabled={activityDisplayEnabled}
+            relationshipsEnabled={relationshipsEnabled}
             canAskForFriend={canAskForFriend}
             isBlocked={isBlocked}
             onClose={() => hideWindow('user_profile')}
@@ -48,10 +51,13 @@ export const UserProfileComponent = () => {
             onSelectGroup={groupId => requestGroupDetails(send, groupId)}
             onShowGroups={() => showGroupBases(send)}
             onFavouriteGroup={(groupId, favourite) => send(favourite ? new DeselectFavouriteHabboGroupComposer({ groupId }) : new SelectFavouriteHabboGroupComposer({ groupId }))}
-            onFindFriends={() => {
-                hideWindow('user_profile');
-                showWindow('friendlist');
-            }}
+            // `onRelationshipLink` -> `addFriendsAlertCallback`: the alert, then the friend list, the profile closed.
+            onFindFriends={() => showAlert(getLocalizationValue('extendedprofile.add.friends.alert.title'), getLocalizationValue('extendedprofile.add.friends.alert.body'), {
+                onClose: () => {
+                    hideWindow('user_profile');
+                    showWindow('friendlist');
+                },
+            })}
             onToggleBlock={() => showConfirm(
                 getLocalizationValue(isBlocked ? 'extendedprofile.unblock_player.title' : 'extendedprofile.block_player.title'),
                 getLocalizationValue(isBlocked ? 'extendedprofile.unblock_player.desc' : 'extendedprofile.block_player.desc'),

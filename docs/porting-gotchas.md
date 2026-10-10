@@ -20,6 +20,9 @@ a new one costs you time. Rules with a longer story live in the other guides in 
   `nitro-config.json`: a missing key is silently `false`.
 - **A table lifted out of a Flash method** lives in `context/<feature>/store/`, not in the view
   file (fast refresh fails lint), and gets a `scripts/drift/constants.py` entry.
+- **A template id is its bundle's key, and the libraries name them differently**: some keep the
+  asset's `_xml` suffix (`habbo-friend-bar-com/bonus_rare_promo_xml`), others drop it
+  (`habbo-groups-com/group`). A wrong id draws nothing and logs nothing - check the library's keys.
 - **A `Frame` opens at its layout's position**: pass `defaultPosition` from the layout's root
   container (the messenger's is (120, 120)); without it the window opens in the top-left corner.
 - **Check the available scrolling API.** `scrollResetKey` resets to the start. Chat auto-scroll

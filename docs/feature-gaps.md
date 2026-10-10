@@ -95,7 +95,6 @@ the layouts are the library's in `scripts/flash-js-resources`.
 
 | Area | Views | Layouts |
 |---|---|---|
-| Groups and profile | `views/groups` (`GroupManagementView` draws only part of itself from a template), `UserProfileView` | `habbo-groups-com`: `group_info_window`, `group_management_window`, `badge_editor`, `guild_members_window`, `group_created_window`, `club_required`, `new_extended_profile` |
 | Collectibles, habbicons, offer centre, special items | `views/collectibles` (only the `CollectiblesView` shell is templated), `views/habbicons`, `OfferCenterView`, `SpecialItemsView` | `habbo-catalog-com`: `collectible_view`, `collectible_reward`, `habbicon_view`, `habbicon_purchase_confirmation`, `offer_center`, `special_items_display` |
 | Wired menu and chests | The `wired_menu` tabs (`WiredMenuOverviewTab`, `WiredMenuInspectionTab`, `WiredMenuMonitorTab`, `WiredMenuSettingsTab`, `WiredMenuChestsTab`) inside the templated `WiredMenuView` frame, `WiredVariableHolderView`, `WiredChestView` | `habbo-user-defined-room-events-com`: `wired_menu_view`, `variables_management_*`, `chest_*` |
 

@@ -5,22 +5,19 @@
  * is on screen is what the store's `infoGroupId` says, as it is in the client.
  */
 import { useGroupActions, useGroupStore } from '#base/context/groups';
-import { useGroupDetailsHandlers } from '#base/hooks';
 import { GroupInfoView } from '#base/views/groups/GroupInfoView';
 
 export const GroupInfoComponent = () => {
     const groupId = useGroupStore(x => x.infoGroupId);
-    const details = useGroupStore(x => (x.infoGroupId ? x.detailsById[x.infoGroupId] : undefined));
+    const hasDetails = useGroupStore(x => !!(x.infoGroupId && x.detailsById[x.infoGroupId]));
     const { closeGroupInfo } = useGroupActions();
-    const handlers = useGroupDetailsHandlers(groupId ?? 0, details);
 
-    if (!groupId || !details) return null;
+    if (!groupId || !hasDetails) return null;
 
     return (
         <GroupInfoView
-            details={details}
+            groupId={groupId}
             onClose={closeGroupInfo}
-            {...handlers}
         />
     );
 };

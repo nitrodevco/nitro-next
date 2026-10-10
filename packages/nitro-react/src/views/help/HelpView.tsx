@@ -31,7 +31,6 @@
  *   Back walks the steps back as `windowEventProcedure`'s `back_button` does; `change_user` goes to
  *   the user list again.
  */
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import type { ICallForHelpTopic } from '@nitrodevco/nitro-packets';
 import { useEffect, useState } from 'react';
 
@@ -40,7 +39,8 @@ import { useWebSocketContext } from '#base/context/communication';
 import { HelpReportEntry, HelpUserItem, useHelpStore } from '#base/context/help';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
-import { ModalDialog, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useAvatarImageTexture, useTemplateFrame } from '#base/theme';
+import { ModalDialog, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplateFrame } from '#base/theme';
+import { AvatarImageWidgetHead } from '#base/views/shared/AvatarImageWidgetHead';
 
 import { HelpMessageInput } from './HelpMessageInput';
 
@@ -60,25 +60,8 @@ const FIELD_MAX_CHARS = 253;
 const HELP_MESSAGE_HEIGHT = 220;
 /** `help.cfh.length.minimum`'s default. */
 const MESSAGE_MINIMUM_LENGTH_DEFAULT = 15;
-/** `AvatarImageWidget`'s default direction, `southeast`. */
-const AVATAR_DIRECTION = 2;
 
 type Container = 'start_container' | 'help_container' | 'users_container' | 'reason_container' | 'topic_container' | 'message_container' | 'chat_container' | 'summary_container';
-
-/** A head drawn into an `avatar_image` widget (`only_head`, optionally `cropped`). */
-const AvatarHead = ({ figure, cropped }: { figure: string; cropped: boolean }) => {
-    const head = useAvatarImageTexture(figure, AvatarGenderType.Male, { headOnly: true, cropped, direction: AVATAR_DIRECTION });
-
-    if (!head.texture) return null;
-
-    return (
-        <pixiSprite
-            texture={head.texture}
-            eventMode="none"
-            layout={{ position: 'absolute', left: 0, top: 0, width: head.width, height: head.height }}
-        />
-    );
-};
 
 /** A list item's text grown to its lines plus 5 and the item to hold it (`populateTopics`, `populateChatMessage`). */
 const fitListText = (textName: string, extra: number) => ({ find, root }: TemplateWindows) => {
@@ -302,7 +285,7 @@ export const HelpView = ({ entry, onClose }: HelpViewProps) => {
             user_name: { caption: user.userName },
             room_name: { caption: user.roomName ? t('help.emergency.main.step.two.room.name', '', { room_name: user.roomName }) : '' },
             user_avatar: { children: (
-                <AvatarHead
+                <AvatarImageWidgetHead
                     figure={user.figure}
                     cropped={false}
                 />
@@ -408,7 +391,7 @@ export const HelpView = ({ entry, onClose }: HelpViewProps) => {
         // `user` (`updateUserData`): a room report shows the room's name alone.
         user_info_title: { visible: (entry !== 'room') && !forumReport },
         reported_user_avatar: { visible: (entry !== 'room') && !forumReport && !!reportedUser, children: reportedUser && (
-            <AvatarHead
+            <AvatarImageWidgetHead
                 figure={reportedUser.figure}
                 cropped
             />

@@ -3,30 +3,20 @@
  * `InfoStandUserView` shows while the pointer is over it. A user badge is drawn from
  * `badge.asset.url`, a group badge from `badge.asset.group.url`.
  *
- * The details are `habbo-room-ui-com/badge_details` (`createBadgeDetails`: `buildFromXML` of the
- * `badge_details` asset) filled by `populateBadgeDetails`:
- *
- * - `showBadgeInfo` (`WME_OVER` on `badge_<n>`): the badge's name and description
- *   (`getBadgeName` / `getBadgeDesc`) and the slot's `SelectedBadgeData`, which shows `rarity_tag` -
- *   `badge.rarity.badge` with the tier's `BadgeRarity.getLabelLocalizationKey` text in white
- *   (`rarity`, and the same text in `rarity_border`) on the tier's
- *   `BadgeRarity.getWhiteBackgroundTagColor` - and `owner_count` (`badge.owner_count`) for 1-999
- *   owners (`shouldShowOwnerCount`).
- * - `showGroupBadgeInfo` (`WME_OVER` on `badge_group`, while the user has a group): the group's
- *   name alone - no description, no selected-badge data.
- * - `details_list.arrangeListItems()` and the window `details_list.y + details_list.height + 6`
- *   high; it opens on the desktop with its right edge on the badge's left, centred on the badge's
- *   height (`getGlobalRectangle`), and `WME_OUT` disposes it (`hideBadgeInfo`).
+ * The details are `habbo-room-ui-com/badge_details` (`createBadgeDetails`), left of the badge
+ * (`BadgeDetailsPopup`): `showBadgeInfo` (`WME_OVER` on `badge_<n>`) the badge's, with the slot's
+ * `SelectedBadgeData`; `showGroupBadgeInfo` (`WME_OVER` on `badge_group`, while the user has a group)
+ * the group's name alone. `WME_OUT` disposes it (`hideBadgeInfo`).
  *
  * Not ported: `playGlow` - the badge widget's glow for a standalone rarity tier on hover.
  */
-import { getBadgeRarityLabelKey, getBadgeRarityWhiteBackgroundTagColor } from '@nitrodevco/nitro-api';
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { useState } from 'react';
 
-import { useConfigValue, useSystemStore, useTranslation } from '#base/context/system';
-import { Box, BoxLayout, FloatingPopup, getGlobalRect, GlobalRect, Region, TemplateBindings, TemplateWindow, TemplateWindows, useLayoutSize, useTextureFromUrl } from '#base/theme';
-import { getBadgeDesc, getBadgeName, shouldShowBadgeOwnerCount } from '#base/utils';
+import { useConfigValue } from '#base/context/system';
+import { BoxLayout, getGlobalRect, GlobalRect, Region, useTextureFromUrl } from '#base/theme';
+import { BadgeDetailsPopup } from '#base/views/shared/BadgeDetailsPopup';
+import { useBadgeDetails } from '#base/views/shared/useBadgeDetails';
 
 export interface InfostandBadgeViewProps {
     /** A badge code, or for a group badge the badge data string. */
@@ -44,71 +34,10 @@ export interface InfostandBadgeViewProps {
     layout?: BoxLayout;
 }
 
-/** `badge_details`' layout width, which the window's right edge is placed by. */
-const DETAILS_WIDTH = 263;
-
-/** `populateBadgeDetails`: the window ends this far under `details_list`. */
-const DETAILS_BOTTOM_SPACING = 6;
-
-/** `rarity.textColor = 16777215`. */
-const RARITY_TEXT_COLOR = 0xffffff;
-
-interface BadgeDetailsProps {
-    anchor: GlobalRect;
-    name: string;
-    description: string;
-    rarity?: { text: string; color: number };
-    ownerCount?: string;
-}
-
-/** The `badge_details` window, on the desktop left of the badge it names. */
-const BadgeDetails = ({ anchor, name, description, rarity, ownerCount }: BadgeDetailsProps) => {
-    const [ node, setNode ] = useState<PixiContainer | null>(null);
-    const size = useLayoutSize(node);
-
-    const bindings: TemplateBindings = {
-        name: { caption: name },
-        description: { visible: !!description.length, caption: description },
-        rarity_tag: rarity ? { visible: true, color: rarity.color } : { visible: false },
-        rarity_border: { caption: rarity?.text ?? '' },
-        rarity: { caption: rarity?.text ?? '', color: RARITY_TEXT_COLOR },
-        owner_count: { visible: ownerCount !== undefined, caption: ownerCount ?? '' },
-    };
-
-    const arrange = ({ find, root }: TemplateWindows) => {
-        const list = find('details_list');
-
-        if (list) root()?.setHeight(list.y + list.height + DETAILS_BOTTOM_SPACING);
-    };
-
-    return (
-        <FloatingPopup
-            x={Math.trunc(anchor.x - DETAILS_WIDTH)}
-            y={Math.trunc(anchor.y + ((anchor.height - size.height) / 2))}
-            onOutsideClick={() => undefined}
-        >
-            <Box
-                ref={setNode}
-                eventMode="none"
-                layout={{ flexDirection: 'column' }}
-            >
-                <TemplateWindow
-                    id="habbo-room-ui-com/badge_details"
-                    bindings={bindings}
-                    arrange={arrange}
-                />
-            </Box>
-        </FloatingPopup>
-    );
-};
-
 export const InfostandBadgeView = ({ code, group = false, ownerCount, rarityId, groupName, onPress, layout }: InfostandBadgeViewProps) => {
     const badgeUrl = useConfigValue<string>('badge.asset.url') ?? '';
     const groupBadgeUrl = useConfigValue<string>('badge.asset.group.url') ?? '';
-    // `isUncommonBadgeRarityEnabled`.
-    const uncommonRarityEnabled = useConfigValue<boolean>('badge_rarity.uncommon') === true;
-    const t = useTranslation();
-    const badgePointLimits = useSystemStore(x => x.badgePointLimits);
+    const badgeDetails = useBadgeDetails();
     const [ anchor, setAnchor ] = useState<GlobalRect | null>(null);
 
     const url = !code?.length
@@ -123,24 +52,9 @@ export const InfostandBadgeView = ({ code, group = false, ownerCount, rarityId, 
         if (hasDetails && (event.currentTarget instanceof PixiContainer)) setAnchor(getGlobalRect(event.currentTarget));
     };
 
-    const details = (() => {
-        if (!anchor || !hasDetails) return null;
-
-        if (group) return { name: groupName ?? '', description: '' };
-
-        const badgeCode = code ?? '';
-        const rarityLabel = (rarityId !== undefined) ? t(getBadgeRarityLabelKey(rarityId, uncommonRarityEnabled)) : undefined;
-        const showsOwnerCount = shouldShowBadgeOwnerCount(ownerCount);
-
-        return {
-            name: getBadgeName(t, badgeCode),
-            description: getBadgeDesc(t, badgeCode, badgePointLimits),
-            rarity: (rarityId !== undefined)
-                ? { text: t('badge.rarity.badge', '', { rarity: rarityLabel ?? '' }), color: getBadgeRarityWhiteBackgroundTagColor(rarityId, uncommonRarityEnabled) }
-                : undefined,
-            ownerCount: showsOwnerCount ? t('badge.owner_count', '', { count: String(ownerCount) }) : undefined,
-        };
-    })();
+    const details = (!anchor || !hasDetails)
+        ? null
+        : group ? { name: groupName ?? '', description: '' } : badgeDetails(code ?? '', ownerCount, rarityId);
 
     return (
         <Region
@@ -157,9 +71,11 @@ export const InfostandBadgeView = ({ code, group = false, ownerCount, rarityId, 
                 />
             )}
             {(anchor && details) && (
-                <BadgeDetails
+                <BadgeDetailsPopup
+                    templateId="habbo-room-ui-com/badge_details"
                     anchor={anchor}
-                    {...details}
+                    side="left"
+                    details={details}
                 />
             )}
         </Region>

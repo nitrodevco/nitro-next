@@ -1,17 +1,39 @@
+/**
+ * The group management window - `GuildManagementWindowCtrl`: `group_management_window`, centred. One
+ * window in two shapes: the four-step purchase wizard of a group that does not exist yet, and the
+ * four-tab editor of one that does (`session.exists`, from `GuildCreationInfoMessage` or
+ * `GuildEditInfoMessage`).
+ *
+ * `refresh`:
+ * - the tabs (`edit_guild_tab_context`) for an existing group, each shown to its owner only - an admin
+ *   editing the group gets the strip with nothing in it; the wizard's step strip
+ *   (`refreshCreateHeader`) - each step's chip lit while it is the one shown, its title 4 higher, the
+ *   credit icon too on the last - its footer (cancel on the first step, previous step after; next
+ *   step before the last, the buy panel on it);
+ * - the step's container, its header picture (36 lower in the wizard, under the step strip), caption
+ *   and description (20 higher in the editor);
+ * - identity: the name and description, the base room menu (`prepareRoomSelection`: a prompt, then
+ *   the user's rooms) with its warning and the create-room link while creating, the badge and member
+ *   count of an existing group;
+ * - the badge editor (`useGroupBadgeEditorItem`), with the reset button for an existing group;
+ * - colours: the primary and secondary palettes (`ColorGridCtrl`), the swatch tinted with the picked
+ *   two, the reset button for an existing group;
+ * - confirm (`updateConfirmPreview`): the badge, the colours, the name, the buy button enabled (and
+ *   its border gold) with a club membership, else greyed with the club panel shown;
+ * - settings (`§_-W1f§`): the group type and the members' rights.
+ */
 import { IGuildEditorData } from '@nitrodevco/nitro-packets';
 
 import {
     GROUP_MANAGEMENT_VIEW_BADGE, GROUP_MANAGEMENT_VIEW_COLORS, GROUP_MANAGEMENT_VIEW_CONFIRM, GROUP_MANAGEMENT_VIEW_IDENTITY, GROUP_MANAGEMENT_VIEW_SETTINGS,
-    GroupManagementSession, limitGroupManagementStep,
+    GroupManagementSession, GUILD_RIGHTS_ADMINS, GUILD_RIGHTS_MEMBERS, limitGroupManagementStep,
 } from '#base/context/groups';
 import { useConfigValue, useTranslation } from '#base/context/system';
-import { Border, Box, ButtonThick, Frame, Region, TemplateWindow, ThemeImage, ThemeText } from '#base/theme';
+import { TemplateBindings, TemplateWindow, TemplateWindows, useTemplateFrame, useTemplateLibrary } from '#base/theme';
 
-import { GroupBadgeEditor } from './GroupBadgeEditor';
-import { GroupManagementColorsStep } from './GroupManagementColorsStep';
-import { GroupManagementConfirmStep } from './GroupManagementConfirmStep';
-import { GroupManagementIdentityStep } from './GroupManagementIdentityStep';
-import { GroupManagementSettingsStep } from './GroupManagementSettingsStep';
+import { GroupBadgePreview } from './GroupBadgePreview';
+import { groupColorItems } from './groupColorItems';
+import { useGroupBadgeEditorItem } from './useGroupBadgeEditorItem';
 
 export interface GroupManagementViewProps {
     session: GroupManagementSession;
@@ -24,6 +46,7 @@ export interface GroupManagementViewProps {
     onName: (name: string) => void;
     onDescription: (description: string) => void;
     onBaseRoom: (roomId: number) => void;
+    onCreateRoom: () => void;
     onMembers: () => void;
     onPickPart: (layerIndex: number) => void;
     onSelectPart: (layerIndex: number, partIndex: number) => void;
@@ -39,345 +62,166 @@ export interface GroupManagementViewProps {
     onBuyClub: () => void;
 }
 
-/** `header_caption_txt` / `header_desc_txt`'s own `y`, and the offset an existing group lifts them by. */
-const HEADER_CAPTION_TOP = 43;
-const HEADER_DESC_TOP = 69;
+const LIBRARY = 'habbo-groups-com';
+
+/** `getStepContainer` / the header pictures: steps 1-5 (`VIEW_*`). */
+const VIEWS = [ 1, 2, 3, 4, 5 ] as const;
+
+/** The editor's tabs, `edit_tab_<view>`. */
+const EDIT_TABS = [ GROUP_MANAGEMENT_VIEW_IDENTITY, GROUP_MANAGEMENT_VIEW_BADGE, GROUP_MANAGEMENT_VIEW_COLORS, GROUP_MANAGEMENT_VIEW_SETTINGS ] as const;
+
+/** The wizard's steps, `gcreate_<step>_*` and `step_title_<step>`. */
+const WIZARD_STEPS = [ 1, 2, 3, 4 ] as const;
+
+/** `refresh` / `refreshCreateHeader`'s offsets. */
+const HEADER_CAPTION_Y = 43;
+const HEADER_DESC_Y = 69;
 const EDIT_HEADER_TEXTS_OFFSET = -20;
-
-/** `CREATE_HEADER_BITMAP_OFFSET`: the wizard drops the step picture to make room for the step chips. */
 const CREATE_HEADER_BITMAP_OFFSET = 36;
+const STEP_TITLE_Y_ACTIVE = 5;
+const STEP_TITLE_Y_INACTIVE = 9;
+const STEP_CREDIT_Y_ACTIVE = 6;
+const STEP_CREDIT_Y_INACTIVE = 10;
 
-/** `STEP_TITLE_Y_OFFSET_*` and the credit icon's two positions. */
-const STEP_TITLE_TOP_ACTIVE = 5;
-const STEP_TITLE_TOP_INACTIVE = 9;
-const STEP_CREDIT_TOP_ACTIVE = 6;
-const STEP_CREDIT_TOP_INACTIVE = 10;
+/** `updateConfirmPreview`: the buy border with and without a club membership. */
+const BUY_BORDER_COLOR = 0xFFFFC300;
+const BUY_BORDER_DISABLED_COLOR = 0xFFAAAAAA;
 
-/**
- * The wizard's four step chips, at the `x`/`width` the layout gives each, with the label box that
- * sits over it. `art` is the bitmap pair the chip loads rather than its own number: the client
- * ships no `gcreate_3_*`, so the colours chip draws the badge chip's art.
- *
- * Each label is its own 156-wide centred box (`step_title_<n>` at x -38, 40, 115, 210), which is
- * what puts it over the middle of its chip whatever the language makes of it - the label is not
- * placed by its left edge.
- */
-const STEP_TITLE_WIDTH = 156;
+/** The settings' type radios, by `GUILD_TYPE_*`. */
+const TYPE_RADIOS = [ 'rb_type_regular', 'rb_type_exclusive', 'rb_type_private' ] as const;
 
-const STEP_CHIPS = [
-    { step: GROUP_MANAGEMENT_VIEW_IDENTITY, art: 1, left: 0, width: 84, titleLeft: -38 },
-    { step: GROUP_MANAGEMENT_VIEW_BADGE, art: 2, left: 77, width: 83, titleLeft: 40 },
-    { step: GROUP_MANAGEMENT_VIEW_COLORS, art: 2, left: 153, width: 83, titleLeft: 115 },
-    { step: GROUP_MANAGEMENT_VIEW_CONFIRM, art: 4, left: 227, width: 133, titleLeft: 210 },
-];
-
-/** The picture each step's header shows, by the file the layout names for it. */
-const HEADER_PICTURES: Record<number, string> = {
-    [GROUP_MANAGEMENT_VIEW_IDENTITY]: 'group_UI_identity',
-    [GROUP_MANAGEMENT_VIEW_BADGE]: 'group_UI_badge',
-    [GROUP_MANAGEMENT_VIEW_COLORS]: 'group_UI_colors',
-    [GROUP_MANAGEMENT_VIEW_CONFIRM]: 'group_UI_ready',
-    [GROUP_MANAGEMENT_VIEW_SETTINGS]: 'group_UI_ready',
-};
-
-/** The layout the editor's tab strip is drawn from: `TabButtonController` sizes each tab to its caption. */
-const TEMPLATE = 'habbo-groups-com/group_management_window';
-
-/** The four tabs of the editor (`edit_tab_<step>`), in the layout's order. */
-const EDIT_TABS = [ GROUP_MANAGEMENT_VIEW_IDENTITY, GROUP_MANAGEMENT_VIEW_BADGE, GROUP_MANAGEMENT_VIEW_COLORS, GROUP_MANAGEMENT_VIEW_SETTINGS ];
-
-/**
- * The group management window - `group_management_window`, drawn by `GuildManagementWindowCtrl`.
- * One window in two shapes: the four-step purchase wizard of a group that does not exist yet, and
- * the four-tab editor of one that does. Which it is comes from the answer that opened it -
- * `GuildCreationInfoMessage` or `GuildEditInfoMessage` - and shows as `session.exists`.
- *
- * Only the owner sees the tabs: `refresh` hides all four for anyone else (`edit_tab_<n>.visible =
- * isOwner`) while leaving the strip itself up, so an admin editing the group gets the identity tab
- * under an empty tab strip.
- */
 export const GroupManagementView = ({
-    session, step, editorData, pickingLayerIndex, hasVip, onClose, onStep, onName, onDescription, onBaseRoom, onMembers,
+    session, step, editorData, pickingLayerIndex, hasVip, onClose, onStep, onName, onDescription, onBaseRoom, onCreateRoom, onMembers,
     onPickPart, onSelectPart, onPosition, onLayerColor, onResetBadge, onPrimaryColor, onSecondaryColor, onResetColors,
     onGuildType, onRightsLevel, onBuy, onBuyClub,
 }: GroupManagementViewProps) => {
     const t = useTranslation();
-    const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
+    const groupBadgeUrl = useConfigValue<string>('badge.asset.group.url') ?? '';
+    const templates = useTemplateLibrary(LIBRARY);
+    const frame = useTemplateFrame({ id: 'groups_main_window', centered: true, rememberPosition: false, onClose });
+    const badgeEditor = useGroupBadgeEditorItem(templates, session.layers, editorData, pickingLayerIndex, { onPickPart, onSelectPart, onPosition, onColor: onLayerColor });
+    const colorTemplate = templates?.[`${LIBRARY}/badge_color_item`];
 
-    const captionPrefix = session.exists ? 'group.edit.tabcaption.' : 'group.create.stepcaption.';
-    const descPrefix = session.exists ? 'group.edit.tabdesc.' : 'group.create.stepdesc.';
-    const headerOffset = session.exists ? EDIT_HEADER_TEXTS_OFFSET : 0;
-
+    const { exists } = session;
     const hasPreviousStep = step !== limitGroupManagementStep(step - 1);
     const hasNextStep = step !== limitGroupManagementStep(step + 1);
+    const stepKey = (prefix: string) => `${prefix}${step}`;
+    const caption = stepKey(exists ? 'group.edit.tabcaption.' : 'group.create.stepcaption.');
+    const desc = stepKey(exists ? 'group.edit.tabdesc.' : 'group.create.stepdesc.');
+    const tintOf = (palette: IGuildEditorData['guildPrimaryColors'] | undefined, colorId: number) => {
+        const color = palette?.find(entry => entry.id === colorId)?.color;
+
+        return (color === undefined) ? undefined : ((0xFF000000 | color) >>> 0);
+    };
+    const primaryTint = tintOf(editorData?.guildPrimaryColors, session.primaryColorId);
+    const secondaryTint = tintOf(editorData?.guildSecondaryColors, session.secondaryColorId);
+    const badgePreview = (
+        <GroupBadgePreview
+            layers={session.layers}
+            editorData={editorData}
+        />
+    );
+
+    // `prepareRoomSelection`: the prompt, then the rooms in the order they came.
+    const roomIndex = session.ownedRooms.findIndex(room => room.roomId === session.baseRoomId);
+    const palette = (colors: IGuildEditorData['guildPrimaryColors'] | undefined, selectedId: number, onSelect: (colorId: number) => void) => ((colorTemplate && colors)
+        ? groupColorItems(colorTemplate, colors, colors.findIndex(color => color.id === selectedId), index => onSelect(colors[index].id))
+        : []);
+
+    const shownType = (Number(session.guildType) < TYPE_RADIOS.length) ? Number(session.guildType) : 0;
+
+    const bindings: TemplateBindings = {
+        // The header.
+        edit_guild_tab_context: { visible: exists },
+        ...Object.fromEntries(EDIT_TABS.map(tab => [ `edit_tab_${tab}`, { visible: !exists || session.isOwner, selected: step === tab, onPointerTap: () => onStep(tab) } ])),
+        steps_header_cont: { visible: !exists },
+        ...Object.fromEntries(WIZARD_STEPS.flatMap(wizardStep => [
+            [ `gcreate_${wizardStep}_0`, { visible: wizardStep !== step } ],
+            [ `gcreate_${wizardStep}_1`, { visible: wizardStep === step } ],
+        ])),
+        header_caption_txt: { caption: t(caption, caption) },
+        header_desc_txt: { caption: t(desc, desc) },
+        ...Object.fromEntries(VIEWS.flatMap(view => [
+            [ `step_cont_${view}`, { visible: view === step } ],
+            [ `header_pic_bitmap_step_${view}`, { visible: view === step } ],
+        ])),
+        reset_badge: { visible: (step === GROUP_MANAGEMENT_VIEW_BADGE) && exists, onPointerTap: onResetBadge },
+        reset_colors: { visible: (step === GROUP_MANAGEMENT_VIEW_COLORS) && exists, onPointerTap: onResetColors },
+
+        // The wizard's footer.
+        footer_cont: { visible: !exists },
+        next_step_button: { visible: hasNextStep, onPointerTap: () => onStep(step + 1) },
+        previous_step_link_region: { visible: hasPreviousStep, onPointerTap: () => onStep(step - 1) },
+        cancel_link_region: { visible: !hasPreviousStep, onPointerTap: onClose },
+        buy_border: { visible: !hasNextStep, color: hasVip ? BUY_BORDER_COLOR : BUY_BORDER_DISABLED_COLOR },
+        buy_button: { disabled: !hasVip, onPointerTap: onBuy },
+
+        // Identity.
+        step_1_badge: { visible: exists },
+        group_logo: { asset: (exists && session.badgeCode) ? groupBadgeUrl.replace('%badgedata%', session.badgeCode) : undefined },
+        step_1_members_region: { visible: exists, onPointerTap: onMembers },
+        step_1_members_txt: { caption: t('group.membercount', '', { totalMembers: String(session.membershipCount) }) },
+        name_txt: { caption: session.name, onChange: onName },
+        desc_txt: { caption: session.description, onChange: onDescription },
+        base_label: { visible: !exists },
+        base_dropmenu: {
+            visible: !exists,
+            options: [ t('group.edit.base.select.room', 'group.edit.base.select.room'), ...session.ownedRooms.map(room => room.roomName) ],
+            selection: roomIndex + 1,
+            onSelect: index => onBaseRoom((index > 0) ? (session.ownedRooms[index - 1]?.roomId ?? 0) : 0),
+        },
+        base_warning: { visible: !exists },
+        create_room_link_region: { visible: !exists, onPointerTap: onCreateRoom },
+
+        // The badge.
+        step_cont_2: { visible: step === GROUP_MANAGEMENT_VIEW_BADGE, items: badgeEditor ? [ badgeEditor ] : [] },
+
+        // Colours.
+        guild_color_primary_color_top: primaryTint !== undefined ? { color: primaryTint } : {},
+        guild_color_secondary_color_top: secondaryTint !== undefined ? { color: secondaryTint } : {},
+        guild_primary_color_selector: { items: palette(editorData?.guildPrimaryColors, session.primaryColorId, onPrimaryColor) },
+        guild_secondary_color_selector: { items: palette(editorData?.guildSecondaryColors, session.secondaryColorId, onSecondaryColor) },
+
+        // Confirm.
+        confirmation_caption: { caption: session.name },
+        badge_preview_image: { children: badgePreview },
+        badge_preview_primary_color_top: primaryTint !== undefined ? { color: primaryTint } : {},
+        badge_preview_secondary_color_top: secondaryTint !== undefined ? { color: secondaryTint } : {},
+        vip_required_border: { visible: !hasVip },
+        vip_required_region: { onPointerTap: onBuyClub },
+
+        // Settings.
+        // `refresh`: a type with no radio of its own (large, 3 and 4) shows as regular.
+        ...Object.fromEntries(TYPE_RADIOS.map((name, guildType) => [ name, { selected: shownType === guildType, onPointerTap: () => onGuildType(guildType) } ])),
+        cb_member_rights: {
+            selected: Number(session.rightsLevel) === GUILD_RIGHTS_MEMBERS,
+            onPointerTap: () => onRightsLevel((Number(session.rightsLevel) === GUILD_RIGHTS_MEMBERS) ? GUILD_RIGHTS_ADMINS : GUILD_RIGHTS_MEMBERS),
+        },
+    };
+
+    /** The placements `refresh` and `refreshCreateHeader` make. */
+    const arrange = ({ find }: TemplateWindows) => {
+        const textOffset = exists ? EDIT_HEADER_TEXTS_OFFSET : 0;
+
+        for (const view of VIEWS) find(`header_pic_bitmap_step_${view}`)?.setY(exists ? 0 : CREATE_HEADER_BITMAP_OFFSET);
+
+        find('header_caption_txt')?.setY(HEADER_CAPTION_Y + textOffset);
+        find('header_desc_txt')?.setY(HEADER_DESC_Y + textOffset);
+
+        if (exists) return;
+
+        for (const wizardStep of WIZARD_STEPS) find(`step_title_${wizardStep}`)?.setY((wizardStep === step) ? STEP_TITLE_Y_ACTIVE : STEP_TITLE_Y_INACTIVE);
+
+        find('gcreate_icon_credit')?.setY((step === GROUP_MANAGEMENT_VIEW_CONFIRM) ? STEP_CREDIT_Y_ACTIVE : STEP_CREDIT_Y_INACTIVE);
+    };
 
     return (
-        <Frame
-            variant="3"
-            name="groups_main_window"
-            caption={t('group.window.title')}
-            tintColor="#418db0"
-            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
-            onClose={onClose}
-            resizeDirection="none"
-            // `prepare`: `_window.center()` as the window is first built.
-            centered
-            layout={{ width: 392, height: 497 }}
-            margins={[ 0, 33, 0, 3 ]}
-        >
-            <Region
-                name="header_cont"
-                layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 110, overflow: 'hidden' }}
-            >
-                <Region
-                    backgroundColor="#b3b099"
-                    layout={{ position: 'absolute', left: 1, right: 0, top: 0, bottom: 0 }}
-                />
-                {!session.exists && (
-                    <Region
-                        name="steps_header_cont"
-                        layout={{ position: 'absolute', left: 16, right: 15, top: 5, height: 33 }}
-                    >
-                        {STEP_CHIPS.map(chip => (
-                            <ThemeImage
-                                key={chip.step}
-                                name={`gcreate_${chip.step}_${(chip.step === step) ? 1 : 0}`}
-                                src={`${imageLibraryUrl}guilds/gcreate_${chip.art}_${(chip.step === step) ? 1 : 0}.png`}
-                                layout={{ position: 'absolute', left: chip.left, width: chip.width, top: 0, height: 33 }}
-                            />
-                        ))}
-                        <ThemeImage
-                            name="gcreate_icon_credit"
-                            src={`${imageLibraryUrl}guilds/gcreate_icon_credit.png`}
-                            layout={{
-                                position: 'absolute',
-                                left: 335,
-                                width: 21,
-                                top: (step === GROUP_MANAGEMENT_VIEW_CONFIRM) ? STEP_CREDIT_TOP_ACTIVE : STEP_CREDIT_TOP_INACTIVE,
-                                height: 20,
-                            }}
-                        />
-                        {STEP_CHIPS.map(chip => (
-                            <ThemeText
-                                key={chip.step}
-                                text={t(`group.create.steplabel.${chip.step}`)}
-                                textOptions={{ fill: '#ffffff', fontFamily: 'Ubuntu', fontSize: 13, align: 'center' }}
-                                flashFormat={{ bold: true, antiAliasType: 'advanced' }}
-                                name={`step_title_${chip.step}`}
-                                verticalAlign="top"
-                                layout={{
-                                    position: 'absolute',
-                                    left: chip.titleLeft,
-                                    width: STEP_TITLE_WIDTH,
-                                    top: (chip.step === step) ? STEP_TITLE_TOP_ACTIVE : STEP_TITLE_TOP_INACTIVE,
-                                }}
-                            />
-                        ))}
-                    </Region>
-                )}
-                <ThemeImage
-                    name={`header_pic_bitmap_step_${step}`}
-                    src={`${imageLibraryUrl}guilds/${HEADER_PICTURES[step] ?? HEADER_PICTURES[GROUP_MANAGEMENT_VIEW_IDENTITY]}.png`}
-                    layout={{ position: 'absolute', left: 0, width: 114, top: session.exists ? 0 : CREATE_HEADER_BITMAP_OFFSET, height: 62 }}
-                />
-                <ThemeText
-                    text={t(`${captionPrefix}${step}`, `${captionPrefix}${step}`)}
-                    textOptions={{ fill: '#ffffff', fontFamily: 'Ubuntu', fontSize: 20 }}
-                    flashFormat={{ bold: true, antiAliasType: 'advanced' }}
-                    markup
-                    clip
-                    name="header_caption_txt"
-                    verticalAlign="top"
-                    layout={{ position: 'absolute', left: 126, right: 2, top: HEADER_CAPTION_TOP + headerOffset, height: 24 }}
-                />
-                <ThemeText
-                    text={t(`${descPrefix}${step}`, `${descPrefix}${step}`)}
-                    textOptions={{ fill: '#ffffff', fontFamily: 'Ubuntu', fontSize: 13, wordWrap: true, wordWrapWidth: 228 }}
-                    flashFormat={{ antiAliasType: 'advanced' }}
-                    clip
-                    name="header_desc_txt"
-                    verticalAlign="top"
-                    layout={{ position: 'absolute', left: 126, right: 33, top: HEADER_DESC_TOP + headerOffset, height: 40 }}
-                />
-                {/*
-                  * `refresh`: the tab strip belongs to an existing group, and its four tabs to the
-                  * owner - an admin editing the group gets the strip with nothing in it.
-                  */}
-                {session.exists && (
-                    <Box layout={{ position: 'absolute', left: -6, top: 89 }}>
-                        <TemplateWindow
-                            id={TEMPLATE}
-                            part="edit_guild_tab_context"
-                            bindings={Object.fromEntries(EDIT_TABS.map(tab => [ `edit_tab_${tab}`, {
-                                visible: session.isOwner,
-                                selected: step === tab,
-                                onPointerTap: () => onStep(tab),
-                            } ]))}
-                        />
-                    </Box>
-                )}
-            </Region>
-
-            {(step === GROUP_MANAGEMENT_VIEW_IDENTITY) && (
-                <GroupManagementIdentityStep
-                    session={session}
-                    onName={onName}
-                    onDescription={onDescription}
-                    onBaseRoom={onBaseRoom}
-                    onMembers={onMembers}
-                />
-            )}
-
-            {(step === GROUP_MANAGEMENT_VIEW_BADGE) && editorData && (
-                <Region
-                    name="step_cont_2"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305 }}
-                >
-                    <GroupBadgeEditor
-                        layers={session.layers}
-                        editorData={editorData}
-                        pickingLayerIndex={pickingLayerIndex}
-                        onPickPart={onPickPart}
-                        onSelectPart={onSelectPart}
-                        onPosition={onPosition}
-                        onColor={onLayerColor}
-                    />
-                </Region>
-            )}
-            {(step === GROUP_MANAGEMENT_VIEW_BADGE) && session.exists && (
-                <ButtonThick
-                    variant="3"
-                    name="reset_badge"
-                    onPointerTap={onResetBadge}
-                    layout={{ position: 'absolute', left: 17, width: 94, top: 245, height: 29, minWidth: 94, maxWidth: 94 }}
-                >
-                    {t('group.edit.reset.badge')}
-                </ButtonThick>
-            )}
-
-            {(step === GROUP_MANAGEMENT_VIEW_COLORS) && editorData && (
-                <GroupManagementColorsStep
-                    session={session}
-                    editorData={editorData}
-                    onPrimary={onPrimaryColor}
-                    onSecondary={onSecondaryColor}
-                />
-            )}
-            {(step === GROUP_MANAGEMENT_VIEW_COLORS) && session.exists && (
-                <ButtonThick
-                    variant="3"
-                    name="reset_colors"
-                    onPointerTap={onResetColors}
-                    layout={{ position: 'absolute', left: 15, width: 90, top: 195, height: 29, minWidth: 90, maxWidth: 90 }}
-                >
-                    {t('group.edit.reset.color')}
-                </ButtonThick>
-            )}
-
-            {(step === GROUP_MANAGEMENT_VIEW_CONFIRM) && (
-                <GroupManagementConfirmStep
-                    session={session}
-                    editorData={editorData}
-                    hasVip={hasVip}
-                    onBuyClub={onBuyClub}
-                />
-            )}
-
-            {(step === GROUP_MANAGEMENT_VIEW_SETTINGS) && (
-                <GroupManagementSettingsStep
-                    guildType={session.guildType}
-                    rightsLevel={session.rightsLevel}
-                    onGuildType={onGuildType}
-                    onRightsLevel={onRightsLevel}
-                />
-            )}
-
-            {!session.exists && (
-                <Region
-                    name="footer_cont"
-                    layout={{ position: 'absolute', left: 0, right: 2, bottom: 9, height: 42 }}
-                >
-                    {hasPreviousStep
-                        ? (
-                                <Region
-                                    name="previous_step_link_region"
-                                    onPointerTap={() => onStep(step - 1)}
-                                    cursor="pointer"
-                                    layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18, overflow: 'hidden' }}
-                                >
-                                    <ThemeText
-                                        text={t('group.create.previousstep')}
-                                        textOptions={{ fontFamily: 'Ubuntu', fontSize: 12 }}
-                                        flashFormat={{ underline: true, antiAliasType: 'advanced' }}
-                                        name="previous_step_link"
-                                        verticalAlign="top"
-                                        layout={{ position: 'absolute', left: 0, top: 0 }}
-                                    />
-                                </Region>
-                            )
-                        : (
-                                <Region
-                                    name="cancel_link_region"
-                                    onPointerTap={onClose}
-                                    cursor="pointer"
-                                    layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18 }}
-                                >
-                                    <ThemeText
-                                        text={t('cancel')}
-                                        textOptions={{ fontFamily: 'Ubuntu', fontSize: 12 }}
-                                        flashFormat={{ underline: true, antiAliasType: 'advanced' }}
-                                        name="cancel_link"
-                                        verticalAlign="top"
-                                        layout={{ position: 'absolute', left: 0, top: 0 }}
-                                    />
-                                </Region>
-                            )}
-                    {hasNextStep
-                        ? (
-                                <ButtonThick
-                                    variant="3"
-                                    name="next_step_button"
-                                    onPointerTap={() => onStep(step + 1)}
-                                    layout={{ position: 'absolute', left: 256, width: 120, top: 13, height: 29, minWidth: 120, maxWidth: 120 }}
-                                >
-                                    {t('group.create.nextstep')}
-                                </ButtonThick>
-                            )
-                        : (
-                                <Border
-                                    variant="0"
-                                    name="buy_border"
-                                    // `updateConfirmPreview`: gold while the purchase may go through, grey while it may not.
-                                    tintColor={hasVip ? '#ffc300' : '#aaaaaa'}
-                                    layout={{ position: 'absolute', left: 126, width: 248, top: 0, height: 39 }}
-                                >
-                                    <ThemeImage
-                                        name="buy_credit_icon"
-                                        src={`${imageLibraryUrl}guilds/gcreate_icon_credit.png`}
-                                        layout={{ position: 'absolute', left: 9, width: 21, top: 11, height: 20 }}
-                                    />
-                                    <ThemeText
-                                        text={t('group.create.confirm.buyinfo', '', { amount: `${session.costInCredits}` })}
-                                        textOptions={{ fontFamily: 'Ubuntu', fontSize: 13, wordWrap: true, wordWrapWidth: 127 }}
-                                        flashFormat={{ antiAliasType: 'advanced' }}
-                                        clip
-                                        name="buy_txt"
-                                        verticalAlign="top"
-                                        layout={{ position: 'absolute', left: 37, width: 131, top: 3, height: 34 }}
-                                    />
-                                    <ButtonThick
-                                        variant="3"
-                                        name="buy_button"
-                                        disabled={!hasVip}
-                                        onPointerTap={onBuy}
-                                        layout={{ position: 'absolute', right: 4, width: 72, top: 5, height: 29, minWidth: 72, maxWidth: 72 }}
-                                    >
-                                        {t('group.create.confirm.buy')}
-                                    </ButtonThick>
-                                </Border>
-                            )}
-                </Region>
-            )}
-        </Frame>
+        <TemplateWindow
+            id={`${LIBRARY}/group_management_window`}
+            frame={frame}
+            parameters={{ 'group.create.confirm.buyinfo': { amount: String(session.costInCredits) } }}
+            bindings={bindings}
+            arrange={arrange}
+        />
     );
 };
