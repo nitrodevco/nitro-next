@@ -94,12 +94,14 @@ export interface TemplateViewProps {
      * (`buildFromXML(xml, 1)`): its id on the desktop, where it opens, and what its close button
      * does (`findChildByTag("close").procedure`). It is dragged like any window. Without it, a root
      * frame is drawn where the template is, fixed. Its `onHelp` is the window manager's
-     * `helpButtonAction` (`openHelpPage`), which `buildFromXML` gives the root frame.
+     * `helpButtonAction` (`openHelpPage`), which `buildFromXML` gives the root frame. Its
+     * `onPointerTap` is the window's `procedure` hearing a `WME_CLICK` anywhere in it, after the
+     * window clicked has had it (a bubble closed by a click elsewhere in the window).
      */
     frame?: TemplateFrameOptions;
 }
 
-export type TemplateFrameOptions = Required<Pick<FrameProps, 'id'>> & Pick<FrameProps, 'defaultPosition' | 'centered' | 'onPositionChange' | 'onClose' | 'resizeDirection' | 'rememberPosition' | 'rememberSize' | 'closeButtonVisible' | 'closeButtonVariant' | 'onHelp'> & {
+export type TemplateFrameOptions = Required<Pick<FrameProps, 'id'>> & Pick<FrameProps, 'defaultPosition' | 'centered' | 'onPositionChange' | 'onClose' | 'resizeDirection' | 'rememberPosition' | 'rememberSize' | 'closeButtonVisible' | 'closeButtonVariant' | 'onHelp' | 'onPointerTap'> & {
     /**
      * The frame is a modal dialog's (`buildModalDialogFromXML`), drawn inside a `ModalDialog`: it stays
      * in the modal's layer, which centres it, rather than going onto the window desktop under the
@@ -1001,6 +1003,7 @@ const ownFaceOf = (element: TemplateElement, rect: TemplateRect, context: Contex
                 tooltip={tooltipOf(element, context, binding)}
                 tooltipDelay={binding?.tooltipDelay}
                 disabled={binding?.disabled}
+                pressed={binding?.pressed}
                 onPointerTap={binding?.onPointerTap}
                 layout={limitedFill(element)}
             >
@@ -1412,7 +1415,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
         );
     }
 
-    const blend = binding?.alpha ?? element.blend ?? 1;
+    const blend = binding?.alpha ?? binding?.blend ?? element.blend ?? 1;
     const ownAlpha = (hidden ? 0.4 : 1) * blend;
     /*
      * A window drawn into its parent's graphic context blends only what it draws itself
@@ -1624,6 +1627,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                 // `FrameController`'s `help_page` property, or the `helpPage` its code sets: a page shows the header's help button.
                 helpPage={binding?.helpPage ?? flashString(element.vars.help_page)}
                 onHelp={window?.onHelp}
+                onPointerTap={window?.onPointerTap}
                 resizeDirection={resizeDirection}
                 onResize={resizeDirection !== 'none' ? context.onFrameResize : undefined}
                 layout={{ width: rect.width, height: rect.height, minWidth: horizontal.min, maxWidth: horizontal.max, minHeight: vertical.min, maxHeight: vertical.max }}

@@ -84,14 +84,26 @@ export interface TemplateBinding {
     style?: string;
     /** `IWindow.blend`, over the layout's - fading the window's children too, where the layout's own blend may not. */
     alpha?: number;
+    /**
+     * `IWindow.blend` as the layout's own is drawn, over it: a window drawn into its parent's graphic
+     * context fades only its face, not its children - what `Util.disableSection` sets on each window.
+     */
+    blend?: number;
     disabled?: boolean;
     /**
-     * `Util.disableSection(window, true)`: disabled, and what it holds drawn at half its blend - a
-     * container button's arrows fade with it (`PagedTableView`'s page buttons). Implies `disabled`.
+     * `Util.disableSection(window, true)` (the wired windows' `roomevents.Util`): the window and
+     * everything in it disabled, each leaf - and a border or background - at half its blend; a button
+     * is disabled but not faded, and a `DO_NOT_DISABLE`-tagged window is left alone with what it holds.
+     * A container button's arrows fade with it (`PagedTableView`'s page buttons).
      */
     disableSection?: boolean;
     /** A tab button's or a checkbox's `ISelectableWindow.select()` / `unselect()`. */
     selected?: boolean;
+    /**
+     * A button held pressed by its code, whatever the pointer does - its `InteractiveController.state`
+     * kept at `0x10` (`VariableTypePicker.update` holds the picked target's button down).
+     */
+    pressed?: boolean;
     /** A frame's `helpPage` as its code sets it, over the layout's `help_page` var: a page shows the help button. */
     helpPage?: string;
     /**
@@ -350,6 +362,32 @@ interface ExpandedNode {
     node: TemplateElement;
 }
 
+/** `ButtonController`, the `IButtonWindow` `Util.disableSection` disables without fading or entering. */
+const SECTION_BUTTONS = new Set([ 'button', 'button_thick', 'button_group_left', 'button_group_center', 'button_group_right' ]);
+/** The containers `disableSection` enters without fading them; a border and a background fade too. */
+const SECTION_CONTAINERS = new Set([
+    'container', 'region', 'frame', 'header', 'itemlist', 'itemlist_vertical', 'itemlist_horizontal', 'scrollable_itemlist', 'scrollable_itemlist_vertical',
+    'scrollable_itemlist_horizontal', 'itemgrid', 'itemgrid_vertical', 'itemgrid_horizontal', 'scrollable_itemgrid_vertical', 'scrollable_itemgrid_horizontal',
+    'selector', 'selector_list', 'tab_selector', 'tab_context', 'widget',
+]);
+
+/**
+ * `Util.disableSection(window, true)` on one window of a disabled section, over its own binding: disabled,
+ * and faded to half the blend it had - unless it is a container (which only passes it on) or a button, or
+ * an `#icon`. A container button keeps its own `disableSection`, which fades what it holds.
+ */
+const sectionBinding = (element: TemplateElement, binding: TemplateBinding): TemplateBinding => {
+    if (element.tag === 'container_button') return { ...binding, disableSection: true };
+
+    const fades = (element.tag === 'border') || (element.tag === 'background')
+        || (!SECTION_BUTTONS.has(element.tag) && !SECTION_CONTAINERS.has(element.tag) && !element.tags?.includes('#icon'));
+
+    return { ...binding, disabled: true, ...(fades && { blend: (binding.blend ?? element.blend ?? 1) / 2 }) };
+};
+
+/** Whether `disableSection` reaches into the window's children: not a button's, nor a container button's (whose binding fades them). */
+const sectionEnters = (element: TemplateElement) => !SECTION_BUTTONS.has(element.tag) && (element.tag !== 'container_button');
+
 const sameElements = (a: readonly TemplateElement[], b: readonly TemplateElement[]) => a.length === b.length && a.every((element, index) => element === b[index]);
 
 /**
@@ -382,14 +420,18 @@ export class TemplateExpander {
      * children are its items' clones, each a scope of its own. A clone's every element is a new one
      * (`fresh`), as `clone()` copies the window.
      */
-    private scope(sources: readonly TemplateElement[], bindings: TemplateBindings | undefined, path: string, fresh: boolean, itemKey: string | undefined, prototypes: readonly TemplateElement[], expansion: TemplateExpansion, appended = false): TemplateElement[] {
+    private scope(sources: readonly TemplateElement[], bindings: TemplateBindings | undefined, path: string, fresh: boolean, itemKey: string | undefined, prototypes: readonly TemplateElement[], expansion: TemplateExpansion, appended = false, disabledSection = false): TemplateElement[] {
         const { targets, missing } = resolveTemplateNames(sources, Object.keys(bindings ?? {}));
         const bound = bindElements(targets, bindings);
 
         for (const key of missing) expansion.missing.push(path ? `${path}: ${key}` : key);
 
-        const build = (source: TemplateElement, nodePath: string, key: string | undefined, append = false): TemplateElement => {
-            const { items, added, ...binding } = bound.get(source) ?? {};
+        /** `inSection`: a window round it is a `disableSection` one, which reaches every window it holds. */
+        const build = (source: TemplateElement, nodePath: string, key: string | undefined, append = false, inSection = disabledSection): TemplateElement => {
+            const { items, added, ...own } = bound.get(source) ?? {};
+            const section = (inSection || !!own.disableSection) && !source.tags?.includes('DO_NOT_DISABLE');
+            const binding = section ? sectionBinding(source, own) : own;
+            const childSection = section && sectionEnters(source);
             const clone = (item: TemplateItem): TemplateElement[] => {
                 const prototype = typeof item.from === 'string' ? findByKey(prototypes, item.from) : 'tag' in item.from ? item.from : item.from.elements[0];
 
@@ -405,7 +447,7 @@ export class TemplateExpander {
 
                 if (entry) expansion.arranges.push(entry);
 
-                const [ made ] = this.scope([ prototype ], item.bindings, `${nodePath}#${item.key}`, true, item.key, prototypes, expansion, !!item.append);
+                const [ made ] = this.scope([ prototype ], item.bindings, `${nodePath}#${item.key}`, true, item.key, prototypes, expansion, !!item.append, childSection);
 
                 if (entry) entry.scope = made;
 
@@ -413,12 +455,12 @@ export class TemplateExpander {
             };
             const children = items
                 ? items.flatMap(clone)
-                : source.children.map((child, index) => build(child, `${nodePath}/${index}`, undefined));
+                : source.children.map((child, index) => build(child, `${nodePath}/${index}`, undefined, false, childSection));
 
             if (added) children.push(...added.flatMap(clone));
             const node = this.node(nodePath, source, children, fresh, key, append);
 
-            if (bound.has(source)) expansion.byElement.set(node, binding);
+            if (bound.has(source) || section) expansion.byElement.set(node, binding);
 
             return node;
         };
@@ -490,10 +532,12 @@ export const sameTemplateBinding = (a: TemplateBinding | undefined, b: TemplateB
         && a.greyscale === b.greyscale
         && a.style === b.style
         && a.alpha === b.alpha
+        && a.blend === b.blend
         && a.color === b.color
         && a.disabled === b.disabled
         && a.disableSection === b.disableSection
         && a.selected === b.selected
+        && a.pressed === b.pressed
         && a.helpPage === b.helpPage
         && sameHeaderButton(a.headerClose, b.headerClose)
         && sameHeaderButton(a.headerHelp, b.headerHelp)

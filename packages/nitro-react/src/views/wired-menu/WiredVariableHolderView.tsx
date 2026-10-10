@@ -1,18 +1,24 @@
 /**
  * Every permanent variable one user, pet or bot holds - `VariableManagementDetailView` on
- * `variables_management_detail_xml`: who it is (`PermanentVariableHolderPreviewer` - a head for a
- * user or bot, a click on it opening the profile, a pet as the pet image widget draws it - and the
- * info text), their variables with values editable in place, "delete", "add" and the "add
- * variable" bubble, and "refresh". The loading icon turns while a change or a refresh waits for
- * the fresh list. The window stretches in height; the table takes the difference.
+ * `variables_management_detail_xml`, opened centred (`show`'s `_window.center()`): who it is, their
+ * variables with values editable in place, "delete", "add" and the "add variable" bubble
+ * (`useWiredCreateVariableBubble`), and "refresh". The window stretches in height; the table's
+ * container takes the difference.
+ *
+ * - `PermanentVariableHolderPreviewer` in `info_box`: a pet as the pet image widget draws it
+ *   (`pet_preview`), anyone else's head (`avatar_preview`, cropped), centred in `preview`, with
+ *   `avatar_preview_region` over it opening the profile on a click.
+ * - `updateInfoBoxUI`: `info_box_text` names the holder - the owner too for a pet or a bot.
+ * - `updateTableviewUI`: the table goes into `variable_values_table_container`; a value is editable
+ *   for someone who may modify wired, where the variable has a value that can be written.
+ * - `searching_icon` turns (`LoadingIcon`) while a change or a refresh waits for the fresh list.
  *
  * The reference server (turbo-cloud) does not implement these packets.
  */
 import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import type { IWiredUserPermanentVariablesList, IWiredVariable } from '@nitrodevco/nitro-packets';
 import { isWiredVariablePersisted } from '@nitrodevco/nitro-packets';
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 import { closeWiredHolderCreateBubble, closeWiredVariableHolder, createWiredHolderVariable, deleteWiredHolderVariable, openWiredUserProfile, refreshWiredVariableHolder, selectWiredHolderVariable, setWiredHolderVariableValue, toggleWiredHolderCreateBubble } from '#base/commands';
 import { AvatarImage } from '#base/components/AvatarImage';
@@ -21,20 +27,21 @@ import { useRoom } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { useWiredHasWritePermission, useWiredStore, WiredVariableValueRow } from '#base/context/wired';
 import { useChatPetFace } from '#base/hooks';
-import { Border, Box, Button, Frame, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Box, TemplateWindow, ThemeImage } from '#base/theme';
 import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 import { sortVariables, WIRED_SOURCE_USER } from '#base/wired';
 
-import { WiredLoadingIcon } from '../wired-common/WiredLoadingIcon';
-import { WiredMenuCreateVariableBubble } from './WiredMenuCreateVariableBubble';
-import { isWithinContainer } from './wiredMenuPointer';
-import { WiredVariableActionButtons } from './WiredVariableActionButtons';
+import { useWiredCreateVariableBubble } from './useWiredCreateVariableBubble';
 import { wiredVariableValueCell } from './wiredVariableValueCell';
 
 /** `RoomObjectUserType` as the packets carry it. */
 const ENTITY_USER = 1;
 const ENTITY_PET = 2;
 const ENTITY_BOT = 4;
+
+/** `LoadingIcon.FRAMES`: the `searching_icon` styles it steps through, one each `LoadingIcon` tick. */
+const LOADING_FRAMES = [ 23, 24, 25, 26 ];
+const LOADING_FRAME_MS = 160;
 
 const PetHolderPreview = ({ figure }: { figure: string }) => {
     const { texture } = useChatPetFace(figure, undefined, { direction: 2 });
@@ -58,8 +65,16 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
     const createBubble = useWiredStore(x => x.variableHolderCreateBubble);
     const createVariables = useWiredStore(x => x.variableHolderCreateVariables);
     const hasWritePermission = useWiredHasWritePermission();
-    const bubbleRef = useRef<PixiContainer>(null);
-    const addButtonRef = useRef<PixiContainer>(null);
+    const [ loadingFrame, setLoadingFrame ] = useState(0);
+
+    // `LoadingIcon.onTimer`: the frame it stopped on is kept for the next run.
+    useEffect(() => {
+        if (!loading) return;
+
+        const timer = setInterval(() => setLoadingFrame(current => ((current + 1) % LOADING_FRAMES.length)), LOADING_FRAME_MS);
+
+        return () => clearInterval(timer);
+    }, [ loading ]);
 
     // `updateTableviewUI`.
     const known = holder.variableStorage.filter(storage => storage.variableId && variablesById[storage.variableId]);
@@ -79,14 +94,26 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
 
     // `updateButtonsUI`.
     const selectedRow = rows.find(row => row.variable.variableId === selectedId);
-    const canDelete = hasWritePermission && !!selectedRow?.variable.canCreateAndDelete;
-    const canAdd = hasWritePermission;
 
     // `variableFilter`: permanent variables the holder does not have yet.
     const heldIds = new Set(holder.variableStorage.map(storage => storage.variableId));
     const variableFilter = (variable: IWiredVariable) => variable.canCreateAndDelete && !heldIds.has(variable.variableId) && isWiredVariablePersisted(variable.availabilityType);
 
-    // `updateInfoBoxUI`.
+    const bubble = useWiredCreateVariableBubble({
+        open: createBubble,
+        variables: createVariables,
+        filter: variableFilter,
+        target: WIRED_SOURCE_USER,
+        roomId,
+        canDelete: hasWritePermission && !!selectedRow?.variable.canCreateAndDelete,
+        canAdd: hasWritePermission,
+        onDelete: () => deleteWiredHolderVariable(send),
+        onAdd: () => toggleWiredHolderCreateBubble(send),
+        onCreate: (variable, valueText) => createWiredHolderVariable(send, variable, valueText),
+        onClose: closeWiredHolderCreateBubble,
+    });
+
+    // `updateInfoBoxUI`: a user's text names it; a pet's and a bot's their owner too.
     const params: Record<string, string> = { name: holder.entityName, id: String(holder.entityId), owner_name: holder.ownerName ?? '', owner_id: String(holder.ownerId ?? '') };
     const infoText = (holder.entityType === ENTITY_USER)
         ? t('wiredmenu.variable_management_detail.info.user', '', params)
@@ -94,142 +121,57 @@ export const WiredVariableHolderView = ({ holder }: WiredVariableHolderViewProps
                 ? t('wiredmenu.variable_management_detail.info.pet', '', params)
                 : (holder.entityType === ENTITY_BOT) ? t('wiredmenu.variable_management_detail.info.bot', '', params) : '';
 
-    // `windowProcedure`.
-    const onWindowTap = (event: FederatedPointerEvent) => {
-        if (!createBubble || isWithinContainer(event.target, bubbleRef.current) || isWithinContainer(event.target, addButtonRef.current)) return;
-
-        closeWiredHolderCreateBubble();
-    };
-
-    const boldText = (key: string) => (
-        <ThemeText
-            text={t(key, key)}
-            textStyle="u_regular"
-            flashFormat={{ bold: true }}
-            clip
-            verticalAlign="top"
-            layout={{ position: 'absolute', left: 0, top: 0, width: 188, height: 19 }}
-        />
-    );
+    const isPet = holder.entityType === ENTITY_PET;
 
     return (
-        <Frame
-            variant="3"
-            id="wired_variable_holder"
-            caption={t('wiredmenu.variable_management_detail.title', 'wiredmenu.variable_management_detail.title')}
-            tintColor="#418db0"
-            dropShadow={{ distance: 4, alpha: 0.35, blur: 4 }}
-            resizeDirection="y"
-            centered
-            rememberPosition={false}
-            onClose={closeWiredVariableHolder}
-            onPointerTap={onWindowTap}
-            layout={{ position: 'absolute', width: 339, height: 512, minWidth: 339, maxWidth: 339, minHeight: 400, maxHeight: 650 }}
-            margins={[ 0, 33, 0, 0 ]}
-        >
-            <Box layout={{ position: 'absolute', left: 18, top: 7, width: 303, height: 57 }}>
-                <Border
-                    variant="4"
-                    layout={{ position: 'absolute', left: 0, top: 0, width: 228, height: 57 }}
-                >
-                    <ThemeText
-                        text={t('wiredmenu.variable_management_detail.info', 'wiredmenu.variable_management_detail.info')}
-                        textStyle="u_regular"
-                        textOptions={{ align: 'center', wordWrap: true, wordWrapWidth: 214 }}
-                        flashFormat={{ leading: 1 }}
-                        markup
-                        verticalAlign="top"
-                        layout={{ position: 'absolute', left: 5, top: 12, width: 218, height: 32 }}
-                    />
-                </Border>
-                <Button
-                    variant="3"
-                    onPointerTap={() => refreshWiredVariableHolder(send)}
-                    layout={{ position: 'absolute', left: 241, top: 13, width: 62, height: 30 }}
-                >
-                    {t('wiredmenu.list_view.refresh', 'wiredmenu.list_view.refresh')}
-                </Button>
-                <WiredLoadingIcon
-                    visible={loading}
-                    layout={{ position: 'absolute', left: 288, top: 48 }}
-                />
-            </Box>
-            <Box layout={{ position: 'absolute', left: 18, top: 73, width: 303, height: 114 }}>
-                {boldText('wiredmenu.variable_management_detail.holder_info')}
-                <Border
-                    variant="2"
-                    tintColor="#dadada"
-                    layout={{ position: 'absolute', left: 0, top: 20, width: 94, height: 94, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    {(holder.entityType === ENTITY_PET)
-                        ? <PetHolderPreview figure={holder.entityFigure} />
-                        : (
-                                <Region
-                                    cursor="pointer"
-                                    onPointerTap={() => openWiredUserProfile(send, holder.entityId)}
-                                    layout={{ width: 74, height: 74, alignItems: 'center', justifyContent: 'center' }}
-                                >
-                                    <AvatarImage
-                                        figure={holder.entityFigure}
-                                        gender={AvatarGenderType.Male}
-                                        headOnly
-                                        direction={2}
-                                    />
-                                </Region>
-                            )}
-                </Border>
-                <Border
-                    variant="10"
-                    layout={{ position: 'absolute', left: 109, top: 20, width: 194, height: 94 }}
-                >
-                    <TextInput
-                        value={infoText.replace(/\r/g, '\n')}
-                        onChange={() => {}}
-                        multiline
-                        textStyle="u_regular"
-                        flashPlacement
-                        editable={false}
-                        backgroundColor={null}
-                        focusedBackgroundColor={null}
-                        layout={{ position: 'absolute', left: 6, top: 6, width: 182, height: 80 }}
-                    />
-                </Border>
-            </Box>
-            <Box layout={{ position: 'absolute', left: 18, top: 196, width: 303, bottom: 18, overflow: 'hidden' }}>
-                {boldText('wiredmenu.variable_management_detail.variables')}
-                <Box layout={{ position: 'absolute', left: 0, top: 20, width: 303, bottom: 34 }}>
-                    <TableView
-                        columns={columns}
-                        rows={rows}
-                        getRowId={row => row.variable.variableId}
-                        getCell={getCell}
-                        selectedId={selectedRow ? selectedId : null}
-                        onRowSelected={row => selectWiredHolderVariable(row?.variable.variableId ?? null)}
-                        onCellEdit={(row, columnId, value) => {
-                            if (columnId === 'value') setWiredHolderVariableValue(send, row.variable, value);
-                        }}
-                    />
-                </Box>
-                <WiredVariableActionButtons
-                    canDelete={canDelete}
-                    canAdd={canAdd}
-                    onDelete={() => deleteWiredHolderVariable(send)}
-                    onAdd={() => toggleWiredHolderCreateBubble(send)}
-                    addButtonRef={addButtonRef}
-                    layout={{ bottom: 0, height: 25 }}
-                />
-                {createBubble && (
-                    <WiredMenuCreateVariableBubble
-                        variables={createVariables}
-                        filter={variableFilter}
-                        target={WIRED_SOURCE_USER}
-                        roomId={roomId}
-                        bubbleRef={bubbleRef}
-                        onCreate={(variable, valueText) => createWiredHolderVariable(send, variable, valueText)}
-                        layout={{ left: 122, top: 95 }}
-                    />
-                )}
-            </Box>
-        </Frame>
+        <TemplateWindow
+            id="habbo-user-defined-room-events-com/variables_management_detail_xml"
+            frame={{ id: 'wired_variable_holder', centered: true, rememberPosition: false, resizeDirection: 'y', onClose: closeWiredVariableHolder, onPointerTap: bubble.onWindowTap }}
+            bindings={{
+                // `onRefreshClick`.
+                refresh_btn: { onPointerTap: () => refreshWiredVariableHolder(send) },
+                searching_icon: { visible: loading, style: String(LOADING_FRAMES[loadingFrame]) },
+                // `updatePreviewUI` / `setUserPreview`: the region opens the holder's profile (`onPreviewAvatarClicked`).
+                avatar_preview_region: { visible: !isPet, onPointerTap: () => openWiredUserProfile(send, holder.entityId) },
+                preview: {
+                    children: (
+                        <Box
+                            eventMode="none"
+                            layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                            {isPet
+                                ? <PetHolderPreview figure={holder.entityFigure} />
+                                : (
+                                        <AvatarImage
+                                            figure={holder.entityFigure}
+                                            gender={AvatarGenderType.Male}
+                                            headOnly
+                                            cropped
+                                            direction={2}
+                                        />
+                                    )}
+                        </Box>
+                    ),
+                },
+                info_box_text: { caption: infoText.replace(/\r/g, '\n') },
+                variable_values_table_container: {
+                    children: (
+                        <TableView
+                            columns={columns}
+                            rows={rows}
+                            getRowId={row => row.variable.variableId}
+                            getCell={getCell}
+                            selectedId={selectedRow ? selectedId : null}
+                            onRowSelected={row => selectWiredHolderVariable(row?.variable.variableId ?? null)}
+                            onCellEdit={(row, columnId, value) => {
+                                if (columnId === 'value') setWiredHolderVariableValue(send, row.variable, value);
+                            }}
+                            layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}
+                        />
+                    ),
+                },
+                ...bubble.bindings,
+            }}
+        />
     );
 };

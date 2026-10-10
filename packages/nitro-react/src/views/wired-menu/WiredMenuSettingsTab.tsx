@@ -1,12 +1,14 @@
 /**
- * The wired menu's settings tab - `WiredMenuSettingsTab` on `settings_container`: who may modify
- * and who may read the room's wired (two bit masks, owner or staff only), the room's timezone,
- * reloading or rolling back the room, and the account's wired preferences.
+ * The wired menu's settings tab - `WiredMenuSettingsTab` on `settings_container` of
+ * `wired_menu_view_xml`: who may modify and who may read the room's wired (two bit masks, owner or
+ * staff only), the room's timezone, reloading or rolling back the room, and the account's wired
+ * preferences.
  *
- * The permission checkboxes show what a level implies, the way `updatePermissionsUI` does:
- * group rights (2) includes group admins (3), read for everyone (0) includes every level, and a
- * level that may modify may read. An implied box is ticked and disabled, but the mask that is
- * saved only holds what was ticked by hand.
+ * `updatePermissionsUI`: the three room setting sections are `Util.disableSection`ed for anyone but
+ * the owner or staff, and each box shows what a level implies - group rights (2) includes group
+ * admins (3), read for everyone (0) includes every level, and a level that may modify may read. An
+ * implied box is ticked and disabled, but the mask that is saved only holds what was ticked by hand.
+ * `updateButtonsUI`: reload needs write permission, roll back the owner or staff.
  *
  * The section title's caption in the layout is `${wiredmenu.settings.room_settings)` - with a
  * parenthesis where the brace should be - so Flash shows it as it stands, and so does this.
@@ -15,11 +17,8 @@ import { changeWiredMenuPreferences, reloadWiredRoom, rollbackWiredRoom, setWire
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import { useWiredHasWritePermission, useWiredIsRoomOwnerOrStaff, useWiredStore, WIRED_MODIFY_PERMISSION_LEVELS, WIRED_READ_PERMISSION_LEVELS } from '#base/context/wired';
-import { Border, Box, Button, ThemeText } from '#base/theme';
+import { TemplateBindings, TemplateWindow } from '#base/theme';
 import { snakeToTitle, WIRED_STYLE_DEFAULT, WIRED_STYLE_OPTIONS } from '#base/wired';
-
-import { WiredMenuCheckOption } from './WiredMenuCheckOption';
-import { WiredMenuDropmenu } from './WiredMenuDropmenu';
 
 interface PermissionBox {
     selected: boolean;
@@ -45,31 +44,6 @@ const permissionBoxes = (modifyMask: number, readMask: number) => {
 
     return { modify, read };
 };
-
-/** A container's `title`: bold, `auto_size` none, so it is cut at its box. */
-const SectionTitle = ({ text }: { text: string }) => (
-    <ThemeText
-        text={text}
-        textStyle="u_regular"
-        flashFormat={{ bold: true }}
-        clip
-        verticalAlign="top"
-        layout={{ position: 'absolute', left: 0, top: 0, width: 208, height: 19 }}
-    />
-);
-
-/** A bordered section's heading: bold, cut at its box (205x20, the read rights' 195x20). */
-const OptionsTitle = ({ text, width = 205, alpha = 1, flow = false }: { text: string; width?: number; alpha?: number; flow?: boolean }) => (
-    <ThemeText
-        text={text}
-        textStyle="u_regular"
-        flashFormat={{ bold: true }}
-        clip
-        alpha={alpha}
-        verticalAlign="top"
-        layout={flow ? { width, height: 20, flexShrink: 0 } : { position: 'absolute', left: 0, top: 0, width, height: 20 }}
-    />
-);
 
 export const WiredMenuSettingsTab = () => {
     const t = useTranslation();
@@ -97,158 +71,49 @@ export const WiredMenuSettingsTab = () => {
     const styleItems = [ t('wiredmenu.settings.preferences.wired_style.default', '', { name: snakeToTitle(WIRED_STYLE_DEFAULT) }), ...WIRED_STYLE_OPTIONS.map(style => snakeToTitle(style)) ];
     const styleSelection = (wiredUiStyle === '') ? 0 : (WIRED_STYLE_OPTIONS.indexOf(wiredUiStyle as typeof WIRED_STYLE_OPTIONS[number]) + 1);
 
-    const permissionOption = (mask: 'modify' | 'read', level: number, box: PermissionBox) => (
-        <WiredMenuCheckOption
-            key={`${mask}${level}`}
-            label={t(`wiredmenu.settings.permission_level.${level}`, `wiredmenu.settings.permission_level.${level}`)}
-            selected={box.selected}
-            disabled={box.implied}
-            rowDisabled={!isRoomOwnerOrStaff}
-            checkSize={[ 20, 20 ]}
-            labelWidth={210}
-            labelClip
-            onToggle={selected => setWiredPermission(send, mask, level, selected)}
-        />
-    );
+    /** A permission box: selected as the masks say, disabled where implied, a click flipping its bit (`onPermissionsChanged`). */
+    const permissionBox = (mask: 'modify' | 'read', level: number, box: PermissionBox): TemplateBindings => ({
+        [`${mask}_${level}_checkbox`]: {
+            selected: box.selected,
+            disableSection: box.implied,
+            onPointerTap: () => setWiredPermission(send, mask, level, !box.selected),
+        },
+    });
 
-    const preferenceOption = (label: string, selected: boolean, onToggle: (selected: boolean) => void) => (
-        <WiredMenuCheckOption
-            label={t(label, label)}
-            selected={selected}
-            checkSize={[ 19, 18 ]}
-            width={450}
-            labelWidth={390}
-            labelHeight={17}
-            labelClip
-            onToggle={onToggle}
-        />
-    );
+    const preferenceBox = (name: string, selected: boolean, change: (selected: boolean) => void): TemplateBindings => ({
+        [name]: { selected, onPointerTap: () => change(!selected) },
+    });
 
     return (
-        <>
-            <Box layout={{ position: 'absolute', left: 14, top: 18, width: 472, height: 220 }}>
-                <SectionTitle text={t('wiredmenu.settings.room_settings')} />
-                <Border
-                    variant="3"
-                    tintColor="#dadada"
-                    layout={{ position: 'absolute', left: 0, top: 20, width: 227, height: 111 }}
-                >
-                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 102, flexDirection: 'column', gap: -1, overflow: 'hidden' }}>
-                        <OptionsTitle
-                            text={t('wiredmenu.settings.room_settings.modify_rights', 'wiredmenu.settings.room_settings.modify_rights')}
-                            alpha={isRoomOwnerOrStaff ? 1 : 0.5}
-                            flow
-                        />
-                        {WIRED_MODIFY_PERMISSION_LEVELS.map(level => permissionOption('modify', level, modify[level]))}
-                    </Box>
-                </Border>
-                <Border
-                    variant="3"
-                    tintColor="#dadada"
-                    layout={{ position: 'absolute', left: 245, top: 20, width: 227, height: 111, overflow: 'hidden' }}
-                >
-                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 233, height: 102, flexDirection: 'column', gap: -1, overflow: 'hidden' }}>
-                        <OptionsTitle
-                            text={t('wiredmenu.settings.room_settings.read_rights', 'wiredmenu.settings.room_settings.read_rights')}
-                            width={195}
-                            alpha={isRoomOwnerOrStaff ? 1 : 0.5}
-                            flow
-                        />
-                        {WIRED_READ_PERMISSION_LEVELS.map(level => permissionOption('read', level, read[level]))}
-                    </Box>
-                </Border>
-                <Border
-                    variant="3"
-                    tintColor="#dadada"
-                    layout={{ position: 'absolute', left: 0, top: 143, width: 227, height: 64 }}
-                >
-                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
-                        <OptionsTitle
-                            text={t('wiredmenu.settings.room_settings.timezone', 'wiredmenu.settings.room_settings.timezone')}
-                            alpha={isRoomOwnerOrStaff ? 1 : 0.5}
-                        />
-                        <WiredMenuDropmenu
-                            items={timezones}
-                            selected={0}
-                            disabled={(timezones.length < 2) || !isRoomOwnerOrStaff}
-                            onSelect={index => setWiredTimezone(send, timezones[index] ?? '')}
-                            layout={{ position: 'absolute', left: 0, top: 21, width: 206, height: 25 }}
-                        />
-                    </Box>
-                </Border>
-                <Border
-                    variant="3"
-                    tintColor="#dadada"
-                    layout={{ position: 'absolute', left: 245, top: 143, width: 227, height: 64 }}
-                >
-                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
-                        <OptionsTitle text={t('wiredmenu.settings.room_settings.room_state', 'wiredmenu.settings.room_settings.room_state')} />
-                        <Box
-                            alpha={hasWritePermission ? 1 : 0.5}
-                            layout={{ position: 'absolute', left: 0, top: 21, width: 98, height: 28 }}
-                        >
-                            <Button
-                                variant="3"
-                                disabled={!hasWritePermission}
-                                onPointerTap={() => reloadWiredRoom(send)}
-                                layout={{ width: 98, height: 28 }}
-                            >
-                                {t('wiredmenu.settings.room_state.reload', 'wiredmenu.settings.room_state.reload')}
-                            </Button>
-                        </Box>
-                        <Box
-                            alpha={isRoomOwnerOrStaff ? 1 : 0.5}
-                            layout={{ position: 'absolute', left: 109, top: 21, width: 98, height: 28 }}
-                        >
-                            <Button
-                                variant="5"
-                                tintColor="#e33934"
-                                disabled={!isRoomOwnerOrStaff}
-                                onPointerTap={() => rollbackWiredRoom(send)}
-                                layout={{ width: 98, height: 28 }}
-                            >
-                                {t('wiredmenu.settings.room_state.roll_back', 'wiredmenu.settings.room_state.roll_back')}
-                            </Button>
-                        </Box>
-                    </Box>
-                </Border>
-            </Box>
-            <Box layout={{ position: 'absolute', left: 14, top: 237, width: 472, height: 131 }}>
-                <SectionTitle text={t('wiredmenu.settings.preferences', 'wiredmenu.settings.preferences')} />
-                <Border
-                    variant="3"
-                    tintColor="#dadada"
-                    layout={{ position: 'absolute', left: 0, top: 20, width: 227, height: 111 }}
-                >
-                    <Box layout={{ position: 'absolute', left: 10, top: 8, width: 213, height: 101, flexDirection: 'column', gap: -1, overflow: 'hidden' }}>
-                        <OptionsTitle
-                            text={t('wiredmenu.settings.preferences.general', 'wiredmenu.settings.preferences.general')}
-                            flow
-                        />
-                        {preferenceOption('wiredmenu.settings.preferences.toolbar', wiredMenuButton, selected => changeWiredMenuPreferences(send, { wiredMenuButton: selected }))}
-                        {preferenceOption('wiredmenu.settings.preferences.inspect_button', wiredInspectButton, selected => changeWiredMenuPreferences(send, { wiredInspectButton: selected }))}
-                        {preferenceOption('wiredmenu.settings.preferences.playtest', playTestMode, selected => changeWiredMenuPreferences(send, { playTestMode: selected }))}
-                        {preferenceOption('wiredmenu.settings.preferences.show_all_errors', showAllNotifications, selected => changeWiredMenuPreferences(send, { showAllNotifications: selected }))}
-                    </Box>
-                </Border>
-                {uiPickerEnabled && (
-                    <Border
-                        variant="3"
-                        tintColor="#dadada"
-                        layout={{ position: 'absolute', left: 245, top: 20, width: 227, height: 64 }}
-                    >
-                        <Box layout={{ position: 'absolute', left: 10, top: 8, width: 212, height: 50 }}>
-                            <OptionsTitle text={t('wiredmenu.settings.preferences.wired_style', 'wiredmenu.settings.preferences.wired_style')} />
-                            <WiredMenuDropmenu
-                                items={styleItems}
-                                selected={Math.max(0, styleSelection)}
-                                onSelect={index => changeWiredMenuPreferences(send, { wiredUiStyle: (index <= 0) ? '' : WIRED_STYLE_OPTIONS[index - 1] })}
-                                layout={{ position: 'absolute', left: 0, top: 21, width: 206, height: 25 }}
-                            />
-                        </Box>
-                    </Border>
-                )}
-            </Box>
-        </>
+        <TemplateWindow
+            id="habbo-user-defined-room-events-com/wired_menu_view_xml"
+            part="settings_container"
+            bindings={{
+                '': { visible: true },
+                modify_settings_container: { disableSection: !isRoomOwnerOrStaff },
+                read_settings_container: { disableSection: !isRoomOwnerOrStaff },
+                timezone_container: { disableSection: !isRoomOwnerOrStaff },
+                ...Object.assign({}, ...WIRED_MODIFY_PERMISSION_LEVELS.map(level => permissionBox('modify', level, modify[level]))) as TemplateBindings,
+                ...Object.assign({}, ...WIRED_READ_PERMISSION_LEVELS.map(level => permissionBox('read', level, read[level]))) as TemplateBindings,
+                timezone_picker: {
+                    options: timezones,
+                    selection: 0,
+                    disableSection: timezones.length < 2,
+                    onSelect: index => setWiredTimezone(send, timezones[index] ?? ''),
+                },
+                reload_room_btn: { disableSection: !hasWritePermission, onPointerTap: () => reloadWiredRoom(send) },
+                roll_back_btn: { disableSection: !isRoomOwnerOrStaff, onPointerTap: () => rollbackWiredRoom(send) },
+                ...preferenceBox('preference_toolbar_checkbox', wiredMenuButton, selected => changeWiredMenuPreferences(send, { wiredMenuButton: selected })),
+                ...preferenceBox('preference_inspect_button_checkbox', wiredInspectButton, selected => changeWiredMenuPreferences(send, { wiredInspectButton: selected })),
+                ...preferenceBox('preference_playtest_checkbox', playTestMode, selected => changeWiredMenuPreferences(send, { playTestMode: selected })),
+                ...preferenceBox('preference_all_notifications_checkbox', showAllNotifications, selected => changeWiredMenuPreferences(send, { showAllNotifications: selected })),
+                wired_style_border: { visible: uiPickerEnabled },
+                wired_style_picker: {
+                    options: styleItems,
+                    selection: Math.max(0, styleSelection),
+                    onSelect: index => changeWiredMenuPreferences(send, { wiredUiStyle: (index <= 0) ? '' : WIRED_STYLE_OPTIONS[index - 1] }),
+                },
+            }}
+        />
     );
 };

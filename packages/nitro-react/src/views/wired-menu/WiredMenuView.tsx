@@ -8,9 +8,9 @@
  * `alignTabs`: a disabled tab's button is hidden and 0 wide, the others share the strip equally
  * (`tabItem.parent.width / enabled`, the selector's width - the context's 500 less the 8 it is
  * inset by at either end), and the selector packs them. `initializeTabs` / `setActiveTab`: every
- * tab's `<id>_container` is hidden but the active one's. The tab bodies are this client's ports of
- * those containers (`WiredMenu*Tab`), so the template's own are all hidden and the active tab is
- * drawn in `body_container`.
+ * tab's `<id>_container` is hidden but the active one's. Each tab (`WiredMenu*Tab`) draws its own
+ * container out of this template (`TemplateWindow`'s `part`) with its own bindings, so here the
+ * containers are all hidden and the active tab's is drawn in `body_container`, where its own is.
  *
  * Being up is being viewed: mounting marks the menu as viewed and starts the active tab
  * (`show` -> `startViewing`), a tab switch stops one tab and starts the next (`setActiveTab`), and

@@ -244,3 +244,30 @@ await test('a clone made from another template brings that template\'s skins', (
 
     assert.equal(skins['scrollable_itemgrid_vertical:3'], skin);
 });
+
+await test('disableSection disables a section the way roomevents Util.disableSection walks it', () => {
+    const leaf = (tag, name, extra = {}) => ({ tag, name, x: 0, y: 0, width: 0, height: 0, vars: {}, children: [], ...extra });
+    const box = leaf('checkbox', 'box');
+    const caption = leaf('text', 'caption', { blend: 0.8 });
+    const icon = leaf('bitmap', 'icon', { tags: [ '#icon' ] });
+    const buttonLabel = leaf('text', 'button_label');
+    const button = { ...leaf('button', 'button'), children: [ buttonLabel ] };
+    const kept = leaf('text', 'kept', { tags: [ 'DO_NOT_DISABLE' ] });
+    const frame = { ...leaf('border', 'frame'), children: [ box, caption ] };
+    const section = { ...leaf('container', 'section'), children: [ frame, icon, button, kept ] };
+    const outside = leaf('text', 'outside');
+    const { byElement } = new TemplateExpander().expand([ { ...leaf('container', 'root'), children: [ section, outside ] } ], {
+        section: { disableSection: true },
+    });
+
+    assert.equal(byElement.get(section).disabled, true);
+    assert.equal(byElement.get(section).blend, undefined, 'a container passes it on without fading itself');
+    assert.equal(byElement.get(frame).blend, 0.5, 'a border fades');
+    assert.deepEqual([ byElement.get(box).disabled, byElement.get(box).blend ], [ true, 0.5 ]);
+    assert.equal(byElement.get(caption).blend, 0.4, 'half the blend it had');
+    assert.deepEqual([ byElement.get(icon).disabled, byElement.get(icon).blend ], [ true, undefined ], 'an #icon is not faded');
+    assert.deepEqual([ byElement.get(button).disabled, byElement.get(button).blend ], [ true, undefined ], 'a button is disabled, not faded');
+    assert.equal(byElement.get(buttonLabel), undefined, 'nor entered');
+    assert.equal(byElement.get(kept), undefined, 'DO_NOT_DISABLE is left alone');
+    assert.equal(byElement.get(outside), undefined);
+});

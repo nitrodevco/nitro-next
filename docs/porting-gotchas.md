@@ -23,6 +23,9 @@ a new one costs you time. Rules with a longer story live in the other guides in 
 - **A template id is its bundle's key, and the libraries name them differently**: some keep the
   asset's `_xml` suffix (`habbo-friend-bar-com/bonus_rare_promo_xml`), others drop it
   (`habbo-groups-com/group`). A wrong id draws nothing and logs nothing - check the library's keys.
+- **`Util.disableSection` is the `disableSection` binding**, on the window the AS3 passes it: it
+  disables everything inside and halves the leaves' blend as Flash does (buttons are only disabled).
+  Do not fade by hand with `alpha` as well. A button the code holds down (`state |= 0x10`) is `pressed`.
 - **A `Frame` opens at its layout's position**: pass `defaultPosition` from the layout's root
   container (the messenger's is (120, 120)); without it the window opens in the top-left corner.
 - **Check the available scrolling API.** `scrollResetKey` resets to the start. Chat auto-scroll

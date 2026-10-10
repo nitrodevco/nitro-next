@@ -1,33 +1,40 @@
 /**
- * The wired menu's inspection tab - `WiredMenuInspectionTab` on `inspection_container`: the type
- * picker (furni, user, global), the preview with its pin option, and the inspected object's
- * variable values (`VariableValueTableObject`), editable in place, with "delete" and "add" under
- * them and the "add variable" bubble. The table is greyed out while nothing is inspected.
+ * The wired menu's inspection tab - `WiredMenuInspectionTab` on `inspection_container` of
+ * `wired_menu_view_xml`: the type picker (furni, user, global), the preview with its pin option,
+ * and the inspected object's variable values (`VariableValueTableObject`), editable in place, with
+ * "delete" and "add" under them and the "add variable" bubble (`useWiredCreateVariableBubble`).
  *
- * Buttons follow `updateButtonsUI`: for someone who may modify wired, with a furni or user
- * inspected, "add" is on, and "delete" is on for a selected variable that can be taken away.
+ * - `updateTableUI`: the table goes into `variable_values_table_container`, which is
+ *   `Util.disableSection`ed while nothing is inspected.
+ * - `updatePreviewUI`: `pin_option_container` is disabled for the globals; the preview shows what
+ *   `VariableHolderPreviewer` is given (`WiredMenuInspectionPreview`): an instruction, the globals'
+ *   placeholder or the object. The "highlight wireds" button is there for furni, and disabled
+ *   unless the inspected furni is configured in wired boxes. Its icon is
+ *   `${image.library.url}catalogue/icon_80.png` in the layout - the catalogue icon set, which this
+ *   client reaches through `catalog.icons.url`.
+ * - `updateButtonsUI`: for someone who may modify wired, with a furni or user inspected, "add" is
+ *   on, and "delete" is on for a selected variable that can be taken away.
  */
 import type { IWiredVariable } from '@nitrodevco/nitro-packets';
 import { VariableExtraSourceTypes } from '@nitrodevco/nitro-packets';
-import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import { useRef } from 'react';
 
 import { closeWiredInspectionCreateBubble, createWiredInspectedVariable, deleteWiredInspectedVariable, selectWiredInspectionRow, selectWiredInspectionType, setWiredInspectedValue, setWiredInspectionPinned, toggleWiredInspectionCreateBubble, toggleWiredInspectionHighlights } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoom } from '#base/context/room';
-import { useTranslation } from '#base/context/system';
+import { useConfigValue, useTranslation } from '#base/context/system';
 import { useWiredHasWritePermission, useWiredStore, WIRED_INSPECTION_STATE_NOTHING, WiredVariableValueRow } from '#base/context/wired';
-import { Box, ThemeText } from '#base/theme';
+import { Box, TemplateWindow } from '#base/theme';
 import { TableCell, TableColumn, TableView } from '#base/views/shared/table/TableView';
 import { WIRED_SOURCE_FURNI } from '#base/wired';
 
-import { WiredMenuCheckOption } from './WiredMenuCheckOption';
-import { WiredMenuCreateVariableBubble } from './WiredMenuCreateVariableBubble';
+import { useWiredCreateVariableBubble } from './useWiredCreateVariableBubble';
 import { WiredMenuInspectionPreview } from './WiredMenuInspectionPreview';
-import { isWithinContainer } from './wiredMenuPointer';
-import { WiredMenuTypePicker } from './WiredMenuTypePicker';
-import { WiredVariableActionButtons } from './WiredVariableActionButtons';
+import { wiredMenuTypePickerBindings } from './wiredMenuTypePicker';
 import { wiredVariableValueCell } from './wiredVariableValueCell';
+
+/** `inspection_container`'s size: the whole tab takes the clicks `windowProcedure` hears. */
+const CONTAINER_WIDTH = 500;
+const CONTAINER_HEIGHT = 382;
 
 export const WiredMenuInspectionTab = () => {
     const t = useTranslation();
@@ -44,8 +51,7 @@ export const WiredMenuInspectionTab = () => {
     const createBubble = useWiredStore(x => x.inspectionCreateBubble);
     const createVariables = useWiredStore(x => x.inspectionCreateVariables);
     const hasWritePermission = useWiredHasWritePermission();
-    const bubbleRef = useRef<PixiContainer>(null);
-    const addButtonRef = useRef<PixiContainer>(null);
+    const catalogIconsUrl = useConfigValue<string>('catalog.icons.url') ?? '';
 
     const loc = (key: string) => t(key, '');
 
@@ -61,8 +67,6 @@ export const WiredMenuInspectionTab = () => {
     // `updateButtonsUI`.
     const inspectsHolder = hasWritePermission && !!data && (Number(data.type) !== Number(VariableExtraSourceTypes.GLOBAL_SOURCE));
     const selectedRow = rows.find(row => row.variable.variableId === selectedId);
-    const canDelete = inspectsHolder && !!selectedRow?.variable.canCreateAndDelete;
-    const canAdd = inspectsHolder;
 
     // `updatePreviewUI`: the highlight button is there for furni, and on for a furni that is configured in wired boxes.
     const canHighlight = !!data && (Number(data.type) === WIRED_SOURCE_FURNI) && !!data.configuredInWireds.length;
@@ -70,101 +74,68 @@ export const WiredMenuInspectionTab = () => {
     // `variableFilter`: what the object may be given and does not hold yet.
     const variableFilter = (variable: IWiredVariable) => variable.canCreateAndDelete && (!data || !data.variableValues.has(variable.variableId));
 
-    // `windowProcedure`: a click in the tab that is neither in the bubble nor on "add" closes the bubble.
-    const onContainerTap = (event: FederatedPointerEvent) => {
-        if (!createBubble || isWithinContainer(event.target, bubbleRef.current) || isWithinContainer(event.target, addButtonRef.current)) return;
+    const bubble = useWiredCreateVariableBubble({
+        open: createBubble,
+        variables: createVariables,
+        filter: variableFilter,
+        target: type,
+        roomId,
+        canDelete: inspectsHolder && !!selectedRow?.variable.canCreateAndDelete,
+        canAdd: inspectsHolder,
+        onDelete: () => deleteWiredInspectedVariable(send),
+        onAdd: () => toggleWiredInspectionCreateBubble(send),
+        onCreate: (variable, valueText) => createWiredInspectedVariable(send, variable, valueText),
+        onClose: closeWiredInspectionCreateBubble,
+    });
 
-        closeWiredInspectionCreateBubble();
-    };
+    const nothingInspected = state === WIRED_INSPECTION_STATE_NOTHING;
 
     return (
         <Box
-            onPointerTap={onContainerTap}
-            layout={{ position: 'absolute', left: 0, top: 0, width: 500, height: 382 }}
+            onPointerTap={bubble.onWindowTap}
+            layout={{ position: 'absolute', left: 0, top: 0, width: CONTAINER_WIDTH, height: CONTAINER_HEIGHT }}
         >
-            <Box layout={{ position: 'absolute', left: 14, top: 18 }}>
-                <WiredMenuTypePicker
-                    titleKey="wiredmenu.inspection.type"
-                    count={3}
-                    selected={type}
-                    onSelect={sourceType => selectWiredInspectionType(send, sourceType)}
-                />
-            </Box>
-            <Box layout={{ position: 'absolute', left: 14, top: 94, width: 150, height: 274, overflow: 'hidden' }}>
-                <ThemeText
-                    text={t('wiredmenu.inspection.preview', 'wiredmenu.inspection.preview')}
-                    textStyle="u_regular"
-                    flashFormat={{ bold: true }}
-                    clip
-                    verticalAlign="top"
-                    layout={{ position: 'absolute', left: 0, top: 0, width: 165, height: 19 }}
-                />
-                <WiredMenuInspectionPreview
-                    preview={preview}
-                    showHighlightButton={type === WIRED_SOURCE_FURNI}
-                    highlightEnabled={canHighlight}
-                    onHighlight={toggleWiredInspectionHighlights}
-                />
-                <Box layout={{ position: 'absolute', left: 0, top: 254 }}>
-                    <WiredMenuCheckOption
-                        label={t('wiredmenu.inspection.pin', 'wiredmenu.inspection.pin')}
-                        selected={pinned}
-                        rowDisabled={type === Number(VariableExtraSourceTypes.GLOBAL_SOURCE)}
-                        onToggle={setWiredInspectionPinned}
-                        width={197}
-                        height={18}
-                        labelWidth={82}
-                        labelHeight={17}
-                    />
-                </Box>
-            </Box>
-            <Box layout={{ position: 'absolute', left: 183, top: 17, width: 303, height: 351, overflow: 'hidden' }}>
-                <ThemeText
-                    text={t('wiredmenu.inspection.variables', 'wiredmenu.inspection.variables')}
-                    textStyle="u_regular"
-                    flashFormat={{ bold: true }}
-                    clip
-                    verticalAlign="top"
-                    layout={{ position: 'absolute', left: 0, top: 0, width: 188, height: 19 }}
-                />
-                <Box
-                    alpha={(state === WIRED_INSPECTION_STATE_NOTHING) ? 0.5 : 1}
-                    eventMode={(state === WIRED_INSPECTION_STATE_NOTHING) ? 'none' : 'auto'}
-                    layout={{ position: 'absolute', left: 0, top: 20, width: 303, height: 297 }}
-                >
-                    <TableView
-                        columns={columns}
-                        rows={rows}
-                        getRowId={row => row.variable.variableId}
-                        getCell={getCell}
-                        selectedId={selectedId}
-                        onRowSelected={row => selectWiredInspectionRow(row?.variable.variableId ?? null)}
-                        onCellEdit={(row, columnId, value) => {
-                            if (columnId === 'value') setWiredInspectedValue(send, row.variable, value);
-                        }}
-                        layout={{ width: 303, height: 297, flex: 0 }}
-                    />
-                </Box>
-                <WiredVariableActionButtons
-                    canDelete={canDelete}
-                    canAdd={canAdd}
-                    onDelete={() => deleteWiredInspectedVariable(send)}
-                    onAdd={() => toggleWiredInspectionCreateBubble(send)}
-                    addButtonRef={addButtonRef}
-                    layout={{ top: 326, height: 30 }}
-                />
-                {createBubble && (
-                    <WiredMenuCreateVariableBubble
-                        variables={createVariables}
-                        filter={variableFilter}
-                        target={type}
-                        roomId={roomId}
-                        bubbleRef={bubbleRef}
-                        onCreate={(variable, valueText) => createWiredInspectedVariable(send, variable, valueText)}
-                        layout={{ left: 122, top: 181 }}
-                    />
-                )}
-            </Box>
+            <TemplateWindow
+                id="habbo-user-defined-room-events-com/wired_menu_view_xml"
+                part="inspection_container"
+                bindings={{
+                    '': { visible: true },
+                    ...wiredMenuTypePickerBindings(type, sourceType => selectWiredInspectionType(send, sourceType), 3),
+                    preview_instruction_furni: { visible: preview.kind === 'furni_instructions' },
+                    preview_instruction_user: { visible: preview.kind === 'user_instructions' },
+                    global_placeholder: { visible: preview.kind === 'global' },
+                    preview_border: { children: <WiredMenuInspectionPreview preview={preview} /> },
+                    highlight_wired_btn: { visible: type === WIRED_SOURCE_FURNI, disableSection: !canHighlight, onPointerTap: toggleWiredInspectionHighlights },
+                    ...(!!catalogIconsUrl.length && { 'highlight_wired_btn/@0': { asset: catalogIconsUrl.replace('%name%', '80') } }),
+                    pin_option_container: { disableSection: type === Number(VariableExtraSourceTypes.GLOBAL_SOURCE) },
+                    pin_checkbox: { selected: pinned, onPointerTap: () => setWiredInspectionPinned(!pinned) },
+                    // `Util.disableSection` reaches the table's windows too: it fades and takes no clicks.
+                    variable_values_table_container: {
+                        disableSection: nothingInspected,
+                        children: (
+                            <Box
+                                alpha={nothingInspected ? 0.5 : 1}
+                                eventMode={nothingInspected ? 'none' : 'auto'}
+                                layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}
+                            >
+                                <TableView
+                                    columns={columns}
+                                    rows={rows}
+                                    getRowId={row => row.variable.variableId}
+                                    getCell={getCell}
+                                    selectedId={selectedId}
+                                    onRowSelected={row => selectWiredInspectionRow(row?.variable.variableId ?? null)}
+                                    onCellEdit={(row, columnId, value) => {
+                                        if (columnId === 'value') setWiredInspectedValue(send, row.variable, value);
+                                    }}
+                                    layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}
+                                />
+                            </Box>
+                        ),
+                    },
+                    ...bubble.bindings,
+                }}
+            />
         </Box>
     );
 };

@@ -1,9 +1,12 @@
 /**
- * The inspection tab's `preview_border` - `VariableHolderPreviewer`: the instruction to pick
- * something, the placeholder for the room's globals, or the inspected object itself, centred
- * (`centerContainer`): a furni as the room engine draws it facing 180 at scale 64 (halved when it
- * does not fit, as Flash zooms the bitmap), an avatar or bot full length, a pet as the pet image
- * widget draws it. The "highlight wireds" button sits in its corner for a furni.
+ * The inspection tab's `preview_container` - `VariableHolderPreviewer` on the layout's
+ * `preview_border`: the instruction to pick something (`preview_instruction_furni` /
+ * `preview_instruction_user`), the room's globals' `global_placeholder`, or the inspected object
+ * itself, centred in the border (`centerContainer`): a furni as the room engine draws it facing 180
+ * at scale 64 (`preview_image_bitmap`, zoomed to half when it does not fit), an avatar or bot full
+ * length (`preview_avatar`, cropped), a pet as the pet image widget draws it (`preview_pet`). The
+ * object is drawn by code into the border, where the widget would be centred; the layout's widgets
+ * and bitmap stay hidden. The tab binds the rest of the border's windows.
  *
  * The furni is rendered from its type and colour (`getGenericRoomObjectTexture`); what its stuff
  * data would add to the picture (a poster's image, a trophy's plate) is not drawn.
@@ -12,13 +15,16 @@ import { AvatarGenderType, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomOb
 
 import { AvatarImage } from '#base/components/AvatarImage';
 import { useRoom, useRoomStore } from '#base/context/room';
-import { useConfigValue, useTranslation } from '#base/context/system';
 import { WiredInspectionPreview } from '#base/context/wired';
 import { useChatPetFace, useFurnitureImageTexture } from '#base/hooks';
-import { Border, Box, ContainerButton, LayoutImage, ThemeImage, ThemeText } from '#base/theme';
+import { Box, ThemeImage } from '#base/theme';
 
-const BORDER_WIDTH = 141;
-const BORDER_HEIGHT = 225;
+/**
+ * `setFurniByObjectId` zooms the bitmap to half when it is as wide as the previewer's container
+ * (`preview_container`, 150 x 274) less 6, or taller than its height less 6.
+ */
+const ZOOM_WIDTH = 150 - 6;
+const ZOOM_HEIGHT = 274 - 6;
 
 const FurniPreview = ({ objectId }: { objectId: number }) => {
     const room = useRoom();
@@ -29,8 +35,7 @@ const FurniPreview = ({ objectId }: { objectId: number }) => {
 
     if (!texture) return null;
 
-    // `setFurniByObjectId`: zoomed to half when it would not fit inside the border.
-    const zoom = ((width >= (BORDER_WIDTH - 6)) || (height > (BORDER_HEIGHT - 6))) ? 0.5 : 1;
+    const zoom = ((width >= ZOOM_WIDTH) || (height > ZOOM_HEIGHT)) ? 0.5 : 1;
 
     return (
         <ThemeImage
@@ -48,6 +53,7 @@ const PetPreview = ({ figure, posture }: { figure: string; posture: string }) =>
     return <ThemeImage texture={texture} />;
 };
 
+/** `setPreviewByUserIndex`: a user, bot or rentable bot in the avatar widget, a pet in the pet widget. */
 const UserPreview = ({ userIndex }: { userIndex: number }) => {
     const userData = useRoomStore(x => x.usersByRoomObjectId[userIndex]);
 
@@ -61,6 +67,7 @@ const UserPreview = ({ userIndex }: { userIndex: number }) => {
                 <AvatarImage
                     figure={userData.figure}
                     gender={userData.gender ?? AvatarGenderType.Male}
+                    cropped
                     direction={2}
                 />
             );
@@ -78,82 +85,29 @@ const UserPreview = ({ userIndex }: { userIndex: number }) => {
 
 export interface WiredMenuInspectionPreviewProps {
     preview: WiredInspectionPreview;
-    /** The highlight button is there for a furni, and enabled when the furni is configured in wired boxes. */
-    showHighlightButton: boolean;
-    highlightEnabled: boolean;
-    onHighlight: () => void;
 }
 
-export const WiredMenuInspectionPreview = ({ preview, showHighlightButton, highlightEnabled, onHighlight }: WiredMenuInspectionPreviewProps) => {
-    const t = useTranslation();
-    const catalogIconsUrl = useConfigValue<string>('catalog.icons.url') ?? '';
-
-    const instruction = (key: string) => (
-        <ThemeText
-            text={t(key, key)}
-            textStyle="u_regular"
-            textOptions={{ fill: '#000000', align: 'center' }}
-            alpha={0.6}
-            verticalAlign="top"
-            layout={{ position: 'absolute', left: 0, top: 104, width: BORDER_WIDTH, height: 17 }}
-        />
-    );
+/** The inspected furni or user, centred in `preview_border` (what goes into its `children`). */
+export const WiredMenuInspectionPreview = ({ preview }: WiredMenuInspectionPreviewProps) => {
+    if ((preview.kind !== 'furni') && (preview.kind !== 'user')) return null;
 
     return (
-        <Border
-            variant="3"
-            tintColor="#dadada"
-            layout={{ position: 'absolute', left: 0, top: 20, width: BORDER_WIDTH, height: BORDER_HEIGHT, overflow: 'hidden' }}
+        <Box
+            eventMode="none"
+            layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
         >
-            {(preview.kind === 'furni_instructions') && instruction('wiredmenu.inspection.preview_furni_instruction')}
-            {(preview.kind === 'user_instructions') && instruction('wiredmenu.inspection.preview_user_instruction')}
-            {/* `global_placeholder`: `setGlobalPlaceholder` shows it where the layout put it (10,64), which its 120x97 bitmap fills. */}
-            {(preview.kind === 'global') && (
-                <ThemeImage
-                    src={LayoutImage('habbo-window-manager-com/wired_global_placeholder.png')}
-                    bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center', fitSizeToContents: true }}
-                    layout={{ position: 'absolute', left: 10, top: 64, width: 120, height: 97 }}
+            {(preview.kind === 'furni') && (
+                <FurniPreview
+                    key={preview.objectId}
+                    objectId={preview.objectId}
                 />
             )}
-            <Box layout={{ position: 'absolute', left: 0, top: 0, width: BORDER_WIDTH, height: BORDER_HEIGHT, alignItems: 'center', justifyContent: 'center' }}>
-                {(preview.kind === 'furni') && (
-                    <FurniPreview
-                        key={preview.objectId}
-                        objectId={preview.objectId}
-                    />
-                )}
-                {(preview.kind === 'user') && (
-                    <UserPreview
-                        key={preview.userIndex}
-                        userIndex={preview.userIndex}
-                    />
-                )}
-            </Box>
-            {showHighlightButton && (
-                <Box
-                    alpha={highlightEnabled ? 1 : 0.5}
-                    layout={{ position: 'absolute', left: 110, top: 6, width: 25, height: 26 }}
-                >
-                    <ContainerButton
-                        variant="7"
-                        disabled={!highlightEnabled}
-                        tooltip={t('wiredmenu.inspection.highlight_wireds', 'wiredmenu.inspection.highlight_wireds')}
-                        tooltipDelay={250}
-                        onPointerTap={onHighlight}
-                        layout={{ width: 25, height: 26 }}
-                    >
-                        {/* `${image.library.url}catalogue/icon_80.png` - the catalogue icon set, which this client reaches through `catalog.icons.url`. */}
-                        {!!catalogIconsUrl.length && (
-                            <ThemeImage
-                                src={catalogIconsUrl.replace('%name%', '80')}
-                                bitmap={{ fitSizeToContents: true }}
-                                eventMode="none"
-                                layout={{ position: 'absolute', left: 4, top: 6, width: 16, height: 14 }}
-                            />
-                        )}
-                    </ContainerButton>
-                </Box>
+            {(preview.kind === 'user') && (
+                <UserPreview
+                    key={preview.userIndex}
+                    userIndex={preview.userIndex}
+                />
             )}
-        </Border>
+        </Box>
     );
 };

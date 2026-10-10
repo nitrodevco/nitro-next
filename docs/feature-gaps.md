@@ -96,15 +96,14 @@ the layouts are the library's in `scripts/flash-js-resources`.
 | Area | Views | Layouts |
 |---|---|---|
 | Collectibles, habbicons, offer centre, special items | `views/collectibles` (only the `CollectiblesView` shell is templated), `views/habbicons`, `OfferCenterView`, `SpecialItemsView` | `habbo-catalog-com`: `collectible_view`, `collectible_reward`, `habbicon_view`, `habbicon_purchase_confirmation`, `offer_center`, `special_items_display` |
-| Wired menu and chests | The `wired_menu` tabs (`WiredMenuOverviewTab`, `WiredMenuInspectionTab`, `WiredMenuMonitorTab`, `WiredMenuSettingsTab`, `WiredMenuChestsTab`) inside the templated `WiredMenuView` frame, `WiredVariableHolderView`, `WiredChestView` | `habbo-user-defined-room-events-com`: `wired_menu_view`, `variables_management_*`, `chest_*` |
 
 The chat bar is drawn from `chatinput_window_new` but keeps the client's own text field in
 `chat_input`'s place, for the command completion the port adds to it.
 
 No layout to convert to, so these stay hand-placed: the wired setup editor and the wired trading
-frame (`views/wired-setup`, `views/wired-common`, `WiredTradingFrame` - Flash builds them in code
-from `UbuntuPresetManager`, and the `wired_style_*` templates are already read by the wired
-styles), the floor plan editor (its layout is not in the bundles) and the loading screen. In the
+frame (`views/wired-setup`, `views/wired-common`, `WiredTradingFrame` and the chest settings and
+notification settings windows on it - Flash builds them in code from `UbuntuPresetManager`, and
+the `wired_style_*` templates are already read by the wired styles), the floor plan editor (its layout is not in the bundles) and the loading screen. In the
 room UI, also the pet picker (`FurniturePetPickerView`: Flash floats a `use_product_menu` bubble
 over each pet instead of opening a window), the room ad tooltip (built
 with `createWindow`), the chat command suggestions (the port's own) and `PetPortraitView` (a
