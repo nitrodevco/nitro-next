@@ -98,6 +98,8 @@ export const createScrollbar = (displayName: string, cascadeKey: string, axis: '
                             ref={node => trackRef(node)}
                             defaultVariant={resolvedVariant}
                             disabled={disabled}
+                            // `relative_*_scale_fixed` across: in a rect wider than its art the track stays as wide as the arrows.
+                            layout={{ alignSelf: 'flex-start' }}
                             onPointerDown={onTrackPointerDown}
                         >
                             {/* `thumbSize` can briefly read 0 on the very first measure tick after
