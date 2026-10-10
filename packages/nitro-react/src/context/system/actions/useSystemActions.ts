@@ -21,6 +21,7 @@ const actions = {
     setHotelViewBonusRare: state.setHotelViewBonusRare,
     setHotelViewCommunityGoal: state.setHotelViewCommunityGoal,
     setHotelViewPromoArticles: state.setHotelViewPromoArticles,
+    setHotelViewPromoArticleIndex: state.setHotelViewPromoArticleIndex,
     setToolbarWidths: state.setToolbarWidths,
     setHomeRoomId: state.setHomeRoomId,
     startRoomSession: state.startRoomSession,

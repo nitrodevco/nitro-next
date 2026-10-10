@@ -66,7 +66,10 @@ hotel's `landing.view.dynamic.slot.*` variables put `bonusrare` in slot 1 and sc
 `widgetcontainer`s in slots 2-5, each asking the timing code of its own schedule and drawing
 the `generic` widget that code names (`caption`, `subcaption`, `bodytext`, `spacing`,
 `catalogbutton`, `internallinkbutton`, `link`, `customtimer` with the window manager's
-`CountdownWidget`). The live emulator capture `tmp/hotel-slots-2.png` shows the bonus rare and
+`CountdownWidget`). The reception, the grid, the generic widget and its elements, the promo
+article and the empty widget container are drawn from their `habbo-friend-bar-com` templates
+(`landing_view_default_dynamic_layout`, `dynamic_widget_grid`, `generic_widget`, `element_*`,
+`promo_article`, `widget_container_widget`). The live emulator capture `tmp/hotel-slots-2.png` shows the bonus rare and
 four scheduled promos, with offsets, pane gap and row spacing matching a capture from the AIR
 client. Only the slot and code variables of the current schedule are in `nitro-config.json`.
 

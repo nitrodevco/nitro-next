@@ -112,42 +112,21 @@ export const parseHotelViewGenericConf = (conf: string): HotelViewGenericElement
     });
 };
 
-/** `configureLayout`: the bitmap and the content column's placement, and the container's minimum height. */
-export interface HotelViewGenericLayout {
-    bitmapUri: string;
-    bitmapX: number;
-    bitmapY: number;
-    bitmapWidth: number | null;
-    bitmapHeight: number | null;
-    contentX: number | null;
-    contentY: number;
-    contentWidth: number;
-    containerHeight: number;
+/** One entry of a generic widget's `layout`: the bitmap's or the content column's placement, or the container's minimum height. */
+export interface HotelViewGenericLayoutEntry {
+    key: string;
+    value: string;
 }
 
-/** `generic_widget`'s own geometry: the bitmap at (10, 10), the content column 250 wide at the top. */
-export const parseHotelViewGenericLayout = (layout: string): HotelViewGenericLayout => {
-    const result: HotelViewGenericLayout = { bitmapUri: '', bitmapX: 10, bitmapY: 10, bitmapWidth: null, bitmapHeight: null, contentX: null, contentY: 0, contentWidth: 250, containerHeight: 30 };
+/**
+ * `configureLayout`'s split: one `key,value` per `;`, in order - each is applied to the built widget
+ * in turn (`bitmap.x`, `content.width`, `container.height`...), so a later entry sees an earlier one.
+ */
+export const parseHotelViewGenericLayout = (layout: string): HotelViewGenericLayoutEntry[] => layout.split(';').map((entry) => {
+    const [ key, value ] = entry.split(',');
 
-    for (const entry of layout.split(';')) {
-        const [ key, value ] = entry.split(',');
-        const number = parseInt(value, 10) | 0;
-
-        switch (key) {
-            case 'bitmap.uri': result.bitmapUri = value ?? ''; break;
-            case 'bitmap.width': result.bitmapWidth = number; break;
-            case 'bitmap.height': result.bitmapHeight = number; break;
-            case 'bitmap.x': result.bitmapX = number; break;
-            case 'bitmap.y': result.bitmapY = number; break;
-            case 'content.x': result.contentX = number; break;
-            case 'content.y': result.contentY = number; break;
-            case 'content.width': result.contentWidth = number; break;
-            case 'container.height': result.containerHeight = Math.max(number, result.containerHeight); break;
-        }
-    }
-
-    return result;
-};
+    return { key, value: value ?? '' };
+});
 
 /** `CustomTimerElementHandler`: `customtimer,<floating>,<x>,<y>,<remainingKey>,<expiredKey>,<timeStr>`. */
 export const hotelViewTimerTimeStr = (element: HotelViewGenericElement): string => element.args[5] ?? '';

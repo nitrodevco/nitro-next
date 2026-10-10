@@ -97,6 +97,8 @@ export interface TemplateElement {
     children: TemplateElement[];
     /** A clone's key (`TemplateItem.key`): which of its list's items it is, across renders. */
     itemKey?: string;
+    /** A clone its code adds to a list with `addListItem` (`TemplateItem.append`). */
+    appended?: boolean;
 }
 
 export interface Template {

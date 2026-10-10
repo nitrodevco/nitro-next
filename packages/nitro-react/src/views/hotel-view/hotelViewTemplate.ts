@@ -1,4 +1,13 @@
-import { TemplateWindows } from '#base/theme';
+import { Template, TemplateWindows } from '#base/theme';
+
+/** The library the reception's layouts are in (`HabboLandingView.getXmlWindow`). */
+export const HOTEL_VIEW_LIBRARY = 'habbo-friend-bar-com';
+
+/** A reception layout's template id: `getXmlWindow(name)` reads the `<name>_xml` asset. */
+export const hotelViewTemplateId = (name: string) => `${HOTEL_VIEW_LIBRARY}/${name}_xml`;
+
+/** A reception layout out of its library's templates, once they are loaded. */
+export const hotelViewTemplate = (templates: Readonly<Record<string, Template>> | undefined, name: string): Template | undefined => templates?.[hotelViewTemplateId(name)];
 
 /** `HabboLandingView.positionAfterAndStretch`'s gap between the two windows. */
 const GAP = 5;

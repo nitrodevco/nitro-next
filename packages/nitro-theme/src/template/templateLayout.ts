@@ -660,6 +660,15 @@ export class LayoutWindow {
      * Nothing for any other window.
      */
     public setAutoRearrange(_on: boolean): void {}
+
+    /**
+     * `IItemListWindow.spacing` as code sets it after the list is built: a new gap arranges the list
+     * again at once. Nothing for any other window.
+     */
+    public setSpacing(_spacing: number): void {}
+
+    /** `IItemListWindow.arrangeListItems`: the list arranged again. Nothing for any other window. */
+    public arrangeListItems(): void {}
 }
 
 /** The window types that have an `iterator` - `ContainerController` and those built on it. */
@@ -953,6 +962,19 @@ class ListWindow extends LayoutWindow {
     /** `IItemListWindow.spacing`: the gap between items, for the items placed from now on. */
     public set spacing(spacing: number) {
         this._spacing = spacing;
+    }
+
+    /** `ItemListController.set spacing`: a changed gap re-arranges the list (`updateScrollAreaRegion`). */
+    public override setSpacing(spacing: number): void {
+        if (spacing === this._spacing) return;
+
+        this._spacing = spacing;
+        this.arrange();
+    }
+
+    /** `ItemListController.arrangeListItems`. */
+    public override arrangeListItems(): void {
+        this.arrange();
     }
 
     /** `IItemListWindow.scaleToFitItems`: whether the list's breadth grows to its widest item. */
@@ -1786,7 +1808,9 @@ export const buildTemplateWindows = (elements: readonly TemplateElement[], input
 
         input.setupOf?.(element)?.(windowOf);
 
-        if (deferPush) parent?.push(window);
+        // `TemplateItem.append`: the code's `addListItem`, which leaves the rest of the list where it is.
+        if (deferPush && element.appended && (parent instanceof ListWindow)) parent.addListItem(window);
+        else if (deferPush) parent?.push(window);
 
         for (const clone of clones) buildScope(clone.element, clone.parent);
     };

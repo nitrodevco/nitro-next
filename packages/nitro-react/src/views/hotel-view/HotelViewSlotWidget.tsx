@@ -2,12 +2,10 @@
  * One widget of the reception - `LandingViewWidgetType.getWidgetForType` for the types the port
  * draws (`PORTED_LANDING_VIEW_WIDGETS`), including `WidgetContainerWidget`, which shows whichever
  * widget the timing code of its slot's schedule names (`switchCurrentWidget`). Until that code
- * arrives, or when it is empty, the container is its empty 250x30 `widget_container_widget`.
+ * arrives, or when it is empty, the container is its own empty `widget_container_widget`.
  */
-import {
-    hotelViewCodeWidget, HotelViewCommonSettings, hotelViewPaneWidths, hotelViewSlotSchedule, isWideHotelViewSlot, LandingViewWidgetType, PORTED_LANDING_VIEW_WIDGETS, useConfigData, useSystemStore,
-} from '#base/context/system';
-import { Box } from '#base/theme';
+import { hotelViewCodeWidget, HotelViewCommonSettings, hotelViewSlotSchedule, LandingViewWidgetType, PORTED_LANDING_VIEW_WIDGETS, useConfigData, useSystemStore } from '#base/context/system';
+import { TemplateWindow } from '#base/theme';
 
 import { HotelViewBonusRareWidget } from './HotelViewBonusRareWidget';
 import { HotelViewCommunityGoalWidget } from './HotelViewCommunityGoalWidget';
@@ -15,6 +13,7 @@ import { HotelViewExpiringCatalogPageWidget } from './HotelViewExpiringCatalogPa
 import { HotelViewGenericWidget } from './HotelViewGenericWidget';
 import { HotelViewNextLimitedRareWidget } from './HotelViewNextLimitedRareWidget';
 import { HotelViewPromoArticleWidget } from './HotelViewPromoArticleWidget';
+import { hotelViewTemplateId } from './hotelViewTemplate';
 
 interface HotelViewSlotWidgetProps {
     type: string;
@@ -28,7 +27,7 @@ const HotelViewContainerWidget = ({ slot, settings }: { slot: number; settings: 
     const code = useSystemStore(x => x.hotelViewTimingCodes[hotelViewSlotSchedule(config, slot)]);
     const type = code ? hotelViewCodeWidget(config, code) : '';
 
-    if (!code || !PORTED_LANDING_VIEW_WIDGETS.has(type) || (type === LandingViewWidgetType.WIDGETCONTAINER)) return <Box layout={{ width: 250, height: 30 }} />;
+    if (!code || !PORTED_LANDING_VIEW_WIDGETS.has(type) || (type === LandingViewWidgetType.WIDGETCONTAINER)) return <TemplateWindow id={hotelViewTemplateId('widget_container_widget')} />;
 
     return (
         <HotelViewSlotWidget
@@ -41,10 +40,6 @@ const HotelViewContainerWidget = ({ slot, settings }: { slot: number; settings: 
 };
 
 export const HotelViewSlotWidget = ({ type, slot, code, settings }: HotelViewSlotWidgetProps) => {
-    const config = useConfigData();
-    const panes = hotelViewPaneWidths(config);
-    const width = isWideHotelViewSlot(slot) ? panes.left : panes.right;
-
     switch (type) {
         case LandingViewWidgetType.WIDGETCONTAINER:
             return (
@@ -64,7 +59,7 @@ export const HotelViewSlotWidget = ({ type, slot, code, settings }: HotelViewSlo
         case LandingViewWidgetType.BONUSRARE:
             return <HotelViewBonusRareWidget settings={settings} />;
         case LandingViewWidgetType.PROMOARTICLE:
-            return <HotelViewPromoArticleWidget width={width} />;
+            return <HotelViewPromoArticleWidget settings={settings} />;
         case LandingViewWidgetType.COMMUNITYGOAL:
         case LandingViewWidgetType.COMMUNITYGOALVS:
         case LandingViewWidgetType.COMMUNITYGOALVSVOTE:

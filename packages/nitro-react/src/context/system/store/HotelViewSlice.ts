@@ -2,7 +2,7 @@
  * Reception state: the background art `WidgetContainerLayout.setBackgroundGraphics` chose, and
  * what the reception's widgets were told by the server - the timing code each scheduled slot
  * shows (`WidgetContainerWidget.onTimingCode`), the countdowns `CustomTimerElementHandler` asked
- * for, the bonus rare (`BonusRarePromoWidget`), the promo articles, the community goal and whether
+ * for, the bonus rare (`BonusRarePromoWidget`), the promo articles and the one shown, the community goal and whether
  * the user's vote on it was taken (`CommunityVoteReceivedEvent`), the catalogue page that expires
  * first (`ExpiringCatalogPageWidget`) and the next limited rare (`NextLimitedRareCountdownWidget`).
  * Retained while a room is open, like the Flash window.
@@ -39,6 +39,8 @@ export interface HotelViewSlice {
     hotelViewBonusRare: BonusRareInfoMessageType | undefined;
     hotelViewCommunityGoal: CommunityGoalProgressMessageType | undefined;
     hotelViewPromoArticles: PromoArticleData[];
+    /** `PromoArticleWidget`'s current article, which it keeps between visits to the reception. */
+    hotelViewPromoArticleIndex: number;
     /** `CommunityVoteReceivedEvent` with `acknowledged`: the vote buttons stay hidden. */
     hotelViewCommunityVoted: boolean;
     hotelViewExpiringPage: HotelViewTimed<CatalogPageWithEarliestExpiryMessageType> | undefined;
@@ -49,11 +51,20 @@ export interface HotelViewSlice {
     setHotelViewBonusRare: (info: BonusRareInfoMessageType) => void;
     setHotelViewCommunityGoal: (goal: CommunityGoalProgressMessageType) => void;
     setHotelViewPromoArticles: (articles: PromoArticleData[]) => void;
+    setHotelViewPromoArticleIndex: (index: number) => void;
     setHotelViewBackgroundCode: (code: string) => void;
     setHotelViewCommunityVoted: (voted: boolean) => void;
     setHotelViewExpiringPage: (page: HotelViewTimed<CatalogPageWithEarliestExpiryMessageType>) => void;
     setHotelViewNextLimited: (offer: HotelViewTimed<LimitedOfferAppearingNextMessageType>) => void;
 }
+
+/** `PromoArticleData.linkType`: a web page, an in-client link, or no link (the button is hidden). */
+export const PROMO_ARTICLE_LINK_WEB = 0;
+export const PROMO_ARTICLE_LINK_CLIENT = 1;
+export const PROMO_ARTICLE_LINK_NONE = 2;
+
+/** `setArticleContent`: the button shows unless the article has no link, or a web link with no page. */
+export const promoArticleHasLink = (article: PromoArticleData) => !((article.linkType === PROMO_ARTICLE_LINK_NONE) || ((article.linkType === PROMO_ARTICLE_LINK_WEB) && (article.linkContent === '')));
 
 /** `CoreConfigurationManager` property interpolation for external reception images. */
 export const hotelViewProperty = (config: Record<string, unknown>, key: string, fallback = ''): string => {
@@ -105,6 +116,7 @@ export const createHotelViewSlice: StateCreator<HotelViewSlice, [], [], HotelVie
     hotelViewBonusRare: undefined,
     hotelViewCommunityGoal: undefined,
     hotelViewPromoArticles: [],
+    hotelViewPromoArticleIndex: 0,
     hotelViewCommunityVoted: false,
     hotelViewExpiringPage: undefined,
     hotelViewNextLimited: undefined,
@@ -114,6 +126,7 @@ export const createHotelViewSlice: StateCreator<HotelViewSlice, [], [], HotelVie
     setHotelViewBonusRare: hotelViewBonusRare => set({ hotelViewBonusRare }),
     setHotelViewCommunityGoal: hotelViewCommunityGoal => set({ hotelViewCommunityGoal }),
     setHotelViewPromoArticles: hotelViewPromoArticles => set({ hotelViewPromoArticles }),
+    setHotelViewPromoArticleIndex: hotelViewPromoArticleIndex => set({ hotelViewPromoArticleIndex }),
     setHotelViewBackgroundCode: hotelViewBackgroundCode => set({ hotelViewBackgroundCode }),
     setHotelViewCommunityVoted: hotelViewCommunityVoted => set({ hotelViewCommunityVoted }),
     setHotelViewExpiringPage: hotelViewExpiringPage => set({ hotelViewExpiringPage }),

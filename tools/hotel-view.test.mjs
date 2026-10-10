@@ -100,14 +100,14 @@ await test('generic widget conf, layout and common settings follow GenericWidget
     assert.equal(widgets.hotelViewTimerTimeStr(widgets.parseHotelViewGenericConf('customtimer,false,0,0,a,b,2026-09-17 15:00')[0]), '2026-09-17 15:00');
     assert.equal(widgets.parseHotelViewGenericConf('').length, 0);
 
-    const layout = widgets.parseHotelViewGenericLayout('bitmap.uri,https://x/p.png;bitmap.x,50;bitmap.y,0;container.height,250');
-
-    assert.equal(layout.bitmapUri, 'https://x/p.png');
-    assert.equal(layout.bitmapX, 50);
-    assert.equal(layout.bitmapY, 0);
-    assert.equal(layout.containerHeight, 250);
-    assert.equal(widgets.parseHotelViewGenericLayout('').containerHeight, 30);
-    assert.equal(widgets.parseHotelViewGenericLayout('container.height,10').containerHeight, 30);
+    // `configureLayout` applies the entries in order, so the parse keeps them as written.
+    assert.deepEqual([ ...widgets.parseHotelViewGenericLayout('bitmap.uri,https://x/p.png;bitmap.x,50;bitmap.y,0;container.height,250') ].map(e => [ e.key, e.value ]), [
+        [ 'bitmap.uri', 'https://x/p.png' ],
+        [ 'bitmap.x', '50' ],
+        [ 'bitmap.y', '0' ],
+        [ 'container.height', '250' ],
+    ]);
+    assert.deepEqual([ ...widgets.parseHotelViewGenericLayout('') ].map(e => [ e.key, e.value ]), [ [ '', '' ] ]);
 
     assert.equal(widgets.isWideHotelViewSlot(3), false);
     assert.equal(widgets.isWideHotelViewSlot(5), false);

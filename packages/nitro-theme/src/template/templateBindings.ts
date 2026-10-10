@@ -241,6 +241,13 @@ export interface TemplateItem {
     bindings?: TemplateBindings;
     /** What the code sizes and moves on the clone once it is laid out, found inside it. */
     arrange?: (windows: TemplateWindows) => void;
+    /**
+     * Added to a list with `addListItem` - placed after the last item, the list's container only
+     * lengthened by it - rather than `addListItemAt`, which arranges the whole list again and fits the
+     * container to its widest item, stretching the items that follow its width
+     * (`GenericWidget.configureContentColumn`).
+     */
+    append?: boolean;
 }
 
 /**
@@ -339,6 +346,7 @@ interface ExpandedNode {
     source: TemplateElement;
     children: TemplateElement[];
     itemKey: string | undefined;
+    appended: boolean;
     node: TemplateElement;
 }
 
@@ -374,13 +382,13 @@ export class TemplateExpander {
      * children are its items' clones, each a scope of its own. A clone's every element is a new one
      * (`fresh`), as `clone()` copies the window.
      */
-    private scope(sources: readonly TemplateElement[], bindings: TemplateBindings | undefined, path: string, fresh: boolean, itemKey: string | undefined, prototypes: readonly TemplateElement[], expansion: TemplateExpansion): TemplateElement[] {
+    private scope(sources: readonly TemplateElement[], bindings: TemplateBindings | undefined, path: string, fresh: boolean, itemKey: string | undefined, prototypes: readonly TemplateElement[], expansion: TemplateExpansion, appended = false): TemplateElement[] {
         const { targets, missing } = resolveTemplateNames(sources, Object.keys(bindings ?? {}));
         const bound = bindElements(targets, bindings);
 
         for (const key of missing) expansion.missing.push(path ? `${path}: ${key}` : key);
 
-        const build = (source: TemplateElement, nodePath: string, key: string | undefined): TemplateElement => {
+        const build = (source: TemplateElement, nodePath: string, key: string | undefined, append = false): TemplateElement => {
             const { items, added, ...binding } = bound.get(source) ?? {};
             const clone = (item: TemplateItem): TemplateElement[] => {
                 const prototype = typeof item.from === 'string' ? findByKey(prototypes, item.from) : 'tag' in item.from ? item.from : item.from.elements[0];
@@ -397,7 +405,7 @@ export class TemplateExpander {
 
                 if (entry) expansion.arranges.push(entry);
 
-                const [ made ] = this.scope([ prototype ], item.bindings, `${nodePath}#${item.key}`, true, item.key, prototypes, expansion);
+                const [ made ] = this.scope([ prototype ], item.bindings, `${nodePath}#${item.key}`, true, item.key, prototypes, expansion, !!item.append);
 
                 if (entry) entry.scope = made;
 
@@ -408,25 +416,25 @@ export class TemplateExpander {
                 : source.children.map((child, index) => build(child, `${nodePath}/${index}`, undefined));
 
             if (added) children.push(...added.flatMap(clone));
-            const node = this.node(nodePath, source, children, fresh, key);
+            const node = this.node(nodePath, source, children, fresh, key, append);
 
             if (bound.has(source)) expansion.byElement.set(node, binding);
 
             return node;
         };
 
-        return sources.map((source, index) => build(source, `${path}/${index}`, itemKey));
+        return sources.map((source, index) => build(source, `${path}/${index}`, itemKey, appended));
     }
 
-    private node(path: string, source: TemplateElement, children: TemplateElement[], fresh: boolean, itemKey: string | undefined): TemplateElement {
+    private node(path: string, source: TemplateElement, children: TemplateElement[], fresh: boolean, itemKey: string | undefined, appended: boolean): TemplateElement {
         if (!fresh && sameElements(children, source.children)) return source;
 
         const cached = this._cache.get(path);
-        const node = cached && cached.source === source && cached.itemKey === itemKey && sameElements(cached.children, children)
+        const node = cached && cached.source === source && cached.itemKey === itemKey && cached.appended === appended && sameElements(cached.children, children)
             ? cached.node
-            : { ...source, children, ...(itemKey !== undefined && { itemKey }) };
+            : { ...source, children, ...(itemKey !== undefined && { itemKey }), ...(appended && { appended }) };
 
-        this._next.set(path, { source, children, itemKey, node });
+        this._next.set(path, { source, children, itemKey, appended, node });
 
         return node;
     }

@@ -35,6 +35,7 @@ export * from './groupCommands';
 export * from './groupForumCommands';
 export * from './habbiconCommands';
 export * from './helpCommands';
+export * from './hotelViewCommands';
 export * from './infostandPlacementCommands';
 export * from './inventoryBadgeCommands';
 export * from './inventoryBotsCommands';
