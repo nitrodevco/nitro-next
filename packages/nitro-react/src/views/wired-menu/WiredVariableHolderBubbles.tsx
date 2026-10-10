@@ -11,21 +11,17 @@
  *
  * Flash puts the bubbles on the desktop, under the windows; they are drawn over the room here.
  */
-import { RoomObjectCategoryEnum, RoomRenderedEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
 import { Container as PixiContainer } from 'pixi.js';
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 
-import { useRoom } from '#base/context/room';
 import { useWiredStore } from '#base/context/wired';
-import { useRoomEventDispatcher } from '#base/hooks';
+import { useRoomObjectBubblePlacement } from '#base/hooks';
 import { Box, TemplateWindow } from '#base/theme';
-import { FixedSizeStack } from '#base/utils';
 
-/** `VariableInfoBubbleView._-zV` / `_-Qf`. */
+/** `VariableInfoBubbleView._-zV`. */
 const LOCATION_STACK_SIZE = 18;
-const BUBBLE_DROP_SPEED = 3;
-/** `getMaximumVerticalLead`. */
-const MAX_VERTICAL_LEAD_RATIO = 0.05;
+
 interface ValueBubbleProps {
     objectId: number;
     category: RoomObjectCategoryEnum;
@@ -35,51 +31,17 @@ interface ValueBubbleProps {
 }
 
 const ValueBubble = ({ objectId, category, value, isAvatar }: ValueBubbleProps) => {
-    const room = useRoom();
     const bubbleRef = useRef<PixiContainer>(null);
-    const stack = useRef(new FixedSizeStack(LOCATION_STACK_SIZE));
-    const lastMax = useRef(0);
 
     // `setActive` after `setInactive`: a bubble given to another object starts over, out of sight until placed.
-    useLayoutEffect(() => {
-        stack.current = new FixedSizeStack(LOCATION_STACK_SIZE);
-        lastMax.current = 0;
-
-        if (bubbleRef.current) bubbleRef.current.alpha = 0;
-    }, [ objectId, category ]);
-
-    useRoomEventDispatcher<RoomRenderedEvent>(RoomRenderedEvent.ROOM_RENDERED, () => {
-        const node = bubbleRef.current;
-
-        if (!room || !node) return;
-
-        const bounds = room.getRoomObjectBoundingRectangle(objectId, category);
-        const location = room.getRoomObjectScreenLocation(objectId, category);
-        const width = node.layout?.computedLayout.width ?? 0;
-        const height = node.layout?.computedLayout.height ?? 0;
-
-        if (!bounds || !location || !width || !height) {
-            node.alpha = 0;
-
-            return;
-        }
-
-        // `getOffset`.
-        const offset = -height - (isAvatar ? 10 : 4);
-
-        stack.current.addValue(location.y - bounds.top);
-
-        let max = stack.current.getMax();
-
-        if (max < (lastMax.current - BUBBLE_DROP_SPEED)) max = lastMax.current - BUBBLE_DROP_SPEED;
-
-        lastMax.current = max;
-
-        const lowest = (bounds.top + offset) - Math.trunc(bounds.height * MAX_VERTICAL_LEAD_RATIO);
-
-        node.x = Math.trunc(location.x - (width / 2));
-        node.y = Math.trunc(Math.max((location.y - max) + offset, lowest));
-        node.alpha = 1;
+    useRoomObjectBubblePlacement(bubbleRef, {
+        objectId,
+        category,
+        isAvatar,
+        stackSize: LOCATION_STACK_SIZE,
+        onRendered: (placed) => {
+            if (bubbleRef.current) bubbleRef.current.alpha = placed ? 1 : 0;
+        },
     });
 
     return (

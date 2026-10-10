@@ -13,6 +13,7 @@ export * from './useRoomFurnitureData';
 export * from './useRoomInfostandPlacementHandler';
 export * from './useRoomInventoryPlacementHandler';
 export * from './useRoomIsInitialized';
+export * from './useRoomObjectBubblePlacement';
 export * from './useRoomObjectInteraction';
 export * from './useRoomObjectModify';
 export * from './useRoomObjectMove';
