@@ -36,7 +36,7 @@ import { GetTicker } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer, Ticker } from 'pixi.js';
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
-import { goToHomeRoom, openClientLink, openProfile, showOwnRooms, showQuests, startTakingPhoto, toggleCatalog } from '#base/commands';
+import { goToHomeRoom, openClientLink, openProfile, showOwnRooms, showQuests, startTakingPhoto, toggleCatalog, toggleNavigator } from '#base/commands';
 import { unseenSkipped, useAchievementsStore } from '#base/context/achievements';
 import { useWebSocketContext } from '#base/context/communication';
 import { getUnseenDailyTasksCount, useDailyTasksStore } from '#base/context/daily-tasks';
@@ -305,7 +305,8 @@ export const ToolbarView = () => {
         RECEPTION: { onPointerTap: iconClick(goToHotelView), tooltip: t('toolbar.icon.tooltip.exitroom.hotelview') },
         // HTIE_ICON_HOME -> `goToHomeRoom`: a room forward to the home room (its GetGuestRoomResult starts the session).
         HOME: { onPointerTap: iconClick(() => goToHomeRoom(send)) },
-        NAVIGATOR: { onPointerTap: iconClick(() => toggleWindow('navigator')) },
+        // HTIE_ICON_NAVIGATOR -> `HabboNewNavigator.toggle`: shown with its last search made again, or hidden.
+        NAVIGATOR: { onPointerTap: iconClick(() => toggleNavigator(send)) },
         PROGRESSION: {
             onPointerTap: iconClick(undefined, 'progression'),
             children: (

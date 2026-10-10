@@ -1,12 +1,13 @@
 import { RateFlatComposer, SetUIFlagsComposer } from '@nitrodevco/nitro-packets';
 import { useEffect, useState } from 'react';
 
-import { forwardToRoom, searchRoomTag } from '#base/commands';
+import { forwardToRoom, openClientLink, searchRoomTag } from '#base/commands';
 import { chatHistoryStore } from '#base/context/chat-history';
 import { useWebSocketContext } from '#base/context/communication';
 import { useNavigatorActions, useNavigatorStore } from '#base/context/navigator';
 import { useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
 import { UiFlagEnum, useRoomToolsCollapsed, useUserActions, useUserStore } from '#base/context/user';
+import { useWiredStore } from '#base/context/wired';
 import { useRoomZoom } from '#base/hooks';
 import { RoomShareView } from '#base/views/room-widgets/room-tools/RoomShareView';
 import { ROOM_TOOLS_INFO_MARGIN, roomToolsRight } from '#base/views/room-widgets/room-tools/roomToolsGeometry';
@@ -36,6 +37,7 @@ export const RoomToolsWidget = () => {
     const canRateCurrentRoom = useNavigatorStore(x => x.canRateCurrentRoom);
     const collapsed = useRoomToolsCollapsed();
     const freeFlowChatDisabled = useUserStore(x => x.freeFlowChatDisabled);
+    const hasWiredAchievements = useWiredStore(x => x.wiredAchievements.length > 0);
     const { setUiFlag } = useUserActions();
     const { stepRoomVisitHistory, setRoomRating } = useNavigatorActions();
     const { toggleWindow } = useWindowActions();
@@ -94,13 +96,22 @@ export const RoomToolsWidget = () => {
     });
     const directLink = `${urlPrefix}/room/${roomId}`;
 
-    const buttons: RoomToolsButton[] = [
+    const buttons: RoomToolsButton[] = [];
+
+    // `RoomToolsWidget.onAchievementsUpdated`: `setAchievementsButton(achievements.length > 0)` on
+    // `WiredEnvironment`'s list; the press opens the achievements on the room's wired ones.
+    if (hasWiredAchievements) buttons.push({
+        key: 'button_achievements',
+        onPress: () => openClientLink(send, 'questengine/achievements/wired_games'),
+    });
+
+    buttons.push(
         {
             key: 'button_settings',
             // `RoomToolsWidgetHandler.toggleRoomInfoWindow`.
             onPress: () => toggleWindow('room_info'),
         },
-    ];
+    );
 
     // `RoomToolsWidget`: `setChatHistoryButton(freeFlowChat != null)` - the history belongs to the free flow chat.
     if (!freeFlowChatDisabled) buttons.push({

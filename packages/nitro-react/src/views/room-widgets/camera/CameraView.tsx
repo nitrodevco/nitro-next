@@ -13,18 +13,27 @@
  *   active slot. The shutter in preview mode goes back to the live view.
  * - The header's close hides it, its help opens `habbopages/camera`; it hides when the room is zoomed.
  *
- * Not ported: collecting the room's render data for the server (`collectPhotoData` /
- * `RenderRoomMessageComposer`) and the photo lab behind `button_editor`, so the editor button does nothing.
+ * - The shutter also collects the room's render data under the image for its slot (`collectPhotoData` ->
+ *   `RoomEngine.getRenderRoomMessage`); `button_editor` hides the viewfinder and opens the photo lab on the
+ *   slot's photo (`editPhoto`), which sends that data with its effects.
+ * - Built with the room (`CameraWidget`'s constructor), it asks for the camera's prices
+ *   (`sendInitCameraMessage`: `RequestCameraConfigurationMessageComposer` with the `CAMERA` perk).
  */
-import { GetRenderer } from '@nitrodevco/nitro-renderer';
-import { Rectangle, Texture } from 'pixi.js';
-import { useEffect, useMemo, useState } from 'react';
+import { RequestCameraConfigurationComposer } from '@nitrodevco/nitro-packets';
+import { GetRenderer, SpriteDataCollector } from '@nitrodevco/nitro-renderer';
+import { Rectangle } from 'pixi.js';
+import { useEffect, useState } from 'react';
 
-import { isRoomUnfit } from '#base/commands';
-import { getRoom } from '#base/context/room';
-import { useIsWindowVisible, useSystemStore, useWindowActions } from '#base/context/system';
+import { CameraPhoto, editPhoto, isRoomUnfit, openClientLink } from '#base/commands';
+import { GetRoomBackgroundColor } from '#base/components';
+import { useWebSocketContext } from '#base/context/communication';
+import { getRoom, useRoom } from '#base/context/room';
+import { useConfigValue, useIsWindowVisible, useSystemStore, useWindowActions } from '#base/context/system';
+import { PerkCodes, useOwnPerkAllowed, userStore } from '#base/context/user';
 import { GetSoundManager, HabboSoundTypesEnum } from '#base/sound';
 import { Region, TemplateBindings, TemplateWindow, TemplateWindows, useWindowActivation } from '#base/theme';
+
+import { CanvasPicture } from './CanvasPicture';
 
 const TEMPLATE = 'habbo-room-ui-com/camera_interface_xml';
 const ASSET = (name: string) => `habbo-window-manager-com-${name}`;
@@ -43,12 +52,12 @@ const EMPTY_SLOT_COLOR = '#d2d2d2';
 const HEIGHT_WITHOUT_SLOTS = 462;
 const WINDOW_WIDTH = 340;
 const WINDOW_FULL_HEIGHT = 536;
-/** The header skin's close button, in window coordinates (measured on the drawn window). */
-const HEADER_CLOSE = { x: 317, y: 11, size: 20 };
 
 interface Slot {
     image: HTMLCanvasElement;
     empty: boolean;
+    /** `_renderRoomMessages[slot]`. */
+    render?: CameraPhoto['render'];
 }
 
 const newCanvas = (color?: string) => {
@@ -80,6 +89,8 @@ const copyCanvas = (source: HTMLCanvasElement) => {
 /** The pictures survive the window closing, as `CameraViewFinder`'s static slots do. */
 let slots: Slot[] = Array.from({ length: NUMBER_OF_SLOTS }, () => ({ image: newCanvas(EMPTY_SLOT_COLOR), empty: true }));
 let fullAlertShown = false;
+/** The flash's start, read when the shutter goes. */
+const now = () => performance.now();
 
 /** The viewfinder's live picture, and its place on the screen once drawn. */
 const liveCanvas = newCanvas('#000000');
@@ -88,31 +99,13 @@ const setImageNode = (node: unknown) => {
     imageNode = node as typeof imageNode;
 };
 
-/** A canvas drawn as a texture that is refreshed in place. */
-const CanvasPicture = ({ canvas, size, offset = 0, onNode }: { canvas: HTMLCanvasElement; size: number; offset?: number; onNode?: (node: unknown) => void }) => {
-    const texture = useMemo(() => Texture.from(canvas), [ canvas ]);
-
-    // Every render is a redraw of the canvas.
-    useEffect(() => {
-        texture.source.update();
-    });
-
-    return (
-        <pixiSprite
-            ref={onNode}
-            texture={texture}
-            layout={{ position: 'absolute', left: offset, top: offset, width: size, height: size }}
-        />
-    );
-};
-
 export const CameraView = () => {
     const visible = useIsWindowVisible('camera');
     const { hideWindow, showAlert } = useWindowActions();
     const getLocalizationValue = useSystemStore(x => x.getLocalizationValue);
     const { zIndex, onPointerDown } = useWindowActivation('camera');
-    // `_window.center()`.
-    const position = { x: Math.max(0, Math.floor((window.innerWidth - WINDOW_WIDTH) / 2)), y: Math.max(0, Math.floor((window.innerHeight - HEIGHT_WITHOUT_SLOTS) / 2)) };
+    // `_window.center()`: the window is its layout's 340 x 536 whether or not `slot_container` shows.
+    const position = { x: Math.max(0, Math.floor((window.innerWidth - WINDOW_WIDTH) / 2)), y: Math.max(0, Math.floor((window.innerHeight - WINDOW_FULL_HEIGHT) / 2)) };
     const [ , redraw ] = useState(0);
     const [ active, setActive ] = useState(0);
     const [ preview, setPreview ] = useState(false);
@@ -121,6 +114,16 @@ export const CameraView = () => {
     const [ flashStart, setFlashStart ] = useState(0);
     const [ flashAlpha, setFlashAlpha ] = useState(0);
     const refresh = () => redraw(version => version + 1);
+    const room = useRoom();
+    const { send } = useWebSocketContext();
+    const cameraAllowed = useOwnPerkAllowed(PerkCodes.Camera);
+    const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
+    const groupBadgeUrl = useConfigValue<string>('group.badge.url') ?? '';
+
+    // `CameraWidget`'s constructor, once per room: `sendInitCameraMessage`.
+    useEffect(() => {
+        if (room && cameraAllowed) send(new RequestCameraConfigurationComposer({}));
+    }, [ room, cameraAllowed, send ]);
 
     // `update`, every 100 ms while shown and not in preview mode: the room under the image.
     useEffect(() => {
@@ -192,8 +195,8 @@ export const CameraView = () => {
     const nextEmpty = () => slots.findIndex(slot => slot.empty);
 
     /** `addToCurrentSlot`. */
-    const addToCurrentSlot = (image: HTMLCanvasElement) => {
-        slots = slots.map((slot, index) => ((index === active) ? { image, empty: false } : slot));
+    const addToCurrentSlot = (image: HTMLCanvasElement, render: Slot['render']) => {
+        slots = slots.map((slot, index) => ((index === active) ? { image, empty: false, render } : slot));
 
         const next = slots.findIndex(slot => slot.empty);
 
@@ -219,9 +222,38 @@ export const CameraView = () => {
         }
 
         GetSoundManager().playSound(HabboSoundTypesEnum.CAMERA_SHUTTER);
-        addToCurrentSlot(copyCanvas(liveCanvas));
-        setFlashStart(performance.now());
+        addToCurrentSlot(copyCanvas(liveCanvas), collectPhotoData());
+        setFlashStart(now());
         setSlotsShown(true);
+    };
+
+    /** `collectPhotoData` -> `RoomEngine.getRenderRoomMessage`: the room under the image, as the thumbnail camera collects it. */
+    const collectPhotoData = (): Slot['render'] => {
+        const current = getRoom();
+        const canvas = current?.canvas;
+
+        if (!current || !canvas || !imageNode) return undefined;
+
+        const { x, y } = imageNode.getGlobalPosition();
+        const viewport = new Rectangle(Math.round(x), Math.round(y), IMAGE_SIZE, IMAGE_SIZE);
+        const collector = new SpriteDataCollector(current, canvas, imageLibraryUrl, groupBadgeUrl);
+
+        return {
+            sprites: collector.getFurniData(viewport, -1),
+            modifiers: collector.getRoomRenderingModifiers(),
+            planes: collector.getRoomPlanes(viewport, GetRoomBackgroundColor()),
+            roomId: current.roomId,
+            topSecurityLevel: userStore.getState().securityLevel,
+            time: Date.now(),
+        };
+    };
+
+    /** `button_editor`: the viewfinder hides and the lab opens on the photo shown. */
+    const onEditor = () => {
+        const slot = slots[active];
+
+        hideWindow('camera');
+        editPhoto({ image: copyCanvas(slot.image), render: slot.render });
     };
 
     /** `cameraButton_<n>`. */
@@ -266,21 +298,13 @@ export const CameraView = () => {
                 />
             ),
         },
-        // `header_button_close` (`hide`): the header's drawn close button has no handler of its own for a window that is no frame.
-        '': {
-            helpPage: 'camera',
-            children: (
-                <Region
-                    cursor="pointer"
-                    onPointerTap={() => hideWindow('camera')}
-                    layout={{ position: 'absolute', left: HEADER_CLOSE.x, top: HEADER_CLOSE.y, width: HEADER_CLOSE.size, height: HEADER_CLOSE.size }}
-                />
-            ),
-        },
+        // `WME_CLICK` on the header's buttons: `header_button_close` hides, `header_button_help` opens `habbopages/camera`.
+        header_button_close: { onPointerTap: () => hideWindow('camera') },
+        header_button_help: { onPointerTap: () => openClientLink(send, 'habbopages/camera') },
         slot_container: { visible: slotsShown },
         camera_crosshair: { visible: !preview },
         delete_photo_button: { visible: preview, onPointerTap: clearCurrentSlot },
-        button_editor: { visible: preview },
+        button_editor: { visible: preview, onPointerTap: onEditor },
         buyButtonBg: { visible: preview },
         photo_date: { visible: false },
         photo_roomname: { visible: false },

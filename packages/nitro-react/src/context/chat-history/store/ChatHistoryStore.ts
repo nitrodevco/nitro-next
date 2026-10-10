@@ -19,6 +19,14 @@ interface ChatHistoryEntryBase {
 export interface ChatHistoryChatEntry extends ChatHistoryEntryBase {
     kind: 'chat';
     data: ChatBubbleData;
+    /** `canIgnore`: the speaker the line's ignore icon ignores, when it has one. */
+    ignore?: ChatHistoryIgnoreTarget;
+}
+
+/** `ChatBubbleFactory.getHistoryLineEntry`'s `webID` and `userName` of a line that can be ignored. */
+export interface ChatHistoryIgnoreTarget {
+    webId: number;
+    userName: string;
 }
 
 export interface ChatHistoryRoomChangeEntry extends ChatHistoryEntryBase {
@@ -37,7 +45,7 @@ interface ChatHistoryState {
 }
 
 interface ChatHistoryActions {
-    insertChat: (data: ChatBubbleData) => void;
+    insertChat: (data: ChatBubbleData, ignore?: ChatHistoryIgnoreTarget) => void;
     /** `onGuestRoomData`: the first room data of a room entry is its change line. */
     insertRoomChange: (roomName: string) => void;
     /** `onRoomEnter`. */
@@ -70,7 +78,7 @@ const push = (entries: ChatHistoryEntry[], entry: ChatHistoryEntry) => {
 
 export const createChatHistoryStore = () => createStore<ChatHistoryStore>()(set => ({
     ...initialState,
-    insertChat: data => set(x => ({ entries: push(x.entries, { kind: 'chat', id: nextEntryId++, time: getChatTimeStampNow(), data }) })),
+    insertChat: (data, ignore) => set(x => ({ entries: push(x.entries, { kind: 'chat', id: nextEntryId++, time: getChatTimeStampNow(), data, ignore }) })),
     insertRoomChange: roomName => set((x) => {
         if (x.roomChangeInserted) return x;
 

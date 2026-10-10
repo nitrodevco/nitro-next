@@ -18,7 +18,7 @@ import { HelpComponent } from './components/help';
 import { HotelViewComponent } from './components/hotel-view';
 import { MotdNotificationComponent } from './components/notifications';
 import { OfferCenterComponent } from './components/offer-center';
-import { QuestsComponent } from './components/quests';
+import { QuestsComponent, QuestTrackerComponent } from './components/quests';
 import { RoomEffectsWidget } from './components/room/widgets/effects/RoomEffectsWidget';
 import { RoomSettingsWidget } from './components/room/widgets/room-settings';
 import { SpecialItemsComponent } from './components/special-items';
@@ -42,7 +42,9 @@ import { ActivityPointsView } from './views/purse/ActivityPointsView';
 import { PurseTemplateView } from './views/purse/PurseTemplateView';
 import { RewardTrackPremiumConfirmationView } from './views/reward-track/RewardTrackPremiumConfirmationView';
 import { RewardTrackView } from './views/reward-track/RewardTrackView';
+import { CameraPhotoLabView } from './views/room-widgets/camera/CameraPhotoLabView';
 import { CameraView } from './views/room-widgets/camera/CameraView';
+import { PhotoPurchaseConfirmationView } from './views/room-widgets/camera/PhotoPurchaseConfirmationView';
 import { RoomChatInputView } from './views/room-widgets/chat-input/RoomChatInputView';
 import { SystemDialogsView } from './views/system/SystemDialogsView';
 import { TemplatePreviewView } from './views/system/TemplatePreviewView';
@@ -112,6 +114,8 @@ export const MainView = () => {
                         </Box>
                         {/* `GroupRoomInfoCtrl` docks the banner in this column, before the quest tracker and the event card. */}
                         <GroupRoomInfoComponent />
+                        {/* `QuestController`'s trackers dock here, after the group banner and before the event card. */}
+                        <QuestTrackerComponent />
                         {/* `RoomEventInfoCtrl` docks the room's event card here, under the group banner. */}
                         <NavigatorRoomEventInfoComponent />
                         <NotificationsExtensionAnchor />
@@ -149,6 +153,8 @@ export const MainView = () => {
                     <GroupForumDialogs />
                     {/* `CameraWidget`'s viewfinder: drawn only while shown, its photos kept. */}
                     <CameraView />
+                    <CameraPhotoLabView />
+                    <PhotoPurchaseConfirmationView />
                     {/* `DailyTasksController`'s two windows: drawn only while shown. */}
                     <DailyTasksView />
                     {/* `BadgeLeaderboardController`: drawn only while shown. */}

@@ -11,6 +11,21 @@ import type { PivotPoint } from '../utils/flashBitmap';
 import type { Template, TemplateElement } from './templateData';
 import type { LayoutWindow, TemplateRect } from './templateLayout';
 
+/** A header's button as its window's code reaches it: shown or hidden, and its click. */
+export interface TemplateHeaderButton {
+    visible?: boolean;
+    onPointerTap?: () => void;
+}
+
+/**
+ * The windows a header's own layout holds (`habbo_window_layout_header_3`'s `_CONTROLS` list), by
+ * name, and the binding field each one's binding goes to on the `header` element - a `header` is
+ * drawn with its buttons, not from elements of its own.
+ */
+type HeaderButtonField = 'headerClose' | 'headerHelp';
+const HEADER_BUTTONS: Record<string, HeaderButtonField> = { header_button_close: 'headerClose', header_button_help: 'headerHelp' };
+const HEADER_BUTTON_FIELDS = [ 'headerClose', 'headerHelp' ] as const;
+
 const sameTemplateRect = (a: TemplateRect | undefined, b: TemplateRect | undefined) => a === b
     || (!!a && !!b && a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height && a.clip === b.clip
         && JSON.stringify(a.scroll) === JSON.stringify(b.scroll)
@@ -79,6 +94,15 @@ export interface TemplateBinding {
     selected?: boolean;
     /** A frame's `helpPage` as its code sets it, over the layout's `help_page` var: a page shows the help button. */
     helpPage?: string;
+    /**
+     * A template's own `header` window's buttons - a captioned container's header, not a frame's -
+     * bound by the names its header layout gives them, `header_button_close` and `header_button_help`
+     * (`habbo_window_layout_header_3`), as the window's code handles their clicks by name
+     * (`CameraViewFinder`'s `WME_CLICK` on `header_button_close` hides, on `header_button_help` opens
+     * `habbopages/camera`). Whether each shows, and its click.
+     */
+    headerClose?: TemplateHeaderButton;
+    headerHelp?: TemplateHeaderButton;
     /** `WME_CLICK`; the event's `currentTarget` is the element's window (`getGlobalRectangle`). */
     onPointerTap?: (event: FederatedPointerEvent) => void;
     /**
@@ -264,7 +288,9 @@ const findByKey = (elements: readonly TemplateElement[], key: string): TemplateE
     for (const name of key.split('/')) {
         if (name.startsWith('#')) found = findTemplateChildByTag(scope, name.slice(1)) ?? findTemplateChildByTag(scope, name);
         else if (name.startsWith('@') && (found !== undefined)) found = scope[Number(name.slice(1))];
-        else found = findTemplateChild(scope, name);
+        // A header's own button, which no element is: the `header` window holding it (`findChildByName`
+        // reaches into a header's layout as into any child).
+        else found = findTemplateChild(scope, name) ?? (HEADER_BUTTONS[name] ? findTemplateChildWhere(scope, child => child.tag === 'header') : undefined);
 
         if (!found) return undefined;
 
@@ -420,7 +446,12 @@ export const bindElements = (targets: ReadonlyMap<string, TemplateElement>, bind
     for (const [ key, binding ] of Object.entries(bindings ?? {})) {
         const element = targets.get(key);
 
-        if (element) byElement.set(element, { ...byElement.get(element), ...binding });
+        if (!element) continue;
+
+        // A header's button, bound on the header: its own field, not merged into the header's binding.
+        const headerButton = (element.tag === 'header') ? HEADER_BUTTONS[key.split('/').pop() ?? ''] : undefined;
+
+        byElement.set(element, headerButton ? { ...byElement.get(element), [headerButton]: binding } : { ...byElement.get(element), ...binding });
     }
 
     return byElement;
@@ -435,6 +466,8 @@ type TemplateHandler = typeof HANDLERS[number];
  * Whether two bindings draw the same: every value equal, `show` by its names, a handler only by
  * whether there is one - the store hands elements a stable handler that calls the latest.
  */
+const sameHeaderButton = (a: TemplateHeaderButton | undefined, b: TemplateHeaderButton | undefined): boolean => (a === b) || (!!a && !!b && (a.visible === b.visible) && (!a.onPointerTap === !b.onPointerTap));
+
 export const sameTemplateBinding = (a: TemplateBinding | undefined, b: TemplateBinding | undefined): boolean => {
     if (a === b) return true;
     if (!a || !b) return false;
@@ -454,6 +487,8 @@ export const sameTemplateBinding = (a: TemplateBinding | undefined, b: TemplateB
         && a.disableSection === b.disableSection
         && a.selected === b.selected
         && a.helpPage === b.helpPage
+        && sameHeaderButton(a.headerClose, b.headerClose)
+        && sameHeaderButton(a.headerHelp, b.headerHelp)
         && a.autoHideScrollBar === b.autoHideScrollBar
         && a.scrollV === b.scrollV
         && a.scrollEndKey === b.scrollEndKey
@@ -503,7 +538,7 @@ export interface TemplateElementState {
 export class TemplateBindingStore {
     private _current = new Map<TemplateElement, TemplateElementState>();
     private _latest = new Map<TemplateElement, TemplateBinding>();
-    private _handlers = new Map<TemplateElement, Partial<Record<TemplateHandler, (...args: never[]) => void>>>();
+    private _handlers = new Map<TemplateElement, Partial<Record<TemplateHandler | HeaderButtonField, (...args: never[]) => void>>>();
     /** When each element was last tapped, for its double click. */
     private _lastTaps = new Map<TemplateElement, number>();
     private _listeners = new Set<() => void>();
@@ -529,7 +564,7 @@ export class TemplateBindingStore {
         for (const element of new Set([ ...byElement.keys(), ...rects.keys() ])) {
             const previous = this._current.get(element);
             const binding = byElement.get(element);
-            const stableBinding = binding && HANDLERS.some(handler => binding[handler]) ? this.stabilise(element, binding) : binding;
+            const stableBinding = binding && (HANDLERS.some(handler => binding[handler]) || HEADER_BUTTON_FIELDS.some(field => binding[field]?.onPointerTap)) ? this.stabilise(element, binding) : binding;
             const rect = rects.get(element);
             const keptBinding = sameTemplateBinding(previous?.binding, stableBinding) ? previous?.binding : stableBinding;
             const keptRect = sameTemplateRect(previous?.rect, rect) ? previous?.rect : rect;
@@ -561,7 +596,25 @@ export class TemplateBindingStore {
         // A double click is told by the element's taps, so an element that only double-clicks taps too.
         if (binding.onDoubleClick) stable.onPointerTap = this.handlerFor(element, 'onPointerTap');
 
+        // A header's buttons: each click one stable function too, calling the latest.
+        for (const field of HEADER_BUTTON_FIELDS) {
+            const button = binding[field];
+
+            if (button?.onPointerTap) stable[field] = { ...button, onPointerTap: this.headerHandlerFor(element, field) };
+        }
+
         return stable;
+    }
+
+    private headerHandlerFor(element: TemplateElement, field: HeaderButtonField): () => void {
+        let handlers = this._handlers.get(element);
+
+        if (!handlers) {
+            handlers = {};
+            this._handlers.set(element, handlers);
+        }
+
+        return handlers[field] ??= () => this._latest.get(element)?.[field]?.onPointerTap?.();
     }
 
     private handlerFor(element: TemplateElement, kind: TemplateHandler): (...args: never[]) => void {

@@ -5,7 +5,7 @@ import {
     GroupManagementSession, limitGroupManagementStep,
 } from '#base/context/groups';
 import { useConfigValue, useTranslation } from '#base/context/system';
-import { Border, ButtonThick, Frame, Region, TabButton, TabContext, ThemeImage, ThemeText } from '#base/theme';
+import { Border, Box, ButtonThick, Frame, Region, TemplateWindow, ThemeImage, ThemeText } from '#base/theme';
 
 import { GroupBadgeEditor } from './GroupBadgeEditor';
 import { GroupManagementColorsStep } from './GroupManagementColorsStep';
@@ -80,13 +80,11 @@ const HEADER_PICTURES: Record<number, string> = {
     [GROUP_MANAGEMENT_VIEW_SETTINGS]: 'group_UI_ready',
 };
 
-/** The four tabs of the editor, in the order and at the widths the layout gives them. */
-const EDIT_TABS = [
-    { step: GROUP_MANAGEMENT_VIEW_IDENTITY, left: 0, width: 97 },
-    { step: GROUP_MANAGEMENT_VIEW_BADGE, left: 97, width: 101 },
-    { step: GROUP_MANAGEMENT_VIEW_COLORS, left: 198, width: 101 },
-    { step: GROUP_MANAGEMENT_VIEW_SETTINGS, left: 299, width: 101 },
-];
+/** The layout the editor's tab strip is drawn from: `TabButtonController` sizes each tab to its caption. */
+const TEMPLATE = 'habbo-groups-com/group_management_window';
+
+/** The four tabs of the editor (`edit_tab_<step>`), in the layout's order. */
+const EDIT_TABS = [ GROUP_MANAGEMENT_VIEW_IDENTITY, GROUP_MANAGEMENT_VIEW_BADGE, GROUP_MANAGEMENT_VIEW_COLORS, GROUP_MANAGEMENT_VIEW_SETTINGS ];
 
 /**
  * The group management window - `group_management_window`, drawn by `GuildManagementWindowCtrl`.
@@ -206,24 +204,17 @@ export const GroupManagementView = ({
                   * owner - an admin editing the group gets the strip with nothing in it.
                   */}
                 {session.exists && (
-                    <TabContext
-                        variant="0"
-                        name="edit_guild_tab_context"
-                        layout={{ position: 'absolute', left: -6, right: -5, top: 89, bottom: 0, overflow: 'hidden' }}
-                    >
-                        {session.isOwner && EDIT_TABS.map(tab => (
-                            <TabButton
-                                key={tab.step}
-                                variant="0"
-                                name={`edit_tab_${tab.step}`}
-                                selected={step === tab.step}
-                                onPointerTap={() => onStep(tab.step)}
-                                layout={{ position: 'absolute', left: tab.left, width: tab.width, top: 0, height: 22 }}
-                            >
-                                {t(`group.edit.tab.${tab.step}`)}
-                            </TabButton>
-                        ))}
-                    </TabContext>
+                    <Box layout={{ position: 'absolute', left: -6, top: 89 }}>
+                        <TemplateWindow
+                            id={TEMPLATE}
+                            part="edit_guild_tab_context"
+                            bindings={Object.fromEntries(EDIT_TABS.map(tab => [ `edit_tab_${tab}`, {
+                                visible: session.isOwner,
+                                selected: step === tab,
+                                onPointerTap: () => onStep(tab),
+                            } ]))}
+                        />
+                    </Box>
                 )}
             </Region>
 

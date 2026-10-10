@@ -62,6 +62,10 @@ export const ClientGates = {
     RoomSettingsStaff: { node: null, level: SecurityLevelEnum.Employee },
     /** `VariableFxVisualizationSettingsPreset` - the campaign icons (security 4). No server node. */
     VariableFxCampaignIcons: { node: null, level: SecurityLevelEnum.Employee },
+    /** `ChatInputWidgetHandler` - `:kick` / `:mute` left to the server, `:aalert` / `:avisit` without being an ambassador (security 4). No server node. */
+    ChatStaffCommands: { node: null, level: SecurityLevelEnum.Employee },
+    /** `ChatInputWidgetHandler` `:reload` / `:rollback` - any room's wired state (security 5). No server node. */
+    RoomStateAnyRoom: { node: null, level: SecurityLevelEnum.Moderator },
 } as const satisfies Record<string, ClientGate>;
 
 /** Whether a user with these rights passes `gate`: its node when the server sent nodes, its level otherwise. */
