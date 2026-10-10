@@ -27,7 +27,7 @@ own config key (`HOTEL_BUNDLE_KEYS` in `utils/assetBundles.ts`):
 | `effect-icons` | `effect.icons.url` | the effect icons, `effect-icons-fx_icon_<id>` |
 
 The window templates are Studio's too, one bundle per Flash library rather than one file:
-named after the library, from `ui.templates.url` with `%libname%` the library (`loadTemplateBundle`).
+named after the library, from `asset.bundles.templates` with `%libname%` the library (`loadTemplateBundle`).
 Each holds `templates.json` - the library's `<layout>`s converted by the theme's `layoutToTemplate`,
 keyed `<library>/<asset>` (`habbo-toolbar-com/purse_xml`) - and every bitmap of the library's, the
 ones no layout names too, named `<library>-<asset>`: that is where the art the views draw with
@@ -41,18 +41,21 @@ of its bitmaps is asked for (`lazyBundleForAsset`: a Flash asset name has no `-`
 the name up to its last one).
 
 The chat styles are a library's bundle too, as the Habbo client reads them out of its
-`habbo-free-flow-chat-com` library: `ui/templates/habbo-free-flow-chat-com.nitro`, loaded as
+`habbo-free-flow-chat-com` library: `bundled/templates/habbo-free-flow-chat-com.nitro`, loaded as
 `habbo-free-flow-chat-com` (preloaded - the room's chat needs it), with the bitmaps named
-as the library names them (`habbo-free-flow-chat-com-style_<assetId>_<file>`) and
-`chat-style-definitions.json` beside them. Nitro Studio's chat bubble builder writes it. So are the
+as the library names them (`habbo-free-flow-chat-com-style_<assetId>_<file>`, and the chat
+history tray's `habbo-free-flow-chat-com-tray_bar`, `-close_x`, `-scrollbar_thumb` ...) and
+`chat-style-definitions.json` beside them. Nitro Studio's chat bubble builder writes it: the styles
+from its chat styles, every other bitmap from the library's `.hab`, which the workspace keeps and
+edits with the template libraries. So are the
 renderer's own bitmaps, as the Habbo client keeps them: the Variable FX in
-`ui/templates/habbo-room-object-visualization-lib.nitro` (loaded by the room engine's
+`bundled/templates/habbo-room-object-visualization-lib.nitro` (loaded by the room engine's
 `VariableFxAssetLibrary`), with `variable-fx-tables.json` beside them, and the avatar additions in
-`ui/templates/habbo-avatar-render-lib.nitro` beside the avatar data's tables (geometry, part sets,
+`bundled/templates/habbo-avatar-render-lib.nitro` beside the avatar data's tables (geometry, part sets,
 actions, ... - which `LoadAvatarData` reads and lets go of), preloaded because the room draws the
 additions by name. Both keep the names the library gives the bitmaps.
 
-The client ships no copy: with a key (or `ui.templates.url`) unset, that bundle is not loaded - and without the window manager's,
+The client ships no copy: with a key (or `asset.bundles.templates`) unset, that bundle is not loaded - and without the window manager's,
 no window has its chrome.
 
 An **atlas** bundle packs its PNGs into one sheet plus a Pixi `SpritesheetData` manifest

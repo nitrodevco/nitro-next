@@ -69,7 +69,7 @@ const libraryBundleForAsset = (name: string): string | undefined => {
 export const lazyBundleForAsset = (name: string): string | undefined => LAZY_BUNDLE_PREFIXES.find(([ prefix ]) => name.startsWith(prefix))?.[1] ?? libraryBundleForAsset(name);
 
 /**
- * The bundles the hotel serves by a config key of their own, rather than as a library's (`ui.templates.url`):
+ * The bundles the hotel serves by a config key of their own, rather than as a library's (`asset.bundles.templates`):
  * the effect icons (`effect.icons.url`), which Nitro Studio builds from the client release and the hotel's own and
  * publishes. The client ships no copy of any: with its key unset, the bundle is not loaded. Nitro's
  * own keys - Flash's came in its SWF.
@@ -80,14 +80,14 @@ const HOTEL_BUNDLE_KEYS: Record<string, string> = {
 
 /**
  * Where a bundle is fetched from; `undefined` for a hotel bundle whose config key is unset. A
- * library's bundle is `ui.templates.url`'s, with `%libname%` the library.
+ * library's bundle is `asset.bundles.templates`'s, with `%libname%` the library.
  */
 export const assetBundleUrl = (name: string): string | undefined => {
-    if (name.startsWith(LIBRARY_PREFIX)) return GetConfigValue<string>('ui.templates.url')?.replace('%libname%', name) || undefined;
+    if (name.startsWith(LIBRARY_PREFIX)) return GetConfigValue<string>('asset.bundles.templates')?.replace('%libname%', name) || undefined;
 
     return Object.hasOwn(HOTEL_BUNDLE_KEYS, name)
         ? (GetConfigValue<string>(HOTEL_BUNDLE_KEYS[name]) || undefined)
-        : (GetConfigValue<string>('asset.bundles.url') ?? DEFAULT_BUNDLE_URL).replace('%name%', name);
+        : (GetConfigValue<string>('asset.bundles.other') ?? DEFAULT_BUNDLE_URL).replace('%name%', name);
 };
 
 /**
@@ -110,7 +110,7 @@ export const unloadAssetBundle = (name: string): void => GetAssetManager().remov
 /**
  * A Flash library's window templates and every bitmap of the library's, in a bundle named after it -
  * which Nitro Studio publishes from the client release, one bundle per library, at
- * `ui.templates.url` with `%libname%` the library. Loaded the first time a template of the library
+ * `asset.bundles.templates` with `%libname%` the library. Loaded the first time a template of the library
  * is drawn (`useTemplate`) or one of its bitmaps is asked for (`lazyBundleForAsset`); the window
  * manager's, which holds most of the art the views draw, is preloaded. `false` without a request
  * when the config names no url: the client ships none.

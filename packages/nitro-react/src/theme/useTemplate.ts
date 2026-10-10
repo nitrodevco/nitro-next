@@ -17,7 +17,7 @@ const readTemplate = (id: string) => GetAssetManager().getBundleFile<TemplateLib
  * from (`getAssetByName("purse_xml")` is `habbo-toolbar-com/purse_xml`). Its library's bundle is
  * loaded the first time one of its templates is asked for, with the window manager's, whose bitmaps
  * every library's templates may name - the way Flash loads a component's library. `undefined` until
- * both are in, or for good when the config names no `ui.templates.url`.
+ * both are in, or for good when the config names no `asset.bundles.templates`.
  */
 export const useTemplate = (id: string) => {
     const [ template, setTemplate ] = useState(() => readTemplate(id));

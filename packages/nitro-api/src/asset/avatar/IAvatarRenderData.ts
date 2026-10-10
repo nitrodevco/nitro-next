@@ -8,7 +8,7 @@ import { IAssetAvatarPartSets } from './partsets/IAssetAvatarPartSets';
 
 /**
  * Everything the avatar render manager starts from (`IAvatarRenderManager.init`), as the hotel's
- * The `habbo-avatar-render-lib` bundle carries it (`ui.templates.url`) - built by Nitro Studio from the client release's
+ * The `habbo-avatar-render-lib` bundle carries it (`asset.bundles.templates`) - built by Nitro Studio from the client release's
  * `habbo-avatar-render-lib` and the hotel's `HabboAvatarActions`, so a new release changes it without
  * the renderer changing.
  */

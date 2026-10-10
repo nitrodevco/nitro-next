@@ -7,7 +7,7 @@ Read the generated layout for geometry and text styles, then write the view by h
 `LayoutImage('<library>/<asset>.png')` - `habbo-room-ui-com/roomtools_gear.png` - which is the
 *asset name* of the bitmap (`habbo-room-ui-com-roomtools_gear`), not a url. The client ships none
 of them: Nitro Studio packs every bitmap of a library into that library's template bundle
-(named after the library, from `ui.templates.url`), and asking for one loads its bundle. See Asset
+(named after the library, from `asset.bundles.templates`), and asking for one loads its bundle. See Asset
 bundles.
 
 The library is where the client finds the bitmap, the way `getAssetByName` does: the library the

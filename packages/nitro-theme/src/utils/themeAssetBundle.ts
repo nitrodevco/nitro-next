@@ -28,7 +28,7 @@ import { registerThemeAtlas, resetThemeSprites, themeTextureKeys } from './theme
  *   slice it out of the decoded sheet on demand, once per key.
  *
  * There is no fallback behind this: the client ships no theme of its own, and the hotel serves the
- * bundle as it does any library's, from `ui.templates.url` (`assetBundleUrl`). If the bundle fails, the chrome is missing and the
+ * bundle as it does any library's, from `asset.bundles.templates` (`assetBundleUrl`). If the bundle fails, the chrome is missing and the
  * error is on the console - which is the intent, an asset silently taking the slow path is how a
  * regression hides.
  */

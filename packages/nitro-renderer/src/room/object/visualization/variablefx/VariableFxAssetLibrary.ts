@@ -87,8 +87,8 @@ export class VariableFxAssetLibrary implements IVariableFxAssetProvider {
 
     private async loadBundle(): Promise<boolean> {
         // The hotel serves the library's bundle beside every other library's (Nitro Studio's, of the
-        // client's bitmaps and its own); with `ui.templates.url` unset, it is not loaded.
-        const url = GetConfigValue<string>('ui.templates.url')?.replace('%libname%', BUNDLE_NAME);
+        // client's bitmaps and its own); with `asset.bundles.templates` unset, it is not loaded.
+        const url = GetConfigValue<string>('asset.bundles.templates')?.replace('%libname%', BUNDLE_NAME);
 
         if (!url) return false;
 

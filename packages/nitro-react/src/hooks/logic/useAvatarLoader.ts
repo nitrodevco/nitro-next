@@ -7,10 +7,10 @@ import { useConfigValue } from '#base/context/system';
 export const useAvatarLoader = () => {
     const figureMapUrl = useConfigValue<string>('figuremap.url') ?? '';
     const effectMapUrl = useConfigValue<string>('effectmap.url') ?? '';
-    const avatarAssetUrl = useConfigValue<string>('asset.urls.avatar') ?? '';
-    const effectAssetUrl = useConfigValue<string>('asset.urls.effect') ?? '';
+    const avatarAssetUrl = useConfigValue<string>('asset.bundles.avatar') ?? '';
+    const effectAssetUrl = useConfigValue<string>('asset.bundles.effects') ?? '';
     const figureDataUrl = useConfigValue<string>('figuredata.url') ?? '';
-    const templatesUrl = useConfigValue<string>('ui.templates.url') ?? '';
+    const templatesUrl = useConfigValue<string>('asset.bundles.templates') ?? '';
 
     useEffect(() => {
         if (!figureMapUrl || !effectMapUrl || !figureDataUrl) return;

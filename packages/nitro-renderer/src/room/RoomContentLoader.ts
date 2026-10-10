@@ -685,11 +685,11 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     private getAssetUrlWithGenericBase(assetName: string): string {
-        return (GetConfigValue<string>('asset.urls.generic') ?? '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.bundles.room') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniBase(assetName: string): string {
-        return (GetConfigValue<string>('asset.urls.furni') ?? '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.bundles.furni') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniIconBase(assetName: string): string {
@@ -697,7 +697,7 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public getAssetUrlWithPetBase(assetName: string): string {
-        return (GetConfigValue<string>('asset.urls.pet') ?? '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.bundles.pets') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public setIconListener(listener: IRoomContentListener): void {

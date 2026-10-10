@@ -33,7 +33,7 @@ responsibilities belong to the development application, not the client runtime t
   Correct imported/generated text at its source instead of patching the client to compensate.
 - The avatar data the renderer starts from - the client's avatar tables and the hotel's actions and
   animations - is the avatar render library's bundle, the workspace's
-  `ui/templates/habbo-avatar-render-lib.nitro` (read from `ui.templates.url`, with the avatar
+  `bundled/templates/habbo-avatar-render-lib.nitro` (read from `asset.bundles.templates`, with the avatar
   additions), built from its gamedata on import, edit and publish. The renderer compiles none of it in.
 - Keep `nitro-config.json` aligned with the workspace's external variables and generated asset URLs.
   Check the actual files served to the client as well as the workspace's source files.

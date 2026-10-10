@@ -26,7 +26,7 @@ const BUNDLE_NAME = 'habbo-free-flow-chat-com';
  * per-style try/catch.
  *
  * The hotel serves the bundle - the client's styles and its own, built by Nitro Studio's chat bubble
- * builder - as the `habbo-free-flow-chat-com` library's template bundle, at `ui.templates.url`
+ * builder - as the `habbo-free-flow-chat-com` library's template bundle, at `asset.bundles.templates`
  * (`assetBundleUrl`). With that unset there is no bundle
  * and no style.
  */

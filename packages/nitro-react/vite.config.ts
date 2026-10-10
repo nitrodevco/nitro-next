@@ -128,6 +128,9 @@ export default defineConfig(({ mode }) => {
                     if (id.includes('/packages/nitro-renderer/')) {
                         return 'nitro-renderer';
                     }
+                    if (id.includes('/packages/nitro-theme/')) {
+                        return 'nitro-theme';
+                    }
                     if (id.includes('node_modules')) {
                         if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) {
                             return 'react-vendor';

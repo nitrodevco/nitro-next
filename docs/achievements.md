@@ -11,7 +11,7 @@ received order, with miscellaneous entries last, then archive. The configured ne
 room-controlled categories are available through category links. Disabled entries are hidden. Room-controlled entries require
 their `WF_` code to be enabled by the current room's Wired environment.
 
-The window draws the quest engine's window templates (`habbo-quest-engine-com` from `ui.templates.url`)
+The window draws the quest engine's window templates (`habbo-quest-engine-com` from `asset.bundles.templates`)
 as `AchievementController` builds them: `Achievements` is the window, an `AchievementCategory` per grid
 tile and an `Achievement` per list slot are added to its containers, and a `ProgressBar` to the footer
 and the details. `refresh`'s geometry is the template's `arrange` (sections stacked by

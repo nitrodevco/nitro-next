@@ -10,8 +10,8 @@ import { useRoom } from '#base/context/room';
 import { useSystemStore, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { easeOutCubic, useRoomObjectSelect, useTween } from '#base/hooks';
+import { LayoutImage, useTextureFromUrl } from '#base/theme';
 
-import { useChatHistoryTexture } from './chatHistoryAssets';
 import { CHAT_HISTORY_LEFT_MARGIN, ChatHistoryEntryMeasure, ChatHistoryEntryView } from './ChatHistoryEntryView';
 
 /** `ChatHistoryTray._openedWidth`: `350 + 62 + 1`. */
@@ -384,7 +384,7 @@ export const ChatHistoryTray = () => {
         if (entry.data.roomId === room?.roomId) selectObjectRef.current(entry.data.objectId, RoomObjectCategoryEnum.Unit);
     }, [ room, ignoredUserIds ]);
 
-    const closeIcon = useChatHistoryTexture('close_x');
+    const closeIcon = useTextureFromUrl(LayoutImage('habbo-free-flow-chat-com/close_x.png'));
     // `deactivateView` takes the icon down with the lines.
     const ignoreEntry = active ? entries.find(entry => entry.id === ignoreEntryId) : undefined;
     const ignoreTarget = (ignoreEntry?.kind === 'chat') ? ignoreEntry.ignore : undefined;
@@ -406,8 +406,8 @@ export const ChatHistoryTray = () => {
     };
 
     // `ChatHistoryScrollBar.updateThumbTrack`.
-    const barTexture = useChatHistoryTexture('scrollbar_back');
-    const thumbTexture = useChatHistoryTexture('scrollbar_thumb');
+    const barTexture = useTextureFromUrl(LayoutImage('habbo-free-flow-chat-com/scrollbar_back.png'));
+    const thumbTexture = useTextureFromUrl(LayoutImage('habbo-free-flow-chat-com/scrollbar_thumb.png'));
     const trackHeight = viewHeight;
     const thumbHeight = (bufferHeight <= 0)
         ? Math.max(5, trackHeight - 4)
@@ -416,8 +416,8 @@ export const ChatHistoryTray = () => {
         ? 2
         : Math.min(trackHeight - 2 - thumbHeight, Math.max(2, Math.trunc(((trackHeight - 4) * (Math.max(1, topY + (viewHeight - trackHeight)) / bufferHeight)) - (thumbHeight / 2))));
 
-    const trayBar = useChatHistoryTexture('tray_bar');
-    const handle = useChatHistoryTexture('tray_handle_close');
+    const trayBar = useTextureFromUrl(LayoutImage('habbo-free-flow-chat-com/tray_bar.png'));
+    const handle = useTextureFromUrl(LayoutImage('habbo-free-flow-chat-com/tray_handle_close.png'));
 
     const hitArea = useMemo(() => new Rectangle(0, 0, trayWidth, viewHeight), [ trayWidth, viewHeight ]);
 

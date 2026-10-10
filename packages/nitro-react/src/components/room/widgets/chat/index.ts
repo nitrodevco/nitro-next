@@ -2,7 +2,6 @@
 export * from './ChatBubbleBody';
 export * from './ChatBubbleView';
 export * from './ChatFlowProvider';
-export * from './chatHistoryAssets';
 export * from './ChatHistoryEntryView';
 export * from './ChatHistoryTray';
 export * from './RoomChatBubbles';

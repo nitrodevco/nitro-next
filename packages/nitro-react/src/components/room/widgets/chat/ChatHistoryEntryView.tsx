@@ -4,9 +4,9 @@ import { memo, useLayoutEffect } from 'react';
 import { CHAT_BUBBLE_WIDTH_NORMAL } from '#base/chat';
 import { ChatHistoryEntry } from '#base/context/chat-history';
 import { useChatBubbleText, useChatBubbleVisual } from '#base/hooks';
+import { LayoutImage, useTextureFromUrl } from '#base/theme';
 
 import { ChatBubbleBody } from './ChatBubbleBody';
-import { useChatHistoryTexture } from './chatHistoryAssets';
 
 /** `_SafeStr_174.LEFT_MARGIN` / `TIMESTAMP_FIXED_WIDTH`: an entry sits 3 in, its bubble 62 right of that. */
 export const CHAT_HISTORY_LEFT_MARGIN = 3;
@@ -89,7 +89,7 @@ const ChatLineEntry = ({ entry, y, onMeasure, onTap }: ChatHistoryEntryViewProps
 const RoomChangeEntry = ({ entry, y, onMeasure }: ChatHistoryEntryViewProps & { entry: Extract<ChatHistoryEntry, { kind: 'roomChange' }> }) => {
     const timestamp = useTimestamp(entry.time);
     const name = useChatBubbleText(entry.roomName, 'Ubuntu', FONT_SIZE, ROOM_NAME_COLOR, WIDE);
-    const icon = useChatHistoryTexture('room_change');
+    const icon = useTextureFromUrl(LayoutImage('habbo-free-flow-chat-com/room_change.png'));
 
     // `new BitmapData(415, textHeight + 5 + 8 + 4)`; no overlap.
     useLayoutEffect(() => {
