@@ -9,6 +9,7 @@ import { ReactNode, useCallback, useRef } from 'react';
 import { useThemeConfigValue } from './host';
 import { setAdvancedBlendModes } from './utils/flashBlendMode';
 import { GetPixelRatio } from './utils/GetPixelRatio';
+import { guardLayoutViewSizes } from './utils/layoutViewSizeGuard';
 import { gateLayoutWalk } from './utils/layoutWalkGate';
 
 /** `renderer.color.space` in nitro-config.json: the port's own key - Flash drew in sRGB and had no such setting. */
@@ -113,6 +114,8 @@ export const PixiApplicationRoot = ({ onReady, onInit, resizeTo = window, canvas
         app.renderer.on('resize', applyScreenLayout);
         // The stage's layout walk runs only after something in its layout changed.
         gateLayoutWalk(app.renderer, app.stage);
+        // A nine-slice or tiling sprite once laid out at 0 would stay `NaN` sized.
+        guardLayoutViewSizes();
 
         onReady();
     }, [ onReady, onInit, colorSpace, canvasStyle ]);

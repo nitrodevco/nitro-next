@@ -26,6 +26,10 @@ a new one costs you time. Rules with a longer story live in the other guides in 
 - **`Util.disableSection` is the `disableSection` binding**, on the window the AS3 passes it: it
   disables everything inside and halves the leaves' blend as Flash does (buttons are only disabled).
   Do not fade by hand with `alpha` as well. A button the code holds down (`state |= 0x10`) is `pressed`.
+- **A skin that vanishes until another window opens** is a `NaN`-sized nine-slice or tiling sprite:
+  `@pixi/layout` scales them by `computed / bounds`, so one laid out at 0 once never recovers.
+  `guardLayoutViewSizes` (theme `utils/layoutViewSizeGuard.ts`) prevents it; dump `getWindowLayer()`
+  sizes before suspecting the art.
 - **A `Frame` opens at its layout's position**: pass `defaultPosition` from the layout's root
   container (the messenger's is (120, 120)); without it the window opens in the top-left corner.
 - **Check the available scrolling API.** `scrollResetKey` resets to the start. Chat auto-scroll
