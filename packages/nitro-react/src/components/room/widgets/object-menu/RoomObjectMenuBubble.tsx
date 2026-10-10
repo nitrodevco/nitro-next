@@ -44,6 +44,9 @@ const isAvatar = (userType: RoomObjectUserType | undefined) => (userType === Roo
  * bubble whose width and height are still zero would put it somewhere else for a frame, and
  * that is the flicker on first open. Transparent rather than invisible, because yoga does not
  * measure an invisible node at all.
+ *
+ * It takes no `zIndex`: a non-zero one makes its parent sort, which lifts the bubble over the
+ * window layer that follows the room in the tree. Room UI stays under every window.
  */
 export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
     const { objectData, userType, fades = false, children, onClose = undefined } = props;
@@ -156,7 +159,6 @@ export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
     return (
         <Box
             ref={bubbleRef}
-            zIndex={500}
             layout={{ position: 'absolute', top: 0, left: 0 }}
         >
             {children}

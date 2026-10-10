@@ -85,7 +85,7 @@ const ValueBubble = ({ objectId, category, value, isAvatar }: ValueBubbleProps) 
     return (
         <Box
             ref={bubbleRef}
-            zIndex={500}
+            // No `zIndex`: in the window layer anything at 100 or more is a window, and these sit under all of them.
             eventMode="none"
             layout={{ position: 'absolute', left: 0, top: 0 }}
         >
