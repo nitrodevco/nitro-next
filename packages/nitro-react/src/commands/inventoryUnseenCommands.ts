@@ -115,3 +115,15 @@ export const removeInventoryUnseenFurniCounter = (send: Send, stripId: number): 
 
     return true;
 };
+
+/**
+ * `HabboInventory.removeUnseenPetCounter` -> `PetsModel.removeUnseenFurniCounter`: an unseen pet is
+ * no longer, and the server hears once the pets' category is empty. True when it was unseen.
+ */
+export const removeInventoryUnseenPetCounter = (send: Send, petId: number): boolean => {
+    if (!isUnseenItem(inventoryStore.getState().unseenItems, UnseenItemCategory.PET, petId) || !removeInventoryUnseenItem(UnseenItemCategory.PET, petId)) return false;
+
+    resetInventoryUnseenCategoryIfEmpty(send, UnseenItemCategory.PET);
+
+    return true;
+};
