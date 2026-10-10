@@ -2,6 +2,7 @@ import { ContextMenuEnum, ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 import { UseFurnitureComposer } from '@nitrodevco/nitro-packets';
 
 import { useWebSocketContext } from '#base/context/communication';
+import { useRoom } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
 import { useOwnUserId } from '#base/context/user';
 import { useRoomFurnitureData } from '#base/hooks';
@@ -35,18 +36,17 @@ export const FurnitureContextMenuView = ({ objectData, menu, onClose }: Furnitur
     const ownUserId = useOwnUserId();
     const t = useTranslation();
     const { send } = useWebSocketContext();
+    const room = useRoom();
 
     if (!furnitureData) return null;
 
     const isOwner = furnitureData.ownerId === ownUserId;
 
-    const useFurniture = () => {
-        send(new UseFurnitureComposer({ objectId, param: 0 }));
-        onClose();
-    };
-
     let title: string;
     let caption: string;
+    // `RoomWidgetFurniActionMessage.USE`: the room engine has the object's logic use it (`useObject`),
+    // so binding clothing furni asks for its confirmation dialog instead of sending a plain use.
+    let viaLogic = false;
 
     switch (menu) {
         case ContextMenuEnum.MONSTERPLANT_SEED:
@@ -68,16 +68,25 @@ export const FurnitureContextMenuView = ({ objectData, menu, onClose }: Furnitur
             // `random_teleport_menu` names its own caption.
             title = t('furni.random_teleport.name');
             caption = t('widget.random_teleport.button.use');
+            viaLogic = true;
             break;
         case ContextMenuEnum.PURCHASABLE_CLOTHING:
         case ContextMenuEnum.GENERIC_USABLE:
             // `GenericUsableFurnitureContextMenuView.updateWindow` always captions it `${furni.generic_usable.name}`.
             title = t('furni.generic_usable.name');
             caption = t('widget.generic_usable.button.use');
+            viaLogic = true;
             break;
         default:
             return null;
     }
+
+    const useFurniture = () => {
+        if (viaLogic) room?.getRoomObject(objectId, category)?.logic?.useObject();
+        else send(new UseFurnitureComposer({ objectId, param: 0 }));
+
+        onClose();
+    };
 
     return (
         <FurnitureMenuBubble
