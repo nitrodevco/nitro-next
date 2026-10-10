@@ -11,8 +11,8 @@ import { LayoutImage } from '#base/theme';
 /** `getSubscriptionProductIcon`: the catalogue's `icon_hc`. */
 export const SUBSCRIPTION_PRODUCT_ICON = LayoutImage('habbo-catalog-com/icon_hc.png');
 
-/** `getPixelEffectIcon`: the effect's `fx_icon_<id>` (the inventory's library, here the `effect-icons` bundle). */
-export const pixelEffectIcon = (classId: number) => LayoutImage(`effect-icons/fx_icon_${classId}.png`);
+/** `getPixelEffectIcon`: the effect's `fx_icon_<id>` (the inventory's library, `habbo-inventory-com`). */
+export const pixelEffectIcon = (classId: number) => LayoutImage(`habbo-inventory-com/fx_icon_${classId}.png`);
 
 /** `Product.initIcon`'s `i` case: the catalogue picture a floor, wallpaper or landscape product shows, or `undefined` for an engine icon. */
 const wallProductPictureName = (className: string, extraParam: string) => {

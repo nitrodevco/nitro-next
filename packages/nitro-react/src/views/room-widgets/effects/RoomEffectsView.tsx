@@ -22,9 +22,9 @@
  *   (`secondsLeftOf`), as `EffectView`'s one-second timer does. The count stops at zero and waits for
  *   the server's expiry. A permanent effect shows no time left, as the port always has.
  *
- * The icons are the client's `effect-icons` bundle (`fx_icon_<type>`), not a library's; it is not in the
- * boot preload, so the first of these to be drawn pulls the bundle in. `effect_selector`, also in the
- * library, is built by no class of this revision.
+ * The icons are the inventory library's (`habbo-inventory-com`, `fx_icon_<type>`), as `EffectsModel`
+ * draws them; it is not in the boot preload, so the first of these to be drawn pulls its bundle in.
+ * `effect_selector`, in the room UI's library, is built by no class of this revision.
  */
 import { useEffect, useState } from 'react';
 
@@ -49,7 +49,7 @@ const SELECTED_TEMPLATE = 'habbo-room-ui-com/memenu_effect_selected';
 const UNSELECTED_TEMPLATE = 'habbo-room-ui-com/memenu_effect_unselected';
 const INACTIVE_TEMPLATE = 'habbo-room-ui-com/memenu_effect_inactive';
 
-const effectIcon = (type: number) => LayoutImage(`effect-icons/fx_icon_${type}.png`);
+const effectIcon = (type: number) => LayoutImage(`habbo-inventory-com/fx_icon_${type}.png`);
 
 /** `EffectView.update`: the hilite's art over the worn effect and over one only running. */
 const FX_PAUSE = LayoutImage('habbo-room-ui-com/memenu_fx_pause.png');

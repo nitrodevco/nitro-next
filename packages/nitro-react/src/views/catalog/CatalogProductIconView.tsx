@@ -8,8 +8,8 @@
  * - `i`: for the `floor`, `wallpaper` and `landscape` products the catalogue's `th_*` picture
  *   (`setImageFromAsset` with `th_<class>_<extra>`, `th_wall_<extra>`, `th_landscape_<extra>_001`),
  *   any other wall item its engine icon (`getWallItemIcon`).
- * - `e`: the effect's `fx_icon_<id>` (`getPixelEffectIcon`, the inventory's library - here the
- *   `effect-icons` bundle).
+ * - `e`: the effect's `fx_icon_<id>` (`getPixelEffectIcon`, the inventory's library,
+ *   `habbo-inventory-com`).
  * - `h`: the catalogue's `icon_hc` (`getSubscriptionProductIcon`).
  * - `b`: the badge image (`getBadgeImage`), from `badge.asset.url`.
  * - `r`: the bot's head, rendered large and cropped at half size (`ProductGridItem.renderAvatarImage`:

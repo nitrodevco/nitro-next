@@ -77,7 +77,6 @@
     "disclaimer.credit_spending.enabled": false,
     "discord.enabled": true,
     "duckets.soft_limit": 5200,
-    "effect.icons.url": "https://images.nitrodev.co/renderer/effect-icons.nitro",
     "effectmap.url": "https://images.nitrodev.co/gamedata/EffectMap.json",
     "effects.in.avatar.editor": false,
     "effects.reactivate.on.room.entry": true,

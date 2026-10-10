@@ -18,15 +18,7 @@ node scripts/build-asset-bundles.ts nitro-layouts fonts        # or just these
 | `loading-screen` | loose | `assets/loading-screen` - the loading screen's frame and photos, loaded by name before anything else and unloaded (`unloadAssetBundle`) once the client replaces the screen |
 | `sounds` | loose | the `.mp3` sounds under `assets/sounds`, loaded by name the first time one plays |
 
-One bundle is not built here: Nitro Studio builds and publishes them from the client release's
-art and the hotel's own (see [Nitro Studio](nitro-studio.md)), and the client loads each from its
-own config key (`HOTEL_BUNDLE_KEYS` in `utils/assetBundles.ts`):
-
-| Bundle | Key | Holds |
-|---|---|---|
-| `effect-icons` | `effect.icons.url` | the effect icons, `effect-icons-fx_icon_<id>` |
-
-The window templates are Studio's too, one bundle per Flash library rather than one file:
+The window templates are Nitro Studio's (see [Nitro Studio](nitro-studio.md)), one bundle per Flash library:
 named after the library, from `asset.bundles.templates` with `%libname%` the library (`loadTemplateBundle`).
 Each holds `templates.json` - the library's `<layout>`s converted by the theme's `layoutToTemplate`,
 keyed `<library>/<asset>` (`habbo-toolbar-com/purse_xml`) - and every bitmap of the library's, the
@@ -87,13 +79,12 @@ Rules that come out of that:
   does not fail; it draws the old art. `bundles.json` records the file behind every asset, so the
   pack is auditable rather than trusted.
 - **What is preloaded is `asset.bundles.preload` in `nitro-config.json`**, fetched by
-  `preloadAssetBundles()` before the first view renders. `effect-icons` is
-  deliberately out of it: a texture request for one of its assets pulls the bundle in on its own
-  (`lazyBundleForAsset` in `utils/assetBundles.ts`), so adding a lazy bundle means adding its name
-  prefix there. `font-faces` is out of it too; `preloadFlashFonts` starts it in the background.
-  `scripts/drift/bundle_loading.py` holds every bundle to one of those ways in (preloaded, a lazy
-  prefix every one of its assets carries and no other bundle's does, or loaded by name in code):
-  a bundle reached by none of them is art that never draws.
+  `preloadAssetBundles()` before the first view renders. A Flash library's bundle that is not
+  preloaded is pulled in by the first texture request for one of its bitmaps
+  (`lazyBundleForAsset` in `utils/assetBundles.ts`). `font-faces` is out of the preload too;
+  `preloadFlashFonts` starts it in the background. `scripts/drift/bundle_loading.py` holds every
+  bundle built here to being preloaded or loaded by name in code: a bundle reached by neither is
+  art that never draws.
 - **The builder owns `public/assets/bundles/`.** A full run drops the archives the previous
   `bundles.json` lists and the current table no longer builds, so a renamed bundle does not leave
   its old file behind to be served. A `.nitro` no manifest ever named is left alone.

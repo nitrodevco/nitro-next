@@ -209,7 +209,7 @@ export const CollectiblesProductPreview = ({ preview, slots }: CollectiblesProdu
             return (
                 <ThemeImage
                     name="product_preview"
-                    src={LayoutImage(`effect-icons/fx_icon_${preview.effectId}.png`)}
+                    src={LayoutImage(`habbo-inventory-com/fx_icon_${preview.effectId}.png`)}
                     bitmap={UNSTRETCHED_CENTER}
                     layout={rectLayout(slots.productPreview)}
                 />

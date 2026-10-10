@@ -24,7 +24,7 @@ const rewardIconSource = (reward: OfferReward): string | undefined => {
         case 'i':
             return GetRoomEngine().getFurnitureWallIconUrl(reward.classId, undefined);
         case 'e':
-            return LayoutImage(`effect-icons/fx_icon_${reward.classId}.png`);
+            return LayoutImage(`habbo-inventory-com/fx_icon_${reward.classId}.png`);
         case 'h':
             return LayoutImage('habbo-catalog-com/icon_hc.png');
     }

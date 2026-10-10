@@ -44,7 +44,7 @@ The client already pays those at runtime. What an interpreted tree does lose:
   per node per frame.
 
 The network cost is a small JSON file per window, zipped into a `.nitro` like `nitro-layouts`
-already is. It is lazy-loaded the same way `lazyBundleForAsset` handles `effect-icons`.
+already is. It is lazy-loaded the same way `lazyBundleForAsset` pulls in a library's bundle.
 
 **The real risks are elsewhere:**
 
