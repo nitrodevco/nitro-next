@@ -21,9 +21,6 @@ import { snakeToTitle, WIRED_STYLE_DEFAULT, WIRED_STYLE_OPTIONS } from '#base/wi
 import { WiredMenuCheckOption } from './WiredMenuCheckOption';
 import { WiredMenuDropmenu } from './WiredMenuDropmenu';
 
-/** The broken caption of `room_settings_container`'s title, as the layout has it. */
-const ROOM_SETTINGS_TITLE = '${wiredmenu.settings.room_settings)';
-
 interface PermissionBox {
     selected: boolean;
     implied: boolean;
@@ -130,7 +127,7 @@ export const WiredMenuSettingsTab = () => {
     return (
         <>
             <Box layout={{ position: 'absolute', left: 14, top: 18, width: 472, height: 220 }}>
-                <SectionTitle text={ROOM_SETTINGS_TITLE} />
+                <SectionTitle text={t('wiredmenu.settings.room_settings')} />
                 <Border
                     variant="3"
                     tintColor="#dadada"
