@@ -1,7 +1,8 @@
 /**
  * `tabs/common/VariableTypePicker` on the `type_picker_container` of `wired_menu_view_xml`: a bold
  * title over a bordered row of 37px buttons, one per variable target, each with its large icon.
- * The selected button stays pressed (Flash keeps its `0x10` state set every frame). The overview
+ * The selected button stays pressed (Flash keeps its `0x10` pressed state - not the `0x08` selected
+ * one - set every frame). The overview
  * tab offers all four targets (188 wide), the inspection tab the first three (141 wide).
  */
 import { useTranslation } from '#base/context/system';
@@ -55,7 +56,7 @@ export const WiredMenuTypePicker = ({ titleKey, count, selected, onSelect }: Wir
                         >
                             <Button
                                 variant="3"
-                                selected={button.type === selected}
+                                pressed={button.type === selected}
                                 tooltip={t(button.tooltip, button.tooltip)}
                                 onPointerTap={() => onSelect(button.type)}
                                 layout={{ position: 'absolute', left: 0, top: 0, width: BUTTON_SIZE, height: 36 }}

@@ -11,16 +11,18 @@ import { ButtonVariant, expandSides, ThemeProps, wrapTextChildren } from './util
 export interface ButtonProps extends ThemeProps<ButtonVariant> {
     disabled?: boolean;
     selected?: boolean;
+    /** Held pressed whatever the pointer does (`useThemeVariant`'s `pressed`). */
+    pressed?: boolean;
     children?: ReactNode;
 }
 
 export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, children,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, dynamicStyle, disabled, selected, pressed, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<ButtonVariant>({
-            cascadeKey: 'button', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, selected, interactive: !!dynamicStyle,
+            cascadeKey: 'button', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, selected, pressed, interactive: !!dynamicStyle,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
         // A few layouts put a `dynamic_style` on a button too: its own rule (only the disabled fade) and its tagged children's.

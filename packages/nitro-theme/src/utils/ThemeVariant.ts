@@ -103,6 +103,8 @@ export type ThemeOptions<T extends AnyThemeVariant = AnyThemeVariant> = {
     tooltipDelay?: number;
     disabled?: boolean;
     selected?: boolean;
+    /** Held in `WINDOW_STATE_PRESSED` (`0x10`) whatever the pointer does - a view that keeps setting the state, as a picker keeps its choice pressed. */
+    pressed?: boolean;
     /** Track hover/press even without a pointer handler (a `dynamicStyle` host needs the state for its looks). */
     interactive?: boolean;
 } & PointerHandlerProps;
