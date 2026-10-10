@@ -23,7 +23,7 @@ const petImageValue = (request: PetImageRequest) => {
 };
 
 /**
- * A catalogue pet render - `getPetImage` at the 64 scale - as the texture the engine drew into
+ * A pet render - `getPetImage` at the request's scale, the catalogue's 64 by default - as the texture the engine drew into
  * (`getGenericRoomObjectTexture`), the same way `useFurnitureImageTexture` takes a furni render.
  * Until the pet's library has downloaded the engine draws its placeholder; the finished render
  * comes through `textureReady`, which is Flash's `imageReady` callback, and `onImageReady` runs
@@ -38,13 +38,14 @@ export const usePetImageTexture = (request: PetImageRequest | undefined, onImage
     const direction = request?.direction ?? 0;
     // `getPetImage`'s last argument: a monster plant is drawn at the growth stage its level names.
     const posture = request?.posture ?? '';
-    const key = type ? JSON.stringify([ type, value, direction, posture ]) : undefined;
+    const scale = request?.scale ?? RoomGeometryScaleType.ZoomedIn;
+    const key = type ? JSON.stringify([ type, value, direction, posture, scale ]) : undefined;
 
     return useOwnedEngineTexture(key, listener => GetRoomEngine().getGenericRoomObjectTexture(
         type ?? '',
         value,
         new Vector3d(direction),
-        RoomGeometryScaleType.ZoomedIn,
+        scale,
         listener,
         undefined,
         undefined,

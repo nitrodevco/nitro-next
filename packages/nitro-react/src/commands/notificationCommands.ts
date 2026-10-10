@@ -14,6 +14,8 @@
  * it tells the server to keep the notification for a user who is offline, and reaches the client
  * only as a parameter nothing looks at.
  */
+import { RoomEnterEffect } from '@nitrodevco/nitro-renderer';
+
 import { NOTIFICATION_ASSETS, notificationStore } from '#base/context/notifications';
 import { systemStore } from '#base/context/system';
 import { configReader } from '#base/utils';
@@ -117,4 +119,34 @@ export const showNotification = (type: string, parameters: NotificationParameter
         image: resolveNotificationImage(getNotificationImageUrl(merged, type)),
         critical: (merged['alertStyle'] === 'critical'),
     });
+};
+
+/** `SingularNotificationController.MODERATION_DISCLAIMER_DELAY_MS`: how long after the room entry effect the disclaimer waits. */
+const MODERATION_DISCLAIMER_DELAY_MS = 5000;
+
+/**
+ * `SingularNotificationController.showModerationDisclaimer`, on every room entry (`IncomingMessages.onRoomEnter`,
+ * for `RoomEntryInfoMessageEvent` and `OpenConnectionMessageEvent`): `mod.chatdisclaimer` (`NA` when the hotel
+ * has no such text) as an `info` bubble, once. While the room entry effect runs it waits for the effect's whole
+ * running time and 5 s more, with one wait at a time, and asks again then.
+ */
+export const showModerationDisclaimer = () => {
+    const { moderationDisclaimerShown, moderationDisclaimerPending, patchModerationDisclaimer, addNotification } = notificationStore.getState();
+
+    if (RoomEnterEffect.isRunning()) {
+        if (moderationDisclaimerPending) return;
+
+        patchModerationDisclaimer({ moderationDisclaimerPending: true });
+        setTimeout(() => {
+            notificationStore.getState().patchModerationDisclaimer({ moderationDisclaimerPending: false });
+            showModerationDisclaimer();
+        }, RoomEnterEffect.totalRunningTime + MODERATION_DISCLAIMER_DELAY_MS);
+
+        return;
+    }
+
+    if (moderationDisclaimerShown) return;
+
+    addNotification(systemStore.getState().getLocalizationValue('mod.chatdisclaimer', 'NA'), 'info');
+    patchModerationDisclaimer({ moderationDisclaimerShown: true });
 };

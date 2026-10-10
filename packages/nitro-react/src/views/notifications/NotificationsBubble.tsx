@@ -1,12 +1,13 @@
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
+import { AvatarGenderType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { useMemo, useState } from 'react';
 
 import { getCollectiblePreviewIcon } from '#base/commands';
 import { AvatarFaceImage } from '#base/components';
-import { NOTIFICATION_ASSETS, NotificationAssetName, NotificationItem, NotificationLayoutName } from '#base/context/notifications';
+import { NOTIFICATION_ASSETS, NotificationAssetName, NotificationItem, NotificationLayoutName, NotificationOptions } from '#base/context/notifications';
 import { useInterpolate, useTranslation } from '#base/context/system';
-import { Box, LayoutImage, measureTemplateText, TemplateBindings, TemplateWindow, TemplateWindows, useLayoutEvent } from '#base/theme';
+import { usePetImageTexture } from '#base/hooks';
+import { Box, LayoutImage, measureTemplateText, TemplateBindings, TemplateWindow, TemplateWindows, ThemeImage, useLayoutEvent } from '#base/theme';
 import { CollectiblesPreviewSlots, CollectiblesProductPreview } from '#base/views/shared/CollectiblesProductPreview';
 
 import { NOTIFICATION_SIDE_MARGIN } from './notificationStack';
@@ -55,6 +56,28 @@ const NFT_OPENING_ICON_SLOTS: CollectiblesPreviewSlots = {
     unknown: { left: 11, top: 11, width: 18, height: 18, src: LayoutImage('habbo-window-manager-com/collectables_icon_curator_stamp_small.png'), stretched: true },
     // `pet_image:direction` south: 3, so 135 degrees; the widget's minimum height makes it 48 high.
     pet: { left: -4, top: -2, width: 48, height: 48, zoom: 1, shrinkOnOverflow: true, direction: 135 },
+};
+
+/** `notification_icon`'s box in `layout_notification_xml`. */
+const ICON_SIZE = 50;
+
+/**
+ * `PetImageUtility.getPetImage(type, palette, color)` with its defaults - facing direction 3, the whole
+ * pet, at the 32 scale - centred in the icon, as Flash centres the bitmap it is handed.
+ */
+const NotificationPetImage = ({ pet }: { pet: NonNullable<NotificationOptions['pet']> }) => {
+    const texture = usePetImageTexture({ ...pet, direction: 135, scale: RoomGeometryScaleType.ZoomedOut });
+
+    if (!texture) return null;
+
+    return (
+        <ThemeImage
+            texture={texture}
+            bitmap={{ stretchedX: false, stretchedY: false, pivot: 'center' }}
+            eventMode="none"
+            layout={{ position: 'absolute', left: 0, top: 0, width: ICON_SIZE, height: ICON_SIZE }}
+        />
+    );
 };
 
 /** A library bitmap by its Flash name, or the URL the caller passed. */
@@ -132,7 +155,7 @@ export const NotificationsBubble = ({ item, frame, zIndex, onHover, onClick, onS
     const [ node, setNode ] = useState<PixiContainer | null>(null);
     const [ stopped, setStopped ] = useState(false);
     const text = interpolate(item.text);
-    const { toggleCallback, product, rarity, rarityColor, figure, gender } = item.options;
+    const { toggleCallback, product, rarity, rarityColor, figure, gender, pet } = item.options;
     // Kept while the text is: the bubble redraws every frame it fades or moves.
     const arrange = useMemo(() => {
         if (item.layout === 'friendonline') return arrangeFriendOnline;
@@ -145,7 +168,9 @@ export const NotificationsBubble = ({ item, frame, zIndex, onHover, onClick, onS
 
     const bindings: TemplateBindings = {
         '#notification_text': { caption: text },
-        '#notification_icon': { asset: imageSource(item.image), pivot: 'center' },
+        '#notification_icon': pet
+            ? { asset: '', children: <NotificationPetImage pet={pet} /> }
+            : { asset: imageSource(item.image), pivot: 'center' },
     };
 
     switch (item.layout) {

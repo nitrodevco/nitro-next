@@ -19,9 +19,10 @@ import { NOTIFICATION_STYLES, NotificationAssetName, NotificationLayoutName, Not
  * `handlers/notifications/registerNotificationHandlers`. The component's own windows are not in
  * this store: the MOTD, club gift and safety lock windows and the `HabboAlertDialogManager`
  * alerts are `context/singular-notifications` (`registerSingularNotificationHandlers`,
- * `registerAlertDialogHandlers`). Not ported: the new-feature window, the moderation disclaimer
- * and the notification feed. `addSongPlayingNotification` is the sound manager's
- * (`HabboSoundManager.notifyPlayedSong`), which adds its `soundmachine` bubble here.
+ * `registerAlertDialogHandlers`), and the new-feature notifications are
+ * `NewFeatureNotificationSlice`. The notification feed is not ported: no Flash path creates it.
+ * `addSongPlayingNotification` is the sound manager's (`HabboSoundManager.notifyPlayedSong`),
+ * which adds its `soundmachine` bubble here.
  */
 
 /**
@@ -61,6 +62,11 @@ export interface NotificationOptions {
      */
     figure?: string;
     gender?: AvatarGenderType;
+    /**
+     * The pet the bubble's icon shows - the `PetImageUtility.getPetImage(type, palette, color)` render
+     * Flash hands `addItem` as its bitmap (`onPetReceived`); here the bubble draws it from these.
+     */
+    pet?: { typeId: number; paletteId: number; color: number };
 }
 
 /** `HabboNotificationItem` with its `HabboNotificationItemStyle` folded in. */
@@ -120,6 +126,10 @@ type State = {
      * the server turns the bubbles off with `InfoFeedEnableMessage` and nothing else sets it.
      */
     disabled: boolean;
+    /** `SingularNotificationController`'s moderation disclaimer flag: shown once, then never again. */
+    moderationDisclaimerShown: boolean;
+    /** Its timer: the disclaimer waits for the room entry effect, one wait at a time. */
+    moderationDisclaimerPending: boolean;
 };
 
 type Actions = {
@@ -140,6 +150,7 @@ type Actions = {
     setExtensionHeight: (extensionHeight: number) => void;
     /** `InfoFeedEnableMessage`: the server turning the bubbles off, and back on. */
     setNotificationsDisabled: (disabled: boolean) => void;
+    patchModerationDisclaimer: (patch: Partial<Pick<State, 'moderationDisclaimerShown' | 'moderationDisclaimerPending'>>) => void;
     /** `new NotificationPopup(...)`: opens one. Returns its key. */
     addNotificationPopup: (popup: Omit<NotificationPopupItem, 'key'>) => number;
     /** `NotificationPopup.dispose`. */
@@ -156,6 +167,8 @@ export const createNotificationStore = () => createStore<NotificationStore>()((s
     visible: [],
     extensionHeight: 0,
     disabled: false,
+    moderationDisclaimerShown: false,
+    moderationDisclaimerPending: false,
     addNotification: (text, style, image, internalLink, options = {}) => {
         const { queue, visible, disabled } = get();
         const id = options.id;
@@ -203,6 +216,7 @@ export const createNotificationStore = () => createStore<NotificationStore>()((s
     finishNotification: key => set(x => ({ visible: x.visible.filter(item => item.key !== key) })),
     setExtensionHeight: extensionHeight => set(x => ((x.extensionHeight === extensionHeight) ? x : { extensionHeight })),
     setNotificationsDisabled: disabled => set({ disabled }),
+    patchModerationDisclaimer: patch => set(patch),
     addNotificationPopup: (popup) => {
         const key = nextNotificationKey++;
 

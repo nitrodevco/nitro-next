@@ -28,7 +28,7 @@
  * `purchaseIconNode` is the confirmation's `product_image` (`getIconWrapper`) while it shows:
  * `onPurchaseOK` flies its picture into the toolbar.
  */
-import { IObjectData, IPetCustomPart, IPurchasableOffer } from '@nitrodevco/nitro-api';
+import { IObjectData, IPetCustomPart, IPurchasableOffer, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { Container as PixiContainer } from 'pixi.js';
 import { StateCreator } from 'zustand';
 
@@ -43,6 +43,8 @@ export interface PetImageRequest {
     readonly customParts?: readonly IPetCustomPart[];
     /** `getPetImage`'s posture: a monster plant's growth stage (`grw<level>` / `std`). */
     readonly posture?: string;
+    /** `getPetImage`'s scale: 64 (the catalogue's) unless given - `PetImageUtility` asks for 32. */
+    readonly scale?: RoomGeometryScaleType.ZoomedIn | RoomGeometryScaleType.ZoomedOut;
 }
 
 /** What `showPurchaseConfirmation` hands the dialog (`PurchaseConfirmationDialog.showOffer`). */

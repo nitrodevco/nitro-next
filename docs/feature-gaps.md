@@ -57,7 +57,6 @@ answer yet.
 | Messenger | The conversation's habbicon picker (`MessengerHabbiconPicker`), and resizing the window. Turbo only sends the friend bar's room event notifications, as it has no achievements, quests or games to send the others for. | `MessengerView` |
 | Group forums | Scrolling to the message a link names. | `GroupForumView` |
 | Wired | The limited-edition plaque on chest item icons. | `WiredChestItemCell` |
-| Notifications | The new-feature window, the moderation disclaimer, the notification feed. `ClubGiftSelectedEventMessage` and `PetReceivedMessage` have empty stub parsers. | `NotificationStore`, `registerAlertDialogHandlers` |
 | Purse | What clicking the currency icons opens. | `PurseView` |
 | Hotel view | The widget types `PORTED_LANDING_VIEW_WIDGETS` leaves out: the avatar image, the catalogue promos, daily quest, the competition prizes and hall of fame, the moderation, talents, Habbo Way and safety quiz promos, and the room hopper. The promo article draws only its first article's text, not its `promo_article` window. The generic widget leaves out its title, image, room, badge, habblet, VIP, community goal, daily quest and concurrent-user elements. The expiring page widget is not asked again when an invisible catalogue page is visited (`CATALOG_INVISIBLE_PAGE_VISITED`), the next limited rare's buttons open its page without picking the offer, and the community goal keeps `goal_info` at its layout height. What the ported widgets wait on from the server is under [Hotel view: Turbo and the admin panel](#hotel-view-turbo-and-the-admin-panel). | `HotelViewWidgets`, `HotelViewGenericWidget`, `HotelViewPromoArticleWidget` |
 | Chat | Flash's chat commands other than the wired ones; the chat input sends them as chat. The chat bar's help button (`helpbutton`, shown while the pointer is over the field, opening `habbopages/chat/commands`) stays hidden. | `wiredChatCommands`, `RoomChatInputView` |
@@ -126,3 +125,6 @@ About 40 unused packets are protocol the port does not need:
   nothing sends `CanCreateRoomEventMessageComposer`, so an event is only made by buying a room ad.
   `CancelEventComposer`: the event settings window's end and cancel handlers are never wired to a
   button.
+- **The notification feed** (`notifications/feed`). `HabboNotifications` declares its
+  `NotificationController` and reads it, but never creates one, so the feed items `IncomingMessages`
+  adds behind `notification.feed.enabled` have nowhere to go (and the hotel sets the key false).

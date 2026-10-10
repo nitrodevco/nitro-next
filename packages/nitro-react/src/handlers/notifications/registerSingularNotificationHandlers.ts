@@ -6,7 +6,7 @@
  *
  * - `onMOTD`: a packet with messages opens a new `MOTDNotification` while
  *   `notification.items.enabled`. The feed items `notification.feed.enabled` would add are not
- *   made: the notification feed is not ported (and the hotel sets the key false).
+ *   made: no Flash path creates the notification feed (and the hotel sets the key false).
  * - `onClubGiftNotification`: at least one gift docks the club gift notification.
  * - `onUserObject`: a safety locked account docks the safety lock notification.
  * - `onAccountSafetyLockStatusChanged`: status 1 (unlocked) takes it down. The session's own
