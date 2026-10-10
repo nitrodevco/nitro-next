@@ -64,13 +64,35 @@ export interface ScrollViewportProps {
  * by the very same layout/paint engine, never two independently-rounded objects). Rounding both
  * to the same pixel grid here is what keeps the clip edge and the content it clips consistent.
  */
+/**
+ * The viewport is a hit target over its whole box, so the wheel scrolls it wherever the pointer is
+ * over it - a scrollable list takes the mouse over all of it in Flash. Without a `hitArea` a plain
+ * container is hit only where a child is, and a list whose items let presses through (a template's
+ * `pointerTransparent` windows) would not scroll over the gaps between them. Read from the box's
+ * computed size on each test, as `Box`'s own fallback hit area is.
+ */
+const attachViewportHitArea = (node: PixiContainer | null) => {
+    if (!node || node.hitArea) return;
+
+    node.hitArea = {
+        contains: (x: number, y: number) => {
+            const computed = node.layout?.computedLayout;
+
+            return (x >= 0) && (x <= (computed?.width ?? node.width)) && (y >= 0) && (y <= (computed?.height ?? node.height));
+        },
+    };
+};
+
 export const ScrollViewport = ({ viewportRef, contentRef, onWheel, scrollOffset, orientation, layout, contentLayout, children }: ScrollViewportProps) => {
     const [ maskNode, setMaskNode ] = useState<PixiGraphics | null>(null);
     const isVertical = orientation === 'vertical';
 
     return (
         <pixiContainer
-            ref={viewportRef}
+            ref={(node) => {
+                attachViewportHitArea(node);
+                viewportRef(node);
+            }}
             eventMode="static"
             onWheel={onWheel}
             mask={maskNode ?? undefined}

@@ -25,7 +25,15 @@ type State = {
      * Flash never clears it.
      */
     friendRequestsListShown: boolean;
+    /**
+     * `FriendListTab.newMessageArrived` of the friends and requests tabs: the tab's header drawn
+     * highlighted (`hdr_hilite`) until the tab is opened. Kept while the window is closed.
+     */
+    friendListTabsHighlighted: FriendListHighlightedTabs;
 };
+
+/** The friend list tabs that can be highlighted, by their window param. */
+export type FriendListHighlightedTabs = { friends: boolean; requests: boolean };
 
 type Actions = {
     setFriendLimits: (userFriendLimit: number, normalFriendLimit: number, extendedFriendLimit: number) => void;
@@ -41,6 +49,8 @@ type Actions = {
     clearAnsweredFriendRequests: () => void;
     /** `FriendRequestsView.fillList`: the requests tab has been opened. */
     markFriendRequestsListShown: () => void;
+    /** `FriendListTab.setNewMessageArrived`, or `setSelected(true)` clearing it. */
+    setFriendListTabHighlighted: (tab: keyof FriendListHighlightedTabs, highlighted: boolean) => void;
     /** `HabboFriendBarData.makeNotification` for a `FriendNotificationMessage` (see `friendBarAfterNotification`). */
     addFriendBarNotification: (friendId: number, typeCode: number, message: string) => void;
     /** `NewFriendEntityTab.deselect`: the shown-once notifications go once the tab closes. */
@@ -68,6 +78,7 @@ export const UserFriendsSlice: State = {
     searchOthers: [],
     searchResultsReceived: false,
     friendRequestsListShown: false,
+    friendListTabsHighlighted: { friends: false, requests: false },
 };
 
 export type UserFriendsSlice = State & Actions;
@@ -76,6 +87,9 @@ export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], User
     ...UserFriendsSlice,
     setFriendLimits: (userFriendLimit: number, normalFriendLimit: number, extendedFriendLimit: number) => set({ userFriendLimit, normalFriendLimit, extendedFriendLimit }),
     setFriendCategories: (categories: IMessengerCategory[]) => set({ categories }),
+    setFriendListTabHighlighted: (tab: keyof FriendListHighlightedTabs, highlighted: boolean) => set(x => ((x.friendListTabsHighlighted[tab] === highlighted)
+        ? x
+        : { friendListTabsHighlighted: { ...x.friendListTabsHighlighted, [tab]: highlighted } })),
     setSearchResults: (searchFriends: IMessengerSearchResult[], searchOthers: IMessengerSearchResult[]) => set({ searchFriends, searchOthers, searchResultsReceived: true }),
     processFriends: (friends: IMessengerFriend[]) => set((x) => {
         const updates = friends.reduce((acc, data) => ({

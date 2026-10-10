@@ -90,6 +90,8 @@ export interface TemplateLayoutInput {
     buttonLabelOf?: (element: TemplateElement) => TemplateButtonLabel | undefined;
     /** A bitmap window's bitmap size, once it is loaded; `undefined` while it is not. */
     bitmapSizeOf?: (element: TemplateElement) => { width: number; height: number } | undefined;
+    /** A bitmap its code sizes to its bitmap (a binding's `fitToBitmap`), as `fit_size_to_contents` does. */
+    fitsToBitmapOf?: (element: TemplateElement) => boolean;
 }
 
 /** A button's `_BTN_TEXT` label as its window layout gives it, in a layout of `width` x `height`. */
@@ -1691,7 +1693,7 @@ const BITMAP_TAGS = new Set([ 'bitmap', 'static_bitmap' ]);
  * the bitmap's size times its zoom - `width` and then `height`, each through `setRectangle`.
  */
 const fitBitmapToContents = (window: LayoutWindow, element: TemplateElement, input: TemplateLayoutInput): void => {
-    if (!BITMAP_TAGS.has(element.tag) || !flashBool(element.vars.fit_size_to_contents)) return;
+    if (!BITMAP_TAGS.has(element.tag) || !(flashBool(element.vars.fit_size_to_contents) || input.fitsToBitmapOf?.(element))) return;
 
     const size = input.bitmapSizeOf?.(element);
 

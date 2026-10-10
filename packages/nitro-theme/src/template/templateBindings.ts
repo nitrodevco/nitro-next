@@ -49,6 +49,12 @@ export interface TemplateBinding {
      * a `badge_image` widget's badge (`BadgeImageWidget.badgeId`), as its image's url.
      */
     asset?: string;
+    /**
+     * A bitmap sized to the image its code gives it, as `fit_size_to_contents` sizes one to its
+     * layout's: what code does when it sets `bitmap` and then `width = bitmap.width`, `height =
+     * bitmap.height` (`HabboFriendList.prepareButton`).
+     */
+    fitToBitmap?: boolean;
     /** `IWindow.background`: a plain window fills its rect with its colour. */
     background?: boolean;
     /** A bitmap's `pivotPoint` (`IBitmapWrapperWindow.pivotPoint`), over its `pivot_point`: `'center'`, `'bottom center'`... */
@@ -126,6 +132,16 @@ export interface TemplateBinding {
      * changes, once the list has laid out the items bound with it.
      */
     scrollV?: number;
+    /**
+     * A scrollable list scrolled to its end whenever this changes, once its items are laid out - code
+     * that sets `scrollV = 1` after each item it appends (`MainView.recordChatEntry`).
+     */
+    scrollEndKey?: unknown;
+    /**
+     * A scrollable list scrolled to its top: what code does when the list's `_CONTAINER` moves there
+     * (`MainView`'s `WE_RELOCATED`, which pages in older entries).
+     */
+    onReachStart?: () => void;
     /** An input taking the focus (`WE_FOCUSED`). */
     onFocus?: () => void;
     /** A text's etching colour (`ITextWindow.etchingColor`), `0xAARRGGBB`; 0 for none. */
@@ -411,7 +427,7 @@ export const bindElements = (targets: ReadonlyMap<string, TemplateElement>, bind
 };
 
 /** The handlers a binding carries: each is handed to the element as one stable function that calls the latest. */
-const HANDLERS = [ 'onPointerTap', 'onDoubleClick', 'onPointerOver', 'onPointerOut', 'onPointerDown', 'onPointerUp', 'onChange', 'onEnter', 'onKeyDown', 'onBlur', 'onFocus', 'onSelect', 'onLink' ] as const;
+const HANDLERS = [ 'onPointerTap', 'onDoubleClick', 'onPointerOver', 'onPointerOut', 'onPointerDown', 'onPointerUp', 'onChange', 'onEnter', 'onKeyDown', 'onBlur', 'onFocus', 'onSelect', 'onLink', 'onReachStart' ] as const;
 
 type TemplateHandler = typeof HANDLERS[number];
 
@@ -440,6 +456,7 @@ export const sameTemplateBinding = (a: TemplateBinding | undefined, b: TemplateB
         && a.helpPage === b.helpPage
         && a.autoHideScrollBar === b.autoHideScrollBar
         && a.scrollV === b.scrollV
+        && a.scrollEndKey === b.scrollEndKey
         && a.spacing === b.spacing
         && a.verticalSpacing === b.verticalSpacing
         && a.italic === b.italic

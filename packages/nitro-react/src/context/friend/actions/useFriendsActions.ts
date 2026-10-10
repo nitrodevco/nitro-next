@@ -13,6 +13,7 @@ export const useFriendsActions = () => {
         setFilterValue: state.setFilterValue,
         setSelectedFriendIds: state.setSelectedFriendIds,
         setRelationshipDropdownId: state.setRelationshipDropdownId,
+        setWindowRect: state.setWindowRect,
         toggleListSearchInput: state.toggleListSearchInput,
         toggleSelectedFriendId: state.toggleSelectedFriendId,
         tooltipHandlers: state.tooltipHandlers,

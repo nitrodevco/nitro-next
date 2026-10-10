@@ -1,5 +1,8 @@
 import { createStore } from 'zustand';
 
+/** The friend list window's rectangle on the desktop (`FriendListView.mainWindow`). */
+export type FriendListWindowRect = { x: number; y: number; width: number; height: number };
+
 type State = {
     tooltip: string;
     showListSearchInput: boolean;
@@ -7,6 +10,7 @@ type State = {
     filterValue: string;
     selectedFriendIds: number[];
     relationshipDropdownId: number;
+    windowRect: FriendListWindowRect | null;
 };
 
 type Actions = {
@@ -15,6 +19,7 @@ type Actions = {
     setFilterValue: (filterValue: string) => void;
     setSelectedFriendIds: (selectedFriendIds: number[]) => void;
     setRelationshipDropdownId: (relationshipDropdownId: number) => void;
+    setWindowRect: (windowRect: FriendListWindowRect) => void;
     toggleListSearchInput: (value: boolean) => void;
     toggleSelectedFriendId: (friendId: number) => void;
     tooltipHandlers: (tooltip: string) => { onMouseEnter: () => void; onMouseLeave: () => void };
@@ -27,6 +32,7 @@ const initialState: State = {
     filterValue: '',
     selectedFriendIds: [],
     relationshipDropdownId: 0,
+    windowRect: null,
 };
 
 /**
@@ -42,6 +48,11 @@ export const createFriendsStore = () => createStore<FriendsStore>()((set, get, s
     setFilterValue: (filterValue: string) => set({ filterValue }),
     setSelectedFriendIds: (selectedFriendIds: number[]) => set({ selectedFriendIds }),
     setRelationshipDropdownId: (relationshipDropdownId: number) => set({ relationshipDropdownId }),
+    setWindowRect: (windowRect: FriendListWindowRect) => set((x) => {
+        const old = x.windowRect;
+
+        return (old && old.x === windowRect.x && old.y === windowRect.y && old.width === windowRect.width && old.height === windowRect.height) ? x : { windowRect };
+    }),
     toggleListSearchInput: (value: boolean) => set((x) => {
         const results = { ...x, showListSearchInput: value };
 

@@ -99,7 +99,7 @@ export interface TemplateViewProps {
     frame?: TemplateFrameOptions;
 }
 
-export type TemplateFrameOptions = Required<Pick<FrameProps, 'id'>> & Pick<FrameProps, 'defaultPosition' | 'centered' | 'onPositionChange' | 'onClose' | 'resizeDirection' | 'rememberPosition' | 'rememberSize' | 'closeButtonVisible' | 'onHelp'> & {
+export type TemplateFrameOptions = Required<Pick<FrameProps, 'id'>> & Pick<FrameProps, 'defaultPosition' | 'centered' | 'onPositionChange' | 'onClose' | 'resizeDirection' | 'rememberPosition' | 'rememberSize' | 'closeButtonVisible' | 'closeButtonVariant' | 'onHelp'> & {
     /**
      * The frame is a modal dialog's (`buildModalDialogFromXML`), drawn inside a `ModalDialog`: it stays
      * in the modal's layer, which centres it, rather than going onto the window desktop under the
@@ -111,6 +111,12 @@ export type TemplateFrameOptions = Required<Pick<FrameProps, 'id'>> & Pick<Frame
      * modal dialog's, or one whose layout is no drag target (`nestBreedingSuccess`).
      */
     draggable?: boolean;
+    /**
+     * The user resized the window with its scaler (`WE_RESIZED` reaching the window's procedure), or
+     * a size kept from before was put back: the code that sizes what the window holds hears it, as
+     * `FriendListView.onWindow` turns the window's height into its tab's.
+     */
+    onResize?: (size: FrameSize | null) => void;
 };
 
 type FrameSize = { width: number; height: number };
@@ -217,13 +223,13 @@ const bitmapSourceOf = (element: TemplateElement, binding: TemplateBinding | und
 };
 
 /**
- * The bitmaps that take their own size (`fit_size_to_contents`) - what the layout reads their size
- * from - with a redraw as each one loads, so the layout runs again with it.
+ * The bitmaps that take their own size (`fit_size_to_contents`, or a binding's `fitToBitmap`) - what
+ * the layout reads their size from - with a redraw as each one loads, so the layout runs again with it.
  */
 const useFittedBitmapSizes = (elements: readonly TemplateElement[], byElement: ReadonlyMap<TemplateElement, TemplateBinding>, imageUrl: ((asset: string) => string) | undefined) => {
     const sources = new Map<TemplateElement, string>();
     const walk = (element: TemplateElement) => {
-        if (BITMAP_TAGS.has(element.tag) && flashBool(element.vars.fit_size_to_contents)) {
+        if (BITMAP_TAGS.has(element.tag) && (flashBool(element.vars.fit_size_to_contents) || byElement.get(element)?.fitToBitmap)) {
             const src = bitmapSourceOf(element, byElement.get(element), imageUrl);
 
             if (src) sources.set(element, src);
@@ -259,6 +265,59 @@ const useFittedBitmapSizes = (elements: readonly TemplateElement[], byElement: R
 
         return texture ? { width: texture.width, height: texture.height } : undefined;
     };
+};
+
+/**
+ * `SeparatorWidget.refresh`: `illumina_light_separator_horizontal` (a habbo-window-manager-com
+ * bitmap, named with its library as every template bitmap is) tiled along the widget at
+ * `height / 2 - 1` - or `_vertical` down it at `width / 2 - 1` (`separator:vertical`) - and then every
+ * visible child's rectangle cleared from it, so the line breaks where a label sits on it (`messenger`'s
+ * `separator_label`). Each child's rect is read as it is laid out, so the gap follows its caption.
+ */
+const SeparatorFace = ({ element, rect, context }: { element: TemplateElement; rect: TemplateRect; context: Context }) => {
+    const vertical = flashBool(element.vars['separator:vertical']);
+    // The children's spans along the line, as `start:end` pairs - a string, so the snapshot is stable.
+    const spans = useSyncExternalStore(context.store.subscribe, () => element.children
+        .map((child) => {
+            const state = context.store.get(child);
+            const shown = state?.binding?.visible ?? !child.hidden;
+            const childRect = state?.rect ?? child;
+
+            if (!shown) return '';
+
+            return vertical ? `${childRect.y}:${childRect.y + childRect.height}` : `${childRect.x}:${childRect.x + childRect.width}`;
+        })
+        .filter(Boolean)
+        .join(','));
+    const length = vertical ? rect.height : rect.width;
+    const offset = Math.trunc((vertical ? rect.width : rect.height) / 2) - 1;
+    const cleared = spans ? spans.split(',').map(span => span.split(':').map(Number) as [ number, number ]).sort((a, b) => a[0] - b[0]) : [];
+    const segments: [ number, number ][] = [];
+    let from = 0;
+
+    for (const [ start, end ] of cleared) {
+        if (start > from) segments.push([ from, Math.min(start, length) ]);
+
+        from = Math.max(from, end);
+    }
+
+    if (from < length) segments.push([ from, length ]);
+
+    const src = context.imageUrl?.(vertical ? 'habbo-window-manager-com-illumina_light_separator_vertical' : 'habbo-window-manager-com-illumina_light_separator_horizontal');
+
+    if (!src) return null;
+
+    return segments.map(([ start, end ]) => (
+        <ThemeImage
+            key={start}
+            eventMode="none"
+            src={src}
+            bitmap={{ stretchedX: false, stretchedY: false, ...(vertical ? { wrapY: true } : { wrapX: true }) }}
+            layout={vertical
+                ? { position: 'absolute', left: offset, top: start, width: rect.width - offset, height: end - start }
+                : { position: 'absolute', left: start, top: offset, width: end - start, height: rect.height - offset }}
+        />
+    ));
 };
 
 /** A widget's own vars, `<type>:`-prefixed in the layout (`badge_image:zoom_x`), without the prefix. */
@@ -646,6 +705,19 @@ const skinPartRect = (part: TemplateElement, skin: Template, rect: TemplateRect)
 /** The box an element's own face fills: the whole of its rect. */
 const FILL: BoxLayout = { position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' };
 
+/**
+ * `FILL` for a window whose layout caps its size (`width_max` / `height_max`): the window model has
+ * held its rect under the cap, so the skin's own minimum size - a style 102 button's 28px - gives
+ * way to it (`messenger`'s `report_button`, `height_max` 20).
+ */
+const limitedFill = (element: TemplateElement): BoxLayout => {
+    const [ , maxWidth, , maxHeight ] = element.limits ?? [ null, null, null, null ];
+
+    if ((maxWidth === null) && (maxHeight === null)) return FILL;
+
+    return { ...FILL, ...((maxWidth !== null) && { minWidth: 0 }), ...((maxHeight !== null) && { minHeight: 0 }) };
+};
+
 const textOf = (element: TemplateElement, rect: TemplateRect, context: Context, binding: TemplateBinding | undefined): ReactNode => {
     const label = element.tag === 'label';
     const style = templateTextStyle(element);
@@ -838,35 +910,43 @@ const ownFaceOf = (element: TemplateElement, rect: TemplateRect, context: Contex
         );
     }
 
-    // `SeparatorWidget.refresh`: `illumina_light_separator_horizontal` (a habbo-window-manager-com
-    // bitmap, named with its library as every template bitmap is) tiled along the widget at
-    // `height / 2 - 1` - or `_vertical` down it at `width / 2 - 1` (`separator:vertical`).
+    // `SeparatorWidget.refresh`: see `SeparatorFace`.
     if (element.tag === 'widget' && element.vars.widget_type === 'separator') {
         if (!context.imageUrl) return null;
 
-        const vertical = flashBool(element.vars['separator:vertical']);
-        const offset = Math.trunc((vertical ? rect.width : rect.height) / 2) - 1;
-
         return (
-            <ThemeImage
-                eventMode="none"
-                src={context.imageUrl(vertical ? 'habbo-window-manager-com-illumina_light_separator_vertical' : 'habbo-window-manager-com-illumina_light_separator_horizontal')}
-                bitmap={{ stretchedX: false, stretchedY: false, ...(vertical ? { wrapY: true } : { wrapX: true }) }}
-                layout={vertical
-                    ? { position: 'absolute', left: offset, top: 0, width: rect.width - offset, height: rect.height }
-                    : { position: 'absolute', left: 0, top: offset, width: rect.width, height: rect.height - offset }}
+            <SeparatorFace
+                element={element}
+                rect={rect}
+                context={context}
             />
         );
     }
 
     switch (element.tag) {
-        case 'border': return (
-            <Border
-                variant={variant}
-                tintColor={tintColor}
-                layout={FILL}
-            />
-        );
+        // `WindowRendererItem.render`: a skinned window's bitmap is filled with its colour and the skin
+        // drawn over it; with `background` set the skin keeps its own colours (`BitmapSkinRenderer`
+        // colourises only without it) - `relationship_chooser`'s white style-100 border.
+        case 'border': {
+            const fill = (binding?.background ?? element.background) ? flashColor(binding?.color ?? element.color) : undefined;
+
+            return (
+                <>
+                    {fill && (
+                        <Region
+                            backgroundColor={fill.hex}
+                            backgroundAlpha={fill.alpha}
+                            layout={FILL}
+                        />
+                    )}
+                    <Border
+                        variant={variant}
+                        tintColor={fill ? undefined : tintColor}
+                        layout={FILL}
+                    />
+                </>
+            );
+        }
         case 'header': return (
             <Header
                 variant={variant}
@@ -882,7 +962,7 @@ const ownFaceOf = (element: TemplateElement, rect: TemplateRect, context: Contex
                 tooltipDelay={binding?.tooltipDelay}
                 disabled={binding?.disabled}
                 onPointerTap={binding?.onPointerTap}
-                layout={FILL}
+                layout={limitedFill(element)}
             >
                 {text}
             </Button>
@@ -1496,6 +1576,8 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                 draggable={!!window && (window.draggable ?? true)}
                 onClose={window?.onClose}
                 closeButtonVisible={window?.closeButtonVisible}
+                // `IFrameWindow`'s `header_button_close` restyled by its code (`MainView`: `style = 102`).
+                closeButtonVariant={window?.closeButtonVariant}
                 // `FrameController`'s `help_page` property, or the `helpPage` its code sets: a page shows the header's help button.
                 helpPage={binding?.helpPage ?? flashString(element.vars.help_page)}
                 onHelp={window?.onHelp}
@@ -1592,6 +1674,8 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                     variant={scrollbar?.style}
                     hideDisabledScrollbar={binding?.autoHideScrollBar ?? true}
                     scrollV={binding?.scrollV}
+                    scrollEndKey={binding?.scrollEndKey}
+                    onReachStart={binding?.onReachStart}
                     layout={{ position: 'absolute', left: 0, top: 0, width: rect.width, height: rect.height, gap: 0 }}
                     viewportLayout={{ position: 'absolute', left: viewport.x, top: viewport.y, width: viewport.width, height: viewport.height }}
                     scrollbarLayout={scrollbar
@@ -1757,7 +1841,10 @@ export const TemplateView = ({ template, resolveText, imageUrl, bindings, showHi
         idPrefix,
         frame,
         scroll,
-        onFrameResize: setFrameSize,
+        onFrameResize: (size) => {
+            setFrameSize(size);
+            frame?.onResize?.(size);
+        },
         skins: template.skins,
     }), [ resolveText, imageUrl, store, showHidden, idPrefix, frame, scroll, template.skins ]);
 
@@ -1808,6 +1895,7 @@ export const TemplateView = ({ template, resolveText, imageUrl, bindings, showHi
         setupOf: element => setups.get(element),
         buttonLabelOf,
         bitmapSizeOf,
+        fitsToBitmapOf: element => !!byElement.get(element)?.fitToBitmap,
     }, (layoutWidth !== undefined || layoutHeight !== undefined) ? { width: layoutWidth ?? template.width, height: layoutHeight ?? template.height } : undefined, arrangeAll);
     const rootRect = elements.length === 1 ? rects.get(elements[0]) : undefined;
 

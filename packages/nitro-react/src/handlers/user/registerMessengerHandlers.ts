@@ -4,7 +4,7 @@ import {
     RoomInviteMessage,
 } from '@nitrodevco/nitro-packets';
 
-import { addMessengerConsoleMessage, addMessengerInstantMessageError, addMessengerRoomInvite, friendRequestAcceptFailed, goToRoom, loadMessengerHistory, notifyFriendOnline, playMessengerMessageReceivedSound, setMessengerOnlineStatus } from '#base/commands';
+import { addMessengerConsoleMessage, addMessengerInstantMessageError, addMessengerRoomInvite, friendRequestAcceptFailed, goToRoom, highlightFriendListTab, loadMessengerHistory, notifyFriendOnline, playMessengerMessageReceivedSound, setMessengerOnlineStatus } from '#base/commands';
 import { WebSocketConnection } from '#base/context/communication';
 import { messengerStore } from '#base/context/messenger';
 import { systemStore } from '#base/context/system';
@@ -119,6 +119,9 @@ export const registerMessengerHandlers = ({ send, subscribe }: WebSocketConnecti
 
                 if (wasOnline !== update.friend.isOnline) setMessengerOnlineStatus(send, update.friend.playerId, update.friend.isOnline);
 
+                // `FriendsView.setNewMessageArrived`: a friend coming online highlights the friends tab.
+                if (!wasOnline && update.friend.isOnline) highlightFriendListTab('friends');
+
                 // `FriendCategories.onFriendListUpdate`: a friend already listed who comes online is announced; a new friend is not.
                 if (previous && !previous.isOnline && update.friend.isOnline) notifyFriendOnline(update.friend);
             }
@@ -127,7 +130,12 @@ export const registerMessengerHandlers = ({ send, subscribe }: WebSocketConnecti
         }),
 
         // `HabboFriendList.onFriendRequests`: the list is replaced, even by an empty one.
-        on(FriendRequestsMessage, data => replaceFriendRequests(data.requests)),
+        // Any request in it highlights the requests tab.
+        on(FriendRequestsMessage, (data) => {
+            replaceFriendRequests(data.requests);
+
+            if (data.requests.length > 0) highlightFriendListTab('requests');
+        }),
 
         // `HabboFriendList.onHabboSearchResult`: `AvatarSearchResults.searchReceived`, which redraws the search tab.
         on(HabboSearchResultMessage, data => setSearchResults(data.friends, data.others)),
@@ -145,8 +153,10 @@ export const registerMessengerHandlers = ({ send, subscribe }: WebSocketConnecti
             send(new GetFriendRequestsComposer({}));
         }),
 
+        // `HabboFriendList.onNewFriendRequest`: the request is added and the requests tab highlighted.
         on(NewFriendRequestMessage, (data) => {
             processFriendRequests([ data.request ]);
+            highlightFriendListTab('requests');
         }),
 
         // `HabboMessenger.onNewConsoleMessage`.

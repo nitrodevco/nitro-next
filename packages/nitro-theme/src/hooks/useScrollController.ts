@@ -141,6 +141,17 @@ export const useScrollController = ({
         measure();
     }, [ measure, scrollOffset ]);
 
+    // The range as the boxes are laid out now: a layout can settle after the last `layout` event
+    // `measure` heard (a template list's content box resized in the same pass as its items), so a
+    // scroll clamps to the live sizes rather than to the last measured range - which would leave
+    // the end of the content out of reach.
+    const liveScrollMax = useCallback(() => {
+        const clientSize = computedSize(viewportNode, sizeAxis);
+        const scrollSize = computedSize(contentNode, sizeAxis);
+
+        return (viewportNode && contentNode) ? Math.max(0, scrollSize - clientSize) : metricsRef.current.scrollMax;
+    }, [ viewportNode, contentNode, sizeAxis ]);
+
     const stopDragging = useCallback(() => {
         const listeners = activeListenersRef.current;
         if (listeners) {
@@ -158,7 +169,7 @@ export const useScrollController = ({
         if (!delta) return;
 
         event.stopPropagation();
-        setScrollOffset(clamp(scrollOffsetRef.current + delta, 0, metricsRef.current.scrollMax));
+        setScrollOffset(clamp(scrollOffsetRef.current + delta, 0, liveScrollMax()));
     };
 
     const onThumbPointerDown = (event: FederatedPointerEvent) => {
@@ -168,7 +179,7 @@ export const useScrollController = ({
             pointer: isVertical ? event.clientY : event.clientX,
             scroll: scrollOffsetRef.current,
             availableTrack: Math.max(0, computedSize(trackNode, sizeAxis) - metricsRef.current.thumbSize),
-            scrollMax: metricsRef.current.scrollMax,
+            scrollMax: liveScrollMax(),
         };
 
         const handleMove = (moveEvent: PointerEvent) => {
@@ -193,7 +204,8 @@ export const useScrollController = ({
         const trackGlobal = trackNode.getGlobalPosition();
         const clickPos = (isVertical ? event.global.y : event.global.x) - (isVertical ? trackGlobal.y : trackGlobal.x);
         const clientSize = computedSize(viewportNode, sizeAxis);
-        const { thumbOffset, thumbSize, scrollMax } = metricsRef.current;
+        const { thumbOffset, thumbSize } = metricsRef.current;
+        const scrollMax = liveScrollMax();
 
         const direction = clickPos < thumbOffset ? -1 : clickPos > thumbOffset + thumbSize ? 1 : 0;
         if (direction === 0) return;
@@ -201,20 +213,20 @@ export const useScrollController = ({
         setScrollOffset(clamp(scrollOffsetRef.current + direction * clientSize, 0, scrollMax));
     };
 
-    const stepBackward = () => setScrollOffset(clamp(scrollOffsetRef.current - step, 0, metricsRef.current.scrollMax));
-    const stepForward = () => setScrollOffset(clamp(scrollOffsetRef.current + step, 0, metricsRef.current.scrollMax));
+    const stepBackward = () => setScrollOffset(clamp(scrollOffsetRef.current - step, 0, liveScrollMax()));
+    const stepForward = () => setScrollOffset(clamp(scrollOffsetRef.current + step, 0, liveScrollMax()));
 
     const scrollTo = useCallback((offset: number) => {
-        const next = clamp(offset, 0, metricsRef.current.scrollMax);
+        const next = clamp(offset, 0, liveScrollMax());
 
         // Written through to the ref as well so a wheel/step in the same frame builds on the new
         // position rather than the one the effect hasn't synced yet.
         scrollOffsetRef.current = next;
         setScrollOffset(next);
-    }, []);
+    }, [ liveScrollMax ]);
 
     /** Scrolls to `ratio` (0 to 1) of the scroll range as it is now laid out. */
-    const scrollToRatio = useCallback((ratio: number) => scrollTo(ratio * metricsRef.current.scrollMax), [ scrollTo ]);
+    const scrollToRatio = useCallback((ratio: number) => scrollTo(ratio * liveScrollMax()), [ scrollTo, liveScrollMax ]);
 
     return {
         viewportRef: setViewportNode,

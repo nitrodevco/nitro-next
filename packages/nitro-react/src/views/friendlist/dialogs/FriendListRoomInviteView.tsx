@@ -3,94 +3,70 @@ import { useState } from 'react';
 import { sendRoomInvite } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useFriendsStore } from '#base/context/friend';
-import { useIsWindowVisible, useSystemActions, useTranslation } from '#base/context/system';
-import { Border, Button, ButtonThick, Frame, TextInput, ThemeText } from '#base/theme';
+import { useIsWindowVisible, useSystemActions } from '#base/context/system';
+import { TemplateWindow, useTemplateFrame } from '#base/theme';
+
+import { friendListAlertPosition } from './friendListAlertPosition';
+
+/** The alert's frame (`room_invite_confirm`'s 211x175). */
+const ALERT_WIDTH = 211;
+const ALERT_HEIGHT = 175;
+
+const TEMPLATE = 'habbo-friend-list-com/room_invite_confirm_xml';
+
+/** `RoomInviteView.onMessageInput`: the message is cut at 120 characters. */
+const MESSAGE_MAX_LENGTH = 120;
 
 /**
- * `RoomInviteView` - the `room_invite_confirm` alert (211x175, content at margins 6/25/6/7): the
- * 199x118 border with the `invite_summary`, the 180x70 word-wrapping `message_input` and the
- * `invite_note`, all Volter 9, over the thick `ok` (send) and plain `cancel` buttons at y 122.
- * `RoomInviteView.onMessageInput` cuts the message at 120 characters.
+ * `RoomInviteView` - the `room_invite_confirm` alert (`AlertView`): `invite_summary` counts the
+ * selected friends (registered as `count`), `message_input` takes the message and Enter sends it
+ * (`onMessageInput`'s char 13). `ok` sends it and drops the alert whether or not it went - an empty
+ * message only answers with its alert - and `cancel` or the close button drops it unsent.
  */
-export const FriendListRoomInviteView = () => {
-    const isVisible = useIsWindowVisible('friendlist_invite');
+const FriendListRoomInvite = () => {
     const { toggleWindow } = useSystemActions();
     const { send } = useWebSocketContext();
     const selectedFriendIds = useFriendsStore(x => x.selectedFriendIds);
+    const [ message, setMessage ] = useState('');
 
-    const [ message, setMessage ] = useState<string>('');
+    const close = () => toggleWindow('friendlist_invite');
+    const windowRect = useFriendsStore(x => x.windowRect);
+    const frame = useTemplateFrame({ id: 'friendlist-room-invite', defaultPosition: friendListAlertPosition(windowRect, ALERT_WIDTH, ALERT_HEIGHT), rememberPosition: false, onClose: close });
 
-    const t = useTranslation();
-
-    /** `RoomInviteView.sendMsg`: the view is disposed once it is sent, so the next one starts empty. */
-    const onSend = () => {
-        if (!sendRoomInvite(send, selectedFriendIds, message)) return;
-
-        setMessage('');
-        toggleWindow('friendlist_invite');
+    /** `sendMsg`: the view is disposed once it is sent. */
+    const sendMessage = () => {
+        if (sendRoomInvite(send, selectedFriendIds, message)) close();
     };
+
+    return (
+        <TemplateWindow
+            id={TEMPLATE}
+            frame={frame}
+            parameters={{ 'friendlist.invite.summary': { count: selectedFriendIds.length.toString() } }}
+            bindings={{
+                message_input: {
+                    caption: message,
+                    maxChars: MESSAGE_MAX_LENGTH,
+                    onChange: setMessage,
+                    onEnter: sendMessage,
+                },
+                cancel: { onPointerTap: close },
+                // `onInvite`: `sendMsg`, then `dispose` either way.
+                ok: {
+                    onPointerTap: () => {
+                        sendRoomInvite(send, selectedFriendIds, message);
+                        close();
+                    },
+                },
+            }}
+        />
+    );
+};
+
+export const FriendListRoomInviteView = () => {
+    const isVisible = useIsWindowVisible('friendlist_invite');
 
     if (!isVisible) return null;
 
-    return (
-        <Frame
-            variant="0"
-            id="friendlist-room-invite"
-            defaultPosition={{ x: 260, y: 20 }}
-            dropShadow={false}
-            resizeDirection="none"
-            layout={{ position: 'absolute', width: 211, height: 175 }}
-            margins={[ 6, 25, 6, 7 ]}
-            caption={t('friendlist.invite.title')}
-            onClose={() => toggleWindow('friendlist_invite')}
-        >
-            <Border
-                variant="0"
-                layout={{ position: 'absolute', left: 0, top: 0, width: 199, height: 118 }}
-            >
-                <ThemeText
-                    text={t('friendlist.invite.summary', '', { count: selectedFriendIds.length.toString() })}
-                    textOptions={{ fontFamily: 'Volter', fontSize: 9 }}
-                    clip
-                    verticalAlign="top"
-                    layout={{ position: 'absolute', left: 10, top: 5, width: 180, height: 20 }}
-                />
-                <TextInput
-                    value={message}
-                    onChange={setMessage}
-                    maxLength={120}
-                    multiline
-                    fontFamily="Volter"
-                    fontSize={9}
-                    flashPlacement
-                    border="#000000"
-                    alwaysShowSelection
-                    backgroundColor={null}
-                    focusedBackgroundColor={null}
-                    layout={{ position: 'absolute', left: 10, top: 24, width: 180, height: 70 }}
-                />
-                <ThemeText
-                    text={t('friendlist.invite.note')}
-                    textOptions={{ fontFamily: 'Volter', fontSize: 9 }}
-                    clip
-                    verticalAlign="top"
-                    layout={{ position: 'absolute', left: 10, top: 98, width: 180, height: 20 }}
-                />
-            </Border>
-            <Button
-                variant="0"
-                onPointerTap={() => toggleWindow('friendlist_invite')}
-                layout={{ position: 'absolute', left: 139, top: 122, width: 60, height: 21, minWidth: 60, maxWidth: 60 }}
-            >
-                {t('generic.cancel')}
-            </Button>
-            <ButtonThick
-                variant="0"
-                onPointerTap={onSend}
-                layout={{ position: 'absolute', left: 0, top: 122, width: 60, height: 21, minWidth: 60, maxWidth: 60 }}
-            >
-                {t('friendlist.invite.send')}
-            </ButtonThick>
-        </Frame>
-    );
+    return <FriendListRoomInvite />;
 };

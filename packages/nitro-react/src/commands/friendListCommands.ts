@@ -3,7 +3,7 @@ import { AcceptFriendComposer, DeclineFriendComposer, EventLogComposer, FollowFr
 import { WebSocketConnection } from '#base/context/communication';
 import { notificationStore } from '#base/context/notifications';
 import { systemStore } from '#base/context/system';
-import { UserStore, userStore } from '#base/context/user';
+import { FriendListHighlightedTabs, UserStore, userStore } from '#base/context/user';
 
 import { sendFriendRequest } from './roomUserCommands';
 
@@ -210,4 +210,14 @@ export const notifyFriendOnline = (friend: IMessengerFriend) => {
         `messenger/${friend.playerId}`,
         { figure: friend.figure, gender: friend.gender },
     );
+};
+
+/**
+ * `FriendListTab.setNewMessageArrived(true)`: the tab's header is highlighted, unless it is the open
+ * tab. A closed friend list opens on the friends tab, which counts as open.
+ */
+export const highlightFriendListTab = (tab: keyof FriendListHighlightedTabs) => {
+    const openTab = systemStore.getState().visibleWindows.friendlist?.tab ?? 'friends';
+
+    userStore.getState().setFriendListTabHighlighted(tab, openTab !== tab);
 };

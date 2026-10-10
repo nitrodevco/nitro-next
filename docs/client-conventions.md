@@ -161,7 +161,7 @@ In either shape a view may read stores through selector and action hooks, transl
 never registers packet handlers.
 
 Naming: `*Widget` for a room widget's component, `*Component` for a window's mount, `*View` for
-a view. Sub-views of a window (`FriendListTab`, `AvatarEditorWardrobe`) carry the window's name as
+a view. Sub-views of a window (`FriendListFace`, `AvatarEditorWardrobe`) carry the window's name as
 a prefix. Nothing carries a `Pixi` or `Dom` suffix: the client renders with Pixi only, and a name
 like `BoxPixi` used to mean it had a DOM twin. `Pixi` in a name is the library
 (`PixiApplicationRoot`, `usePixiTexture`, the `Container as PixiContainer` alias), never a target.

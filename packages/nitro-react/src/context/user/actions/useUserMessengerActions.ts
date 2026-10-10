@@ -16,6 +16,7 @@ const actions = {
     setFriendRequestsState: state.setFriendRequestsState,
     clearAnsweredFriendRequests: state.clearAnsweredFriendRequests,
     markFriendRequestsListShown: state.markFriendRequestsListShown,
+    setFriendListTabHighlighted: state.setFriendListTabHighlighted,
     setSearchResults: state.setSearchResults,
     addFriendBarNotification: state.addFriendBarNotification,
     clearViewedFriendBarNotifications: state.clearViewedFriendBarNotifications,

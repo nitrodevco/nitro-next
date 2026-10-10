@@ -31,7 +31,7 @@ answer yet.
 
 | Feature | What is missing | Packet areas |
 |---|---|---|
-| Messenger and friend bar | Conversations and their history, instant-message errors, mini mail, friend notifications, room invites, the conversation's habbicon picker (`MessengerHabbiconPicker`). The friend list is ported; its "start conversation" buttons do nothing (`FriendListSearch`, `FriendListSearchItem`). The friend bar is ported (`views/friend-bar`); Turbo only sends its room event notifications, as it has no achievements, quests or games to send the others for. | `FriendList` |
+| Messenger and friend bar | Conversations and their history, instant-message errors, mini mail, friend notifications, room invites, the conversation's habbicon picker (`MessengerHabbiconPicker`). The friend list is ported. The friend bar is ported (`views/friend-bar`); Turbo only sends its room event notifications, as it has no achievements, quests or games to send the others for. | `FriendList` |
 | Moderation tool | Issues, chat logs, room and user info, room visits, sanctions. No window, no store, and nothing sends its requests. | `Moderation`, `Moderator` |
 | Help, call for help and guides | Reporting a user or room (the navigator's room info bubble keeps its report entry hidden until this exists), pending calls, guide sessions, chat review, the safety quiz. | `Help`, `Callforhelp` |
 | Quests and talent track | Daily and seasonal quests, community goals and talent track levels. The achievement browser, score and standard award packets are implemented; see [achievement client](achievements.md). | `Quest`, `Talent` |
@@ -96,10 +96,9 @@ the layouts are the library's in `scripts/flash-js-resources`.
 | Area | Views | Layouts |
 |---|---|---|
 | Hotel view | `views/hotel-view`, except the bonus rare, expiring page, next limited rare and community goal widgets | `habbo-friend-bar-com`: `landing_view_*`, `dynamic_widget_grid`, `generic_widget`, `element_*`, `promo_article` |
-| Friend list and messenger | `views/friendlist`, `views/messenger` | `habbo-friend-list-com`, `habbo-messenger-com` |
 | Groups and profile | `views/groups`, `UserProfileView` | `habbo-groups-com`: `group_info_window`, `group_management_window`, `badge_editor`, `guild_members_window`, `group_created_window`, `club_required`, `new_extended_profile` |
 | Collectibles, habbicons, offer centre, special items | `views/collectibles`, `views/habbicons`, `OfferCenterView`, `SpecialItemsView` | `habbo-catalog-com`: `collectible_view`, `collectible_reward`, `habbicon_view`, `habbicon_purchase_confirmation`, `offer_center`, `special_items_display` |
-| Wired menu, chests and transactions | `views/wired-menu`, `views/wired-trading/chests`, `views/wired-trading/transactions` | `habbo-user-defined-room-events-com`: `wired_menu_view`, `logs_overview`, `error_info_view`, `variables_management_*`, `chest_*`, `transaction_*` |
+| Wired menu and chests | `views/wired-menu`, `views/wired-trading/chests` | `habbo-user-defined-room-events-com`: `wired_menu_view`, `logs_overview`, `error_info_view`, `variables_management_*`, `chest_*` |
 
 The chat bar is drawn from `chatinput_window_new` but keeps the client's own text field in
 `chat_input`'s place, for the command completion the port adds to it.
