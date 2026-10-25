@@ -2,17 +2,18 @@
  * Not Flash's: reads and writes a Turbo plugin message from the schema the server sends for it
  * (`client.messages`, Turbo's `docs/plugin-messages.md`). The schema is compact JSON: an array of
  * `[name, type]` fields, where a type is `'int'`, `'long'`, `'bool'`, `'string'`, `'double'`,
- * `['array', type]` or `['object', fields]`. Fields are written in order in Habbo's wire encoding;
- * an array is an int count and its items, a record its fields.
+ * `['array', type]`, `['map', type]` or `['object', fields]`. Fields are written in order in Habbo's
+ * wire encoding; an array is an int count and its items, a map (a string-keyed dictionary, read as a
+ * plain object) an int count and each key and value, a record its fields.
  *
  * The two halves may be a version apart: a field the schema does not know is ignored and a missing
- * one is sent as its default (0, '', false, []); `skew` hears of each so the caller can log it.
+ * one is sent as its default (0, '', false, [], {}); `skew` hears of each so the caller can log it.
  */
 import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type PluginMessageScalar = 'int' | 'long' | 'bool' | 'string' | 'double';
 
-export type PluginMessageType = PluginMessageScalar | { array: PluginMessageType } | { object: PluginMessageField[] };
+export type PluginMessageType = PluginMessageScalar | { array: PluginMessageType } | { map: PluginMessageType } | { object: PluginMessageField[] };
 
 export type PluginMessageField = { name: string; type: PluginMessageType };
 
@@ -29,6 +30,7 @@ const parseType = (raw: unknown, path: string): PluginMessageType => {
 
     if (Array.isArray(raw) && (raw.length === 2)) {
         if (raw[0] === 'array') return { array: parseType(raw[1], `${path}[]`) };
+        if (raw[0] === 'map') return { map: parseType(raw[1], `${path}{}`) };
         if (raw[0] === 'object') return { object: parseFields(raw[1], path) };
     }
 
@@ -59,7 +61,10 @@ const defaultOf = (type: PluginMessageType): unknown => {
         case 'string':
             return '';
         default:
-            return ('array' in type) ? [] : defaultsOf(type.object);
+            if ('array' in type) return [];
+            if ('map' in type) return {};
+
+            return defaultsOf(type.object);
     }
 };
 
@@ -92,6 +97,15 @@ const readValue = (wrapper: IMessageDataWrapper, type: PluginMessageType): unkno
             return readDouble(wrapper);
         default: {
             if ('object' in type) return readFields(wrapper, type.object);
+
+            if ('map' in type) {
+                const entries: [ string, unknown ][] = [];
+
+                for (let count = wrapper.readInt(); count > 0; count--) entries.push([ wrapper.readString(), readValue(wrapper, type.map) ]);
+
+                // fromEntries makes each key an own property, `__proto__` included.
+                return Object.fromEntries(entries);
+            }
 
             const items: unknown[] = [];
 
@@ -153,6 +167,17 @@ const writeValue = (value: unknown, type: PluginMessageType, path: string, out: 
                 return;
             }
 
+            if ('map' in type) {
+                const entries = (value instanceof Map) ? [ ...value.entries() ].map(([ key, item ]) => [ String(key), item ] as const) : (value && (typeof value === 'object') && !Array.isArray(value)) ? Object.entries(value) : [];
+
+                out.push(entries.length);
+                entries.forEach(([ key, item ]) => {
+                    out.push(key);
+                    writeValue(item, type.map, `${path}{}`, out, skew);
+                });
+                return;
+            }
+
             const items = Array.isArray(value) ? value : [];
 
             out.push(items.length);
@@ -181,6 +206,3 @@ export const encodePluginMessage = (value: Record<string, unknown>, fields: Plug
 
     return out;
 };
-
-/** A message of the schema with every field at its default: what a module reads for a field it was not sent. */
-export const defaultPluginMessage = (fields: PluginMessageField[]) => defaultsOf(fields);

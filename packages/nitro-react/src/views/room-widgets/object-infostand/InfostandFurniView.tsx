@@ -7,6 +7,8 @@ import { findTemplateChild, LayoutImage, TemplateBindings, TemplateItem, Templat
 import { GetFriendlyTime } from '#base/utils';
 import { LimitedItemPreviewOverlayView } from '#base/views/shared/LimitedItemPreviewOverlayView';
 
+import type { ClientModuleMenuButton } from '../object-menu/useClientModuleMenuButtons';
+
 /** `PickupMode` values the pickup button reads. */
 const PICKUP_NONE = 0;
 const PICKUP_FULL = 2;
@@ -98,8 +100,10 @@ export interface InfostandFurniViewProps {
     /** The `label_settings` button (WIN63-202610121624): a WIRED label, for whoever may modify the room's wired. */
     canLabelSettings: boolean;
     onLabelSettings: () => void;
-    /** `button_list.visible`: what `update` works out from the buttons it shows. */
+    /** `button_list.visible`: what `update` works out from the buttons it shows, and any client module's button. */
     buttonsVisible: boolean;
+    /** Not Flash's: client modules' buttons (`api.contextMenu`, menu `furni`), after the client's own in `button_list`. */
+    moduleButtons?: readonly ClientModuleMenuButton[];
     onMove: () => void;
     onRotate: () => void;
     onPickup: () => void;
@@ -136,7 +140,7 @@ export interface InfostandFurniViewProps {
  * description; neither does this. The `rarity_item_overlay_widget` (`rarity_item_overlay_preview`)
  * is not drawn: the theme has no such widget, and its container stays hidden.
  */
-export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWiredInspect, canRecolor, onRecolor, canLabelSettings, onLabelSettings, pickupMode, canSaveBranding, buttonsVisible, onMove, onRotate, onPickup, onUse, onWiredInspect, onPlaceMore, onBuy, onRent, onExtend, onBuyout, onOpenOwner, onOpenGroup, onSaveBranding, onSetCustomVariables, onClose }: InfostandFurniViewProps) => {
+export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWiredInspect, canRecolor, onRecolor, canLabelSettings, onLabelSettings, pickupMode, canSaveBranding, buttonsVisible, moduleButtons = [], onMove, onRotate, onPickup, onUse, onWiredInspect, onPlaceMore, onBuy, onRent, onExtend, onBuyout, onOpenOwner, onOpenGroup, onSaveBranding, onSetCustomVariables, onClose }: InfostandFurniViewProps) => {
     const t = useTranslation();
     const groupBadgeUrl = useGroupBadgeImageUrl();
     const { texture, height } = useFurnitureImageTexture(details.className, details.colorIndex, 2, RoomGeometryScaleType.ZoomedIn);
@@ -292,6 +296,9 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
     };
 
     for (const spacer of SPACERS) bindings[spacer] = { ...bindings[spacer], color: colors.spacer };
+
+    // A module's button is a copy of `move` its patch put last in the row (`clientModuleMenuRow`).
+    for (const { row, label, press } of moduleButtons) bindings[`button_list/${row}`] = { visible: true, caption: label, onPointerTap: press };
 
     // A variant's layout lacks some of these windows; the code's `findChildByName` finds nothing there and does nothing.
     const elements = template?.elements ?? [];

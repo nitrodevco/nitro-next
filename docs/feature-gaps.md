@@ -1,12 +1,13 @@
 # Feature gaps
 
-What the port does not do yet, as of client revision `WIN63-202609091217-117204808`: whole
+What the port does not do yet, as of client revision `WIN63-202610201032-107964540`: whole
 systems with no window, and gaps inside features that are otherwise ported. Use it to pick work,
 and to tell a missing feature from a bug before debugging something that was never built.
 
-This list comes from the code, not from a full audit against the Flash client, so a gap that
-neither sends nor receives a packet and carries no "Not ported" note can be missing from it.
-Update the list when a gap is closed or found.
+The list was last checked against the Flash client package by package on 2026-10-25: every text
+key and layout a Flash package uses that the port never names was looked at by hand. A gap that
+uses neither a packet, a text nor a layout of its own can still be missing from it. Update the
+list when a gap is closed or found.
 
 ## How the list is made
 
@@ -14,7 +15,7 @@ Three sources, each worth re-running after a revision bump or a feature port:
 
 - **Packet coverage.** `node tools/packet-coverage.mjs` lists, by feature area, the incoming
   messages nothing in the client listens to and the outgoing composers nothing sends. At the time
-  of writing that is 96 of 585 incoming and 101 of 578 outgoing. A packet counts as used when its
+  of writing that is 78 of 600 incoming and 91 of 589 outgoing. A packet counts as used when its
   class name appears in the client's source, so a registered listener that does nothing still counts.
 - **The port's own notes.** Views, stores and handlers state what they leave out; search the
   client for `not ported` and `Not ported:`.
@@ -29,27 +30,31 @@ answer yet.
 
 ## Whole features with no window
 
-| Feature | What is missing | Packet areas |
-|---|---|---|
-| Help, call for help and guides | Pending calls, guide sessions, chat review, the safety quiz. Reporting a user, a room, an instant message or a photo is ported (`views/help`, `helpCommands`, the navigator's room info bubble). | `Help`, `Callforhelp` |
-| Talent track and the daily quest | Talent track levels, and the talent track window the hotel view's `habbotalentspromo` button asks for (`GetTalentTrack`). The hotel view's daily quest widget and element are ported. The quest list, details, tracker and completed dialog are ported (`views/quests`), community goals are the hotel view's; the achievement browser, score and standard award packets are implemented - see [achievement client](achievements.md). | `Quest`, `Talent` |
-| Game centre | SnowWar (it needs the game engine), game directory, leaderboards, weekly rewards. Nothing calls `buySnowWarTokensOffer` (`commands/game-tokens/gameTokensCommands.ts`); the catalogue's game token offers are bought through `purchaseGameTokensOffer`. The staff chat command `:csmm` (`GameManager.generateChecksumMismatch`) waits on the game manager. | `Game` |
-| Campaign calendar | The advent calendar and its doors, the seasonal daily offer that shares it, and the seasonal quest calendar (`seasonalcalendar.MainWindow`, fed by `SeasonalQuestsMessage`). | `Campaign`, `Catalog`, `Quest` |
-| Phone number verification | `HabboPhoneNumber`'s collect window and its minimised view, behind `sms.identity.verification.enabled`. | `Gifts` |
-| Interstitial ads | `AdManager`'s interstitials, behind `interstitials.2016.enabled`. | `Advertisement` |
-| New user experience | The gift offer and the tutorial script. The new user flow - look, name and starter room (`OnBoardingHcFlow`) - is ported (`views/onboarding`); the room types, their pictures (`new.user.flow.room.image.url`) and the dice's looks (`new.user.flow.figures.male` / `.female`) are configuration - see Turbo's `docs/onboarding.md`. | `Nux` |
-| Room competitions | The room competition window (`RoomCompetitionController`) and voting. The hotel view's competition elements ask whether the user has entered, submit a room and forward to competition rooms, and its prizes and hall of fame widgets are drawn. | `Competition`, `Navigator` |
-| Name change | The avatar editor's `avatar_name_change` (`AvatarEditorNameChangeView`, behind `premium.name.change.enabled`). Its layouts (`avatar_editor_name_change`, `avatar_editor_name_change_item`) are only in the AS3's embedded assets: Habbo's JavaScript client dropped them, so the `habbo-avatar-editor-com` template bundle built from its library has neither. In Flash the window only checks a name - `select_name_button` has no handler. The own avatar menu's name change window (`NameChangeView`) is ported (`commands/user/nameChangeCommands.ts`). | `Avatar` |
+Most of these are switched off on the live hotel, which the last column says with the external
+variable that does it: porting them changes nothing a player of the live hotel sees.
+
+| Feature | What is missing | Packet areas | Live hotel |
+|---|---|---|---|
+| Help, call for help and guides | Pending calls, guide sessions, chat review, the safety quiz. Reporting a user, a room, an instant message or a photo is ported (`views/help`, `helpCommands`, the navigator's room info bubble), and so are the sanctions, my reports and name change views. | `Help`, `Callforhelp` | Guides and chat review off (`guides.enabled=false`, `guardians.enabled=false`); the safety quiz belongs to them |
+| Talent track and the daily quest | Talent track levels, and the talent track window the hotel view's `habbotalentspromo` button asks for (`GetTalentTrack`). The hotel view's daily quest widget and element are ported. The quest list, details, tracker and completed dialog are ported (`views/quests`), community goals are the hotel view's; the achievement browser, score and standard award packets are implemented - see [achievement client](achievements.md). | `Quest`, `Talent` | Off (`talent.track.enabled=false`) |
+| Game centre | The SnowWar game itself (it needs the game engine), leaderboards, weekly rewards. The games window is ported (`views/game-center`, `commands/game-center`): the toolbar icon, quick play, the instructions, games left, the token buttons (`buySnowWarTokensOffer`) and the lobby up to the game's start, which closes the window. The staff chat command `:csmm` (`GameManager.generateChecksumMismatch`) waits on the game manager. | `Game` | Off (`game.center.enabled=false`) |
+| Campaign calendar | The advent calendar and its doors, the seasonal daily offer that shares it, and the seasonal quest calendar (`seasonalcalendar.MainWindow`, fed by `SeasonalQuestsMessage`). | `Campaign`, `Catalog`, `Quest` | The advent calendar is seasonal (December); the seasonal quest calendar is off (`seasonalQuestCalendar.enabled=false`) |
+| Phone number verification | `HabboPhoneNumber`'s collect window and its minimised view, behind `sms.identity.verification.enabled`. | `Gifts` | Off (`sms.identity.verification.enabled=false`) |
+| Interstitial ads | `AdManager`'s interstitials, behind `interstitials.2016.enabled`. | `Advertisement` | On, but ads only |
+| New user experience | The tutorial script (`NewUserExperienceNotComplete`). The gift selection (`views/onboarding/NuxGiftSelectionView`) is ported, and so is the new user flow - look, name and starter room (`OnBoardingHcFlow`, `views/onboarding`); the room types, their pictures (`new.user.flow.room.image.url`) and the dice's looks (`new.user.flow.figures.male` / `.female`) are configuration - see Turbo's `docs/onboarding.md`. | `Nux` | On |
+| Room competitions | The room competition window (`RoomCompetitionController`) and voting. The hotel view's competition elements ask whether the user has entered, submit a room and forward to competition rooms, and its prizes and hall of fame widgets are drawn. | `Competition`, `Navigator` | No competition running: the server never answers `RoomCompetitionInit` |
+| Name change | The avatar editor's `avatar_name_change` (`AvatarEditorNameChangeView`, behind `premium.name.change.enabled`). Its layouts (`avatar_editor_name_change`, `avatar_editor_name_change_item`) are only in the AS3's embedded assets: Habbo's JavaScript client dropped them, so the `habbo-avatar-editor-com` template bundle built from its library has neither. In Flash the window only checks a name - `select_name_button` has no handler. The own avatar menu's name change window (`NameChangeView`) is ported (`commands/user/nameChangeCommands.ts`). | `Avatar` | Off (`premium.name.change.enabled` is not set) |
 
 ## Gaps inside ported features
 
 | Area | Gap | Where |
 |---|---|---|
 | Room | YouTube playback control from the server (`YoutubeControlVideoMessage`). | `FurnitureYoutubeView` |
-| Room camera | Photo competitions (`PhotoCompetitionComposer`, `CompetitionStatusMessage`); taking, buying and publishing photos and room thumbnails are ported (`views/room-widgets/camera`, `RoomThumbnailCameraWidget`). | `Camera` |
+| Room camera | Photo competitions (`PhotoCompetitionComposer`, `CompetitionStatusMessage`), which the live hotel has off (`camera.competition.enabled=false`); taking, buying and publishing photos and room thumbnails are ported (`views/room-widgets/camera`, `RoomThumbnailCameraWidget`). | `Camera` |
 | Crafting | Secret recipes (`CraftSecretComposer`, `GetCraftingRecipesAvailableComposer`). | |
 | Hotel view | Every widget type and generic widget element is drawn. What their buttons open is not always there: the talents promo asks for a talent track no window shows, the Habbo Way and safety quiz promos' buttons open windows that are not ported (`showHabboWay`, `SafetyBookletController`), and nothing reopens the room competition window (`reenableRoomCompetitionWindow`). The avatar image widget has no greyed placeholder while the figure loads, and the handlers' tracking calls (`trackGoogle`, `trackEventLog`) have no receiver. What the widgets wait on from the server is under [Hotel view: Turbo and the admin panel](#hotel-view-turbo-and-the-admin-panel). | `HotelViewWidgets`, `HotelViewGenericWidget` |
-| Account | Email change and status. | `Users` |
+| Account | Email change and status, which the live hotel has off (`progress.emailchange.enabled=false`). | `Users` |
+| Moderation | `NewModerationTool`'s ban management, send warning and give furniture tabs (`new_mod_tool_tabs`): the port names none of their texts or alerts. Staff only. | `Moderation` |
 
 ## Hotel view: Turbo and the admin panel
 

@@ -1,4 +1,5 @@
-import { NitroLogger, RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RemoveItemComposer } from '@nitrodevco/nitro-packets';
 import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
 
@@ -7,8 +8,8 @@ import { openProfile } from '#base/commands';
 import { reportPhoto } from '#base/commands/help/helpCommands';
 import { useWebSocketContext } from '#base/context/communication';
 import { getInventoryWallItemById, useInventoryStore } from '#base/context/inventory';
-import { useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
-import { useConfigBoolean, useConfigValue } from '#base/context/system';
+import { useOwnControllerLevel, useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useConfigBoolean, useConfigValue, useTranslation, useWindowActions } from '#base/context/system';
 import type { PhotoData } from '#base/utils';
 import { parsePhotoData, readPhotoExtraDataId, resolvePhotoUrl } from '#base/utils';
 import { FurnitureExternalImageView } from '#base/views/room-widgets/furniture/FurnitureExternalImageView';
@@ -79,7 +80,12 @@ const usePhotoData = (furnitureData: string | undefined): { photo: PhotoData | u
  *
  * The inventory's `viewItemButton` shows a photo it holds the same way (`showWithFurniID`, through
  * `showInventoryUseProductSelection`): the wall item with that strip id, its type the wall item
- * type's name, and no report button.
+ * type's name, and no report or remove button.
+ *
+ * `removebutton` (`hasRightsToRemove`: controller level 4 up) asks first - `windowManager.confirm` with
+ * the `inventory.remove.external_image_wallitem_*` texts, its ok button captioned "delete" - and on ok
+ * `deleteCard` destroys the wall item (`deleteRoomObject(id, 20)` -> `RemoveItem`); the viewer closes
+ * as the item leaves the room.
  */
 export const FurnitureExternalImageWidget = () => {
     const request = useRoomWidget<Partial<InventoryExternalImageRequest>>(RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE);
@@ -87,6 +93,9 @@ export const FurnitureExternalImageWidget = () => {
     const { send } = useWebSocketContext();
     const { closeRoomWidget } = useRoomWidgetActions();
     const furniGroups = useInventoryStore(x => x.furniGroups);
+    const controllerLevel = useOwnControllerLevel();
+    const { showConfirm } = useWindowActions();
+    const t = useTranslation();
     const imageUrlBase = useConfigValue<string>('stories.image_url_base') ?? '';
     // `ExternalImageWidgetHandler.isSelfieReportingEnabled`.
     const selfieReportingEnabled = useConfigBoolean('stories.report.selfie.enabled');
@@ -117,8 +126,10 @@ export const FurnitureExternalImageWidget = () => {
                 time={photo?.time ?? 0}
                 caption={photo?.caption ?? ''}
                 reportVisible={false}
+                removeVisible={false}
                 browseVisible={false}
                 onReport={() => undefined}
+                onRemove={() => undefined}
                 onBrowse={() => undefined}
                 onSender={() => photo && openProfile(send, photo.creatorId)}
                 onClose={onClose}
@@ -139,6 +150,12 @@ export const FurnitureExternalImageWidget = () => {
 
         setBrowsed({ request, objectId: sameType[next].id });
     };
+    // `onDeleteConfirm`: `deleteCard` of the shown item on ok.
+    const onRemove = () => {
+        const itemId = roomObject.id;
+
+        showConfirm(t('inventory.remove.external_image_wallitem_header'), t('inventory.remove.external_image_wallitem_body'), () => send(new RemoveItemComposer({ itemId })), { okCaption: t('inventory.remove.external_image_wallitem_delete') });
+    };
 
     return (
         <FurnitureExternalImageView
@@ -151,6 +168,8 @@ export const FurnitureExternalImageWidget = () => {
             // `openReportImage`: the sender, their name, the photo's extra data id (none for a photo that
             // carries its own url) and the wall item.
             onReport={() => reportPhoto(photo?.creatorId ?? 0, photo?.creatorName ?? '', extraDataId, roomObject.id)}
+            removeVisible={Number(controllerLevel) >= Number(RoomControllerLevelEnum.RoomOwner)}
+            onRemove={onRemove}
             onBrowse={onBrowse}
             onSender={() => photo && openProfile(send, photo.creatorId)}
             onClose={onClose}

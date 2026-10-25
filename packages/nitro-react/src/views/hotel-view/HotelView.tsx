@@ -17,7 +17,8 @@
  *   bottom slot takes `landing.view.dynamic.slot.6.widget` when that names a widget the port draws
  *   there (`BOTTOM_SLOT_LANDING_VIEW_WIDGETS`); its windows have no relative scale, so it stays where
  *   the placeholder was in the 822-high layout whatever the desktop's height. Any other bottom slot
- *   type leaves the slot empty.
+ *   type leaves the slot empty. Not Flash's: a client module's widget for slot 6 (`hotelView.addWidget`)
+ *   is drawn there instead, whatever the configured type.
  * - `hideWarningIfPresent`: the layout editor's `warning` is hidden.
  *
  * Only the default layout is drawn: a hotel naming another in `landing.view.layoutxml` (the custom
@@ -27,11 +28,12 @@ import { useMemo } from 'react';
 
 import { AvatarImage } from '#base/components/AvatarImage';
 import { useClientModulesStore } from '#base/context/client-modules';
-import { BOTTOM_SLOT_LANDING_VIEW_WIDGETS, HOTEL_VIEW_BOTTOM_SLOT, hotelViewCommonSettings, hotelViewSlotWidget, useConfigData, useSystemStore } from '#base/context/system';
+import { BOTTOM_SLOT_LANDING_VIEW_WIDGETS, HOTEL_VIEW_BOTTOM_SLOT, hotelViewCommonSettings, hotelViewPaneWidths, hotelViewSlotWidget, useConfigData, useSystemStore } from '#base/context/system';
 import { useOwnUserFigure, useOwnUserGender } from '#base/context/user';
 import { useViewportSize } from '#base/hooks';
 import { findTemplateChild, Template, TemplateBinding, TemplateElement, TemplateItem, TemplateWindow, useTemplateLibrary } from '#base/theme';
 import { ClientModuleHotelViewLayersView } from '#base/views/client-modules/ClientModuleHotelViewLayersView';
+import { ClientModuleHotelViewWidgetView } from '#base/views/client-modules/ClientModuleHotelViewWidgetView';
 
 import { HotelViewMovingObjects } from './HotelViewMovingObjects';
 import { HotelViewSlotWidget } from './HotelViewSlotWidget';
@@ -67,6 +69,7 @@ export const HotelView = () => {
     const figure = useOwnUserFigure();
     const gender = useOwnUserGender();
     const bottomWidget = hotelViewSlotWidget(config, HOTEL_VIEW_BOTTOM_SLOT);
+    const bottomModuleWidget = useClientModulesStore(x => x.hotelViewWidgets.findLast(widget => widget.slot === HOTEL_VIEW_BOTTOM_SLOT));
     const landing = hotelViewTemplate(templates, 'landing_view_default_dynamic_layout');
     const avatarImage = hotelViewTemplate(templates, 'avatar_image');
     const grid = useHotelViewWidgetGrid(templates);
@@ -97,7 +100,18 @@ export const HotelView = () => {
 
     /** `setupBottomSlotWidgetName`: the bottom slot's widget in the placeholder's place, else the placeholder hidden. */
     const bottomSlot = (placeholder: TemplateElement): TemplateItem => {
-        if (!bottomHolder || !BOTTOM_SLOT_LANDING_VIEW_WIDGETS.has(bottomWidget)) return { key: BOTTOM_SLOT_PLACEHOLDER, from: placeholder, bindings: { '': { visible: false } } };
+        if (!bottomHolder || (!bottomModuleWidget && !BOTTOM_SLOT_LANDING_VIEW_WIDGETS.has(bottomWidget))) return { key: BOTTOM_SLOT_PLACEHOLDER, from: placeholder, bindings: { '': { visible: false } } };
+
+        if (bottomModuleWidget) {
+            const moduleWidget = (
+                <ClientModuleHotelViewWidgetView
+                    widget={bottomModuleWidget}
+                    width={hotelViewPaneWidths(config).left}
+                />
+            );
+
+            return { key: BOTTOM_SLOT_PLACEHOLDER, from: bottomHolder, bindings: { '': { children: moduleWidget } } };
+        }
 
         const widget = (
             <HotelViewSlotWidget

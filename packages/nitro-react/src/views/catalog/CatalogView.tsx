@@ -27,7 +27,7 @@ import { useEffect, useState } from 'react';
 
 import { refreshBuilderStatus, updateBuilderStatus } from '#base/commands';
 import { CATALOG_HEADER_DESCRIPTION, CATALOG_HEADER_IMAGE, CatalogPage, getCatalogPageImage, getCatalogPageText, getCatalogWindowName, isNonTabbedCatalog, useCatalogRootNode, useCatalogStore, useCatalogStoreApi, useCatalogType } from '#base/context/catalog';
-import { useConfigValue, useTranslation } from '#base/context/system';
+import { useConfigBoolean, useConfigValue, useTranslation } from '#base/context/system';
 import { useCatalogNavigation, useWindowVisibility } from '#base/hooks';
 import { Box, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useLayoutSize, useTemplateLibrary, useTemplateWindowRect } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
@@ -99,7 +99,7 @@ export const CatalogView = () => {
     const { hide } = useWindowVisibility(windowName);
     const catalogIconUrl = useConfigValue<string>('catalog.icons.url') ?? '';
     const catalogImageUrl = useConfigValue<string>('asset.urls.catalog') ?? '';
-    const isDeepHierarchy = String(useConfigValue('catalog.deep.hierarchy')) === 'true';
+    const isDeepHierarchy = useConfigBoolean('catalog.deep.hierarchy');
     const templates = useTemplateLibrary(CATALOG_LIBRARY);
     const { searchValue, setSearchValue } = useCatalogSearch();
     const [ hoveredNode, setHoveredNode ] = useState<ICatalogNode>();

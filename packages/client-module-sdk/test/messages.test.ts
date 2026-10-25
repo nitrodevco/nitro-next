@@ -24,3 +24,16 @@ void test('a message schema written as const types the data a module reads', () 
     assert.equal(SKILLS_STATE.length, 3);
     assert.equal(state.skills[0].name, 'mining');
 });
+
+// `WithDictionary(Dictionary<string, int> Counts, IReadOnlyDictionary<string, Inner> Records, ...)`: a map reads as an object.
+const WITH_DICTIONARY = [
+    [ 'counts', [ 'map', 'int' ] ],
+    [ 'records', [ 'map', [ 'object', [ [ 'label', 'string' ] ] ] ] ],
+] as const satisfies ClientModuleMessageSchema;
+
+const typedMap: Same<ClientModuleMessageOf<typeof WITH_DICTIONARY>, { counts: Record<string, number>; records: Record<string, { label: string }> }> = true;
+
+void test('a map in a schema types a string-keyed object', () => {
+    assert.equal(typedMap, true);
+    assert.equal(WITH_DICTIONARY.length, 2);
+});

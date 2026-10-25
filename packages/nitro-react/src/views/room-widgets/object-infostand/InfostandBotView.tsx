@@ -168,6 +168,7 @@ export const InfostandBotView = ({ rentable, name, motto, figure, gender, ownerN
                     id="habbo-room-ui-com/bot_view"
                     bindings={bindings}
                     arrange={arrange}
+                    context={{ type: 'bot', name, figure, gender }}
                 />
                 {badgeDetails && (
                     <FloatingPopup
@@ -244,6 +245,7 @@ export const InfostandBotView = ({ rentable, name, motto, figure, gender, ownerN
             id="habbo-room-ui-com/rentable_bot_view"
             bindings={bindings}
             arrange={arrange}
+            context={{ type: 'rentable_bot', name, figure, gender, ownerName }}
         />
     );
 };

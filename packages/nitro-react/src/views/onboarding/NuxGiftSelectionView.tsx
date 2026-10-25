@@ -14,11 +14,12 @@
  *   next one; after the last, `HabboNuxDialogs.onSendGetGifts` takes the window down and sends every
  *   pick (`NewUserExperienceGetGifts`).
  */
-import { INewUserExperienceGiftOfferGiftOption, INewUserExperienceGiftSelection, NewUserExperienceGetGiftsComposer } from '@nitrodevco/nitro-packets';
+import { INewUserExperienceGiftOfferGiftOption, INewUserExperienceGiftSelection } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
+import { sendNuxGifts } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { onboardingStore, useOnboardingStore } from '#base/context/onboarding';
+import { useOnboardingStore } from '#base/context/onboarding';
 import { useConfigValue, useSystemStore, useTranslation } from '#base/context/system';
 import { TemplateWindow, useTemplateFrame } from '#base/theme';
 
@@ -97,8 +98,7 @@ const NuxGiftSelectionWindow = ({ steps }: { steps: INewUserExperienceGiftOfferG
             return;
         }
 
-        onboardingStore.getState().setGiftOffer(undefined);
-        send(new NewUserExperienceGetGiftsComposer({ selections: picked }));
+        sendNuxGifts(send, picked);
     };
 
     return (

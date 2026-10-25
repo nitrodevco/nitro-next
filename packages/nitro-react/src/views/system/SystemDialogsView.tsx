@@ -124,7 +124,7 @@ const SystemMessageDialogView = ({ dialog }: { dialog: SystemMessageDialog }) =>
             bindings={{
                 '': { caption: dialog.title },
                 '#DESCRIPTION': { caption: dialog.message },
-                _alert_button_ok: { onPointerTap: confirm },
+                _alert_button_ok: { ...((dialog.okCaption !== undefined) ? { caption: dialog.okCaption } : {}), onPointerTap: confirm },
                 _alert_button_cancel: { visible: dialog.kind === 'confirm', onPointerTap: cancel },
                 ...((dialog.kind === 'alert') ? { _alert_button_custom: { visible: false } } : {}),
             }}

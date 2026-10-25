@@ -20,6 +20,9 @@
  *   every `lagWarningLog.interval.seconds` (10).
  *
  * Flash's `int` truncation is kept where the values go out as `int`s.
+ *
+ * `configReader`'s readers, copied: `tools/habbo-tracking.test.mjs` loads this file on its own, and Node does not
+ * resolve an extensionless import of a sibling module.
  */
 /** `getInteger(key, default)`: unset gives the default, anything else is `int(value)` - text that is no number is 0. */
 const configInteger = (config: Record<string, unknown>, key: string, defaultValue: number): number => {

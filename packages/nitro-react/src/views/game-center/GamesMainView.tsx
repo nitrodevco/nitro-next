@@ -27,6 +27,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useGameCenterStore } from '#base/context/game-center';
 import { useConfigBoolean, useSystemStore } from '#base/context/system';
 import { Box, TemplateBindings, TemplateItem, TemplateWindow, useTemplate, useTemplateFrame } from '#base/theme';
+import { twoDigits } from '#base/utils';
 
 const TEMPLATE = 'habbo-games-com/games_main';
 const PLAYER_TEMPLATE = 'habbo-games-com/snowwar_lobby_player';
@@ -61,7 +62,7 @@ const useAnimationFrame = (frames: number, length: number, key: string) => {
 };
 
 /** `checkBlockStatus`'s caption: minutes and two-digit seconds. */
-const blockCaption = (seconds: number) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+const blockCaption = (seconds: number) => `${Math.floor(seconds / 60)}:${twoDigits(seconds % 60)}`;
 
 export const GamesMainView = () => {
     const open = useGameCenterStore(x => x.open);

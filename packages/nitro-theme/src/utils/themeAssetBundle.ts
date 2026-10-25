@@ -29,7 +29,7 @@
  * an asset silently taking the slow path is how a regression hides.
  */
 import { GetAssetManager } from '@nitrodevco/nitro-renderer';
-import { SpritesheetData } from 'pixi.js';
+import { SpritesheetData, Texture } from 'pixi.js';
 
 import { registerThemeTexture, resetThemeTextures } from '../hooks/usePixiTexture';
 import { themeHost } from '../host';
@@ -75,10 +75,18 @@ export const preloadThemeAssets = async (bundle: string = BUNDLE_NAME): Promise<
     setTextStyleOverrides('theme', assetManager.getBundleFile(bundle, TEXT_STYLES_FILE));
     setFontFaceOverrides('theme', assetManager.getBundleFile(bundle, TEXT_FACES_FILE));
 
-    for (const [ key, asset ] of themeTextureKeys(Object.keys(manifest.frames), themeTextureAliases())) {
-        const texture = assetManager.getTexture(asset);
+    // A sprite the hotel replaced (`asset.overlays`, put in the asset manager as the bundle loaded) is a
+    // texture of its own: drawn as it is, and sliced from its own bitmap.
+    const overlays = new Map<string, { x: number; y: number; width: number; height: number; image: CanvasImageSource }>();
 
-        if (texture) registerThemeTexture(key, texture);
+    for (const [ key, asset ] of themeTextureKeys(Object.keys(manifest.frames), themeTextureAliases())) {
+        const texture: Texture | undefined = assetManager.getTexture(asset);
+
+        if (!texture) continue;
+
+        registerThemeTexture(key, texture);
+
+        if (texture.source !== sheet.source && texture.source.resource) overlays.set(asset, { x: texture.frame.x, y: texture.frame.y, width: texture.frame.width, height: texture.frame.height, image: texture.source.resource as CanvasImageSource });
     }
 
     // The `ImageBitmap` the bundle decoded to: a `CanvasImageSource`, which is all a slice needs.
@@ -86,7 +94,7 @@ export const preloadThemeAssets = async (bundle: string = BUNDLE_NAME): Promise<
 
     if (!image) return;
 
-    registerThemeAtlas({ image }, manifest.frames, themeTextureAliases());
+    registerThemeAtlas({ image }, manifest.frames, themeTextureAliases(), overlays);
 
     // The bundle's data is kept: the window manager's carries the library's templates too, which
     // `useTemplate` reads as they are drawn.

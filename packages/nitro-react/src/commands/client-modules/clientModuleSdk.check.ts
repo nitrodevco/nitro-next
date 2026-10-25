@@ -7,7 +7,7 @@
  * field the SDK lets a module pass, and give back what the SDK says it does.
  */
 import type * as Sdk from '@nitrodevco/client-module-sdk/types';
-import type { TemplateBinding, TemplatePatchOp, TemplatePatchReport } from '@nitrodevco/nitro-theme';
+import type { TemplateBinding, TemplateContext, TemplatePatchOp, TemplatePatchReport, TemplateWindows } from '@nitrodevco/nitro-theme';
 import type { ComponentProps } from 'react';
 
 import type * as Theme from '#base/theme';
@@ -29,6 +29,8 @@ export type ClientModuleSdkConformance = [
     Assert<Sdk.ClientModuleTemplatePatchOp extends TemplatePatchOp ? true : false>,
     Assert<Sdk.ClientModuleTemplateBinding extends TemplateBinding ? true : false>,
     Assert<Same<TemplatePatchReport, Sdk.ClientModuleTemplatePatchReport>>,
+    Assert<Same<TemplateContext, Sdk.ClientModuleTemplateContext>>,
+    Assert<TemplateWindows extends Sdk.ClientModuleTemplateWindows ? true : false>,
     Assert<SameKeys<ClientModuleApi['libs'], Sdk.ClientModuleApi['libs']>>,
     Assert<Same<ClientModuleApi['libs']['react'], Sdk.ClientModuleLibraries['react']>>,
     Assert<Sdk.ClientModuleBoxProps extends ComponentProps<typeof Theme.Box> ? true : false>,

@@ -23,17 +23,11 @@ import { useOwnCredits, useUserStore } from '#base/context/user';
 import { WiredChestUpgradeRequest } from '#base/context/wired-trading';
 import { useFurnitureImageTexture } from '#base/hooks';
 import { TemplateWindow, ThemeImage } from '#base/theme';
+import { configReader } from '#base/utils';
 
 /** `getActivityPointsForType(5)`: diamonds. */
 const DIAMONDS_TYPE = 5;
 const DEFAULT_UPGRADE_COST = 999;
-
-/** `getInteger(key, 999)`. */
-const configInteger = (config: Record<string, unknown>, key: string, fallback: number): number => {
-    const value = Number(config[key]);
-
-    return Number.isFinite(value) ? Math.trunc(value) : fallback;
-};
 
 /** `getFurnitureImage(type, Vector3d(90), 64)`: the chest furni at 64, facing 90 degrees. */
 const useChestTexture = (furniTypeId: number) => {
@@ -78,8 +72,10 @@ export const WiredChestUpgradeView = ({ request, onClose }: WiredChestUpgradeVie
     const initialCapacity = getWiredChestConfigInteger(config, chestType, 'initial_capacity');
     const upgradeCapacity = getWiredChestConfigInteger(config, chestType, 'upgrade_capacity');
     const maxUpgrades = getWiredChestConfigInteger(config, chestType, 'max_upgrades');
-    const costCredits = configInteger(config, 'wired.chests.upgrade_cost_credits', DEFAULT_UPGRADE_COST);
-    const costDiamonds = configInteger(config, 'wired.chests.upgrade_cost_diamonds', DEFAULT_UPGRADE_COST);
+    // `getInteger(key, 999)`.
+    const { configInteger } = configReader(config);
+    const costCredits = configInteger('wired.chests.upgrade_cost_credits', DEFAULT_UPGRADE_COST);
+    const costDiamonds = configInteger('wired.chests.upgrade_cost_diamonds', DEFAULT_UPGRADE_COST);
 
     // `initializeDropMenu`: "1", then one more for every level still to buy after the next.
     const amounts = [ '1' ];

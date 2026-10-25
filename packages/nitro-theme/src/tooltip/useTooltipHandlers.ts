@@ -1,5 +1,6 @@
-import { useEffect, useId, useMemo, useRef } from 'react';
+import { useEffect, useId, useMemo } from 'react';
 
+import { useLatest } from '../hooks/useLatest';
 import { PointerHandler } from '../utils/interaction';
 import { beginTooltip, endTooltip, TOOLTIP_DELAY_MS, updateTooltipText } from './tooltipStore';
 
@@ -17,15 +18,13 @@ export interface TooltipHandlers {
  */
 export const useTooltipHandlers = (text: string | undefined, delay?: number): TooltipHandlers => {
     const owner = useId();
-    const textRef = useRef(text);
-    const delayRef = useRef(delay);
+    const textRef = useLatest(text);
+    const delayRef = useLatest(delay);
     const hasTooltip = !!text;
 
     useEffect(() => {
-        textRef.current = text;
-        delayRef.current = delay;
         updateTooltipText(owner, text ?? '');
-    }, [ owner, text, delay ]);
+    }, [ owner, text ]);
 
     // A hovered component that unmounts takes its tooltip with it.
     useEffect(() => () => endTooltip(owner), [ owner ]);

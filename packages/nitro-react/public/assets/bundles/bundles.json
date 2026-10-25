@@ -245,12 +245,10 @@
         "onboarding-icon_name_alert": "onboarding/icon_name_alert.png",
         "onboarding-icon_name_ok": "onboarding/icon_name_ok.png",
         "onboarding-icon_yes": "onboarding/icon_yes.png",
-        "onboarding-input_corrected_hitch": "onboarding/input_corrected_hitch.png",
         "onboarding-input_error_alert_hitch": "onboarding/input_error_alert_hitch.png",
         "onboarding-input_error_hitch": "onboarding/input_error_hitch.png",
         "onboarding-input_field_hitch": "onboarding/input_field_hitch.png",
-        "onboarding-rnd_button": "onboarding/rnd_button.png",
-        "onboarding-room_image_border_new": "onboarding/room_image_border_new.png"
+        "onboarding-rnd_button": "onboarding/rnd_button.png"
       },
       "absorbed": [
         "onboarding/avatar_glow.png",
@@ -294,14 +292,12 @@
         "onboarding/icon_name_alert.png",
         "onboarding/icon_name_ok.png",
         "onboarding/icon_yes.png",
-        "onboarding/input_corrected_hitch.png",
         "onboarding/input_error_alert_hitch.png",
         "onboarding/input_error_hitch.png",
         "onboarding/input_field_hitch.png",
-        "onboarding/rnd_button.png",
-        "onboarding/room_image_border_new.png"
+        "onboarding/rnd_button.png"
       ],
-      "sources": "80cc0554b5cb1aac"
+      "sources": "c630acc9abfffaa3"
     }
   ]
 }

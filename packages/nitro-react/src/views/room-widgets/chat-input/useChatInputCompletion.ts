@@ -2,6 +2,7 @@ import { RoomObjectUserType } from '@nitrodevco/nitro-api';
 import { RefObject, useEffect, useMemo, useState } from 'react';
 
 import { requestChatCommandSuggestions } from '#base/commands';
+import { clientModuleChatCommandEntry, useClientModulesStore } from '#base/context/client-modules';
 import { useWebSocketContext } from '#base/context/communication';
 import { useOwnControllerLevel, useRoomStore } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
@@ -37,6 +38,7 @@ export const useChatInputCompletion = ({ value, valueRef, cursor, focused, onTak
     const { send } = useWebSocketContext();
     const mayUseWired = useClientGate(ClientGates.WiredMenu);
     const chatCommands = useUserStore(x => x.chatCommands);
+    const moduleChatCommands = useClientModulesStore(x => x.chatCommands);
     const chatCommandSuggestions = useUserStore(x => x.chatCommandSuggestions);
     const controllerLevel = useOwnControllerLevel();
     const usersByRoomObjectId = useRoomStore(x => x.usersByRoomObjectId);
@@ -48,7 +50,7 @@ export const useChatInputCompletion = ({ value, valueRef, cursor, focused, onTak
 
     const roomUserNames = useMemo(() => Object.values(usersByRoomObjectId).filter(x => x.userType === RoomObjectUserType.User).map(x => x.name), [ usersByRoomObjectId ]);
 
-    // The client's own `:words` and, from a Turbo server, the commands it says the user may use.
+    // The client's own `:words`, the client modules' (`api.chatCommands`) and, from a Turbo server, the commands it says the user may use.
     const commands = useMemo(() => mergeChatCommands(chatInputClientCommands({
         whisperMode: t('widgets.chatinput.mode.whisper', ':whisper'),
         shoutMode: t('widgets.chatinput.mode.shout', ':shout'),
@@ -68,7 +70,7 @@ export const useChatInputCompletion = ({ value, valueRef, cursor, focused, onTak
         resetScores: t('widgets.chatinput.command.resetscores', 'Reset the room\'s scores'),
         ejectAll: t('widgets.chatinput.command.ejectall', 'Eject everyone else\'s furni from the room'),
         ejectPets: t('widgets.chatinput.command.ejectpets', 'Send the pets in the room home'),
-    }, mayUseWired), chatCommands ?? []), [ t, mayUseWired, chatCommands ]);
+    }, mayUseWired), mergeChatCommands(moduleChatCommands.map(entry => clientModuleChatCommandEntry(entry.moduleKey, entry.command)), chatCommands ?? [])), [ t, mayUseWired, chatCommands, moduleChatCommands ]);
 
     const completion = useMemo<IChatCommandCompletion>(() => (focused
         ? completeChatCommand({ text: value, cursor, commands, controllerLevel, roomUserNames, serverValues: chatCommandSuggestions })

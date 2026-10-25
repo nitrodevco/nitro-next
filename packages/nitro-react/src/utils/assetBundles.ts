@@ -15,6 +15,9 @@
  */
 import { GetConfigValue, GetTemplateBundleUrl, NitroLogger } from '@nitrodevco/nitro-api';
 import { DownloadTemplateBundle, GetAssetManager } from '@nitrodevco/nitro-renderer';
+import { ASSET_OVERLAYS_KEY } from '@nitrodevco/nitro-theme';
+
+import { applyAssetOverlays, forgetAssetOverlays } from './assetOverlays';
 
 /** Where the bundles this repo builds and ships are, when the hotel's config names no other place. */
 const DEFAULT_BUNDLE_URL = '/assets/bundles/%name%.nitro';
@@ -68,20 +71,25 @@ export const assetBundleUrl = (name: string): string | undefined => {
  * path that needs one: the `AssetManager` keeps the promise, so a bundle is only ever read once.
  * `false` without a request for a library's bundle when the config names no url for it. A library's
  * bundle a theme pack's url fails to load comes from the hotel's own url instead (`DownloadTemplateBundle`).
+ * The hotel's `asset.overlays` for the bundle are over its bitmaps by the time it resolves (`applyAssetOverlays`).
  */
 export const loadAssetBundle = async (name: string): Promise<boolean> => {
-    if (name.startsWith(LIBRARY_PREFIX)) return !!await DownloadTemplateBundle(name);
+    const url = name.startsWith(LIBRARY_PREFIX) ? undefined : assetBundleUrl(name);
+    const loaded = name.startsWith(LIBRARY_PREFIX) ? !!await DownloadTemplateBundle(name) : (!!url && !!await GetAssetManager().downloadAssetBundle(name, url));
 
-    const url = assetBundleUrl(name);
+    if (loaded) await applyAssetOverlays(name, GetConfigValue(ASSET_OVERLAYS_KEY));
 
-    return !!url && !!await GetAssetManager().downloadAssetBundle(name, url);
+    return loaded;
 };
 
 /**
  * Drops a bundle that is done with - the loading screen's, once the client has replaced it - and
  * frees its textures on the GPU. Nothing may still draw from it.
  */
-export const unloadAssetBundle = (name: string): void => GetAssetManager().removeAssetBundle(name);
+export const unloadAssetBundle = (name: string): void => {
+    GetAssetManager().removeAssetBundle(name);
+    forgetAssetOverlays(name);
+};
 
 /**
  * A Flash library's window templates and every bitmap of the library's, in a bundle named after it -

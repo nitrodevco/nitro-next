@@ -1,8 +1,9 @@
 import { GetRenderer } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer } from 'pixi.js';
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect } from 'react';
 
 import { ClientPointToStage } from '../utils/GetPixelRatio';
+import { useLatest } from './useLatest';
 
 /**
  * Calls `callback` on any press outside `ref`'s container - what Flash tells a window as `WME_CLICK_AWAY`. Every
@@ -15,11 +16,7 @@ export const useOutsideClick = <T extends PixiContainer>(ref: RefObject<T | null
     // itself stable across re-renders instead of tearing down/re-adding the window listener (and
     // dropping it during any render that happens between pointerdown and its own effect re-run)
     // every time the caller re-renders.
-    const callbackRef = useRef(callback);
-
-    useEffect(() => {
-        callbackRef.current = callback;
-    }, [ callback ]);
+    const callbackRef = useLatest(callback);
 
     useEffect(() => {
         if (!enabled) return;

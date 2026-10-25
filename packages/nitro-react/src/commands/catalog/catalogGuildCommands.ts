@@ -1,18 +1,29 @@
 /**
  * The catalogue's group calls - Flash's `GuildMembershipsController.registerGuildSelectorWidget`
- * (the guild selector widgets register when their page is up, and that asks for the user's groups)
- * and `BuyGuildWidget`'s buy button (`GetGuildCreationInfoComposer`, then the catalogue closes).
+ * (the guild selector widgets register when their page is up, and that asks for the user's groups),
+ * its `onGuildVisualSettingsChanged` and `BuyGuildWidget`'s buy button (`GetGuildCreationInfoComposer`, then the catalogue closes).
  */
 import { GetGuildCreationInfoComposer, GetGuildMembershipsComposer } from '@nitrodevco/nitro-packets';
 import { StoreApi } from 'zustand';
 
-import { CatalogGuildSelector, CatalogStore } from '#base/context/catalog';
+import { CatalogGuildSelector, CatalogStore, getCreatedCatalogStores } from '#base/context/catalog';
 import { Send } from '#base/context/communication';
 import { systemStore } from '#base/context/system';
 
 /** `registerGuildSelectorWidget`: the widget the memberships go to, and the request for them. */
 export const registerGuildSelectorWidget = (send: Send, store: StoreApi<CatalogStore>, widget: CatalogGuildSelector) => {
     store.getState().setGuildSelectorWidget(widget);
+
+    send(new GetGuildMembershipsComposer({}));
+};
+
+/**
+ * `HabboCatalog.onGuildVisualSettingsChanged` -> `GuildMembershipsController.onGuildVisualSettingsChanged`:
+ * the groups manager saved a group's name, badge or colours (`GSCIME_GUILD_VISUAL_SETTINGS_CHANGED`),
+ * so a guild selector on show asks for the memberships again and repaints from the answer.
+ */
+export const onGuildVisualSettingsChanged = (send: Send) => {
+    if (!getCreatedCatalogStores().some(store => !!store.getState().guildSelectorWidget)) return;
 
     send(new GetGuildMembershipsComposer({}));
 };

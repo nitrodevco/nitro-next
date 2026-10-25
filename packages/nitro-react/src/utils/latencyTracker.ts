@@ -12,6 +12,9 @@
  *   `report.delta` since the last report - and the answers start over.
  *
  * Flash's `int` truncation is kept: the averages are whole milliseconds.
+ *
+ * `configReader`'s readers, copied: `tools/latency-tracker.test.mjs` loads this file on its own, and Node does not
+ * resolve an extensionless import of a sibling module.
  */
 export interface LatencyReport {
     averageLatency: number;

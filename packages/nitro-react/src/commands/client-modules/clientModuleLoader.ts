@@ -15,6 +15,10 @@
  *
  * A module that fails to load or throws in `activate` is stopped and left out; the others run.
  * Changes are applied one message at a time, in the order they came.
+ *
+ * A module refused or failing is said loudly: a console warning (the logger's are quiet by default)
+ * naming what to change, and a report to the server (`reportClientExtension`), whose log and
+ * extension inspector name it too - a refused module otherwise just never runs.
  */
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { ITurboClientModule } from '@nitrodevco/nitro-packets';
@@ -23,6 +27,7 @@ import { CLIENT_MODULES_HOSTS_KEY } from '#base/context/client-modules';
 import { WebSocketConnection } from '#base/context/communication';
 import { systemStore } from '#base/context/system';
 
+import { reportClientExtension } from './clientExtensionReports';
 import { ClientModuleApi } from './ClientModuleApi';
 import { getClientModuleLibraries } from './clientModuleLibraries';
 import { createClientModuleApi } from './createClientModuleApi';
@@ -50,20 +55,33 @@ const allowedHosts = (): string[] => {
     return list.map(entry => String(entry).trim().toLowerCase()).filter(entry => entry.length);
 };
 
-/** The module's URL when it may be loaded, `undefined` (and a warning) when not. */
-export const resolveClientModuleUrl = (url: string): URL | undefined => {
+/** Why a module did not run, as the server's inspector files it. */
+type RefusalReason = 'url' | 'host' | 'hash' | 'load' | 'exports' | 'activate';
+
+/** Says a module did not run: a console warning, and a report to the server when the module's owner is known. */
+const refuse = (owner: string | undefined, url: string, reason: RefusalReason, message: string, error?: unknown) => {
+    const text = owner ? `Client module ${owner} did not run: ${message}` : `Client module refused: ${message}`;
+
+    if (error === undefined) console.warn(`[ClientModules] ${text}`);
+    else console.warn(`[ClientModules] ${text}`, error);
+
+    if (owner) reportClientExtension({ owner, kind: reason === 'activate' ? 'module.failed' : 'module.refused', subject: url, reason, message });
+};
+
+/** The module's URL when it may be loaded, `undefined` (and a warning, reported for `owner`) when not. */
+export const resolveClientModuleUrl = (url: string, owner?: string): URL | undefined => {
     let resolved: URL;
 
     try {
         resolved = new URL(url, window.location.href);
     } catch {
-        NitroLogger.warn('ClientModules', `Refused ${url}: not a URL.`);
+        refuse(owner, url, 'url', `${url} is not a URL.`);
 
         return undefined;
     }
 
     if ((resolved.protocol !== 'https:') && (resolved.protocol !== 'http:')) {
-        NitroLogger.warn('ClientModules', `Refused ${resolved.href}: only http(s) modules are loaded.`);
+        refuse(owner, resolved.href, 'url', `${resolved.href}: only http(s) modules are loaded.`);
 
         return undefined;
     }
@@ -74,7 +92,7 @@ export const resolveClientModuleUrl = (url: string): URL | undefined => {
 
     if (hosts.includes(resolved.origin.toLowerCase()) || hosts.includes(resolved.host.toLowerCase())) return resolved;
 
-    NitroLogger.warn('ClientModules', `Refused ${resolved.href}: ${resolved.origin} is not in client.modules.hosts.`);
+    refuse(owner, resolved.href, 'host', `${resolved.origin} is not in the hotel's ${CLIENT_MODULES_HOSTS_KEY} (external variables). Add "${resolved.origin}" to ${CLIENT_MODULES_HOSTS_KEY}, or serve plugin files from ${window.location.origin}.`);
 
     return undefined;
 };
@@ -82,11 +100,11 @@ export const resolveClientModuleUrl = (url: string): URL | undefined => {
 const toHex = (buffer: ArrayBuffer) => Array.from(new Uint8Array(buffer), byte => byte.toString(16).padStart(2, '0')).join('');
 
 /** The module's exports: imported from the URL, or from the checked bytes when it has a SHA-256. */
-const importModule = async (url: URL, sha256: string): Promise<ClientModuleExports | undefined> => {
+const importModule = async (owner: string, url: URL, sha256: string): Promise<ClientModuleExports | undefined> => {
     if (!sha256.length) return await import(/* @vite-ignore */ url.href) as ClientModuleExports;
 
     if (!globalThis.crypto?.subtle) {
-        NitroLogger.warn('ClientModules', `Refused ${url.href}: this page cannot check a SHA-256 (no crypto.subtle).`);
+        refuse(owner, url.href, 'hash', `${url.href}: this page cannot check a SHA-256 (no crypto.subtle; serve the client over https).`);
 
         return undefined;
     }
@@ -94,7 +112,7 @@ const importModule = async (url: URL, sha256: string): Promise<ClientModuleExpor
     const response = await fetch(url.href, { credentials: 'omit' });
 
     if (!response.ok) {
-        NitroLogger.warn('ClientModules', `Refused ${url.href}: HTTP ${response.status}.`);
+        refuse(owner, url.href, 'load', `${url.href} answered HTTP ${response.status}.`);
 
         return undefined;
     }
@@ -103,7 +121,7 @@ const importModule = async (url: URL, sha256: string): Promise<ClientModuleExpor
     const digest = toHex(await crypto.subtle.digest('SHA-256', bytes));
 
     if (digest !== sha256.toLowerCase()) {
-        NitroLogger.warn('ClientModules', `Refused ${url.href}: SHA-256 ${digest} is not the ${sha256} the server named.`);
+        refuse(owner, url.href, 'hash', `${url.href}: SHA-256 ${digest} is not the ${sha256} the server named (the file changed after the server read it).`);
 
         return undefined;
     }
@@ -142,7 +160,7 @@ const stopModule = (key: string) => {
 };
 
 const startModule = async (connection: WebSocketConnection, module: ITurboClientModule) => {
-    const url = resolveClientModuleUrl(module.url);
+    const url = resolveClientModuleUrl(module.url, module.key);
 
     if (!url) return;
 
@@ -152,11 +170,11 @@ const startModule = async (connection: WebSocketConnection, module: ITurboClient
     let exports: ClientModuleExports | undefined;
 
     try {
-        const namespace = await importModule(url, module.sha256);
+        const namespace = await importModule(module.key, url, module.sha256);
 
         exports = namespace && readExports(namespace as Record<string, unknown>);
     } catch (error) {
-        NitroLogger.error('ClientModules', `${module.key}: ${url.href} did not load`, error);
+        refuse(module.key, url.href, 'load', `${url.href} did not load: ${error instanceof Error ? error.message : String(error)}`, error);
 
         return;
     }
@@ -164,7 +182,7 @@ const startModule = async (connection: WebSocketConnection, module: ITurboClient
     if (!exports) return;
 
     if (!exports.activate) {
-        NitroLogger.warn('ClientModules', `${module.key}: ${url.href} exports no activate(api).`);
+        refuse(module.key, url.href, 'exports', `${url.href} exports no activate(api).`);
 
         return;
     }
@@ -176,7 +194,7 @@ const startModule = async (connection: WebSocketConnection, module: ITurboClient
     try {
         await exports.activate(api);
     } catch (error) {
-        NitroLogger.error('ClientModules', `${module.key}: activate threw`, error);
+        refuse(module.key, url.href, 'activate', `activate threw: ${error instanceof Error ? error.message : String(error)}`, error);
         stopModule(module.key);
     }
 };
@@ -213,6 +231,3 @@ export const stopClientModules = () => {
 
     return queue;
 };
-
-/** The running modules' keys and versions, for diagnostics. */
-export const getRunningClientModules = () => [ ...running.values() ].map(({ module }) => ({ key: module.key, version: module.version }));

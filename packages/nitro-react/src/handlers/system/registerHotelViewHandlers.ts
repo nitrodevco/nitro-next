@@ -45,7 +45,7 @@ import {
 
 import { WebSocketConnection } from '#base/context/communication';
 import {
-    applyHotelViewTiming, BOTTOM_SLOT_LANDING_VIEW_WIDGETS, CONCURRENT_USERS_UPDATE_INTERVAL_MS, hallOfFameSchedule, HOTEL_VIEW_BOTTOM_SLOT, hotelViewBadgeRequestCode, hotelViewCodeWidget, hotelViewCommunityGoalScorePollMillis, hotelViewCompetitionGoalCode, hotelViewGenericConf, HotelViewGenericElement, hotelViewProperty, hotelViewSlotSchedule, hotelViewSlotWidget, hotelViewTimerTimeStr, initialHotelViewBackgrounds, isConcurrentUsersGoalReached, LANDING_VIEW_DYNAMIC_SLOTS,
+    applyHotelViewTiming, BOTTOM_SLOT_LANDING_VIEW_WIDGETS, CONCURRENT_USERS_UPDATE_INTERVAL_MS, configBoolean, hallOfFameSchedule, HOTEL_VIEW_BOTTOM_SLOT, hotelViewBadgeRequestCode, hotelViewCodeWidget, hotelViewCommunityGoalScorePollMillis, hotelViewCompetitionGoalCode, hotelViewGenericConf, HotelViewGenericElement, hotelViewProperty, hotelViewSlotSchedule, hotelViewSlotWidget, hotelViewTimerTimeStr, initialHotelViewBackgrounds, isConcurrentUsersGoalReached, LANDING_VIEW_DYNAMIC_SLOTS,
     LANDING_VIEW_ELEMENT_COMMUNITYGOALSCORE, LANDING_VIEW_ELEMENT_COMMUNITYGOALTIMER, LANDING_VIEW_ELEMENT_CONCURRENTUSERSINFO, LANDING_VIEW_ELEMENT_CUSTOMTIMER,
     LANDING_VIEW_ELEMENT_DAILYQUEST,
     LANDING_VIEW_ELEMENT_REQUESTBADGEBUTTONS, LANDING_VIEW_ELEMENT_SUBMITCOMPETITIONROOM, LandingViewWidgetType, parseHotelViewGenericConf, systemStore,
@@ -92,7 +92,7 @@ export const registerHotelViewHandlers = ({ send, subscribe }: WebSocketConnecti
 
     /** `NextLimitedRareCountdownWidget.requestNextLimitedRare`. */
     const requestNextLimited = () => {
-        if (hotelViewProperty(systemStore.getState().config, 'next.limited.rare.countdown.widget.disabled') === 'true') return;
+        if (configBoolean('next.limited.rare.countdown.widget.disabled')) return;
 
         send(new GetLimitedOfferAppearingNextComposer({}));
     };

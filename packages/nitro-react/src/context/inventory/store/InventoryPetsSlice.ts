@@ -14,8 +14,8 @@
  *   packet.
  *
  * Which pets are new is the unseen item tracker's (`InventoryUnseenSlice`, category 3), which the
- * grid reads for its thumbs; Flash keeps no order for them. Not ported: the pet breeding dialogs,
- * which are their own feature.
+ * grid reads for its thumbs; Flash keeps no order for them. Breeding is the room's
+ * (`RoomNestBreedingWidget`, `commands/room/roomPetCommands`), not the inventory's.
  */
 import { IPetData } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';

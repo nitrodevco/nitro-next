@@ -76,16 +76,10 @@ export const useScrollController = ({
     const [ trackNode, setTrackNode ] = useState<PixiContainer | null>(null);
 
     const [ scrollOffset, setScrollOffset ] = useState(0);
-    const scrollOffsetRef = useRef(0);
-    useEffect(() => {
-        scrollOffsetRef.current = scrollOffset;
-    }, [ scrollOffset ]);
+    const scrollOffsetRef = useLatest(scrollOffset);
 
     const [ metrics, setMetrics ] = useState({ thumbSize: minThumbSize, thumbOffset: 0, atStart: true, atEnd: true, scrollable: false, scrollMax: 0 });
-    const metricsRef = useRef(metrics);
-    useEffect(() => {
-        metricsRef.current = metrics;
-    }, [ metrics ]);
+    const metricsRef = useLatest(metrics);
 
     const wasAtStartRef = useRef(true);
     const wasAtEndRef = useRef(true);

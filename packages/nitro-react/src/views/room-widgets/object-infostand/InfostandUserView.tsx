@@ -298,6 +298,8 @@ export const InfostandUserView = ({ objectData, onClose }: InfostandUserViewProp
             id="habbo-room-ui-com/user_view"
             bindings={bindings}
             arrange={arrange}
+            // Not Flash's: who is shown, for extensions that skin the infostand by it (`docs/template-patches.md`).
+            context={{ type: 'user', userId: info.webId, name: info.name, figure: info.figure, gender: info.gender, isOwnUser: info.isOwnUser }}
         />
     );
 };

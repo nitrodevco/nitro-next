@@ -23,3 +23,6 @@ export const getCatalogStore = (catalogType: CatalogTypeEnum): StoreApi<CatalogS
 
     return store;
 };
+
+/** The catalogue stores made so far - a catalogue nobody has opened has no widget to tell. */
+export const getCreatedCatalogStores = (): StoreApi<CatalogStore>[] => [ ...catalogStores.values() ];

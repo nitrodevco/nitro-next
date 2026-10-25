@@ -18,7 +18,7 @@ import {
 
 import { Send } from '#base/context/communication';
 import {
-    canAddToTrading, getInventoryFurniItemsForTrade, getSelectedFurniGroup, INVENTORY_FURNI_CATEGORY_GUILD_FURNI, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_TRADE_MAX_ITEMS, INVENTORY_TRADING_COUNTDOWN_SECONDS, INVENTORY_TRADING_STATE_CANCELLED,
+    canAddToTrading, getInventoryFurniItemsForTrade, getSelectedFurniGroup, hasTradingOffer, INVENTORY_FURNI_CATEGORY_GUILD_FURNI, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_TRADE_MAX_ITEMS, INVENTORY_TRADING_COUNTDOWN_SECONDS, INVENTORY_TRADING_STATE_CANCELLED,
     INVENTORY_TRADING_STATE_COMPLETED, INVENTORY_TRADING_STATE_CONFIRMED, INVENTORY_TRADING_STATE_CONFIRMING,
     INVENTORY_TRADING_STATE_COUNTDOWN, INVENTORY_TRADING_STATE_READY, INVENTORY_TRADING_STATE_RUNNING, InventoryFurniGroup, InventoryFurniItem, inventoryStore, InventoryTradingUserSetup, isWeb3Trading, peekInventoryFurni,
 } from '#base/context/inventory';
@@ -290,11 +290,21 @@ export const onInventoryClosedDuringTrade = (send: Send) => {
     closeInventoryTrading(send);
 };
 
-/** `TradingView.windowEventProc`'s accept button: accept, take it back, or confirm, by the state. */
+/**
+ * `TradingView.windowEventProc`'s accept button: accept, take it back, or confirm, by the state.
+ * Accepting while the other side offers nothing raises `alertPopup(0)`'s scam warning, and the
+ * accept still goes out.
+ */
 export const onTradingAcceptPressed = (send: Send) => {
-    const { tradingState, tradingOwnUser } = inventoryStore.getState();
+    const { tradingState, tradingOwnUser, tradingOtherUser } = inventoryStore.getState();
 
     if (tradingState === INVENTORY_TRADING_STATE_RUNNING) {
+        if (!hasTradingOffer(tradingOtherUser) && !tradingOwnUser.accepts) {
+            const { getLocalizationValue, showAlert } = systemStore.getState();
+
+            showAlert(getLocalizationValue('inventory.trading.notification.title'), getLocalizationValue('inventory.trading.warning.other_not_offering'));
+        }
+
         if (tradingOwnUser.accepts) requestUnacceptTrading(send);
         else requestAcceptTrading(send);
 

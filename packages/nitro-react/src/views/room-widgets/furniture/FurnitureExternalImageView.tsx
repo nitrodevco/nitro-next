@@ -19,9 +19,9 @@ import { FurnitureTemplatePanel } from './FurnitureTemplatePanel';
  * `reportButton` reports the photo (`openReportImage`, `HabboHelp.startPhotoReportingInNewCfhFlow`),
  * `senderNameButton` opens the sender's profile (`GetExtendedProfileMessageComposer(senderId)`) and
  * `nextButton` / `previousButton` browse the room's other wall items of the same type (`drawImage`
- * shows them for two or more, and never for an inventory item).
- * What this port leaves out: the remove button of `buttonContainer` (the `deleteCard` confirmation is
- * not ported), the moderator's name copy (`name_copy_wrapper`) and the share area.
+ * shows them for two or more, and never for an inventory item). `removebutton` asks to delete the photo
+ * for good (`removeButtonContainer`, shown by `hasRightsToRemove`).
+ * What this port leaves out: the moderator's name copy (`name_copy_wrapper`) and the share area.
  */
 export interface FurnitureExternalImageViewProps {
     imageUrl: string;
@@ -33,6 +33,10 @@ export interface FurnitureExternalImageViewProps {
     reportVisible: boolean;
     /** `reportButton`: `openReportImage`. */
     onReport: () => void;
+    /** `showWithRoomObject`: `removeButtonContainer` shows from controller level 4 up (`hasRightsToRemove`), never for an inventory item. */
+    removeVisible: boolean;
+    /** `removebutton`: the delete confirmation. */
+    onRemove: () => void;
     /** `nextButton` / `previousButton`: shown for two or more wall items of the type in the room. */
     browseVisible: boolean;
     /** `showNext` (1) / `showPrevious` (-1). */
@@ -50,7 +54,7 @@ const BROWSE_BUTTON_SIZE = 64;
 /** `imageLoader`'s layout size, which `clearImage` fills black (less its 1px outline) until the photo is in. */
 const EMPTY_IMAGE_SIZE = 322;
 
-export const FurnitureExternalImageView = ({ imageUrl, creatorName, time, reportVisible, onReport, browseVisible, onBrowse, onSender, onClose }: FurnitureExternalImageViewProps) => {
+export const FurnitureExternalImageView = ({ imageUrl, creatorName, time, reportVisible, onReport, removeVisible, onRemove, browseVisible, onBrowse, onSender, onClose }: FurnitureExternalImageViewProps) => {
     const viewport = useViewportSize();
     const texture = useTextureFromUrl(imageUrl || undefined);
     const date = new Date(time);
@@ -129,7 +133,8 @@ export const FurnitureExternalImageView = ({ imageUrl, creatorName, time, report
                 },
                 reportButtonContainer: { visible: reportVisible },
                 reportButton: { onPointerTap: onReport },
-                removeButtonContainer: { visible: false },
+                removeButtonContainer: { visible: removeVisible },
+                removebutton: { onPointerTap: onRemove },
                 closebutton: { onPointerTap: onClose },
                 previousButton: { visible: browseVisible, onPointerTap: () => onBrowse(-1) },
                 nextButton: { visible: browseVisible, onPointerTap: () => onBrowse(1) },

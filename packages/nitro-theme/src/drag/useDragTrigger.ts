@@ -11,7 +11,7 @@ import { DragTargetContext, DragTargetController } from './DragTargetContext';
  * the claim is read off the path instead: a node between the two with a press or click handler
  * of its own takes the press.
  */
-const reachedUnclaimed = (event: FederatedPointerEvent): boolean => {
+export const reachedUnclaimed = (event: FederatedPointerEvent): boolean => {
     let node = event.target as PixiContainer | null;
 
     while (node && node !== event.currentTarget) {

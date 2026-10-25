@@ -43,7 +43,7 @@ void test('the module runs on the client\'s React and theme, and its components 
         react: React,
         reactJsxRuntime: ReactJsxRuntime,
         zustand: { useStore: () => undefined },
-        theme: { Frame, Box: Leaf('box'), Button: Leaf('button'), ThemeText: Leaf('text'), TemplateWindow: Leaf('template') as never },
+        theme: { Frame, Box: Leaf('box'), Button: Leaf('button'), Region: Leaf('region'), RichText: Leaf('richtext') as never, ThemeText: Leaf('text'), TemplateWindow: Leaf('template') as never },
         stores: { room: undefined, system: undefined, user: undefined },
     };
 

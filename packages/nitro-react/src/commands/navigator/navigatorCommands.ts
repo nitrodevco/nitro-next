@@ -86,6 +86,33 @@ export const reportRoomFromWeb = (send: Send, globalId: string, reportedName: st
  */
 export const goToPrivateRoom = (send: Send, roomId: number) => send(new GetGuestRoomComposer({ roomId, enterRoom: false, roomForward: true }));
 
+/** `HabboNewNavigator`'s pending forward: the room an `ask_forward` link asked about, until its info is in; -1 for none. */
+let askForwardRoomId = -1;
+
+/**
+ * `HabboNewNavigator.linkReceived`, `navigator/ask_forward/<roomId>`: the room's plain info
+ * (`GetGuestRoomMessageComposer(id, false, false)`), which `confirmAskForward` then offers to enter.
+ */
+export const askForwardToRoom = (send: Send, roomId: number) => {
+    askForwardRoomId = roomId;
+    send(new GetGuestRoomComposer({ roomId, enterRoom: false, roomForward: false }));
+};
+
+/**
+ * `HabboNewNavigator.onRoomInfo`, for plain room info: the room an `ask_forward` link asked about
+ * is offered once - "go to <room>?" (`navigator.forward_confirmation.*`), and on ok
+ * `goToPrivateRoom`. Any other room's info leaves the question open.
+ */
+export const confirmAskForward = (send: Send, roomId: number, roomName: string) => {
+    if ((askForwardRoomId === -1) || (roomId !== askForwardRoomId)) return;
+
+    askForwardRoomId = -1;
+
+    const { interpolate, getLocalizationValue, showConfirm } = systemStore.getState();
+
+    showConfirm(interpolate('${navigator.forward_confirmation.title}'), getLocalizationValue('navigator.forward_confirmation.desc', '', { room_name: roomName }), () => goToPrivateRoom(send, roomId));
+};
+
 /**
  * `HabboNavigator.goToHomeRoom` -> `HabboNewNavigator.goToHomeRoom`: the home room is entered
  * through a room forward (`goToRoom(homeRoomId, "external")`), so a locked or password

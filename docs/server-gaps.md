@@ -10,7 +10,7 @@ This is the opposite of [Feature gaps](feature-gaps.md), which lists what the cl
 ported. A feature can be in both lists: the server's half here, the client's there.
 
 As of client revision `WIN63-202609091217-117204808` and Turbo revision `Revision20260909`:
-17 packets sent and 55 listened to. Update the list when a gap is closed on either side.
+15 packets sent and 52 listened to. Update the list when a gap is closed on either side.
 
 ## How the list is made
 
@@ -38,19 +38,20 @@ Every one of these has a header in Turbo but no parser registered for it.
 | Area | Packets | Client |
 |---|---|---|
 | Recycler | `GetRecyclerStatus`, `GetRecyclerPrizes`, `RecycleItems` | `commands/catalog/catalogRecyclerCommands.ts` |
-| Game tokens | `GetSnowWarGameTokensOffer`, `PurchaseSnowWarGameTokensOffer` | `commands/game-tokens/gameTokensCommands.ts` |
-| NFT collectibles | `ClaimNftClaims`, `NftStorePurchase`, `RedeemNftLootBox`, `ProgressTreasureHunt` | `commands/collectibles/collectiblesRewardClaimsCommands.ts`, `collectiblesPurchaseCommands.ts`, `collectiblesCommands.ts`, `useRoomFurnitureActionHandler` |
+| Game tokens | `GetSnowWarGameTokensOffer`, `PurchaseSnowWarGameTokensOffer` | `commands/game-tokens/gameTokensCommands.ts`, `commands/game-center/gameCenterCommands.ts` |
+| NFT collectibles | `ClaimNftClaims`, `NftStorePurchase`, `RedeemNftLootBox`, `ProgressTreasureHunt` | `commands/collectibles/collectiblesRewardClaimsCommands.ts`, `collectiblesPurchaseCommands.ts`, `collectiblesCommands.ts`, `commands/wired/wiredCommands.ts`, `useRoomFurnitureActionHandler` |
 | NFT trading | `GetNftTradeInventory`, `AddNftToTrade`, `RemoveNftFromTrade` | `commands/inventory/inventoryTradingCommands.ts` |
-| Wired | `WiredGetVariableOwnersPage`, `WiredGetUserPermanentVariables`, `WiredSetUserPermanentVariable` | `commands/wired/wiredMenuOverviewCommands.ts`, `wiredVariableManagementCommands.ts` |
 | Wired trading | `SelfDonateItem` | `commands/wired-trading/wiredTradingCommands.ts` |
 
 `RedeemNftLootBox` is `UnknownOutgoing_41H` in Turbo's headers: Turbo knows the id but not the
 packet.
 
-The tool also reports `TurboBugReportCapture` (21001) here and `TurboBugReportRequest` (21000)
-below as `no Turbo header`. They are not gaps: they are the `bugreport` extension of Turbo's bug
-report plugin (`context/bugreport/bugReportCapture.ts`), not part of the revision, so the
-revision's headers never name them.
+The tool also reports `TurboBugReportCapture` (21001) and `TurboClientErrorReport` (21100) here
+and `TurboBugReportRequest` (21000) below as `no Turbo header`. They are not gaps: they are the
+`bugreport` extension of Turbo's bug report plugin (`context/bugreport/bugReportCapture.ts`) and
+the `clienterrors` extension of its client errors plugin
+(`context/clienterrors/clientErrorReporter.ts`), not part of the revision, so the revision's
+headers never name them.
 
 ## Listened to by the client, never sent by Turbo
 
@@ -68,14 +69,14 @@ nothing sends it.
 | Room: bots | `BotSkillListUpdate` | never sent |
 | Room: queue | `RoomQueueStatus` | never sent |
 | Room: sound | `PlayListSongAdded` | never sent |
-| Navigator | `ShowEnforceRoomCategoryDialog`, `RoomAdError` | never sent |
+| Navigator | `ShowEnforceRoomCategoryDialog` | never sent |
 | Inventory | `FurniListRemoveMultiple` | never sent |
 | Catalogue | `FurniRentOrBuyoutOffer` | never sent |
 | Recycler | `RecyclerStatus`, `RecyclerPrizes`, `RecyclerFinished` | no serializer |
 | Offer centre | `OfferRewardDelivered` | never sent |
 | Game tokens | `SnowWarGameTokens` | never sent |
+| Game centre | `Game2GameLongData`, `Game2InArenaQueue`, `Game2UserBlocked` | never sent |
 | Quests | `CitizenshipVipOfferPromoEnabled` | never sent |
-| Help | `CallForHelpReply`, `CallForHelpDisabledNotify` | never sent |
 | User and account | `InClientLink` (its serializer writes nothing), `EmailStatusResult`, `AccountSafetyLockStatusChange`, `AvatarEffectSelected` | never sent |
 | Chat styles | `UserPurchasableChatStyleChanged` | no serializer |
 | Messenger | `MiniMailNew`, `MiniMailUnreadCount` | never sent |
@@ -83,8 +84,7 @@ nothing sends it.
 | Hotel status | `InfoHotelClosed`, `LoginFailedHotelClosed` | never sent |
 | NFT collectibles | `CollectibleMintableItemResult`, `NftBonusItemClaimResult`, `NftRewardItemClaimResult`, `NftTransferAssetsResult` | never sent |
 | NFT collectibles | `NftClaimResult`, `NftStorePurchase`, `RedeemNftLootBoxState`, `RedeemNftLootBoxResult` | no serializer |
-| Trading | `TradeSilverSet`, `TradeSilverFee` (never sent), `TradeNftAssets`, `TradeNftAssetInventory` (no serializer) | |
-| Wired | `WiredMenuError` (never sent); `WiredUserVariablesList`, `WiredUserPermanentVariables`, `WiredSetUserPermanentVariableResult` (no serializer) | |
+| Trading | `TradeSilverSet`, `TradeSilverFee`, `TradingOtherNotAllowed` (never sent), `TradeNftAssets`, `TradeNftAssetInventory` (no serializer) | |
 | Wired trading | `SelfDonationResult` | no serializer |
 
 ## Known behaviour gaps

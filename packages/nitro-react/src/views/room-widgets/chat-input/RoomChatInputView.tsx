@@ -2,7 +2,7 @@ import { isNftChatStyle, isStaticChatStyle } from '@nitrodevco/nitro-theme/chat'
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { IChatStyle } from '#base/chat';
-import { openClientLink, openHabbiconHub, resetUnseenHabbicons, runRoomChatCommand, runWiredChatCommand, sayChat, sendChatTyping, setChatFontSizeMode, setPreferredChatStyle, shoutChat, trackEventLogOncePerSession, triggerHabbicon, whisperChat, withSelectedAvatarName } from '#base/commands';
+import { openClientLink, openHabbiconHub, resetUnseenHabbicons, runClientModuleChatCommand, runRoomChatCommand, runWiredChatCommand, sayChat, sendChatTyping, setChatFontSizeMode, setPreferredChatStyle, shoutChat, trackEventLogOncePerSession, triggerHabbicon, whisperChat, withSelectedAvatarName } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { HabbiconsStore, useHabbiconsStore } from '#base/context/habbicons';
 import { getUnseenItemCount, UnseenItemCategory, useInventoryStore } from '#base/context/inventory';
@@ -401,8 +401,8 @@ export const RoomChatInputView = () => {
 
         clearTimers();
 
-        // `ChatInputWidgetHandler`: a chat command is run, not said.
-        const isCommand = (mode !== 'whisper') && (runWiredChatCommand(send, message) || runRoomChatCommand(send, message));
+        // `ChatInputWidgetHandler`: a chat command is run, not said; then a client module's (not Flash's), before the line goes to the server.
+        const isCommand = (mode !== 'whisper') && (runWiredChatCommand(send, message) || runRoomChatCommand(send, message) || runClientModuleChatCommand(message));
 
         if (message.length && !isCommand) {
             const cleaned = message.replace(/&#[0-9]+;/g, '');

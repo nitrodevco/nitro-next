@@ -510,6 +510,7 @@ export class OutgoingHeader {
     public static TurboBugReportCaptureComposer = 21001;
     public static TurboClientCapabilitiesComposer = 30000;
     public static TurboClientErrorReportComposer = 21100;
+    public static TurboClientExtensionReportComposer = 30012;
     public static TurboCommandSuggestComposer = 30003;
     public static TurboStarterRoomPictureComposer = 30006;
     public static TurboWebSessionRequestComposer = 30011;

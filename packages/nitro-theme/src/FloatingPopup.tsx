@@ -19,7 +19,7 @@ import { Container } from 'pixi.js';
 import { ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { Box, BoxLayout } from './Box';
-import { useRevealWhenSettled } from './hooks';
+import { useLatest, useRevealWhenSettled } from './hooks';
 import { ClientPointToStage, isModalDialogContainer, WindowPlacedContext } from './utils';
 
 /** Above every frame (their z-indices count up from 100), below the tooltip layer (100000). */
@@ -61,11 +61,7 @@ export const FloatingPopup = ({ x, y, onOutsideClick, layout, children }: Floati
     }, []);
     // Kept unrendered until its lists and scrollbars have been laid out, rather than drawn half built for a frame or two.
     const revealed = useRevealWhenSettled(popupNode);
-    const onOutsideClickRef = useRef(onOutsideClick);
-
-    useEffect(() => {
-        onOutsideClickRef.current = onOutsideClick;
-    }, [ onOutsideClick ]);
+    const onOutsideClickRef = useLatest(onOutsideClick);
 
     useLayoutEffect(() => {
         const host = hostRef.current;

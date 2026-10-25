@@ -201,6 +201,8 @@ export const UserProfileView = ({
             <TemplateWindow
                 id="habbo-groups-com/new_extended_profile"
                 frame={frame}
+                // Not Flash's: whose profile it is, for extensions that patch it by them (`docs/template-patches.md`).
+                context={{ userId: profile.userId, name: profile.userName, figure: profile.figure, isOwnUser: isSelf }}
                 parameters={{
                     'extendedprofile.caption': { username: profile.userName },
                     'extendedprofile.username': { username: profile.userName },

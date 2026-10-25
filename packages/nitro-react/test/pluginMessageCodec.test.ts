@@ -117,3 +117,18 @@ void test('a schema the client cannot read is refused', () => {
     assert.throws(() => parsePluginMessageSchema('[["id","decimal"]]', 'test.bad'), /test\.bad\.id/);
     assert.throws(() => parsePluginMessageSchema('{"id":"int"}'));
 });
+
+void test('a string-keyed dictionary is read as an object and written as Turbo writes one', () => {
+    // Turbo.Tests: the schema of WithDictionary, and PluginMessageComposer.For(new WithDictionary(new() { ["a"] = 5 }, null!, null!)).Body
+    const fields = parsePluginMessageSchema('[["counts",["map","int"]],["records",["map",["object",[["label","string"],["values",["array","int"]]]]]],["lists",["map",["array","string"]]]]', 'test.dictionary');
+    const sent = { counts: { mining: 2, fishing: 0 }, records: { a: { label: 'x', values: [ 1, 2 ] } }, lists: JSON.parse('{"__proto__":["own"],"tags":["red","blue"]}') as Record<string, string[]> };
+    const wire = reader(toBytes(encodePluginMessage(sent, fields)));
+    const read = decodePluginMessage(wire, fields) as typeof sent;
+
+    assert.deepEqual(read, sent);
+    assert.equal(wire.remaining, 0);
+    // A key named like a prototype property stays a key.
+    assert.deepEqual(Object.keys(read.lists), [ '__proto__', 'tags' ]);
+    assert.equal(Object.getPrototypeOf(read.lists), Object.prototype);
+    assert.deepEqual([ ...toBytes(encodePluginMessage({ counts: new Map([ [ 'a', 5 ] ]) }, fields)) ], [ 0, 0, 0, 1, 0, 1, 97, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0 ]);
+});

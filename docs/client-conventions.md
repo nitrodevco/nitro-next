@@ -92,9 +92,11 @@ Imports go through the aliases: `#base/context/<feature>` (never `#base/context`
   by subdirectory. Add one when the same expression appears in three places.
 - Constants that describe packet values (`BOT_SKILL_SETUP_CHAT = 2`) live next to the slice that
   stores them and are exported.
-- Every slice's actions are exposed by an action hook. If a component needs an action the
-  hooks do not offer, add it to the slice's hook (or add `useRoom<Slice>Actions.ts`) rather than
-  reaching for `xStore.getState()` - that call belongs in handlers and commands only.
+- A slice whose actions a component calls exposes them through an action hook. A slice only
+  commands and handlers write has none: they read its actions with `xStore.getState()`, and a
+  hook nothing imports is dead code. If a component needs an action the hooks do not offer, add
+  it to the slice's hook (or add `useRoom<Slice>Actions.ts`) rather than reaching for
+  `xStore.getState()` - that call belongs in handlers and commands only.
   `scripts/drift/store_access.py` reports an action selected from a store and a `getState()` in a
   view or component.
 
@@ -215,7 +217,10 @@ which counts as a new warning at the verification gate.
   whole resolution, so at 125% or 150% Windows scaling a stage pixel is smaller than a CSS pixel.
   Use a Pixi event's `global`; convert a native event's `clientX` / `clientY` (or a delta of them)
   with `ClientToStage` / `ClientPointToStage`, and take the screen's size from `GetDesktopSize`
-  or `useViewportSize`, never `window.innerWidth` / `innerHeight`.
+  or `useViewportSize`, never `window.innerWidth` / `innerHeight`. In a render body use
+  `useViewportSize`: the React Compiler caches a `GetDesktopSize()` call there, so the component
+  keeps the size it first rendered at (the tooltip clamped to the screen it first showed on).
+  `GetDesktopSize` is for handlers, effects and a `useState` initialiser that wants the size at open.
 - A passive `Box` is still a hit *target*: `EventBoundary.hitTestFn` reports a hit for any
   container carrying a `hitArea`, and the mode it tests is the one inherited from the nearest
   interactive ancestor, not the container's own. So a box that covers a sibling swallows that

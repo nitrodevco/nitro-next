@@ -31,7 +31,7 @@ import { voteCommunityGoal } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import {
     COMMUNITY_GOAL_METER_BUILDUP_MS, COMMUNITY_GOAL_METER_DELAY_MS, COMMUNITY_GOAL_NEEDLE_BASE_FRAMES, communityGoalNeedleFrame, communityGoalVsNeedleFrame, hotelViewColorableBindings, HotelViewCommonSettings,
-    hotelViewProperty, LandingViewWidgetType, useConfigData, useSystemStore, useWindowActions,
+    hotelViewProperty, LandingViewWidgetType, useConfigBoolean, useConfigData, useSystemStore, useWindowActions,
 } from '#base/context/system';
 import { Box, LayoutImage, TemplateBindings, TemplateWindow, TemplateWindows } from '#base/theme';
 
@@ -113,7 +113,7 @@ export const HotelViewCommunityGoalWidget = ({ type, settings }: HotelViewCommun
 
     const goalCode = goal?.goalCode ?? '';
     const imageLibrary = hotelViewProperty(config, 'image.library.url');
-    const interactive = hotelViewProperty(config, 'landing.view.community.interactive') === 'true';
+    const interactive = useConfigBoolean('landing.view.community.interactive');
     const campaignText = (key: string) => `\${${key}.${goalCode}}`;
 
     const vote = (option: number) => {

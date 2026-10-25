@@ -22,7 +22,8 @@
  *
  * A slot is occupied when its widget has a container - here, when the type is one the port draws
  * (`PORTED_LANDING_VIEW_WIDGETS`); a slot naming any other type stays empty, where Flash would have
- * shown that widget. `enableSeparator` puts a `dynamic_widget_grid_separator` over slot 4 or 5 when
+ * shown that widget. Not Flash's: a client module's widget for a slot (`hotelView.addWidget`) is
+ * drawn there instead of the configured one, and occupies the slot like any widget. `enableSeparator` puts a `dynamic_widget_grid_separator` over slot 4 or 5 when
  * the hotel turns it on (`landing.view.dynamic.slot.4/5.separator`), titled with its `.title` key.
  *
  * The widgets are the port's own views, drawn into their slots; each reports its size, which the
@@ -30,9 +31,12 @@
  */
 import { useCallback, useState } from 'react';
 
-import { hotelViewColorableBindings, hotelViewCommonSettings, hotelViewPaneWidths, hotelViewProperty, hotelViewSlotWidget, PORTED_LANDING_VIEW_WIDGETS, useConfigData } from '#base/context/system';
+import { useClientModulesStore } from '#base/context/client-modules';
+import { hotelViewColorableBindings, hotelViewCommonSettings, hotelViewPaneWidths, hotelViewProperty, hotelViewSlotWidget, isWideHotelViewSlot, PORTED_LANDING_VIEW_WIDGETS, useConfigData } from '#base/context/system';
 import { useViewportSize } from '#base/hooks';
 import { findTemplateChild, Template, TemplateItem, TemplateWindows } from '#base/theme';
+import { configReader } from '#base/utils';
+import { ClientModuleHotelViewWidgetView } from '#base/views/client-modules/ClientModuleHotelViewWidgetView';
 
 import { HotelViewMeasuredSlot, HotelViewSlotSize } from './HotelViewMeasuredSlot';
 import { HotelViewSlotWidget } from './HotelViewSlotWidget';
@@ -67,6 +71,7 @@ export interface HotelViewWidgetGrid {
 export const useHotelViewWidgetGrid = (templates: Readonly<Record<string, Template>> | undefined): HotelViewWidgetGrid | undefined => {
     const config = useConfigData();
     const { width, height } = useViewportSize();
+    const moduleWidgets = useClientModulesStore(x => x.hotelViewWidgets);
     const [ sizes, setSizes ] = useState<Record<number, HotelViewSlotSize>>({});
     // Stable, so a slot reports its size when it changes rather than on every render of the grid.
     const onSize = useCallback((slot: number, size: HotelViewSlotSize) => setSizes(previous => (((previous[slot]?.width === size.width) && (previous[slot]?.height === size.height)) ? previous : { ...previous, [slot]: size })), []);
@@ -78,9 +83,11 @@ export const useHotelViewWidgetGrid = (templates: Readonly<Record<string, Templa
     const settings = hotelViewCommonSettings(config);
     const panes = hotelViewPaneWidths(config);
     const configString = (key: string) => hotelViewProperty(config, key);
-    const configBoolean = (key: string) => configString(key) === 'true';
+    // `getBoolean`: "1" or "true", with no placeholders filled.
+    const { configBoolean } = configReader(config);
     const widgetType = (slot: number) => hotelViewSlotWidget(config, slot);
-    const occupied = (slot: number) => PORTED_LANDING_VIEW_WIDGETS.has(widgetType(slot));
+    const moduleWidget = (slot: number) => moduleWidgets.findLast(widget => widget.slot === slot);
+    const occupied = (slot: number) => !!moduleWidget(slot) || PORTED_LANDING_VIEW_WIDGETS.has(widgetType(slot));
     const ignoreBottomRight = configBoolean('landing.view.dynamic.slot.5.ignore');
     const separator = (slot: number) => (configBoolean(`landing.view.dynamic.slot.${slot}.separator`) ? configString(`landing.view.dynamic.slot.${slot}.title`) : undefined);
 
@@ -88,18 +95,35 @@ export const useHotelViewWidgetGrid = (templates: Readonly<Record<string, Templa
     const listWidth = LIST_WIDTH - (LAYOUT_WIDTH - width);
     const listHeight = LIST_HEIGHT - (LAYOUT_HEIGHT - height);
 
+    const slotWidget = (slot: number) => {
+        const fromModule = moduleWidget(slot);
+
+        if (fromModule) {
+            return (
+                <ClientModuleHotelViewWidgetView
+                    widget={fromModule}
+                    width={isWideHotelViewSlot(slot) ? panes.left : panes.right}
+                />
+            );
+        }
+
+        return (
+            <HotelViewSlotWidget
+                type={widgetType(slot)}
+                slot={slot}
+                code={null}
+                settings={settings}
+            />
+        );
+    };
+
     const slotBinding = (slot: number) => ({
         children: occupied(slot) && (
             <HotelViewMeasuredSlot
                 slot={slot}
                 onSize={onSize}
             >
-                <HotelViewSlotWidget
-                    type={widgetType(slot)}
-                    slot={slot}
-                    code={null}
-                    settings={settings}
-                />
+                {slotWidget(slot)}
             </HotelViewMeasuredSlot>
         ),
     });

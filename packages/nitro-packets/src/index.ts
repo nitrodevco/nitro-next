@@ -1398,6 +1398,7 @@ export * from './outgoing/Tracking/PerformanceLogComposer';
 export * from './outgoing/Turbo/TurboBugReportCaptureComposer';
 export * from './outgoing/Turbo/TurboClientCapabilitiesComposer';
 export * from './outgoing/Turbo/TurboClientErrorReportComposer';
+export * from './outgoing/Turbo/TurboClientExtensionReportComposer';
 export * from './outgoing/Turbo/TurboCommandSuggestComposer';
 export * from './outgoing/Turbo/TurboStarterRoomPictureComposer';
 export * from './outgoing/Turbo/TurboWebSessionRequestComposer';

@@ -7,4 +7,4 @@ import type { ClientModuleTheme } from './theme-types';
 
 export type * from './theme-types';
 
-export const { Box, Button, Frame, ThemeText, TemplateWindow }: ClientModuleTheme = host().theme;
+export const { Box, Button, Frame, Region, RichText, ThemeText, TemplateWindow }: ClientModuleTheme = host().theme;

@@ -72,6 +72,8 @@ export const ClientGates = {
     GameCenterForStaff: { node: null, level: SecurityLevelEnum.Employee },
     /** `ModerationManager.isModerator` - the user classification window's classifications and its user info / visit links (security 5). No server node. */
     ModerationUserLinks: { node: null, level: SecurityLevelEnum.Moderator },
+    /** Not Flash's: the extension inspector (`ExtensionInspectorView`), alt-click a window element for its template key; Turbo's `client.inspector`. */
+    ExtensionInspector: { node: 'client.inspector', level: SecurityLevelEnum.Employee },
 } as const satisfies Record<string, ClientGate>;
 
 /** Whether a user with these rights passes `gate`: its node when the server sent nodes, its level otherwise. */

@@ -5,10 +5,6 @@
  * `context/groups`; every function here takes the socket, because the manager is a component and
  * these are its methods.
  *
- * One thing Flash does that the port cannot yet:
- * - the creation wizard's "create a room" link calls `startRoomCreation`, which opens the
- *   navigator's room-creation view; that view is not ported either, so the link is not offered.
- *
  * `ApproveAllMembershipRequestsComposer` has no caller here because it has none in the client
  * either: `GuildMembersWindowCtrl.onAcceptAll` is written but never bound, and
  * `guild_members_window` has no control to bind it to.
@@ -33,6 +29,7 @@ import { configBoolean, systemStore, translate as t } from '#base/context/system
 import { ClientGates, hasClientGate, userStore } from '#base/context/user';
 
 import { openClubCenter } from '../catalog/catalogClubCommands';
+import { onGuildVisualSettingsChanged } from '../catalog/catalogGuildCommands';
 import { goToRoom, performNavigatorSearch } from '../navigator/navigatorCommands';
 import { openClientLink } from '../system/clientLinkCommands';
 
@@ -322,33 +319,45 @@ const validateGroupManagementView = (): boolean => {
 };
 
 /**
- * `GuildManagementWindowCtrl.saveView`: an existing group saves the step being left. The creation
- * wizard saves nothing - everything it collects goes out at once in `CreateGuildComposer`.
+ * `GuildManagementWindowCtrl.saveView`: an existing group saves the step being left (only its
+ * owner sends). The creation wizard saves nothing - everything it collects goes out at once in
+ * `CreateGuildComposer`. Leaving the identity, badge or colour step also raises
+ * `GSCIME_GUILD_VISUAL_SETTINGS_CHANGED`, which the catalogue's guild selector answers.
  */
 const saveGroupManagementView = (send: Send) => {
     const { session, step, editorData } = groupStore.getState();
 
-    if (!session || !session.exists || !session.isOwner) return;
+    if (!session || !session.exists) return;
+
+    const { isOwner } = session;
 
     switch (step) {
         case GROUP_MANAGEMENT_VIEW_IDENTITY:
-            send(new UpdateGuildIdentityComposer({ groupId: session.groupId, groupName: session.name, groupDescription: session.description }));
+            if (isOwner) send(new UpdateGuildIdentityComposer({ groupId: session.groupId, groupName: session.name, groupDescription: session.description }));
+
+            onGuildVisualSettingsChanged(send);
 
             return;
         case GROUP_MANAGEMENT_VIEW_BADGE:
-            send(new UpdateGuildBadgeComposer({ groupId: session.groupId, badgeSettings: badgeSettingsFromLayers(session.layers, editorData) }));
+            if (isOwner) send(new UpdateGuildBadgeComposer({ groupId: session.groupId, badgeSettings: badgeSettingsFromLayers(session.layers, editorData) }));
+
+            onGuildVisualSettingsChanged(send);
 
             return;
         case GROUP_MANAGEMENT_VIEW_COLORS:
-            send(new UpdateGuildColorsComposer({
-                groupId: session.groupId,
-                primaryColorId: session.primaryColorId,
-                secondaryColorId: session.secondaryColorId,
-            }));
+            if (isOwner) {
+                send(new UpdateGuildColorsComposer({
+                    groupId: session.groupId,
+                    primaryColorId: session.primaryColorId,
+                    secondaryColorId: session.secondaryColorId,
+                }));
+            }
+
+            onGuildVisualSettingsChanged(send);
 
             return;
         case GROUP_MANAGEMENT_VIEW_SETTINGS:
-            send(new UpdateGuildSettingsComposer({ groupId: session.groupId, guildType: session.guildType, rightsLevel: session.rightsLevel }));
+            if (isOwner) send(new UpdateGuildSettingsComposer({ groupId: session.groupId, guildType: session.guildType, rightsLevel: session.rightsLevel }));
 
             return;
         default:

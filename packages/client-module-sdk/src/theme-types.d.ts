@@ -71,7 +71,11 @@ export interface ClientModuleButtonProps extends ClientModulePointerProps {
 export interface ClientModuleFrameProps {
     /** Unique across the client: `<module key>-<window id>` is a safe choice. */
     id?: string;
-    /** The theme's frame variant: `'3'` is the usual window. */
+    /**
+     * The theme's frame variant: `'3'` is the usual window. `'none'` draws no frame - no skin, header,
+     * scaler or crop - and the window is dragged by any press its content does not take (or by a
+     * `Region dragTrigger` in it), raised and remembered like any other.
+     */
     variant?: string;
     caption?: string;
     centered?: boolean;
@@ -80,8 +84,26 @@ export interface ClientModuleFrameProps {
     defaultPosition?: { x: number; y: number };
     rememberPosition?: boolean;
     onClose?: () => void;
+    /** Whether it can be dragged at all (its header, or anywhere when frameless). */
+    draggable?: boolean;
     layout?: ClientModuleLayout;
     contentLayout?: ClientModuleLayout;
+    /**
+     * Panes of the window beside it - a second `Frame` - placed against its top left and not cropped
+     * by it: they move, raise and close with it, and a pane's header drags it. Behind the window's art
+     * unless `panesInFront`.
+     */
+    panes?: ReactNode;
+    panesInFront?: boolean;
+    children?: ReactNode;
+}
+
+export interface ClientModuleRegionProps extends ClientModulePointerProps {
+    /** `#rrggbb`. */
+    backgroundColor?: string;
+    /** A press on it drags the window it is in (a frameless window's own drag bar). */
+    dragTrigger?: boolean;
+    layout?: ClientModuleLayout;
     children?: ReactNode;
 }
 
@@ -157,9 +179,45 @@ export type ClientModuleTextStyle =
     | 'tool_tip'
     | 'tag';
 
+/** A text's own face, size, colour and wrapping over its style's. */
+export interface ClientModuleTextOptions {
+    fontFamily?: string;
+    fontSize?: number;
+    /** `#rrggbb`. */
+    fill?: string;
+    align?: 'left' | 'center' | 'right';
+    wordWrap?: boolean;
+    wordWrapWidth?: number;
+}
+
 export interface ClientModuleThemeTextProps {
     text: string;
     textStyle?: ClientModuleTextStyle;
+    textOptions?: ClientModuleTextOptions;
+    /** `text` is Flash `htmlText`: `<b>`, `<i>`, `<u>`, `<font color>`, `<br>`, `<a href>`, in any face. */
+    markup?: boolean;
+    /** With `markup`: a click on a link's glyphs (Habbo's own faces). */
+    onLink?: (link: string) => void;
+    layout?: ClientModuleLayout;
+}
+
+export interface ClientModuleRichTextProps {
+    /**
+     * HTML - paragraphs, headings, lists, line breaks, pictures, bold, italic, underline, colour and
+     * links are drawn; nothing else is kept and nothing of it runs (`docs/client-modules.md`).
+     */
+    html: string;
+    /** What the text wraps at and pictures are scaled down to. */
+    width: number;
+    textStyle?: ClientModuleTextStyle;
+    textOptions?: ClientModuleTextOptions;
+    /** Picture origins (`https://cdn.example.com`) or hosts besides the page's own. */
+    imageHosts?: readonly string[];
+    /** What relative links and pictures resolve against: the page's address unless given. */
+    baseUrl?: string;
+    onLink?: (link: string) => void;
+    blockSpacing?: number;
+    listIndent?: number;
     layout?: ClientModuleLayout;
 }
 
@@ -176,6 +234,8 @@ export interface ClientModuleTheme {
     Box: ComponentType<ClientModuleBoxProps>;
     Button: ComponentType<ClientModuleButtonProps>;
     Frame: ComponentType<ClientModuleFrameProps>;
+    Region: ComponentType<ClientModuleRegionProps>;
+    RichText: ComponentType<ClientModuleRichTextProps>;
     ThemeText: ComponentType<ClientModuleThemeTextProps>;
     TemplateWindow: ComponentType<ClientModuleTemplateWindowProps>;
 }

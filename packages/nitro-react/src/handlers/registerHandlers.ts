@@ -1,6 +1,7 @@
 import { WebSocketConnection } from '#base/context/communication';
 
 import { registerAchievementHandlers } from './achievements';
+import { registerCampaignHandlers } from './campaign';
 import { bridgeRecyclerRoomSession, registerCatalogRecyclerHandlers, registerCatalogRentHandlers, registerCatalogVoucherHandlers, registerTargetedOfferHandlers } from './catalog';
 import { registerClientModuleHandlers } from './client-modules';
 import { bridgeCollectiblesInventoryAndPurse, registerCollectiblesHandlers } from './collectibles';
@@ -176,6 +177,8 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerAchievementHandlers(socket),
         // `RewardTrackController`, a component of the quest engine: the tracks the server sends unasked.
         registerRewardTrackHandlers(socket),
+        // `HabboCampaigns`, a component of the toolbar: the campaign calendar the server sends unasked.
+        registerCampaignHandlers(socket),
         registerQuestHandlers(socket),
         registerInventoryPetsHandlers(socket),
         registerInventoryBotsHandlers(socket),

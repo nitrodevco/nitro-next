@@ -19,8 +19,9 @@ export interface ButtonGroupComponentProps extends ThemeProps<ButtonGroupVariant
 
 /**
  * Flash's `SelectableButtonController` (`button_group_left`, `_center`, `_right` - a `ButtonController`
- * that stays selected): the state's skin with its caption over it. Each of the three is this
- * component bound to its own cascade key.
+ * that stays selected): the state's skin with its caption centred over it, as its window layout's
+ * `_BTN_TEXT` label is (`relative_horizontal_scale_center`, `relative_vertical_scale_center`). Each of
+ * the three is this component bound to its own cascade key.
  */
 export const createButtonGroupComponent = (
     displayName: string,
@@ -41,6 +42,9 @@ export const createButtonGroupComponent = (
                     ref={ref}
                     visible={visible}
                     layout={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                         ...expandSides(config.layout),
                         ...expandSides(layout),
                     }}

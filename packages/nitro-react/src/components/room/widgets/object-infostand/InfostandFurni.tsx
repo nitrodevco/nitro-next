@@ -12,9 +12,10 @@
  */
 import { CatalogTypeEnum, CrackableDataType, FurniId, FurnitureLabelData, FurnitureSpecialType, FurnitureUsagePolicyEnum, ISimpleRoomObjectData, MapDataType, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 import { GetSongInfoComposer, SetObjectDataComposer } from '@nitrodevco/nitro-packets';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { openClientLink, openGroupInfo, openProfile, openRentConfirmationWindow, requestGroupDetails, requestInfostandItemToMover, toggleCatalog } from '#base/commands';
+import { furniKindOf } from '#base/context/client-modules';
 import { useWebSocketContext } from '#base/context/communication';
 import { useGroupStore } from '#base/context/groups';
 import { useIsRoomOwner, useOwnControllerLevel, useRoom, useRoomPlayTestMode, useRoomStore, useRoomWidgetActions } from '#base/context/room';
@@ -24,6 +25,7 @@ import { useWiredHasWritePermission, useWiredShowInspectButton } from '#base/con
 import { useCanPlaceWithBuildersClub, useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify, useSecondsClock } from '#base/hooks';
 import { FURNITURE_LABEL_SETTINGS_WIDGET, FURNITURE_RECOLOR_WIDGET, getFurniturePickupMode, PICKUP_FULL, PICKUP_NONE } from '#base/utils';
 import { InfostandFurniDetails, InfostandFurniVariant, InfostandFurniView } from '#base/views/room-widgets/object-infostand/InfostandFurniView';
+import { useClientModuleMenuButtons } from '#base/views/room-widgets/object-menu/useClientModuleMenuButtons';
 
 type InfostandFurniProps = {
     objectData: ISimpleRoomObjectData;
@@ -92,6 +94,15 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
 
         send(new GetSongInfoComposer({ songIds: [ songToName ] }));
     }, [ songToName, songKnown, send ]);
+
+    // The furni as client modules' buttons are given it (`api.contextMenu`, menu `furni`).
+    const objectType = room?.getRoomObject(objectId, category)?.type;
+    const moduleTarget = useMemo(() => {
+        const kind = furniKindOf(category);
+
+        return (kind && (objectType !== undefined)) ? { id: objectId, kind, type: objectType } : undefined;
+    }, [ objectId, category, objectType ]);
+    const moduleButtons = useClientModuleMenuButtons('furni', moduleTarget);
 
     if (!room || !furniData || (!furniData.furnitureData && !furniData.name)) return null;
 
@@ -211,7 +222,8 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
             // `RWFAM_LABEL_SETTINGS`: `RWFLE_FURNITURE_LABEL_SETTINGS_OPEN` for the label widget.
             canLabelSettings={canLabelSettings}
             onLabelSettings={() => openRoomWidget({ type: FURNITURE_LABEL_SETTINGS_WIDGET, objectId, category, objectType: roomObject.type })}
-            buttonsVisible={canMove || (pickupMode !== PICKUP_NONE) || canUse || canLabelSettings || canRecolor}
+            buttonsVisible={canMove || (pickupMode !== PICKUP_NONE) || canUse || canLabelSettings || canRecolor || (moduleButtons.length > 0)}
+            moduleButtons={moduleButtons}
             canSaveBranding={canSaveBranding}
             onMove={() => modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_MOVE)}
             onRotate={() => modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)}

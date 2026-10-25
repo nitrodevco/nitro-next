@@ -3,14 +3,14 @@
  * client's texts and bitmaps. What the window's code does with its named elements comes in as
  * `bindings`.
  */
-import { colorTemplateByTags, findTemplateChild, Template, TemplateBindings, TemplateView, TemplateViewProps } from '@nitrodevco/nitro-theme';
-import { useCallback, useMemo } from 'react';
+import { colorTemplateByTags, findTemplateChild, isTemplateInspecting, subscribeTemplateInspecting, Template, TemplateBindings, TemplateContext, TemplateInspectContext, TemplateInspectWindowContext, TemplateView, TemplateViewProps } from '@nitrodevco/nitro-theme';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
 
 import { openClientLink } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useSystemStore, useTranslation } from '#base/context/system';
 
-import { useTemplateExtensionBindings } from './templatePatches';
+import { useTemplateExtensionArrange, useTemplateExtensionBindings } from './templatePatches';
 import { useTemplate } from './useTemplate';
 
 export interface TemplateWindowProps {
@@ -24,6 +24,12 @@ export interface TemplateWindowProps {
     bindings?: TemplateBindings;
     /** What the window's code does once the layout is built (`TemplateView`'s `arrange`). */
     arrange?: TemplateViewProps['arrange'];
+    /**
+     * Not Flash's: what the window shows, read-only, for the extensions that patch, bind or arrange it
+     * as a function of it (`docs/template-patches.md` lists each window's keys). Flat values; a new
+     * object with the same values is the same context.
+     */
+    context?: TemplateContext;
     /** How the root frame opens, when the template is a window of its own (`TemplateView`'s `frame`). */
     frame?: TemplateViewProps['frame'];
     /** The window's size as its code sets it (`TemplateView`'s `width` / `height`). */
@@ -49,10 +55,13 @@ const templatePart = (template: Template, part: string): Template | undefined =>
 };
 
 /** Draws nothing until the template is loaded, as a Flash window opens once its library is in. */
-export const TemplateWindow = ({ id, part, bindings, arrange, frame, width, height, parameters, tagColors }: TemplateWindowProps) => {
-    const loaded = useTemplate(id);
-    // The bindings extensions give the elements they added (`api.templates.bind`), under the window's own.
-    const allBindings = useTemplateExtensionBindings(id, bindings);
+export const TemplateWindow = ({ id, part, bindings, arrange, context, frame, width, height, parameters, tagColors }: TemplateWindowProps) => {
+    const loaded = useTemplate(id, context);
+    // The bindings extensions give the elements they added (`api.templates.bind`), under the window's
+    // own - or over them, for an override.
+    const allBindings = useTemplateExtensionBindings(id, bindings, context);
+    // What extensions do after the window's own code has laid it out (`api.templates.arrange`).
+    const allArrange = useTemplateExtensionArrange(id, arrange, context);
     const template = useMemo(() => {
         const built = (loaded && tagColors) ? colorTemplateByTags(loaded, tagColors) : loaded;
 
@@ -79,19 +88,34 @@ export const TemplateWindow = ({ id, part, bindings, arrange, frame, width, heig
 
         return (typeof value === 'string' || typeof value === 'number') ? String(value) : '';
     }), [ config ]);
+    // While the extension inspector is on: the template it names for this window's elements (a window
+    // drawn in another's element starts its own element chain). Turning it on redraws the view once.
+    const inspecting = useSyncExternalStore(subscribeTemplateInspecting, isTemplateInspecting);
+    const inspectWindow = useMemo(() => ({ id, part, context }), [ id, part, context ]);
 
     if (!template) return null;
 
-    return (
+    const view = (
         <TemplateView
+            key={inspecting ? 'inspected' : 'plain'}
             template={template}
             bindings={allBindings}
-            arrange={arrange}
+            arrange={allArrange}
             frame={windowFrame}
             width={width}
             height={height}
             resolveText={resolveText}
             imageUrl={imageUrl}
         />
+    );
+
+    if (!inspecting) return view;
+
+    return (
+        <TemplateInspectWindowContext.Provider value={inspectWindow}>
+            <TemplateInspectContext.Provider value={undefined}>
+                {view}
+            </TemplateInspectContext.Provider>
+        </TemplateInspectWindowContext.Provider>
     );
 };

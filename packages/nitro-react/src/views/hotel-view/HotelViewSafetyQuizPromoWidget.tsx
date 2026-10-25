@@ -13,12 +13,9 @@
  * drawn and does nothing.
  */
 import { useOwnUserFigure, useOwnUserGender } from '#base/context/user';
-import { Box, TemplateWindow, useAvatarImageTexture } from '#base/theme';
+import { Box, findTemplateChild, TemplateWindow, useAvatarImageTexture, useTemplateLibrary } from '#base/theme';
 
-import { hotelViewTemplateId } from './hotelViewTemplate';
-
-/** `safety_quiz_overlay`'s `x` in the layout, which the widget's window keeps in a widget slot. */
-const ROOT_X = 186;
+import { HOTEL_VIEW_LIBRARY, hotelViewTemplate, hotelViewTemplateId } from './hotelViewTemplate';
 
 /** `avatar`'s `avatar_image:direction`: `south`. */
 const AVATAR_DIRECTION = 3;
@@ -32,9 +29,12 @@ export const HotelViewSafetyQuizPromoWidget = ({ bottomSlot }: HotelViewSafetyQu
     const figure = useOwnUserFigure();
     const gender = useOwnUserGender();
     const head = useAvatarImageTexture(figure || undefined, gender, { headOnly: true, direction: AVATAR_DIRECTION });
+    const template = hotelViewTemplate(useTemplateLibrary(HOTEL_VIEW_LIBRARY), 'safety_quiz_promo');
+    // `safety_quiz_overlay`'s `x`, which the widget's window keeps in a widget slot.
+    const rootX = (template && findTemplateChild(template.elements, 'safety_quiz_overlay')?.x) ?? 0;
 
     return (
-        <Box layout={{ flexShrink: 0, paddingLeft: bottomSlot ? 0 : ROOT_X }}>
+        <Box layout={{ flexShrink: 0, paddingLeft: bottomSlot ? 0 : rootX }}>
             <TemplateWindow
                 id={hotelViewTemplateId('safety_quiz_promo')}
                 bindings={{

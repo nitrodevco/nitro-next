@@ -1,8 +1,9 @@
-import { RoomControllerLevelEnum, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 import { RemoveItemComposer, SetItemDataComposer } from '@nitrodevco/nitro-packets';
 
 import { useWebSocketContext } from '#base/context/communication';
-import { useIsRoomOwner, useOwnControllerLevel, useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { useIsRoomOwner, useRoom, useRoomWidget, useRoomWidgetActions } from '#base/context/room';
+import { ClientGates, useClientGate } from '#base/context/user';
 import { parseStickieData } from '#base/utils';
 import { FurnitureStickieView } from '#base/views/room-widgets/furniture/FurnitureStickieView';
 
@@ -20,7 +21,7 @@ export const FurnitureStickieWidget = () => {
     const request = useRoomWidget(RoomObjectWidgetRequestEvent.STICKIE);
     const room = useRoom();
     const isRoomOwner = useIsRoomOwner();
-    const controllerLevel = useOwnControllerLevel();
+    const isAnyRoomController = useClientGate(ClientGates.AnyRoomController);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
 
@@ -52,7 +53,8 @@ export const FurnitureStickieWidget = () => {
             objectType={roomObject.type}
             colorHex={colorHex}
             text={text}
-            canModify={isRoomOwner || controllerLevel >= RoomControllerLevelEnum.Guest}
+            // `FurnitureStickieWidgetHandler`: `isRoomOwner || isAnyRoomController` edits and deletes; rights do not.
+            canModify={isRoomOwner || isAnyRoomController}
             onSave={onSave}
             onDelete={onDelete}
             onClose={onClose}

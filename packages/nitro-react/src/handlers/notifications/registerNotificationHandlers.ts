@@ -6,7 +6,7 @@
  *
  * Only the part of that class whose packet the port parses and whose destination exists is here:
  * `onBadgeReceived`, `onPetLevelNotification`, `onPetReceived`, `onRoomMessagesNotification`,
- * `onInfoFeedEnable`, `onBroadcastMessageEvent`, `onClaimProductResult`, `onClubGiftSelected`,
+ * `onInfoFeedEnable`, `onBroadcastMessageEvent`, `onPetRespectFailed`, `onClaimProductResult`, `onClubGiftSelected`,
  * `onRoomEnter` (the moderation disclaimer, `showModerationDisclaimer`) and
  * `onNotificationDialogMessageEvent` (`showNotification`, in `commands/notifications/notificationCommands`,
  * with `showCallCreatedNotification` for `cfh.created`). The MOTD, club gift and safety lock
@@ -21,7 +21,7 @@
  * does, and a pet - levelled up or received - is drawn by the bubble from the figure its packet
  * carries (`NotificationOptions.pet`), as `PetImageUtility.getPetImage` renders it outside any room.
  */
-import { BadgeReceivedEventMessage, ClaimProductResultMessage, ClubGiftSelectedEventMessage, HabboBroadcastMessage, InfoFeedEnableMessage, IPetFigureData, NotificationDialogMessage, OpenConnectionMessage, PetLevelNotificationEventMessage, PetReceivedMessage, RoomEntryInfoMessage, RoomMessageNotificationMessage } from '@nitrodevco/nitro-packets';
+import { BadgeReceivedEventMessage, ClaimProductResultMessage, ClubGiftSelectedEventMessage, HabboBroadcastMessage, InfoFeedEnableMessage, IPetFigureData, NotificationDialogMessage, OpenConnectionMessage, PetLevelNotificationEventMessage, PetReceivedMessage, PetRespectFailedMessage, RoomEntryInfoMessage, RoomMessageNotificationMessage } from '@nitrodevco/nitro-packets';
 import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 
 import { showModerationDisclaimer, showNotification } from '#base/commands';
@@ -124,6 +124,14 @@ export const registerNotificationHandlers = ({ subscribe }: WebSocketConnection)
             const claimName = getLocalizationValue(`claim_product.name.${data.claimId}`, data.claimId);
 
             addNotification(getLocalizationValue(`claim_product.result.${data.result}`, '', { claim_name: claimName }), 'info');
+        }),
+
+        // `onPetRespectFailed`: an `alert` under `${error.title}` with the age the account needs and the age it has.
+        on(PetRespectFailedMessage, (data) => {
+            systemStore.getState().showAlert(t('error.title', 'error.title'), t('room.error.pets.respectfailed', 'room.error.pets.respectfailed', {
+                required_age: String(data.requiredDays),
+                avatar_age: String(data.avatarAgeInDays),
+            }));
         }),
 
         // `onInfoFeedEnable`: the server turning the bubbles off. `addNotification` drops them while it is set.

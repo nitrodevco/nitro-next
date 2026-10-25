@@ -20,6 +20,7 @@ node_modules
 /coverage
 *.log
 *.tsbuildinfo
+.eslintcache
 .git
 .DS_Store
 Thumbs.db

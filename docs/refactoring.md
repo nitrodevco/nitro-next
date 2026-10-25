@@ -286,7 +286,11 @@ owner flag and the entered room's info; entering again fills them.
 
 - **Unused action hooks.** 26 `use*Actions` hooks have no importer; the conventions ask for one per
   slice and the dead-code check exempts them. Keep them for command-driven features, or relax the
-  rule.
+  rule. **Done:** relaxed - a slice has an action hook only where a component calls its actions,
+  as commands and handlers read them with `getState()`. The 26 are deleted (badge leaderboard,
+  collectibles, daily tasks, earnings, game tokens, help, offer center, quests, reward track, four
+  catalogue slices, the recycler, the room chooser, user social and ten wired slices), and the
+  dead-code check no longer exempts action hooks.
 - **Packet callbacks in commands.** 30 command files export `on*` callbacks that handlers call;
   other features keep that logic in the handler. Document the pattern or apply one placement.
 
@@ -304,3 +308,4 @@ owner flag and the entered room's info; entering again fills them.
 - Item 10, views send packets only through commands.
 - Item 11, the camera store in `context`, store reads out of views, `getRoom()`, leaderboard commands.
 - Item 12, navigator store slices; the groups copy of the room id derived.
+- Unused action hooks deleted; a slice has one only where a component calls its actions.

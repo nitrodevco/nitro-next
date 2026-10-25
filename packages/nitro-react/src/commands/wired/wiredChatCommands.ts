@@ -8,7 +8,8 @@
  * - `:wf` / `:wired`, `:var` / `:variables`, `:inspect` / `:inspection` - the wired menu links;
  * - `:playtest` - `switchPlayTestMode`.
  *
- * The rest of Flash's chat commands are not ported; the chat input sends them as chat.
+ * The chat input's other commands are `runRoomChatCommand` (`commands/room/roomChatCommands`), and
+ * the list the completion offers is `chatInputClientCommands`.
  */
 import { Send } from '#base/context/communication';
 

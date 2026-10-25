@@ -277,6 +277,7 @@ export const InfostandPetView = ({ info, figure, posture, name, respectLeft, isO
             id="habbo-room-ui-com/pet_view"
             bindings={bindings}
             arrange={arrange}
+            context={{ type: 'pet', name: info?.name.length ? info.name : name, figure, isOwnPet }}
         />
     );
 };

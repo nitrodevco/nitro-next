@@ -14,9 +14,11 @@
  *   instead of the hotel view, out of a lobby (door mode 4) goes home and out of anywhere else
  *   to a lobby - the toolbar's reception button too. (In a lobby the toolbar shows its
  *   `VISIBLE_NOOB` icons, home rather than reception: `ToolbarView`.)
+ * - `sendNuxGifts` (`HabboNuxDialogs.onSendGetGifts`): the gift selection's last pick takes the
+ *   window down and sends every pick.
  */
 import { NoobnessLevelEnum, RoomDoorModeEnum } from '@nitrodevco/nitro-api';
-import { EventLogComposer, ForwardToSomeRoomComposer } from '@nitrodevco/nitro-packets';
+import { EventLogComposer, ForwardToSomeRoomComposer, INewUserExperienceGiftSelection, NewUserExperienceGetGiftsComposer } from '@nitrodevco/nitro-packets';
 
 import { Send } from '#base/context/communication';
 import { navigatorStore } from '#base/context/navigator';
@@ -96,4 +98,10 @@ export const leaveRoomAsNewUser = (send: Send): boolean => {
     else goToNoobLobby(send);
 
     return true;
+};
+
+/** `onSendGetGifts`: the gift selection goes, then every step's pick is sent. */
+export const sendNuxGifts = (send: Send, selections: INewUserExperienceGiftSelection[]) => {
+    onboardingStore.getState().setGiftOffer(undefined);
+    send(new NewUserExperienceGetGiftsComposer({ selections }));
 };

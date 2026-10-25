@@ -16,13 +16,15 @@ import { PerkCodes, userStore } from '#base/context/user';
 import { getWiredHasReadPermission, getWiredMenuEnabled, WIRED_MENU_TAB_INSPECTION, WIRED_MENU_TAB_MONITOR, WIRED_MENU_TAB_OVERVIEW } from '#base/context/wired';
 
 import { openAchievements } from '../achievements/achievementCommands';
+import { openCampaignCalendarLink } from '../campaign/campaignCalendarCommands';
+import { routeClientModuleLink } from '../client-modules/clientModuleLinkRoutes';
 import { openCursedDragonAdoption } from '../cursed-dragon-adoption/cursedDragonAdoptionCommands';
 import { openDailyTasksLink } from '../daily-tasks/dailyTasksCommands';
 import { showEarnings } from '../earnings/earningsCommands';
 import { openBadgeLeaderboardLink } from '../groups/badgeLeaderboardCommands';
 import { openGroupForumLink } from '../groups/groupForumCommands';
 import { habbiconsEnabled, openHabbiconHub } from '../habbicons/habbiconCommands';
-import { forwardToRoom, goToHomeRoom, reportRoomFromWeb, searchNavigator, searchRoomTag } from '../navigator/navigatorCommands';
+import { askForwardToRoom, forwardToRoom, goToHomeRoom, reportRoomFromWeb, searchNavigator, searchRoomTag } from '../navigator/navigatorCommands';
 import { openRaidProtectionFromLink } from '../navigator/raidProtectionCommands';
 import { toggleQuests } from '../quests/questCommands';
 import { openRewardTrackLink } from '../reward-track/rewardTrackCommands';
@@ -219,6 +221,12 @@ export const openClientLink = (send: Send, link: string) => {
 
                     return;
                 }
+                // `int(<roomId>)`: anything but a number asks about room 0.
+                case 'ask_forward': {
+                    if (parts.length > 2) askForwardToRoom(send, parseInt(parts[2], 10) || 0);
+
+                    return;
+                }
             }
 
             break;
@@ -377,6 +385,12 @@ export const openClientLink = (send: Send, link: string) => {
 
             return;
         }
+        // `HabboCampaigns.linkReceived`: openView/calendar.
+        case 'openView': {
+            openCampaignCalendarLink(parts);
+
+            return;
+        }
         // `RewardTrackController.linkReceived`: reward_track/open/<track id>.
         case 'reward_track': {
             openRewardTrackLink(parts);
@@ -481,7 +495,7 @@ export const openClientLink = (send: Send, link: string) => {
     }
 
     // A client module's prefix (`links.handle`): only links the client itself has no route for.
-    const moduleHandlers = clientModulesStore.getState().linkHandlers.filter(handler => handler.prefix === parts[0]);
+    const moduleHandlers = routeClientModuleLink(clientModulesStore.getState().linkHandlers, link);
 
     for (const handler of moduleHandlers) {
         try {

@@ -14,5 +14,6 @@ export * from './useResolvedVariant';
 export * from './useRevealWhenSettled';
 export * from './useScrollController';
 export * from './useThemeVariant';
+export * from './useViewportSize';
 export * from './useWindowActivation';
 export * from './useWindowPointerDrag';

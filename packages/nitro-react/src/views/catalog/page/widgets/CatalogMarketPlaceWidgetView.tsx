@@ -1,4 +1,4 @@
-import { TemplateBindings, TemplateElement, TemplateItem } from '@nitrodevco/nitro-theme';
+import { TemplateBindings, TemplateElement, TemplateItem, TemplateWindows } from '@nitrodevco/nitro-theme';
 import { useEffect, useState } from 'react';
 
 import { buyMarketplaceOffer, requestMarketplaceItemStats, requestMarketplaceOffers } from '#base/commands';
@@ -81,7 +81,8 @@ const offerItem = (from: string | TemplateElement, offer: MarketplaceOfferData, 
  *
  * - `init` / `displayMainView`: the activity search is selected and run.
  * - `selectSearchCategory` empties the search container and builds `marketplace_search_simple` or
- *   `marketplace_search_advanced` into it: its inputs start empty, the `sort_dropmenu` lists
+ *   `marketplace_search_advanced` into it (`selectSearchCategory2` sizing the container to it - see
+ *   `arrange`): its inputs start empty, the `sort_dropmenu` lists
  *   `catalog.marketplace.sort.<type>` for the category's sort types with the first selected, and the
  *   `combine_uniques_checkbox` keeps its state. That selection is a `WE_SELECTED`, which searches in
  *   the two simple categories; the advanced one waits for its search button. (Flash's rebuilt
@@ -237,7 +238,28 @@ export const CatalogMarketPlaceWidgetView = ({ tags }: CatalogWidgetProps) => {
 
     for (const category of SEARCH_CATEGORIES) bindings[category] = { selected: fields.category === category, onPointerTap: () => selectSearchCategory(category) };
 
-    useCatalogWidgetView(templates && { template: 'marketPlaceWidget', bindings });
+    /**
+     * `selectSearchCategory2`, in the build whose advanced search adds the `offer_source_container`
+     * row and is 150 tall: the search container grows to the search built into it, the status text
+     * and offer list move down by as much and the list is shortened by it - 150 / 185 / 200 / 395
+     * there, and the layout's 120 / 155 / 170 / 425 for a 120-tall search (the simple one, and the
+     * AS3 build's advanced one), which fits as it is.
+     */
+    const arrange = ({ find }: TemplateWindows) => {
+        const container = find('search_container');
+        const grow = (container && searchTemplate) ? (searchTemplate.height - container.height) : 0;
+
+        if (!container || (grow <= 0)) return;
+
+        container.setHeight(container.height + grow);
+        find('status_text')?.offset(0, grow);
+
+        const list = find('offer_list');
+
+        list?.setRectangle(list.x, list.y + grow, list.width, list.height - grow);
+    };
+
+    useCatalogWidgetView(templates && { template: 'marketPlaceWidget', bindings, arrange });
 
     return null;
 };

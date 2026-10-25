@@ -1,10 +1,15 @@
 import { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
+import { useMemo } from 'react';
 
+import { toClientModuleAvatar } from '#base/context/client-modules';
+import { useRoomUserByObjectId } from '#base/context/room';
 import { useTranslation } from '#base/context/system';
+import { useOwnUserId } from '#base/context/user';
 import { LayoutImage, TemplateBindings, TemplateWindow } from '#base/theme';
 
-import { RELATIONSHIPS, useAvatarMenu } from './useAvatarMenu';
+import { MODE_ACTIONS, RELATIONSHIPS, useAvatarMenu } from './useAvatarMenu';
 import { useButtonMenu, useMinimizedMenu } from './useButtonMenu';
+import { bindClientModuleMenuRows, useClientModuleMenuButtons } from './useClientModuleMenuButtons';
 
 /**
  * The menu over another user - `AvatarMenuView`, drawn from its
@@ -16,7 +21,8 @@ import { useButtonMenu, useMinimizedMenu } from './useButtonMenu';
  * relationship grid in the relationship mode (`showButtonGrid`). A row's click is on its `button`.
  * `AvatarMenuView.buttonEventProc` takes `WME_OVER` for its own tracking and never passes it on, so
  * its rows keep their colour under the pointer. The layout's `blow`, `perform` and `donate_*` rows
- * are not offered: the port has no action behind them.
+ * are not offered: the port has no action behind them. Client modules' rows (`api.contextMenu`, menu
+ * `user`) follow the actions' rows.
  */
 export interface InfoBubbleAvatarViewProps {
     objectData: ISimpleRoomObjectData;
@@ -34,18 +40,24 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
     const { showButton, button } = useButtonMenu(false);
     const { minimizedView, bindings: minimizeBindings } = useMinimizedMenu();
     const t = useTranslation();
+    const user = useRoomUserByObjectId(objectData.objectId);
+    const ownUserId = useOwnUserId();
+    const target = useMemo(() => user && toClientModuleAvatar(user, ownUserId), [ user, ownUserId ]);
+    const moduleButtons = useClientModuleMenuButtons('user', target);
 
     if (!menu) return null;
     if (minimizedView) return minimizedView;
 
-    const { info, visibleButtons, showsRelationshipGrid, relationshipIcon, tradeTooltip, press, pressRelationship, openTheirProfile } = menu;
+    const { info, mode, visibleButtons, showsRelationshipGrid, relationshipIcon, tradeTooltip, press, pressRelationship, openTheirProfile } = menu;
+    // The modules' rows are on the actions' page, not on a sub-page.
+    const shownModuleButtons = (mode === MODE_ACTIONS) ? moduleButtons : [];
     const bindings: TemplateBindings = {
         ...minimizeBindings,
         profile_link: { onPointerTap: openTheirProfile },
         // A blocked user's name is `infostand.blocked_user` (italic in the client; the binding sets the text only).
         name: { caption: info.isBlocked ? t('infostand.blocked_user') : info.name, setCaptionAfterBuild: true },
         relationship_status: relationshipIcon ? { visible: true, asset: LayoutImage(`habbo-window-manager-com/${relationshipIcon}`) } : { visible: false },
-        buttons: { show: [ ...visibleButtons.map(row => row.key), ...(showsRelationshipGrid ? [ 'relationship_grid' ] : []) ] },
+        buttons: { show: [ ...visibleButtons.map(row => row.key), ...(showsRelationshipGrid ? [ 'relationship_grid' ] : []), ...shownModuleButtons.map(row => row.row) ] },
     };
 
     for (const row of visibleButtons) {
@@ -56,6 +68,8 @@ export const InfoBubbleAvatarView = ({ objectData, onClose }: InfoBubbleAvatarVi
             tooltip: (row.key === 'trade') ? tradeTooltip : undefined,
         });
     }
+
+    bindClientModuleMenuRows(bindings, shownModuleButtons, button);
 
     RELATIONSHIPS.forEach((relationship, index) => {
         bindings[`${RELATIONSHIP_CELLS[index]}/button`] = button(`${RELATIONSHIP_CELLS[index]}/button`, () => pressRelationship(relationship));

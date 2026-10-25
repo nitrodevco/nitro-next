@@ -1,6 +1,7 @@
 import { Container, Graphics } from 'pixi.js';
-import { forwardRef, ForwardRefExoticComponent, JSX, ReactNode, RefAttributes, useCallback, useState } from 'react';
+import { forwardRef, ForwardRefExoticComponent, JSX, ReactNode, RefAttributes, use, useCallback, useState } from 'react';
 
+import { isTemplateInspecting, noteInspectTarget, TemplateInspectContext, TemplateInspectWindowContext } from './inspect';
 import { attachBoxHitArea, cursorForHandlers, FillLayout, resolveEventMode, wrapTextChildren } from './utils';
 
 /**
@@ -74,13 +75,17 @@ export const Box: ForwardRefExoticComponent<BoxProps & RefAttributes<Container>>
     ({ children, eventMode, cursor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap, mask, pointerTransparent, clipOutset, ...props }, ref) => {
         const [ overflowMask, setOverflowMask ] = useState<Graphics | null>(null);
         const clips = clipsOverflow(props.layout);
+        // The template element this box draws, for the extension inspector (`inspect`): read only while it is on.
+        const inspectNode = isTemplateInspecting() ? use(TemplateInspectContext) : undefined;
+        const inspectWindow = inspectNode ? use(TemplateInspectWindowContext) : undefined;
 
         const setRef = useCallback((node: Container | null) => {
             if (node && !pointerTransparent) attachBoxHitArea(node);
+            if (node && inspectNode && inspectWindow) noteInspectTarget(node, { node: inspectNode, window: inspectWindow });
 
             if (typeof ref === 'function') ref(node);
             else if (ref) ref.current = node;
-        }, [ ref, pointerTransparent ]);
+        }, [ ref, pointerTransparent, inspectNode, inspectWindow ]);
 
         const resolvedEventMode = resolveEventMode(eventMode, { onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });
 

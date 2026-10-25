@@ -16,6 +16,11 @@ export interface ThemeSprite {
     y: number;
     width: number;
     height: number;
+    /**
+     * Its own bitmap, when a hotel replaced the sprite (`asset.overlays`): sliced from this at `x`, `y`
+     * rather than from the sheet.
+     */
+    image?: CanvasImageSource;
 }
 
 interface ThemeAtlas {
@@ -53,14 +58,19 @@ export const resetThemeSprites = (): void => {
     sliceCanvases.clear();
 };
 
-/** Registers the sheet and every sprite rect it holds. Called once by `preloadThemeAssets`. */
-export const registerThemeAtlas = (sheet: ThemeAtlas, frames: Record<string, { frame: { x: number; y: number; w: number; h: number } }>, aliases: Record<string, string>): void => {
+/**
+ * Registers the sheet and every sprite rect it holds. Called once by `preloadThemeAssets`. A sprite in
+ * `overlays` (by sprite name) is a bitmap of its own that stands in for the sheet's.
+ */
+export const registerThemeAtlas = (sheet: ThemeAtlas, frames: Record<string, { frame: { x: number; y: number; w: number; h: number } }>, aliases: Record<string, string>, overlays: ReadonlyMap<string, Pick<ThemeSprite, 'x' | 'y' | 'width' | 'height'> & { image: CanvasImageSource }> = new Map()): void => {
     atlas = sheet;
 
     for (const [ key, asset ] of themeTextureKeys(Object.keys(frames), aliases)) {
+        const overlay = overlays.get(asset);
         const rect = frames[asset]?.frame;
 
-        if (rect) sprites.set(key, { key, x: rect.x, y: rect.y, width: rect.w, height: rect.h });
+        if (overlay) sprites.set(key, { key, ...overlay });
+        else if (rect) sprites.set(key, { key, x: rect.x, y: rect.y, width: rect.w, height: rect.h });
     }
 };
 
@@ -120,8 +130,8 @@ const extendLastPaintedRow = (ctx: CanvasRenderingContext2D, canvasWidth: number
     ctx.putImageData(image, 0, 0);
 };
 
-/** The rect of the sheet a slice occupies - `ThemeSprite` without its key. */
-type SliceRect = Pick<ThemeSprite, 'x' | 'y' | 'width' | 'height'>;
+/** The rect of the sheet a slice occupies - `ThemeSprite` without its key - and its own bitmap, for an overlaid sprite. */
+type SliceRect = Pick<ThemeSprite, 'x' | 'y' | 'width' | 'height' | 'image'>;
 
 /**
  * Draws `slices` of `source`, stacked on one another at the first one's size, onto a fresh
@@ -145,7 +155,7 @@ const renderSliceEffect = (source: CanvasImageSource, slices: readonly SliceRect
 
     if (!ctx) return undefined;
 
-    for (const slice of slices) ctx.drawImage(source, slice.x, slice.y, slice.width, slice.height, pad, pad, slice.width, slice.height);
+    for (const slice of slices) ctx.drawImage(slice.image ?? source, slice.x, slice.y, slice.width, slice.height, pad, pad, slice.width, slice.height);
 
     if (effect.kind === 'shadow') {
         // Before the silhouette is taken, so the window's body casts a shadow too.

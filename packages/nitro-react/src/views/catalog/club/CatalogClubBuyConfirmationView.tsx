@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { cancelClubBuy, confirmClubBuy } from '#base/commands';
 import { useCatalogStore, useCatalogStoreApi } from '#base/context/catalog';
 import { useWebSocketContext } from '#base/context/communication';
-import { useConfigData, useConfigValue, useTranslation } from '#base/context/system';
+import { useConfigBoolean, useConfigData, useTranslation } from '#base/context/system';
 import { getPurseHasClubLeft, useOwnClubSubscription } from '#base/context/user';
 import { TemplateWindow, useTemplateLibrary } from '#base/theme';
 import { getClubOfferPrices } from '#base/utils';
@@ -26,7 +26,7 @@ import { priceDisplayBindings } from '../page/widgets/catalogPrice';
 export const CatalogClubBuyConfirmationView = () => {
     const confirmation = useCatalogStore(x => x.clubBuyConfirmation);
     const clubSubscription = useOwnClubSubscription();
-    const disclaimerEnabled = useConfigValue<boolean | string>('disclaimer.credit_spending.enabled');
+    const hasDisclaimer = useConfigBoolean('disclaimer.credit_spending.enabled');
     const config = useConfigData();
     const templates = useTemplateLibrary(CATALOG_LIBRARY);
     const store = useCatalogStoreApi();
@@ -37,7 +37,6 @@ export const CatalogClubBuyConfirmationView = () => {
     if (!confirmation) return null;
 
     const { offer } = confirmation;
-    const hasDisclaimer = (disclaimerEnabled === true) || (disclaimerEnabled === 'true');
     const accepted = (disclaimer.offerId === offer.offerId) && disclaimer.accepted;
     const kind = (getPurseHasClubLeft(clubSubscription) && clubSubscription.isVip) ? 'extension' : 'subscription';
     const unit = (offer.months === 0) ? 'days' : 'months';

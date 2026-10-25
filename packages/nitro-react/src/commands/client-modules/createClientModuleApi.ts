@@ -4,26 +4,36 @@
  * the module stops.
  */
 import { IMessageDataWrapper, NitroLogger } from '@nitrodevco/nitro-api';
+import { ownedElementName } from '@nitrodevco/nitro-theme';
 
 import { clientModulesStore, isClientModuleHeader } from '#base/context/client-modules';
 import { WebSocketConnection } from '#base/context/communication';
 import { notificationStore } from '#base/context/notifications';
 import { getRoom } from '#base/context/room';
-import { systemStore } from '#base/context/system';
+import { HOTEL_VIEW_BOTTOM_SLOT, systemStore } from '#base/context/system';
 import { GetSoundManager } from '#base/sound';
-import { addTemplateBinding, addTemplatePatch, templatePatchReports } from '#base/theme/templatePatches';
+import { addTemplateArrange, addTemplateBinding, addTemplatePatch, templatePatchReport } from '#base/theme/templatePatches';
 
 import { quitRoom } from '../navigator/navigatorCommands';
 import { openClientLink } from '../system/clientLinkCommands';
 import { ClientModuleApi, ClientModuleDispose, ClientModulePacketValue } from './ClientModuleApi';
+import { createClientModuleChannels } from './clientModuleChannels';
+import { onClientModuleEvent } from './clientModuleEvents';
 import { clientModuleFetch } from './clientModuleHttp';
 import { getClientModuleLibraries } from './clientModuleLibraries';
+import { normalizeLinkPath } from './clientModuleLinkRoutes';
+import { clientModuleMenuRow, isClientModuleContextMenu } from './clientModuleMenus';
+import { clientModuleHasPermission, getClientModuleState, subscribeClientModuleState, useClientModuleState } from './clientModuleState';
 import { onPluginMessage, sendPluginMessage } from './pluginMessages';
 
 let nextOverlayKey = 1;
 let nextIllustrationKey = 1;
 let nextNotificationId = 1;
 let nextHotelViewLayerKey = 1;
+let nextHotelViewWidgetKey = 1;
+
+/** Every module's channels (`api.channels`): one set for the page, so modules meet on them. */
+export const clientModuleChannels = createClientModuleChannels((owner, key, error) => NitroLogger.error('ClientModules', `${owner}: a handler of channel ${key} threw`, error));
 
 export const createClientModuleApi = (connection: WebSocketConnection, moduleKey: string, baseUrl: string): { api: ClientModuleApi; dispose: () => void } => {
     const store = clientModulesStore.getState();
@@ -58,9 +68,57 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
 
     const api: ClientModuleApi = {
         version: 1,
+        minor: 2,
         key: moduleKey,
         baseUrl,
         libs: getClientModuleLibraries(),
+        state: {
+            get: getClientModuleState,
+            subscribe: listener => track(subscribeClientModuleState(listener)),
+            use: useClientModuleState,
+            hasPermission: clientModuleHasPermission,
+        },
+        events: {
+            on: (event, handler) => track(onClientModuleEvent(moduleKey, event, handler)),
+        },
+        contextMenu: {
+            add: (button) => {
+                if (!isClientModuleContextMenu(button.menu)) {
+                    NitroLogger.warn('ClientModules', `${moduleKey}: there is no ${String(button.menu)} menu (user, ownUser or furni).`);
+
+                    return () => undefined;
+                }
+
+                const key = windowKey(button.id);
+                const { templates, ops } = clientModuleMenuRow(button.menu, button.id, !!button.icon);
+                const patches = templates.map(template => addTemplatePatch({ owner: moduleKey, template, ops }));
+
+                store.addContextMenuItem({
+                    moduleKey,
+                    key,
+                    row: ownedElementName(moduleKey, button.id),
+                    menu: button.menu,
+                    label: button.label,
+                    icon: button.icon,
+                    when: button.when,
+                    onClick: button.onClick,
+                });
+
+                return track(() => {
+                    clientModulesStore.getState().removeContextMenuItem(key);
+                    patches.forEach(remove => remove());
+                });
+            },
+        },
+        chatCommands: {
+            register: (command) => {
+                const entry = { moduleKey, command: { ...command, name: command.name.replace(/^:/, '') } };
+
+                store.addChatCommand(entry);
+
+                return track(() => clientModulesStore.getState().removeChatCommand(entry));
+            },
+        },
         windows: {
             register: (id, component, options = {}) => {
                 const key = windowKey(id);
@@ -99,8 +157,13 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
             toggle: () => systemStore.getState().toggleToolbarMenu('me'),
         },
         links: {
-            handle: (prefix, handle) => {
-                const handler = { moduleKey, prefix, handle };
+            handle: (prefix, handle, options = {}) => {
+                const path = normalizeLinkPath(options.path) || undefined;
+                const handler = { moduleKey, prefix, path, handle };
+                const shared = clientModulesStore.getState().linkHandlers.filter(other => (other.moduleKey !== moduleKey) && (other.prefix === prefix) && (normalizeLinkPath(other.path) === (path ?? '')));
+
+                // Both get every such link; the inspector lists it too (`clientModuleLinkConflicts`).
+                if (shared.length) NitroLogger.warn('ClientModules', `${moduleKey}: link ${prefix}${path ? `/${path}` : ''} is handled by ${[ ...new Set(shared.map(other => other.moduleKey)) ].join(', ')} too; each gets its links. Give each module a path of its own (links.handle(prefix, fn, { path })).`);
 
                 store.addLinkHandler(handler);
 
@@ -179,6 +242,11 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
             on: (name, handler) => track(onPluginMessage(moduleKey, name, handler)),
             send: (name, data) => sendPluginMessage(moduleKey, name, data),
         },
+        channels: {
+            publish: (key, value) => clientModuleChannels.publish(moduleKey, key, value),
+            subscribe: (key, handler) => track(clientModuleChannels.subscribe(moduleKey, key, handler)),
+            get: key => clientModuleChannels.get(key) as never,
+        },
         http: {
             get: (path, query) => clientModuleFetch(connection, moduleKey, 'GET', path, { query }),
             post: (path, body) => clientModuleFetch(connection, moduleKey, 'POST', path, { body }),
@@ -226,6 +294,19 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
 
                 return track(() => clientModulesStore.getState().removeHotelViewLayer(key));
             },
+            addWidget: (slot, component) => {
+                if (!Number.isInteger(slot) || (slot < 1) || (slot > HOTEL_VIEW_BOTTOM_SLOT)) {
+                    NitroLogger.warn('ClientModules', `${moduleKey}: hotel view slot ${slot} is not one of 1-${HOTEL_VIEW_BOTTOM_SLOT}.`);
+
+                    return () => undefined;
+                }
+
+                const key = nextHotelViewWidgetKey++;
+
+                store.addHotelViewWidget({ moduleKey, key, slot, component });
+
+                return track(() => clientModulesStore.getState().removeHotelViewWidget(key));
+            },
         },
         notifications: {
             registerLayout: (name, { template, height }) => {
@@ -268,8 +349,9 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
         },
         templates: {
             patch: (template, ops, options = {}) => track(addTemplatePatch({ owner: moduleKey, template, ops, order: options.order })),
-            bind: (template, element, binding) => track(addTemplateBinding(moduleKey, template, element, binding)),
-            report: template => templatePatchReports().get(template),
+            bind: (template, element, binding, options) => track(addTemplateBinding(moduleKey, template, element, binding, options)),
+            arrange: (template, arrange) => track(addTemplateArrange(moduleKey, template, arrange)),
+            report: template => templatePatchReport(template),
         },
     };
 
@@ -282,6 +364,7 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
             }
         }
 
+        clientModuleChannels.removeOwner(moduleKey);
         clientModulesStore.getState().removeModule(moduleKey);
     };
 

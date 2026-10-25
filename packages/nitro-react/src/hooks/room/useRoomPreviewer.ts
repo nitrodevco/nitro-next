@@ -133,15 +133,9 @@ export const useRoomPreviewer = (roomId: number, targetRef: RefObject<RoomPrevie
         autoStateChangeTime: -1,
     });
     // `anchor`, read by the frame tick, which keeps the closure of the render that set it up.
-    const anchorRef = useRef<PointData | undefined>(anchor);
-    const anchorX = anchor?.x;
-    const anchorY = anchor?.y;
+    const anchorRef = useLatest(anchor);
     const { handleBadgeAssetEvent } = useRoomBadgeAssetHandler(room);
     const handleBadgeAssetEventRef = useLatest(handleBadgeAssetEvent);
-
-    useEffect(() => {
-        anchorRef.current = ((anchorX !== undefined) && (anchorY !== undefined)) ? { x: anchorX, y: anchorY } : undefined;
-    }, [ anchorX, anchorY ]);
 
     const changeObjectDirection = () => {
         if (!room) return;

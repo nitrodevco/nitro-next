@@ -1,13 +1,14 @@
-import { CanvasTextMetrics, TextDropShadow, TextStyleOptions } from 'pixi.js';
+import { CanvasTextMetrics, fontStringFromTextStyle, Graphics, TextDropShadow, TextStyle, TextStyleOptions } from 'pixi.js';
 import { useMemo } from 'react';
 
 import { BoxLayout } from './Box';
 import { useDynamicStyleEffect } from './dynamicstyle';
-import { DEFAULT_FLASH_TEXT_FORMAT, FlashTextFieldOverrides, FlashTextStyleSheet, parseFlashTextMarkup } from './font/flash-text';
+import { FlashTextFieldOverrides, FlashTextStyleSheet } from './font/flash-text';
 import { FlashText } from './font/FlashText';
 import { FlashTextCanvasConfig, FlashTextOverflowReplace, useFlashTextCanvas } from './hooks/useFlashTextCanvas';
 import { browserFaceOverride, DEFAULT_TEXT_STYLE, DynamicStyleRole, flashFaceOverride, getPixiTextStyle, insetStretchAxes, resolveFlashStyle, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
 import { GetPixelRatio } from './utils/GetPixelRatio';
+import { NATIVE_UNDERLINE, nativeMarkup } from './utils/nativeTextMarkup';
 
 export type TextConfig = {
     text: string;
@@ -36,7 +37,7 @@ export type TextConfig = {
      * The text is Flash `htmlText` - a `formatted_text` / `html` window, whose
      * `FormattedTextController` / `HTMLTextController` set `field.htmlText` - and renders its
      * `<b>`, `<i>`, `<u>`, `<font>`, `<br>` and `<p>` (see `parseFlashTextMarkup`). The browser
-     * fallback shows the text with its tags stripped.
+     * fallback keeps each run's bold, italic, underline, colour and size (`nativeMarkup`).
      */
     markup?: boolean;
     /** With `markup`: the field's `TextField.styleSheet` (`parseFlashStyleSheet`). Exact rendering only. */
@@ -82,6 +83,60 @@ const baseFill = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOpt
     return styleColor ?? '#000000';
 };
 
+/** The colour a canvas run is drawn in, as a number for its underline. */
+const runColor = (style: TextStyle): number => {
+    const fill = style.fill;
+
+    if (typeof fill === 'number') return fill;
+    if (typeof fill === 'string' && fill.startsWith('#')) return Number.parseInt(fill.slice(1, 7), 16);
+
+    return 0;
+};
+
+/** A run's advance as Pixi's tagged canvas text moves its pen by it (`CanvasTextGenerator._renderTaggedTextToCanvas`). */
+const runAdvance = (text: string, style: TextStyle): number => {
+    const context = CanvasTextMetrics._context;
+
+    context.font = fontStringFromTextStyle(style);
+
+    return CanvasTextMetrics._measureText(text, style.letterSpacing, context);
+};
+
+/**
+ * Where the underlined runs of a tagged canvas text are, one pixel under their baseline: Pixi draws
+ * no underline, so `NativeText` draws these over its text. Each run is placed as Pixi's tagged
+ * renderer places it - its pen moved by each run's advance, each line by the text's `align` - so a
+ * line stays under its glyphs.
+ */
+const underlineRects = (metrics: CanvasTextMetrics, style: TextStyle): { x: number; y: number; width: number; color: number }[] => {
+    const lines = metrics.runsByLine;
+
+    if (!lines) return [];
+
+    const rects: { x: number; y: number; width: number; color: number }[] = [];
+    const halfStroke = (style.stroke ? (style._stroke?.width ?? 0) : 0) / 2;
+    let top = halfStroke;
+
+    lines.forEach((runs, index) => {
+        const lineWidth = metrics.lineWidths[index] ?? 0;
+        const free = metrics.maxLineWidth - lineWidth;
+        let left = halfStroke + ((style.align === 'center') ? free / 2 : (style.align === 'right') ? free : 0);
+        const ascent = metrics.lineAscents?.[index] ?? metrics.fontProperties.ascent;
+
+        for (const run of runs) {
+            const width = runAdvance(run.text, run.style);
+
+            if ((run.style as unknown as Record<string, unknown>)[NATIVE_UNDERLINE]) rects.push({ x: Math.round(left), y: Math.round(top + ascent + 1), width: Math.round(width), color: runColor(run.style) });
+
+            left += width;
+        }
+
+        top += metrics.lineHeights?.[index] ?? metrics.lineHeight;
+    });
+
+    return rects;
+};
+
 /**
  * Unlike a CSS `<span>`, which naturally reports its own rendered size to its flex parent,
  * `@pixi/layout`'s Yoga integration only *positions* a `pixiText` leaf within a size
@@ -114,8 +169,9 @@ const baseFill = (textStyle: TextStyleKey | undefined, textOptions: TextStyleOpt
  * a `<span>`'s real floor.
  */
 const NativeText = ({ text: source, markup, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y }: TextRenderConfig) => {
-    // Markup the exact renderer could not take shows as its text alone.
-    const text = useMemo(() => (markup ? parseFlashTextMarkup(source, DEFAULT_FLASH_TEXT_FORMAT).map(run => run.text).join('') : source), [ markup, source ]);
+    // Markup the exact renderer could not take: its runs as the canvas text's tags (`nativeMarkup`).
+    const rich = useMemo(() => (markup ? nativeMarkup(source) : undefined), [ markup, source ]);
+    const text = rich ? rich.text : source;
     // The layout's `font_face`/`bold`/`italic` vars again, in the face names Pixi's canvas text
     // knows - `fontFamily` alone would leave a `bold` var out of the fallback. A family none of the
     // captured faces covers (the floor plan map's `Courier`) is the very reason for falling back,
@@ -124,36 +180,73 @@ const NativeText = ({ text: source, markup, textStyle, textOptions, flashFormat,
         const face = flashFaceOverride(textOptions?.fontFamily);
         const keepsFamily = !face && (typeof textOptions?.fontFamily === 'string');
 
-        return getPixiTextStyle(textStyle ?? DEFAULT_TEXT_STYLE, {
+        const base = getPixiTextStyle(textStyle ?? DEFAULT_TEXT_STYLE, {
             ...textOptions,
             ...(keepsFamily ? {} : browserFaceOverride(textStyle ?? DEFAULT_TEXT_STYLE, face, flashFormat)),
         });
-    }, [ textStyle, textOptions, flashFormat ]);
+
+        if (!rich || !Object.keys(rich.tagStyles).length) return base;
+
+        // A style of its own: the plain one is shared through the style cache.
+        const tagged = base.clone();
+
+        tagged.tagStyles = rich.tagStyles;
+
+        return tagged;
+    }, [ textStyle, textOptions, flashFormat, rich ]);
     const metrics = useMemo(() => (text?.length ? CanvasTextMetrics.measureText(text, style) : undefined), [ text, style ]);
+    const underlines = useMemo(() => (metrics ? underlineRects(metrics, style) : []), [ metrics, style ]);
 
     if (!text?.length || !metrics) return null;
 
     const stretchAxes = insetStretchAxes(layout);
     const objectPosition = textObjectPosition(textOptions?.align, verticalAlign);
-    const label = (labelLayout: BoxLayout | undefined, nudge: boolean) => (
-        <pixiText
-            text={text}
-            style={style}
-            resolution={GetPixelRatio()}
-            visible={visible}
-            alpha={alpha}
-            x={nudge ? x : undefined}
-            y={nudge ? y : undefined}
-            layout={{
-                width: Math.ceil(metrics.width),
-                height: Math.ceil(metrics.height),
-                objectFit: 'none',
-                objectPosition,
-                flexShrink: 0,
-                ...labelLayout,
-            }}
-        />
-    );
+    const label = (labelLayout: BoxLayout | undefined, nudge: boolean) => (underlines.length
+        ? (
+                <pixiContainer
+                    eventMode="none"
+                    visible={visible}
+                    alpha={alpha}
+                    x={nudge ? x : undefined}
+                    y={nudge ? y : undefined}
+                    layout={{ width: Math.ceil(metrics.width), height: Math.ceil(metrics.height), flexShrink: 0, ...labelLayout }}
+                >
+                    <pixiText
+                        text={text}
+                        style={style}
+                        resolution={GetPixelRatio()}
+                        layout={{ position: 'absolute', left: 0, top: 0, width: Math.ceil(metrics.width), height: Math.ceil(metrics.height), objectFit: 'none', objectPosition: 'left top' }}
+                    />
+                    {/* No layout of its own: a laid-out leaf is moved so its bounds start at its box, which would put every line at x 0. */}
+                    <pixiGraphics
+                        eventMode="none"
+                        draw={(g: Graphics) => {
+                            g.clear();
+
+                            for (const line of underlines) g.rect(line.x, line.y, line.width, 1).fill(line.color);
+                        }}
+                    />
+                </pixiContainer>
+            )
+        : (
+                <pixiText
+                    text={text}
+                    style={style}
+                    resolution={GetPixelRatio()}
+                    visible={visible}
+                    alpha={alpha}
+                    x={nudge ? x : undefined}
+                    y={nudge ? y : undefined}
+                    layout={{
+                        width: Math.ceil(metrics.width),
+                        height: Math.ceil(metrics.height),
+                        objectFit: 'none',
+                        objectPosition,
+                        flexShrink: 0,
+                        ...labelLayout,
+                    }}
+                />
+            ));
 
     // Same leaf/inset rule as `FlashText`: a leaf keeps its intrinsic size between two
     // insets, so a container host does the spanning and the text fills it.

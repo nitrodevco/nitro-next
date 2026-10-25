@@ -31,6 +31,7 @@ import { loadTemplatePatchFiles } from '#base/theme/templatePatches';
 import { isPreviewHost, loadAssetBundle, preloadAssetBundles, unloadAssetBundle } from '#base/utils';
 
 import { MainView } from './MainView';
+import { LOADING_SCREEN_KEY, LoadingScreenStyle, parseLoadingScreenStyle } from './views/loading-screen/loadingScreenStyle';
 import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
 import { PreviewHostView } from './views/preview/PreviewHostView';
 import { SystemDialogsView } from './views/system/SystemDialogsView';
@@ -72,6 +73,7 @@ export const NitroView = ({ dataLoaded, dataTotal }: NitroViewProps) => {
     const [ isEngineReady, setIsEngineReady ] = useState(false);
     const [ setupDone, setSetupDone ] = useState(0);
     const [ splash, setSplash ] = useState<{ photo: number; seed: number } | null>(null);
+    const [ loadingLook, setLoadingLook ] = useState<LoadingScreenStyle | undefined>(undefined);
     const [ error, setError ] = useState<string | undefined>(undefined);
     const [ hasShownClient, setHasShownClient ] = useState(false);
     const { isAuthenticated, isDisconnected, connect } = useWebSocketContext();
@@ -97,8 +99,10 @@ export const NitroView = ({ dataLoaded, dataTotal }: NitroViewProps) => {
                 // The hotel's text style and face overrides, before the first text is drawn (the theme's own come with its bundle).
                 setTextStyleOverrides('hotel', GetConfigValue('text.styles.overrides'));
                 setFontFaceOverrides('hotel', GetConfigValue('text.faces.overrides'));
+                // The hotel's look for the screen itself, before it goes up: no client module has loaded to draw one.
+                setLoadingLook(parseLoadingScreenStyle(GetConfigValue(LOADING_SCREEN_KEY)));
                 // The plugins' declarative window patches; a window drawn before one arrives is redrawn with it.
-                void loadTemplatePatchFiles(GetConfigValue('templates.patches'));
+                void loadTemplatePatchFiles(GetConfigValue('templates.patches'), GetConfigValue('templates.styles'));
 
                 await Promise.all([ loadAssetBundle('loading-screen'), preloadFlashFonts() ]);
 
@@ -157,6 +161,7 @@ export const NitroView = ({ dataLoaded, dataTotal }: NitroViewProps) => {
                     error={error}
                     photo={splash.photo}
                     seed={splash.seed}
+                    look={loadingLook}
                 />
             )}
             {!showClient && isDisconnected && (

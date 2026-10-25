@@ -1,23 +1,26 @@
 import { AvatarActionStateType, AvatarExpressionEnum, ClubLevelEnum, ISimpleRoomObjectData, PostureTypeEnum, RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 
 import { changePosture, dropCarryItem, openClientLink, openProfile, setDance, showAvatarExpression, showSign, startNameChange, trackEventLog } from '#base/commands';
+import { toClientModuleAvatar } from '#base/context/client-modules';
 import { useWebSocketContext } from '#base/context/communication';
-import { useIsRoomOwner, useOwnIsDancing, useRoomSessionActions, useRoomStore } from '#base/context/room';
+import { useIsRoomOwner, useOwnIsDancing, useRoomSessionActions, useRoomStore, useRoomUserByObjectId } from '#base/context/room';
 import { useConfigBoolean, useTranslation, useWindowActions } from '#base/context/system';
-import { useOwnClubLevel, useOwnHasClub, useUserStore } from '#base/context/user';
+import { useOwnClubLevel, useOwnHasClub, useOwnUserId, useUserStore } from '#base/context/user';
 import { useWiredShowInspectButton } from '#base/context/wired';
 import { useRoomUserData } from '#base/hooks';
 import { Box, LayoutImage, TemplateBindings, TemplateWindow, ThemeImage } from '#base/theme';
 import { isHandItem } from '#base/utils';
 
 import { useButtonMenu, useMinimizedMenu } from './useButtonMenu';
+import { bindClientModuleMenuRows, useClientModuleMenuButtons } from './useClientModuleMenuButtons';
 
 /**
  * The menu over your own avatar - `OwnAvatarMenuView`, drawn from its
  * `habbo-room-ui-com/own_avatar_menu` template: looks, decorating, dancing, the expressions and
  * signs sub-pages, effects and dropping what you carry. `updateButtons` shows each mode's rows of
- * `buttons`, the sign grid in the signs mode.
+ * `buttons`, the sign grid in the signs mode; client modules' rows (`api.contextMenu`, menu `ownUser`)
+ * follow the main page's.
  */
 export interface InfoBubbleOwnAvatarViewProps {
     objectData: ISimpleRoomObjectData;
@@ -110,6 +113,10 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
     const { send } = useWebSocketContext();
     const { showWindow, toggleWindow } = useWindowActions();
     const { setIsDecorating } = useRoomSessionActions();
+    const user = useRoomUserByObjectId(objectData.objectId);
+    const ownUserId = useOwnUserId();
+    const target = useMemo(() => user && toClientModuleAvatar(user, ownUserId), [ user, ownUserId ]);
+    const moduleButtons = useClientModuleMenuButtons('ownUser', target);
 
     if (!info) return null;
     if (minimizedView) return minimizedView;
@@ -185,6 +192,7 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
 
     const visibleButtons = buttons[mode].filter(row => row.visible);
     const showsSigns = (mode === MODE_SIGNS);
+    const shownModuleButtons = (mode === MODE_NORMAL) ? moduleButtons : [];
     const bindings: TemplateBindings = {
         ...minimizeBindings,
         profile_link: {
@@ -194,8 +202,10 @@ export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAv
             onPointerOut: () => setNameHovered(false),
         },
         name: { caption: info.name, setCaptionAfterBuild: true, color: nameHovered ? NAME_HOVER_COLOR : NAME_COLOR },
-        buttons: { show: [ ...visibleButtons.map(row => row.key), ...(showsSigns ? [ 'signs_grid' ] : []) ] },
+        buttons: { show: [ ...visibleButtons.map(row => row.key), ...(showsSigns ? [ 'signs_grid' ] : []), ...shownModuleButtons.map(row => row.row) ] },
     };
+
+    bindClientModuleMenuRows(bindings, shownModuleButtons, button);
 
     for (const row of visibleButtons) {
         showButton(bindings, row.key, () => press(row), {

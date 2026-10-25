@@ -1,19 +1,27 @@
-import { Container as PixiContainer } from 'pixi.js';
-import { ReactNode, useContext, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
+import { ReactNode, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 
 import { Box, BoxLayout } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { ContentArea } from './ContentArea';
+import { DragTargetContext, DragTargetController } from './drag/DragTargetContext';
+import { reachedUnclaimed } from './drag/useDragTrigger';
 import { Header } from './Header';
 import { ChildBounds, useChildBounds, useFrameDrag, useFrameResize, useThemeVariant } from './hooks';
+import { useThemeConfigValue } from './host';
 import { BackgroundLayer, ShadowLayer } from './layer';
 import { Scaler, ScalerDirection } from './Scaler';
-import { DropShadowConfig, expandSides, getWindowLayer, subscribeWindowLayer, ThemeProps, ThemeVariant, WindowPlacedContext } from './utils';
+import { DropShadowConfig, expandSides, FRAME_OVERRIDES_KEY, frameOverrideOf, getWindowLayer, isFramelessVariant, subscribeWindowLayer, ThemeProps, ThemeVariant, WindowPlacedContext } from './utils';
 
 export type FrameVariant = ThemeVariant;
 
 export interface FrameProps extends Omit<ThemeProps<FrameVariant>, 'dropShadow'> {
     id?: string;
+    /**
+     * The window's name in its layout (a template's root frame): with `id`, what a hotel's
+     * `frame.overrides` entry names the frame by (`frameOverrideOf`).
+     */
+    name?: string;
     caption?: string;
     resizeDirection?: ScalerDirection;
     contentLayout?: BoxLayout;
@@ -99,6 +107,14 @@ export interface FrameProps extends Omit<ThemeProps<FrameVariant>, 'dropShadow'>
      * laid out, and while none is visible, the layout's size stands, as Flash leaves it.
      */
     fitContent?: boolean | 'width' | 'height';
+    /**
+     * Not Flash's: panes of the window drawn beside it, placed against its top left and not cropped by
+     * it - a second `Frame` (a navigation pane) that moves, raises and closes with this one. A press
+     * on a pane's header drags this window, as a nested frame's header does. Drawn behind the frame's
+     * art unless `panesInFront`.
+     */
+    panes?: ReactNode;
+    panesInFront?: boolean;
     children?: ReactNode;
 }
 
@@ -150,11 +166,20 @@ const frameAxisSize = (fit: boolean, hasMargins: boolean, bound: number | undefi
  * clipped to it.
  */
 export const Frame = ({
-    variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, dropShadow, id, caption, resizeDirection = 'all', contentLayout, margins,
-    defaultPosition, rememberPosition = true, rememberSize = true, draggable = true, centered, onPositionChange, onClose, onResize, closeButtonVisible, closeButtonVariant, onMenu, helpPage, onHelp, backdrop, fitContent, children,
+    variant: codeVariant, defaultVariant, tooltip, tooltipDelay, layout, tintColor: codeTintColor, textStyle, textColor, dropShadow, id, name, caption, resizeDirection = 'all', contentLayout, margins,
+    defaultPosition, rememberPosition = true, rememberSize = true, draggable = true, centered, onPositionChange, onClose, onResize, closeButtonVisible, closeButtonVariant, onMenu, helpPage, onHelp, backdrop, fitContent, panes, panesInFront, children,
     onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
 }: FrameProps) => {
-    const { frameRef, attachFrame, offset, zIndex, revealed, onHeaderPointerDown } = useFrameDrag(id, { defaultPosition, remember: rememberPosition, centered, onPositionChange });
+    const { frameRef, attachFrame, offset, zIndex, revealed, onHeaderPointerDown, startDrag } = useFrameDrag(id, { defaultPosition, remember: rememberPosition, centered, onPositionChange });
+    /*
+     * The window a frame that is no drag target itself is dragged with: `WindowController.update`
+     * walks up from a `mouse_dragging_trigger` (a frame skin's header) to the first ancestor with the
+     * target flag, so a nested frame's header - a pane's - drags the window it is in.
+     */
+    const outerTarget = useContext(DragTargetContext);
+    // What this frame hands what it holds: the target their triggers drag.
+    const ownTarget = useMemo<DragTargetController | null>(() => (draggable ? { begin: startDrag } : null), [ draggable, startDrag ]);
+    const heldTarget = ownTarget ?? outerTarget;
     /*
      * A window belongs on the window desktop, whoever built it - `buildFromXML(xml, 1)`. A frame
      * mounted outside the layer (every room widget's dialog is mounted over the room canvas) has
@@ -165,11 +190,29 @@ export const Frame = ({
      * one. A frame already on a desktop - every window of the client's own, and a frame nested
      * inside one - stays exactly where it is rendered.
      */
+    // A theme's style for this window (`frame.overrides`), over what its code passes.
+    const override = frameOverrideOf(useThemeConfigValue<unknown>(FRAME_OVERRIDES_KEY), id, name);
+    const variant = override?.variant ?? codeVariant;
+    const frameless = isFramelessVariant(variant);
+    const tintColor = override?.color ?? codeTintColor;
     const placed = useContext(WindowPlacedContext);
     const windowLayer = useSyncExternalStore(subscribeWindowLayer, getWindowLayer);
     const hostRef = useRef<PixiContainer>(null);
+    // A frameless window has no header: a press its content leaves unclaimed drags it.
+    const onFramelessPointerDown = (event: FederatedPointerEvent) => {
+        onPointerDownProp?.(event);
+
+        if (reachedUnclaimed(event)) startDrag(event);
+    };
+    const headerPointerDown = draggable
+        ? onHeaderPointerDown
+        : ((placed && outerTarget)
+                ? (event: FederatedPointerEvent) => {
+                        if ((event.button === 0) && (event.target === event.currentTarget)) outerTarget.begin(event);
+                    }
+                : undefined);
     const { ownCascade, config, handlers, resolvedLayer, resolvedPlain, resolvedOverlay, resolvedShadow, resolvedTint } = useThemeVariant<FrameVariant>({
-        cascadeKey: 'frame', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, dropShadow, interactive: true, onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
+        cascadeKey: 'frame', variant: frameless ? undefined : variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, dropShadow, interactive: true, onPointerOver, onPointerOut, onPointerDown: (frameless && draggable) ? onFramelessPointerDown : onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
     });
     const minWidth = layout?.minWidth ?? config.layout?.minWidth ?? 20;
     const minHeight = layout?.minHeight ?? config.layout?.minHeight ?? 20;
@@ -218,6 +261,12 @@ export const Frame = ({
                 y={offset.dy}
                 zIndex={zIndex}
                 renderable={revealed}
+                /*
+                 * Pixi prunes the children of a box whose hit area misses the pointer: a frame that holds
+                 * what lies past its own rectangle (a frameless one's content, its panes) has none, and is
+                 * hit through what it holds - a framed one through the filler below.
+                 */
+                pointerTransparent={frameless || !!panes}
                 {...handlers}
                 layout={{
                     // A window sits on its desktop at its own rectangle, never in a sibling's flow -
@@ -234,52 +283,82 @@ export const Frame = ({
                     ...(size && { width: size.width, height: size.height }),
                 }}
             >
-                { resolvedShadow && (
+                { panes && !frameless && <Box layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }} /> }
+                { panes && (
+                    <Box
+                        pointerTransparent
+                        zIndex={panesInFront ? 30 : undefined}
+                        layout={{ position: 'absolute', left: 0, top: 0, width: 0, height: 0 }}
+                    >
+                        <DragTargetContext.Provider value={heldTarget}>
+                            {panes}
+                        </DragTargetContext.Provider>
+                    </Box>
+                ) }
+                { !frameless && resolvedShadow && (
                     <ShadowLayer
                         {...resolvedShadow}
                         layer={resolvedLayer}
                         plain={resolvedPlain}
                     />
                 ) }
-                { resolvedLayer && (
+                { !frameless && resolvedLayer && (
                     <BackgroundLayer
                         layer={resolvedLayer}
                         tintColor={resolvedTint}
                     />
                 ) }
                 {/* The skin's `colorize="false"` pieces, over the tinted art and under the shine. */}
-                { resolvedPlain && <BackgroundLayer layer={resolvedPlain} /> }
-                { resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} /> }
+                { !frameless && resolvedPlain && <BackgroundLayer layer={resolvedPlain} /> }
+                { !frameless && resolvedOverlay && <BackgroundLayer layer={resolvedOverlay} /> }
                 { backdrop }
-                <VariantCascadeProvider map={ownCascade}>
-                    <Header
-                        caption={caption}
-                        tintColor={resolvedTint}
-                        onClose={onClose}
-                        closeButtonVisible={closeButtonVisible}
-                        closeVariant={closeButtonVariant}
-                        onMenu={onMenu}
-                        helpPage={helpPage}
-                        onHelp={onHelp}
-                        onPointerDown={draggable ? onHeaderPointerDown : undefined}
-                    />
-                    <ContentArea
-                        ref={setContentNode}
-                        // Its children are cropped by the frame, not by this box: the margins are
-                        // how far past its own edges they may reach on each side. See `ContentArea`.
-                        clipOutset={margins}
-                        layout={margins ? { ...contentLayout, ...marginsLayout(margins, fitWidth, fitHeight, contentBounds) } : contentLayout}
-                    >
-                        {children}
-                    </ContentArea>
-                    <Scaler
-                        // `_FRAME_SCALER` is tagged `_COLORIZE` in every frame's window layout, so
-                        // the corner takes the window's own colour as the header does.
-                        tintColor={resolvedTint}
-                        direction={resizeDirection}
-                        onPointerDown={onScalerPointerDown}
-                    />
-                </VariantCascadeProvider>
+                { frameless
+                    ? (
+                            // No header, no scaler, and no crop: what it holds is the window.
+                            <Box
+                                ref={setContentNode}
+                                pointerTransparent
+                                zIndex={20}
+                                layout={margins ? { ...contentLayout, ...marginsLayout(margins, fitWidth, fitHeight, contentBounds) } : { flex: 1, flexDirection: 'column', ...contentLayout }}
+                            >
+                                <DragTargetContext.Provider value={heldTarget}>
+                                    {children}
+                                </DragTargetContext.Provider>
+                            </Box>
+                        )
+                    : (
+                            <VariantCascadeProvider map={ownCascade}>
+                                <Header
+                                    caption={caption}
+                                    tintColor={resolvedTint}
+                                    onClose={onClose}
+                                    closeButtonVisible={closeButtonVisible}
+                                    closeVariant={closeButtonVariant}
+                                    onMenu={onMenu}
+                                    helpPage={helpPage}
+                                    onHelp={onHelp}
+                                    onPointerDown={headerPointerDown}
+                                />
+                                <ContentArea
+                                    ref={setContentNode}
+                                    // Its children are cropped by the frame, not by this box: the margins are
+                                    // how far past its own edges they may reach on each side. See `ContentArea`.
+                                    clipOutset={margins}
+                                    layout={margins ? { ...contentLayout, ...marginsLayout(margins, fitWidth, fitHeight, contentBounds) } : contentLayout}
+                                >
+                                    <DragTargetContext.Provider value={heldTarget}>
+                                        {children}
+                                    </DragTargetContext.Provider>
+                                </ContentArea>
+                                <Scaler
+                                    // `_FRAME_SCALER` is tagged `_COLORIZE` in every frame's window layout, so
+                                    // the corner takes the window's own colour as the header does.
+                                    tintColor={resolvedTint}
+                                    direction={resizeDirection}
+                                    onPointerDown={onScalerPointerDown}
+                                />
+                            </VariantCascadeProvider>
+                        ) }
             </Box>
         </WindowPlacedContext.Provider>
     );

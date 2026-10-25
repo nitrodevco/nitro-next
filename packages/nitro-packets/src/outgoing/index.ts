@@ -474,6 +474,7 @@ export * from './Tracking/PerformanceLogComposer';
 export * from './Turbo/TurboBugReportCaptureComposer';
 export * from './Turbo/TurboClientCapabilitiesComposer';
 export * from './Turbo/TurboClientErrorReportComposer';
+export * from './Turbo/TurboClientExtensionReportComposer';
 export * from './Turbo/TurboCommandSuggestComposer';
 export * from './Turbo/TurboStarterRoomPictureComposer';
 export * from './Turbo/TurboWebSessionRequestComposer';

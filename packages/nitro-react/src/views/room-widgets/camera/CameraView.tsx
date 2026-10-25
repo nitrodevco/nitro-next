@@ -2,9 +2,10 @@
  * The camera's viewfinder - Flash `CameraViewFinder` (`ui/widget/camera`) over
  * `habbo-room-ui-com/camera_interface_xml`, shown by the toolbar's camera icon.
  *
- * - While it is up, every 100 ms (`registerUpdateReceiver(this, 100)`) the room under the `image` rect is
- *   drawn into it (`snapShotRoomCanvas` over `getViewPort`: the window's position plus the image's) - on the
- *   GPU, as the thumbnail camera's viewfinder is; the shutter alone reads the picture back.
+ * - While it is up, every frame (`registerUpdateReceiver(this, 100)`: an update receiver at priority 2 -
+ *   the number is a priority, clamped to 0-2, not a period) the room under the `image` rect is drawn into it
+ *   (`snapShotRoomCanvas` over `getViewPort`: the window's position plus the image's) - on the GPU, as the
+ *   thumbnail camera's viewfinder is; the shutter alone reads the picture back.
  * - Five slots (`NUMBER_OF_SLOTS`, kept for the session, as the class's statics are) hold the photos: the
  *   shutter (`button_release`, its picture `camera_camera_btn` / `_hi` over / `_down` pressed) plays the
  *   shutter sound, puts the picture in the active slot with a 350 ms white flash, shows `slot_container`
@@ -40,8 +41,8 @@ import { CanvasPicture } from './CanvasPicture';
 const TEMPLATE = 'habbo-room-ui-com/camera_interface_xml';
 
 const NUMBER_OF_SLOTS = 5;
-/** `registerUpdateReceiver(this, 100)`. */
-const UPDATE_INTERVAL_MS = 100;
+/** How often a preview, which draws no room, checks for a zoomed room (`onRoomZoomed`). */
+const UNFIT_CHECK_MS = 100;
 /** `_-wG`. */
 const FLASH_MS = 350;
 /** A slot is 58 x 58, its picture drawn at (width - 2) / `CAMERA_IMAGE_SIZE`. */
@@ -127,8 +128,8 @@ export const CameraView = () => {
         if (room) requestAchievements(send);
     }, [ room, send ]);
 
-    // `update`, every 100 ms while shown and not in preview mode: the room under the image.
-    const { texture, viewfinder, collect } = useRoomViewfinder(CAMERA_IMAGE_SIZE, CAMERA_IMAGE_SIZE, visible && !preview, () => hideWindow('camera'), UPDATE_INTERVAL_MS);
+    // `update`, every frame while shown and not in preview mode: the room under the image.
+    const { texture, viewfinder, collect } = useRoomViewfinder(CAMERA_IMAGE_SIZE, CAMERA_IMAGE_SIZE, visible && !preview, () => hideWindow('camera'));
 
     // `updateFlash`: the white fading out over 350 ms.
     useEffect(() => {
@@ -156,7 +157,7 @@ export const CameraView = () => {
 
         const timer = setInterval(() => {
             if (isRoomUnfit()) hideWindow('camera');
-        }, UPDATE_INTERVAL_MS);
+        }, UNFIT_CHECK_MS);
 
         return () => clearInterval(timer);
     }, [ visible, hideWindow ]);

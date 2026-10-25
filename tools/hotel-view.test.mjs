@@ -140,7 +140,13 @@ const composer = name => class {
 };
 const loadHandlers = systemStore => load('nitro-react/src/handlers/system/registerHotelViewHandlers', {
     '@nitrodevco/nitro-packets': { ...Object.fromEntries(INCOMING.map(name => [ name, { name } ])), ...Object.fromEntries(OUTGOING.map(name => [ name, composer(name) ])) },
-    '#base/context/system': { ...backgrounds, ...widgets, ...questWidgets, systemStore },
+    '#base/context/system': {
+        ...backgrounds,
+        ...widgets,
+        ...questWidgets,
+        ...load('nitro-react/src/context/system/configValues', { '#base/utils/configReader': load('nitro-react/src/utils/configReader'), './store': { systemStore } }),
+        systemStore,
+    },
     '../packetSubscriptions': load('nitro-react/src/handlers/packetSubscriptions'),
 });
 

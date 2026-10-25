@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { useWebSocketContext } from '#base/context/communication';
 import { useRoomPollActions, useRoomStore } from '#base/context/room';
+import { useTranslation, useWindowActions } from '#base/context/system';
 import { RoomPollOfferView } from '#base/views/room-widgets/poll/RoomPollOfferView';
 import { RoomPollQuestionView } from '#base/views/room-widgets/poll/RoomPollQuestionView';
 
@@ -35,6 +36,8 @@ export const RoomPollWidget = () => {
     const poll = useRoomStore(x => x.poll);
     const { closePoll } = useRoomPollActions();
     const { send } = useWebSocketContext();
+    const { showAlert } = useWindowActions();
+    const t = useTranslation();
     const [ progress, setProgress ] = useState<PollProgress>(EMPTY_PROGRESS);
 
     const pollId = poll?.id ?? 0;
@@ -107,6 +110,17 @@ export const RoomPollWidget = () => {
         const goToFollowUp = !progress.inFollowUp
             && !!category
             && parent.children.some(child => child.questionCategory === category);
+
+        /*
+         * `PollContentDialog.nextQuestion` with no question left: `PollWidget.pollFinished` ->
+         * `PollSession.showThanks`, an alert of `${poll_thanks_title}` over the poll's end message.
+         */
+        if (!goToFollowUp && !questions[progress.index + 1]) {
+            showAlert(t('poll_thanks_title'), poll.contents?.endMessage ?? '');
+            closePoll();
+
+            return;
+        }
 
         setProgress(previous => ({
             ...previous,

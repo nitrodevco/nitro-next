@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+import { useLatest } from './useLatest';
+
 const HOLD_INITIAL_DELAY_MS = 400;
 const HOLD_REPEAT_INTERVAL_MS = 60;
 
@@ -12,10 +14,7 @@ const HOLD_REPEAT_INTERVAL_MS = 60;
 export const useHoldToRepeat = (callback: () => void) => {
     const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
     const intervalRef = useRef<ReturnType<typeof setInterval>>(undefined);
-    const callbackRef = useRef(callback);
-    useEffect(() => {
-        callbackRef.current = callback;
-    }, [ callback ]);
+    const callbackRef = useLatest(callback);
 
     const stop = () => {
         clearTimeout(timeoutRef.current);

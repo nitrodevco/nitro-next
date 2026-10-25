@@ -31,6 +31,7 @@ import { registerHandlers } from './handlers';
 import { useRegisterHandlers } from './hooks';
 import { Box, ModalLayer, TooltipLayer, WindowLayer } from './theme';
 import { BadgeLeaderboardView } from './views/badge-leaderboard/BadgeLeaderboardView';
+import { CampaignCalendarView } from './views/campaign/CampaignCalendarView';
 import { MallOfferMinimizedView } from './views/catalog/targeted-offers/MallOfferMinimizedView';
 import { TargetedOfferMinimizedView } from './views/catalog/targeted-offers/TargetedOfferMinimizedView';
 import { ClientModuleAvatarOverlaysView } from './views/client-modules/ClientModuleAvatarOverlaysView';
@@ -60,6 +61,7 @@ import { CameraView } from './views/room-widgets/camera/CameraView';
 import { PhotoPurchaseConfirmationView } from './views/room-widgets/camera/PhotoPurchaseConfirmationView';
 import { RoomChatInputView } from './views/room-widgets/chat-input/RoomChatInputView';
 import { PetTrainingView } from './views/room-widgets/pet-training/PetTrainingView';
+import { ExtensionInspectorView } from './views/system/ExtensionInspectorView';
 import { SystemDialogsView } from './views/system/SystemDialogsView';
 import { TemplatePreviewView } from './views/system/TemplatePreviewView';
 import { ViewErrorBoundaries } from './views/system/ViewErrorBoundary';
@@ -162,6 +164,7 @@ export const MainView = () => {
                     </Box>
                     <AvatarEditorComponent />
                     <TemplatePreviewView />
+                    <ExtensionInspectorView />
                     <CatalogWrapper catalogType={CatalogTypeEnum.Normal} />
                     <CatalogWrapper catalogType={CatalogTypeEnum.BuildersClub} />
                     <InventoryComponent />
@@ -211,6 +214,8 @@ export const MainView = () => {
                     <NoobLobbyOfferView />
                     {/* `HabboNuxDialogs`' new user gift selection: drawn only while offered. */}
                     <NuxGiftSelectionView />
+                    {/* `HabboCampaigns`' calendar: drawn only while shown. */}
+                    <CampaignCalendarView />
                     {/* `HabboPagesViewer`: drawn only while shown. */}
                     <HabboPagesView />
                     {/* `PetCommandTool`: drawn only while shown. */}

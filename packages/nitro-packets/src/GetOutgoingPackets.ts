@@ -512,6 +512,7 @@ import {
     TurboBugReportCaptureComposer,
     TurboClientCapabilitiesComposer,
     TurboClientErrorReportComposer,
+    TurboClientExtensionReportComposer,
     TurboCommandSuggestComposer,
     TurboStarterRoomPictureComposer,
     TurboWebSessionRequestComposer,
@@ -1182,5 +1183,6 @@ export const GetOutgoingPackets = () => {
         [OutgoingHeader.TurboCommandSuggestComposer]: TurboCommandSuggestComposer,
         [OutgoingHeader.TurboStarterRoomPictureComposer]: TurboStarterRoomPictureComposer,
         [OutgoingHeader.TurboWebSessionRequestComposer]: TurboWebSessionRequestComposer,
+        [OutgoingHeader.TurboClientExtensionReportComposer]: TurboClientExtensionReportComposer,
     } as Record<number, OutgoingPacketConstructor>;
 };

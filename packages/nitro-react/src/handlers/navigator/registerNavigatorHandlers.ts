@@ -1,7 +1,7 @@
 import { NoobnessLevelEnum, RoomDoorModeEnum } from '@nitrodevco/nitro-api';
 import { CantConnectMessage, CantConnectReason, CloseConnectionMessage, ConvertedRoomIdMessage, DoorbellMessage, FavouriteChangedMessage, FavouritesMessage, FlatAccessDeniedMessage, FlatAccessibleMessage, FlatCreatedMessage, FollowFriendComposer, GenericErrorMessage, GetGuestRoomComposer, GetGuestRoomResultMessage, GetUserEventCatsComposer, GetUserFlatCatsComposer, MuteAllInRoomMessage, NavigatorCollapsedCategoriesMessage, NavigatorLiftedRoomsMessage, NavigatorMetadataMessage, NavigatorSavedSearchesMessage, NavigatorSearchResultBlocksMessage, NavigatorSettingsMessage, NewNavigatorInitComposer, NewNavigatorPreferencesMessage, QuitComposer, RoomAdErrorEventMessage, RoomEntryInfoMessage, RoomEventCancelMessage, RoomEventMessage, RoomFilterSettingsMessage, RoomForwardMessage, RoomInfoUpdatedMessage, RoomRatingMessage, ShowEnforceRoomCategoryDialogMessage, UserEventCatsMessage, UserFlatCatsMessage, UserObjectMessage } from '@nitrodevco/nitro-packets';
 
-import { forwardToRoom, goToHomeRoom, goToRoom, reportRoom, trackEventLog } from '#base/commands';
+import { confirmAskForward, forwardToRoom, goToHomeRoom, goToRoom, reportRoom, trackEventLog } from '#base/commands';
 import { WebSocketConnection } from '#base/context/communication';
 import { navigatorStore } from '#base/context/navigator';
 import { configInteger, systemStore } from '#base/context/system';
@@ -240,6 +240,9 @@ export const registerNavigatorHandlers = ({ send, subscribe }: WebSocketConnecti
                     info: room,
                     isStaffPicked: data.staffPick,
                 });
+
+                // `NewIncomingMessages.onRoomInfo` -> `HabboNewNavigator.onRoomInfo`: the room an ask_forward link asked about.
+                confirmAskForward(send, room.roomId, room.name);
 
                 return;
             }

@@ -3,12 +3,14 @@
  *
  * - `defineModule({ activate, deactivate })`: the module's default export, typed;
  * - `useApi()`: the module's API from any component it draws;
- * - `assetUrl(path)`: a file beside the module in its plugin's `wwwroot/`.
+ * - `assetUrl(path)`: a file beside the module in its plugin's `wwwroot/`;
+ * - `defineChannel<T>(key)` / `useChannel(channel)`: data shared with other modules, typed.
  *
  * React comes from `react` and the theme from `@nitrodevco/client-module-sdk/theme`; the bundler
  * preset (`@nitrodevco/client-module-sdk/build`) makes both the client's own.
  */
-import type { ClientModuleApi } from './api';
+import type { ClientModuleApi, ClientModuleDispose } from './api';
+import { host } from './host';
 
 export type * from './types';
 
@@ -49,3 +51,26 @@ export const useApi = (): ClientModuleApi => {
 
 /** The address of a file beside the module in its plugin's `wwwroot/` (`assetUrl('icon.png')`). */
 export const assetUrl = (path: string): string => new URL(path, useApi().baseUrl).href;
+
+/** A channel's key with the type of what is published on it: what two modules agree on. */
+export interface ClientModuleChannel<T> {
+    readonly key: string;
+    publish: (value: T) => void;
+    subscribe: (handler: (value: T | undefined, from: string | undefined) => void) => ClientModuleDispose;
+    get: () => T | undefined;
+}
+
+/**
+ * `api.channels` for one key, typed: `const promo = defineChannel<Article[]>('news.promo')`, then
+ * `promo.publish(articles)` in one module and `promo.subscribe(list => ...)` (or `useChannel(promo)`)
+ * in another. Each call reaches the API of the module it runs in.
+ */
+export const defineChannel = <T>(key: string): ClientModuleChannel<T> => ({
+    key,
+    publish: value => useApi().channels.publish<T>(key, value),
+    subscribe: handler => useApi().channels.subscribe<T>(key, handler),
+    get: () => useApi().channels.get<T>(key),
+});
+
+/** A channel's value in a component, drawn again when it changes; `undefined` until one is published. */
+export const useChannel = <T>(channel: ClientModuleChannel<T>): T | undefined => host().react.useSyncExternalStore(channel.subscribe, channel.get);

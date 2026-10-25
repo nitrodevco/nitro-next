@@ -9,6 +9,9 @@
     },
     "include": [
         "./**/*",
-        "../src/commands/client-modules/pluginMessageCodec.ts"
+        "../src/commands/client-modules/pluginMessageCodec.ts",
+        "../src/commands/client-modules/clientModuleChannels.ts",
+        "../src/commands/client-modules/clientModuleLinkRoutes.ts",
+        "../src/views/loading-screen/loadingScreenStyle.ts"
     ]
 }

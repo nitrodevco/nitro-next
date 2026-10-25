@@ -31,6 +31,7 @@ export const RoomInfoWidget = () => {
     const currentRoomRating = useNavigatorStore(x => x.currentRoomRating);
     const canRateCurrentRoom = useNavigatorStore(x => x.canRateCurrentRoom);
     const favouriteRoomIds = useNavigatorStore(x => x.favouriteRoomIds);
+    const favouriteRoomLimit = useNavigatorStore(x => x.favouriteRoomLimit);
     const homeRoomId = useHomeRoomId();
     const { showWindow, hideWindow } = useWindowActions();
     const controllerLevel = useOwnControllerLevel();
@@ -44,7 +45,7 @@ export const RoomInfoWidget = () => {
     // `RoomInfoViewCtrl.refreshButtons`: the word filter button needs the hotel's flag as well.
     const roomFilterEnabled = useConfigBoolean('room.custom.filter.enabled');
     const { send } = useWebSocketContext();
-    const { setRoomRating, setRoomFavourite, updateEnteredRoom } = useNavigatorActions();
+    const { setAlert, setRoomRating, setRoomFavourite, updateEnteredRoom } = useNavigatorActions();
     // `onRaidProtectionStateChanged`: the button follows the capabilities as they come and go.
     const raidCapabilities = useRaidProtectionStore(x => x.capabilities);
     const raidProtectionEnabled = useConfigBoolean('raid.protection.enabled');
@@ -133,6 +134,14 @@ export const RoomInfoWidget = () => {
                 setRoomRating(currentRoomRating + LIKE_POINTS, false);
             }}
             onToggleFavourite={() => {
+                // `onAddFavouriteClick`: a full list (`NavigatorData.isFavouritesFull`) gets the
+                // navigator's alert and nothing is sent.
+                if (!isFavourite && (favouriteRoomIds.length >= favouriteRoomLimit)) {
+                    setAlert({ titleKey: 'navigator.favouritesfull.title', messageKey: 'navigator.favouritesfull.body' });
+
+                    return;
+                }
+
                 send(isFavourite
                     ? new DeleteFavouriteRoomComposer({ roomId })
                     : new AddFavouriteRoomComposer({ roomId }));

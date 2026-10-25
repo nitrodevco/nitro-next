@@ -135,12 +135,9 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
         onPositionChange?.({ x: next.dx, y: next.dy });
     });
 
-    const handleHeaderPointerDown = (event: FederatedPointerEvent | PointerEvent) => {
+    // `WindowMouseDragger.begin` for this frame: the press that grabs it, wherever it landed.
+    const startDrag = (event: FederatedPointerEvent | PointerEvent) => {
         if (event.button !== 0) return;
-
-        // Only a press on the header itself drags: one on a button in it (help, menu) is that
-        // button's, as `MouseEventProcessor` gives a press to the window under the pointer.
-        if (event instanceof FederatedPointerEvent && event.target !== event.currentTarget) return;
 
         const node = frameRef.current;
 
@@ -198,6 +195,14 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
         startPointerDrag(event.pointerId, { onMove: handleMove, onEnd: handleUp });
     };
 
+    const handleHeaderPointerDown = (event: FederatedPointerEvent | PointerEvent) => {
+        // Only a press on the header itself drags: one on a button in it (help, menu) is that
+        // button's, as `MouseEventProcessor` gives a press to the window under the pointer.
+        if (event instanceof FederatedPointerEvent && event.target !== event.currentTarget) return;
+
+        startDrag(event);
+    };
+
     // A press anywhere in the window raises it, before whatever it lands on handles it - in the
     // capture phase, so a child that stops the press (a close button, a scrollbar) still raises it.
     useEffect(() => {
@@ -216,5 +221,5 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
         };
     }, [ frameNode, stackId, bringWindowToFront ]);
 
-    return { frameRef, attachFrame, offset, zIndex, revealed, onHeaderPointerDown: handleHeaderPointerDown };
+    return { frameRef, attachFrame, offset, zIndex, revealed, onHeaderPointerDown: handleHeaderPointerDown, startDrag };
 };

@@ -38,6 +38,8 @@ export interface SystemDialogOptions {
 export interface SystemConfirmOptions extends SystemDialogOptions {
     /** `WE_CANCEL`: the cancel link or the header close. */
     onCancel?: () => void;
+    /** `setButtonCaption(16, caption)`: the ok button's caption in place of the layout's. */
+    okCaption?: string;
 }
 
 /** One `AlertDialog` or `ConfirmDialog`. */
@@ -51,6 +53,8 @@ export interface SystemMessageDialog {
     onConfirm?: () => void;
     onCancel?: () => void;
     onClose?: (event: SystemDialogCloseEvent) => void;
+    /** `setButtonCaption(16, caption)` on `_alert_button_ok`. */
+    okCaption?: string;
 }
 
 /** `IHabboWindowManager.simpleAlert`'s arguments, in its order. */
@@ -113,7 +117,7 @@ export const createSystemDialogsSlice: StateCreator<SystemDialogsSlice, [], [], 
     return {
         ...SystemDialogsSliceInitialState,
         showAlert: (title, message, options) => add({ id: nextDialogId++, kind: 'alert', title, message, modal: options?.modal === true, onClose: options?.onClose }),
-        showConfirm: (title, message, onConfirm, options) => add({ id: nextDialogId++, kind: 'confirm', title, message, modal: options?.modal === true, onConfirm, onCancel: options?.onCancel, onClose: options?.onClose }),
+        showConfirm: (title, message, onConfirm, options) => add({ id: nextDialogId++, kind: 'confirm', title, message, modal: options?.modal === true, onConfirm, onCancel: options?.onCancel, onClose: options?.onClose, okCaption: options?.okCaption }),
         showSimpleAlert: alert => add({ ...alert, id: nextDialogId++, kind: 'simpleAlert' }),
         closeDialog: id => set(x => (x.dialogs.some(dialog => dialog.id === id) ? { dialogs: x.dialogs.filter(dialog => dialog.id !== id) } : x)),
     };
