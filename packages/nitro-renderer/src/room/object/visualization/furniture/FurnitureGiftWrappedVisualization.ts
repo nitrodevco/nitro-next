@@ -1,8 +1,11 @@
-import type { IRoomGeometry, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureVisualization } from './FurnitureVisualization';
 
+/**
+ * Port of Flash `FurnitureGiftWrappedVisualization`, the visualization
+ * `RoomObjectVisualizationFactory` builds for `furniture_gift_wrapped`.
+ */
 export class FurnitureGiftWrappedVisualization extends FurnitureVisualization {
     private _packetType: number = 0;
     private _ribbonType: number = 0;

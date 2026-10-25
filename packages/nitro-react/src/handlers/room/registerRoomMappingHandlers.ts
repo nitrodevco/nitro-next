@@ -1,0 +1,322 @@
+import { RoomObjectVariableEnum, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
+import { FloorHeightMapMessage, HeightMapMessage, HeightMapMessageType, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from '@nitrodevco/nitro-packets';
+import { RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
+
+import { WebSocketConnection } from '#base/context/communication';
+import { getRoom, roomStore } from '#base/context/room';
+import { configInteger } from '#base/context/system';
+import { buildRoomWallGeometry } from '#base/utils';
+
+import { on, subscribeAll } from '../packetSubscriptions';
+
+/**
+ * The model half of Flash's `RoomMessageHandler`: the floor plan, the two height maps, the
+ * wallpaper/floor/landscape properties, the visualization settings and the special effects.
+ * The stacking height map lands in the store, which the room reads tile heights from.
+ */
+export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) => {
+    const { setHeightMap, setHeightMapUpdates } = roomStore.getState();
+    let entryTile: { x: number; y: number; dir: number } | undefined = undefined;
+
+    // Flash `HeightMapMessageParser`: the stacking-blocked flag is bit `room.stacking_blocked_mask_bit`
+    // (`RoomMessageHandler.onHeightMap` reads it per message, default 14; Habbo's variables set 15), the bits
+    // below it are height x 256, and only -1 means "no tile" - a blocked tile under bit 15 is negative.
+    const stackingBlockedFlag = () => {
+        const bit = configInteger('room.stacking_blocked_mask_bit', 15);
+
+        return 1 << bit;
+    };
+    const decodeTileHeight = (height: number) => ((height === -1) ? -1 : ((height & (stackingBlockedFlag() - 1)) / 0x0100));
+    const decodeIsStackingBlocked = (height: number) => !!(height & stackingBlockedFlag());
+    const decodeIsRoomTile = (height: number) => height !== -1;
+
+    const getTileHeight = (data: HeightMapMessageType, x: number, y: number) => {
+        if ((x < 0) || (x >= data.width) || (y < 0) || (y >= data.height)) return -1;
+
+        return decodeTileHeight(data.heights[(y * data.width) + x]);
+    };
+
+    const getStackingBlocked = (data: HeightMapMessageType, x: number, y: number) => {
+        if ((x < 0) || (x >= data.width) || (y < 0) || (y >= data.height)) return true;
+
+        return decodeIsStackingBlocked(data.heights[(y * data.width) + x]);
+    };
+
+    const isRoomTile = (data: HeightMapMessageType, x: number, y: number) => {
+        if ((x < 0) || (x >= data.width) || (y < 0) || (y >= data.height)) return true;
+
+        return decodeIsRoomTile(data.heights[(y * data.width) + x]);
+    };
+
+    const parseMapData = (modelData: string, wallHeight: number) => {
+        const model = modelData.split('\r');
+
+        let width = 0;
+        const height = model.length;
+
+        let i = 0;
+
+        while (i < height) {
+            const row = model[i];
+
+            if (row.length > width) width = row.length;
+
+            i++;
+        }
+
+        const heightMap: number[][] = [];
+
+        i = 0;
+
+        while (i < height) {
+            const heights: number[] = [];
+
+            let j = 0;
+
+            while (j < width) {
+                heights.push(RoomPlaneParser.TILE_BLOCKED);
+
+                j++;
+            }
+
+            heightMap.push(heights);
+
+            i++;
+        }
+
+        i = 0;
+
+        while (i < height) {
+            const map = heightMap[i];
+            const text = model[i];
+
+            if (text.length > 0) {
+                let j = 0;
+
+                while (j < text.length) {
+                    const char = text.charAt(j);
+                    let height = RoomPlaneParser.TILE_BLOCKED;
+
+                    if (char !== 'x' && char !== 'X') height = parseInt(char, 36);
+
+                    map[j] = height;
+
+                    j++;
+                }
+            }
+
+            i++;
+        }
+
+        let doorX = -1;
+        let doorY = -1;
+        let doorZ = 0;
+        let doorRot = 0;
+
+        const planeParser = new RoomPlaneParser();
+
+        planeParser.initializeTileMap(width, height);
+
+        let y = 0;
+
+        while (y < height) {
+            let x = 0;
+
+            while (x < width) {
+                const tileHeight = heightMap[y]?.[x] ?? RoomPlaneParser.TILE_BLOCKED;
+
+                if (
+                    ((y > 0 && y < height - 1) || (x > 0 && x < width - 1))
+                    && !(tileHeight === RoomPlaneParser.TILE_BLOCKED)
+                    && (!entryTile || (x === entryTile.x && y === entryTile.y))
+                ) {
+                    if (
+                        (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        && (heightMap[y]?.[x - 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        && (heightMap[y + 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                    ) {
+                        doorX = x + 0.5;
+                        doorY = y;
+                        doorZ = tileHeight;
+                        doorRot = 90;
+                    }
+
+                    if (
+                        (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        && (heightMap[y]?.[x - 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                        && (heightMap[y]?.[x + 1] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
+                    ) {
+                        doorX = x;
+                        doorY = y + 0.5;
+                        doorZ = tileHeight;
+                        doorRot = 180;
+                    }
+                }
+
+                planeParser.setTileHeight(x, y, tileHeight);
+
+                x++;
+            }
+
+            y++;
+        }
+
+        planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ);
+        planeParser.initializeFromTileData(wallHeight);
+        planeParser.setTileHeight(Math.floor(doorX), Math.floor(doorY), doorZ + planeParser.wallHeight);
+
+        const wallGeometry = buildRoomWallGeometry(planeParser, width, height);
+
+        const mapData = planeParser.getMapData();
+
+        mapData.doors.push({ x: doorX, y: doorY, z: doorZ, dir: doorRot });
+
+        return { mapData, wallGeometry };
+    };
+
+    return subscribeAll(subscribe, [
+        on(RoomEntryTileMessage, (data) => {
+            entryTile = {
+                x: data.x,
+                y: data.y,
+                dir: data.rotation,
+            };
+        }),
+
+        on(FloorHeightMapMessage, (data) => {
+            const room = getRoom();
+
+            if (!room) return;
+
+            const { mapData, wallGeometry } = parseMapData(data.modelData, data.fixedWallsHeight);
+
+            room.applyRoomMap(mapData);
+            room.setLegacyGeometry(wallGeometry);
+
+            // `RoomEngine.initializeRoom`: where the camera rests until there is an avatar to follow.
+            room.setRoomValue(RoomObjectVariableEnum.CameraInitX, data.cameraInitX);
+            room.setRoomValue(RoomObjectVariableEnum.CameraInitY, data.cameraInitY);
+            room.setRoomValue(RoomObjectVariableEnum.CameraInitZ, data.cameraInitZ);
+
+            /*
+             * The areas the room is already hiding when you walk into it. Flash handed the same list
+             * to `initializeRoom` and applied it once the room object existed; the map has to be in
+             * place first, so this stays here rather than moving to the area hide handler.
+             */
+            for (const areaHide of data.areaHideData) room.updateAreaHide(areaHide.furniId, areaHide.on, areaHide.rootX, areaHide.rootY, areaHide.width, areaHide.length, areaHide.invert);
+        }),
+
+        on(HeightMapMessage, (data) => {
+            const room = getRoom();
+
+            if (!room) return;
+
+            const width = data.width;
+            const height = data.height;
+            const heights: number[] = [];
+            const stackingBlocked: boolean[] = [];
+            const validTiles: boolean[] = [];
+
+            let y = 0;
+
+            while (y < height) {
+                let x = 0;
+
+                while (x < width) {
+                    const key = y * width + x;
+
+                    heights[key] = getTileHeight(data, x, y);
+                    stackingBlocked[key] = getStackingBlocked(data, x, y);
+                    validTiles[key] = isRoomTile(data, x, y);
+
+                    x++;
+                }
+
+                y++;
+            }
+
+            setHeightMap(width, height, heights, stackingBlocked, validTiles);
+            room.resetTileObjectMap(width, height);
+        }),
+
+        on(HeightMapUpdateMessage, (data) => {
+            const room = getRoom();
+
+            if (!room || !data.heightUpdates.length) return;
+
+            const updates: { x: number; y: number; height: number; stackingBlocked: boolean; validTile: boolean }[] = [];
+
+            for (const update of data.heightUpdates) updates.push({
+                x: update.x,
+                y: update.y,
+                height: decodeTileHeight(update.height),
+                stackingBlocked: decodeIsStackingBlocked(update.height),
+                validTile: decodeIsRoomTile(update.height),
+            });
+
+            setHeightMapUpdates(updates);
+            room.refreshTileObjectMap();
+        }),
+
+        on(RoomPropertyMessage, (data) => {
+            const room = getRoom();
+
+            if (!room) return;
+
+            room.updateRoomPlaneType((data.key === 'floor') ? data.value : undefined, (data.key === 'wallpaper') ? data.value : undefined, (data.key === 'landscape') ? data.value : undefined);
+        }),
+
+        on(RoomVisualizationSettingsMessage, (data) => {
+            const room = getRoom();
+
+            if (!room) return;
+
+            room.updateRoomPlaneVisibilities(!data.wallsHidden);
+            room.updateRoomPlaneThickness(data.wallThickness, data.floorThickness);
+        }),
+
+        on(SpecialRoomEffectMessage, (data) => {
+            const room = getRoom();
+
+            if (!room) return;
+
+            switch (data.effectId) {
+                case SpecialRoomEffectType.Rotating: {
+                    RoomRotatingEffect.init(250, 5000);
+                    RoomRotatingEffect.turnVisualizationOn();
+                    break;
+                }
+                case SpecialRoomEffectType.Shaking: {
+                    RoomShakingEffect.init(250, 5000);
+                    RoomShakingEffect.turnVisualizationOn();
+                    break;
+                }
+                case SpecialRoomEffectType.Zoom: {
+                    room.eventDispatcher.dispatchEvent(new RoomZoomEvent(room.roomId, -1, true));
+                    break;
+                }
+                case SpecialRoomEffectType.Disco: {
+                    // Flash's `Timer(1000, colours.length + 1)`: one colour a second, then a tenth
+                    // tick past the end of the list, whose missing colour coerces to 0 and is
+                    // applied to the background only.
+                    const colors = [
+                        0x0072BB, 0xFF4C3B, 0xFFD034, 0x99FF00,
+                        0x0072BB, 0xFF4C3B, 0xFFD034, 0x99FF00,
+                        0x000000,
+                    ];
+                    const roomId = room.roomId;
+
+                    let index = 0;
+                    const timer = setInterval(() => {
+                        const current = getRoom();
+
+                        if (current?.roomId === roomId) current.updateRoomObjectRoomColor(colors[index] ?? 0, 176, index === colors.length);
+
+                        if (++index > colors.length) clearInterval(timer);
+                    }, 1000);
+                    break;
+                }
+            }
+        }),
+    ]);
+};

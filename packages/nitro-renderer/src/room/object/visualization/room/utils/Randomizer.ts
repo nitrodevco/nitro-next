@@ -1,5 +1,6 @@
-﻿import { ToInt32 } from '@nitrodevco/nitro-api';
+import { ToInt32 } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `Randomizer`. */
 export class Randomizer {
     public static DEFAULT_SEED: number = 1;
     public static DEFAULT_MODULUS: number = 16777216;

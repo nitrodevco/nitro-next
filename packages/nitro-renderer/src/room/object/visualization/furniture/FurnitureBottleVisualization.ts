@@ -1,8 +1,12 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurnitureBottleVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash `FurnitureBottleVisualization`, the visualization `RoomObjectVisualizationFactory`
+ * builds for `furniture_bottle`.
+ */
+export class FurnitureBottleVisualization extends AnimatedFurnitureVisualization {
     private static ANIMATION_ID_OFFSET_SLOW1: number = 20;
     private static ANIMATION_ID_OFFSET_SLOW2: number = 9;
     private static ANIMATION_ID_ROLL: number = -1;

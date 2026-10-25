@@ -1,6 +1,6 @@
-﻿import type { IGraphicAsset, IVector3D, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { Vector3d } from '@nitrodevco/nitro-api';
+import { IGraphicAsset, IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `FurnitureParticleSystemParticle`. */
 export class FurnitureParticleSystemParticle {
     private _x: number;
     private _y: number;
@@ -153,7 +153,7 @@ export class FurnitureParticleSystemParticle {
     }
 
     public toString(): string {
-        return [this._x, this._y, this._z].toString();
+        return [ this._x, this._y, this._z ].toString();
     }
 
     public copy(particle: FurnitureParticleSystemParticle, scale: RoomGeometryScaleType): void {

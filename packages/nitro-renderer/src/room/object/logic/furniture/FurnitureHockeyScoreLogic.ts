@@ -1,11 +1,14 @@
-import { type IRoomGeometry, type IRoomSpriteMouseEvent, MouseEventType } from '@nitrodevco/nitro-api';
-import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, IRoomSpriteMouseEvent, MouseEventType, RoomObjectStateChangedEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash `FurnitureHockeyScoreLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_hockey_score`.
+ */
 export class FurnitureHockeyScoreLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectStateChangedEvent.STATE_CHANGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectStateChangedEvent.STATE_CHANGE ]);
     }
 
     public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {

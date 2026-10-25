@@ -1,8 +1,7 @@
+import { IEventDispatcher, IRoomObjectEvent } from '#api/events';
 
-import type { IEventDispatcher, IRoomObjectEvent } from '#api/events';
-
-import type { IRoomSpriteMouseEvent } from './IRoomSpriteMouseEvent';
-import type { IRoomObject } from './object';
+import { IRoomSpriteMouseEvent } from './IRoomSpriteMouseEvent';
+import { IRoomObject } from './object';
 
 export interface IRoomEventHandler {
     handleRoomObjectEvent(event: IRoomObjectEvent): void;

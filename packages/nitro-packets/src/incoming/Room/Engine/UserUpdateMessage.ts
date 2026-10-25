@@ -1,4 +1,5 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
 import { IRoomAvatarUpdate } from './Data/IRoomAvatarUpdate';
 import { UserUpdateParser } from './Data/UserUpdateParser';
 
@@ -9,7 +10,7 @@ export type UserUpdateMessageType = {
 export class UserUpdateMessage implements IIncomingPacket<UserUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): UserUpdateMessageType {
         const packet: UserUpdateMessageType = {
-            updates: []
+            updates: [],
         };
 
         let count = wrapper.readInt();

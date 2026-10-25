@@ -1,7 +1,8 @@
-﻿import type { IActiveActionData } from '@nitrodevco/nitro-api';
+import { IActiveActionData } from '@nitrodevco/nitro-api';
 
-import type { AvatarImageActionCache } from './AvatarImageActionCache';
+import { AvatarImageActionCache } from './AvatarImageActionCache';
 
+/** Port of Flash `AvatarImageBodyPartCache`. */
 export class AvatarImageBodyPartCache {
     private _cache: Map<string, AvatarImageActionCache> = new Map();
     private _currentAction: IActiveActionData | undefined = undefined;
@@ -23,7 +24,7 @@ export class AvatarImageBodyPartCache {
     public disposeActions(time: number, max: number): void {
         if (!this._cache || this._disposed) return;
 
-        for (const [key, cache] of this._cache.entries()) {
+        for (const [ key, cache ] of this._cache.entries()) {
             if (!cache) continue;
 
             if ((max - cache.lastAccessTime) >= time) {

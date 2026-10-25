@@ -1,13 +1,16 @@
-﻿import { RoomObjectLocationCacheItem } from './RoomObjectLocationCacheItem';
+import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+
+import { RoomObjectLocationCacheItem } from './RoomObjectLocationCacheItem';
 import { RoomObjectSortableSpriteCacheItem } from './RoomObjectSortableSpriteCacheItem';
 
+/** Port of Flash `RoomObjectCacheItem`. */
 export class RoomObjectCacheItem {
     private _objectId: number;
     private _location: RoomObjectLocationCacheItem;
     private _sprites: RoomObjectSortableSpriteCacheItem;
 
-    constructor() {
-        this._location = new RoomObjectLocationCacheItem();
+    constructor(accurateZVariable?: RoomObjectVariableEnum) {
+        this._location = new RoomObjectLocationCacheItem(accurateZVariable);
         this._sprites = new RoomObjectSortableSpriteCacheItem();
     }
 

@@ -13,7 +13,7 @@ export class CatalogIndexMessage implements IIncomingPacket<CatalogIndexMessageT
         return {
             root: CatalogNodeParser(wrapper),
             newAdditionsAvailable: wrapper.readBoolean(),
-            catalogType: wrapper.readString() as CatalogTypeEnum
-        }
+            catalogType: wrapper.readString() as CatalogTypeEnum,
+        };
     }
 }

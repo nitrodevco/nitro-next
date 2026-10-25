@@ -1,5 +1,6 @@
-﻿import type { AvatarBodyPartType, AvatarSetType, IAssetAvatarSet } from "@nitrodevco/nitro-api";
+import { AvatarBodyPartType, AvatarSetType, IAssetAvatarSet } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `AvatarSet`. */
 export class AvatarSet {
     private readonly _id: AvatarSetType;
     private readonly _isMain: boolean;
@@ -15,7 +16,7 @@ export class AvatarSet {
 
         if (set.bodyParts?.length) for (const bodyPart of set.bodyParts) this._bodyParts.push(bodyPart.id);
 
-        let bodyParts = [...this._bodyParts];
+        let bodyParts = [ ...this._bodyParts ];
 
         for (const avatarSet of this._avatarSets.values()) {
             if (!avatarSet) continue;
@@ -41,7 +42,7 @@ export class AvatarSet {
     }
 
     public getBodyParts(): AvatarBodyPartType[] {
-        return [...this._allBodyParts];
+        return [ ...this._allBodyParts ];
     }
 
     public get id(): AvatarSetType {

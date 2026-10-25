@@ -1,17 +1,21 @@
-import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
-import type { IEventDispatcher } from '#api/events';
+import { IEventDispatcher } from '#api/events';
 
-import type { IGraphicAsset, IGraphicAssetCollection } from '../asset';
-import type { IFurnitureData } from '../session';
-import type { IPetColorResult } from './IPetColorResult';
-import type { IRoomContentListener } from './IRoomContentListener';
+import { IGraphicAsset, IGraphicAssetCollection } from '../asset';
+import { IFurnitureData } from '../session';
+import { IPetColorResult } from './IPetColorResult';
+import { IRoomContentListener } from './IRoomContentListener';
 
 export interface IRoomContentLoader {
     init(): Promise<void>;
     processFurnitureData(furnitureData: IFurnitureData[]): void;
     downloadAsset(type: string, events: IEventDispatcher): void;
     downloadAssetAsync(type: string): Promise<boolean>;
+    /** Flash `purge`: releases the collections nothing has referenced for a while. */
+    purge(): void;
+    /** A disposed room's waits: its queued downloads that nothing else waits for are dropped. */
+    cancelDownloads(events: IEventDispatcher): void;
     isLoaderType(type: string): boolean;
     getCollection(name: string): IGraphicAssetCollection | undefined;
     getPlaceholderName(type: string): string;

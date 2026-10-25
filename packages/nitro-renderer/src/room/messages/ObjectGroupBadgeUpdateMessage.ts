@@ -1,5 +1,6 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectGroupBadgeUpdateMessage`. */
 export class ObjectGroupBadgeUpdateMessage extends RoomObjectUpdateMessage {
     public static BADGE_LOADED: string = 'ROGBUM_BADGE_LOADED' as const;
 

@@ -1,0 +1,186 @@
+import { NitroLogger, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, RoomWidgetEnum } from '@nitrodevco/nitro-api';
+import { GetGuestRoomComposer, GetGuildFurniContextMenuInfoComposer, GetJukeboxPlayListComposer, GetNowPlayingComposer, GetResolutionAchievementsComposer, GetUserSongDisksComposer, GetYoutubeDisplayStatusComposer, RentableSpaceStatusComposer, UseFurnitureComposer } from '@nitrodevco/nitro-packets';
+
+import { openClientLink, openCraftingTable } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomStore, useRoomWidgetActions } from '#base/context/room';
+import { useTranslation, useWindowActions } from '#base/context/system';
+import { LayoutImage } from '#base/theme';
+import { PRESENT_OPENED_WIDGET, PresentOpenedData, readFurnitureLink } from '#base/utils';
+
+/**
+ * The bridge between a room object asking for its dialog and the UI opening it - the Flash
+ * client's `RoomObjectEventHandler.handleRoomObjectWidgetRequestEvent`.
+ *
+ * About twenty-five furniture logics already dispatch these: `FurnitureLogic` sends
+ * `OPEN_FURNI_CONTEXT_MENU` when the object is selected, `OPEN_WIDGET` from `useObject()` and
+ * `CLOSE_WIDGET` when it tears down, and each specialised logic sends its own constant. Every
+ * one of them lands here, is turned into room-store state, and is picked up by the widget that
+ * declares that type.
+ *
+ * Two of them carry their name on the logic rather than in the event, exactly as Flash did:
+ * `OPEN_WIDGET` reads `logic.widget` (a `RoomWidgetEnum` value) and the context menu reads
+ * `logic.contextMenu` (a `ContextMenuEnum` value).
+ */
+export const useRoomWidgetRequestHandler = () => {
+    const room = useRoom();
+    const { openRoomWidget, closeRoomWidget, closeRoomWidgetsForObject, setFurnitureContextMenu } = useRoomWidgetActions();
+    // The opened gift card is on screen once its contents have arrived.
+    const presentOpenedShowing = useRoomStore(x => !!(x.openWidgets[PRESENT_OPENED_WIDGET]?.data as PresentOpenedData | undefined)?.contents);
+    const { showSimpleAlert } = useWindowActions();
+    const { send } = useWebSocketContext();
+    const t = useTranslation();
+
+    const handleRoomWidgetRequestEvent = (event: RoomObjectWidgetRequestEvent) => {
+        if (!room) return;
+
+        const category = room.getRoomObjectCategoryForType(event.objectType);
+        const request = { type: event.type, objectId: event.objectId, category, objectType: event.objectType };
+
+        switch (event.type) {
+            // Tear-down doesn't say which widget it meant, so everything aimed at the object goes.
+            case RoomObjectWidgetRequestEvent.CLOSE_WIDGET:
+                closeRoomWidgetsForObject(event.objectId, category);
+                return;
+            case RoomObjectWidgetRequestEvent.OPEN_WIDGET: {
+                const widget = room.getRoomObject(event.objectId, category)?.logic?.widget;
+
+                if (!widget) return;
+
+                openRoomWidget({ ...request, type: widget });
+
+                // Neither of these keeps what it needs on the furni; the server has it.
+                if (widget === RoomWidgetEnum.RENTABLESPACE) send(new RentableSpaceStatusComposer({ objectId: event.objectId }));
+
+                if (widget === RoomWidgetEnum.CRAFTING) openCraftingTable(send);
+
+                return;
+            }
+            case RoomObjectWidgetRequestEvent.OPEN_FURNI_CONTEXT_MENU: {
+                const menu = room.getRoomObject(event.objectId, category)?.logic?.contextMenu;
+
+                if (!menu) return;
+
+                setFurnitureContextMenu({ menu, objectId: event.objectId, category });
+                return;
+            }
+            case RoomObjectWidgetRequestEvent.CLOSE_FURNI_CONTEXT_MENU:
+                setFurnitureContextMenu(undefined);
+                return;
+            // A dimmer asking to be taken down is a close, not an open.
+            case RoomObjectWidgetRequestEvent.WIDGET_REMOVE_DIMMER:
+                closeRoomWidget(RoomObjectWidgetRequestEvent.DIMMER);
+                return;
+            /*
+             * A scoreboard leaves its display state, so it wants its board gone. Flash checked
+             * the board on screen belonged to this furni before closing it, which closing by
+             * object does here.
+             */
+            case RoomObjectWidgetRequestEvent.HIDE_HIGH_SCORE_DISPLAY:
+                closeRoomWidgetsForObject(event.objectId, category);
+                return;
+            /*
+             * A resolution trophy whose achievement was not reached in time has nothing to offer
+             * but news: `FurnitureBadgeDisplayWidgetHandler` answers it with a `simpleAlert`, with
+             * the window manager's `help_error_state` illustration (the same bytes as the help
+             * window's copy, which is the one the bundles carry).
+             */
+            case RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_FAILED:
+                showSimpleAlert({
+                    caption: t('resolution.failed.title'),
+                    subtitle: t('resolution.failed.subtitle'),
+                    message: t('resolution.failed.text'),
+                    illustration: LayoutImage('habbo-window-manager-com/help_error_state.png'),
+                });
+                return;
+            /*
+             * The four below ask the server something instead of opening anything themselves,
+             * which is how `RoomObjectEventHandler` treated them: the dialog, if there is one,
+             * comes back with the answer.
+             */
+            case RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_OPEN:
+                // 0: whichever achievement the trophy is already set to.
+                send(new GetResolutionAchievementsComposer({ objectId: event.objectId, selectedAchievementId: 0 }));
+                return;
+            case RoomObjectWidgetRequestEvent.GUILD_FURNI_CONTEXT_MENU: {
+                const guildId = room.getRoomObject(event.objectId, category)
+                    ?.model.getValue<number>(RoomObjectVariableEnum.FurnitureGuildCustomizedGuildId);
+
+                send(new GetGuildFurniContextMenuInfoComposer({ objectId: event.objectId, guildId: guildId ?? 0 }));
+                openRoomWidget(request);
+                return;
+            }
+            /*
+             * The jukebox editor needs three separate answers before it can show anything: what
+             * is in the machine, what you own, and what is playing right now.
+             */
+            case RoomObjectWidgetRequestEvent.JUKEBOX_PLAYLIST_EDITOR:
+                send(new GetJukeboxPlayListComposer({}));
+                send(new GetUserSongDisksComposer({}));
+                send(new GetNowPlayingComposer({}));
+                openRoomWidget(request);
+                return;
+            // A video display is asked what it can play and what it is playing.
+            case RoomObjectWidgetRequestEvent.YOUTUBE:
+                send(new GetYoutubeDisplayStatusComposer({ objectId: event.objectId }));
+                openRoomWidget(request);
+                return;
+            // A mystery box only starts a wait; the dialog appears when the server says it has.
+            case RoomObjectWidgetRequestEvent.MYSTERYBOX_OPEN_DIALOG:
+                send(new UseFurnitureComposer({ objectId: event.objectId, param: 0 }));
+                openRoomWidget(request);
+                return;
+            case RoomObjectWidgetRequestEvent.ROOM_LINK: {
+                const roomObject = room.getRoomObject(event.objectId, category);
+                const roomId = parseInt(roomObject ? (readFurnitureLink(roomObject) ?? '') : '', 10);
+
+                if (isNaN(roomId)) return;
+
+                send(new GetGuestRoomComposer({ roomId, enterRoom: false, roomForward: false }));
+                openRoomWidget(request);
+                return;
+            }
+            /*
+             * An internal link is not a dialog at all - it is wherever the furni points
+             * (`furniture_data.internalLink`, else `furniture_internal_link`), which Flash's
+             * internal-link widget handler passed to `context.createLinkEvent`. `openClientLink`
+             * is that link bus here, and logs a link it cannot route.
+             */
+            case RoomObjectWidgetRequestEvent.INTERNAL_LINK: {
+                const roomObject = room.getRoomObject(event.objectId, category);
+                const link = roomObject ? readFurnitureLink(roomObject) : undefined;
+
+                if (!link) return;
+
+                openClientLink(send, link);
+                return;
+            }
+            /*
+             * `PresentFurniWidget.onObjectUpdate`: another gift's card (`RWPDUE_PACKAGEINFO`)
+             * takes down the opened card, and a gift still being opened stops waiting for its
+             * contents (`§_-B28§ = false`).
+             */
+            case RoomObjectWidgetRequestEvent.PRESENT:
+                closeRoomWidget(PRESENT_OPENED_WIDGET);
+                openRoomWidget(request);
+                return;
+            /*
+             * `PresentFurniWidget.onEcotronUpdate`: an ecotron box's card only hides the opened
+             * card's window (`hideInterface`), so a gift still waiting for its contents keeps
+             * waiting and shows them when they come.
+             */
+            case RoomObjectWidgetRequestEvent.ECOTRONBOX:
+                if (presentOpenedShowing) closeRoomWidget(PRESENT_OPENED_WIDGET);
+                openRoomWidget(request);
+                return;
+            default:
+                // Opened by type, so a widget component that declares this type picks it up with
+                // no change here. One that nothing renders sits in the store until the object
+                // tears down, which is why the request is worth seeing while tracing.
+                NitroLogger.events('RoomWidgetRequest', event.type, event.objectId);
+                openRoomWidget(request);
+        }
+    };
+
+    return { handleRoomWidgetRequestEvent };
+};

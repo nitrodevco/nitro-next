@@ -1,5 +1,6 @@
-﻿import { AnimationFrame } from './AnimationFrame';
+import { AnimationFrame } from './AnimationFrame';
 
+/** Port of Flash `AnimationStateData`. */
 export class AnimationStateData {
     private _animationId: number = -1;
     private _animationAfterTransitionId: number = 0;

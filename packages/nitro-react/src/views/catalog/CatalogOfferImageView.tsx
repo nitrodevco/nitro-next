@@ -1,67 +1,148 @@
-import { IPurchasableOffer } from "@nitrodevco/nitro-api";
+import { AvatarGenderType, FurnitureTypeEnum, IObjectData, IPurchasableOffer, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
 
-import { FurnitureImage } from "#base/components";
-import { useCatalogOfferProduct } from "#base/hooks";
+import { GetChatStyleLibrary } from '#base/chat';
+import { habbiconPreviewAssetName } from '#base/commands';
+import { PetImageRequest } from '#base/context/catalog';
+import { useCatalogOfferActions, useFurnitureImageTexture, usePetImageTexture } from '#base/hooks';
+import { LayoutImage, ThemeImage, useAvatarImageTexture } from '#base/theme';
+import { PRODUCT_IMAGES } from '#base/utils';
 
-const PRODUCT_IMAGES: Record<string, string> = {};
+import { pixelEffectIcon, SUBSCRIPTION_PRODUCT_ICON } from './catalogProductIcons';
 
-PRODUCT_IMAGES["deal01"] = "ctlg_pic_deal01";
-PRODUCT_IMAGES["deal02"] = "ctlg_pic_deal02";
-PRODUCT_IMAGES["deal03"] = "ctlg_pic_deal03";
-PRODUCT_IMAGES["deal04"] = "ctlg_pic_deal04";
-PRODUCT_IMAGES["deal05"] = "ctlg_pic_deal05";
-PRODUCT_IMAGES["deal06"] = "ctlg_pic_deal06";
-PRODUCT_IMAGES["deal07"] = "ctlg_pic_deal07";
-PRODUCT_IMAGES["deal08"] = "ctlg_pic_deal08";
-PRODUCT_IMAGES["deal09"] = "ctlg_pic_deal09";
-PRODUCT_IMAGES["deal10"] = "ctlg_pic_deal10";
-PRODUCT_IMAGES["deal97"] = "ctlg_pic_deal97";
-PRODUCT_IMAGES["deal98"] = "ctlg_pic_deal98";
-PRODUCT_IMAGES["deal99"] = "ctlg_pic_deal99";
-PRODUCT_IMAGES["noob_set_1"] = "ctlg_pic_noob_set_1";
-PRODUCT_IMAGES["noob_set_2"] = "ctlg_pic_noob_set_2";
-PRODUCT_IMAGES["noob_set_3"] = "ctlg_pic_noob_set_3";
-PRODUCT_IMAGES["noob_set_4"] = "ctlg_pic_noob_set_4";
-PRODUCT_IMAGES["noob_set_5"] = "ctlg_pic_noob_set_5";
-PRODUCT_IMAGES["noob_set_6"] = "ctlg_pic_noob_set_6";
-PRODUCT_IMAGES["a0 deal100"] = "ctlg_pic_a0_deal100";
-PRODUCT_IMAGES["a0 raredaffodilrug"] = "ctlg_pic_a0_raredaffodilrug";
-PRODUCT_IMAGES["a2 slp"] = "ctlg_pic_a2_slp";
-PRODUCT_IMAGES["A2 tlp 20"] = "ctlg_pic_A2_tlp_20";
-PRODUCT_IMAGES["DEAL_HC_1"] = "ctlg_pic_hc_deal01";
-PRODUCT_IMAGES["DEAL_HC_2"] = "ctlg_pic_hc_deal02";
-PRODUCT_IMAGES["DEAL_HC_3"] = "ctlg_pic_hc_deal03";
-PRODUCT_IMAGES["hween09_ghost"] = "ctlg_pic_hween09_ghost";
-PRODUCT_IMAGES["ads_twi_mist"] = "ctlg_pic_ads_twi_mist";
-PRODUCT_IMAGES["party_lights"] = "ctlg_pic_party_lights";
-PRODUCT_IMAGES["xmas_snow"] = "ctlg_pic_xmas_snow";
-PRODUCT_IMAGES["wf_deal1"] = "ctlg_pic_deal_wired_pswdoor";
-PRODUCT_IMAGES["wf_deal2"] = "ctlg_pic_deal_wired_swtchdoor";
-PRODUCT_IMAGES["wf_deal3"] = "ctlg_pic_deal_wired_coopdoor";
-PRODUCT_IMAGES["wf_deal4"] = "ctlg_pic_deal_wired_rmtdoor";
-PRODUCT_IMAGES["wf_deal5"] = "ctlg_pic_deal_wired_wlcmmsg";
-PRODUCT_IMAGES["wf_deal6"] = "ctlg_pic_deal_wired_pswtele";
-PRODUCT_IMAGES["wf_deal7"] = "ctlg_pic_deal_wired_dircntrl";
-PRODUCT_IMAGES["wf_deal8"] = "ctlg_pic_deal_wired_mvngfurni";
-PRODUCT_IMAGES["wf_deal9"] = "ctlg_pic_deal_wired_flshfires";
-PRODUCT_IMAGES["qt_val11_heartlights"] = "ctlg_pic_qt_val11_heartlights";
-PRODUCT_IMAGES["room_ad_plus_badge"] = "events_confirm_purchase";
+/**
+ * The `PRODUCT_IMAGES` pictures the client ships, by picture name. Flash draws a listed offer's
+ * picture only when its asset library has it and the product otherwise; the `ctlg_pic_*` pictures
+ * are in no bundle of this revision, and `events_confirm_purchase` is a GIF the port's bundles
+ * cannot carry, so for every listed offer but the snowwar tokens Flash and the port draw the
+ * product.
+ */
+const SHIPPED_PRODUCT_IMAGES: Record<string, string> = {
+    snowwar_tokens_10: LayoutImage('habbo-catalog-com/snowwar_tokens_10.png'),
+};
 
-type CatalogOfferImageViewProps = {
+export interface CatalogOfferImageViewProps {
     offer: IPurchasableOffer;
+    stuffData?: IObjectData;
+    /** `showConfirmationDialog`'s `param2`: the pets widgets' pet picture, rendered here and shown instead of the product's. */
+    previewImage?: PetImageRequest;
 }
 
-export const CatalogOfferImageView = (props: CatalogOfferImageViewProps) => {
-    const { offer } = props;
-    const product = useCatalogOfferProduct(offer);
+/**
+ * The product picture of the purchase confirmation - `PurchaseConfirmationDialog.showConfirmationDialog`
+ * into `product_image`, centred in its 126x152 bitmap (`setImage`): the offer's `PRODUCT_IMAGES`
+ * picture when one ships, else the picture the caller passed (the pets widgets' pet preview),
+ * else - for an offer with a product (a game token offer has none, and shows nothing) - by product type - a floor or wall furni rendered by the room engine
+ * facing 90 degrees at 64 (`getFurnitureImage` / `getWallItemImage`), an effect's icon, the club
+ * icon, a chat style's selector preview, a bot's figure facing 3, or a habbicon's preview.
+ *
+ * Not exact: Flash renders the floor furni with the purchase's stuff data and the bot waving
+ * (`wave`, `gest sml`); the port's furni texture takes no stuff data and its avatar texture no
+ * actions, so the furni shows its default state and the bot stands.
+ */
+export const CatalogOfferImageView = ({ offer, previewImage }: CatalogOfferImageViewProps) => {
+    const { getOfferProduct } = useCatalogOfferActions();
+    // `ProductContainer.firstProduct`: the one product the offer is about.
+    const product = getOfferProduct(offer);
+    const shippedImage = SHIPPED_PRODUCT_IMAGES[PRODUCT_IMAGES[offer.localizationId] ?? ''];
+    const productType = product?.productType;
+    const isFurni = !shippedImage && !previewImage && ((productType === FurnitureTypeEnum.Floor) || (productType === FurnitureTypeEnum.Wall));
+
+    // `getWallItemImage(productClassId, .., extraParam)`: a poster is drawn as its own `poster<id>`.
+    const furniType = (product?.furnitureData && isFurni)
+        ? ((productType === FurnitureTypeEnum.Wall) ? GetRoomContentLoader().getFurnitureWallNameForTypeId(product.furnitureData.id, product.extraParam || undefined) : product.furnitureData.className)
+        : undefined;
+
+    const { texture, width, height } = useFurnitureImageTexture(
+        furniType,
+        product?.furnitureData && isFurni ? product.furnitureData.colorIndex : undefined,
+        2,
+        RoomGeometryScaleType.ZoomedIn,
+        (isFurni && product) ? parseInt(product.extraParam) : undefined,
+    );
+    const petTexture = usePetImageTexture(shippedImage ? undefined : previewImage);
+    const bot = useAvatarImageTexture((!shippedImage && !previewImage && (productType === FurnitureTypeEnum.Robot)) ? product?.extraParam : undefined, AvatarGenderType.Male, { direction: 3 });
+
+    if (shippedImage) {
+        return (
+            <ThemeImage
+                src={shippedImage}
+                bitmap={{ stretchedX: false, stretchedY: false }}
+            />
+        );
+    }
 
     if (!product) return null;
 
-    const hardCodedImage = PRODUCT_IMAGES[offer.localizationId];
+    if (previewImage) {
+        if (!petTexture) return null;
 
-    if (hardCodedImage && hardCodedImage.length) {
-        return null;
+        return (
+            <pixiSprite
+                texture={petTexture}
+                layout={{}}
+            />
+        );
     }
 
-    return <FurnitureImage type={product.furnitureData.className} colorIndex={product.furnitureData.colorIndex} direction={2} extra={parseInt(product.extraParam)} />
-}
+    switch (product.productType) {
+        case FurnitureTypeEnum.Floor:
+        case FurnitureTypeEnum.Wall:
+            if (!texture) return null;
+
+            return (
+                <pixiSprite
+                    texture={texture}
+                    width={width}
+                    height={height}
+                    layout={{}}
+                />
+            );
+        case FurnitureTypeEnum.Effect:
+            return (
+                <ThemeImage
+                    src={pixelEffectIcon(product.classId)}
+                    bitmap={{ stretchedX: false, stretchedY: false }}
+                />
+            );
+        case FurnitureTypeEnum.HabboClub:
+            return (
+                <ThemeImage
+                    src={SUBSCRIPTION_PRODUCT_ICON}
+                    bitmap={{ stretchedX: false, stretchedY: false }}
+                />
+            );
+        case FurnitureTypeEnum.ChatStyle: {
+            const preview = GetChatStyleLibrary().getStyle(parseInt(product.extraParam))?.selectorPreviewTexture;
+
+            if (!preview) return null;
+
+            return (
+                <pixiSprite
+                    texture={preview}
+                    layout={{}}
+                />
+            );
+        }
+        case FurnitureTypeEnum.Robot:
+            if (!bot.texture) return null;
+
+            return (
+                <pixiSprite
+                    texture={bot.texture}
+                    width={bot.width}
+                    height={bot.height}
+                    layout={{}}
+                />
+            );
+        case FurnitureTypeEnum.Habbicon:
+            return (
+                <ThemeImage
+                    src={habbiconPreviewAssetName(parseInt(product.extraParam))}
+                    bitmap={{ stretchedX: false, stretchedY: false }}
+                />
+            );
+    }
+
+    return null;
+};

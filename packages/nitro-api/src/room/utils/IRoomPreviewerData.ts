@@ -1,5 +1,6 @@
-import { PointData, Rectangle } from "pixi.js";
-import { RoomObjectCategoryEnum } from "../object";
+import { PointData, Rectangle } from 'pixi.js';
+
+import { RoomObjectCategoryEnum } from '../object';
 
 export interface IRoomPreviewerData {
     objectType: number;

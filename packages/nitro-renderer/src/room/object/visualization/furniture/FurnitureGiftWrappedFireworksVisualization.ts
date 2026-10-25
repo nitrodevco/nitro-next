@@ -1,8 +1,11 @@
-import type { IRoomGeometry, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureFireworksVisualization } from './FurnitureFireworksVisualization';
 
+/**
+ * Port of Flash `FurnitureGiftWrappedFireworksVisualization`, the visualization
+ * `RoomObjectVisualizationFactory` builds for `furniture_gift_wrapped_fireworks`.
+ */
 export class FurnitureGiftWrappedFireworksVisualization extends FurnitureFireworksVisualization {
     private static PRESENT_DEFAULT_STATE: number = 0;
     private static MAX_PACKET_TYPE_VALUE: number = 9;
@@ -26,10 +29,10 @@ export class FurnitureGiftWrappedFireworksVisualization extends FurnitureFirewor
         const packetType = Math.floor(extras / local3);
         const ribbonType = extras % local3;
 
-        this._packetType =
-            packetType > FurnitureGiftWrappedFireworksVisualization.MAX_PACKET_TYPE_VALUE ? 0 : packetType;
-        this._ribbonType =
-            ribbonType > FurnitureGiftWrappedFireworksVisualization.MAX_RIBBON_TYPE_VALUE ? 0 : ribbonType;
+        this._packetType
+            = packetType > FurnitureGiftWrappedFireworksVisualization.MAX_PACKET_TYPE_VALUE ? 0 : packetType;
+        this._ribbonType
+            = ribbonType > FurnitureGiftWrappedFireworksVisualization.MAX_RIBBON_TYPE_VALUE ? 0 : ribbonType;
     }
 
     public override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {

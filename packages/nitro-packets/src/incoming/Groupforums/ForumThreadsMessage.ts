@@ -1,18 +1,28 @@
+// Body filled by hand from the AS3 parser (`groupforums/ForumThreadsMessageParser`).
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type ForumThreadsMessageType = {
-  // no fields
+import { IThreadData, ThreadDataParser } from './Data/ThreadDataParser';
 
+export type ForumThreadsMessageType = {
+    groupId: number;
+    startIndex: number;
+    threads: IThreadData[];
 };
 
-export class ForumThreadsMessage implements IIncomingPacket<ForumThreadsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ForumThreadsMessageType
-  {
+export class ForumThreadsMessage implements IIncomingPacket<ForumThreadsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ForumThreadsMessageType {
+        const groupId = wrapper.readInt();
+        const startIndex = wrapper.readInt();
+        const threads: IThreadData[] = [];
 
-    const packet: ForumThreadsMessageType = {
-    };
+        let count = wrapper.readInt();
 
-    return packet;
-  }
+        while (count > 0) {
+            threads.push(ThreadDataParser(wrapper));
+
+            count--;
+        }
+
+        return { groupId, startIndex, threads };
+    }
 }

@@ -1,0 +1,110 @@
+import { RoomEngineObjectEvent, RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
+import { LookToComposer } from '@nitrodevco/nitro-packets';
+import { ObjectAvatarSelectedMessage, ObjectSelectedMessage, ObjectVisibilityUpdateMessage } from '@nitrodevco/nitro-renderer';
+
+import { resetSelectedRoomObject } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useRoom, useRoomIsPlayingGame, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
+import { useWiredStore } from '#base/context/wired';
+
+/**
+ * Selecting and deselecting room objects and avatars -
+ * `RoomObjectEventHandler.setSelectedObject` and `setSelectedAvatar`: the selection arrow, the
+ * look-at, and `resetSelectedObject`, which puts back an object whose move or placement was
+ * abandoned.
+ */
+export const useRoomObjectSelect = () => {
+    const room = useRoom();
+    const isPlayingGame = useRoomIsPlayingGame();
+    const selectedAvatarId = useRoomStore(x => x.selectedAvatarId);
+    const selectedObjectId = useRoomStore(x => x.selectedObjectId);
+    const selectedObjectCategory = useRoomStore(x => x.selectedObjectCategory);
+    const { setSelectedAvatarId, setSelectedObjectId, setSelectedObjectCategory } = useRoomSelectedObjectActions();
+    const hasClickUserWired = useWiredStore(x => x.hasClickUserWired);
+    const { send } = useWebSocketContext();
+
+    const selectObject = (objectId: number, category: RoomObjectCategoryEnum) => {
+        if (!room) return;
+
+        switch (category) {
+            case RoomObjectCategoryEnum.Unit:
+            case RoomObjectCategoryEnum.Floor:
+            case RoomObjectCategoryEnum.Wall: {
+                if (category === RoomObjectCategoryEnum.Unit) {
+                    deselectObject();
+                    selectAvatar(objectId, true);
+                } else {
+                    selectAvatar(0, false);
+
+                    if (objectId !== selectedObjectId) {
+                        deselectObject();
+
+                        const roomObject = room.getRoomObject(objectId, category);
+
+                        if (roomObject?.logic) {
+                            roomObject.processUpdateMessage(new ObjectSelectedMessage(true));
+
+                            setSelectedObjectId(objectId);
+                            setSelectedObjectCategory(category);
+                        }
+                    }
+                }
+
+                room.dispatchEvent(
+                    new RoomEngineObjectEvent(RoomEngineObjectEvent.SELECTED, room.roomId, objectId, category),
+                );
+            }
+        }
+    };
+
+    const selectAvatar = (objectId: number, lookAt: boolean) => {
+        if (!room) return;
+
+        const prevAvatar = room.getRoomObject(selectedAvatarId, RoomObjectCategoryEnum.Unit);
+
+        if (prevAvatar?.logic) {
+            prevAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(false));
+            setSelectedAvatarId(-1);
+        }
+
+        const nextAvatar = room.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (nextAvatar?.logic) {
+            nextAvatar.processUpdateMessage(new ObjectAvatarSelectedMessage(true));
+            setSelectedAvatarId(objectId);
+
+            // Not while the room's wired listens for clicks on users: the server decides what the click does.
+            if (lookAt && !hasClickUserWired) {
+                const location = nextAvatar.getLocation();
+
+                send(new LookToComposer({ x: Math.trunc(location.x), y: Math.trunc(location.y) }));
+            }
+        }
+
+        const selectionArrow = room.getRoomObjectSelectionArrow();
+
+        if (selectionArrow?.logic) {
+            const visibility = lookAt && !isPlayingGame
+                ? ObjectVisibilityUpdateMessage.ENABLED
+                : ObjectVisibilityUpdateMessage.DISABLED;
+
+            selectionArrow.processUpdateMessage(new ObjectVisibilityUpdateMessage(visibility));
+        }
+    };
+
+    const deselectObject = () => {
+        if (!room || selectedObjectId === -1) return;
+
+        const roomObject = room.getRoomObject(selectedObjectId, selectedObjectCategory);
+
+        if (roomObject?.logic) roomObject.processUpdateMessage(new ObjectSelectedMessage(false));
+
+        setSelectedObjectId(-1);
+        setSelectedObjectCategory(RoomObjectCategoryEnum.Minimum);
+    };
+
+    /** `resetSelectedObjectData` - see `resetSelectedRoomObject`. */
+    const resetSelectedObject = resetSelectedRoomObject;
+
+    return { selectObject, selectAvatar, deselectObject, resetSelectedObject };
+};

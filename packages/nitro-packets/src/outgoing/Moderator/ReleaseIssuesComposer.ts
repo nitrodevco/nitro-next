@@ -1,12 +1,14 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
-export type ReleaseIssuesComposerType = object;
+// `ReleaseIssuesMessageComposer(issueIds)`.
+export type ReleaseIssuesComposerType = {
+    issueIds: number[];
+};
 
 export class ReleaseIssuesComposer implements IOutgoingPacket<ReleaseIssuesComposerType> {
     public constructor(private params: ReleaseIssuesComposerType) { }
 
     public compose(): (number | string | boolean)[] {
-        return [
-        ];
+        return [ this.params.issueIds.length, ...this.params.issueIds ];
     }
 }

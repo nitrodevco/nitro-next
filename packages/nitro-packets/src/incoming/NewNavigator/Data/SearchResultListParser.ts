@@ -1,7 +1,6 @@
-import type { IMessageDataWrapper } from "@nitrodevco/nitro-api";
+import { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IRoomInfo } from "../../Navigator/Data/RoomSettingsParser";
-import { RoomSettingsParser } from "../../Navigator/Data/RoomSettingsParser";
+import { IRoomInfo, RoomSettingsParser } from '../../Navigator/Data/RoomSettingsParser';
 
 export interface ISearchResultList {
     searchCode: string;
@@ -19,7 +18,7 @@ export const SearchResultListParser = (wrapper: IMessageDataWrapper): ISearchRes
         actionAllowed: wrapper.readInt(),
         forceClosed: wrapper.readBoolean(),
         viewMode: wrapper.readInt(),
-        guestRooms: []
+        guestRooms: [],
     };
 
     let count = wrapper.readInt();
@@ -32,4 +31,4 @@ export const SearchResultListParser = (wrapper: IMessageDataWrapper): ISearchRes
     }
 
     return list;
-}
+};

@@ -1,29 +1,45 @@
-import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils } from "@nitrodevco/nitro-api";
-import { useState } from "react";
+import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
+import { useState } from 'react';
 
-import { useRoomSelector } from "#base/context";
-import { useRoomObjectDeselected, useRoomObjectSelected } from "#base/hooks";
-import { InfostandPetView } from "#base/views/room-widgets/object-infostand/InfostandPetView";
-import { InfostandUserView } from "#base/views/room-widgets/object-infostand/InfostandUserView";
+import { useRoom, useRoomStore } from '#base/context/room';
+import { useRoomEventDispatcher, useRoomInfostandPlacementHandler } from '#base/hooks';
+import { InfostandUserView } from '#base/views/room-widgets/object-infostand/InfostandUserView';
 
-import { InfostandFurni } from "./InfostandFurni";
+import { InfostandBot } from './InfostandBot';
+import { InfostandFurni } from './InfostandFurni';
+import { InfostandPet } from './InfostandPet';
 
+/**
+ * The infostand - Flash's `InfoStandWidget`: whatever is selected gets its panel (user, bot,
+ * pet or furniture), and the panel closes when the selection does or the object leaves the
+ * room.
+ */
 export const RoomObjectInfostandWidget = () => {
-    const [selectedData, setSelectedData] = useState<ISimpleRoomObjectData | undefined>(undefined);
-    const room = useRoomSelector();
+    const [ selectedData, setSelectedData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
+    const room = useRoom();
+    // The room object's type is a pet's breed name, not its kind; the user list knows the kind.
+    const selectedUserType = useRoomStore(x => (selectedData ? x.usersByRoomObjectId[selectedData.objectId]?.userType : undefined));
+
+    // The place more button keeps placing while the stand is closed.
+    useRoomInfostandPlacementHandler();
 
     const onClose = () => {
         setSelectedData(undefined);
-    }
+    };
 
-    useRoomObjectDeselected(_e => {
+    useRoomEventDispatcher(RoomWidgetUpdateRoomObjectEvent.OBJECT_DESELECTED, () => {
         setSelectedData(undefined);
     });
 
-    useRoomObjectSelected(event => {
+    // `InfoStandWidget`: whatever the stand shows leaving the room closes it.
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>([ RoomWidgetUpdateRoomObjectEvent.USER_REMOVED, RoomWidgetUpdateRoomObjectEvent.FURNI_REMOVED ], (event) => {
+        if (selectedData && (selectedData.objectId === event.objectId) && (selectedData.category === event.category)) setSelectedData(undefined);
+    });
+
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>(RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED, (event) => {
         setSelectedData({
             objectId: event.objectId,
-            category: event.category
+            category: event.category,
         });
     });
 
@@ -32,33 +48,46 @@ export const RoomObjectInfostandWidget = () => {
     switch (selectedData.category) {
         case RoomObjectCategoryEnum.Floor:
         case RoomObjectCategoryEnum.Wall: {
-            return <InfostandFurni objectData={selectedData} onClose={onClose} />;
+            return (
+                <InfostandFurni
+                    objectData={selectedData}
+                    onClose={onClose}
+                />
+            );
         }
         case RoomObjectCategoryEnum.Unit: {
-            const roomObject = room.getRoomObject(selectedData.objectId, selectedData.category);
+            if (selectedUserType === undefined) return null;
 
-            if (!roomObject) return null;
-
-            const userType = RoomObjectUserTypeUtils.getAvatarType(roomObject.type);
-
-            if (!userType) return null;
-
-            switch (userType) {
+            switch (selectedUserType) {
                 case RoomObjectUserType.Pet: {
-                    return <InfostandPetView objectData={selectedData} onClose={onClose} />;
+                    return (
+                        <InfostandPet
+                            objectData={selectedData}
+                            onClose={onClose}
+                        />
+                    );
                 }
                 case RoomObjectUserType.User: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
+                    return (
+                        <InfostandUserView
+                            objectData={selectedData}
+                            onClose={onClose}
+                        />
+                    );
                 }
-                case RoomObjectUserType.Bot: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
-                }
+                // A bot has no profile, motto or respect, so it gets its own panel.
+                case RoomObjectUserType.Bot:
                 case RoomObjectUserType.RentableBot: {
-                    return <InfostandUserView objectData={selectedData} onClose={onClose} />;
+                    return (
+                        <InfostandBot
+                            objectData={selectedData}
+                            onClose={onClose}
+                        />
+                    );
                 }
             }
         }
     }
 
     return null;
-}
+};

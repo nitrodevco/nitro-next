@@ -1,6 +1,6 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IRoomWallItem } from './Data/IRoomWallItem';
+import { IRoomWallItem } from './Data/IRoomWallItem';
 import { WallItemParser } from './Data/WallItemParser';
 
 export type ItemUpdateMessageType = {
@@ -10,7 +10,7 @@ export type ItemUpdateMessageType = {
 export class ItemUpdateMessage implements IIncomingPacket<ItemUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): ItemUpdateMessageType {
         const packet: ItemUpdateMessageType = {
-            wallItem: WallItemParser(wrapper)
+            wallItem: WallItemParser(wrapper),
         };
 
         return packet;

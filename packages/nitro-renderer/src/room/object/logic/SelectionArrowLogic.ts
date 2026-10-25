@@ -1,10 +1,10 @@
-import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomObjectUpdateMessage, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectVisibilityUpdateMessage } from '../../messages';
-import { RoomObjectLogicBase } from './RoomObjectLogicBase';
+import { ObjectLogicBase } from './ObjectLogicBase';
 
-export class SelectionArrowLogic extends RoomObjectLogicBase {
+/** Port of Flash `SelectionArrowLogic`, the logic `RoomObjectFactory` builds for `selection_arrow`. */
+export class SelectionArrowLogic extends ObjectLogicBase {
     public override initialize(data: IAssetData): void {
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
 

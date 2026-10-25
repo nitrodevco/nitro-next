@@ -7,7 +7,7 @@ export type ClubGiftNotificationEventMessageType = {
 export class ClubGiftNotificationEventMessage implements IIncomingPacket<ClubGiftNotificationEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): ClubGiftNotificationEventMessageType {
         const packet: ClubGiftNotificationEventMessageType = {
-            numGifts: wrapper.readInt()
+            numGifts: wrapper.readInt(),
         };
 
         return packet;

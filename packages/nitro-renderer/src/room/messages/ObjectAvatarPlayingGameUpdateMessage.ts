@@ -1,18 +1,16 @@
 import { ObjectStateUpdateMessage } from './ObjectStateUpdateMessage';
 
-export class ObjectAvatarPlayingGameUpdateMessage extends ObjectStateUpdateMessage
-{
+/** Port of Flash `RoomObjectAvatarPlayingGameMessage`. */
+export class ObjectAvatarPlayingGameUpdateMessage extends ObjectStateUpdateMessage {
     private _isPlayingGame: boolean;
 
-    constructor(flag: boolean)
-    {
+    constructor(flag: boolean) {
         super();
 
         this._isPlayingGame = flag;
     }
 
-    public get isPlayingGame(): boolean
-    {
+    public get isPlayingGame(): boolean {
         return this._isPlayingGame;
     }
 }

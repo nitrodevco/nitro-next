@@ -1,4 +1,4 @@
-import type { IRoomObject } from '../object';
+import { IRoomObject } from '../object';
 
 export interface ITileObjectMap {
     clear(): void;

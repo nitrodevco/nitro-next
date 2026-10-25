@@ -1,4 +1,4 @@
-import { AvatarActionStateType } from "#api/avatar/enum";
+import { AvatarActionStateType } from '#api/avatar/enum';
 
 export interface IAssetAvatarActionType {
     id: number;

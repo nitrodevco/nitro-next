@@ -1,18 +1,16 @@
 import { ObjectStateUpdateMessage } from './ObjectStateUpdateMessage';
 
-export class ObjectAvatarExperienceUpdateMessage extends ObjectStateUpdateMessage
-{
+/** Port of Flash `RoomObjectAvatarExperienceUpdateMessage`. */
+export class ObjectAvatarExperienceUpdateMessage extends ObjectStateUpdateMessage {
     private _gainedExperience: number;
 
-    constructor(amount: number)
-    {
+    constructor(amount: number) {
         super();
 
         this._gainedExperience = amount;
     }
 
-    public get gainedExperience(): number
-    {
+    public get gainedExperience(): number {
         return this._gainedExperience;
     }
 }

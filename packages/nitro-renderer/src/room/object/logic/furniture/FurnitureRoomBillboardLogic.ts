@@ -1,9 +1,11 @@
-import type { IRoomObjectModel } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectRoomAdEvent } from '@nitrodevco/nitro-api';
+import { IRoomObjectModel, RoomObjectRoomAdEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureRoomBrandingLogic } from './FurnitureRoomBrandingLogic';
 
+/**
+ * Flash `FurnitureRoomBillboardLogic`: a branding furni whose click goes somewhere - the
+ * `clickUrl` of its map data (`furniture_branding_url`) rather than the room ad url.
+ */
 export class FurnitureRoomBillboardLogic extends FurnitureRoomBrandingLogic {
     constructor() {
         super();
@@ -16,8 +18,10 @@ export class FurnitureRoomBillboardLogic extends FurnitureRoomBrandingLogic {
     }
 
     protected override handleAdClick(objectId: number, objectType: string, clickUrl: string): void {
+        // Flash opens a web address itself (`HabboWebTools.openWebPage`, into the `habboMain`
+        // window) and hands anything else to `RoomObjectEventHandler` as an in-client link.
         if (clickUrl.indexOf('http') === 0) {
-            // HabboWebTools.openWebPage(clickUrl);
+            window.open(clickUrl, 'habboMain');
 
             return;
         }

@@ -1,6 +1,10 @@
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurnitureResettingAnimatedVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash's obfuscated `§_-U1k§`, the visualization `RoomObjectVisualizationFactory` builds
+ * for `furniture_resetting_animated`.
+ */
+export class FurnitureResettingAnimatedVisualization extends AnimatedFurnitureVisualization {
     protected override usesAnimationResetting(): boolean {
         return true;
     }

@@ -1,7 +1,7 @@
-import type { IMessageDataWrapper } from '#api/communication';
+import { IMessageDataWrapper } from '#api/communication';
 
-import type { IRoomObjectModel } from '../IRoomObjectModel';
-import type { ObjectDataFlagsEnum } from './ObjectDataFlagsEnum';
+import { IRoomObjectModel } from '../IRoomObjectModel';
+import { ObjectDataFlagsEnum } from './ObjectDataFlagsEnum';
 
 export interface IObjectData {
     state: number;

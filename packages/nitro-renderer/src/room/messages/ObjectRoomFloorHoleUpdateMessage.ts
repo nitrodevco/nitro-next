@@ -1,5 +1,6 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectRoomFloorHoleUpdateMessage`. */
 export class ObjectRoomFloorHoleUpdateMessage extends RoomObjectUpdateMessage {
     public static ADD: string = 'ORPFHUM_ADD' as const;
     public static REMOVE: string = 'ORPFHUM_REMOVE' as const;

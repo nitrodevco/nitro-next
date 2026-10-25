@@ -1,4 +1,4 @@
-import { AvatarFigurePartType } from "#api/avatar/enum";
+import { AvatarFigurePartType } from '#api/avatar/enum';
 
 export interface IFigureDataPart {
     id: number;
@@ -6,4 +6,6 @@ export interface IFigureDataPart {
     colorable?: boolean;
     index: number;
     colorindex?: number;
+    paletteMapId?: number;
+    breed?: number;
 }

@@ -1,6 +1,10 @@
-import type { RoomMapData } from '../object';
+import { RoomMapData } from '../object';
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/**
+ * Nitro's own: hands `RoomLogic` the room's map as data (`RoomMapData`), where Flash sets the
+ * plane XML on the model (`room_plane_xml`).
+ */
 export class ObjectRoomMapUpdateMessage extends RoomObjectUpdateMessage {
     public static UPDATE_MAP: string = 'RORMUM_UPDATE_MAP' as const;
 

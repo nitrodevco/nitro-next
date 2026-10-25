@@ -1,9 +1,10 @@
-import type { IAssetVisualAnimation } from '@nitrodevco/nitro-api';
+import { IAssetVisualAnimation } from '@nitrodevco/nitro-api';
 
 import { AnimationData } from './AnimationData';
-import type { AnimationFrame } from './AnimationFrame';
+import { AnimationFrame } from './AnimationFrame';
 import { SizeData } from './SizeData';
 
+/** Port of Flash `AnimationSizeData`. */
 export class AnimationSizeData extends SizeData {
     private _animations: Map<number, AnimationData>;
     private _animationIds: number[];

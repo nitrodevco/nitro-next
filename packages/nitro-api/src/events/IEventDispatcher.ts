@@ -1,4 +1,4 @@
-import type { INitroEvent } from './INitroEvent';
+import { INitroEvent } from './INitroEvent';
 
 export interface IEventDispatcher {
     dispose(): void;

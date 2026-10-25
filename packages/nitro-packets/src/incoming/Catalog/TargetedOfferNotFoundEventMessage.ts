@@ -1,18 +1,10 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket } from '@nitrodevco/nitro-api';
 
-export type TargetedOfferNotFoundEventMessageType = {
-  // no fields
+export type TargetedOfferNotFoundEventMessageType = object;
 
-};
-
-export class TargetedOfferNotFoundEventMessage implements IIncomingPacket<TargetedOfferNotFoundEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): TargetedOfferNotFoundEventMessageType
-  {
-
-    const packet: TargetedOfferNotFoundEventMessageType = {
-    };
-
-    return packet;
-  }
+export class TargetedOfferNotFoundEventMessage implements IIncomingPacket<TargetedOfferNotFoundEventMessageType> {
+    public parse(): TargetedOfferNotFoundEventMessageType {
+        return {};
+    }
 }

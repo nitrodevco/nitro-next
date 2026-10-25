@@ -1,11 +1,14 @@
-import type { IAssetData } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash `FurnitureCreditLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_credit`.
+ */
 export class FurnitureCreditLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.CREDITFURNI]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.CREDITFURNI ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

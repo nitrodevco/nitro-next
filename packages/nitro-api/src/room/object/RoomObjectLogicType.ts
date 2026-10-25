@@ -7,6 +7,8 @@ export class RoomObjectLogicType {
     public static FURNITURE_CREDIT = 'furniture_credit';
     public static FURNITURE_STICKIE = 'furniture_stickie';
     public static FURNITURE_PRESENT = 'furniture_present';
+    public static FURNITURE_FURNI_CHEST = 'furniture_furnichest';
+    public static FURNITURE_COINS_CHEST = 'furniture_coinschest';
     public static FURNITURE_TROPHY = 'furniture_trophy';
     public static FURNITURE_ECOTRON_BOX = 'furniture_ecotron_box';
     public static FURNITURE_DICE = 'furniture_dice';
@@ -33,6 +35,9 @@ export class RoomObjectLogicType {
     public static FURNITURE_FLOOR_HOLE = 'furniture_floor_hole';
     public static FURNITURE_MANNEQUIN = 'furniture_mannequin';
     public static FURNITURE_GUILD_CUSTOMIZED = 'furniture_guild_customized';
+    public static FURNITURE_RECOLORABLE = 'furniture_recolorable';
+    public static FURNITURE_LABEL = 'furniture_label';
+    public static FURNITURE_REGION = 'furniture_region';
     public static FURNITURE_GROUP_FORUM_TERMINAL = 'furniture_group_forum_terminal';
     public static FURNITURE_PET_CUSTOMIZATION = 'furniture_pet_customization';
     public static FURNITURE_CUCKOO_CLOCK = 'furniture_cuckoo_clock';
@@ -62,6 +67,8 @@ export class RoomObjectLogicType {
     public static FURNITURE_EDITABLE_ROOM_LINK = 'furniture_editable_room_link';
     public static FURNITURE_CRAFTING_GIZMO = 'furniture_crafting_gizmo';
     public static FURNITURE_AREA_HIDE = 'furniture_area_hide';
+    public static FURNITURE_NFT_CREDIT = 'furniture_nft_credit';
+    public static FURNITURE_NFT_REWARD_BOX = 'furniture_nft_reward_box';
     public static ROOM = 'room';
     public static USER = 'user';
     public static BOT = 'bot';

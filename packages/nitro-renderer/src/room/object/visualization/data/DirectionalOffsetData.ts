@@ -1,3 +1,4 @@
+/** Port of Flash's obfuscated `§_-d24§`: a frame's offset per direction. */
 export class DirectionalOffsetData {
     private _offsetX: Map<number, number> = new Map();
     private _offsetY: Map<number, number> = new Map();

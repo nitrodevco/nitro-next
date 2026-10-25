@@ -1,4 +1,4 @@
-import type { IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
+import { IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
 
 export class RoomSpriteMouseEvent implements IRoomSpriteMouseEvent {
     private _type: string;

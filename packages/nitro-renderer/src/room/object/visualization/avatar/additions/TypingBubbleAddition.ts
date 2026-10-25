@@ -1,11 +1,12 @@
-import { AvatarActionStateType, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { AvatarActionStateType, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
 
-import type { AvatarVisualization } from '../AvatarVisualization';
-import type { IAvatarAddition } from './IAvatarAddition';
+import { AvatarVisualization } from '../AvatarVisualization';
+import { IAvatarAddition } from './IAvatarAddition';
 
+/** Port of Flash `TypingBubble`. */
 export class TypingBubbleAddition implements IAvatarAddition {
     private _asset: Texture | undefined = undefined;
     private _relativeDepth: number = 0;

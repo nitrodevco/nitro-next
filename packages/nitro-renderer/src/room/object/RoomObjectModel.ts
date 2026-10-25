@@ -1,5 +1,6 @@
-import type { IRoomObjectModel, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IRoomObjectModel, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `RoomObjectModel`. */
 export class RoomObjectModel implements IRoomObjectModel {
     private _map: Map<RoomObjectVariableEnum, unknown> = new Map();
     private _updateCounter: number = 0;

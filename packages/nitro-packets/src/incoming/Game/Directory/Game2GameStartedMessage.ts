@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type Game2GameStartedMessageType = {
-  // no fields
+import { GameLobbyDataParser } from './Data/GameLobbyDataParser';
+import { IGameLobbyData } from './Data/IGameLobbyData';
 
+export type Game2GameStartedMessageType = {
+    lobbyData: IGameLobbyData;
 };
 
-export class Game2GameStartedMessage implements IIncomingPacket<Game2GameStartedMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): Game2GameStartedMessageType
-  {
-
-    const packet: Game2GameStartedMessageType = {
-    };
-
-    return packet;
-  }
+export class Game2GameStartedMessage implements IIncomingPacket<Game2GameStartedMessageType> {
+    public parse(wrapper: IMessageDataWrapper): Game2GameStartedMessageType {
+        const lobbyData = GameLobbyDataParser(wrapper);
+        return { lobbyData };
+    }
 }

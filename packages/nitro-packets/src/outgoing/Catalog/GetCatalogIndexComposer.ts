@@ -1,7 +1,7 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import { CatalogTypeEnum, IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetCatalogIndexComposerType = {
-    catalogType: CatalogType;
+    catalogType: CatalogTypeEnum;
 };
 
 export class GetCatalogIndexComposer implements IOutgoingPacket<GetCatalogIndexComposerType> {

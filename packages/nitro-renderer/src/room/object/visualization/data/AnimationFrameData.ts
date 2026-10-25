@@ -1,3 +1,4 @@
+/** Port of Flash `AnimationFrameData`. */
 export class AnimationFrameData {
     private _id: number;
     private _x: number;

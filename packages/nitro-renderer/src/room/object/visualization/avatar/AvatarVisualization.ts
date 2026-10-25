@@ -9,51 +9,80 @@ import {
     type IGraphicAsset,
     type IObjectVisualizationData,
     type IRoomGeometry,
-    IRoomObject, IRoomObjectModel,
+    IRoomObject, IRoomObjectModel, type IRoomObjectSprite,
+    IVariableFxStatusModelData,
+    RoomObjectSpriteData,
     RoomObjectSpriteTypeEnum,
     RoomObjectVariableEnum,
 } from '@nitrodevco/nitro-api';
 import { AdvancedMap, AvatarActionStateType, AvatarActionStateTypeUtilities, AvatarGenderType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { Texture } from 'pixi.js';
+import { ColorMatrixFilter, Filter, Texture } from 'pixi.js';
 
-import { GetAssetManager } from '../../../../assets';
+import { GetAssetManager } from '#renderer/assets';
+import { createFlashGlowFilter, GetTickerTime } from '#renderer/utils';
+
+import { FurnitureHighlightComposite } from '../furniture/FurnitureHighlightComposite';
+import { FurnitureHighlightFilters } from '../furniture/FurnitureHighlightFilters';
+import { RoomObjectSprite } from '../RoomObjectSprite';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
-import type { IAvatarAddition } from './additions';
-import {
-    ExpressionAdditionFactory,
+import { IVariableFxVisualizationHost, IVariableFxVisualizationRoomData } from '../variablefx/IVariableFxVisualizationRoomData';
+import { VariableFxStatusReconciler } from '../variablefx/VariableFxStatusReconciler';
+import { ExpressionAdditionFactory,
     FloatingIdleZAddition,
     GameClickTargetAddition,
     GuideStatusBubbleAddition,
+    HabbiconBubble,
+    IAvatarAddition,
     MutedBubbleAddition,
     NumberBubbleAddition,
+    StackedAdditions,
     TypingBubbleAddition,
 } from './additions';
 import { AvatarVisualizationData } from './AvatarVisualizationData';
 
+/**
+ * Draws a room avatar: the avatar image, its shadow and its additions (bubbles, expressions, the
+ * Variable FX stack). Ports `AvatarVisualization`.
+ */
 export class AvatarVisualization
     extends RoomObjectSpriteVisualization
-    implements IAvatarImageListener, IAvatarEffectListener {
-    private static AVATAR: string = 'avatar';
-    private static FLOATING_IDLE_Z_ID: number = 1;
-    private static TYPING_BUBBLE_ID: number = 2;
-    private static EXPRESSION_ID: number = 3;
-    private static NUMBER_BUBBLE_ID: number = 4;
-    private static GAME_CLICK_TARGET_ID: number = 5;
-    private static MUTED_BUBBLE_ID: number = 6;
-    private static GUIDE_BUBBLE_ID: number = 7;
-    private static OWN_USER_ID: number = 4;
-    private static AVATAR_LAYER_ID: number = 0;
-    private static SHADOW_LAYER_ID: number = 1;
-    private static SNOWBOARDING_EFFECT: number = 97;
-    private static INITIAL_RESERVED_SPRITES: number = 2;
-    private static ANIMATION_FRAME_UPDATE_INTERVAL: number = 2;
-    private static DEFAULT_CANVAS_OFFSETS: number[] = [0, 0, 0];
-    private static MAX_EFFECT_CACHE: number = 2;
-    private static SPRITE_INDEX_AVATAR: number = 0;
-    private static BASE_Y_SCALE: number = 1000;
+    implements IAvatarImageListener, IAvatarEffectListener, IVariableFxVisualizationHost {
+    // The static constants of Flash `AvatarVisualization`, under Flash's names (checked by
+    // `scripts/drift/constants.py`). Flash's obfuscated `§_-A1O§` is `SPRITE_INDEX_SHADOW`.
+    private static AVATAR_SPRITE_TAG: string = 'avatar';
     private static AVATAR_SPRITE_DEFAULT_DEPTH: number = -0.01;
     private static AVATAR_OWN_DEPTH_ADJUST: number = 0.001;
     private static AVATAR_SPRITE_LAYING_DEPTH: number = -0.409;
+    private static BASE_Y_SCALE: number = 1000;
+    public static readonly ANIMATION_FRAME_UPDATE_INTERVAL: number = 2;
+    private static SNOWBOARDING_EFFECT: number = 97;
+    private static FREEZE_EFFECT: number = 218;
+    /** How many effect avatar images `getAvatarImage` keeps before disposing the oldest. */
+    private static MAX_AVATARS_WITH_EFFECT: number = 3;
+    private static SPRITE_INDEX_AVATAR: number = 0;
+    private static SPRITE_INDEX_SHADOW: number = 1;
+    private static INITIAL_RESERVED_SPRITES: number = 2;
+    private static ADDITION_ID_IDLE_BUBBLE: number = 1;
+    private static ADDITION_ID_TYPING_BUBBLE: number = 2;
+    private static ADDITION_ID_EXPRESSION: number = 3;
+    private static ADDITION_ID_NUMBER_BUBBLE: number = 4;
+    private static ADDITION_ID_GAME_CLICK_TARGET: number = 5;
+    private static ADDITION_ID_MUTED_BUBBLE: number = 6;
+    private static ADDITION_ID_GUIDE_STATUS_BUBBLE: number = 7;
+    /** The `HabbiconBubble` put into the stacked additions while `figure_habbicon` is set (`StackedAdditions.LAYER_HABBICON`). */
+    private static ADDITION_ID_HABBICON_BUBBLE: number = 8;
+    private static ADDITION_ID_STACKED_ADDITIONS: number = 9;
+    public static readonly DEFAULT_CANVAS_OFFSETS: number[] = [ 0, 0, 0 ];
+    /** Flash's literal `6710886`: the grey a blocked avatar's placeholder is tinted. */
+    private static BLOCKED_AVATAR_COLOR: number = 0x666666;
+
+    /** Flash `GlowFilter(0xFFFFFF, 1, 6, 6)` around a highlighted avatar. */
+    private static HIGHLIGHT_FILTERS: Filter[] | undefined = undefined;
+    /**
+     * Flash `VARIABLE_HOLDER_FILTER`: the tint and inner glow the wired menu puts on the avatars
+     * that hold a variable. Pixi's colour matrix takes its offsets in 0-1 where Flash's are 0-255.
+     */
+    private static VARIABLE_HOLDER_FILTERS: Filter[] | undefined = undefined;
 
     protected _data: AvatarVisualizationData | undefined = undefined;
 
@@ -68,6 +97,8 @@ export class AvatarVisualization
     private _gender: AvatarGenderType = AvatarGenderType.Male;
     private _direction: number = -1;
     private _headDirection: number = -1;
+    /** `figure_habbicon_spin_offset`: the spinning duck's turn, added to the body's and the head's angle. */
+    private _habbiconSpinOffset: number = 0;
     private _posture: AvatarActionStateType = AvatarActionStateType.Stand;
     private _postureParameter: number = 0;
     private _canStandUp: boolean = false;
@@ -83,6 +114,13 @@ export class AvatarVisualization
     private _sign: number = -1;
     private _highlightEnabled: boolean = false;
     private _highlight: boolean = false;
+    private _highlightVariableHolder: boolean = false;
+    private _blocked: boolean = false;
+    private _alphaMultiplier: number = 1;
+    /** WIRED Set Visibility: 1 - `furniture_wired_transparency` / 100 (Flash `§_-S1H§`). */
+    private _wiredAlpha: number = 1;
+    /** WIRED Set Visibility's "allow clicks to pass through" (`furniture_wired_click_through`). */
+    private _skipMouseHandling: boolean = false;
     private _dance: number = 0;
     private _effect: number = 0;
     private _carryObject: number = 0;
@@ -94,6 +132,15 @@ export class AvatarVisualization
     private _layInside: boolean = false;
     private _isAnimating: boolean = false;
     private _extraSpritesStartIndex: number = 2;
+
+    /** WIRED Set Highlight (Flash `updateWiredHighlight`), as in `FurnitureVisualization`. */
+    private _wiredHighlightType: number = 0;
+    private _wiredHighlightStrength: number = 0;
+    private _wiredHighlightColor: number = 0xFFFFFF;
+    private _wiredHighlightFilters: Filter[] | undefined = undefined;
+    private _wiredHighlightFilterCache: Map<number, Filter[] | undefined> = new Map();
+    private _wiredHighlightComposite: FurnitureHighlightComposite | undefined = new FurnitureHighlightComposite();
+    private _wiredHighlightSprite: IRoomObjectSprite | undefined = undefined;
     private _forcedAnimFrames: number = 0;
     private _updatesUntilFrameUpdate: number = 0;
     private _updatesUntilCleanup: number = Math.random() * 200 + 200;
@@ -101,6 +148,10 @@ export class AvatarVisualization
     private _geometryUpdateCounter: number = -1;
 
     private _additions: Map<number, IAvatarAddition> = new Map();
+
+    private _variableFxRoomData: IVariableFxVisualizationRoomData | undefined = undefined;
+    private _variableFxReconciler: VariableFxStatusReconciler = new VariableFxStatusReconciler();
+    private _variableFxManagerUpdateId: number = -1;
 
     public override initialize(data: IObjectVisualizationData): boolean {
         if (!(data instanceof AvatarVisualizationData)) return false;
@@ -117,12 +168,36 @@ export class AvatarVisualization
     public override dispose(): void {
         if (this._disposed) return;
 
+        // AS3 disposes every cached scale/effect image, not just the current one: they are held by
+        // `AvatarRenderManager` until disposed, so skipping them leaked each avatar's render textures.
+        this.resetAvatar();
+
         super.dispose();
 
-        if (this._avatarImage) this._avatarImage.dispose();
+        for (const addition of this._additions.values()) addition.dispose();
 
+        this._additions.clear();
+        this._variableFxRoomData = undefined;
         this._shadow = undefined;
+
+        this._wiredHighlightComposite?.dispose();
+        this._wiredHighlightComposite = undefined;
+        this._wiredHighlightSprite?.dispose();
+        this._wiredHighlightSprite = undefined;
+        this._wiredHighlightFilters = undefined;
+        this._wiredHighlightFilterCache.clear();
+
         this._disposed = true;
+    }
+
+    /** The room's Variable FX tables for users; set by the room when the visualization is created. */
+    public get variableFxRoomData(): IVariableFxVisualizationRoomData | undefined {
+        return this._variableFxRoomData;
+    }
+
+    public set variableFxRoomData(data: IVariableFxVisualizationRoomData | undefined) {
+        this._variableFxRoomData = data;
+        this._variableFxManagerUpdateId = -1;
     }
 
     public override update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void {
@@ -145,6 +220,8 @@ export class AvatarVisualization
 
         const scale = geometry.scale;
         const effect = this._effect;
+        const alphaMultiplier = this._alphaMultiplier;
+        const wiredAlpha = this._wiredAlpha;
 
         let didScaleUpdate = false;
         let didEffectUpdate = false;
@@ -152,6 +229,7 @@ export class AvatarVisualization
         let objectUpdated = false;
 
         const modelUpdated = this.updateModel(this.object.model, scale, update);
+        const highlightUpdated = this.updateWiredHighlight(this.object.model);
 
         if (this._forceUpdate) {
             this.resetAvatar();
@@ -168,21 +246,26 @@ export class AvatarVisualization
 
             if (effect !== this._effect) didEffectUpdate = true;
 
-            if (didScaleUpdate || !this._avatarImage || didEffectUpdate) {
-                this._avatarImage?.dispose();
+            const didAlphaUpdate = (alphaMultiplier !== this._alphaMultiplier) || (wiredAlpha !== this._wiredAlpha);
 
+            if (didScaleUpdate || !this._avatarImage || didEffectUpdate || didAlphaUpdate) {
+                // Cached scale/effect images are disposed together by resetAvatar.
                 this._avatarImage = this.createAvatarImage(scale, this._effect);
 
                 if (!this._avatarImage) return;
 
                 otherUpdate = true;
 
-                const sprite = this.getSprite(AvatarVisualization.AVATAR_LAYER_ID);
+                this._updatesUntilFrameUpdate = 0;
 
-                if (sprite && this._avatarImage && this._avatarImage.isPlaceholder()) {
-                    sprite.alpha = 150;
+                const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
+
+                if (sprite && (this._avatarImage.isPlaceholder() || this._avatarImage.isBlocked())) {
+                    sprite.alpha = 150 * this._alphaMultiplier * this._wiredAlpha;
+                    sprite.color = this._avatarImage.isBlocked() ? AvatarVisualization.BLOCKED_AVATAR_COLOR : 0xFFFFFF;
                 } else if (sprite) {
-                    sprite.alpha = 255;
+                    sprite.alpha = 255 * this._alphaMultiplier * this._wiredAlpha;
+                    sprite.color = 0xFFFFFF;
                 }
             }
 
@@ -217,6 +300,8 @@ export class AvatarVisualization
                 const sprite = this.getSprite(index++);
                 if (sprite && addition.animate(sprite)) this.updateSpriteCounter++;
             }
+
+            if (this.removeEmptyStackedAdditions()) this.updateSpriteCounter++;
         }
 
         const update1 = objectUpdated || modelUpdated || didScaleUpdate;
@@ -232,11 +317,23 @@ export class AvatarVisualization
                 this._updatesUntilFrameUpdate--;
             }
 
-            if (!(this._updatesUntilFrameUpdate <= 0 || (shouldUpdateFrame && (didScaleUpdate || modelUpdated || otherUpdate)))) return;
+            const changed = didScaleUpdate || modelUpdated || otherUpdate;
 
-            this._avatarImage.updateAnimationByFrames(1);
+            if (!(this._updatesUntilFrameUpdate <= 0 || changed)) {
+                if (highlightUpdated) this.updateWiredHighlightSprites();
 
-            this._updatesUntilFrameUpdate = AvatarVisualization.ANIMATION_FRAME_UPDATE_INTERVAL;
+                return;
+            }
+
+            // Flash runs this whole update on the frame tick, so a posture change and the move
+            // that comes with it land together. Here the object moves every render frame: a
+            // change between ticks redraws now, or a stood-up avatar keeps its sit image at the
+            // new height until the next frame update. Only the tick advances the animation.
+            if (shouldUpdateFrame || this._updatesUntilFrameUpdate <= 0) {
+                this._avatarImage.updateAnimationByFrames(1);
+
+                this._updatesUntilFrameUpdate = AvatarVisualization.ANIMATION_FRAME_UPDATE_INTERVAL;
+            }
 
             let _local_20 = this._avatarImage.getCanvasOffsets();
 
@@ -245,25 +342,19 @@ export class AvatarVisualization
             const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
 
             if (sprite) {
-                const highlightEnabled =
-                    this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlightEnable) === 1 &&
-                    this.object.model.getValue<number>(RoomObjectVariableEnum.FigureHighlight) === 1;
+                const highlighted = this._highlightEnabled && this._highlight;
 
-                const avatarImage = this._avatarImage.getImage(AvatarSetType.Full, highlightEnabled);
+                const avatarImage = this._avatarImage.getImageWithCroppedTop(AvatarSetType.Full, highlighted || this._highlightVariableHolder);
 
                 if (avatarImage) {
                     sprite.texture = avatarImage;
 
-                    if (highlightEnabled) {
-                        // sprite.filters  = [
-                        //     new GlowFilter({
-                        //         color: 0xFFFFFF,
-                        //         distance: 6
-                        //     })
-                        // ];
-                    } else {
-                        sprite.filters = [];
-                    }
+                    // Flash applies one or the other to the avatar bitmap, the hover highlight first.
+                    if (highlighted) sprite.filters = AvatarVisualization.getHighlightFilters();
+                    else if (this._highlightVariableHolder) sprite.filters = AvatarVisualization.getVariableHolderFilters();
+                    else sprite.filters = AvatarVisualization.NO_FILTERS;
+
+                    this.applyWiredHighlightLayerFilters(sprite);
                 }
 
                 if (sprite.texture) {
@@ -286,9 +377,12 @@ export class AvatarVisualization
                 } else {
                     sprite.spriteType = RoomObjectSpriteTypeEnum.Avatar;
                 }
+
+                sprite.alpha = ((this._avatarImage.isPlaceholder() || this._avatarImage.isBlocked()) ? 150 : 255) * this._alphaMultiplier * this._wiredAlpha;
+                sprite.skipMouseHandling = this._skipMouseHandling;
             }
 
-            const typingBubble = this.getAddition(AvatarVisualization.TYPING_BUBBLE_ID) as TypingBubbleAddition;
+            const typingBubble = this.getAddition(AvatarVisualization.ADDITION_ID_TYPING_BUBBLE) as TypingBubbleAddition;
 
             if (typingBubble) {
                 if (!this._isLaying) typingBubble.relativeDepth = AvatarVisualization.AVATAR_SPRITE_DEFAULT_DEPTH - 0.01 + _local_20[2];
@@ -299,9 +393,11 @@ export class AvatarVisualization
 
             let _local_21 = AvatarVisualization.INITIAL_RESERVED_SPRITES;
             const direction = this._avatarImage.getDirection();
+            const avatarSpriteData = this._avatarImage.avatarSpriteData;
+            const grayscaleColor = (avatarSpriteData && avatarSpriteData.paletteIsGrayscale && avatarSpriteData.reds) ? (avatarSpriteData.reds[0] & 0xFFFFFF) : undefined;
 
             for (const spriteData of this._avatarImage.getSprites()) {
-                if (spriteData.id === AvatarVisualization.AVATAR) {
+                if (spriteData.id === AvatarVisualization.AVATAR_SPRITE_TAG) {
                     const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
 
                     if (sprite) {
@@ -330,6 +426,8 @@ export class AvatarVisualization
 
                     if (sprite) {
                         sprite.alphaTolerance = AlphaTolerance.MATCH_NOTHING;
+                        // AvatarVisualization.as:1269 (WIN63-202610201032).
+                        sprite.alpha = 255 * this._alphaMultiplier * this._wiredAlpha;
                         sprite.visible = true;
 
                         const layerData = this._avatarImage.getLayerData(spriteData);
@@ -358,7 +456,8 @@ export class AvatarVisualization
                         else if (dd > 7) dd -= 8;
 
                         const assetName = `${this._avatarImage.getScale()}_${spriteData.member}_${dd}_${frameNumber}`;
-                        const asset = GetAssetManager().getAsset(assetName);
+                        // Flash `AvatarImage.getAsset`: through the avatar's alias collection, so an effect's aliased sprites draw
+                        const asset = this._avatarImage.getAsset(assetName);
 
                         if (!asset || !asset.texture) continue;
 
@@ -366,6 +465,8 @@ export class AvatarVisualization
                         sprite.offsetX = asset.offsetX - scale / 2 + offsetX;
                         sprite.offsetY = asset.offsetY + offsetY;
                         sprite.flipH = asset.flipH;
+                        // Flash leaves the `h_std_fx` / `h_std_sd` (shadow) sprites out of the palette tint
+                        sprite.color = (grayscaleColor !== undefined && !assetName.includes('h_std_fx') && !assetName.includes('h_std_sd')) ? grayscaleColor : 0xFFFFFF;
 
                         if (spriteData.hasStaticY) {
                             sprite.offsetY += this._verticalOffset * scale / (2 * AvatarVisualization.BASE_Y_SCALE);
@@ -374,21 +475,231 @@ export class AvatarVisualization
                         }
 
                         if (this._isLaying) {
-                            sprite.relativeDepth =
-                                AvatarVisualization.AVATAR_SPRITE_LAYING_DEPTH - 0.001 * this.totalSprites * offsetZ;
+                            sprite.relativeDepth
+                                = AvatarVisualization.AVATAR_SPRITE_LAYING_DEPTH - 0.001 * this.totalSprites * offsetZ;
                         } else {
-                            sprite.relativeDepth =
-                                AvatarVisualization.AVATAR_SPRITE_DEFAULT_DEPTH - 0.001 * this.totalSprites * offsetZ;
+                            sprite.relativeDepth
+                                = AvatarVisualization.AVATAR_SPRITE_DEFAULT_DEPTH - 0.001 * this.totalSprites * offsetZ;
                         }
 
                         if (spriteData.ink === 33) sprite.blendMode = 'add';
                         else sprite.blendMode = 'normal';
+
+                        if (sprite.filters.length) sprite.filters = AvatarVisualization.NO_FILTERS;
+                        if (sprite.blendMode !== 'add') this.applyWiredHighlightLayerFilters(sprite);
                     }
 
                     _local_21++;
                 }
             }
+
+            this.updateWiredHighlightSprites();
+        } else if (highlightUpdated) {
+            this.updateWiredHighlightSprites();
+            this.updateSpriteCounter++;
         }
+    }
+
+    /** Flash `updateWiredHighlight`: whether the published type, quantized strength or colour changed. */
+    private updateWiredHighlight(model: IRoomObjectModel): boolean {
+        const typeValue = model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredHighlightType);
+        const type = (typeValue === undefined || isNaN(typeValue)) ? 0 : Math.trunc(typeValue);
+        const strength = FurnitureHighlightFilters.quantizeStrength(model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredHighlightStrength));
+        const colorValue = model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredHighlightColor);
+        const color = (colorValue === undefined || isNaN(colorValue)) ? 0xFFFFFF : (colorValue & 0xFFFFFF);
+
+        if (type === this._wiredHighlightType && strength === this._wiredHighlightStrength && color === this._wiredHighlightColor) return false;
+
+        if (type !== this._wiredHighlightType || color !== this._wiredHighlightColor) this._wiredHighlightFilterCache.clear();
+
+        this._wiredHighlightType = type;
+        this._wiredHighlightStrength = strength;
+        this._wiredHighlightColor = color;
+
+        if (strength === 0) {
+            this._wiredHighlightFilters = undefined;
+        } else {
+            if (!this._wiredHighlightFilterCache.has(strength)) this._wiredHighlightFilterCache.set(strength, FurnitureHighlightFilters.create(type, color, strength));
+
+            this._wiredHighlightFilters = this._wiredHighlightFilterCache.get(strength);
+        }
+
+        return true;
+    }
+
+    /** A highlight's colour matrix (Darken, Color tint, Brighten) goes after the sprite's own filters; its glows are the composite's. */
+    private applyWiredHighlightLayerFilters(sprite: IRoomObjectSprite): void {
+        if (!this._wiredHighlightFilters || FurnitureHighlightFilters.usesCompositeSilhouette(this._wiredHighlightType)) return;
+
+        sprite.filters = sprite.filters.concat(this._wiredHighlightFilters);
+    }
+
+    /**
+     * Flash `updateWiredHighlightSprites`: the glow round the avatar's own sprites (the figure and its effect's,
+     * not the shadow or the additions), behind them.
+     */
+    private updateWiredHighlightSprites(): void {
+        const composite = this._wiredHighlightComposite;
+
+        if (!composite) return;
+
+        if (!FurnitureHighlightFilters.usesCompositeSilhouette(this._wiredHighlightType) || !this._wiredHighlightFilters) {
+            composite.clear(this._wiredHighlightSprite, true);
+
+            if (!FurnitureHighlightFilters.usesCompositeSilhouette(this._wiredHighlightType)) this.reapplyWiredHighlightLayerFilters();
+
+            return;
+        }
+
+        const sources: IRoomObjectSprite[] = [];
+
+        for (let index = 0; index < this._extraSpritesStartIndex; index++) {
+            if (index === AvatarVisualization.SPRITE_INDEX_SHADOW) continue;
+
+            const sprite = this.getSprite(index);
+
+            if (!sprite || !sprite.visible || !sprite.texture || sprite.texture === Texture.EMPTY || sprite.alpha <= 0 || sprite.blendMode === 'add') continue;
+
+            sources.push(sprite);
+        }
+
+        if (!this._wiredHighlightSprite) this._wiredHighlightSprite = new RoomObjectSprite();
+
+        const avatarSprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
+
+        composite.update(this._wiredHighlightSprite, sources, this._wiredHighlightFilters, avatarSprite?.alpha ?? 255, this.object?.type ?? '', this._direction, false, true);
+    }
+
+    /** A highlight change between frame redraws: the colour matrix is put on (or taken off) the sprites now. */
+    private reapplyWiredHighlightLayerFilters(): void {
+        for (let index = 0; index < this._extraSpritesStartIndex; index++) {
+            if (index === AvatarVisualization.SPRITE_INDEX_SHADOW) continue;
+
+            const sprite = this.getSprite(index);
+
+            if (!sprite || sprite.blendMode === 'add') continue;
+
+            const base = (index === AvatarVisualization.SPRITE_INDEX_AVATAR) ? AvatarVisualization.getAvatarBaseFilters(sprite.filters) : AvatarVisualization.NO_FILTERS;
+
+            sprite.filters = this._wiredHighlightFilters ? base.concat(this._wiredHighlightFilters) : base;
+        }
+    }
+
+    /** The avatar sprite's filters without a highlight's colour matrix: the hover or variable holder filters, if any. */
+    private static getAvatarBaseFilters(current: Filter[]): Filter[] {
+        if (current.includes(AvatarVisualization.getHighlightFilters()[0])) return AvatarVisualization.getHighlightFilters();
+        if (current.includes(AvatarVisualization.getVariableHolderFilters()[0])) return AvatarVisualization.getVariableHolderFilters();
+
+        return AvatarVisualization.NO_FILTERS;
+    }
+
+    /** Flash `additionalSpriteCount` / `getAdditionalSprite`: the highlight composite, drawn after the avatar's sprites. */
+    public override get additionalSpriteCount(): number {
+        return this._wiredHighlightSprite ? 1 : 0;
+    }
+
+    public override getAdditionalSprite(index: number): IRoomObjectSprite | undefined {
+        return (index === 0) ? this._wiredHighlightSprite : undefined;
+    }
+
+    /**
+     * Flash `getSpriteList`: the avatar as the camera's server render draws it (`SpriteDataCollector`
+     * places these at the avatar's spot) - its figure's parts, its effect's sprites at the normal
+     * size, and the shadow sprite last.
+     */
+    public override getSpriteList(): RoomObjectSpriteData[] {
+        if (!this._avatarImage) return [];
+
+        let shadow: RoomObjectSpriteData | undefined = undefined;
+        const shadowSprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_SHADOW);
+
+        if (shadowSprite) {
+            shadow = new RoomObjectSpriteData();
+            shadow.alpha = shadowSprite.alpha;
+            shadow.x = shadowSprite.offsetX;
+            shadow.y = shadowSprite.offsetY;
+            shadow.name = shadowSprite.name;
+            shadow.width = shadowSprite.width;
+            shadow.height = shadowSprite.height;
+        }
+
+        const sprites = this._avatarImage.getServerRenderData();
+        // Flash places the effect sprites for the large (64) avatar, whatever the room's zoom
+        const scale = 64;
+
+        for (const spriteData of this._avatarImage.getSprites()) {
+            const layerData = this._avatarImage.getLayerData(spriteData);
+            const direction = this._avatarImage.getDirection();
+
+            let frameNumber = 0;
+            let offsetX = spriteData.getDirectionOffsetX(direction);
+            let offsetY = spriteData.getDirectionOffsetY(direction);
+            const offsetZ = spriteData.getDirectionOffsetZ(direction);
+            let dd = spriteData.hasDirections ? direction : 0;
+
+            if (layerData) {
+                frameNumber = layerData.animationFrame;
+                offsetX += layerData.dx;
+                offsetY += layerData.dy;
+                dd += layerData.dd;
+            }
+
+            if (dd < 0) dd += 8;
+            else if (dd > 7) dd -= 8;
+
+            const assetName = `${this._avatarImage.getScale()}_${spriteData.member}_${dd}_${frameNumber}`;
+            const asset = this._avatarImage.getAsset(assetName);
+
+            if (!asset) continue;
+
+            const sprite = new RoomObjectSpriteData();
+
+            sprite.x = asset.offsetX - (scale / 2) + offsetX;
+            sprite.y = asset.offsetY + offsetY;
+
+            if (spriteData.hasStaticY) sprite.y += this._verticalOffset * scale / (2 * AvatarVisualization.BASE_Y_SCALE);
+
+            if (spriteData.ink === 33) sprite.blendMode = 'add';
+
+            sprite.name = assetName;
+            sprite.z = (this._isLaying ? AvatarVisualization.AVATAR_SPRITE_LAYING_DEPTH : 0) - 0.001 * this.totalSprites * offsetZ;
+            sprite.width = asset.rectangle ? asset.rectangle.width : 60;
+            sprite.height = asset.rectangle ? asset.rectangle.height : 60;
+
+            sprites.push(sprite);
+        }
+
+        const avatarSpriteData = this._avatarImage.avatarSpriteData;
+
+        if (avatarSpriteData?.paletteIsGrayscale && avatarSpriteData.reds) {
+            const color = avatarSpriteData.reds[0].toString();
+
+            for (const sprite of sprites) {
+                if ((sprite.name.indexOf('h_std_fx') === -1) && (sprite.name.indexOf('h_std_sd') === -1)) sprite.color = color;
+            }
+        }
+
+        if (shadow) sprites.push(shadow);
+
+        return sprites;
+    }
+
+    private static getHighlightFilters(): Filter[] {
+        if (!AvatarVisualization.HIGHLIGHT_FILTERS) AvatarVisualization.HIGHLIGHT_FILTERS = [ createFlashGlowFilter(0xFFFFFF, 1, 6, 6) ];
+
+        return AvatarVisualization.HIGHLIGHT_FILTERS;
+    }
+
+    private static getVariableHolderFilters(): Filter[] {
+        if (!AvatarVisualization.VARIABLE_HOLDER_FILTERS) {
+            const tint = new ColorMatrixFilter();
+
+            tint.matrix = [ 0.9, 0, 0, 0, 0, 0, 1, 0, 0, 40 / 255, 0, 0, 1, 0, 80 / 255, 0, 0, 0, 0.85, 0 ];
+
+            AvatarVisualization.VARIABLE_HOLDER_FILTERS = [ tint, createFlashGlowFilter(0xBBF7FA, 1, 4, 4, 4, 1, true, false) ];
+        }
+
+        return AvatarVisualization.VARIABLE_HOLDER_FILTERS;
     }
 
     private createAvatarImage(scale: RoomGeometryScaleType, effectId: number): IAvatarImage | undefined {
@@ -404,13 +715,13 @@ export class AvatarVisualization
         }
 
         if (!cachedImage && this._figure && this._figure.length > 0) {
-            cachedImage = this._data?.createAvatarImage(this._figure, scale, this._gender, this, this);
+            cachedImage = this._data?.createAvatarImage(this._figure, scale, this._gender, this, this, this._blocked);
 
             if (cachedImage) {
                 if (!effectId) {
                     this._cachedAvatars.add(imageName, cachedImage);
                 } else {
-                    if (this._cachedAvatarEffects.length >= AvatarVisualization.MAX_EFFECT_CACHE) {
+                    if (this._cachedAvatarEffects.length >= AvatarVisualization.MAX_AVATARS_WITH_EFFECT) {
                         const cacheKey = this._cachedAvatarEffects.getKey(0);
 
                         if (cacheKey !== undefined) this._cachedAvatarEffects.remove(cacheKey)?.dispose();
@@ -431,9 +742,9 @@ export class AvatarVisualization
         _arg_4: boolean = false,
     ): boolean {
         if (
-            !_arg_4 &&
-            this.updateObjectCounter === object.updateCounter &&
-            this._geometryUpdateCounter === geometry.updateId
+            !_arg_4
+            && this.updateObjectCounter === object.updateCounter
+            && this._geometryUpdateCounter === geometry.updateId
         )
             return false;
 
@@ -451,7 +762,12 @@ export class AvatarVisualization
 
         headDirection = (headDirection % 360 + 360) % 360;
 
-        if (this._posture === AvatarActionStateType.Sit && this._canStandUp || this._posture === AvatarActionStateType.SnowwarDieBack || this._posture === AvatarActionStateType.SnowwarDieFront) headDirection -= headDirection % 90 - 45;
+        if ((this._posture === AvatarActionStateType.Sit && this._canStandUp) || this._posture === AvatarActionStateType.SnowwarDieBack || this._posture === AvatarActionStateType.SnowwarDieFront) headDirection -= headDirection % 90 - 45;
+
+        if (this._habbiconSpinOffset !== 0) {
+            direction = AvatarVisualization.normalizeDirectionAngle(direction + this._habbiconSpinOffset);
+            headDirection = AvatarVisualization.normalizeDirectionAngle(headDirection + this._habbiconSpinOffset);
+        }
 
         if (direction !== this._angle || _arg_4) {
             didUpdate = true;
@@ -485,9 +801,15 @@ export class AvatarVisualization
     protected updateModel(model: IRoomObjectModel, scale: RoomGeometryScaleType, update: boolean): boolean {
         if (!model) return false;
 
-        if (this.updateModelCounter === model.updateCounter) return false;
+        const variableFxManagerUpdateId = this._variableFxRoomData?.variableFxVisualizationManager.updateId ?? -1;
+
+        if (this.updateModelCounter === model.updateCounter && variableFxManagerUpdateId === this._variableFxManagerUpdateId) return false;
+
+        this._variableFxManagerUpdateId = variableFxManagerUpdateId;
 
         let needsUpdate = false;
+
+        if (this.reconcileVariableFxStatuses(model.getValue<IVariableFxStatusModelData | undefined>(RoomObjectVariableEnum.VariableFxStatuses))) needsUpdate = true;
 
         const talk = model.getValue<number>(RoomObjectVariableEnum.FigureTalk) > 0 && update;
 
@@ -553,8 +875,8 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
-        const verticalOffset =
-            model.getValue<number>(RoomObjectVariableEnum.FigureVerticalOffset) * AvatarVisualization.BASE_Y_SCALE;
+        const verticalOffset
+            = model.getValue<number>(RoomObjectVariableEnum.FigureVerticalOffset) * AvatarVisualization.BASE_Y_SCALE;
 
         if (verticalOffset !== this._verticalOffset) {
             this._verticalOffset = verticalOffset;
@@ -602,6 +924,28 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
+        let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FigureAlphaMultiplier);
+
+        if (alphaMultiplier === undefined || alphaMultiplier === null || isNaN(alphaMultiplier)) alphaMultiplier = 1;
+
+        if (alphaMultiplier !== this._alphaMultiplier) {
+            this._alphaMultiplier = alphaMultiplier;
+
+            needsUpdate = true;
+        }
+
+        // AvatarVisualization.as:535-543 (WIN63-202610201032): WIRED Set Visibility on a user.
+        const wiredTransparency = model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredTransparency);
+        const wiredAlpha = ((wiredTransparency === undefined) || isNaN(wiredTransparency)) ? 1 : (1 - (Math.max(0, Math.min(100, wiredTransparency)) / 100));
+        const skipMouseHandling = model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredClickThrough) > 0;
+
+        if ((wiredAlpha !== this._wiredAlpha) || (skipMouseHandling !== this._skipMouseHandling)) {
+            this._wiredAlpha = wiredAlpha;
+            this._skipMouseHandling = skipMouseHandling;
+
+            needsUpdate = true;
+        }
+
         if (this._carryObject > 0 && useObject > 0) {
             if (this._useObject !== this._carryObject) {
                 this._useObject = this._carryObject;
@@ -614,49 +958,49 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
-        let idleAddition = this.getAddition(AvatarVisualization.FLOATING_IDLE_Z_ID);
+        let idleAddition = this.getAddition(AvatarVisualization.ADDITION_ID_IDLE_BUBBLE);
 
         if (this._sleep) {
             if (!idleAddition)
 
                 idleAddition = this.addAddition(
-                    new FloatingIdleZAddition(AvatarVisualization.FLOATING_IDLE_Z_ID, this),
+                    new FloatingIdleZAddition(AvatarVisualization.ADDITION_ID_IDLE_BUBBLE, this),
                 );
 
             needsUpdate = true;
-        } else if (idleAddition) this.removeAddition(AvatarVisualization.FLOATING_IDLE_Z_ID);
+        } else if (idleAddition) this.removeAddition(AvatarVisualization.ADDITION_ID_IDLE_BUBBLE);
 
         const isMuted = model.getValue<number>(RoomObjectVariableEnum.FigureIsMuted) > 0;
 
-        let mutedAddition = this.getAddition(AvatarVisualization.MUTED_BUBBLE_ID);
+        let mutedAddition = this.getAddition(AvatarVisualization.ADDITION_ID_MUTED_BUBBLE);
 
         if (isMuted) {
             if (!mutedAddition)
 
-                mutedAddition = this.addAddition(new MutedBubbleAddition(AvatarVisualization.MUTED_BUBBLE_ID, this));
+                mutedAddition = this.addAddition(new MutedBubbleAddition(AvatarVisualization.ADDITION_ID_MUTED_BUBBLE, this));
 
             needsUpdate = true;
         } else {
             if (mutedAddition) {
-                this.removeAddition(AvatarVisualization.MUTED_BUBBLE_ID);
+                this.removeAddition(AvatarVisualization.ADDITION_ID_MUTED_BUBBLE);
 
                 needsUpdate = true;
             }
 
             const isTyping = model.getValue<number>(RoomObjectVariableEnum.FigureIsTyping) > 0;
 
-            let typingAddition = this.getAddition(AvatarVisualization.TYPING_BUBBLE_ID);
+            let typingAddition = this.getAddition(AvatarVisualization.ADDITION_ID_TYPING_BUBBLE);
 
             if (isTyping) {
                 if (!typingAddition)
 
                     typingAddition = this.addAddition(
-                        new TypingBubbleAddition(AvatarVisualization.TYPING_BUBBLE_ID, this),
+                        new TypingBubbleAddition(AvatarVisualization.ADDITION_ID_TYPING_BUBBLE, this),
                     );
 
                 needsUpdate = true;
             } else if (typingAddition) {
-                this.removeAddition(AvatarVisualization.TYPING_BUBBLE_ID);
+                this.removeAddition(AvatarVisualization.ADDITION_ID_TYPING_BUBBLE);
 
                 needsUpdate = true;
             }
@@ -665,59 +1009,85 @@ export class AvatarVisualization
         const guideStatusValue = model.getValue<number>(RoomObjectVariableEnum.FigureGuideStatus) || 0;
 
         if (guideStatusValue !== AvatarGuideStatus.NONE) {
-            this.removeAddition(AvatarVisualization.GUIDE_BUBBLE_ID);
+            this.removeAddition(AvatarVisualization.ADDITION_ID_GUIDE_STATUS_BUBBLE);
             this.addAddition(
-                new GuideStatusBubbleAddition(AvatarVisualization.GUIDE_BUBBLE_ID, this, guideStatusValue),
+                new GuideStatusBubbleAddition(AvatarVisualization.ADDITION_ID_GUIDE_STATUS_BUBBLE, this, guideStatusValue),
             );
 
             needsUpdate = true;
-        } else if (this.getAddition(AvatarVisualization.GUIDE_BUBBLE_ID)) {
-            this.removeAddition(AvatarVisualization.GUIDE_BUBBLE_ID);
+        } else if (this.getAddition(AvatarVisualization.ADDITION_ID_GUIDE_STATUS_BUBBLE)) {
+            this.removeAddition(AvatarVisualization.ADDITION_ID_GUIDE_STATUS_BUBBLE);
 
             needsUpdate = true;
         }
 
         const isPlayingGame = model.getValue<number>(RoomObjectVariableEnum.FigureIsPlayingGame) > 0;
 
-        let gameClickAddition = this.getAddition(AvatarVisualization.GAME_CLICK_TARGET_ID);
+        let gameClickAddition = this.getAddition(AvatarVisualization.ADDITION_ID_GAME_CLICK_TARGET);
 
         if (isPlayingGame) {
             if (!gameClickAddition)
 
                 gameClickAddition = this.addAddition(
-                    new GameClickTargetAddition(AvatarVisualization.GAME_CLICK_TARGET_ID),
+                    new GameClickTargetAddition(AvatarVisualization.ADDITION_ID_GAME_CLICK_TARGET),
                 );
 
             needsUpdate = true;
-        } else if (gameClickAddition) this.removeAddition(AvatarVisualization.GAME_CLICK_TARGET_ID);
+        } else if (gameClickAddition) this.removeAddition(AvatarVisualization.ADDITION_ID_GAME_CLICK_TARGET);
+
+        // A habbicon in the stack, a new one for a new habbicon or a new trigger, none once the logic clears it.
+        const habbiconId = model.getValue<number>(RoomObjectVariableEnum.FigureHabbicon) ?? 0;
+        const habbiconTrigger = model.getValue<number>(RoomObjectVariableEnum.FigureHabbiconTriggerSequence) ?? 0;
+        const habbiconStack = this.getStackedAdditions(habbiconId > 0);
+        const habbicon = habbiconStack?.habbicon;
+
+        if (habbiconId > 0) {
+            if (!habbicon || (habbicon.habbiconId !== habbiconId) || (habbicon.triggerSequence !== habbiconTrigger)) habbiconStack?.setHabbicon(new HabbiconBubble(AvatarVisualization.ADDITION_ID_HABBICON_BUBBLE, habbiconId, habbiconTrigger, this));
+
+            needsUpdate = true;
+        } else if (habbicon) {
+            habbiconStack?.clearHabbicon();
+
+            if (habbiconStack?.isEmpty) this.removeAddition(AvatarVisualization.ADDITION_ID_STACKED_ADDITIONS);
+
+            needsUpdate = true;
+        }
+
+        const habbiconSpinOffset = model.getValue<number>(RoomObjectVariableEnum.FigureHabbiconSpinOffset) ?? 0;
+
+        if (habbiconSpinOffset !== this._habbiconSpinOffset) {
+            this._habbiconSpinOffset = habbiconSpinOffset;
+
+            needsUpdate = true;
+        }
 
         const numberValue = model.getValue<number>(RoomObjectVariableEnum.FigureNumberValue);
 
-        let numberAddition = this.getAddition(AvatarVisualization.NUMBER_BUBBLE_ID);
+        let numberAddition = this.getAddition(AvatarVisualization.ADDITION_ID_NUMBER_BUBBLE);
 
         if (numberValue > 0) {
             if (!numberAddition)
 
                 numberAddition = this.addAddition(
-                    new NumberBubbleAddition(AvatarVisualization.NUMBER_BUBBLE_ID, numberValue, this),
+                    new NumberBubbleAddition(AvatarVisualization.ADDITION_ID_NUMBER_BUBBLE, numberValue, this),
                 );
 
             needsUpdate = true;
-        } else if (numberAddition) this.removeAddition(AvatarVisualization.NUMBER_BUBBLE_ID);
+        } else if (numberAddition) this.removeAddition(AvatarVisualization.ADDITION_ID_NUMBER_BUBBLE);
 
-        let expressionAddition = this.getAddition(AvatarVisualization.EXPRESSION_ID);
+        let expressionAddition = this.getAddition(AvatarVisualization.ADDITION_ID_EXPRESSION);
 
         if (this._expression > 0) {
             if (!expressionAddition) {
                 expressionAddition = ExpressionAdditionFactory.getExpressionAddition(
-                    AvatarVisualization.EXPRESSION_ID,
+                    AvatarVisualization.ADDITION_ID_EXPRESSION,
                     this._expression,
                     this,
                 );
 
                 if (expressionAddition) this.addAddition(expressionAddition);
             }
-        } else if (expressionAddition) this.removeAddition(AvatarVisualization.EXPRESSION_ID);
+        } else if (expressionAddition) this.removeAddition(AvatarVisualization.ADDITION_ID_EXPRESSION);
 
         this.updateScale(scale);
 
@@ -741,6 +1111,8 @@ export class AvatarVisualization
             needsUpdate = true;
         }
 
+        if (this.updateBlocked(model.getValue<number>(RoomObjectVariableEnum.Blocked) > 0)) needsUpdate = true;
+
         const highlightEnabled = model.getValue<number>(RoomObjectVariableEnum.FigureHighlightEnable) > 0;
 
         if (highlightEnabled !== this._highlightEnabled) {
@@ -759,6 +1131,14 @@ export class AvatarVisualization
             }
         }
 
+        const highlightVariableHolder = model.getValue<number>(RoomObjectVariableEnum.FigureHighlightVariableHolder) > 0;
+
+        if (highlightVariableHolder !== this._highlightVariableHolder) {
+            this._highlightVariableHolder = highlightVariableHolder;
+
+            needsUpdate = true;
+        }
+
         const ownUser = model.getValue<number>(RoomObjectVariableEnum.OwnUser) > 0;
 
         if (ownUser !== this._ownUser) {
@@ -770,6 +1150,17 @@ export class AvatarVisualization
         this.updateModelCounter = model.updateCounter;
 
         return needsUpdate;
+    }
+
+    /** Flash `updateBlocked`: the cached images are of the other figure, so they all go. */
+    private updateBlocked(blocked: boolean): boolean {
+        if (blocked === this._blocked) return false;
+
+        this._blocked = blocked;
+
+        this.resetAvatar();
+
+        return true;
     }
 
     private updateScale(scale: RoomGeometryScaleType): void {
@@ -821,6 +1212,9 @@ export class AvatarVisualization
                     case AvatarActionStateType.Dance:
                         this._avatarImage.appendAction(AvatarActionStateType.Dance, 2);
                         break;
+                    case AvatarActionStateType.Expression67:
+                        this._avatarImage.appendAction(AvatarActionStateType.Dance, 'sixseven');
+                        break;
                     default:
                         this._avatarImage.appendAction(expression);
                         break;
@@ -837,7 +1231,7 @@ export class AvatarVisualization
         let spriteCount = AvatarVisualization.INITIAL_RESERVED_SPRITES;
 
         for (const sprite of this._avatarImage.getSprites()) {
-            if (sprite.id !== AvatarVisualization.AVATAR) spriteCount++;
+            if (sprite.id !== AvatarVisualization.AVATAR_SPRITE_TAG) spriteCount++;
         }
 
         if (spriteCount !== this.totalSprites) this.createSprites(spriteCount);
@@ -875,7 +1269,7 @@ export class AvatarVisualization
 
         this._avatarImage = undefined;
 
-        const sprite = this.getSprite(AvatarVisualization.AVATAR_LAYER_ID);
+        const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_AVATAR);
 
         if (sprite) {
             sprite.texture = Texture.EMPTY;
@@ -907,23 +1301,54 @@ export class AvatarVisualization
         addition.dispose();
     }
 
+    private reconcileVariableFxStatuses(data: IVariableFxStatusModelData | undefined): boolean {
+        const hasStatuses = !!data && data.statusesByConfig.size > 0 && !!this._variableFxRoomData;
+        const stackedAdditions = this.getStackedAdditions(hasStatuses);
+
+        if (!stackedAdditions) return false;
+
+        return this._variableFxReconciler.reconcile(data, this._variableFxRoomData?.variableFxVisualizationManager, this._variableFxRoomData?.variableFxAssetProvider, this._variableFxRoomData?.variableFxRendererRegistry, stackedAdditions.stack, StackedAdditions.LAYER_VARIABLE_FX, GetTickerTime());
+    }
+
+    private getStackedAdditions(create: boolean): StackedAdditions | undefined {
+        let stackedAdditions = this.getAddition(AvatarVisualization.ADDITION_ID_STACKED_ADDITIONS) as StackedAdditions | undefined;
+
+        if (!stackedAdditions && create) stackedAdditions = this.addAddition(new StackedAdditions(AvatarVisualization.ADDITION_ID_STACKED_ADDITIONS, this)) as StackedAdditions;
+
+        return stackedAdditions;
+    }
+
+    /** Once every stacked addition has faded out the stack sprite goes away and the sprite list is rebuilt. */
+    private removeEmptyStackedAdditions(): boolean {
+        const stackedAdditions = this.getStackedAdditions(false);
+
+        if (!stackedAdditions || !stackedAdditions.isEmpty) return false;
+
+        this.removeAddition(AvatarVisualization.ADDITION_ID_STACKED_ADDITIONS);
+
+        this._forceUpdate = true;
+
+        return true;
+    }
+
     private updateShadow(scale: RoomGeometryScaleType): void {
         this._shadow = undefined;
 
-        const sprite = this.getSprite(AvatarVisualization.SHADOW_LAYER_ID);
+        const sprite = this.getSprite(AvatarVisualization.SPRITE_INDEX_SHADOW);
 
         if (!sprite) return;
 
-        let hasShadow =
-            this._posture === AvatarActionStateType.Walk || this._posture === AvatarActionStateType.Stand || (this._posture === AvatarActionStateType.Sit && this._canStandUp);
+        sprite.skipMouseHandling = this._skipMouseHandling;
 
-        if (this._effect === AvatarVisualization.SNOWBOARDING_EFFECT) hasShadow = false;
+        let hasShadow
+            = this._posture === AvatarActionStateType.Walk || this._posture === AvatarActionStateType.Stand || (this._posture === AvatarActionStateType.Sit && this._canStandUp);
+
+        if (this._effect === AvatarVisualization.SNOWBOARDING_EFFECT || this._effect === AvatarVisualization.FREEZE_EFFECT) hasShadow = false;
 
         if (hasShadow) {
             sprite.visible = true;
 
             if (!this._shadow || scale !== this._scale) {
-
                 if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
                     sprite.libraryAssetName = 'sh_std_sd_1_0_0';
 
@@ -942,7 +1367,7 @@ export class AvatarVisualization
 
                 if (this._shadow && this._shadow.texture) {
                     sprite.texture = this._shadow.texture;
-                    sprite.alpha = 50;
+                    sprite.alpha = 50 * this._alphaMultiplier * this._wiredAlpha;
                     sprite.relativeDepth = 1;
                 } else {
                     sprite.visible = false;
@@ -957,6 +1382,27 @@ export class AvatarVisualization
 
     public get direction(): number {
         return this._direction;
+    }
+
+    /** `habbiconFacingDirection`: the way the avatar faces, for mirroring its habbicon - 1, -1 or 0. */
+    public get habbiconFacingDirection(): number {
+        if (!this._avatarImage) return 0;
+
+        return AvatarVisualization.resolveHabbiconFacingDirection(this._avatarImage.getDirection());
+    }
+
+    /** `resolveHabbiconFacingDirection`: directions 0-2 face one way, 4-6 the other, 3 and 7 neither. */
+    private static resolveHabbiconFacingDirection(direction: number): number {
+        const normalized = ((direction % 8) + 8) % 8;
+
+        if (normalized <= 2) return 1;
+        if ((normalized >= 4) && (normalized <= 6)) return -1;
+
+        return 0;
+    }
+
+    private static normalizeDirectionAngle(angle: number): number {
+        return ((angle % 360) + 360) % 360;
     }
 
     public get posture(): AvatarActionStateType {

@@ -1,7 +1,8 @@
-import type { IVector3D } from '@nitrodevco/nitro-api';
+import { IVector3D } from '@nitrodevco/nitro-api';
 
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectTileCursorUpdateMessage`. */
 export class ObjectTileCursorUpdateMessage extends RoomObjectUpdateMessage {
     private _height: number;
     private _sourceEventId: number;

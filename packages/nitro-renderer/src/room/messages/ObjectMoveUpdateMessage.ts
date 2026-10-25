@@ -1,7 +1,8 @@
-import type { IVector3D } from '@nitrodevco/nitro-api';
+import { IVector3D } from '@nitrodevco/nitro-api';
 
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectMoveUpdateMessage`. */
 export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
     private _targetLocation: IVector3D | undefined;
     private _isSlide: boolean;
@@ -18,7 +19,7 @@ export class ObjectMoveUpdateMessage extends RoomObjectUpdateMessage {
         animationTime: number = NaN,
         skipPositionUpdate: boolean = false,
         overshootAnimationTime: number = NaN,
-        curveStrength: number = NaN
+        curveStrength: number = NaN,
     ) {
         super(location, direction);
 

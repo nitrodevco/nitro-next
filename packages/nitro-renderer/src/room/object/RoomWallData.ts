@@ -1,6 +1,7 @@
-﻿import { type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import { IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
+/** Port of Flash `RoomWallData`. */
 export class RoomWallData {
     public static WALL_DIRECTION_VECTORS: IVector3D[] = [
         new Vector3d(1, 0, 0),
@@ -67,12 +68,12 @@ export class RoomWallData {
 
         while (_local_6 < this._count) {
             if (
-                this._corners[_local_6].x == corner.x &&
-                this._corners[_local_6].y == corner.y &&
-                this._directions[_local_6] == direction &&
-                this._lengths[_local_6] == length &&
-                this._borders[_local_6] == border &&
-                this._leftTurns[_local_6] == leftTurn
+                this._corners[_local_6].x == corner.x
+                && this._corners[_local_6].y == corner.y
+                && this._directions[_local_6] == direction
+                && this._lengths[_local_6] == length
+                && this._borders[_local_6] == border
+                && this._leftTurns[_local_6] == leftTurn
             ) {
                 return false;
             }

@@ -1,4 +1,4 @@
-import { IBinaryReader } from "./IBinaryReader";
+import { IBinaryReader } from './IBinaryReader';
 
 export class BinaryReader implements IBinaryReader {
     private _position: number;

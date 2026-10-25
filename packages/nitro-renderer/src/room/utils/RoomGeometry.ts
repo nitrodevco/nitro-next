@@ -1,6 +1,7 @@
-import { type IRoomGeometry, type IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
+/** Port of Flash `RoomGeometry`. */
 export class RoomGeometry implements IRoomGeometry {
     private _updateId: number = 0;
     private _x: IVector3D = new Vector3d();
@@ -25,6 +26,12 @@ export class RoomGeometry implements IRoomGeometry {
 
     constructor(scale: RoomGeometryScaleType, direction: IVector3D, location: IVector3D, depth: IVector3D | undefined = undefined) {
         this.scale = scale;
+
+        // Flash sets `z_scale = 1` here, through the setter, so every geometry - not only the room
+        // canvas's, which `Room.getRoomCanvas` sets again - folds `_zScaleInternal` into its z. The
+        // plane rasterizers size their textures in a geometry of their own; without it a wall's
+        // texture came out taller than its corners and was squeezed onto them, masks and all.
+        this.zScale = 1;
 
         this.location.assign(location);
 
@@ -275,11 +282,10 @@ export class RoomGeometry implements IRoomGeometry {
     public set scale(scale: RoomGeometryScaleType) {
         if (scale <= RoomGeometryScaleType.Icon) scale = RoomGeometryScaleType.Icon;
 
-        scale = scale * Math.sqrt(0.5);
+        const value = scale * Math.sqrt(0.5);
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-        if (scale !== this._scale) {
-            this._scale = scale;
+        if (value !== this._scale) {
+            this._scale = value;
             this._updateId++;
         }
     }
@@ -426,6 +432,9 @@ export class RoomGeometry implements IRoomGeometry {
     }
 
     private getDisplacenent(k: IVector3D): IVector3D | undefined {
+        // Most rooms set none; skip building the key, as every moving object asks each frame.
+        if (!this._displacements.size) return undefined;
+
         return this._displacements.get(
             Math.trunc(Math.round(k.x)) + '_' + Math.trunc(Math.round(k.y)) + '_' + Math.trunc(Math.round(k.z)),
         );

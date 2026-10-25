@@ -1,4 +1,4 @@
-import { AvatarFigurePartType } from "../enum";
+import { AvatarFigurePartType } from '../enum';
 
 export interface IFigurePart {
     dispose(): void;

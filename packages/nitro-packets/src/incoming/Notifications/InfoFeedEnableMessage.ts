@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type InfoFeedEnableMessageType = {
-  enabled: boolean;
+    enabled: boolean;
 };
 
-export class InfoFeedEnableMessage implements IIncomingPacket<InfoFeedEnableMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): InfoFeedEnableMessageType
-  {
+export class InfoFeedEnableMessage implements IIncomingPacket<InfoFeedEnableMessageType> {
+    public parse(wrapper: IMessageDataWrapper): InfoFeedEnableMessageType {
+        const packet: InfoFeedEnableMessageType = {
+            enabled: wrapper.readBoolean(),
+        };
 
-    const packet: InfoFeedEnableMessageType = {
-      enabled: wrapper.readBoolean(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

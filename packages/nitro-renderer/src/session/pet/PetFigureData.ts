@@ -1,7 +1,8 @@
-import type { IPetCustomPart } from '@nitrodevco/nitro-api';
+import { IPetCustomPart } from '@nitrodevco/nitro-api';
 
 import { PetCustomPart } from './PetCustomPart';
 
+/** Port of Flash `PetFigureData`. */
 export class PetFigureData {
     private _typeId: number;
     private _paletteId: number;

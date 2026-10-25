@@ -1,10 +1,11 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
-/* GetGuildEditInfoMessageComposer (874) — groupId */
 export type GetGuildEditInfoComposerType = {
     groupId: number;
 };
 
+/** Opens the management window on an existing group - `GroupDetailsCtrl.onManageGuild`. */
 export class GetGuildEditInfoComposer implements IOutgoingPacket<GetGuildEditInfoComposerType> {
     public constructor(private params: GetGuildEditInfoComposerType) { }
 

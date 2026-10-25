@@ -1,7 +1,8 @@
-import type { AvatarFigurePartType, IAvatarFigureContainer } from "@nitrodevco/nitro-api";
+import { AvatarFigurePartType, IAvatarFigureContainer } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `AvatarFigureContainer`. */
 export class AvatarFigureContainer implements IAvatarFigureContainer {
-    private _parts: Map<AvatarFigurePartType, { type: AvatarFigurePartType, setId: number, colorIds: number[] }> = new Map();
+    private _parts: Map<AvatarFigurePartType, { type: AvatarFigurePartType; setId: number; colorIds: number[] }> = new Map();
 
     constructor(figure: string) {
         this.parseFigure(figure);
@@ -28,7 +29,7 @@ export class AvatarFigureContainer implements IAvatarFigureContainer {
         this._parts.set(type, {
             type,
             setId,
-            colorIds
+            colorIds,
         });
     }
 

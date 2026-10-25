@@ -1,34 +1,25 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IPetFigureData } from '../../Data/PetFigureDataParser';
-import { PetFigureDataParser } from '../../Data/PetFigureDataParser';
+import { IPetFigureData, PetFigureDataParser } from '../../Data/PetFigureDataParser';
 
 export type PetFigureUpdateMessageType = {
-  roomIndex: number;
-  petId: number;
-  figureData: IPetFigureData;
-  hasSaddle: boolean;
-  isRiding: boolean;
+    roomIndex: number;
+    petId: number;
+    figureData: IPetFigureData;
+    hasSaddle: boolean;
+    isRiding: boolean;
 };
 
-export class PetFigureUpdateMessage implements IIncomingPacket<PetFigureUpdateMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): PetFigureUpdateMessageType
-  {
-    const packet: PetFigureUpdateMessageType = {
-      roomIndex: 0,
-      petId: 0,
-      figureData: {} as any,
-      hasSaddle: false,
-      isRiding: false,
-    };
-
-    packet.roomIndex = wrapper.readInt();
-    packet.petId = wrapper.readInt();
-    packet.figureData = PetFigureDataParser(wrapper);
-    packet.hasSaddle = wrapper.readBoolean();
-    packet.isRiding = wrapper.readBoolean();
-
-    return packet;
-  }
+/** A pet's look changed - dyed, saddled, mounted - for everyone in the room. */
+export class PetFigureUpdateMessage implements IIncomingPacket<PetFigureUpdateMessageType> {
+    public parse(wrapper: IMessageDataWrapper): PetFigureUpdateMessageType {
+        return {
+            roomIndex: wrapper.readInt(),
+            petId: wrapper.readInt(),
+            figureData: PetFigureDataParser(wrapper),
+            hasSaddle: wrapper.readBoolean(),
+            isRiding: wrapper.readBoolean(),
+        };
+    }
 }

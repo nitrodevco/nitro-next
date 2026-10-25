@@ -1,4 +1,4 @@
-import { NitroEvent } from "../NitroEvent";
+import { NitroEvent } from '../NitroEvent';
 
 export class RoomEngineEvent extends NitroEvent {
     public static INITIALIZED: string = 'REE_INITIALIZED' as const;
@@ -8,6 +8,7 @@ export class RoomEngineEvent extends NitroEvent {
     public static GAME_MODE: string = 'REE_GAME_MODE' as const;
     public static ROOM_ZOOMED: string = 'REE_ROOM_ZOOMED' as const;
     public static DISPOSED: string = 'REE_DISPOSED' as const;
+    public static ROOM_ENTRANCE_AFTER_SPECTATE: string = 'REE_ENTRANCE_AFTER_SPECTATE' as const;
 
     private _roomId: number;
 

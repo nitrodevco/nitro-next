@@ -1,3 +1,3 @@
-import type { IIncomingPacket } from './IIncomingPacket';
+import { IIncomingPacket } from './IIncomingPacket';
 
 export type IncomingPacketConstructor<T extends object = object> = new () => IIncomingPacket<T>;

@@ -1,4 +1,4 @@
-import type { IAssetVisualAnimationSequenceFrameOffset } from './IAssetVisualAnimationSequenceFrameOffset';
+import { IAssetVisualAnimationSequenceFrameOffset } from './IAssetVisualAnimationSequenceFrameOffset';
 
 export interface IAssetVisualAnimationSequenceFrame {
     id: number;

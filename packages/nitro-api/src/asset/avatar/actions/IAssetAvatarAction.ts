@@ -1,6 +1,7 @@
-import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType } from "#api/avatar";
-import { IAssetAvatarActionParam } from "./IAssetAvatarActionParam";
-import { IAssetAvatarActionType } from "./IAssetAvatarActionType";
+import { AvatarActionStateType, AvatarActionType, AvatarGeometryType, AvatarPartSetType } from '#api/avatar';
+
+import { IAssetAvatarActionParam } from './IAssetAvatarActionParam';
+import { IAssetAvatarActionType } from './IAssetAvatarActionType';
 
 export interface IAssetAvatarAction {
     readonly id: AvatarActionType;

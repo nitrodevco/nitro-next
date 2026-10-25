@@ -1,4 +1,4 @@
 export enum CatalogTypeEnum {
-    Normal = "NORMAL",
-    BuildersClub = "BUILDERS_CLUB"
+    Normal = 'NORMAL',
+    BuildersClub = 'BUILDERS_CLUB',
 }

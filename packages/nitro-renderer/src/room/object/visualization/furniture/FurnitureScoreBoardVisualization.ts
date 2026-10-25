@@ -1,8 +1,12 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurnitureScoreBoardVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash's obfuscated `§_-52b§`, the visualization `RoomObjectVisualizationFactory` builds
+ * for `furniture_score_board`.
+ */
+export class FurnitureScoreBoardVisualization extends AnimatedFurnitureVisualization {
     private static ONES_SPRITE: string = 'ones_sprite';
     private static TENS_SPRITE: string = 'tens_sprite';
     private static HUNDREDS_SPRITE: string = 'hundreds_sprite';

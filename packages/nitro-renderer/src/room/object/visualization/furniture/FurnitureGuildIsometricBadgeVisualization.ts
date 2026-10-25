@@ -1,11 +1,13 @@
-import type { IGraphicAsset, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
-import { Matrix, Sprite } from 'pixi.js';
+import { IGraphicAsset, IRoomObjectSprite, RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { Matrix, Sprite, Texture } from 'pixi.js';
 
 import { TextureUtils } from '../../../../utils';
 import { IsometricImageFurniVisualization } from './IsometricImageFurniVisualization';
 
+/**
+ * Port of Flash's obfuscated `§_-W2u§`, the visualization `RoomObjectVisualizationFactory` builds
+ * for `furniture_guild_isometric_badge`.
+ */
 export class FurnitureGuildIsometricBadgeVisualization extends IsometricImageFurniVisualization {
     public static PRIMARY_COLOUR_SPRITE_TAG: string = 'COLOR1' as const;
     public static SECONDARY_COLOUR_SPRITE_TAG: string = 'COLOR2' as const;
@@ -76,36 +78,11 @@ export class FurnitureGuildIsometricBadgeVisualization extends IsometricImageFur
         sprite.x = 0;
         sprite.y = 0;
 
-        return TextureUtils.generateTexture(sprite);
+        const badge = TextureUtils.generateTexture(sprite);
 
-        /* const renderTexture = RenderTexture.create({
-            width: asset.width,
-            height: asset.height
-        });
+        sprite.destroy();
 
-        PixiApplicationProxy.instance.renderer.render(sprite, {
-            renderTexture,
-            clear: true,
-        });
-
-        return renderTexture; */
-
-        /* const sprite = new NitroSprite(texture);
-
-        const renderTexture = RenderTexture.create({
-            width: (asset.width + matrix.tx),
-            height: (asset.height + matrix.ty)
-        });
-
-        sprite.position.set(0)
-
-        PixiApplicationProxy.instance.renderer.render(sprite, {
-            renderTexture,
-            clear: true,
-            transform: matrix
-        });
-
-        return renderTexture; */
+        return badge;
     }
 
     protected override getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
@@ -127,12 +104,12 @@ export class FurnitureGuildIsometricBadgeVisualization extends IsometricImageFur
     ): string | undefined {
         if (sprite.tag === FurnitureGuildIsometricBadgeVisualization.THUMBNAIL) {
             if (
-                this.object &&
-                this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName)
+                this.object
+                && this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName)
             ) {
                 return (
-                    '%group.badge.url%' +
-                    this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName)
+                    '%group.badge.url%'
+                    + this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureGuildCustomizedAssetName)
                 );
             }
         }

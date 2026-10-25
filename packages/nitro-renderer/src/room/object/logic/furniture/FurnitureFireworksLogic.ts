@@ -1,11 +1,14 @@
-import type { IAssetData, IParticleSystem, IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectStateChangedEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { IAssetData, IParticleSystem, IRoomGeometry, IRoomSpriteMouseEvent, MouseEventType, RoomObjectStateChangedEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash `FurnitureFireworksLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_fireworks`.
+ */
 export class FurnitureFireworksLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectStateChangedEvent.STATE_CHANGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectStateChangedEvent.STATE_CHANGE ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -13,7 +16,7 @@ export class FurnitureFireworksLogic extends FurnitureLogic {
 
         if (asset?.logic?.particleSystems) this.object.model.setValue<IParticleSystem[]>(
             RoomObjectVariableEnum.FurnitureFireworksData,
-            asset.logic.particleSystems
+            asset.logic.particleSystems,
         );
     }
 

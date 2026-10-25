@@ -17,7 +17,12 @@ export default defineConfig({
         },
         rollupOptions: {
             output: {
-                manualChunks: id => {
+                manualChunks: (id, meta) => {
+                    // Keep `import()` targets in their own chunk - see the same guard in
+                    // packages/nitro-react/vite.config.ts for why folding one into the chunk
+                    // that imports it deadlocks any top-level await on it.
+                    if (meta.getModuleInfo(id)?.dynamicImporters?.length) return;
+
                     if (id.includes('/packages/nitro-api/')) {
                         return 'nitro-api';
                     }

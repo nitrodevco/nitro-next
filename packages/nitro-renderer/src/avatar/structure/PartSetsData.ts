@@ -1,8 +1,9 @@
-import type { AvatarFigurePartType, AvatarPartSetType, IActionDefinition, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IFigureSetData } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarPartSetType, IActionDefinition, IAssetAvatarPartSetItem, IAssetAvatarPartSets, IFigureSetData } from '@nitrodevco/nitro-api';
 
-import type { ActionDefinition } from '../actions';
+import { ActionDefinition } from '../actions';
 import { ActivePartSet, PartDefinition } from './parts';
 
+/** Port of Flash `PartSetsData`. */
 export class PartSetsData implements IFigureSetData {
     private _parts: Map<string, PartDefinition> = new Map();
     private _activePartSets: Map<AvatarPartSetType, ActivePartSet> = new Map();

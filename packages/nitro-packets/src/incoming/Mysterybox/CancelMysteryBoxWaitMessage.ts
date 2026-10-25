@@ -1,18 +1,12 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type CancelMysteryBoxWaitMessageType = {
-  // no fields
+export type CancelMysteryBoxWaitMessageType = object;
 
-};
+export class CancelMysteryBoxWaitMessage implements IIncomingPacket<CancelMysteryBoxWaitMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CancelMysteryBoxWaitMessageType {
+        const packet: CancelMysteryBoxWaitMessageType = {
+        };
 
-export class CancelMysteryBoxWaitMessage implements IIncomingPacket<CancelMysteryBoxWaitMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CancelMysteryBoxWaitMessageType
-  {
-
-    const packet: CancelMysteryBoxWaitMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

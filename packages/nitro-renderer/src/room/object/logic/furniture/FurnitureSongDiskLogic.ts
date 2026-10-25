@@ -1,8 +1,11 @@
-import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash `FurnitureSongDiskLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_song_disk`.
+ */
 export class FurnitureSongDiskLogic extends FurnitureLogic {
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         super.processUpdateMessage(message);

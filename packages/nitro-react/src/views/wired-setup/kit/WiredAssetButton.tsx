@@ -1,0 +1,71 @@
+/**
+ * `wired_setup.uibuilder.presets.AssetButtonPreset` - the style's `asset_button`: a container
+ * button around one bitmap (the movement and rotation pickers, the floor editor's tools). The
+ * bitmap sits at its natural size at the template's inset, top left (no `pivot_point`), and the
+ * button takes the bitmap's size plus the template's margins - see `useWiredAssetButtonSize`.
+ * Static width: that size.
+ *
+ * `selected` shows the way `updateVisuals` does it: the volters keep a selected button in its
+ * hovered face, the other styles keep it pressed. Unlike the mini button, a press on a selected
+ * one still calls back (`maybeCancelEvent`).
+ *
+ * Illumina's and the volters' template is `dynamic_style="button"` around an `#icon` bitmap. There
+ * the style owns the disabled look as well: `Util.disableSection` never blends a window (every
+ * `WindowController` has `caption`, `enable` and `disable`, the test it skips on) and only calls
+ * `disable()`, so the button fades by the style's rule - the face to 0.5 and the icon, through its
+ * own `#icon` rule, to 0.25. The kit's half-blend applies only to a template without a style.
+ */
+import { BackgroundLayer, Box, ContainerButton, ThemeImage } from '#base/theme';
+
+import { useWiredAssetButtonSize, wiredAssetButtonSource } from './useWiredAssetButtonSize';
+import { useWiredCaption } from './useWiredCaption';
+import { useWiredDisabled, wiredDisabledAlpha } from './useWiredDisabled';
+import { wiredPressedLayer } from './wiredPressedLayers';
+import { useWiredStyle } from './WiredStyleContext';
+
+export interface WiredAssetButtonProps {
+    /** The asset's short name (`move_0`, `rotate_cw`, `add`, ...), resolved per style by `resolveWiredAssetName`. */
+    asset: string;
+    /** A literal or `${key}`. */
+    tooltip?: string;
+    selected?: boolean;
+    onPress: () => void;
+    disabled?: boolean;
+}
+
+/** The volters' selected face: `setStateFlag(4, hovered || selected)` - the hover sheet's lighter fill. */
+const VOLTER_SELECTED_TINT = '#cccccc';
+
+export const WiredAssetButton = ({ asset, tooltip, selected = false, onPress, disabled = false }: WiredAssetButtonProps) => {
+    const style = useWiredStyle();
+    const caption = useWiredCaption();
+    const isDisabled = useWiredDisabled(disabled);
+    const template = style.templates.assetButton;
+    const pressedLayer = (selected && !style.isVolter) ? wiredPressedLayer(template.variant) : undefined;
+    const size = useWiredAssetButtonSize(style, asset);
+
+    return (
+        <Box
+            alpha={template.dynamicStyle ? undefined : wiredDisabledAlpha(isDisabled)}
+            layout={{ width: size.width, height: size.height, flexShrink: 0 }}
+        >
+            <ContainerButton
+                variant={template.variant}
+                tintColor={(selected && style.isVolter) ? VOLTER_SELECTED_TINT : undefined}
+                dynamicStyle={template.dynamicStyle}
+                disabled={isDisabled}
+                tooltip={tooltip ? caption(tooltip) : undefined}
+                onPointerTap={onPress}
+                layout={{ position: 'relative', width: size.width, height: size.height }}
+            >
+                {pressedLayer && <BackgroundLayer layer={pressedLayer} />}
+                <ThemeImage
+                    src={wiredAssetButtonSource(style, asset)}
+                    dynamicRole="icon"
+                    eventMode="none"
+                    layout={{ position: 'absolute', left: template.assetInset, top: template.assetInset }}
+                />
+            </ContainerButton>
+        </Box>
+    );
+};

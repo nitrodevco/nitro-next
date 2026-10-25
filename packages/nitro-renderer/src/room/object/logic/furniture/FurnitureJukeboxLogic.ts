@@ -12,6 +12,10 @@ import {
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash `FurnitureJukeboxLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_jukebox`.
+ */
 export class FurnitureJukeboxLogic extends FurnitureMultiStateLogic {
     private _disposeEventsAllowed: boolean = false;
     private _isInitialized: boolean = false;
@@ -36,7 +40,8 @@ export class FurnitureJukeboxLogic extends FurnitureMultiStateLogic {
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         super.processUpdateMessage(message);
 
-        if (this.isRealRoomObject()) return;
+        // Flash: only a furni that is really in the room (`furniture_real_room_object` 1) inits and plays.
+        if (!this.isRealRoomObject()) return;
 
         if (!this._isInitialized) this.requestInit();
 

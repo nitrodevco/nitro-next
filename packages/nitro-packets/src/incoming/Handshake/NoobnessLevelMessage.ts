@@ -1,4 +1,4 @@
-import type { IIncomingPacket, IMessageDataWrapper, NoobnessLevelEnum } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper, NoobnessLevelEnum } from '@nitrodevco/nitro-api';
 
 export type NoobnessLevelMessageType = {
     noobnessLevel: NoobnessLevelEnum;

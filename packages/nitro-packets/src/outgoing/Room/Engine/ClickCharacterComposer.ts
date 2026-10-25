@@ -1,4 +1,4 @@
-import type { IOutgoingPacket } from '@nitrodevco/nitro-api';
+import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type ClickCharacterComposerType = {
     objectId: number;
@@ -9,7 +9,7 @@ export class ClickCharacterComposer implements IOutgoingPacket<ClickCharacterCom
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.objectId
+            this.params.objectId,
         ];
     }
 }

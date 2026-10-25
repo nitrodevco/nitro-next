@@ -1,15 +1,33 @@
-﻿import { type IRoomGeometry, type IRoomObject, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, IRoomObject, IVector3D, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
+/**
+ * `RoomObjectLocationCacheItem`: an object's screen location, worked out again only when the
+ * object or the geometry changed. Its depth is taken from the tile the object stands on - the
+ * location rounded to whole tiles - unless the object's model sets the accurate-z variable, when
+ * the exact location's depth is kept. Wall items set it (`RoomEngine.addObjectWallItem`), so one
+ * sorts by where it hangs rather than by the tile below.
+ *
+ * The screen x and y are left unrounded, as the 2026 client leaves them: `renderObject` snaps
+ * each sprite once, against the display's offset and scale (`snapRoomSpriteCoordinate`), and a
+ * position rounded here first would be rounded twice at every zoom but 1.
+ */
 export class RoomObjectLocationCacheItem {
+    private _accurateZVariable: RoomObjectVariableEnum | undefined;
     private _location: Vector3d = new Vector3d();
     private _screenLocation: Vector3d = new Vector3d();
+    private _roundedLocation: Vector3d = new Vector3d();
     private _locationChanged: boolean = false;
 
     private _geometryUpdateId: number = -1;
     private _objectUpdateId: number = -1;
 
+    constructor(accurateZVariable?: RoomObjectVariableEnum) {
+        this._accurateZVariable = accurateZVariable;
+    }
+
     public dispose(): void {
         this._screenLocation = undefined!;
+        this._roundedLocation = undefined!;
     }
 
     public updateLocation(object: IRoomObject, geometry: IRoomGeometry): IVector3D | undefined {
@@ -23,10 +41,10 @@ export class RoomObjectLocationCacheItem {
             this._objectUpdateId = object.updateCounter;
 
             if (
-                geometry.updateId !== this._geometryUpdateId ||
-                location.x !== this._location.x ||
-                location.y !== this._location.y ||
-                location.z !== this._location.z
+                geometry.updateId !== this._geometryUpdateId
+                || location.x !== this._location.x
+                || location.y !== this._location.y
+                || location.z !== this._location.z
             ) {
                 this._geometryUpdateId = geometry.updateId;
                 this._location.assign(location);
@@ -42,21 +60,22 @@ export class RoomObjectLocationCacheItem {
 
             if (!screenLocation) return undefined;
 
-            const rounded = new Vector3d(Math.round(location.x), Math.round(location.y), location.z);
+            const accurateZ = this._accurateZVariable ? object.model.getValue<number>(this._accurateZVariable) : NaN;
+            const rounded = this._roundedLocation;
 
-            if ((rounded.x !== location.x) || (rounded.y !== location.y)) {
+            rounded.x = Math.round(location.x);
+            rounded.y = Math.round(location.y);
+            rounded.z = location.z;
+
+            if ((isNaN(accurateZ) || (accurateZ === 0)) && ((rounded.x !== location.x) || (rounded.y !== location.y))) {
                 const roundedScreen = geometry.getScreenPosition(rounded);
 
                 this._screenLocation.assign(screenLocation);
 
                 if (roundedScreen) this._screenLocation.z = roundedScreen.z;
-            }
-            else {
+            } else {
                 this._screenLocation.assign(screenLocation);
             }
-
-            this._screenLocation.x = Math.round(screenLocation.x);
-            this._screenLocation.y = Math.round(screenLocation.y);
         }
 
         return this._screenLocation;

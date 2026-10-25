@@ -1,5 +1,6 @@
-﻿import type { IAssetAlias } from "@nitrodevco/nitro-api";
+import { IAssetAlias } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `AssetAlias`. */
 export class AssetAlias {
     private _name: string;
     private _link: string;

@@ -4,6 +4,8 @@ export * from './additions/FloatingHeartAddition';
 export * from './additions/FloatingIdleZAddition';
 export * from './additions/GameClickTargetAddition';
 export * from './additions/GuideStatusBubbleAddition';
+export * from './additions/HabbiconAssetManager';
+export * from './additions/HabbiconBubble';
 export * from './additions/IAvatarAddition';
 export * from './additions/IExpressionAddition';
 export * from './additions/MutedBubbleAddition';

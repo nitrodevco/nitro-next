@@ -1,21 +1,29 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-/*
- * CantConnectMessageParser — reason int, then a parameter string only when the
- * packet carries more bytes (the reason 3 queue errors put the error key in it).
- */
+/** `CantConnectMessageParser.reason` values (the Flash `RoomConnectionErrorType`). */
+export enum CantConnectReason {
+    RoomFull = 1,
+    RoomClosed = 2,
+    QueueError = 3,
+    Banned = 4,
+    Blocked = 5,
+}
+
 export type CantConnectMessageType = {
-  reason: number;
-  parameter: string;
+    reason: CantConnectReason;
+    /** Only sent for `QueueError`: the `room.queue.error.<parameter>` localization suffix. */
+    parameter: string;
 };
 
-export class CantConnectMessage implements IIncomingPacket<CantConnectMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CantConnectMessageType
-  {
-    return {
-        reason: wrapper.readInt(),
-        parameter: wrapper.bytesAvailable ? wrapper.readString() : '',
-    };
-  }
+export class CantConnectMessage implements IIncomingPacket<CantConnectMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CantConnectMessageType {
+        const reason: CantConnectReason = wrapper.readInt();
+
+        const packet: CantConnectMessageType = {
+            reason,
+            parameter: reason === CantConnectReason.QueueError ? wrapper.readString() : '',
+        };
+
+        return packet;
+    }
 }

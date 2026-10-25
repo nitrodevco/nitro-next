@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type UnreadForumsCountMessageType = {
-  // no fields
-
+    unreadForumsCount: number;
 };
 
-export class UnreadForumsCountMessage implements IIncomingPacket<UnreadForumsCountMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UnreadForumsCountMessageType
-  {
+export class UnreadForumsCountMessage implements IIncomingPacket<UnreadForumsCountMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UnreadForumsCountMessageType {
+        const packet: UnreadForumsCountMessageType = {
+            unreadForumsCount: wrapper.readInt(),
+        };
 
-    const packet: UnreadForumsCountMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

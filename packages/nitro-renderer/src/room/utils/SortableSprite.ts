@@ -1,5 +1,6 @@
-﻿import type { IRoomObjectSprite, ISortableSprite } from '@nitrodevco/nitro-api';
+import { IRoomObjectSprite, ISortableSprite } from '@nitrodevco/nitro-api';
 
+/** Port of Flash's obfuscated `§_-yX§`, an `ISortableSprite`. */
 export class SortableSprite implements ISortableSprite {
     public static Z_INFINITY: number = 100000000;
 

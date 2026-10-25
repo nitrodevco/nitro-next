@@ -1,12 +1,13 @@
-import { AvatarActionStateType, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { AvatarActionStateType, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
 import { GetTickerTime } from '#renderer/utils';
 
-import type { AvatarVisualization } from '../AvatarVisualization';
-import type { IAvatarAddition } from './IAvatarAddition';
+import { AvatarVisualization } from '../AvatarVisualization';
+import { IAvatarAddition } from './IAvatarAddition';
 
+/** Port of Flash `FloatingIdleZ`. */
 export class FloatingIdleZAddition implements IAvatarAddition {
     private static DELAY_BEFORE_ANIMATION: number = 2000;
     private static DELAY_PER_FRAME: number = 2000;
@@ -34,11 +35,11 @@ export class FloatingIdleZAddition implements IAvatarAddition {
         let side = 'left';
 
         if (
-            this._visualization !== undefined &&
-            (this._visualization.angle === 135 ||
-                this._visualization.angle === 180 ||
-                this._visualization.angle === 225 ||
-                this._visualization.angle === 270)
+            this._visualization !== undefined
+            && (this._visualization.angle === 135
+                || this._visualization.angle === 180
+                || this._visualization.angle === 225
+                || this._visualization.angle === 270)
         )
             side = 'right';
 
@@ -58,10 +59,10 @@ export class FloatingIdleZAddition implements IAvatarAddition {
 
         if (scale < RoomGeometryScaleType.AvatarSizeNormal) {
             if (
-                this._visualization.angle === 135 ||
-                this._visualization.angle === 180 ||
-                this._visualization.angle === 225 ||
-                this._visualization.angle === 270
+                this._visualization.angle === 135
+                || this._visualization.angle === 180
+                || this._visualization.angle === 225
+                || this._visualization.angle === 270
             ) {
                 offsetX = 10;
             } else {
@@ -73,10 +74,10 @@ export class FloatingIdleZAddition implements IAvatarAddition {
             additionScale = RoomGeometryScaleType.ZoomedOut;
         } else {
             if (
-                this._visualization.angle === 135 ||
-                this._visualization.angle === 180 ||
-                this._visualization.angle === 225 ||
-                this._visualization.angle === 270
+                this._visualization.angle === 135
+                || this._visualization.angle === 180
+                || this._visualization.angle === 225
+                || this._visualization.angle === 270
             ) {
                 offsetX = 22;
             } else {

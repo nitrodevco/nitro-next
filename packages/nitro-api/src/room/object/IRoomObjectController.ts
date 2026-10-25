@@ -1,9 +1,9 @@
-import type { IVector3D } from '#api/utils';
+import { IVector3D } from '#api/utils';
 
-import type { IRoomObject } from './IRoomObject';
-import type { IRoomObjectUpdateMessage } from './IRoomObjectUpdateMessage';
-import type { IRoomObjectEventHandler } from './logic';
-import type { IRoomObjectGraphicVisualization } from './visualization';
+import { IRoomObject } from './IRoomObject';
+import { IRoomObjectUpdateMessage } from './IRoomObjectUpdateMessage';
+import { IRoomObjectEventHandler } from './logic';
+import { IRoomObjectGraphicVisualization } from './visualization';
 
 export interface IRoomObjectController extends IRoomObject {
     setLocation(vector: IVector3D): void;

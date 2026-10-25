@@ -1,17 +1,21 @@
-import { AvatarGenderType, IUserInfo } from "@nitrodevco/nitro-api";
-import type { StateCreator } from "zustand";
+import { AvatarGenderType, IUserInfo } from '@nitrodevco/nitro-api';
+import { StateCreator } from 'zustand';
 
+/**
+ * Who you are - the user object at login and everything Flash's `SessionDataManager` kept about
+ * the logged-in user.
+ */
 type State = IUserInfo;
 
 type Actions = {
     setUserInfo: (userInfo: IUserInfo) => void;
     setName: (name: string, nameChangeAllowed: boolean) => void;
-    setFigure: (figure: string, sex: string) => void;
+    setFigure: (figure: string, sex: AvatarGenderType) => void;
     setAccountSafetyLocked: (accountSafetyLocked: boolean) => void;
     setEmailVerified: (directMail: boolean) => void;
 };
 
-export const UserInfoSlice: State = {
+export const UserInfoSliceInitialState: State = {
     userId: -1,
     name: '',
     figure: '',
@@ -26,12 +30,16 @@ export const UserInfoSlice: State = {
     lastAccessDate: '',
     nameChangeAllowed: false,
     accountSafetyLocked: false,
+    accountTradeLocked: false,
+    nameColor: '',
+    respectReplenishesLeft: 0,
+    maxRespectPerDay: 0,
 };
 
 export type UserInfoSlice = State & Actions;
 
-export const createUserInfoSlice: StateCreator<UserInfoSlice, [], [], UserInfoSlice> = (set, get, store) => ({
-    ...UserInfoSlice,
+export const createUserInfoSlice: StateCreator<UserInfoSlice, [], [], UserInfoSlice> = set => ({
+    ...UserInfoSliceInitialState,
     setUserInfo: (userInfo: IUserInfo) => set({ ...userInfo }),
     setName: (name: string, nameChangeAllowed: boolean) => set({ name, nameChangeAllowed }),
     setFigure: (figure: string, sex: AvatarGenderType) => set({ figure, sex }),

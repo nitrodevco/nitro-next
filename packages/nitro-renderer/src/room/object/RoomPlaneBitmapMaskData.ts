@@ -1,5 +1,6 @@
-﻿import { type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import { IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `RoomPlaneBitmapMaskData`. */
 export class RoomPlaneBitmapMaskData {
     public static WINDOW: string = 'window' as const;
     public static HOLE: string = 'hole' as const;

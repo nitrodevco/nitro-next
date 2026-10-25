@@ -1,16 +1,18 @@
 import {
-    type IRoomObjectController,
-    type IRoomObjectEventHandler,
-    type IRoomObjectModel,
-    type IRoomObjectMouseHandler,
-    type IRoomObjectUpdateMessage,
-    type IRoomObjectVisualization,
-    type IVector3D,
+    IRoomObjectController,
+    IRoomObjectEventHandler,
+    IRoomObjectEventHandlerStateTransfer,
+    IRoomObjectModel,
+    IRoomObjectMouseHandler,
+    IRoomObjectUpdateMessage,
+    IRoomObjectVisualization,
+    IVector3D,
     Vector3d,
 } from '@nitrodevco/nitro-api';
 
 import { RoomObjectModel } from './RoomObjectModel';
 
+/** Port of Flash `RoomObject`. */
 export class RoomObject implements IRoomObjectController {
     private static OBJECT_COUNTER: number = 0;
 
@@ -117,14 +119,20 @@ export class RoomObject implements IRoomObjectController {
         if (this._visualization) this._visualization.object = this;
     }
 
+    /** `RoomObject.setEventHandler`: a replacing logic that can carry state over takes it from the one it replaces. */
     public setLogic(logic: IRoomObjectEventHandler): void {
         if (this._logic === logic) return;
 
         const eventHandler = this._logic;
 
+        if (eventHandler && logic && 'transferStateFrom' in logic) (logic as IRoomObjectEventHandler & IRoomObjectEventHandlerStateTransfer).transferStateFrom(eventHandler);
+
         if (eventHandler) {
             this._logic = null!;
 
+            // Its room event listeners go with it: a placeholder's logic replaced when the furni
+            // loads otherwise stayed subscribed for the life of the room.
+            eventHandler.tearDown();
             eventHandler.setObject(null!);
         }
 

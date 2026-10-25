@@ -1,21 +1,29 @@
-﻿import {
+import {
     type IRoomObjectSprite,
     type IRoomObjectSpriteData,
     RoomObjectSpriteData,
     RoomObjectSpriteTypeEnum,
+    RoomObjectVariableEnum,
 } from '@nitrodevco/nitro-api';
 
-import type { SortableSprite } from '../../utils';
+import { SortableSprite } from '../../utils';
 import { RoomObjectCacheItem } from './RoomObjectCacheItem';
 
+/** Port of Flash `RoomObjectCache`. */
 export class RoomObjectCache {
     private static MAX_SIZE_FOR_AVG_COLOR: number = 200;
 
     private _data: Map<number, RoomObjectCacheItem> = new Map();
+    private _accurateZVariable: RoomObjectVariableEnum | undefined;
+
+    /** `RoomObjectCache(roomObjectVariableAccurateZ)`: the model variable each item's location reads. */
+    constructor(accurateZVariable?: RoomObjectVariableEnum) {
+        this._accurateZVariable = accurateZVariable;
+    }
 
     public dispose(): void {
         if (this._data) {
-            for (const [key, item] of this._data.entries()) {
+            for (const [ key, item ] of this._data.entries()) {
                 if (!item) continue;
 
                 this._data.delete(key);
@@ -31,7 +39,7 @@ export class RoomObjectCache {
         let existing = this._data.get(key);
 
         if (!existing) {
-            existing = new RoomObjectCacheItem();
+            existing = new RoomObjectCacheItem(this._accurateZVariable);
 
             this._data.set(key, existing);
         }
@@ -62,14 +70,17 @@ export class RoomObjectCache {
             for (const sprite of sprites) {
                 if (!sprite) continue;
 
-                if (sprite.sprite.spriteType !== RoomObjectSpriteTypeEnum.RoomPlane && sprite.sprite.name !== '') {
+                // `RoomObjectCache.getSortableSpriteList`: the sprites with a library asset name, by it.
+                if (sprite.sprite.spriteType !== RoomObjectSpriteTypeEnum.RoomPlane && !!sprite.sprite.libraryAssetName) {
                     const data = new RoomObjectSpriteData();
 
                     data.objectId = item.objectId;
-                    data.x = sprite.x;
-                    data.y = sprite.y;
+                    // Flash's canvas draws a flipped sprite from a mirrored copy of its bitmap, so its x is where the picture
+                    // starts; here it is mirrored in place (`scale -1`) and reaches back a width from the sprite's x.
+                    data.x = Math.round(sprite.x) - (sprite.sprite.flipH ? sprite.sprite.width : 0);
+                    data.y = Math.round(sprite.y);
                     data.z = sprite.z;
-                    data.name = sprite.sprite.name || '';
+                    data.name = sprite.sprite.libraryAssetName;
                     data.flipH = sprite.sprite.flipH;
                     data.alpha = sprite.sprite.alpha;
                     data.color = sprite.sprite.color.toString();
@@ -84,15 +95,15 @@ export class RoomObjectCache {
                     if (isSkewed) data.skew = sprite.sprite.direction % 4 === 0 ? -0.5 : 0.5;
 
                     if (
-                        (isSkewed ||
-                            sprite.name.indexOf('%image.library.url%') >= 0 ||
-                            sprite.name.indexOf('%group.badge.url%') >= 0) &&
-                        data.width <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR &&
-                        data.height <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR
+                        (isSkewed
+                            || data.name.indexOf('%image.library.url%') >= 0
+                            || data.name.indexOf('%group.badge.url%') >= 0)
+                        && data.width <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR
+                        && data.height <= RoomObjectCache.MAX_SIZE_FOR_AVG_COLOR
                     ) {
-                        //data.color = Canvas._Str_23439(sprite.sprite.texture).toString();
+                        // Flash sets `color` here from `Canvas.averageColor(sprite.asset)`; that is not ported.
 
-                        if (sprite.sprite.name.indexOf('external_image_wallitem') === 0) {
+                        if (data.type.indexOf('external_image_wallitem') === 0) {
                             data.frame = true;
                         }
                     }

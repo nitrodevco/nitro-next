@@ -1,9 +1,10 @@
+// Body filled by hand from the 2026 client's own parser - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-/* RoomSettingsSaveErrorParser (§_-94§/§_-92z§) — roomId, errorCode, info */
 export type RoomSettingsSaveErrorEventMessageType = {
     roomId: number;
     errorCode: number;
+    /** Which field the server refused, when it names one. */
     info: string;
 };
 

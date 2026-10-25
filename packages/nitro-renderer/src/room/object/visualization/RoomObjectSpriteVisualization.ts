@@ -8,15 +8,20 @@ import {
     RoomGeometryScaleType,
     type RoomObjectSpriteData,
 } from '@nitrodevco/nitro-api';
-import type { ImageLike } from 'pixi.js';
-import { Container, Point, Rectangle, Sprite } from 'pixi.js';
+import { Container, Filter, ImageLike, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { TextureUtils } from '../../../utils';
 import { RoomObjectSprite } from './RoomObjectSprite';
 
+/** Port of Flash `RoomObjectSpriteVisualization`. */
 export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualization {
     private static VISUALIZATION_COUNTER: number = 0;
-    protected static UPDATE_TIME_INCREASER: number = 41;
+    public static readonly UPDATE_TIME_INCREASER: number = 41;
+    /**
+     * One empty filter list for every unfiltered sprite: a fresh `[]` each frame counted as a sprite
+     * change, and comparing against this one tells a sprite that has no filters from one that does.
+     */
+    protected static readonly NO_FILTERS: Filter[] = [];
 
     private _id: number = RoomObjectSpriteVisualization.VISUALIZATION_COUNTER++;
     private _object: IRoomObjectController;
@@ -51,7 +56,9 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
         }
 
         this._object = undefined!;
-        this._asset = undefined!;
+        // Flash `assetCollection = null`: through the setter, so the collection's reference is let go
+        // and `RoomContentLoader.purge` can release it once nothing else draws with it.
+        this.asset = undefined;
     }
 
     public getSprite(index: number): IRoomObjectSprite | undefined {
@@ -93,6 +100,30 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
     }
 
     public async getImage(): Promise<ImageLike | undefined> {
+        const container = this.buildImageContainer();
+
+        if (!container) return undefined;
+
+        const image = await TextureUtils.generateImage({ target: container });
+
+        container.destroy({ children: true });
+
+        return image;
+    }
+
+    public getRenderTexture(): Texture | undefined {
+        const container = this.buildImageContainer();
+
+        if (!container) return undefined;
+
+        const texture = TextureUtils.generateTexture({ target: container });
+
+        container.destroy({ children: true });
+
+        return texture;
+    }
+
+    private buildImageContainer(): Container | undefined {
         const boundingRectangle = this.getBoundingRectangle();
 
         if (boundingRectangle.width * boundingRectangle.height === 0) return undefined;
@@ -140,7 +171,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
             index++;
         }
 
-        return TextureUtils.generateImage({ target: container });
+        return container;
     }
 
     public getBoundingRectangle(): Rectangle {
@@ -211,6 +242,15 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
 
     public get totalSprites(): number {
         return this._sprites.length;
+    }
+
+    /** Flash `additionalSpriteCount`: none here; a WIRED highlight's composite sprite in the furniture and avatar visualizations. */
+    public get additionalSpriteCount(): number {
+        return 0;
+    }
+
+    public getAdditionalSprite(_index: number): IRoomObjectSprite | undefined {
+        return undefined;
     }
 
     public get updateObjectCounter(): number {

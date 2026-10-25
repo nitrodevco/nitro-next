@@ -1,4 +1,4 @@
-﻿import type { IVector3D } from './IVector3D';
+﻿import { IVector3D } from './IVector3D';
 
 export class Vector3d implements IVector3D {
     private _length: number = NaN;

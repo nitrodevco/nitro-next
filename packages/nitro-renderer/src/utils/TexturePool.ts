@@ -1,14 +1,23 @@
-import { NitroLogger } from "@nitrodevco/nitro-api";
-import { RenderTexture } from "pixi.js";
+import { NitroLogger } from '@nitrodevco/nitro-api';
+import { RenderTexture, TextureSource } from 'pixi.js';
 
-import { ExtendedSprite } from "./ExtendedSprite";
-import { GetTicker } from "./GetTicker";
+import { ExtendedSprite } from './ExtendedSprite';
+import { GetTicker } from './GetTicker';
+import { TextureUtils } from './TextureUtils';
 
+/**
+ * Nitro's own pool of render textures by size, so the many short-lived renders (avatar heads, part
+ * thumbnails) reuse GPU memory; idle textures are destroyed by `startAutoCleanup`.
+ */
 export class TexturePool {
     private static _texturePool: Record<number, Record<number, RenderTexture[]>> = {};
     private static _totalTextures: number = 0;
     private static _runCount: number = 0;
-    private static _maxIdle: number = 3600;
+    // Idle age is measured in cleanup RUNS, and a run happens every `_checkInterval`
+    // frames (~10s at 60fps) - so 6 runs destroys a pooled texture after ~1 minute unused.
+    // (The previous 3600 was meant as frames but counted runs: ~10 HOURS, i.e. pooled
+    // render textures were effectively never freed for the whole session.)
+    private static _maxIdle: number = 6;
     private static _checkInterval: number = 600;
     private static _framesSinceCheck: number = 0;
     private static _tickerFn: (() => void) | null = null;
@@ -22,6 +31,7 @@ export class TexturePool {
             if (this._framesSinceCheck >= this._checkInterval) {
                 this._framesSinceCheck = 0;
                 this.cleanUpTextures();
+                TextureUtils.pruneBatchBindGroups();
             }
         };
 
@@ -35,22 +45,35 @@ export class TexturePool {
         this._tickerFn = null;
     }
 
-    public static createRenderTexture(width: number, height: number): RenderTexture | undefined {
+    public static createRenderTexture(width: number, height: number, antialias: boolean = TextureSource.defaultOptions.antialias ?? false): RenderTexture | undefined {
         if (!this._texturePool[width]) this._texturePool[width] = {};
 
         if (!this._texturePool[width][height]) this._texturePool[width][height] = [];
 
-        if (this._texturePool[width][height].length > 0) {
-            const texture = this._texturePool[width][height].shift();
+        const matchingIndex = this._texturePool[width][height].findIndex(texture => texture.source.antialias === antialias);
+
+        if (matchingIndex >= 0) {
+            const [ texture ] = this._texturePool[width][height].splice(matchingIndex, 1);
 
             if (texture) {
                 this._totalTextures--;
+
+                // A final room plane may have enabled linear minification. A later owner
+                // must receive the same sampling defaults as a newly allocated target.
+                const style = texture.source.style;
+                const scaleMode = TextureSource.defaultOptions.scaleMode ?? 'linear';
+
+                // Only when it differs: `update` notifies every batch bind group still subscribed to the style.
+                if ((style.magFilter !== scaleMode) || (style.minFilter !== scaleMode) || (style.mipmapFilter !== scaleMode)) {
+                    style.scaleMode = scaleMode;
+                    style.update();
+                }
 
                 return texture;
             }
         }
 
-        return RenderTexture.create({ width, height });
+        return RenderTexture.create({ width, height, antialias });
     }
 
     public static releaseTexture(texture: RenderTexture): void {
@@ -66,6 +89,8 @@ export class TexturePool {
         (texture.source as unknown as { _touched: number })._touched = this._runCount;
 
         ExtendedSprite.removeHitmap(texture.source);
+        // Whoever draws into it next does not draw what the last holder's alpha describes.
+        ExtendedSprite.setAlphaProvider(texture.source, undefined);
 
         this._texturePool[width][height].push(texture);
 
@@ -91,7 +116,8 @@ export class TexturePool {
 
                         ExtendedSprite.removeHitmap(source);
 
-                        if (!texture.destroyed) texture.destroy();
+                        // Through `TextureUtils`: a pooled avatar image may still be in a room's cached batch.
+                        TextureUtils.destroyTexture(texture);
 
                         if (!source.destroyed) source.destroy();
 

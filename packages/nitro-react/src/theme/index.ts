@@ -1,61 +1,19 @@
-export * from './Accordion';
-export * from './AccordionContent';
-export * from './AccordionContext';
-export * from './AccordionItem';
-export * from './AccordionTrigger';
-export * from './Border';
-export * from './Bubble';
-export * from './BubblePointer';
-export * from './Button';
-export * from './ButtonGroupCenter';
-export * from './ButtonGroupLeft';
-export * from './ButtonGroupRight';
-export * from './ButtonThick';
-export * from './CheckBox';
-export * from './CloseButton';
-export * from './ContainerButton';
-export * from './ContentArea';
-export * from './Droplist';
-export * from './DroplistItem';
-export * from './Dropmenu';
-export * from './DropmenuItem';
-export * from './DropmenuSelect';
-export * from './FieldErrorPopup';
-export * from './Frame';
-export * from './FramePointerDown';
-export * from './Header';
-export * from './Image';
-export * from './InfiniteGrid';
-export * from './NitroCurrencyIcon';
-export * from './NitroIcon';
-export * from './RadioButton';
-export * from './Scaler';
-export * from './ScrollableItemGridVertical';
-export * from './ScrollableItemListVertical';
-export * from './ScrollArea';
-export * from './ScrollbarHorizontal';
-export * from './ScrollbarSliderBarHorizontal';
-export * from './ScrollbarSliderBarVertical';
-export * from './ScrollbarSliderButtonDown';
-export * from './ScrollbarSliderButtonLeft';
-export * from './ScrollbarSliderButtonRight';
-export * from './ScrollbarSliderButtonUp';
-export * from './ScrollbarSliderTrackHorizontal';
-export * from './ScrollbarSliderTrackVertical';
-export * from './ScrollbarVertical';
-export * from './TabButton';
-export * from './TabContainerButton';
-export * from './TabContent';
-export * from './TabContext';
-export * from './Tooltip';
-export * from './TooltipContext';
-export * from './TooltipProvider';
-export * from './utils/pixiTint';
-export * from './utils/themeUrls';
-export * from './utils/useCascadedVariant';
-export * from './utils/useTintedVars';
-export * from './utils/utils';
-export * from './utils/VariantCascadeContext';
-export * from './utils/VariantCascadeMap';
-export * from './utils/VariantCascadeProvider';
-export * from './VariantConfig';
+/**
+ * The client's theme: `@nitrodevco/nitro-theme` - the window skins, buttons, text and the rest, shared
+ * with Nitro Studio - wired into the client (`themeHost`: its asset bundles, config and window
+ * manager), with what only the client has: the room stage under the UI (`PixiApplicationRoot`) and
+ * the window manager's widgets that read its translations, ticker or templates (countdown, updating
+ * timestamp, running number, progress indicator).
+ */
+import './themeHost';
+
+export * from './CountdownWidget';
+export * from './ProgressIndicatorWidget';
+export * from './RunningNumberWidget';
+export * from './TemplateWindow';
+export * from './UpdatingTimeStampWidget';
+export * from './useTemplate';
+export * from './useTemplateFrame';
+export * from '@nitrodevco/nitro-theme';
+// Over the theme's own: the client's puts its room stage under the UI.
+export { PixiApplicationRoot } from './PixiApplicationRoot';

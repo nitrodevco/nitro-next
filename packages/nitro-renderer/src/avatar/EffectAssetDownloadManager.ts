@@ -1,10 +1,12 @@
-import type { IAvatarEffectListener, IEffectAssetDownloadLibrary, IEffectMapLibrary } from '@nitrodevco/nitro-api';
+import { IAvatarEffectListener, IEffectAssetDownloadLibrary, IEffectMapLibrary } from '@nitrodevco/nitro-api';
 
-import type { AvatarStructure } from './AvatarStructure';
+import { AvatarStructure } from './AvatarStructure';
 import { EffectAssetDownloadLibrary } from './EffectAssetDownloadLibrary';
 
+/** Port of Flash `EffectAssetDownloadManager`. */
 export class EffectAssetDownloadManager {
-    private static MANDATORY_LIBRARIES: string[] = ['dance.1', 'dance.2', 'dance.3', 'dance.4'];
+    private static MANDATORY_LIBRARIES: string[] = [ 'dance.1', 'dance.2', 'dance.3', 'dance.4' ];
+    private static MAX_SIMULTANEOUS_DOWNLOADS: number = 2;
 
     private _structure: AvatarStructure;
     private _missingMandatoryLibs: string[] = EffectAssetDownloadManager.MANDATORY_LIBRARIES;
@@ -16,9 +18,12 @@ export class EffectAssetDownloadManager {
     private _currentDownloads: EffectAssetDownloadLibrary[] = [];
     private _libraryNames: string[] = [];
     private _isReady: boolean = false;
+    /** Flash's `LIBRARY_LOADED` event: `AvatarRenderManager` registers the library's aliases. */
+    private _onLibraryLoaded: ((libraryName: string) => void) | undefined;
 
-    constructor(structure: AvatarStructure) {
+    constructor(structure: AvatarStructure, onLibraryLoaded: ((libraryName: string) => void) | undefined = undefined) {
         this._structure = structure;
+        this._onLibraryLoaded = onLibraryLoaded;
     }
 
     public processEffectMap(data: IEffectMapLibrary[], assetUrl: string): void {
@@ -29,7 +34,7 @@ export class EffectAssetDownloadManager {
 
             this._libraryNames.push(library.lib);
 
-            const downloadLibrary = new EffectAssetDownloadLibrary(library.lib, library.revision ?? 0, assetUrl, lib => this.onLibraryLoaded(lib));
+            const downloadLibrary = new EffectAssetDownloadLibrary(library.lib, library.revision ?? 0, assetUrl, lib => this.onLibraryComplete(lib));
 
             let existing = this._effectMap.get(library.id);
 
@@ -52,18 +57,20 @@ export class EffectAssetDownloadManager {
     }
 
     public processPendingDownloads(): void {
-        for (const [id, listener] of this._pendingDownloads) this.downloadAvatarEffect(id, listener);
+        for (const [ id, listener ] of this._pendingDownloads) this.downloadAvatarEffect(id, listener);
 
         this._pendingDownloads = [];
     }
 
     public isAvatarEffectReady(effect: number): boolean {
+        if (!this._isReady) return false;
+
         return !this.getAvatarEffectPendingLibraries(effect)?.length;
     }
 
     public downloadAvatarEffect(id: number, listener: IAvatarEffectListener): void {
         if (!this._isReady) {
-            this._pendingDownloads.push([id, listener]);
+            this._pendingDownloads.push([ id, listener ]);
 
             return;
         }
@@ -84,8 +91,7 @@ export class EffectAssetDownloadManager {
             this._incompleteEffects.set(id, libraries);
 
             for (const library of libraries) this.downloadLibrary(library);
-        }
-        else listener.resetEffect(id);
+        } else listener.resetEffect(id);
     }
 
     public async downloadAvatarEffectAsync(id: number): Promise<void> {
@@ -100,6 +106,43 @@ export class EffectAssetDownloadManager {
         this._isReady = true;
     }
 
+    /**
+     * Unloads the effect libraries nothing uses. Flash never unloaded one; here they would pile up
+     * for the session, one per effect anybody in any room wore. Kept: the mandatory dances, the
+     * effects in `inUse` (every live avatar's) and the effects still downloading, whose completion
+     * waits on all of their libraries being loaded.
+     */
+    public purge(inUse: Iterable<number>): void {
+        const keep = new Set<EffectAssetDownloadLibrary>();
+        const keepIds = [ ...EffectAssetDownloadManager.MANDATORY_LIBRARIES, ...[ ...inUse ].map(String) ];
+
+        for (const id of keepIds) {
+            for (const library of this._effectMap.get(id) ?? []) keep.add(library);
+        }
+
+        for (const libraries of this._incompleteEffects.values()) {
+            for (const library of libraries) keep.add(library);
+        }
+
+        for (const libraries of this._effectMap.values()) {
+            for (const library of libraries) {
+                if (library.isLoaded && !keep.has(library)) library.purge();
+            }
+        }
+    }
+
+    /** Effect id -> the libraries holding it (Flash `map`, which `AvatarRenderManager.effectMap` hands out). */
+    public get map(): Map<string, IEffectAssetDownloadLibrary[]> {
+        return this._effectMap;
+    }
+
+    /** `IAvatarRenderManager.isAvatarEffectLoaded`: in the effect map, and every library of it loaded. */
+    public isAvatarEffectLoaded(effect: string): boolean {
+        const libraries = this._effectMap.get(effect);
+
+        return !!libraries?.length && libraries.every(library => library.isLoaded);
+    }
+
     private getAvatarEffectPendingLibraries(id: number): EffectAssetDownloadLibrary[] {
         const pendingLibraries: EffectAssetDownloadLibrary[] = [];
 
@@ -109,7 +152,7 @@ export class EffectAssetDownloadManager {
 
         if (libraries) {
             for (const library of libraries) {
-                if (!library || library.isLoaded) continue;
+                if (!library || library.isReady) continue;
 
                 if (pendingLibraries.indexOf(library) === -1) pendingLibraries.push(library);
             }
@@ -119,7 +162,7 @@ export class EffectAssetDownloadManager {
     }
 
     private downloadLibrary(library: EffectAssetDownloadLibrary): void {
-        if (!library || library.isLoaded) return;
+        if (!library || library.isReady) return;
 
         if ((this._pendingDownloadQueue.indexOf(library) >= 0) || (this._currentDownloads.indexOf(library) >= 0)) return;
 
@@ -129,35 +172,38 @@ export class EffectAssetDownloadManager {
     }
 
     private async downloadLibraryAsync(library: EffectAssetDownloadLibrary): Promise<void> {
-        if (!library || library.isLoaded) return;
+        if (!library || library.isReady) return;
 
         await library.downloadAssetAsync();
     }
 
+    /** Flash allows two effect libraries in flight at once. */
     private processDownloadQueue(): void {
-        while (this._pendingDownloadQueue.length) {
+        while (this._pendingDownloadQueue.length && (this._currentDownloads.length < EffectAssetDownloadManager.MAX_SIMULTANEOUS_DOWNLOADS)) {
             const library = this._pendingDownloadQueue.shift();
 
             if (!library) continue;
 
             this._currentDownloads.push(library);
 
-            void library.downloadAsset();
+            library.downloadAsset();
         }
     }
 
-    private onLibraryLoaded(library: IEffectAssetDownloadLibrary): void {
+    private onLibraryComplete(library: EffectAssetDownloadLibrary): void {
         if (!library) return;
+
+        if (library.isLoaded) this._onLibraryLoaded?.(library.libraryName);
 
         const loadedEffects: number[] = [];
 
-        this._structure.registerAnimations(library.animations);
+        if (library.isLoaded) this._structure.registerAnimations(library.animations);
 
-        for (const [id, libraries] of this._incompleteEffects.entries()) {
+        for (const [ id, libraries ] of this._incompleteEffects.entries()) {
             let isReady = true;
 
-            for (const library of libraries) {
-                if (!library || library.isLoaded) continue;
+            for (const pending of libraries) {
+                if (!pending || pending.isReady) continue;
 
                 isReady = false;
 
@@ -170,9 +216,7 @@ export class EffectAssetDownloadManager {
 
             const listeners = this._effectListeners.get(id);
 
-            if (listeners) {
-                for (const listener of listeners) listener.resetEffect(id);
-            }
+            if (listeners) for (const listener of listeners) listener.resetEffect(id);
 
             this._effectListeners.delete(id);
         }
@@ -184,9 +228,15 @@ export class EffectAssetDownloadManager {
         while (index < this._currentDownloads.length) {
             const download = this._currentDownloads[index];
 
-            if (download && download.libraryName === library.libraryName) this._currentDownloads.splice(index, 1);
+            if (download && download.libraryName === library.libraryName) {
+                this._currentDownloads.splice(index, 1);
+
+                continue;
+            }
 
             index++;
         }
+
+        this.processDownloadQueue();
     }
 }

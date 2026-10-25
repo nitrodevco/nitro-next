@@ -1,19 +1,28 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
-import { useConfigActions, useConfigData } from '#base/context';
+import { CLIENT_MODULES_HOSTS_KEY } from '#base/context/client-modules';
+import { useConfigActions, useConfigData } from '#base/context/system';
+import { PREVIEW_ALLOWED_ORIGINS_KEY } from '#base/utils';
 
+/**
+ * Loads the client configuration once, and mirrors every change into the globals and logger flags
+ * that read it. `isConfigReady` says when it is in - everything else the client loads is named by it.
+ */
 export const useConfigLoader = () => {
-    const [isReady, setIsReady] = useState(false);
-    const [needsUpdate, setNeedsUpdate] = useState(true);
+    const [ needsUpdate, setNeedsUpdate ] = useState(true);
     const config = useConfigData();
     const { setConfig } = useConfigActions();
 
     useEffect(() => {
         window.NitroParsedConfig = { ...config };
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setIsReady(true);
-    }, [config]);
+
+        NitroLogger.LOG_DEBUG = config['log.debug'] as boolean ?? false;
+        NitroLogger.LOG_WARN = config['log.warn'] as boolean ?? false;
+        NitroLogger.LOG_ERROR = config['log.error'] as boolean ?? false;
+        NitroLogger.LOG_EVENTS = config['log.events'] as boolean ?? false;
+        NitroLogger.LOG_PACKETS = config['log.packets'] as boolean ?? false;
+    }, [ config ]);
 
     useEffect(() => {
         if (!needsUpdate) return;
@@ -34,9 +43,7 @@ export const useConfigLoader = () => {
                     const responseData = await response.json() as Record<string, object>;
 
                     data = { ...data, ...responseData };
-                }
-
-                catch (err) {
+                } catch (err) {
                     NitroLogger.error(`Trouble loading the configuration using: ${url}`, err.message);
                 }
             }
@@ -44,16 +51,20 @@ export const useConfigLoader = () => {
             const dataToProcess = { ...data, ...window.NitroConfig };
             const urlParams = new URLSearchParams(window.location.search);
 
-            if (urlParams.size > 0) urlParams.forEach((value, key) => dataToProcess[key] = value);
+            // The query never names who may drive the preview host (whoever frames the page writes its URL), nor where client
+            // modules may come from (with its own `socket.url`, a link would let any server run code in the hotel's page).
+            if (urlParams.size > 0) urlParams.forEach((value, key) => {
+                if ((key !== PREVIEW_ALLOWED_ORIGINS_KEY) && (key !== CLIENT_MODULES_HOSTS_KEY)) dataToProcess[key] = value;
+            });
 
             window.NitroParsedConfig = { ...dataToProcess };
 
             setConfig(dataToProcess);
             setNeedsUpdate(false);
-        }
+        };
 
         void load(urls);
-    }, [needsUpdate]);
+    }, [ needsUpdate ]);
 
-    return { isConfigReady: isReady };
+    return { isConfigReady: () => !needsUpdate };
 };

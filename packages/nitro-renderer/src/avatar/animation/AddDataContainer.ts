@@ -1,5 +1,6 @@
-﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAssetAnimationAdd } from "@nitrodevco/nitro-api";
+import { AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAssetAnimationAdd } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `AddDataContainer`. */
 export class AddDataContainer implements IAddDataContainer {
     private _id: AvatarFigurePartType | string;
     private _align: AvatarBodyPartType | undefined;
@@ -12,11 +13,12 @@ export class AddDataContainer implements IAddDataContainer {
         this._align = data.align;
         this._base = data.base ?? '';
         this._ink = data.ink ?? 0;
-        this._blend = 0;
+        // `AddDataContainer`: blend defaults to 1 (opaque), most <add> elements carry none.
+        this._blend = 1;
 
         if (data.blend) {
             if (data.blend.length > 0) {
-                let blend = parseInt(data.blend);
+                let blend = Number(data.blend);
 
                 if (blend > 1) blend = (blend / 100);
 

@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetRoomSettingsComposerType = {
-    roomId: RoomId;
+    roomId: number;
 };
 
 export class GetRoomSettingsComposer implements IOutgoingPacket<GetRoomSettingsComposerType> {

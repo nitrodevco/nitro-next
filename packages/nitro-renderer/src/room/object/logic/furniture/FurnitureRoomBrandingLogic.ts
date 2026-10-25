@@ -1,16 +1,14 @@
-import type { IAssetData, IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import {
+import { IAssetData, IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent,
     MapDataType,
     MouseEventType,
-    RoomObjectVariableEnum,
-    RoomWidgetEnumItemExtradataParameter,
-} from '@nitrodevco/nitro-api';
-import { RoomObjectRoomAdEvent } from '@nitrodevco/nitro-api';
+    RoomObjectRoomAdEvent, RoomObjectVariableEnum,
+    RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
 import { GetAssetManager } from '../../../../assets';
 import { ObjectAdUpdateMessage, ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 
+/** Port of Flash `FurnitureRoomBrandingLogic`. */
 export class FurnitureRoomBrandingLogic extends FurnitureLogic {
     public static STATE: string = 'state' as const;
     public static IMAGEURL_KEY: string = 'imageUrl' as const;
@@ -23,7 +21,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
     protected _hasClickUrl: boolean = false;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectRoomAdEvent.ROOM_AD_LOAD_IMAGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectRoomAdEvent.ROOM_AD_LOAD_IMAGE ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -105,8 +103,8 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         let options = FurnitureRoomBrandingLogic.IMAGEURL_KEY + '=' + (imageUrl !== null ? imageUrl : '') + '\t';
 
         if (this._hasClickUrl)
-            options =
-                options + (FurnitureRoomBrandingLogic.CLICKURL_KEY + '=' + (clickUrl !== null ? clickUrl : '') + '\t');
+            options
+                = options + (FurnitureRoomBrandingLogic.CLICKURL_KEY + '=' + (clickUrl !== null ? clickUrl : '') + '\t');
 
         options = options + (FurnitureRoomBrandingLogic.OFFSETX_KEY + '=' + offsetX + '\t');
         options = options + (FurnitureRoomBrandingLogic.OFFSETY_KEY + '=' + offsetY + '\t');
@@ -136,6 +134,11 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
 
         if (!texture) {
             const status = await asset.downloadAsset(imageUrl);
+
+            // The room may have gone while the image downloaded. Flash's engine only tells live
+            // objects that their image loaded or failed (FurnitureRoomBrandingLogic.as:60-71), so a
+            // disposed one hears nothing.
+            if (!this.object?.model) return;
 
             if (!status) {
                 this.processUpdateMessage(new ObjectAdUpdateMessage(ObjectAdUpdateMessage.IMAGE_LOADING_FAILED));

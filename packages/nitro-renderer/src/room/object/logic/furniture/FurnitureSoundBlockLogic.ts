@@ -1,10 +1,12 @@
-import type { IAssetData, IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectSamplePlaybackEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomObjectUpdateMessage, RoomObjectSamplePlaybackEvent, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-I1Z§`, the logic `RoomObjectFactory` builds for
+ * `furniture_soundblock`.
+ */
 export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
     private static HIGHEST_SEMITONE: number = 12;
     private static LOWEST_SEMITONE: number = -12;
@@ -27,7 +29,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
     public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (asset.logic && asset.logic.soundSample) {
+        if (asset?.logic?.soundSample) {
             this._sampleId = asset.logic.soundSample.id as number;
             this._noPitch = asset.logic.soundSample.noPitch as boolean;
         }
@@ -108,8 +110,8 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
         if (heightScaled > FurnitureSoundBlockLogic.HIGHEST_SEMITONE) {
             heightScaled = Math.min(
                 0,
-                FurnitureSoundBlockLogic.LOWEST_SEMITONE +
-                (heightScaled - FurnitureSoundBlockLogic.HIGHEST_SEMITONE - 1),
+                FurnitureSoundBlockLogic.LOWEST_SEMITONE
+                + (heightScaled - FurnitureSoundBlockLogic.HIGHEST_SEMITONE - 1),
             );
         }
 

@@ -1,8 +1,7 @@
-import { RoomObjectSpriteTypeEnum } from '@nitrodevco/nitro-api';
-import { AlphaTolerance, type IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import type { BLEND_MODES, Filter } from 'pixi.js';
-import { Texture } from 'pixi.js';
+import { AlphaTolerance, IRoomObjectSprite, RoomObjectSpriteTypeEnum } from '@nitrodevco/nitro-api';
+import { BLEND_MODES, Filter, Texture } from 'pixi.js';
 
+/** Port of Flash `RoomObjectSprite`. */
 export class RoomObjectSprite implements IRoomObjectSprite {
     private static SPRITE_COUNTER: number = 0;
 
@@ -296,6 +295,8 @@ export class RoomObjectSprite implements IRoomObjectSprite {
     }
 
     public set filters(filters: Filter[]) {
+        if (this._filters === filters) return;
+
         this._filters = filters;
 
         this._updateCounter++;
@@ -309,7 +310,12 @@ export class RoomObjectSprite implements IRoomObjectSprite {
         return this._skipMouseHandling;
     }
 
+    /** Flash bumps the update id on a change, so the canvas copies it over (RoomObjectSprite.as:421-428). */
     public set skipMouseHandling(flag: boolean) {
+        if (this._skipMouseHandling === flag) return;
+
         this._skipMouseHandling = flag;
+
+        this._updateCounter++;
     }
 }

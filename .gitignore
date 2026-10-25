@@ -31,3 +31,13 @@ Thumbs.db
 public/renderer-config*
 public/ui-config*
 public/config/*.json
+**/scripts/binaryData
+**/scripts/images
+**/scripts/**/*
+
+# Nitro Studio is its own git repository, checked out here as a workspace package.
+packages/nitro-studio/
+.yarn/install-state.gz
+
+# The imager's build, while it is being made (build.ts swaps it in as dist).
+packages/nitro-imager/dist-next/

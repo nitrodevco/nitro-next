@@ -1,8 +1,8 @@
-import type { IVector3D } from '#api/utils';
+import { IVector3D } from '#api/utils';
 
-import type { IRoomObjectModel } from './IRoomObjectModel';
-import type { IRoomObjectMouseHandler } from './logic';
-import type { IRoomObjectVisualization } from './visualization';
+import { IRoomObjectModel } from './IRoomObjectModel';
+import { IRoomObjectMouseHandler } from './logic';
+import { IRoomObjectVisualization } from './visualization';
 
 export interface IRoomObject {
     dispose(): void;

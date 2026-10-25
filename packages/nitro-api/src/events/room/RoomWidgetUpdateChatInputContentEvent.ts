@@ -1,7 +1,7 @@
 import { RoomWidgetUpdateEvent } from './RoomWidgetUpdateEvent';
 
 export class RoomWidgetUpdateChatInputContentEvent extends RoomWidgetUpdateEvent {
-    public static CHAT_INPUT_CONTENT: string = 'RWUCICE_CHAT_INPUT_CONTENT' as const;
+    public static CHAT_INPUT_CONTENT: string = 'RWWCIDE_CHAT_INPUT_CONTENT' as const;
     public static WHISPER: string = 'whisper' as const;
     public static SHOUT: string = 'shout' as const;
 

@@ -1,8 +1,11 @@
-import { AlphaTolerance, type IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { AlphaTolerance, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 import { RenderTexture } from 'pixi.js';
 
-import type { IAvatarAddition } from './IAvatarAddition';
+import { TextureUtils } from '#renderer/utils';
 
+import { IAvatarAddition } from './IAvatarAddition';
+
+/** Port of Flash `GameClickTarget`. */
 export class GameClickTargetAddition implements IAvatarAddition {
     private static WIDTH: number = 46;
     private static HEIGHT: number = 60;
@@ -15,7 +18,7 @@ export class GameClickTargetAddition implements IAvatarAddition {
 
     public dispose(): void {
         if (this._asset) {
-            this._asset.destroy(true);
+            TextureUtils.destroyTexture(this._asset);
 
             this._asset = undefined;
         }

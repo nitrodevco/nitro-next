@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
-import type { IMessageDataWrapper } from '#api/communication/IMessageDataWrapper';
+import { IMessageDataWrapper } from '#api/communication/IMessageDataWrapper';
 
-import type { IObjectData } from './IObjectData';
+import { IObjectData } from './IObjectData';
 import { ObjectDataFlagsEnum } from './ObjectDataFlagsEnum';
 import {
     CrackableDataType,
@@ -58,4 +58,4 @@ export const GetObjectDataFromWrapper = (wrapper: IMessageDataWrapper) => {
     data.parseWrapper(wrapper);
 
     return data;
-}
+};

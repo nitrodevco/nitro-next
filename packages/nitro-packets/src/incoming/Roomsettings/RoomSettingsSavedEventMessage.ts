@@ -1,6 +1,6 @@
+// Body filled by hand from the 2026 client's own parser - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-/* RoomSettingsSavedParser (§_-94§/§_-B1H§) — roomId only */
 export type RoomSettingsSavedEventMessageType = {
     roomId: number;
 };

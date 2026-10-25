@@ -1,4 +1,4 @@
-﻿import type { IRoomPlane } from './IRoomPlane';
+﻿import { IRoomPlane } from './IRoomPlane';
 
 export interface IPlaneVisualization {
     planes: IRoomPlane[];

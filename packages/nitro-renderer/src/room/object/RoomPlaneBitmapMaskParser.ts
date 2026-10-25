@@ -1,8 +1,9 @@
-﻿import { type IRoomMapMask, type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomMapMask, IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 import { RoomMapMaskData } from './RoomMapMaskData';
 import { RoomPlaneBitmapMaskData } from './RoomPlaneBitmapMaskData';
 
+/** Port of Flash `RoomPlaneBitmapMaskParser`. */
 export class RoomPlaneBitmapMaskParser {
     private _masks: Map<string, RoomPlaneBitmapMaskData> = new Map();
 
@@ -70,7 +71,7 @@ export class RoomPlaneBitmapMaskParser {
     public getMaskData(): RoomMapMaskData {
         const data = new RoomMapMaskData();
 
-        for (const [key, mask] of this._masks.entries()) {
+        for (const [ key, mask ] of this._masks.entries()) {
             if (!mask) continue;
 
             const type = this.getMaskType(mask);
@@ -82,7 +83,7 @@ export class RoomPlaneBitmapMaskParser {
                     id: key,
                     type: type,
                     category: category,
-                    locations: [new Vector3d(location.x, location.y, location.z)],
+                    locations: [ new Vector3d(location.x, location.y, location.z) ],
                 };
 
                 data.masks.push(newMask);

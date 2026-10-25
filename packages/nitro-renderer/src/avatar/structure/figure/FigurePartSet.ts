@@ -1,9 +1,8 @@
-
-import type { AvatarFigurePartType, IFigureDataSet, IFigurePart, IFigurePartSet } from '@nitrodevco/nitro-api';
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarGenderType, IFigureDataSet, IFigurePart, IFigurePartSet } from '@nitrodevco/nitro-api';
 
 import { FigurePart } from './FigurePart';
 
+/** Port of Flash `FigurePartSet`. */
 export class FigurePartSet implements IFigurePartSet {
     private _id: number;
     private _type: AvatarFigurePartType;
@@ -118,7 +117,7 @@ export class FigurePartSet implements IFigurePartSet {
 
             if (!existingPart) continue;
 
-            if (existingPart.type !== part.type || existingPart.index > part.index) continue;
+            if (existingPart.type !== part.type || existingPart.index >= part.index) continue;
 
             return i;
         }

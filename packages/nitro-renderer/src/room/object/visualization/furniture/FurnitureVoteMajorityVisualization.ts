@@ -1,13 +1,16 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurnitureVoteMajorityVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash's obfuscated `§_-nZ§`, the visualization `RoomObjectVisualizationFactory` builds
+ * for `furniture_vote_majority`.
+ */
+export class FurnitureVoteMajorityVisualization extends AnimatedFurnitureVisualization {
     private static ONES_SPRITE: string = 'ones_sprite';
     private static TENS_SPRITE: string = 'tens_sprite';
     private static HUNDREDS_SPRITE: string = 'hundreds_sprite';
-    private static HIDE_RESULTS_STATES: number[] = [-1, 1];
+    private static HIDE_RESULTS_STATES: number[] = [ -1, 1 ];
     private static HIDE_RESULTS_VALUE: number = -1;
 
     protected override getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
@@ -30,8 +33,8 @@ export class FurnitureVoteMajorityVisualization extends FurnitureAnimatedVisuali
         const result = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureVoteMajorityResult);
 
         if (
-            !(FurnitureVoteMajorityVisualization.HIDE_RESULTS_STATES.indexOf(this.object.getState(0)) === -1) ||
-            result === FurnitureVoteMajorityVisualization.HIDE_RESULTS_VALUE
+            !(FurnitureVoteMajorityVisualization.HIDE_RESULTS_STATES.indexOf(this.object.getState(0)) === -1)
+            || result === FurnitureVoteMajorityVisualization.HIDE_RESULTS_VALUE
         ) {
             const tag = this.getLayerTag(scale, direction, layerId);
 

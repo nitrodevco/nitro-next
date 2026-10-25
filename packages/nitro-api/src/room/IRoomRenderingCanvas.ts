@@ -1,14 +1,16 @@
-import type { Container, Point, Texture } from 'pixi.js';
+import { Container, Point, Texture } from 'pixi.js';
 
-import type { IRoomGeometry } from './IRoomGeometry';
-import type { ISortableSprite } from './object';
-import type { RoomObjectSpriteData } from './utils';
+import { IRoomGeometry } from './IRoomGeometry';
+import { ISortableSprite } from './object';
+import { RoomObjectSpriteData } from './utils';
 
 export interface IRoomRenderingCanvas {
     dispose(): void;
     initialize(width: number, height: number): void;
     setMask(flag: boolean): void;
+    setBackgroundVisible(flag: boolean): void;
     setScale(scale: number, point?: Point, offsetPoint?: Point): void;
+    setFlip(flipped: boolean, point?: Point, offsetPoint?: Point): void;
     render(time: number, update?: boolean): void;
     update(): void;
     skipSpriteVisibilityChecking(): void;
@@ -36,6 +38,11 @@ export interface IRoomRenderingCanvas {
     screenOffsetX: number;
     screenOffsetY: number;
     scale: number;
+    readonly isFlipped: boolean;
+    /** Flash `fpsCounterEnabled`: the fps, frame time and ping text in the canvas's bottom right corner. */
+    fpsCounterEnabled: boolean;
+    /** Flash `pingMs`: the latency the fps counter shows on its first line; below 0 it shows none. */
+    pingMs: number;
     width: number;
     height: number;
 }

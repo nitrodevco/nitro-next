@@ -7,11 +7,8 @@ export type ModeratorMessageType = {
 
 export class ModeratorMessage implements IIncomingPacket<ModeratorMessageType> {
     public parse(wrapper: IMessageDataWrapper): ModeratorMessageType {
-        const packet: ModeratorMessageType = {
-            message: wrapper.readString(),
-            url: wrapper.readString()
-        };
-
-        return packet;
+        const message = wrapper.readString();
+        const url = wrapper.readString();
+        return { message, url };
     }
 }

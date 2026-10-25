@@ -1,89 +1,122 @@
-import { AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarScaleType, AvatarSetType, type IActiveActionData, IAnimationLayerData, type IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, type ISpriteDataContainer } from '@nitrodevco/nitro-api';
-import { AvatarActionStateType, AvatarGeometryType } from '@nitrodevco/nitro-api';
-import type { Filter, ImageLike, RenderTexture } from 'pixi.js';
-import { ColorMatrixFilter, Container, Sprite } from 'pixi.js';
+import { AvatarActionStateType, AvatarBodyPartType, AvatarDirectionAngle, AvatarFigurePartType, AvatarGeometryType, AvatarScaleType, AvatarSetType, IActiveActionData, IAnimationLayerData, IAvatarDataContainer, IAvatarEffectListener, IAvatarFigureContainer, IAvatarImage, IGraphicAsset, IPartColor, ISpriteDataContainer, RoomObjectSpriteData } from '@nitrodevco/nitro-api';
+import { Container, Filter, ImageLike, Point, PointData, Rectangle, RenderTexture, Sprite, Texture } from 'pixi.js';
 
-import { GetRenderer, GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
+import { ExtendedSprite, GetTickerTime, TexturePool, TextureUtils } from '#renderer/utils';
 
 import { ActiveActionData } from './actions';
-import type { AssetAliasCollection } from './alias';
+import { AssetAliasCollection } from './alias';
 import { AvatarFigureContainer } from './AvatarFigureContainer';
-import type { AvatarStructure } from './AvatarStructure';
+import { AvatarHitAlpha } from './AvatarHitAlpha';
+import { AvatarStructure } from './AvatarStructure';
 import { AvatarImageCache } from './cache';
-import type { EffectAssetDownloadManager } from './EffectAssetDownloadManager';
+import { EffectAssetDownloadManager } from './EffectAssetDownloadManager';
+
+/** A full-figure render kept for re-use, with the row the figure starts at (for the cropped-top variant). */
+export interface AvatarImageCachedFullImage {
+    texture: RenderTexture;
+    topCropY: number;
+}
 
 export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
-    private static CHANNELS_EQUAL: string = 'CHANNELS_EQUAL';
-    private static CHANNELS_UNIQUE: string = 'CHANNELS_UNIQUE';
-    private static CHANNELS_RED: string = 'CHANNELS_RED';
-    private static CHANNELS_GREEN: string = 'CHANNELS_GREEN';
-    private static CHANNELS_BLUE: string = 'CHANNELS_BLUE';
-    private static CHANNELS_DESATURATED: string = 'CHANNELS_DESATURATED';
-    private static DEFAULT_ACTION: string = 'Default';
     private static DEFAULT_DIRECTION: number = 2;
-    private static DEFAULT_AVATAR_SET: string = AvatarSetType.Full;
-    private static MAX_IMAGE_CACHE: number = 5;
+    private static DEFAULT_AVATAR_SET: AvatarSetType = AvatarSetType.Full;
+    /** The idle postures loop over 8 frames, everything else over 4 (the full-image cache key). */
+    private static MAX_IDLE_FRAMES: number = 8;
+    private static MAX_OTHER_FRAMES: number = 4;
+    private static IDLE_ACTION_STRINGS: string[] = [ AvatarActionStateType.Stand, AvatarActionStateType.Lay, AvatarActionStateType.Sit ];
+    private static DEFAULT_FIGURE: string = 'hr-893-45.hd-180-2.ch-210-66.lg-270-82.sh-300-91.wa-2007-.ri-1-';
 
     protected _structure: AvatarStructure;
     protected _assets: AssetAliasCollection;
-    private _effectManager: EffectAssetDownloadManager | undefined;
-    private _effectListener: IAvatarEffectListener | undefined;
+    protected _effectManager: EffectAssetDownloadManager | undefined;
+    protected _effectListener: IAvatarEffectListener | undefined;
     protected _figure: IAvatarFigureContainer;
     protected _scale: AvatarScaleType;
+    /** Flash `h_50`: rendered from the large assets and halved. */
+    protected _largeScaledSmall: boolean;
     protected _cache: AvatarImageCache;
     protected _mainDirection: number;
     protected _headDirection: number;
-    protected _actions: ActiveActionData[];
-    protected _defaultAction: IActiveActionData;
-    protected _fullImageCache: Map<string, RenderTexture>;
-    protected _isCachedImage: boolean;
-    protected _image: RenderTexture | undefined;
-    protected _avatarSpriteData: IAvatarDataContainer | undefined = undefined;
-
-
     protected _mainAction: IActiveActionData;
-    protected _disposed: boolean = false;
+    protected _defaultAction: IActiveActionData;
+    protected _actions: ActiveActionData[];
     protected _canvasOffsets: number[] = [];
-    protected _reusableTexture: RenderTexture;
-
+    protected _image: RenderTexture | undefined = undefined;
+    protected _isCachedImage: boolean = false;
+    /** A view of `_image` without the empty rows above the figure. */
+    protected _croppedTopImage: Texture | undefined = undefined;
+    /** The first row `_image` has figure pixels on; -1 until the image is rendered. */
+    protected _topCropY: number = -1;
+    protected _avatarSpriteData: IAvatarDataContainer | undefined = undefined;
+    protected _disposed: boolean = false;
+    protected _sortedActions: IActiveActionData[] = [];
+    private _fullImageCache: Map<string, AvatarImageCachedFullImage> = new Map();
+    /** The cached frames by what they are made of (`getImageInternal`): one texture for the same picture under several keys. */
+    private _fullImageBySignature: Map<string, AvatarImageCachedFullImage> = new Map();
+    private static readonly _objectIds = new WeakMap<object, number>();
+    private static readonly _partSignatures = new WeakMap<Container, string>();
+    private static _nextObjectId = 1;
     private _frameCounter: number = 0;
     private _directionOffset: number = 0;
     private _changes: boolean = true;
-    private _sprites: ISpriteDataContainer[];
+    private _sprites: ISpriteDataContainer[] = [];
     private _isAnimating: boolean = false;
     private _animationHasResetOnToggle: boolean = false;
     private _actionsSorted: boolean = false;
-    private _sortedActions: IActiveActionData[];
-    private _lastActionsString: string;
-    private _currentActionsString: string;
+    private _lastActionsString: string = '';
+    private _currentActionsString: string = '';
     private _useFullImageCache: boolean = false;
     private _effectIdInUse: number = -1;
+    /** The running effect's animation id and the frame it started on: its layers count from there. */
+    private _effectAnimationId: string | undefined = undefined;
+    private _effectAnimationStartFrame: number = 0;
     private _animationFrameCount: number = 0;
     private _cachedBodyParts: AvatarBodyPartType[] = [];
     private _cachedBodyPartsDirection: number = -1;
-    private _cachedBodyPartsGeometryType: AvatarGeometryType = AvatarGeometryType.Vertical;
-    private _cachedBodyPartsAvatarSet: AvatarSetType = AvatarSetType.Full;
+    private _cachedBodyPartsGeometryType: AvatarGeometryType | undefined = undefined;
+    private _cachedBodyPartsAvatarSet: AvatarSetType | undefined = undefined;
+    private _onDisposed: ((image: AvatarImage) => void) | undefined;
+    /**
+     * The tree a set is laid out in for rendering, reused by every render: an animating avatar is
+     * re-rendered every few frames, and a fresh tree (a root, a container per part and the render
+     * group Pixi gives the root) was ~14KB of garbage each time. Only ever used synchronously.
+     */
+    private _setContainer: Container | undefined = undefined;
+    /** The parts of the frame last drawn into `_image`, for its hit test (`AvatarHitAlpha`). */
+    private readonly _hitAlpha = new AvatarHitAlpha();
+    private _setPartContainers: Container[] = [];
+    private _setPartCount: number = 0;
+    private _setImageFilter: Filter | undefined = undefined;
 
-    constructor(structure: AvatarStructure, assets: AssetAliasCollection, container: AvatarFigureContainer | undefined, scale: AvatarScaleType, effectManager: EffectAssetDownloadManager | undefined = undefined, effectListener: IAvatarEffectListener | undefined = undefined) {
+    constructor(structure: AvatarStructure, assets: AssetAliasCollection, container: AvatarFigureContainer | undefined, scale: AvatarScaleType, effectManager: EffectAssetDownloadManager | undefined = undefined, effectListener: IAvatarEffectListener | undefined = undefined, onDisposed: ((image: AvatarImage) => void) | undefined = undefined) {
         this._structure = structure;
         this._assets = assets;
         this._effectManager = effectManager;
         this._effectListener = effectListener;
+        this._onDisposed = onDisposed;
+        this._largeScaledSmall = false;
 
-        if (!container) container = new AvatarFigureContainer('hr-893-45.hd-180-2.ch-210-66.lg-270-82.sh-300-91.wa-2007-.ri-1-');
+        if (!scale) scale = AvatarScaleType.Large;
+        else if (scale === AvatarScaleType.LargeToSmall) {
+            this._largeScaledSmall = true;
+
+            scale = AvatarScaleType.Small;
+        }
+
+        if (!container) container = new AvatarFigureContainer(AvatarImage.DEFAULT_FIGURE);
 
         this._figure = container;
         this._scale = scale;
-        this._cache = new AvatarImageCache(this._structure, this, this._assets, this._scale);
+        this._cache = new AvatarImageCache(this._structure, this, this._assets, this._scale, this._largeScaledSmall);
 
-        this.setDirection(AvatarSetType.Full, 2);
+        this.setDirection(AvatarImage.DEFAULT_AVATAR_SET, AvatarImage.DEFAULT_DIRECTION);
+
         this._actions = [];
         this._defaultAction = new ActiveActionData(AvatarActionStateType.Stand);
-        this._defaultAction.definition = this._structure.getActionDefinition(AvatarImage.DEFAULT_ACTION);
+        this._defaultAction.definition = this._structure.getDefaultActionDefinition();
+        this._mainAction = this._defaultAction;
+
         this.resetActions();
-        this._fullImageCache = new Map();
-        this._isCachedImage = false;
-        this._image = undefined;
     }
 
     public dispose(): void {
@@ -93,17 +126,47 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         this._image = undefined;
 
-        if (this._cache) {
-            this._cache.dispose();
-        }
+        this.disposeCroppedTopImage();
 
-        if (this._fullImageCache) {
-            for (const image of this._fullImageCache.values()) TexturePool.releaseTexture(image);
+        // The part images belong to the cache; only the containers holding them go.
+        for (const partContainer of this._setPartContainers) partContainer.destroy({ children: false });
 
-            this._fullImageCache.clear();
-        }
+        this._setPartContainers = [];
+        this._setContainer?.destroy({ children: false });
+        this._setContainer = undefined;
+
+        if (this._cache) this._cache.dispose();
+
+        this.disposeFullImageCache();
 
         this._disposed = true;
+
+        if (this._onDisposed) this._onDisposed(this);
+    }
+
+    /** Flash `resetCache`: everything rendered is thrown away, the next `getImage` starts from the current assets. */
+    public resetCache(): void {
+        if (this._cache) this._cache.reset();
+
+        this.disposeFullImageCache();
+
+        this._cachedBodyParts = [];
+        this._cachedBodyPartsDirection = -1;
+        this._cachedBodyPartsGeometryType = undefined;
+        this._cachedBodyPartsAvatarSet = undefined;
+        this._lastActionsString = '';
+        this._actionsSorted = false;
+        this._changes = true;
+
+        if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
+
+        this._image = undefined;
+        this._isCachedImage = false;
+
+        this.disposeCroppedTopImage();
+
+        this._topCropY = -1;
+        this._frameCounter = 0;
     }
 
     public setDirection(setType: AvatarSetType, direction: number): void {
@@ -129,8 +192,13 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         this.setDirection(setType, Math.floor(angle / 45));
     }
 
+    /** An effect's sprite layers count frames from the frame the effect was appended on. */
     public getLayerData(sprite: ISpriteDataContainer): IAnimationLayerData | undefined {
-        return this._structure.getBodyPartData(sprite.animation.id, this._frameCounter, sprite.id);
+        let frame = this._frameCounter;
+
+        if (sprite.animation.id === this._effectAnimationId) frame -= this._effectAnimationStartFrame;
+
+        return this._structure.getBodyPartData(sprite.animation.id, frame, sprite.id);
     }
 
     public updateAnimationByFrames(frame: number = 1): void {
@@ -140,11 +208,26 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
     public resetAnimationFrameCounter(): void {
         this._frameCounter = 0;
+        this._effectAnimationStartFrame = 0;
         this._changes = true;
     }
 
-    public getImage(setType: AvatarSetType, hightlight: boolean, _scale: number = 1): RenderTexture | undefined {
-        if (!this._changes) return this._image;
+    public getImage(setType: AvatarSetType, hightlight: boolean, scale: number = 1): RenderTexture | undefined {
+        return this.getImageInternal(setType, hightlight, scale, false) as RenderTexture | undefined;
+    }
+
+    public getImageWithCroppedTop(setType: AvatarSetType, hightlight: boolean, scale: number = 1): Texture | undefined {
+        return this.getImageInternal(setType, hightlight, scale, true);
+    }
+
+    private getImageInternal(setType: AvatarSetType, hightlight: boolean, scale: number, croppedTop: boolean): Texture | undefined {
+        if (!this._changes) {
+            if (!croppedTop) return this._image;
+
+            if (this._topCropY >= 0) return this.getCroppedTopImage();
+
+            this._changes = true;
+        }
 
         if (!this._mainAction?.definition) return undefined;
 
@@ -153,14 +236,19 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         const cacheKey = this.getFullImageCacheKey();
 
         if (cacheKey) {
-            const texture = this.getFullImage(cacheKey);
+            const cached = this.getFullImage(cacheKey);
 
-            if (texture) {
+            if (cached) {
                 this._changes = false;
-                this._image = texture;
+
+                // The view is kept while it frames the same pixels (`getCroppedTopImage`): an idle
+                // avatar comes back to the frame it shows on every animation tick, and a new view of
+                // it would be a texture change - a redraw of the room - twelve times a second.
+                this._topCropY = Math.max(0, cached.topCropY);
+                this._image = cached.texture;
                 this._isCachedImage = true;
 
-                return this._image;
+                return croppedTop ? this.getCroppedTopImage() : this._image;
             }
         }
 
@@ -168,27 +256,23 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         if (!avatarCanvas) return undefined;
 
-        if (this._isCachedImage || !this._image || this._image.width !== avatarCanvas.width || this._image.height !== avatarCanvas.height) {
-            if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
-
-            this._image = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
-            this._isCachedImage = false;
-        }
-
         const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
-        const container = new Container();
+        const container = this.beginSetContainer();
 
         let isCachable = true;
+        let topY = avatarCanvas.height;
+        // What the frame is made of: the canvas, the effect's filter and every part image where it goes.
+        let signature = `${avatarCanvas.width}x${avatarCanvas.height}:${AvatarImage.objectId(this._avatarSpriteData?.imageFilter)}`;
 
         for (let i = parts.length - 1; i >= 0; i--) {
-            const set = parts[i];
-            const part = this._cache.getImageContainer(set, this._frameCounter);
+            const part = this._cache.getImageContainer(parts[i], this._frameCounter);
 
             if (!part || !part.image) continue;
 
             isCachable &&= part.isCacheable;
 
-            const point = part.regPoint.clone();
+            // `regPoint` is already a copy.
+            const point = part.regPoint;
 
             point.x += avatarCanvas.offset.x;
             point.y += avatarCanvas.offset.y;
@@ -196,50 +280,159 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             point.x += avatarCanvas.regPoint.x;
             point.y += avatarCanvas.regPoint.y;
 
-            const partContainer = new Container();
+            this.addSetPart(container, part.image, point.x, point.y);
 
-            partContainer.addChild(part.image);
-            partContainer.position.set(point.x, point.y);
-
-            container.addChild(partContainer);
+            signature += `|${AvatarImage.partSignature(part.image)}@${point.x},${point.y}`;
+            topY = Math.min(topY, point.y);
         }
 
-        if (this._avatarSpriteData) {
-            const filters: Filter[] = [];
+        this.endSetContainer(container);
 
-            if (!container.filters) container.filters = [];
+        /*
+         * The idle cycle's eight cache keys, and an animation's held frames, are mostly the same
+         * picture: frames built from the same part images in the same places share one cached
+         * texture rather than each drawing its own copy. The sprite then keeps its texture, and
+         * an idle avatar stops redrawing the room every animation tick.
+         */
+        if (cacheKey && isCachable && (scale === 1)) {
+            const same = this._fullImageBySignature.get(signature);
 
-            if (this._avatarSpriteData.colorTransform) filters.push(this._avatarSpriteData.colorTransform);
+            if (same && !same.texture.destroyed) {
+                this._fullImageCache.set(cacheKey, same);
 
-            //if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
+                if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
 
-            container.filters = filters;
-        }
+                this._image = same.texture;
+                this._isCachedImage = true;
+                this._topCropY = same.topCropY;
+                this._changes = false;
 
-        GetRenderer().render({
-            target: this._image,
-            container,
-            clear: true
-        });
-
-        if (cacheKey && isCachable) {
-            const imageClone = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
-
-            if (imageClone) {
-                GetRenderer().render({
-                    target: imageClone,
-                    container,
-                    clear: true
-                });
-
-                this.cacheFullImage(cacheKey, imageClone);
+                return croppedTop ? this.getCroppedTopImage() : this._image;
             }
         }
 
-        return this._image;
+        this.disposeCroppedTopImage();
+
+        this._topCropY = (topY === avatarCanvas.height) ? 0 : Math.max(0, Math.min((avatarCanvas.height - 1), topY));
+
+        // A frame that goes into the full image cache is drawn once, straight into its cache
+        // texture, and shown from there - what the next request for it gets anyway.
+        const cachedImage = (cacheKey && isCachable && (scale === 1)) ? TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height) : undefined;
+
+        if (cachedImage) {
+            if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
+
+            this._image = cachedImage;
+            this._isCachedImage = true;
+        } else if (this._isCachedImage || !this._image || this._image.width !== avatarCanvas.width || this._image.height !== avatarCanvas.height) {
+            if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
+
+            this._image = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
+            this._isCachedImage = false;
+        }
+
+        if (!this._image) return undefined;
+
+        TextureUtils.getRenderer().render({
+            target: this._image,
+            container,
+            clear: true,
+        });
+
+        this._changes = false;
+
+        // What was drawn, for a hit test to rebuild its alpha from without reading the GPU back.
+        this._hitAlpha.capture(container);
+
+        if (cachedImage && cacheKey) {
+            AvatarImage.provideHitAlpha(cachedImage, this._hitAlpha.clone(), 1);
+            this.cacheFullImage(cacheKey, cachedImage, this._topCropY);
+
+            const entry = this.getFullImage(cacheKey);
+
+            if (entry) this._fullImageBySignature.set(signature, entry);
+        } else {
+            // Drawn again in place for an action the cache leaves out (a dance, talking, a turned head): the last frame's alpha is stale.
+            ExtendedSprite.removeHitmap(this._image.source);
+            AvatarImage.provideHitAlpha(this._image, this._hitAlpha, 1);
+
+            if (cacheKey && isCachable) {
+                const imageClone = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
+
+                if (imageClone) {
+                    TextureUtils.getRenderer().render({
+                        target: imageClone,
+                        container,
+                        clear: true,
+                    });
+
+                    AvatarImage.provideHitAlpha(imageClone, this._hitAlpha.clone(), 1);
+                    this.cacheFullImage(cacheKey, imageClone, this._topCropY);
+                }
+            }
+        }
+
+        if (scale !== 1) {
+            const reduced = TextureUtils.createReducedTexture(this._image, scale);
+
+            if (reduced) {
+                TexturePool.releaseTexture(this._image);
+
+                this._image = reduced;
+                this._topCropY = Math.max(0, Math.min((reduced.height - 1), Math.round(this._topCropY * scale)));
+
+                AvatarImage.provideHitAlpha(reduced, this._hitAlpha, scale);
+            }
+        }
+
+        return croppedTop ? this.getCroppedTopImage() : this._image;
     }
 
-    public async getCroppedImageAsync(setType: AvatarSetType, hightlight: boolean, _scale: number = 1): Promise<ImageLike | undefined> {
+    /** The same pixels as `_image`, framed from the first row the figure occupies (the room sprite's texture). */
+    private getCroppedTopImage(): Texture | undefined {
+        if (!this._image) return undefined;
+
+        if (this._topCropY <= 0) return this._image;
+
+        const height = Math.max(1, (this._image.height - this._topCropY));
+
+        if (!this._croppedTopImage || this._croppedTopImage.source !== this._image.source || this._croppedTopImage.width !== this._image.width || this._croppedTopImage.height !== height) {
+            this.disposeCroppedTopImage();
+
+            this._croppedTopImage = new Texture({
+                source: this._image.source,
+                frame: new Rectangle(0, this._topCropY, this._image.width, height),
+            });
+        }
+
+        return this._croppedTopImage;
+    }
+
+    protected disposeCroppedTopImage(): void {
+        if (!this._croppedTopImage) return;
+
+        // a view over `_image`: only the view goes, never the pixels
+        this._croppedTopImage.destroy(false);
+        this._croppedTopImage = undefined;
+    }
+
+    public getHeadRegPoints(_setType: AvatarSetType): Point {
+        const container = this._cache.getImageContainer(AvatarBodyPartType.Head, this._frameCounter);
+
+        if (!container) return new Point(0, 0);
+
+        return new Point(container.regPoint.x, container.regPoint.y);
+    }
+
+    public getFaceOffset(_setType: AvatarSetType): Point {
+        const container = this._cache.getImageContainer(AvatarBodyPartType.Head, this._frameCounter);
+
+        if (!container?.faceOffset) return new Point(0, 0);
+
+        return new Point(container.faceOffset.x, container.faceOffset.y);
+    }
+
+    public getCroppedImage(setType: AvatarSetType, hightlight: boolean, scale: number = 1): RenderTexture | undefined {
         if (!this._mainAction?.definition) return undefined;
 
         if (!this._actionsSorted) this.endActionAppends();
@@ -248,56 +441,64 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         if (!avatarCanvas) return undefined;
 
-        const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
-        const container = new Container();
+        const container = this.buildSetContainer(setType, avatarCanvas.offset, avatarCanvas.regPoint);
 
-        let isCachable = true;
+        // The Flash `getCroppedImage` blitted every part of the set onto the avatar canvas, then
+        // copied out the union of the parts' bounds - a head set comes back as just the head,
+        // not the head floating at the top of a full-body canvas. Only the drawn sprites count:
+        // every part container also holds a `Texture.EMPTY` placeholder sized to the part's
+        // full union box, which can reach far outside the canvas (a layer with a large negative
+        // offset) and would otherwise push the head into a corner of the crop.
+        const placeholders: Sprite[] = [];
 
-        for (let i = parts.length - 1; i >= 0; i--) {
-            const set = parts[i];
-            const part = this._cache.getImageContainer(set, this._frameCounter);
+        const hidePlaceholders = (node: Container) => {
+            for (const child of node.children) {
+                if ((child instanceof Sprite) && (child.texture === Texture.EMPTY)) {
+                    child.measurable = false;
+                    placeholders.push(child);
+                }
 
-            if (!part || !part.image) continue;
+                hidePlaceholders(child);
+            }
+        };
 
-            isCachable &&= part.isCacheable;
+        hidePlaceholders(container);
 
-            const point = part.regPoint.clone();
+        const bounds = container.getLocalBounds().rectangle.clone();
 
-            point.x += avatarCanvas.offset.x;
-            point.y += avatarCanvas.offset.y;
+        for (const placeholder of placeholders) placeholder.measurable = true;
 
-            point.x += avatarCanvas.regPoint.x;
-            point.y += avatarCanvas.regPoint.y;
+        if ((bounds.width <= 0) || (bounds.height <= 0)) return undefined;
 
-            const partContainer = new Container();
+        const fullWidth = Math.max(1, Math.ceil(bounds.width));
+        const fullHeight = Math.max(1, Math.ceil(bounds.height));
+        const fullTexture = TexturePool.createRenderTexture(fullWidth, fullHeight);
 
-            partContainer.addChild(part.image);
-            partContainer.position.set(point.x, point.y);
+        if (!fullTexture) return undefined;
 
-            container.addChild(partContainer);
-        }
+        container.position.set(-bounds.x, -bounds.y);
 
-        if (this._avatarSpriteData) {
-            const filters: Filter[] = [];
+        TextureUtils.getRenderer().render({
+            target: fullTexture,
+            container,
+            clear: true,
+        });
 
-            if (!container.filters) container.filters = [];
+        if (scale === 1) return fullTexture;
 
-            if (this._avatarSpriteData.colorTransform) filters.push(this._avatarSpriteData.colorTransform);
+        // Flash drew the reduced copy with `smoothing = true` and then sharpened it - a plain
+        // nearest-neighbour half-size render drops every other row of a pixel-art head.
+        const texture = TextureUtils.createReducedTexture(fullTexture, scale);
 
-            //if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
+        TexturePool.releaseTexture(fullTexture);
 
-            container.filters = filters;
-        }
+        return texture;
+    }
 
-        const texture = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
+    public async getCroppedImageAsync(setType: AvatarSetType, hightlight: boolean, _scale: number = 1): Promise<ImageLike | undefined> {
+        const texture = this.renderSetToCanvasTexture(setType);
 
         if (!texture) return undefined;
-
-        GetRenderer().render({
-            target: texture,
-            container,
-            clear: true
-        });
 
         const image = await TextureUtils.generateImage(texture);
 
@@ -307,6 +508,94 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     public async getCroppedBase64Async(setType: AvatarSetType, hightlight: boolean, _scale: number = 1): Promise<string | undefined> {
+        const texture = this.renderSetToCanvasTexture(setType);
+
+        if (!texture) return undefined;
+
+        const sprite = new Sprite(texture);
+        const base64 = await TextureUtils.getRenderer().extract.base64(sprite);
+
+        sprite.destroy();
+        TexturePool.releaseTexture(texture);
+
+        return base64;
+    }
+
+    /** The set's parts laid out on the avatar canvas, with the effect's image filter applied. */
+    private buildSetContainer(setType: AvatarSetType, canvasOffset: PointData, canvasRegPoint: PointData): Container {
+        const parts = this.getBodyParts(setType, this._mainAction.definition!.geometryType, this._mainDirection);
+        const container = this.beginSetContainer();
+
+        for (let i = parts.length - 1; i >= 0; i--) {
+            const part = this._cache.getImageContainer(parts[i], this._frameCounter);
+
+            if (!part || !part.image) continue;
+
+            // `regPoint` is already a copy.
+            const point = part.regPoint;
+
+            point.x += canvasOffset.x;
+            point.y += canvasOffset.y;
+
+            point.x += canvasRegPoint.x;
+            point.y += canvasRegPoint.y;
+
+            this.addSetPart(container, part.image, point.x, point.y);
+        }
+
+        this.endSetContainer(container);
+
+        return container;
+    }
+
+    /** Empties the reused set tree for a new layout: no parts, at the origin. */
+    private beginSetContainer(): Container {
+        const container = (this._setContainer ??= new Container());
+
+        if (container.children.length) container.removeChildren();
+
+        container.position.set(0, 0);
+
+        this._setPartCount = 0;
+
+        return container;
+    }
+
+    /** Adds a part image at its canvas position, in the next pooled part container. */
+    private addSetPart(container: Container, image: Container, x: number, y: number): void {
+        let partContainer = this._setPartContainers[this._setPartCount];
+
+        if (!partContainer) {
+            partContainer = new Container();
+
+            this._setPartContainers[this._setPartCount] = partContainer;
+        }
+
+        this._setPartCount++;
+
+        if ((partContainer.children.length !== 1) || (partContainer.children[0] !== image)) {
+            if (partContainer.children.length) partContainer.removeChildren();
+
+            partContainer.addChild(image);
+        }
+
+        partContainer.position.set(x, y);
+
+        container.addChild(partContainer);
+    }
+
+    /** The effect's image filter on the whole set, set only when it changes (Pixi copies the list on every write). */
+    private endSetContainer(container: Container): void {
+        const imageFilter = this._avatarSpriteData?.imageFilter;
+
+        if (imageFilter === this._setImageFilter) return;
+
+        this._setImageFilter = imageFilter;
+
+        container.filters = imageFilter ? [ imageFilter ] : [];
+    }
+
+    private renderSetToCanvasTexture(setType: AvatarSetType): RenderTexture | undefined {
         if (!this._mainAction?.definition) return undefined;
 
         if (!this._actionsSorted) this.endActionAppends();
@@ -315,62 +604,18 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         if (!avatarCanvas) return undefined;
 
-        const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
-        const container = new Container();
-
-        let isCachable = true;
-
-        for (let i = parts.length - 1; i >= 0; i--) {
-            const set = parts[i];
-            const part = this._cache.getImageContainer(set, this._frameCounter);
-
-            if (!part || !part.image) continue;
-
-            isCachable &&= part.isCacheable;
-
-            const point = part.regPoint.clone();
-
-            point.x += avatarCanvas.offset.x;
-            point.y += avatarCanvas.offset.y;
-
-            point.x += avatarCanvas.regPoint.x;
-            point.y += avatarCanvas.regPoint.y;
-
-            const partContainer = new Container();
-
-            partContainer.addChild(part.image);
-            partContainer.position.set(point.x, point.y);
-
-            container.addChild(partContainer);
-        }
-
-        if (this._avatarSpriteData) {
-            const filters: Filter[] = [];
-
-            if (!container.filters) container.filters = [];
-
-            if (this._avatarSpriteData.colorTransform) filters.push(this._avatarSpriteData.colorTransform);
-
-            //if (this._avatarSpriteData.paletteIsGrayscale) filters.push(this.getGrayscaleFilter(), new PaletteMapFilter(this._avatarSpriteData.reds, PaletteMapFilter.CHANNEL_RED));
-
-            container.filters = filters;
-        }
-
+        const container = this.buildSetContainer(setType, avatarCanvas.offset, avatarCanvas.regPoint);
         const texture = TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height);
 
         if (!texture) return undefined;
 
-        GetRenderer().render({
+        TextureUtils.getRenderer().render({
             target: texture,
             container,
-            clear: true
+            clear: true,
         });
 
-        const base64 = await GetRenderer().extract.base64(new Sprite(texture));
-
-        TexturePool.releaseTexture(texture);
-
-        return base64;
+        return texture;
     }
 
     public initActionAppends(): void {
@@ -383,59 +628,64 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     public endActionAppends(): void {
         if (!this.sortActions()) return;
 
-        for (const action of this._sortedActions) if (action.type === AvatarActionStateType.Effect && this._effectManager && !this._effectManager.isAvatarEffectReady(action.actionParameter)) this._effectManager.downloadAvatarEffect(action.actionParameter, this);
+        for (const action of this._sortedActions) {
+            if (action.type !== AvatarActionStateType.Effect || !this._effectManager) continue;
+
+            const effectId = parseInt(action.actionParameter);
+
+            if (!this._effectManager.isAvatarEffectReady(effectId)) this._effectManager.downloadAvatarEffect(effectId, this);
+        }
 
         this.resetActions();
         this.setActionsToParts();
     }
 
-    public appendAction(action: AvatarActionStateType, ..._args: (AvatarActionStateType | number)[]): boolean {
-        const state: AvatarActionStateType | number = _args[0];
+    public appendAction(action: AvatarActionStateType, ..._args: (AvatarActionStateType | number | string)[]): boolean {
+        const parameter = (_args.length > 0 && _args[0] !== undefined) ? _args[0].toString() : '';
 
         this._actionsSorted = false;
 
         switch (action) {
             case AvatarActionStateType.Posture: {
-                switch (state) {
+                switch (parameter as AvatarActionStateType) {
                     case AvatarActionStateType.Lay:
                         this.setDirection(AvatarSetType.Full, this._mainDirection === 0 ? 4 : 2);
-                    // eslint-disable-next-line no-fallthrough
+                    // falls through, as Flash's does
                     case AvatarActionStateType.Walk:
-                        this._useFullImageCache = true;
-                    // eslint-disable-next-line no-fallthrough
                     case AvatarActionStateType.Stand:
+                    case AvatarActionStateType.Sit:
                         this._useFullImageCache = true;
-                    // eslint-disable-next-line no-fallthrough
+                        this.addActionData(parameter as AvatarActionStateType);
+                        break;
                     case AvatarActionStateType.Swim:
                     case AvatarActionStateType.Float:
-                    case AvatarActionStateType.Sit:
                     case AvatarActionStateType.SnowwarRun:
                     case AvatarActionStateType.SnowwarDieFront:
                     case AvatarActionStateType.SnowwarDieBack:
                     case AvatarActionStateType.SnowwarPick:
-                    case AvatarActionStateType.SnowwarThrow: {
-                        this.addActionData(state);
+                    case AvatarActionStateType.SnowwarThrow:
+                        this._useFullImageCache = false;
+                        this.addActionData(parameter as AvatarActionStateType);
                         break;
-                    }
                 }
 
                 break;
             }
             case AvatarActionStateType.Gesture: {
-                switch (state) {
+                switch (parameter as AvatarActionStateType) {
                     case AvatarActionStateType.Angry:
                     case AvatarActionStateType.Sad:
                     case AvatarActionStateType.Smile:
-                    case AvatarActionStateType.Surprised: {
-                        this.addActionData(state);
-                    }
+                    case AvatarActionStateType.Surprised:
+                        this.addActionData(parameter as AvatarActionStateType);
+                        break;
                 }
 
                 break;
             }
             case AvatarActionStateType.Effect:
-                if (state === 33 || state === 34 || state === 35 || state === 36 || state === 38 || state === 39) this._useFullImageCache = true;
-            // eslint-disable-next-line no-fallthrough
+                if (parameter === '33' || parameter === '34' || parameter === '35' || parameter === '36' || parameter === '38' || parameter === '39') this._useFullImageCache = true;
+            // falls through, as Flash's does
             case AvatarActionStateType.Dance:
             case AvatarActionStateType.Talk:
             case AvatarActionStateType.Wave:
@@ -443,17 +693,21 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
             case AvatarActionStateType.Sign:
             case AvatarActionStateType.Respect:
             case AvatarActionStateType.BlowAKiss:
+            case AvatarActionStateType.Expression67:
             case AvatarActionStateType.Laugh:
             case AvatarActionStateType.Cry:
             case AvatarActionStateType.Idle:
             case AvatarActionStateType.SnowboardOllie:
             case AvatarActionStateType.Snowboard360:
             case AvatarActionStateType.RideJump:
-                this.addActionData(action, state as unknown as number);
+                this.addActionData(action, parameter);
                 break;
             case AvatarActionStateType.CarryObject:
             case AvatarActionStateType.UseObject: {
-                this.addActionData(action, parseInt(this._structure.getActionDefinitionWithState(action)?.getParameterValue(state.toString()) ?? '0'));
+                // the item id maps to the asset id through the action's params
+                const definition = this._structure.getActionDefinitionWithState(action);
+
+                this.addActionData(action, definition ? definition.getParameterValue(parameter) : parameter);
                 break;
             }
         }
@@ -461,16 +715,65 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         return true;
     }
 
+    /*
+     * The placeholder and blocked images' `appendAction`: only the plain postures go through
+     * the full path, a handful of overlays are added raw (no item-id mapping - the stand-in
+     * figure has no such parts) and everything else is ignored.
+     */
+    protected appendRestrictedAction(action: AvatarActionStateType, args: (AvatarActionStateType | number | string)[]): boolean {
+        const parameter = (args.length > 0 && args[0] !== undefined) ? args[0].toString() : '';
+
+        switch (action) {
+            case AvatarActionStateType.Posture: {
+                switch (parameter as AvatarActionStateType) {
+                    case AvatarActionStateType.Lay:
+                    case AvatarActionStateType.Walk:
+                    case AvatarActionStateType.Stand:
+                    case AvatarActionStateType.Swim:
+                    case AvatarActionStateType.Float:
+                    case AvatarActionStateType.Sit:
+                        AvatarImage.prototype.appendAction.call(this, action, ...args);
+                        break;
+                }
+
+                break;
+            }
+            case AvatarActionStateType.Effect:
+            case AvatarActionStateType.Dance:
+            case AvatarActionStateType.Wave:
+            case AvatarActionStateType.Sign:
+            case AvatarActionStateType.CarryObject:
+            case AvatarActionStateType.UseObject:
+            case AvatarActionStateType.BlowAKiss:
+            case AvatarActionStateType.Expression67:
+                this.addActionData(action, parameter);
+                break;
+        }
+
+        return true;
+    }
+
+    protected addActionData(type: AvatarActionStateType, parameter: string = ''): void {
+        if (!this._actions) this._actions = [];
+
+        for (const action of this._actions) if (action.type === type && action.actionParameter === parameter) return;
+
+        let startFrame = this._frameCounter;
+
+        // re-appending the running effect keeps its original start frame, so its animation does not restart
+        if (type === AvatarActionStateType.Effect && parameter === this._effectIdInUse.toString() && this._effectAnimationId !== undefined) startFrame = this._effectAnimationStartFrame;
+
+        this._actions.push(new ActiveActionData(type, parameter, startFrame));
+    }
+
     public disposeInactiveActionCache(): void {
         this._cache?.disposeInactiveActions();
     }
 
     public getTotalFrameCount(): number {
-        const actions = this._sortedActions;
-
         let frameCount = this._animationFrameCount;
 
-        for (const action of actions) {
+        for (const action of this._sortedActions) {
             if (!action?.definition) continue;
 
             const animation = this._structure.animationManager.getAnimation(`${action.definition.state}.${action.actionParameter}`);
@@ -487,6 +790,11 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         return this._figure;
     }
 
+    /** The effect the image draws, or -1; `AvatarRenderManager.purgeAssets` keeps its libraries. */
+    public get effectIdInUse(): number {
+        return this._effectIdInUse;
+    }
+
     public getScale(): AvatarScaleType {
         return this._scale;
     }
@@ -497,6 +805,24 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
     public getSprites(): ISpriteDataContainer[] {
         return this._sprites;
+    }
+
+    /** Flash `getServerRenderData`: the whole figure's parts, collected now, for the camera's server render. */
+    public getServerRenderData(): RoomObjectSpriteData[] {
+        this.getAvatarPartsForCamera(AvatarSetType.Full);
+
+        return this._cache.getServerRenderData();
+    }
+
+    /** Flash `getAvatarPartsForCamera`: every body part of the set, the nearest last, into the cache's server render data. */
+    private getAvatarPartsForCamera(setType: AvatarSetType): void {
+        if (!this._mainAction?.definition) return;
+
+        if (!this._structure.getCanvas(this._scale, this._mainAction.definition.geometryType)) return;
+
+        const parts = this.getBodyParts(setType, this._mainAction.definition.geometryType, this._mainDirection);
+
+        for (let i = parts.length - 1; i >= 0; i--) this._cache.getImageContainer(parts[i], this._frameCounter, true);
     }
 
     public getCanvasOffsets(): number[] {
@@ -516,6 +842,10 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     public isPlaceholder(): boolean {
+        return false;
+    }
+
+    public isBlocked(): boolean {
         return false;
     }
 
@@ -551,20 +881,90 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         return this._disposed;
     }
 
-    private getFullImage(key: string): RenderTexture | undefined {
+    /** Lets the hit test build `image`'s alpha from `hitAlpha`, drawn `scale` times the canvas size. */
+    private static provideHitAlpha(image: Texture, hitAlpha: AvatarHitAlpha, scale: number): void {
+        const source = image.source;
+
+        ExtendedSprite.setAlphaProvider(source, () => hitAlpha.compose(source.pixelWidth, source.pixelHeight, scale * source.resolution));
+    }
+
+    protected getFullImage(key: string): AvatarImageCachedFullImage | undefined {
         return this._fullImageCache.get(key);
     }
 
-    private cacheFullImage(key: string, texture: RenderTexture): void {
+    protected cacheFullImage(key: string, texture: RenderTexture, topCropY: number): void {
         const existing = this._fullImageCache.get(key);
 
         if (existing) {
             this._fullImageCache.delete(key);
 
-            TexturePool.releaseTexture(existing);
+            // Released only once no other key shows the same frame.
+            if (![ ...this._fullImageCache.values() ].includes(existing)) {
+                for (const [ signature, image ] of this._fullImageBySignature) if (image === existing) this._fullImageBySignature.delete(signature);
+
+                TexturePool.releaseTexture(existing.texture);
+            }
         }
 
-        this._fullImageCache.set(key, texture);
+        this._fullImageCache.set(key, { texture, topCropY });
+    }
+
+    protected disposeFullImageCache(): void {
+        // A texture several keys share (`_fullImageBySignature`) goes back to the pool once.
+        for (const image of new Set(this._fullImageCache.values())) TexturePool.releaseTexture(image.texture);
+
+        this._fullImageCache.clear();
+        this._fullImageBySignature.clear();
+    }
+
+    /**
+     * What a part image draws - each sprite's texture, placement, tint and alpha - read once per
+     * part image, which is not changed once built. Part images are built per frame number even
+     * where every frame draws the same assets (the idle cycle's body), so they are compared by this.
+     */
+    private static partSignature(image: Container): string {
+        let signature = AvatarImage._partSignatures.get(image);
+
+        if (signature !== undefined) return signature;
+
+        signature = '';
+
+        const walk = (node: Container) => {
+            if (!node.visible) return;
+
+            node.updateLocalTransform();
+
+            if ((node instanceof Sprite) && (node.texture !== Texture.EMPTY)) {
+                const { a, b, c, d, tx, ty } = node.localTransform;
+
+                signature += `${AvatarImage.objectId(node.texture)}:${a},${b},${c},${d},${tx},${ty},${node.tint},${node.alpha},${node.blendMode};`;
+            }
+
+            for (const child of node.children) walk(child);
+        };
+
+        image.updateLocalTransform();
+        signature += `${image.scale.x},${image.scale.y},${image.x},${image.y}/`;
+
+        for (const child of image.children) walk(child);
+
+        AvatarImage._partSignatures.set(image, signature);
+
+        return signature;
+    }
+
+    /** A number for an object, the same every time it is asked: what a frame's signature names its parts by. */
+    private static objectId(object: object | undefined): number {
+        if (!object) return 0;
+
+        let id = AvatarImage._objectIds.get(object);
+
+        if (id === undefined) {
+            id = AvatarImage._nextObjectId++;
+            AvatarImage._objectIds.set(object, id);
+        }
+
+        return id;
     }
 
     private resetActions(): boolean {
@@ -573,19 +973,14 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         this._sprites = [];
         this._avatarSpriteData = undefined;
         this._directionOffset = 0;
+        this._effectAnimationId = undefined;
+        this._effectAnimationStartFrame = 0;
         this._structure.removeDynamicItems(this);
         this._mainAction = this._defaultAction;
         this._mainAction.definition = this._defaultAction.definition;
         this.resetBodyPartCache(this._defaultAction);
+
         return true;
-    }
-
-    private addActionData(stateType: AvatarActionStateType, parameter: number = -1): void {
-        if (!this._actions) this._actions = [];
-
-        for (const action of this._actions) if (action.type === stateType && action.actionParameter === parameter) return;
-
-        this._actions.push(new ActiveActionData(stateType, parameter, this._frameCounter));
     }
 
     private isHeadTurnPreventedByAction(): boolean {
@@ -597,8 +992,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     private sortActions(): boolean {
-        let effectActive: boolean = false;
         let effectChanged: boolean = false;
+        let hasEffect: boolean = false;
         let sorted: boolean = false;
 
         this._currentActionsString = '';
@@ -606,7 +1001,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         this._animationFrameCount = this._structure.maxFrames(this._sortedActions);
 
         if (!this._sortedActions) {
-            this._canvasOffsets = [0, 0, 0];
+            this._canvasOffsets = [ 0, 0, 0 ];
 
             if (this._lastActionsString !== '') {
                 sorted = true;
@@ -620,21 +1015,23 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
                 this._currentActionsString = (this._currentActionsString + action.type + action.actionParameter);
 
                 if (action.type === AvatarActionStateType.Effect) {
-                    if (this._effectIdInUse !== action.actionParameter) effectActive = true;
+                    const effectId = parseInt(action.actionParameter);
 
-                    this._effectIdInUse = action.actionParameter;
+                    if (this._effectIdInUse !== effectId) effectChanged = true;
 
-                    effectChanged = true;
+                    this._effectIdInUse = effectId;
+
+                    hasEffect = true;
                 }
             }
 
-            if (!effectChanged) {
-                if (this._effectIdInUse > -1) effectActive = true;
+            if (!hasEffect) {
+                if (this._effectIdInUse > -1) effectChanged = true;
 
                 this._effectIdInUse = -1;
             }
 
-            if (effectActive) this._cache.disposeInactiveActions(0);
+            if (effectChanged) this._cache.disposeInactiveActions(0);
 
             if (this._lastActionsString !== this._currentActionsString) {
                 sorted = true;
@@ -649,6 +1046,8 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     }
 
     private setActionsToParts(): void {
+        if (!this._sortedActions) return;
+
         const time: number = GetTickerTime();
         const actionTypes: AvatarActionStateType[] = [];
 
@@ -667,7 +1066,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         for (const action of this._sortedActions) {
             if (!action?.definition) continue;
 
-            if (action.definition.isAnimation && action.actionParameter === undefined) action.actionParameter = 1;
+            if (action.definition.isAnimation && action.actionParameter === '') action.actionParameter = '1';
 
             this.setActionToParts(action, time);
 
@@ -679,11 +1078,16 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
             if (!animation) continue;
 
+            if (action.type === AvatarActionStateType.Effect) {
+                this._effectAnimationId = animation.id;
+                this._effectAnimationStartFrame = action.startFrame;
+            }
+
             this._sprites = this._sprites.concat(animation.spriteData);
 
-            if (animation.directionData) this._directionOffset = animation.directionData.offset;
+            if (animation.hasDirectionData() && animation.directionData) this._directionOffset = animation.directionData.offset;
 
-            if (animation.avatarData) this._avatarSpriteData = animation.avatarData;
+            if (animation.hasAvatarData()) this._avatarSpriteData = animation.avatarData;
         }
     }
 
@@ -722,60 +1126,31 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         return this._cachedBodyParts;
     }
 
+    /*
+     * A key for the finished figure when it is worth keeping: a single plain action with the
+     * head facing the body (idle postures loop over 8 frames, others over 4), or one of the
+     * static / head-turning effects (33-36 render once, 38-39 loop over 11 frames).
+     */
     private getFullImageCacheKey(): string | undefined {
         if (!this._useFullImageCache) return undefined;
 
         if (this._sortedActions.length === 1 && this._mainDirection === this._headDirection) {
-            return `${this._mainDirection}${this._currentActionsString}${this._frameCounter % 4}`;
+            const isIdle = AvatarImage.IDLE_ACTION_STRINGS.includes(this._currentActionsString);
+            const frame = this._frameCounter % (isIdle ? AvatarImage.MAX_IDLE_FRAMES : AvatarImage.MAX_OTHER_FRAMES);
+
+            return `${this._mainDirection}${this._currentActionsString}${frame}`;
         }
 
         if (this._sortedActions.length === 2) for (const action of this._sortedActions) {
-            if (action.type === AvatarActionStateType.Effect && (action.actionParameter === 33 || action.actionParameter === 34 || action.actionParameter === 35 || action.actionParameter === 36)) return `${this._mainDirection}${this._currentActionsString}0`;
+            if (action.type !== AvatarActionStateType.Effect) continue;
 
-            if (action.type === AvatarActionStateType.Effect && (action.actionParameter === 38 || action.actionParameter === 39)) return `${this._mainDirection}_${this._headDirection}${this._currentActionsString}${this._frameCounter % 11}`;
+            const parameter = action.actionParameter;
+
+            if (parameter === '33' || parameter === '34' || parameter === '35' || parameter === '36') return `${this._mainDirection}${this._currentActionsString}0`;
+
+            if (parameter === '38' || parameter === '39') return `${this._mainDirection}_${this._headDirection}${this._currentActionsString}${this._frameCounter % 11}`;
         }
 
         return undefined;
-    }
-
-    private getGrayscaleFilter(channel: string = 'CHANNELS_EQUAL'): Filter {
-        let r = 0.33;
-        let g = 0.33;
-        let b = 0.33;
-        const _local_6 = 1;
-
-        switch (channel) {
-            case AvatarImage.CHANNELS_UNIQUE:
-                r = 0.3;
-                g = 0.59;
-                b = 0.11;
-                break;
-            case AvatarImage.CHANNELS_RED:
-                r = 1;
-                g = 0;
-                b = 0;
-                break;
-            case AvatarImage.CHANNELS_GREEN:
-                r = 0;
-                g = 1;
-                b = 0;
-                break;
-            case AvatarImage.CHANNELS_BLUE:
-                r = 0;
-                g = 0;
-                b = 1;
-                break;
-            case AvatarImage.CHANNELS_DESATURATED:
-                r = 0.3086;
-                g = 0.6094;
-                b = 0.082;
-                break;
-        }
-
-        const filter = new ColorMatrixFilter();
-
-        filter.matrix = [r, g, b, 0, 0, r, g, b, 0, 0, r, g, b, 0, 0, 0, 0, 0, 1, 0];
-
-        return filter;
     }
 }

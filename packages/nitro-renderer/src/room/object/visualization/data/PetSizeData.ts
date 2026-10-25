@@ -1,7 +1,8 @@
-import type { IAssetGesture, IAssetPosture } from '@nitrodevco/nitro-api';
+import { IAssetGesture, IAssetPosture } from '@nitrodevco/nitro-api';
 
 import { AnimationSizeData } from './AnimationSizeData';
 
+/** Port of Flash `PetAnimationSizeData`. */
 export class PetSizeData extends AnimationSizeData {
     public static DEFAULT: number = -1;
 
@@ -17,7 +18,8 @@ export class PetSizeData extends AnimationSizeData {
         if (!postures.postures) return false;
 
         for (const posture of postures.postures) {
-            if (this._posturesToAnimations.get(posture.id)) continue;
+            // Animation id 0 is a valid mapping - test for the key, as `PetAnimationSizeData` tests for null.
+            if (this._posturesToAnimations.has(posture.id)) continue;
 
             if (!this._defaultPosture) this._defaultPosture = posture.id;
 
@@ -33,7 +35,7 @@ export class PetSizeData extends AnimationSizeData {
         if (!gestures) return false;
 
         for (const gesture of gestures) {
-            if (this._gesturesToAnimations.get(gesture.id)) continue;
+            if (this._gesturesToAnimations.has(gesture.id)) continue;
 
             this._gesturesToAnimations.set(gesture.id, gesture.animationId);
         }
@@ -42,7 +44,7 @@ export class PetSizeData extends AnimationSizeData {
     }
 
     public getAnimationForPosture(posture: string): number {
-        if (!this._posturesToAnimations.get(posture)) posture = this._defaultPosture!;
+        if (!this._posturesToAnimations.has(posture)) posture = this._defaultPosture!;
 
         return this._posturesToAnimations.get(posture) ?? 0;
     }
@@ -54,7 +56,7 @@ export class PetSizeData extends AnimationSizeData {
     }
 
     public getAnimationForGesture(gesture: string): number {
-        if (!this._gesturesToAnimations.get(gesture)) return PetSizeData.DEFAULT;
+        if (!this._gesturesToAnimations.has(gesture)) return PetSizeData.DEFAULT;
 
         return this._gesturesToAnimations.get(gesture) ?? 0;
     }

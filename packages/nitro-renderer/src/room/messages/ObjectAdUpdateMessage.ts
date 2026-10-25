@@ -1,5 +1,6 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectRoomAdUpdateMessage`. */
 export class ObjectAdUpdateMessage extends RoomObjectUpdateMessage {
     public static IMAGE_LOADED: string = 'ROAUM_IMAGE_LOADED' as const;
     public static IMAGE_LOADING_FAILED: string = 'ROAUM_IMAGE_FAILED' as const;

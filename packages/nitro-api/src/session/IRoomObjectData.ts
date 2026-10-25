@@ -1,4 +1,4 @@
-import { RoomObjectCategoryEnum } from "../room";
+import { RoomObjectCategoryEnum } from '../room';
 
 export interface IRoomObjectData {
     readonly id: number;

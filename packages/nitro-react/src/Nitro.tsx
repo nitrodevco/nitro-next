@@ -1,104 +1,32 @@
-import { NitroLogger } from '@nitrodevco/nitro-api';
-import {
-    GetRoomContentLoader,
-    GetRoomEngine,
-    PrepareRenderer,
-    RoomContentLoader,
-    TexturePool
-} from '@nitrodevco/nitro-renderer';
-import { AnimatePresence, motion } from 'motion/react';
-import { type FC, useEffect, useState } from 'react';
+/**
+ * The client's boot. The config comes first - it names every file and bundle that follows - and
+ * nothing is drawn until it is in. Then the renderer starts and `NitroView` shows
+ * `HabboLoadingScreen` while the gamedata (texts, furni and product data, avatar data) loads beside
+ * the renderer's own bundles, handing over to the client once all of it is in and the connection is
+ * authenticated.
+ */
+import { FC } from 'react';
 
-import { useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
-import { GetPixelRatio } from '#base/utils';
+import { useAvatarLoader, useConfigLoader, useFurnitureDataLoader, useLocalizationLoader, useProductDataLoader } from '#base/hooks';
 
-import { useWebSocketContext } from './context';
-import { useAvatarLoader } from './hooks/logic';
-import { MainView } from './MainView';
-import { LoadingScreenView } from './views/loading-screen/LoadingScreenView';
+import { NitroView } from './NitroView';
 
 export const Nitro: FC = () => {
-    const [isEngineReady, setIsEngineReady] = useState(false);
-
     const { isConfigReady } = useConfigLoader();
     const { isLocalizationReady } = useLocalizationLoader();
     const { isFurnitureDataReady } = useFurnitureDataLoader();
     const { isProductDataReady } = useProductDataLoader();
-    const { isAuthenticated, connect } = useWebSocketContext();
 
     useAvatarLoader();
 
-    useEffect(() => {
-        if (!isEngineReady) return;
+    if (!isConfigReady()) return null;
 
-        connect();
-    }, [isEngineReady, connect]);
-
-    useEffect(() => {
-        const setup = async (width: number, height: number) => {
-            try {
-                await PrepareRenderer({
-                    width,
-                    height,
-                    autoDensity: false,
-                    resolution: GetPixelRatio(),
-                    backgroundAlpha: 0,
-                    roundPixels: false,
-                    preference: 'webgpu',
-                    preserveDrawingBuffer: false,
-                });
-
-                TexturePool.startAutoCleanup();
-
-                try {
-                    await GetRoomEngine().init();
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.ROOM_CONTENT);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.TILE_CURSOR);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.SELECTION_ARROW);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_WALL);
-                    await GetRoomContentLoader().downloadAssetAsync(RoomContentLoader.PLACE_HOLDER_PET);
-
-                    setIsEngineReady(true);
-                } catch (err) {
-                    NitroLogger.error(err);
-                }
-            } catch (err) {
-                NitroLogger.error(err);
-            }
-        };
-
-        void setup(Math.floor(window.innerWidth), Math.floor(window.innerHeight));
-    }, []);
-
-    const isReady = isEngineReady && isAuthenticated && isLocalizationReady() && isFurnitureDataReady() && isProductDataReady();
+    const dataSteps = [ isLocalizationReady(), isFurnitureDataReady(), isProductDataReady() ];
 
     return (
-        <>
-            <AnimatePresence mode="wait">
-                {!isReady && (
-                    <motion.div
-                        key="loading-screen"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="size-full"
-                    >
-                        <LoadingScreenView />
-                    </motion.div>
-                )}
-                {isReady && (
-                    <motion.div
-                        key="main-view"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="size-full"
-                    >
-                        <MainView />
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
+        <NitroView
+            dataLoaded={dataSteps.filter(Boolean).length}
+            dataTotal={dataSteps.length}
+        />
     );
 };

@@ -1,8 +1,11 @@
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectDataRequestEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectDataRequestEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-E2d§`, the logic `RoomObjectFactory` builds for
+ * `furniture_youtube`.
+ */
 export class FurnitureYoutubeLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [

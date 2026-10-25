@@ -1,5 +1,9 @@
-import type { IRoomMapData } from '@nitrodevco/nitro-api';
+import { IRoomMapData } from '@nitrodevco/nitro-api';
 
+/**
+ * Nitro's own: the room's floor plan as data - tiles, holes, doors and wall heights - which
+ * `RoomPlaneParser.initializeFromMapData` builds the planes from where Flash parses XML.
+ */
 export class RoomMapData implements IRoomMapData {
     private _width: number;
     private _height: number;

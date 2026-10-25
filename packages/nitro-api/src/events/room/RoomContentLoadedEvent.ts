@@ -1,4 +1,4 @@
-import { NitroEvent } from "../NitroEvent";
+import { NitroEvent } from '../NitroEvent';
 
 export class RoomContentLoadedEvent extends NitroEvent {
     public static RCLE_SUCCESS: string = 'RCLE_SUCCESS' as const;

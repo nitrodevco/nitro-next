@@ -1,5 +1,6 @@
-import type { IAssetAvatarAnimationFrame } from "@nitrodevco/nitro-api";
+import { IAssetAvatarAnimationFrame } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `AnimationFrame` (the avatar's, `com.sulake.habbo.avatar.structure.animation`). */
 export class AvatarAnimationFrame {
     private _number: number;
     private _assetPartDefinition: string;

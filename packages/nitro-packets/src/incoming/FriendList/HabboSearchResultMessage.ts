@@ -1,4 +1,5 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+
 import { IMessengerSearchResult } from './Data/IMessengerSearchResult';
 import { MessengerSearchResultParser } from './Data/MessengerSearchResultParser';
 
@@ -11,7 +12,7 @@ export class HabboSearchResultMessage implements IIncomingPacket<HabboSearchResu
     public parse(wrapper: IMessageDataWrapper): HabboSearchResultMessageType {
         const packet: HabboSearchResultMessageType = {
             friends: [],
-            others: []
+            others: [],
         };
 
         let count = wrapper.readInt();

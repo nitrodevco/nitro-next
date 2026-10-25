@@ -1,8 +1,8 @@
-import type { IRoomGeometry, IRoomSpriteMouseEvent, RoomObjectEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomGeometry, IRoomSpriteMouseEvent, MouseEventType, RoomObjectEvent, RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/** Port of Flash `FurnitureDiceLogic`, the logic `RoomObjectFactory` builds for `furniture_dice`. */
 export class FurnitureDiceLogic extends FurnitureLogic {
     private _noTags: boolean = false;
     private _noTagsLastStateActivate: boolean = false;
@@ -14,6 +14,13 @@ export class FurnitureDiceLogic extends FurnitureLogic {
         ]);
     }
 
+    /** `FurnitureDiceLogic.initialize`: an `allspritesactivate` element makes every sprite toggle the dice. */
+    public override initialize(asset: IAssetData | undefined): void {
+        super.initialize(asset);
+
+        this._noTags = !!asset?.logic?.allSpritesActivate;
+    }
+
     public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
         if (!event || !geometry) return;
 
@@ -23,9 +30,9 @@ export class FurnitureDiceLogic extends FurnitureLogic {
             case MouseEventType.DOUBLE_CLICK:
                 if (this._noTags) {
                     if (
-                        !this._noTagsLastStateActivate ||
-                        this.object.getState(0) === 0 ||
-                        this.object.getState(0) === 100
+                        !this._noTagsLastStateActivate
+                        || this.object.getState(0) === 0
+                        || this.object.getState(0) === 100
                     ) {
                         objectEvent = new RoomObjectFurnitureActionEvent(
                             RoomObjectFurnitureActionEvent.DICE_ACTIVATE,
@@ -42,9 +49,9 @@ export class FurnitureDiceLogic extends FurnitureLogic {
                         this._noTagsLastStateActivate = false;
                     }
                 } else if (
-                    event.spriteTag === 'activate' ||
-                    this.object.getState(0) === 0 ||
-                    this.object.getState(0) === 100
+                    event.spriteTag === 'activate'
+                    || this.object.getState(0) === 0
+                    || this.object.getState(0) === 100
                 ) {
                     objectEvent = new RoomObjectFurnitureActionEvent(
                         RoomObjectFurnitureActionEvent.DICE_ACTIVATE,

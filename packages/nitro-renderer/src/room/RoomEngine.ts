@@ -1,4 +1,3 @@
-
 import {
     GetObjectDataForFlags,
     IGetImageListener,
@@ -13,27 +12,101 @@ import {
     RoomObjectCategoryEnum,
     RoomObjectUserTypeName,
     RoomObjectVariableEnum,
-    Vector3d
+    Vector3d,
 } from '@nitrodevco/nitro-api';
-import { type ImageLike } from 'pixi.js';
+import { ImageLike, Texture, Ticker, UPDATE_PRIORITY } from 'pixi.js';
 
+import { GetAvatarRenderManager } from '#renderer/avatar';
 import { PetFigureData } from '#renderer/session';
-import { NumberBank } from '#renderer/utils';
+import { GetTicker, LoadMetrics, NumberBank, PurgeTrigger, TextureUtils } from '#renderer/utils';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
-import { ObjectDataUpdateMessage } from './messages';
+import { ObjectDataUpdateMessage, ObjectRoomMaskUpdateMessage } from './messages';
+import { RoomLogic, RoomPlaneParser } from './object';
+import { RefreshVariableFxRendererMappings } from './object/variablefx/VariableFxRoomData';
+import { GetVariableFxAssetLibrary } from './object/visualization/variablefx/VariableFxAssetLibrary';
 import { Room } from './Room';
 import { RoomGeometry } from './utils';
 
+/** Port of Flash `RoomEngine`. */
 export class RoomEngine implements IRoomEngine {
     public static TEMPORARY_ROOM_ID: number = -1;
+    /** `createRoomFurniture`'s `getTimer() - start >= 30`: how long a frame may spend building queued furniture. */
+    private static FURNITURE_CREATION_BUDGET_MS: number = 30;
 
     private _rooms: Map<number, IRoom> = new Map();
     private _imageObjectIdBank = new NumberBank(1000);
     private _imageListeners: Record<number, IGetImageListener[]> = {};
+    private _tick = (ticker: Ticker) => this.update(ticker.lastTime);
+    private _ticking: boolean = false;
 
     public async init(): Promise<void> {
         await GetRoomContentLoader().init();
+
+        // Flash `CoreComponentContext` starts the purge trigger with the client; `Core.purge` reaches
+        // the room engine's `purge`, which purges the room content. The avatar render manager's
+        // `purge` was empty in Flash, so clothing and effect libraries stayed for the session; here
+        // they go too once no live avatar draws with them.
+        PurgeTrigger.start(() => {
+            this.purgeRoomContent();
+            GetAvatarRenderManager().purgeAssets();
+        });
+
+        // The Variable FX atlas is not needed for the first frame; statuses that arrive before it
+        // has loaded are kept by their stack additions and drawn once it is ready.
+        void GetVariableFxAssetLibrary().load().then((loaded) => {
+            if (loaded) RefreshVariableFxRendererMappings();
+        });
+
+        this.start();
+    }
+
+    /**
+     * Registers the single room tick on the shared ticker. It runs at HIGH priority so every
+     * room's objects and sprite canvas are advanced before the NORMAL-priority presentation
+     * work registered by the UI (camera, preview centring, DOM blits) and before Pixi's own
+     * LOW-priority render of the frame.
+     */
+    public start(): void {
+        if (this._ticking) return;
+
+        this._ticking = true;
+
+        GetTicker().add(this._tick, undefined, UPDATE_PRIORITY.HIGH);
+    }
+
+    public stop(): void {
+        if (!this._ticking) return;
+
+        this._ticking = false;
+
+        GetTicker().remove(this._tick);
+    }
+
+    /**
+     * Flash `RoomEngine.update`: the queued furniture of every room is built first, within one shared
+     * budget (`createRoomFurniture`), then every room that is being drawn (has a canvas) advances - the
+     * main room and any previewers alike.
+     */
+    public update(time: number): void {
+        this.createRoomFurniture();
+
+        for (const room of this._rooms.values()) {
+            if (!room.canvas) continue;
+
+            room.update(time);
+        }
+    }
+
+    /**
+     * Flash `RoomEngine.createRoomFurniture`: each room builds its queued furniture until the frame has
+     * spent `FURNITURE_CREATION_BUDGET_MS` since this started, checked every four pieces - so a room
+     * that comes after the budget is spent still builds up to four.
+     */
+    private createRoomFurniture(): void {
+        const startTime = performance.now();
+
+        for (const room of this._rooms.values()) room.createPendingFurniture(startTime, RoomEngine.FURNITURE_CREATION_BUDGET_MS);
     }
 
     public createRoom(roomId: number): IRoom {
@@ -43,15 +116,22 @@ export class RoomEngine implements IRoomEngine {
 
         room = new Room(roomId);
 
+        LoadMetrics.event('room-created', { roomId });
+
         this._rooms.set(roomId, room);
 
         return room;
     }
 
-    /*
-     * RoomEngine.disposeRoom in the SWF removes the instance from its map before
-     * disposing it (`roomInstanceData.remove(identifier)`), so a later createRoom for
-     * the same id builds a fresh room rather than handing back a disposed one.
+    /** Flash `purgeRoomContent` (and the engine's `purge`): the loader releases what nothing draws. */
+    public purgeRoomContent(): void {
+        GetRoomContentLoader().purge();
+    }
+
+    /**
+     * Flash `RoomEngine.disposeRoom` removes the room from its map (`§_-C2o§.remove(identifier)`)
+     * before disposing it, so a later `createRoom` for the same id builds a fresh room rather than
+     * handing back a disposed one.
      */
     public disposeRoom(roomId: number): void {
         const room = this._rooms.get(roomId);
@@ -59,6 +139,8 @@ export class RoomEngine implements IRoomEngine {
         if (!room) return;
 
         this._rooms.delete(roomId);
+
+        LoadMetrics.event('room-disposed', { roomId });
 
         room.dispose();
     }
@@ -89,6 +171,96 @@ export class RoomEngine implements IRoomEngine {
         frameCount: number = -1,
         posture: string = '',
     ): Promise<ImageLike | undefined> {
+        const texture = await this.getGenericRoomObjectTexture(type, value, direction, scale, listener, extras, objectData, state, frameCount, posture);
+
+        if (!texture) return undefined;
+
+        const image = await TextureUtils.generateImage(texture);
+
+        texture.destroy(true);
+
+        return image;
+    }
+
+    /**
+     * Flash `RoomEngine.getRoomImage`, as a texture: a small room with these floor, wall and
+     * landscape types, rendered as a `room` object of the temporary room. The planes and the types
+     * travel in the object's value (`<floor>\n<wall>\n<landscape>\n<window>`), which
+     * `initializeRoomForGettingImage` reads back; `windowType` cuts that window's mask into the
+     * wall, the way the catalogue's spaces preview shows its landscape through one.
+     */
+    public getRoomTexture(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined, scale: RoomGeometryScaleType, listener: IGetImageListener | undefined = undefined, windowType: string | undefined = undefined): Promise<Texture | undefined> {
+        let value = `${floorType ?? ''}\n${wallType ?? ''}\n${landscapeType ?? ''}\n`;
+
+        if (windowType !== undefined) value += windowType;
+
+        return this.getGenericRoomObjectTexture('room', value, new Vector3d(), scale, listener);
+    }
+
+    /**
+     * Flash `RoomEngine.initializeRoomForGettingImage`: a 6x6 floor of height 0 inside a one-tile
+     * border, walls 6 high, the plane types from the value, and - when the value names a window
+     * (its fourth line; an empty one is still a mask of no type, which the logic ignores) - that
+     * window's mask as `20_1` at (2.5, 0.5, 2).
+     */
+    private initializeRoomForGettingImage(roomObject: IRoomObjectController, value: string): void {
+        const parts = value.split('\n');
+
+        if (parts.length < 3) return;
+
+        const [ floorType, wallType, landscapeType, windowType ] = parts;
+        const size = 6;
+        const parser = new RoomPlaneParser();
+
+        parser.initializeTileMap(size + 2, size + 2);
+
+        for (let y = 1; y < (1 + size); y++) {
+            for (let x = 1; x < (1 + size); x++) parser.setTileHeight(x, y, 0);
+        }
+
+        parser.wallHeight = size;
+        parser.initializeFromTileData();
+
+        if (roomObject.logic instanceof RoomLogic) roomObject.logic.initialize(parser.getMapData());
+
+        roomObject.model.setValue(RoomObjectVariableEnum.RoomFloorType, floorType);
+        roomObject.model.setValue(RoomObjectVariableEnum.RoomWallType, wallType);
+        roomObject.model.setValue(RoomObjectVariableEnum.RoomLandscapeType, landscapeType);
+
+        if (windowType !== undefined) roomObject.processUpdateMessage(new ObjectRoomMaskUpdateMessage(ObjectRoomMaskUpdateMessage.ADD_MASK, '20_1', windowType, new Vector3d(2.5, 0.5, 2)));
+
+        parser.dispose();
+    }
+
+    public getGenericRoomObjectTexture(
+        type: string,
+        value: string,
+        direction: IVector3D,
+        scale: RoomGeometryScaleType,
+        listener: IGetImageListener | undefined = undefined,
+        extras: number = NaN,
+        objectData: IObjectData | undefined = undefined,
+        state: number = -1,
+        frameCount: number = -1,
+        posture: string = '',
+    ): Promise<Texture | undefined> {
+        // The render is synchronous. The executor runs it at once and a throw rejects the promise,
+        // exactly as the `async` method with nothing to await did.
+        return new Promise(resolve => resolve(this.renderGenericRoomObjectTexture(type, value, direction, scale, listener, extras, objectData, state, frameCount, posture)));
+    }
+
+    private renderGenericRoomObjectTexture(
+        type: string,
+        value: string,
+        direction: IVector3D,
+        scale: RoomGeometryScaleType,
+        listener: IGetImageListener | undefined,
+        extras: number,
+        objectData: IObjectData | undefined,
+        state: number,
+        frameCount: number,
+        posture: string,
+    ): Texture | undefined {
         const room = this.getTemporaryRoom();
 
         if (!room) return undefined;
@@ -120,10 +292,10 @@ export class RoomEngine implements IRoomEngine {
                 break;
             case RoomObjectCategoryEnum.Unit:
                 if (
-                    type === RoomObjectUserTypeName.User ||
-                    type === RoomObjectUserTypeName.Bot ||
-                    type === RoomObjectUserTypeName.RentableBot ||
-                    type === RoomObjectUserTypeName.Pet
+                    type === RoomObjectUserTypeName.User
+                    || type === RoomObjectUserTypeName.Bot
+                    || type === RoomObjectUserTypeName.RentableBot
+                    || type === RoomObjectUserTypeName.Pet
                 ) {
                     model.setValue(RoomObjectVariableEnum.Figure, value);
                 } else {
@@ -144,6 +316,7 @@ export class RoomEngine implements IRoomEngine {
                 }
                 break;
             case RoomObjectCategoryEnum.Room:
+                this.initializeRoomForGettingImage(roomObject, value);
                 break;
         }
 
@@ -172,7 +345,7 @@ export class RoomEngine implements IRoomEngine {
             }
         }
 
-        const image = await roomObject.visualization.getImage();
+        const texture = roomObject.visualization.getRenderTexture();
 
         if (!roomObject.isReady && listener) {
             let imageListeners = this._imageListeners[objectId];
@@ -194,7 +367,29 @@ export class RoomEngine implements IRoomEngine {
 
         geometry.dispose();
 
-        return image;
+        return texture;
+    }
+
+    /** Delivers a finished render to a listener in the form it asked for - texture (owned by it) or read-back image. */
+    private async notifyImageListener(listener: IGetImageListener, texture: Texture | undefined): Promise<void> {
+        if (!texture) {
+            listener.imageFailed();
+
+            return;
+        }
+
+        if (listener.textureReady) {
+            listener.textureReady(texture);
+
+            return;
+        }
+
+        const image = await TextureUtils.generateImage(texture);
+
+        texture.destroy(true);
+
+        if (image) listener.imageReady(image);
+        else listener.imageFailed();
     }
 
     public initalizeTemporaryObjectsByType(type: string, valid: boolean): void {
@@ -212,9 +407,12 @@ export class RoomEngine implements IRoomEngine {
 
         let geometry: IRoomGeometry | undefined = undefined;
         let scale: RoomGeometryScaleType = RoomGeometryScaleType.None;
+        const rendered: number[] = [];
 
         for (const roomObject of roomObjects) {
             if (!roomObject?.model || roomObject.type !== type) continue;
+
+            rendered.push(roomObject.id);
 
             const imageScale = roomObject.model.getValue<RoomGeometryScaleType>(RoomObjectVariableEnum.ImageQueryScale);
 
@@ -237,22 +435,22 @@ export class RoomEngine implements IRoomEngine {
             if (imageListeners) {
                 delete this._imageListeners[roomObject.id];
 
-                const notify = async () => {
-                    const image = await roomObject.visualization.getImage();
-
-                    for (const listener of imageListeners) {
-                        if (!listener) continue;
-
-                        if (image) listener.imageReady(image);
-                        else listener.imageFailed();
-                    }
+                // Each listener gets its own render: a texture listener takes ownership of it.
+                for (const listener of imageListeners) {
+                    if (listener) void this.notifyImageListener(listener, roomObject.visualization.getRenderTexture());
                 }
-
-                void notify();
             }
         }
 
         geometry?.dispose();
+
+        // Flash removed each one once rendered and handed its id back; left in place, every delayed
+        // image kept a whole room object, and after 1000 the id bank ran dry and every image failed.
+        for (const objectId of rendered) {
+            room.removeRoomObject(objectId, objectCategory);
+
+            this._imageObjectIdBank.freeNumber(objectId - 1);
+        }
     }
 
     public getTemporaryRoom(): IRoom {

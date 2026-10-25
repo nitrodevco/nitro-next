@@ -1,31 +1,18 @@
-import { IAchievementData, IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-import { AchievementDataParser } from './Data/AchievementDataParser';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type AchievementsEventMessageType = {
-    achievements: IAchievementData[];
-    defaultCategory: string;
-};
+import { AchievementParser } from '../../Data/AchievementParser';
+import { IAchievement } from '../../Data/IAchievement';
 
-export class AchievementsEventMessage implements IIncomingPacket<AchievementsEventMessageType>
-{
-    public parse(wrapper: IMessageDataWrapper): AchievementsEventMessageType
-    {
-        const packet: AchievementsEventMessageType = {
-            achievements: [],
-            defaultCategory: '',
-        };
+/** AS3 AchievementsMessageParser: ordered records followed by the preferred category. */
+export type AchievementsEventMessageType = { achievements: IAchievement[]; defaultCategory: string };
 
-        let totalCount = wrapper.readInt();
+export class AchievementsEventMessage implements IIncomingPacket<AchievementsEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): AchievementsEventMessageType {
+        const count = wrapper.readInt();
+        const achievements: IAchievement[] = [];
 
-        while (totalCount > 0)
-        {
-            packet.achievements.push(AchievementDataParser(wrapper));
+        for (let i = 0; i < count; i++) achievements.push(AchievementParser(wrapper));
 
-            totalCount--;
-        }
-
-        packet.defaultCategory = wrapper.readString();
-
-        return packet;
+        return { achievements, defaultCategory: wrapper.readString() };
     }
 }

@@ -1,13 +1,13 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type HabboBroadcastMessageType = {
-    message: string;
+    messageText: string;
 };
 
 export class HabboBroadcastMessage implements IIncomingPacket<HabboBroadcastMessageType> {
     public parse(wrapper: IMessageDataWrapper): HabboBroadcastMessageType {
         const packet: HabboBroadcastMessageType = {
-            message: wrapper.readString(),
+            messageText: wrapper.readString(),
         };
 
         return packet;

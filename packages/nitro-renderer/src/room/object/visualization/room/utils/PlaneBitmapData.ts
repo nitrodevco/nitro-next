@@ -1,5 +1,6 @@
-﻿import type { Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
+/** Port of Flash `PlaneBitmapData`. */
 export class PlaneBitmapData {
     private _texture: Texture | undefined;
     private _timeStamp: number;

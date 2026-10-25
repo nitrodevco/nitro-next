@@ -1,6 +1,7 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-import { IHistoricConsoleMessage } from './Data/IHistoricConsoleMessage';
+
 import { HistoricConsoleMessageParser } from './Data/HistoricConsoleMessageParser';
+import { IHistoricConsoleMessage } from './Data/IHistoricConsoleMessage';
 
 export type ConsoleMessageHistoryMessageType = {
     chatId: number;
@@ -11,7 +12,7 @@ export class ConsoleMessageHistoryMessage implements IIncomingPacket<ConsoleMess
     public parse(wrapper: IMessageDataWrapper): ConsoleMessageHistoryMessageType {
         const packet: ConsoleMessageHistoryMessageType = {
             chatId: wrapper.readInt(),
-            messages: []
+            messages: [],
         };
 
         let count = wrapper.readInt();

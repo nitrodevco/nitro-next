@@ -1,13 +1,14 @@
-import type {
+import {
     IAssetVisualAnimation,
     IAssetVisualAnimationLayer,
     IAssetVisualAnimationSequenceFrame,
 } from '@nitrodevco/nitro-api';
 
-import type { AnimationFrame } from './AnimationFrame';
+import { AnimationFrame } from './AnimationFrame';
 import { AnimationLayerData } from './AnimationLayerData';
 import { DirectionalOffsetData } from './DirectionalOffsetData';
 
+/** Port of Flash `AnimationData` (the room's, not the avatar's). */
 export class AnimationData {
     private static TRANSITION_TO_ANIMATION_OFFSET: number = 1000000;
     private static TRANSITION_FROM_ANIMATION_OFFSET: number = 2000000;
@@ -29,8 +30,8 @@ export class AnimationData {
 
     public static isTransitionToAnimation(animationId: number): boolean {
         return (
-            animationId >= AnimationData.TRANSITION_TO_ANIMATION_OFFSET &&
-            animationId < AnimationData.TRANSITION_FROM_ANIMATION_OFFSET
+            animationId >= AnimationData.TRANSITION_TO_ANIMATION_OFFSET
+            && animationId < AnimationData.TRANSITION_FROM_ANIMATION_OFFSET
         );
     }
 
@@ -86,15 +87,13 @@ export class AnimationData {
         if (layer.frameSequences) {
             for (const animationSequence of layer.frameSequences) {
                 const loopCount = animationSequence.loopCount ?? 1;
-                const isSequenceRandom =
-                    animationSequence.random !== undefined && animationSequence.random !== 0 ? true : false;
+                const isSequenceRandom
+                    = animationSequence.random !== undefined && animationSequence.random !== 0 ? true : false;
 
                 const frame = layerData.addFrameSequence(loopCount, isSequenceRandom);
 
                 if (animationSequence.frames) {
-                    for (const key in animationSequence.frames) {
-                        const animationFrame = animationSequence.frames[key];
-
+                    for (const animationFrame of animationSequence.frames) {
                         if (!animationFrame) {
                             layerData.dispose();
 

@@ -1,10 +1,13 @@
-import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectBadgeAssetEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, StringDataType } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, RoomObjectBadgeAssetEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, StringDataType } from '@nitrodevco/nitro-api';
 
 import { GetTickerTime } from '../../../../utils';
 import { ObjectDataUpdateMessage, ObjectGroupBadgeUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-Gr§`, the logic `RoomObjectFactory` builds for
+ * `furniture_badge_display`.
+ */
 export class FurnitureBadgeDisplayLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [

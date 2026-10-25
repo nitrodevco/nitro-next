@@ -1,28 +1,25 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IEventCategory } from './Data/EventCategoryParser';
-import { EventCategoryParser } from './Data/EventCategoryParser';
+import { EventCategoryParser, IEventCategory } from './Data/EventCategoryParser';
 
 export type UserEventCatsMessageType = {
-  eventCategories: IEventCategory[];
+    eventCategories: IEventCategory[];
 };
 
-export class UserEventCatsMessage implements IIncomingPacket<UserEventCatsMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): UserEventCatsMessageType
-  {
-    const packet: UserEventCatsMessageType = {
-      eventCategories: []
-    };
+export class UserEventCatsMessage implements IIncomingPacket<UserEventCatsMessageType> {
+    public parse(wrapper: IMessageDataWrapper): UserEventCatsMessageType {
+        const packet: UserEventCatsMessageType = {
+            eventCategories: [],
+        };
 
-    let count = wrapper.readInt();
+        let count = wrapper.readInt();
 
-    while (count > 0) {
-      packet.eventCategories.push(EventCategoryParser(wrapper));
+        while (count > 0) {
+            packet.eventCategories.push(EventCategoryParser(wrapper));
 
-      count--;
+            count--;
+        }
+
+        return packet;
     }
-
-    return packet;
-  }
 }

@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  push:
+    branches: [pixi-render, main]
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Replace obsolete PR runs; branch pushes keep one run per commit.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Yarn 4 from package.json's packageManager; setup-node caches its package cache.
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: yarn
+
+      # yarn.lock also locks packages/nitro-studio, a workspace kept out of git (.gitignore), so
+      # a checkout without it drops those entries; every other package keeps its locked version.
+      - name: Install
+        run: yarn install --no-immutable
+
+      - name: Typecheck the client
+        run: yarn tsc -p packages/nitro-react/tsconfig.typecheck.json
+
+      - name: Typecheck the client module SDK
+        run: yarn workspace @nitrodevco/client-module-sdk typecheck
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install
+        run: yarn install --no-immutable
+
+      # PRs reuse the results of files unchanged since the last branch push; pushes lint every
+      # file (a type change can break a file it did not touch) and save the cache.
+      - name: Restore lint cache
+        if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .eslintcache
+          key: eslint-v1-${{ hashFiles('yarn.lock', 'eslint.config.js', 'tsconfig*.json', 'packages/*/tsconfig*.json') }}-${{ github.sha }}
+          restore-keys: |
+            eslint-v1-${{ hashFiles('yarn.lock', 'eslint.config.js', 'tsconfig*.json', 'packages/*/tsconfig*.json') }}-
+
+      - name: Lint
+        run: yarn eslint . --cache --cache-strategy content --cache-location .eslintcache
+
+      - name: Save lint cache
+        if: github.event_name == 'push'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .eslintcache
+          key: eslint-v1-${{ hashFiles('yarn.lock', 'eslint.config.js', 'tsconfig*.json', 'packages/*/tsconfig*.json') }}-${{ github.sha }}
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install
+        run: yarn install --no-immutable
+
+      - name: Package tests
+        run: yarn workspaces foreach --all --parallel run test
+
+      - name: Tool tests
+        run: node --test "tools/*.test.mjs"

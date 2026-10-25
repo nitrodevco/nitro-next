@@ -1,4 +1,7 @@
-﻿import type { IVector3D } from '#api/utils';
+﻿import { IRoomGeometry } from '#api/room/IRoomGeometry';
+import { IVector3D } from '#api/utils';
+
+import { IPlaneDrawingData } from './IPlaneDrawingData';
 
 export interface IRoomPlane {
     uniqueId: number;
@@ -6,4 +9,5 @@ export interface IRoomPlane {
     leftSide: IVector3D;
     rightSide: IVector3D;
     color: number;
+    getDrawingDatas(geometry: IRoomGeometry): IPlaneDrawingData[];
 }

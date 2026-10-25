@@ -1,4 +1,4 @@
-import type { ClubLevelEnum, IIncomingPacket, IMessageDataWrapper, SecurityLevelEnum } from '@nitrodevco/nitro-api';
+import { ClubLevelEnum, IIncomingPacket, IMessageDataWrapper, SecurityLevelEnum } from '@nitrodevco/nitro-api';
 
 export type UserRightsMessageType = {
     clubLevel: ClubLevelEnum;

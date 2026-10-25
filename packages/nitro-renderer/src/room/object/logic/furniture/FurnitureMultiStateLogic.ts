@@ -1,8 +1,11 @@
-import { type IRoomGeometry, type IRoomSpriteMouseEvent, MouseEventType } from '@nitrodevco/nitro-api';
-import { RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, IRoomSpriteMouseEvent, MouseEventType, RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash `FurnitureMultiStateLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_multistate`.
+ */
 export class FurnitureMultiStateLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [

@@ -9,7 +9,7 @@ export class UserTypingMessage implements IIncomingPacket<UserTypingMessageType>
     public parse(wrapper: IMessageDataWrapper): UserTypingMessageType {
         const packet: UserTypingMessageType = {
             objectId: wrapper.readInt(),
-            isTyping: !!wrapper.readInt()
+            isTyping: !!wrapper.readInt(),
         };
 
         return packet;

@@ -1,7 +1,7 @@
-﻿
 import { GetTickerTime } from '../../utils';
-import type { AvatarImageDirectionCache } from './AvatarImageDirectionCache';
+import { AvatarImageDirectionCache } from './AvatarImageDirectionCache';
 
+/** Port of Flash `AvatarImageActionCache`. */
 export class AvatarImageActionCache {
     private _cache: Map<number, AvatarImageDirectionCache> = new Map();
     private _lastAccessTime: number;

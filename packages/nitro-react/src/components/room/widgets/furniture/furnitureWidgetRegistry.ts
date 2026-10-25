@@ -1,0 +1,89 @@
+import { RoomObjectWidgetRequestEvent, RoomWidgetEnum } from '@nitrodevco/nitro-api';
+import { ComponentType } from 'react';
+
+import { FURNITURE_LABEL_SETTINGS_WIDGET, FURNITURE_RECOLOR_WIDGET, PET_PACKAGE_WIDGET, PRESENT_OPENED_WIDGET } from '#base/utils';
+
+import { FurnitureAreaHideWidget } from './FurnitureAreaHideWidget';
+import { FurnitureBackgroundColorWidget } from './FurnitureBackgroundColorWidget';
+import { FurnitureBadgeEngravingWidget } from './FurnitureBadgeEngravingWidget';
+import { FurnitureClothingChangeWidget } from './FurnitureClothingChangeWidget';
+import { FurnitureCraftingWidget } from './FurnitureCraftingWidget';
+import { FurnitureCreditWidget } from './FurnitureCreditWidget';
+import { FurnitureDimmerWidget } from './FurnitureDimmerWidget';
+import { FurnitureEcotronBoxWidget } from './FurnitureEcotronBoxWidget';
+import { FurnitureEffectBoxWidget } from './FurnitureEffectBoxWidget';
+import { FurnitureEngravingWidget } from './FurnitureEngravingWidget';
+import { FurnitureExternalImageWidget } from './FurnitureExternalImageWidget';
+import { FurnitureGuildMenuWidget } from './FurnitureGuildMenuWidget';
+import { FurnitureHighScoreWidget } from './FurnitureHighScoreWidget';
+import { FurnitureLabelSettingsWidget } from './FurnitureLabelSettingsWidget';
+import { FurnitureLockConfirmWidget } from './FurnitureLockConfirmWidget';
+import { FurnitureMannequinWidget } from './FurnitureMannequinWidget';
+import { FurnitureMonsterplantSeedWidget } from './FurnitureMonsterplantSeedWidget';
+import { FurnitureMysteryBoxWidget } from './FurnitureMysteryBoxWidget';
+import { FurnitureMysteryTrophyWidget } from './FurnitureMysteryTrophyWidget';
+import { FurniturePetPackageWidget } from './FurniturePetPackageWidget';
+import { FurniturePetProductWidget } from './FurniturePetProductWidget';
+import { FurniturePlaceholderWidget } from './FurniturePlaceholderWidget';
+import { FurniturePlaylistEditorWidget } from './FurniturePlaylistEditorWidget';
+import { FurniturePresentOpenedWidget } from './FurniturePresentOpenedWidget';
+import { FurniturePresentWidget } from './FurniturePresentWidget';
+import { FurniturePurchasableClothingWidget } from './FurniturePurchasableClothingWidget';
+import { FurnitureRecolorWidget } from './FurnitureRecolorWidget';
+import { FurnitureRentableSpaceWidget } from './FurnitureRentableSpaceWidget';
+import { FurnitureRoomLinkWidget } from './FurnitureRoomLinkWidget';
+import { FurnitureSpamWallPostItWidget } from './FurnitureSpamWallPostItWidget';
+import { FurnitureStackHeightWidget } from './FurnitureStackHeightWidget';
+import { FurnitureStickieWidget } from './FurnitureStickieWidget';
+import { FurnitureTrophyWidget } from './FurnitureTrophyWidget';
+import { FurnitureVimeoWidget } from './FurnitureVimeoWidget';
+import { FurnitureYoutubeWidget } from './FurnitureYoutubeWidget';
+
+/**
+ * Which dialog answers which request. A widget reads its own request once mounted, so this only
+ * decides what is worth mounting - and adding a dialog to the room means adding a line here.
+ *
+ * Most of these are the `RoomObjectWidgetRequestEvent` a furniture logic dispatches. Five arrive
+ * by another road: `RoomWidgetEnum` values name the widget a logic asks for through OPEN_WIDGET,
+ * the pet package and the spam wall's note are raised by the server rather than by any furni, an opened gift's
+ * card is put up by the gift's own card, since the box is gone by the time it shows, and the recolor window
+ * is opened by the infostand's recolor button.
+ */
+export const FURNITURE_WIDGETS: Record<string, ComponentType> = {
+    [RoomObjectWidgetRequestEvent.ACHIEVEMENT_RESOLUTION_ENGRAVING]: FurnitureBadgeEngravingWidget,
+    [RoomObjectWidgetRequestEvent.AREA_HIDE]: FurnitureAreaHideWidget,
+    [RoomObjectWidgetRequestEvent.BACKGROUND_COLOR]: FurnitureBackgroundColorWidget,
+    [RoomObjectWidgetRequestEvent.BADGE_DISPLAY_ENGRAVING]: FurnitureBadgeEngravingWidget,
+    [RoomObjectWidgetRequestEvent.CLOTHING_CHANGE]: FurnitureClothingChangeWidget,
+    [RoomObjectWidgetRequestEvent.CREDITFURNI]: FurnitureCreditWidget,
+    [RoomObjectWidgetRequestEvent.DIMMER]: FurnitureDimmerWidget,
+    [RoomObjectWidgetRequestEvent.ECOTRONBOX]: FurnitureEcotronBoxWidget,
+    [RoomObjectWidgetRequestEvent.EFFECTBOX_OPEN_DIALOG]: FurnitureEffectBoxWidget,
+    [RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE]: FurnitureExternalImageWidget,
+    [RoomObjectWidgetRequestEvent.FRIEND_FURNITURE_CONFIRM]: FurnitureLockConfirmWidget,
+    [RoomObjectWidgetRequestEvent.FRIEND_FURNITURE_ENGRAVING]: FurnitureEngravingWidget,
+    [RoomObjectWidgetRequestEvent.GUILD_FURNI_CONTEXT_MENU]: FurnitureGuildMenuWidget,
+    [RoomObjectWidgetRequestEvent.HIGH_SCORE_DISPLAY]: FurnitureHighScoreWidget,
+    [RoomObjectWidgetRequestEvent.JUKEBOX_PLAYLIST_EDITOR]: FurniturePlaylistEditorWidget,
+    [RoomObjectWidgetRequestEvent.MANNEQUIN]: FurnitureMannequinWidget,
+    [RoomObjectWidgetRequestEvent.MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG]: FurnitureMonsterplantSeedWidget,
+    [RoomObjectWidgetRequestEvent.MYSTERYBOX_OPEN_DIALOG]: FurnitureMysteryBoxWidget,
+    [RoomObjectWidgetRequestEvent.MYSTERYTROPHY_OPEN_DIALOG]: FurnitureMysteryTrophyWidget,
+    [RoomObjectWidgetRequestEvent.PET_PRODUCT_MENU]: FurniturePetProductWidget,
+    [RoomObjectWidgetRequestEvent.PLACEHOLDER]: FurniturePlaceholderWidget,
+    [RoomObjectWidgetRequestEvent.PRESENT]: FurniturePresentWidget,
+    [RoomObjectWidgetRequestEvent.PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG]: FurniturePurchasableClothingWidget,
+    [RoomObjectWidgetRequestEvent.ROOM_LINK]: FurnitureRoomLinkWidget,
+    [RoomObjectWidgetRequestEvent.STACK_HEIGHT]: FurnitureStackHeightWidget,
+    [RoomObjectWidgetRequestEvent.STICKIE]: FurnitureStickieWidget,
+    [RoomObjectWidgetRequestEvent.TROPHY]: FurnitureTrophyWidget,
+    [RoomObjectWidgetRequestEvent.YOUTUBE]: FurnitureYoutubeWidget,
+    [RoomWidgetEnum.CRAFTING]: FurnitureCraftingWidget,
+    [RoomWidgetEnum.RENTABLESPACE]: FurnitureRentableSpaceWidget,
+    [RoomWidgetEnum.VIMEO]: FurnitureVimeoWidget,
+    [RoomWidgetEnum.SPAMWALL_POSTIT_WIDGET]: FurnitureSpamWallPostItWidget,
+    [PET_PACKAGE_WIDGET]: FurniturePetPackageWidget,
+    [PRESENT_OPENED_WIDGET]: FurniturePresentOpenedWidget,
+    [FURNITURE_RECOLOR_WIDGET]: FurnitureRecolorWidget,
+    [FURNITURE_LABEL_SETTINGS_WIDGET]: FurnitureLabelSettingsWidget,
+};

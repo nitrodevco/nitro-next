@@ -1,10 +1,14 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { Texture } from 'pixi.js';
 
 import { DirectionalOffsetData } from '../data';
-import { FurnitureBrandedImageVisualization } from './FurnitureBrandedImageVisualization';
+import { FurnitureRoomBrandingVisualization } from './FurnitureRoomBrandingVisualization';
 
-export class FurnitureRoomBackgroundVisualization extends FurnitureBrandedImageVisualization {
+/**
+ * Port of Flash `FurnitureRoomBackgroundVisualization`, the visualization
+ * `RoomObjectVisualizationFactory` builds for `furniture_bg`.
+ */
+export class FurnitureRoomBackgroundVisualization extends FurnitureRoomBrandingVisualization {
     private _imageOffset: DirectionalOffsetData;
 
     protected override imageReady(texture: Texture, imageUrl: string): void {

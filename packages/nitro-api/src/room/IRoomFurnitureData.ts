@@ -1,5 +1,5 @@
-import { IVector3D } from "../utils";
-import { IObjectData } from "./object";
+import { IVector3D } from '../utils';
+import { IObjectData } from './object';
 
 export interface IRoomFurnitureData {
     readonly objectId: number;
@@ -8,7 +8,7 @@ export interface IRoomFurnitureData {
     readonly location: IVector3D;
     readonly direction: IVector3D;
     readonly state: number;
-    readonly objectData: IObjectData;
+    readonly objectData?: IObjectData;
     readonly extra: number;
     readonly expires: number;
     readonly usagePolicy: number;

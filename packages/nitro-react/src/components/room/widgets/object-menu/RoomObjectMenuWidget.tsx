@@ -1,88 +1,277 @@
-import { ISimpleRoomObjectData, RoomObjectCategoryEnum, RoomObjectUserType, RoomObjectUserTypeUtils } from "@nitrodevco/nitro-api";
-import { useState } from "react";
+import { ISimpleRoomObjectData, NoobnessLevelEnum, RoomObjectCategoryEnum, RoomObjectUserType, RoomWidgetUpdateRoomObjectEvent } from '@nitrodevco/nitro-api';
+import { ReactNode, useEffect, useState } from 'react';
 
-import { useOwnRoomObjectId, useRoomSelector } from "#base/context";
-import { useRoomObjectDeselected, useRoomObjectRollOut, useRoomObjectRollOver, useRoomObjectSelected } from "#base/hooks";
-import { InfoBubbleAvatarView } from "#base/views/room-widgets/object-menu/InfoBubbleAvatarView";
-import { InfoBubbleOwnAvatarView } from "#base/views/room-widgets/object-menu/InfoBubbleOwnAvatarView";
+import { useHintActions } from '#base/context/hints';
+import { useOwnRoomObjectId, useRoom, useRoomBotsActions, useRoomFurnitureContextMenu, useRoomIsPlayingGame, useRoomIsSpectating, useRoomObjectIdByWebId, useRoomStore } from '#base/context/room';
+import { useUserStore } from '#base/context/user';
+import { useWiredStore } from '#base/context/wired';
+import { useHintTarget, useRoomEventDispatcher } from '#base/hooks';
+import { FurnitureContextMenuView } from '#base/views/room-widgets/furniture/FurnitureContextMenuView';
+import { DecorateModeBubbleView } from '#base/views/room-widgets/object-menu/DecorateModeBubbleView';
+import { InfoBubbleAvatarView } from '#base/views/room-widgets/object-menu/InfoBubbleAvatarView';
+import { InfoBubbleOwnAvatarView } from '#base/views/room-widgets/object-menu/InfoBubbleOwnAvatarView';
+import { InfoBubbleRentableBotView } from '#base/views/room-widgets/object-menu/InfoBubbleRentableBotView';
 
-import { RoomObjectMenuBubble } from "./RoomObjectMenuBubble";
-import { RoomObjectMenuNameBubble } from "./RoomObjectMenuNameBubble";
+import { RoomObjectMenuBubble } from './RoomObjectMenuBubble';
+import { RoomObjectMenuNameBubble } from './RoomObjectMenuNameBubble';
+import { RoomObjectMenuPet } from './RoomObjectMenuPet';
 
+/** `setAvatarHightlightTimer`'s `Timer(5000)`. */
+const AVATAR_HIGHLIGHT_MS = 5000;
+
+/**
+ * Everything that sits over a room object - `AvatarInfoWidget` and the furniture context menus.
+ *
+ * Selecting a unit opens its menu: your own, another user's, a pet's or a rentable bot's; a plain
+ * bot only ever gets its name. Hovering shows a name bubble, but not while a menu is up. While you
+ * decorate, your own avatar carries the decorate bubble instead of a menu.
+ *
+ * While the room's wired listens for clicks on users (`hasClickUserWired`), a unit's menu is held
+ * back (`maybeSetupMenuView`) until the server answers the reported click
+ * (`WIRED_USER_CLICK_HANDLED`) with `openMenu` for that same unit (`onUserClickHandledEvent`).
+ * A spectator (`isSpectatorMode`) gets none of the unit parts: Flash does not create the avatar
+ * info widget for them, only the furniture context menu.
+ * While the room is playing a game - a game arena, or wired click settings that make it one
+ * (`isGameMode`: `RoomEngine.getActiveRoomIsPlayingGame`) - users, pets and rentable bots open no
+ * menu at all.
+ *
+ * The own name bubble of a room entry is highlighted (`§_-N2P§`): registered as the `avatar` hint target
+ * with the arrow shown at it (`registerHintWindow("avatar", view.window)`, `showHint("avatar")`), and
+ * hovering units shows no names meanwhile. For a user who is not new (`isNoob`) the highlight ends after
+ * 5 s (`setAvatarHightlightTimer` -> `removeAvatarHighlightTimer`, `unregisterHintWindow("avatar")`);
+ * otherwise it lasts as long as the bubble does (`removeView`).
+ */
 export const RoomObjectMenuWidget = () => {
-
-    const [selectedData, setSelectedData] = useState<ISimpleRoomObjectData | undefined>(undefined);
-
-    const [hoverData, setHoverData] = useState<ISimpleRoomObjectData | undefined>(undefined);
-    const room = useRoomSelector();
+    const [ selectedData, setSelectedData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
+    const [ hoverData, setHoverData ] = useState<ISimpleRoomObjectData | undefined>(undefined);
+    const room = useRoom();
+    const nameChangeAllowed = useUserStore(x => x.nameChangeAllowed);
+    // `RWAIE_AVATAR_INFO`: the own user's name over their avatar from the moment they are in the room.
+    const [ dismissedEntryKey, setDismissedEntryKey ] = useState<string | undefined>(undefined);
     const ownRoomObjectId = useOwnRoomObjectId();
+    const contextMenu = useRoomFurnitureContextMenu();
+    const isDecorating = useRoomStore(x => x.isDecorating);
+    const isPlayingGame = useRoomIsPlayingGame();
+    // `RoomUI` creates `RWE_AVATAR_INFO` - every unit's menu and name, and the decorate bubble - only for a session that is not spectating.
+    const isSpectating = useRoomIsSpectating();
+    const forcedBotMenuId = useRoomStore(x => x.forcedBotMenuId);
+    // The room object's type is a pet's breed name, not its kind; the user list knows the kind.
+    const selectedUserType = useRoomStore(x => (selectedData ? x.usersByRoomObjectId[selectedData.objectId]?.userType : undefined));
+    const { setForcedBotMenuId } = useRoomBotsActions();
+    const forcedBotObjectId = useRoomObjectIdByWebId(forcedBotMenuId ?? -1, RoomObjectUserType.RentableBot);
+    const hasClickUserWired = useWiredStore(x => x.hasClickUserWired);
+    const userClickHandled = useWiredStore(x => x.userClickHandled);
+    // `§_-M2g§`: the room index whose menu waits for the server's answer.
+    const [ heldMenuIndex, setHeldMenuIndex ] = useState<number | undefined>(undefined);
+    const [ seenClickAnswer, setSeenClickAnswer ] = useState(userClickHandled?.sequence ?? 0);
+    const isNoob = useUserStore(x => Number(x.noobnessLevel) !== Number(NoobnessLevelEnum.NotNoob));
+    // The room entry whose highlight timer has run out.
+    const [ highlightEndedKey, setHighlightEndedKey ] = useState<string | undefined>(undefined);
+    const { showHint } = useHintActions();
 
-    const onClose = () => {
-        setSelectedData(undefined);
+    // `onUserClickHandledEvent`: an answer with `openMenu` for the held unit lets its menu open.
+    if (userClickHandled && (userClickHandled.sequence !== seenClickAnswer)) {
+        setSeenClickAnswer(userClickHandled.sequence);
+
+        if (userClickHandled.openMenu && (heldMenuIndex === userClickHandled.index)) setHeldMenuIndex(undefined);
     }
 
-    useRoomObjectDeselected(_e => {
-        setSelectedData(undefined);
+    // `RWRBFOCME_OPEN`: the server asked for a bot's menu, so it opens as if the bot were clicked.
+    // The request is cleared from the room store in an effect: clearing it while rendering updates every other component reading the store.
+    const [ takenForcedBotMenuId, setTakenForcedBotMenuId ] = useState<number | undefined>(undefined);
+
+    if ((forcedBotMenuId !== undefined) && (forcedBotObjectId !== undefined) && (forcedBotMenuId !== takenForcedBotMenuId)) {
+        setTakenForcedBotMenuId(forcedBotMenuId);
+        setSelectedData({ objectId: forcedBotObjectId, category: RoomObjectCategoryEnum.Unit });
+    }
+
+    if ((forcedBotMenuId === undefined) && (takenForcedBotMenuId !== undefined)) setTakenForcedBotMenuId(undefined);
+
+    useEffect(() => {
+        if ((forcedBotMenuId !== undefined) && (forcedBotMenuId === takenForcedBotMenuId)) setForcedBotMenuId(undefined);
+    }, [ forcedBotMenuId, takenForcedBotMenuId, setForcedBotMenuId ]);
+
+    const onClose = () => setSelectedData(undefined);
+
+    // `dispatchOwnAvatarInfo` -> `updateUserView(own, allowNameChange false)`: `AvatarContextInfoButtonView` over the own avatar, once per room entry until something else is selected. A user who may change the name gets the minimised menu selected instead.
+    const entryKey = (room && !isSpectating && !nameChangeAllowed && (ownRoomObjectId >= 0)) ? `${room.roomId}:${ownRoomObjectId}` : undefined;
+    const entryData: ISimpleRoomObjectData | undefined = (entryKey && (entryKey !== dismissedEntryKey)) ? { objectId: ownRoomObjectId, category: RoomObjectCategoryEnum.Unit } : undefined;
+
+    // `§_-N2P§`: the entry's own name bubble is up and its highlight not over.
+    const highlighting = !!entryData && !selectedData && (entryKey !== highlightEndedKey);
+    const avatarHintTarget = useHintTarget('avatar', highlighting && !isDecorating);
+
+    useEffect(() => {
+        if (highlighting && !isDecorating) showHint('avatar');
+    }, [ highlighting, isDecorating, showHint ]);
+
+    // `setAvatarHightlightTimer`: 5 s, for a user who is not new.
+    useEffect(() => {
+        if (!highlighting || isNoob) return;
+
+        const timeout = setTimeout(() => setHighlightEndedKey(entryKey), AVATAR_HIGHLIGHT_MS);
+
+        return () => clearTimeout(timeout);
+    }, [ highlighting, isNoob, entryKey ]);
+
+    useRoomEventDispatcher(RoomWidgetUpdateRoomObjectEvent.OBJECT_DESELECTED, () => setSelectedData(undefined));
+
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>([ RoomWidgetUpdateRoomObjectEvent.USER_REMOVED, RoomWidgetUpdateRoomObjectEvent.FURNI_REMOVED ], (event) => {
+        if (selectedData && (selectedData.objectId === event.objectId) && (selectedData.category === event.category)) setSelectedData(undefined);
     });
 
-    useRoomObjectSelected(event => {
-        setSelectedData({
-            objectId: event.objectId,
-            category: event.category
-        });
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>(RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED, (event) => {
+        setSelectedData({ objectId: event.objectId, category: event.category });
+        setHoverData(undefined);
+        setDismissedEntryKey(entryKey);
+        setHeldMenuIndex((hasClickUserWired && (Number(event.category) === Number(RoomObjectCategoryEnum.Unit))) ? event.objectId : undefined);
+    });
+
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>(RoomWidgetUpdateRoomObjectEvent.OBJECT_ROLL_OVER, (event) => {
+        if (highlighting || selectedData || (event.category !== RoomObjectCategoryEnum.Unit)) return;
+
+        setHoverData({ objectId: event.objectId, category: event.category });
+    });
+
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>(RoomWidgetUpdateRoomObjectEvent.OBJECT_ROLL_OUT, (event) => {
+        if (highlighting || !hoverData || (event.category !== RoomObjectCategoryEnum.Unit) || (hoverData.objectId !== event.objectId)) return;
+
         setHoverData(undefined);
     });
 
-    useRoomObjectRollOver(event => {
-        if (selectedData || event.category !== RoomObjectCategoryEnum.Unit) return;
-
-        setHoverData({
-            objectId: event.objectId,
-            category: event.category
-        });
-    });
-
-    useRoomObjectRollOut(event => {
-        if (!hoverData || event.category !== RoomObjectCategoryEnum.Unit || hoverData.objectId !== event.objectId) return;
-
-        setHoverData(undefined);
+    // Someone leaving takes their menu and their name with them.
+    useRoomEventDispatcher<RoomWidgetUpdateRoomObjectEvent>(RoomWidgetUpdateRoomObjectEvent.USER_REMOVED, (event) => {
+        if (selectedData?.objectId === event.objectId) setSelectedData(undefined);
+        if (hoverData?.objectId === event.objectId) setHoverData(undefined);
     });
 
     if (!room) return null;
 
-    if (hoverData) return <RoomObjectMenuNameBubble objectData={hoverData} />;
+    const renderSelected = () => {
+        if (!selectedData || (selectedData.objectId < 0)) return null;
 
-    if (!selectedData || selectedData.objectId < 0) return null;
+        switch (selectedData.category) {
+            case RoomObjectCategoryEnum.Floor:
+            case RoomObjectCategoryEnum.Wall: {
+                // Selecting furniture asks its logic for a context menu; only some kinds offer one.
+                if (!contextMenu || (contextMenu.objectId !== selectedData.objectId) || (contextMenu.category !== selectedData.category)) return null;
 
-    switch (selectedData.category) {
-        case RoomObjectCategoryEnum.Floor:
-        case RoomObjectCategoryEnum.Wall: {
-            return null;
-        }
-        case RoomObjectCategoryEnum.Unit: {
-            const roomObject = room.getRoomObject(selectedData.objectId, selectedData.category);
+                return (
+                    <RoomObjectMenuBubble objectData={selectedData}>
+                        <FurnitureContextMenuView
+                            objectData={selectedData}
+                            menu={contextMenu.menu}
+                            onClose={onClose}
+                        />
+                    </RoomObjectMenuBubble>
+                );
+            }
+            case RoomObjectCategoryEnum.Unit: {
+                const userType = selectedUserType;
 
-            if (!roomObject) return null;
+                if ((userType === undefined) || isSpectating) return null;
 
-            const userType = RoomObjectUserTypeUtils.getAvatarType(roomObject.type);
+                // `isGameMode()` - `updateUserView` / `updatePetView` / `updateRentableBotView` set no menu up.
+                if (isPlayingGame && (userType !== RoomObjectUserType.Bot)) return null;
 
-            if (!userType) return null;
+                // `maybeSetupMenuView` - a plain bot has no menu to hold, only its name.
+                if ((heldMenuIndex === selectedData.objectId) && (userType !== RoomObjectUserType.Bot)) return null;
 
-            switch (userType) {
-                case RoomObjectUserType.Pet: {
-                    return null;
+                const bubble = (children: ReactNode) => (
+                    <RoomObjectMenuBubble
+                        objectData={selectedData}
+                        userType={userType}
+                    >
+                        {children}
+                    </RoomObjectMenuBubble>
+                );
+
+                switch (userType) {
+                    case RoomObjectUserType.Pet:
+                        return bubble(
+                            <RoomObjectMenuPet
+                                objectData={selectedData}
+                                onClose={onClose}
+                            />,
+                        );
+                    case RoomObjectUserType.RentableBot:
+                        return bubble(
+                            <InfoBubbleRentableBotView
+                                objectData={selectedData}
+                                onClose={onClose}
+                            />,
+                        );
+                    case RoomObjectUserType.Bot:
+                        // A bot has nothing to offer but its name.
+                        return <RoomObjectMenuNameBubble objectData={selectedData} />;
+                    case RoomObjectUserType.User:
+                        if (selectedData.objectId === ownRoomObjectId) {
+                            // Decorating, your own avatar wears the decorate bubble rather than a menu.
+                            if (isDecorating) return null;
+
+                            return bubble(
+                                <InfoBubbleOwnAvatarView
+                                    objectData={selectedData}
+                                    onClose={onClose}
+                                />,
+                            );
+                        }
+
+                        return bubble(
+                            <InfoBubbleAvatarView
+                                objectData={selectedData}
+                                onClose={onClose}
+                            />,
+                        );
                 }
-                case RoomObjectUserType.User: {
-                    return (
-                        <RoomObjectMenuBubble objectData={selectedData} userType={userType}>
-                            {selectedData.objectId === ownRoomObjectId && <InfoBubbleOwnAvatarView objectData={selectedData} onClose={onClose} />}
-                            {selectedData.objectId !== ownRoomObjectId && <InfoBubbleAvatarView objectData={selectedData} onClose={onClose} />}
-                        </RoomObjectMenuBubble>
-                    );
-                }
+
+                return null;
             }
         }
-    }
 
-    return null;
-}
+        return null;
+    };
+
+    const renderUnitBubble = () => {
+        if (hoverData && !isDecorating) {
+            if (isSpectating) return null;
+
+            return (
+                <RoomObjectMenuNameBubble
+                    key="hover"
+                    objectData={hoverData}
+                />
+            );
+        }
+
+        const selected = renderSelected();
+
+        if (selected) return selected;
+
+        if (!entryData || selectedData || isDecorating) return null;
+
+        // The entry name fades like any other; once gone it stays gone for this entry.
+        return (
+            <RoomObjectMenuNameBubble
+                key="entry"
+                objectData={entryData}
+                onClose={() => setDismissedEntryKey(entryKey)}
+                targetRef={avatarHintTarget}
+            />
+        );
+    };
+
+    return (
+        <>
+            {isDecorating && !isSpectating && (ownRoomObjectId >= 0) && (
+                <RoomObjectMenuBubble
+                    objectData={{ objectId: ownRoomObjectId, category: RoomObjectCategoryEnum.Unit }}
+                    userType={RoomObjectUserType.User}
+                >
+                    <DecorateModeBubbleView />
+                </RoomObjectMenuBubble>
+            )}
+            {renderUnitBubble()}
+        </>
+    );
+};

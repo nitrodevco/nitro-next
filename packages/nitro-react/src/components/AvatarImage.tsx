@@ -1,92 +1,39 @@
-import type { AvatarGenderType } from '@nitrodevco/nitro-api';
-import { AvatarScaleType, AvatarSetType } from '@nitrodevco/nitro-api';
-import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+/** Renders a Flash `AvatarImageWidget` figure as a Pixi sprite with its size and crop from the avatar renderer. */
+import { AvatarGenderType } from '@nitrodevco/nitro-api';
+import { Container as PixiContainer } from 'pixi.js';
+import { forwardRef } from 'react';
+
+import { Box, BoxLayout, useAvatarImageTexture } from '#base/theme';
 
 type AvatarImageProps = {
     figure: string;
     gender: AvatarGenderType;
     headOnly?: boolean;
+    cropped?: boolean;
     direction?: number;
     scale?: number;
+    /** Positions the image box; its size is always the render's own size (never shrunk by a flex parent - crop with the parent's `overflow` instead). */
+    layout?: BoxLayout;
 };
 
-export const AvatarImage = forwardRef<HTMLDivElement, AvatarImageProps>(
-    (props, ref) => {
-        const { figure, gender, headOnly = false, direction = 0, scale = 1 } = props;
-        const [randomValue, setRandomValue] = useState<number>(-1);
-        const [imageData, setImageData] = useState<{
-            width: number;
-            height: number;
-            url: string;
-        }>({ width: 0, height: 0, url: '' });
-        const disposed = useRef<boolean>(false);
+/** Pixi: the avatar's own render texture, straight from the render manager (see `useAvatarImageTexture`). A `scale` other than 1 is rendered as a smoothed, sharpened copy at that size rather than by stretching the sprite, which would mangle the pixel art. */
+export const AvatarImage = forwardRef<PixiContainer, AvatarImageProps>(({ figure, gender, headOnly = false, cropped = false, direction = 0, scale = 1, layout }, ref) => {
+    const { texture, width, height } = useAvatarImageTexture(figure, gender, { headOnly, cropped, direction, scale });
 
-        useEffect(() => {
-            if (!figure) return;
+    if (!texture) return null;
 
-            const avatarImage = GetAvatarRenderManager().createAvatarImage(
-                figure,
-                AvatarScaleType.Large,
-                gender,
-                {
-                    resetFigure: (figure: string) => {
-                        if (disposed.current) return;
-
-                        setRandomValue(Math.random());
-                    },
-                },
-                {
-                    resetEffect: (effect: number) => {
-                        if (disposed.current) return;
-
-                        setRandomValue(Math.random());
-                    },
-                },
-            );
-
-            if (!avatarImage) return;
-
-            let setType = AvatarSetType.Full;
-
-            if (headOnly) setType = AvatarSetType.Head;
-
-            avatarImage?.setDirection(setType, direction);
-
-            const load = async () => {
-                const image = await avatarImage.getCroppedImageAsync(setType, false, 1);
-
-                if (!image) return;
-
-                setImageData({
-                    width: image.width,
-                    height: image.height,
-                    url: image.src,
-                });
-            };
-
-            void load();
-        }, [figure, direction, randomValue]);
-
-        useEffect(() => {
-            return () => {
-                disposed.current = true;
-            };
-        }, []);
-
-        return (
-            <div
-                className="avatar-image-container"
-                ref={ref}
-                style={{
-                    width: imageData.width,
-                    height: imageData.height,
-                    backgroundImage: `url(${imageData.url})`,
-                    backgroundPosition: 'center -8px',
-                    backgroundRepeat: 'no-repeat',
-                    pointerEvents: 'none',
-                }}
+    return (
+        <Box
+            ref={ref}
+            layout={{ ...layout, width, height, flexShrink: 0 }}
+        >
+            <pixiSprite
+                texture={texture}
+                eventMode="none"
+                layout={{ width, height }}
             />
-        );
-    },
-);
+        </Box>
+    );
+});
+
+AvatarImage.displayName = 'AvatarImage';

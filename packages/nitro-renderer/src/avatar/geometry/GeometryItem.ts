@@ -1,8 +1,9 @@
-﻿import type { AvatarFigurePartType, IAssetAvatarBodyPartItem } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, IAssetAvatarBodyPartItem } from '@nitrodevco/nitro-api';
 
 import { Node3D } from './Node3D';
 import { Vector3D } from './Vector3D';
 
+/** Port of Flash `GeometryItem`. */
 export class GeometryItem extends Node3D {
     private _id: AvatarFigurePartType;
     private _radius: number;

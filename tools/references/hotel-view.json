@@ -1,0 +1,52 @@
+{
+  "revision": "WIN63-202609091217-117204808",
+  "feature": "hotel-view",
+  "states": [
+    "Default reception after matching empty timing code",
+    "Scheduled background variant",
+    "Hidden background with replacement URI",
+    "Missing replacement preserves previous image",
+    "Room exit and return",
+    "Small viewport and tall viewport"
+  ],
+  "sources": [
+    {
+      "root": "NITRO_HOTEL_REFERENCE_ROOT",
+      "kind": "layout",
+      "path": "landing_view_default_dynamic_layout.xml",
+      "sha256": "0ae070b09f5d4c39d902d4c7d0ddb1b5df010a5d72cd8499202bd55fff942352"
+    },
+    {
+      "root": "NITRO_HOTEL_REFERENCE_ROOT",
+      "kind": "official-reference",
+      "path": "official-default.xml",
+      "sha256": "c560c712e33bc647fe4567fed16627a9a49b9c170945368fbd5e4ec135a699bb"
+    },
+    {
+      "root": "NITRO_HOTEL_REFERENCE_ROOT",
+      "kind": "official-reference",
+      "path": "official-WidgetContainerLayout.js",
+      "sha256": "6cb93f20b046d86ebc4f26ffe3d96285df62b98d0eeae0b62d5f0ea1bc37eddb"
+    },
+    {
+      "root": "NITRO_AS3_ROOT",
+      "kind": "controller",
+      "path": "com/sulake/habbo/friendbar/landingview/layout/WidgetContainerLayout.as",
+      "sha256": "b9f30bc7712bf822abea4ac578b8a0f32921a8a57598da8af14c22717622e3d2"
+    },
+    {
+      "root": "NITRO_AS3_ROOT",
+      "kind": "controller",
+      "path": "com/sulake/habbo/communication/messages/parser/competition/CurrentTimingCodeMessageParser.as",
+      "sha256": "af48824856df8f4b18348c7496f16b24e9436eafb5c8b31556ec8eed5ad3c393"
+    }
+  ],
+  "contracts": [
+    "Default dynamic layout: 1172x822, resized to desktop; content fill #aae0f0, footer #333333 at bottom 50px",
+    "Background gradient bottom 38px, height 1150; native left/horizon/right bottom 38px, right edge inset 1px",
+    "Hotel top height desktop height minus 821; gradient top y=-175 and same height; logo x=100 y=0 w=145 h=200",
+    "Only a matching schedule changes backgrounds; hidden layers retain URI; absent/empty URI retains previous asset",
+    "Editor warning and divider remain hidden; no fabricated welcome panel",
+    "Campaign widgets, moving objects, avatar widget and alternative layouts remain unported; no claim of complete reception parity"
+  ]
+}

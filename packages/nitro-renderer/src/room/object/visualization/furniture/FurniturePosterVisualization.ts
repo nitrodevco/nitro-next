@@ -1,3 +1,7 @@
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurniturePosterVisualization extends FurnitureAnimatedVisualization {}
+/**
+ * Port of Flash `FurniturePosterVisualization`, the visualization `RoomObjectVisualizationFactory`
+ * builds for `furniture_poster`.
+ */
+export class FurniturePosterVisualization extends AnimatedFurnitureVisualization {}

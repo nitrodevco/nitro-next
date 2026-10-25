@@ -1,16 +1,33 @@
-import type { IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { AlphaTolerance, RoomGeometryScaleType, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
-import type { BLEND_MODES, Filter } from 'pixi.js';
-import { Texture } from 'pixi.js';
+import { AlphaTolerance, IGraphicAsset, IObjectVisualizationData, IRoomGeometry, IRoomObjectModel, IRoomObjectSprite, IVariableFxStatusModelData, RoomGeometryScaleType, RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+import { BLEND_MODES, Filter, Texture } from 'pixi.js';
+
+import { GetTickerTime } from '#renderer/utils';
 
 import { ColorData, LayerData } from '../data';
+import { RoomObjectSprite } from '../RoomObjectSprite';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
+import { StackedAdditionStack } from '../stacked/StackedAdditionStack';
+import { IVariableFxVisualizationHost, IVariableFxVisualizationRoomData } from '../variablefx/IVariableFxVisualizationRoomData';
+import { VariableFxStatusReconciler } from '../variablefx/VariableFxStatusReconciler';
+import { FurnitureHighlightComposite } from './FurnitureHighlightComposite';
+import { FurnitureHighlightFilters } from './FurnitureHighlightFilters';
 import { FurnitureVisualizationData } from './FurnitureVisualizationData';
 
-export class FurnitureVisualization extends RoomObjectSpriteVisualization {
+/**
+ * Port of Flash `FurnitureVisualization`, the visualization `RoomObjectVisualizationFactory`
+ * builds for `furniture_static`.
+ */
+export class FurnitureVisualization extends RoomObjectSpriteVisualization implements IVariableFxVisualizationHost {
     protected static DEPTH_MULTIPLIER: number = Math.sqrt(0.5);
 
     public static TYPE: string = RoomObjectVisualizationType.FURNITURE_STATIC;
+
+    private static VARIABLE_FX_SPRITE_TAG: string = 'variable_fx';
+    private static INVISIBLE_LAYER_TAG: string = 'invisible';
+    private static VARIABLE_FX_ASSET_NAME: string = 'variable_fx_stack';
+    private static VARIABLE_FX_STACK_LAYER: number = 0;
+    private static VARIABLE_FX_STACK_GAP: number = 4;
+    private static VARIABLE_FX_MANAGER_UPDATE_ID_UNSET: number = -2;
 
     protected _data: FurnitureVisualizationData | undefined = undefined;
     protected _type: string | undefined = undefined;
@@ -19,6 +36,12 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     protected _selectedColor: number = 0;
     protected _furnitureLift: number = 0;
     protected _alphaMultiplier: number = 1;
+    /** WIRED Set Visibility: 1 - `furniture_wired_transparency` / 100, multiplied into every layer's alpha (Flash `§_-S1H§`). */
+    protected _wiredAlpha: number = 1;
+    /** WIRED Set Visibility's "allow clicks to pass through" (`furniture_wired_click_through`). */
+    protected _skipMouseHandling: boolean = false;
+    /** The room hides layers tagged `invisible` (Flash `furniture_invisible_layer`). */
+    protected _invisibleLayer: boolean = false;
     protected _alphaChanged: boolean = false;
     protected _clickUrl: string | undefined = undefined;
     protected _clickHandling: boolean = false;
@@ -39,12 +62,45 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     protected _spriteXOffsets: number[] = [];
     protected _spriteYOffsets: number[] = [];
     protected _spriteZOffsets: number[] = [];
-    protected _filters: Filter[] = [];
+
+    /**
+     * Flash `_filters`: filters put on the whole furni from outside (the wired UI's looks, through
+     * `RoomObjectHighLighter`). They belong to the object rather than to a direction or scale, so
+     * unlike the per-layer caches above they outlive `resetSpriteData`.
+     */
+    private _filters: Filter[] = FurnitureVisualization.NO_FILTERS;
+    private _needsFilterUpdate: boolean = false;
+
+    /**
+     * Layers drawn as nothing (`setHiddenLayers`), `-1` for the shadow - Nitro's own, for the asset
+     * manager's Paint preview, where a layer hidden on the canvas is hidden in the room too.
+     */
+    private _hiddenLayers: ReadonlySet<number> = new Set();
+    private _hiddenLayersKey: string = '';
+    private _needsHiddenUpdate: boolean = false;
 
     private _animationNumber: number = 0;
     private _lookThrough: boolean = false;
     private _needsLookThroughUpdate: boolean = false;
-    private _lastUpdateTime: number = -1000;
+    /** Flash `_lastUpdateTime`: the time the sprites were last brought up to date (the furni chest times its floating icons by it). */
+    protected _lastUpdateTime: number = -1000;
+
+    private _variableFxRoomData: IVariableFxVisualizationRoomData | undefined = undefined;
+    private _variableFxStack: StackedAdditionStack | undefined = new StackedAdditionStack();
+    private _variableFxReconciler: VariableFxStatusReconciler = new VariableFxStatusReconciler();
+    private _variableFxManagerUpdateId: number = FurnitureVisualization.VARIABLE_FX_MANAGER_UPDATE_ID_UNSET;
+    private _variableFxSpriteIndex: number = -1;
+    private _variableFxAnchorY: number = 0;
+    private _variableFxAnchorX: number = 0;
+
+    /** WIRED Set Highlight (Flash `updateWiredHighlight`): the type, quantized strength and colour drawn, and their filters. */
+    private _wiredHighlightType: number = 0;
+    private _wiredHighlightStrength: number = 0;
+    private _wiredHighlightColor: number = 0xFFFFFF;
+    private _wiredHighlightFilters: Filter[] | undefined = undefined;
+    private _wiredHighlightFilterCache: Map<number, Filter[] | undefined> = new Map();
+    private _wiredHighlightComposite: FurnitureHighlightComposite | undefined = new FurnitureHighlightComposite();
+    private _wiredHighlightSprite: IRoomObjectSprite | undefined = undefined;
 
     public override initialize(data: IObjectVisualizationData): boolean {
         this.reset();
@@ -58,10 +114,37 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     }
 
     public override dispose(): void {
+        if (this._variableFxStack) {
+            this._variableFxStack.dispose();
+            this._variableFxStack = undefined;
+        }
+
+        if (this._wiredHighlightComposite) {
+            this._wiredHighlightComposite.dispose();
+            this._wiredHighlightComposite = undefined;
+        }
+
+        this._wiredHighlightSprite?.dispose();
+        this._wiredHighlightSprite = undefined;
+        this._wiredHighlightFilters = undefined;
+        this._wiredHighlightFilterCache.clear();
+
         super.dispose();
 
         this._data = undefined;
+        this._variableFxRoomData = undefined;
+        this._filters = FurnitureVisualization.NO_FILTERS;
         this.resetSpriteData();
+    }
+
+    /** The room's Variable FX tables for this object's kind; set by the room when the visualization is created. */
+    public get variableFxRoomData(): IVariableFxVisualizationRoomData | undefined {
+        return this._variableFxRoomData;
+    }
+
+    public set variableFxRoomData(data: IVariableFxVisualizationRoomData | undefined) {
+        this._variableFxRoomData = data;
+        this._variableFxManagerUpdateId = FurnitureVisualization.VARIABLE_FX_MANAGER_UPDATE_ID_UNSET;
     }
 
     protected resetSpriteData(): void {
@@ -75,7 +158,6 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         this._spriteXOffsets = [];
         this._spriteYOffsets = [];
         this._spriteZOffsets = [];
-        this._filters = [];
     }
 
     protected override reset(): void {
@@ -84,7 +166,9 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         this._data = undefined;
 
         this.setDirection(-1);
+        this.resetVariableFxStack();
         this.resetSpriteData();
+        this._wiredHighlightComposite?.clear(this._wiredHighlightSprite, true);
         this.createSprites(0);
     }
 
@@ -119,6 +203,16 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
             this._needsLookThroughUpdate = false;
         }
 
+        if (this._needsFilterUpdate) {
+            updateSprites = true;
+            this._needsFilterUpdate = false;
+        }
+
+        if (this._needsHiddenUpdate) {
+            updateSprites = true;
+            this._needsHiddenUpdate = false;
+        }
+
         let animation = 0;
 
         if (skipUpdate) {
@@ -131,18 +225,21 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
 
         if (updateSprites || animation !== 0) {
             this.updateSprites(scale, updateSprites, animation);
+            this.updateWiredHighlightComposite(animation !== 0);
 
             this._scale = scale;
 
             this.updateSpriteCounter++;
         }
+
+        if (this.updateVariableFxOverlay(scale, updateSprites || animation !== 0)) this.updateSpriteCounter++;
     }
 
     protected updateObject(scale: RoomGeometryScaleType, direction: number): boolean {
         if (
-            this.updateObjectCounter === this.object.updateCounter &&
-            scale === this._scale &&
-            this._lastCameraAngle === direction
+            this.updateObjectCounter === this.object.updateCounter
+            && scale === this._scale
+            && this._lastCameraAngle === direction
         )
             return false;
 
@@ -169,27 +266,69 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
 
         if (!model) return false;
 
-        if (this.updateModelCounter === model.updateCounter) return false;
+        const variableFxManagerUpdateId = this.getVariableFxVisualizationManagerUpdateId();
+        const modelChanged = this.updateModelCounter !== model.updateCounter;
+        const variableFxManagerChanged = variableFxManagerUpdateId !== this._variableFxManagerUpdateId;
 
-        this._selectedColor = model.getValue<number>(RoomObjectVariableEnum.FurnitureColor);
-        this._clickUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
-        this._clickHandling =
-            (this._clickUrl && this._clickUrl !== '' && this._clickUrl.indexOf('http') === 0) || false;
-        this._furnitureLift = model.getValue<number>(RoomObjectVariableEnum.FurnitureLiftAmount) || 0;
+        if (!modelChanged && !variableFxManagerChanged) return false;
 
-        let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FurnitureAlphaMultiplier);
+        if (modelChanged) {
+            this._selectedColor = model.getValue<number>(RoomObjectVariableEnum.FurnitureColor);
+            this._clickUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
+            this._clickHandling
+                = (this._clickUrl && this._clickUrl !== '' && this._clickUrl.indexOf('http') === 0) || false;
+            this._furnitureLift = model.getValue<number>(RoomObjectVariableEnum.FurnitureLiftAmount) || 0;
 
-        if (isNaN(alphaMultiplier)) alphaMultiplier = 1;
+            let alphaMultiplier = model.getValue<number>(RoomObjectVariableEnum.FurnitureAlphaMultiplier);
 
-        if (this._alphaMultiplier !== alphaMultiplier) {
-            this._alphaMultiplier = alphaMultiplier;
+            if (isNaN(alphaMultiplier)) alphaMultiplier = 1;
+
+            if (this._alphaMultiplier !== alphaMultiplier) {
+                this._alphaMultiplier = alphaMultiplier;
+
+                this._alphaChanged = true;
+            }
+
+            this.updateWiredVisibility(model);
+            this.updateWiredHighlight(model);
+
+            const invisibleLayer = model.getValue<number>(RoomObjectVariableEnum.FurnitureInvisibleLayer) > 0;
+
+            // Flash raises the same flag as an alpha change, which redraws every layer.
+            if (this._invisibleLayer !== invisibleLayer) {
+                this._invisibleLayer = invisibleLayer;
+
+                this._alphaChanged = true;
+            }
+        }
+
+        const variableFxChanged = this.reconcileVariableFxStatuses(model.getValue<IVariableFxStatusModelData | undefined>(RoomObjectVariableEnum.VariableFxStatuses));
+
+        this.updateModelCounter = model.updateCounter;
+        this._variableFxManagerUpdateId = variableFxManagerUpdateId;
+
+        return modelChanged || variableFxChanged;
+    }
+
+    /**
+     * WIRED Set Visibility (FurnitureVisualization.as:802-814, WIN63-202610201032): the transparency
+     * fades every layer, the shadow and the highlight, and "allow clicks to pass through" lets the
+     * mouse reach whatever is under the furni.
+     */
+    protected updateWiredVisibility(model: IRoomObjectModel): void {
+        let wiredTransparency = model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredTransparency);
+
+        if (wiredTransparency === undefined || isNaN(wiredTransparency)) wiredTransparency = 0;
+
+        const wiredAlpha = 1 - (Math.max(0, Math.min(100, wiredTransparency)) / 100);
+
+        if (this._wiredAlpha !== wiredAlpha) {
+            this._wiredAlpha = wiredAlpha;
 
             this._alphaChanged = true;
         }
 
-        this.updateModelCounter = model.updateCounter;
-
-        return true;
+        this._skipMouseHandling = model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredClickThrough) > 0;
     }
 
     protected updateSprites(scale: RoomGeometryScaleType, update: boolean, animation: number): void {
@@ -218,6 +357,12 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     }
 
     protected updateSprite(scale: RoomGeometryScaleType, layerId: number): void {
+        if (layerId === this._variableFxSpriteIndex) {
+            this.clearVariableFxOverlaySprite(this.getSprite(layerId));
+
+            return;
+        }
+
         const assetName = this.getSpriteAssetName(scale, layerId);
         const sprite = this.getSprite(layerId);
 
@@ -225,7 +370,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
             const assetData = this.getAsset(assetName, layerId);
 
             if (assetData) {
-                sprite.visible = true;
+                sprite.visible = !this._hiddenLayers.has(layerId === this._shadowLayerIndex ? -1 : layerId);
                 sprite.type = this._type!;
                 sprite.texture = this.getTexture(scale, layerId, assetData);
                 sprite.flipH = assetData.flipH;
@@ -245,12 +390,19 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
                         ? AlphaTolerance.MATCH_NOTHING
                         : AlphaTolerance.MATCH_OPAQUE_PIXELS;
 
+                    if (this.getLayerFlipH(scale, this._direction, layerId)) sprite.flipH = !sprite.flipH;
+
+                    if (this._invisibleLayer && sprite.tag === FurnitureVisualization.INVISIBLE_LAYER_TAG) {
+                        sprite.alpha = 0;
+                        sprite.alphaTolerance = AlphaTolerance.MATCH_NOTHING;
+                    }
+
                     relativeDepth = this.getLayerZOffset(scale, this._direction, layerId);
                     relativeDepth = relativeDepth - layerId * 0.001;
                 } else {
                     sprite.offsetX = assetData.offsetX;
                     sprite.offsetY = assetData.offsetY + this.getLayerYOffset(scale, this._direction, layerId);
-                    sprite.alpha = 48 * this._alphaMultiplier;
+                    sprite.alpha = 48 * this._alphaMultiplier * this._wiredAlpha;
                     sprite.alphaTolerance = AlphaTolerance.MATCH_NOTHING;
 
                     relativeDepth = 1;
@@ -262,13 +414,158 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
                 sprite.name = assetName;
                 sprite.libraryAssetName = this.getLibraryAssetNameForSprite(assetData, sprite);
                 sprite.posture = assetData.source ? this.getPostureForAsset(scale, assetData.source) : undefined;
-                sprite.clickHandling = this._clickHandling;
+                sprite.clickHandling = this._clickHandling && !this._skipMouseHandling;
+                sprite.skipMouseHandling = this._skipMouseHandling;
 
-                if (sprite.blendMode !== 'add') sprite.filters = this._filters;
+                this.updateSpriteFilters(scale, sprite, layerId);
             } else {
                 this.resetSprite(sprite);
             }
         } else if (sprite) this.resetSprite(sprite);
+    }
+
+    /**
+     * Flash `updateSpriteFilters`: every layer carries the furni's filters followed by its own
+     * (`getSpriteFilters` - the glow round a furni chest's floating icons), except the additive
+     * ones (lights, glows), which are never filtered. `RoomObjectSprite.filters` counts every write
+     * as a change, so it is only written when the list really differs - `concatListWillEqual`
+     * for the combined list.
+     */
+    private updateSpriteFilters(scale: RoomGeometryScaleType, sprite: IRoomObjectSprite, layerId: number): void {
+        if (sprite.blendMode === 'add') {
+            if (sprite.filters !== FurnitureVisualization.NO_FILTERS) sprite.filters = FurnitureVisualization.NO_FILTERS;
+
+            return;
+        }
+
+        const layerFilters = this.getLayerFilters(scale, this._direction, layerId);
+        // A highlight's colour matrix goes on every layer but the shadow; its glows are the composite's.
+        const highlightFilters = ((layerId === this._shadowLayerIndex) || FurnitureHighlightFilters.usesCompositeSilhouette(this._wiredHighlightType)) ? undefined : this._wiredHighlightFilters;
+
+        if (highlightFilters && highlightFilters.length) {
+            const combined = this._filters.concat(highlightFilters, layerFilters ?? []);
+
+            if (!FurnitureVisualization.listWillEqual(combined, sprite.filters)) sprite.filters = combined;
+
+            return;
+        }
+
+        if (!layerFilters || !layerFilters.length) {
+            if (sprite.filters !== this._filters) sprite.filters = this._filters;
+
+            return;
+        }
+
+        if (!this._filters.length) {
+            if (sprite.filters !== layerFilters) sprite.filters = layerFilters;
+
+            return;
+        }
+
+        if (FurnitureVisualization.concatListWillEqual(this._filters, layerFilters, sprite.filters)) return;
+
+        sprite.filters = this._filters.concat(layerFilters);
+    }
+
+    private static listWillEqual(list: Filter[], current: Filter[] | undefined): boolean {
+        return FurnitureVisualization.concatListWillEqual(list, FurnitureVisualization.NO_FILTERS, current);
+    }
+
+    /**
+     * Flash `updateWiredHighlight`: reads the WIRED Set Highlight the logic published (`furniture_wired_highlight_type`,
+     * `_strength`, `_color`); the strength is quantized so a pulse or an easing only builds a few filter lists, cached
+     * per strength until the type or colour changes.
+     */
+    private updateWiredHighlight(model: IRoomObjectModel): void {
+        const typeValue = model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredHighlightType);
+        const type = (typeValue === undefined || isNaN(typeValue)) ? 0 : Math.trunc(typeValue);
+        const strength = FurnitureHighlightFilters.quantizeStrength(model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredHighlightStrength));
+        const colorValue = model.getValue<number>(RoomObjectVariableEnum.FurnitureWiredHighlightColor);
+        const color = (colorValue === undefined || isNaN(colorValue)) ? 0xFFFFFF : (colorValue & 0xFFFFFF);
+
+        if (type === this._wiredHighlightType && strength === this._wiredHighlightStrength && color === this._wiredHighlightColor) return;
+
+        if (type !== this._wiredHighlightType || color !== this._wiredHighlightColor) this._wiredHighlightFilterCache.clear();
+
+        this._wiredHighlightType = type;
+        this._wiredHighlightStrength = strength;
+        this._wiredHighlightColor = color;
+        this._wiredHighlightFilters = this.getCachedWiredHighlightFilters();
+    }
+
+    private getCachedWiredHighlightFilters(): Filter[] | undefined {
+        if (this._wiredHighlightStrength === 0) return undefined;
+
+        if (!this._wiredHighlightFilterCache.has(this._wiredHighlightStrength)) this._wiredHighlightFilterCache.set(this._wiredHighlightStrength, FurnitureHighlightFilters.create(this._wiredHighlightType, this._wiredHighlightColor, this._wiredHighlightStrength));
+
+        return this._wiredHighlightFilterCache.get(this._wiredHighlightStrength);
+    }
+
+    /** Flash `updateWiredHighlightComposite`: the glow round the visible layers (not the shadow or the Variable FX stack). */
+    private updateWiredHighlightComposite(animated: boolean): void {
+        const composite = this._wiredHighlightComposite;
+
+        if (!composite) return;
+
+        if (!FurnitureHighlightFilters.usesCompositeSilhouette(this._wiredHighlightType) || !this._wiredHighlightFilters) {
+            composite.clear(this._wiredHighlightSprite, true);
+
+            return;
+        }
+
+        const sources: IRoomObjectSprite[] = [];
+
+        for (let index = 0; index < this.totalSprites; index++) {
+            if (index === this._shadowLayerIndex || index === this._variableFxSpriteIndex) continue;
+
+            const sprite = this.getSprite(index);
+
+            if (!sprite || !sprite.visible || !sprite.texture || sprite.texture === Texture.EMPTY || sprite.alpha <= 0 || sprite.blendMode === 'add') continue;
+
+            sources.push(sprite);
+        }
+
+        let alpha = this._alphaMultiplier * this._wiredAlpha;
+
+        if (this._lookThrough) alpha *= 0.2;
+
+        if (!this._wiredHighlightSprite) this._wiredHighlightSprite = new RoomObjectSprite();
+
+        composite.update(this._wiredHighlightSprite, sources, this._wiredHighlightFilters, Math.round(255 * Math.max(0, Math.min(1, alpha))), this._type ?? '', this._direction, false, animated);
+    }
+
+    /** Flash `additionalSpriteCount` / `getAdditionalSprite`: the highlight composite, drawn after the layers. */
+    public override get additionalSpriteCount(): number {
+        return this._wiredHighlightSprite ? 1 : 0;
+    }
+
+    public override getAdditionalSprite(index: number): IRoomObjectSprite | undefined {
+        return (index === 0) ? this._wiredHighlightSprite : undefined;
+    }
+
+    /** Flash `concatListWillEqual`: whether `first` followed by `second` is already `current`, item for item. */
+    private static concatListWillEqual(first: Filter[], second: Filter[], current: Filter[] | undefined): boolean {
+        if (!current || (first.length + second.length) !== current.length) return false;
+
+        for (let index = 0; index < first.length; index++) {
+            if (first[index] !== current[index]) return false;
+        }
+
+        for (let index = 0; index < second.length; index++) {
+            if (second[index] !== current[first.length + index]) return false;
+        }
+
+        return true;
+    }
+
+    /** Flash `getSpriteFilters`: filters of this layer's own, drawn after the furni's. */
+    protected getLayerFilters(_scale: RoomGeometryScaleType, _direction: number, _layerId: number): Filter[] | undefined {
+        return undefined;
+    }
+
+    /** Flash `getSpriteFlipH`: whether this layer is drawn mirrored against its asset. */
+    protected getLayerFlipH(_scale: RoomGeometryScaleType, _direction: number, _layerId: number): boolean {
+        return false;
     }
 
     protected getLibraryAssetNameForSprite(asset: IGraphicAsset, sprite: IRoomObjectSprite): string | undefined {
@@ -323,9 +620,9 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         }
 
         if (assetName.length > 0) {
-            assetName =
-                this._type +
-                (isntIcon ? '_' + size + '_' + assetName + '_' + this._direction + '_' : '_icon_' + assetName);
+            assetName
+                = this._type
+                    + (isntIcon ? '_' + size + '_' + assetName + '_' + this._direction + '_' : '_icon_' + assetName);
         }
 
         if (cache) {
@@ -376,6 +673,8 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
         let alpha = this._data.getLayerAlpha(scale, direction, layerId);
 
         if (this._alphaMultiplier !== null) alpha = alpha * this._alphaMultiplier;
+
+        alpha = alpha * this._wiredAlpha;
 
         this._spriteAlphas[layerId] = alpha;
 
@@ -463,6 +762,148 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
     protected setLayerCount(count: number): void {
         this._layerCount = count;
         this._shadowLayerIndex = count - this.getAdditionalLayerCount();
+
+        this.reserveVariableFxOverlaySprite();
+    }
+
+    /** One extra sprite, right after the shadow, carries the composed Variable FX stack. */
+    protected reserveVariableFxOverlaySprite(): void {
+        this._variableFxSpriteIndex = this._shadowLayerIndex >= 0 ? this._shadowLayerIndex + 1 : this._layerCount;
+        this._layerCount++;
+    }
+
+    private updateVariableFxOverlay(scale: RoomGeometryScaleType, update: boolean): boolean {
+        const stack = this._variableFxStack;
+
+        if (!stack) return false;
+        if (!update && stack.isCachedIdle) return false;
+
+        const sprite = this.getVariableFxSprite();
+
+        if (!sprite) return false;
+        if (stack.isEmpty && !sprite.visible) return false;
+        if (!update && stack.isIdleInvisible && !sprite.visible) return false;
+
+        const updateCounter = sprite.updateCounter;
+
+        this.applyVariableFxOverlaySpriteDefaults(sprite);
+
+        if (!this.resolveVariableFxAnchor()) {
+            const animated = stack.animate(sprite, 0);
+
+            this.clearVariableFxOverlaySprite(sprite);
+
+            return animated || sprite.updateCounter !== updateCounter;
+        }
+
+        const changed = update ? stack.update(sprite, scale, this._variableFxAnchorY) : stack.animate(sprite, this._variableFxAnchorY);
+        const positioned = update || changed || sprite.updateCounter !== updateCounter;
+
+        this.applyVariableFxOverlaySpriteDefaults(sprite);
+
+        if (sprite.visible && stack.texture && positioned) {
+            sprite.offsetX += this._variableFxAnchorX;
+        } else if (!sprite.visible) {
+            sprite.texture = Texture.EMPTY;
+        }
+
+        return changed || sprite.updateCounter !== updateCounter;
+    }
+
+    /** The stack sits above the furni: centred on the union of its visible layers, 4px above the topmost one. */
+    private resolveVariableFxAnchor(): boolean {
+        const limit = this._shadowLayerIndex >= 0 ? this._shadowLayerIndex : this._variableFxSpriteIndex;
+
+        let found = false;
+        let minX = 0;
+        let maxX = 0;
+        let minY = 0;
+
+        for (let index = 0; index < limit; index++) {
+            const sprite = this.getSprite(index);
+
+            if (!sprite || !sprite.visible || !sprite.texture || sprite.texture === Texture.EMPTY || sprite.alpha <= 0 || sprite.width <= 0 || sprite.height <= 0) continue;
+
+            const left = sprite.offsetX;
+            const right = left + sprite.width;
+
+            if (!found) {
+                minX = left;
+                maxX = right;
+                minY = sprite.offsetY;
+                found = true;
+            } else {
+                if (left < minX) minX = left;
+                if (right > maxX) maxX = right;
+                if (sprite.offsetY < minY) minY = sprite.offsetY;
+            }
+        }
+
+        if (!found) return false;
+
+        this._variableFxAnchorX = Math.round((minX + maxX) / 2);
+        this._variableFxAnchorY = minY - FurnitureVisualization.VARIABLE_FX_STACK_GAP;
+
+        return true;
+    }
+
+    private applyVariableFxOverlaySpriteDefaults(sprite: IRoomObjectSprite | undefined): void {
+        if (!sprite) return;
+
+        sprite.type = this._type ?? '';
+        sprite.name = FurnitureVisualization.VARIABLE_FX_ASSET_NAME;
+        sprite.libraryAssetName = FurnitureVisualization.VARIABLE_FX_ASSET_NAME;
+        sprite.posture = undefined;
+        sprite.tag = FurnitureVisualization.VARIABLE_FX_SPRITE_TAG;
+        sprite.color = 0xffffff;
+        sprite.blendMode = 'normal';
+        sprite.flipH = false;
+        sprite.flipV = false;
+        sprite.direction = this._direction;
+        sprite.alphaTolerance = AlphaTolerance.MATCH_NOTHING;
+        sprite.clickHandling = false;
+        sprite.skipMouseHandling = true;
+        sprite.filters = FurnitureVisualization.NO_FILTERS;
+        sprite.spriteType = RoomObjectSpriteTypeEnum.Default;
+        sprite.varyingDepth = false;
+    }
+
+    private clearVariableFxOverlaySprite(sprite: IRoomObjectSprite | undefined): void {
+        if (!sprite) return;
+
+        this.applyVariableFxOverlaySpriteDefaults(sprite);
+
+        sprite.texture = Texture.EMPTY;
+        sprite.visible = false;
+        sprite.alpha = 0;
+        sprite.offsetX = 0;
+        sprite.offsetY = 0;
+        sprite.relativeDepth = 0;
+    }
+
+    private getVariableFxSprite(): IRoomObjectSprite | undefined {
+        return this._variableFxSpriteIndex < 0 ? undefined : this.getSprite(this._variableFxSpriteIndex);
+    }
+
+    private getVariableFxVisualizationManagerUpdateId(): number {
+        return this._variableFxRoomData?.variableFxVisualizationManager.updateId ?? -1;
+    }
+
+    private reconcileVariableFxStatuses(data: IVariableFxStatusModelData | undefined): boolean {
+        if (!this._variableFxStack) this._variableFxStack = new StackedAdditionStack();
+
+        return this._variableFxReconciler.reconcile(data, this._variableFxRoomData?.variableFxVisualizationManager, this._variableFxRoomData?.variableFxAssetProvider, this._variableFxRoomData?.variableFxRendererRegistry, this._variableFxStack, FurnitureVisualization.VARIABLE_FX_STACK_LAYER, GetTickerTime());
+    }
+
+    private resetVariableFxStack(): void {
+        if (this._variableFxStack) this._variableFxStack.dispose();
+
+        this._variableFxStack = new StackedAdditionStack();
+        this._variableFxReconciler = new VariableFxStatusReconciler();
+        this._variableFxManagerUpdateId = FurnitureVisualization.VARIABLE_FX_MANAGER_UPDATE_ID_UNSET;
+        this._variableFxSpriteIndex = -1;
+        this._variableFxAnchorY = 0;
+        this._variableFxAnchorX = 0;
     }
 
     protected setDirection(direction: number): void {
@@ -500,6 +941,30 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization {
 
         this._lookThrough = flag;
         this._needsLookThroughUpdate = true;
+    }
+
+    /**
+     * Flash `filters`: the list is replaced, never edited in place - the sprites hold the array
+     * that was set, and a new array is what tells them it changed.
+     */
+    public get filters(): Filter[] {
+        return this._filters;
+    }
+
+    public set filters(filters: Filter[]) {
+        this._filters = (filters && filters.length) ? filters : FurnitureVisualization.NO_FILTERS;
+        this._needsFilterUpdate = true;
+    }
+
+    /** Hides these layers (`-1`: the shadow); the sprites update on the next frame. Setting the same set again does nothing. */
+    public setHiddenLayers(layers: number[]): void {
+        const key = [ ...layers ].sort((a, b) => a - b).join(',');
+
+        if (key === this._hiddenLayersKey) return;
+
+        this._hiddenLayersKey = key;
+        this._hiddenLayers = new Set(layers);
+        this._needsHiddenUpdate = true;
     }
 
     protected get direction(): number {

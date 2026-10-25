@@ -1,23 +1,22 @@
-﻿import type { IActionDefinition, IPartColor } from '@nitrodevco/nitro-api';
-import { AvatarFigurePartType } from '@nitrodevco/nitro-api';
-import type { AdjustmentFilter } from 'pixi-filters';
+import { AvatarFigurePartType, IActionDefinition, IPartColor } from '@nitrodevco/nitro-api';
 
 import { AvatarAnimationFrame } from './structure';
 
+/** Port of Flash `AvatarImagePartContainer`. */
 export class AvatarImagePartContainer {
     private _bodyPartId: string;
     private _partType: AvatarFigurePartType;
     private _flippedPartType: AvatarFigurePartType | undefined;
-    private _partId: number;
+    private _partId: string;
     private _color: IPartColor | undefined;
     private _frames: (AvatarAnimationFrame | number)[];
     private _action: IActionDefinition;
     private _isColorable: boolean;
     private _isBlendable: boolean;
-    private _blendTransform: AdjustmentFilter | undefined;
+    private _blendAlpha: number;
     private _paletteMapId: number;
 
-    constructor(bodyPartId: string, partType: AvatarFigurePartType, partId: number, partColor: IPartColor | undefined, frames: (AvatarAnimationFrame | number)[], action: IActionDefinition, isColorable: boolean, paletteMapId: number, flippedPartType: AvatarFigurePartType | undefined = undefined, isBlendable: boolean = false, _arg_11: number = 1) {
+    constructor(bodyPartId: string, partType: AvatarFigurePartType, partId: string, partColor: IPartColor | undefined, frames: (AvatarAnimationFrame | number)[], action: IActionDefinition, isColorable: boolean, paletteMapId: number, flippedPartType: AvatarFigurePartType | undefined = undefined, isBlendable: boolean = false, blendAlpha: number = 1) {
         this._bodyPartId = bodyPartId;
         this._partType = partType;
         this._partId = partId;
@@ -28,7 +27,8 @@ export class AvatarImagePartContainer {
         this._paletteMapId = paletteMapId;
         this._flippedPartType = flippedPartType;
         this._isBlendable = isBlendable;
-        this._blendTransform = undefined;
+        // Flash: `new ColorTransform(1, 1, 1, blend)` - the effect add's blend is an alpha multiplier
+        this._blendAlpha = blendAlpha;
 
         if (this._partType === AvatarFigurePartType.Eyes) this._isColorable = false;
     }
@@ -79,7 +79,7 @@ export class AvatarImagePartContainer {
         return this._partType;
     }
 
-    public get partId(): number {
+    public get partId(): string {
         return this._partId;
     }
 
@@ -111,7 +111,11 @@ export class AvatarImagePartContainer {
         return this._isBlendable;
     }
 
+    public get blendAlpha(): number {
+        return this._blendAlpha;
+    }
+
     public toString(): string {
-        return [this._bodyPartId, this._partType, this._partId].join(':');
+        return [ this._bodyPartId, this._partType, this._partId ].join(':');
     }
 }

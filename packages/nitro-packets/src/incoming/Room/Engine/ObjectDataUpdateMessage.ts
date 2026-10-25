@@ -1,4 +1,4 @@
-import { GetObjectDataFromWrapper, type IIncomingPacket, type IMessageDataWrapper, type IObjectData } from '@nitrodevco/nitro-api';
+import { GetObjectDataFromWrapper, IIncomingPacket, IMessageDataWrapper, IObjectData } from '@nitrodevco/nitro-api';
 
 export type ObjectDataUpdateMessageType = {
     objectId: number;
@@ -9,7 +9,7 @@ export class ObjectDataUpdateMessage implements IIncomingPacket<ObjectDataUpdate
     public parse(wrapper: IMessageDataWrapper): ObjectDataUpdateMessageType {
         const packet: ObjectDataUpdateMessageType = {
             objectId: parseInt(wrapper.readString()),
-            stuffData: GetObjectDataFromWrapper(wrapper)
+            stuffData: GetObjectDataFromWrapper(wrapper),
         };
 
         return packet;

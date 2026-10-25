@@ -1,4 +1,5 @@
-﻿export class RoomPlaneBitmapMask {
+/** Port of Flash `RoomPlaneBitmapMask`. */
+export class RoomPlaneBitmapMask {
     private _type: string;
     private _leftSideLoc: number;
     private _rightSideLoc: number;

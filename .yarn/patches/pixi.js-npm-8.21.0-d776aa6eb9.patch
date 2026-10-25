@@ -1,0 +1,767 @@
+diff --git a/lib/events/EventBoundary.js b/lib/events/EventBoundary.js
+index 79c512c8d572ca9f5e495b562bc87f011715d734..53356604facfc4295da624d215e1e588f679a62f 100644
+--- a/lib/events/EventBoundary.js
++++ b/lib/events/EventBoundary.js
+@@ -374,7 +374,9 @@ class EventBoundary {
+     }
+     type ?? (type = e.type);
+     const handlerKey = `on${type}`;
+-    e.currentTarget[handlerKey]?.(e);
++    if (e.eventPhase !== e.CAPTURING_PHASE) {
++      e.currentTarget[handlerKey]?.(e);
++    }
+     const key = e.eventPhase === e.CAPTURING_PHASE || e.eventPhase === e.AT_TARGET ? `${type}capture` : type;
+     this._notifyListeners(e, key);
+     if (e.eventPhase === e.AT_TARGET) {
+diff --git a/lib/events/EventBoundary.mjs b/lib/events/EventBoundary.mjs
+index 7630d15d9493e2fdc04d5753bacba00bbe248080..5b389d2ec4f448edd76b3d6a0ae8a1c990ae9d6b 100644
+--- a/lib/events/EventBoundary.mjs
++++ b/lib/events/EventBoundary.mjs
+@@ -372,7 +372,9 @@ class EventBoundary {
+     }
+     type ?? (type = e.type);
+     const handlerKey = `on${type}`;
+-    e.currentTarget[handlerKey]?.(e);
++    if (e.eventPhase !== e.CAPTURING_PHASE) {
++      e.currentTarget[handlerKey]?.(e);
++    }
+     const key = e.eventPhase === e.CAPTURING_PHASE || e.eventPhase === e.AT_TARGET ? `${type}capture` : type;
+     this._notifyListeners(e, key);
+     if (e.eventPhase === e.AT_TARGET) {
+diff --git a/lib/index.js b/lib/index.js
+index d05452eef05d5dd4fb6b0fabea40165e2270d3b7..49f95e837cc0619013769632da64c7d168980df1 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -829,6 +829,7 @@ exports.getMaxTexturesPerBatch = maxRecommendedTextures.getMaxTexturesPerBatch;
+ exports.generateGPULayout = generateGPULayout.generateGPULayout;
+ exports.generateLayout = generateLayout.generateLayout;
+ exports.getTextureBatchBindGroup = getTextureBatchBindGroup.getTextureBatchBindGroup;
++exports.pruneTextureBatchBindGroups = getTextureBatchBindGroup.pruneTextureBatchBindGroups;
+ exports.GpuBatchAdaptor = GpuBatchAdaptor.GpuBatchAdaptor;
+ exports.Batch = Batcher.Batch;
+ exports.Batcher = Batcher.Batcher;
+diff --git a/lib/index.mjs b/lib/index.mjs
+index 19eddc0fa2d0b4d2745bc00a0851b8185181d1a8..7c3d3e414b64aba439de59a95366a35ec732b641 100644
+--- a/lib/index.mjs
++++ b/lib/index.mjs
+@@ -190,7 +190,7 @@ export { checkMaxIfStatementsInShader } from './rendering/batcher/gl/utils/check
+ export { getMaxTexturesPerBatch } from './rendering/batcher/gl/utils/maxRecommendedTextures.mjs';
+ export { generateGPULayout } from './rendering/batcher/gpu/generateGPULayout.mjs';
+ export { generateLayout } from './rendering/batcher/gpu/generateLayout.mjs';
+-export { getTextureBatchBindGroup } from './rendering/batcher/gpu/getTextureBatchBindGroup.mjs';
++export { getTextureBatchBindGroup, pruneTextureBatchBindGroups } from './rendering/batcher/gpu/getTextureBatchBindGroup.mjs';
+ export { GpuBatchAdaptor } from './rendering/batcher/gpu/GpuBatchAdaptor.mjs';
+ export { Batch, Batcher } from './rendering/batcher/shared/Batcher.mjs';
+ export { BatcherPipe } from './rendering/batcher/shared/BatcherPipe.mjs';
+diff --git a/lib/rendering/batcher/gpu/GpuBatchAdaptor.js b/lib/rendering/batcher/gpu/GpuBatchAdaptor.js
+index e174a61efda8a5bb754cc8be5a4e357e728e2574..d210a89aded274a1a0e2245b1750ab443399cd43 100644
+--- a/lib/rendering/batcher/gpu/GpuBatchAdaptor.js
++++ b/lib/rendering/batcher/gpu/GpuBatchAdaptor.js
+@@ -30,7 +30,7 @@ class GpuBatchAdaptor {
+     const program = this._shader.gpuProgram;
+     const renderer = batchPipe.renderer;
+     const encoder = renderer.encoder;
+-    if (!batch.bindGroup) {
++    if (!batch.bindGroup || !getTextureBatchBindGroup.isTextureBatchBindGroupAlive(batch.bindGroup)) {
+       const textureBatch = batch.textures;
+       batch.bindGroup = getTextureBatchBindGroup.getTextureBatchBindGroup(
+         textureBatch.textures,
+diff --git a/lib/rendering/batcher/gpu/GpuBatchAdaptor.mjs b/lib/rendering/batcher/gpu/GpuBatchAdaptor.mjs
+index 38d4838a2ea183b6196ac0328b57473167498b35..0aea44710e6e6f4d414961f69517ffaf9ec79073 100644
+--- a/lib/rendering/batcher/gpu/GpuBatchAdaptor.mjs
++++ b/lib/rendering/batcher/gpu/GpuBatchAdaptor.mjs
+@@ -1,6 +1,6 @@
+ import { ExtensionType } from '../../../extensions/Extensions.mjs';
+ import { State } from '../../renderers/shared/state/State.mjs';
+-import { getTextureBatchBindGroup } from './getTextureBatchBindGroup.mjs';
++import { getTextureBatchBindGroup, isTextureBatchBindGroupAlive } from './getTextureBatchBindGroup.mjs';
+ 
+ "use strict";
+ const tempState = State.for2d();
+@@ -28,7 +28,7 @@ class GpuBatchAdaptor {
+     const program = this._shader.gpuProgram;
+     const renderer = batchPipe.renderer;
+     const encoder = renderer.encoder;
+-    if (!batch.bindGroup) {
++    if (!batch.bindGroup || !isTextureBatchBindGroupAlive(batch.bindGroup)) {
+       const textureBatch = batch.textures;
+       batch.bindGroup = getTextureBatchBindGroup(
+         textureBatch.textures,
+diff --git a/lib/rendering/batcher/gpu/getTextureBatchBindGroup.d.ts b/lib/rendering/batcher/gpu/getTextureBatchBindGroup.d.ts
+index 90fec795cbc9b37aba921921be58b1681b630c4e..2f39a2db31fe3a7bb1885ae0a2ba2e53ed266918 100644
+--- a/lib/rendering/batcher/gpu/getTextureBatchBindGroup.d.ts
++++ b/lib/rendering/batcher/gpu/getTextureBatchBindGroup.d.ts
+@@ -6,4 +6,11 @@ import type { TextureSource } from '../../renderers/shared/texture/sources/Textu
+  * @param maxTextures
+  * @internal
+  */
++/**
++ * Drops the texture batch bind groups that have not been drawn for `maxIdle` ms (nitro patch).
++ * @param now - The current time, as `performance.now()`.
++ * @param maxIdle - How long, in ms, a group may go undrawn before it is dropped.
++ * @returns The number of groups dropped.
++ */
++export declare function pruneTextureBatchBindGroups(now: number, maxIdle: number): number;
+ export declare function getTextureBatchBindGroup(textures: TextureSource[], size: number, maxTextures: number): BindGroup;
+diff --git a/lib/rendering/batcher/gpu/getTextureBatchBindGroup.js b/lib/rendering/batcher/gpu/getTextureBatchBindGroup.js
+index c87625041835cbaf9d1280d6eaef70a3feccf4d2..21d25051e8af687cac066f7d3265aae0cbaa1fee 100644
+--- a/lib/rendering/batcher/gpu/getTextureBatchBindGroup.js
++++ b/lib/rendering/batcher/gpu/getTextureBatchBindGroup.js
+@@ -2,9 +2,91 @@
+ 
+ var BindGroup = require('../../renderers/gpu/shader/BindGroup.js');
+ var Texture = require('../../renderers/shared/texture/Texture.js');
++var warn = require('../../../utils/logging/warn.js');
+ 
+ "use strict";
+ const cachedGroups = {};
++const attachedGroups = /* @__PURE__ */ new Set();
++function recacheTextureBatchBindGroup(bindGroup) {
++  attachedGroups.add(bindGroup);
++  if (!cachedGroups[bindGroup._batchKey]) cachedGroups[bindGroup._batchKey] = bindGroup;
++}
++/**
++ * Drops the texture batch bind groups that have not been drawn for `maxIdle` ms. The cache otherwise
++ * keeps every texture combination ever batched - and through it every texture source - alive forever.
++ * A dropped group stays valid for whatever still holds it and rejoins the cache on its next draw.
++ * @param now - The current time, as `performance.now()`.
++ * @param maxIdle - How long, in ms, a group may go undrawn before it is dropped.
++ * @returns The number of groups dropped.
++ */
++function pruneTextureBatchBindGroups(now, maxIdle) {
++  const pruned = /* @__PURE__ */ new Set();
++  for (const bindGroup of attachedGroups) {
++    if (now - bindGroup._lastUsed <= maxIdle) continue;
++    attachedGroups.delete(bindGroup);
++    if (cachedGroups[bindGroup._batchKey] === bindGroup) delete cachedGroups[bindGroup._batchKey];
++    pruned.add(bindGroup);
++  }
++  if (pruned.size) detachTextureBatchBindGroups(pruned);
++  return pruned.size;
++}
++/**
++ * Detaches many groups at once. Every texture batch group binds the shared empty texture in its
++ * unused slots, so that source and its style carry a listener per slot of every attached group.
++ * eventemitter3's `off` copies the whole listener list on each call, so detaching groups one by one
++ * was quadratic in the cache size - seconds of frame time and hundreds of MB of garbage on a prune.
++ * This rebuilds each affected emitter's list once.
++ * @param groups - The groups to detach.
++ */
++function detachTextureBatchBindGroups(groups) {
++  const handler = BindGroup.BindGroup.prototype.onResourceChange;
++  const emitters = /* @__PURE__ */ new Set();
++  for (const bindGroup of groups) {
++    if (bindGroup._detached || !bindGroup.resources) continue;
++    for (const i in bindGroup.resources) {
++      const resource = bindGroup.resources[i];
++      if (resource && resource._events) emitters.add(resource);
++    }
++    bindGroup._detached = true;
++  }
++  for (const emitter of emitters) {
++    const listeners = emitter._events.change;
++    if (!listeners) continue;
++    if (!Array.isArray(listeners)) {
++      if (listeners.fn === handler && groups.has(listeners.context)) emitter.removeAllListeners("change");
++      continue;
++    }
++    const kept = listeners.filter((listener) => listener.fn !== handler || !groups.has(listener.context));
++    if (kept.length === listeners.length) continue;
++    if (!kept.length) emitter.removeAllListeners("change");
++    else emitter._events.change = kept.length === 1 ? kept[0] : kept;
++  }
++}
++/**
++ * Whether every texture this group binds is still alive. A source destroyed while a batch still
++ * draws it - or while a group pruning detached still holds it - made the GPU bind group rebuild
++ * throw and stopped the ticker; such a group is rebuilt instead, the dead source drawn empty.
++ * @param bindGroup - The texture batch bind group to check.
++ * @returns Whether the group can be bound as it is.
++ */
++function isTextureBatchBindGroupAlive(bindGroup) {
++  const resources = bindGroup.resources;
++  if (!resources) return false;
++  for (const i in resources) {
++    const resource = resources[i];
++    if (!resource || resource.destroyed) return false;
++  }
++  return true;
++}
++const warnedSources = /* @__PURE__ */ new WeakSet();
++function liveSource(source) {
++  if (!source.destroyed) return source;
++  if (!warnedSources.has(source)) {
++    warnedSources.add(source);
++    warn.warn(`[Batcher] a destroyed texture source (${source.label || `uid ${source.uid}`}) is still drawn; it is drawn empty. Whatever shows it destroyed it too early.`);
++  }
++  return Texture.Texture.EMPTY.source;
++}
+ function getTextureBatchBindGroup(textures, size, maxTextures) {
+   let uid = 2166136261;
+   for (let i = 0; i < size; i++) {
+@@ -12,20 +94,32 @@ function getTextureBatchBindGroup(textures, size, maxTextures) {
+     uid = Math.imul(uid, 16777619);
+     uid >>>= 0;
+   }
+-  return cachedGroups[uid] || generateTextureBatchBindGroup(textures, size, uid, maxTextures);
++  const cached = cachedGroups[uid];
++  if (cached) {
++    if (isTextureBatchBindGroupAlive(cached)) return cached;
++    attachedGroups.delete(cached);
++    cached._detach();
++  }
++  return generateTextureBatchBindGroup(textures, size, uid, maxTextures);
+ }
+ function generateTextureBatchBindGroup(textures, size, key, maxTextures) {
+   const bindGroupResources = {};
+   let bindIndex = 0;
+   for (let i = 0; i < maxTextures; i++) {
+-    const texture = i < size ? textures[i] : Texture.Texture.EMPTY.source;
+-    bindGroupResources[bindIndex++] = texture.source;
+-    bindGroupResources[bindIndex++] = texture.style;
++    const source = liveSource(i < size ? textures[i].source : Texture.Texture.EMPTY.source);
++    bindGroupResources[bindIndex++] = source;
++    bindGroupResources[bindIndex++] = source.style;
+   }
+   const bindGroup = new BindGroup.BindGroup(bindGroupResources);
++  bindGroup._batchKey = key;
++  bindGroup._lastUsed = performance.now();
++  bindGroup._onReattach = recacheTextureBatchBindGroup;
++  attachedGroups.add(bindGroup);
+   cachedGroups[key] = bindGroup;
+   return bindGroup;
+ }
+ 
+ exports.getTextureBatchBindGroup = getTextureBatchBindGroup;
++exports.isTextureBatchBindGroupAlive = isTextureBatchBindGroupAlive;
++exports.pruneTextureBatchBindGroups = pruneTextureBatchBindGroups;
+ //# sourceMappingURL=getTextureBatchBindGroup.js.map
+diff --git a/lib/rendering/batcher/gpu/getTextureBatchBindGroup.mjs b/lib/rendering/batcher/gpu/getTextureBatchBindGroup.mjs
+index 433fedc5a99dea5dd01d0f55f0aba7dffdb6c795..cf598cc9f69d2c6ef2a493aaf13f640a7d17ac01 100644
+--- a/lib/rendering/batcher/gpu/getTextureBatchBindGroup.mjs
++++ b/lib/rendering/batcher/gpu/getTextureBatchBindGroup.mjs
+@@ -1,8 +1,90 @@
+ import { BindGroup } from '../../renderers/gpu/shader/BindGroup.mjs';
+ import { Texture } from '../../renderers/shared/texture/Texture.mjs';
++import { warn } from '../../../utils/logging/warn.mjs';
+ 
+ "use strict";
+ const cachedGroups = {};
++const attachedGroups = /* @__PURE__ */ new Set();
++function recacheTextureBatchBindGroup(bindGroup) {
++  attachedGroups.add(bindGroup);
++  if (!cachedGroups[bindGroup._batchKey]) cachedGroups[bindGroup._batchKey] = bindGroup;
++}
++/**
++ * Drops the texture batch bind groups that have not been drawn for `maxIdle` ms. The cache otherwise
++ * keeps every texture combination ever batched - and through it every texture source - alive forever.
++ * A dropped group stays valid for whatever still holds it and rejoins the cache on its next draw.
++ * @param now - The current time, as `performance.now()`.
++ * @param maxIdle - How long, in ms, a group may go undrawn before it is dropped.
++ * @returns The number of groups dropped.
++ */
++function pruneTextureBatchBindGroups(now, maxIdle) {
++  const pruned = /* @__PURE__ */ new Set();
++  for (const bindGroup of attachedGroups) {
++    if (now - bindGroup._lastUsed <= maxIdle) continue;
++    attachedGroups.delete(bindGroup);
++    if (cachedGroups[bindGroup._batchKey] === bindGroup) delete cachedGroups[bindGroup._batchKey];
++    pruned.add(bindGroup);
++  }
++  if (pruned.size) detachTextureBatchBindGroups(pruned);
++  return pruned.size;
++}
++/**
++ * Detaches many groups at once. Every texture batch group binds the shared empty texture in its
++ * unused slots, so that source and its style carry a listener per slot of every attached group.
++ * eventemitter3's `off` copies the whole listener list on each call, so detaching groups one by one
++ * was quadratic in the cache size - seconds of frame time and hundreds of MB of garbage on a prune.
++ * This rebuilds each affected emitter's list once.
++ * @param groups - The groups to detach.
++ */
++function detachTextureBatchBindGroups(groups) {
++  const handler = BindGroup.prototype.onResourceChange;
++  const emitters = /* @__PURE__ */ new Set();
++  for (const bindGroup of groups) {
++    if (bindGroup._detached || !bindGroup.resources) continue;
++    for (const i in bindGroup.resources) {
++      const resource = bindGroup.resources[i];
++      if (resource && resource._events) emitters.add(resource);
++    }
++    bindGroup._detached = true;
++  }
++  for (const emitter of emitters) {
++    const listeners = emitter._events.change;
++    if (!listeners) continue;
++    if (!Array.isArray(listeners)) {
++      if (listeners.fn === handler && groups.has(listeners.context)) emitter.removeAllListeners("change");
++      continue;
++    }
++    const kept = listeners.filter((listener) => listener.fn !== handler || !groups.has(listener.context));
++    if (kept.length === listeners.length) continue;
++    if (!kept.length) emitter.removeAllListeners("change");
++    else emitter._events.change = kept.length === 1 ? kept[0] : kept;
++  }
++}
++/**
++ * Whether every texture this group binds is still alive. A source destroyed while a batch still
++ * draws it - or while a group pruning detached still holds it - made the GPU bind group rebuild
++ * throw and stopped the ticker; such a group is rebuilt instead, the dead source drawn empty.
++ * @param bindGroup - The texture batch bind group to check.
++ * @returns Whether the group can be bound as it is.
++ */
++function isTextureBatchBindGroupAlive(bindGroup) {
++  const resources = bindGroup.resources;
++  if (!resources) return false;
++  for (const i in resources) {
++    const resource = resources[i];
++    if (!resource || resource.destroyed) return false;
++  }
++  return true;
++}
++const warnedSources = /* @__PURE__ */ new WeakSet();
++function liveSource(source) {
++  if (!source.destroyed) return source;
++  if (!warnedSources.has(source)) {
++    warnedSources.add(source);
++    warn(`[Batcher] a destroyed texture source (${source.label || `uid ${source.uid}`}) is still drawn; it is drawn empty. Whatever shows it destroyed it too early.`);
++  }
++  return Texture.EMPTY.source;
++}
+ function getTextureBatchBindGroup(textures, size, maxTextures) {
+   let uid = 2166136261;
+   for (let i = 0; i < size; i++) {
+@@ -10,20 +92,30 @@ function getTextureBatchBindGroup(textures, size, maxTextures) {
+     uid = Math.imul(uid, 16777619);
+     uid >>>= 0;
+   }
+-  return cachedGroups[uid] || generateTextureBatchBindGroup(textures, size, uid, maxTextures);
++  const cached = cachedGroups[uid];
++  if (cached) {
++    if (isTextureBatchBindGroupAlive(cached)) return cached;
++    attachedGroups.delete(cached);
++    cached._detach();
++  }
++  return generateTextureBatchBindGroup(textures, size, uid, maxTextures);
+ }
+ function generateTextureBatchBindGroup(textures, size, key, maxTextures) {
+   const bindGroupResources = {};
+   let bindIndex = 0;
+   for (let i = 0; i < maxTextures; i++) {
+-    const texture = i < size ? textures[i] : Texture.EMPTY.source;
+-    bindGroupResources[bindIndex++] = texture.source;
+-    bindGroupResources[bindIndex++] = texture.style;
++    const source = liveSource(i < size ? textures[i].source : Texture.EMPTY.source);
++    bindGroupResources[bindIndex++] = source;
++    bindGroupResources[bindIndex++] = source.style;
+   }
+   const bindGroup = new BindGroup(bindGroupResources);
++  bindGroup._batchKey = key;
++  bindGroup._lastUsed = performance.now();
++  bindGroup._onReattach = recacheTextureBatchBindGroup;
++  attachedGroups.add(bindGroup);
+   cachedGroups[key] = bindGroup;
+   return bindGroup;
+ }
+ 
+-export { getTextureBatchBindGroup };
++export { getTextureBatchBindGroup, isTextureBatchBindGroupAlive, pruneTextureBatchBindGroups };
+ //# sourceMappingURL=getTextureBatchBindGroup.mjs.map
+diff --git a/lib/rendering/index.js b/lib/rendering/index.js
+index e078f85c4a469e7e5b8195db6df86a407bd7ee3f..85df4be4d95ac20e0a9a90d0d074be5c67bbb357 100644
+--- a/lib/rendering/index.js
++++ b/lib/rendering/index.js
+@@ -250,6 +250,7 @@ exports.getMaxTexturesPerBatch = maxRecommendedTextures.getMaxTexturesPerBatch;
+ exports.generateGPULayout = generateGPULayout.generateGPULayout;
+ exports.generateLayout = generateLayout.generateLayout;
+ exports.getTextureBatchBindGroup = getTextureBatchBindGroup.getTextureBatchBindGroup;
++exports.pruneTextureBatchBindGroups = getTextureBatchBindGroup.pruneTextureBatchBindGroups;
+ exports.GpuBatchAdaptor = GpuBatchAdaptor.GpuBatchAdaptor;
+ exports.Batch = Batcher.Batch;
+ exports.Batcher = Batcher.Batcher;
+diff --git a/lib/rendering/index.mjs b/lib/rendering/index.mjs
+index 75de38551df6130b63ee6495562813c42ef9a24c..6d254712f8a6c9a0653ad7b7b42d10fbc4cf92d8 100644
+--- a/lib/rendering/index.mjs
++++ b/lib/rendering/index.mjs
+@@ -4,7 +4,7 @@ export { checkMaxIfStatementsInShader } from './batcher/gl/utils/checkMaxIfState
+ export { getMaxTexturesPerBatch } from './batcher/gl/utils/maxRecommendedTextures.mjs';
+ export { generateGPULayout } from './batcher/gpu/generateGPULayout.mjs';
+ export { generateLayout } from './batcher/gpu/generateLayout.mjs';
+-export { getTextureBatchBindGroup } from './batcher/gpu/getTextureBatchBindGroup.mjs';
++export { getTextureBatchBindGroup, pruneTextureBatchBindGroups } from './batcher/gpu/getTextureBatchBindGroup.mjs';
+ export { GpuBatchAdaptor } from './batcher/gpu/GpuBatchAdaptor.mjs';
+ export { Batch, Batcher } from './batcher/shared/Batcher.mjs';
+ export { BatcherPipe } from './batcher/shared/BatcherPipe.mjs';
+diff --git a/lib/rendering/renderers/gpu/BindGroupSystem.js b/lib/rendering/renderers/gpu/BindGroupSystem.js
+index efc1c53ae3aabf7c0b382096d9ae6322b03967d1..e29947ac9512d7988ec00d22c32d68fc5e3d5288 100644
+--- a/lib/rendering/renderers/gpu/BindGroupSystem.js
++++ b/lib/rendering/renderers/gpu/BindGroupSystem.js
+@@ -1,8 +1,36 @@
+ 'use strict';
+ 
+ var Extensions = require('../../../extensions/Extensions.js');
++var warn = require('../../../utils/logging/warn.js');
++var Texture = require('../shared/texture/Texture.js');
+ 
+ "use strict";
++/**
++ * What a slot of a bind group binds when its resource was destroyed while a shader still uses it:
++ * the empty texture for a 2d float texture slot, its sampler for a filtering sampler slot, nothing
++ * (so the bind group still throws) for anything else. Every path that drew a destroyed texture -
++ * and `BindGroup.onResourceChange` nulls the slot of each group that held it - otherwise threw here
++ * and stopped the ticker: one early `destroy` blacked out the whole client.
++ * @param program - The program the group is bound for.
++ * @param groupIndex - The group's index in the program.
++ * @param binding - The slot's binding in the group.
++ * @returns The stand-in resource, or undefined when the slot takes no texture or sampler.
++ */
++function getEmptyStandIn(program, groupIndex, binding) {
++  const entries = program.gpuLayout?.[groupIndex];
++  if (!entries) return void 0;
++  for (const i in entries) {
++    const entry = entries[i];
++    if (!entry || entry.binding !== binding) continue;
++    if (entry.texture) {
++      const { sampleType = "float", viewDimension = "2d", multisampled = false } = entry.texture;
++      return sampleType === "float" && viewDimension === "2d" && !multisampled ? Texture.Texture.EMPTY.source : void 0;
++    }
++    if (entry.sampler) return (entry.sampler.type ?? "filtering") === "filtering" ? Texture.Texture.EMPTY.source.style : void 0;
++    return void 0;
++  }
++  return void 0;
++}
+ class GpuBindGroupEntry {
+   constructor(gpuBindGroup, now) {
+     this.autoGarbageCollect = true;
+@@ -23,6 +51,17 @@ class GpuBindGroupEntry {
+ class BindGroupSystem {
+   constructor(renderer) {
+     this._hash = /* @__PURE__ */ Object.create(null);
++    /**
++     * How long, in ms, a cached bind group may go unbound before it is dropped. A key holds the ids of
++     * the resources bound, so every texture combination a batch, avatar frame or window ever drew made
++     * one, and the renderer's garbage collection kept each for `gcMaxUnusedTime` (a minute, swept every
++     * 30 s): thousands of native bind groups - and the texture views they hold - in a busy session.
++     * Making a bind group again costs microseconds; one still bound this frame is never dropped.
++     */
++    this.maxUnusedTime = 5e3;
++    /** How often, in ms, the cache is swept. */
++    this.sweepFrequency = 1e3;
++    this._lastSweep = 0;
+     this._renderer = renderer;
+     renderer.gc.addResourceHash(this, "_hash", "resource");
+     renderer.gc.addCollection(this, "_hash", "hash");
+@@ -31,6 +70,18 @@ class BindGroupSystem {
+     this._gpu = gpu;
+     this._hash = /* @__PURE__ */ Object.create(null);
+   }
++  postrender() {
++    const now = this._renderer.gc.now;
++    if (now - this._lastSweep < this.sweepFrequency) return;
++    this._lastSweep = now;
++    const hash = this._hash;
++    for (const key in hash) {
++      const entry = hash[key];
++      if (entry && (now - entry._gcLastUsed <= this.maxUnusedTime || !entry.autoGarbageCollect)) continue;
++      entry?.unload();
++      delete hash[key];
++    }
++  }
+   getBindGroup(bindGroup, program, groupIndex) {
+     const key = `${bindGroup._key}:${program._layoutKey << 4 | groupIndex}`;
+     const entry = this._hash[key];
+@@ -46,9 +97,14 @@ class BindGroupSystem {
+     const entries = [];
+     const renderer = this._renderer;
+     for (const j in groupLayout) {
+-      const resource = group.resources[j] ?? group.resources[groupLayout[j]];
++      let resource = group.resources?.[j] ?? group.resources?.[groupLayout[j]];
+       if (!resource || resource.destroyed) {
+-        throw new Error(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it. Remove it from the shader before destroying it.`);
++        const standIn = getEmptyStandIn(program, groupIndex, groupLayout[j]);
++        if (!standIn) {
++          throw new Error(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it. Remove it from the shader before destroying it.`);
++        }
++        warn.warn(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it; it is drawn empty. Whatever draws it destroyed it too early.`);
++        resource = standIn;
+       }
+       let gpuResource;
+       if (resource._resourceType === "uniformGroup") {
+diff --git a/lib/rendering/renderers/gpu/BindGroupSystem.mjs b/lib/rendering/renderers/gpu/BindGroupSystem.mjs
+index 3f7c953cc7ff84ce42e3fa671b8f213e6e17d810..67342c4ac31c0baf57b5ef9f1b197fdfd2490720 100644
+--- a/lib/rendering/renderers/gpu/BindGroupSystem.mjs
++++ b/lib/rendering/renderers/gpu/BindGroupSystem.mjs
+@@ -1,6 +1,34 @@
+ import { ExtensionType } from '../../../extensions/Extensions.mjs';
++import { warn } from '../../../utils/logging/warn.mjs';
++import { Texture } from '../shared/texture/Texture.mjs';
+ 
+ "use strict";
++/**
++ * What a slot of a bind group binds when its resource was destroyed while a shader still uses it:
++ * the empty texture for a 2d float texture slot, its sampler for a filtering sampler slot, nothing
++ * (so the bind group still throws) for anything else. Every path that drew a destroyed texture -
++ * and `BindGroup.onResourceChange` nulls the slot of each group that held it - otherwise threw here
++ * and stopped the ticker: one early `destroy` blacked out the whole client.
++ * @param program - The program the group is bound for.
++ * @param groupIndex - The group's index in the program.
++ * @param binding - The slot's binding in the group.
++ * @returns The stand-in resource, or undefined when the slot takes no texture or sampler.
++ */
++function getEmptyStandIn(program, groupIndex, binding) {
++  const entries = program.gpuLayout?.[groupIndex];
++  if (!entries) return void 0;
++  for (const i in entries) {
++    const entry = entries[i];
++    if (!entry || entry.binding !== binding) continue;
++    if (entry.texture) {
++      const { sampleType = "float", viewDimension = "2d", multisampled = false } = entry.texture;
++      return sampleType === "float" && viewDimension === "2d" && !multisampled ? Texture.EMPTY.source : void 0;
++    }
++    if (entry.sampler) return (entry.sampler.type ?? "filtering") === "filtering" ? Texture.EMPTY.source.style : void 0;
++    return void 0;
++  }
++  return void 0;
++}
+ class GpuBindGroupEntry {
+   constructor(gpuBindGroup, now) {
+     this.autoGarbageCollect = true;
+@@ -21,6 +49,17 @@ class GpuBindGroupEntry {
+ class BindGroupSystem {
+   constructor(renderer) {
+     this._hash = /* @__PURE__ */ Object.create(null);
++    /**
++     * How long, in ms, a cached bind group may go unbound before it is dropped. A key holds the ids of
++     * the resources bound, so every texture combination a batch, avatar frame or window ever drew made
++     * one, and the renderer's garbage collection kept each for `gcMaxUnusedTime` (a minute, swept every
++     * 30 s): thousands of native bind groups - and the texture views they hold - in a busy session.
++     * Making a bind group again costs microseconds; one still bound this frame is never dropped.
++     */
++    this.maxUnusedTime = 5e3;
++    /** How often, in ms, the cache is swept. */
++    this.sweepFrequency = 1e3;
++    this._lastSweep = 0;
+     this._renderer = renderer;
+     renderer.gc.addResourceHash(this, "_hash", "resource");
+     renderer.gc.addCollection(this, "_hash", "hash");
+@@ -29,6 +68,18 @@ class BindGroupSystem {
+     this._gpu = gpu;
+     this._hash = /* @__PURE__ */ Object.create(null);
+   }
++  postrender() {
++    const now = this._renderer.gc.now;
++    if (now - this._lastSweep < this.sweepFrequency) return;
++    this._lastSweep = now;
++    const hash = this._hash;
++    for (const key in hash) {
++      const entry = hash[key];
++      if (entry && (now - entry._gcLastUsed <= this.maxUnusedTime || !entry.autoGarbageCollect)) continue;
++      entry?.unload();
++      delete hash[key];
++    }
++  }
+   getBindGroup(bindGroup, program, groupIndex) {
+     const key = `${bindGroup._key}:${program._layoutKey << 4 | groupIndex}`;
+     const entry = this._hash[key];
+@@ -44,9 +95,14 @@ class BindGroupSystem {
+     const entries = [];
+     const renderer = this._renderer;
+     for (const j in groupLayout) {
+-      const resource = group.resources[j] ?? group.resources[groupLayout[j]];
++      let resource = group.resources?.[j] ?? group.resources?.[groupLayout[j]];
+       if (!resource || resource.destroyed) {
+-        throw new Error(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it. Remove it from the shader before destroying it.`);
++        const standIn = getEmptyStandIn(program, groupIndex, groupLayout[j]);
++        if (!standIn) {
++          throw new Error(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it. Remove it from the shader before destroying it.`);
++        }
++        warn(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it; it is drawn empty. Whatever draws it destroyed it too early.`);
++        resource = standIn;
+       }
+       let gpuResource;
+       if (resource._resourceType === "uniformGroup") {
+diff --git a/lib/rendering/renderers/gpu/shader/BindGroup.d.ts b/lib/rendering/renderers/gpu/shader/BindGroup.d.ts
+index 89d340f065e87f6d84bcef4c2eabb6e07635433e..c0982cf3247118d9ca3e02224cf6c2e8d38e7e82 100644
+--- a/lib/rendering/renderers/gpu/shader/BindGroup.d.ts
++++ b/lib/rendering/renderers/gpu/shader/BindGroup.d.ts
+@@ -63,6 +63,10 @@ export declare class BindGroup {
+      * @internal
+      */
+     _touch(now: number): void;
++    /** @internal */
++    _detach(): void;
++    /** @internal */
++    _reattach(): void;
+     /** Destroys this bind group and removes all listeners. */
+     destroy(): void;
+     protected onResourceChange(resource: BindResource): void;
+diff --git a/lib/rendering/renderers/gpu/shader/BindGroup.js b/lib/rendering/renderers/gpu/shader/BindGroup.js
+index 54aee731d5bf4d2451525f3b26906aaf6b76ef20..45568caf241345c8965b320eb5e16bc77b373839 100644
+--- a/lib/rendering/renderers/gpu/shader/BindGroup.js
++++ b/lib/rendering/renderers/gpu/shader/BindGroup.js
+@@ -24,7 +24,7 @@ class BindGroup {
+    * @internal
+    */
+   get _key() {
+-    if (this._dirty) {
++    if (this._dirty || this._detached) {
+       this._dirty = false;
+       const keyParts = [];
+       let index = 0;
+@@ -67,6 +67,8 @@ class BindGroup {
+    * @internal
+    */
+   _touch(now) {
++    this._lastUsed = now;
++    if (this._detached) this._reattach();
+     const resources = this.resources;
+     for (const i in resources) {
+       const resource = resources[i];
+@@ -75,6 +77,36 @@ class BindGroup {
+     }
+   }
+   /** Destroys this bind group and removes all listeners. */
++  /**
++   * Stops listening to its resources, so they no longer keep this group alive. The group stays
++   * usable: its key is recomputed on every use, and it listens again on its next draw.
++   * @internal
++   */
++  _detach() {
++    if (this._detached || !this.resources) return;
++    const seen = /* @__PURE__ */ new Set();
++    for (const i in this.resources) {
++      const resource = this.resources[i];
++      if (!resource || seen.has(resource)) continue;
++      seen.add(resource);
++      resource.off?.("change", this.onResourceChange, this);
++    }
++    this._detached = true;
++  }
++  /** @internal */
++  _reattach() {
++    this._detached = false;
++    this._dirty = true;
++    const resources = this.resources;
++    if (!resources) return;
++    for (const i in resources) {
++      const resource = resources[i];
++      if (!resource) continue;
++      if (resource.destroyed) this.onResourceChange(resource);
++      else resource.on?.("change", this.onResourceChange, this);
++    }
++    this._onReattach?.(this);
++  }
+   destroy() {
+     const resources = this.resources;
+     for (const i in resources) {
+diff --git a/lib/rendering/renderers/gpu/shader/BindGroup.mjs b/lib/rendering/renderers/gpu/shader/BindGroup.mjs
+index 6c0d131c4eca916aaed87f4cb5098c00a426f579..ba00630e6499c824791ab580551e41f3d09c9daf 100644
+--- a/lib/rendering/renderers/gpu/shader/BindGroup.mjs
++++ b/lib/rendering/renderers/gpu/shader/BindGroup.mjs
+@@ -22,7 +22,7 @@ class BindGroup {
+    * @internal
+    */
+   get _key() {
+-    if (this._dirty) {
++    if (this._dirty || this._detached) {
+       this._dirty = false;
+       const keyParts = [];
+       let index = 0;
+@@ -65,6 +65,8 @@ class BindGroup {
+    * @internal
+    */
+   _touch(now) {
++    this._lastUsed = now;
++    if (this._detached) this._reattach();
+     const resources = this.resources;
+     for (const i in resources) {
+       const resource = resources[i];
+@@ -73,6 +75,36 @@ class BindGroup {
+     }
+   }
+   /** Destroys this bind group and removes all listeners. */
++  /**
++   * Stops listening to its resources, so they no longer keep this group alive. The group stays
++   * usable: its key is recomputed on every use, and it listens again on its next draw.
++   * @internal
++   */
++  _detach() {
++    if (this._detached || !this.resources) return;
++    const seen = /* @__PURE__ */ new Set();
++    for (const i in this.resources) {
++      const resource = this.resources[i];
++      if (!resource || seen.has(resource)) continue;
++      seen.add(resource);
++      resource.off?.("change", this.onResourceChange, this);
++    }
++    this._detached = true;
++  }
++  /** @internal */
++  _reattach() {
++    this._detached = false;
++    this._dirty = true;
++    const resources = this.resources;
++    if (!resources) return;
++    for (const i in resources) {
++      const resource = resources[i];
++      if (!resource) continue;
++      if (resource.destroyed) this.onResourceChange(resource);
++      else resource.on?.("change", this.onResourceChange, this);
++    }
++    this._onReattach?.(this);
++  }
+   destroy() {
+     const resources = this.resources;
+     for (const i in resources) {
+diff --git a/lib/scene/graphics/gpu/GpuGraphicsAdaptor.js b/lib/scene/graphics/gpu/GpuGraphicsAdaptor.js
+index 87eb96c74b6b9d5530070a048270620433a757c0..3e8a5af0a8d5ac87feadd166086bba2360eebae5 100644
+--- a/lib/scene/graphics/gpu/GpuGraphicsAdaptor.js
++++ b/lib/scene/graphics/gpu/GpuGraphicsAdaptor.js
+@@ -69,8 +69,7 @@ class GpuGraphicsAdaptor {
+           shader._overrides
+         );
+       }
+-      shader.groups[1] = batch.bindGroup;
+-      if (!batch.gpuBindGroup) {
++      if (!batch.gpuBindGroup || !batch.bindGroup || !getTextureBatchBindGroup.isTextureBatchBindGroupAlive(batch.bindGroup)) {
+         const textureBatch = batch.textures;
+         batch.bindGroup = getTextureBatchBindGroup.getTextureBatchBindGroup(
+           textureBatch.textures,
+@@ -83,6 +82,7 @@ class GpuGraphicsAdaptor {
+           1
+         );
+       }
++      shader.groups[1] = batch.bindGroup;
+       encoder.setBindGroup(1, batch.bindGroup, shader.gpuProgram);
+       encoder.renderPassEncoder.drawIndexed(batch.size, 1, batch.start);
+     }
+diff --git a/lib/scene/graphics/gpu/GpuGraphicsAdaptor.mjs b/lib/scene/graphics/gpu/GpuGraphicsAdaptor.mjs
+index e10754a4837a013112854e3b73d0064672d4b7ff..9e9732246093e58d288d1f053eae568347ecbdf6 100644
+--- a/lib/scene/graphics/gpu/GpuGraphicsAdaptor.mjs
++++ b/lib/scene/graphics/gpu/GpuGraphicsAdaptor.mjs
+@@ -1,6 +1,6 @@
+ import { ExtensionType } from '../../../extensions/Extensions.mjs';
+ import { Matrix } from '../../../maths/matrix/Matrix.mjs';
+-import { getTextureBatchBindGroup } from '../../../rendering/batcher/gpu/getTextureBatchBindGroup.mjs';
++import { getTextureBatchBindGroup, isTextureBatchBindGroupAlive } from '../../../rendering/batcher/gpu/getTextureBatchBindGroup.mjs';
+ import { compileHighShaderGpuProgram } from '../../../rendering/high-shader/compileHighShaderToProgram.mjs';
+ import { colorBit } from '../../../rendering/high-shader/shader-bits/colorBit.mjs';
+ import { generateTextureBatchBit } from '../../../rendering/high-shader/shader-bits/generateTextureBatchBit.mjs';
+@@ -67,8 +67,7 @@ class GpuGraphicsAdaptor {
+           shader._overrides
+         );
+       }
+-      shader.groups[1] = batch.bindGroup;
+-      if (!batch.gpuBindGroup) {
++      if (!batch.gpuBindGroup || !batch.bindGroup || !isTextureBatchBindGroupAlive(batch.bindGroup)) {
+         const textureBatch = batch.textures;
+         batch.bindGroup = getTextureBatchBindGroup(
+           textureBatch.textures,
+@@ -81,6 +80,7 @@ class GpuGraphicsAdaptor {
+           1
+         );
+       }
++      shader.groups[1] = batch.bindGroup;
+       encoder.setBindGroup(1, batch.bindGroup, shader.gpuProgram);
+       encoder.renderPassEncoder.drawIndexed(batch.size, 1, batch.start);
+     }

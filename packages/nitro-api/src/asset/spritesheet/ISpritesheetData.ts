@@ -1,5 +1,5 @@
-import type { ISpritesheetFrame } from './ISpritesheetFrame';
-import type { ISpritesheetMeta } from './ISpritesheetMeta';
+import { ISpritesheetFrame } from './ISpritesheetFrame';
+import { ISpritesheetMeta } from './ISpritesheetMeta';
 
 export interface ISpritesheetData {
     meta?: ISpritesheetMeta;

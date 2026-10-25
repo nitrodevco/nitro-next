@@ -1,4 +1,4 @@
-﻿import type { Point } from 'pixi.js';
+﻿import { Point } from 'pixi.js';
 
 export interface IPlaneDrawingData {
     isBottomAligned(): boolean;

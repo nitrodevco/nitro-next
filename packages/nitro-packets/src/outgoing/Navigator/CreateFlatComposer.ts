@@ -1,4 +1,5 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IOutgoingPacket, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
 export type CreateFlatComposerType = {
     flatName: string;
@@ -6,7 +7,7 @@ export type CreateFlatComposerType = {
     flatModelName: string;
     categoryID: number;
     maxPlayers: number;
-    tradeSetting: RoomTradeModeType;
+    tradeSetting: RoomTradeModeEnum;
 };
 
 export class CreateFlatComposer implements IOutgoingPacket<CreateFlatComposerType> {

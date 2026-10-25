@@ -1,5 +1,6 @@
-﻿import type { SortableSprite } from '../../utils';
+import { SortableSprite } from '../../utils';
 
+/** Port of Flash `RoomObjectSortableSpriteCacheItem`. */
 export class RoomObjectSortableSpriteCacheItem {
     private _sprites: SortableSprite[] = [];
     private _geometryUpdateId: number = -1;

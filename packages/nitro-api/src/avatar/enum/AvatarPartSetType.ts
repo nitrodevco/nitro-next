@@ -7,6 +7,8 @@ export enum AvatarPartSetType {
     HandRight = 'handRight',
     HandRightAndHead = 'handRightAndHead',
     HandLeft = 'handLeft',
+    Pet = 'pet',
+    Misc = 'misc',
     Walk = 'walk',
     Sit = 'sit',
     ItemRight = 'itemRight',
@@ -15,5 +17,5 @@ export enum AvatarPartSetType {
     SnowWarPick = 'snowwarpick',
     SnowWarDieFront = 'snowwardiefront',
     SnowWarDieBack = 'snowwardieback',
-    SnowWarThrow = 'snowwarthrow'
+    SnowWarThrow = 'snowwarthrow',
 }

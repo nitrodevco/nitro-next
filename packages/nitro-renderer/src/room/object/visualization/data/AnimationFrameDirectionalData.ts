@@ -1,6 +1,7 @@
 import { AnimationFrameData } from './AnimationFrameData';
-import type { DirectionalOffsetData } from './DirectionalOffsetData';
+import { DirectionalOffsetData } from './DirectionalOffsetData';
 
+/** Port of Flash `AnimationFrameDirectionalData`. */
 export class AnimationFrameDirectionalData extends AnimationFrameData {
     private _directionalOffsets: DirectionalOffsetData | undefined = undefined;
 

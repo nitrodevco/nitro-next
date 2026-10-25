@@ -1,7 +1,8 @@
-import type { IVector3D } from '@nitrodevco/nitro-api';
+import { IVector3D } from '@nitrodevco/nitro-api';
 
 import { ObjectMoveUpdateMessage } from './ObjectMoveUpdateMessage';
 
+/** Port of Flash `RoomObjectAvatarUpdateMessage`. */
 export class ObjectAvatarUpdateMessage extends ObjectMoveUpdateMessage {
     private _headDirection: number;
     private _canStandUp: boolean;
@@ -18,7 +19,7 @@ export class ObjectAvatarUpdateMessage extends ObjectMoveUpdateMessage {
         jumpingPower: number = NaN,
         isSlide: boolean = false,
         animationTime: number = NaN,
-        skipPositionUpdate: boolean = false
+        skipPositionUpdate: boolean = false,
     ) {
         super(location, targetLocation, direction, isSlide, animationTime, skipPositionUpdate);
 

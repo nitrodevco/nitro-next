@@ -1,8 +1,12 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurnitureQueueTileVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash `FurnitureQueueTileVisualization`, the visualization
+ * `RoomObjectVisualizationFactory` builds for `furniture_queue_tile`.
+ */
+export class FurnitureQueueTileVisualization extends AnimatedFurnitureVisualization {
     private static ANIMATION_ID_ROLL: number = 3;
     private static ANIMATION_ID_ROLL_ONCE: number = 2;
     private static ANIMATION_ID_NORMAL: number = 1;

@@ -1,5 +1,5 @@
-import { FriendListUpdateActionType } from "./FriendListUpdateActionType";
-import { IMessengerFriend } from "./IMessengerFriend";
+import { FriendListUpdateActionType } from './FriendListUpdateActionType';
+import { IMessengerFriend } from './IMessengerFriend';
 
 export interface IMessengerUpdate {
     readonly actionType: FriendListUpdateActionType;

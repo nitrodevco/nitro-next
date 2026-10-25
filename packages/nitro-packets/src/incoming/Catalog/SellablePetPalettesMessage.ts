@@ -1,18 +1,20 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper, ParseArray } from '@nitrodevco/nitro-api';
+
+import { ISellablePetPaletteData, SellablePetPaletteDataParser } from '../Data/SellablePetPaletteDataParser';
 
 export type SellablePetPalettesMessageType = {
-  // no fields
-
+    /** The product code `GetSellablePetPalettesComposer` asked for. */
+    productCode: string;
+    sellablePalettes: ISellablePetPaletteData[];
 };
 
-export class SellablePetPalettesMessage implements IIncomingPacket<SellablePetPalettesMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): SellablePetPalettesMessageType
-  {
+/** Flash `SellablePetPalettesParser`: the product code, then a count and one `SellablePetPaletteData` each. */
+export class SellablePetPalettesMessage implements IIncomingPacket<SellablePetPalettesMessageType> {
+    public parse(wrapper: IMessageDataWrapper): SellablePetPalettesMessageType {
+        const productCode = wrapper.readString();
+        const sellablePalettes = ParseArray(wrapper, SellablePetPaletteDataParser);
 
-    const packet: SellablePetPalettesMessageType = {
-    };
-
-    return packet;
-  }
+        return { productCode, sellablePalettes };
+    }
 }

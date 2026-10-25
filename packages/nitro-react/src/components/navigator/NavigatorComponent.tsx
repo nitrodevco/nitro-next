@@ -1,90 +1,48 @@
-import { ForwardToSomeRoomComposer, GetGuestRoomComposer, OpenFlatConnectionComposer } from '@nitrodevco/nitro-packets';
+import { RoomQueueWidget } from '#base/components';
+import { useNavigatorStore } from '#base/context/navigator';
+import { useNavigatorSearchCodeRequest, useNavigatorWindowPreferencesSync, useWindowVisibility } from '#base/hooks';
+import { NavigatorEnforceCategoryView } from '#base/views/navigator/NavigatorEnforceCategoryView';
+import { NavigatorRoomCreateView } from '#base/views/navigator/NavigatorRoomCreateView';
+import { NavigatorRoomEntryDialogs } from '#base/views/navigator/NavigatorRoomEntryDialogs';
+import { NavigatorRoomEventSettingsView } from '#base/views/navigator/NavigatorRoomEventSettingsView';
+import { NavigatorRoomFilterView } from '#base/views/navigator/NavigatorRoomFilterView';
+import { NavigatorView } from '#base/views/navigator/NavigatorView';
+import { RaidProtectionSettingsView } from '#base/views/navigator/RaidProtectionSettingsView';
 
-import { useNavigatorActions, useNavigatorContext, useNavigatorSelectors, useWebSocketContext } from '#base/context';
-import { useNavigatorHandler } from '#base/handlers';
-import { useLinkEventTracker, useNavigatorSearch, useNavigatorVisibility } from '#base/hooks';
-import { NavigatorCreateRoomView, NavigatorDoorbellView, NavigatorEnforceCategoryView, NavigatorForwardConfirmView, NavigatorGroupRoomInfoView, NavigatorPasswordView, NavigatorRoomEventEditorView, NavigatorRoomEventInfoView, NavigatorRoomFilterView, NavigatorRoomInfoWindowView, NavigatorRoomSettingsView, NavigatorSimpleAlertView, NavigatorView } from '#base/views/navigator';
-
+/**
+ * The navigator's mount - `HabboNewNavigator`'s main window and the windows it owns that outlive
+ * it: room creation, the room entry popups, the event, category, raid protection and word filter
+ * dialogs, and the queue into a full room. It also runs the window's link and preferences hooks.
+ */
 export const NavigatorComponent = () => {
-    const { isNavigatorVisible } = useNavigatorVisibility();
-    const { createRoomOpen } = useNavigatorSelectors();
-    const { setPendingForwardRoomId, toggleRoomInfoWindow } = useNavigatorActions();
-    const { performSearch } = useNavigatorSearch();
-    const { send } = useWebSocketContext();
-    const homeRoomId = useNavigatorContext(x => x.homeRoomId);
+    const { isWindowVisible } = useWindowVisibility('navigator');
+    const { isWindowVisible: isRoomCreateVisible } = useWindowVisibility('navigator_room_create');
+    const roomEventSettingsVisible = useNavigatorStore(x => x.roomEventSettingsVisible);
+    const enforcingCategory = useNavigatorStore(x => x.enforceCategorySelectionType !== undefined);
+    const { isWindowVisible: isRoomFilterVisible } = useWindowVisibility('room_filter');
+    // `RoomFilterCtrl.refreshWindow` shows nothing outside a room.
+    const inRoom = useNavigatorStore(x => !!x.enteredRoom);
 
-    // handler lives inside the provider so it can write to the navigator store
-    useNavigatorHandler();
-
-    /*
-     * HabboNewNavigator.linkReceived, linkPattern "navigator/":
-     *   goto/home        -> goToHomeRoom (direct OpenFlatConnection)
-     *   goto/<int>       -> goToPrivateRoom (GetGuestRoom roomForward flow)
-     *   goto/<name>      -> ForwardToSomeRoomMessageComposer(name)
-     *   search|tag/<txt> -> performSearch("hotel_view", txt) — no tag: prefix here
-     *   tab/<name>       -> performSearch(name), "me" mapped to "myworld_view"
-     *   ask_forward/<id> -> remember the id and request the room data; the
-     *                       GetGuestRoomResult handler raises the confirm dialog
-     *   report           -> habboHelp flow, not built yet
-     */
-    useLinkEventTracker('navigator/', url => {
-        const parts = url.split('/');
-
-        if (parts.length < 2) return;
-
-        switch (parts[1]) {
-            case 'goto':
-                if (parts.length <= 2) break;
-
-                if (parts[2] === 'home') {
-                    if (homeRoomId >= 1) send(new OpenFlatConnectionComposer({ roomId: homeRoomId, password: '', unknown1: -1 }));
-                } else if (parseInt(parts[2]) > 0) {
-                    send(new GetGuestRoomComposer({ roomId: parseInt(parts[2]), enterRoom: false, roomForward: true }));
-                } else {
-                    send(new ForwardToSomeRoomComposer({ forwardData: parts[2] }));
-                }
-                break;
-            case 'search':
-            case 'tag':
-                if (parts.length > 2) performSearch('hotel_view', parts[2]);
-                break;
-            case 'tab':
-                if (parts.length > 2) performSearch(parts[2] === 'me' ? 'myworld_view' : parts[2]);
-                break;
-            case 'roominfo':
-                /* HTIE_ICON_ROOMINFO — the toolbar room-info icon toggles RoomInfoViewCtrl */
-                toggleRoomInfoWindow();
-                break;
-            case 'ask_forward':
-                if (parts.length > 2) {
-                    setPendingForwardRoomId(parseInt(parts[2]));
-                    send(new GetGuestRoomComposer({ roomId: parseInt(parts[2]), enterRoom: false, roomForward: false }));
-                }
-                break;
-        }
-    });
+    // A `navigator/tab/<name>` link travels as this window's parameter; act on it here.
+    useNavigatorSearchCodeRequest();
+    // `NavigatorView.update` keeps sending the window's preferences while the window is hidden.
+    useNavigatorWindowPreferencesSync();
 
     return (
         <>
-            {isNavigatorVisible && <NavigatorView />}
-            {/*
-              * roc_create_room is its own desktop window (Util.getLocationRelativeTo
-              * centres it on the desktop) — it must be a SIBLING of the navigator
-              * frame: nesting it inside would position and clip it within the frame
-              */}
-            {createRoomOpen && <NavigatorCreateRoomView />}
-            <NavigatorDoorbellView />
-            <NavigatorPasswordView />
-            <NavigatorForwardConfirmView />
-            <NavigatorRoomSettingsView />
-            <NavigatorRoomInfoWindowView />
-            <NavigatorRoomFilterView />
-            {/* extension order: room_group_info attaches before event info */}
-            <NavigatorGroupRoomInfoView />
-            <NavigatorRoomEventInfoView />
-            <NavigatorRoomEventEditorView />
-            <NavigatorEnforceCategoryView />
-            <NavigatorSimpleAlertView />
+            {isWindowVisible && <NavigatorView />}
+            {/* `RoomCreateViewCtrl` is a window of its own: it stays when the navigator closes. */}
+            {isRoomCreateVisible && <NavigatorRoomCreateView />}
+            {/* doorbell / password / cant-connect popups outlive the navigator window */}
+            <NavigatorRoomEntryDialogs />
+            {/* `RoomEventViewCtrl`, `EnforceCategoryCtrl` and `RoomFilterCtrl` are windows of their own too. */}
+            {roomEventSettingsVisible && <NavigatorRoomEventSettingsView />}
+            {enforcingCategory && <NavigatorEnforceCategoryView />}
+            {/* `RaidProtectionSettingsView`: built once, so it keeps its place between shows; it draws only while shown. */}
+            <RaidProtectionSettingsView />
+            {isRoomFilterVisible && inRoom && <NavigatorRoomFilterView />}
+            {/* The queue into a full room is up before the room exists, so it lives out here too. */}
+            <RoomQueueWidget />
         </>
     );
-}
+};

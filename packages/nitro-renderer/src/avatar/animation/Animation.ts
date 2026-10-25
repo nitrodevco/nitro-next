@@ -1,12 +1,13 @@
-﻿import type { AvatarActionStateType, AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAnimationFrame, IAssetAnimationFramePart, IAvatarDataContainer, IDirectionDataContainer, ISpriteDataContainer } from '@nitrodevco/nitro-api';
+import { AvatarActionStateType, AvatarBodyPartType, AvatarFigurePartType, IAddDataContainer, IAnimation, IAnimationLayerData, IAssetAnimation, IAssetAnimationFrame, IAssetAnimationFramePart, IAvatarDataContainer, IDirectionDataContainer, ISpriteDataContainer } from '@nitrodevco/nitro-api';
 
-import type { AvatarStructure } from '../AvatarStructure';
+import { AvatarStructure } from '../AvatarStructure';
 import { AddDataContainer } from './AddDataContainer';
 import { AvatarAnimationLayerData } from './AvatarAnimationLayerData';
 import { AvatarDataContainer } from './AvatarDataContainer';
 import { DirectionDataContainer } from './DirectionDataContainer';
 import { SpriteDataContainer } from './SpriteDataContainer';
 
+/** Port of Flash `Animation`. */
 export class Animation implements IAnimation {
     private static readonly EMPTY_ARRAY: unknown[] = [] as const;
 
@@ -123,7 +124,7 @@ export class Animation implements IAnimation {
     }
 
     public hasAddData(): boolean {
-        return !!this._addData;
+        return this._addData.length > 0;
     }
 
     public get id(): string {
@@ -165,8 +166,7 @@ export class Animation implements IAnimation {
 
         if (!name) {
             if (this._frames.length > 0) layers = this._frames[(frameCount % this._frames.length)];
-        }
-        else {
+        } else {
             const overrideLayers = this._overrideFrames.get(name);
 
             if (overrideLayers && (overrideLayers.length > 0)) layers = overrideLayers[(frameCount % overrideLayers.length)];
@@ -188,9 +188,9 @@ export class Animation implements IAnimation {
             while (index < repeats) {
                 const layers: AvatarAnimationLayerData[] = [];
 
-                if (frame.bodyparts && frame.bodyparts.length) layers.push(...this.parseFramePartsToLayers(frame.bodyparts, structure));
+                if (frame.bodyparts && frame.bodyparts.length) layers.push(...this.parseFramePartsToLayers(frame.bodyparts, AvatarAnimationLayerData.BODYPART, structure));
 
-                if (frame.fxs && frame.fxs.length) layers.push(...this.parseFramePartsToLayers(frame.fxs, structure));
+                if (frame.fxs && frame.fxs.length) layers.push(...this.parseFramePartsToLayers(frame.fxs, AvatarAnimationLayerData.FX, structure));
 
                 frames.push(layers);
 
@@ -199,17 +199,15 @@ export class Animation implements IAnimation {
         }
     }
 
-    private parseFramePartsToLayers(parts: IAssetAnimationFramePart[], structure: AvatarStructure): AvatarAnimationLayerData[] {
+    // a layer without an action still positions its body part / effect sprite; only its action stays undefined
+    private parseFramePartsToLayers(parts: IAssetAnimationFramePart[], type: string, structure: AvatarStructure): AvatarAnimationLayerData[] {
         const layers: AvatarAnimationLayerData[] = [];
 
         if (parts && parts.length) {
             for (const part of parts) {
-                if (!part.action) continue;
+                const definition = part.action ? structure.getActionDefinition(part.action) : undefined;
 
-                const definition = structure.getActionDefinition(part.action);
-                const layer = new AvatarAnimationLayerData(part, AvatarAnimationLayerData.BODYPART, definition);
-
-                layers.push(layer);
+                layers.push(new AvatarAnimationLayerData(part, type, definition));
             }
         }
 

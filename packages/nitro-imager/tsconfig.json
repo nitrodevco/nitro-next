@@ -1,20 +1,20 @@
 {
     "extends": "../../tsconfig.base.json",
-    "references": [
-        {
-            "path": "../nitro-api"
-        },
-        {
-            "path": "../nitro-renderer"
+    "compilerOptions": {
+        "noEmit": true,
+        "types": [
+            "node"
+        ],
+        "composite": false,
+        "paths": {
+            "#api/*": [
+                "../nitro-api/src/*"
+            ]
         }
-    ],
+    },
     "include": [
-        "src/**/*"
-    ],
-    "exclude": [
-        "dist",
-        "node_modules",
-        "eslint.config.js",
-        "prettier.config.js"
+        "build.ts",
+        "src/**/*",
+        "test/**/*"
     ]
 }

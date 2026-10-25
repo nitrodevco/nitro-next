@@ -1,5 +1,5 @@
-import type { IAssetPlaneVisualizationAnimatedLayer } from './IAssetPlaneVisualizationAnimatedLayer';
-import type { IAssetPlaneVisualizationLayer } from './IAssetPlaneVisualizationLayer';
+import { IAssetPlaneVisualizationAnimatedLayer } from './IAssetPlaneVisualizationAnimatedLayer';
+import { IAssetPlaneVisualizationLayer } from './IAssetPlaneVisualizationLayer';
 
 export interface IAssetPlaneVisualization {
     size?: number;

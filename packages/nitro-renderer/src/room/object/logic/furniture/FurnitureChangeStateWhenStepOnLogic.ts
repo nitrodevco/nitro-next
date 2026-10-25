@@ -1,13 +1,16 @@
-import type { IAssetData } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, RoomToObjectOwnAvatarMoveEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, RoomObjectVariableEnum, RoomToObjectOwnAvatarMoveEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-a13§`, the logic `RoomObjectFactory` builds for
+ * `furniture_change_state_when_step_on`.
+ */
 export class FurnitureChangeStateWhenStepOnLogic extends FurnitureLogic {
     public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        this.addEventListener<RoomToObjectOwnAvatarMoveEvent>(RoomToObjectOwnAvatarMoveEvent.ROAME_MOVE_TO, event => {
+        this.addEventListener<RoomToObjectOwnAvatarMoveEvent>(RoomToObjectOwnAvatarMoveEvent.ROAME_MOVE_TO, (event) => {
             const location = this.object.getLocation();
             const targetLocation = event.targetLocation;
 
@@ -18,13 +21,13 @@ export class FurnitureChangeStateWhenStepOnLogic extends FurnitureLogic {
 
             const direction = ((Math.floor(this.object.getDirection().x) + 45) % 360) / 90;
 
-            if (direction === 1 || direction === 3) [sizeX, sizeY] = [sizeY, sizeX];
+            if (direction === 1 || direction === 3) [ sizeX, sizeY ] = [ sizeY, sizeX ];
 
             if (
-                targetLocation.x >= location.x &&
-                targetLocation.x < location.x + sizeX &&
-                targetLocation.y >= location.y &&
-                targetLocation.y < location.y + sizeY
+                targetLocation.x >= location.x
+                && targetLocation.x < location.x + sizeX
+                && targetLocation.y >= location.y
+                && targetLocation.y < location.y + sizeY
             ) {
                 this.object.setState(1, 0);
             } else {

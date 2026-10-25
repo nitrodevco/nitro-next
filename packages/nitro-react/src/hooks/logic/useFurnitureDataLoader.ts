@@ -1,61 +1,24 @@
-import { NitroLogger } from '@nitrodevco/nitro-api';
-import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
+/**
+ * The boot's furnidata step: loads `furnituredata.url` once the config names it
+ * (`loadFurnitureData`), and says when it is in for the loading screen. Reloads after a catalogue
+ * publish go through the same command, from `registerFurnitureDataHandlers`.
+ */
 import { useEffect, useState } from 'react';
 
-import { useConfigValue, useFurnitureDataActions, useFurnitureDataSelector, useSystemActions } from '#base/context';
+import { loadFurnitureData } from '#base/commands';
+import { useConfigValue } from '#base/context/system';
 
 export const useFurnitureDataLoader = () => {
-    const [needsUpdate, setNeedsUpdate] = useState(true);
-    const { floorItems, wallItems } = useFurnitureDataSelector();
-    const { parseFloorItems, parseWallItems } = useFurnitureDataActions();
+    const [ ready, setReady ] = useState(false);
     const furnidataUrl = useConfigValue<string>('furnituredata.url') ?? '';
-    const { setLocalizationForFurniture } = useSystemActions();
-
-    const isFurnitureDataReady = () => {
-        return !needsUpdate;
-    }
 
     useEffect(() => {
-        const items = Object.values(floorItems);
+        if (ready || !furnidataUrl.length) return;
 
-        if (!items.length) return;
+        void loadFurnitureData().then(loaded => loaded && setReady(true));
+    }, [ ready, furnidataUrl ]);
 
-        setLocalizationForFurniture(items);
-        GetRoomContentLoader().processFurnitureData(items);
-    }, [floorItems]);
-
-    useEffect(() => {
-        const items = Object.values(wallItems);
-
-        if (!items.length) return;
-
-        setLocalizationForFurniture(items);
-        GetRoomContentLoader().processFurnitureData(items);
-    }, [wallItems]);
-
-    useEffect(() => {
-        if (!needsUpdate || !furnidataUrl || !furnidataUrl.length) return;
-
-        const loadAsync = async (url: string) => {
-            if (!url || !url.length) return;
-
-            try {
-                const response = await fetch(url);
-
-                if (response.status !== 200) throw new Error('Invalid furnidata url');
-
-                const responseData = await response.json();
-
-                parseFloorItems(responseData.roomitemtypes.furnitype);
-                parseWallItems(responseData.wallitemtypes.furnitype);
-                setNeedsUpdate(false);
-            } catch (e) {
-                NitroLogger.error(e);
-            }
-        };
-
-        void loadAsync(furnidataUrl);
-    }, [needsUpdate, furnidataUrl]);
+    const isFurnitureDataReady = () => ready;
 
     return { isFurnitureDataReady };
 };

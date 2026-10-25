@@ -1,5 +1,6 @@
-import type { IPetCustomPart } from '@nitrodevco/nitro-api';
+import { IPetCustomPart } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `PetCustomPart`. */
 export class PetCustomPart implements IPetCustomPart {
     private _layerId: number;
     private _partId: number;

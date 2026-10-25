@@ -1,29 +1,30 @@
+// Body filled by hand from the 2026 client's own parser - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type IBannedUserData = {
-    userId: number;
-    userName: string;
-};
+import { FlatControllerParser } from './Data/FlatControllerParser';
+import { IFlatController } from './Data/IFlatController';
 
-/* BannedUsersFromRoomParser — roomId + BannedUserData list */
 export type BannedUsersFromRoomEventMessageType = {
     roomId: number;
-    bannedUsers: IBannedUserData[];
+    /** `BannedUserData` is the same user/name pair the rights list uses. */
+    bannedUsers: IFlatController[];
 };
 
 export class BannedUsersFromRoomEventMessage implements IIncomingPacket<BannedUsersFromRoomEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): BannedUsersFromRoomEventMessageType {
-        const roomId = wrapper.readInt();
-        const bannedUsers: IBannedUserData[] = [];
+        const packet: BannedUsersFromRoomEventMessageType = {
+            roomId: wrapper.readInt(),
+            bannedUsers: [],
+        };
 
         let count = wrapper.readInt();
 
         while (count > 0) {
-            bannedUsers.push({ userId: wrapper.readInt(), userName: wrapper.readString() });
+            packet.bannedUsers.push(FlatControllerParser(wrapper));
 
             count--;
         }
 
-        return { roomId, bannedUsers };
+        return packet;
     }
 }

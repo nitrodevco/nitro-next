@@ -1,5 +1,5 @@
-import { ICatalogPageLocalization } from "./ICatalogPageLocalization";
-import { IPurchasableOffer } from "./IPurchasableOffer";
+import { ICatalogPageLocalization } from './ICatalogPageLocalization';
+import { IPurchasableOffer } from './IPurchasableOffer';
 
 export interface IActivePage {
     readonly pageId: number;

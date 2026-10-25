@@ -1,7 +1,7 @@
-﻿import type { IAssetAvatarGeometry, IAvatarCanvas } from "@nitrodevco/nitro-api";
-import { AvatarScaleType } from "@nitrodevco/nitro-api";
-import { Point } from "pixi.js";
+import { AvatarScaleType, IAssetAvatarGeometry, IAvatarCanvas } from '@nitrodevco/nitro-api';
+import { Point } from 'pixi.js';
 
+/** Port of Flash `AvatarCanvas`. */
 export class AvatarCanvas implements IAvatarCanvas {
     private readonly _id: string;
     private readonly _width: number;

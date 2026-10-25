@@ -1,5 +1,6 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectRoomColorUpdateMessage`. */
 export class ObjectRoomColorUpdateMessage extends RoomObjectUpdateMessage {
     public static BACKGROUND_COLOR: string = 'RORCUM_BACKGROUND_COLOR' as const;
 

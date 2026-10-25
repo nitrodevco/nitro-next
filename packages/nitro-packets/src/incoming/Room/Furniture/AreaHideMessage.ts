@@ -1,22 +1,14 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IAreaHideMessageData } from '../../Data/AreaHideMessageDataParser';
-import { AreaHideMessageDataParser } from '../../Data/AreaHideMessageDataParser';
+import { AreaHideMessageDataParser, IAreaHideMessageData } from '../../Data/AreaHideMessageDataParser';
 
 export type AreaHideMessageType = {
-  areaHideMessageData: IAreaHideMessageData;
+    areaHideMessageData: IAreaHideMessageData;
 };
 
-export class AreaHideMessage implements IIncomingPacket<AreaHideMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): AreaHideMessageType
-  {
-    const packet: AreaHideMessageType = {
-      areaHideMessageData: {} as any,
-    };
-
-    packet.areaHideMessageData = AreaHideMessageDataParser(wrapper);
-
-    return packet;
-  }
+export class AreaHideMessage implements IIncomingPacket<AreaHideMessageType> {
+    public parse(wrapper: IMessageDataWrapper): AreaHideMessageType {
+        return { areaHideMessageData: AreaHideMessageDataParser(wrapper) };
+    }
 }

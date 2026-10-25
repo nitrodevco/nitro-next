@@ -1,4 +1,4 @@
-import { AvatarScaleType } from "#api/avatar/enum";
+import { AvatarScaleType } from '#api/avatar/enum';
 
 export interface IAssetAvatarActionOffsetConfig {
     size: AvatarScaleType;

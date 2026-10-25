@@ -1,18 +1,19 @@
-import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper, ParseArray } from '@nitrodevco/nitro-api';
+
+import { CraftingIngredientParser } from './Data/CraftingIngredientParser';
+import { ICraftingIngredient } from './Data/ICraftingIngredient';
 
 export type CraftingRecipeMessageType = {
-  // no fields
-
+    ingredients: ICraftingIngredient[];
 };
 
-export class CraftingRecipeMessage implements IIncomingPacket<CraftingRecipeMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CraftingRecipeMessageType
-  {
+export class CraftingRecipeMessage implements IIncomingPacket<CraftingRecipeMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CraftingRecipeMessageType {
+        const packet: CraftingRecipeMessageType = {
+            ingredients: ParseArray(wrapper, CraftingIngredientParser),
+        };
 
-    const packet: CraftingRecipeMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

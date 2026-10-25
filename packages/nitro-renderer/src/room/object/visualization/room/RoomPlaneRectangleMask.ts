@@ -1,4 +1,5 @@
-﻿export class RoomPlaneRectangleMask {
+/** Port of Flash `RoomPlaneRectangleMask`. */
+export class RoomPlaneRectangleMask {
     private _leftSideLoc: number;
     private _rightSideLoc: number;
     private _leftSideLength: number;

@@ -1,26 +1,26 @@
-import type {
-    IEventDispatcher,
+import {
+    FurnitureTypeEnum,
+    GetConfigValue, IEventDispatcher,
     IFurnitureData,
     IGraphicAsset,
     IGraphicAssetCollection,
     IPetColorResult,
     IRoomContentListener,
     IRoomContentLoader,
-} from '@nitrodevco/nitro-api';
-import {
-    FurnitureTypeEnum,
-    GetConfigValue, NitroLogger,
+    NitroLogger,
     RoomContentLoadedEvent, RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectUserTypeName,
-    RoomObjectUserTypeUtils
-} from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+    RoomObjectUserTypeUtils } from '@nitrodevco/nitro-api';
+import { Texture, TextureSource } from 'pixi.js';
 
 import { GetAssetManager } from '../assets';
+import { GetTickerTime, LoadMetrics, TextureUtils } from '../utils';
+import { chooseFurnitureDownloadConcurrency, readDeviceHints } from './furnitureDownloadConcurrency';
 import { GetRoomEngine } from './GetRoomEngine';
 import { PetColorResult } from './PetColorResult';
 
+/** Port of Flash `RoomContentLoader`. */
 export class RoomContentLoader implements IRoomContentLoader {
     public static ROOM_CONTENT: string = 'room' as const;
     public static TILE_CURSOR: string = 'tile_cursor' as const;
@@ -29,10 +29,42 @@ export class RoomContentLoader implements IRoomContentLoader {
     public static PLACE_HOLDER_WALL: string = 'wall_place_holder' as const;
     public static PLACE_HOLDER_PET: string = 'pet_place_holder' as const;
     public static PLACE_HOLDER_DEFAULT: string = RoomContentLoader.PLACE_HOLDER;
+    public static MANDATORY_LIBRARIES: string[] = [
+        RoomContentLoader.ROOM_CONTENT,
+        RoomContentLoader.TILE_CURSOR,
+        RoomContentLoader.SELECTION_ARROW,
+        RoomContentLoader.PLACE_HOLDER,
+        RoomContentLoader.PLACE_HOLDER_WALL,
+        RoomContentLoader.PLACE_HOLDER_PET,
+    ];
+
+    /** Flash `purge`: how long a collection nothing references is kept before it is released. */
+    public static PURGE_IDLE_MS: number = 20000;
+    /**
+     * How many furniture downloads run at once is `maxConcurrentDownloads`; the rest wait their
+     * turn. A large room asks for hundreds of types together, and decoding them all at once - each
+     * sheet's bitmap and GPU upload at the same moment - is what runs a phone's tab out of memory.
+     * A slot is held until the sheet is decoded and built, so the number is also how many sheets
+     * are in memory at once.
+     */
+    /**
+     * Furniture that changes how the room itself looks - the dimmers and the background toners -
+     * skips the queue: its logic, and so the room's colour, only applies once its asset is in.
+     */
+    public static PRIORITY_FURNITURE_PATTERN: RegExp = /dimmer|roombg|bg_color/i;
 
     private _iconListener: IRoomContentListener;
     private _images: Map<string, HTMLImageElement> = new Map();
-    private _events: Map<string, IEventDispatcher> = new Map();
+    private _listeners: Map<string, Set<IEventDispatcher>> = new Map();
+    private _downloads: Map<string, Promise<boolean>> = new Map();
+    /** Furniture downloads waiting for a slot, oldest first. */
+    private _downloadQueue: { type: string; start: () => void; cancel: () => void }[] = [];
+    private _activeQueuedDownloads: number = 0;
+    private _maxConcurrentDownloads: number | undefined = undefined;
+    /** The types a `downloadAssetAsync` caller waits on: never dropped from the queue. */
+    private _awaitedTypes: Set<string> = new Set();
+    /** The types this loader downloaded - the collections `purge` may release (Flash's own collection map). */
+    private _downloadedTypes: Set<string> = new Set();
 
     private _activeObjects: { [index: string]: number } = {};
     private _activeObjectTypes: Map<number, string> = new Map();
@@ -44,19 +76,17 @@ export class RoomContentLoader implements IRoomContentLoader {
     private _furniRevisions: Map<string, number> = new Map();
     private _pets: { [index: string]: number } = {};
     private _petColors: Map<number, Map<number, IPetColorResult>> = new Map();
+    /** Flash's `_petLayers`: per pet type, per visualization size, each tagged layer's id. */
+    private _petLayers: Map<number, Map<number, Map<string, number>>> = new Map();
     private _objectAliases: Map<string, string> = new Map();
     private _objectOriginalNames: Map<string, string> = new Map();
-
-    private _pendingContentTypes: string[] = [];
 
     public async init(): Promise<void> {
         const petTypes = GetConfigValue<string[]>('renderer.petTypes') ?? [];
 
-        if (petTypes) for (const [index, name] of petTypes.entries()) this._pets[name] = index;
+        if (petTypes) for (const [ index, name ] of petTypes.entries()) this._pets[name] = index;
 
-        //await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAsset(value)));
-
-        return Promise.resolve();
+        await Promise.all(RoomContentLoader.MANDATORY_LIBRARIES.map(value => this.downloadAssetAsync(value)));
     }
 
     public processFurnitureData(furnitureData: IFurnitureData[]): void {
@@ -120,13 +150,28 @@ export class RoomContentLoader implements IRoomContentLoader {
     public getFurnitureWallNameForTypeId(typeId: number, extra?: string): string {
         let type = this._wallItemTypes.get(typeId);
 
-        if (type === 'poster' && extra) type = `${type} ${extra}`;
+        // `RoomContentLoader.getWallItemType`: the poster id is appended as it is - `poster5`, the asset each
+        // poster is. `poster 5` is its productdata code, a different thing.
+        if (type === 'poster' && extra) type = `${type}${extra}`;
 
         return this.removeColorIndex(type ?? '');
     }
 
     public getFurnitureWallTypeIdForName(name: string): number {
         return this._wallItemTypeIds.get(name) ?? -1;
+    }
+
+    /**
+     * What Flash's `FurniIconImageManager` read from the furni data to name and fetch an icon: the
+     * class name, and the colour index when the furni has an indexed colour (`undefined` when it
+     * has not). `undefined` for a type id the furni data does not know.
+     */
+    public getFurnitureIconData(wallItem: boolean, typeId: number): { className: string; colorIndex: number | undefined } | undefined {
+        const type = wallItem ? this._wallItemTypes.get(typeId) : this._activeObjectTypes.get(typeId);
+
+        if (type === undefined) return undefined;
+
+        return { className: this.removeColorIndex(type), colorIndex: type.includes('*') ? this.getColorIndexFromName(type) : undefined };
     }
 
     public getFurnitureFloorColorIndex(typeId: number): number {
@@ -142,7 +187,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
         if (index === -1) return 0;
 
-        return parseInt(name.substr(index + 1));
+        return parseInt(name.substring(index + 1));
     }
 
     private removeColorIndex(name: string): string {
@@ -150,7 +195,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
         if (index === -1) return name;
 
-        return name.substr(0, index);
+        return name.substring(0, index);
     }
 
     public getRoomObjectAdUrl(type: string): string {
@@ -174,6 +219,24 @@ export class RoomContentLoader implements IRoomContentLoader {
         return results;
     }
 
+    /** Flash `RoomContentLoader.getPetLayerIdForTag`: the id of the layer tagged `tagName` in the pet's visualization of `size`, -1 for none. */
+    public getPetLayerIdForTag(petIndex: number, tagName: string, size: number = 64): number {
+        return this._petLayers.get(petIndex)?.get(size)?.get(tagName) ?? -1;
+    }
+
+    /** Flash `RoomContentLoader.getPetDefaultPalette`: the master palette whose layer tags include `tagName`. */
+    public getPetDefaultPalette(petIndex: number, tagName: string): IPetColorResult | undefined {
+        const colorResults = this._petColors.get(petIndex);
+
+        if (colorResults) {
+            for (const result of colorResults.values()) {
+                if (result.layerTags.includes(tagName) && result.isMaster) return result;
+            }
+        }
+
+        return undefined;
+    }
+
     public getCollection(name: string): IGraphicAssetCollection | undefined {
         return GetAssetManager().getCollection(name);
     }
@@ -190,7 +253,7 @@ export class RoomContentLoader implements IRoomContentLoader {
     public addAssetToCollection(
         collectionName: string,
         assetName: string,
-        texture: Texture
+        texture: Texture,
     ): IGraphicAsset | undefined {
         return GetAssetManager().addAssetToCollection(collectionName, assetName, texture);
     }
@@ -238,7 +301,6 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public getPetNameForType(type: number): string | undefined {
-
         return GetConfigValue<string[]>('renderer.petTypes')?.[type] ?? undefined;
     }
 
@@ -274,9 +336,9 @@ export class RoomContentLoader implements IRoomContentLoader {
             image.onload = () => {
                 image.onerror = null;
 
-                this._images.set([type, param].join('_'), image);
+                this._images.set([ type, param ].join('_'), image);
 
-                this._iconListener.onRoomContentLoaded(id, [type, param].join('_'), true);
+                this._iconListener.onRoomContentLoaded(id, [ type, param ].join('_'), true);
             };
 
             image.onerror = () => {
@@ -284,7 +346,7 @@ export class RoomContentLoader implements IRoomContentLoader {
 
                 NitroLogger.error('Failed to download asset', url);
 
-                this._iconListener.onRoomContentLoaded(id, [type, param].join('_'), false);
+                this._iconListener.onRoomContentLoaded(id, [ type, param ].join('_'), false);
             };
 
             return true;
@@ -294,25 +356,167 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public downloadAsset(type: string, events: IEventDispatcher): void {
+        if (this.getCollection(type)) {
+            events.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_SUCCESS, type));
+
+            return;
+        }
+
+        let listeners = this._listeners.get(type);
+
+        if (!listeners) {
+            listeners = new Set();
+
+            this._listeners.set(type, listeners);
+        }
+
+        listeners.add(events);
+
+        void this.download(type).then((flag) => {
+            const waiting = this._listeners.get(type);
+
+            this._listeners.delete(type);
+
+            const status = flag ? RoomContentLoadedEvent.RCLE_SUCCESS : RoomContentLoadedEvent.RCLE_FAILURE;
+
+            for (const dispatcher of waiting ?? []) dispatcher.dispatchEvent(new RoomContentLoadedEvent(status, type));
+
+            GetRoomEngine().initalizeTemporaryObjectsByType(type, flag);
+        });
+    }
+
+    public async downloadAssetAsync(type: string): Promise<boolean> {
+        if (this.getCollection(type)) return true;
+
+        this._awaitedTypes.add(type);
+
+        try {
+            return await this.download(type);
+        } finally {
+            this._awaitedTypes.delete(type);
+        }
+    }
+
+    /**
+     * A disposed room no longer waits for its content: it leaves every listener set, and a queued
+     * download (not yet started) nothing else waits for is dropped - leaving a big room does not
+     * go on loading its furniture alongside the next one.
+     */
+    public cancelDownloads(events: IEventDispatcher): void {
+        for (const [ type, listeners ] of this._listeners) {
+            listeners.delete(events);
+
+            if (!listeners.size) this._listeners.delete(type);
+        }
+
+        this._downloadQueue = this._downloadQueue.filter((entry) => {
+            if (this._listeners.has(entry.type) || this._awaitedTypes.has(entry.type)) return true;
+
+            entry.cancel();
+
+            return false;
+        });
+    }
+
+    /** Whether a type's download waits for a slot: furniture, but not the kind that changes the room. */
+    private isQueuedType(type: string): boolean {
+        if (RoomContentLoader.MANDATORY_LIBRARIES.includes(type) || (this._pets[type] !== undefined)) return false;
+
+        if ((this._activeObjects[type] === undefined) && (this._wallItems[type] === undefined)) return false;
+
+        return !RoomContentLoader.PRIORITY_FURNITURE_PATTERN.test(type);
+    }
+
+    /**
+     * How many furniture downloads run at once: the hotel's `furniture.download.concurrency` if it
+     * sets one, else 32 on a desktop and 4 where memory is short (`furnitureDownloadConcurrency`).
+     * Chosen once, when the first download is queued, since a device does not change under a page.
+     */
+    public get maxConcurrentDownloads(): number {
+        if (this._maxConcurrentDownloads === undefined) {
+            this._maxConcurrentDownloads = chooseFurnitureDownloadConcurrency(GetConfigValue<number>('furniture.download.concurrency'), readDeviceHints());
+
+            LoadMetrics.event('download-concurrency', { slots: this._maxConcurrentDownloads, ...readDeviceHints() });
+        }
+
+        return this._maxConcurrentDownloads;
+    }
+
+    /** Starts queued downloads while a slot is free. */
+    private pumpDownloadQueue(): void {
+        while ((this._activeQueuedDownloads < this.maxConcurrentDownloads) && this._downloadQueue.length) {
+            this._downloadQueue.shift()?.start();
+        }
+    }
+
+    private download(type: string): Promise<boolean> {
+        const existing = this._downloads.get(type);
+
+        if (existing) return existing;
+
         const assetUrl: string = this.getAssetUrls(type)?.[0];
 
-        if (!assetUrl || !assetUrl.length || this._pendingContentTypes.indexOf(type) >= 0 || this.getOrRemoveEventDispatcher(type)) return;
+        if (!assetUrl || !assetUrl.length) return Promise.resolve(false);
 
-        this._pendingContentTypes.push(type);
-        this._events.set(type, events);
+        const queued = this.isQueuedType(type);
+        const furniture = queued || RoomContentLoader.PRIORITY_FURNITURE_PATTERN.test(type);
 
-        GetAssetManager().downloadAsset(assetUrl)
-            .then(flag => {
-                if (!flag) {
-                    this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
+        LoadMetrics.begin(assetUrl, type);
 
-                    return;
-                }
+        const fetchAsset = (): Promise<boolean> => {
+            LoadMetrics.mark(assetUrl, 'slot');
+
+            return GetAssetManager().downloadAsset(assetUrl);
+        };
+        // A queued type takes a slot when one is free; dropped from the queue, it settles as a failure.
+        const downloaded: Promise<boolean> = queued
+            ? new Promise<boolean>((resolve) => {
+                    this._downloadQueue.push({
+                        type,
+                        start: () => {
+                            this._activeQueuedDownloads++;
+
+                            fetchAsset().then(resolve, () => resolve(false)).finally(() => {
+                                this._activeQueuedDownloads--;
+                                this.pumpDownloadQueue();
+                            });
+                        },
+                        cancel: () => resolve(false),
+                    });
+
+                    this.pumpDownloadQueue();
+                })
+            : fetchAsset();
+
+        const promise = downloaded
+            .then((flag) => {
+                if (!flag) return false;
+
+                this._downloadedTypes.add(type);
+
+                if (furniture) this.makeSheetsGpuResident(type);
 
                 const petIndex = this._pets[type];
                 const collection = this.getCollection(type);
 
-                if (petIndex && collection && collection.data.palettes) {
+                // Type 0 (the dog) is a pet too: Flash keys both tables by the type, whatever it is.
+                if ((petIndex !== undefined) && collection && collection.data.visualizations) {
+                    const layers: Map<number, Map<string, number>> = new Map();
+
+                    for (const visualization of collection.data.visualizations) {
+                        const tagged: Map<string, number> = new Map();
+
+                        for (const layer of visualization.layers ?? []) {
+                            if (layer.tag !== undefined) tagged.set(layer.tag, layer.id);
+                        }
+
+                        layers.set(visualization.size ?? 0, tagged);
+                    }
+
+                    this._petLayers.set(petIndex, layers);
+                }
+
+                if ((petIndex !== undefined) && collection && collection.data.palettes) {
                     const palettes: Map<number, IPetColorResult> = new Map();
 
                     for (const palette of collection.data.palettes) {
@@ -329,49 +533,77 @@ export class RoomContentLoader implements IRoomContentLoader {
                     this._petColors.set(petIndex, palettes);
                 }
 
-                this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_SUCCESS, type));
-
-                GetRoomEngine().initalizeTemporaryObjectsByType(type, true);
+                return true;
             })
-            .catch(_err => {
-                this._events.get(type)?.dispatchEvent(new RoomContentLoadedEvent(RoomContentLoadedEvent.RCLE_FAILURE, type));
+            .catch((err) => {
+                NitroLogger.error('Failed to download asset', assetUrl, err);
 
-                GetRoomEngine().initalizeTemporaryObjectsByType(type, false);
-            });
+                return false;
+            })
+            .finally(() => this._downloads.delete(type));
+
+        this._downloads.set(type, promise);
+
+        return promise;
     }
 
-    public async downloadAssetAsync(type: string): Promise<boolean> {
-        const assetUrl: string = this.getAssetUrls(type)?.[0];
+    /**
+     * Flash `RoomContentLoader.purge`: every collection this loader downloaded that nothing has
+     * referenced for `PURGE_IDLE_MS` - no room object draws with it, and none has let go of it
+     * recently - is removed with its textures, and the next object of the type downloads it again
+     * (`downloadAsset` finds no collection). Flash spares the placeholders; the port spares every
+     * mandatory library it loads at `init`, which it never asks for again.
+     */
+    public purge(): void {
+        const now = GetTickerTime();
+        const purged: string[] = [];
 
-        if (!assetUrl || !assetUrl.length) return false;
+        for (const type of [ ...this._downloadedTypes ]) {
+            if (RoomContentLoader.MANDATORY_LIBRARIES.includes(type) || this._downloads.has(type)) continue;
 
-        if (this._pendingContentTypes.indexOf(type) >= 0) return false;
+            const collection = this.getCollection(type);
 
-        this._pendingContentTypes.push(type);
+            if (!collection) {
+                this._downloadedTypes.delete(type);
 
-        if (!(await GetAssetManager().downloadAsset(assetUrl))) return false;
-
-        const petIndex = this._pets[type];
-        const collection = this.getCollection(type);
-
-        if (petIndex && collection && collection.data.palettes) {
-            const palettes: Map<number, IPetColorResult> = new Map();
-
-            for (const palette of collection.data.palettes) {
-                const paletteData = collection.palettes.get(palette.id);
-
-                if (!paletteData) continue;
-
-                palettes.set(
-                    palette.id,
-                    new PetColorResult(paletteData.primaryColor, paletteData.secondaryColor, palette.breed ?? 0, palette.colorTag ?? -1, palette.id, palette.master ?? false, palette.tags ?? []),
-                );
+                continue;
             }
 
-            this._petColors.set(petIndex, palettes);
+            if ((collection.referenceCount >= 1) || ((now - collection.lastReferenceTimestamp) < RoomContentLoader.PURGE_IDLE_MS)) continue;
+
+            GetAssetManager().removeCollection(type);
+
+            this._downloadedTypes.delete(type);
+
+            purged.push(type);
         }
 
-        return true;
+        if (purged.length) LoadMetrics.event('purge', { count: purged.length, types: purged.slice(0, 30) });
+    }
+
+    /**
+     * With `furniture.sheets.gpu_resident` on, a furniture collection's sheets are uploaded to the
+     * GPU as soon as they are in and their decoded bitmaps closed (`TextureUtils.makeGpuResident`):
+     * each sheet is then held once, on the GPU, rather than as a bitmap too until its first draw.
+     * Off by default - a lost GPU context cannot restore such a sheet until the collection is
+     * purged and downloaded again.
+     */
+    private makeSheetsGpuResident(type: string): void {
+        if (GetConfigValue<boolean>('furniture.sheets.gpu_resident') !== true) return;
+
+        const collection = this.getCollection(type);
+
+        if (!collection) return;
+
+        const sources = new Set<TextureSource>();
+
+        if (collection.textureSource) sources.add(collection.textureSource);
+
+        for (const texture of collection.textures.values()) {
+            if (texture?.source) sources.add(texture.source);
+        }
+
+        for (const source of sources) TextureUtils.makeGpuResident(source);
     }
 
     public getAssetAliasName(name: string): string {
@@ -390,17 +622,17 @@ export class RoomContentLoader implements IRoomContentLoader {
     public getAssetUrls(type: string, param: string = '', icon: boolean = false): string[] {
         switch (type) {
             case RoomContentLoader.PLACE_HOLDER:
-                return [this.getAssetUrlWithGenericBase('PlaceHolderFurniture')];
+                return [ this.getAssetUrlWithGenericBase('PlaceHolderFurniture') ];
             case RoomContentLoader.PLACE_HOLDER_WALL:
-                return [this.getAssetUrlWithGenericBase('PlaceHolderWallItem')];
+                return [ this.getAssetUrlWithGenericBase('PlaceHolderWallItem') ];
             case RoomContentLoader.PLACE_HOLDER_PET:
-                return [this.getAssetUrlWithGenericBase('PlaceHolderPet')];
+                return [ this.getAssetUrlWithGenericBase('PlaceHolderPet') ];
             case RoomContentLoader.ROOM_CONTENT:
-                return [this.getAssetUrlWithGenericBase('HabboRoomContent')];
+                return [ this.getAssetUrlWithGenericBase('HabboRoomContent') ];
             case RoomContentLoader.TILE_CURSOR:
-                return [this.getAssetUrlWithGenericBase('TileCursor')];
+                return [ this.getAssetUrlWithGenericBase('TileCursor') ];
             case RoomContentLoader.SELECTION_ARROW:
-                return [this.getAssetUrlWithGenericBase('SelectionArrow')];
+                return [ this.getAssetUrlWithGenericBase('SelectionArrow') ];
             default: {
                 const category = this.getCategoryForType(type);
 
@@ -415,11 +647,11 @@ export class RoomContentLoader implements IRoomContentLoader {
                         assetUrl = assetUrl.replace(/%param%/gi, active ? '_' + param : '');
                     }
 
-                    return [assetUrl];
+                    return [ assetUrl ];
                 }
 
                 if (category === RoomObjectCategoryEnum.Unit) {
-                    return [this.getAssetUrlWithPetBase(type)];
+                    return [ this.getAssetUrlWithPetBase(type) ];
                 }
             }
         }
@@ -450,11 +682,11 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     private getAssetUrlWithGenericBase(assetName: string): string {
-        return (GetConfigValue<string>('asset.urls.generic') ?? '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.bundles.room') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniBase(assetName: string): string {
-        return (GetConfigValue<string>('asset.urls.furni') ?? '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.bundles.furni') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public getAssetUrlWithFurniIconBase(assetName: string): string {
@@ -462,7 +694,7 @@ export class RoomContentLoader implements IRoomContentLoader {
     }
 
     public getAssetUrlWithPetBase(assetName: string): string {
-        return (GetConfigValue<string>('asset.urls.pet') ?? '').replace(/%libname%/gi, assetName);
+        return (GetConfigValue<string>('asset.bundles.pets') ?? '').replace(/%libname%/gi, assetName);
     }
 
     public setIconListener(listener: IRoomContentListener): void {
@@ -471,13 +703,5 @@ export class RoomContentLoader implements IRoomContentLoader {
 
     public get pets(): { [index: string]: number } {
         return this._pets;
-    }
-
-    private getOrRemoveEventDispatcher(type: string, remove: boolean = false): IEventDispatcher | undefined {
-        const existing = this._events.get(type);
-
-        if (remove && existing) this._events.delete(type);
-
-        return existing;
     }
 }

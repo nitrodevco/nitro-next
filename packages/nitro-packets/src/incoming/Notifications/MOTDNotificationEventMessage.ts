@@ -1,4 +1,4 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type MOTDNotificationEventMessageType = {
     messages: string[];
@@ -10,12 +10,10 @@ export class MOTDNotificationEventMessage implements IIncomingPacket<MOTDNotific
             messages: [],
         };
 
-        let count = wrapper.readInt();
-
-        while (count) {
+        let v1 = wrapper.readInt();
+        while (v1 > 0) {
             packet.messages.push(wrapper.readString());
-
-            count--;
+            v1--;
         }
 
         return packet;

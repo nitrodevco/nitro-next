@@ -1,5 +1,6 @@
-import { AvatarSetType } from "#api/avatar";
-import { IAssetAvatarBodyPartRef } from "./IAssetAvatarBodyPartRef";
+import { AvatarSetType } from '#api/avatar';
+
+import { IAssetAvatarBodyPartRef } from './IAssetAvatarBodyPartRef';
 
 export interface IAssetAvatarSet {
     id: AvatarSetType;

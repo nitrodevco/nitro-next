@@ -1,5 +1,5 @@
 export enum CatalogFrontPageItemType {
-    Default = 0,
-    One = 1,
-    Two = 2,
+    Page = 0,
+    ProductOffer = 1,
+    Iap = 2,
 }

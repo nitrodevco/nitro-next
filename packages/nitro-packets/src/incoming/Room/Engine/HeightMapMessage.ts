@@ -1,4 +1,4 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type HeightMapMessageType = {
     width: number;
@@ -13,7 +13,7 @@ export class HeightMapMessage implements IIncomingPacket<HeightMapMessageType> {
             width: wrapper.readInt(),
             size: wrapper.readInt(),
             height: 0,
-            heights: []
+            heights: [],
         };
 
         packet.height = packet.size / packet.width;

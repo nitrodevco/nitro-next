@@ -1,7 +1,8 @@
-import type { IObjectData } from '@nitrodevco/nitro-api';
+import { IObjectData } from '@nitrodevco/nitro-api';
 
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectDataUpdateMessage`. */
 export class ObjectDataUpdateMessage extends RoomObjectUpdateMessage {
     private _state: number;
     private _data: IObjectData | undefined;

@@ -1,16 +1,19 @@
-import { type IRoomObjectUpdateMessage, MapDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, MapDataType, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash `FurnitureMannequinLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_mannequin`.
+ */
 export class FurnitureMannequinLogic extends FurnitureLogic {
     private static GENDER: string = 'GENDER';
     private static FIGURE: string = 'FIGURE';
     private static OUTFIT_NAME: string = 'OUTFIT_NAME';
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.MANNEQUIN]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.MANNEQUIN ]);
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {

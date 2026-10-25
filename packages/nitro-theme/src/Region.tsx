@@ -1,0 +1,147 @@
+import { BLEND_MODES, Container as PixiContainer } from 'pixi.js';
+import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
+
+import { Box } from './Box';
+import { VariantCascadeProvider } from './cascade';
+import { DragTargetContext } from './drag/DragTargetContext';
+import { useDragTarget } from './drag/useDragTarget';
+import { useDragTrigger } from './drag/useDragTrigger';
+import { dynamicStyleBoxProps, DynamicStyleProvider, useDynamicStyleEffect, useHostDynamicStyleEffect } from './dynamicstyle';
+import { useThemeVariant } from './hooks';
+import { ColorLayer, ShadowLayer } from './layer';
+import { compose, DynamicStyleRole, expandSides, ThemeProps, ThemeVariant, wrapTextChildren } from './utils';
+
+export type RegionVariant = ThemeVariant;
+
+export interface RegionProps extends ThemeProps<RegionVariant> {
+    /** The Flash `background="true"` + `color` pair: a flat fill behind the children. */
+    backgroundColor?: string;
+    /** The alpha byte of that colour, when it isn't `ff` - the fill is the whole ARGB value. */
+    backgroundAlpha?: number;
+    cursor?: string;
+    /** The Flash `BLEND_<mode>` tag (`BLEND_ADD` on glow bitmaps, ...). */
+    blendMode?: BLEND_MODES;
+    /**
+     * The Flash window `blend` of a container/text with its own graphic context: the opacity
+     * of the whole subtree (a container drawing into its parent's context ignores `blend`
+     * entirely - `WindowRendererItem` only applies it to a skin or an own-context fill).
+     */
+    alpha?: number;
+    /** Greys the region out through its `dynamicStyle`'s disabled rule and stops its pointer events. */
+    disabled?: boolean;
+    /**
+     * The `input_event_processor` flag (1): this region is a mouse target in its own right, with
+     * no handler of its own. Pixi only treats a container as a target where the `eventMode`
+     * inherited down the hit-test walk is already `static`/`dynamic` (`EventBoundary._isInteractive`),
+     * so a `passive` region under nothing interactive is *skipped* and the press carries on to the
+     * next sibling - which, for a window drawn over the room, is the room canvas, and the press
+     * becomes a room drag. A window whose Flash layout carries the flag says so here instead.
+     */
+    interactive?: boolean;
+    /**
+     * A region that is no mouse target of its own, only a frame for its children - see `Box`'s
+     * `pointerTransparent`. Not for a region with handlers, `interactive` or a `dynamicStyle`.
+     */
+    pointerTransparent?: boolean;
+    /** A `#icon` / `#bg` tag under a `dynamicStyle` host: that host's child rule moves and tints this region. */
+    dynamicRole?: DynamicStyleRole;
+    /**
+     * The `mouse_dragging_target` flag (32768): this region is the window a drag moves. It stays
+     * where its layout puts it until a `dragTrigger` inside it (or itself) is pressed, and then
+     * follows the pointer - see `useDragTarget` (`WindowMouseDragger`).
+     */
+    dragTarget?: boolean;
+    /**
+     * The `mouse_dragging_trigger` flag (257): pressing this region drags the nearest
+     * `dragTarget` - itself, when it is one, else the closest enclosing one.
+     */
+    dragTrigger?: boolean;
+    /**
+     * The `bound_to_parent_rect` flag (32), read here for a `dragTarget`: a drag never takes it
+     * past its parent's box (`WindowController.setRectangle`).
+     */
+    boundToParentRect?: boolean;
+    /** A `dragTarget` whose move goes at the release, its code laying it out where it belongs (`useDragTarget`). */
+    dropToLayout?: boolean;
+    children?: ReactNode;
+}
+
+/**
+ * The themed counterpart of the Flash `container`/`region`/`background` elements: a plain
+ * positioning `Box` that, unlike `Box` itself, accepts the full `ThemeProps` surface (variant
+ * cascade, text style inheritance for bare string children, the layout metadata in
+ * `ThemeLayoutMeta`, and the pointer handlers a `region` uses as a hit area). Ported layouts
+ * reach for this wherever the XML had a structural node; hand-written views keep using `Box`.
+ * Its `dropShadow` is cast by its box (a `Border` and a `Frame` cast their skin's own silhouette).
+ *
+ * A region is also the usual `dynamicStyle` host (the toolbar's `lifted_hover` tiles, the room
+ * tools' `brightness_and_shadow_under` buttons): it tracks hover/press itself, applies the
+ * style's host rule to its own box (the nudge, the pressed colour transform) and hands its
+ * state down so its `dynamicRole` children can apply theirs - see utils/dynamicStyles.ts.
+ *
+ * And it carries the generic window drag (`WindowController.update`'s `WME_DOWN` case with
+ * `services/WindowMouseDragger.as`): `dragTarget` is the window that moves, `dragTrigger` the one
+ * that starts it - see theme/drag.
+ */
+export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, RegionProps>(
+    ({
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, zIndex, visible, dropShadow, dynamicStyle, dynamicRole, backgroundColor, backgroundAlpha, cursor, blendMode, alpha, disabled, interactive = false, pointerTransparent, dragTarget = false, dragTrigger = false, boundToParentRect, dropToLayout, children,
+        onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
+    }, ref) => {
+        const drag = useDragTarget(dragTarget, { boundToParentRect, dropToLayout });
+        const startDrag = useDragTrigger(dragTrigger, drag.controller);
+        const onPointerDown = compose(onPointerDownProp, startDrag);
+        const { ownCascade, config, state, handlers, resolvedTextStyle, resolvedTextColor } = useThemeVariant<RegionVariant>({
+            cascadeKey: 'region', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, interactive: interactive || !!dynamicStyle,
+            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        });
+        const hostEffect = useHostDynamicStyleEffect(dynamicStyle, state);
+        const childEffect = useDynamicStyleEffect(dynamicRole);
+        const boxProps = dynamicStyleBoxProps(hostEffect ?? childEffect, alpha);
+        const setRef = (node: PixiContainer | null) => {
+            drag.attach(node);
+
+            if (typeof ref === 'function') ref(node);
+            else if (ref) ref.current = node;
+        };
+        const content = (
+            <DynamicStyleProvider
+                name={dynamicStyle}
+                state={state}
+            >
+                <VariantCascadeProvider map={ownCascade}>
+                    {wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor })}
+                </VariantCascadeProvider>
+            </DynamicStyleProvider>
+        );
+
+        return (
+            <Box
+                ref={setRef}
+                zIndex={zIndex}
+                visible={visible}
+                blendMode={blendMode}
+                pointerTransparent={pointerTransparent}
+                layout={{ ...expandSides(config.layout), ...expandSides(layout) }}
+                {...boxProps}
+                // A drag target's move rides on top of any dynamic style nudge.
+                {...(dragTarget && { x: (boxProps.x ?? 0) + drag.offset.x, y: (boxProps.y ?? 0) + drag.offset.y })}
+                {...handlers}
+                cursor={cursor ?? handlers.cursor}
+            >
+                {dropShadow && <ShadowLayer {...dropShadow} />}
+                {backgroundColor && (
+                    <ColorLayer
+                        color={backgroundColor}
+                        alpha={backgroundAlpha}
+                    />
+                )}
+                {dragTarget
+                    ? <DragTargetContext.Provider value={drag.controller}>{content}</DragTargetContext.Provider>
+                    : content}
+            </Box>
+        );
+    },
+);
+
+Region.displayName = 'Region';

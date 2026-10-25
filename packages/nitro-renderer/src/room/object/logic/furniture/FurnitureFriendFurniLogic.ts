@@ -1,9 +1,12 @@
-import type { IAssetData, IRoomObjectUpdateMessage, StringDataType } from '@nitrodevco/nitro-api';
-import { ContextMenuEnum, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { ContextMenuEnum, IAssetData, IRoomObjectUpdateMessage, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, StringDataType } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-Y3§`, the friend furni (lovelock) logic the lovelock logics
+ * extend: locked furni open the engraving dialog, unlocked ones ask both owners to confirm.
+ */
 export class FurnitureFriendFurniLogic extends FurnitureMultiStateLogic {
     private static readonly STATE_UNINITIALIZED: number = -1;
     private static readonly STATE_UNLOCKED: number = 0;
@@ -12,7 +15,7 @@ export class FurnitureFriendFurniLogic extends FurnitureMultiStateLogic {
     private _state: number = -1;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.FRIEND_FURNITURE_ENGRAVING]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.FRIEND_FURNITURE_ENGRAVING ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

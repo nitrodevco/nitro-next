@@ -1,128 +1,88 @@
-import type { IRoom } from "@nitrodevco/nitro-api";
-import { createStore } from "zustand";
+import { IRoom } from '@nitrodevco/nitro-api';
+import { createStore, StoreApi } from 'zustand';
 
-import type { RoomCameraSlice } from "./RoomCameraSlice";
-import { createRoomCameraSlice, RoomCameraSliceInitialState } from "./RoomCameraSlice";
-import type { RoomMouseSlice } from "./RoomMouseSlice";
-import { createRoomMouseSlice, RoomMouseSliceInitialState } from "./RoomMouseSlice";
-import type { RoomSelectedObjectSlice } from "./RoomSelectedObjectSlice";
-import { createRoomSelectedObjectSlice, RoomSelectedObjectSliceInitialState } from "./RoomSelectedObjectSlice";
-import type { RoomSessionSlice } from "./RoomSessionSlice";
-import { createRoomSessionSlice, RoomSessionSliceInitialState } from "./RoomSessionSlice";
-import type { RoomStackingHeightMapSlice } from "./RoomStackingHeightMapSlice";
-import { createRoomStackingHeightMapSlice, RoomStackingHeightMapSliceInitialState } from "./RoomStackingHeightMapSlice";
-import type { RoomUsersSlice } from "./RoomUsersSlice";
-import { createRoomUsersSlice, RoomUsersSliceInitialState } from "./RoomUsersSlice";
+import { createRoomBotsSlice, RoomBotsSlice } from './RoomBotsSlice';
+import { createRoomCameraSlice, RoomCameraSlice } from './RoomCameraSlice';
+import { createRoomChatSlice, RoomChatSlice } from './RoomChatSlice';
+import { createRoomChooserSlice, RoomChooserSlice } from './RoomChooserSlice';
+import { createRoomCustomUserNotificationSlice, RoomCustomUserNotificationSlice } from './RoomCustomUserNotificationSlice';
+import { createRoomDoorbellSlice, RoomDoorbellSlice } from './RoomDoorbellSlice';
+import { createRoomFloorPlanSlice, RoomFloorPlanSlice } from './RoomFloorPlanSlice';
+import { createRoomFriendRequestSlice, RoomFriendRequestSlice } from './RoomFriendRequestSlice';
+import { createRoomMouseSlice, RoomMouseSlice } from './RoomMouseSlice';
+import { createRoomPetsSlice, RoomPetsSlice } from './RoomPetsSlice';
+import { createRoomPollSlice, RoomPollSlice } from './RoomPollSlice';
+import { createRoomQuizSlice, RoomQuizSlice } from './RoomQuizSlice';
+import { createRoomSelectedObjectSlice, RoomSelectedObjectSlice } from './RoomSelectedObjectSlice';
+import { createRoomSessionSlice, RoomSessionSlice } from './RoomSessionSlice';
+import { createRoomSettingsFormSlice, RoomSettingsFormSlice } from './RoomSettingsFormSlice';
+import { createRoomSoundSlice, RoomSoundSlice } from './RoomSoundSlice';
+import { createRoomStackingHeightMapSlice, RoomStackingHeightMapSlice } from './RoomStackingHeightMapSlice';
+import { createRoomUsersSlice, RoomUsersSlice } from './RoomUsersSlice';
+import { createRoomWidgetSlice, RoomWidgetSlice } from './RoomWidgetSlice';
 
+/**
+ * The room store: the room on screen and every per-room slice, composed into one Zustand store.
+ * A new room (or none) resets every slice to its initial state.
+ */
 type State = {
     room: IRoom | undefined;
-    ownUserId: number;
-    landingViewVisible: boolean;
-    /*
-     * RoomToolsWidget session-global state — the SWF keeps ROOM_VISIT_HISTORY as a
-     * static across room sessions, so it lives OUTSIDE the slices that setRoom
-     * resets on every entry. Capped at 20 entries.
-     */
-    toolsCanRate: boolean;
-    toolsRoomId: number;
-    visitHistory: { flatId: number; roomName: string }[];
-    visitHistoryIndex: number;
-    /* AccountPreferences uiFlags — bit 2 keeps the room tools panel expanded */
-    uiFlags: number;
-    roomToolsCollapsed: boolean;
-}
+};
 
 type Actions = {
+    /** Adopts a new room (or none) and resets every slice to a fresh copy of its initial state. */
     setRoom: (room: IRoom | undefined) => void;
-    setOwnUserId: (ownUserId: number) => void;
-    setLandingViewVisible: (landingViewVisible: boolean) => void;
-    setToolsCanRate: (canRate: boolean) => void;
-    setToolsRoomEntered: (roomId: number, roomName: string) => void;
-    visitHistoryGo: (direction: number) => { flatId: number; roomName: string } | null;
-    setUiFlags: (uiFlags: number) => void;
-    setRoomToolsCollapsed: (roomToolsCollapsed: boolean) => void;
-}
+};
 
-export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice;
+export type RoomStore = State & Actions & RoomMouseSlice & RoomSessionSlice & RoomCameraSlice & RoomChatSlice & RoomSelectedObjectSlice & RoomStackingHeightMapSlice & RoomUsersSlice & RoomWidgetSlice & RoomDoorbellSlice & RoomPollSlice & RoomCustomUserNotificationSlice & RoomQuizSlice & RoomFriendRequestSlice & RoomSettingsFormSlice & RoomFloorPlanSlice & RoomPetsSlice & RoomBotsSlice & RoomSoundSlice & RoomChooserSlice;
+
+/**
+ * Everything a room starts with, as a fresh deep copy: the store's own initial state with the
+ * actions left out. Deriving it from the store means a new slice resets with the room without
+ * being listed anywhere, and copying it means state a slice mutates in place - the mouse slice's
+ * event id maps - cannot carry the previous room's contents into the next one.
+ */
+const freshRoomState = (store: StoreApi<RoomStore>): Partial<RoomStore> => structuredClone(Object.fromEntries(
+    Object.entries(store.getInitialState()).filter(([ , value ]) => typeof value !== 'function'),
+));
 
 export const createRoomStore = () => createStore<RoomStore>()((set, get, store) => ({
     room: undefined,
-    ownUserId: -1,
-    landingViewVisible: true,
-    toolsCanRate: false,
-    toolsRoomId: -1,
-    visitHistory: [],
-    visitHistoryIndex: -1,
-    uiFlags: 0,
-    roomToolsCollapsed: false,
-    setRoom: (room: IRoom | undefined) => set(x => {
+    setRoom: (room: IRoom | undefined) => set((x) => {
         if (x.room && x.room !== room) {
             x.room.dispose();
         }
 
-        return {
-            ...RoomMouseSliceInitialState,
-            ...RoomSessionSliceInitialState,
-            ...RoomCameraSliceInitialState,
-            ...RoomSelectedObjectSliceInitialState,
-            ...RoomStackingHeightMapSliceInitialState,
-            ...RoomUsersSliceInitialState,
-            room
-        };
+        // The room reads tile heights off this store, live, so the map the handlers fill in is the one it sees.
+        room?.setStackingHeightMap({ getTileHeight: (tileX, tileY) => get().getTileHeight(tileX, tileY) });
+
+        return { ...freshRoomState(store), room };
     }),
-    setOwnUserId: (ownUserId: number) => set({ ownUserId }),
-    setLandingViewVisible: (landingViewVisible: boolean) => set({ landingViewVisible }),
-    setToolsCanRate: (canRate: boolean) => set({ toolsCanRate: canRate }),
-    setUiFlags: (uiFlags: number) => set({ uiFlags, roomToolsCollapsed: !(uiFlags & 2) }),
-    setRoomToolsCollapsed: (roomToolsCollapsed: boolean) => set({ roomToolsCollapsed }),
-    /*
-     * RoomVisitHistory.onRoomEntered — names refresh everywhere; entering a new room
-     * mid-history REVERSES the forward suffix (nothing is discarded) before appending,
-     * unless the tail already is this room. canRate clears until RoomRating arrives.
-     */
-    setToolsRoomEntered: (roomId: number, roomName: string) => set(x => {
-        const history = x.visitHistory.map(y => (y.flatId === roomId ? { ...y, roomName } : y));
-        let index = x.visitHistoryIndex;
-
-        if (history.length === 0) {
-            return { toolsRoomId: roomId, toolsCanRate: false, visitHistory: [{ flatId: roomId, roomName }], visitHistoryIndex: 0 };
-        }
-
-        if (index < 0) index = 0;
-        if (index >= history.length) index = history.length - 1;
-
-        if (history[index].flatId === roomId) {
-            return { toolsRoomId: roomId, toolsCanRate: false, visitHistory: history, visitHistoryIndex: index };
-        }
-
-        if (index < history.length - 1) {
-            const suffix = history.splice(index, history.length - index).reverse();
-
-            history.push(...suffix);
-        }
-
-        if (history[history.length - 1].flatId !== roomId) {
-            history.push({ flatId: roomId, roomName });
-
-            while (history.length > 20) history.shift();
-        }
-
-        return { toolsRoomId: roomId, toolsCanRate: false, visitHistory: history, visitHistoryIndex: history.length - 1 };
-    }),
-    visitHistoryGo: (direction: number) => {
-        const { visitHistory, visitHistoryIndex } = get();
-        const target = visitHistoryIndex + direction;
-
-        if (target < 0 || target >= visitHistory.length) return null;
-
-        set({ visitHistoryIndex: target });
-
-        return visitHistory[target];
-    },
     ...createRoomMouseSlice(set, get, store),
     ...createRoomSessionSlice(set, get, store),
     ...createRoomCameraSlice(set, get, store),
+    ...createRoomChatSlice(set, get, store),
     ...createRoomSelectedObjectSlice(set, get, store),
     ...createRoomStackingHeightMapSlice(set, get, store),
-    ...createRoomUsersSlice(set, get, store)
+    ...createRoomUsersSlice(set, get, store),
+    ...createRoomWidgetSlice(set, get, store),
+    ...createRoomDoorbellSlice(set, get, store),
+    ...createRoomPollSlice(set, get, store),
+    ...createRoomCustomUserNotificationSlice(set, get, store),
+    ...createRoomQuizSlice(set, get, store),
+    ...createRoomFriendRequestSlice(set, get, store),
+    ...createRoomSettingsFormSlice(set, get, store),
+    ...createRoomFloorPlanSlice(set, get, store),
+    ...createRoomPetsSlice(set, get, store),
+    ...createRoomBotsSlice(set, get, store),
+    ...createRoomSoundSlice(set, get, store),
+    ...createRoomChooserSlice(set, get, store),
 }));
+
+/**
+ * The one RoomStore for the whole client. There is only ever one room on screen, and the store
+ * resets itself per room in `setRoom`, so it can live as long as the app: components read it
+ * through their hooks, and packet handlers read and write it through `getState()`, which is
+ * always current - a batch of packets is dispatched without React rendering in between.
+ */
+export const roomStore = createRoomStore();

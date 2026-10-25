@@ -1,4 +1,4 @@
-import type { IAssetDimension } from './IAssetDimension';
+import { IAssetDimension } from './IAssetDimension';
 
 export interface IAssetLogicModel {
     dimensions?: IAssetDimension;

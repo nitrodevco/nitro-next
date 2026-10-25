@@ -1,7 +1,8 @@
-﻿import { type IVector3D, Vector3d } from '@nitrodevco/nitro-api';
+import { IVector3D, Vector3d } from '@nitrodevco/nitro-api';
 
 import { RoomPlaneMaskData } from './RoomPlaneMaskData';
 
+/** Port of Flash `RoomPlaneData`. */
 export class RoomPlaneData {
     public static PLANE_UNDEFINED: number = 0;
     public static PLANE_FLOOR: number = 1;

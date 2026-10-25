@@ -1,4 +1,5 @@
-﻿export class NumberBank {
+/** Port of Flash `NumberBank`. */
+export class NumberBank {
     private _reservedNumbers: number[] = [];
     private _freeNumbers: number[] = [];
 

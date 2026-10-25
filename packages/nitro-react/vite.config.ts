@@ -1,30 +1,134 @@
 import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+import { execSync } from 'node:child_process';
+import { existsSync, readdirSync, readFileSync, rmdirSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { defineConfig, Plugin } from 'vite';
 
 const r = (p: string) => `${import.meta.dirname}/${p}`;
 
-const tailwindAutoReference = (): Plugin => {
-    const indexCss = path.resolve(r('./src/index.css'));
+/**
+ * Drops the art that is already inside a `.nitro` bundle from the built output.
+ *
+ * Everything under `public/assets/<component>/` is the input of
+ * `scripts/build-asset-bundles.ts`, not something the client fetches: it is packed into
+ * `public/assets/bundles/*.nitro` and reached through the `AssetManager` by asset name. Vite
+ * copies `public/` verbatim, though, so without this the same ~1,800 files ship a second time
+ * loose beside the bundles that contain them.
+ *
+ * The prune list is the builder's own manifest (`bundles.json`, one `absorbed` entry per file a
+ * bundle took in), so a bundle definition and the files it removes can never drift apart - and
+ * a hand-placed file no bundle names is left alone.
+ */
+const pruneBundledAssets = (): Plugin => ({
+    name: 'prune-bundled-assets',
+    apply: 'build',
+    closeBundle() {
+        const manifest = r('public/assets/bundles/bundles.json');
 
-    return {
-        name: 'tailwind-auto-reference',
-        enforce: 'pre',
-        transform(code, id) {
-            const file = path.resolve(id.split('?')[0]);
+        if (!existsSync(manifest)) {
+            this.warn('No public/assets/bundles/bundles.json - run `yarn build-asset-bundles`. The loose art has been left in the output.');
 
-            if (file === indexCss || !file.endsWith('.css') || !file.startsWith(path.resolve(r('./src/views'))) || /@reference\b/.test(code) || /@import\s+['"]tailwindcss['"]/.test(code)) return;
+            return;
+        }
 
-            const rel = path.relative(path.dirname(file), indexCss).replace(/\\/g, '/');
+        const { bundles } = JSON.parse(readFileSync(manifest, 'utf8')) as { bundles: { absorbed: string[] }[] };
+        const root = r('dist/assets');
+        let removed = 0;
 
-            return `@reference '${rel.startsWith('.') ? rel : './' + rel}';\n${code}`;
-        },
-    };
+        for (const bundle of bundles) {
+            for (const absorbed of bundle.absorbed) {
+                const file = path.join(root, absorbed);
+
+                if (!existsSync(file)) continue;
+
+                rmSync(file);
+                removed++;
+            }
+        }
+
+        // Bottom-up, so a folder emptied by the pass above goes with its contents. `dist/assets`
+        // itself always holds the built chunks, so it is never a candidate.
+        const pruneEmpty = (dir: string): boolean => {
+            for (const entry of readdirSync(dir)) {
+                const full = path.join(dir, entry);
+
+                if (statSync(full).isDirectory() && pruneEmpty(full)) rmdirSync(full);
+            }
+
+            return !readdirSync(dir).length;
+        };
+
+        // The manifest itself is a build record, not a runtime file - it is read from `public/`
+        // above, so the copy in the output goes too.
+        const shipped = path.join(root, 'bundles/bundles.json');
+
+        if (existsSync(shipped)) rmSync(shipped);
+
+        pruneEmpty(root);
+
+        this.info(`Pruned ${removed} bundled asset files from dist/assets`);
+    },
+});
+
+/**
+ * Dev-server speed. The workspace packages resolve to their TypeScript sources, so by default
+ * the unbundled dev server sends every one of their modules to the browser individually -
+ * roughly 2,400 requests before the first frame (nitro-packets alone is 1,100 files behind one
+ * barrel). Two opt-in modes trade hot reload of those packages for a fast first load:
+ *
+ * - `yarn dev:prebundle` (`--mode prebundle`): pre-bundle `@nitrodevco/*` with the dependency
+ *   optimizer, the way node_modules packages are. The app keeps full HMR; a change inside
+ *   nitro-renderer / nitro-packets / nitro-api needs a restart (`--force` re-optimizes).
+ * - `yarn dev:bundled` (`--mode bundled`): Vite 8's experimental full-bundle dev mode - the
+ *   whole app is bundled by rolldown and served from memory, with HMR. Fastest cold load.
+ *
+ * Either way the React Compiler only runs on this package's sources: the others have no
+ * components, and compiling them was pure transform cost on every file.
+ */
+const WORKSPACE_PACKAGES = [ '@nitrodevco/nitro-api', '@nitrodevco/nitro-packets', '@nitrodevco/nitro-renderer', '@nitrodevco/nitro-theme' ];
+
+/**
+ * The build's own name, as a bug report carries it: `NITRO_BUILD` when the host sets one,
+ * otherwise the commit it was built from, `dev` outside a git checkout.
+ */
+const buildId = () => {
+    if (process.env.NITRO_BUILD) return process.env.NITRO_BUILD;
+
+    try {
+        return execSync('git rev-parse --short=12 HEAD', { cwd: import.meta.dirname, stdio: [ 'ignore', 'pipe', 'ignore' ] }).toString().trim() || 'dev';
+    } catch {
+        return 'dev';
+    }
 };
 
-export default defineConfig({
+/**
+ * Names the build in the page itself, `<meta name="nitro-build" content="...">`, so which commit a
+ * host serves can be read from its `index.html` without running the client.
+ */
+const buildMeta = (build: string): Plugin => ({
+    name: 'nitro-build-meta',
+    transformIndexHtml: () => [ { tag: 'meta', attrs: { name: 'nitro-build', content: build }, injectTo: 'head' } ],
+});
+
+export default defineConfig(({ mode }) => {
+    const prebundleWorkspace = mode === 'prebundle';
+    const bundledDev = mode === 'bundled';
+    const build = buildId();
+
+    return {
+    // The repository root's `.env` - where a host such as Ploi writes the site's environment.
+    envDir: r('../..'),
+    define: {
+        __NITRO_BUILD__: JSON.stringify(build),
+    },
+    experimental: {
+        bundledDev,
+    },
+    optimizeDeps: {
+        include: prebundleWorkspace ? WORKSPACE_PACKAGES : [],
+    },
     build: {
         target: 'baseline-widely-available',
         sourcemap: false,
@@ -32,7 +136,17 @@ export default defineConfig({
         emptyOutDir: true,
         rollupOptions: {
             output: {
-                manualChunks: id => {
+                manualChunks: (id, meta) => {
+                    // A module that something `import()`s has to keep a chunk of its own. Folding
+                    // it into the chunk that imports it turns that `import()` into a self-import -
+                    // a promise that only settles once the importing chunk has finished evaluating -
+                    // so any top-level await on it deadlocks: the chunk never finishes, nothing
+                    // downstream of it ever evaluates, and the browser reports nothing at all.
+                    // The blanket `node_modules -> vendor` rule below would otherwise put both
+                    // sides of such an `import()` in `vendor` - a silent black screen in the
+                    // production build while dev (unbundled) is fine.
+                    if (meta.getModuleInfo(id)?.dynamicImporters?.length) return;
+
                     if (id.includes('/packages/nitro-api/')) {
                         return 'nitro-api';
                     }
@@ -42,11 +156,10 @@ export default defineConfig({
                     if (id.includes('/packages/nitro-renderer/')) {
                         return 'nitro-renderer';
                     }
+                    if (id.includes('/packages/nitro-theme/')) {
+                        return 'nitro-theme';
+                    }
                     if (id.includes('node_modules')) {
-                        if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) {
-                            return 'react-vendor';
-                        }
-
                         return 'vendor';
                     }
                 },
@@ -54,10 +167,15 @@ export default defineConfig({
         },
     },
     plugins: [
-        tailwindAutoReference(),
+        pruneBundledAssets(),
+        buildMeta(build),
         react(),
         babel({
             plugins: ['babel-plugin-react-compiler'],
+            // Replaces the plugin's default (every script file anywhere), so it has to keep
+            // the script-extension part of that default - without it babel is handed CSS too.
+            // The theme's components are compiled with the client's: they are the same React tree.
+            include: [ /[\\/]packages[\\/]nitro-(?:react|theme)[\\/]src[\\/].*\.(?:[jt]sx?|[cm][jt]s)(?:$|\?)/ ],
         }),
         tailwindcss(),
     ],
@@ -67,12 +185,20 @@ export default defineConfig({
         alias: [
             { find: /^#base\/(.*)/, replacement: r('src/$1') },
             { find: /^#themes\/(.*)/, replacement: r('themes/$1') },
-            { find: '@nitrodevco/nitro-api', replacement: r('../nitro-api/src') },
-            {
-                find: '@nitrodevco/nitro-renderer',
-                replacement: r('../nitro-renderer/src'),
-            },
-            { find: '@nitrodevco/nitro-packets', replacement: r('../nitro-packets/src') }
+            // Pre-bundling needs the packages reached as bare imports (their `exports` already
+            // point at the sources); the aliases are for the plain source-served mode.
+            ...(prebundleWorkspace
+                ? []
+                : [
+                        { find: '@nitrodevco/nitro-api', replacement: r('../nitro-api/src') },
+                        { find: '@nitrodevco/nitro-renderer', replacement: r('../nitro-renderer/src') },
+                        { find: '@nitrodevco/nitro-packets', replacement: r('../nitro-packets/src') },
+                        // The theme's entry points, as its `exports` name them - its sub-paths are not its folders.
+                        { find: /^@nitrodevco\/nitro-theme\/flash-text\/(.*)$/, replacement: r('../nitro-theme/src/font/flash-text/$1') },
+                        { find: /^@nitrodevco\/nitro-theme\/flash-text$/, replacement: r('../nitro-theme/src/font/flash-text/index.ts') },
+                        { find: /^@nitrodevco\/nitro-theme\/utils\/(.*)$/, replacement: r('../nitro-theme/src/utils/$1') },
+                        { find: /^@nitrodevco\/nitro-theme$/, replacement: r('../nitro-theme/src/index.ts') },
+                    ]),
         ],
     },
     server: {
@@ -81,5 +207,10 @@ export default defineConfig({
         fs: {
             allow: [r('.'), r('..'), r('../..')],
         },
+        // Transform the app's import graph while the server starts instead of on first request.
+        warmup: {
+            clientFiles: [ './src/index.tsx' ],
+        },
     },
+    };
 });

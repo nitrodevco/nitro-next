@@ -9,16 +9,33 @@
     "scripts": {
         "build": "npx update-browserslist-db@latest && yarn workspaces foreach --all -pt run build",
         "typecheck": "yarn workspaces foreach --all -pt run typecheck",
-        "lint": "yarn workspaces foreach --all -pt run lint",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "clean": "yarn workspaces foreach --all -pt run clean",
-        "dev": "yarn workspace @nitrodevco/nitro-react dev"
+        "dev": "yarn workspace @nitrodevco/nitro-react dev",
+        "build-client": "yarn workspace @nitrodevco/nitro-react build",
+        "start-studio": "yarn workspace @nitrodevco/nitro-studio start"
     },
     "dependencies": {
         "pixi.js": "^8.18.1"
     },
+    "resolutions": {
+        "pixi.js@npm:^8.18.1": "patch:pixi.js@npm%3A8.21.0#~/.yarn/patches/pixi.js-npm-8.21.0-d776aa6eb9.patch",
+        "@pixi/react@npm:^8.0.0": "patch:@pixi/react@npm%3A8.0.5#~/.yarn/patches/@pixi-react-npm-8.0.5-b9686ce1cd.patch",
+        "@pixi/react@npm:^8.0.5": "patch:@pixi/react@npm%3A8.0.5#~/.yarn/patches/@pixi-react-npm-8.0.5-b9686ce1cd.patch"
+    },
     "devDependencies": {
-        "@types/node": "^25.9.1",
+        "@eslint/js": "^10.0.1",
+        "@stylistic/eslint-plugin": "^5.10.0",
+        "@types/node": "^26.3.0",
+        "eslint": "^10.6.0",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-react-hooks": "^7.1.1",
+        "eslint-plugin-react-refresh": "^0.5.3",
+        "eslint-plugin-simple-import-sort": "^13.0.0",
+        "eslint-plugin-unused-imports": "^4.4.1",
         "globals": "^17.6.0",
-        "typescript": "^5.9.3"
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.21.1"
     }
 }

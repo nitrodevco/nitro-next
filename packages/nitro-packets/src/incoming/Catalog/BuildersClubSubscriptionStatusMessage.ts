@@ -14,6 +14,6 @@ export class BuildersClubSubscriptionStatusMessage implements IIncomingPacket<Bu
             furniLimit: wrapper.readInt(),
             maxFurniLimit: wrapper.readInt(),
             secondsLeftWithGrace: wrapper.readInt(),
-        }
+        };
     }
 }

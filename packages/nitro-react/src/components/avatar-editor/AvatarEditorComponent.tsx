@@ -1,10 +1,11 @@
-import { useIsWindowVisible } from "#base/context";
-import { AvatarEditorView } from "#base/views/avatar-editor/AvatarEditorView"
+import { useWindowVisibility } from '#base/hooks';
+import { AvatarEditor } from '#base/views/avatar-editor/AvatarEditor';
 
+/** The avatar editor's mount: `AvatarEditor` while the `avatar_editor` window is open. */
 export const AvatarEditorComponent = () => {
-    const isVisible = useIsWindowVisible('avatar_editor');
+    const { isWindowVisible } = useWindowVisibility('avatar_editor');
 
-    if (!isVisible) return null;
+    if (!isWindowVisible) return null;
 
-    return <AvatarEditorView />;
-}
+    return <AvatarEditor />;
+};

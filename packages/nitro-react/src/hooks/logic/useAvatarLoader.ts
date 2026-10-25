@@ -1,16 +1,20 @@
-import type { IEffectMapLibrary, IFigureMapLibrary } from '@nitrodevco/nitro-api';
-import { NitroLogger } from '@nitrodevco/nitro-api';
-import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
+import { IEffectMapLibrary, IFigureMapLibrary, NitroLogger } from '@nitrodevco/nitro-api';
+import { GetAvatarRenderManager, LoadAvatarData } from '@nitrodevco/nitro-renderer';
 import { useEffect } from 'react';
 
-import { useConfigValue } from '#base/context';
+import { useConfigValue } from '#base/context/system';
 
+/**
+ * The boot's avatar step: once the config names them, starts the avatar render manager from its
+ * bundle (`asset.bundles.templates`), then loads the figure map, effect map and figure data into it.
+ */
 export const useAvatarLoader = () => {
     const figureMapUrl = useConfigValue<string>('figuremap.url') ?? '';
     const effectMapUrl = useConfigValue<string>('effectmap.url') ?? '';
-    const avatarAssetUrl = useConfigValue<string>('asset.urls.avatar') ?? '';
-    const effectAssetUrl = useConfigValue<string>('asset.urls.effect') ?? '';
+    const avatarAssetUrl = useConfigValue<string>('asset.bundles.avatar') ?? '';
+    const effectAssetUrl = useConfigValue<string>('asset.bundles.effects') ?? '';
     const figureDataUrl = useConfigValue<string>('figuredata.url') ?? '';
+    const templatesUrl = useConfigValue<string>('asset.bundles.templates') ?? '';
 
     useEffect(() => {
         if (!figureMapUrl || !effectMapUrl || !figureDataUrl) return;
@@ -61,10 +65,25 @@ export const useAvatarLoader = () => {
             }
         };
 
-        GetAvatarRenderManager().init();
+        /**
+         * The avatar render library's bundle first: the geometry, part sets, placeholder figure, built-in animations,
+         * action offsets, actions and animations the manager starts from. The figure data is laid over
+         * its placeholder figure, so it waits for it; the maps only need it for what they render.
+         */
+        const startAsync = async () => {
+            try {
+                GetAvatarRenderManager().init(await LoadAvatarData(templatesUrl));
+            } catch (e) {
+                NitroLogger.error(e);
 
-        void loadFigureMapAsync(figureMapUrl);
-        void loadEffectMapAsync(effectMapUrl);
-        void loadFigureDataAsync(figureDataUrl);
-    }, [figureMapUrl, effectMapUrl]);
+                return;
+            }
+
+            void loadFigureMapAsync(figureMapUrl);
+            void loadEffectMapAsync(effectMapUrl);
+            void loadFigureDataAsync(figureDataUrl);
+        };
+
+        void startAsync();
+    }, [ figureMapUrl, effectMapUrl, figureDataUrl, avatarAssetUrl, effectAssetUrl, templatesUrl ]);
 };

@@ -1,4 +1,4 @@
-import { IAssetAvatarActionOffsetConfig } from "./IAssetAvatarActionOffsetConfig";
+import { IAssetAvatarActionOffsetConfig } from './IAssetAvatarActionOffsetConfig';
 
 export interface IAssetAvatarActionOffset {
     action: string;

@@ -1,5 +1,6 @@
-import type { AvatarActionStateType, IAssetAvatarActionType } from "@nitrodevco/nitro-api";
+import { AvatarActionStateType, IAssetAvatarActionType } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `ActionType`. */
 export class ActionType {
     private readonly _id: number;
     private readonly _prevents: AvatarActionStateType[];

@@ -1,12 +1,12 @@
-import type {
+import {
     IRoomGeometry,
     IRoomMapData,
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
-} from '@nitrodevco/nitro-api';
-import { ColorConverter, MouseEventType, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectVariableEnum, RoomObjectWallMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
+    MouseEventType, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectVariableEnum, RoomObjectWallMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
+import { GetTickerTime } from '../../../utils';
 import {
     ObjectRoomColorUpdateMessage,
     ObjectRoomFloorHoleUpdateMessage,
@@ -16,30 +16,24 @@ import {
     ObjectRoomPlaneVisibilityUpdateMessage,
     ObjectRoomUpdateMessage,
 } from '../../messages';
+import { ColorTransitioner } from '../../utils/ColorTransitioner';
 import { RoomMapData } from '../RoomMapData';
 import { RoomPlaneBitmapMaskData } from '../RoomPlaneBitmapMaskData';
 import { RoomPlaneBitmapMaskParser } from '../RoomPlaneBitmapMaskParser';
 import { RoomPlaneData } from '../RoomPlaneData';
 import { RoomPlaneParser } from '../RoomPlaneParser';
-import { RoomObjectLogicBase } from './RoomObjectLogicBase';
+import { ObjectLogicBase } from './ObjectLogicBase';
 
-export class RoomLogic extends RoomObjectLogicBase {
+/** Port of Flash `RoomLogic`, the logic `RoomObjectFactory` builds for `room`. */
+export class RoomLogic extends ObjectLogicBase {
     private _planeParser: RoomPlaneParser = new RoomPlaneParser();
     private _planeBitmapMaskParser: RoomPlaneBitmapMaskParser = new RoomPlaneBitmapMaskParser();
-    private _color = 0xffffff;
-    private _light = 0xff;
-    private _originalColor = 0xffffff;
-    private _originalLight = 0xff;
-    private _targetColor = 0xffffff;
-    private _targetLight = 0xff;
-    private _colorChangedTime = 0;
-    private _colorTransitionLength = 1500;
+    private _colorTransitioner: ColorTransitioner = new ColorTransitioner();
     private _lastHoleUpdate = 0;
     private _needsMapUpdate = false;
-    private _skipColorTransition = false;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectMouseEvent.MOUSE_MOVE, RoomObjectMouseEvent.CLICK]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectMouseEvent.MOUSE_MOVE, RoomObjectMouseEvent.CLICK ]);
     }
 
     public override dispose(): void {
@@ -66,8 +60,6 @@ export class RoomLogic extends RoomObjectLogicBase {
         this.object.model.setValue(RoomObjectVariableEnum.RoomFloorVisibility, 1);
         this.object.model.setValue(RoomObjectVariableEnum.RoomWallVisibility, 1);
         this.object.model.setValue(RoomObjectVariableEnum.RoomLandscapeVisibility, 1);
-
-        // this._skipColorTransition = GetConfigValue<boolean>('renderer.skipColorTransition') === true;
     }
 
     public override update(time: number): void {
@@ -172,31 +164,38 @@ export class RoomLogic extends RoomObjectLogicBase {
         if (message instanceof ObjectRoomFloorHoleUpdateMessage) {
             switch (message.type) {
                 case ObjectRoomFloorHoleUpdateMessage.ADD:
-                    this._planeParser.addFloorHole(message.id, message.x, message.y, message.width, message.height);
-                    this._needsMapUpdate = true;
-                    return;
+                    this._planeParser.addFloorHole(message.id, message.x, message.y, message.width, message.height, message.invert);
+                    break;
                 case ObjectRoomFloorHoleUpdateMessage.REMOVE:
                     this._planeParser.removeFloorHole(message.id);
-                    this._needsMapUpdate = true;
+                    break;
+                default:
                     return;
             }
 
+            this._needsMapUpdate = true;
+            /*
+             * Entering a room replays every area hide it has at once, and each of them would
+             * otherwise re-parse the whole floor. The timestamp holds the rebuild off for a
+             * frame so the room is parsed once however many holes arrived together.
+             */
             this._lastHoleUpdate = this.time;
 
             return;
         }
 
+        /*
+         * `updateColors`: only a background colour lands on the planes. A colour for the whole
+         * room fades them back to white - `RoomDesktop`'s colorizer tints the whole view with it
+         * instead (`REE_ROOM_COLOR`). The fade starts at the clock's time (`getTimer()`), not the last
+         * update's: a dimmer lit before the room's first update would otherwise start a fade at 0,
+         * which is "no fade", and the planes stayed white.
+         */
         if (message instanceof ObjectRoomColorUpdateMessage) {
-            this._originalColor = this._color;
-            this._originalLight = this._light;
-            this._targetColor = message.color;
-            this._targetLight = message.light;
-            this._colorChangedTime = this.time;
-
-            if (this._skipColorTransition) this._colorTransitionLength = 0;
-            else this._colorTransitionLength = 1500;
-
             this.object.model.setValue(RoomObjectVariableEnum.RoomColorizeBgOnly, message.backgroundOnly);
+
+            if (message.backgroundOnly) this._colorTransitioner.startTransition(message.color, message.light, GetTickerTime());
+            else this._colorTransitioner.startTransition(0xFFFFFF, 0xFF, GetTickerTime());
 
             return;
         }
@@ -265,10 +264,10 @@ export class RoomLogic extends RoomObjectLogicBase {
         const tileZ = _local_18.z;
 
         if (
-            planePosition.x >= 0 &&
-            planePosition.x < leftSideLength &&
-            planePosition.y >= 0 &&
-            planePosition.y < rightSideLength
+            planePosition.x >= 0
+            && planePosition.x < leftSideLength
+            && planePosition.y >= 0
+            && planePosition.y < rightSideLength
         ) {
             this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedX, tileX);
             this.object.model.setValue(RoomObjectVariableEnum.RoomSelectedY, tileY);
@@ -346,38 +345,10 @@ export class RoomLogic extends RoomObjectLogicBase {
         }
     }
 
+    /** `updateBackgroundColor`: the faded colour, while a fade runs. */
     private updateBackgroundColor(time: number): void {
-        if (!this._colorChangedTime) return;
+        if (!this._colorTransitioner.updateColor(time)) return;
 
-        let color = this._color;
-        let newColor = this._light;
-
-        if (time - this._colorChangedTime >= this._colorTransitionLength) {
-            color = this._targetColor;
-            newColor = this._targetLight;
-
-            this._colorChangedTime = 0;
-        } else {
-            const offset = (time - this._colorChangedTime) / this._colorTransitionLength;
-
-            let r = (this._originalColor >> 16) & 0xff;
-            let g = (this._originalColor >> 8) & 0xff;
-            let b = this._originalColor & 0xff;
-
-            r = r + (((this._targetColor >> 16) & 0xff) - r) * offset;
-            g = g + (((this._targetColor >> 8) & 0xff) - g) * offset;
-            b = b + ((this._targetColor & 0xff) - b) * offset;
-
-            color = (r << 16) + (g << 8) + b;
-            newColor = this._originalLight + (this._targetLight - this._originalLight) * offset;
-
-            this._color = color;
-            this._light = newColor;
-        }
-
-        this.object.model.setValue(
-            RoomObjectVariableEnum.RoomBackgroundColor,
-            ColorConverter.hslToRGB((ColorConverter.rgbToHSL(color) & 0xffff00) + newColor),
-        );
+        this.object.model.setValue(RoomObjectVariableEnum.RoomBackgroundColor, this._colorTransitioner.color);
     }
 }

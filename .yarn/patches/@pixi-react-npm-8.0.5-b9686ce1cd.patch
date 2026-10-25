@@ -1,0 +1,114 @@
+diff --git a/lib/helpers/diffProps.js b/lib/helpers/diffProps.js
+index 6f266bc477cbe7fd4e4c92e2a6951daf37ec2f03..9d98ad557abe67a154bdb0b58817f08545dccca6 100644
+--- a/lib/helpers/diffProps.js
++++ b/lib/helpers/diffProps.js
+@@ -24,6 +24,18 @@ function diffProps(newProps, oldProps = {}, remove = false) {
+     }
+   }
+   entries.forEach(([key, value]) => {
++    /*
++     * A prop passed as `undefined` is an unset prop, as in React DOM (nitro patch). Assigned
++     * as-is, `alpha={cond ? 0.5 : undefined}` left `container.alpha = undefined`, which renders
++     * nothing; so on an update a value turning `undefined` resets to the default like a removed
++     * prop, and on creation it is skipped rather than written over the instance's own default.
++     */
++    if (value === undefined) {
++      if (!remove || oldPropsRest[key] === undefined) {
++        return;
++      }
++      value = `${DEFAULT}remove`;
++    }
+     if (compare.isEqual(value, oldPropsRest[key])) {
+       return;
+     }
+diff --git a/lib/helpers/diffProps.mjs b/lib/helpers/diffProps.mjs
+index ca5a92a4a95ea8d543f63ca8f4b0c2be0439569e..3f90bb2f8760fb481b1337d5d4a09cfc8938e076 100644
+--- a/lib/helpers/diffProps.mjs
++++ b/lib/helpers/diffProps.mjs
+@@ -22,6 +22,18 @@ function diffProps(newProps, oldProps = {}, remove = false) {
+     }
+   }
+   entries.forEach(([key, value]) => {
++    /*
++     * A prop passed as `undefined` is an unset prop, as in React DOM (nitro patch). Assigned
++     * as-is, `alpha={cond ? 0.5 : undefined}` left `container.alpha = undefined`, which renders
++     * nothing; so on an update a value turning `undefined` resets to the default like a removed
++     * prop, and on creation it is skipped rather than written over the instance's own default.
++     */
++    if (value === undefined) {
++      if (!remove || oldPropsRest[key] === undefined) {
++        return;
++      }
++      value = `${DEFAULT}remove`;
++    }
+     if (isEqual(value, oldPropsRest[key])) {
+       return;
+     }
+diff --git a/lib/helpers/removeChild.js b/lib/helpers/removeChild.js
+index 47c25cb7d7028d8e11d0556f00b7a54f3f10a436..c29e4bbcf67ea100b30d769497545c57aab118db 100644
+--- a/lib/helpers/removeChild.js
++++ b/lib/helpers/removeChild.js
+@@ -5,12 +5,28 @@ var detach = require('./detach.js');
+ var log = require('./log.js');
+ 
+ "use strict";
++/**
++ * React calls `removeChild` only for the topmost host instance of a removed subtree, and a plain
++ * `destroy()` leaves its descendants undestroyed - so every nested container's @pixi/layout Yoga
++ * node (WASM memory, never garbage collected) leaked with each closed window (nitro patch). This
++ * destroys the descendants React created; a child added imperatively (`__pixireact` unset) is
++ * detached instead, left to whoever added it.
++ */
++function destroyInstance(instance) {
++  const children = instance.children ? [...instance.children] : [];
++  for (const child of children) {
++    if (child.destroyed) continue;
++    if (child.__pixireact) destroyInstance(child);
++    else instance.removeChild(child);
++  }
++  instance.destroy();
++}
+ function removeChild(_parentInstance, childInstance) {
+   log.log("info", "lifecycle::removeChild");
+   if (childInstance instanceof pixi_js.Filter) {
+     detach.detach(childInstance);
+   }
+-  childInstance.destroy();
++  destroyInstance(childInstance);
+ }
+ 
+ exports.removeChild = removeChild;
+diff --git a/lib/helpers/removeChild.mjs b/lib/helpers/removeChild.mjs
+index ee3385b8c354112c68c51d8a67a65cadfeafb070..c6b5e9a9cdd5475a67d4f37c07db1c87bf3be9eb 100644
+--- a/lib/helpers/removeChild.mjs
++++ b/lib/helpers/removeChild.mjs
+@@ -3,12 +3,28 @@ import { detach } from './detach.mjs';
+ import { log } from './log.mjs';
+ 
+ "use strict";
++/**
++ * React calls `removeChild` only for the topmost host instance of a removed subtree, and a plain
++ * `destroy()` leaves its descendants undestroyed - so every nested container's @pixi/layout Yoga
++ * node (WASM memory, never garbage collected) leaked with each closed window (nitro patch). This
++ * destroys the descendants React created; a child added imperatively (`__pixireact` unset) is
++ * detached instead, left to whoever added it.
++ */
++function destroyInstance(instance) {
++  const children = instance.children ? [...instance.children] : [];
++  for (const child of children) {
++    if (child.destroyed) continue;
++    if (child.__pixireact) destroyInstance(child);
++    else instance.removeChild(child);
++  }
++  instance.destroy();
++}
+ function removeChild(_parentInstance, childInstance) {
+   log("info", "lifecycle::removeChild");
+   if (childInstance instanceof Filter) {
+     detach(childInstance);
+   }
+-  childInstance.destroy();
++  destroyInstance(childInstance);
+ }
+ 
+ export { removeChild };

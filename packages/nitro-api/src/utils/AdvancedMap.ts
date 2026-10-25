@@ -1,4 +1,4 @@
-﻿import { IAdvancedMap } from "./IAdvancedMap";
+﻿import { IAdvancedMap } from './IAdvancedMap';
 
 export class AdvancedMap<T, U> implements IAdvancedMap<T, U> {
     private _length: number = 0;
@@ -7,7 +7,7 @@ export class AdvancedMap<T, U> implements IAdvancedMap<T, U> {
     private _keys: T[] = [];
 
     constructor(map?: Map<T, U>) {
-        if (map) for (const [key, value] of map.entries()) this.add(key, value);
+        if (map) for (const [ key, value ] of map.entries()) this.add(key, value);
     }
 
     public dispose(): void {

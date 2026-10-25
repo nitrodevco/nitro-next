@@ -1,5 +1,6 @@
 import { GetTickerTime } from '../../utils';
 
+/** Port of Flash `RoomRotatingEffect`. */
 export class RoomRotatingEffect {
     public static readonly STATE_NOT_INITIALIZED = 0;
     public static readonly STATE_START_DELAY = 1;
@@ -60,10 +61,6 @@ export class RoomRotatingEffect {
 
     public static isVisualizationOn(): boolean {
         return this.isVisualizationActive && this.isRunning();
-    }
-
-    public static getProgress(): number {
-        return this.progress;
     }
 
     private static isRunning(): boolean {

@@ -1,64 +1,75 @@
-import { getFlatCategoryVisibleName, UpdateRoomCategoryAndTradeSettingsComposer } from '@nitrodevco/nitro-packets';
 import { useState } from 'react';
 
-import { useInterpolate, useNavigatorActions, useNavigatorSelectors, useTranslation, useWebSocketContext } from '#base/context';
-import { Button, DropmenuSelect, Frame } from '#base/theme';
+import { enforceRoomCategory } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useNavigatorStore } from '#base/context/navigator';
+import { useTranslation } from '#base/context/system';
+import { ClientGates, useClientGate } from '#base/context/user';
+import { ModalDialog, TemplateBindings, TemplateWindow, useTemplateFrame } from '#base/theme';
+import { flatCategoryName } from '#base/utils';
 
-/*
- * EnforceCategoryCtrl — enforce_category (310x240, frame style 3) built as a MODAL
- * with the close button hidden: the only way out is OK, which sends
- * UpdateRoomCategoryAndTradeSettings(currentRoomId, categoryId, tradeMode).
- * Categories: visible, not automatic, staffOnly only with security >= 7.
+import { ROOM_TRADE_MODE_TEXTS } from './roomTradeModeTexts';
+
+/**
+ * `EnforceCategoryCtrl` over `habbo-navigator-com/enforce_category_xml`, built as a modal dialog
+ * (`buildModalDialogFromXML`, centred over the darkened client): the dialog the server opens
+ * (`ShowEnforceRoomCategoryDialogMessage`) to make the owner pick a category and a trade mode for
+ * the room they are in. Its header close is hidden and the frame does not move (`params="1"`), so
+ * OK is the only way out.
+ *
+ * `category` lists the visible categories that are not automatic, the staff-only ones only for
+ * `hasSecurity(7)`; both menus start on their first entry. OK sends the picked category's node id
+ * and the trade mode's index (`UpdateRoomCategoryAndTradeSettingsComposer`). The selection type the
+ * server sends is not read by `show`.
+ *
+ * Flash keeps the last picks in fields `show` does not reset, so a second dialog opened without
+ * touching the menus would send the first one's picks under menus showing the first entries; each
+ * dialog here starts over with what it shows.
  */
+const TEMPLATE = 'habbo-navigator-com/enforce_category_xml';
+
 export const NavigatorEnforceCategoryView = () => {
-    const { enforceCategory, currentRoom, flatCategories, securityLevel } = useNavigatorSelectors();
-    const { closeEnforceCategory } = useNavigatorActions();
+    const flatCategories = useNavigatorStore(x => x.flatCategories);
+    const currentRoomId = useNavigatorStore(x => x.currentRoomId);
+    const staffCategories = useClientGate(ClientGates.StaffCategories);
     const { send } = useWebSocketContext();
-    const interpolate = useInterpolate();
     const t = useTranslation();
-    const [categoryIndex, setCategoryIndex] = useState(0);
-    const [tradeIndex, setTradeIndex] = useState(0);
+    const frame = useTemplateFrame({ id: 'navigator_enforce_category', modal: true, draggable: false, rememberPosition: false, closeButtonVisible: false });
+    const [ categoryIndex, setCategoryIndex ] = useState(0);
+    const [ tradeMode, setTradeMode ] = useState(0);
 
-    if (!enforceCategory || !currentRoom) return null;
+    const categories = flatCategories.filter(category => category.visible && !category.automatic && (!category.staffOnly || staffCategories));
 
-    const categories = flatCategories.filter(x => x.visible && !x.automatic && (!x.staffOnly || securityLevel >= 7));
+    const bindings: TemplateBindings = {
+        category: {
+            options: categories.map(category => flatCategoryName(category, t)),
+            selection: categoryIndex,
+            onSelect: setCategoryIndex,
+        },
+        trade_mode: {
+            // `show`'s `trade_mode` entries - the selection is the mode sent.
+            options: ROOM_TRADE_MODE_TEXTS,
+            selection: tradeMode,
+            onSelect: setTradeMode,
+        },
+        ok: {
+            onPointerTap: () => {
+                const category = categories[Math.max(0, categoryIndex)];
 
-    const confirm = () => {
-        const category = categories[Math.max(0, categoryIndex)];
+                if (!category) return;
 
-        if (!category) return;
-
-        send(new UpdateRoomCategoryAndTradeSettingsComposer({ roomId: currentRoom.roomId, categoryId: category.nodeId, tradeType: tradeIndex }));
-        closeEnforceCategory();
+                enforceRoomCategory(send, currentRoomId, category.nodeId, tradeMode);
+            },
+        },
     };
 
     return (
-        <div className="absolute inset-0 z-40 bg-[rgba(0,0,0,0.4)] pointer-events-auto">
-            <Frame
-                caption={t('enforce.category.title')}
-                className="inset-0 m-auto w-77.5 h-60"
-                contentClassName="relative"
-                id="navigator-enforce-category"
-                resizeDirection="none"
-                variant="3">
-                <span className="absolute left-1 top-1 w-73.75 text-style-regular break-words">{t('enforce.category.body.text.multiline')}</span>
-                <DropmenuSelect
-                    className="absolute left-1.5 top-17 w-69.75 h-5.75"
-                    options={categories.map(x => interpolate(getFlatCategoryVisibleName(x)))}
-                    selectedIndex={categoryIndex}
-                    variant="2"
-                    onSelect={setCategoryIndex} />
-                <span className="absolute left-1 top-24 text-style-regular">{t('enforce.category.trade.setting')}</span>
-                <DropmenuSelect
-                    className="absolute left-1.5 top-30 w-69.75 h-5.75"
-                    options={[t('navigator.roomsettings.trade_not_allowed'), t('navigator.roomsettings.trade_not_with_Controller'), t('navigator.roomsettings.trade_allowed')]}
-                    selectedIndex={tradeIndex}
-                    variant="2"
-                    onSelect={setTradeIndex} />
-                <Button className="absolute left-21.5 top-39.5 w-33 h-8" variant="3" onClick={confirm}>
-                    {t('enforce.category.ok')}
-                </Button>
-            </Frame>
-        </div>
+        <ModalDialog>
+            <TemplateWindow
+                id={TEMPLATE}
+                frame={frame}
+                bindings={bindings}
+            />
+        </ModalDialog>
     );
-}
+};

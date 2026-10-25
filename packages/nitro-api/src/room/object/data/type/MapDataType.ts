@@ -1,14 +1,15 @@
-import type { IMessageDataWrapper } from '#api/communication';
+import { IMessageDataWrapper } from '#api/communication';
 
-import type { IRoomObjectModel } from '../../IRoomObjectModel';
+import { IRoomObjectModel } from '../../IRoomObjectModel';
 import { RoomObjectVariableEnum } from '../../RoomObjectVariableEnum';
-import type { IObjectData } from '../IObjectData';
+import { IObjectData } from '../IObjectData';
 import { ObjectDataBase } from '../ObjectDataBase';
 import { ObjectDataFlagsEnum } from '../ObjectDataFlagsEnum';
 
 export class MapDataType extends ObjectDataBase {
     private static STATE = 'state';
     private static RARITY = 'rarity';
+    private static CHEST_NAME = 'chest_name';
 
     private _data: Record<string, string> = {};
 
@@ -51,6 +52,11 @@ export class MapDataType extends ObjectDataBase {
         return false;
     }
 
+    /** Replaces the map, as Flash's `new MapStuffData(map)` builds one from a map it has. */
+    public setData(data: Record<string, string>): void {
+        this._data = { ...data };
+    }
+
     public getValue(key: string): string {
         return this._data[key];
     }
@@ -63,6 +69,10 @@ export class MapDataType extends ObjectDataBase {
         if (state === undefined || state === null) return -1;
 
         return parseInt(state);
+    }
+
+    public get chestName(): string {
+        return this._data?.[MapDataType.CHEST_NAME] ?? '';
     }
 
     // TODO: How to get the keys?

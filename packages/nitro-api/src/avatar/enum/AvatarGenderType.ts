@@ -1,7 +1,7 @@
 export enum AvatarGenderType {
     Male = 'M',
     Female = 'F',
-    Unisex = 'U'
+    Unisex = 'U',
 }
 
 export class AvatarGenderTypeUtilities {

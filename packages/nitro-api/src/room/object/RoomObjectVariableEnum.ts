@@ -1,3 +1,22 @@
+/**
+ * The keys a room object's model is read and written with. One enum for what Flash spreads over
+ * several places:
+ *
+ * - `RoomObjectVariableEnum.as` - every constant of it, values verbatim (typos included);
+ * - `RoomVariableEnum.as` - the room-level keys, from `RoomMinX` to `CameraInitZ`;
+ * - keys Flash only ever writes as string literals (`FurnitureCrackable*`, `InfostandExtraParam`).
+ *
+ * Two Flash keys are deliberately replaced: `room_plane_xml` / `room_plane_mask_xml` carry XML in
+ * Flash, and the port hands the same data over as objects under `RoomMapData` /
+ * `RoomPlaneMaskData`. `VariableFxStatuses` and the `FurnitureFurniChest*` / `FurnitureChest*`
+ * keys are likewise the port's own.
+ *
+ * Keys that are listed but not yet in use, so that the feature's port finds the name here instead
+ * of inventing a literal:
+ *
+ * - `RoomAd*` - the room billboard of Flash's ad manager, which is not ported. Flash itself only
+ *   uses `RoomAdImageAsset`; the other five are constants nothing in the client reads.
+ */
 export enum RoomObjectVariableEnum {
     ObjectRoomId = 'object_room_id',
     ObjectAccurateZValue = 'object_accurate_z_value',
@@ -5,6 +24,7 @@ export enum RoomObjectVariableEnum {
     Figure = 'figure',
     Gender = 'gender',
     OwnUser = 'own_user',
+    Blocked = 'blocked',
     FigureCanStandUp = 'figure_can_stand_up',
     FigureVerticalOffset = 'figure_vertical_offset',
     FigureTalk = 'figure_talk',
@@ -19,10 +39,11 @@ export enum RoomObjectVariableEnum {
     FigurePostureParameter = 'figure_posture_parameter',
     FigureHighlightEnable = 'figure_highlight_enable',
     FigureHighlight = 'figure_highlight',
+    FigureHighlightVariableHolder = 'figure_highlight_variable_holder',
     FurniturePurchaserName = 'furniture_purchaser_name',
     FurniturePurchaserFigure = 'furniture_purchaser_figure',
+    FurnitureTrustedSender = 'furniture_trusted_sender',
     Std = 'std',
-    Swim = 'swm',
     FigureSign = 'figure_sign',
     FigureFlatControl = 'figure_flat_control',
     FigureIsTyping = 'figure_is_typing',
@@ -34,6 +55,10 @@ export enum RoomObjectVariableEnum {
     FigureGuideStatus = 'figure_guide_status',
     FigureExpression = 'figure_expression',
     FigureJumpingPower = 'figure_jumping_power',
+    FigureAlphaMultiplier = 'figure_alpha_multiplier',
+    FigureHabbicon = 'figure_habbicon',
+    FigureHabbiconTriggerSequence = 'figure_habbicon_trigger_sequence',
+    FigureHabbiconSpinOffset = 'figure_habbicon_spin_offset',
     HeadDirection = 'head_direction',
     FurnitureCustomVariables = 'furniture_custom_variables',
     FurnitureAutomaticStateIndex = 'furniture_automatic_state_index',
@@ -46,16 +71,27 @@ export enum RoomObjectVariableEnum {
     FurnitureCrackableHits = 'furniture_crackable_hits',
     FurnitureCrackableTarget = 'furniture_crackable_target',
     FurnitureCreditValue = 'furniture_credit_value',
+    FurnitureNftCredit = 'furniture_nft_credit',
     FurnitureData = 'furniture_data',
     FurnitureItemdata = 'furniture_itemdata',
     FurnitureColor = 'furniture_color',
-    FurnitureLiftAmount = 'furniure_lift_amount',
+    FurnitureLiftAmount = 'furniture_lift_amount',
     FurnitureGuildCustomizedGuildId = 'furniture_guild_customized_guild_id',
     FurnitureGuildCustomizedAssetName = 'furniture_guild_customized_asset_name',
     FurnitureGuildCustomizedColor1 = 'furniture_guild_customized_color_1',
     FurnitureGuildCustomizedColor2 = 'furniture_guild_customized_color_2',
+    FurnitureRecolorableColor = 'furniture_recolorable_color',
+    FurnitureLabelData = 'furniture_label_data',
+    FurnitureRegionData = 'furniture_region_data',
+    FurnitureWiredTransparency = 'furniture_wired_transparency',
+    FurnitureWiredClickThrough = 'furniture_wired_click_through',
+    FurnitureWiredHighlightType = 'furniture_wired_highlight_type',
+    FurnitureWiredHighlightStrength = 'furniture_wired_highlight_strength',
+    FurnitureWiredHighlightColor = 'furniture_wired_highlight_color',
+    FurnitureWiredTransparencyData = 'furniture_wired_transparency_data',
+    FurnitureWiredHighlightData = 'furniture_wired_highlight_data',
     FurnitureStateUpdateTime = 'furniture_state_update_time',
-    FurnitureSelectionDisabled = 'furniture_selection_disabled',
+    FurnitureSelectionDisabled = 'furniture_selection_disable',
     FurnitureSizeX = 'furniture_size_x',
     FurnitureSizeY = 'furniture_size_y',
     FurnitureSizeZ = 'furniture_size_z',
@@ -66,8 +102,10 @@ export enum RoomObjectVariableEnum {
     FurnitureAdUrl = 'furniture_ad_url',
     FurnitureTypeId = 'furniture_type_id',
     FurnitureExtras = 'furniture_extras',
+    FurnitureExtra = 'furniture_extra',
     FurnitureExpiryTime = 'furniture_expiry_time',
-    FurnitureExpirtyTimestamp = 'furniture_expiry_timestamp',
+    // The misspelt value is the Flash client's own key.
+    FurnitureExpiryTimestamp = 'furniture_expirty_timestamp',
     FurnitureRealRoomObject = 'furniture_real_room_object',
     FurnitureIsStickie = 'furniture_is_stickie',
     FurnitureBrandingImageStatus = 'furniture_branding_image_status',
@@ -80,6 +118,7 @@ export enum RoomObjectVariableEnum {
     FurnitureBadgeAssetName = 'furniture_badge_asset_name',
     FurnitureBadgeVisibleInState = 'furniture_badge_visible_in_state',
     FurnitureAlphaMultiplier = 'furniture_alpha_multiplier',
+    FurnitureInvisibleLayer = 'furniture_invisible_layer',
     FurnitureUsagePolicy = 'furniture_usage_policy',
     FurnitureOwnerId = 'furniture_owner_id',
     FurnitureOwnerName = 'furniture_owner_name',
@@ -91,7 +130,7 @@ export enum RoomObjectVariableEnum {
     FurnitureAreaHideWidth = 'furniture_area_hide_width',
     FurnitureAreaHideLength = 'furniture_area_hide_length',
     FurnitureAreaHideInvisibility = 'furniture_area_hide_invisibility',
-    FurnitureAreaHideWallItems = 'furniture_area_hide_wall_items',
+    FurnitureAreaHideWallItems = 'furniture_area_hide_wallitems',
     FurnitureAreaHideInvert = 'furniture_area_hide_invert',
     FurnitureUsesPlaneMask = 'furniture_uses_plane_mask',
     FurniturePlaneMaskType = 'furniture_plane_mask_type',
@@ -145,6 +184,12 @@ export enum RoomObjectVariableEnum {
     RoomSelectedY = 'room_selected_y',
     RoomSelectedZ = 'room_selected_z',
     RoomSelectedPlane = 'room_selected_plane',
+    RoomAdSpriteTag = 'billboard',
+    RoomAdImageAsset = 'room_ad_image_asset',
+    RoomAdClickUrl = 'room_ad_click_url',
+    RoomAdWaiting = 'room_ad_waiting',
+    RoomAdWarningImageLeft = 'room_ad_warning_image_left',
+    RoomAdWarningImageRight = 'room_ad_warning_image_right',
     ImageQueryScale = 'image_query_scale',
     FurnitureFriendfurniEngraving = 'furniture_friendfurni_engraving_type',
     SessionUrlPrefix = 'session_url_prefix',
@@ -158,4 +203,14 @@ export enum RoomObjectVariableEnum {
     RoomZScale = 'room_z_scale',
     AdDisplayDelay = 'ad_display_delay',
     IsPlayingGame = 'is_playing_game',
+    HanditemControlBlocked = 'handitem_control_blocked',
+    ChooserDisabled = 'chooser_disabled',
+    FreeFurniMovementsMode = 'free_furni_movements_mode',
+    InvisibleFurni = 'invisible_furni',
+    CameraInitX = 'camera_init_x',
+    CameraInitY = 'camera_init_y',
+    CameraInitZ = 'camera_init_z',
+    VariableFxStatuses = 'variable_fx_statuses',
+    FurnitureFurniChestShownAssetNames = 'furniture_furni_chest_shown_asset_names',
+    FurnitureChestIsWiredEnabled = 'furniture_chest_is_wired_enabled',
 }

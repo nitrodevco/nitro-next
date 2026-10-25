@@ -1,9 +1,11 @@
-import type { IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType } from '@nitrodevco/nitro-api';
-import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, IRoomSpriteMouseEvent, MouseEventType, RoomObjectStateChangedEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash `FurnitureWelcomeGiftLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_welcome_gift`.
+ */
 export class FurnitureWelcomeGiftLogic extends FurnitureMultiStateLogic {
     public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
         if (!event || !geometry) return;

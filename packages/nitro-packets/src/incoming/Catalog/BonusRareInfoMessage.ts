@@ -14,6 +14,6 @@ export class BonusRareInfoMessage implements IIncomingPacket<BonusRareInfoMessag
             productClassId: wrapper.readInt(),
             totalCoinsForBonus: wrapper.readInt(),
             coinsStillRequiredToBuy: wrapper.readInt(),
-        }
+        };
     }
 }

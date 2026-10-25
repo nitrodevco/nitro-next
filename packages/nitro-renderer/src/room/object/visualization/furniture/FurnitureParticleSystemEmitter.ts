@@ -1,8 +1,9 @@
-﻿import { type IGraphicAsset, type IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
+import { IGraphicAsset, IVector3D, RoomGeometryScaleType, Vector3d } from '@nitrodevco/nitro-api';
 
-import type { ParticleSystemParticle } from '../data';
+import { ParticleSystemParticle } from '../data';
 import { FurnitureParticleSystemParticle } from './FurnitureParticleSystemParticle';
 
+/** Port of Flash `FurnitureParticleSystemEmitter`. */
 export class FurnitureParticleSystemEmitter extends FurnitureParticleSystemParticle {
     public static CONE: string = 'cone' as const;
     public static PLANE: string = 'plane' as const;
@@ -203,10 +204,10 @@ export class FurnitureParticleSystemEmitter extends FurnitureParticleSystemParti
             const z = this.z;
 
             this.x = (2 - this._airFriction) * this.x - (1 - this._airFriction) * this.lastX;
-            this.y =
-                (2 - this._airFriction) * this.y -
-                (1 - this._airFriction) * this.lastY +
-                this._gravity * this._timeStep * this._timeStep;
+            this.y
+                = (2 - this._airFriction) * this.y
+                    - (1 - this._airFriction) * this.lastY
+                    + this._gravity * this._timeStep * this._timeStep;
             this.z = (2 - this._airFriction) * this.z - (1 - this._airFriction) * this.lastZ;
             this.lastX = x;
             this.lastY = y;
@@ -222,10 +223,10 @@ export class FurnitureParticleSystemEmitter extends FurnitureParticleSystemParti
             const y = particle.y;
             const z = particle.z;
             particle.x = (2 - this._airFriction) * particle.x - (1 - this._airFriction) * particle.lastX;
-            particle.y =
-                (2 - this._airFriction) * particle.y -
-                (1 - this._airFriction) * particle.lastY +
-                this._gravity * this._timeStep * this._timeStep;
+            particle.y
+                = (2 - this._airFriction) * particle.y
+                    - (1 - this._airFriction) * particle.lastY
+                    + this._gravity * this._timeStep * this._timeStep;
             particle.z = (2 - this._airFriction) * particle.z - (1 - this._airFriction) * particle.lastZ;
             particle.lastX = x;
             particle.lastY = y;

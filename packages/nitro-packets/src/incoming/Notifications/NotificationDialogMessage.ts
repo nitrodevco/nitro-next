@@ -1,7 +1,9 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type NotificationDialogMessageType = {
     type: string;
+    /** The server's key/value pairs; `HabboNotifications.showNotification` merges `notification.<type>` over them. */
     parameters: Record<string, string>;
 };
 
@@ -13,12 +15,12 @@ export class NotificationDialogMessage implements IIncomingPacket<NotificationDi
         };
 
         packet.type = wrapper.readString();
-        let v1 = wrapper.readInt();
-        while (v1 > 0) {
-            let v2 = wrapper.readString();
-            let v3 = wrapper.readString();
-            packet.parameters[v2] = v3;
-            v1--;
+        let count = wrapper.readInt();
+        while (count > 0) {
+            const key = wrapper.readString();
+            const value = wrapper.readString();
+            packet.parameters[key] = value;
+            count--;
         }
 
         return packet;

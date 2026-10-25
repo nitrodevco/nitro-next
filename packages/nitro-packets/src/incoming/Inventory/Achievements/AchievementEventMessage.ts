@@ -1,18 +1,13 @@
-import { IAchievementData, IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
-import { AchievementDataParser } from './Data/AchievementDataParser';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type AchievementEventMessageType = {
-    achievement: IAchievementData;
-};
+import { AchievementParser } from '../../Data/AchievementParser';
+import { IAchievement } from '../../Data/IAchievement';
 
-export class AchievementEventMessage implements IIncomingPacket<AchievementEventMessageType>
-{
-    public parse(wrapper: IMessageDataWrapper): AchievementEventMessageType
-    {
-        const packet: AchievementEventMessageType = {
-            achievement: AchievementDataParser(wrapper),
-        };
+/** AS3 AchievementMessageParser: one achievement, with cumulative point offsets. */
+export type AchievementEventMessageType = { achievement: IAchievement };
 
-        return packet;
+export class AchievementEventMessage implements IIncomingPacket<AchievementEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): AchievementEventMessageType {
+        return { achievement: AchievementParser(wrapper) };
     }
 }

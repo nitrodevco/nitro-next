@@ -1,10 +1,12 @@
-import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectDimmerStateUpdateEvent, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, RoomObjectDimmerStateUpdateEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-31Z§`, the logic `RoomObjectFactory` builds for
+ * `furniture_roomdimmer`.
+ */
 export class FurnitureRoomDimmerLogic extends FurnitureLogic {
     private _roomColorUpdated: boolean = false;
 

@@ -1,8 +1,9 @@
-﻿import type { IGraphicAsset } from '@nitrodevco/nitro-api';
+import { IGraphicAsset } from '@nitrodevco/nitro-api';
 
 import { GetAssetManager } from '../../assets';
 import { AssetAlias } from './AssetAlias';
 
+/** Port of Flash `AssetAliasCollection`. */
 export class AssetAliasCollection {
     private _aliases: Map<string, AssetAlias> = new Map();
 
@@ -27,6 +28,19 @@ export class AssetAliasCollection {
 
                 this._aliases.set(assetAlias.name, assetAlias);
             }
+        }
+    }
+
+    /** Flash `onAvatarAssetsLibraryReady`: the aliases of one library that has just loaded, over any of the same name. */
+    public onAvatarAssetsLibraryReady(libraryName: string): void {
+        const aliases = GetAssetManager().getCollection(libraryName)?.data?.aliases;
+
+        if (!aliases) return;
+
+        for (const alias of aliases) {
+            const assetAlias = new AssetAlias(alias);
+
+            this._aliases.set(assetAlias.name, assetAlias);
         }
     }
 

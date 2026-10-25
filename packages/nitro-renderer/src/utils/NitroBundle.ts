@@ -1,40 +1,83 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
-import type JSZip from 'jszip';
-import type { Texture } from 'pixi.js';
-import { Assets } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
+import { LoadMetrics } from './LoadMetrics';
+import { TextureUtils } from './TextureUtils';
+import { readZipEntries } from './ZipArchive';
+
+/**
+ * One `.nitro` archive, read out: its JSON entries parsed, its PNG entries decoded to textures,
+ * anything else kept as bytes.
+ *
+ * What it holds on to afterwards is deliberate. A bundle the `AssetManager` throws away after
+ * building its collection (furniture, pets, figures) takes everything with it; a UI bundle it
+ * retains keeps only what someone still reads - the decoded textures, and whatever `releaseData`
+ * has not yet dropped (the `.ttf` faces until `FontFace` has them, a table until it is read).
+ * An encoded bitmap is never kept: the renderer draws the `Texture`.
+ */
 export class NitroBundle {
     private static TEXT_DECODER: TextDecoder = new TextDecoder('utf-8');
 
     private _files: { [key: string]: object } = {};
     private _textures: { [key: string]: Texture } = {};
+    private _binaries: { [key: string]: ArrayBuffer } = {};
 
-    public static async fromZip(zip: JSZip): Promise<NitroBundle> {
+    /** `metricsKey` is the url the archive came from, set only when `LoadMetrics` is timing it. */
+    public static async fromBuffer(data: ArrayBuffer, metricsKey?: string): Promise<NitroBundle> {
         const bundle = new NitroBundle();
 
-        for (const file of Object.values(zip.files)) {
+        for (const entry of readZipEntries(data)) {
             try {
-                const name = file.name;
+                const name = entry.name;
 
                 switch (name.slice(name.lastIndexOf('.') + 1)) {
                     case 'json': {
-                        bundle.files[name] = JSON.parse(NitroBundle.TEXT_DECODER.decode(await file.async('arraybuffer')));
+                        const startedAt = metricsKey ? performance.now() : 0;
+                        const bytes = await entry.bytes();
+
+                        if (metricsKey) LoadMetrics.addTime(metricsKey, 'inflateMs', performance.now() - startedAt);
+
+                        bundle.files[name] = JSON.parse(NitroBundle.TEXT_DECODER.decode(bytes));
                         break;
                     }
                     case 'png': {
-                        const data = await file.async('base64');
+                        // A blob goes to the image decoder directly - one fewer copy of the sheet at the load peak.
+                        const startedAt = metricsKey ? performance.now() : 0;
+                        const blob = await entry.blob('image/png');
+                        const inflated = metricsKey ? performance.now() : 0;
 
-                        bundle.textures[name] = await Assets.load<Texture>(`data:image/png;base64,${data}`);
+                        bundle.textures[name] = await TextureUtils.textureFromEncodedBytes(blob, 'image/png', name);
+
+                        if (metricsKey) {
+                            LoadMetrics.addTime(metricsKey, 'inflateMs', inflated - startedAt);
+                            LoadMetrics.addTime(metricsKey, 'imageMs', performance.now() - inflated);
+                        }
+
+                        break;
+                    }
+                    default: {
+                        // Anything else is carried through as bytes for whoever asked for the
+                        // bundle - the font faces `FontFace` is constructed from, and the like.
+                        bundle.binaries[name] = (await entry.bytes()).buffer as ArrayBuffer;
                         break;
                     }
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 NitroLogger.error(err);
             }
         }
 
         return bundle;
+    }
+
+    /**
+     * Drops the parsed tables and carried bytes a consumer has finished reading; the textures
+     * stay. What is dropped is gone: call it once, from the code that owns the bundle, after it
+     * has taken what it needs.
+     */
+    public releaseData(): void {
+        this._files = {};
+        this._binaries = {};
     }
 
     public get files(): { [key: string]: object } {
@@ -43,5 +86,9 @@ export class NitroBundle {
 
     public get textures(): { [key: string]: Texture } {
         return this._textures;
+    }
+
+    public get binaries(): { [key: string]: ArrayBuffer } {
+        return this._binaries;
     }
 }

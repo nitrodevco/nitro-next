@@ -1,4 +1,4 @@
-import type { ChangeUserNameResultMessageCode, IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { ChangeUserNameResultMessageCode, IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ChangeUserNameResultMessageType = {
     resultCode: ChangeUserNameResultMessageCode;

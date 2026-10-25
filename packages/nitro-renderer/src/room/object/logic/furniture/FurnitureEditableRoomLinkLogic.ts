@@ -1,13 +1,16 @@
-import { type IAssetData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-M16§`, the logic `RoomObjectFactory` builds for
+ * `furniture_editable_room_link`.
+ */
 export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
     private _timer: ReturnType<typeof setTimeout> | undefined = undefined;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.ROOM_LINK]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.ROOM_LINK ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {

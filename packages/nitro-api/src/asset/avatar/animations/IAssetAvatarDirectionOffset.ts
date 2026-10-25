@@ -1,4 +1,4 @@
-import { IAssetAvatarBodyPartOffset } from "./IAssetAvatarBodyPartOffset";
+import { IAssetAvatarBodyPartOffset } from './IAssetAvatarBodyPartOffset';
 
 export interface IAssetAvatarDirectionOffset {
     id: number;

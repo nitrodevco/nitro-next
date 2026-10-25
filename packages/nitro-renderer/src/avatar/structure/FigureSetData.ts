@@ -1,7 +1,8 @@
-import type { AvatarFigurePartType, AvatarGenderType, IFigureData, IFigurePartSet, IFigureSetData, IPalette, ISetType, IStructureData } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarGenderType, IFigureData, IFigurePartSet, IFigureSetData, IPalette, ISetType, IStructureData } from '@nitrodevco/nitro-api';
 
 import { Palette, SetType } from './figure';
 
+/** Port of Flash `FigureSetData`. */
 export class FigureSetData implements IFigureSetData, IStructureData {
     private _palettes: Map<number, Palette>;
     private _setTypes: Map<AvatarFigurePartType, SetType>;

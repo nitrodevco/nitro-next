@@ -1,4 +1,4 @@
-import type { IAssetPlaneMaterialCellMatrix } from './IAssetPlaneMaterialCellMatrix';
+import { IAssetPlaneMaterialCellMatrix } from './IAssetPlaneMaterialCellMatrix';
 
 export interface IAssetPlaneMaterial {
     id?: string;

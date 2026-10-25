@@ -1,9 +1,8 @@
-import type { Rectangle } from 'pixi.js';
-import type { ImageLike } from 'pixi.js';
+import { ImageLike, Rectangle, Texture } from 'pixi.js';
 
-import type { IRoomGeometry } from '../../IRoomGeometry';
-import type { IRoomObject } from '../IRoomObject';
-import type { IObjectVisualizationData } from './IRoomObjectVisualizationData';
+import { IRoomGeometry } from '../../IRoomGeometry';
+import { IRoomObject } from '../IRoomObject';
+import { IObjectVisualizationData } from './IRoomObjectVisualizationData';
 
 export interface IRoomObjectVisualization {
     initialize(data: IObjectVisualizationData): boolean;
@@ -11,6 +10,8 @@ export interface IRoomObjectVisualization {
     update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void;
     getBoundingRectangle(): Rectangle;
     getImage(): Promise<ImageLike | undefined>;
+    /** The object's current sprites rendered into one texture (caller owns it), or undefined if it has nothing to draw. */
+    getRenderTexture(): Texture | undefined;
     instanceId: number;
     object: IRoomObject;
     updateSpriteCounter: number;

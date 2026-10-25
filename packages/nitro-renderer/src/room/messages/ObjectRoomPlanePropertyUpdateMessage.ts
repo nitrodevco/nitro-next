@@ -1,5 +1,6 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectRoomPlanePropertyUpdateMessage`. */
 export class ObjectRoomPlanePropertyUpdateMessage extends RoomObjectUpdateMessage {
     public static WALL_THICKNESS: string = 'RORPPUM_WALL_THICKNESS' as const;
     public static FLOOR_THICKNESS: string = 'RORPVUM_FLOOR_THICKNESS' as const;

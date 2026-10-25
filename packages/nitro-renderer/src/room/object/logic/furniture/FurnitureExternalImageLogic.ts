@@ -1,21 +1,25 @@
-import { type IAssetData, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash `FurnitureExternalImageLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_external_image_wallitem`.
+ */
 export class FurnitureExternalImageLogic extends FurnitureMultiStateLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        let maskType = '';
+        // `FurnitureExternalImageLogic.initialize`: both variables are only set when the logic carries a `mask` type.
+        const maskType = asset?.logic?.maskType;
 
-        if (asset?.logic?.maskType) maskType = asset.logic.maskType ?? '';
+        if (maskType === undefined) return;
 
-        this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, false);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureUsesPlaneMask, true);
         this.object.model.setValue(RoomObjectVariableEnum.FurniturePlaneMaskType, maskType);
     }
 

@@ -1,5 +1,6 @@
-﻿import type { IAnimation, IAssetAnimationSprite, ISpriteDataContainer } from "@nitrodevco/nitro-api";
+import { IAnimation, IAssetAnimationSprite, ISpriteDataContainer } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `SpriteDataContainer`. */
 export class SpriteDataContainer implements ISpriteDataContainer {
     private _animation: IAnimation;
     private _id: string;

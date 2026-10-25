@@ -1,9 +1,9 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
-// GetHabboGroupDetailsMessageComposer(groupId:int, open:Boolean)
 export type GetHabboGroupDetailsComposerType = {
     groupId: number;
-    open: boolean;
+    openDetails: boolean;
 };
 
 export class GetHabboGroupDetailsComposer implements IOutgoingPacket<GetHabboGroupDetailsComposerType> {
@@ -12,7 +12,7 @@ export class GetHabboGroupDetailsComposer implements IOutgoingPacket<GetHabboGro
     public compose(): (number | string | boolean)[] {
         return [
             this.params.groupId,
-            this.params.open,
+            this.params.openDetails,
         ];
     }
 }

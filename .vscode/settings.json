@@ -1,7 +1,7 @@
 {
     "js/ts.tsdk.path": "./node_modules/typescript/lib",
     "files.eol": "\n",
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.detectIndentation": false,
     "editor.wordWrap": "on",
     "editor.tabSize": 4,
@@ -12,22 +12,33 @@
     "editor.quickSuggestions": {
         "strings": true
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    // ESLint's fixAll (via codeActionsOnSave below) fully owns formatting for these languages
+    // now (see @stylistic rules in eslint.config.js) - a second format-on-save pass here would
+    // race against it (e.g. falling back to Prettier, which strips array-bracket spacing back
+    // out right after ESLint adds it), so formatting is disabled and fixAll is the only pass.
     "[javascript,javascriptreact,typescript,typescriptreact]": {
-        "js/ts.preferences.importModuleSpecifier": "shortest"
+        "editor.formatOnSave": false,
+        "js/ts.preferences.importModuleSpecifier": "non-relative"
     },
     "[json]": {
         "editor.tabSize": 4
     },
-    "prettier.prettierPath": "./node_modules/prettier/index.cjs",
-    "prettier.configPath": "prettier.config.js",
+    "eslint.format.enable": true,
     "eslint.validate": [
         "javascript",
         "javascriptreact",
         "typescript",
         "typescriptreact"
     ],
-    "tailwindAutoOptimizer.autoFixOnSave": true,
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ],
+    // Disabled: this extension runs its own fix-on-save pass independent of
+    // editor.formatOnSave/codeActionsOnSave (so disabling those doesn't stop it), and it was
+    // reverting ESLint's fixAll edits (e.g. array-bracket-spacing) right after they were applied.
+    "tailwindAutoOptimizer.autoFixOnSave": false,
     "tailwindCSS.experimental.configFile": "./packages/nitro-react/src/index.css",
     "tailwindCSS.experimental.classRegex": [
         [

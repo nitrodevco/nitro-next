@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type CallForHelpReplyMessageType = {
-  // no fields
-
+    /** A moderator's reply to the user's report. */
+    message: string;
 };
 
-export class CallForHelpReplyMessage implements IIncomingPacket<CallForHelpReplyMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CallForHelpReplyMessageType
-  {
-
-    const packet: CallForHelpReplyMessageType = {
-    };
-
-    return packet;
-  }
+/** `CallForHelpReplyMessageParser`. */
+export class CallForHelpReplyMessage implements IIncomingPacket<CallForHelpReplyMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CallForHelpReplyMessageType {
+        return {
+            message: wrapper.readString(),
+        };
+    }
 }

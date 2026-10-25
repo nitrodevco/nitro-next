@@ -1,4 +1,4 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type RoomEntryTileMessageType = {
     x: number;
@@ -8,12 +8,11 @@ export type RoomEntryTileMessageType = {
 
 export class RoomEntryTileMessage implements IIncomingPacket<RoomEntryTileMessageType> {
     public parse(wrapper: IMessageDataWrapper): RoomEntryTileMessageType {
-
         const packet: RoomEntryTileMessageType = {
             x: wrapper.readInt(),
             y: wrapper.readInt(),
-            rotation: wrapper.readInt()
-        }
+            rotation: wrapper.readInt(),
+        };
 
         return packet;
     }

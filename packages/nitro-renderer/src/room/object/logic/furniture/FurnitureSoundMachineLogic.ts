@@ -1,10 +1,12 @@
-import type { IRoomObjectUpdateMessage } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
-import { RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, RoomObjectFurnitureActionEvent, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash `FurnitureSoundMachineLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_sound_machine`.
+ */
 export class FurnitureSoundMachineLogic extends FurnitureMultiStateLogic {
     private _disposeEventsAllowed: boolean = false;
     private _isInitialized: boolean = false;

@@ -1,8 +1,8 @@
-import type { IMessageDataWrapper } from '#api/communication';
+import { IMessageDataWrapper } from '#api/communication';
 
-import type { IRoomObjectModel } from '../../IRoomObjectModel';
+import { IRoomObjectModel } from '../../IRoomObjectModel';
 import { RoomObjectVariableEnum } from '../../RoomObjectVariableEnum';
-import type { IObjectData } from '../IObjectData';
+import { IObjectData } from '../IObjectData';
 import { ObjectDataBase } from '../ObjectDataBase';
 import { ObjectDataFlagsEnum } from '../ObjectDataFlagsEnum';
 

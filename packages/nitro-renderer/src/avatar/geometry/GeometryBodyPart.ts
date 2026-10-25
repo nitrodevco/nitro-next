@@ -1,13 +1,16 @@
-﻿import type { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarBodyPart, IAssetAvatarBodyPartItem, IAvatarImage } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarFigurePartType, IAssetAvatarBodyPart, IAssetAvatarBodyPartItem, IAvatarImage } from '@nitrodevco/nitro-api';
 
 import { GeometryItem } from './GeometryItem';
-import type { Matrix4x4 } from './Matrix4x4';
+import { Matrix4x4 } from './Matrix4x4';
 import { Node3D } from './Node3D';
-import type { Vector3D } from './Vector3D';
+import { Vector3D } from './Vector3D';
 
+/** Port of Flash `GeometryBodyPart`. */
 export class GeometryBodyPart extends Node3D {
     private _id: AvatarBodyPartType;
     private _radius: number;
+    private _orderBefore: AvatarBodyPartType | undefined;
+    private _orderAfter: AvatarBodyPartType | undefined;
     private _parts: Map<string, GeometryItem> = new Map();
     private _dynamicParts: Map<IAvatarImage, Record<string, GeometryItem>> = new Map();
 
@@ -16,6 +19,8 @@ export class GeometryBodyPart extends Node3D {
 
         this._id = part.id;
         this._radius = part.radius ?? 0;
+        this._orderBefore = part.orderBefore;
+        this._orderAfter = part.orderAfter;
 
         if (part.items && (part.items.length > 0)) {
             for (const item of part.items) {
@@ -109,7 +114,7 @@ export class GeometryBodyPart extends Node3D {
 
             part.applyTransform(matrix);
 
-            parts.push([part.getDistance(loc), part]);
+            parts.push([ part.getDistance(loc), part ]);
         }
 
         const existingDynamic = this._dynamicParts.get(avatar);
@@ -122,7 +127,7 @@ export class GeometryBodyPart extends Node3D {
 
                 part.applyTransform(matrix);
 
-                parts.push([part.getDistance(loc), part]);
+                parts.push([ part.getDistance(loc), part ]);
             }
         }
 
@@ -150,5 +155,13 @@ export class GeometryBodyPart extends Node3D {
 
     public get radius(): number {
         return this._radius;
+    }
+
+    public get orderBefore(): AvatarBodyPartType | undefined {
+        return this._orderBefore;
+    }
+
+    public get orderAfter(): AvatarBodyPartType | undefined {
+        return this._orderAfter;
     }
 }

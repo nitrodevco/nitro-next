@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type CallForHelpDisabledNotifyMessageType = {
-  // no fields
-
+    /** Where the alert's link goes. */
+    infoUrl: string;
 };
 
-export class CallForHelpDisabledNotifyMessage implements IIncomingPacket<CallForHelpDisabledNotifyMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): CallForHelpDisabledNotifyMessageType
-  {
-
-    const packet: CallForHelpDisabledNotifyMessageType = {
-    };
-
-    return packet;
-  }
+/** `CallForHelpDisabledNotifyMessageParser`: reporting is off for this account (a global mute). */
+export class CallForHelpDisabledNotifyMessage implements IIncomingPacket<CallForHelpDisabledNotifyMessageType> {
+    public parse(wrapper: IMessageDataWrapper): CallForHelpDisabledNotifyMessageType {
+        return {
+            infoUrl: wrapper.readString(),
+        };
+    }
 }

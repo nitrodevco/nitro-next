@@ -1,4 +1,4 @@
-import type {
+import {
     IAsset,
     IAssetData,
     IAssetPalette,
@@ -6,15 +6,25 @@ import type {
     IGraphicAssetCollection,
     IGraphicAssetPalette,
 } from '@nitrodevco/nitro-api';
-import type { Texture, TextureSource } from 'pixi.js';
+import { Texture, TextureSource } from 'pixi.js';
+
+import { GetTickerTime, TextureUtils } from '#renderer/utils';
 
 import { GraphicAsset } from './GraphicAsset';
 import { GraphicAssetPalette } from './GraphicAssetPalette';
 
+/** Port of Flash `GraphicAssetCollection`. */
 export class GraphicAssetCollection implements IGraphicAssetCollection {
     private static PALETTE_ASSET_DISPOSE_THRESHOLD: number = 10;
 
     private _referenceCount: number = 0;
+    /**
+     * Flash `GraphicAssetCollection`'s reference timestamp, which `RoomContentLoader.purge` reads
+     * to find a collection nothing has used for a while. Flash starts it at 0; here it starts when
+     * the collection is made, so one that has just downloaded is not purgeable before the object
+     * that asked for it has taken its reference.
+     */
+    private _lastReferenceTimestamp: number = GetTickerTime();
 
     private _type: string;
     private _textureSource: TextureSource | undefined;
@@ -68,6 +78,11 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         if (palettes) this.definePalettes(palettes);
     }
 
+    /**
+     * Flash `GraphicAssetCollection.getAssetWithPalette`: an asset that does not use a palette is
+     * returned as it is - a pet's shadow (`dog_64_sd_*`, `lion_64_sd_*`) is one, and dropping it
+     * left those pets without a shadow.
+     */
     public getAssetWithPalette(name: string, paletteId: number): IGraphicAsset | undefined {
         const saveName = name + '@' + paletteId;
 
@@ -77,7 +92,7 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
         asset = this.getAsset(name);
 
-        if (!asset || !asset.texture || !asset.usesPalette) return undefined;
+        if (!asset || !asset.usesPalette || !asset.texture) return asset;
 
         const palette = this.getPalette(paletteId);
 
@@ -102,9 +117,9 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
     public getPaletteColors(paletteId: number): number[] {
         const palette = this.getPalette(paletteId);
 
-        if (palette) return [palette.primaryColor, palette.secondaryColor];
+        if (palette) return [ palette.primaryColor, palette.secondaryColor ];
 
-        return [0, 0];
+        return [ 0, 0 ];
     }
 
     public addAsset(
@@ -115,7 +130,7 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         flipH: boolean = false,
         flipV: boolean = false,
         usesPalette: boolean = false,
-        replace: boolean = false
+        replace: boolean = false,
     ): IGraphicAsset | undefined {
         if (!name || !texture) return undefined;
 
@@ -124,7 +139,12 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         if (asset) {
             if (!replace) return undefined;
 
-            this.disposeAsset(name);
+            // A shared texture registered again (a second guild furni of the type with the same
+            // badge): disposing would destroy the very texture being added, under every other user.
+            if (asset.texture === texture) {
+                this._assets.delete(name);
+                asset.recycle();
+            } else this.disposeAsset(name);
         }
 
         asset = GraphicAsset.createAsset(name, name, texture, x, y, flipH, flipV, usesPalette);
@@ -140,13 +160,12 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         if (!asset || !this._assets.delete(name)) return;
 
         if (asset.texture) {
+            const isSubTexture = asset.texture.frame.x !== 0
+                || asset.texture.frame.y !== 0
+                || asset.texture.frame.width !== asset.texture.source.width
+                || asset.texture.frame.height !== asset.texture.source.height;
 
-            const isSubTexture = asset.texture.frame.x !== 0 ||
-                asset.texture.frame.y !== 0 ||
-                asset.texture.frame.width !== asset.texture.source.width ||
-                asset.texture.frame.height !== asset.texture.source.height;
-
-            if (!isSubTexture) asset.texture.destroy(true);
+            if (!isSubTexture) TextureUtils.destroyTexture(asset.texture);
         }
 
         asset.recycle();
@@ -164,8 +183,14 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         return this._palettes.get(paletteId);
     }
 
+    /** Flash `getPaletteXML`: a palette as the library defines it (its `source` names its file), read from the library's data. */
+    public getPaletteData(paletteId: number): IAssetPalette | undefined {
+        return this._data.palettes?.find(palette => palette.id === paletteId);
+    }
+
     public addReference(): void {
         this._referenceCount++;
+        this._lastReferenceTimestamp = GetTickerTime();
     }
 
     public removeReference(): void {
@@ -173,6 +198,7 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
         if (this._referenceCount <= 0) {
             this._referenceCount = 0;
+            this._lastReferenceTimestamp = GetTickerTime();
 
             this.disposePaletteAssets(false);
         }
@@ -180,6 +206,10 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
     public get referenceCount(): number {
         return this._referenceCount;
+    }
+
+    public get lastReferenceTimestamp(): number {
+        return this._lastReferenceTimestamp;
     }
 
     public get name(): string {
@@ -218,6 +248,12 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
             if (!texture) continue;
 
+            // `GraphicAssetCollection.defineAssets`: the first definition of a name wins, unless what is
+            // there is an alias (its source is another asset), which a later definition replaces.
+            const existing = this._assets.get(asset.name);
+
+            if (existing && (existing.source === undefined || existing.source === existing.name)) continue;
+
             this._assets.set(asset.name, GraphicAsset.createAsset(asset.name, source, texture, x, y, flipH, flipV, usesPalette));
         }
     }
@@ -231,7 +267,8 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
             let color = palette.color1;
 
-            if (color && color.length > 0) colorOne = parseInt(color, 16);
+            // `GraphicAssetCollection.definePalettes`: color2 falls back to color1, not to white.
+            if (color && color.length > 0) colorOne = colorTwo = parseInt(color, 16);
 
             color = palette.color2;
 

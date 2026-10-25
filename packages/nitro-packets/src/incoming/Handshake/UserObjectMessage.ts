@@ -1,5 +1,4 @@
-import type { AvatarGenderType, IIncomingPacket, IMessageDataWrapper, IUserInfo } from "@nitrodevco/nitro-api";
-
+import { AvatarGenderType, IIncomingPacket, IMessageDataWrapper, IUserInfo } from '@nitrodevco/nitro-api';
 
 export type UserObjectMessageType = {
     userInfo: IUserInfo;
@@ -25,6 +24,17 @@ export class UserObjectMessage implements IIncomingPacket<UserObjectMessageType>
                 accountSafetyLocked: wrapper.readBoolean(),
             },
         };
+
+        // Newer servers append these; an older one simply stops here.
+        if (wrapper.bytesAvailable) {
+            packet.userInfo.accountTradeLocked = wrapper.readBoolean();
+            packet.userInfo.nameColor = wrapper.readString();
+        }
+
+        if (wrapper.bytesAvailable) {
+            packet.userInfo.respectReplenishesLeft = wrapper.readInt();
+            packet.userInfo.maxRespectPerDay = wrapper.readInt();
+        }
 
         return packet;
     }

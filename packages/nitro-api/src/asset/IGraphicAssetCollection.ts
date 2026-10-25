@@ -1,8 +1,9 @@
-import type { Texture, TextureSource } from 'pixi.js';
+import { Texture, TextureSource } from 'pixi.js';
 
-import type { IAssetData } from './IAssetData';
-import type { IGraphicAsset } from './IGraphicAsset';
-import type { IGraphicAssetPalette } from './IGraphicAssetPalette';
+import { IAssetData } from './IAssetData';
+import { IAssetPalette } from './IAssetPalette';
+import { IGraphicAsset } from './IGraphicAsset';
+import { IGraphicAssetPalette } from './IGraphicAssetPalette';
 
 export interface IGraphicAssetCollection {
     dispose(): void;
@@ -23,9 +24,11 @@ export interface IGraphicAssetCollection {
     getAsset(name: string): IGraphicAsset | undefined;
     getTexture(name: string): Texture | undefined;
     getPalette(paletteId: number): IGraphicAssetPalette | undefined;
+    getPaletteData(paletteId: number): IAssetPalette | undefined;
     addReference(): void;
     removeReference(): void;
     readonly referenceCount: number;
+    readonly lastReferenceTimestamp: number;
     readonly name: string;
     readonly data: IAssetData;
     readonly textureSource: TextureSource | undefined;

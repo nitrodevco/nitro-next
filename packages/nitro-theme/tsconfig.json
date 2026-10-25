@@ -1,0 +1,24 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "types": [
+            "vite/client"
+        ],
+        "paths": {
+            "#api/*": [
+                "../nitro-api/src/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*",
+        "test/**/*"
+    ],
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}

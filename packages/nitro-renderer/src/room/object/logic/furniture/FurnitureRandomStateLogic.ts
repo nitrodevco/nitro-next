@@ -2,9 +2,13 @@ import { RoomObjectStateChangedEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash `FurnitureRandomStateLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_randomstate`.
+ */
 export class FurnitureRandomStateLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectStateChangedEvent.STATE_RANDOM]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectStateChangedEvent.STATE_RANDOM ]);
     }
 
     public override useObject(): void {

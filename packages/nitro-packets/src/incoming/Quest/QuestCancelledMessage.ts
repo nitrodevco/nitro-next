@@ -1,18 +1,18 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type QuestCancelledMessageType = {
-  // no fields
+import { IQuestMessageData, QuestMessageDataParser } from './QuestsMessage';
 
+export type QuestCancelledMessageType = {
+    expired: boolean;
+    quest: IQuestMessageData;
 };
 
-export class QuestCancelledMessage implements IIncomingPacket<QuestCancelledMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): QuestCancelledMessageType
-  {
+/** Flash `QuestCancelledMessageParser`: `expired`, then the quest. */
+export class QuestCancelledMessage implements IIncomingPacket<QuestCancelledMessageType> {
+    public parse(wrapper: IMessageDataWrapper): QuestCancelledMessageType {
+        const expired = wrapper.readBoolean();
 
-    const packet: QuestCancelledMessageType = {
-    };
-
-    return packet;
-  }
+        return { expired, quest: QuestMessageDataParser(wrapper) };
+    }
 }

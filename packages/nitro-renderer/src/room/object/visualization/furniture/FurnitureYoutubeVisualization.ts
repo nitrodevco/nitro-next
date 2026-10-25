@@ -1,8 +1,12 @@
 import { RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
-import { FurnitureDynamicThumbnailVisualization } from './FurnitureDynamicThumbnailVisualization';
+import { ExternalIsometricImageFurniVisualization } from './ExternalIsometricImageFurniVisualization';
 
-export class FurnitureYoutubeVisualization extends FurnitureDynamicThumbnailVisualization {
+/**
+ * Port of Flash's obfuscated `§_-AD§`, the visualization `RoomObjectVisualizationFactory` builds
+ * for `furniture_youtube`.
+ */
+export class FurnitureYoutubeVisualization extends ExternalIsometricImageFurniVisualization {
     protected static THUMBNAIL_URL: string = 'THUMBNAIL_URL';
 
     protected override getThumbnailURL(): string | undefined {

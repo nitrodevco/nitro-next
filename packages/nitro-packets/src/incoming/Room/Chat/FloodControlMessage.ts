@@ -1,19 +1,15 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FloodControlMessageType = {
-  seconds: number;
+    seconds: number;
 };
 
-export class FloodControlMessage implements IIncomingPacket<FloodControlMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): FloodControlMessageType
-  {
-    const packet: FloodControlMessageType = {
-      seconds: 0,
-    };
+export class FloodControlMessage implements IIncomingPacket<FloodControlMessageType> {
+    public parse(wrapper: IMessageDataWrapper): FloodControlMessageType {
+        const packet: FloodControlMessageType = {
+            seconds: wrapper.readInt(),
+        };
 
-    packet.seconds = wrapper.readInt();
-
-    return packet;
-  }
+        return packet;
+    }
 }

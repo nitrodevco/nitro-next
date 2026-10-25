@@ -1,7 +1,6 @@
 import { AssetManager } from './AssetManager';
 
-//Assets.init();
-
 const assetManager = new AssetManager();
 
+/** The one `AssetManager` the client and the room engine share. */
 export const GetAssetManager = () => assetManager;

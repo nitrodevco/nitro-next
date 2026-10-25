@@ -1,24 +1,28 @@
-import type {
+import {
     IAssetData,
     IParticleSystem,
     IRoomGeometry,
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
-} from '@nitrodevco/nitro-api';
-import { MapDataType, MouseEventType, RoomObjectFurnitureActionEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+    MapDataType, MouseEventType, RoomObjectFurnitureActionEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage, ObjectModelDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash `FurniturePresentLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_present`.
+ */
 export class FurniturePresentLogic extends FurnitureLogic {
     private static MESSAGE: string = 'MESSAGE';
     private static PRODUCT_CODE: string = 'PRODUCT_CODE';
     private static EXTRA_PARAM: string = 'EXTRA_PARAM';
     private static PURCHASER_NAME: string = 'PURCHASER_NAME';
     private static PURCHASER_FIGURE: string = 'PURCHASER_FIGURE';
+    private static TRUSTED_SENDER: string = 'TRUSTED_SENDER';
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.PRESENT]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.PRESENT ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -26,7 +30,7 @@ export class FurniturePresentLogic extends FurnitureLogic {
 
         if (asset?.logic?.particleSystems) this.object.model.setValue<IParticleSystem[]>(
             RoomObjectVariableEnum.FurnitureFireworksData,
-            asset.logic.particleSystems
+            asset.logic.particleSystems,
         );
     }
 
@@ -63,6 +67,11 @@ export class FurniturePresentLogic extends FurnitureLogic {
             this.object.model.setValue(
                 RoomObjectVariableEnum.FurniturePurchaserFigure,
                 stuffData.getValue(FurniturePresentLogic.PURCHASER_FIGURE),
+            );
+            // Set by the server for gifts from staff; anything else gets the untrusted-sender banner.
+            this.object.model.setValue(
+                RoomObjectVariableEnum.FurnitureTrustedSender,
+                (stuffData.getValue(FurniturePresentLogic.TRUSTED_SENDER) === 'true') ? 1 : 0,
             );
         }
 

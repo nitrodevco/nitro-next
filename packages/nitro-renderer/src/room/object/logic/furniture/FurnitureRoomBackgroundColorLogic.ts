@@ -1,9 +1,12 @@
-import type { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, NumberDataType, RoomObjectHSLColorEnableEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent, MouseEventType, NumberDataType, RoomObjectHSLColorEnableEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-s1t§`, the logic `RoomObjectFactory` builds for
+ * `furniture_background_color`.
+ */
 export class FurnitureRoomBackgroundColorLogic extends FurnitureMultiStateLogic {
     private _roomColorUpdated: boolean = false;
 

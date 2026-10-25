@@ -1,18 +1,19 @@
+// Body filled by hand from the 2026 client's own parser - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-/* FlatControllerAddedParser (§_-94§/§_-vL§) — flatId + FlatControllerData */
+import { FlatControllerParser } from './Data/FlatControllerParser';
+import { IFlatController } from './Data/IFlatController';
+
 export type FlatControllerAddedEventMessageType = {
     roomId: number;
-    userId: number;
-    userName: string;
+    controller: IFlatController;
 };
 
 export class FlatControllerAddedEventMessage implements IIncomingPacket<FlatControllerAddedEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): FlatControllerAddedEventMessageType {
         return {
             roomId: wrapper.readInt(),
-            userId: wrapper.readInt(),
-            userName: wrapper.readString(),
+            controller: FlatControllerParser(wrapper),
         };
     }
 }

@@ -1,7 +1,8 @@
-import type { BLEND_MODES } from 'pixi.js';
+import { BLEND_MODES } from 'pixi.js';
 
 import { LayerData } from './LayerData';
 
+/** Port of Flash `DirectionData`. */
 export class DirectionData {
     public static USE_DEFAULT_DIRECTION: number = -1;
 

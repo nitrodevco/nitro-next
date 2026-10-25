@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetBannedUsersFromRoomComposerType = {
-    roomId: RoomId;
+    roomId: number;
 };
 
 export class GetBannedUsersFromRoomComposer implements IOutgoingPacket<GetBannedUsersFromRoomComposerType> {

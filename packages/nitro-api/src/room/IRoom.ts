@@ -1,34 +1,38 @@
-import type { Container, ImageLike, Point, PointData, Rectangle } from 'pixi.js';
+import { Container, ImageLike, PointData, Rectangle } from 'pixi.js';
 
-import type { IEventDispatcher, INitroEvent } from '../events';
-import type { IPetCustomPart } from '../session';
-import type { IVector3D } from '../utils';
-import type { FurnitureUsagePolicyEnum, RoomGeometryScaleType, RoomThicknessType } from './enum';
-import type { IRoomEventHandler } from './IRoomEventHandler';
-import type { IRoomGeometry } from './IRoomGeometry';
-import type { IRoomObjectManager } from './IRoomObjectManager';
-import type { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
-import type {
+import { IEventDispatcher, INitroEvent } from '../events';
+import { IPetCustomPart } from '../session';
+import { IVector3D } from '../utils';
+import { FurnitureUsagePolicyEnum, RoomGeometryScaleType, RoomThicknessType } from './enum';
+import { IRoomEventHandler } from './IRoomEventHandler';
+import { IRoomGeometry } from './IRoomGeometry';
+import { IRoomObjectManager } from './IRoomObjectManager';
+import { IRoomRenderingCanvas } from './IRoomRenderingCanvas';
+import {
     IObjectData,
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IVariableFxConfigUpdateData,
+    IVariableFxStatusRemoveData,
+    IVariableFxStatusUpdateData,
     RoomObjectCategoryEnum,
     RoomObjectUserType,
     RoomObjectVariableEnum,
 } from './object';
-import type { ILegacyWallGeometry, IRoomAreaSelectionManager } from './utils';
+import { FurnitureLabelData } from './object/data/FurnitureLabelData';
+import { IWiredVisualizationStateEntry, WiredFurnitureHighlightData, WiredFurnitureTransparencyData } from './object/data/WiredFurnitureEffectData';
+import { ILegacyWallGeometry, IRoomAreaSelectionManager, IRoomObjectHighLighter, IStackingHeightMapReader, ITileObjectMap } from './utils';
 
 export interface IRoom {
     dispose(): void;
     getRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): IRoomRenderingCanvas;
     resizeRoomCanvas(width: number, height: number, scale: RoomGeometryScaleType): void;
-    setRoomCanvasScale(scale: number, point?: Point, offsetPoint?: Point, exact?: boolean): void;
-    getRoomCanvasScale(): number;
     applyRoomMap(roomMap: IRoomMapData): void;
     update(time: number, update?: boolean): void;
     getRoomObjectBoundingRectangle(objectId: number, category: RoomObjectCategoryEnum): Rectangle | undefined;
     getRoomInstanceRenderingCanvasOffset(): PointData;
+    /** The stacking height of a tile from the map the UI holds for this room, or -1 before it has one. */
     getTileHeight(x: number, y: number): number;
     setRoomInstanceRenderingCanvasOffset(point: PointData): boolean;
     getRoomObjectManager(category: RoomObjectCategoryEnum): IRoomObjectManager | undefined;
@@ -67,6 +71,11 @@ export interface IRoom {
         realRoomObject?: boolean,
         sizeZ?: number,
     ): boolean;
+    /**
+     * Builds furniture waiting in the room's queues until `startTime` is `budgetMs` old (checked
+     * every four pieces), floor items first; true when the budget ran out.
+     */
+    createPendingFurniture(startTime: number, budgetMs: number): boolean;
     addFurnitureFloorByTypeName(
         objectId: number,
         typeName: string,
@@ -112,6 +121,9 @@ export interface IRoom {
         data?: IObjectData,
         extra?: number,
     ): boolean;
+    updateFurnitureColor(objectIds: number[], red: number, green: number, blue: number): void;
+    replaceFurnitureLabelsAndRegions(entries: FurnitureLabelData[]): void;
+    updateFurnitureLabelsAndRegions(addedOrUpdated: FurnitureLabelData[], removedIds: number[]): void;
     updateRoomObjectWall(
         objectId: number,
         location: IVector3D | undefined,
@@ -135,14 +147,19 @@ export interface IRoom {
     updateRoomObjectFloorHeight(objectId: number, height: number): boolean;
     updateRoomObjectMask(objectId: number, add?: boolean): boolean;
     updateRoomObjectState(objectId: number, category: RoomObjectCategoryEnum): boolean;
+    updateRoomObjectRoomColor(color: number, light: number, backgroundOnly: boolean): boolean;
+    updateAreaHide(furniId: number, on: boolean, rootX: number, rootY: number, width: number, length: number, invert: boolean): boolean;
+    addFloorHole(objectId: number): void;
+    removeFloorHole(objectId: number): void;
     updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean;
     updateRoomPlaneVisibilities(wallVisible: boolean, floorVisible?: boolean): boolean;
     updateRoomPlaneThickness(wallThickness: RoomThicknessType, floorThickness: RoomThicknessType): boolean;
     updateRoomObjectFloorExpiration(objectId: number, expires: number): boolean;
     updateRoomObjectWallExpiration(objectId: number, expires: number): boolean;
-    updateRoomObjectUser(objectId: number, location: IVector3D, target?: IVector3D | undefined, canStandUp?: boolean, baseY?: number, direction?: IVector3D | undefined, headDirection?: number, animationTime?: number, skipPositionUpdate?: boolean, jumpingPower?: number): boolean;
+    updateRoomObjectUser(objectId: number, location: IVector3D, target?: IVector3D, canStandUp?: boolean, baseY?: number, direction?: IVector3D, headDirection?: number, animationTime?: number, skipPositionUpdate?: boolean, jumpingPower?: number): boolean;
     updateRoomObjectUserDirection(objectId: number, direction: IVector3D, headDirection: number): boolean;
     updateRoomObjectUserOwn(objectId: number): boolean;
+    updateRoomObjectUserBlocked(objectId: number, isBlocked: boolean): boolean;
     updateRoomObjectUserAction(objectId: number, action: RoomObjectVariableEnum, value: number, parameter?: string): boolean;
     updateRoomObjectUserFigure(objectId: number, figure: string, gender?: string, subType?: string, isRiding?: boolean): boolean;
     updateRoomObjectUserFlatControl(objectId: number, level: string): boolean;
@@ -150,18 +167,39 @@ export interface IRoom {
     updateRoomObjectUserGesture(objectId: number, gestureId: number): boolean;
     updateRoomObjectUserPetGesture(objectId: number, gesture: string): boolean;
     updateRoomObjectUserPosture(objectId: number, type: string, parameter?: string): boolean;
-    removeRoomObjectFloor(objectId: number, isOwner?: boolean): void;
-    removeRoomObjectWall(objectId: number, isOwner?: boolean): void;
+    removeRoomObjectFloor(objectId: number, byInvisibleFurniManager?: boolean): void;
+    removeRoomObjectWall(objectId: number): void;
     removeRoomObjectUser(objectId: number): void;
     getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined;
     getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined>;
     getRoomObjectPetImage(typeId: number, paletteId: number, color: number, direction: IVector3D, scale: RoomGeometryScaleType, headOnly?: boolean, customParts?: IPetCustomPart[], posture?: string): Promise<ImageLike | undefined>;
     setRoomOverlayIconSprite(id: number, category: RoomObjectCategoryEnum, realRoomObject: boolean, extra?: string, posture?: string): Promise<void>;
-    setRoomOverlayIconSpriteVisibility(flag: boolean): void
+    setRoomOverlayIconSpriteVisibility(flag: boolean): void;
     removeRoomOverlayIconSprite(): void;
     setLegacyGeometry(geometry: ILegacyWallGeometry): void;
+    /** Lends the room a live view of the stacking height map, which the UI owns and keeps up to date. */
+    setStackingHeightMap(map: IStackingHeightMapReader | undefined): void;
+    /** A new stacking height map of this size: the tile object map starts over, empty. */
+    resetTileObjectMap(width: number, height: number): void;
+    /** Rebuilds the tile object map from the floor objects, after the height map or the furni changed. */
+    refreshTileObjectMap(): void;
+    /** The topmost floor object on each tile, or undefined before a stacking height map arrived. */
+    readonly tileObjectMap: ITileObjectMap | undefined;
     getRoomValue<T>(key: RoomObjectVariableEnum): T;
     setRoomValue<T>(key: RoomObjectVariableEnum, value: T): void;
+    /** A room value that is set and above zero - the wired configuration item flags. */
+    isRoomVariableActive(key: RoomObjectVariableEnum): boolean;
+    /** Hides (or shows again) the furni layers tagged `invisible`, for furni already here and placed later. */
+    setInvisibleFurni(flag: boolean): void;
+    /**
+     * Flash `RoomEngine.setClickSettings`: makes the room's users and/or furni click-through, so a
+     * click lands on whatever is behind them. Settings are kept per `key` (`'wired_env'` for the
+     * room's wired click settings, `'object_handler'` while a furni is moved or placed) and a
+     * category is click-through while any key asks for it; `false, false` clears the key.
+     */
+    setClickSettings(key: string, clickThroughUsers: boolean, clickThroughFurni: boolean): void;
+    /** Flash `RoomEngine.setMoveBlocked`: a tile click does not walk while the area selection is dragging. */
+    setMoveBlocked(flag: boolean): void;
     getGeometry(): IRoomGeometry | undefined;
     getRoomObjectRoom(): IRoomObjectController | undefined;
     getRoomObjectCursor(): IRoomObjectController | undefined;
@@ -169,6 +207,19 @@ export interface IRoom {
     getRoomOverlay(): Container | undefined;
     getRoomOverlayIconSprite(): Container | undefined;
     getPetTypeId(figure: string): number;
+    /** Registers/replaces Variable FX configs for this room (logic visibility rules + visualization renderer settings). */
+    updateVariableFxConfigs(configs: IVariableFxConfigUpdateData[]): void;
+    removeVariableFxConfigs(configIds: number[]): void;
+    /** Applies Variable FX statuses to the user/furniture objects they target. */
+    updateVariableFxStatuses(statuses: IVariableFxStatusUpdateData[]): void;
+    removeVariableFxStatuses(statuses: IVariableFxStatusRemoveData[]): void;
+    /** WIRED Set Visibility / Set Highlight on furni (a negative id is a wall item) and on users, pets and bots (room index). */
+    updateWiredFurniTransparency(furniIds: number[], transparency: number, allowClickThrough: boolean, easingMode: number): void;
+    updateWiredFurniHighlight(furniIds: number[], highlightType: number, strength: number, color: number, animationMode: number, easingMode: number): void;
+    initializeWiredFurniVisualizationStates(transparencies: IWiredVisualizationStateEntry<WiredFurnitureTransparencyData>[], highlights: IWiredVisualizationStateEntry<WiredFurnitureHighlightData>[]): void;
+    updateWiredUserTransparency(roomIndices: number[], transparency: number, allowClickThrough: boolean, easingMode: number): void;
+    updateWiredUserHighlight(roomIndices: number[], highlightType: number, strength: number, color: number, animationMode: number, easingMode: number): void;
+    initializeWiredUserVisualizationStates(transparencies: IWiredVisualizationStateEntry<WiredFurnitureTransparencyData>[], highlights: IWiredVisualizationStateEntry<WiredFurnitureHighlightData>[]): void;
     dispatchEvent(event: INitroEvent): void;
     readonly disposed: boolean;
     readonly roomId: number;
@@ -178,6 +229,10 @@ export interface IRoom {
     readonly objects: Map<number, IRoomObject>;
     readonly managers: Map<RoomObjectCategoryEnum, IRoomObjectManager>;
     readonly areaSelection: IRoomAreaSelectionManager;
+    readonly objectHighLighter: IRoomObjectHighLighter;
+    readonly clickThroughUsers: boolean;
+    readonly clickThroughFurni: boolean;
+    readonly isMoveBlocked: boolean;
     readonly isAreaSelectionMode: boolean;
     readonly legacyGeometry: ILegacyWallGeometry | undefined;
     readonly isInitialized: boolean;

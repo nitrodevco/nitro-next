@@ -1,44 +1,66 @@
-import { RemoveFriendComposer } from "@nitrodevco/nitro-packets";
+import { removeFriends as removeFriendsCommand } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useFriendsActions, useFriendsStore } from '#base/context/friend';
+import { useIsWindowVisible, useWindowActions } from '#base/context/system';
+import { useFriends } from '#base/context/user';
+import { TemplateWindow, useTemplateFrame } from '#base/theme';
 
-import { useFriendsActions, useFriendsSelector, useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from "#base/context";
-import { Border, Button, Frame } from "#base/theme";
+import { friendListAlertPosition } from './friendListAlertPosition';
 
-export const FriendListRemoveConfirmationView = () => {
-    const isVisible = useIsWindowVisible('friendlist_remove_confirmation');
-    const { toggleWindow } = useSystemActions();
-    const { selectedFriendIds } = useFriendsSelectors();
+/** The alert's frame (`friend_remove_confirm`'s 160x200). */
+const ALERT_WIDTH = 160;
+const ALERT_HEIGHT = 200;
+
+const TEMPLATE = 'habbo-friend-list-com/friend_remove_confirm_xml';
+
+/**
+ * `FriendRemoveView` - the `friend_remove_confirm` alert (`AlertView`): `remove_info` names the
+ * selected friends (`Util.arrayToString`, registered as `user_names`), `ok` removes them and
+ * `cancel` or the close button drops the alert.
+ */
+const FriendListRemoveConfirmation = () => {
+    const { toggleWindow } = useWindowActions();
+    const selectedFriendIds = useFriendsStore(x => x.selectedFriendIds);
     const { setSelectedFriendIds } = useFriendsActions();
     const { send } = useWebSocketContext();
+    const friends = useFriends();
 
-    const t = useTranslation();
-
-    const friends = useFriendsSelector();
+    const close = () => toggleWindow('friendlist_remove_confirmation');
+    const windowRect = useFriendsStore(x => x.windowRect);
+    const frame = useTemplateFrame({ id: 'friendlist-remove-confirmation', defaultPosition: friendListAlertPosition(windowRect, ALERT_WIDTH, ALERT_HEIGHT), rememberPosition: false, onClose: close });
 
     const usernames = Object.values(friends)
         .filter(friend => selectedFriendIds.includes(friend.playerId))
         .map(friend => friend.name)
-        .join(', ')
+        .join(', ');
 
+    /** `onRemove`: one `RemoveFriendMessageComposer` for every selected friend. */
     const removeFriends = () => {
-        if (selectedFriendIds.length < 1) return;
+        if (selectedFriendIds.length > 0) {
+            removeFriendsCommand(send, selectedFriendIds);
+            setSelectedFriendIds([]);
+        }
 
-        send(new RemoveFriendComposer({ playerIds: selectedFriendIds }));
+        close();
+    };
 
-        setSelectedFriendIds([]);
-        toggleWindow('friendlist_remove_confirmation');
-    }
+    return (
+        <TemplateWindow
+            id={TEMPLATE}
+            frame={frame}
+            parameters={{ 'friendlist.removefriendconfirm.userlist': { user_names: usernames } }}
+            bindings={{
+                cancel: { onPointerTap: close },
+                ok: { onPointerTap: removeFriends },
+            }}
+        />
+    );
+};
+
+export const FriendListRemoveConfirmationView = () => {
+    const isVisible = useIsWindowVisible('friendlist_remove_confirmation');
 
     if (!isVisible) return null;
 
-    return (
-        <Frame variant="0" id="friendlist-room-invite" className="w-52.75 h-43.75" caption={t('friendlist.removefriendconfirm.title')} onClose={() => toggleWindow('friendlist_remove_confirmation')}>
-            <Border className="h-29 px-2.25 py-1 overflow-hidden">
-                <div className="text-[0.7rem] mb-0.5 leading-3.5">{t('friendlist.removefriendconfirm.userlist', '', { 'user_names': usernames })}</div>
-            </Border>
-            <div className="flex justify-between items-center mt-0.75">
-                <Button className="h-5.5" onClick={removeFriends}>{t('generic.ok')}</Button>
-                <Button className="h-5.5" onClick={() => toggleWindow('friendlist_remove_confirmation')}>{t('generic.cancel')}</Button>
-            </div>
-        </Frame>
-    );
-}
+    return <FriendListRemoveConfirmation />;
+};

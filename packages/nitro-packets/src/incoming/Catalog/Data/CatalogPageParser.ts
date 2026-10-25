@@ -1,11 +1,11 @@
-import { CatalogTypeEnum, ICatalogPage, IMessageDataWrapper, ParseArray } from "@nitrodevco/nitro-api";
+import { CatalogTypeEnum, ICatalogPage, IMessageDataWrapper, ParseArray } from '@nitrodevco/nitro-api';
 
-import { CatalogFrontPageItemParser } from "./CatalogFrontPageItemParser";
-import { CatalogOfferParser } from "./CatalogOfferParser";
-import { CatalogPageLocalizationParser } from "./CatalogPageLocalizationParser";
+import { CatalogFrontPageItemParser } from './CatalogFrontPageItemParser';
+import { CatalogOfferParser } from './CatalogOfferParser';
+import { CatalogPageLocalizationParser } from './CatalogPageLocalizationParser';
 
 export const CatalogPageParser = (wrapper: IMessageDataWrapper): ICatalogPage => {
-    return {
+    const result = {
         pageId: wrapper.readInt(),
         catalogType: wrapper.readString() as CatalogTypeEnum,
         layout: wrapper.readString(),
@@ -13,6 +13,10 @@ export const CatalogPageParser = (wrapper: IMessageDataWrapper): ICatalogPage =>
         offers: ParseArray(wrapper, CatalogOfferParser),
         offerId: wrapper.readInt(),
         acceptSeasonCurrencyAsCredits: wrapper.readBoolean(),
-        frontPageItems: ParseArray(wrapper, CatalogFrontPageItemParser)
-    }
-}
+        frontPageItems: [],
+    } as ICatalogPage;
+
+    if (wrapper.bytesAvailable) result.frontPageItems = ParseArray(wrapper, CatalogFrontPageItemParser);
+
+    return result;
+};

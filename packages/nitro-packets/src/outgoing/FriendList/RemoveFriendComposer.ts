@@ -10,7 +10,7 @@ export class RemoveFriendComposer implements IOutgoingPacket<RemoveFriendCompose
     public compose(): (number | string | boolean)[] {
         return [
             this.params.playerIds.length,
-            ...this.params.playerIds
+            ...this.params.playerIds,
         ];
     }
 }

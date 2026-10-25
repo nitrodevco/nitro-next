@@ -1,0 +1,1100 @@
+{
+    "bases": [
+        {
+            "id": 1,
+            "fileName": "base_advanced_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 2,
+            "fileName": "base_advanced_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 3,
+            "fileName": "base_advanced_3",
+            "maskFileName": ""
+        },
+        {
+            "id": 4,
+            "fileName": "base_advanced_4",
+            "maskFileName": ""
+        },
+        {
+            "id": 5,
+            "fileName": "base_basic_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 6,
+            "fileName": "base_basic_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 7,
+            "fileName": "base_basic_3",
+            "maskFileName": ""
+        },
+        {
+            "id": 8,
+            "fileName": "base_basic_4",
+            "maskFileName": ""
+        },
+        {
+            "id": 9,
+            "fileName": "base_basic_5",
+            "maskFileName": ""
+        },
+        {
+            "id": 10,
+            "fileName": "base_beams_part1",
+            "maskFileName": "base_beams_part2"
+        },
+        {
+            "id": 11,
+            "fileName": "base_book",
+            "maskFileName": ""
+        },
+        {
+            "id": 12,
+            "fileName": "base_circles_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 13,
+            "fileName": "base_circles_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 14,
+            "fileName": "base_egg",
+            "maskFileName": ""
+        },
+        {
+            "id": 15,
+            "fileName": "base_gold_1_part1",
+            "maskFileName": "base_gold_1_part2"
+        },
+        {
+            "id": 16,
+            "fileName": "base_gold_2_part1",
+            "maskFileName": "base_gold_2_part2"
+        },
+        {
+            "id": 17,
+            "fileName": "base_gradient_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 18,
+            "fileName": "base_gradient_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 19,
+            "fileName": "base_misc_1_part1",
+            "maskFileName": "base_misc_1_part2"
+        },
+        {
+            "id": 20,
+            "fileName": "base_misc_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 21,
+            "fileName": "base_ornament",
+            "maskFileName": ""
+        },
+        {
+            "id": 22,
+            "fileName": "base_ornament_1_part1",
+            "maskFileName": "base_ornament_1_part2"
+        },
+        {
+            "id": 23,
+            "fileName": "base_ornament_2_part1",
+            "maskFileName": "base_ornament_2_part2"
+        },
+        {
+            "id": 24,
+            "fileName": "base_pin_part1",
+            "maskFileName": "base_pin_part2"
+        },
+        {
+            "id": 25,
+            "fileName": "base_ring",
+            "maskFileName": ""
+        },
+        {
+            "id": 26,
+            "fileName": "base_shield_part1",
+            "maskFileName": "base_shield_part2"
+        },
+        {
+            "id": 27,
+            "fileName": "base_simplestar_part1",
+            "maskFileName": "base_simplestar_part2"
+        },
+        {
+            "id": 28,
+            "fileName": "base_spiral",
+            "maskFileName": ""
+        },
+        {
+            "id": 29,
+            "fileName": "base_transparent",
+            "maskFileName": ""
+        }
+    ],
+    "symbols": [
+        {
+            "id": 1,
+            "fileName": "symbol_0",
+            "maskFileName": ""
+        },
+        {
+            "id": 2,
+            "fileName": "symbol_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 3,
+            "fileName": "symbol_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 4,
+            "fileName": "symbol_3",
+            "maskFileName": ""
+        },
+        {
+            "id": 5,
+            "fileName": "symbol_4",
+            "maskFileName": ""
+        },
+        {
+            "id": 6,
+            "fileName": "symbol_5",
+            "maskFileName": ""
+        },
+        {
+            "id": 7,
+            "fileName": "symbol_6",
+            "maskFileName": ""
+        },
+        {
+            "id": 8,
+            "fileName": "symbol_7",
+            "maskFileName": ""
+        },
+        {
+            "id": 9,
+            "fileName": "symbol_8",
+            "maskFileName": ""
+        },
+        {
+            "id": 10,
+            "fileName": "symbol_9",
+            "maskFileName": ""
+        },
+        {
+            "id": 11,
+            "fileName": "symbol_a",
+            "maskFileName": ""
+        },
+        {
+            "id": 12,
+            "fileName": "symbol_alligator",
+            "maskFileName": ""
+        },
+        {
+            "id": 13,
+            "fileName": "symbol_americanfootball_part1",
+            "maskFileName": "symbol_americanfootball_part2"
+        },
+        {
+            "id": 14,
+            "fileName": "symbol_arrow_down",
+            "maskFileName": ""
+        },
+        {
+            "id": 15,
+            "fileName": "symbol_arrow_left",
+            "maskFileName": ""
+        },
+        {
+            "id": 16,
+            "fileName": "symbol_arrow_right",
+            "maskFileName": ""
+        },
+        {
+            "id": 17,
+            "fileName": "symbol_arrow_up",
+            "maskFileName": ""
+        },
+        {
+            "id": 18,
+            "fileName": "symbol_arrowbig_up",
+            "maskFileName": ""
+        },
+        {
+            "id": 19,
+            "fileName": "symbol_award_part1",
+            "maskFileName": "symbol_award_part2"
+        },
+        {
+            "id": 20,
+            "fileName": "symbol_axe_part1",
+            "maskFileName": "symbol_axe_part2"
+        },
+        {
+            "id": 21,
+            "fileName": "symbol_b",
+            "maskFileName": ""
+        },
+        {
+            "id": 22,
+            "fileName": "symbol_background_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 23,
+            "fileName": "symbol_background_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 24,
+            "fileName": "symbol_background_3_part1",
+            "maskFileName": "symbol_background_3_part2"
+        },
+        {
+            "id": 25,
+            "fileName": "symbol_ball_1_part1",
+            "maskFileName": "symbol_ball_1_part2"
+        },
+        {
+            "id": 26,
+            "fileName": "symbol_ball_2_part1",
+            "maskFileName": "symbol_ball_2_part2"
+        },
+        {
+            "id": 27,
+            "fileName": "symbol_bananapeel",
+            "maskFileName": ""
+        },
+        {
+            "id": 28,
+            "fileName": "symbol_battleball",
+            "maskFileName": ""
+        },
+        {
+            "id": 29,
+            "fileName": "symbol_biohazard",
+            "maskFileName": ""
+        },
+        {
+            "id": 30,
+            "fileName": "symbol_bird",
+            "maskFileName": ""
+        },
+        {
+            "id": 31,
+            "fileName": "symbol_bishop",
+            "maskFileName": ""
+        },
+        {
+            "id": 32,
+            "fileName": "symbol_bobba",
+            "maskFileName": ""
+        },
+        {
+            "id": 33,
+            "fileName": "symbol_bomb_part1",
+            "maskFileName": "symbol_bomb_part2"
+        },
+        {
+            "id": 34,
+            "fileName": "symbol_bow",
+            "maskFileName": ""
+        },
+        {
+            "id": 35,
+            "fileName": "symbol_box_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 36,
+            "fileName": "symbol_box_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 37,
+            "fileName": "symbol_bug_part1",
+            "maskFileName": "symbol_bug_part2"
+        },
+        {
+            "id": 38,
+            "fileName": "symbol_bunting_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 39,
+            "fileName": "symbol_bunting_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 40,
+            "fileName": "symbol_butterfly_part1",
+            "maskFileName": "symbol_butterfly_part2"
+        },
+        {
+            "id": 41,
+            "fileName": "symbol_c",
+            "maskFileName": ""
+        },
+        {
+            "id": 42,
+            "fileName": "symbol_capsbig_part1",
+            "maskFileName": "symbol_capsbig_part2"
+        },
+        {
+            "id": 43,
+            "fileName": "symbol_capssmall_part1",
+            "maskFileName": "symbol_capssmall_part2"
+        },
+        {
+            "id": 44,
+            "fileName": "symbol_cloud",
+            "maskFileName": ""
+        },
+        {
+            "id": 45,
+            "fileName": "symbol_coalion",
+            "maskFileName": ""
+        },
+        {
+            "id": 46,
+            "fileName": "symbol_cocoamug",
+            "maskFileName": ""
+        },
+        {
+            "id": 47,
+            "fileName": "symbol_cowskull_part1",
+            "maskFileName": "symbol_cowskull_part2"
+        },
+        {
+            "id": 48,
+            "fileName": "symbol_credit_part1",
+            "maskFileName": "symbol_credit_part2"
+        },
+        {
+            "id": 49,
+            "fileName": "symbol_cross",
+            "maskFileName": ""
+        },
+        {
+            "id": 50,
+            "fileName": "symbol_crown_part1",
+            "maskFileName": "symbol_crown_part2"
+        },
+        {
+            "id": 51,
+            "fileName": "symbol_d",
+            "maskFileName": ""
+        },
+        {
+            "id": 52,
+            "fileName": "symbol_dashflag",
+            "maskFileName": ""
+        },
+        {
+            "id": 53,
+            "fileName": "symbol_diamond",
+            "maskFileName": ""
+        },
+        {
+            "id": 54,
+            "fileName": "symbol_diamondring_part1",
+            "maskFileName": "symbol_diamondring_part2"
+        },
+        {
+            "id": 55,
+            "fileName": "symbol_diamsmall",
+            "maskFileName": ""
+        },
+        {
+            "id": 56,
+            "fileName": "symbol_diamsmall2",
+            "maskFileName": ""
+        },
+        {
+            "id": 57,
+            "fileName": "symbol_diploma_part1",
+            "maskFileName": "symbol_diploma_part2"
+        },
+        {
+            "id": 58,
+            "fileName": "symbol_discoball_part1",
+            "maskFileName": "symbol_discoball_part2"
+        },
+        {
+            "id": 59,
+            "fileName": "symbol_dog",
+            "maskFileName": ""
+        },
+        {
+            "id": 60,
+            "fileName": "symbol_drop",
+            "maskFileName": ""
+        },
+        {
+            "id": 61,
+            "fileName": "symbol_e",
+            "maskFileName": ""
+        },
+        {
+            "id": 62,
+            "fileName": "symbol_electricguitarh_part1",
+            "maskFileName": "symbol_electricguitarh_part2"
+        },
+        {
+            "id": 63,
+            "fileName": "symbol_electricguitarv_part1",
+            "maskFileName": "symbol_electricguitarv_part2"
+        },
+        {
+            "id": 64,
+            "fileName": "symbol_eyeball_part1",
+            "maskFileName": "symbol_eyeball_part2"
+        },
+        {
+            "id": 65,
+            "fileName": "symbol_f",
+            "maskFileName": ""
+        },
+        {
+            "id": 66,
+            "fileName": "symbol_film",
+            "maskFileName": ""
+        },
+        {
+            "id": 67,
+            "fileName": "symbol_fingersheavy",
+            "maskFileName": ""
+        },
+        {
+            "id": 68,
+            "fileName": "symbol_fingersv",
+            "maskFileName": ""
+        },
+        {
+            "id": 69,
+            "fileName": "symbol_fist",
+            "maskFileName": ""
+        },
+        {
+            "id": 70,
+            "fileName": "symbol_flame_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 71,
+            "fileName": "symbol_flame_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 72,
+            "fileName": "symbol_flame_part1",
+            "maskFileName": "symbol_flame_part2"
+        },
+        {
+            "id": 73,
+            "fileName": "symbol_flash",
+            "maskFileName": ""
+        },
+        {
+            "id": 74,
+            "fileName": "symbol_flower_1_part1",
+            "maskFileName": "symbol_flower_1_part2"
+        },
+        {
+            "id": 75,
+            "fileName": "symbol_flower_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 76,
+            "fileName": "symbol_flower_3",
+            "maskFileName": ""
+        },
+        {
+            "id": 77,
+            "fileName": "symbol_flower_4",
+            "maskFileName": ""
+        },
+        {
+            "id": 78,
+            "fileName": "symbol_football",
+            "maskFileName": ""
+        },
+        {
+            "id": 79,
+            "fileName": "symbol_g",
+            "maskFileName": ""
+        },
+        {
+            "id": 80,
+            "fileName": "symbol_gamepad",
+            "maskFileName": ""
+        },
+        {
+            "id": 81,
+            "fileName": "symbol_gem1_part1",
+            "maskFileName": "symbol_gem1_part2"
+        },
+        {
+            "id": 82,
+            "fileName": "symbol_gem2_part1",
+            "maskFileName": "symbol_gem2_part2"
+        },
+        {
+            "id": 83,
+            "fileName": "symbol_gem3_part1",
+            "maskFileName": "symbol_gem3_part2"
+        },
+        {
+            "id": 84,
+            "fileName": "symbol_gtr_part1",
+            "maskFileName": "symbol_gtr_part2"
+        },
+        {
+            "id": 85,
+            "fileName": "symbol_h",
+            "maskFileName": ""
+        },
+        {
+            "id": 86,
+            "fileName": "symbol_hat",
+            "maskFileName": ""
+        },
+        {
+            "id": 87,
+            "fileName": "symbol_hawk",
+            "maskFileName": ""
+        },
+        {
+            "id": 88,
+            "fileName": "symbol_hc_part1",
+            "maskFileName": "symbol_hc_part2"
+        },
+        {
+            "id": 89,
+            "fileName": "symbol_heart_1_part1",
+            "maskFileName": "symbol_heart_1_part2"
+        },
+        {
+            "id": 90,
+            "fileName": "symbol_heart_2_part1",
+            "maskFileName": "symbol_heart_2_part2"
+        },
+        {
+            "id": 91,
+            "fileName": "symbol_hearts_down",
+            "maskFileName": ""
+        },
+        {
+            "id": 92,
+            "fileName": "symbol_hearts_up",
+            "maskFileName": ""
+        },
+        {
+            "id": 93,
+            "fileName": "symbol_horseshoe",
+            "maskFileName": ""
+        },
+        {
+            "id": 94,
+            "fileName": "symbol_i",
+            "maskFileName": ""
+        },
+        {
+            "id": 95,
+            "fileName": "symbol_inksplatter",
+            "maskFileName": ""
+        },
+        {
+            "id": 96,
+            "fileName": "symbol_j",
+            "maskFileName": ""
+        },
+        {
+            "id": 97,
+            "fileName": "symbol_jingjang_part1",
+            "maskFileName": "symbol_jingjang_part2"
+        },
+        {
+            "id": 98,
+            "fileName": "symbol_k",
+            "maskFileName": ""
+        },
+        {
+            "id": 99,
+            "fileName": "symbol_l",
+            "maskFileName": ""
+        },
+        {
+            "id": 100,
+            "fileName": "symbol_leaf",
+            "maskFileName": ""
+        },
+        {
+            "id": 101,
+            "fileName": "symbol_lips_part1",
+            "maskFileName": "symbol_lips_part2"
+        },
+        {
+            "id": 102,
+            "fileName": "symbol_m",
+            "maskFileName": ""
+        },
+        {
+            "id": 103,
+            "fileName": "symbol_micstand",
+            "maskFileName": ""
+        },
+        {
+            "id": 104,
+            "fileName": "symbol_mirror_part1",
+            "maskFileName": "symbol_mirror_part2"
+        },
+        {
+            "id": 105,
+            "fileName": "symbol_monkeywrench",
+            "maskFileName": ""
+        },
+        {
+            "id": 106,
+            "fileName": "symbol_n",
+            "maskFileName": ""
+        },
+        {
+            "id": 107,
+            "fileName": "symbol_note",
+            "maskFileName": ""
+        },
+        {
+            "id": 108,
+            "fileName": "symbol_note1",
+            "maskFileName": ""
+        },
+        {
+            "id": 109,
+            "fileName": "symbol_note2",
+            "maskFileName": ""
+        },
+        {
+            "id": 110,
+            "fileName": "symbol_note3",
+            "maskFileName": ""
+        },
+        {
+            "id": 111,
+            "fileName": "symbol_nursecross",
+            "maskFileName": ""
+        },
+        {
+            "id": 112,
+            "fileName": "symbol_o",
+            "maskFileName": ""
+        },
+        {
+            "id": 113,
+            "fileName": "symbol_omie",
+            "maskFileName": ""
+        },
+        {
+            "id": 114,
+            "fileName": "symbol_oval_part1",
+            "maskFileName": "symbol_oval_part2"
+        },
+        {
+            "id": 115,
+            "fileName": "symbol_p",
+            "maskFileName": ""
+        },
+        {
+            "id": 116,
+            "fileName": "symbol_pawprint",
+            "maskFileName": ""
+        },
+        {
+            "id": 117,
+            "fileName": "symbol_peace",
+            "maskFileName": ""
+        },
+        {
+            "id": 118,
+            "fileName": "symbol_pencil_part1",
+            "maskFileName": "symbol_pencil_part2"
+        },
+        {
+            "id": 119,
+            "fileName": "symbol_pixel_part1",
+            "maskFileName": "symbol_pixel_part2"
+        },
+        {
+            "id": 120,
+            "fileName": "symbol_planet_part1",
+            "maskFileName": "symbol_planet_part2"
+        },
+        {
+            "id": 121,
+            "fileName": "symbol_q",
+            "maskFileName": ""
+        },
+        {
+            "id": 122,
+            "fileName": "symbol_queen",
+            "maskFileName": ""
+        },
+        {
+            "id": 123,
+            "fileName": "symbol_r",
+            "maskFileName": ""
+        },
+        {
+            "id": 124,
+            "fileName": "symbol_rainbow_part1",
+            "maskFileName": "symbol_rainbow_part2"
+        },
+        {
+            "id": 125,
+            "fileName": "symbol_rock",
+            "maskFileName": ""
+        },
+        {
+            "id": 126,
+            "fileName": "symbol_rook",
+            "maskFileName": ""
+        },
+        {
+            "id": 127,
+            "fileName": "symbol_rosete",
+            "maskFileName": ""
+        },
+        {
+            "id": 128,
+            "fileName": "symbol_s",
+            "maskFileName": ""
+        },
+        {
+            "id": 129,
+            "fileName": "symbol_screw",
+            "maskFileName": ""
+        },
+        {
+            "id": 130,
+            "fileName": "symbol_shape",
+            "maskFileName": ""
+        },
+        {
+            "id": 131,
+            "fileName": "symbol_skate",
+            "maskFileName": ""
+        },
+        {
+            "id": 132,
+            "fileName": "symbol_smallring_part1",
+            "maskFileName": "symbol_smallring_part2"
+        },
+        {
+            "id": 133,
+            "fileName": "symbol_snowstorm_part1",
+            "maskFileName": "symbol_snowstorm_part2"
+        },
+        {
+            "id": 134,
+            "fileName": "symbol_sphere",
+            "maskFileName": ""
+        },
+        {
+            "id": 135,
+            "fileName": "symbol_spraycan_part1",
+            "maskFileName": "symbol_spraycan_part2"
+        },
+        {
+            "id": 136,
+            "fileName": "symbol_star_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 137,
+            "fileName": "symbol_star_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 138,
+            "fileName": "symbol_stars1",
+            "maskFileName": ""
+        },
+        {
+            "id": 139,
+            "fileName": "symbol_stars2",
+            "maskFileName": ""
+        },
+        {
+            "id": 140,
+            "fileName": "symbol_stars3",
+            "maskFileName": ""
+        },
+        {
+            "id": 141,
+            "fileName": "symbol_stars4",
+            "maskFileName": ""
+        },
+        {
+            "id": 142,
+            "fileName": "symbol_stars5",
+            "maskFileName": ""
+        },
+        {
+            "id": 143,
+            "fileName": "symbol_stickL_part1",
+            "maskFileName": "symbol_stickL_part2"
+        },
+        {
+            "id": 144,
+            "fileName": "symbol_stickR_part1",
+            "maskFileName": "symbol_stickR_part2"
+        },
+        {
+            "id": 145,
+            "fileName": "symbol_sword_1_part1",
+            "maskFileName": "symbol_sword_1_part2"
+        },
+        {
+            "id": 146,
+            "fileName": "symbol_sword_2_part1",
+            "maskFileName": "symbol_sword_2_part2"
+        },
+        {
+            "id": 147,
+            "fileName": "symbol_sword_3_part1",
+            "maskFileName": "symbol_sword_3_part2"
+        },
+        {
+            "id": 148,
+            "fileName": "symbol_t",
+            "maskFileName": ""
+        },
+        {
+            "id": 149,
+            "fileName": "symbol_u",
+            "maskFileName": ""
+        },
+        {
+            "id": 150,
+            "fileName": "symbol_v",
+            "maskFileName": ""
+        },
+        {
+            "id": 151,
+            "fileName": "symbol_vip_part1",
+            "maskFileName": "symbol_vip_part2"
+        },
+        {
+            "id": 152,
+            "fileName": "symbol_w",
+            "maskFileName": ""
+        },
+        {
+            "id": 153,
+            "fileName": "symbol_waterdrop_part1",
+            "maskFileName": "symbol_waterdrop_part2"
+        },
+        {
+            "id": 154,
+            "fileName": "symbol_wings_1",
+            "maskFileName": ""
+        },
+        {
+            "id": 155,
+            "fileName": "symbol_wings_2",
+            "maskFileName": ""
+        },
+        {
+            "id": 156,
+            "fileName": "symbol_wolverine",
+            "maskFileName": ""
+        },
+        {
+            "id": 157,
+            "fileName": "symbol_x",
+            "maskFileName": ""
+        },
+        {
+            "id": 158,
+            "fileName": "symbol_y",
+            "maskFileName": ""
+        },
+        {
+            "id": 159,
+            "fileName": "symbol_z",
+            "maskFileName": ""
+        }
+    ],
+    "colors": [
+        {
+            "id": 1,
+            "color": "EEEEEE"
+        },
+        {
+            "id": 2,
+            "color": "FFFFFF"
+        },
+        {
+            "id": 3,
+            "color": "BBBBBB"
+        },
+        {
+            "id": 4,
+            "color": "888888"
+        },
+        {
+            "id": 5,
+            "color": "555555"
+        },
+        {
+            "id": 6,
+            "color": "222222"
+        },
+        {
+            "id": 7,
+            "color": "FFF6C8"
+        },
+        {
+            "id": 8,
+            "color": "FFE500"
+        },
+        {
+            "id": 9,
+            "color": "FFB100"
+        },
+        {
+            "id": 10,
+            "color": "FF7B00"
+        },
+        {
+            "id": 11,
+            "color": "FF3300"
+        },
+        {
+            "id": 12,
+            "color": "D30000"
+        },
+        {
+            "id": 13,
+            "color": "9E0000"
+        },
+        {
+            "id": 14,
+            "color": "FFD3E2"
+        },
+        {
+            "id": 15,
+            "color": "FF80B2"
+        },
+        {
+            "id": 16,
+            "color": "FF2D7C"
+        },
+        {
+            "id": 17,
+            "color": "C4006A"
+        },
+        {
+            "id": 18,
+            "color": "8B004B"
+        },
+        {
+            "id": 19,
+            "color": "E3D4FF"
+        },
+        {
+            "id": 20,
+            "color": "B37DFF"
+        },
+        {
+            "id": 21,
+            "color": "8A2BE2"
+        },
+        {
+            "id": 22,
+            "color": "5B00B5"
+        },
+        {
+            "id": 23,
+            "color": "2E0066"
+        },
+        {
+            "id": 24,
+            "color": "CFE7FF"
+        },
+        {
+            "id": 25,
+            "color": "6FB7FF"
+        },
+        {
+            "id": 26,
+            "color": "1B7EE8"
+        },
+        {
+            "id": 27,
+            "color": "0B4FA8"
+        },
+        {
+            "id": 28,
+            "color": "032C66"
+        },
+        {
+            "id": 29,
+            "color": "D3FFE9"
+        },
+        {
+            "id": 30,
+            "color": "6FE3A8"
+        },
+        {
+            "id": 31,
+            "color": "1BB866"
+        },
+        {
+            "id": 32,
+            "color": "0B7A42"
+        },
+        {
+            "id": 33,
+            "color": "024023"
+        },
+        {
+            "id": 34,
+            "color": "FFE9C9"
+        },
+        {
+            "id": 35,
+            "color": "E0B37A"
+        },
+        {
+            "id": 36,
+            "color": "A87438"
+        },
+        {
+            "id": 37,
+            "color": "6B4415"
+        },
+        {
+            "id": 38,
+            "color": "3B2308"
+        }
+    ]
+}

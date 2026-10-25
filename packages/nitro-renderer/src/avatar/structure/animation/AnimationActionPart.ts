@@ -1,7 +1,8 @@
-import type { IAssetAvatarAnimationPart } from '@nitrodevco/nitro-api';
+import { IAssetAvatarAnimationPart } from '@nitrodevco/nitro-api';
 
 import { AvatarAnimationFrame } from './AvatarAnimationFrame';
 
+/** Port of Flash `AnimationActionPart`. */
 export class AnimationActionPart {
     private _frames: AvatarAnimationFrame[];
 

@@ -1,4 +1,4 @@
-﻿import type { IAnimation } from './IAnimation';
+﻿import { IAnimation } from './IAnimation';
 
 export interface ISpriteDataContainer {
     animation: IAnimation;

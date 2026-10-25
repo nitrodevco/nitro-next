@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type ChangeMottoComposerType = {
-    text: string
+    text: string;
 };
 
 export class ChangeMottoComposer implements IOutgoingPacket<ChangeMottoComposerType> {
@@ -9,7 +9,7 @@ export class ChangeMottoComposer implements IOutgoingPacket<ChangeMottoComposerT
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.text
+            this.params.text,
         ];
     }
 }

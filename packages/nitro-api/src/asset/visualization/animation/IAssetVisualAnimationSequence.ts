@@ -1,4 +1,4 @@
-import type { IAssetVisualAnimationSequenceFrame } from './IAssetVisualAnimationSequenceFrame';
+import { IAssetVisualAnimationSequenceFrame } from './IAssetVisualAnimationSequenceFrame';
 
 export interface IAssetVisualAnimationSequence {
     loopCount?: number;

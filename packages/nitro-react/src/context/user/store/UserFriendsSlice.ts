@@ -1,6 +1,14 @@
-import { FriendListUpdateActionType, IFriendRequest, IMessengerCategory, IMessengerFriend, IMessengerUpdate } from "@nitrodevco/nitro-packets";
-import type { StateCreator } from "zustand";
+import { FriendListUpdateActionType, FriendRequestStateType, IFriendRequest, IMessengerCategory, IMessengerFriend, IMessengerSearchResult, IMessengerUpdate } from '@nitrodevco/nitro-packets';
+import { StateCreator } from 'zustand';
 
+import { friendBarAfterFragment, friendBarAfterNotification, friendBarAfterUpdates, FriendBarNotification } from './friendBarOrder';
+
+/**
+ * The friend list as the server sends it - limits, categories, friends and requests - and the
+ * search tab's last results (Flash's `AvatarSearchResults`; which of them were asked to be
+ * friends is `UserSocialSlice.sentFriendRequestIds`, the same record the infostand reads). On the
+ * user store rather than the friend list window's, because the room widgets read it too.
+ */
 type State = {
     userFriendLimit: number;
     normalFriendLimit: number;
@@ -8,7 +16,30 @@ type State = {
     categories: IMessengerCategory[];
     friends: Record<number, IMessengerFriend>;
     requests: Record<number, IFriendRequest>;
-}
+    /** The friend bar's friends - the online ones, in `HabboFriendBarData`'s order (`friendBarOrder`). */
+    friendBarIds: number[];
+    /** Each bar friend's notifications (`IFriendEntity.notifications`), in the order they came. */
+    friendBarNotifications: Record<number, FriendBarNotification[]>;
+    /** `AvatarSearchResults.friends` / `others`: the last `HabboSearchResultMessage`. */
+    searchFriends: IMessengerSearchResult[];
+    searchOthers: IMessengerSearchResult[];
+    /** `SearchView.refreshList` has run: before the first answer the list holds no rows at all. */
+    searchResultsReceived: boolean;
+    /**
+     * `§_-fK§.§_-ku§` set (`friendlist/§_-fK§`, the requests tab): its list has been built once
+     * (`fillList`), after which every tab click lets the answered requests go (`tabClicked`).
+     * Flash never clears it.
+     */
+    friendRequestsListShown: boolean;
+    /**
+     * `FriendListTab.newMessageArrived` of the friends and requests tabs: the tab's header drawn
+     * highlighted (`hdr_hilite`) until the tab is opened. Kept while the window is closed.
+     */
+    friendListTabsHighlighted: FriendListHighlightedTabs;
+};
+
+/** The friend list tabs that can be highlighted, by their window param. */
+export type FriendListHighlightedTabs = { friends: boolean; requests: boolean };
 
 type Actions = {
     setFriendLimits: (userFriendLimit: number, normalFriendLimit: number, extendedFriendLimit: number) => void;
@@ -16,34 +47,62 @@ type Actions = {
     processFriends: (friends: IMessengerFriend[]) => void;
     processFriendUpdates: (updates: IMessengerUpdate[]) => void;
     processFriendRequests: (requests: IFriendRequest[]) => void;
+    /** `HabboFriendList.onFriendRequests`: `clearAndUpdateView(false)`, then every request in the list, open. */
+    replaceFriendRequests: (requests: IFriendRequest[]) => void;
+    /** `FriendRequest.state`: an answered request stays in the list, drawn with its outcome, until the tab is clicked. */
+    setFriendRequestsState: (requesterIds: number[], state: FriendRequestStateType) => void;
+    /** `§_-fK§.tabClicked` -> `clearAndUpdateView(true)`: the answered requests go. */
+    clearAnsweredFriendRequests: () => void;
+    /** `§_-fK§.fillList`: the requests tab has been opened. */
+    markFriendRequestsListShown: () => void;
+    /** `FriendListTab.setNewMessageArrived`, or `setSelected(true)` clearing it. */
+    setFriendListTabHighlighted: (tab: keyof FriendListHighlightedTabs, highlighted: boolean) => void;
+    /** `HabboFriendBarData.makeNotification` for a `FriendNotificationMessage` (see `friendBarAfterNotification`). */
+    addFriendBarNotification: (friendId: number, typeCode: number, message: string) => void;
+    /** `NewFriendEntityTab.deselect`: the shown-once notifications go once the tab closes. */
+    clearViewedFriendBarNotifications: (friendId: number) => void;
+    /** `AvatarSearchResults.searchReceived`. */
+    setSearchResults: (friends: IMessengerSearchResult[], others: IMessengerSearchResult[]) => void;
 };
 
-export const UserFriendsSlice: State = {
+export const UserFriendsSliceInitialState: State = {
     userFriendLimit: 0,
     normalFriendLimit: 0,
     extendedFriendLimit: 0,
     categories: [],
     friends: {},
-    requests: {}
+    requests: {},
+    friendBarIds: [],
+    friendBarNotifications: {},
+    searchFriends: [],
+    searchOthers: [],
+    searchResultsReceived: false,
+    friendRequestsListShown: false,
+    friendListTabsHighlighted: { friends: false, requests: false },
 };
 
 export type UserFriendsSlice = State & Actions;
 
-export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], UserFriendsSlice> = (set, get, store) => ({
-    ...UserFriendsSlice,
+export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], UserFriendsSlice> = set => ({
+    ...UserFriendsSliceInitialState,
     setFriendLimits: (userFriendLimit: number, normalFriendLimit: number, extendedFriendLimit: number) => set({ userFriendLimit, normalFriendLimit, extendedFriendLimit }),
     setFriendCategories: (categories: IMessengerCategory[]) => set({ categories }),
-    processFriends: (friends: IMessengerFriend[]) => set(x => {
+    setFriendListTabHighlighted: (tab: keyof FriendListHighlightedTabs, highlighted: boolean) => set(x => ((x.friendListTabsHighlighted[tab] === highlighted)
+        ? x
+        : { friendListTabsHighlighted: { ...x.friendListTabsHighlighted, [tab]: highlighted } })),
+    setSearchResults: (searchFriends: IMessengerSearchResult[], searchOthers: IMessengerSearchResult[]) => set({ searchFriends, searchOthers, searchResultsReceived: true }),
+    processFriends: (friends: IMessengerFriend[]) => set((x) => {
         const updates = friends.reduce((acc, data) => ({
             ...acc,
-            [data.playerId]: data
+            [data.playerId]: data,
         }), {});
 
         return {
-            friends: { ...x.friends, ...updates }
+            friends: { ...x.friends, ...updates },
+            friendBarIds: friendBarAfterFragment(x.friendBarIds, friends),
         };
     }),
-    processFriendUpdates: (updates: IMessengerUpdate[]) => set(x => {
+    processFriendUpdates: (updates: IMessengerUpdate[]) => set((x) => {
         const friends = { ...x.friends };
 
         for (const update of updates) {
@@ -58,16 +117,50 @@ export const createUserFriendsSlice: StateCreator<UserFriendsSlice, [], [], User
             if (update.friend) friends[update.friendId] = update.friend;
         }
 
-        return { friends };
+        const friendBarIds = friendBarAfterUpdates(x.friendBarIds, updates);
+        // A friend the bar lets go of goes with their notifications: coming back is a new `FriendEntity`.
+        const friendBarNotifications = Object.fromEntries(Object.entries(x.friendBarNotifications).filter(([ id ]) => friendBarIds.includes(Number(id))));
+
+        return { friends, friendBarIds, friendBarNotifications };
     }),
-    processFriendRequests: (requests: IFriendRequest[]) => set(x => {
+    addFriendBarNotification: (friendId: number, typeCode: number, message: string) => set((x) => {
+        const next = friendBarAfterNotification(x.friendBarIds, x.friendBarNotifications[friendId] ?? [], friendId, typeCode, message);
+
+        if (!next) return x;
+
+        return { friendBarIds: next.ids, friendBarNotifications: { ...x.friendBarNotifications, [friendId]: next.notifications } };
+    }),
+    clearViewedFriendBarNotifications: (friendId: number) => set((x) => {
+        const notifications = x.friendBarNotifications[friendId];
+
+        if (!notifications?.some(notification => notification.viewOnce)) return x;
+
+        return { friendBarNotifications: { ...x.friendBarNotifications, [friendId]: notifications.filter(notification => !notification.viewOnce) } };
+    }),
+    processFriendRequests: (requests: IFriendRequest[]) => set((x) => {
         const updates = requests.reduce((acc, data) => ({
             ...acc,
-            [data.playerId]: data
+            [data.playerId]: data,
         }), {});
 
         return {
-            requests: { ...x.requests, ...updates }
+            requests: { ...x.requests, ...updates },
         };
     }),
+    replaceFriendRequests: (requests: IFriendRequest[]) => set({
+        requests: requests.reduce((acc, data) => ({ ...acc, [data.playerId]: data }), {}),
+    }),
+    setFriendRequestsState: (requesterIds: number[], state: FriendRequestStateType) => set((x) => {
+        const requests = { ...x.requests };
+
+        for (const requesterId of requesterIds) {
+            if (requests[requesterId]) requests[requesterId] = { ...requests[requesterId], state };
+        }
+
+        return { requests };
+    }),
+    markFriendRequestsListShown: () => set({ friendRequestsListShown: true }),
+    clearAnsweredFriendRequests: () => set(x => ({
+        requests: Object.fromEntries(Object.entries(x.requests).filter(([ , request ]) => request.state === FriendRequestStateType.Open)),
+    })),
 });

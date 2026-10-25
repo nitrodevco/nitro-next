@@ -1,43 +1,72 @@
-import { SendRoomInviteComposer } from "@nitrodevco/nitro-packets";
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useFriendsSelectors, useIsWindowVisible, useSystemActions, useTranslation, useWebSocketContext } from "#base/context";
-import { Border, Button, Frame } from "#base/theme";
+import { sendRoomInvite } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useFriendsStore } from '#base/context/friend';
+import { useIsWindowVisible, useWindowActions } from '#base/context/system';
+import { TemplateWindow, useTemplateFrame } from '#base/theme';
+
+import { friendListAlertPosition } from './friendListAlertPosition';
+
+/** The alert's frame (`room_invite_confirm`'s 211x175). */
+const ALERT_WIDTH = 211;
+const ALERT_HEIGHT = 175;
+
+const TEMPLATE = 'habbo-friend-list-com/room_invite_confirm_xml';
+
+/** `RoomInviteView.onMessageInput`: the message is cut at 120 characters. */
+const MESSAGE_MAX_LENGTH = 120;
+
+/**
+ * `RoomInviteView` - the `room_invite_confirm` alert (`AlertView`): `invite_summary` counts the
+ * selected friends (registered as `count`), `message_input` takes the message and Enter sends it
+ * (`onMessageInput`'s char 13). `ok` sends it and drops the alert whether or not it went - an empty
+ * message only answers with its alert - and `cancel` or the close button drops it unsent.
+ */
+const FriendListRoomInvite = () => {
+    const { toggleWindow } = useWindowActions();
+    const { send } = useWebSocketContext();
+    const selectedFriendIds = useFriendsStore(x => x.selectedFriendIds);
+    const [ message, setMessage ] = useState('');
+
+    const close = () => toggleWindow('friendlist_invite');
+    const windowRect = useFriendsStore(x => x.windowRect);
+    const frame = useTemplateFrame({ id: 'friendlist-room-invite', defaultPosition: friendListAlertPosition(windowRect, ALERT_WIDTH, ALERT_HEIGHT), rememberPosition: false, onClose: close });
+
+    /** `sendMsg`: the view is disposed once it is sent. */
+    const sendMessage = () => {
+        if (sendRoomInvite(send, selectedFriendIds, message)) close();
+    };
+
+    return (
+        <TemplateWindow
+            id={TEMPLATE}
+            frame={frame}
+            parameters={{ 'friendlist.invite.summary': { count: selectedFriendIds.length.toString() } }}
+            bindings={{
+                message_input: {
+                    caption: message,
+                    maxChars: MESSAGE_MAX_LENGTH,
+                    onChange: setMessage,
+                    onEnter: sendMessage,
+                },
+                cancel: { onPointerTap: close },
+                // `onInvite`: `sendMsg`, then `dispose` either way.
+                ok: {
+                    onPointerTap: () => {
+                        sendRoomInvite(send, selectedFriendIds, message);
+                        close();
+                    },
+                },
+            }}
+        />
+    );
+};
 
 export const FriendListRoomInviteView = () => {
     const isVisible = useIsWindowVisible('friendlist_invite');
-    const { toggleWindow } = useSystemActions();
-    const { send } = useWebSocketContext();
-    const { selectedFriendIds } = useFriendsSelectors();
-
-    const [message, setMessage] = useState<string>('');
-
-    const t = useTranslation();
-
-    const sendRoomInvite = () => {
-        if (selectedFriendIds.length < 1 || !message?.length || message.length > 255) return;
-
-        send(new SendRoomInviteComposer({
-            message,
-            playerIds: selectedFriendIds
-        }));
-
-        toggleWindow('friendlist_invite');
-    }
 
     if (!isVisible) return null;
 
-    return (
-        <Frame variant="0" id="friendlist-room-invite" className="w-52.75 h-43.75" caption={t('friendlist.invite.title')} onClose={() => toggleWindow('friendlist_invite')}>
-            <Border className="h-29 px-2.25 py-1">
-                <div className="block overflow-hidden whitespace-nowrap text-[0.7rem] mb-0.5">{t('friendlist.invite.summary', '', { 'count': selectedFriendIds.length.toString() })}</div>
-                <textarea value={message} name="room_invite_text" className="block border p-0.5 border-black text-[0.57rem] w-full font-goldfish resize-none h-17.5 scrollbar-none [&::-webkit-scrollbar]:hidden" onChange={e => setMessage(e.target.value)} />
-                <div className="block mt-px overflow-hidden whitespace-nowrap text-[0.7rem]">{t('friendlist.invite.note')}</div>
-            </Border>
-            <div className="flex justify-between items-center mt-0.75">
-                <Button className="h-5.5" onClick={sendRoomInvite}>{t('friendlist.invite.send')}</Button>
-                <Button className="h-5.5" onClick={() => toggleWindow('friendlist_invite')}>{t('generic.cancel')}</Button>
-            </div>
-        </Frame>
-    );
-}
+    return <FriendListRoomInvite />;
+};

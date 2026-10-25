@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type GetFlatControllersComposerType = {
-    roomId: RoomId;
+    roomId: number;
 };
 
 export class GetFlatControllersComposer implements IOutgoingPacket<GetFlatControllersComposerType> {

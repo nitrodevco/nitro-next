@@ -1,8 +1,8 @@
-import type { IAdvancedMap, IRoomObjectController, IRoomObjectManager } from '@nitrodevco/nitro-api';
-import { AdvancedMap } from '@nitrodevco/nitro-api';
+import { AdvancedMap, IAdvancedMap, IRoomObjectController, IRoomObjectManager } from '@nitrodevco/nitro-api';
 
 import { RoomObject } from './RoomObject';
 
+/** Port of Flash `RoomObjectManager`. */
 export class RoomObjectManager implements IRoomObjectManager {
     private _objects: IAdvancedMap<number, IRoomObjectController> = new AdvancedMap();
     private _objectsPerType: IAdvancedMap<string, IAdvancedMap<number, IRoomObjectController>> = new AdvancedMap();

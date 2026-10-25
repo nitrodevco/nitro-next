@@ -1,8 +1,9 @@
-import type { AvatarVisualization } from '../AvatarVisualization';
+import { AvatarVisualization } from '../AvatarVisualization';
 import { ExpressionAddition } from './ExpressionAddition';
 import { FloatingHeartAddition } from './FloatingHeartAddition';
-import type { IExpressionAddition } from './IExpressionAddition';
+import { IExpressionAddition } from './IExpressionAddition';
 
+/** Port of Flash's obfuscated `§_-B2y§`: `make` builds the addition an avatar expression draws. */
 export class ExpressionAdditionFactory {
     public static WAVE: number = 1;
     public static BLOW: number = 2;

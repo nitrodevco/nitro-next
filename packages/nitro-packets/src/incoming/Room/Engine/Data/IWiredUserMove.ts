@@ -1,4 +1,4 @@
-import { SlideAvatarMoveType } from "@nitrodevco/nitro-api";
+import { SlideAvatarMoveType } from '@nitrodevco/nitro-api';
 
 export interface IWiredUserMove {
     sourceX: number;
@@ -12,5 +12,6 @@ export interface IWiredUserMove {
     animationTime: number;
     bodyRotation: number;
     headRotation: number;
+    /** `NaN` unless the move is a jump. */
     jumpPower: number;
 }

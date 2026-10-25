@@ -9,7 +9,7 @@ export class ChangePostureComposer implements IOutgoingPacket<ChangePostureCompo
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.postureType
+            this.params.postureType,
         ];
     }
 }

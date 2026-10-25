@@ -1,8 +1,12 @@
 import { RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash's obfuscated `§_-QC§`, the visualization `RoomObjectVisualizationFactory` builds
+ * for `furniture_badge_display`.
+ */
+export class FurnitureBadgeDisplayVisualization extends AnimatedFurnitureVisualization {
     private static BADGE: string = 'BADGE';
 
     private _badgeId: string = '';
@@ -42,8 +46,8 @@ export class FurnitureBadgeDisplayVisualization extends FurnitureAnimatedVisuali
         const tag = this.getLayerTag(scale, this.direction, layerId);
 
         if (
-            tag !== FurnitureBadgeDisplayVisualization.BADGE ||
-            (this._badgeVisibleInState !== -1 && this.object.getState(0) !== this._badgeVisibleInState)
+            tag !== FurnitureBadgeDisplayVisualization.BADGE
+            || (this._badgeVisibleInState !== -1 && this.object.getState(0) !== this._badgeVisibleInState)
         )
             return super.getSpriteAssetName(scale, layerId);
 

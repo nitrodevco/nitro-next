@@ -1,4 +1,4 @@
-import { AvatarGenderType } from "@nitrodevco/nitro-api";
+import { AvatarGenderType } from '@nitrodevco/nitro-api';
 
 export interface IMessengerSearchResult {
     readonly playerId: number;

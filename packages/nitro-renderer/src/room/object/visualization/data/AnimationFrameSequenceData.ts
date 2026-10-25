@@ -1,7 +1,8 @@
 import { AnimationFrameData } from './AnimationFrameData';
 import { AnimationFrameDirectionalData } from './AnimationFrameDirectionalData';
-import type { DirectionalOffsetData } from './DirectionalOffsetData';
+import { DirectionalOffsetData } from './DirectionalOffsetData';
 
+/** Port of Flash `AnimationFrameSequenceData`. */
 export class AnimationFrameSequenceData {
     private _frames: AnimationFrameData[];
     private _frameIndexes: number[];
@@ -62,14 +63,14 @@ export class AnimationFrameSequenceData {
             const frame = this._frames[this._frames.length - 1];
 
             if (
-                frame.id === id &&
-                !frame.hasDirectionalOffsets() &&
-                frame.x === x &&
-                frame.y === y &&
-                frame.randomX === randomX &&
-                randomX === 0 &&
-                frame.randomY === randomY &&
-                randomY === 0
+                frame.id === id
+                && !frame.hasDirectionalOffsets()
+                && frame.x === x
+                && frame.y === y
+                && frame.randomX === randomX
+                && randomX === 0
+                && frame.randomY === randomY
+                && randomY === 0
             ) {
                 repeats += frame.repeats;
 

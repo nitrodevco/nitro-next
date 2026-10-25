@@ -9,7 +9,7 @@ export class AvatarExpressionComposer implements IOutgoingPacket<AvatarExpressio
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.expressionType
+            this.params.expressionType,
         ];
     }
 }

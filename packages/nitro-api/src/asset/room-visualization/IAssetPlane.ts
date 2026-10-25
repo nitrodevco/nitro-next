@@ -1,4 +1,4 @@
-import type { IAssetPlaneVisualization } from './IAssetPlaneVisualization';
+import { IAssetPlaneVisualization } from './IAssetPlaneVisualization';
 
 export interface IAssetPlane {
     id?: string;

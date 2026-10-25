@@ -1,3 +1,4 @@
+/** Port of Flash `ColorData`. */
 export class ColorData {
     public static DEFAULT_COLOR: number = 0xffffff;
 

@@ -1,10 +1,14 @@
-import type { IAssetLogicPlanetSystem, IVector3D, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import { RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+import { IAssetLogicPlanetSystem, IVector3D, RoomGeometryScaleType, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 import { FurniturePlanetSystemVisualizationPlanetObject } from './FurniturePlanetSystemVisualizationPlanetObject';
 
-export class FurniturePlanetSystemVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash `FurniturePlanetSystemVisualization` (`furniture_planet_system`): an animated furni
+ * whose layers named in the logic's planet system data orbit each other
+ * (`FurniturePlanetSystemVisualizationPlanetObject`), each planet's offset replacing its layer's.
+ */
+export class FurniturePlanetSystemVisualization extends AnimatedFurnitureVisualization {
     private _planetIndex: FurniturePlanetSystemVisualizationPlanetObject[] | undefined = undefined;
     private _planetNameIndex: string[] = [];
     private _offsetArray: IVector3D[] = [];
@@ -18,7 +22,10 @@ export class FurniturePlanetSystemVisualization extends FurnitureAnimatedVisuali
         this._planetIndex = undefined;
         this._planetNameIndex = [];
 
-        super.dispose(); // TODO maybe not?
+        // Flash's `dispose` stops here and never calls `super.dispose()`, so its sprites and its
+        // asset collection's reference outlive the furni. Here that reference is what lets
+        // `RoomContentLoader.purge` release the collection, so the base dispose still runs.
+        super.dispose();
     }
 
     protected override updateAnimation(scale: RoomGeometryScaleType): number {

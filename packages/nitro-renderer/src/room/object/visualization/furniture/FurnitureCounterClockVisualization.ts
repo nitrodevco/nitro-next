@@ -1,8 +1,12 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurnitureCounterClockVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash's obfuscated `§_-414§`, the visualization `RoomObjectVisualizationFactory` builds
+ * for `furniture_counter_clock`.
+ */
+export class FurnitureCounterClockVisualization extends AnimatedFurnitureVisualization {
     private static SECONDS_SPRITE: string = 'seconds_sprite';
     private static TEN_SECONDS_SPRITE: string = 'ten_seconds_sprite';
     private static MINUTES_SPRITE: string = 'minutes_sprite';

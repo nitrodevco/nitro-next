@@ -1,6 +1,7 @@
 import { AnimationFrame } from './AnimationFrame';
 import { AnimationFrameSequenceData } from './AnimationFrameSequenceData';
 
+/** Port of Flash `AnimationLayerData` (the room's, not the avatar's). */
 export class AnimationLayerData {
     private _frameSequences: AnimationFrameSequenceData[] = [];
     private _frameCount: number = -1;

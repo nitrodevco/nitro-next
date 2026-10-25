@@ -9,6 +9,7 @@ export * from './AnimationStateData';
 export * from './ColorData';
 export * from './DirectionalOffsetData';
 export * from './DirectionData';
+export * from './ExtraDataManager';
 export * from './LayerData';
 export * from './ParticleSystemParticle';
 export * from './PetSizeData';

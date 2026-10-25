@@ -1,6 +1,6 @@
-﻿import type { IVector3D } from '#api/utils';
+﻿import { IVector3D } from '#api/utils';
 
-import type { IObjectData, RoomObjectCategoryEnum, RoomObjectOperationType } from '../object';
+import { IObjectData, RoomObjectCategoryEnum, RoomObjectOperationType } from '../object';
 
 export interface ISelectedRoomObjectData {
     objectId: number;

@@ -1,18 +1,15 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type YouAreNotSpectatorMessageType = {
-  roomId: number;
+    roomId: number;
 };
 
-export class YouAreNotSpectatorMessage implements IIncomingPacket<YouAreNotSpectatorMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): YouAreNotSpectatorMessageType
-  {
+export class YouAreNotSpectatorMessage implements IIncomingPacket<YouAreNotSpectatorMessageType> {
+    public parse(wrapper: IMessageDataWrapper): YouAreNotSpectatorMessageType {
+        const packet: YouAreNotSpectatorMessageType = {
+            roomId: wrapper.readInt(),
+        };
 
-    const packet: YouAreNotSpectatorMessageType = {
-      roomId: wrapper.readInt(),
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

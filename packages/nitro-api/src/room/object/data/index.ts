@@ -1,3 +1,4 @@
+export * from './FurnitureLabelData';
 export * from './GetObjectDataForFlags';
 export * from './IObjectData';
 export * from './ObjectDataBase';
@@ -12,3 +13,4 @@ export * from './type/MapDataType';
 export * from './type/NumberDataType';
 export * from './type/StringDataType';
 export * from './type/VoteDataType';
+export * from './WiredFurnitureEffectData';

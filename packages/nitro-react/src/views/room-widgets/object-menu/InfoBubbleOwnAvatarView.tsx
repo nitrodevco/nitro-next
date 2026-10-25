@@ -1,272 +1,231 @@
-import { AvatarActionStateType, AvatarExpressionEnum, ISimpleRoomObjectData, PostureTypeEnum } from "@nitrodevco/nitro-api";
-import { AvatarExpressionComposer, ChangePostureComposer, DanceComposer, DropCarryItemComposer, SignComposer } from "@nitrodevco/nitro-packets";
-import { useState } from "react";
+import { AvatarActionStateType, AvatarExpressionEnum, ClubLevelEnum, ISimpleRoomObjectData, PostureTypeEnum, RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
+import { ReactNode, useState } from 'react';
 
-import { useOwnHasClub, useOwnIsDancing, useRoomCanDecorate, useTranslation, useWebSocketContext } from "#base/context";
-import { useRoomUserData } from "#base/hooks";
-import { Bubble, Button, NitroIcon } from "#base/theme";
+import { changePosture, dropCarryItem, openClientLink, openProfile, setDance, showAvatarExpression, showSign, startNameChange, trackEventLog } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { useIsRoomOwner, useOwnIsDancing, useRoomSessionActions, useRoomStore } from '#base/context/room';
+import { useConfigBoolean, useTranslation, useWindowActions } from '#base/context/system';
+import { useOwnClubLevel, useOwnHasClub, useUserStore } from '#base/context/user';
+import { useWiredShowInspectButton } from '#base/context/wired';
+import { useRoomUserData } from '#base/hooks';
+import { Box, LayoutImage, TemplateBindings, TemplateWindow, ThemeImage } from '#base/theme';
+import { isHandItem } from '#base/utils';
 
-interface InfoBubbleOwnAvatarViewProps {
+import { useButtonMenu, useMinimizedMenu } from './useButtonMenu';
+
+/**
+ * The menu over your own avatar - `OwnAvatarMenuView`, drawn from its
+ * `habbo-room-ui-com/own_avatar_menu` template: looks, decorating, dancing, the expressions and
+ * signs sub-pages, effects and dropping what you carry. `updateButtons` shows each mode's rows of
+ * `buttons`, the sign grid in the signs mode.
+ */
+export interface InfoBubbleOwnAvatarViewProps {
     objectData: ISimpleRoomObjectData;
     onClose: () => void;
 }
 
+/** `OwnAvatarMenuView` modes. */
 const MODE_NORMAL = 0;
 const MODE_CLUB_DANCES = 1;
-const MODE_NAME_CHANGE = 2;
 const MODE_EXPRESSIONS = 3;
 const MODE_SIGNS = 4;
 
-export const InfoBubbleOwnAvatarView = (props: InfoBubbleOwnAvatarViewProps) => {
-    const { objectData, onClose } = props;
-    const { objectId, category } = objectData;
-    const userData = useRoomUserData(objectId);
-    const isOwnDancing = useOwnIsDancing();
-    const hasHabboClub = useOwnHasClub();
-    const canDecorate = useRoomCanDecorate();
-    const [mode, setMode] = useState<number>((isOwnDancing && hasHabboClub) ? MODE_CLUB_DANCES : MODE_NORMAL);
-    const [collapsed, setCollapsed] = useState<boolean>(false);
+/** Effects that put the avatar in water: nothing but a wave works there. */
+const SWIMMING_EFFECTS = [ 29, 30, 185 ];
+/** The horse-riding effect. */
+const RIDING_EFFECT = 77;
+
+/** The rows whose button holds an arrow `icon`. */
+const ICON_ROWS = new Set([ 'expressions', 'dance_menu', 'signs', 'more', 'back' ]);
+
+/**
+ * `signs_grid`'s cells, `sign_<n>`: a cell's `button` sends sign `n` (`gridEventProc`). A picture
+ * cell's `<bitmap tags="icon">` is filled by `showButtonGrid` with the room UI's bitmap of the
+ * window's own name (`setImageAsset(icon, icon.name, true)`): copied unscaled into the middle of a
+ * bitmap the window's own size. The bitmap window would stretch an asset set on it, so the picture
+ * is drawn over the cell's button instead, centred in the 39x29 window it fills.
+ */
+const SIGN_CELLS = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0, 13, 15, 14, 17, 16 ];
+const SIGN_ICONS: Record<number, string> = {
+    11: 'sign_icon_heart',
+    12: 'sign_icon_skull',
+    13: 'sign_icon_13',
+    14: 'sign_icon_14',
+    15: 'sign_icon_15',
+    16: 'sign_icon_16',
+    17: 'sign_icon_17',
+};
+const SIGN_PICTURES: Record<number, ReactNode> = Object.fromEntries(Object.entries(SIGN_ICONS).map(([ sign, icon ]) => [ sign, (
+    <Box
+        pointerTransparent
+        layout={{ position: 'absolute', left: 0, top: 0, width: 39, height: 29, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+    >
+        <ThemeImage
+            src={LayoutImage(`habbo-room-ui-com/${icon}.png`)}
+            layout={{}}
+        />
+    </Box>
+) ]));
+
+/** `ButtonMenuView.buttonEventProc` on `profile_link`: the name light blue under the pointer. */
+const NAME_COLOR = 0xffffff;
+const NAME_HOVER_COLOR = 0x91c2ff;
+
+type MenuButton = {
+    /** The row's name in `own_avatar_menu`'s `buttons` list. */
+    key: string;
+    visible: boolean;
+    /** `showButton`'s `enabled`. */
+    enabled?: boolean;
+    /** A VIP expression: without VIP the row is an advert and its press opens the catalogue. */
+    vip?: boolean;
+    staysOpen?: boolean;
+    /** The action of the `EventLog("OwnAvatarMenu", "click", ...)` the press logs. */
+    track?: string;
+    onPress: () => void;
+};
+
+export const InfoBubbleOwnAvatarView = ({ objectData, onClose }: InfoBubbleOwnAvatarViewProps) => {
+    const info = useRoomUserData(objectData.objectId);
+    const showWiredInspect = useWiredShowInspectButton();
+    const isDancing = useOwnIsDancing();
+    const clubLevel = useOwnClubLevel();
+    const hasEffectOn = useUserStore(x => x.avatarEffects.some(effect => effect.isInUse));
+    const isRoomOwner = useIsRoomOwner();
+    const hasClub = useOwnHasClub();
+    const hasVip = clubLevel >= ClubLevelEnum.Vip;
+    const [ mode, setMode ] = useState((isDancing && hasClub) ? MODE_CLUB_DANCES : MODE_NORMAL);
+    const [ nameHovered, setNameHovered ] = useState(false);
+    const effectsDisabled = useConfigBoolean('memenu.effects.widget.disabled');
+    // `OwnAvatarMenuView`: the config flag, and not while the room's configuration items block hand item control.
+    const isHanditemControlBlocked = useRoomStore(x => x.isHanditemControlBlocked);
+    const handItemDropEnabled = (useConfigBoolean('handitem.drop.enabled')) && !isHanditemControlBlocked;
+    const expressionsMenuEnabled = useConfigBoolean('avatar.expressions_menu.enabled');
+    const signsEnabled = useConfigBoolean('avatar.signs.enabled');
+    const sittingEnabled = useConfigBoolean('avatar.sitting.enabled');
+    const expression67Enabled = useConfigBoolean('avatar.expression.67.enabled');
+    const { showButton, button } = useButtonMenu();
+    const { minimizedView, bindings: minimizeBindings } = useMinimizedMenu();
     const t = useTranslation();
     const { send } = useWebSocketContext();
+    const { showWindow, toggleWindow } = useWindowActions();
+    const { setIsDecorating } = useRoomSessionActions();
 
-    if (!userData) return null;
+    if (!info) return null;
+    if (minimizedView) return minimizedView;
 
-    const isRidingHorse = userData.effectId === 77;
+    const isSwimming = SWIMMING_EFFECTS.includes(info.effectId);
+    const isRiding = info.effectId === RIDING_EFFECT;
+    const canUseVipExpressions = !hasEffectOn && !isSwimming && hasVip;
 
-    const processAction = (action: string) => {
-        let hideMenu = true;
+    const expression = (type: AvatarExpressionEnum) => () => showAvatarExpression(send, type);
+    const dance = (style: number) => () => setDance(send, style);
+    const toMode = (next: number) => () => setMode(next);
 
-        if (action?.length) {
-            if (action.startsWith('sign_')) {
-                send(new SignComposer({ signType: parseInt(action.split('_')[1]) ?? 0 }));
-            } else {
+    const buttons: Record<number, MenuButton[]> = {
+        [MODE_NORMAL]: [
+            // `showButton("change_name", allowNameChange)` -> `RWUAM_START_NAME_CHANGE` -> `HabboHelp.startNameChange`.
+            { key: 'change_name', visible: info.allowNameChange, onPress: startNameChange },
+            // Decorating is a club feature, and only where you may move furniture.
+            { key: 'decorate', visible: hasClub && ((info.myControllerLevel >= RoomControllerLevelEnum.Guest) || isRoomOwner), onPress: () => setIsDecorating(true) },
+            { key: 'change_looks', visible: true, track: 'clothes', onPress: () => showWindow('avatar_editor') },
+            { key: 'wave', visible: !expressionsMenuEnabled, track: 'wave', onPress: expression(AvatarExpressionEnum.Wave) },
+            { key: 'expressions', visible: expressionsMenuEnabled, staysOpen: true, onPress: toMode(MODE_EXPRESSIONS) },
+            { key: 'dance_menu', visible: hasClub && !isRiding, enabled: !hasEffectOn, staysOpen: true, onPress: toMode(MODE_CLUB_DANCES) },
+            { key: 'dance', visible: !hasClub && !isDancing && !isRiding, enabled: !hasEffectOn, track: 'dance_start', onPress: dance(1) },
+            { key: 'dance_stop', visible: !hasClub && isDancing && !isRiding, track: 'dance_stop', onPress: dance(0) },
+            { key: 'signs', visible: signsEnabled, staysOpen: true, onPress: toMode(MODE_SIGNS) },
+            { key: 'handitem', visible: handItemDropEnabled && isHandItem(info.carryItem), onPress: () => dropCarryItem(send) },
+            { key: 'effects', visible: !effectsDisabled && !isRiding, track: 'effects', onPress: () => toggleWindow('avatar_effects') },
+            { key: 'wired_inspect', visible: showWiredInspect, onPress: () => openClientLink(send, `wiredmenu/open/inspection/1/${objectData.objectId}`) },
+        ],
+        [MODE_CLUB_DANCES]: [
+            { key: 'dance_stop', visible: true, enabled: isDancing, track: 'dance_stop', onPress: dance(0) },
+            { key: 'dance_1', visible: true, track: 'dance_start', onPress: dance(1) },
+            { key: 'dance_2', visible: true, track: 'dance_start', onPress: dance(2) },
+            { key: 'dance_3', visible: true, track: 'dance_start', onPress: dance(3) },
+            { key: 'dance_4', visible: true, track: 'dance_start', onPress: dance(4) },
+            { key: 'back', visible: true, staysOpen: true, onPress: toMode(MODE_NORMAL) },
+        ],
+        [MODE_EXPRESSIONS]: [
+            { key: 'sit', visible: sittingEnabled && !isSwimming && !isRiding && (info.posture === String(AvatarActionStateType.Stand)), track: 'sit', onPress: () => changePosture(send, PostureTypeEnum.Sit) },
+            { key: 'stand', visible: sittingEnabled && !isSwimming && !isRiding && info.canStandUp, track: 'stand', onPress: () => changePosture(send, PostureTypeEnum.Stand) },
+            { key: 'wave', visible: true, enabled: !isSwimming, track: 'wave', onPress: expression(AvatarExpressionEnum.Wave) },
+            { key: 'blow', visible: true, enabled: canUseVipExpressions, vip: true, track: 'blow', onPress: expression(AvatarExpressionEnum.Blow) },
+            { key: '67', visible: expression67Enabled, enabled: canUseVipExpressions, vip: true, track: '67', onPress: expression(AvatarExpressionEnum.Expression67) },
+            { key: 'laugh', visible: true, enabled: canUseVipExpressions, vip: true, track: 'laugh', onPress: expression(AvatarExpressionEnum.Laugh) },
+            { key: 'idle', visible: true, track: 'idle', onPress: expression(AvatarExpressionEnum.Idle) },
+            { key: 'back', visible: true, staysOpen: true, onPress: toMode(MODE_NORMAL) },
+        ],
+        [MODE_SIGNS]: [
+            { key: 'back', visible: true, staysOpen: true, onPress: toMode(MODE_NORMAL) },
+        ],
+    };
 
-                switch (action) {
-                    case 'expressions': {
-                        hideMenu = false;
-                        setMode(MODE_EXPRESSIONS);
-                        break;
-                    }
-                    case 'sit': send(new ChangePostureComposer({ postureType: PostureTypeEnum.Sit })); break;
-                    case 'stand': send(new ChangePostureComposer({ postureType: PostureTypeEnum.Stand })); break;
-                    case 'wave': send(new AvatarExpressionComposer({ expressionType: AvatarExpressionEnum.Wave })); break;
-                    case 'blow': if (hasHabboClub) send(new AvatarExpressionComposer({ expressionType: AvatarExpressionEnum.Blow })); break;
-                    case 'laugh': if (hasHabboClub) send(new AvatarExpressionComposer({ expressionType: AvatarExpressionEnum.Laugh })); break;
-                    case 'idle': if (hasHabboClub) send(new AvatarExpressionComposer({ expressionType: AvatarExpressionEnum.Idle })); break;
-                    case 'dance_menu': {
-                        hideMenu = false;
-                        setMode(MODE_CLUB_DANCES);
-                        break;
-                    }
-                    case 'dance': send(new DanceComposer({ danceType: 1 })); break;
-                    case 'dance_stop': send(new DanceComposer({ danceType: 0 })); break;
-                    case 'dance_1':
-                    case 'dance_2':
-                    case 'dance_3':
-                    case 'dance_4': {
-                        send(new DanceComposer({ danceType: parseInt(action.split('_')[1]) ?? 0 }));
-                        break;
-                    }
-                    case 'signs': {
-                        hideMenu = false;
-                        setMode(MODE_SIGNS);
-                        break;
-                    }
-                    case 'back': {
-                        hideMenu = false;
-                        setMode(MODE_NORMAL);
-                        break;
-                    }
-                    case 'drop_hand_item': send(new DropCarryItemComposer({})); break;
-                }
+    const press = (row: MenuButton) => {
+        // `OwnAvatarMenuView.buttonEventProc`: a VIP button pressed without VIP is an advert for it.
+        if (row.vip && !hasVip) {
+            showWindow('catalog');
+            onClose();
 
-            }
+            return;
         }
 
-        if (hideMenu && onClose) onClose();
+        row.onPress();
+
+        if (row.track) trackEventLog(send, 'OwnAvatarMenu', 'click', row.track);
+
+        if (!row.staysOpen) onClose();
+    };
+
+    const openOwnProfile = () => {
+        openProfile(send, info.webId);
+        onClose();
+    };
+
+    const visibleButtons = buttons[mode].filter(row => row.visible);
+    const showsSigns = (mode === MODE_SIGNS);
+    const bindings: TemplateBindings = {
+        ...minimizeBindings,
+        profile_link: {
+            tooltip: t('infostand.profile.link.tooltip', 'Click to view profile'),
+            onPointerTap: openOwnProfile,
+            onPointerOver: () => setNameHovered(true),
+            onPointerOut: () => setNameHovered(false),
+        },
+        name: { caption: info.name, setCaptionAfterBuild: true, color: nameHovered ? NAME_HOVER_COLOR : NAME_COLOR },
+        buttons: { show: [ ...visibleButtons.map(row => row.key), ...(showsSigns ? [ 'signs_grid' ] : []) ] },
+    };
+
+    for (const row of visibleButtons) {
+        showButton(bindings, row.key, () => press(row), {
+            enabled: row.enabled,
+            vipAdvert: row.vip && !hasVip,
+            hasIcon: ICON_ROWS.has(row.key),
+        });
     }
 
-    const MODE_BUTTONS = {
-        0: [
-            {
-                visible: canDecorate,
-                caption: 'widget.avatar.decorate',
-                action: undefined
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.myclothes',
-                action: undefined
-            },
-            {
-                visible: hasHabboClub && !isRidingHorse,
-                caption: 'widget.memenu.dance',
-                action: () => processAction('dance_menu')
-            },
-            {
-                visible: !isOwnDancing && !hasHabboClub && !isRidingHorse,
-                caption: 'widget.avatar.dance',
-                action: () => processAction('dance')
-            },
-            {
-                visible: isOwnDancing && !hasHabboClub && !isRidingHorse,
-                caption: 'widget.memenu.dance.stop',
-                action: () => processAction('dance_stop')
-            },
-            {
-                visible: userData.effectId !== 29 && userData.effectId !== 30 && userData.effectId !== 185,
-                caption: 'infostand.link.expressions',
-                action: () => processAction('expressions')
-            },
-            {
-                visible: true,
-                caption: 'infostand.show.signs',
-                action: () => processAction('signs')
-            },
-            {
-                visible: userData.carryItem > 0,
-                caption: 'avatar.widget.drop_hand_item',
-                action: () => processAction('drop_hand_item')
-            }
-        ],
-        1: [
-            {
-                visible: isOwnDancing,
-                caption: 'widget.memenu.dance.stop',
-                action: () => processAction('dance_stop')
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.dance1',
-                action: () => processAction('dance_1')
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.dance2',
-                action: () => processAction('dance_2')
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.dance3',
-                action: () => processAction('dance_3')
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.dance4',
-                action: () => processAction('dance_4')
-            },
-            {
-                visible: true,
-                caption: 'generic.back',
-                action: () => processAction('back')
-            }
-        ],
-        3: [
-            {
-                visible: userData.posture === AvatarActionStateType.Stand,
-                caption: 'widget.memenu.sit',
-                action: () => processAction('sit')
-            },
-            {
-                visible: userData.canStandUp,
-                caption: 'widget.memenu.stand',
-                action: () => processAction('stand')
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.wave',
-                action: () => processAction('wave')
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.laugh',
-                action: () => processAction('laugh')
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.blow',
-                action: () => processAction('blow')
-            },
-            {
-                visible: true,
-                caption: 'widget.memenu.idle',
-                action: () => processAction('idle')
-            },
-            {
-                visible: true,
-                caption: 'generic.back',
-                action: () => processAction('back')
-            }
-        ],
-        4: [
-            {
-                visible: true,
-                caption: 'generic.back',
-                action: () => processAction('back')
-            }
-        ]
+    if (showsSigns) {
+        for (const sign of SIGN_CELLS) {
+            bindings[`sign_${sign}/button`] = {
+                ...button(`sign_${sign}/button`, () => {
+                    showSign(send, sign);
+                    trackEventLog(send, 'OwnAvatarMenu', 'click', 'sign', '', sign);
+                    onClose();
+                }),
+                children: SIGN_PICTURES[sign],
+            };
+
+            const icon = SIGN_ICONS[sign];
+
+            if (icon) bindings[`sign_${sign}/button/${icon}`] = { visible: false };
+        }
     }
 
     return (
-        <Bubble variant="0" tintColor="#6e6b67">
-            {!collapsed && <div className="min-w-25 max-w-25 flex flex-col mx-px overflow-hidden">
-                <div className="flex items-center justify-center min-h-6 max-h-6">
-                    <span className="text-style-u-bold font-[11px] text-white">{userData.name}</span>
-                </div>
-                <div className="flex flex-col w-full overflow-hidden gap-px border-y border-black">
-                    {mode === MODE_SIGNS && <>
-                        <div className="flex justify-evenly gap-px">
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_1')}>1</Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_2')}>2</Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_3')}>3</Button>
-                        </div>
-                        <div className="flex justify-evenly gap-px">
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_4')}>4</Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_5')}>5</Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_6')}>6</Button>
-                        </div>
-                        <div className="flex justify-evenly gap-px">
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_7')}>7</Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_8')}>8</Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_9')}>9</Button>
-                        </div>
-                        <div className="flex justify-evenly gap-px">
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_10')}>10</Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_11')}>
-                                <NitroIcon icon="icon-sign-heart" />
-                            </Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_12')}>
-                                <NitroIcon icon="icon-sign-skull" />
-                            </Button>
-                        </div>
-                        <div className="flex justify-evenly gap-px">
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_0')}>0</Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_13')}>
-                                <NitroIcon icon="icon-sign-exclamation" />
-                            </Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_15')}>
-                                <NitroIcon icon="icon-sign-smile" />
-                            </Button>
-                        </div>
-                        <div className="flex justify-evenly gap-px">
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_14')}>
-                                <NitroIcon icon="icon-sign-soccer" />
-                            </Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_17')}>
-                                <NitroIcon icon="icon-sign-yellow" />
-                            </Button>
-                            <Button variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 w-full text-white text-[11px]" onClick={() => processAction('sign_16')}>
-                                <NitroIcon icon="icon-sign-red" />
-                            </Button>
-                        </div>
-                    </>}
-                    {MODE_BUTTONS[mode].map(({ visible, caption, action }) =>
-                        visible ? <Button key={caption} variant="300" tintColor="#2d2a27" className="min-h-6.25 max-h-6.25 text-white text-[11px] w-full" onClick={action}>{t(caption)}</Button> : null)}
-                </div>
-            </div>}
-            <div className="flex items-center justify-center min-h-4.5 max-h-4.5 p-2 w-full" onClick={() => setCollapsed(!collapsed)}>
-                <div className={`cursor-pointer habbo-icon icon-tri-arrow-${!collapsed ? 'down' : 'up'}`} />
-            </div>
-        </Bubble>
+        <TemplateWindow
+            id="habbo-room-ui-com/own_avatar_menu"
+            bindings={bindings}
+        />
     );
-}
+};

@@ -1,1 +1,2 @@
-export const GetPixelRatio = () => Math.round(window.devicePixelRatio ?? 1);
+/** The theme's own (`@nitrodevco/nitro-theme`), under the client's name for it. */
+export * from '@nitrodevco/nitro-theme/utils/GetPixelRatio';

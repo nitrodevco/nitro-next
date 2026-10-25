@@ -1,6 +1,8 @@
 export class RoomObjectVisualizationType {
     public static FURNITURE_STATIC = 'furniture_static';
     public static FURNITURE_ANIMATED = 'furniture_animated';
+    public static FURNITURE_FURNI_CHEST = 'furniture_furnichest';
+    public static FURNITURE_COINS_CHEST = 'furniture_coinschest';
     public static FURNITURE_RESETTING_ANIMATED = 'furniture_resetting_animated';
     public static FURNITURE_POSTER = 'furniture_poster';
     public static FURNITURE_EXTERNAL_IMAGE = 'furniture_external_image';
@@ -23,6 +25,9 @@ export class RoomObjectVisualizationType {
     public static FURNITURE_STICKIE = 'furniture_stickie';
     public static FURNITURE_MANNEQUIN = 'furniture_mannequin';
     public static FURNITURE_GUILD_CUSTOMIZED = 'furniture_guild_customized';
+    public static FURNITURE_RECOLORABLE = 'furniture_recolorable';
+    public static FURNITURE_LABEL = 'furniture_label';
+    public static FURNITURE_REGION = 'furniture_region';
     public static FURNITURE_GUILD_ISOMETRIC_BADGE = 'furniture_guild_isometric_badge';
     public static FURNITURE_VOTE_COUNTER = 'furniture_vote_counter';
     public static FURNITURE_VOTE_MAJORITY = 'furniture_vote_majority';

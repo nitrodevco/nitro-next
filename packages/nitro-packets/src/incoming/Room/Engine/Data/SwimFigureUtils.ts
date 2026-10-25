@@ -21,20 +21,20 @@ interface SwimFigureConfig {
 export const convertSwimFigure = (
     colorString: string,
     sizeString: string,
-    gender: string
+    gender: string,
 ): string => {
     const config = parseSwimFigureConfig(colorString, sizeString, gender);
 
     return (
-        `${sizeString}.bds-10001-${config.headSize}.ss-` +
-        `${config.genderId}-${config.colorId}`
+        `${sizeString}.bds-10001-${config.headSize}.ss-`
+        + `${config.genderId}-${config.colorId}`
     );
 };
 
 const parseSwimFigureConfig = (
     colorString: string,
     sizeString: string,
-    gender: string
+    gender: string,
 ): SwimFigureConfig => {
     const headSize = extractHeadSize(sizeString);
     const genderId = gender === 'F' ? GENDER_ID_FEMALE : GENDER_ID_MALE;
@@ -47,7 +47,7 @@ const extractHeadSize = (sizeString: string): number => {
     const sizeParts = sizeString.split('.');
 
     for (const sizePart of sizeParts) {
-        const [type, , value] = sizePart.split('-');
+        const [ type, , value ] = sizePart.split('-');
         if (type === 'hd' && value) {
             return parseInt(value, 10);
         }
@@ -61,8 +61,8 @@ const extractColorId = (colorString: string): number => {
 
     if (parts.length <= 1) return 1;
 
-    const [, colorData] = parts;
-    const [, colorValue] = colorData.split('/');
+    const [ , colorData ] = parts;
+    const [ , colorValue ] = colorData.split('/');
 
     const colorIndex = SWIM_COLOR_PALETTE.indexOf(colorValue);
     if (colorIndex === -1) return 1; // Default if color not found

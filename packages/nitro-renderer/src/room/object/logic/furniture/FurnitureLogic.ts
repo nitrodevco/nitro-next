@@ -1,4 +1,4 @@
-import type {
+import {
     IAssetData,
     IRoomGeometry,
     IRoomObjectController,
@@ -6,14 +6,11 @@ import type {
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
     IVector3D,
-} from '@nitrodevco/nitro-api';
-import {
     MouseEventType, RoomObjectMouseEvent,
     RoomObjectRoomAdEvent,
     RoomObjectStateChangedEvent,
     RoomObjectVariableEnum, RoomObjectWidgetRequestEvent,
-    Vector3d,
-} from '@nitrodevco/nitro-api';
+    Vector3d } from '@nitrodevco/nitro-api';
 
 import {
     ObjectDataUpdateMessage,
@@ -25,6 +22,10 @@ import {
 } from '../../../messages';
 import { MovingObjectLogic } from '../MovingObjectLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-q1B§`, the logic `RoomObjectFactory` builds for
+ * `furniture_basic`.
+ */
 export class FurnitureLogic extends MovingObjectLogic {
     private static BOUNCING_STEPS: number = 8;
     private static BOUNCING_Z: number = 0.0625;
@@ -79,7 +80,8 @@ export class FurnitureLogic extends MovingObjectLogic {
 
                     this._centerX = this._sizeX / 2;
                     this._centerY = this._sizeY / 2;
-                    this._centerZ = this._sizeZ / 2;
+                    // `FurnitureLogic.initialize`: an explicit `centerZ` wins over half the height.
+                    this._centerZ = dimensions.centerZ ?? (this._sizeZ / 2);
                 }
 
                 const directions = asset.logic.model.directions;
@@ -139,12 +141,17 @@ export class FurnitureLogic extends MovingObjectLogic {
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         if (!message) return;
 
+        if (this.processWiredEffectMessage(message)) return;
+
+        if (this.processVariableFxStatusMessage(message)) return;
+
         if (message instanceof ObjectDataUpdateMessage) {
             this.object.setState(message.state, 0);
 
             message.data?.writeRoomObjectModel(this.object.model);
 
             this.object.model.setValue(RoomObjectVariableEnum.FurnitureExtras, message.extra);
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureExtra, message.extra);
             this.object.model.setValue(RoomObjectVariableEnum.FurnitureStateUpdateTime, this.lastUpdateTime);
 
             return;
@@ -164,17 +171,19 @@ export class FurnitureLogic extends MovingObjectLogic {
 
         this._mouseOver = false;
 
+        this.setVariableFxHolderHovered(false);
+
         if (message.location && message.direction) {
             if (!(message instanceof ObjectMoveUpdateMessage)) {
                 const direction = this.object.getDirection();
                 const location = this.object.getLocation();
 
                 if (
-                    direction.x !== message.direction.x &&
-                    this._directionInitialized &&
-                    location.x === message.location.x &&
-                    location.y === message.location.y &&
-                    location.z === message.location.z
+                    direction.x !== message.direction.x
+                    && this._directionInitialized
+                    && location.x === message.location.x
+                    && location.y === message.location.y
+                    && location.z === message.location.z
                 ) {
                     this._bouncingStep = 1;
                     this._storedRotateMessage = new RoomObjectUpdateMessage(message.location, message.direction);
@@ -228,6 +237,8 @@ export class FurnitureLogic extends MovingObjectLogic {
                 return;
             }
             case MouseEventType.ROLL_OVER: {
+                this.setVariableFxHolderHovered(true);
+
                 if (!this._mouseOver) {
                     if (adUrl && adUrl.indexOf('http') === 0)
                         this.handleRoomObjectEvent(
@@ -257,6 +268,8 @@ export class FurnitureLogic extends MovingObjectLogic {
                 return;
             }
             case MouseEventType.ROLL_OUT: {
+                this.setVariableFxHolderHovered(false);
+
                 if (this._mouseOver) {
                     if (adUrl && adUrl.indexOf('http') === 0)
                         this.handleRoomObjectEvent(
@@ -361,8 +374,7 @@ export class FurnitureLogic extends MovingObjectLogic {
         return model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected handleAdClick(objectId: number, objectType: string, clickUrl: string): void {
+    protected handleAdClick(_objectId: number, _objectType: string, _clickUrl: string): void {
         this.handleRoomObjectEvent(new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_FURNI_CLICK, this.object));
     }
 
@@ -384,8 +396,8 @@ export class FurnitureLogic extends MovingObjectLogic {
                     this._storedRotateMessage = undefined;
                 }
 
-                this._locationOffset.z =
-                    FurnitureLogic.BOUNCING_Z * (FurnitureLogic.BOUNCING_STEPS - this._bouncingStep);
+                this._locationOffset.z
+                    = FurnitureLogic.BOUNCING_Z * (FurnitureLogic.BOUNCING_STEPS - this._bouncingStep);
             }
 
             return this._locationOffset;

@@ -1,8 +1,10 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper, WiredMovementType } from '@nitrodevco/nitro-api';
-import { IWiredUserMove } from './Data/IWiredUserMove';
+
 import { IWiredFloorMove } from './Data/IWiredFloorMove';
-import { IWiredWallMove } from './Data/IWiredWallMove';
 import { IWiredUserDirection } from './Data/IWiredUserDirection';
+import { IWiredUserMove } from './Data/IWiredUserMove';
+import { IWiredWallMove } from './Data/IWiredWallMove';
 
 export type WiredMovementsMessageType = {
     userMoves: IWiredUserMove[];
@@ -26,9 +28,10 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 animationTime: wrapper.readInt(),
                 bodyRotation: wrapper.readInt(),
                 headRotation: wrapper.readInt(),
-                jumpPower: wrapper.readInt()
-            } as IWiredUserMove;
-        }
+                // sent only for a jump: a flag, then the power
+                jumpPower: wrapper.readBoolean() ? wrapper.readInt() : NaN,
+            };
+        };
 
         const parseFloorMove = (wrapper: IMessageDataWrapper) => {
             return {
@@ -40,9 +43,12 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 targetZ: parseFloat(wrapper.readString()),
                 objectId: wrapper.readInt(),
                 animationTime: wrapper.readInt(),
-                rotation: wrapper.readInt()
-            } as IWiredFloorMove;
-        }
+                rotation: wrapper.readInt(),
+                // both optional, each behind its own flag
+                overshootingDistance: wrapper.readBoolean() ? wrapper.readInt() : NaN,
+                curveStrength: wrapper.readBoolean() ? wrapper.readInt() : NaN,
+            };
+        };
 
         const parseWallMove = (wrapper: IMessageDataWrapper) => {
             return {
@@ -51,34 +57,34 @@ export class WiredMovementsMessage implements IIncomingPacket<WiredMovementsMess
                 sourceX: wrapper.readInt(),
                 sourceY: wrapper.readInt(),
                 sourceOffsetX: wrapper.readInt(),
-                sourceOffsetY: parseFloat(wrapper.readString()),
+                sourceOffsetY: wrapper.readInt(),
                 targetX: wrapper.readInt(),
                 targetY: wrapper.readInt(),
                 targetOffsetX: wrapper.readInt(),
                 targetOffsetY: wrapper.readInt(),
-                animationTime: wrapper.readInt()
-            } as IWiredWallMove;
-        }
+                animationTime: wrapper.readInt(),
+            };
+        };
 
         const parseUserDirection = (wrapper: IMessageDataWrapper) => {
             return {
                 objectId: wrapper.readInt(),
                 bodyRotation: wrapper.readInt(),
                 headRotation: wrapper.readInt(),
-            } as IWiredUserDirection;
-        }
+            };
+        };
 
         const packet: WiredMovementsMessageType = {
             userMoves: [],
             floorMoves: [],
             wallMoves: [],
-            userDirections: []
+            userDirections: [],
         };
 
         let count = wrapper.readInt();
 
         while (count > 0) {
-            const type = wrapper.readInt() as WiredMovementType;
+            const type: WiredMovementType = wrapper.readInt();
 
             switch (type) {
                 case WiredMovementType.User: {

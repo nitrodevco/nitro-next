@@ -1,19 +1,20 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type FurnitureAliasesMessageType = {
-    aliases: { alias: string, original: string }[];
+    /** `FurnitureAliasesMessageParser`: each furni type name and the asset name it is drawn from. */
+    aliases: { name: string; alias: string }[];
 };
 
 export class FurnitureAliasesMessage implements IIncomingPacket<FurnitureAliasesMessageType> {
     public parse(wrapper: IMessageDataWrapper): FurnitureAliasesMessageType {
         const packet: FurnitureAliasesMessageType = {
-            aliases: []
+            aliases: [],
         };
 
         let count = wrapper.readInt();
 
         while (count > 0) {
-            packet.aliases.push({ alias: wrapper.readString(), original: wrapper.readString() });
+            packet.aliases.push({ name: wrapper.readString(), alias: wrapper.readString() });
 
             count--;
         }

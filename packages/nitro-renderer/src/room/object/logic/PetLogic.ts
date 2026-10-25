@@ -1,14 +1,14 @@
-import type {
+import {
     IAssetData,
     IRoomGeometry,
     IRoomObjectModel,
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
     IVector3D,
-} from '@nitrodevco/nitro-api';
-import { MouseEventType, PetType, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
+    MouseEventType, PetType, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectVariableEnum, Vector3d } from '@nitrodevco/nitro-api';
 
 import { PetFigureData } from '../../../session';
+import { GetTickerTime } from '../../../utils';
 import {
     ObjectAvatarChatUpdateMessage,
     ObjectAvatarDirectionUpdateMessage,
@@ -22,6 +22,7 @@ import {
 } from '../../messages';
 import { MovingObjectLogic } from './MovingObjectLogic';
 
+/** Port of Flash `PetLogic`, the logic `RoomObjectFactory` builds for `pet`. */
 export class PetLogic extends MovingObjectLogic {
     private _selected: boolean = false;
     private _reportedLocation: IVector3D = new Vector3d();
@@ -36,6 +37,8 @@ export class PetLogic extends MovingObjectLogic {
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [
             RoomObjectMouseEvent.CLICK,
+            RoomObjectMouseEvent.MOUSE_ENTER,
+            RoomObjectMouseEvent.MOUSE_LEAVE,
             RoomObjectMoveEvent.POSITION_CHANGED,
         ]);
     }
@@ -73,10 +76,10 @@ export class PetLogic extends MovingObjectLogic {
             const location = this.object.getLocation();
 
             if (
-                !this._reportedLocation ||
-                this._reportedLocation.x !== location.x ||
-                this._reportedLocation.y !== location.y ||
-                this._reportedLocation.z !== location.z
+                !this._reportedLocation
+                || this._reportedLocation.x !== location.x
+                || this._reportedLocation.y !== location.y
+                || this._reportedLocation.z !== location.z
             ) {
                 if (!this._reportedLocation) this._reportedLocation = new Vector3d();
 
@@ -93,6 +96,10 @@ export class PetLogic extends MovingObjectLogic {
         if (!message) return;
 
         super.processUpdateMessage(message);
+
+        if (this.processWiredEffectMessage(message)) return;
+
+        if (this.processVariableFxStatusMessage(message)) return;
 
         if (message instanceof ObjectAvatarUpdateMessage) {
             this.object.model.setValue(RoomObjectVariableEnum.HeadDirection, message.headDirection);
@@ -131,7 +138,9 @@ export class PetLogic extends MovingObjectLogic {
         if (message instanceof ObjectAvatarChatUpdateMessage) {
             this.object.model.setValue(RoomObjectVariableEnum.FigureTalk, 1);
 
-            this._talkingEndTimestamp = this.time + message.numberOfWords * 1000;
+            // The clock's time (`getTimer()`), not the last update's: a pet that talks before its
+            // first update would otherwise stop at once.
+            this._talkingEndTimestamp = GetTickerTime() + message.numberOfWords * 1000;
 
             return;
         }
@@ -145,7 +154,7 @@ export class PetLogic extends MovingObjectLogic {
         if (message instanceof ObjectAvatarPetGestureUpdateMessage) {
             this.object.model.setValue(RoomObjectVariableEnum.FigureGesture, message.gesture);
 
-            this._gestureEndTimestamp = this.time + 3000;
+            this._gestureEndTimestamp = GetTickerTime() + 3000;
 
             return;
         }
@@ -158,7 +167,7 @@ export class PetLogic extends MovingObjectLogic {
         }
 
         if (message instanceof ObjectAvatarExperienceUpdateMessage) {
-            this.object.model.setValue(RoomObjectVariableEnum.FigureExperienceTimestamp, this.time);
+            this.object.model.setValue(RoomObjectVariableEnum.FigureExperienceTimestamp, GetTickerTime());
             this.object.model.setValue(RoomObjectVariableEnum.FigureGainedExperience, message.gainedExperience);
 
             return;
@@ -168,13 +177,22 @@ export class PetLogic extends MovingObjectLogic {
     public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
         if (!event || !geometry) return;
 
-        let eventType = event.type;
+        // Only these are passed on; any other sprite event goes no further than the logic.
+        let eventType: string | undefined = undefined;
 
-        switch (eventType) {
+        switch (event.type) {
             case MouseEventType.MOUSE_CLICK:
                 eventType = RoomObjectMouseEvent.CLICK;
                 break;
             case MouseEventType.DOUBLE_CLICK:
+                break;
+            case MouseEventType.ROLL_OVER:
+                this.setVariableFxHolderHovered(true);
+                eventType = RoomObjectMouseEvent.MOUSE_ENTER;
+                break;
+            case MouseEventType.ROLL_OUT:
+                this.setVariableFxHolderHovered(false);
+                eventType = RoomObjectMouseEvent.MOUSE_LEAVE;
                 break;
             case MouseEventType.MOUSE_DOWN: {
                 const petType = this.object.model.getValue<number>(RoomObjectVariableEnum.PetType);
@@ -195,6 +213,8 @@ export class PetLogic extends MovingObjectLogic {
                 break;
             }
         }
+
+        if (!eventType) return;
 
         this.handleRoomObjectEvent(
             new RoomObjectMouseEvent(

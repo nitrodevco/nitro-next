@@ -1,6 +1,7 @@
-
 import {
     EventDispatcher,
+    FurnitureLabelData,
+    FurnitureRegionData,
     FurnitureUsagePolicyEnum,
     GetConfigValue,
     GetObjectDataForFlags,
@@ -18,39 +19,49 @@ import {
     IRoomMapData,
     IRoomObject,
     IRoomObjectController,
+    IRoomObjectEventHandler,
+    IRoomObjectHighLighter,
     IRoomObjectManager,
     IRoomObjectModel,
+    IRoomObjectVisualization,
     IRoomRenderingCanvas,
-    IVector3D, LegacyDataType,
+    IStackingHeightMapReader,
+    ITileObjectMap,
+    IVariableFxConfigUpdateData,
+    IVariableFxStatusRemoveData,
+    IVariableFxStatusUpdateData,
+    IVector3D, IWiredVisualizationStateEntry,
+    LegacyDataType,
+    MapDataType,
     ObjectDataFlagsEnum,
+    RoomBackgroundColorEvent,
     RoomContentLoadedEvent,
     RoomEngineEvent,
+    RoomEngineFurnitureLabelEvent,
     RoomEngineObjectEvent,
-    RoomGeometryScaleType
-    ,
+    RoomGeometryScaleType,
     RoomObjectCategoryEnum,
+    RoomObjectFurnitureActionEvent,
+    RoomObjectLogicType,
     RoomObjectUserType,
-    RoomObjectUserTypeName
-    ,
+    RoomObjectUserTypeName,
     RoomObjectUserTypeUtils,
     RoomObjectVariableEnum,
-    RoomThicknessType
-    ,
+    RoomThicknessType,
     RoomToObjectOwnAvatarMoveEvent,
-    Vector3d
+    Vector3d,
+    WiredFurnitureHighlightData,
+    WiredFurnitureTransparencyData,
 } from '@nitrodevco/nitro-api';
-import { ImageLike, Point, type PointData, Rectangle, Sprite } from 'pixi.js';
-import { Container, Texture } from 'pixi.js';
+import { Container, ImageLike, PointData, Rectangle, Sprite, Texture } from 'pixi.js';
 
 import { PetFigureData } from '../session';
-import { FurniId, GetTickerTime } from '../utils';
+import { GetTickerTime, TextureUtils } from '../utils';
 import { GetRoomObjectLogicFactory, GetRoomObjectVisualizationFactory } from './factories';
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { GetRoomEngine } from './GetRoomEngine';
-import type {
-    ObjectStateUpdateMessage
-} from './messages';
 import {
+    ObjectAvatarBlockedUpdateMessage,
     ObjectAvatarCarryObjectUpdateMessage,
     ObjectAvatarChatUpdateMessage,
     ObjectAvatarDanceUpdateMessage,
@@ -62,6 +73,7 @@ import {
     ObjectAvatarFlatControlUpdateMessage,
     ObjectAvatarGestureUpdateMessage,
     ObjectAvatarGuideStatusUpdateMessage,
+    ObjectAvatarHabbiconUpdateMessage,
     ObjectAvatarMutedUpdateMessage,
     ObjectAvatarOwnMessage,
     ObjectAvatarPetGestureUpdateMessage,
@@ -74,20 +86,35 @@ import {
     ObjectAvatarUpdateMessage,
     ObjectAvatarUseObjectUpdateMessage,
     ObjectDataUpdateMessage,
+    ObjectFurnitureLabelUpdateMessage,
+    ObjectFurnitureRegionUpdateMessage,
     ObjectHeightUpdateMessage,
     ObjectItemDataUpdateMessage,
     ObjectMoveUpdateMessage,
+    ObjectRoomColorUpdateMessage,
+    ObjectRoomFloorHoleUpdateMessage,
     ObjectRoomMaskUpdateMessage,
     ObjectRoomPlanePropertyUpdateMessage,
     ObjectRoomPlaneVisibilityUpdateMessage,
     ObjectRoomUpdateMessage,
+    ObjectStateUpdateMessage,
+    RoomObjectFurnitureHighlightUpdateMessage,
+    RoomObjectFurnitureTransparencyUpdateMessage,
     RoomObjectUpdateMessage,
-} from './messages';
-import { RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
+    RoomObjectVariableFxStatusRemoveMessage,
+    RoomObjectVariableFxStatusUpdateMessage } from './messages';
+import { FurnitureVisualization, MovingObjectLogic, RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
+import { VariableFxRoomData } from './object/variablefx/VariableFxRoomData';
+import { isVariableFxVisualizationHost } from './object/visualization/variablefx/IVariableFxVisualizationRoomData';
 import { RoomEventHandler } from './RoomEventHandler';
 import { RoomSpriteCanvas } from './RoomSpriteCanvas';
-import { RoomAreaSelectionManager } from './utils';
+import { petImageValue, RoomAreaSelectionManager, RoomObjectHighLighter, TileObjectMap } from './utils';
 
+/**
+ * One room: Flash's `RoomInstance` (its object managers and model) with the per-room half of
+ * `RoomEngine` - the add, update and remove calls for the room's furniture, users and planes - and
+ * of `RoomInstanceData` (the tile object map and stacking heights).
+ */
 export class Room implements IRoom {
     public static ROOM_OBJECT_ID: number = -1;
     public static ROOM_OBJECT_TYPE: string = 'room' as const;
@@ -113,21 +140,81 @@ export class Room implements IRoom {
         RoomObjectCategoryEnum.Cursor,
         RoomObjectCategoryEnum.Room,
     ];
+
+    /**
+     * The objects `update` runs logic for, copied out first because a logic may add or remove
+     * objects. Reused rather than `getValues()`, which allocated a copy of every category each frame.
+     */
+    private _updateObjects: (IRoomObjectController | undefined)[] = [];
+
     private _skipContentProcessingForNextFrame: boolean = false;
     private _skipFurnitureCreationForNextFrame: boolean = false;
     private _legacyGeometry: ILegacyWallGeometry | undefined = undefined;
+    private _stackingHeightMap: IStackingHeightMapReader | undefined = undefined;
+    private _tileObjectMap: TileObjectMap | undefined = undefined;
     private _canvas: IRoomRenderingCanvas | undefined = undefined;
     private _areaSelection: IRoomAreaSelectionManager;
+    private _objectHighLighter: IRoomObjectHighLighter;
     private _isInitialized: boolean = false;
+    private _isMoveBlocked: boolean = false;
 
+    /** Flash `RoomEngine._clickThroughUsers` and its furni twin: the keys that currently ask for each. */
+    private _clickThroughUsers: Set<string> = new Set();
+    private _clickThroughFurni: Set<string> = new Set();
+
+    /**
+     * The area hides in force, held as the very messages that applied them. `applyRoomMap`
+     * throws the room object away and builds a new one, taking the plane parser that owns the
+     * holes with it, so every one still in force has to be applied to its replacement - Flash
+     * replayed the server's list at the end of `initializeRoom` for the same reason.
+     */
+    private _areaHides: Map<number, ObjectRoomFloorHoleUpdateMessage> = new Map();
+
+    /**
+     * The room index of the user this client is logged in as, which Flash read off the room
+     * session (`IRoomSession.ownUserRoomId`) in `RoomEngine.updateObjectUser`. The session lives in
+     * the UI, so the engine learns it the moment the UI marks that avatar as its own
+     * (`updateRoomObjectUserOwn`); -1 until then.
+     */
+    private _ownUserRoomIndex: number = -1;
+
+    /**
+     * The papers told before the room object exists. Habbo sends a room's `RoomProperty`
+     * messages before its floor height map, so Flash's `RoomEngine.updateObjectRoom` keeps them in
+     * the room's `RoomData` and `initializeRoom` builds the room with them instead of the defaults.
+     */
+    private _pendingPlaneTypes: { floor?: string; wall?: string; landscape?: string } = {};
+
+    /**
+     * Flash `RoomInstanceData`'s furniture and wall item queues: furniture is added as data and built
+     * a few at a time by the engine's update (`createPendingFurniture`), or at once when something
+     * asks for it first (`getRoomObject`). In insertion order; adding an id again moves it to the end.
+     */
     private _floorStack: Map<number, IRoomFurnitureData> = new Map();
     private _wallStack: Map<number, IRoomFurnitureData> = new Map();
+    private _variableFx: VariableFxRoomData = new VariableFxRoomData();
+
+    /**
+     * Flash `BufferedRoomObjectModelDataManager`'s `furniture_label` / `furniture_region` data
+     * (category 10): a label or region for a furni that is not ready yet, or that the invisible furni
+     * manager took away, kept until the furni is ready again (`restoreFurnitureLabelData`).
+     */
+    private _bufferedLabels: Map<number, FurnitureLabelData> = new Map();
+
+    /**
+     * Flash `BufferedRoomObjectModelDataManager`'s `wired_transparency` / `wired_highlight` data (furni
+     * categories 10 and 20, users 100): a WIRED Set Visibility / Set Highlight for an object that is not
+     * ready yet, or that the invisible furni manager took away, kept until it is ready
+     * (`restoreWiredFurnitureTransparencyData` / `restoreWiredFurnitureHighlightData`). Keyed `category:id`.
+     */
+    private _bufferedWiredEffects: Map<string, { transparency?: WiredFurnitureTransparencyData; highlight?: WiredFurnitureHighlightData }> = new Map();
 
     constructor(roomId: number) {
         this._roomId = roomId;
         this._eventDispatcher = new EventDispatcher();
         this._eventHandler = new RoomEventHandler(this);
         this._areaSelection = new RoomAreaSelectionManager(this);
+        this._objectHighLighter = new RoomObjectHighLighter(this);
 
         this._eventDispatcher.addEventListener<RoomContentLoadedEvent>(RoomContentLoadedEvent.RCLE_SUCCESS, event => this.onRoomContentLoadedEvent(event));
         this._eventDispatcher.addEventListener<RoomContentLoadedEvent>(RoomContentLoadedEvent.RCLE_FAILURE, event => this.onRoomContentLoadedEvent(event));
@@ -137,6 +224,12 @@ export class Room implements IRoom {
     public dispose(): void {
         if (this._disposed) return;
 
+        // Its furniture still waiting for a download slot is no longer wanted.
+        GetRoomContentLoader().cancelDownloads(this._eventDispatcher);
+
+        this._floorStack.clear();
+        this._wallStack.clear();
+
         this.removeAllRoomObjectManagers();
 
         if (this._canvas) {
@@ -145,6 +238,12 @@ export class Room implements IRoom {
             this._canvas = undefined;
         }
 
+        this._areaHides.clear();
+        this._bufferedWiredEffects.clear();
+        this._stackingHeightMap = undefined;
+        this._tileObjectMap?.dispose();
+        this._tileObjectMap = undefined;
+        this._variableFx.dispose();
         this._model.dispose();
 
         this._disposed = true;
@@ -201,28 +300,15 @@ export class Room implements IRoom {
         if (this._canvas.geometry) this._canvas.geometry.scale = scale;
     }
 
-    public setRoomCanvasScale(scale: number, point: Point | undefined = undefined, offsetPoint: Point | undefined = undefined, exact: boolean = false): void {
-        if (!(GetConfigValue<boolean>('zoom.enabled') ?? false)) return;
-
-        if (!this._canvas || isNaN(scale)) return;
-
-        if (!exact) scale = scale < 1 ? 0.5 : Math.floor(scale);
-
-        this._canvas.setScale(scale, point, offsetPoint);
-
-        this.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.ROOM_ZOOMED, this._roomId));
-    }
-
-    public getRoomCanvasScale(): number {
-        return this._canvas?.scale ?? 1;
-    }
-
     public applyRoomMap(roomMap: IRoomMapData): void {
         if (!roomMap) return;
 
-        const floorType = '111';
-        const wallType = '201';
-        const landscapeType = '1';
+        // `initializeRoom`: the papers told while there was no room yet, else the defaults.
+        const floorType = this._pendingPlaneTypes.floor || '111';
+        const wallType = this._pendingPlaneTypes.wall || '201';
+        const landscapeType = this._pendingPlaneTypes.landscape || '1';
+
+        this._pendingPlaneTypes = {};
 
         this.removeRoomObject(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
 
@@ -329,13 +415,15 @@ export class Room implements IRoom {
             RoomObjectCategoryEnum.Cursor,
         );
 
-        if (GetConfigValue<boolean>('renderer.avatarArrowEnabled') ?? false) this.createRoomObjectAndInitalize(
+        // `RoomEngine`: the selection arrow only when the avatar widget is off - `!getBoolean("avatar.widget.enabled")`.
+        if (GetConfigValue<boolean>('avatar.widget.enabled') !== true) this.createRoomObjectAndInitalize(
             Room.ARROW_OBJECT_ID,
             Room.ARROW_OBJECT_TYPE,
             RoomObjectCategoryEnum.Cursor,
         );
 
-        // TODO update area hide
+        // Whatever the room was already hiding, put back onto the room object just built.
+        for (const areaHide of this._areaHides.values()) roomObject.processUpdateMessage(areaHide);
 
         this._isInitialized = true;
 
@@ -352,7 +440,15 @@ export class Room implements IRoom {
 
             if (!objects || !objects.length) continue;
 
-            for (const object of objects.getValues()) object?.logic?.update(time);
+            const snapshot = this._updateObjects;
+            const count = objects.length;
+
+            for (let i = 0; i < count; i++) snapshot[i] = objects.getWithIndex(i);
+
+            for (let i = 0; i < count; i++) snapshot[i]?.logic?.update(time);
+
+            // Not kept alive by the snapshot once removed from the room.
+            for (let i = 0; i < count; i++) snapshot[i] = undefined;
         }
 
         this._canvas?.render(time, update);
@@ -373,19 +469,29 @@ export class Room implements IRoom {
         screenPoint.x = Math.round(screenPoint.x);
         screenPoint.y = Math.round(screenPoint.y);
 
-        rectangle.x = (rectangle.x * canvas.scale);
-        rectangle.y = (rectangle.y * canvas.scale);
+        // Flash `RoomEngine.getCanvasTransformScale`: flipped rectangles keep positive extents.
+        const transformScale = canvas.isFlipped ? -canvas.scale : canvas.scale;
+
+        if (canvas.isFlipped) {
+            rectangle.x += rectangle.width;
+            rectangle.y += rectangle.height;
+        }
+
+        rectangle.x = (rectangle.x * transformScale);
+        rectangle.y = (rectangle.y * transformScale);
         rectangle.width = (rectangle.width * canvas.scale);
         rectangle.height = (rectangle.height * canvas.scale);
 
-        screenPoint.x = (screenPoint.x * canvas.scale);
-        screenPoint.y = (screenPoint.y * canvas.scale);
+        screenPoint.x = (screenPoint.x * transformScale);
+        screenPoint.y = (screenPoint.y * transformScale);
 
         rectangle.x += screenPoint.x;
         rectangle.y += screenPoint.y;
 
-        rectangle.x += (Math.round(canvas.width / 2) + canvas.screenOffsetX);
-        rectangle.y += (Math.round(canvas.height / 2) + canvas.screenOffsetY);
+        // The sprite canvas draws at `screenOffset + (point + canvasSize / 2) * scale` - the
+        // half-size centring lives inside the scaled display, so it scales too.
+        rectangle.x += ((canvas.width >> 1) * transformScale) + canvas.screenOffsetX;
+        rectangle.y += ((canvas.height >> 1) * transformScale) + canvas.screenOffsetY;
 
         return rectangle;
     }
@@ -393,7 +499,7 @@ export class Room implements IRoom {
     public getRoomInstanceRenderingCanvasOffset(): PointData {
         const offset = {
             x: 0,
-            y: 0
+            y: 0,
         };
 
         if (this._canvas) {
@@ -404,17 +510,48 @@ export class Room implements IRoom {
         return offset;
     }
 
+    /**
+     * The stacking height map is the UI's - it lives in the room store, which also validates
+     * placements against it - so the room only holds a reader onto it. Flash's `RoomEngine` kept
+     * its own `FurniStackingHeightMap` per room; this is the same lookup with the map elsewhere.
+     */
+    public setStackingHeightMap(map: IStackingHeightMapReader | undefined): void {
+        this._stackingHeightMap = map;
+    }
+
     public getTileHeight(x: number, y: number): number {
-        return -1;
+        return this._stackingHeightMap?.getTileHeight(x, y) ?? -1;
+    }
+
+    /**
+     * `RoomInstanceData.furniStackingHeightMap`'s setter: a new stacking height map comes with a
+     * new, empty tile object map of its size.
+     */
+    public resetTileObjectMap(width: number, height: number): void {
+        this._tileObjectMap?.dispose();
+        this._tileObjectMap = ((width > 0) && (height > 0)) ? new TileObjectMap(width, height) : undefined;
+    }
+
+    /** `RoomEngine.refreshTileObjectMap`: rebuilt from every floor object. */
+    public refreshTileObjectMap(): void {
+        this._tileObjectMap?.populate(this.getRoomObjectsForCategory(RoomObjectCategoryEnum.Floor));
+    }
+
+    public get tileObjectMap(): ITileObjectMap | undefined {
+        return this._tileObjectMap;
     }
 
     public setRoomInstanceRenderingCanvasOffset(point: PointData): boolean {
         if (!this._canvas || !point) return false;
 
-        if ((this._canvas.screenOffsetX === point.x) && (this._canvas.screenOffsetY === point.y)) return false;
+        // Flash `setRoomCanvasScreenOffset` passes the point on unrounded; the camera's eased location is fractional.
+        const x = point.x;
+        const y = point.y;
 
-        this._canvas.screenOffsetX = point.x;
-        this._canvas.screenOffsetY = point.y;
+        if ((this._canvas.screenOffsetX === x) && (this._canvas.screenOffsetY === y)) return false;
+
+        this._canvas.screenOffsetX = x;
+        this._canvas.screenOffsetY = y;
 
         return true;
     }
@@ -445,15 +582,24 @@ export class Room implements IRoom {
         if (roomObject) return roomObject;
 
         switch (category) {
+            // Flash `RoomEngine.getObject`: furniture still queued is built now.
             case RoomObjectCategoryEnum.Floor: {
-                if (!this.addFurnitureFloorFromData(this._floorStack[objectId])) return undefined;
+                const data = this._floorStack.get(objectId);
+
+                this._floorStack.delete(objectId);
+
+                if (!data || !this.addFurnitureFloorFromData(data)) return undefined;
 
                 roomObject = this.getRoomObjectManager(category).getObject(objectId);
 
                 break;
             }
             case RoomObjectCategoryEnum.Wall: {
-                if (!this.addFurnitureWallFromData(this._wallStack[objectId])) return undefined;
+                const data = this._wallStack.get(objectId);
+
+                this._wallStack.delete(objectId);
+
+                if (!data || !this.addFurnitureWallFromData(data)) return undefined;
 
                 roomObject = this.getRoomObjectManager(category).getObject(objectId);
 
@@ -514,7 +660,12 @@ export class Room implements IRoom {
     }
 
     public removeRoomObject(objectId: number, category: RoomObjectCategoryEnum): void {
-        const roomObject = this.getRoomObject(objectId, category);
+        // Flash `disposeObjectFurniture` / `disposeObjectWallItem`: queued data is dropped first, so
+        // furniture removed before it was built is never built.
+        if (category === RoomObjectCategoryEnum.Floor) this._floorStack.delete(objectId);
+        else if (category === RoomObjectCategoryEnum.Wall) this._wallStack.delete(objectId);
+
+        const roomObject = this.getRoomObjectManager(category)?.getObject(objectId);
 
         if (!roomObject) return;
 
@@ -581,6 +732,8 @@ export class Room implements IRoom {
 
         object.setVisualization(visualization);
 
+        this.assignVariableFxRoomData(visualization, category);
+
         const logic = GetRoomObjectLogicFactory().getLogic(logicType);
 
         if (logic) {
@@ -588,6 +741,8 @@ export class Room implements IRoom {
 
             object.setLogic(logic);
             object.logic.initialize(asset?.data ?? undefined);
+
+            this.assignVariableFxLogicManager(logic, category);
         }
 
         if (!isLoading) {
@@ -618,9 +773,14 @@ export class Room implements IRoom {
             }
         }
 
-        //EventStore.getState().emit(new RoomEngineObjectEvent(RoomEngineObjectEvent.CONTENT_UPDATED, id, objectId, category));
+        if (category === RoomObjectCategoryEnum.Floor) this.restoreFurnitureLabelOrRegion(object);
 
-        //this.addObjectToTileMap(id, object);
+        this.restoreWiredEffects(object, category);
+
+        this.dispatchEvent(new RoomEngineObjectEvent(RoomEngineObjectEvent.CONTENT_UPDATED, this._roomId, objectId, category));
+
+        // Only an object that is ready goes in, so one made before it has a location does not.
+        this._tileObjectMap?.addRoomObject(object);
     }
 
     public reinitializeRoomObjectsByType(type: string): void {
@@ -633,20 +793,25 @@ export class Room implements IRoom {
         const visualizationData = GetRoomObjectVisualizationFactory().getVisualizationData(
             type,
             asset.data.visualizationType,
-            asset.data
+            asset.data,
         );
 
-        for (const [category, manager] of this._objectManagers.entries()) {
+        for (const [ category, manager ] of this._objectManagers.entries()) {
             for (const object of manager.objects.getValues()) {
                 if (!object || object.type !== type) continue;
 
-                const visualization = GetRoomObjectVisualizationFactory().getVisualization(asset.data.visualizationType)
+                const visualization = GetRoomObjectVisualizationFactory().getVisualization(asset.data.visualizationType);
 
                 if (visualization) {
                     visualization.asset = asset;
 
                     if (visualizationData && visualization.initialize(visualizationData)) {
+                        // The placeholder's visualization is thrown away here; a wired look put on it while the furni was still loading moves over.
+                        if ((object.visualization instanceof FurnitureVisualization) && (visualization instanceof FurnitureVisualization)) visualization.filters = object.visualization.filters;
+
                         object.setVisualization(visualization);
+
+                        this.assignVariableFxRoomData(visualization, category);
 
                         const logic = GetRoomObjectLogicFactory().getLogic(asset.data.logicType);
 
@@ -655,31 +820,152 @@ export class Room implements IRoom {
 
                             object.setLogic(logic);
                             logic.initialize(asset.data);
+
+                            this.assignVariableFxLogicManager(logic, category);
                         }
 
-                        this.objectInitialized(object.id, category);
-
+                        // Flash's `RoomManager` marks the object initialized before `objectInitialized`.
                         object.isReady = true;
+
+                        this.objectInitialized(object.id, category);
 
                         continue;
                     }
                 }
 
-                manager.removeObject(object.id);
+                // The whole removal: torn down and out of the room's index and the canvas cache too.
+                this.removeRoomObject(object.id, category);
             }
         }
     }
 
-    public initializeTemporaryObjectsByType(type: string) {
+    /** Users (avatars, pets, bots) draw from the user Variable FX tables; floor/wall items from the furniture ones. */
+    private assignVariableFxRoomData(visualization: IRoomObjectVisualization, category: RoomObjectCategoryEnum): void {
+        if (!isVariableFxVisualizationHost(visualization)) return;
 
+        visualization.variableFxRoomData = category === RoomObjectCategoryEnum.Unit ? this._variableFx.avatarVisualizationData : this._variableFx.furnitureVisualizationData;
+    }
+
+    private assignVariableFxLogicManager(logic: IRoomObjectEventHandler, category: RoomObjectCategoryEnum): void {
+        if (!(logic instanceof MovingObjectLogic)) return;
+
+        logic.variableFxLogicManager = category === RoomObjectCategoryEnum.Unit ? this._variableFx.avatarLogicManager : this._variableFx.furnitureLogicManager;
+    }
+
+    public updateVariableFxConfigs(configs: IVariableFxConfigUpdateData[]): void {
+        this._variableFx.updateConfigs(configs);
+    }
+
+    public removeVariableFxConfigs(configIds: number[]): void {
+        this._variableFx.removeConfigs(configIds);
+    }
+
+    public updateVariableFxStatuses(statuses: IVariableFxStatusUpdateData[]): void {
+        for (const status of statuses) {
+            const object = this.getVariableFxTarget(status.isUserEntity, status.entityId);
+
+            if (!object) continue;
+
+            object.processUpdateMessage(new RoomObjectVariableFxStatusUpdateMessage(status.configId, status.variableId, status.value, status.overrideMinValue, status.overrideMaxValue, new Map(status.extra), status.isInitialize));
+        }
+    }
+
+    public removeVariableFxStatuses(statuses: IVariableFxStatusRemoveData[]): void {
+        for (const status of statuses) {
+            const object = this.getVariableFxTarget(status.isUserEntity, status.entityId);
+
+            if (!object) continue;
+
+            object.processUpdateMessage(new RoomObjectVariableFxStatusRemoveMessage(status.configId, status.variableId));
+        }
+    }
+
+    private getVariableFxTarget(isUserEntity: boolean, entityId: number): IRoomObjectController | undefined {
+        if (isUserEntity) return this.getRoomObjectManager(RoomObjectCategoryEnum.Unit).getObject(entityId);
+
+        return this.getRoomObject(entityId, RoomObjectCategoryEnum.Floor) ?? this.getRoomObject(entityId, RoomObjectCategoryEnum.Wall);
     }
 
     public createRoomObjectFloor(id: number, type: string): IRoomObject | undefined {
-        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor);
+        return this.applyInvisibleFurniState(this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Floor));
     }
 
     public createRoomObjectWall(id: number, type: string): IRoomObject | undefined {
-        return this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Wall);
+        return this.applyInvisibleFurniState(this.createRoomObjectAndInitalize(id, type, RoomObjectCategoryEnum.Wall));
+    }
+
+    /**
+     * Flash `RoomEngine.setInvisibleFurni`: the room's "invisible furni" configuration item hides
+     * every furni layer tagged `invisible`. The flag is kept as a room value so furni placed
+     * afterwards pick it up (`applyInvisibleFurniState`), and pushed onto the furni already here.
+     */
+    public setInvisibleFurni(flag: boolean): void {
+        this.setRoomValue(RoomObjectVariableEnum.InvisibleFurni, flag ? 1 : 0);
+
+        for (const category of [ RoomObjectCategoryEnum.Floor, RoomObjectCategoryEnum.Wall ]) {
+            for (const object of this.getRoomObjectsForCategory(category)) object.model.setValue(RoomObjectVariableEnum.FurnitureInvisibleLayer, flag ? 1 : 0);
+        }
+    }
+
+    /**
+     * Flash `RoomEngine.setClickSettings`. The flags are read where Flash read them, at the top
+     * of `processRoomCanvasMouseEvent` (`RoomEventHandler.handleRoomCanvasMouseEvent` here): a
+     * click-through object never sees the mouse event and never claims its event id, so the next
+     * object under the pointer - other furni, or the floor tile - handles it instead.
+     *
+     * A category that becomes click-through also stops getting its roll-outs, so Flash dropped
+     * the button cursors its objects owned (`removeButtonMouseCursorOwners`). The cursor owners
+     * are kept by the UI here, which gives one up on `RoomObjectFurnitureActionEvent.MOUSE_ARROW`,
+     * so that is what each object of the category sends.
+     */
+    public setClickSettings(key: string, clickThroughUsers: boolean, clickThroughFurni: boolean): void {
+        const wasClickThroughUsers = this.clickThroughUsers;
+        const wasClickThroughFurni = this.clickThroughFurni;
+
+        if (clickThroughUsers) this._clickThroughUsers.add(key);
+        else this._clickThroughUsers.delete(key);
+
+        if (clickThroughFurni) this._clickThroughFurni.add(key);
+        else this._clickThroughFurni.delete(key);
+
+        if (!wasClickThroughUsers && clickThroughUsers) this.removeButtonMouseCursorOwners(RoomObjectCategoryEnum.Unit);
+
+        if (!wasClickThroughFurni && clickThroughFurni) {
+            this.removeButtonMouseCursorOwners(RoomObjectCategoryEnum.Floor);
+            this.removeButtonMouseCursorOwners(RoomObjectCategoryEnum.Wall);
+        }
+    }
+
+    private removeButtonMouseCursorOwners(category: RoomObjectCategoryEnum): void {
+        for (const object of this.getRoomObjectsForCategory(category)) this._eventHandler.handleRoomObjectEvent(new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.MOUSE_ARROW, object));
+    }
+
+    public get clickThroughUsers(): boolean {
+        return this._clickThroughUsers.size > 0;
+    }
+
+    public get clickThroughFurni(): boolean {
+        return this._clickThroughFurni.size > 0;
+    }
+
+    /** Flash `RoomEngine.setMoveBlocked`; its one writer is the area selection, while it is dragging. */
+    public setMoveBlocked(flag: boolean): void {
+        this._isMoveBlocked = flag;
+    }
+
+    public get isMoveBlocked(): boolean {
+        return this._isMoveBlocked;
+    }
+
+    /** Flash `RoomEngine.isRoomVariableActive`: a room value that is set and above zero. */
+    public isRoomVariableActive(key: RoomObjectVariableEnum): boolean {
+        return this.getRoomValue<number>(key) > 0;
+    }
+
+    private applyInvisibleFurniState(object: IRoomObject | undefined): IRoomObject | undefined {
+        object?.model.setValue(RoomObjectVariableEnum.FurnitureInvisibleLayer, this.isRoomVariableActive(RoomObjectVariableEnum.InvisibleFurni) ? 1 : 0);
+
+        return object;
     }
 
     public createRoomObjectUser(id: number, type: string): IRoomObject | undefined {
@@ -735,7 +1021,9 @@ export class Room implements IRoom {
         sizeZ: number = -1,
         typeId: number = -1,
     ): boolean {
-        this._floorStack[objectId] = {
+        // Flash `RoomEngine.addObjectFurniture`: queued (`RoomInstanceData.addFurnitureData`), not built.
+        this._floorStack.delete(objectId);
+        this._floorStack.set(objectId, {
             objectId,
             typeId,
             typeName,
@@ -749,12 +1037,8 @@ export class Room implements IRoom {
             ownerId,
             ownerName,
             realRoomObject,
-            sizeZ
-        };
-
-        this.addFurnitureFloorFromData(this._floorStack[objectId]);
-
-        delete this._floorStack[objectId];
+            sizeZ,
+        });
 
         return true;
     }
@@ -770,20 +1054,23 @@ export class Room implements IRoom {
 
         const roomObject = this.createRoomObjectFloor(data.objectId, typeName);
 
-        if (roomObject) {
-            roomObject.model.setValue(
-                RoomObjectVariableEnum.FurnitureColor,
-                GetRoomContentLoader().getFurnitureFloorColorIndex(data.typeId),
-            );
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureTypeId, data.typeId);
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAdUrl, '');
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureRealRoomObject, data.realRoomObject ? 1 : 0);
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, data.expires);
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpirtyTimestamp, GetTickerTime());
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureUsagePolicy, data.usagePolicy);
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerId, data.ownerId);
-            roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, data.ownerName);
-        }
+        // As `addFurnitureWallFromData` does: an object that could not be made is not updated, or
+        // `updateRoomObjectFloor` asks `getRoomObject`, which makes it from this same data again - forever.
+        if (!roomObject) return false;
+
+        roomObject.model.setValue(
+            RoomObjectVariableEnum.FurnitureColor,
+            GetRoomContentLoader().getFurnitureFloorColorIndex(data.typeId),
+        );
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureTypeId, data.typeId);
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAdUrl, GetRoomContentLoader().getRoomObjectAdUrl(typeName));
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureRealRoomObject, data.realRoomObject ? 1 : 0);
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, data.expires);
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTimestamp, GetTickerTime());
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureUsagePolicy, data.usagePolicy);
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerId, data.ownerId);
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, data.ownerName);
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExtra, data.extra);
 
         if (!this.updateRoomObjectFloor(data.objectId, data.location, data.direction, data.state, data.objectData, data.extra)) return false;
 
@@ -794,6 +1081,8 @@ export class Room implements IRoom {
         this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, data.objectId, RoomObjectCategoryEnum.Floor),
         );
+
+        if (roomObject.isReady) this._tileObjectMap?.addRoomObject(roomObject);
 
         return true;
     }
@@ -815,7 +1104,9 @@ export class Room implements IRoom {
 
         objectData.setString(data);
 
-        this._wallStack[objectId] = {
+        // Flash `RoomEngine.addObjectWallItem`: queued (`RoomInstanceData.addWallItemData`), not built.
+        this._wallStack.delete(objectId);
+        this._wallStack.set(objectId, {
             objectId,
             typeId,
             typeName: GetRoomContentLoader().getFurnitureWallNameForTypeId(typeId, objectData.getLegacyString()),
@@ -823,19 +1114,45 @@ export class Room implements IRoom {
             direction,
             state,
             objectData,
+            // Flash's wall `FurnitureData` takes `NaN` for the extra.
+            extra: NaN,
             expires,
             usagePolicy,
             ownerId,
             ownerName,
             realRoomObject,
-            sizeZ: -1
-        };
-
-        this.addFurnitureWallFromData(this._wallStack[objectId]);
-
-        delete this._wallStack[objectId];
+            sizeZ: -1,
+        });
 
         return true;
+    }
+
+    /**
+     * This room's part of Flash `RoomEngine.createRoomFurniture`: its queued floor items, then its
+     * wall items, built one at a time; every fourth, the frame's budget (measured from `startTime`)
+     * is checked and the rest waits for the next frame. Flash skips the check in game mode, which
+     * only SnowWar sets and the port does not have.
+     */
+    public createPendingFurniture(startTime: number, budgetMs: number): boolean {
+        let built = 0;
+
+        const outOfTime = () => ((++built % 4) === 0) && ((performance.now() - startTime) >= budgetMs);
+
+        for (const [ objectId, data ] of this._floorStack) {
+            this._floorStack.delete(objectId);
+            this.addFurnitureFloorFromData(data);
+
+            if (outOfTime()) return true;
+        }
+
+        for (const [ objectId, data ] of this._wallStack) {
+            this._wallStack.delete(objectId);
+            this.addFurnitureWallFromData(data);
+
+            if (outOfTime()) return true;
+        }
+
+        return false;
     }
 
     public addFurnitureWallFromData(data: IRoomFurnitureData): boolean {
@@ -850,15 +1167,18 @@ export class Room implements IRoom {
             GetRoomContentLoader().getFurnitureWallColorIndex(data.typeId),
         );
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureTypeId, data.typeId);
-        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAdUrl, '');
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAdUrl, GetRoomContentLoader().getRoomObjectAdUrl(data.typeName));
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureRealRoomObject, data.realRoomObject ? 1 : 0);
+        // `addObjectWallItem`: a wall item sorts by its own depth, not the tile it hangs over.
+        roomObject.model.setValue(RoomObjectVariableEnum.ObjectAccurateZValue, 1);
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, data.expires);
-        roomObject.model.setValue(RoomObjectVariableEnum.FigureExperienceTimestamp, GetTickerTime());
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTimestamp, GetTickerTime());
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureUsagePolicy, data.usagePolicy);
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerId, data.ownerId);
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureOwnerName, data.ownerName);
+        roomObject.model.setValue(RoomObjectVariableEnum.FurnitureExtra, data.extra);
 
-        if (!this.updateRoomObjectWall(data.objectId, data.location, data.direction, data.state, data.objectData.getLegacyString())) return false;
+        if (!this.updateRoomObjectWall(data.objectId, data.location, data.direction, data.state, data.objectData?.getLegacyString() ?? '')) return false;
 
         this.dispatchEvent(
             new RoomEngineObjectEvent(RoomEngineObjectEvent.ADDED, this._roomId, data.objectId, RoomObjectCategoryEnum.Wall),
@@ -927,12 +1247,162 @@ export class Room implements IRoom {
         return true;
     }
 
+    /**
+     * `RoomEngine.updateFurnitureColor` (`FurniRecolorUpdate`): writes the channels into each
+     * furni's map data, as strings, and hands the map back to the furni with its state and its
+     * unique serial, as a recolorable's logic reads them.
+     */
+    public updateFurnitureColor(objectIds: number[], red: number, green: number, blue: number): void {
+        for (const objectId of objectIds) {
+            const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
+
+            if (!object) continue;
+
+            const stuffData = new MapDataType();
+
+            stuffData.initializeFromRoomObjectModel(object.model);
+            stuffData.data['r'] = String(red);
+            stuffData.data['g'] = String(green);
+            stuffData.data['b'] = String(blue);
+
+            this.updateRoomObjectFloor(objectId, undefined, undefined, object.getState(0), stuffData);
+        }
+    }
+
+    /**
+     * `RoomEngine.replaceFurnitureLabelsAndRegions` (`FurnitureLabelsAndRegions`, every room
+     * entry): every buffered label goes, every ready furni loses its label or region, then each
+     * entry is applied or buffered. A widget hears of each furni whose label changed.
+     */
+    public replaceFurnitureLabelsAndRegions(entries: FurnitureLabelData[]): void {
+        this._bufferedLabels.clear();
+
+        for (const object of this.getRoomObjectsForCategory(RoomObjectCategoryEnum.Floor)) {
+            if (object.isReady && (this.applyFurnitureLabelOrRegion(object as IRoomObjectController, undefined) === 2)) this.dispatchFurnitureLabelUpdated(object.id);
+        }
+
+        for (const entry of entries) {
+            if (this.applyOrBufferFurnitureLabelOrRegion(entry) === 2) this.dispatchFurnitureLabelUpdated(entry.furnitureId);
+        }
+    }
+
+    /**
+     * `RoomEngine.updateFurnitureLabelsAndRegions` (`FurnitureLabelsAndRegionsUpdate`): each entry
+     * applied or buffered, then each removed furni loses its label or region, buffered or not.
+     */
+    public updateFurnitureLabelsAndRegions(addedOrUpdated: FurnitureLabelData[], removedIds: number[]): void {
+        for (const entry of addedOrUpdated) {
+            if (this.applyOrBufferFurnitureLabelOrRegion(entry) !== 0) this.dispatchFurnitureLabelUpdated(entry.furnitureId);
+        }
+
+        for (const objectId of removedIds) {
+            this._bufferedLabels.delete(objectId);
+
+            const object = this.getReadyFloorObject(objectId);
+
+            if (object && (this.applyFurnitureLabelOrRegion(object, undefined) === 2)) this.dispatchFurnitureLabelUpdated(objectId);
+        }
+    }
+
+    /** `applyOrBufferFurnitureLabelOrRegion`: a furni that is not ready keeps the entry until it is (0). */
+    private applyOrBufferFurnitureLabelOrRegion(entry: FurnitureLabelData): number {
+        const object = this.getReadyFloorObject(entry.furnitureId);
+
+        if (!object) {
+            this._bufferedLabels.set(entry.furnitureId, entry);
+
+            return 0;
+        }
+
+        this._bufferedLabels.delete(entry.furnitureId);
+
+        return this.applyFurnitureLabelOrRegion(object, entry);
+    }
+
+    /**
+     * `applyFurnitureLabelOrRegion`: only a furni whose asset has the `furniture_label` logic takes a
+     * label, and only one with `furniture_region` a region; the other kind is taken off. 2 when the
+     * furni's label changed (the widget reads it again), 1 when a label entry changed nothing it shows,
+     * 0 otherwise. Without an entry the furni loses whatever it had.
+     */
+    private applyFurnitureLabelOrRegion(object: IRoomObjectController, entry: FurnitureLabelData | undefined): number {
+        const logicType = GetRoomContentLoader().getCollection(object.type)?.data?.logicType;
+        const label = object.model.getValue<FurnitureLabelData | undefined>(RoomObjectVariableEnum.FurnitureLabelData);
+        const region = object.model.getValue<FurnitureRegionData | undefined>(RoomObjectVariableEnum.FurnitureRegionData);
+
+        if (entry instanceof FurnitureRegionData) {
+            if (logicType !== RoomObjectLogicType.FURNITURE_REGION) {
+                if ((logicType === RoomObjectLogicType.FURNITURE_LABEL) && label) {
+                    object.processUpdateMessage(new ObjectFurnitureLabelUpdateMessage(undefined));
+
+                    return 2;
+                }
+
+                return 0;
+            }
+
+            if (!region || !region.equals(entry)) object.processUpdateMessage(new ObjectFurnitureRegionUpdateMessage(entry));
+
+            return 0;
+        }
+
+        if (entry) {
+            if (logicType !== RoomObjectLogicType.FURNITURE_LABEL) {
+                if ((logicType === RoomObjectLogicType.FURNITURE_REGION) && region) object.processUpdateMessage(new ObjectFurnitureRegionUpdateMessage(undefined));
+
+                return 1;
+            }
+
+            if (!label || !label.equals(entry)) {
+                object.processUpdateMessage(new ObjectFurnitureLabelUpdateMessage(entry.text, entry.bubbleColor, entry.visibility, entry.alwaysOpen));
+
+                return 2;
+            }
+
+            return 1;
+        }
+
+        if (logicType === RoomObjectLogicType.FURNITURE_LABEL) {
+            if (label) {
+                object.processUpdateMessage(new ObjectFurnitureLabelUpdateMessage(undefined));
+
+                return 2;
+            }
+        } else if ((logicType === RoomObjectLogicType.FURNITURE_REGION) && region) {
+            object.processUpdateMessage(new ObjectFurnitureRegionUpdateMessage(undefined));
+        }
+
+        return 0;
+    }
+
+    /** `restoreFurnitureLabelData` / `restoreFurnitureRegionData`: a furni just ready takes what was kept for it. */
+    private restoreFurnitureLabelOrRegion(object: IRoomObjectController): void {
+        const entry = this._bufferedLabels.get(object.id);
+
+        if (!entry) return;
+
+        this._bufferedLabels.delete(object.id);
+
+        if (this.applyFurnitureLabelOrRegion(object, entry) === 2) this.dispatchFurnitureLabelUpdated(object.id);
+    }
+
+    /** `getReadyRoomObject`: a floor furni already built and ready, without building a queued one. */
+    private getReadyFloorObject(objectId: number): IRoomObjectController | undefined {
+        const object = this.getRoomObjectManager(RoomObjectCategoryEnum.Floor)?.getObject(objectId);
+
+        return object?.isReady ? object : undefined;
+    }
+
+    private dispatchFurnitureLabelUpdated(furnitureId: number): void {
+        this.dispatchEvent(new RoomEngineFurnitureLabelEvent(RoomEngineFurnitureLabelEvent.UPDATED, this._roomId, furnitureId));
+    }
+
     public updateRoomObjectWall(
         objectId: number,
         location: IVector3D | undefined,
         direction: IVector3D | undefined,
         state: number,
-        data: string
+        data: string,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -952,7 +1422,7 @@ export class Room implements IRoom {
 
     public updateRoomObjectWallLocation(
         objectId: number,
-        location: IVector3D | undefined
+        location: IVector3D | undefined,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -968,7 +1438,7 @@ export class Room implements IRoom {
     public updateRoomObjectWallState(
         objectId: number,
         state: number,
-        data: string
+        data: string,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -985,7 +1455,7 @@ export class Room implements IRoom {
 
     public updateRoomObjectWallItemData(
         objectId: number,
-        data: string
+        data: string,
     ): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -1049,7 +1519,7 @@ export class Room implements IRoom {
 
         roomObject.model.setValue(RoomObjectVariableEnum.FurnitureAutomaticStateIndex, stateIndex);
 
-        const dataKey = roomObject.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat)
+        const dataKey = roomObject.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat);
         const data = GetObjectDataForFlags(dataKey);
 
         data.initializeFromRoomObjectModel(roomObject.model);
@@ -1059,10 +1529,87 @@ export class Room implements IRoom {
         return true;
     }
 
-    public updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean {
+    public updateRoomObjectRoomColor(color: number, light: number, backgroundOnly: boolean): boolean {
         const room = this.getRoomObjectRoom();
 
         if (!room) return false;
+
+        room.processUpdateMessage(new ObjectRoomColorUpdateMessage(ObjectRoomColorUpdateMessage.BACKGROUND_COLOR, color, light, backgroundOnly));
+
+        // `RoomEngine.updateObjectRoomColor`: the room view tints itself from this (`RoomUI`'s `REE_ROOM_COLOR`).
+        this.dispatchEvent(new RoomBackgroundColorEvent(this._roomId, color, light, backgroundOnly));
+
+        return true;
+    }
+
+    /**
+     * A furni hiding - or revealing - the area it covers. The area is a hole in the room's floor
+     * plane, so the work lands on the room object rather than on the furni that asked for it,
+     * exactly as `RoomEngine.updateAreaHide` did.
+     *
+     * An inverted area hides everything *outside* itself, which the plane parser keeps as a
+     * separate set of holes; that is the only thing `invert` decides here.
+     */
+    public updateAreaHide(furniId: number, on: boolean, rootX: number, rootY: number, width: number, length: number, invert: boolean): boolean {
+        const message = on
+            ? new ObjectRoomFloorHoleUpdateMessage(ObjectRoomFloorHoleUpdateMessage.ADD, furniId, rootX, rootY, width, length, invert)
+            : new ObjectRoomFloorHoleUpdateMessage(ObjectRoomFloorHoleUpdateMessage.REMOVE, furniId);
+
+        if (on) this._areaHides.set(furniId, message);
+        else this._areaHides.delete(furniId);
+
+        const room = this.getRoomObjectRoom();
+
+        if (!room) return false;
+
+        room.processUpdateMessage(message);
+
+        return true;
+    }
+
+    /**
+     * `RoomEngine.addFloorHole`: a floor hole furni opening the tiles it stands on. Unlike an area
+     * hide the hole is the furni's own footprint - its location and `furniture_size_x` /
+     * `_size_y` as they are now - and a negative id (a previewed or carried object) opens nothing.
+     */
+    public addFloorHole(objectId: number): void {
+        if (objectId < 0) return;
+
+        const room = this.getRoomObjectRoom();
+        const furni = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
+
+        if (!room || !furni) return;
+
+        const location = furni.getLocation();
+
+        room.processUpdateMessage(new ObjectRoomFloorHoleUpdateMessage(
+            ObjectRoomFloorHoleUpdateMessage.ADD,
+            objectId,
+            Math.trunc(location.x),
+            Math.trunc(location.y),
+            Math.trunc(furni.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeX)),
+            Math.trunc(furni.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeY)),
+        ));
+    }
+
+    /** `RoomEngine.removeFloorHole`. */
+    public removeFloorHole(objectId: number): void {
+        if (objectId < 0) return;
+
+        this.getRoomObjectRoom()?.processUpdateMessage(new ObjectRoomFloorHoleUpdateMessage(ObjectRoomFloorHoleUpdateMessage.REMOVE, objectId));
+    }
+
+    public updateRoomPlaneType(floorType: string | undefined, wallType: string | undefined, landscapeType: string | undefined): boolean {
+        const room = this.getRoomObjectRoom();
+
+        // `RoomEngine.updateObjectRoom`: no room object yet, so the room keeps them for `applyRoomMap`.
+        if (!room) {
+            if (floorType) this._pendingPlaneTypes.floor = floorType;
+            if (wallType) this._pendingPlaneTypes.wall = wallType;
+            if (landscapeType) this._pendingPlaneTypes.landscape = landscapeType;
+
+            return true;
+        }
 
         if (floorType && floorType.length) room.processUpdateMessage(new ObjectRoomUpdateMessage(ObjectRoomUpdateMessage.ROOM_FLOOR_UPDATE, floorType));
 
@@ -1101,7 +1648,7 @@ export class Room implements IRoom {
         if (!object) return false;
 
         object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, expires);
-        object.model.setValue(RoomObjectVariableEnum.FurnitureExpirtyTimestamp, GetTickerTime());
+        object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTimestamp, GetTickerTime());
 
         return true;
     }
@@ -1112,7 +1659,7 @@ export class Room implements IRoom {
         if (!object) return false;
 
         object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTime, expires);
-        object.model.setValue(RoomObjectVariableEnum.FurnitureExpirtyTimestamp, GetTickerTime());
+        object.model.setValue(RoomObjectVariableEnum.FurnitureExpiryTimestamp, GetTickerTime());
 
         return true;
     }
@@ -1127,16 +1674,12 @@ export class Room implements IRoom {
 
         if (isNaN(headDirection)) headDirection = object.model.getValue<number>(RoomObjectVariableEnum.HeadDirection);
 
-        // TODO fixedUserLocation
+        // `RoomEngine.updateObjectUser`: both ends of the walk sit on the real floor, not the stacking map.
+        object.processUpdateMessage(new ObjectAvatarUpdateMessage(this.fixedUserLocation(location), this.fixedUserLocation(target), direction, headDirection, canStandUp, baseY, jumpingPower, false, animationTime, skipPositionUpdate));
 
-        object.processUpdateMessage(new ObjectAvatarUpdateMessage(location, target, direction, headDirection, canStandUp, baseY, jumpingPower, false, animationTime, skipPositionUpdate));
-
-        const ownRoomIndex = false;
-
-        if (ownRoomIndex) {
-            // TODO
-            this.dispatchEvent(new RoomToObjectOwnAvatarMoveEvent(RoomToObjectOwnAvatarMoveEvent.ROAME_MOVE_TO, target));
-        }
+        // `RoomEngine.updateObjectUser`: where the own avatar is heading goes out to every furni
+        // logic, unfixed - `FurnitureChangeStateWhenStepOnLogic` lights up under it.
+        if (objectId === this._ownUserRoomIndex) this.dispatchEvent(new RoomToObjectOwnAvatarMoveEvent(RoomToObjectOwnAvatarMoveEvent.ROAME_MOVE_TO, target));
 
         return true;
     }
@@ -1151,7 +1694,14 @@ export class Room implements IRoom {
         return true;
     }
 
+    /**
+     * Marks the avatar at `objectId` as the user's own (`RoomEngine.updateObjectUserOwnUserAvatar`)
+     * and records its index, as `RoomEngine.setOwnUserId` put it on the session, for
+     * `updateRoomObjectUser` to tell the furniture about.
+     */
     public updateRoomObjectUserOwn(objectId: number): boolean {
+        this._ownUserRoomIndex = objectId;
+
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (!object) return false;
@@ -1161,10 +1711,24 @@ export class Room implements IRoom {
         return true;
     }
 
+    /** Flash `RoomEngine.updateObjectUserBlocked`: swaps the avatar to or from the generic blocked figure. */
+    public updateRoomObjectUserBlocked(objectId: number, isBlocked: boolean): boolean {
+        const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+
+        if (!object) return false;
+
+        object.processUpdateMessage(new ObjectAvatarBlockedUpdateMessage(isBlocked));
+
+        return true;
+    }
+
     public updateRoomObjectUserAction(objectId: number, action: RoomObjectVariableEnum, value: number, parameter: string = ''): boolean {
         const object = this.getRoomObject(objectId, RoomObjectCategoryEnum.Unit);
 
         if (!object) return false;
+
+        // Flash `userIsBlocked`: a blocked user's dances, signs and hand items are not shown.
+        if (object.model.getValue<number>(RoomObjectVariableEnum.Blocked) > 0) return false;
 
         let message: ObjectStateUpdateMessage | undefined = undefined;
 
@@ -1202,11 +1766,16 @@ export class Room implements IRoom {
             case RoomObjectVariableEnum.FigureExpression:
                 message = new ObjectAvatarExpressionUpdateMessage(value);
                 break;
-            case RoomObjectVariableEnum.IsPlayingGame:
+            // Flash's case is `figure_is_playing_game`, the key the message writes; `is_playing_game` is the room's own
+            case RoomObjectVariableEnum.FigureIsPlayingGame:
                 message = new ObjectAvatarPlayingGameUpdateMessage(value === 1);
                 break;
             case RoomObjectVariableEnum.FigureGuideStatus:
                 message = new ObjectAvatarGuideStatusUpdateMessage(value);
+                break;
+            // Flash `RoomUI.onRoomUseHabbicon`; no packet here plays one yet (see AvatarLogic)
+            case RoomObjectVariableEnum.FigureHabbicon:
+                message = new ObjectAvatarHabbiconUpdateMessage(value);
                 break;
         }
 
@@ -1277,79 +1846,26 @@ export class Room implements IRoom {
         return true;
     }
 
-    public removeRoomObjectFloor(objectId: number, isOwner: boolean = false): void {
-        if (isOwner && !FurniId.isBuilderClubId(objectId)) {
-            const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Floor);
+    /**
+     * `RoomEngine.disposeObjectFurniture`; the flight of a picked up item to the toolbar is the client's (`createPickupTransition`).
+     * Taken away by the invisible furni manager, a ready furni's label or region is kept for when it
+     * comes back (`BufferedRoomObjectModelDataManager.captureObject`); otherwise it goes with it (`clearObject`).
+     */
+    public removeRoomObjectFloor(objectId: number, byInvisibleFurniManager: boolean = false): void {
+        const object = this.getRoomObjectManager(RoomObjectCategoryEnum.Floor)?.getObject(objectId);
+        const captured = (byInvisibleFurniManager && object?.isReady) ? (object.model.getValue<FurnitureLabelData | undefined>(RoomObjectVariableEnum.FurnitureLabelData) ?? object.model.getValue<FurnitureRegionData | undefined>(RoomObjectVariableEnum.FurnitureRegionData)) : undefined;
 
-            if (roomObject) {
-                const screenLocation = this.getRoomObjectScreenLocation(objectId, RoomObjectCategoryEnum.Floor);
+        if (captured) this._bufferedLabels.set(objectId, captured);
+        else if (!byInvisibleFurniManager) this._bufferedLabels.delete(objectId);
 
-                if (screenLocation) {
-                    const disabledPickingAnimation =
-                        roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureDisablePickingAnimation) ===
-                        1;
-
-                    if (!disabledPickingAnimation) {
-                        const typeId = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureTypeId);
-                        const extras = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
-                        const dataKey = roomObject.model.getValue<ObjectDataFlagsEnum>(RoomObjectVariableEnum.FurnitureDataFormat);
-                        const objectData = GetObjectDataForFlags(dataKey);
-                        /* const icon = this.getFurnitureFloorIcon(typeId, null, extras, objectData).data;
-
-                        if (icon) {
-                            (async () => {
-                                const image = await TextureUtils.generateImage(icon);
-                                const event = new NitroToolbarAnimateIconEvent(
-                                    image,
-                                    screenLocation.x,
-                                    screenLocation.y,
-                                );
-
-                                event.iconName = ToolbarIconEnum.INVENTORY;
-
-                                EventStore.getState().emit(event);
-                            })();
-                        } */
-                    }
-                }
-            }
-        }
+        this.captureOrClearWiredEffects(objectId, RoomObjectCategoryEnum.Floor, byInvisibleFurniManager, object);
 
         this.removeRoomObject(objectId, RoomObjectCategoryEnum.Floor);
     }
 
-    public removeRoomObjectWall(objectId: number, isOwner: boolean = false): void {
-        if (isOwner && !FurniId.isBuilderClubId(objectId)) {
-            const roomObject = this.getRoomObject(objectId, RoomObjectCategoryEnum.Wall);
-
-            if (
-                roomObject &&
-                roomObject.type.indexOf('post_it') === -1 &&
-                roomObject.type.indexOf('external_image_wallitem') === -1
-            ) {
-                const screenLocation = this.getRoomObjectScreenLocation(objectId, RoomObjectCategoryEnum.Wall);
-
-                if (screenLocation) {
-                    const typeId = roomObject.model.getValue<number>(RoomObjectVariableEnum.FurnitureTypeId);
-                    const objectData = roomObject.model.getValue<string>(RoomObjectVariableEnum.FurnitureData);
-                    /* const icon = this.getFurnitureWallIcon(typeId, null, objectData).data;
-
-                    if (icon)
-                    {
-                        (async () =>
-                        {
-                            const image = await TextureUtils.generateImage(icon);
-
-                            const event = new NitroToolbarAnimateIconEvent(image, screenLocation.x, screenLocation.y);
-
-                            event.iconName = ToolbarIconEnum.INVENTORY;
-
-                            EventStore.getState().emit(event);
-                        })();
-                    } */
-                }
-            }
-        }
+    /** `RoomEngine.disposeObjectWallItem`; the flight of a picked up item to the toolbar is the client's (`createPickupTransition`). */
+    public removeRoomObjectWall(objectId: number): void {
+        this.captureOrClearWiredEffects(objectId, RoomObjectCategoryEnum.Wall, false, undefined);
 
         this.removeRoomObject(objectId, RoomObjectCategoryEnum.Wall);
 
@@ -1357,7 +1873,114 @@ export class Room implements IRoom {
     }
 
     public removeRoomObjectUser(objectId: number): void {
+        this.captureOrClearWiredEffects(objectId, RoomObjectCategoryEnum.Unit, false, undefined);
+
         this.removeRoomObject(objectId, RoomObjectCategoryEnum.Unit);
+    }
+
+    /** `RoomEngine.updateWiredFurniTransparency`: a negative id is a wall item. */
+    public updateWiredFurniTransparency(furniIds: number[], transparency: number, allowClickThrough: boolean, easingMode: number): void {
+        for (const furniId of furniIds) this.applyOrBufferWiredEffect(Room.getWiredFurniCategory(furniId), Math.abs(furniId), new WiredFurnitureTransparencyData(transparency, allowClickThrough, easingMode), false);
+    }
+
+    /** `RoomEngine.updateWiredFurniHighlight`: a negative id is a wall item. */
+    public updateWiredFurniHighlight(furniIds: number[], highlightType: number, strength: number, color: number, animationMode: number, easingMode: number): void {
+        for (const furniId of furniIds) this.applyOrBufferWiredEffect(Room.getWiredFurniCategory(furniId), Math.abs(furniId), new WiredFurnitureHighlightData(highlightType, strength, color, animationMode, easingMode), false);
+    }
+
+    /** `RoomEngine.initializeWiredFurniVisualizationStates`: the room's states on entry, applied without easing. */
+    public initializeWiredFurniVisualizationStates(transparencies: IWiredVisualizationStateEntry<WiredFurnitureTransparencyData>[], highlights: IWiredVisualizationStateEntry<WiredFurnitureHighlightData>[]): void {
+        for (const entry of transparencies) this.applyOrBufferWiredEffect(Room.getWiredFurniCategory(entry.id), Math.abs(entry.id), entry.data, true);
+        for (const entry of highlights) this.applyOrBufferWiredEffect(Room.getWiredFurniCategory(entry.id), Math.abs(entry.id), entry.data, true);
+    }
+
+    /** `RoomEngine.updateWiredUserTransparency`, by room index (users, pets and bots). */
+    public updateWiredUserTransparency(roomIndices: number[], transparency: number, allowClickThrough: boolean, easingMode: number): void {
+        for (const roomIndex of roomIndices) this.applyOrBufferWiredEffect(RoomObjectCategoryEnum.Unit, roomIndex, new WiredFurnitureTransparencyData(transparency, allowClickThrough, easingMode), false);
+    }
+
+    /** `RoomEngine.updateWiredUserHighlight`, by room index (users, pets and bots). */
+    public updateWiredUserHighlight(roomIndices: number[], highlightType: number, strength: number, color: number, animationMode: number, easingMode: number): void {
+        for (const roomIndex of roomIndices) this.applyOrBufferWiredEffect(RoomObjectCategoryEnum.Unit, roomIndex, new WiredFurnitureHighlightData(highlightType, strength, color, animationMode, easingMode), false);
+    }
+
+    /** `RoomEngine.initializeWiredUserVisualizationStates`. */
+    public initializeWiredUserVisualizationStates(transparencies: IWiredVisualizationStateEntry<WiredFurnitureTransparencyData>[], highlights: IWiredVisualizationStateEntry<WiredFurnitureHighlightData>[]): void {
+        for (const entry of transparencies) this.applyOrBufferWiredEffect(RoomObjectCategoryEnum.Unit, entry.id, entry.data, true);
+        for (const entry of highlights) this.applyOrBufferWiredEffect(RoomObjectCategoryEnum.Unit, entry.id, entry.data, true);
+    }
+
+    /** `getWiredFurniCategory`: WIRED sends wall items with a negative id. */
+    private static getWiredFurniCategory(furniId: number): RoomObjectCategoryEnum {
+        return (furniId < 0) ? RoomObjectCategoryEnum.Wall : RoomObjectCategoryEnum.Floor;
+    }
+
+    /** `applyOrBufferWiredFurniTransparency` / `applyOrBufferWiredFurniHighlight` and their user twins. */
+    private applyOrBufferWiredEffect(category: RoomObjectCategoryEnum, objectId: number, data: WiredFurnitureTransparencyData | WiredFurnitureHighlightData, initialize: boolean): void {
+        const key = `${category}:${objectId}`;
+        const object = this.getRoomObjectManager(category)?.getObject(objectId);
+
+        if (!object?.isReady) {
+            const buffered = this._bufferedWiredEffects.get(key) ?? {};
+
+            if (data instanceof WiredFurnitureTransparencyData) buffered.transparency = data;
+            else buffered.highlight = data;
+
+            this._bufferedWiredEffects.set(key, buffered);
+
+            return;
+        }
+
+        const buffered = this._bufferedWiredEffects.get(key);
+
+        if (buffered) {
+            if (data instanceof WiredFurnitureTransparencyData) buffered.transparency = undefined;
+            else buffered.highlight = undefined;
+
+            if (!buffered.transparency && !buffered.highlight) this._bufferedWiredEffects.delete(key);
+        }
+
+        Room.applyWiredEffect(object, data, initialize);
+    }
+
+    private static applyWiredEffect(object: IRoomObjectController, data: WiredFurnitureTransparencyData | WiredFurnitureHighlightData, initialize: boolean): void {
+        if (data instanceof WiredFurnitureTransparencyData) object.processUpdateMessage(new RoomObjectFurnitureTransparencyUpdateMessage(data.transparency, data.allowClickThrough, data.easingMode, initialize));
+        else object.processUpdateMessage(new RoomObjectFurnitureHighlightUpdateMessage(data.highlightType, data.strength, data.color, data.animationMode, data.easingMode, initialize));
+    }
+
+    /** `restoreWiredFurnitureTransparencyData` / `restoreWiredFurnitureHighlightData`: applied without easing. */
+    private restoreWiredEffects(object: IRoomObjectController, category: RoomObjectCategoryEnum): void {
+        const key = `${category}:${object.id}`;
+        const buffered = this._bufferedWiredEffects.get(key);
+
+        if (!buffered) return;
+
+        this._bufferedWiredEffects.delete(key);
+
+        if (buffered.transparency) Room.applyWiredEffect(object, buffered.transparency, true);
+        if (buffered.highlight) Room.applyWiredEffect(object, buffered.highlight, true);
+    }
+
+    /**
+     * `captureWiredFurnitureTransparencyData` / `captureWiredFurnitureHighlightData`: a furni the invisible furni
+     * manager takes away keeps its state; any other removal forgets it (`BufferedRoomObjectModelDataManager.clearObject`).
+     */
+    private captureOrClearWiredEffects(objectId: number, category: RoomObjectCategoryEnum, capture: boolean, capturedFrom: IRoomObjectController | undefined): void {
+        const key = `${category}:${objectId}`;
+
+        if (!capture) {
+            this._bufferedWiredEffects.delete(key);
+
+            return;
+        }
+
+        if (!capturedFrom?.isReady) return;
+
+        const transparency = capturedFrom.model.getValue<WiredFurnitureTransparencyData | undefined>(RoomObjectVariableEnum.FurnitureWiredTransparencyData);
+        const highlight = capturedFrom.model.getValue<WiredFurnitureHighlightData | undefined>(RoomObjectVariableEnum.FurnitureWiredHighlightData);
+
+        if (transparency || highlight) this._bufferedWiredEffects.set(key, { transparency, highlight });
+        else this._bufferedWiredEffects.delete(key);
     }
 
     public getRoomObjectScreenLocation(objectId: number, category: RoomObjectCategoryEnum): PointData | undefined {
@@ -1367,11 +1990,13 @@ export class Room implements IRoom {
 
         const screenPoint = this._canvas.geometry.getScreenPoint(roomObject.getLocation());
 
-        screenPoint.x = screenPoint.x * this._canvas.scale;
-        screenPoint.y = screenPoint.y * this._canvas.scale;
+        const transformScale = this._canvas.isFlipped ? -this._canvas.scale : this._canvas.scale;
 
-        screenPoint.x += this._canvas.width / 2 + this._canvas.screenOffsetX;
-        screenPoint.y += this._canvas.height / 2 + this._canvas.screenOffsetY;
+        screenPoint.x = screenPoint.x * transformScale;
+        screenPoint.y = screenPoint.y * transformScale;
+
+        screenPoint.x += ((this._canvas.width >> 1) * transformScale) + this._canvas.screenOffsetX;
+        screenPoint.y += ((this._canvas.height >> 1) * transformScale) + this._canvas.screenOffsetY;
 
         screenPoint.x = Math.round(screenPoint.x);
         screenPoint.y = Math.round(screenPoint.y);
@@ -1380,11 +2005,18 @@ export class Room implements IRoom {
     }
 
     public async getRoomObjectImage(objectId: number, category: RoomObjectCategoryEnum, direction: IVector3D, scale: RoomGeometryScaleType): Promise<ImageLike | undefined> {
+        const args = this.getRoomObjectImageArgs(objectId, category);
+
+        if (!args) return undefined;
+
+        return await GetRoomEngine().getGenericRoomObjectImage(args.type, args.value, direction, scale, undefined, args.extras, args.data);
+    }
+
+    private getRoomObjectImageArgs(objectId: number, category: RoomObjectCategoryEnum): { type: string; value: string; extras: number | undefined; data: IObjectData | undefined } | undefined {
         const roomObject = this.getRoomObject(objectId, category);
 
         if (!roomObject) return undefined;
 
-        const id = roomObject.id;
         const type: string = roomObject.type;
 
         let value: string = '';
@@ -1413,25 +2045,23 @@ export class Room implements IRoom {
             }
         }
 
-        return await GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, undefined, extras, data);
+        return { type, value, extras, data };
     }
 
     public async getRoomObjectPetImage(typeId: number, paletteId: number, color: number, direction: IVector3D, scale: RoomGeometryScaleType, headOnly: boolean = false, customParts: IPetCustomPart[] = [], posture: string | undefined = undefined): Promise<ImageLike | undefined> {
+        const args = this.getRoomObjectPetImageArgs(typeId, paletteId, color, headOnly, customParts);
+
+        if (!args) return undefined;
+
+        return await GetRoomEngine().getGenericRoomObjectImage(args.type, args.value, direction, scale, undefined, 0, undefined, 0, 0, posture);
+    }
+
+    private getRoomObjectPetImageArgs(typeId: number, paletteId: number, color: number, headOnly: boolean, customParts: IPetCustomPart[]): { type: string; value: string } | undefined {
         const type = GetRoomContentLoader().getPetNameForType(typeId);
 
         if (!type) return undefined;
 
-        let value = `${typeId} ${paletteId} ${color.toString(16)}`;
-
-        if (headOnly) value = `${value} head`;
-
-        if (customParts) {
-            value = `${value} ${customParts.length}`;
-
-            for (const part of customParts) value = `${value} ${part.layerId} ${part.partId} ${part.paletteId}`;
-        }
-
-        return await GetRoomEngine().getGenericRoomObjectImage(type, value, direction, scale, undefined, 0, undefined, 0, 0, posture);
+        return { type, value: petImageValue(typeId, paletteId, color, headOnly, customParts) };
     }
 
     public async setRoomOverlayIconSprite(objectId: number, category: RoomObjectCategoryEnum, realRoomObject: boolean, extra: string = '', posture: string = ''): Promise<void> {
@@ -1439,10 +2069,14 @@ export class Room implements IRoom {
         let type: string | undefined = undefined;
         let colorIndex = 0;
 
-        let image: ImageLike | undefined = undefined;
+        // The overlay icon is a sprite in this canvas: render straight to a texture, never through a base64 `<img>`.
+        const engine = GetRoomEngine();
+        let texture: Texture | undefined = undefined;
 
         if (realRoomObject) {
-            image = await this.getRoomObjectImage(objectId, category, new Vector3d(), RoomGeometryScaleType.Icon);
+            const args = this.getRoomObjectImageArgs(objectId, category);
+
+            if (args) texture = await engine.getGenericRoomObjectTexture(args.type, args.value, new Vector3d(), RoomGeometryScaleType.Icon, undefined, args.extras, args.data);
         } else {
             if (category === RoomObjectCategoryEnum.Floor) {
                 type = roomContentLoader.getFurnitureFloorNameForTypeId(objectId);
@@ -1457,20 +2091,21 @@ export class Room implements IRoom {
 
                 if (type === RoomObjectUserTypeName.Pet) {
                     const petFigureData = new PetFigureData(extra);
+                    const args = this.getRoomObjectPetImageArgs(petFigureData.typeId, petFigureData.paletteId, petFigureData.color, true, petFigureData.customParts);
 
-                    image = await this.getRoomObjectPetImage(petFigureData.typeId, petFigureData.paletteId, petFigureData.color, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, true, petFigureData.customParts, posture);
+                    if (args) texture = await engine.getGenericRoomObjectTexture(args.type, args.value, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, undefined, 0, undefined, 0, 0, posture);
                 } else {
-                    image = await GetRoomEngine().getGenericRoomObjectImage(type!, extra, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, undefined, 0, undefined, 0, 0, posture);
+                    texture = await engine.getGenericRoomObjectTexture(type!, extra, new Vector3d(180), RoomGeometryScaleType.ZoomedIn, undefined, 0, undefined, 0, 0, posture);
                 }
             } else {
-                image = await GetRoomEngine().getGenericRoomObjectImage(type!, colorIndex.toString(), new Vector3d(), RoomGeometryScaleType.Icon, undefined, 0, undefined, 0, 0, posture);
+                texture = await engine.getGenericRoomObjectTexture(type!, colorIndex.toString(), new Vector3d(), RoomGeometryScaleType.Icon, undefined, 0, undefined, 0, 0, posture);
             }
         }
 
-        if (!image) return;
+        if (!texture) return;
 
         this.removeRoomOverlayIconSprite();
-        this.addRoomOverlayIconSprite(image, Room.OVERLAY_ICON_SPRITE);
+        this.addRoomOverlayIconSprite(texture, Room.OVERLAY_ICON_SPRITE);
     }
 
     public setRoomOverlayIconSpriteVisibility(flag: boolean): void {
@@ -1486,7 +2121,12 @@ export class Room implements IRoom {
 
         if (!sprite) return;
 
+        const texture = (sprite instanceof Sprite) ? sprite.texture : undefined;
+
         sprite.parent?.removeChild(sprite);
+        sprite.destroy();
+        // The icon's render texture belongs to this sprite alone; one drawn this frame is still in the room's batch.
+        if (texture) TextureUtils.destroyTexture(texture);
     }
 
     public getGeometry(): IRoomGeometry | undefined {
@@ -1577,6 +2217,10 @@ export class Room implements IRoom {
         return this._areaSelection;
     }
 
+    public get objectHighLighter(): IRoomObjectHighLighter {
+        return this._objectHighLighter;
+    }
+
     public get isAreaSelectionMode(): boolean {
         return this._areaSelection.areaSelectionState !== RoomAreaSelectionManager.NOT_ACTIVE;
     }
@@ -1603,28 +2247,40 @@ export class Room implements IRoom {
         return undefined;
     }
 
-    private fixedUserLocation(location: IVector3D): IVector3D | undefined {
-        if (!this._legacyGeometry || !location) return undefined;
+    /**
+     * `RoomEngine.fixedUserLocation`: a user standing on bare floor is lifted onto the floor's
+     * drawn altitude (half a tile up next to a raised neighbour) rather than the stacking height
+     * the server sent. The stacking height is read off the map the UI lent this room; until it
+     * has, or off the map, the location stays as given.
+     */
+    private fixedUserLocation(location: IVector3D): IVector3D;
+    private fixedUserLocation(location: IVector3D | undefined): IVector3D | undefined;
+    private fixedUserLocation(location: IVector3D | undefined): IVector3D | undefined {
+        if (!location) return undefined;
+
+        if (!this._legacyGeometry) return location;
 
         let z = location.z;
         const tileHeight = this.getTileHeight(location.x, location.y);
         const wallHeight = this._legacyGeometry.getHeight(location.x, location.y);
 
-        if (Math.abs(z - tileHeight) < 0.1 && Math.abs(tileHeight - wallHeight) < 0.1) {
+        if ((Math.abs(z - tileHeight) < 0.02) && (Math.abs(tileHeight - wallHeight) < 0.02)) {
             z = this._legacyGeometry.getFloorAltitude(location.x, location.y);
         }
 
         return new Vector3d(location.x, location.y, z);
     }
 
-    private addRoomOverlayIconSprite(image: ImageLike | undefined, label: string): void {
-        if (!image) return;
+    private addRoomOverlayIconSprite(texture: Texture | undefined, label: string): void {
+        if (!texture) return;
 
         let sprite = this.getRoomOverlayIconSprite();
 
-        if (sprite) return;
+        if (sprite) {
+            texture.destroy(true);
 
-        const texture = Texture.from(image);
+            return;
+        }
 
         sprite = new Sprite(texture);
 

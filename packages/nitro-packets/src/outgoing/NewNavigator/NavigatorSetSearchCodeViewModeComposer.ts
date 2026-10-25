@@ -1,8 +1,9 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type NavigatorSetSearchCodeViewModeComposerType = {
     categoryName: string;
-    viewMode: NavigatorViewModeType;
+    viewMode: number;
 };
 
 export class NavigatorSetSearchCodeViewModeComposer implements IOutgoingPacket<NavigatorSetSearchCodeViewModeComposerType> {

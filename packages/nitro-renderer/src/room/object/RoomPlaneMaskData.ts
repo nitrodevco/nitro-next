@@ -1,4 +1,5 @@
-﻿export class RoomPlaneMaskData {
+/** Port of Flash `RoomPlaneMaskData`. */
+export class RoomPlaneMaskData {
     private _leftSideLoc: number = 0;
     private _rightSideLoc: number = 0;
     private _leftSideLength: number = 0;

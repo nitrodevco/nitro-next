@@ -1,5 +1,6 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectVisibilityUpdateMessage`. */
 export class ObjectVisibilityUpdateMessage extends RoomObjectUpdateMessage {
     public static ENABLED: string = 'ROVUM_ENABLED' as const;
     public static DISABLED: string = 'ROVUM_DISABLED' as const;

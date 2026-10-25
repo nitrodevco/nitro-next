@@ -1,7 +1,8 @@
-import type { IGraphicAsset, IVector3D } from '@nitrodevco/nitro-api';
+import { IGraphicAsset, IVector3D } from '@nitrodevco/nitro-api';
 
 import { PlaneMaskBitmap } from './PlaneMaskBitmap';
 
+/** Port of Flash `PlaneMaskVisualization`. */
 export class PlaneMaskVisualization {
     public static MIN_NORMAL_COORDINATE_VALUE: number = -1;
     public static MAX_NORMAL_COORDINATE_VALUE: number = 1;
@@ -32,11 +33,11 @@ export class PlaneMaskVisualization {
         if (point)
             for (const mask of this._bitmaps) {
                 if (
-                    mask &&
-                    point.x >= mask.normalMinX &&
-                    point.x <= mask.normalMaxX &&
-                    point.y >= mask.normalMinY &&
-                    point.y <= mask.normalMaxY
+                    mask
+                    && point.x >= mask.normalMinX
+                    && point.x <= mask.normalMaxX
+                    && point.y >= mask.normalMinY
+                    && point.y <= mask.normalMaxY
                 ) {
                     return mask.asset;
                 }

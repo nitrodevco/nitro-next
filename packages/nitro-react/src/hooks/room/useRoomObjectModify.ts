@@ -1,0 +1,183 @@
+import { IRoomObject, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectOperationType, RoomObjectUserTypeName, Vector3d } from '@nitrodevco/nitro-api';
+import { MoveEntityInFlatComposer, MoveObjectComposer, MovePetComposer, MoveWallItemComposer, PickupObjectComposer, RemoveBotFromFlatComposer, RemovePetFromFlatComposer } from '@nitrodevco/nitro-packets';
+import { SelectedRoomObjectData } from '@nitrodevco/nitro-renderer';
+
+import { trackEventLogOncePerSession } from '#base/commands';
+import { useWebSocketContext } from '#base/context/communication';
+import { roomStore, useIsRoomOwner, useOwnControllerLevel, useRoom, useRoomPlayTestMode, useRoomSelectedObjectActions, useRoomStore } from '#base/context/room';
+import { useOwnIsAnyRoomController, useOwnUserId } from '#base/context/user';
+import { getValidRoomObjectDirection, isFurnitureOwnedBy, setObjectAlphaMultiplier } from '#base/utils';
+
+import { useRoomObjectSelect } from './useRoomObjectSelect';
+import { useRoomObjectValidation } from './useRoomObjectValidation';
+
+/**
+ * The manipulation menu's operations on a room object - move, rotate, pick up, eject and the
+ * rest of `RoomObjectOperationType` - and who may perform them:
+ * `RoomObjectEventHandler.modifyRoomObject` with `SessionDataManager.canManipulateFurniture`.
+ * While the session is in wired play test mode nothing is modified, unless the room's
+ * configuration items free the furni for everyone.
+ */
+export const useRoomObjectModify = () => {
+    const room = useRoom();
+    const ownUserId = useOwnUserId();
+    const isAnyRoomController = useOwnIsAnyRoomController();
+    const controllerLevel = useOwnControllerLevel();
+    const isRoomOwner = useIsRoomOwner();
+    const isFreeFurniMovementsMode = useRoomStore(x => x.isFreeFurniMovementsMode);
+    const playTestMode = useRoomPlayTestMode();
+    const { setSelectedObject } = useRoomSelectedObjectActions();
+    const { resetSelectedObject } = useRoomObjectSelect();
+    const { isValidLocation } = useRoomObjectValidation();
+    const { send } = useWebSocketContext();
+
+    /**
+     * A unit's own account id, which is what the pet and bot composers are addressed by. Read when
+     * the operation happens rather than subscribed to - every user update would otherwise
+     * re-render whatever mounts this.
+     */
+    const getUserWebId = (objectId: number) => roomStore.getState().usersByRoomObjectId[objectId]?.webID ?? 0;
+
+    /**
+     * `RoomObjectEventHandler.sendMoveUserObjectMessage`: of the units, a rentable bot moves by its
+     * room object id and a monsterplant by its pet id; anything else cannot be moved this way.
+     */
+    const moveUnit = (roomObject: IRoomObject, objectId: number, x: number, y: number, direction: number) => {
+        if (roomObject.type === RoomObjectUserTypeName.RentableBot) {
+            send(new MoveEntityInFlatComposer({ objectId, x, y, direction }));
+
+            return;
+        }
+
+        if (roomObject.type !== RoomObjectUserTypeName.MonsterPlant) return;
+
+        const petId = getUserWebId(objectId);
+
+        if (petId) send(new MovePetComposer({ petId, x, y, direction }));
+    };
+
+    /** `RoomDesktop.checkFurniManipulationRights`: rights, ownership, or a room whose configuration items free the furni for everyone. */
+    const canManipulateFurniture = (objectId: number, category: RoomObjectCategoryEnum) => room && (isRoomOwner || isAnyRoomController || (controllerLevel >= RoomControllerLevelEnum.Guest) || isFreeFurniMovementsMode || isFurnitureOwnedBy(room.getRoomObject(objectId, category), ownUserId));
+
+    const modifyRoomObject = (objectId: number, category: RoomObjectCategoryEnum, operation: RoomObjectOperationType) => {
+        if (!room) return false;
+
+        if (!isFreeFurniMovementsMode && playTestMode) return false;
+
+        const roomObject = room.getRoomObject(objectId, category);
+
+        if (!roomObject) return false;
+
+        let shouldReset = true;
+
+        // The operation in progress now, not at the last render: a click and the next move can come in one frame.
+        const { selectedObject } = roomStore.getState();
+
+        let selectedObjectData = selectedObject;
+
+        switch (operation) {
+            case RoomObjectOperationType.OBJECT_ROTATE_POSITIVE:
+            case RoomObjectOperationType.OBJECT_ROTATE_NEGATIVE: {
+                const forward = operation === RoomObjectOperationType.OBJECT_ROTATE_POSITIVE;
+                const direction = getValidRoomObjectDirection(roomObject, forward);
+
+                if (isValidLocation(roomObject, new Vector3d(direction))) {
+                    const x = roomObject.getLocation().x;
+                    const y = roomObject.getLocation().y;
+
+                    if (category === RoomObjectCategoryEnum.Unit) moveUnit(roomObject, objectId, x, y, direction / 45);
+                    else send(new MoveObjectComposer({ objectId, x, y, rotation: direction / 45 }));
+                }
+
+                break;
+            }
+            case RoomObjectOperationType.OBJECT_EJECT:
+            case RoomObjectOperationType.OBJECT_PICKUP:
+                send(new PickupObjectComposer({ objectId, objectCategory: category }));
+                break;
+            /*
+             * A pet and a bot are picked up by their own id rather than the room object's, which
+             * is why neither goes through `PickupObjectComposer`.
+             */
+            case RoomObjectOperationType.OBJECT_PICKUP_PET: {
+                const petId = getUserWebId(objectId);
+
+                if (petId) send(new RemovePetFromFlatComposer({ petId }));
+                break;
+            }
+            case RoomObjectOperationType.OBJECT_PICKUP_BOT: {
+                const botId = getUserWebId(objectId);
+
+                if (botId) send(new RemoveBotFromFlatComposer({ botId }));
+                break;
+            }
+            case RoomObjectOperationType.OBJECT_MOVE:
+                shouldReset = false;
+                setObjectAlphaMultiplier(roomObject, 0.5);
+
+                // `setSelectedObjectData` resets the operation in progress first: an object still
+                // being moved (released over a window, where no click reaches the room) goes back
+                // where it was at full alpha instead of staying hidden until the room is entered again.
+                resetSelectedObject(selectedObject);
+
+                selectedObjectData = new SelectedRoomObjectData(
+                    roomObject.id,
+                    category,
+                    operation,
+                    roomObject.getLocation(),
+                    roomObject.getDirection(),
+                );
+
+                void (async () => {
+                    await room.setRoomOverlayIconSprite(roomObject.id, category, true);
+
+                    room.setRoomOverlayIconSpriteVisibility(false);
+                })();
+
+                break;
+            case RoomObjectOperationType.OBJECT_MOVE_TO: {
+                if (selectedObject) selectedObjectData = new SelectedRoomObjectData(
+                    selectedObject.objectId,
+                    selectedObject.category,
+                    RoomObjectOperationType.OBJECT_MOVE_TO,
+                    roomObject.getLocation(),
+                    roomObject.getDirection(),
+                );
+
+                setObjectAlphaMultiplier(roomObject, 1);
+
+                room.removeRoomOverlayIconSprite();
+
+                if (category === RoomObjectCategoryEnum.Floor) {
+                    const _angle = roomObject.getDirection().x % 360;
+                    const location = roomObject.getLocation();
+                    const rotation = _angle / 45;
+
+                    // `modifyRoomObject` `OBJECT_MOVE_TO`: the first furni move of the client session.
+                    trackEventLogOncePerSession(send, 'Tutorial', 'interaction', 'furniture.move');
+                    send(new MoveObjectComposer({ objectId, x: location.x, y: location.y, rotation }));
+                } else if (category === RoomObjectCategoryEnum.Wall) {
+                    const _angle = roomObject.getDirection().x % 360;
+                    const location = room.legacyGeometry?.getOldLocationString(roomObject.getLocation(), _angle);
+
+                    if (location) trackEventLogOncePerSession(send, 'Tutorial', 'interaction', 'furniture.move');
+                    send(new MoveWallItemComposer({ objectId, wallPosition: location ?? '' }));
+                } else if (category === RoomObjectCategoryEnum.Unit) {
+                    const location = roomObject.getLocation();
+
+                    moveUnit(roomObject, objectId, Math.trunc(location.x), Math.trunc(location.y), (roomObject.getDirection().x % 360) / 45);
+                }
+
+                break;
+            }
+        }
+
+        if (selectedObjectData !== selectedObject) setSelectedObject(selectedObjectData);
+
+        if (shouldReset) resetSelectedObject(selectedObjectData);
+
+        return true;
+    };
+
+    return { canManipulateFurniture, modifyRoomObject };
+};

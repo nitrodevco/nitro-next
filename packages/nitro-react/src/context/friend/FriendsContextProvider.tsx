@@ -1,15 +1,18 @@
-import type { ReactNode } from 'react';
-import { useState } from 'react';
+/**
+ * The friend list's store, made once per mount of the provider (`FriendListWrapper`) and handed to
+ * the friend list inside it.
+ */
+import { ReactNode, useState } from 'react';
 
 import { FriendsContext } from './FriendsContext';
-import { createFriendsContextStore } from './store';
+import { createFriendsStore } from './store';
 
 type ProviderProps = {
     children: ReactNode;
-}
+};
 
 export const FriendsContextProvider = ({ children }: ProviderProps) => {
-    const [ctx] = useState(() => createFriendsContextStore());
+    const [ ctx ] = useState(() => createFriendsStore());
 
     return (
         <FriendsContext value={ctx}>

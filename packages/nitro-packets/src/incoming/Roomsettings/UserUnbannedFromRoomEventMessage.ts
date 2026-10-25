@@ -1,6 +1,6 @@
+// Body filled by hand from the 2026 client's own parser - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-/* UserUnbannedFromRoomParser (§_-94§/§_-Ym§) — roomId, userId */
 export type UserUnbannedFromRoomEventMessageType = {
     roomId: number;
     userId: number;

@@ -1,4 +1,4 @@
-import { AvatarActionStateType } from "./AvatarActionStateType";
+import { AvatarActionStateType } from './AvatarActionStateType';
 
 export const AvatarPostureStates = new Set<AvatarActionStateType>([
     AvatarActionStateType.Float,

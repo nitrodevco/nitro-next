@@ -1,7 +1,8 @@
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
-/* SetUIFlagsMessageComposer (3653) — the full flags int; bit 2 = room tools expanded */
 export type SetUIFlagsComposerType = {
+    /** The whole flag word, not one flag: the client keeps it and re-sends it every time a bit moves. */
     flags: number;
 };
 

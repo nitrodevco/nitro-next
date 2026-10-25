@@ -1,8 +1,12 @@
-import type { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { RoomGeometryScaleType } from '@nitrodevco/nitro-api';
 
-import { FurnitureAnimatedVisualization } from './FurnitureAnimatedVisualization';
+import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization';
 
-export class FurnitureHabboWheelVisualization extends FurnitureAnimatedVisualization {
+/**
+ * Port of Flash `FurnitureHabboWheelVisualization`, the visualization
+ * `RoomObjectVisualizationFactory` builds for `furniture_habbowheel`.
+ */
+export class FurnitureHabboWheelVisualization extends AnimatedFurnitureVisualization {
     private static ANIMATION_ID_OFFSET_SLOW1: number = 10;
     private static ANIMATION_ID_OFFSET_SLOW2: number = 20;
     private static ANIMATION_ID_START_ROLL: number = 31;

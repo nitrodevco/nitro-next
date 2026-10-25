@@ -1,59 +1,27 @@
-import { RoomEngineEvent } from "@nitrodevco/nitro-api";
-import { AnimatePresence, motion } from "motion/react";
-import { useRef, useState } from "react";
+import { useRoomIsInitialized } from '#base/hooks';
 
-import { useRoomIsLandingViewVisible } from "#base/context";
-import { useRoomEventDispatcher } from "#base/hooks";
-import { HotelView } from "#base/views/hotel-view/HotelView";
+import { RoomCanvas } from './RoomCanvas';
+import { RoomEventHandler } from './RoomEventHandler';
+import { RoomWidgets } from './widgets';
 
-import { RoomCanvas } from "./RoomCanvas";
-import { RoomEventHandler } from "./RoomEventHandler";
-import { RoomWidgets } from "./widgets/RoomWidgets";
-
+/**
+ * Everything that exists only while a room is on screen: the canvas, the engine's event side and
+ * the widgets.
+ *
+ * The room is shown when *it* says it is initialized, not when an event about it was caught - see
+ * `useRoomIsInitialized` for why the two are not the same. It also means a stale "ready" can never
+ * carry over from the previous room: a new room is not shown until that room is initialized.
+ */
 export const RoomContainer = () => {
-    const [isReady, setIsReady] = useState<boolean>(false);
-    const landingViewVisible = useRoomIsLandingViewVisible();
-    const elementRef = useRef<HTMLDivElement>(null);
+    const isInitialized = useRoomIsInitialized();
 
-    useRoomEventDispatcher(RoomEngineEvent.INITIALIZED, event => {
-        setIsReady(true);
-    });
-
-    useRoomEventDispatcher(RoomEngineEvent.DISPOSED, event => {
-        setIsReady(false);
-    });
+    if (!isInitialized) return null;
 
     return (
         <>
-            <AnimatePresence mode="wait">
-                {(landingViewVisible && !isReady) && (
-                    <motion.div
-                        key="hotel-view"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="z-0 size-full"
-                    >
-                        <HotelView />
-                    </motion.div>
-                )}
-                {isReady && (
-                    <>
-                        <RoomEventHandler />
-                        <RoomWidgets />
-                        <motion.div
-                            ref={elementRef}
-                            key="room-canvas"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="z-0 size-full"
-                        >
-                            <RoomCanvas ref={elementRef} />
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
+            <RoomEventHandler />
+            <RoomWidgets />
+            <RoomCanvas />
         </>
     );
-}
+};

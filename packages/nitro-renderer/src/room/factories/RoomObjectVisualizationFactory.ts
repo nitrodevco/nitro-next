@@ -1,25 +1,26 @@
-import type {
+import {
     IAssetData,
     IObjectVisualizationData,
     IRoomObjectGraphicVisualization,
     IRoomObjectVisualizationFactory,
-} from '@nitrodevco/nitro-api';
-import { RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
+    RoomObjectVisualizationType } from '@nitrodevco/nitro-api';
 
-import type { RoomObjectSpriteVisualization } from '../object';
-import {
+import { AnimatedFurnitureVisualization,
+    AnimatedFurnitureVisualizationData,
+    AnimatedPetVisualization,
+    AnimatedPetVisualizationData,
+    AvatarFurnitureVisualizationData,
     AvatarVisualization,
     AvatarVisualizationData,
-    FurnitureAnimatedVisualization,
-    FurnitureAnimatedVisualizationData,
     FurnitureBadgeDisplayVisualization,
-    FurnitureBBVisualization,
     FurnitureBottleVisualization,
     FurnitureBuilderPlaceholderVisualization,
+    FurnitureChestVisualization,
     FurnitureCounterClockVisualization,
     FurnitureCuboidVisualization,
     FurnitureExternalImageVisualization,
     FurnitureFireworksVisualization,
+    FurnitureFurniChestVisualization,
     FurnitureGiftWrappedFireworksVisualization,
     FurnitureGiftWrappedVisualization,
     FurnitureGuildCustomizedVisualization,
@@ -27,13 +28,14 @@ import {
     FurnitureHabboWheelVisualization,
     FurnitureIsometricBBVisualization,
     FurnitureMannequinVisualization,
-    FurnitureMannequinVisualizationData,
     FurniturePartyBeamerVisualization,
     FurniturePlanetSystemVisualization,
     FurniturePosterVisualization,
     FurnitureQueueTileVisualization,
+    FurnitureRecolorableVisualization,
     FurnitureResettingAnimatedVisualization,
     FurnitureRoomBackgroundVisualization,
+    FurnitureRoomBillboardVisualization,
     FurnitureScoreBoardVisualization,
     FurnitureSoundBlockVisualization,
     FurnitureStickieVisualization,
@@ -44,13 +46,13 @@ import {
     FurnitureVoteMajorityVisualization,
     FurnitureWaterAreaVisualization,
     FurnitureYoutubeVisualization,
-    PetVisualization,
-    PetVisualizationData,
+    RoomObjectSpriteVisualization,
     RoomVisualization,
     RoomVisualizationData,
     TileCursorVisualization,
 } from '../object';
 
+/** Port of Flash `RoomObjectVisualizationFactory`. */
 export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationFactory {
     private static CACHING_ENABLED: boolean = true;
 
@@ -80,13 +82,15 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 visualization = AvatarVisualization;
                 break;
             case RoomObjectVisualizationType.PET_ANIMATED:
-                visualization = PetVisualization;
+                visualization = AnimatedPetVisualization;
                 break;
             case RoomObjectVisualizationType.FURNITURE_STATIC:
+            case RoomObjectVisualizationType.FURNITURE_LABEL:
+            case RoomObjectVisualizationType.FURNITURE_REGION:
                 visualization = FurnitureVisualization;
                 break;
             case RoomObjectVisualizationType.FURNITURE_ANIMATED:
-                visualization = FurnitureAnimatedVisualization;
+                visualization = AnimatedFurnitureVisualization;
                 break;
             case RoomObjectVisualizationType.FURNITURE_RESETTING_ANIMATED:
                 visualization = FurnitureResettingAnimatedVisualization;
@@ -98,10 +102,16 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 visualization = FurnitureRoomBackgroundVisualization;
                 break;
             case RoomObjectVisualizationType.FURNITURE_BB:
-                visualization = FurnitureBBVisualization;
+                visualization = FurnitureRoomBillboardVisualization;
                 break;
             case RoomObjectVisualizationType.FURNITURE_ISOMETRIC_BB:
                 visualization = FurnitureIsometricBBVisualization;
+                break;
+            case RoomObjectVisualizationType.FURNITURE_FURNI_CHEST:
+                visualization = FurnitureFurniChestVisualization;
+                break;
+            case RoomObjectVisualizationType.FURNITURE_COINS_CHEST:
+                visualization = FurnitureChestVisualization;
                 break;
             case RoomObjectVisualizationType.FURNITURE_BOTTLE:
                 visualization = FurnitureBottleVisualization;
@@ -139,6 +149,9 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
             case RoomObjectVisualizationType.FURNITURE_MANNEQUIN:
                 visualization = FurnitureMannequinVisualization;
                 break;
+            case RoomObjectVisualizationType.FURNITURE_RECOLORABLE:
+                visualization = FurnitureRecolorableVisualization;
+                break;
             case RoomObjectVisualizationType.FURNITURE_PARTY_BEAMER:
                 visualization = FurniturePartyBeamerVisualization;
                 break;
@@ -175,6 +188,9 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
             case RoomObjectVisualizationType.FURNITURE_YOUTUBE:
                 visualization = FurnitureYoutubeVisualization;
                 break;
+            // Flash builds two more types that deliberately land here on the static furniture
+            // visualization: the snowwar `game_snowball` / `game_snowsplash`, which need the game
+            // engine. Run `scripts/drift/factories.py` after a revision bump to see whether that list grew.
             default:
                 visualization = FurnitureVisualization;
                 break;
@@ -183,10 +199,20 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
         return visualization;
     }
 
+    /**
+     * Forgets the data kept for `type`: the next object of it builds its data from the asset it is
+     * given. Not disposed - objects made before still draw with it. Nitro's own: Flash replaces an
+     * asset only by reloading the client, and the asset manager's preview swaps a furniture's build
+     * in a running engine, where the kept data (its layers, its visualization type) would be the old one's.
+     */
+    public removeVisualizationData(type: string): void {
+        this._visualizationDatas.delete(type);
+    }
+
     public getVisualizationData(
         type: string,
         visualization: string | undefined,
-        asset: IAssetData | undefined
+        asset: IAssetData | undefined,
     ): IObjectVisualizationData | undefined {
         let visualizationData = this._visualizationDatas.get(type);
 
@@ -194,6 +220,8 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
 
         switch (visualization) {
             case RoomObjectVisualizationType.FURNITURE_STATIC:
+            case RoomObjectVisualizationType.FURNITURE_LABEL:
+            case RoomObjectVisualizationType.FURNITURE_REGION:
             case RoomObjectVisualizationType.FURNITURE_GIFT_WRAPPED:
             case RoomObjectVisualizationType.FURNITURE_BB:
             case RoomObjectVisualizationType.FURNITURE_ISOMETRIC_BB:
@@ -203,6 +231,8 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 visualizationData = new FurnitureVisualizationData();
                 break;
             case RoomObjectVisualizationType.FURNITURE_ANIMATED:
+            case RoomObjectVisualizationType.FURNITURE_FURNI_CHEST:
+            case RoomObjectVisualizationType.FURNITURE_COINS_CHEST:
             case RoomObjectVisualizationType.FURNITURE_RESETTING_ANIMATED:
             case RoomObjectVisualizationType.FURNITURE_POSTER:
             case RoomObjectVisualizationType.FURNITURE_HABBOWHEEL:
@@ -218,6 +248,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
             case RoomObjectVisualizationType.FURNITURE_GIFT_WRAPPED_FIREWORKS:
             case RoomObjectVisualizationType.FURNITURE_GUILD_CUSTOMIZED:
             case RoomObjectVisualizationType.FURNITURE_GUILD_ISOMETRIC_BADGE:
+            case RoomObjectVisualizationType.FURNITURE_RECOLORABLE:
             case RoomObjectVisualizationType.FURNITURE_VOTE_COUNTER:
             case RoomObjectVisualizationType.FURNITURE_VOTE_MAJORITY:
             case RoomObjectVisualizationType.FURNITURE_SOUNDBLOCK:
@@ -225,10 +256,10 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
             case RoomObjectVisualizationType.FURNITURE_EXTERNAL_IMAGE:
             case RoomObjectVisualizationType.FURNITURE_YOUTUBE:
             case RoomObjectVisualizationType.TILE_CURSOR:
-                visualizationData = new FurnitureAnimatedVisualizationData();
+                visualizationData = new AnimatedFurnitureVisualizationData();
                 break;
             case RoomObjectVisualizationType.FURNITURE_MANNEQUIN:
-                visualizationData = new FurnitureMannequinVisualizationData();
+                visualizationData = new AvatarFurnitureVisualizationData();
                 break;
             case RoomObjectVisualizationType.ROOM:
                 visualizationData = new RoomVisualizationData();
@@ -239,7 +270,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 visualizationData = new AvatarVisualizationData();
                 break;
             case RoomObjectVisualizationType.PET_ANIMATED:
-                visualizationData = new PetVisualizationData();
+                visualizationData = new AnimatedPetVisualizationData();
                 break;
             default:
                 visualizationData = new FurnitureVisualizationData();

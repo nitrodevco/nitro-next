@@ -1,4 +1,4 @@
-import { RoomModerationType } from "./enum";
+import { RoomModerationType } from './enum';
 
 export interface IRoomModerationSettings {
     whoCanMute: RoomModerationType;

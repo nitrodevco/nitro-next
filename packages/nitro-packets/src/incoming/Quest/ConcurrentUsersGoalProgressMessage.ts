@@ -1,18 +1,20 @@
+// Body filled by hand from the packet generator output - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type ConcurrentUsersGoalProgressMessageType = {
-  // no fields
-
+    /** `ConcurrentUsersInfoElementHandler`'s `STATE_DISABLED` 0, `STATE_ACTIVE` 1, `STATE_REDEEM` 2, `STATE_REWARDED` 3. */
+    state: number;
+    userCount: number;
+    userCountGoal: number;
 };
 
-export class ConcurrentUsersGoalProgressMessage implements IIncomingPacket<ConcurrentUsersGoalProgressMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): ConcurrentUsersGoalProgressMessageType
-  {
+/** Flash `ConcurrentUsersGoalProgressMessageParser`: three integers. */
+export class ConcurrentUsersGoalProgressMessage implements IIncomingPacket<ConcurrentUsersGoalProgressMessageType> {
+    public parse(wrapper: IMessageDataWrapper): ConcurrentUsersGoalProgressMessageType {
+        const state = wrapper.readInt();
+        const userCount = wrapper.readInt();
+        const userCountGoal = wrapper.readInt();
 
-    const packet: ConcurrentUsersGoalProgressMessageType = {
-    };
-
-    return packet;
-  }
+        return { state, userCount, userCountGoal };
+    }
 }

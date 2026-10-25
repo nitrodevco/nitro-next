@@ -11,7 +11,7 @@ export class NotEnoughBalanceMessage implements IIncomingPacket<NotEnoughBalance
         return {
             notEnoughCredits: wrapper.readBoolean(),
             notEnoughActivityPoints: wrapper.readBoolean(),
-            activityPointType: wrapper.readInt()
+            activityPointType: wrapper.readInt(),
         };
     }
 }

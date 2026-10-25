@@ -1,12 +1,14 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
-export type GetModeratorRoomInfoComposerType = object;
+// `GetModeratorRoomInfoMessageComposer(flatId)`.
+export type GetModeratorRoomInfoComposerType = {
+    roomId: number;
+};
 
 export class GetModeratorRoomInfoComposer implements IOutgoingPacket<GetModeratorRoomInfoComposerType> {
     public constructor(private params: GetModeratorRoomInfoComposerType) { }
 
     public compose(): (number | string | boolean)[] {
-        return [
-        ];
+        return [ this.params.roomId ];
     }
 }

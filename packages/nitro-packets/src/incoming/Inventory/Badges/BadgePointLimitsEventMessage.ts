@@ -1,18 +1,38 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type BadgePointLimitsEventMessageType = {
-  // no fields
-
+export type BadgePointLimitData = {
+    badgeId: string;
+    limit: number;
 };
 
-export class BadgePointLimitsEventMessage implements IIncomingPacket<BadgePointLimitsEventMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): BadgePointLimitsEventMessageType
-  {
+export type BadgePointLimitsEventMessageType = {
+    data: BadgePointLimitData[];
+};
 
-    const packet: BadgePointLimitsEventMessageType = {
-    };
+export class BadgePointLimitsEventMessage implements IIncomingPacket<BadgePointLimitsEventMessageType> {
+    public parse(wrapper: IMessageDataWrapper): BadgePointLimitsEventMessageType {
+        const data: BadgePointLimitData[] = [];
 
-    return packet;
-  }
+        let groupCount = wrapper.readInt();
+
+        while (groupCount > 0) {
+            const code = wrapper.readString();
+
+            let levelCount = wrapper.readInt();
+
+            // `BadgeAndPointLimit`: the badge is `ACH_` + the achievement code + its level.
+            while (levelCount > 0) {
+                const level = wrapper.readInt();
+                const limit = wrapper.readInt();
+
+                data.push({ badgeId: `ACH_${code}${level}`, limit });
+
+                levelCount--;
+            }
+
+            groupCount--;
+        }
+
+        return { data };
+    }
 }

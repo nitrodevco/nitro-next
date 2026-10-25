@@ -7,7 +7,7 @@ export type PurchaseNotAllowedMessageType = {
 export class PurchaseNotAllowedMessage implements IIncomingPacket<PurchaseNotAllowedMessageType> {
     public parse(wrapper: IMessageDataWrapper): PurchaseNotAllowedMessageType {
         return {
-            errorType: wrapper.readInt()
-        }
+            errorType: wrapper.readInt(),
+        };
     }
 }

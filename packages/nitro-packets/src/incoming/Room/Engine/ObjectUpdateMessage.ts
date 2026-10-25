@@ -1,7 +1,7 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { FloorItemParser } from './Data/FloorItemParser';
-import type { IRoomFloorItem } from './Data/IRoomFloorItem';
+import { IRoomFloorItem } from './Data/IRoomFloorItem';
 
 export type ObjectUpdateMessageType = {
     floorItem: IRoomFloorItem;
@@ -10,7 +10,7 @@ export type ObjectUpdateMessageType = {
 export class ObjectUpdateMessage implements IIncomingPacket<ObjectUpdateMessageType> {
     public parse(wrapper: IMessageDataWrapper): ObjectUpdateMessageType {
         const packet: ObjectUpdateMessageType = {
-            floorItem: FloorItemParser(wrapper)
+            floorItem: FloorItemParser(wrapper),
         };
 
         return packet;

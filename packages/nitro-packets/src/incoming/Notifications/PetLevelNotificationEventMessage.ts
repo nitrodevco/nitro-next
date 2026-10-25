@@ -1,7 +1,7 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+// Body filled by hand from D:\Habbo\packet-tool\out - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-import type { IPetFigureData } from '../Data/PetFigureDataParser';
-import { PetFigureDataParser } from '../Data/PetFigureDataParser';
+import { IPetFigureData, PetFigureDataParser } from '../Data/PetFigureDataParser';
 
 export type PetLevelNotificationEventMessageType = {
     petId: number;
@@ -12,18 +12,11 @@ export type PetLevelNotificationEventMessageType = {
 
 export class PetLevelNotificationEventMessage implements IIncomingPacket<PetLevelNotificationEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): PetLevelNotificationEventMessageType {
-        const packet: PetLevelNotificationEventMessageType = {
-            petId: 0,
-            petName: '',
-            level: 0,
-            figureData: {} as any,
-        };
+        const petId = wrapper.readInt();
+        const petName = wrapper.readString();
+        const level = wrapper.readInt();
+        const figureData = PetFigureDataParser(wrapper);
 
-        packet.petId = wrapper.readInt();
-        packet.petName = wrapper.readString();
-        packet.level = wrapper.readInt();
-        packet.figureData = PetFigureDataParser(wrapper);
-
-        return packet;
+        return { petId, petName, level, figureData };
     }
 }

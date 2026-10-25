@@ -1,18 +1,19 @@
-﻿import type { Container } from "pixi.js";
-import { Point } from "pixi.js";
+import { Container, Point } from 'pixi.js';
 
+/** Port of Flash `AvatarImageBodyPartContainer`. */
 export class AvatarImageBodyPartContainer {
     private _image: Container;
     private _regPoint: Point;
     private _offset: Point;
     private _isCacheable: boolean;
+    private _faceOffset: Point | undefined;
 
-    constructor(k: Container, _arg_2: Point, _arg_3: boolean) {
-        this._image = k;
-        this._regPoint = _arg_2;
+    constructor(image: Container, regPoint: Point, isCacheable: boolean, faceOffset: Point | undefined = undefined) {
+        this._image = image;
+        this._regPoint = regPoint;
         this._offset = new Point(0, 0);
-        this._regPoint = _arg_2;
-        this._isCacheable = _arg_3;
+        this._isCacheable = isCacheable;
+        this._faceOffset = faceOffset;
 
         this.cleanPoints();
     }
@@ -20,16 +21,17 @@ export class AvatarImageBodyPartContainer {
     public dispose(): void {
         if (this._image) {
             this._image.destroy({
-                children: true
+                children: true,
             });
         }
     }
 
+    /** Flash truncated both points to whole pixels so parts never land on half-pixel boundaries. */
     private cleanPoints(): void {
-        // this._regPoint.x    = this._regPoint.x;
-        // this._regPoint.y    = this._regPoint.y;
-        // this._offset.x      = this._offset.x;
-        // this._offset.y      = this._offset.y;
+        this._regPoint.x = Math.trunc(this._regPoint.x);
+        this._regPoint.y = Math.trunc(this._regPoint.y);
+        this._offset.x = Math.trunc(this._offset.x);
+        this._offset.y = Math.trunc(this._offset.y);
     }
 
     public setRegPoint(k: Point): void {
@@ -45,7 +47,7 @@ export class AvatarImageBodyPartContainer {
     public set image(k: Container) {
         if (this._image && (this._image !== k)) {
             this._image.destroy({
-                children: true
+                children: true,
             });
         }
 
@@ -69,5 +71,10 @@ export class AvatarImageBodyPartContainer {
 
     public get isCacheable(): boolean {
         return this._isCacheable;
+    }
+
+    /** Where the face part was placed inside this body part's image, when it holds one (the head). */
+    public get faceOffset(): Point | undefined {
+        return this._faceOffset;
     }
 }

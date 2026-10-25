@@ -1,8 +1,8 @@
-import type { AvatarFigurePartType, IFigureDataSetType, IFigurePartSet, ISetType } from '@nitrodevco/nitro-api';
-import { AvatarGenderType } from '@nitrodevco/nitro-api';
+import { AvatarFigurePartType, AvatarGenderType, IFigureDataSetType, IFigurePartSet, ISetType } from '@nitrodevco/nitro-api';
 
 import { FigurePartSet } from './FigurePartSet';
 
+/** Port of Flash `SetType`. */
 export class SetType implements ISetType {
     private _type: AvatarFigurePartType;
     private _paletteId: number;
@@ -15,9 +15,9 @@ export class SetType implements ISetType {
         this._partSets = new Map();
 
         this._isMandatory = {
-            'F': [data.mandatory_f_0 ?? false, data.mandatory_f_1 ?? false],
-            'M': [data.mandatory_m_0 ?? false, data.mandatory_m_1 ?? false],
-            'U': [false, false]
+            F: [ data.mandatory_f_0 ?? false, data.mandatory_f_1 ?? false ],
+            M: [ data.mandatory_m_0 ?? false, data.mandatory_m_1 ?? false ],
+            U: [ false, false ],
         };
 
         this.append(data);
@@ -49,8 +49,13 @@ export class SetType implements ISetType {
         for (const set of setType.sets) this._partSets.set(set.id, new FigurePartSet(this._type, set));
     }
 
+    /** Flash walks the sets from the last added backwards, so a later free set wins. */
     public getDefaultPartSet(gender: AvatarGenderType): IFigurePartSet | undefined {
-        for (const set of this._partSets.values()) {
+        const sets = [ ...this._partSets.values() ];
+
+        for (let i = sets.length - 1; i >= 0; i--) {
+            const set = sets[i];
+
             if (set && (set.clubLevel === 0) && ((set.gender === gender) || (set.gender === AvatarGenderType.Unisex))) return set;
         }
 

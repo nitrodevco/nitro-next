@@ -1,18 +1,12 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type TalentLevelUpMessageType = {
-  // no fields
+export type TalentLevelUpMessageType = object;
 
-};
+export class TalentLevelUpMessage implements IIncomingPacket<TalentLevelUpMessageType> {
+    public parse(wrapper: IMessageDataWrapper): TalentLevelUpMessageType {
+        const packet: TalentLevelUpMessageType = {
+        };
 
-export class TalentLevelUpMessage implements IIncomingPacket<TalentLevelUpMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): TalentLevelUpMessageType
-  {
-
-    const packet: TalentLevelUpMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

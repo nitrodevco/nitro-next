@@ -12,19 +12,12 @@
         <!-- <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script> -->
     </head>
 
-    <body class="bg-black">
+    <body style="background-color: #000;">
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id="root" class="size-full overflow-hidden text-base bg-black" oncontextmenu="return false;"></div>
+        <div id="root" style="width: 100%; height: 100%; overflow: hidden; font-size: 1rem; line-height: 1.5rem; background-color: #000;"></div>
         <script>
             window.NitroConfig = {
-                'nitro.config.url': '/config/nitro-config.json',
-                'forward.type': new URLSearchParams(window.location.search).get('room')
-                    ? 2
-                    : -1,
-                'forward.id':
-                    new URLSearchParams(window.location.search).get('room') || 0,
-                'friend.id':
-                    new URLSearchParams(window.location.search).get('friend') || 0,
+                'nitro.config.url': 'https://nitrodev.co/gamedata/external_variables/0',
             };
         </script>
         <script type="module" src="./src/index.tsx"></script>

@@ -1,7 +1,7 @@
-import type { IGraphicAsset } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
-import { Rectangle } from 'pixi.js';
+import { IGraphicAsset } from '@nitrodevco/nitro-api';
+import { Rectangle, Texture } from 'pixi.js';
 
+/** Port of Flash `GraphicAsset`. */
 export class GraphicAsset implements IGraphicAsset {
     private static GRAPHIC_POOL: GraphicAsset[] = [];
 
@@ -28,9 +28,9 @@ export class GraphicAsset implements IGraphicAsset {
         flipV: boolean = false,
         usesPalette: boolean = false,
     ): GraphicAsset {
-        const graphicAsset =
-            (GraphicAsset.GRAPHIC_POOL.length ? GraphicAsset.GRAPHIC_POOL.pop() : new GraphicAsset()) ||
-            new GraphicAsset();
+        const graphicAsset
+            = (GraphicAsset.GRAPHIC_POOL.length ? GraphicAsset.GRAPHIC_POOL.pop() : new GraphicAsset())
+                || new GraphicAsset();
 
         graphicAsset._name = name;
         graphicAsset._source = source || undefined;

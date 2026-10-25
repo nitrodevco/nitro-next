@@ -1,4 +1,4 @@
-import type { IAssetVisualizationLayer } from './IAssetVisualizationLayer';
+import { IAssetVisualizationLayer } from './IAssetVisualizationLayer';
 
 export interface IAssetVisualizationDirection {
     id: number;

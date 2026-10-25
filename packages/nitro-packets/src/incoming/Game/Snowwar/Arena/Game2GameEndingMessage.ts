@@ -1,18 +1,12 @@
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-export type Game2GameEndingMessageType = {
-  // no fields
+export type Game2GameEndingMessageType = object;
 
-};
+export class Game2GameEndingMessage implements IIncomingPacket<Game2GameEndingMessageType> {
+    public parse(wrapper: IMessageDataWrapper): Game2GameEndingMessageType {
+        const packet: Game2GameEndingMessageType = {
+        };
 
-export class Game2GameEndingMessage implements IIncomingPacket<Game2GameEndingMessageType>
-{
-  public parse(wrapper: IMessageDataWrapper): Game2GameEndingMessageType
-  {
-
-    const packet: Game2GameEndingMessageType = {
-    };
-
-    return packet;
-  }
+        return packet;
+    }
 }

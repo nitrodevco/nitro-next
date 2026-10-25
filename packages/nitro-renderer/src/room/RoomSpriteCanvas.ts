@@ -1,4 +1,4 @@
-import type {
+import {
     IRoom,
     IRoomGeometry,
     IRoomObject,
@@ -6,15 +6,13 @@ import type {
     IRoomObjectSpriteVisualization,
     IRoomRenderingCanvas,
     IRoomSpriteMouseEvent,
-    RoomGeometryScaleType,
-    RoomObjectSpriteData
-} from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectSpriteTypeEnum, RoomSpriteMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
-import { Container, Matrix, Point, Rectangle, Sprite, Texture } from 'pixi.js';
+    MouseEventType, RoomGeometryScaleType,
+    RoomObjectSpriteData,
+    RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, RoomSpriteMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
+import { Container, Graphics, Matrix, Point, Rectangle, Sprite, Text, TextStyle, Texture } from 'pixi.js';
 
-import { ExtendedSprite, TextureUtils } from '../utils';
-import type { RoomObjectCacheItem } from './object';
-import { RoomObjectCache } from './object';
+import { ExtendedSprite, GetTicker, TextureUtils } from '../utils';
+import { RoomObjectCache, RoomObjectCacheItem } from './object';
 import {
     ObjectMouseData,
     RoomEnterEffect,
@@ -23,16 +21,31 @@ import {
     RoomShakingEffect,
     SortableSprite,
 } from './utils';
+import { RoomDownsampleFilter } from './utils/RoomDownsampleFilter';
+import { drawnRoomSpriteShift, snapRoomSpriteCoordinate } from './utils/snapRoomSpriteCoordinate';
 
+/**
+ * One view of a room: every object's sprites, sorted by depth into one display, with the mouse
+ * events that reach them. Ports Flash `com.sulake.room.renderer.RoomSpriteCanvas`.
+ */
 export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _room: IRoom;
     private _geometry: IRoomGeometry;
     private _renderTimestamp: number = 0;
 
     private _master: Container | undefined = undefined;
+    private _roomLayer: Container | undefined = undefined;
     private _display: Container | undefined = undefined;
-    private _mask: Sprite | undefined = undefined;
+    // A Graphics rectangle rather than a Sprite: Pixi masks a Sprite through an alpha-mask
+    // filter (screen-sized render textures per masked object, and misrendering when several
+    // rooms are masked in one frame), while a rect Graphics is a plain stencil/scissor mask.
+    private _mask: Graphics | undefined = undefined;
     private _background: Sprite | undefined = undefined;
+    private _downsampleFilter: RoomDownsampleFilter | undefined = undefined;
+    private _compositeZoom: boolean = false;
+    /** `drawnRoomSpriteShift` on each axis for this frame: where every sprite's picture is drawn, in screen pixels from its x / y. */
+    private _drawShiftX: number = 0;
+    private _drawShiftY: number = 0;
 
     private _sortableSprites: SortableSprite[] = [];
     private _spriteCount: number = 0;
@@ -58,6 +71,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _mouseOutKeys: string[] = [];
     private _eventId: number = 0;
     private _scale: number = 1;
+    private _isFlipped: boolean = false;
 
     private _SafeStr_4507: boolean = false;
     private _rotation: number = 0;
@@ -70,9 +84,69 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _noSpriteVisibilityChecking: boolean = false;
     private _usesExclusionRectangles: boolean = false;
     private _usesMask: boolean = true;
+    private _backgroundVisible: boolean = true;
     private _zDirty: boolean = false;
 
+    /*
+     * `calculateUpdateInterval`'s bookkeeping for the fps counter: the frames before the first
+     * sample, the frames and their intervals and render times in the sample being taken, the last
+     * sample's averages, the last really slow frame and how long the last render took.
+     */
+    private _fpsCounterEnabled: boolean = false;
+    private _fpsText: Text | undefined = undefined;
+    private _pingMs: number = -1;
+    private _framesBeforeSampling: number = 0;
+    private _sampledFrames: number = 0;
+    private _sampledIntervalTotal: number = 0;
+    private _sampledRenderTimeTotal: number = 0;
+    private _averageInterval: number = 0;
+    private _averageRenderTime: number = 0;
+    private _haltedTime: number = 0;
+    private _renderTime: number = 0;
+
+    /** The JS port's 24 ms and 18 ms against its 60 fps frame: into and out of frame skipping. */
+    private static readonly RUNNING_SLOW_ENTER_RATIO = 24 / (1000 / 60);
+    private static readonly RUNNING_SLOW_LEAVE_RATIO = 18 / (1000 / 60);
+
     private static readonly _zComparator = (a: SortableSprite, b: SortableSprite): number => b.z - a.z;
+
+    /**
+     * Sorts the sprites back to front - the same order as a stable `sort` by `_zComparator`. The list
+     * keeps last frame's order, so when something moves it is nearly sorted and an insertion sort
+     * finishes in about one pass, where `Array.sort` allocated merge buffers (50-150KB in a busy room)
+     * on every frame anything moved. A list far out of order (a room still loading) goes to `sort`.
+     */
+    private static sortByZ(sprites: SortableSprite[]): void {
+        const length = sprites.length;
+        const moveLimit = (length * 8) + 64;
+
+        let moves = 0;
+
+        for (let i = 1; i < length; i++) {
+            const sprite = sprites[i];
+            const z = sprite.z;
+
+            let j = i - 1;
+
+            if (!(z > sprites[j].z)) continue;
+
+            do {
+                sprites[j + 1] = sprites[j];
+                j--;
+                moves++;
+            } while ((j >= 0) && (z > sprites[j].z));
+
+            sprites[j + 1] = sprite;
+
+            // Only ever moved past strictly lower sprites, so equal ones keep their order and `sort`
+            // finishes exactly as it would have from the start.
+            if (moves > moveLimit) {
+                sprites.sort(RoomSpriteCanvas._zComparator);
+
+                return;
+            }
+        }
+    }
 
     private _objectCache: RoomObjectCache;
 
@@ -89,7 +163,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             new Vector3d(11, 11, 5),
             new Vector3d(-135, 0.5, 0),
         );
-        this._objectCache = new RoomObjectCache();
+        // `RoomEngine.createRoomCanvas` gives every renderer `object_accurate_z_value` as its accurate-z variable.
+        this._objectCache = new RoomObjectCache(RoomObjectVariableEnum.ObjectAccurateZValue);
 
         this.setupCanvas();
         this.initialize(width, height);
@@ -98,9 +173,14 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private setupCanvas(): void {
         if (!this._master) this._master = new Container();
 
-        this._master.interactive = true;
-
+        this._master.eventMode = 'static';
+        this._master.interactiveChildren = false;
         this._master.cullableChildren = false;
+
+        if (!this._roomLayer) {
+            this._roomLayer = new Container();
+            this._master.addChild(this._roomLayer);
+        }
 
         if (!this._display) {
             const display = new Container();
@@ -108,19 +188,29 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             display.isRenderGroup = false;
             display.cullableChildren = false;
 
-            this._master.addChild(display);
+            this._roomLayer.addChild(display);
 
             this._display = display;
+
+            // Its sprites draw room textures; one destroyed must not stay in a cached batch.
+            TextureUtils.watchBatches(display);
         }
     }
 
     public dispose(): void {
+        this._downsampleFilter?.destroy();
+        this._downsampleFilter = undefined;
+
+        if (this._display) TextureUtils.unwatchBatches(this._display);
+
         this.cleanSprites(0, true);
 
         if (this._geometry) {
             this._geometry.dispose();
         }
 
+        // setMask(false) detaches the mask, so dispose it even outside the room layer.
+        this._mask?.destroy();
         this._mask = undefined;
 
         if (this._objectCache) {
@@ -133,7 +223,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             while (this._master.children.length) {
                 const child = this._master.removeChildAt(0);
 
-                child.destroy();
+                child.destroy({ children: child === this._roomLayer });
             }
 
             if (this._master.parent) this._master.parent.removeChild(this._master);
@@ -141,9 +231,11 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._master.destroy();
 
             this._master = undefined;
+            this._roomLayer = undefined;
         }
 
         this._display = undefined;
+        this._background = undefined;
         this._sortableSprites = [];
 
         if (this._mouseActiveObjects) this._mouseActiveObjects.clear();
@@ -171,8 +263,9 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._background.tint = 0;
             this._background.width = width;
             this._background.height = height;
+            this._background.visible = this._backgroundVisible;
 
-            if (this._master) this._master.addChildAt(this._background, 0);
+            if (this._roomLayer) this._roomLayer.addChildAt(this._background, 0);
         } else {
             this._background.width = width;
             this._background.height = height;
@@ -180,20 +273,15 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         if (this._usesMask) {
             if (!this._mask) {
-                this._mask = new Sprite(Texture.WHITE);
+                this._mask = new Graphics().rect(0, 0, width, height).fill(0xffffff);
 
-                this._mask.tint = 0xff0000;
-                this._mask.width = width;
-                this._mask.height = height;
-
-                if (this._master) {
-                    this._master.addChild(this._mask);
+                if (this._roomLayer) {
+                    this._roomLayer.addChild(this._mask);
 
                     if (this._display) this._display.mask = this._mask;
                 }
             } else {
-                this._mask.width = width;
-                this._mask.height = height;
+                this._mask.clear().rect(0, 0, width, height).fill(0xffffff);
             }
         }
 
@@ -206,10 +294,44 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             } else {
                 this._master.filterArea = new Rectangle(0, 0, width, height);
             }
+
+            this._master.hitArea = new Rectangle(0, 0, width, height);
         }
 
         this._width = width;
         this._height = height;
+        this.positionFpsText();
+        this.updateZoomSampling();
+    }
+
+    public setBackgroundVisible(flag: boolean): void {
+        this._backgroundVisible = flag;
+
+        if (this._background) this._background.visible = flag;
+
+        // Without the opaque background under them, additive sprites go back to the `add` blend at once.
+        if (!flag && this._display) for (const child of this._display.children) {
+            if (!(child instanceof ExtendedSprite) || !child.batchAdditive) continue;
+
+            child.batchAdditive = false;
+            child.blendMode = 'add';
+        }
+    }
+
+    /**
+     * Sets the sprite's blend mode. An `add` sprite is drawn with the normal blend in its
+     * neighbours' batch (`AdditiveBatcher`) where that is the same picture: over the room's opaque
+     * background (the batched sprite leaves the destination's alpha as it was, `add` raises it),
+     * not through a filter pass (which composites the sprite's own output alpha), and not rounded
+     * by Pixi (whose round-pixels flag the additive mark sits beside).
+     */
+    private applyBlendMode(extendedSprite: ExtendedSprite, blendMode: ExtendedSprite['blendMode'], filters: readonly unknown[] | undefined): void {
+        const batchAdditive = (blendMode === 'add') && this._backgroundVisible && !filters?.length && !extendedSprite.roundPixels;
+        const mode = batchAdditive ? 'normal' : blendMode;
+
+        if (extendedSprite.blendMode !== mode) extendedSprite.blendMode = mode;
+
+        extendedSprite.batchAdditive = batchAdditive;
     }
 
     public setMask(flag: boolean): void {
@@ -218,20 +340,22 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         if (flag && !this._usesMask) {
             this._usesMask = true;
 
-            if (this._mask && this._mask.parent !== this._master) {
-                this._master.addChild(this._mask);
+            if (this._mask && this._mask.parent !== this._roomLayer) {
+                this._roomLayer?.addChild(this._mask);
 
                 this._display.mask = this._mask;
             }
         } else if (!flag && this._usesMask) {
             this._usesMask = false;
 
-            if (this._mask && this._mask.parent === this._master) {
-                this._master.removeChild(this._mask);
+            if (this._mask && this._mask.parent === this._roomLayer) {
+                this._roomLayer?.removeChild(this._mask);
 
                 this._display.mask = null;
             }
         }
+
+        this.updateZoomSampling();
     }
 
     public setScale(
@@ -239,19 +363,40 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         point: Point | undefined = undefined,
         offsetPoint: Point | undefined = undefined,
     ): void {
+        this.setTransform(Math.abs(scale), this._isFlipped, point, offsetPoint);
+    }
+
+    /** Flash `RoomSpriteCanvas.setFlip`: invert both display axes around the requested pivot. */
+    public setFlip(flipped: boolean, point?: Point, offsetPoint?: Point): void {
+        this.setTransform(this._scale, flipped, point, offsetPoint);
+    }
+
+    private get displayScale(): number {
+        return this._isFlipped ? -this._scale : this._scale;
+    }
+
+    public get isFlipped(): boolean {
+        return this._isFlipped;
+    }
+
+    /** Flash `RoomSpriteCanvas.setTransform`, including consecutive changes before a render. */
+    private setTransform(scale: number, flipped: boolean, point?: Point, offsetPoint?: Point): void {
         if (!this._master || !this._display) return;
 
         if (!point) point = new Point(this._width / 2, this._height / 2);
 
         if (!offsetPoint) offsetPoint = point;
 
-        const localX = (point.x - this._screenOffsetX) / this._scale;
-        const localY = (point.y - this._screenOffsetY) / this._scale;
+        const local = new Point(
+            (point.x - this.screenOffsetX) / this.displayScale,
+            (point.y - this.screenOffsetY) / this.displayScale,
+        );
 
         this._scale = scale;
+        this._isFlipped = flipped;
 
-        this.screenOffsetX = offsetPoint.x - localX * this._scale;
-        this.screenOffsetY = offsetPoint.y - localY * this._scale;
+        this.screenOffsetX = offsetPoint.x - local.x * this.displayScale;
+        this.screenOffsetY = offsetPoint.y - local.y * this.displayScale;
     }
 
     public render(time: number, update: boolean = false): void {
@@ -261,15 +406,33 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         if (!this._geometry || time === this._renderTimestamp) return;
 
+        const renderStart = performance.now();
+
+        // RotatingRoomSpriteCanvas.render: the rotating and shaking room effects move the geometry
+        // before each frame is drawn. Once per frame, so a re-entrant render(-1) does not step them twice.
+        this.doMagic();
+
+        this.updateZoomSampling();
+
         if (this._width !== this._renderedWidth || this._height !== this._renderedHeight) update = true;
 
-        if (this._display && (this._display.x !== this._screenOffsetX || this._display.y !== this._screenOffsetY || this._display.scale.x !== this._scale)) {
+        if (this._display && (this._display.x !== this._screenOffsetX || this._display.y !== this._screenOffsetY || this._display.scale.x !== this.displayScale)) {
+            // Flash assigns the offset unrounded: `renderObject` snaps each sprite against this
+            // exact offset (`snapRoomSpriteCoordinate`), so flooring it here moves every sprite
+            // off the pixel grid, and a fractional offset would never compare equal again.
             this._display.x = this._screenOffsetX;
             this._display.y = this._screenOffsetY;
-            this._display.scale.set(this._scale);
+            this._display.scale.set(this.displayScale);
 
             update = true;
         }
+
+        // One shift moves the whole picture. Not for the half-size composite or a flipped room:
+        // their pixels are placed differently.
+        const drawShift = !this._compositeZoom && !this._isFlipped;
+
+        this._drawShiftX = drawShift ? drawnRoomSpriteShift(this._screenOffsetX) : 0;
+        this._drawShiftY = drawShift ? drawnRoomSpriteShift(this._screenOffsetY) : 0;
 
         let spriteCount = 0;
 
@@ -284,7 +447,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         }
 
         if (this._zDirty || spriteCount !== this._sortableSprites.length) {
-            this._sortableSprites.sort(RoomSpriteCanvas._zComparator);
+            RoomSpriteCanvas.sortByZ(this._sortableSprites);
 
             update = true;
         }
@@ -303,9 +466,131 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this.cleanSprites(spriteCount);
 
+        this._renderTime = performance.now() - renderStart;
+
+        this.calculateUpdateInterval(time);
+
         this._renderTimestamp = time;
         this._renderedWidth = this._width;
         this._renderedHeight = this._height;
+    }
+
+    /**
+     * Flash `calculateUpdateInterval`, the fps counter's half: after the first 50 frames, every 50
+     * frames the average interval between them and the average time their renders took become the
+     * counter's text (`fps`, `frame time`, the ping first when one is known), with the last frame
+     * of over 180 ms since the previous text as `halted`.
+     *
+     * The same average switches the frame skipping mode (`_runningSlow`), in which a furni's
+     * sprites are rebuilt only every other frame while its animation runs on. Flash enters it over
+     * a 60 ms average and leaves it under 50 ms; Habbo's JS port, drawing at up to 60 fps, over
+     * 24 ms and under 18 ms. Here those are taken as shares of the ticker's own frame, as
+     * `fps.limit` sets it, so a lower cap is not slow in itself.
+     */
+    private calculateUpdateInterval(time: number): void {
+        if (this._renderTimestamp <= 0) return;
+
+        const interval = time - this._renderTimestamp;
+
+        if (interval <= 0) return;
+
+        // Flash's frame times are whole milliseconds (`getTimer`); the ticker's are not.
+        if (interval > (60 * 3)) this._haltedTime = Math.trunc(interval);
+
+        this._framesBeforeSampling++;
+
+        if (this._framesBeforeSampling <= 50) return;
+
+        this._sampledFrames++;
+        this._sampledIntervalTotal += interval;
+        this._sampledRenderTimeTotal += this._renderTime;
+
+        if (this._sampledFrames < 50) return;
+
+        this._averageInterval = this._sampledIntervalTotal / this._sampledFrames;
+        this._averageRenderTime = this._sampledRenderTimeTotal / this._sampledFrames;
+        this._sampledFrames = 0;
+        this._sampledIntervalTotal = 0;
+        this._sampledRenderTimeTotal = 0;
+
+        const maxFPS = GetTicker().maxFPS;
+        const frameInterval = 1000 / ((maxFPS > 0) ? maxFPS : 60);
+
+        if (!this._runningSlow && (this._averageInterval > (frameInterval * RoomSpriteCanvas.RUNNING_SLOW_ENTER_RATIO))) this._runningSlow = true;
+        else if (this._runningSlow && (this._averageInterval < (frameInterval * RoomSpriteCanvas.RUNNING_SLOW_LEAVE_RATIO))) this._runningSlow = false;
+
+        if (this._fpsCounterEnabled && this._fpsText) {
+            const fps = (1000 / this._averageInterval).toFixed(1);
+            const frameTime = (this._averageRenderTime < 1) ? '<1.0' : this._averageRenderTime.toFixed(1);
+
+            let text = '';
+
+            if (this._pingMs >= 0) text += 'ping: ' + this._pingMs + 'ms\n';
+
+            text += 'fps: ' + fps + '\n' + 'frame time: ' + frameTime + 'ms';
+
+            if (this._haltedTime > 0) text += '\nhalted ' + this._haltedTime + 'ms';
+
+            this._fpsText.text = text;
+        }
+
+        this._haltedTime = 0;
+    }
+
+    /**
+     * Flash's counter `TextField`: Verdana 9 in 0xFF5500, right aligned in a 100 x 60 box 20 px in
+     * from the right edge and 60 px up from the bottom. Flash builds it with every canvas; here it
+     * is made the first time a counter is turned on, over the room in the canvas's master.
+     */
+    private createFpsText(): Text | undefined {
+        if (this._fpsText || !this._master) return this._fpsText;
+
+        this._fpsText = new Text({
+            text: '',
+            style: new TextStyle({
+                fontFamily: 'Verdana',
+                fontSize: 9,
+                fill: 0xFF5500,
+                align: 'right',
+            }),
+        });
+
+        this._fpsText.anchor.x = 1;
+        this._fpsText.eventMode = 'none';
+
+        this._master.addChild(this._fpsText);
+        this.positionFpsText();
+
+        return this._fpsText;
+    }
+
+    /** `initialize`: the box's right edge, less the `TextField`'s 2 px gutter, and its top plus the gutter. */
+    private positionFpsText(): void {
+        if (!this._fpsText) return;
+
+        this._fpsText.x = this._width - (100 + 20) + 100 - 2;
+        this._fpsText.y = this._height - (60 + 60) + 2;
+    }
+
+    public get fpsCounterEnabled(): boolean {
+        return this._fpsCounterEnabled;
+    }
+
+    /** Flash `set fpsCounterEnabled`: turning it off empties the text; on, it fills at the next sample. */
+    public set fpsCounterEnabled(flag: boolean) {
+        this._fpsCounterEnabled = flag;
+
+        if (flag) this.createFpsText();
+        else if (this._fpsText) this._fpsText.text = '';
+    }
+
+    public get pingMs(): number {
+        return this._pingMs;
+    }
+
+    /** Flash `set pingMs`, which `RoomEngine.update` gives the active canvas every frame. */
+    public set pingMs(ping: number) {
+        this._pingMs = ping;
     }
 
     public skipSpriteVisibilityChecking(): void {
@@ -328,6 +613,32 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
     public removeFromCache(identifier: number): void {
         this._objectCache.removeObjectCache(identifier);
+    }
+
+    /** Join the existing depth-sorted pixels before reducing the room to half size. */
+    private updateZoomSampling(): void {
+        if (!this._master || !this._display || !this._roomLayer) return;
+
+        const composite = this._scale === 0.5;
+
+        if (composite) {
+            this._downsampleFilter ??= new RoomDownsampleFilter();
+            this._downsampleFilter.resolution = TextureUtils.getRenderer().resolution * 2;
+        }
+
+        if (composite !== this._compositeZoom) {
+            this._compositeZoom = composite;
+            this._roomLayer.filters = composite ? [ this._downsampleFilter! ] : [];
+        }
+
+        this._roomLayer.filterArea = this._usesMask ? this._master.filterArea : undefined;
+
+        // The room layer's viewport filterArea supplies the same rectangular clipping.
+        // A stencil inside this offscreen pass can leak into subsequent UI draws.
+        const mask = composite ? null : (this._usesMask ? this._mask ?? null : null);
+
+        if (this._display.mask !== mask) this._display.mask = mask;
+        if (this._mask) this._mask.visible = !composite;
     }
 
     private renderObject(
@@ -386,7 +697,13 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         let spriteCount = 0;
 
-        for (const sprite of visualization.sprites.values()) {
+        // Flash: the visualization's sprites, then its additional ones (`IPlaneVisualization.getAdditionalSprite`).
+        const sprites = visualization.sprites;
+        const totalSprites = sprites.length + (visualization.additionalSpriteCount ?? 0);
+
+        for (let index = 0; index < totalSprites; index++) {
+            const sprite = (index < sprites.length) ? sprites[index] : visualization.getAdditionalSprite(index - sprites.length);
+
             if (!sprite || !sprite.visible) continue;
 
             const texture = sprite.texture;
@@ -394,20 +711,20 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (!texture || !baseTexture) continue;
 
-            const spriteX = this.snapSpriteCoordinate(x + sprite.offsetX, screenOffsetX);
-            const spriteY = this.snapSpriteCoordinate(y + sprite.offsetY, screenOffsetY);
-            const screenX = spriteX + screenOffsetX;
-            const screenY = spriteY + screenOffsetY;
+            // The composite's source grid has two pixels per screen pixel at zoom 0.
+            // A flipped display maps `coordinate` to `offset - coordinate * scale`, so the snap takes the sign.
+            const samplingScale = (this._compositeZoom ? 1 : this._scale) * (this._isFlipped ? -1 : 1);
+            const samplingOffset = this._compositeZoom ? 2 : 1;
+            const spriteX = snapRoomSpriteCoordinate(x + sprite.offsetX, screenOffsetX * samplingOffset, samplingScale) + screenOffsetX;
+            const spriteY = snapRoomSpriteCoordinate(y + sprite.offsetY, screenOffsetY * samplingOffset, samplingScale) + screenOffsetY;
 
-            if (sprite.flipH) {
-                const checkX = x + -(texture.width + -sprite.offsetX) + screenOffsetX;
+            // `rectangleVisible` on the snapped position. Flash drew a flipped sprite from a mirrored
+            // copy of its bitmap, so it still started at its x; here the sprite is mirrored in place
+            // (`scale -1`) and reaches back from it, so the rectangle starts a width (or height) earlier.
+            const visibleX = sprite.flipH ? (spriteX - texture.width) : spriteX;
+            const visibleY = sprite.flipV ? (spriteY - texture.height) : spriteY;
 
-                if (!this.isSpriteVisible(checkX, screenY, texture.width, texture.height)) continue;
-            } else if (sprite.flipV) {
-                const checkY = y + -(texture.height + -sprite.offsetY) + screenOffsetY;
-
-                if (!this.isSpriteVisible(screenX, checkY, texture.width, texture.height)) continue;
-            } else if (!this.isSpriteVisible(screenX, screenY, texture.width, texture.height)) continue;
+            if (!this.isSpriteVisible(visibleX, visibleY, texture.width, texture.height)) continue;
 
             let sortableSprite = sortableCache.getSprite(spriteCount);
 
@@ -424,14 +741,14 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             sortableSprite.sprite = sprite;
 
             if (
-                sprite.spriteType === RoomObjectSpriteTypeEnum.Avatar ||
-                sprite.spriteType === RoomObjectSpriteTypeEnum.AvatarOwn
+                sprite.spriteType === RoomObjectSpriteTypeEnum.Avatar
+                || sprite.spriteType === RoomObjectSpriteTypeEnum.AvatarOwn
             ) {
                 sortableSprite.sprite.libraryAssetName = 'avatar_' + object.id;
             }
 
-            sortableSprite.x = spriteX;
-            sortableSprite.y = spriteY;
+            sortableSprite.x = spriteX - screenOffsetX;
+            sortableSprite.y = spriteY - screenOffsetY;
 
             const newZ = z + sprite.relativeDepth + 3.7e-11 * count;
 
@@ -485,8 +802,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         }
 
         if (
-            extendedSprite.needsUpdate(objectSprite.id, objectSprite.updateCounter) ||
-            RoomEnterEffect.isVisualizationOn()
+            extendedSprite.needsUpdate(objectSprite.id, objectSprite.updateCounter)
+            || RoomEnterEffect.isVisualizationOn()
         ) {
             extendedSprite.tag = objectSprite.tag;
             extendedSprite.alphaTolerance = objectSprite.alphaTolerance;
@@ -494,7 +811,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             extendedSprite.varyingDepth = objectSprite.varyingDepth;
             extendedSprite.clickHandling = objectSprite.clickHandling;
             extendedSprite.skipMouseHandling = objectSprite.skipMouseHandling;
-            extendedSprite.filters = objectSprite.filters;
+            extendedSprite.setFilters(objectSprite.filters);
 
             const alpha = objectSprite.alpha / 255;
 
@@ -502,7 +819,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (extendedSprite.tint !== objectSprite.color) extendedSprite.tint = objectSprite.color;
 
-            if (extendedSprite.blendMode !== objectSprite.blendMode) extendedSprite.blendMode = objectSprite.blendMode;
+            this.applyBlendMode(extendedSprite, objectSprite.blendMode, objectSprite.filters);
 
             if (extendedSprite.texture !== objectSprite.texture) extendedSprite.setTexture(objectSprite.texture);
 
@@ -527,10 +844,23 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         extendedSprite.x = sprite.x;
         extendedSprite.y = sprite.y;
 
+        this.placeDrawShift(extendedSprite);
+
         extendedSprite.offsetX = objectSprite.offsetX;
         extendedSprite.offsetY = objectSprite.offsetY;
 
         return true;
+    }
+
+    /**
+     * Draws the picture where Flash shows it (`drawnRoomSpriteShift`) and leaves x / y where
+     * `renderObject` put them: mouse hits stay on those, as `RoomSpriteCanvas.checkMouseHits` tests them.
+     */
+    private placeDrawShift(extendedSprite: ExtendedSprite): void {
+        const pivotX = this._drawShiftX ? -this._drawShiftX / (extendedSprite.scale.x * this._scale) : 0;
+        const pivotY = this._drawShiftY ? -this._drawShiftY / (extendedSprite.scale.y * this._scale) : 0;
+
+        if (extendedSprite.pivot.x !== pivotX || extendedSprite.pivot.y !== pivotY) extendedSprite.pivot.set(pivotX, pivotY);
     }
 
     private createAndAddSprite(sortableSprite: SortableSprite, index: number = -1): void {
@@ -566,14 +896,16 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         extendedSprite.varyingDepth = sprite.varyingDepth;
         extendedSprite.clickHandling = sprite.clickHandling;
         extendedSprite.skipMouseHandling = sprite.skipMouseHandling;
-        extendedSprite.blendMode = sprite.blendMode;
-        extendedSprite.filters = sprite.filters;
+        extendedSprite.setFilters(sprite.filters);
+        this.applyBlendMode(extendedSprite, sprite.blendMode, sprite.filters);
 
         if (!textureSet) extendedSprite.setTexture(sprite.texture);
 
         if (sprite.flipH) extendedSprite.scale.x = -1;
 
         if (sprite.flipV) extendedSprite.scale.y = -1;
+
+        this.placeDrawShift(extendedSprite);
 
         this.updateEnterRoomEffect(extendedSprite, sprite);
 
@@ -649,19 +981,23 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         return this._objectCache.getObjectCache(id);
     }
 
-    private snapSpriteCoordinate(coordinate: number, screenOffset: number): number {
-        if (this._scale === 0.5) return coordinate;
-
-        return (Math.round(screenOffset + coordinate * this._scale) - screenOffset) / this._scale;
-    }
-
     private isSpriteVisible(x: number, y: number, width: number, height: number): boolean {
         if (this._noSpriteVisibilityChecking) return true;
 
-        x = (x - this._screenOffsetX) * this._scale + this._screenOffsetX;
-        y = (y - this._screenOffsetY) * this._scale + this._screenOffsetY;
-        width = width * this._scale;
-        height = height * this._scale;
+        x = (x - this._screenOffsetX) * this.displayScale + this._screenOffsetX;
+        y = (y - this._screenOffsetY) * this.displayScale + this._screenOffsetY;
+        width = width * this.displayScale;
+        height = height * this.displayScale;
+
+        if (width < 0) {
+            x += width;
+            width = -width;
+        }
+
+        if (height < 0) {
+            y += height;
+            height = -height;
+        }
 
         if (x < this._width && x + width >= 0 && y < this._height && y + height >= 0) {
             if (!this._usesExclusionRectangles) return true;
@@ -682,14 +1018,28 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         x = x - this._screenOffsetX;
         y = y - this._screenOffsetY;
 
-        this._mouseLocation.x = x / this._scale;
-        this._mouseLocation.y = y / this._scale;
+        this._mouseLocation.x = x / this.displayScale;
+        this._mouseLocation.y = y / this.displayScale;
 
         if (this._mouseCheckCount > 0 && type == MouseEventType.MOUSE_MOVE) return this._mouseSpriteWasHit;
 
+        // Flash's `clickHandler`, the display's own click listener: sprites with a click url get
+        // their clicks here, since `checkMouseHits` passes them over.
+        if ((type === MouseEventType.MOUSE_CLICK) || (type === MouseEventType.DOUBLE_CLICK)) {
+            this.checkMouseClickHits(
+                Math.trunc(x / this.displayScale),
+                Math.trunc(y / this.displayScale),
+                (type === MouseEventType.DOUBLE_CLICK),
+                altKey,
+                ctrlKey,
+                shiftKey,
+                buttonDown,
+            );
+        }
+
         this._mouseSpriteWasHit = this.checkMouseHits(
-            Math.trunc(x / this._scale),
-            Math.trunc(y / this._scale),
+            Math.trunc(x / this.displayScale),
+            Math.trunc(y / this.displayScale),
             type,
             altKey,
             ctrlKey,
@@ -700,6 +1050,58 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         this._mouseCheckCount++;
 
         return this._mouseSpriteWasHit;
+    }
+
+    /** `checkMouseClickHits`: a click or double click, for the sprites that handle their own. */
+    private checkMouseClickHits(
+        x: number,
+        y: number,
+        doubleClick: boolean,
+        altKey: boolean = false,
+        ctrlKey: boolean = false,
+        shiftKey: boolean = false,
+        buttonDown: boolean = false,
+    ): boolean {
+        const type = doubleClick ? MouseEventType.DOUBLE_CLICK : MouseEventType.MOUSE_CLICK;
+        const clicked = new Set<string>();
+
+        let didHitSprite = false;
+        let spriteId = this._activeSpriteCount - 1;
+
+        while (spriteId >= 0) {
+            const extendedSprite = this.getExtendedSprite(spriteId);
+
+            if (extendedSprite?.clickHandling) {
+                if (extendedSprite.containsXY(x - extendedSprite.x, y - extendedSprite.y)) {
+                    const identifier = this.getExtendedSpriteIdentifier(extendedSprite);
+
+                    if (!clicked.has(identifier)) {
+                        this.bufferMouseEvent(this.createMouseEvent(
+                            x,
+                            y,
+                            x - extendedSprite.x,
+                            y - extendedSprite.y,
+                            type,
+                            extendedSprite.tag,
+                            altKey,
+                            ctrlKey,
+                            shiftKey,
+                            buttonDown,
+                        ), identifier);
+
+                        clicked.add(identifier);
+                    }
+                }
+
+                didHitSprite = true;
+            }
+
+            spriteId--;
+        }
+
+        this.processMouseEvents();
+
+        return didHitSprite;
     }
 
     private checkMouseHits(
@@ -723,10 +1125,10 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             if (extendedSprite && extendedSprite.containsXY(x - extendedSprite.x, y - extendedSprite.y)) {
                 if (!extendedSprite.skipMouseHandling) {
                     if (
-                        extendedSprite.clickHandling &&
-                        (type === MouseEventType.MOUSE_CLICK || type === MouseEventType.DOUBLE_CLICK)
+                        extendedSprite.clickHandling
+                        && (type === MouseEventType.MOUSE_CLICK || type === MouseEventType.DOUBLE_CLICK)
                     ) {
-                        //
+                        // Left to `checkMouseClickHits`.
                     } else {
                         const identifier = this.getExtendedSpriteIdentifier(extendedSprite);
 
@@ -795,8 +1197,8 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                             mouseData.spriteTag = tag;
 
                             if (
-                                mouseEvent &&
-                                (type !== MouseEventType.MOUSE_MOVE || x !== this._mouseOldX || y !== this._mouseOldY)
+                                mouseEvent
+                                && (type !== MouseEventType.MOUSE_MOVE || x !== this._mouseOldX || y !== this._mouseOldY)
                             )
                                 this.bufferMouseEvent(mouseEvent, identifier);
 
@@ -833,7 +1235,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
                 ctrlKey,
                 shiftKey,
                 buttonDown,
-            ), key)
+            ), key);
         }
 
         this.processMouseEvents();
@@ -882,7 +1284,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     protected processMouseEvents(): void {
         if (!this._eventCache) return;
 
-        for (const [key, event] of this._eventCache.entries()) {
+        for (const [ key, event ] of this._eventCache.entries()) {
             if (!this._eventCache) return;
 
             if (!event) continue;
@@ -931,6 +1333,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
         this._screenOffsetX = currentOffsetX;
         this._screenOffsetY = currentOffsetY;
+        this.render(-1, true);
 
         return texture;
     }
@@ -949,16 +1352,16 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
 
             if (this._rotationOrigin) location.assign(this._rotationOrigin);
 
-            location.x =
-                location.x +
-                this._rotationRodLength *
-                Math.cos(((direction.x + 180) / 180) * Math.PI) *
-                Math.cos((direction.y / 180) * Math.PI);
-            location.y =
-                location.y +
-                this._rotationRodLength *
-                Math.sin(((direction.x + 180) / 180) * Math.PI) *
-                Math.cos((direction.y / 180) * Math.PI);
+            location.x
+                = location.x
+                    + this._rotationRodLength
+                    * Math.cos(((direction.x + 180) / 180) * Math.PI)
+                    * Math.cos((direction.y / 180) * Math.PI);
+            location.y
+                = location.y
+                    + this._rotationRodLength
+                    * Math.sin(((direction.x + 180) / 180) * Math.PI)
+                    * Math.cos((direction.y / 180) * Math.PI);
             location.z = location.z + this._rotationRodLength * Math.sin((direction.y / 180) * Math.PI);
 
             this._geometry.setLocation(location);
@@ -1118,7 +1521,9 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         return this._screenOffsetX;
     }
 
+    /** Flash keeps the offset as it is given (a `Number`): sprites snap against it in `renderObject`. */
     public set screenOffsetX(x: number) {
+        this._mouseLocation.x = this._mouseLocation.x - (x - this._screenOffsetX);
         this._screenOffsetX = x;
     }
 
@@ -1126,7 +1531,9 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         return this._screenOffsetY;
     }
 
+    /** Flash keeps the offset as it is given (a `Number`): sprites snap against it in `renderObject`. */
     public set screenOffsetY(y: number) {
+        this._mouseLocation.y = this._mouseLocation.y - (y - this._screenOffsetY);
         this._screenOffsetY = y;
     }
 

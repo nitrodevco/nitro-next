@@ -1,10 +1,13 @@
-import type { IRoomObjectUpdateMessage, IVector3D } from '@nitrodevco/nitro-api';
-import { LegacyDataType, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, IVector3D, LegacyDataType, Vector3d } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage, ObjectMoveUpdateMessage } from '../../../messages';
 import { MovingObjectLogic } from '../MovingObjectLogic';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash `FurniturePushableLogic`, the logic `RoomObjectFactory` builds for
+ * `furniture_pushable`.
+ */
 export class FurniturePushableLogic extends FurnitureMultiStateLogic {
     private static ANIMATION_NOT_MOVING: number = 0;
     private static ANIMATION_MOVING: number = 1;
@@ -15,7 +18,7 @@ export class FurniturePushableLogic extends FurnitureMultiStateLogic {
     constructor() {
         super();
 
-        this.updateInterval = MovingObjectLogic.DEFAULT_UPDATE_INTERVAL;
+        this.setMoveUpdateInterval(MovingObjectLogic.DEFAULT_UPDATE_INTERVAL);
     }
 
     public override update(time: number): void {
@@ -58,10 +61,9 @@ export class FurniturePushableLogic extends FurnitureMultiStateLogic {
 
         if (message instanceof ObjectDataUpdateMessage) {
             if (message.state > 0) {
-                this.updateInterval =
-                    MovingObjectLogic.DEFAULT_UPDATE_INTERVAL / this.getUpdateIntervalValue(message.state);
+                this.setMoveUpdateInterval(MovingObjectLogic.DEFAULT_UPDATE_INTERVAL / this.getUpdateIntervalValue(message.state));
             } else {
-                this.updateInterval = 1;
+                this.setMoveUpdateInterval(1);
             }
 
             const animation = this.getAnimationValue(message.state);

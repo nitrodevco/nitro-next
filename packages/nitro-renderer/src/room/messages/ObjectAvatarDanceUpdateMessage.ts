@@ -1,18 +1,16 @@
 import { ObjectStateUpdateMessage } from './ObjectStateUpdateMessage';
 
-export class ObjectAvatarDanceUpdateMessage extends ObjectStateUpdateMessage
-{
+/** Port of Flash `RoomObjectAvatarDanceUpdateMessage`. */
+export class ObjectAvatarDanceUpdateMessage extends ObjectStateUpdateMessage {
     private _danceStyle: number;
 
-    constructor(danceStyle: number = 0)
-    {
+    constructor(danceStyle: number = 0) {
         super();
 
         this._danceStyle = danceStyle;
     }
 
-    public get danceStyle(): number
-    {
+    public get danceStyle(): number {
         return this._danceStyle;
     }
 }

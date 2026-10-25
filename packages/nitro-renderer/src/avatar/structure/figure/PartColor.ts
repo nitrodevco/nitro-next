@@ -1,5 +1,6 @@
-import type { IFigureDataColor, IPartColor } from "@nitrodevco/nitro-api";
+import { IFigureDataColor, IPartColor } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `PartColor`. */
 export class PartColor implements IPartColor {
     private _id: number;
     private _index: number;

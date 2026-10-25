@@ -1,17 +1,30 @@
-import type { Spritesheet, Texture } from 'pixi.js';
+import { Spritesheet, Texture } from 'pixi.js';
 
-import type { IAssetData } from './IAssetData';
-import type { IGraphicAsset } from './IGraphicAsset';
-import type { IGraphicAssetCollection } from './IGraphicAssetCollection';
+import { IAssetData } from './IAssetData';
+import { IGraphicAsset } from './IGraphicAsset';
+import { IGraphicAssetCollection } from './IGraphicAssetCollection';
 
 export interface IAssetManager {
     getTexture(name: string): Texture | undefined;
     setTexture(name: string, texture: Texture): void;
+    removeTexture(name: string): void;
     getAsset(name: string): IGraphicAsset | undefined;
     addAssetToCollection(collectionName: string, assetName: string, texture: Texture): IGraphicAsset | undefined;
     getCollection(name: string): IGraphicAssetCollection | undefined;
-    createCollection(data: IAssetData, spritesheet: Spritesheet): IGraphicAssetCollection | undefined;
+    removeCollection(name: string): void;
+    createCollection(data: IAssetData, spritesheet: Spritesheet | undefined, textures?: Record<string, Texture>): IGraphicAssetCollection | undefined;
     downloadAssets(urls: string[]): Promise<boolean>;
     downloadAsset(url: string): Promise<boolean>;
+    /** A `.nitro` bundle kept by name after it is read - see `AssetManager.downloadAssetBundle`. */
+    downloadAssetBundle(name: string, url: string): Promise<IGraphicAssetCollection | undefined>;
+    downloadAssetBundles(bundles: { name: string; url: string }[]): Promise<boolean>;
+    /** A JSON entry a retained bundle carries beside its bitmaps. */
+    getBundleFile<T>(bundleName: string, fileName: string): T | undefined;
+    /** A non-JSON, non-PNG entry of a retained bundle, as bytes (a `.ttf` face, ...). */
+    getBundleBinary(bundleName: string, fileName: string): ArrayBuffer | undefined;
+    /** Drops a retained bundle's tables and raw bytes once its consumer has read them. */
+    releaseBundleData(name: string): void;
+    /** Forgets a retained bundle and frees its textures - for a bundle nothing draws any more. */
+    removeAssetBundle(name: string): void;
     readonly collections: Map<string, IGraphicAssetCollection>;
 }

@@ -1,5 +1,6 @@
-﻿import type { IAssetAnimationDirection, IDirectionDataContainer } from "@nitrodevco/nitro-api";
+import { IAssetAnimationDirection, IDirectionDataContainer } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `DirectionDataContainer`. */
 export class DirectionDataContainer implements IDirectionDataContainer {
     private _offset: number;
 

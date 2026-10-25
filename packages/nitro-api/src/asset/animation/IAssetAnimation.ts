@@ -1,11 +1,11 @@
-import type { IAssetAnimationAdd } from './IAssetAnimationAdd';
-import type { IAssetAnimationAvatar } from './IAssetAnimationAvatar';
-import type { IAssetAnimationDirection } from './IAssetAnimationDirection';
-import type { IAssetAnimationFrame } from './IAssetAnimationFrame';
-import type { IAssetAnimationOverride } from './IAssetAnimationOverride';
-import type { IAssetAnimationRemove } from './IAssetAnimationRemove';
-import type { IAssetAnimationShadow } from './IAssetAnimationShadow';
-import type { IAssetAnimationSprite } from './IAssetAnimationSprite';
+import { IAssetAnimationAdd } from './IAssetAnimationAdd';
+import { IAssetAnimationAvatar } from './IAssetAnimationAvatar';
+import { IAssetAnimationDirection } from './IAssetAnimationDirection';
+import { IAssetAnimationFrame } from './IAssetAnimationFrame';
+import { IAssetAnimationOverride } from './IAssetAnimationOverride';
+import { IAssetAnimationRemove } from './IAssetAnimationRemove';
+import { IAssetAnimationShadow } from './IAssetAnimationShadow';
+import { IAssetAnimationSprite } from './IAssetAnimationSprite';
 
 export interface IAssetAnimation {
     name: string;

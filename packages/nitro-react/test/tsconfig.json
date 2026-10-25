@@ -1,0 +1,14 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "rootDir": "..",
+        "types": [
+            "node"
+        ]
+    },
+    "include": [
+        "./**/*",
+        "../src/commands/client-modules/pluginMessageCodec.ts"
+    ]
+}

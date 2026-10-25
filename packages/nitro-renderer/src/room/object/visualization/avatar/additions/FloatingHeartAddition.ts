@@ -1,12 +1,12 @@
-import type { IRoomObjectSprite } from '@nitrodevco/nitro-api';
-import { AvatarActionStateType, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
-import type { Texture } from 'pixi.js';
+import { AvatarActionStateType, IRoomObjectSprite, RoomGeometryScaleType } from '@nitrodevco/nitro-api';
+import { Texture } from 'pixi.js';
 
 import { GetAssetManager } from '#renderer/assets';
 import { GetTickerTime } from '#renderer/utils';
 
 import { ExpressionAddition } from './ExpressionAddition';
 
+/** Port of Flash `FloatingHeart`. */
 export class FloatingHeartAddition extends ExpressionAddition {
     private static DELAY_BEFORE_ANIMATION: number = 300;
     private static STATE_DELAY: number = 0;
@@ -35,9 +35,9 @@ export class FloatingHeartAddition extends ExpressionAddition {
             if (this.visualization.angle === 90 || this.visualization.angle === 270) {
                 offsetX = 0;
             } else if (
-                this.visualization.angle === 135 ||
-                this.visualization.angle === 180 ||
-                this.visualization.angle === 225
+                this.visualization.angle === 135
+                || this.visualization.angle === 180
+                || this.visualization.angle === 225
             ) {
                 offsetX = 6;
             } else offsetX = -6;
@@ -51,9 +51,9 @@ export class FloatingHeartAddition extends ExpressionAddition {
             if (this.visualization.angle === 90 || this.visualization.angle === 270) {
                 offsetX = -3;
             } else if (
-                this.visualization.angle === 135 ||
-                this.visualization.angle === 180 ||
-                this.visualization.angle === 225
+                this.visualization.angle === 135
+                || this.visualization.angle === 180
+                || this.visualization.angle === 225
             ) {
                 offsetX = 22;
             } else offsetX = -30;

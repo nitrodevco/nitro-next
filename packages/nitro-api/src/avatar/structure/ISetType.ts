@@ -1,8 +1,7 @@
 import { IFigureDataSetType } from '#api/asset/index';
-import type { IAdvancedMap } from '#api/utils';
-import { AvatarFigurePartType, AvatarGenderType } from '../enum';
 
-import type { IFigurePartSet } from './IFigurePartSet';
+import { AvatarFigurePartType, AvatarGenderType } from '../enum';
+import { IFigurePartSet } from './IFigurePartSet';
 
 export interface ISetType {
     dispose(): void;

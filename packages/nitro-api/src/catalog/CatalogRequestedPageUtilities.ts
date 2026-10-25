@@ -1,31 +1,31 @@
-import { CatalogPageRequestType } from "./CatalogPageRequestType";
-import { ICatalogRequestedPage } from "./ICatalogRequestedPage";
+import { CatalogPageRequestType } from './CatalogPageRequestType';
+import { ICatalogRequestedPage } from './ICatalogRequestedPage';
 
 export class CatalogRequestedPageUtilities {
     public static getEmpty() {
         return {
-            type: CatalogPageRequestType.None
+            type: CatalogPageRequestType.None,
         } as ICatalogRequestedPage;
     }
 
     public static getForPageId(pageId: number) {
         return {
             type: CatalogPageRequestType.PageId,
-            pageId
+            pageId,
         } as ICatalogRequestedPage;
     }
 
     public static getForOfferId(offerId: number) {
         return {
             type: CatalogPageRequestType.OfferId,
-            offerId
+            offerId,
         } as ICatalogRequestedPage;
     }
 
     public static getForPageName(pageName: string) {
         return {
             type: CatalogPageRequestType.PageName,
-            pageName
+            pageName,
         } as ICatalogRequestedPage;
     }
 }

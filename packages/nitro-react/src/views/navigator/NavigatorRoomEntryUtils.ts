@@ -3,19 +3,18 @@
  * — com.sulake.habbo.window.utils.getUserCountColor
  * — com.sulake.habbo.navigator.view.search.results.RoomEntryUtils.getModulatedBackgroundColor
  */
-
-const toHex = (argb: number) => `#${(argb & 0xFFFFFF).toString(16).padStart(6, '0')}`;
+import { toCssHexColor } from '#base/utils';
 
 /** getUserCountColor(userCount, maxUserCount) — ARGB constants straight from the SWF */
 export const getUserCountColor = (userCount: number, maxUserCount: number) => {
     const percent = 100 * (userCount / maxUserCount);
 
-    if (percent >= 92) return toHex(4290917164);   // #c2332c
-    if (percent >= 80) return toHex(4294947099);   // #ffb11b
-    if (percent >= 50) return toHex(4294947099);   // #ffb11b
-    if (userCount > 0) return toHex(4284723554);   // #63b162
+    if (percent >= 92) return toCssHexColor(4290917164); // #c2332c
+    if (percent >= 80) return toCssHexColor(4294947099); // #ffb11b
+    if (percent >= 50) return toCssHexColor(4294947099); // #ffb11b
+    if (userCount > 0) return toCssHexColor(4284723554); // #63b162
 
-    return toHex(4291545793);                      // #cbcac1
+    return toCssHexColor(4291545793); // #cbcac1
 };
 
 /** CategoryElementFactory: colorMod = 9412607, color = -1, accumulator starts at 1 */
@@ -24,7 +23,7 @@ export const ALTERNATING_COLOR_NONE = -1;
 
 /** getModulatedBackgroundColor(modulation, baseColor) — -1 leaves the colour untouched */
 export const getModulatedBackgroundColor = (modulation: number, base: number) => {
-    if (modulation === -1) return toHex(base);
+    if (modulation === -1) return toCssHexColor(base);
 
     const br = ((0xFF0000 & base) >> 16) / 255;
     const bg = ((0xFF00 & base) >> 8) / 255;
@@ -37,15 +36,12 @@ export const getModulatedBackgroundColor = (modulation: number, base: number) =>
     const g = bg * Math.min(1, mg * 1.5);
     const b = bb * Math.min(1, mb * 1.5);
 
-    return toHex((Math.trunc(r * 255) << 16) + (Math.trunc(g * 255) << 8) + Math.trunc(b * 255));
+    return toCssHexColor((Math.trunc(r * 255) << 16) + (Math.trunc(g * 255) << 8) + Math.trunc(b * 255));
 };
 
 /**
- * navigator_entry_tile declares color="0x0ebe9df" in navigator_frame_2.
- * navigator_entry_row_container declares no color, so it keeps
- * WindowModel._fillColor, which is 16777215 (0xFFFFFF) — see WindowModel.as:37.
- * Neither border sets background="true", so this colour tints the border graphic
- * rather than filling it; Pixi's multiplicative tint makes 0xFFFFFF the identity.
+ * `getNewRowElement` modulates the row's own colour: `navigator_entry_row_container` declares none,
+ * so it keeps `WindowModel._fillColor`, 16777215 (0xFFFFFF). A tile keeps its layout colour - the
+ * factory hands `getNewTileElement` the alternating colour and does not use it.
  */
-export const TILE_BASE_COLOR = 0xEBE9DF;
 export const ROW_BASE_COLOR = 0xFFFFFF;

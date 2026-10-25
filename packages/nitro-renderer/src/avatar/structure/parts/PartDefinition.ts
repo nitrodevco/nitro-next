@@ -1,5 +1,6 @@
-import type { AvatarFigurePartType, IAssetAvatarPartSetItem } from "@nitrodevco/nitro-api";
+import { AvatarFigurePartType, IAssetAvatarPartSetItem } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `PartDefinition`. */
 export class PartDefinition {
     private _setType: string;
     private _flippedSetType: AvatarFigurePartType | undefined;

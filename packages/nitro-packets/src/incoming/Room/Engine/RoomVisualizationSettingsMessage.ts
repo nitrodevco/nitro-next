@@ -11,11 +11,11 @@ export class RoomVisualizationSettingsMessage implements IIncomingPacket<RoomVis
         const packet: RoomVisualizationSettingsMessageType = {
             wallsHidden: wrapper.readBoolean(),
             wallThickness: wrapper.readInt(),
-            floorThickness: wrapper.readInt()
+            floorThickness: wrapper.readInt(),
         };
 
-        packet.wallThickness = (packet.wallThickness < -2) ? -2 : (packet.wallThickness > 1) ? 1 : packet.wallThickness;
-        packet.floorThickness = (packet.floorThickness < -2) ? -2 : (packet.floorThickness > 1) ? 1 : packet.floorThickness;
+        packet.wallThickness = (packet.wallThickness < RoomThicknessType.Thinnest) ? -2 : (packet.wallThickness > RoomThicknessType.Thick) ? 1 : packet.wallThickness;
+        packet.floorThickness = (packet.floorThickness < RoomThicknessType.Thinnest) ? -2 : (packet.floorThickness > RoomThicknessType.Thick) ? 1 : packet.floorThickness;
 
         packet.wallThickness = Math.pow(2, packet.wallThickness);
         packet.floorThickness = Math.pow(2, packet.floorThickness);

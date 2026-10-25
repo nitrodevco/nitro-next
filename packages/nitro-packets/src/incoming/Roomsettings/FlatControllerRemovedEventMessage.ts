@@ -1,6 +1,6 @@
+// Body filled by hand from the 2026 client's own parser - the generator has no preserve step, so re-apply after a regeneration.
 import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-/* FlatControllerRemovedParser (§_-94§/§_-6w§) — flatId, userId */
 export type FlatControllerRemovedEventMessageType = {
     roomId: number;
     userId: number;

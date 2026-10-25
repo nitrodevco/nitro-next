@@ -1,30 +1,28 @@
-import { IOutgoingPacket } from '@nitrodevco/nitro-api';
+// Body filled by hand from the 2026 client's own composer - the generator has no preserve step, so re-apply after a regeneration.
+import { IOutgoingPacket, RoomChatFloodSensitivityType, RoomDoorModeEnum, RoomModerationType, RoomThicknessType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
-/*
- * SaveRoomSettingsMessageComposer (725) — WIN63-202607011411 wire: the pre-2014 chat
- * mode/bubble/scroll fields are gone; flood sensitivity, door-tile and idle-timer
- * fields plus muteAllPets replaced them.
- */
 export type SaveRoomSettingsComposerType = {
     roomId: number;
-    name: string;
-    description: string;
-    doorMode: number;
+    roomName: string;
+    roomDescription: string;
+    doorMode: RoomDoorModeEnum;
+    /** Only read for a password door; sent empty otherwise. */
     password: string;
-    maximumVisitors: number;
+    maxVisitors: number;
     categoryId: number;
     tags: string[];
-    tradeMode: number;
+    tradeMode: RoomTradeModeEnum;
     allowPets: boolean;
     allowFoodConsume: boolean;
     allowWalkThrough: boolean;
     hideWalls: boolean;
-    wallThickness: number;
-    floorThickness: number;
-    whoCanMute: number;
-    whoCanKick: number;
-    whoCanBan: number;
-    chatFloodSensitivity: number;
+    wallThickness: RoomThicknessType;
+    floorThickness: RoomThicknessType;
+    whoCanMute: RoomModerationType;
+    whoCanKick: RoomModerationType;
+    whoCanBan: RoomModerationType;
+    chatFloodSensitivity: RoomChatFloodSensitivityType;
+    /** Walking onto the door tile leaves the room. */
     leaveOnDoorTileEnabled: boolean;
     idleSleepEnabled: boolean;
     idleSleepTimeoutSeconds: number;
@@ -37,15 +35,16 @@ export class SaveRoomSettingsComposer implements IOutgoingPacket<SaveRoomSetting
     public constructor(private params: SaveRoomSettingsComposerType) { }
 
     public compose(): (number | string | boolean)[] {
-        const tags = this.params.tags.filter(x => x !== '');
+        // `SaveRoomSettingsMessageComposer` drops blank tags rather than sending them.
+        const tags = this.params.tags.filter(tag => !!tag && (tag !== ''));
 
         return [
             this.params.roomId,
-            this.params.name,
-            this.params.description,
+            this.params.roomName,
+            this.params.roomDescription,
             this.params.doorMode,
             this.params.password,
-            this.params.maximumVisitors,
+            this.params.maxVisitors,
             this.params.categoryId,
             tags.length,
             ...tags,

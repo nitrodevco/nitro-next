@@ -1,28 +1,27 @@
-import { IIncomingPacket, IMessageDataWrapper, IRoomModerationSettings } from '@nitrodevco/nitro-api';
+// Body filled by hand from the 2026 client's own parser - the generator has no preserve step, so re-apply after a regeneration.
+import { IIncomingPacket, IMessageDataWrapper, IRoomModerationSettings, RoomChatFloodSensitivityType, RoomDoorModeEnum, RoomThicknessType, RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 
 import { RoomModerationParser } from '../Navigator/Data/RoomModerationParser';
 
-/*
- * RoomSettingsDataParser (§_-94§/§_-1i§) — the full editable settings snapshot the
- * server answers GetRoomSettings with.
- */
-export type IRoomSettingsData = {
+export type RoomSettingsDataEventMessageType = {
     roomId: number;
     name: string;
     description: string;
-    doorMode: number;
+    doorMode: RoomDoorModeEnum;
     categoryId: number;
     maximumVisitors: number;
+    /** The highest the visitor cap may be set to for this room. */
     maximumVisitorsLimit: number;
     tags: string[];
-    tradeMode: number;
+    tradeMode: RoomTradeModeEnum;
     allowPets: boolean;
     allowFoodConsume: boolean;
     allowWalkThrough: boolean;
     hideWalls: boolean;
-    wallThickness: number;
-    floorThickness: number;
-    chatFloodSensitivity: number;
+    wallThickness: RoomThicknessType;
+    floorThickness: RoomThicknessType;
+    /** The wire carries only the flood sensitivity; the rest of the chat settings are fixed. */
+    chatFloodSensitivity: RoomChatFloodSensitivityType;
     leaveOnDoorTileEnabled: boolean;
     idleSleepEnabled: boolean;
     idleSleepTimeoutSeconds: number;
@@ -30,16 +29,13 @@ export type IRoomSettingsData = {
     idleAutokickTimeoutSeconds: number;
     muteAllPets: boolean;
     moderation: IRoomModerationSettings;
+    /** Hidden from the navigator by Builders Club. */
     hiddenByBc: boolean;
-};
-
-export type RoomSettingsDataEventMessageType = {
-    data: IRoomSettingsData;
 };
 
 export class RoomSettingsDataEventMessage implements IIncomingPacket<RoomSettingsDataEventMessageType> {
     public parse(wrapper: IMessageDataWrapper): RoomSettingsDataEventMessageType {
-        const data: IRoomSettingsData = {
+        const packet: RoomSettingsDataEventMessageType = {
             roomId: wrapper.readInt(),
             name: wrapper.readString(),
             description: wrapper.readString(),
@@ -48,7 +44,7 @@ export class RoomSettingsDataEventMessage implements IIncomingPacket<RoomSetting
             maximumVisitors: wrapper.readInt(),
             maximumVisitorsLimit: wrapper.readInt(),
             tags: [],
-            tradeMode: -1,
+            tradeMode: 0,
             allowPets: false,
             allowFoodConsume: false,
             allowWalkThrough: false,
@@ -56,41 +52,42 @@ export class RoomSettingsDataEventMessage implements IIncomingPacket<RoomSetting
             wallThickness: 0,
             floorThickness: 0,
             chatFloodSensitivity: 0,
-            leaveOnDoorTileEnabled: true,
+            leaveOnDoorTileEnabled: false,
             idleSleepEnabled: false,
             idleSleepTimeoutSeconds: 0,
             idleAutokickEnabled: false,
             idleAutokickTimeoutSeconds: 0,
             muteAllPets: false,
-            moderation: { whoCanMute: 0, whoCanKick: 0, whoCanBan: 0 } as IRoomModerationSettings,
+            moderation: { whoCanMute: 0, whoCanKick: 0, whoCanBan: 0 },
             hiddenByBc: false,
         };
 
-        let tagCount = wrapper.readInt();
+        let count = wrapper.readInt();
 
-        while (tagCount > 0) {
-            data.tags.push(wrapper.readString());
+        while (count > 0) {
+            packet.tags.push(wrapper.readString());
 
-            tagCount--;
+            count--;
         }
 
-        data.tradeMode = wrapper.readInt();
-        data.allowPets = wrapper.readInt() === 1;
-        data.allowFoodConsume = wrapper.readInt() === 1;
-        data.allowWalkThrough = wrapper.readInt() === 1;
-        data.hideWalls = wrapper.readInt() === 1;
-        data.wallThickness = wrapper.readInt();
-        data.floorThickness = wrapper.readInt();
-        data.chatFloodSensitivity = wrapper.readInt();
-        data.leaveOnDoorTileEnabled = wrapper.readBoolean();
-        data.idleSleepEnabled = wrapper.readBoolean();
-        data.idleSleepTimeoutSeconds = wrapper.readInt();
-        data.idleAutokickEnabled = wrapper.readBoolean();
-        data.idleAutokickTimeoutSeconds = wrapper.readInt();
-        data.muteAllPets = wrapper.readBoolean();
-        data.moderation = RoomModerationParser(wrapper);
-        data.hiddenByBc = wrapper.readBoolean();
+        packet.tradeMode = wrapper.readInt();
+        // The four switches come over as integers rather than booleans.
+        packet.allowPets = wrapper.readInt() === 1;
+        packet.allowFoodConsume = wrapper.readInt() === 1;
+        packet.allowWalkThrough = wrapper.readInt() === 1;
+        packet.hideWalls = wrapper.readInt() === 1;
+        packet.wallThickness = wrapper.readInt();
+        packet.floorThickness = wrapper.readInt();
+        packet.chatFloodSensitivity = wrapper.readInt();
+        packet.leaveOnDoorTileEnabled = wrapper.readBoolean();
+        packet.idleSleepEnabled = wrapper.readBoolean();
+        packet.idleSleepTimeoutSeconds = wrapper.readInt();
+        packet.idleAutokickEnabled = wrapper.readBoolean();
+        packet.idleAutokickTimeoutSeconds = wrapper.readInt();
+        packet.muteAllPets = wrapper.readBoolean();
+        packet.moderation = RoomModerationParser(wrapper);
+        packet.hiddenByBc = wrapper.readBoolean();
 
-        return { data };
+        return packet;
     }
 }

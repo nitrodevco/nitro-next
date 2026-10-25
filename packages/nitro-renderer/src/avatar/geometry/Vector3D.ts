@@ -1,4 +1,5 @@
-﻿export class Vector3D {
+/** Port of Flash `Vector3D`. */
+export class Vector3D {
     private _x: number;
     private _y: number;
     private _z: number;
@@ -59,12 +60,6 @@
         this._x = (this._x * k);
         this._y = (this._y * k);
         this._z = (this._z * k);
-    }
-
-    public scaleBy(value: number): void {
-        this._x *= value;
-        this._y *= value;
-        this._z *= value;
     }
 
     public length(): number {

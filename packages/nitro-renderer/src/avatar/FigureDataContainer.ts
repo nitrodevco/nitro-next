@@ -1,8 +1,8 @@
-﻿import type { AvatarGenderType } from "@nitrodevco/nitro-api";
-import { AvatarFigurePartType } from "@nitrodevco/nitro-api";
+import { AvatarFigurePartType, AvatarGenderType } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `FigureDataContainer`. */
 export class FigureDataContainer {
-    private static BLOCKED_FX_TYPES: number[] = [28, 29, 30, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 68];
+    private static BLOCKED_FX_TYPES: number[] = [ 28, 29, 30, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 68 ];
 
     private _gender: AvatarGenderType;
     private _data: Map<string, number> = new Map();
@@ -38,7 +38,7 @@ export class FigureDataContainer {
 
         const sets: string[] = [];
 
-        for (const [key, value] of this._data.entries()) {
+        for (const [ key, value ] of this._data.entries()) {
             let set = ((key + '-') + value);
 
             const colors = this._colors.get(key);
@@ -62,7 +62,7 @@ export class FigureDataContainer {
     }
 
     public getFigureStringWithFace(k: number): string {
-        const partSets: AvatarFigurePartType[] = [AvatarFigurePartType.Head];
+        const partSets: AvatarFigurePartType[] = [ AvatarFigurePartType.Head ];
 
         let figure = '';
         const sets: string[] = [];
@@ -78,7 +78,7 @@ export class FigureDataContainer {
 
             if (part === AvatarFigurePartType.Head) setId = k;
 
-            let set = `${part}=${setId}`;
+            let set = `${part}-${setId}`;
 
             if (setId >= 0) for (const color of colors) set = `${set}-${color}`;
 
@@ -149,6 +149,8 @@ export class FigureDataContainer {
             case AvatarFigurePartType.Legs:
             case AvatarFigurePartType.Shoes:
             case AvatarFigurePartType.WaistAccessory:
+            case AvatarFigurePartType.Misc:
+            case AvatarFigurePartType.Pet:
                 if (setId >= 0) {
                     this._data.set(partType, setId);
                 } else {
@@ -173,6 +175,8 @@ export class FigureDataContainer {
             case AvatarFigurePartType.Legs:
             case AvatarFigurePartType.Shoes:
             case AvatarFigurePartType.WaistAccessory:
+            case AvatarFigurePartType.Misc:
+            case AvatarFigurePartType.Pet:
                 this._colors.set(partType, colorIds);
                 return;
         }

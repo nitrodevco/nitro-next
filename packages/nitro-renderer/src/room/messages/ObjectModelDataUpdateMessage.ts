@@ -1,5 +1,6 @@
 import { RoomObjectUpdateMessage } from './RoomObjectUpdateMessage';
 
+/** Port of Flash `RoomObjectModelDataUpdateMessage`. */
 export class ObjectModelDataUpdateMessage extends RoomObjectUpdateMessage {
     private _numberKey: string;
     private _numberValue: number;

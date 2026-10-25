@@ -1,12 +1,17 @@
-import type { IAssetColor, IAssetVisualizationDirection, IAssetVisualizationLayer } from '@nitrodevco/nitro-api';
-import type { BLEND_MODES } from 'pixi.js';
+import { IAssetColor, IAssetVisualizationDirection, IAssetVisualizationLayer } from '@nitrodevco/nitro-api';
+import { BLEND_MODES } from 'pixi.js';
 
 import { ColorData } from './ColorData';
 import { DirectionData } from './DirectionData';
 import { LayerData } from './LayerData';
 
+/**
+ * One size of a furniture visualization: its layer count, angle, directions and colours.
+ * Ports `com.sulake.habbo.room.object.visualization.data.SizeData`.
+ */
 export class SizeData {
-    public static MAX_LAYERS: number = 26;
+    public static LAYER_LIMIT: number = 1000;
+    public static DEFAULT_DIRECTION: number = 0;
 
     private _layerCount: number;
     private _angle: number;
@@ -18,7 +23,7 @@ export class SizeData {
     private _lastDirection: number = -1;
 
     constructor(layerCount: number, angle: number) {
-        this._layerCount = layerCount < 0 ? 0 : layerCount > SizeData.MAX_LAYERS ? SizeData.MAX_LAYERS : layerCount;
+        this._layerCount = layerCount < 0 ? 0 : layerCount > SizeData.LAYER_LIMIT ? SizeData.LAYER_LIMIT : layerCount;
         this._angle = angle < 1 ? 1 : angle > 360 ? 360 : angle;
 
         this._defaultDirection = new DirectionData(this._layerCount);
@@ -74,7 +79,8 @@ export class SizeData {
 
             if (color.layers) {
                 for (const layer of color.layers) {
-                    if (layer?.color) colorData.setColorLayer(layer.id, layer.color);
+                    // Black is 0 - `SizeData.defineColors` sets every colorLayer it reads.
+                    if (layer && layer.color !== undefined) colorData.setColorLayer(layer.id, layer.color);
                 }
             }
 

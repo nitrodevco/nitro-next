@@ -1,4 +1,4 @@
-import type { IFigureDataColor } from './IFigureDataColor';
+import { IFigureDataColor } from './IFigureDataColor';
 
 export interface IFigureDataPalette {
     id: number;

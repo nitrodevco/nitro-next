@@ -1,16 +1,14 @@
-import type {
+import {
     IRoomObjectEventHandler,
     IRoomObjectLogicFactory,
-} from '@nitrodevco/nitro-api';
-import { NitroLogger, RoomObjectLogicType } from '@nitrodevco/nitro-api';
+    NitroLogger, RoomObjectLogicType } from '@nitrodevco/nitro-api';
 
-import type { RoomObjectLogicBase } from '../object';
-import {
-    AvatarLogic,
+import { AvatarLogic,
     FurnitureAchievementResolutionLogic,
     FurnitureAreaHideLogic,
     FurnitureBadgeDisplayLogic,
     FurnitureChangeStateWhenStepOnLogic,
+    FurnitureChestLogic,
     FurnitureClothingChangeLogic,
     FurnitureCounterClockLogic,
     FurnitureCrackableLogic,
@@ -26,54 +24,67 @@ import {
     FurnitureExternalImageLogic,
     FurnitureFireworksLogic,
     FurnitureFloorHoleLogic,
-    FurnitureGroupForumTerminalLogic,
+    FurnitureFurniChestLogic,
     FurnitureGuildCustomizedLogic,
+    FurnitureGuildForumTerminalLogic,
     FurnitureHabboWheelLogic,
+    FurnitureHalloweenLovelockLogic,
     FurnitureHighScoreLogic,
     FurnitureHockeyScoreLogic,
-    FurnitureHweenLovelockLogic,
     FurnitureIceStormLogic,
     FurnitureInternalLinkLogic,
     FurnitureJukeboxLogic,
+    FurnitureLabelDataLogic,
     FurnitureLogic,
-    FurnitureLoveLockLogic,
+    FurnitureLovelockLogic,
     FurnitureMannequinLogic,
     FurnitureMonsterplantSeedLogic,
     FurnitureMultiHeightLogic,
     FurnitureMultiStateLogic,
     FurnitureMysteryBoxLogic,
     FurnitureMysteryTrophyLogic,
+    FurnitureNftCreditLogic,
+    FurnitureNftRewardBoxLogic,
     FurnitureOneWayDoorLogic,
-    FurniturePetCustomizationLogic,
+    FurniturePetProductLogic,
     FurniturePlaceholderLogic,
     FurniturePlanetSystemLogic,
     FurniturePresentLogic,
-    FurniturePurchaseableClothingLogic,
+    FurniturePurchasableClothingLogic,
     FurniturePushableLogic,
     FurnitureRandomStateLogic,
     FurnitureRandomTeleportLogic,
+    FurnitureRecolorableLogic,
+    FurnitureRegionDataLogic,
     FurnitureRentableSpaceLogic,
     FurnitureRoomBackgroundColorLogic,
     FurnitureRoomBackgroundLogic,
     FurnitureRoomBillboardLogic,
     FurnitureRoomDimmerLogic,
-    FurnitureScoreLogic,
+    FurnitureScoreBoardLogic,
     FurnitureSongDiskLogic,
     FurnitureSoundBlockLogic,
     FurnitureSoundMachineLogic,
     FurnitureStickieLogic,
     FurnitureTrophyLogic,
+    FurnitureVimeoLogic,
     FurnitureVoteCounterLogic,
     FurnitureVoteMajorityLogic,
     FurnitureWelcomeGiftLogic,
+    FurnitureWildWestWantedLogic,
     FurnitureWindowLogic,
     FurnitureYoutubeLogic,
+    ObjectLogicBase,
     PetLogic,
     RoomLogic,
+    RoomTileCursorLogic,
     SelectionArrowLogic,
-    TileCursorLogic,
 } from '../object';
 
+/**
+ * Port of Flash `RoomObjectFactory.createRoomObjectLogic`: the logic class for each
+ * `RoomObjectLogicType`.
+ */
 export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
     public getLogic(type: string | undefined): IRoomObjectEventHandler | undefined {
         try {
@@ -84,23 +95,22 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
             const instance = new logic() as IRoomObjectEventHandler;
 
             return instance;
-        }
-        catch (err) {
+        } catch (err) {
             NitroLogger.error(err);
 
             return undefined;
         }
     }
 
-    public getLogicType(type: string | undefined): typeof RoomObjectLogicBase | undefined {
-        let logic: typeof RoomObjectLogicBase;
+    public getLogicType(type: string | undefined): typeof ObjectLogicBase | undefined {
+        let logic: typeof ObjectLogicBase;
 
         switch (type) {
             case RoomObjectLogicType.ROOM:
                 logic = RoomLogic;
                 break;
             case RoomObjectLogicType.TILE_CURSOR:
-                logic = TileCursorLogic;
+                logic = RoomTileCursorLogic;
                 break;
             case RoomObjectLogicType.SELECTION_ARROW:
                 logic = SelectionArrowLogic;
@@ -167,6 +177,15 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
             case RoomObjectLogicType.FURNITURE_MANNEQUIN:
                 logic = FurnitureMannequinLogic;
                 break;
+            case RoomObjectLogicType.FURNITURE_RECOLORABLE:
+                logic = FurnitureRecolorableLogic;
+                break;
+            case RoomObjectLogicType.FURNITURE_LABEL:
+                logic = FurnitureLabelDataLogic;
+                break;
+            case RoomObjectLogicType.FURNITURE_REGION:
+                logic = FurnitureRegionDataLogic;
+                break;
             case RoomObjectLogicType.FURNITURE_MULTIHEIGHT:
                 logic = FurnitureMultiHeightLogic;
                 break;
@@ -177,13 +196,13 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
                 logic = FurnitureOneWayDoorLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_PET_CUSTOMIZATION:
-                logic = FurniturePetCustomizationLogic;
+                logic = FurniturePetProductLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_PRESENT:
                 logic = FurniturePresentLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_PURCHASABLE_CLOTHING:
-                logic = FurniturePurchaseableClothingLogic;
+                logic = FurniturePurchasableClothingLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_PUSHABLE:
                 logic = FurniturePushableLogic;
@@ -197,11 +216,17 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
             case RoomObjectLogicType.FURNITURE_BB:
                 logic = FurnitureRoomBillboardLogic;
                 break;
+            case RoomObjectLogicType.FURNITURE_FURNI_CHEST:
+                logic = FurnitureFurniChestLogic;
+                break;
+            case RoomObjectLogicType.FURNITURE_COINS_CHEST:
+                logic = FurnitureChestLogic;
+                break;
             case RoomObjectLogicType.FURNITURE_ROOMDIMMER:
                 logic = FurnitureRoomDimmerLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_SCORE:
-                logic = FurnitureScoreLogic;
+                logic = FurnitureScoreBoardLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_SOUNDBLOCK:
                 logic = FurnitureSoundBlockLogic;
@@ -222,7 +247,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
                 logic = FurnitureWindowLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_LOVELOCK:
-                logic = FurnitureLoveLockLogic;
+                logic = FurnitureLovelockLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_YOUTUBE:
                 logic = FurnitureYoutubeLogic;
@@ -258,10 +283,10 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
                 logic = FurnitureEcotronBoxLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_GROUP_FORUM_TERMINAL:
-                logic = FurnitureGroupForumTerminalLogic;
+                logic = FurnitureGuildForumTerminalLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_HWEEN_LOVELOCK:
-                logic = FurnitureHweenLovelockLogic;
+                logic = FurnitureHalloweenLovelockLogic;
                 break;
             case RoomObjectLogicType.FURNITURE_INTERNAL_LINK:
                 logic = FurnitureInternalLinkLogic;
@@ -296,6 +321,21 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
             case RoomObjectLogicType.FURNITURE_AREA_HIDE:
                 logic = FurnitureAreaHideLogic;
                 break;
+            case RoomObjectLogicType.FURNITURE_NFT_CREDIT:
+                logic = FurnitureNftCreditLogic;
+                break;
+            case RoomObjectLogicType.FURNITURE_NFT_REWARD_BOX:
+                logic = FurnitureNftRewardBoxLogic;
+                break;
+            case RoomObjectLogicType.FURNITURE_WILDWEST_WANTED:
+                logic = FurnitureWildWestWantedLogic;
+                break;
+            case RoomObjectLogicType.FURNITURE_VIMEO:
+                logic = FurnitureVimeoLogic;
+                break;
+            // Flash builds two more types that deliberately land here on the basic logic: the
+            // snowwar `game_snowball` / `game_snowsplash`, which need the game engine. Run
+            // `scripts/drift/factories.py` after a revision bump to see whether that list grew.
             default:
                 logic = FurnitureLogic;
                 break;

@@ -9,7 +9,7 @@ export class RoomInviteErrorMessage implements IIncomingPacket<RoomInviteErrorMe
     public parse(wrapper: IMessageDataWrapper): RoomInviteErrorMessageType {
         const packet: RoomInviteErrorMessageType = {
             errorCode: wrapper.readInt(),
-            failedRecipients: []
+            failedRecipients: [],
         };
 
         if (packet.errorCode === 1) {

@@ -1,114 +1,107 @@
-import { ISimpleRoomObjectData, RoomObjectUserType, RoomRenderedEvent } from "@nitrodevco/nitro-api";
-import { PointData, Rectangle } from "pixi.js";
-import { ReactNode, useEffect, useRef } from "react";
+/**
+ * A bubble that follows a room object - Flash's `ContextInfoView`, placed by
+ * `useRoomObjectBubblePlacement` and kept inside the window.
+ *
+ * The bubble is drawn fully transparent until its own layout has been measured: positioning a
+ * bubble whose width and height are still zero would put it somewhere else for a frame, and
+ * that is the flicker on first open. Transparent rather than invisible, because yoga does not
+ * measure an invisible node at all.
+ *
+ * It takes no `zIndex`: a non-zero one makes its parent sort, which lifts the bubble over the
+ * window layer that follows the room in the tree. Room UI stays under every window.
+ */
+import { ISimpleRoomObjectData, RoomObjectUserType } from '@nitrodevco/nitro-api';
+import { Container as PixiContainer } from 'pixi.js';
+import { ReactNode, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 
-import { useRoomSelector } from "#base/context";
-import { useRoomEventDispatcher } from "#base/hooks";
-import { FixedSizeStack } from "#base/utils";
+import { useRoomObjectBubblePlacement } from '#base/hooks';
+import { Box } from '#base/theme';
 
 const LOCATION_STACK_SIZE: number = 25;
-const BUBBLE_DROP_SPEED: number = 3;
 const FADE_DELAY = 5000;
 const FADE_LENGTH = 75;
-const SPACE_AROUND_EDGES = 10;
 
-let FIXED_STACK: FixedSizeStack | undefined = undefined;
-let MAX_STACK = -1000000;
-
-type RoomObjectInfoBubbleProps = {
+type RoomObjectMenuBubbleProps = {
     objectData: ISimpleRoomObjectData;
-    userType: RoomObjectUserType;
+    /** Humanoid units get the taller gap above the head; furniture and pets leave this out. */
+    userType?: RoomObjectUserType;
     fades?: boolean;
     children?: ReactNode;
     onClose?: () => void;
-}
+    /** The bubble's window, for whoever needs it as well (a hint target). */
+    targetRef?: (node: PixiContainer | null) => void;
+};
 
-export const RoomObjectMenuBubble = (props: RoomObjectInfoBubbleProps) => {
-    const { objectData, userType, fades = false, children, onClose = undefined } = props;
+const isAvatar = (userType: RoomObjectUserType | undefined) => (userType === RoomObjectUserType.User) || (userType === RoomObjectUserType.Bot) || (userType === RoomObjectUserType.RentableBot);
+
+export const RoomObjectMenuBubble = (props: RoomObjectMenuBubbleProps) => {
+    const { objectData, userType, fades = false, children, onClose = undefined, targetRef = undefined } = props;
     const { objectId, category } = objectData;
-    const room = useRoomSelector();
     const isFading = useRef<boolean>(false);
     const fadeTime = useRef<number>(1);
-    const elementRef = useRef<HTMLDivElement>(null);
+    const bubbleRef = useRef<PixiContainer>(null);
+    const attachBubble = useCallback((node: PixiContainer | null) => {
+        bubbleRef.current = node;
+        targetRef?.(node);
+    }, [ targetRef ]);
 
     const updateFade = (time: number) => {
-        if (!onClose || !isFading.current || !elementRef?.current) return;
+        if (!isFading.current || !bubbleRef?.current) return;
 
         fadeTime.current += time;
 
-        const newOpacity = ((1 - (fadeTime.current / FADE_LENGTH)) * 1);
+        const newOpacity = (1 - (fadeTime.current / FADE_LENGTH));
 
         if (newOpacity <= 0) {
+            bubbleRef.current.alpha = 0;
+
             if (onClose) onClose();
 
             return;
         }
 
-        elementRef.current.style.opacity = `${newOpacity ?? 0}`;
-    }
+        bubbleRef.current.alpha = newOpacity;
+    };
 
-    const updatePosition = (bounds: Rectangle, location: PointData) => {
-        if (!bounds || !location || !FIXED_STACK || !elementRef?.current) return;
+    /*
+     * The smoothing is this bubble's own: several of them can be up at once - a furniture menu,
+     * a scoreboard, a guild menu - and one sharing its stack with another would be dragged
+     * about by whatever that one is following.
+     */
+    useRoomObjectBubblePlacement(bubbleRef, {
+        objectId,
+        category,
+        isAvatar: isAvatar(userType),
+        stackSize: LOCATION_STACK_SIZE,
+        keepOnScreen: true,
+        onRendered: (placed, time) => {
+            updateFade(time);
 
-        let offset = -(elementRef.current.offsetHeight ?? 0);
-
-        if (userType === RoomObjectUserType.User || userType === RoomObjectUserType.Bot || userType === RoomObjectUserType.RentableBot) offset = (offset + ((bounds.height > 50) ? 15 : 0));
-        else offset = (offset - 14);
-
-        FIXED_STACK.addValue((location.y - bounds.top));
-
-        let maxStack = FIXED_STACK.getMax();
-
-        if (maxStack < (MAX_STACK - BUBBLE_DROP_SPEED)) maxStack = (MAX_STACK - BUBBLE_DROP_SPEED);
-
-        MAX_STACK = maxStack;
-
-        const deltaY = (location.y - maxStack);
-
-        let x = (location.x - (elementRef.current.offsetWidth / 2));
-        let y = (deltaY + offset);
-
-        const maxLeft = ((window.innerWidth - elementRef.current.offsetWidth) - SPACE_AROUND_EDGES);
-        const maxTop = ((window.innerHeight - elementRef.current.offsetHeight) - SPACE_AROUND_EDGES);
-
-        if (x < SPACE_AROUND_EDGES) x = SPACE_AROUND_EDGES;
-        else if (x > maxLeft) x = maxLeft;
-
-        if (y < SPACE_AROUND_EDGES) y = SPACE_AROUND_EDGES;
-        else if (y > maxTop) y = maxTop;
-
-        elementRef.current.style.left = `${~~x}px`;
-        elementRef.current.style.top = `${~~y}px`;
-    }
-
-    useRoomEventDispatcher<RoomRenderedEvent>(RoomRenderedEvent.ROOM_RENDERED, event => {
-        if (!room || !elementRef.current || !objectData) return;
-
-        updateFade(event.time);
-
-        const bounds = room.getRoomObjectBoundingRectangle(objectId, category);
-        const location = room.getRoomObjectScreenLocation(objectId, category);
-
-        if (!bounds || !location) return;
-
-        updatePosition(bounds, location);
-
-        elementRef.current.style.visibility = 'visible';
+            if (placed && !isFading.current && bubbleRef.current) bubbleRef.current.alpha = 1;
+        },
     });
 
+    // The fade counts down afresh for every object the bubble follows.
     useEffect(() => {
+        isFading.current = false;
+
         if (!fades) return;
 
         const timeout = setTimeout(() => isFading.current = true, FADE_DELAY);
 
         return () => clearTimeout(timeout);
-    }, [fades]);
+    }, [ fades, objectId, category ]);
 
-    useEffect(() => {
-        FIXED_STACK = new FixedSizeStack(LOCATION_STACK_SIZE);
-        MAX_STACK = -1000000;
+    useLayoutEffect(() => {
         fadeTime.current = 1;
-    }, []);
+    }, [ objectId, category ]);
 
-    return <div ref={elementRef} className="absolute z-50 invisible">{children}</div>
-}
+    return (
+        <Box
+            ref={attachBubble}
+            layout={{ position: 'absolute', top: 0, left: 0 }}
+        >
+            {children}
+        </Box>
+    );
+};

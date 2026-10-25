@@ -1,7 +1,7 @@
 import { IOutgoingPacket } from '@nitrodevco/nitro-api';
 
 export type UpdateHomeRoomComposerType = {
-    roomId: RoomId;
+    roomId: number;
 };
 
 export class UpdateHomeRoomComposer implements IOutgoingPacket<UpdateHomeRoomComposerType> {

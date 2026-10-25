@@ -1,7 +1,7 @@
-import type { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import { IIncomingPacket, IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 import { FurnitureOwnersParser } from './Data/FurnitureOwnersParser';
-import type { IRoomWallItem } from './Data/IRoomWallItem';
+import { IRoomWallItem } from './Data/IRoomWallItem';
 import { WallItemParser } from './Data/WallItemParser';
 
 export type ItemsMessageType = {
@@ -13,7 +13,7 @@ export class ItemsMessage implements IIncomingPacket<ItemsMessageType> {
     public parse(wrapper: IMessageDataWrapper): ItemsMessageType {
         const packet: ItemsMessageType = {
             owners: FurnitureOwnersParser(wrapper),
-            wallItems: []
+            wallItems: [],
         };
 
         let count = wrapper.readInt();

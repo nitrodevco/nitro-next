@@ -12,7 +12,7 @@ export class DeclineFriendComposer implements IOutgoingPacket<DeclineFriendCompo
         return [
             this.params.declineAll,
             this.params.playerIds.length,
-            ...this.params.playerIds
+            ...this.params.playerIds,
         ];
     }
 }

@@ -1,3 +1,5 @@
+export * from './enums/ClientDeviceCategoryEnum';
+export * from './enums/ClientPlatformEnum';
 export * from './EvaWireDataWrapper';
 export * from './ICodec';
 export * from './IIncomingPacket';
@@ -8,5 +10,5 @@ export * from './OutgoingPacketConstructor';
 export * from './ParseArray';
 export * from './ParseInts';
 export * from './ParseStrings';
-export * from './enums/ClientDeviceCategoryEnum';
-export * from './enums/ClientPlatformEnum';
+export * from './ReadLong';
+export * from './WriteLong';

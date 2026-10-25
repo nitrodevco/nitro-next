@@ -1,5 +1,6 @@
-import type { AvatarFigurePartType, IFigureDataPart, IFigurePart } from "@nitrodevco/nitro-api";
+import { AvatarFigurePartType, IFigureDataPart, IFigurePart } from '@nitrodevco/nitro-api';
 
+/** Port of Flash `FigurePart`. */
 export class FigurePart implements IFigurePart {
     private _id: number;
     private _type: AvatarFigurePartType;
@@ -13,8 +14,8 @@ export class FigurePart implements IFigurePart {
         this._type = data.type;
         this._index = data.index;
         this._colorLayerIndex = data.colorindex ?? -1;
-        this._paletteMapId = -1;
-        this._breed = -1;
+        this._paletteMapId = data.paletteMapId ?? -1;
+        this._breed = data.breed ?? -1;
     }
 
     public dispose(): void {

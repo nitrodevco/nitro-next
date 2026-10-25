@@ -1,4 +1,4 @@
-import { IAssetAvatarDirectionOffset } from "./IAssetAvatarDirectionOffset";
+import { IAssetAvatarDirectionOffset } from './IAssetAvatarDirectionOffset';
 
 export interface IAssetAvatarFrameOffsetData {
     id: number;

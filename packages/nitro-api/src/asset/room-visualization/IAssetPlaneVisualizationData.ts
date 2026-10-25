@@ -1,6 +1,6 @@
-import type { IAssetPlane } from './IAssetPlane';
-import type { IAssetPlaneMaterial } from './IAssetPlaneMaterial';
-import type { IAssetPlaneTexture } from './IAssetPlaneTexture';
+import { IAssetPlane } from './IAssetPlane';
+import { IAssetPlaneMaterial } from './IAssetPlaneMaterial';
+import { IAssetPlaneTexture } from './IAssetPlaneTexture';
 
 export interface IAssetPlaneVisualizationData {
     planes?: IAssetPlane[];

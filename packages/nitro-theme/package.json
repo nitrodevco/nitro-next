@@ -1,0 +1,28 @@
+{
+    "name": "@nitrodevco/nitro-theme",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "test": "tsx --test test/*.test.ts"
+    },
+    "exports": {
+        ".": "./src/index.ts",
+        "./chat": "./src/chat/index.ts",
+        "./flash-text": "./src/font/flash-text/index.ts",
+        "./utils/*": "./src/utils/*.ts",
+        "./template/*": "./src/template/*.ts",
+        "./flash-text/*": "./src/font/flash-text/*.ts"
+    },
+    "dependencies": {
+        "@nitrodevco/nitro-api": "workspace:*",
+        "@nitrodevco/nitro-renderer": "workspace:*",
+        "@pixi/layout": "^3.2.1",
+        "@pixi/react": "patch:@pixi/react@npm%3A8.0.5#~/.yarn/patches/@pixi-react-npm-8.0.5-b9686ce1cd.patch",
+        "pixi.js": "^8.18.1",
+        "react": "^19.2.6"
+    },
+    "devDependencies": {
+        "@types/react": "^19.2.17",
+        "tsx": "^4.23.15"
+    }
+}

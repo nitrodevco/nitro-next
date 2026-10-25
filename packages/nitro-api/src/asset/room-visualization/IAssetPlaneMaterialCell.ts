@@ -1,4 +1,4 @@
-import type { IAssetPlaneMaterialCellExtraItemData } from './IAssetPlaneMaterialCellExtraItemData';
+import { IAssetPlaneMaterialCellExtraItemData } from './IAssetPlaneMaterialCellExtraItemData';
 
 export interface IAssetPlaneMaterialCell {
     textureId?: string;

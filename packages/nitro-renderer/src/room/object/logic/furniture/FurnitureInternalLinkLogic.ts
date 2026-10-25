@@ -1,15 +1,17 @@
-import type { IAssetData, IRoomGeometry, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomGeometry, IRoomSpriteMouseEvent, MouseEventType, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-31U§`, the logic `RoomObjectFactory` builds for
+ * `furniture_internal_link`.
+ */
 export class FurnitureInternalLinkLogic extends FurnitureLogic {
     private _showStateOnceRendered: boolean = false;
     private _updateCount: number = 0;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.INERNAL_LINK]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.INTERNAL_LINK ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
@@ -51,7 +53,7 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
 
     public override useObject(): void {
         this.handleRoomObjectEvent(
-            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INERNAL_LINK, this.object),
+            new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INTERNAL_LINK, this.object),
         );
     }
 

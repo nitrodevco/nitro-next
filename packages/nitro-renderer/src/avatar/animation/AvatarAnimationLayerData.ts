@@ -1,8 +1,8 @@
-﻿
-import type { AvatarBodyPartType, AvatarFigurePartType, IActionDefinition, IActiveActionData, IAnimationLayerData, IAssetAnimationFramePart } from '@nitrodevco/nitro-api';
+import { AvatarBodyPartType, AvatarFigurePartType, IActionDefinition, IActiveActionData, IAnimationLayerData, IAssetAnimationFramePart } from '@nitrodevco/nitro-api';
 
 import { ActiveActionData } from '../actions';
 
+/** Port of Flash `AnimationLayerData` (the avatar's, not the room's). */
 export class AvatarAnimationLayerData implements IAnimationLayerData {
     public static BODYPART: string = 'bodypart';
     public static FX: string = 'fx';
@@ -15,8 +15,8 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
     private _dz: number;
     private _directionOffset: number;
     private _type: string;
-    private _base: number;
-    private _items: Map<AvatarFigurePartType, number>;
+    private _base: string;
+    private _items: Map<AvatarFigurePartType, string>;
 
     constructor(part: IAssetAnimationFramePart, type: string, definition: IActionDefinition | undefined) {
         this._id = part.id;
@@ -26,14 +26,15 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
         this._dz = part.dz ?? 0;
         this._directionOffset = part.dd ?? 0;
         this._type = type;
-        this._base = parseInt(part.base ?? '');
+        // Flash keeps `base` as the raw string: it becomes the layer action's parameter and an item's part id
+        this._base = part.base ?? '';
         this._items = new Map();
 
         if (part.items) {
             for (const item of part.items) {
-                if (!item || !item.id || !item.base) continue;
+                if (!item || !item.id) continue;
 
-                this._items.set(item.id, parseInt(item.base));
+                this._items.set(item.id, item.base ?? '');
             }
         }
 
@@ -71,7 +72,7 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
         return this._type;
     }
 
-    public get base(): number {
+    public get base(): string {
         return this._base;
     }
 
@@ -79,7 +80,7 @@ export class AvatarAnimationLayerData implements IAnimationLayerData {
         return this._action;
     }
 
-    public get items(): Map<AvatarFigurePartType, number> {
+    public get items(): Map<AvatarFigurePartType, string> {
         return this._items;
     }
 }

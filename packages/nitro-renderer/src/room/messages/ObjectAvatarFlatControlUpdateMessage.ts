@@ -2,6 +2,7 @@ import { RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
 
 import { ObjectStateUpdateMessage } from './ObjectStateUpdateMessage';
 
+/** Port of Flash `RoomObjectAvatarFlatControlUpdateMessage`. */
 export class ObjectAvatarFlatControlUpdateMessage extends ObjectStateUpdateMessage {
     private _level: RoomControllerLevelEnum;
 

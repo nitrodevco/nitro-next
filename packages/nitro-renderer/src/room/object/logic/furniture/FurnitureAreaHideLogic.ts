@@ -1,12 +1,15 @@
-import type { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
-import { MouseEventType, NumberDataType, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent, MouseEventType, NumberDataType, RoomObjectStateChangedEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
 
+/**
+ * Port of Flash's obfuscated `§_-S1g§`, the logic `RoomObjectFactory` builds for
+ * `furniture_area_hide`.
+ */
 export class FurnitureAreaHideLogic extends FurnitureMultiStateLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [RoomObjectWidgetRequestEvent.AREA_HIDE]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.AREA_HIDE ]);
     }
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {

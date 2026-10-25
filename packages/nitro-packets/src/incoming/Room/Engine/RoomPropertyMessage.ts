@@ -9,7 +9,7 @@ export class RoomPropertyMessage implements IIncomingPacket<RoomPropertyMessageT
     public parse(wrapper: IMessageDataWrapper): RoomPropertyMessageType {
         const packet: RoomPropertyMessageType = {
             key: wrapper.readString(),
-            value: wrapper.readString()
+            value: wrapper.readString(),
         };
 
         return packet;

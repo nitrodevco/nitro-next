@@ -1,6 +1,6 @@
-import { AvatarGenderType } from "../avatar";
-import { RoomObjectUserType } from "../room";
-import { IRoomObjectData } from "./IRoomObjectData";
+import { AvatarGenderType } from '../avatar';
+import { RoomObjectUserType } from '../room';
+import { IRoomObjectData } from './IRoomObjectData';
 
 export interface IRoomUserData extends IRoomObjectData {
     objectId: number;
@@ -27,4 +27,6 @@ export interface IRoomUserData extends IRoomObjectData {
     petPosture: string;
     botSkills: number[];
     isModerator: boolean;
+    /** The user's place on the badge leaderboard, when they have one. */
+    badgesRank?: number;
 }

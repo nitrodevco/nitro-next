@@ -1,4 +1,4 @@
-﻿import type {
+import {
     IAssetPlaneMaskData,
     IAssetPlaneTextureBitmap,
     IGraphicAssetCollection,
@@ -11,6 +11,7 @@ import { TextureUtils } from '../../../../../utils';
 import { PlaneMask } from './PlaneMask';
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
 
+/** Port of Flash `PlaneMaskManager`. */
 export class PlaneMaskManager {
     private _masks: Map<string, PlaneMask> = new Map();
     private _data: IAssetPlaneMaskData | undefined = undefined;
@@ -46,9 +47,8 @@ export class PlaneMaskManager {
     private parseMasks(maskData: IAssetPlaneMaskData, assets: IGraphicAssetCollection): void {
         if (!maskData || !assets || !maskData.masks || !maskData.masks.length) return;
 
-        let index = 0;
-
-        while (index < maskData.masks.length) {
+        // A `for` so the `continue`s below still advance - as a `while` they skipped the increment and hung.
+        for (let index = 0; index < maskData.masks.length; index++) {
             const mask = maskData.masks[index];
 
             if (mask) {
@@ -89,8 +89,6 @@ export class PlaneMaskManager {
 
                 this._masks.set(id, newMask);
             }
-
-            index++;
         }
     }
 
@@ -162,8 +160,8 @@ export class PlaneMaskManager {
         return {
             texture: texture,
             position: { x: Math.trunc(posX) + asset.offsetX, y: Math.trunc(posY) + asset.offsetY },
-            scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 }
-        }
+            scale: { x: asset.flipH ? -1 : 1, y: asset.flipV ? -1 : 1 },
+        };
     }
 
     public getMask(k: string): PlaneMask | undefined {
