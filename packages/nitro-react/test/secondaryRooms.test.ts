@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { IRoom, IRoomRenderingCanvas, Vector3d } from '@nitrodevco/nitro-api';
+import { IRoom, IRoomRenderingCanvas, IRoomUserData, RoomObjectCategoryEnum, Vector3d } from '@nitrodevco/nitro-api';
 import { RoomGeometry } from '@nitrodevco/nitro-renderer';
 
 import { parseRoomFloorTiles, roomFloorTileAt, secondaryRoomScreenOffset } from '../src/commands/room/secondaryRoomGeometry';
@@ -107,4 +107,31 @@ void test('the floor tile under the pointer is the tile whose top is there, the 
     const off = stagePoint(canvas, new Vector3d(0, 4, 0));
 
     assert.equal(roomFloorTileAt(canvas, floor, off.x, off.y), undefined);
+});
+
+// The bug it fixes: a module kept the room the session left (`keepWhenLeft`) and the session's own avatar
+// stood on in it, and once more beside the new one each time the session came back to it.
+void test('the room the session leaves is kept without the session\'s own avatar, the others stay', async () => {
+    // The kept room is drawn from the ticker, which asks for frames.
+    globalThis.requestAnimationFrame ??= () => 0;
+    globalThis.cancelAnimationFrame ??= () => undefined;
+
+    const { adoptSecondaryRoom, keepRoomBeingLeft, keepRoomWhenLeft } = await import('../src/commands/room/secondaryRooms');
+    const { roomStore } = await import('../src/context/room/store/RoomStore');
+    const removed: number[][] = [];
+    const left = { ...room(1), removeRoomObject: (id: number, category: number) => void removed.push([ id, category ]) } as unknown as IRoom;
+    const user = (objectId: number, webID: number) => ({ objectId, webID, userType: 1 }) as unknown as IRoomUserData;
+
+    roomStore.getState().setRoom(left);
+    roomStore.getState().updateUsers([ user(3, 101), user(4, 102) ]);
+    roomStore.getState().setOwnRoomIndex(3);
+    keepRoomWhenLeft('test', {}, () => undefined);
+
+    assert.equal(keepRoomBeingLeft(left, 2), true);
+    assert.deepEqual(removed, [ [ 3, RoomObjectCategoryEnum.Unit ] ]);
+
+    const kept = adoptSecondaryRoom(1)!.state;
+
+    assert.equal(kept.ownRoomIndex, -1);
+    assert.deepEqual(Object.keys(kept.usersByRoomObjectId!), [ '4' ]);
 });

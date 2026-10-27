@@ -223,7 +223,7 @@ api.room.onUnhandledPointer(({ type, secondaryTile }) => {
   are, and the tile object map is filled from the furni it has.
 - **Kept**: `keepWhenLeft(options)` keeps the room the session is in drawn once the session goes to
   another room (`waiting` until then), placed with `options` against the room entered and fed by the
-  module from then on. Leaving for the hotel view keeps nothing.
+  module from then on, without the session's own avatar, which left with it. Leaving for the hotel view keeps nothing.
 - **Gone**: `dispose()` takes the room away (a room the session is in stays); a module's rooms go
   when it stops. With no secondary room nothing of this runs: no ticker, no extra pointer work.
 

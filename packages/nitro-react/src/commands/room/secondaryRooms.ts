@@ -14,7 +14,7 @@
  * another room (`keepRoomBeingLeft`) but drawn on as one of these. With no module using any of it,
  * none of this runs.
  */
-import { IncomingPacketConstructor, IRoom } from '@nitrodevco/nitro-api';
+import { IncomingPacketConstructor, IRoom, RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
 import {
     AvatarEffectMessage, CarryObjectMessage, DanceMessage, DiceValueMessage, ExpressionMessage, FavoriteMembershipUpdateMessage, FloorHeightMapMessage, FurniRecolorUpdateMessage, GamePlayerValueMessage, HeightMapMessage, HeightMapUpdateMessage,
     ItemAddMessage, ItemDataUpdateMessage, ItemRemoveMessage, ItemRemoveMultipleMessage, ItemsMessage, ItemsStateUpdateMessage, ItemStateUpdateMessage, ItemUpdateMessage, ObjectAddMessage, ObjectDataUpdateMessage, ObjectRemoveMessage,
@@ -335,6 +335,17 @@ export const keepRoomBeingLeft = (room: IRoom | undefined, nextRoomId: number | 
 
     store.setState(roomStateOf(roomStore));
     room.setStackingHeightMap({ getTileHeight: (x, y) => store.getState().getTileHeight(x, y) });
+
+    // The session's own avatar leaves with it. The room's UserRemove for it goes to the players still
+    // in the room, never to the one leaving, so without this it would stand on in the kept room (and
+    // again, beside the new one, when the session comes back and the room is adopted).
+    const own = store.getState().ownRoomIndex;
+
+    if (own >= 0) {
+        room.removeRoomObject(own, RoomObjectCategoryEnum.Unit);
+        store.getState().removeUser(own);
+        store.setState({ ownRoomIndex: -1 });
+    }
 
     entry.store = store;
     entry.status = 'drawn';
