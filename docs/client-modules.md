@@ -204,7 +204,8 @@ api.room.onUnhandledPointer(({ type, secondaryTile }) => {
 - **Drawn**: room `roomId` is a room of the room engine like the one on screen - its own objects,
   content loading and frame - with its tile (0, 0, 0) drawn on the active room's tile `offset`. It sits
   in the active canvas over its black backing and under its display, so the room on screen covers it
-  where they overlap, and follows that room's camera, drag, zoom and flip every frame. `alpha`,
+  where they overlap, and follows that room's camera, drag, zoom and flip every frame. At zoom 0 the
+  active canvas's half-size pass reduces it with the room on screen (it runs none of its own). `alpha`,
   `greyscale` (a colour matrix over the room) and `tint` say how it looks; `setOptions` changes them.
   It takes no pointer events: the floor tile of it under the pointer comes with `onUnhandledPointer`
   as `secondaryTile`. The room the session is in, or a room drawn already, is refused with a warning.

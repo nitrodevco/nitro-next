@@ -91,7 +91,10 @@ const applyStyle = (entry: Entry) => {
     master.tint = tint;
 
     if (greyscale > 0) {
-        entry.filter ??= new ColorMatrixFilter();
+        // Not clipped to the viewport: at zoom 0 it runs inside the active canvas's half-size pass, whose
+        // texture has twice the resolution, and Pixi clips a pass nested in it to the viewport divided by
+        // that resolution - the top left quarter of the screen. The canvas's filter area clips it instead.
+        entry.filter ??= new ColorMatrixFilter({ clipToViewport: false });
         entry.filter.saturate(-greyscale, false);
 
         master.filters = [ entry.filter ];
@@ -120,6 +123,7 @@ const unstyle = (entry: Entry) => {
     entry.filter = undefined;
 
     canvas?.setBackgroundVisible(true);
+    canvas?.setCompositedByParent(false);
 };
 
 /** Each frame: every drawn room placed against the active canvas, at its size, scale and flip. */
@@ -149,6 +153,8 @@ const place = () => {
         if (canvas.scale !== active.scale) canvas.setScale(active.scale);
         if (canvas.isFlipped !== active.isFlipped) canvas.setFlip(active.isFlipped);
         if (canvas.backgroundVisible) canvas.setBackgroundVisible(false);
+        // Inside the active canvas's room layer, whose own pass reduces it at zoom 0.
+        if (!canvas.compositedByParent) canvas.setCompositedByParent(true);
 
         const master = canvas.master;
 
