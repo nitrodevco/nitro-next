@@ -1,9 +1,12 @@
 # Client modules
 
-A Turbo plugin can ship JavaScript that runs inside the client: a **client module**. It is how a
-hotel adds windows, toolbar icons and overlays of its own without a fork of the client. Turbo's
-`docs/client-modules.md` owns the server side (how a plugin declares a module and where its files
-are served); this page is the client's.
+A Turbo plugin can bring code that runs inside the client: a **client module**. It is how a
+hotel adds windows, toolbar icons and overlays of its own without a fork of the client. The plugin
+ships the module's TypeScript under `client/src/` and the Turbo server builds it into the
+JavaScript clients load. Turbo's `docs/client-modules.md` owns the server side (how it builds,
+declares and serves a module); this page is the client's. What changed for module authors, newest
+first, is turbo-cloud's `docs/plugin-changelog.md`; moving a plugin that shipped built JavaScript is
+turbo-cloud's `docs/upgrading.md`.
 
 ## The exchange
 
@@ -114,6 +117,12 @@ import { clientModuleBuildOptions } from '@nitrodevco/client-module-sdk/build';
 
 await esbuild.build(clientModuleBuildOptions({ entry: 'client/src/index.tsx', outfile: 'dist/counter/wwwroot/counter.js' }));
 ```
+
+A Turbo server builds a plugin's module itself, with these options, from `client/src/index.tsx`
+(or `index.ts`); it serves no JavaScript a plugin brings, and bundles only the module's own files
+under `client/src/`, the SDK, `react` and `zustand` (turbo-cloud `docs/client-modules.md`, "How the
+server builds a module"). The preset is for building a module outside Turbo, or to see what the
+server will make of it.
 
 Turbo's `dotnet new turbo-plugin` template (turbo-cloud `templates/turbo-plugin`) sets all of this
 up with the server half and one `npm run dev`. The SDK is not on npm yet: a plugin names this
@@ -372,5 +381,6 @@ the own user's name from `state`, a room event, an avatar menu button and a chat
 
 `docs/examples/client-modules/hello/` is a module with no build step: a toolbar icon and a me
 menu entry that open a window, the `hello/open` link, a bar over the user's own avatar, and a
-button that sends the plugin's `hello.wave` message and shows its `hello.waved` answer. Turbo's
-example plugin serves the same files.
+button that sends the plugin's `hello.wave` message and shows its `hello.waved` answer. It is plain
+JavaScript the client runs as it is; Turbo's example plugin ships the same module as
+`client/src/index.ts`, which the server builds.
