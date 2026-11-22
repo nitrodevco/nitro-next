@@ -124,7 +124,7 @@ under `client/src/`, the SDK, `react` and `zustand` (turbo-cloud `docs/client-mo
 server builds a module"). The preset is for building a module outside Turbo, or to see what the
 server will make of it.
 
-Turbo's `dotnet new turbo-plugin` template (turbo-cloud `templates/turbo-plugin`) sets all of this
+Turbo's `dotnet new turbo-plugin` template (turbo-cloud `docs/examples/turbo-plugin`) sets all of this
 up with the server half and one `npm run dev`. The SDK is not on npm yet: a plugin names this
 folder (`"file:<nitro-next>/packages/client-module-sdk"`).
 
@@ -377,7 +377,7 @@ watch's envelope as the server frames it, through the listener) (`yarn workspace
 
 ## Example
 
-Turbo's plugin template (`templates/turbo-plugin`, `client/src/index.tsx`) uses four of these parts:
+Turbo's plugin template (`docs/examples/turbo-plugin`, `client/src/index.tsx`) uses four of these parts:
 the own user's name from `state`, a room event, an avatar menu button and a chat command.
 
 `docs/examples/client-modules/hello/` is a module with no build step: a toolbar icon and a me
