@@ -161,7 +161,7 @@ const buildMeta = (build: string): Plugin => ({
     transformIndexHtml: () => [ { tag: 'meta', attrs: { name: 'nitro-build', content: build }, injectTo: 'head' } ],
 });
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
     const prebundleWorkspace = mode === 'prebundle';
     const bundledDev = mode === 'bundled';
     const build = buildId();
@@ -226,6 +226,11 @@ export default defineConfig(({ mode }) => {
             // the script-extension part of that default - without it babel is handed CSS too.
             // The theme's components are compiled with the client's: they are the same React tree.
             include: [ /[\\/]packages[\\/]nitro-(?:react|theme)[\\/]src[\\/].*\.(?:[jt]sx?|[cm][jt]s)(?:$|\?)/ ],
+            // In worker threads (up to 4): on one thread the compiler was nearly all of a build's
+            // time (18 of 19 seconds; 7 in all now), and the output is the same.
+            parallel: true,
+            // The build writes no source maps (`build.sourcemap`), so babel need not make them.
+            sourceMap: command === 'serve',
         }),
     ],
     resolve: {
