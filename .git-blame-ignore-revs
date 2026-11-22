@@ -1,0 +1,5 @@
+# Formatting-only commits for git blame to look past. GitHub reads this file; locally run
+# git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Reformat to @stylistic 6's list-style
+7194b4205cb8561178114c387d5b2f1add41bc1a
