@@ -58,7 +58,7 @@ const SIGN_ICONS: Record<number, string> = {
     16: 'sign_icon_16',
     17: 'sign_icon_17',
 };
-const SIGN_PICTURES: Record<number, ReactNode> = Object.fromEntries(Object.entries(SIGN_ICONS).map(([ sign, icon ]) => [ sign, (
+const signPicture = (icon: string) => (
     <Box
         pointerTransparent
         layout={{ position: 'absolute', left: 0, top: 0, width: 39, height: 29, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
@@ -68,7 +68,8 @@ const SIGN_PICTURES: Record<number, ReactNode> = Object.fromEntries(Object.entri
             layout={{}}
         />
     </Box>
-) ]));
+);
+const SIGN_PICTURES: Record<number, ReactNode> = Object.fromEntries(Object.entries(SIGN_ICONS).map(([ sign, icon ]) => [ sign, signPicture(icon) ]));
 
 /** `ButtonMenuView.buttonEventProc` on `profile_link`: the name light blue under the pointer. */
 const NAME_COLOR = 0xffffff;
