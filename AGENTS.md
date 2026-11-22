@@ -69,6 +69,7 @@ For code changes, run these gates on the assembled candidate:
 ```sh
 # Repository root
 npx tsc -p packages/nitro-react/tsconfig.typecheck.json --noEmit
+npx tsc -p packages/nitro-react/test/tsconfig.json --noEmit
 npx tsc -p packages/nitro-theme/tsconfig.json --noEmit
 npx eslint <changed-code-files>
 node tools/store-access.mjs

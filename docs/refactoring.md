@@ -28,11 +28,6 @@ it set none; git history keeps the details.
   the faces by element type. `templateLayout.ts` is 1,995 lines holding about ten Flash window
   classes (`LayoutWindow` 531, `ListWindow`, `GridWindow`, `ScrollableWindow`, `BoxSizerWindow`,
   ...): one file per class, as nitro-renderer keeps its ports.
-- **nitro-react's test tsconfig does not typecheck** (S, `packages/nitro-react/test/tsconfig.json`).
-  It lists the sources its tests import one by one, and with `composite` on, every module those
-  import is error TS6307 (2,153 of them), so no typecheck runs it and the package's tests are
-  checked by nothing. Include `../src/**/*` (or turn `composite` off for the tests), then give the
-  package a typecheck of its tests, as nitro-theme and nitro-renderer have.
 - **Nitro Studio's copies** (the Studio repository's change). Its pet figure builder
   (`preview/engine/chat.ts`) can use nitro-renderer's `petImageValue`, and its chat copies
   (`src/lib/chatBubble.ts`, `src/lib/flashText.ts`, `src/preview/engine/chat.ts`) can import
@@ -96,6 +91,9 @@ Rules finished refactors set that [Client code conventions](client-conventions.m
   (nitro-renderer and nitro-packets have one now). `yarn test` runs the packages' tests, Nitro
   Studio's aside, then the tools tests, and CI runs `yarn test`. Nine tools tests keep a loader of
   their own: lazily built stubs, methods lifted out of a class, a source rewritten before it runs.
+- nitro-react's tests are typechecked by its `typecheck` script (and CI) through
+  `test/tsconfig.json`: `composite` off, so the sources they import need no listing, and `node`
+  types beside `vite/client`, which the app's own program leaves out.
 
 Left as they are, on purpose:
 

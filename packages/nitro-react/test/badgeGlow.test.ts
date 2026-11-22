@@ -42,8 +42,8 @@ void test('the strength: about half at the first tick, full at 40%, gone at the 
 void test('the outer and inner glows at full strength and at half', () => {
     const rare = 0x85F97F;
 
-    const outer = [ ...glow.badgeOuterGlowArgs(rare, 1) ];
-    const inner = [ ...glow.badgeInnerGlowArgs(rare, 1) ];
+    const outer = glow.badgeOuterGlowArgs(rare, 1);
+    const inner = glow.badgeInnerGlowArgs(rare, 1);
 
     assert.deepEqual(outer, [ rare, 0.7, 8, 8, 2.2, 2, false, false ]);
     assert.deepEqual([ ...inner.slice(0, 4), ...inner.slice(5) ], [ rare, 0.22, 4, 4, 1, true, false ]);

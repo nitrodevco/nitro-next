@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import { createClientModuleRoomPointer } from '../src/commands/client-modules/clientModuleRoomPointer';
 import type { ClientModuleRoomPointerEvent } from '../src/context/client-modules/clientModuleModel';
 
-const click: ClientModuleRoomPointerEvent = { type: 'click', x: 10, y: 20, altKey: false, ctrlKey: false, shiftKey: false, tile: { x: -3, y: 4 } };
+const click: ClientModuleRoomPointerEvent = { type: 'click', x: 10, y: 20, altKey: false, ctrlKey: false, shiftKey: false, tile: { x: -3, y: 4 }, secondaryTile: undefined };
 
 void test('without listeners the room is told nothing was taken, so it does what it always did', () => {
     const pointer = createClientModuleRoomPointer(() => undefined);
