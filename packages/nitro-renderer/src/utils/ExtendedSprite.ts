@@ -27,8 +27,8 @@ export interface SourceAlpha {
     height: number;
 }
 
-/** A decoded image a 2D canvas can read the frame from without going through the GPU. */
-const isCpuReadable = (resource: unknown): resource is CanvasImageSource => {
+/** A decoded image a 2D canvas can read the frame from without going through the GPU. A closed `ImageBitmap` has no size. */
+export const isCpuReadable = (resource: unknown): resource is CanvasImageSource => {
     if ((typeof ImageBitmap !== 'undefined') && (resource instanceof ImageBitmap)) return resource.width > 0;
     if ((typeof HTMLCanvasElement !== 'undefined') && (resource instanceof HTMLCanvasElement)) return true;
     if ((typeof OffscreenCanvas !== 'undefined') && (resource instanceof OffscreenCanvas)) return true;
