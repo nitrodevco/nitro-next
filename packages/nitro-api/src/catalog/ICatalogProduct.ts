@@ -1,4 +1,4 @@
-import { FurnitureTypeEnum } from '@nitrodevco/nitro-api';
+import { FurnitureTypeEnum } from '../session/enum/FurnitureTypeEnum';
 
 export interface ICatalogProduct {
     productType: FurnitureTypeEnum;

@@ -24,7 +24,8 @@ import { useConfigBoolean, useIsWindowVisible, useTranslation, useWindowActions,
 import { useChatPetFace } from '#base/hooks';
 import { Box, TemplateItem, TemplateWindow, TemplateWindows, ThemeImage, useTemplateFrame } from '#base/theme';
 import { petTypeFromFigure } from '#base/utils';
-import { PET_EXPERIENCE_BAR_COLORS, PetPercentageBar } from '#base/views/shared/PetPercentageBar';
+import { PET_EXPERIENCE_BAR_COLORS } from '#base/views/shared/petBarColors';
+import { PetPercentageBar } from '#base/views/shared/PetPercentageBar';
 
 const DEFAULT_POSITION = { x: 100, y: 70 };
 const BUTTONS_DISABLED_MS = 1100;

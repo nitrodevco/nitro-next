@@ -261,7 +261,7 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
         return true;
     }
 
-    protected updateModel(scale: RoomGeometryScaleType): boolean {
+    protected updateModel(_scale: RoomGeometryScaleType): boolean {
         const model = this.object && this.object.model;
 
         if (!model) return false;
@@ -568,11 +568,11 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
         return false;
     }
 
-    protected getLibraryAssetNameForSprite(asset: IGraphicAsset, sprite: IRoomObjectSprite): string | undefined {
+    protected getLibraryAssetNameForSprite(asset: IGraphicAsset, _sprite: IRoomObjectSprite): string | undefined {
         return asset?.source;
     }
 
-    protected getPostureForAssetFile(scale: RoomGeometryScaleType, _arg_2: string): string | undefined {
+    protected getPostureForAssetFile(_scale: RoomGeometryScaleType, _arg_2: string): string | undefined {
         return undefined;
     }
 
@@ -916,19 +916,19 @@ export class FurnitureVisualization extends RoomObjectSpriteVisualization implem
         return 1;
     }
 
-    protected updateAnimation(scale: RoomGeometryScaleType): number {
+    protected updateAnimation(_scale: RoomGeometryScaleType): number {
         return 0;
     }
 
-    protected getFrameNumber(scale: RoomGeometryScaleType, layerId: number): number {
+    protected getFrameNumber(_scale: RoomGeometryScaleType, _layerId: number): number {
         return 0;
     }
 
-    protected getPostureForAsset(scale: RoomGeometryScaleType, name: string): string | undefined {
+    protected getPostureForAsset(_scale: RoomGeometryScaleType, _name: string): string | undefined {
         return undefined;
     }
 
-    public getAsset(name: string, layerId: number = -1): IGraphicAsset | undefined {
+    public getAsset(name: string, _layerId: number = -1): IGraphicAsset | undefined {
         return this.asset?.getAsset(name);
     }
 

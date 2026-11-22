@@ -1,5 +1,6 @@
-﻿import { IRoomObject, IVector3D, Vector3d } from '@nitrodevco/nitro-api';
-
+﻿import { IRoomObject } from '../../room/object/IRoomObject';
+import { IVector3D } from '../../utils/IVector3D';
+import { Vector3d } from '../../utils/Vector3d';
 import { RoomObjectMouseEvent } from './RoomObjectMouseEvent';
 
 export class RoomObjectWallMouseEvent extends RoomObjectMouseEvent {

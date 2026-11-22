@@ -15,11 +15,11 @@ export class ExpressionAddition implements IExpressionAddition {
         this._visualization = undefined;
     }
 
-    public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
+    public update(_sprite: IRoomObjectSprite, _scale: RoomGeometryScaleType): void {
         return;
     }
 
-    public animate(sprite: IRoomObjectSprite): boolean {
+    public animate(_sprite: IRoomObjectSprite): boolean {
         return false;
     }
 

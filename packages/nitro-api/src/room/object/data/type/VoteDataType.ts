@@ -36,7 +36,7 @@ export class VoteDataType extends ObjectDataBase {
         return this._state;
     }
 
-    public override compare(data: IObjectData): boolean {
+    public override compare(_data: IObjectData): boolean {
         return true;
     }
 

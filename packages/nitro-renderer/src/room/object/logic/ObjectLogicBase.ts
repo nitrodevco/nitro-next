@@ -16,7 +16,7 @@ export class ObjectLogicBase implements IRoomObjectEventHandler {
     private _object: IRoomObjectController;
     private _time: number = 0;
 
-    public initialize(data: unknown): void {
+    public initialize(_data: unknown): void {
         return;
     }
 
@@ -49,7 +49,7 @@ export class ObjectLogicBase implements IRoomObjectEventHandler {
         if (message.direction) this._object.setDirection(message.direction);
     }
 
-    public mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry): void {
+    public mouseEvent(_event: IRoomSpriteMouseEvent, _geometry: IRoomGeometry): void {
         return;
     }
 

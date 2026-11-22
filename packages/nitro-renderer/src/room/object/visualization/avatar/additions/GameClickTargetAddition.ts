@@ -24,7 +24,7 @@ export class GameClickTargetAddition implements IAvatarAddition {
         }
     }
 
-    public update(sprite: IRoomObjectSprite, scale: RoomGeometryScaleType): void {
+    public update(sprite: IRoomObjectSprite, _scale: RoomGeometryScaleType): void {
         if (!sprite) return;
 
         if (!this._asset) this._asset = RenderTexture.create({ width: GameClickTargetAddition.WIDTH, height: GameClickTargetAddition.HEIGHT });
@@ -38,7 +38,7 @@ export class GameClickTargetAddition implements IAvatarAddition {
         }
     }
 
-    public animate(sprite: IRoomObjectSprite): boolean {
+    public animate(_sprite: IRoomObjectSprite): boolean {
         return false;
     }
 

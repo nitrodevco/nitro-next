@@ -19,7 +19,6 @@ export const UserParser = (wrapper: IMessageDataWrapper): IRoomAvatar => {
         y: wrapper.readInt(),
         z: parseFloat(wrapper.readString()),
         bodyRotation: wrapper.readInt(),
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         avatarType: wrapper.readInt() as RoomObjectUserType,
     };
 

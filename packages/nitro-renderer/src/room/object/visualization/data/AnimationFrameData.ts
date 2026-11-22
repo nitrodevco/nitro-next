@@ -24,11 +24,11 @@ export class AnimationFrameData {
         return false;
     }
 
-    public getX(direction: number): number {
+    public getX(_direction: number): number {
         return this._x;
     }
 
-    public getY(direction: number): number {
+    public getY(_direction: number): number {
         return this._y;
     }
 

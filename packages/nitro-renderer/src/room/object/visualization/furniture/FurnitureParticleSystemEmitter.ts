@@ -248,11 +248,8 @@ export class FurnitureParticleSystemEmitter extends FurnitureParticleSystemParti
 
     private satisfyConstraints(): void { }
 
-    private accumulateForces(): void {
-        for (const k of this._particles) {
-            //
-        }
-    }
+    /** Flash's walks `_particles` with an empty body: it does nothing. */
+    private accumulateForces(): void { }
 
     public get particles(): FurnitureParticleSystemParticle[] {
         return this._particles;

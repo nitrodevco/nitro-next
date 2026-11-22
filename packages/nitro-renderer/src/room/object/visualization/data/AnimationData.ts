@@ -55,7 +55,7 @@ export class AnimationData {
         return this._immediateChanges.indexOf(animationId) >= 0 || false;
     }
 
-    public getStartFrame(direction: number): number {
+    public getStartFrame(_direction: number): number {
         return !this._randomStart ? 0 : Math.random() * this._frameCount;
     }
 

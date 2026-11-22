@@ -40,7 +40,7 @@ export class CrackableDataType extends ObjectDataBase implements IObjectData {
         return this._state;
     }
 
-    public override compare(data: IObjectData): boolean {
+    public override compare(_data: IObjectData): boolean {
         return true;
     }
 

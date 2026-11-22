@@ -12,7 +12,7 @@ export class RoomTileCursorLogic extends ObjectLogicBase {
     private _lastEventId: number = -1;
     private _isHidden: boolean = false;
 
-    public override initialize(data: IAssetData): void {
+    public override initialize(_data: IAssetData): void {
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
 
         this.object.setState(RoomTileCursorLogic.CURSOR_HIDDEN_STATE, 0);

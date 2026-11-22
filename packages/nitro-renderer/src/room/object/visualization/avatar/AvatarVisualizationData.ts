@@ -16,7 +16,7 @@ import { GetAvatarRenderManager } from '#renderer/avatar';
  * user's own figure, or the generic blocked figure when the user behind it is blocked.
  */
 export class AvatarVisualizationData implements IObjectVisualizationData {
-    public initialize(asset: IAssetData | undefined): boolean {
+    public initialize(_asset: IAssetData | undefined): boolean {
         return true;
     }
 

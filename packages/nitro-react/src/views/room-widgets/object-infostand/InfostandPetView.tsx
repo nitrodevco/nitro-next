@@ -5,7 +5,8 @@ import { useConfigBoolean, useTranslation } from '#base/context/system';
 import { useChatPetFace } from '#base/hooks';
 import { Box, CountdownWidget, LayoutImage, TemplateBindings, TemplateWindow, TemplateWindows, ThemeImage } from '#base/theme';
 import { petTypeFromFigure, twoDigits } from '#base/utils';
-import { PET_BAR_HEIGHT, PET_BAR_WIDTH, PET_ENERGY_BAR_COLORS, PET_EXPERIENCE_BAR_COLORS, PET_HAPPINESS_BAR_COLORS, PET_WELLBEING_BAR_COLORS, PetBarColors, PetPercentageBar } from '#base/views/shared/PetPercentageBar';
+import { PET_ENERGY_BAR_COLORS, PET_EXPERIENCE_BAR_COLORS, PET_HAPPINESS_BAR_COLORS, PET_WELLBEING_BAR_COLORS, PetBarColors } from '#base/views/shared/petBarColors';
+import { PET_BAR_HEIGHT, PET_BAR_WIDTH, PetPercentageBar } from '#base/views/shared/PetPercentageBar';
 
 import { arrangeInfostandButtons } from './infostandButtons';
 

@@ -6,7 +6,10 @@ import { Byte, Short } from '../utils';
  * sent by wrapping the value: `new Short(contractType)`, `new Byte(nodeType)` - what Flash does
  * with its own `Short` and `Byte`. A 64-bit value is two ints, see `WriteLong`. An `ArrayBuffer` is
  * written as its bytes, as they are.
+ *
+ * `_Params` names what the composer is built from (`OutgoingPacketConstructor`), for its reader: the
+ * interface itself reads only `compose`.
  */
-export interface IOutgoingPacket<T extends object> {
+export interface IOutgoingPacket<_Params extends object> {
     compose(): (number | string | boolean | Byte | Short | ArrayBuffer)[];
 }

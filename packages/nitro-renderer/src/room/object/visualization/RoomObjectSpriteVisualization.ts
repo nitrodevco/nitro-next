@@ -34,11 +34,11 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
     private _updateModelCounter: number = -1;
     private _updateSpriteCounter: number = -1;
 
-    public initialize(data: IObjectVisualizationData): boolean {
+    public initialize(_data: IObjectVisualizationData): boolean {
         return false;
     }
 
-    public update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void {
+    public update(_geometry: IRoomGeometry, _time: number, _update: boolean, _skipUpdate: boolean): void {
         return;
     }
 

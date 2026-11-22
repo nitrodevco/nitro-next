@@ -5,7 +5,7 @@ import { ObjectLogicBase } from './ObjectLogicBase';
 
 /** Port of Flash `SelectionArrowLogic`, the logic `RoomObjectFactory` builds for `selection_arrow`. */
 export class SelectionArrowLogic extends ObjectLogicBase {
-    public override initialize(data: IAssetData): void {
+    public override initialize(_data: IAssetData): void {
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureAlphaMultiplier, 1);
 
         this.object.setState(1, 0);

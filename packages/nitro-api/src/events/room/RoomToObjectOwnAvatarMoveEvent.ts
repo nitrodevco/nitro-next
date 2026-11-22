@@ -1,5 +1,4 @@
-﻿import { IVector3D } from '@nitrodevco/nitro-api';
-
+﻿import { IVector3D } from '../../utils/IVector3D';
 import { RoomToObjectEvent } from './RoomToObjectEvent';
 
 export class RoomToObjectOwnAvatarMoveEvent extends RoomToObjectEvent {

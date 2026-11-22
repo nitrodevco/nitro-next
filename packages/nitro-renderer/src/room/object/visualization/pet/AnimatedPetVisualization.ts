@@ -134,7 +134,7 @@ export class AnimatedPetVisualization extends AnimatedFurnitureVisualization {
         }
     }
 
-    protected override updateModel(scale: RoomGeometryScaleType): boolean {
+    protected override updateModel(_scale: RoomGeometryScaleType): boolean {
         if (this.updateModelCounter === this.object.model.updateCounter) return false;
 
         const posture = this.object.model.getValue<string>(RoomObjectVariableEnum.FigurePosture);
@@ -331,7 +331,7 @@ export class AnimatedPetVisualization extends AnimatedFurnitureVisualization {
         return '';
     }
 
-    protected override getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
+    protected override getLayerColor(scale: RoomGeometryScaleType, layerId: number, _colorId: number): number {
         if (layerId < this._shadowLayerIndex + 1) return this._color;
 
         return 0xffffff;

@@ -33,7 +33,7 @@ export class ObjectDataBase implements IObjectData {
         return '';
     }
 
-    public compare(data: IObjectData): boolean {
+    public compare(_data: IObjectData): boolean {
         return false;
     }
 

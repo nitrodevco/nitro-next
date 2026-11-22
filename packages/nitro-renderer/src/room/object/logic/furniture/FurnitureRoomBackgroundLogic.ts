@@ -7,7 +7,7 @@ import { FurnitureRoomBrandingLogic } from './FurnitureRoomBrandingLogic';
  * `furniture_bg`.
  */
 export class FurnitureRoomBackgroundLogic extends FurnitureRoomBrandingLogic {
-    protected override getAdClickUrl(model: IRoomObjectModel): string {
+    protected override getAdClickUrl(_model: IRoomObjectModel): string {
         return '';
     }
 }

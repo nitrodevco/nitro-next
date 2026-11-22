@@ -1,5 +1,4 @@
-import { RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
-
+import { RoomObjectCategoryEnum } from '../../room/object/RoomObjectCategoryEnum';
 import { RoomEngineEvent } from './RoomEngineEvent';
 
 /**

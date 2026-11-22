@@ -44,7 +44,7 @@ export class AnimatedFurnitureVisualization extends FurnitureVisualization {
         return this._animationData.animationId;
     }
 
-    protected getAnimationId(animationData: AnimationStateData): number {
+    protected getAnimationId(_animationData: AnimationStateData): number {
         if (
             this.animationId !== AnimatedFurnitureVisualization.DEFAULT_ANIMATION_ID
             && this.data.hasAnimation(this._animationScale, this.animationId)

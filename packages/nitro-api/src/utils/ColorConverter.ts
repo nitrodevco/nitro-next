@@ -51,7 +51,6 @@ export class ColorConverter {
         const b = color & 0xff;
         const g = (color & 0xff00) >>> 8;
         const r = (color & 0xff0000) >>> 16;
-        const a = ((color & 0xff000000) >>> 24) / 255;
 
         return 'rgba(' + [ r, g, b, 1 ].join(',') + ')';
     }

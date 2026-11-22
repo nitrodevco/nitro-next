@@ -1,5 +1,5 @@
-import { IRoomObject, IRoomObjectEvent } from '@nitrodevco/nitro-api';
-
+import { IRoomObject } from '../../room/object/IRoomObject';
+import { IRoomObjectEvent } from '../IRoomObjectEvent';
 import { NitroEvent } from '../NitroEvent';
 
 export class RoomObjectEvent extends NitroEvent implements IRoomObjectEvent {

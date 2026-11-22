@@ -392,7 +392,7 @@ export class RoomEngine implements IRoomEngine {
         else listener.imageFailed();
     }
 
-    public initalizeTemporaryObjectsByType(type: string, valid: boolean): void {
+    public initalizeTemporaryObjectsByType(type: string, _valid: boolean): void {
         const room = this.getTemporaryRoom();
 
         if (!room) return;

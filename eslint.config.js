@@ -136,6 +136,15 @@ const config = [
         },
     },
     {
+        // A message that carries nothing still implements `IIncomingPacket.parse(wrapper)`. The packet
+        // tool writes that signature, and `scripts/sync-generated-packets.ts` replaces an empty stub
+        // with the tool's copy, so a renamed parameter would only come back.
+        files: ['packages/nitro-packets/src/incoming/**/*.ts'],
+        rules: {
+            '@typescript-eslint/no-unused-vars': ['warn', { args: 'none', varsIgnorePattern: '^_' }],
+        },
+    },
+    {
         files: ['packages/nitro-react/**/*.{ts,tsx}', 'packages/nitro-theme/**/*.{ts,tsx}', 'packages/nitro-studio/src/**/*.{ts,tsx}'],
         plugins: {
             ...reactHooks.configs.flat['recommended-latest'].plugins,

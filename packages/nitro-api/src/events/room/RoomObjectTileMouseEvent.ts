@@ -1,5 +1,4 @@
-﻿import { IRoomObject } from '@nitrodevco/nitro-api';
-
+﻿import { IRoomObject } from '../../room/object/IRoomObject';
 import { RoomObjectMouseEvent } from './RoomObjectMouseEvent';
 
 export class RoomObjectTileMouseEvent extends RoomObjectMouseEvent {

@@ -48,7 +48,7 @@ export class MapDataType extends ObjectDataBase {
         return state;
     }
 
-    public override compare(data: IObjectData): boolean {
+    public override compare(_data: IObjectData): boolean {
         return false;
     }
 

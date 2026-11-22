@@ -200,7 +200,7 @@ export class AvatarVisualization
         this._variableFxManagerUpdateId = -1;
     }
 
-    public override update(geometry: IRoomGeometry, time: number, update: boolean, skipUpdate: boolean): void {
+    public override update(geometry: IRoomGeometry, time: number, update: boolean, _skipUpdate: boolean): void {
         if (!this.object || !geometry || !this._data) return;
 
         if (--this._updatesUntilCleanup <= 0 && this._avatarImage) {
@@ -1238,7 +1238,7 @@ export class AvatarVisualization
 
         this._extraSpritesStartIndex = spriteCount;
 
-        if (this._additions) for (const addition of this._additions.values()) this.createSprite();
+        if (this._additions) for (const _addition of this._additions.values()) this.createSprite();
     }
 
     private updateFigure(figure: string): boolean {
@@ -1251,11 +1251,11 @@ export class AvatarVisualization
         return true;
     }
 
-    public resetFigure(figure: string): void {
+    public resetFigure(_figure: string): void {
         this._forceUpdate = true;
     }
 
-    public resetEffect(effect: number): void {
+    public resetEffect(_effect: number): void {
         this._forceUpdate = true;
     }
 
