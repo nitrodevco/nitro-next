@@ -4,9 +4,10 @@ import { Texture } from 'pixi.js';
 import { useLayoutEffect, useSyncExternalStore } from 'react';
 
 import { useRoom } from '#base/context/room';
-import { destroyOwnedTexture, RetainedCache } from '#base/utils';
+import { destroyOwnedTexture } from '#base/utils';
 
 import { renderPetFigureTexture } from '../images/renderPetFigureTexture';
+import { createPetFaceStore } from './petFaceStore';
 
 /** How big and which way round a pet render is wanted. */
 export interface PetFaceOptions {
@@ -30,6 +31,8 @@ const MAX_CACHED_FACES = 64;
 
 const faceKey = (cacheKey: string): string => `chat:pet:${cacheKey}`;
 
+const storeFace = (cacheKey: string, texture: Texture) => GetAssetManager().setTexture(faceKey(cacheKey), texture);
+
 const freeFace = (cacheKey: string, texture: Texture) => {
     if (GetAssetManager().getTexture(faceKey(cacheKey)) === texture) GetAssetManager().removeTexture(faceKey(cacheKey));
 
@@ -37,16 +40,11 @@ const freeFace = (cacheKey: string, texture: Texture) => {
 };
 
 /**
- * Least recently used past the cap - but never a face something on screen still shows
- * (`RetainedCache`): it used to be destroyed under the bubble, which stops the ticker.
+ * Least recently used past the cap - but never a face something on screen still shows: it used to
+ * be destroyed under the bubble, which stops the ticker. A pet still downloading is replaced by its
+ * finished render when that lands (`petFaceStore`).
  */
-const cache = new RetainedCache<string, Texture>(MAX_CACHED_FACES, freeFace);
-const pending = new Map<string, Promise<Texture | undefined>>();
-
-const storeFace = (cacheKey: string, texture: Texture) => {
-    GetAssetManager().setTexture(faceKey(cacheKey), texture);
-    cache.set(cacheKey, texture);
-};
+const faces = createPetFaceStore<Texture>(MAX_CACHED_FACES, storeFace, freeFace);
 
 /** `ChatBubbleFactory.getPetImage`'s scale and direction: the zoomed-out (32px) scale, facing direction 2. */
 const DEFAULT_SCALE = RoomGeometryScaleType.ZoomedOut;
@@ -55,7 +53,8 @@ const DEFAULT_DIRECTION = 2;
 /**
  * A pet drawn by the room engine, cached across everything that shows one. The chat bubble takes
  * the scale and direction defaults and asks for the head only; the infostand asks for a bigger
- * whole-body render, which is a different cache entry.
+ * whole-body render, which is a different cache entry. A pet whose library is still downloading
+ * shows the engine's placeholder until the finished render replaces it.
  */
 export const useChatPetFace = (figure: string | undefined, posture: string | undefined, options?: PetFaceOptions): ChatPetFace => {
     const scale = options?.scale ?? DEFAULT_SCALE;
@@ -69,35 +68,18 @@ export const useChatPetFace = (figure: string | undefined, posture: string | und
     const getSnapshot = () => {
         if (!canRender) return undefined;
 
-        return cache.get(cacheKey);
+        return faces.get(cacheKey);
     };
 
-    // Subscribing is what starts the render; the face landing in the cache is the change to re-read.
+    // Subscribing is what starts the render; a face stored or replaced under the key is the change to re-read.
     const subscribe = (onChange: () => void) => {
-        if (!canRender || cache.has(cacheKey)) return () => {};
+        if (!canRender) return () => {};
 
-        let cancelled = false;
-        let promise = pending.get(cacheKey);
+        const unwatch = faces.watch(cacheKey, onChange);
 
-        if (!promise) {
-            promise = renderPetFigureTexture(new PetFigureData(figure), { direction: direction * 45, scale, posture: posture ?? '', headOnly }).then((texture) => {
-                if (!texture) return undefined;
+        faces.request(cacheKey, listener => renderPetFigureTexture(new PetFigureData(figure), { direction: direction * 45, scale, posture: posture ?? '', headOnly, listener }));
 
-                storeFace(cacheKey, texture);
-
-                return texture;
-            }, () => undefined).finally(() => pending.delete(cacheKey));
-
-            pending.set(cacheKey, promise);
-        }
-
-        void promise.then(() => {
-            if (!cancelled) onChange();
-        });
-
-        return () => {
-            cancelled = true;
-        };
+        return unwatch;
     };
 
     const texture = useSyncExternalStore(subscribe, getSnapshot);
@@ -106,9 +88,9 @@ export const useChatPetFace = (figure: string | undefined, posture: string | und
     useLayoutEffect(() => {
         if (!texture) return;
 
-        cache.retain(texture);
+        faces.retain(texture);
 
-        return () => cache.release(texture);
+        return () => faces.release(texture);
     }, [ texture ]);
 
     if (!canRender) return EMPTY;
