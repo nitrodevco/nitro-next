@@ -20,11 +20,11 @@
         "@pixi/layout": "^3.2.1",
         "@pixi/react": "patch:@pixi/react@npm%3A8.0.5#~/.yarn/patches/@pixi-react-npm-8.0.5-b9686ce1cd.patch",
         "pixi.js": "^8.18.1",
-        "react": "^19.2.6",
+        "react": "^19.3.1",
         "yoga-layout": "^3.2.1"
     },
     "devDependencies": {
-        "@types/react": "^19.2.17",
+        "@types/react": "^19.3.0",
         "tsx": "^4.23.15",
         "typescript": "^5.9.3"
     }

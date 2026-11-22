@@ -10,12 +10,12 @@
         "typecheck": "tsc -p tsconfig.json --noEmit"
     },
     "dependencies": {
-        "@hono/node-server": "^2.1.4",
-        "@napi-rs/canvas": "^1.0.11",
+        "@hono/node-server": "^2.1.11",
+        "@napi-rs/canvas": "^1.2.0",
         "@nitrodevco/nitro-api": "workspace:*",
         "@nitrodevco/nitro-renderer": "workspace:*",
         "gifenc": "^1.0.3",
-        "hono": "^4.13.13",
+        "hono": "^4.13.20",
         "pixi.js": "^8.18.1"
     },
     "devDependencies": {

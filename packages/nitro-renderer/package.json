@@ -19,24 +19,20 @@
     "dependencies": {
         "@nitrodevco/nitro-api": "workspace:*",
         "@pixi/gif": "^3.0.1",
-        "howler": "^2.2.4",
-        "pako": "^2.1.0",
         "pixi-filters": "^6.1.5",
         "pixi.js": "^8.18.1"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@stylistic/eslint-plugin": "^5.10.0",
-        "@types/howler": "^2.2.13",
-        "@types/pako": "^2.0.4",
-        "eslint": "^10.6.0",
+        "eslint": "^10.15.0",
         "eslint-plugin-import-x": "^4.18.1",
         "eslint-plugin-react-hooks": "^7.1.1",
-        "eslint-plugin-react-refresh": "^0.5.3",
+        "eslint-plugin-react-refresh": "^0.5.8",
         "eslint-plugin-simple-import-sort": "^13.0.0",
         "eslint-plugin-unused-imports": "^4.4.1",
         "typescript": "^5.9.3",
-        "typescript-eslint": "^8.21.1",
-        "vite": "^8.0.14"
+        "typescript-eslint": "^8.73.0",
+        "vite": "^8.3.8"
     }
 }
