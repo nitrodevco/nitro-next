@@ -3,36 +3,15 @@
  * an empty slot in it: without the step the loop never ended and the tab hung.
  */
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { createContext, runInContext, runInNewContext } from 'node:vm';
+import { createContext, runInContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
-const cache = new Map();
 const external = {};
 
-const loadFile = (url) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        if (Object.hasOwn(external, name)) return external[name];
-
-        assert.ok(name.startsWith('.'), `Unexpected dependency: ${name}`);
-
-        const file = new URL(`${name}.ts`, url);
-
-        return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url));
-    } });
-
-    return exports;
-};
+const loader = createLoader();
+const loadFile = url => loader(url, external);
 
 external['@nitrodevco/nitro-api'] = loadFile(new URL('../packages/nitro-api/src/utils/Vector3d.ts', import.meta.url));
 external['pixi.js'] = {

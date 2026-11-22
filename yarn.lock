@@ -1621,6 +1621,7 @@ __metadata:
   dependencies:
     "@nitrodevco/nitro-api": "workspace:*"
     pixi.js: "npm:^8.18.1"
+    tsx: "npm:^4.23.15"
     typescript: "npm:@typescript/typescript6@^6.0.2"
   peerDependencies:
     pixi.js: ^8.18.1
@@ -1685,6 +1686,7 @@ __metadata:
     eslint-plugin-unused-imports: "npm:^4.4.1"
     pixi-filters: "npm:^6.1.5"
     pixi.js: "npm:^8.18.1"
+    tsx: "npm:^4.23.15"
     typescript: "npm:@typescript/typescript6@^6.0.2"
     typescript-eslint: "npm:^8.73.0"
     vite: "npm:^8.3.8"

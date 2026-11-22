@@ -5,9 +5,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 const ACCURATE_Z = 'object_accurate_z_value';
 
@@ -27,14 +26,9 @@ class Vector3d {
 
 const load = () => {
     const source = readFileSync(new URL('../packages/nitro-renderer/src/room/object/cache/RoomObjectLocationCacheItem.ts', import.meta.url), 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-    runInNewContext(outputText, {
-        exports,
-        require: (dependency) => {
-            assert.equal(dependency, '@nitrodevco/nitro-api');
-            return { Vector3d, RoomObjectVariableEnum: { ObjectAccurateZValue: ACCURATE_Z } };
-        },
+    const exports = loadModule(source, (dependency) => {
+        assert.equal(dependency, '@nitrodevco/nitro-api');
+        return { Vector3d, RoomObjectVariableEnum: { ObjectAccurateZValue: ACCURATE_Z } };
     });
     return exports.RoomObjectLocationCacheItem;
 };

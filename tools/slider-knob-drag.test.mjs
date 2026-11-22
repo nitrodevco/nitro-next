@@ -5,25 +5,19 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 const load = () => {
     const source = readFileSync(new URL('../packages/nitro-react/src/hooks/useSliderKnobDrag.ts', import.meta.url), 'utf8');
-    const outputText = transpile(source);
     const drags = [];
-    const exports = {};
 
-    runInNewContext(outputText, {
-        exports,
-        require: (name) => {
-            if (name === '#base/theme') return { ClientToStage: value => value };
-            if (name === '#base/utils') return { clamp: (value, min, max) => Math.min(Math.max(value, min), max) };
-            if (name === './useWindowPointerDrag') return { useWindowPointerDrag: () => ({ start: (pointerId, handlers) => drags.push({ pointerId, handlers }), stop: () => {} }) };
+    const exports = loadModule(source, (name) => {
+        if (name === '#base/theme') return { ClientToStage: value => value };
+        if (name === '#base/utils') return { clamp: (value, min, max) => Math.min(Math.max(value, min), max) };
+        if (name === './useWindowPointerDrag') return { useWindowPointerDrag: () => ({ start: (pointerId, handlers) => drags.push({ pointerId, handlers }), stop: () => {} }) };
 
-            throw new Error(`Unexpected dependency: ${name}`);
-        },
+        throw new Error(`Unexpected dependency: ${name}`);
     });
 
     return { knob: exports.useSliderKnobDrag(), drags };

@@ -1,34 +1,12 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
 // WIN63-202610121624 chat markup: eight colours, and `[a]` table tabs in notification bubbles
 // (`ChatMarkup.applyToElements` with tableTabs, then `ChatTabLayout` column stops).
 
-const cache = new Map();
-
-const loadFile = (url) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        assert.ok(name.startsWith('.'), `Unexpected dependency: ${name}`);
-
-        const file = new URL(`${name}.ts`, url);
-
-        return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url));
-    } });
-
-    return exports;
-};
+const loadFile = createLoader();
 
 const chat = new URL('../packages/nitro-theme/src/chat/', import.meta.url);
 const markup = loadFile(new URL('ChatMarkup.ts', chat));

@@ -6,13 +6,11 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 const load = () => {
     const source = readFileSync(new URL('../packages/nitro-theme/src/hooks/useWindowPointerDrag.ts', import.meta.url), 'utf8');
-    const outputText = transpile(source);
     const listeners = new Map();
     const window = {
         addEventListener: (type, fn) => (listeners.get(type) ?? listeners.set(type, new Set()).get(type)).add(fn),
@@ -23,27 +21,22 @@ const load = () => {
     };
     const count = () => [ ...listeners.values() ].reduce((n, set) => n + set.size, 0);
     const cleanups = [];
-    const exports = {};
 
-    runInNewContext(outputText, {
-        exports,
-        window,
-        require: (name) => {
-            if (name === 'react') {
-                return {
-                    useRef: value => ({ current: value }),
-                    useCallback: fn => fn,
-                    useEffect: (fn) => {
-                        const cleanup = fn();
+    const exports = loadModule(source, (name) => {
+        if (name === 'react') {
+            return {
+                useRef: value => ({ current: value }),
+                useCallback: fn => fn,
+                useEffect: (fn) => {
+                    const cleanup = fn();
 
-                        if (cleanup) cleanups.push(cleanup);
-                    },
-                };
-            }
+                    if (cleanup) cleanups.push(cleanup);
+                },
+            };
+        }
 
-            throw new Error(`Unexpected dependency: ${name}`);
-        },
-    });
+        throw new Error(`Unexpected dependency: ${name}`);
+    }, { window });
 
     const drag = exports.useWindowPointerDrag();
     const unmount = () => cleanups.forEach(fn => fn());

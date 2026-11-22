@@ -20,6 +20,7 @@
         "../src/context/client-modules/clientModuleModel.ts",
         "../src/views/loading-screen/loadingScreenStyle.ts",
         "../src/chat/chatBubbleTheme.ts",
-        "../src/views/navigator/navigatorFirstPosition.ts"
+        "../src/views/navigator/navigatorFirstPosition.ts",
+        "../src/views/shared/badgeGlow.ts"
     ]
 }

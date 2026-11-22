@@ -4,13 +4,15 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "sync-packets": "node scripts/sync-generated-packets.ts"
+        "sync-packets": "node scripts/sync-generated-packets.ts",
+        "test": "tsx --test test/*.test.ts"
     },
     "exports": {
         ".": "./src/index.ts"
     },
     "devDependencies": {
         "pixi.js": "^8.18.1",
+        "tsx": "^4.23.15",
         "typescript": "npm:@typescript/typescript6@^6.0.2"
     },
     "dependencies": {

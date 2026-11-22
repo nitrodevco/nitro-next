@@ -5,42 +5,18 @@
  * the creation time decides.
  */
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
-const cache = new Map();
 const external = {
     '@nitrodevco/nitro-api': { ToInt32: value => value | 0 },
     'pixi.js': { Texture: class {} },
     '#renderer/utils': { GetTickerTime: () => 0, TextureUtils: {} },
 };
 
-const loadFile = (url) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        if (name.startsWith('.')) {
-            const file = new URL(`${name}.ts`, url);
-
-            return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url));
-        }
-
-        assert.ok(Object.hasOwn(external, name), `Unexpected dependency: ${name}`);
-
-        return external[name];
-    } });
-
-    return exports;
-};
+const loader = createLoader();
+const loadFile = url => loader(url, external);
 
 const load = path => loadFile(new URL(`../packages/nitro-renderer/src/room/object/visualization/${path}.ts`, import.meta.url));
 

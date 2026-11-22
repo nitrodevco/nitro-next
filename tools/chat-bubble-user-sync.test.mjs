@@ -6,9 +6,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 class Rectangle {
     constructor(x = 0, y = 0, width = 0, height = 0) {
@@ -21,17 +20,12 @@ class Rectangle {
 
 const load = () => {
     const source = readFileSync(new URL('../packages/nitro-react/src/chat/simulation/ChatBubbleSimulationEntity.ts', import.meta.url), 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
 
-    runInNewContext(outputText, {
-        exports,
-        require: (name) => {
-            if (name === 'pixi.js') return { Rectangle };
-            if (name === '@nitrodevco/nitro-theme/chat') return { CHAT_BUBBLE_HEIGHT_PADDING: 10 };
-            if (name === './IChatFlowBubble') return {};
-            throw new Error(`Unexpected dependency: ${name}`);
-        },
+    const exports = loadModule(source, (name) => {
+        if (name === 'pixi.js') return { Rectangle };
+        if (name === '@nitrodevco/nitro-theme/chat') return { CHAT_BUBBLE_HEIGHT_PADDING: 10 };
+        if (name === './IChatFlowBubble') return {};
+        throw new Error(`Unexpected dependency: ${name}`);
     });
 
     return exports.ChatBubbleSimulationEntity;

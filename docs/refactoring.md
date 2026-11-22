@@ -28,12 +28,11 @@ it set none; git history keeps the details.
   the faces by element type. `templateLayout.ts` is 1,995 lines holding about ten Flash window
   classes (`LayoutWindow` 531, `ListWindow`, `GridWindow`, `ScrollableWindow`, `BoxSizerWindow`,
   ...): one file per class, as nitro-renderer keeps its ports.
-- **Two kinds of test** (M, `tools/`). 67 `tools/*.test.mjs` sit beside 35 package
-  `test/*.test.ts`. The tools tests transpile through `tools/load-source.mjs` (esbuild), and six
-  load through its `loadModule`; the other 45 still run their output with a `runInNewContext`
-  of their own, with stubs of their own, and none is typechecked (`checkJs: false`). Move the rest
-  onto `loadModule` where the shape allows, put tests of modules that import cleanly in Node in
-  their package's `test/`, and add a root `yarn test` that runs both, as CI does.
+- **nitro-react's test tsconfig does not typecheck** (S, `packages/nitro-react/test/tsconfig.json`).
+  It lists the sources its tests import one by one, and with `composite` on, every module those
+  import is error TS6307 (2,153 of them), so no typecheck runs it and the package's tests are
+  checked by nothing. Include `../src/**/*` (or turn `composite` off for the tests), then give the
+  package a typecheck of its tests, as nitro-theme and nitro-renderer have.
 - **Nitro Studio's copies** (the Studio repository's change). Its pet figure builder
   (`preview/engine/chat.ts`) can use nitro-renderer's `petImageValue`, and its chat copies
   (`src/lib/chatBubble.ts`, `src/lib/flashText.ts`, `src/preview/engine/chat.ts`) can import
@@ -91,6 +90,12 @@ Rules finished refactors set that [Client code conventions](client-conventions.m
   branch cannot bring back what they report; the drift checks that need Habbo's client stay local.
 - The preview host's logic is `src/preview/` and its views `views/preview`: a view fills the
   stores with samples through `preview/designSamples.ts` and takes actions from the action hooks.
+- A tools test loads the repository's TypeScript through `tools/load-source.mjs` (esbuild):
+  `loadModule` for one module and its stubs, `createLoader` for a module and the real sources it
+  imports. A test of a module that needs no stubs lives in its package's `test/` and imports it
+  (nitro-renderer and nitro-packets have one now). `yarn test` runs the packages' tests, Nitro
+  Studio's aside, then the tools tests, and CI runs `yarn test`. Nine tools tests keep a loader of
+  their own: lazily built stubs, methods lifted out of a class, a source rewritten before it runs.
 
 Left as they are, on purpose:
 

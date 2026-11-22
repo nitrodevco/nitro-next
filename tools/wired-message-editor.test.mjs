@@ -1,35 +1,13 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
 // The WIN63-202610121624 message editor (`MessageEditor*Preset`, `TextAreaPreset.insertText` /
 // `wrapSelection`) and the boxes that use it: Show Message (400 characters) and the bot talk
 // boxes (400 characters, int param 2 = hide bot name).
 
-const cache = new Map();
-
-const loadFile = (url) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        assert.ok(name.startsWith('.'), `Unexpected dependency: ${name}`);
-
-        const file = new URL(`${name}.ts`, url);
-
-        return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url));
-    } });
-
-    return exports;
-};
+const loadFile = createLoader();
 
 const wired = new URL('../packages/nitro-react/src/wired/', import.meta.url);
 const editor = loadFile(new URL('common/messageEditor.ts', wired));

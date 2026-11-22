@@ -3,20 +3,17 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 const load = (path, dependencies = {}) => {
     const source = readFileSync(new URL(`../packages/${path}.ts`, import.meta.url), 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
 
-    runInNewContext(outputText, { exports, performance, setTimeout, clearTimeout, setInterval, clearInterval, Date, require: (name) => {
+    const exports = loadModule(source, (name) => {
         assert.ok(Object.hasOwn(dependencies, name), `Unexpected dependency: ${name}`);
 
         return dependencies[name];
-    } });
+    }, { performance, setTimeout, clearTimeout, setInterval, clearInterval, Date });
 
     return exports;
 };

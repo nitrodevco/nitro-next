@@ -2,20 +2,14 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 const load = () => {
     const source = readFileSync(new URL('../packages/nitro-renderer/src/room/utils/LegacyWallGeometry.ts', import.meta.url), 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-    runInNewContext(outputText, {
-        exports,
-        require: (dependency) => {
-            assert.equal(dependency, '@nitrodevco/nitro-api');
-            return { Vector3d: class {}, RoomGeometryScaleType: { ZoomedIn: 64 } };
-        },
+    const exports = loadModule(source, (dependency) => {
+        assert.equal(dependency, '@nitrodevco/nitro-api');
+        return { Vector3d: class {}, RoomGeometryScaleType: { ZoomedIn: 64 } };
     });
     return exports.LegacyWallGeometry;
 };

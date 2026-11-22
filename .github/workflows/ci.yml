@@ -137,8 +137,6 @@ jobs:
       - name: Install
         run: yarn install --no-immutable
 
-      - name: Package tests
-        run: yarn workspaces foreach --all --parallel run test
-
-      - name: Tool tests
-        run: node --test "tools/*.test.mjs"
+      # Every package's tests, then the tools tests: what `yarn test` runs anywhere.
+      - name: Tests
+        run: yarn test

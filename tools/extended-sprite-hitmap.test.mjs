@@ -6,9 +6,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 /** A 4x2 RGBA sheet: the left frame (0,0 2x2) opaque only at (1,1), the right frame (2,0 2x2) opaque only at (0,0). */
 const SHEET_WIDTH = 4;
@@ -24,7 +23,6 @@ const sheetRgba = () => {
 
 const load = (overrides = {}) => {
     const source = readFileSync(new URL('../packages/nitro-renderer/src/utils/ExtendedSprite.ts', import.meta.url), 'utf8');
-    const outputText = transpile(source);
     const gpuReads = [];
 
     class Sprite {
@@ -59,19 +57,13 @@ const load = (overrides = {}) => {
             return { pixels: sheetRgba(), width: SHEET_WIDTH, height: SHEET_HEIGHT };
         },
     };
-    const exports = {};
 
-    runInNewContext(outputText, {
-        exports,
-        ImageBitmap: overrides.ImageBitmap,
-        OffscreenCanvas: overrides.OffscreenCanvas,
-        require: (name) => {
-            if (name === '@nitrodevco/nitro-api') return { AlphaTolerance: { MATCH_OPAQUE_PIXELS: 128 } };
-            if (name === 'pixi.js') return { Sprite, Texture };
-            if (name === '.') return { TextureUtils };
-            throw new Error(`Unexpected dependency: ${name}`);
-        },
-    });
+    const exports = loadModule(source, (name) => {
+        if (name === '@nitrodevco/nitro-api') return { AlphaTolerance: { MATCH_OPAQUE_PIXELS: 128 } };
+        if (name === 'pixi.js') return { Sprite, Texture };
+        if (name === '.') return { TextureUtils };
+        throw new Error(`Unexpected dependency: ${name}`);
+    }, { ImageBitmap: overrides.ImageBitmap, OffscreenCanvas: overrides.OffscreenCanvas });
 
     return { ExtendedSprite: exports.ExtendedSprite, gpuReads };
 };

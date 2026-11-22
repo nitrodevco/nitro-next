@@ -4,28 +4,13 @@
  * glow, inner glow and tint built from that strength.
  */
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import * as glow from '../src/views/shared/badgeGlow';
 
-const load = () => {
-    const source = readFileSync(new URL('../packages/nitro-react/src/views/shared/badgeGlow.ts', import.meta.url), 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
+const close = (actual: number, expected: number, label: string) => assert.ok(Math.abs(actual - expected) < 1e-9, `${label}: ${actual} != ${expected}`);
 
-    runInNewContext(outputText, { exports, Math });
-
-    return exports;
-};
-
-// its arrays come from the module's own realm: spread them before a deep compare
-const glow = load();
-
-const close = (actual, expected, label) => assert.ok(Math.abs(actual - expected) < 1e-9, `${label}: ${actual} != ${expected}`);
-
-await test('the default glow is 31 ticks of 16 ms; 0 or less plays 1000 ms; at least one tick', () => {
+void test('the default glow is 31 ticks of 16 ms; 0 or less plays 1000 ms; at least one tick', () => {
     assert.equal(glow.BADGE_GLOW_DURATION, 500);
     assert.equal(glow.BADGE_GLOW_TICK, 16);
     assert.equal(glow.BADGE_GLOW_IMAGE_TIMEOUT, 5000);
@@ -36,9 +21,9 @@ await test('the default glow is 31 ticks of 16 ms; 0 or less plays 1000 ms; at l
     assert.equal(glow.badgeGlowTicks(10), 1);
 });
 
-await test('the strength: about half at the first tick, full at 40%, gone at the last tick', () => {
+void test('the strength: about half at the first tick, full at 40%, gone at the last tick', () => {
     const ticks = 31;
-    const at = count => glow.badgeGlowStrength(count, ticks);
+    const at = (count: number) => glow.badgeGlowStrength(count, ticks);
 
     close(at(1), 1 - ((1.75 / 31) - 0.7) ** 2, 'tick 1');
     assert.ok(at(1) > 0.58 && at(1) < 0.59);
@@ -54,7 +39,7 @@ await test('the strength: about half at the first tick, full at 40%, gone at the
     for (let count = 13; count < 31; count++) assert.ok(at(count + 1) < at(count), `down at ${count}`);
 });
 
-await test('the outer and inner glows at full strength and at half', () => {
+void test('the outer and inner glows at full strength and at half', () => {
     const rare = 0x85F97F;
 
     const outer = [ ...glow.badgeOuterGlowArgs(rare, 1) ];
@@ -80,7 +65,7 @@ await test('the outer and inner glows at full strength and at half', () => {
     assert.equal(innerFlag, true);
 });
 
-await test('the tint: 48% of the strength towards the colour, 5% of that crossed, up to 80 added', () => {
+void test('the tint: 48% of the strength towards the colour, 5% of that crossed, up to 80 added', () => {
     // the epic tier, 0x66BAFF
     const matrix = [ ...glow.badgeTintMatrix(0x66BAFF, 1) ];
     const r = 0x66 / 255;

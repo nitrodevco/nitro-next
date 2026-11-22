@@ -1,24 +1,14 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
-import { transpile } from './load-source.mjs';
+import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
-// Transpiled rather than imported as `.ts`: Node's type stripping rejects the packets' enums. Both
-// import only types, so the module has no imports left once transpiled.
-const load = async (path) => {
-    const source = readFileSync(new URL(`../packages/nitro-packets/src/${path}.ts`, import.meta.url), 'utf8');
-    const outputText = transpile(source, { format: 'esm' });
+import { TurboCommandTreeMessage } from '../src/incoming/Turbo/TurboCommandTreeMessage';
+import { TurboCommandSuggestComposer } from '../src/outgoing/Turbo/TurboCommandSuggestComposer';
 
-    return import(`data:text/javascript,${encodeURIComponent(outputText)}`);
-};
+const parameterFields = (name: string, description: string) => [ name, 1, false, 0, false, 0, description, '1', '20', 1, 12, '3' ];
 
-const { TurboCommandTreeMessage } = await load('incoming/Turbo/TurboCommandTreeMessage');
-const { TurboCommandSuggestComposer } = await load('outgoing/Turbo/TurboCommandSuggestComposer');
-
-const parameterFields = (name, description) => [ name, 1, false, 0, false, 0, description, '1', '20', 1, 12, '3' ];
-
-await test('v2 tree reads parameter metadata and syntax branch parameters', () => {
+void test('v2 tree reads parameter metadata and syntax branch parameters', () => {
     const values = [
         1,
         'group',
@@ -35,7 +25,7 @@ await test('v2 tree reads parameter metadata and syntax branch parameters', () =
         1,
         ...parameterFields('name', 'Group name'),
     ];
-    const wrapper = Object.fromEntries([ 'readInt', 'readString', 'readBoolean' ].map(method => [ method, () => values.shift() ]));
+    const wrapper = Object.fromEntries([ 'readInt', 'readString', 'readBoolean' ].map(method => [ method, () => values.shift() ])) as unknown as IMessageDataWrapper;
     const { commands: [ command ] } = new TurboCommandTreeMessage().parse(wrapper);
     assert.equal(command.parameters.length, 0);
     assert.equal(command.syntax?.[0].path, 'add');
@@ -56,7 +46,7 @@ await test('v2 tree reads parameter metadata and syntax branch parameters', () =
     assert.equal(values.length, 0);
 });
 
-await test('suggest request appends branch path and preceding parsed arguments', () => {
+void test('suggest request appends branch path and preceding parsed arguments', () => {
     const packet = new TurboCommandSuggestComposer({ requestId: 7, command: 'group', parameter: 0, prefix: 'al', syntax: 'add', argumentText: 'owner' });
     assert.deepEqual(packet.compose(), [ 7, 'group', 0, 'al', 'add', 'owner' ]);
 });

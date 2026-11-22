@@ -63,6 +63,8 @@ same environment variables.
 
 ## Tool availability
 
+`corepack yarn test` runs every package's tests (`packages/*/test`) and then the tools tests, as CI
+does; Nitro Studio's suites are its own (`node test/unit.ts` in its folder) and are left out.
 Shared test and diagnostic scripts are in the [tools directory](../tools/); the two with written
 guides are `hotel-view-reference.md` and `profile-visual-check.md`. [Nitro Studio](nitro-studio.md)
 documents its workflow whether or not it is checked out. Scripts and external inputs the topic

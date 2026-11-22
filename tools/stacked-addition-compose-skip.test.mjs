@@ -4,11 +4,9 @@
  * (`getBitmapVersion`), placed and blended the same - leaves the bitmap and the upload as they were.
  */
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
 /** A canvas whose context counts the draws into it. */
 class FakeCanvas {
@@ -45,40 +43,14 @@ class FakeTexture {
     }
 }
 
-const cache = new Map();
 const external = {
     '@nitrodevco/nitro-api': { ToInt32: value => value | 0 },
     'pixi.js': { Texture: FakeTexture },
     '#renderer/utils': { GetTickerTime: () => 1000, TextureUtils: { destroyTexture() {} } },
 };
 
-const loadFile = (url) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, {
-        exports,
-        document: { createElement: () => new FakeCanvas() },
-        require: (name) => {
-            if (name.startsWith('.')) {
-                const file = new URL(`${name}.ts`, url);
-
-                return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url));
-            }
-
-            assert.ok(Object.hasOwn(external, name), `Unexpected dependency: ${name}`);
-
-            return external[name];
-        },
-    });
-
-    return exports;
-};
+const loader = createLoader();
+const loadFile = url => loader(url, external, { document: { createElement: () => new FakeCanvas() } });
 
 const root = new URL('../packages/nitro-renderer/src/room/object/visualization/', import.meta.url);
 const { StackedAdditionStack } = loadFile(new URL('stacked/StackedAdditionStack.ts', root));

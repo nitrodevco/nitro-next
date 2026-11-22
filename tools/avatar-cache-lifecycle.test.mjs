@@ -2,9 +2,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 class AdvancedMap {
     values = new Map();
@@ -35,8 +34,6 @@ class RoomObjectSpriteVisualization {
 
 const load = () => {
     const source = readFileSync(new URL('../packages/nitro-renderer/src/room/object/visualization/avatar/AvatarVisualization.ts', import.meta.url), 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
     const dependencies = {
         '@nitrodevco/nitro-api': {
             AdvancedMap,
@@ -64,12 +61,9 @@ const load = () => {
         './AvatarVisualizationData': { AvatarVisualizationData: class {} },
     };
 
-    runInNewContext(outputText, {
-        exports,
-        require: (dependency) => {
-            assert.ok(Object.hasOwn(dependencies, dependency), `Unexpected dependency: ${dependency}`);
-            return dependencies[dependency];
-        },
+    const exports = loadModule(source, (dependency) => {
+        assert.ok(Object.hasOwn(dependencies, dependency), `Unexpected dependency: ${dependency}`);
+        return dependencies[dependency];
     });
 
     return exports.AvatarVisualization;

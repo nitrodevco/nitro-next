@@ -7,21 +7,17 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 const read = path => readFileSync(new URL(`../packages/${path}`, import.meta.url), 'utf8');
 
 const load = (path, dependencies = {}) => {
-    const outputText = transpile(read(`${path}.ts`));
-    const exports = {};
-
-    runInNewContext(outputText, { exports, Object, Array, Math, require: (name) => {
+    const exports = loadModule(read(`${path}.ts`), (name) => {
         assert.ok(Object.hasOwn(dependencies, name), `Unexpected dependency: ${name}`);
 
         return dependencies[name];
-    } });
+    }, { Object, Array, Math });
 
     return exports;
 };

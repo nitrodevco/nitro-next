@@ -2,19 +2,16 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
 import { Matrix, Point, Rectangle } from 'pixi.js';
 
-import { transpile } from './load-source.mjs';
+import { loadModule } from './load-source.mjs';
 
 const load = (source, dependencies) => {
-    const outputText = transpile(source);
-    const exports = {};
-    runInNewContext(outputText, { exports, window: { innerWidth: 800, innerHeight: 600, addEventListener() {}, removeEventListener() {} }, require: (name) => {
+    const exports = loadModule(source, (name) => {
         assert.ok(Object.hasOwn(dependencies, name), `Unexpected dependency: ${name}`);
         return dependencies[name];
-    } });
+    }, { window: { innerWidth: 800, innerHeight: 600, addEventListener() {}, removeEventListener() {} } });
     return exports;
 };
 const { Vector3d } = load(readFileSync(new URL('../packages/nitro-api/src/utils/Vector3d.ts', import.meta.url), 'utf8'), {});

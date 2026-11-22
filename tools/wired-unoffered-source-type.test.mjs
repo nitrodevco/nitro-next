@@ -5,39 +5,13 @@
  * resolve it to the picker's first option at `createForm`, so saving such a box sent furni.
  */
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
 const packets = new URL('../packages/nitro-packets/src/', import.meta.url);
-const cache = new Map();
-
 // Transpiled to CommonJS and run in a sandbox, as in wired-release-20261012.test.mjs.
-const loadFile = (url, external) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        if (name.startsWith('.')) {
-            const file = new URL(`${name}.ts`, url);
-
-            return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url), external);
-        }
-
-        assert.ok(Object.hasOwn(external, name), `Unexpected dependency: ${name}`);
-
-        return external[name];
-    } });
-
-    return exports;
-};
+const loadFile = createLoader();
 
 const packetFile = path => loadFile(new URL(path, packets), {});
 const external = {

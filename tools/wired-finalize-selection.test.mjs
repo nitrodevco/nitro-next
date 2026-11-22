@@ -1,42 +1,16 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
 // `VariablePickerPreset.finalizeSelection`: a box's `readVariableIds` sends a picked variable only
 // while the room's list still has it, and `WiredVariable.§_-7h§` ("n") otherwise - the p-code's
 // null branch, and what the official client sends (Variable Age ["n","n"], WIN63-202610121709).
 
 const packets = new URL('../packages/nitro-packets/src/', import.meta.url);
-const cache = new Map();
-
 // Transpiled to CommonJS and run in a sandbox; relative imports load the real sources, the packets
 // package is only the enums these modules use. Anything else is a dependency the test must name.
-const loadFile = (url, external) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        if (name.startsWith('.')) {
-            const file = new URL(`${name}.ts`, url);
-
-            return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url), external);
-        }
-
-        assert.ok(Object.hasOwn(external, name), `Unexpected dependency: ${name}`);
-
-        return external[name];
-    } });
-
-    return exports;
-};
+const loadFile = createLoader();
 
 const external = {
     // `WiredUtil` colours with it; nothing here reaches that.

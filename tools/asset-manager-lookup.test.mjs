@@ -4,14 +4,11 @@
  * collection's assets change, so a name is not looked for through every collection on every call.
  */
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
 const TextureUtils = { destroyTexture() {}, destroySource() {} };
-const cache = new Map();
 const external = {
     '@nitrodevco/nitro-api': { NitroLogger: { LOG_WARN: false, warn() {}, error() {}, log() {} } },
     '@pixi/gif': { AnimatedGIF: class {} },
@@ -21,27 +18,8 @@ const external = {
     './GraphicAssetPalette': { GraphicAssetPalette: class {} },
 };
 
-const loadFile = (url) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        if (Object.hasOwn(external, name)) return external[name];
-
-        assert.ok(name.startsWith('.'), `Unexpected dependency: ${name}`);
-
-        const file = new URL(`${name}.ts`, url);
-
-        return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url));
-    } });
-
-    return exports;
-};
+const loader = createLoader();
+const loadFile = url => loader(url, external);
 
 const { AssetManager } = loadFile(new URL('../packages/nitro-renderer/src/assets/AssetManager.ts', import.meta.url));
 

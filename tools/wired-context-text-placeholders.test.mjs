@@ -1,39 +1,13 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import { transpile } from './load-source.mjs';
+import { createLoader } from './load-source.mjs';
 
 // `WiredContext` section 7 (`TextPlaceholders`: placeholder names, then capturer names) arrives
 // with every Show Message / Bot Talk editor on WIN63-202610121624. A parser that skips an unknown
 // section without reading it misreads everything after the context, starting with defaultIntParams.
 
-const cache = new Map();
-
-const loadFile = (url, external) => {
-    if (cache.has(url.href)) return cache.get(url.href);
-
-    const source = readFileSync(url, 'utf8');
-    const outputText = transpile(source);
-    const exports = {};
-
-    cache.set(url.href, exports);
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        if (name.startsWith('.')) {
-            const file = new URL(`${name}.ts`, url);
-
-            return loadFile(existsSync(file) ? file : new URL(`${name}/index.ts`, url), external);
-        }
-
-        assert.ok(Object.hasOwn(external, name), `Unexpected dependency: ${name}`);
-
-        return external[name];
-    } });
-
-    return exports;
-};
+const loadFile = createLoader();
 
 const api = new URL('../packages/nitro-api/src/communication/', import.meta.url);
 const external = {
