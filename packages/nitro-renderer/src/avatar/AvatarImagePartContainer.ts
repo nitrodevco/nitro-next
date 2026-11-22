@@ -71,6 +71,11 @@ export class AvatarImagePartContainer {
         return (this.partId + ':' + frameNumber);
     }
 
+    /** How many frames the part cycles through: its frame (and cache key) repeats every this many. */
+    public get frameCount(): number {
+        return this._frames?.length ?? 0;
+    }
+
     public get bodyPartId(): string {
         return this._bodyPartId;
     }
