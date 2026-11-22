@@ -24,6 +24,12 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     private static MAX_IDLE_FRAMES: number = 8;
     private static MAX_OTHER_FRAMES: number = 4;
     private static IDLE_ACTION_STRINGS: string[] = [ AvatarActionStateType.Stand, AvatarActionStateType.Lay, AvatarActionStateType.Sit ];
+    /**
+     * The frames the full image cache has no key for that an avatar keeps (`_signatureFrames`): a talk,
+     * wave or dance repeats a few frames per direction (the longest dance 16), and a turned head or a
+     * walk under them multiplies that by a little.
+     */
+    private static MAX_SIGNATURE_FRAMES: number = 24;
     private static DEFAULT_FIGURE: string = 'hr-893-45.hd-180-2.ch-210-66.lg-270-82.sh-300-91.wa-2007-.ri-1-';
 
     protected _structure: AvatarStructure;
@@ -42,6 +48,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     protected _actions: ActiveActionData[];
     protected _canvasOffsets: number[] = [];
     protected _image: RenderTexture | undefined = undefined;
+    /** `_image` belongs to a cache (the full image cache or `_signatureFrames`), not to `_image`: never released or drawn over from there. */
     protected _isCachedImage: boolean = false;
     /** A view of `_image` without the empty rows above the figure. */
     protected _croppedTopImage: Texture | undefined = undefined;
@@ -53,6 +60,13 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
     private _fullImageCache: Map<string, AvatarImageCachedFullImage> = new Map();
     /** The cached frames by what they are made of (`getImageInternal`): one texture for the same picture under several keys. */
     private _fullImageBySignature: Map<string, AvatarImageCachedFullImage> = new Map();
+    /**
+     * The frames the full image cache has no key for (a talk, a dance, a turned head), by signature,
+     * least recently shown first: their textures are owned here alone - a key that takes one over
+     * takes it out - and go back to the pool past `MAX_SIGNATURE_FRAMES`. Per image, even where the
+     * full image cache is shared (`PlaceHolderAvatarImage`).
+     */
+    private _signatureFrames: Map<string, AvatarImageCachedFullImage> = new Map();
     private static readonly _objectIds = new WeakMap<object, number>();
     private static readonly _partSignatures = new WeakMap<Container, string>();
     private static _nextObjectId = 1;
@@ -138,6 +152,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         if (this._cache) this._cache.dispose();
 
         this.disposeFullImageCache();
+        this.disposeSignatureFrames();
 
         this._disposed = true;
 
@@ -149,6 +164,7 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         if (this._cache) this._cache.reset();
 
         this.disposeFullImageCache();
+        this.disposeSignatureFrames();
 
         this._cachedBodyParts = [];
         this._cachedBodyPartsDirection = -1;
@@ -238,18 +254,10 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         if (cacheKey) {
             const cached = this.getFullImage(cacheKey);
 
-            if (cached) {
-                this._changes = false;
-
-                // The view is kept while it frames the same pixels (`getCroppedTopImage`): an idle
-                // avatar comes back to the frame it shows on every animation tick, and a new view of
-                // it would be a texture change - a redraw of the room - twelve times a second.
-                this._topCropY = Math.max(0, cached.topCropY);
-                this._image = cached.texture;
-                this._isCachedImage = true;
-
-                return croppedTop ? this.getCroppedTopImage() : this._image;
-            }
+            // The view is kept while it frames the same pixels (`getCroppedTopImage`): an idle
+            // avatar comes back to the frame it shows on every animation tick, and a new view of
+            // it would be a texture change - a redraw of the room - twelve times a second.
+            if (cached) return this.showCachedImage(cached, croppedTop);
         }
 
         const avatarCanvas = this._structure.getCanvas(this._scale, this._mainAction.definition.geometryType);
@@ -289,35 +297,28 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         this.endSetContainer(container);
 
         /*
-         * The idle cycle's eight cache keys, and an animation's held frames, are mostly the same
-         * picture: frames built from the same part images in the same places share one cached
-         * texture rather than each drawing its own copy. The sprite then keeps its texture, and
-         * an idle avatar stops redrawing the room every animation tick.
+         * Frames built from the same part images in the same places share one texture, drawn once.
+         * The idle cycle's eight cache keys and an animation's held frames are mostly the same
+         * picture, and what the full image cache has no key for - a talk, a dance, a turned head -
+         * repeats a few frames: the sprite keeps to those textures (an idle avatar stops redrawing
+         * the room every animation tick), and an animating one draws no frame twice. A part that
+         * is not ready yet (`isCachable`) or a reduced image is drawn in place every time.
          */
-        if (cacheKey && isCachable && (scale === 1)) {
-            const same = this._fullImageBySignature.get(signature);
+        const keepsFrame = isCachable && (scale === 1);
 
-            if (same && !same.texture.destroyed) {
-                this._fullImageCache.set(cacheKey, same);
+        if (keepsFrame) {
+            const same = this.getFrameBySignature(signature, cacheKey);
 
-                if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
-
-                this._image = same.texture;
-                this._isCachedImage = true;
-                this._topCropY = same.topCropY;
-                this._changes = false;
-
-                return croppedTop ? this.getCroppedTopImage() : this._image;
-            }
+            if (same) return this.showCachedImage(same, croppedTop);
         }
 
         this.disposeCroppedTopImage();
 
         this._topCropY = (topY === avatarCanvas.height) ? 0 : Math.max(0, Math.min((avatarCanvas.height - 1), topY));
 
-        // A frame that goes into the full image cache is drawn once, straight into its cache
-        // texture, and shown from there - what the next request for it gets anyway.
-        const cachedImage = (cacheKey && isCachable && (scale === 1)) ? TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height) : undefined;
+        // A frame that is kept is drawn once, straight into the texture it is kept in, and shown
+        // from there - what the next request for it gets anyway.
+        const cachedImage = keepsFrame ? TexturePool.createRenderTexture(avatarCanvas.width, avatarCanvas.height) : undefined;
 
         if (cachedImage) {
             if (this._image && !this._isCachedImage) TexturePool.releaseTexture(this._image);
@@ -344,15 +345,21 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
         // What was drawn, for a hit test to rebuild its alpha from without reading the GPU back.
         this._hitAlpha.capture(container);
 
-        if (cachedImage && cacheKey) {
+        if (cachedImage) {
+            // Its own copy: `_hitAlpha` is captured again for whatever is drawn next.
             AvatarImage.provideHitAlpha(cachedImage, this._hitAlpha.clone(), 1);
-            this.cacheFullImage(cacheKey, cachedImage, this._topCropY);
 
-            const entry = this.getFullImage(cacheKey);
+            if (cacheKey) {
+                this.cacheFullImage(cacheKey, cachedImage, this._topCropY);
 
-            if (entry) this._fullImageBySignature.set(signature, entry);
+                const entry = this.getFullImage(cacheKey);
+
+                if (entry) this._fullImageBySignature.set(signature, entry);
+            } else {
+                this.keepSignatureFrame(signature, { texture: cachedImage, topCropY: this._topCropY });
+            }
         } else {
-            // Drawn again in place for an action the cache leaves out (a dance, talking, a turned head): the last frame's alpha is stale.
+            // Drawn again in place (a part not ready yet, a reduced image): the last frame's alpha is stale.
             ExtendedSprite.removeHitmap(this._image.source);
             AvatarImage.provideHitAlpha(this._image, this._hitAlpha, 1);
 
@@ -915,6 +922,74 @@ export class AvatarImage implements IAvatarImage, IAvatarEffectListener {
 
         this._fullImageCache.clear();
         this._fullImageBySignature.clear();
+    }
+
+    /** Shows a frame a cache owns; an image `_image` owned (drawn in place) goes back to the pool. */
+    private showCachedImage(image: AvatarImageCachedFullImage, croppedTop: boolean): Texture | undefined {
+        if (this._image && !this._isCachedImage && (this._image !== image.texture)) TexturePool.releaseTexture(this._image);
+
+        this._image = image.texture;
+        this._isCachedImage = true;
+        this._topCropY = Math.max(0, image.topCropY);
+        this._changes = false;
+
+        return croppedTop ? this.getCroppedTopImage() : this._image;
+    }
+
+    /**
+     * The frame already drawn from the same parts, if any: one the full image cache keeps (now
+     * under `cacheKey` too), or a key-less frame - which a key takes over rather than drawing its
+     * own copy, and which otherwise becomes the most recently shown.
+     */
+    private getFrameBySignature(signature: string, cacheKey: string | undefined): AvatarImageCachedFullImage | undefined {
+        const keyed = this._fullImageBySignature.get(signature);
+
+        if (keyed && !keyed.texture.destroyed) {
+            if (cacheKey) this._fullImageCache.set(cacheKey, keyed);
+
+            return keyed;
+        }
+
+        const frame = this._signatureFrames.get(signature);
+
+        if (!frame || frame.texture.destroyed) return undefined;
+
+        // Last in the map's order is the most recently shown.
+        this._signatureFrames.delete(signature);
+
+        if (!cacheKey) {
+            this._signatureFrames.set(signature, frame);
+
+            return frame;
+        }
+
+        this.cacheFullImage(cacheKey, frame.texture, frame.topCropY);
+
+        const entry = this.getFullImage(cacheKey);
+
+        if (entry) this._fullImageBySignature.set(signature, entry);
+
+        return frame;
+    }
+
+    /** Keeps a key-less frame just drawn (and shown); the least recently shown past the bound goes back to the pool. */
+    private keepSignatureFrame(signature: string, image: AvatarImageCachedFullImage): void {
+        this._signatureFrames.set(signature, image);
+
+        // The frame just added is last, so the one let go is never the frame shown.
+        for (const [ oldest, frame ] of this._signatureFrames) {
+            if (this._signatureFrames.size <= AvatarImage.MAX_SIGNATURE_FRAMES) break;
+
+            this._signatureFrames.delete(oldest);
+            TexturePool.releaseTexture(frame.texture);
+        }
+    }
+
+    /** Beside `disposeFullImageCache`, which an image sharing its full image cache overrides: the key-less frames are always this image's own. */
+    private disposeSignatureFrames(): void {
+        for (const frame of this._signatureFrames.values()) TexturePool.releaseTexture(frame.texture);
+
+        this._signatureFrames.clear();
     }
 
     /**
