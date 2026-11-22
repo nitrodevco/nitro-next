@@ -261,9 +261,8 @@ export class RoomPlaneParser {
             while (index < data.holeMap.length) {
                 const hole = data.holeMap[index];
 
-                if (!hole) continue;
-
-                this.addFloorHole(hole.id, hole.x, hole.y, hole.width, hole.height, hole.invert);
+                // Past an empty slot too: without the step the loop never ends.
+                if (hole) this.addFloorHole(hole.id, hole.x, hole.y, hole.width, hole.height, hole.invert);
 
                 index++;
             }
