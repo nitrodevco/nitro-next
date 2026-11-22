@@ -10,7 +10,7 @@ import {
 } from '@nitrodevco/nitro-api';
 import { Container, Filter, ImageLike, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 
-import { TextureUtils } from '../../../utils';
+import { DarknessToAlphaFilter, TextureUtils } from '../../../utils';
 import { RoomObjectSprite } from './RoomObjectSprite';
 
 /** Port of Flash `RoomObjectSpriteVisualization`. */
@@ -106,7 +106,7 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
 
         const image = await TextureUtils.generateImage({ target: container });
 
-        container.destroy({ children: true });
+        RoomObjectSpriteVisualization.destroyImageContainer(container);
 
         return image;
     }
@@ -118,11 +118,28 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
 
         const texture = TextureUtils.generateTexture({ target: container });
 
-        container.destroy({ children: true });
+        RoomObjectSpriteVisualization.destroyImageContainer(container);
 
         return texture;
     }
 
+    /** The image's sprites, and the darkness-to-alpha filters made for them - the sprites' own filters are the visualization's. */
+    private static destroyImageContainer(container: Container): void {
+        for (const child of container.children) {
+            for (const filter of child.filters ?? []) {
+                if (filter instanceof DarknessToAlphaFilter) filter.destroy();
+            }
+        }
+
+        container.destroy({ children: true });
+    }
+
+    /**
+     * Flash `getImage` with no background colour, the only kind asked for here: the visible sprites
+     * back to front, each with its colour transform and blend mode. An `add` sprite's bitmap went
+     * through `extractDarknessToAlpha` first - its black would otherwise show as a box over the
+     * image's transparent pixels - which `DarknessToAlphaFilter` does, colour transform included.
+     */
     private buildImageContainer(): Container | undefined {
         const boundingRectangle = this.getBoundingRectangle();
 
@@ -154,12 +171,21 @@ export class RoomObjectSpriteVisualization implements IRoomObjectSpriteVisualiza
             if (texture) {
                 const sprite = new Sprite(texture);
 
-                sprite.alpha = objectSprite.alpha / 255;
-                sprite.tint = objectSprite.color;
                 sprite.x = objectSprite.offsetX;
                 sprite.y = objectSprite.offsetY;
-                sprite.blendMode = objectSprite.blendMode;
-                sprite.filters = objectSprite.filters;
+
+                if (objectSprite.blendMode === 'add') {
+                    // The filter tints, fades and adds its result; the sprite goes into it as it is.
+                    const darknessToAlpha = new DarknessToAlphaFilter();
+
+                    darknessToAlpha.setColorTransform(objectSprite.color, objectSprite.alpha / 255);
+                    sprite.filters = [ ...objectSprite.filters, darknessToAlpha ];
+                } else {
+                    sprite.alpha = objectSprite.alpha / 255;
+                    sprite.tint = objectSprite.color;
+                    sprite.blendMode = objectSprite.blendMode;
+                    sprite.filters = objectSprite.filters;
+                }
 
                 if (objectSprite.flipH) sprite.scale.x = -1;
 

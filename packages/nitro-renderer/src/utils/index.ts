@@ -1,3 +1,4 @@
+export * from './DarknessToAlphaFilter';
 export * from './ExtendedSprite';
 export * from './flash-filters';
 export * from './GetRenderer';
