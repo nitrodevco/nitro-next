@@ -1,15 +1,13 @@
 # Nitro and Turbo development
 
-Use this guide when a feature spans the client and server, a packet does not behave as expected,
-or a live check needs server support. Turbo is the emulator used for development. Read the target
-Turbo checkout's `AGENTS.md` and the relevant parts of `CONTEXT.md` before changing server code;
-those files own its architecture and contribution rules.
+Read the target Turbo checkout's `AGENTS.md` and the relevant parts of `CONTEXT.md` before
+changing server code; they own its architecture and contribution rules.
 
 ## Keep the environments aligned
 
-Keep Nitro and Turbo as separate Git checkouts. Record both branches and commit IDs for a joint
-change, including any uncommitted dependencies. A passing mixed WIP is not proof that either PR
-works independently. Use each developer's own checkout locations; no shared absolute path is needed.
+Keep Nitro and Turbo as separate Git checkouts, at each developer's own locations. For a joint
+change, record both branches and commit IDs, including uncommitted dependencies; a passing mixed
+WIP does not prove that either PR works on its own.
 
 | Contract | Nitro side | Turbo side |
 | --- | --- | --- |
@@ -22,48 +20,48 @@ works independently. Use each developer's own checkout locations; no shared abso
 The inspected revision is `WIN63-202609091217-117204808`, implemented under
 `Turbo.Revisions/Revision20260909/`. Confirm the current registration when changing revisions;
 updating the client's version string alone does not update packet headers or payload layouts.
-Keep asset imports, configuration and database definitions consistent with the fixture being tested.
-See [Nitro Studio workflow](nitro-studio.md) for workspace and version management.
+Keep asset imports, configuration and database definitions consistent with the tested fixture;
+see [Nitro Studio workflow](nitro-studio.md) for workspaces and versions.
 
 ## Start the development environment
 
-From the Turbo root, install the SDK selected by `global.json` and follow its README for MySQL setup.
-Bootstrap once using the shell available on your machine:
+From the Turbo root, install the SDK selected by `global.json`, follow its README for MySQL
+setup, and bootstrap once:
 
 ```powershell
 pwsh -File scripts/bootstrap.ps1
 ```
 
 For bash, use `sh scripts/bootstrap.sh`. Bootstrap configures Git hooks, creates local settings if
-absent, and builds the host. Configure `Turbo:Database:ConnectionString` in the ignored
-`appsettings.Development.json` for your development database. Keep credentials out of shared files.
-Set the WebSocket listener for your environment, then start Turbo from its root:
+absent, and builds the host. Set `Turbo:Database:ConnectionString` for your development database
+in the ignored `appsettings.Development.json` (credentials stay out of shared files) and the
+WebSocket listener for your environment, then start Turbo from its root:
 
 ```powershell
 $env:DOTNET_ENVIRONMENT = 'Development'
 dotnet run --project Turbo.Main/Turbo.Main.csproj
 ```
 
-The bash equivalent is `DOTNET_ENVIRONMENT=Development dotnet run --project Turbo.Main/Turbo.Main.csproj`.
-Use the project-scoped command; the solution may include other projects that are not needed for
-core server work. Check startup logs for the loaded configuration and registered revision.
+In bash: `DOTNET_ENVIRONMENT=Development dotnet run --project Turbo.Main/Turbo.Main.csproj`.
+Use the project-scoped command; the solution may include projects core server work does not need.
+Check startup logs for the loaded configuration and registered revision.
 
-In another terminal, start the client as in [Development setup](development.md) and open Vite's
-printed URL. Point the loaded Nitro `socket.url` at Turbo's WebSocket listener, not its
-TCP or Orleans gateway port. Use the browser-reachable hostname and port; a listener bind address
-such as `0.0.0.0` is not the URL to give the client. Match `ws`/`wss` to the configured endpoint.
-Keep developer-specific endpoint changes out of unrelated feature PRs.
+In another terminal, start the client as in [Development setup](development.md). Point the
+loaded Nitro `socket.url` at Turbo's WebSocket listener, not its TCP or Orleans gateway port,
+using the browser-reachable hostname and port (a bind address such as `0.0.0.0` is not one) and
+the `ws`/`wss` scheme of the configured endpoint. Keep developer-specific endpoint changes out
+of unrelated feature PRs.
 
-Obtain a fresh ticket through the development hotel's authentication workflow and open the client
-with `?sso=<ticket>` (or append `&sso=<ticket>` to an existing query). Nitro sends the configured
-revision in `ClientHelloComposer` before the SSO packet. The inspected Turbo authentication service
-looks up `SecurityTickets` and consumes unlocked tickets, so reusing a consumed ticket can fail.
-The ticket-issuing workflow is environment-specific; this guide does not assume a ticket API or CLI.
-Do not copy live tickets into documentation, logs, screenshots or PRs.
+Open the client with a fresh ticket from the development hotel's authentication workflow as
+`?sso=<ticket>` (or `&sso=<ticket>` after an existing query). Nitro sends the configured revision
+in `ClientHelloComposer` before the SSO packet. The inspected Turbo authentication service looks
+up `SecurityTickets` and consumes unlocked tickets, so a reused ticket can fail. Ticket issuing is
+environment-specific; this guide assumes no ticket API or CLI. Do not copy live tickets into
+documentation, logs, screenshots or PRs.
 
 ## Trace a feature across the boundary
 
-Directions are named from the perspective of each repository:
+Directions are named from each repository's perspective:
 
 | Flow | Nitro | Turbo |
 | --- | --- | --- |
@@ -71,20 +69,21 @@ Directions are named from the perspective of each repository:
 | Server response | `nitro-packets/src/incoming/` and `GetIncomingPackets.ts` → React handler → store → view | Domain/grain → composer in `Turbo.Primitives/Messages/Outgoing/` → revision `Serializers/` |
 | Header registration | Packet header maps and `Get*Packets.ts` registries | Revision `Headers.cs` and `Revision<id>.cs` mappings |
 
-In this checkout, `Turbo.Main` references `Turbo.Revisions` directly. Protocol parser/serializer code
-belongs there. Older revision documentation may refer to an external plugin; follow the compiled
-project references and the current Turbo coding contract when determining ownership.
+In this checkout, `Turbo.Main` references `Turbo.Revisions` directly, and protocol
+parser/serializer code belongs there. Older revision documentation may refer to an external
+plugin; decide ownership by the compiled project references and the current Turbo coding contract.
 
 For each changed exchange, record the header, ordered field types, array counts, optional tails,
-units, trigger and expected state transition. AS3 decides the behavior; compare both sides before
-changing a parser to tolerate unexpected server data. A registered packet with no consumer is still
-an incomplete feature. Check permissions, configuration gates and failure responses as well as the
+units, trigger and expected state transition. Compare both sides against AS3 before changing a
+parser to tolerate unexpected server data. A registered packet with no consumer is still an
+incomplete feature. Check permissions, configuration gates and failure responses as well as the
 successful path. See [packet conventions](packets.md). [Server gaps](server-gaps.md) lists the
 exchanges the client implements that Turbo does not answer yet (`node tools/server-gaps.mjs`).
 
-Keep Turbo handlers focused on orchestration. Domain/grain code owns runtime state and persistence;
-do not update database rows directly to bypass grain-owned state. Keep client-specific display logic
-in Nitro. Check Turbo's architecture contract for the relevant domain before implementing a fix.
+Keep Turbo handlers focused on orchestration. Domain/grain code owns runtime state and
+persistence; do not update database rows directly to bypass it. Keep client-specific display
+logic in Nitro. Check Turbo's architecture contract for the relevant domain before implementing
+a fix.
 
 ## Turbo protocol extensions
 
@@ -98,42 +97,44 @@ and the client never asks. An extension's packets are taken only once the server
 so a server using the same headers for something else cannot feed them in. Turbo's
 `docs/client-capabilities.md` owns the wire format.
 
-The first two. `chat.commands.v2` gives the chat input Turbo's command tree and its
-suggestions (`TurboCommandTreeMessage` 30002, `TurboCommandSuggestComposer` 30003,
-`TurboCommandSuggestionsMessage` 30004, into `UserChatCommandsSlice`). `permission.nodes`: Turbo sends the user's client-facing permission
-nodes (`TurboPermissionNodesMessage`, 30001) after `UserRights` and on every change, into
-`userStore.permissionNodes`. Every security-level check goes through a `ClientGates` entry
-(`src/context/user/gates/ClientGate.ts`) and `useClientGate` / `hasClientGate`: the gate asks its
-node when the store has nodes, and the Flash `hasSecurity` level otherwise. Add a new staff-only
-feature as a gate there, with the Flash level it ports and the Turbo node behind it - never as a
-bare `securityLevel` comparison - and register the node in Turbo with the same client level.
+`chat.commands.v2` gives the chat input Turbo's command tree and its suggestions
+(`TurboCommandTreeMessage` 30002, `TurboCommandSuggestComposer` 30003,
+`TurboCommandSuggestionsMessage` 30004, into `UserChatCommandsSlice`). `permission.nodes`: Turbo
+sends the user's client-facing permission nodes (`TurboPermissionNodesMessage`, 30001) after
+`UserRights` and on every change, into `userStore.permissionNodes`. Every security-level check
+goes through a `ClientGates` entry (`src/context/user/gates/ClientGate.ts`) and `useClientGate` /
+`hasClientGate`: the gate asks its node when the store has nodes, and the Flash `hasSecurity`
+level otherwise. Add a new staff-only feature as a gate there, with the Flash level it ports and
+the Turbo node behind it - never as a bare `securityLevel` comparison - and register the node in
+Turbo with the same client level.
 
 `client.modules` names the JavaScript modules a server's plugins ship (`TurboClientModulesMessage`,
 30009), which the client loads and hands its module API: see [Client modules](client-modules.md).
 
 ## Verify the complete change
 
-Run Nitro's applicable [code gates](../AGENTS.md) and focused regressions. For Turbo code changes,
-its required checks are run from the Turbo root:
+Run Nitro's [code gates](../AGENTS.md) and focused regressions. For Turbo code changes, run its
+required checks from the Turbo root:
 
 ```sh
 dotnet build Turbo.Main/Turbo.Main.csproj -t:TurboCloudFastCheck
 dotnet build Turbo.Main/Turbo.Main.csproj -t:TurboCloudQualityGate
 ```
 
-These are build/format/analyzer gates, not evidence that a gameplay exchange works. Check the target
-checkout's instructions for additional domain verification. Do not run database migrations or alter
-a shared fixture just to get a check green without the appropriate authorization.
+These are build/format/analyzer gates, not evidence that a gameplay exchange works; the target
+checkout's instructions name any further domain verification. Do not run database migrations or
+alter a shared fixture to get a check green without the appropriate authorization.
 
-For a joint feature, verify the actual request/response on a dedicated development account and room.
-Exercise one relevant failure or permission case and lifecycle behavior such as leaving/re-entering
-a room or reconnecting. If persistence is part of the change, check it through the supported lifecycle.
-Packet injection isolates client handling; it does not prove Turbo emits the right response.
-For rendering changes, also use [renderer verification](renderer-parity.md).
+For a joint feature, verify the actual request/response on a dedicated development account and
+room. Exercise one relevant failure or permission case and lifecycle behavior such as
+leaving/re-entering a room or reconnecting; check persistence, if the change has it, through the
+supported lifecycle. Packet injection isolates client handling; it does not prove Turbo emits
+the right response. For rendering changes, also use [renderer verification](renderer-parity.md).
 
-Batch server changes before restarting the development host, then reconnect Nitro with a fresh ticket
-as needed. Do not terminate an unidentified process. Record which commits and fixture were actually
-running. Keep diagnostic reports under ignored `tmp/`, with credentials and personal data removed.
+Batch server changes before restarting the development host, then reconnect Nitro with a fresh
+ticket as needed. Do not terminate an unidentified process. Record which commits and fixture were
+actually running. Keep diagnostic reports under ignored `tmp/`, with credentials and personal data
+removed.
 
 ## Diagnose the failing layer
 
@@ -149,6 +150,6 @@ running. Keep diagnostic reports under ignored `tmp/`, with credentials and pers
 ## Cross-repository handoff
 
 Include the two commit IDs, dependent PRs and merge order, changed packet/configuration contracts,
-any database or asset prerequisites, fixture setup, checks run and remaining gaps. State whether either
-side remains compatible on its own. Keep machine-specific checkout locations and live session details
-in local task notes rather than the shared guide.
+any database or asset prerequisites, fixture setup, checks run and remaining gaps. State whether
+either side remains compatible on its own. Keep machine-specific checkout locations and live
+session details in local task notes.

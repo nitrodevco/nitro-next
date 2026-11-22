@@ -1,20 +1,20 @@
 # Porting gotchas
 
-Traps that cost a retry, each hit at least once. Read this before building a view; add to it when
-a new one costs you time. Rules with a longer story live in the other guides in `docs/`; this is the short list.
+Traps that have each cost a retry. Read this before building a view; add to it when a new one
+costs you time. Rules with a longer story live in the other guides in `docs/`.
 
 ## Theme
 
 - **`display: 'none'` does not hide a theme `Icon`** - it drops the icon's position and draws it at
   the parent's corner. Render it conditionally (`{cond && <Icon ... />}`).
 - **Insets alone do not size a leaf**: one without a texture stays 1x1 (`left: 0, right: 0,
-  height: 1` on a `ColorLayer` draws one pixel, not a line - `TextInput`'s `border` drew four
-  corner dots in every window), and a textured one keeps its texture's size. State the length too -
+  height: 1` on a `ColorLayer` draws one pixel, not a line; `TextInput`'s `border` once drew four
+  corner dots), and a textured one keeps its texture's size. State the length too -
   `width: '100%'` - as `FillLayout` does; see [Client conventions](client-conventions.md).
 - **`Box` lays out in a row by default.** A bubble with an arrow under it needs
   `flexDirection: 'column'`.
 - **Check the component's props before adding diagnostic labels.** Named-control browser
-  diagnostics require matching UI instrumentation; optional tooling may not be in your branch.
+  diagnostics need matching UI instrumentation, which may not be in your branch.
 - **A Flash `TextFieldManager` hint is real text**, in the field's normal colour, cleared on focus -
   not a grey `placeholder`. See `NavigatorRoomCreateView`'s name and description fields.
 - **Config booleans go through `useConfigValue<boolean>(key) === true`**, and the key must be in
@@ -34,9 +34,9 @@ a new one costs you time. Rules with a longer story live in the other guides in 
   `guardLayoutViewSizes` (theme `utils/layoutViewSizeGuard.ts`) prevents it; dump `getWindowLayer()`
   sizes before suspecting the art.
 - **A `Frame` opens at its layout's position**: pass `defaultPosition` from the layout's root
-  container (the messenger's is (120, 120)); without it the window opens in the top-left corner.
+  container (the messenger's is (120, 120)), or the window opens in the top-left corner.
 - **Check the available scrolling API.** `scrollResetKey` resets to the start. Chat auto-scroll
-  belongs with the messenger implementation; do not assume a separate WIP branch's props exist.
+  belongs with the messenger implementation; do not assume a WIP branch's props exist.
 
 ## Reference material
 
@@ -60,16 +60,17 @@ a new one costs you time. Rules with a longer story live in the other guides in 
 Local Jev and `live-check` helpers are optional; confirm availability before using these commands.
 
 - **Asset changes need a bundle rebuild.** If the builder or source resources are unavailable,
-  obtain the prerequisites before claiming the change works. Do not add a URL fallback for bundled
-  assets to work around a missing local tool. See [Asset bundles](asset-bundles.md).
+  obtain them before claiming the change works; do not add a URL fallback for bundled assets to
+  work around a missing local tool. See [Asset bundles](asset-bundles.md).
 - **Windows:** Python text mode writes CRLF (`newline=''`); global `yarn` may be v1 (`corepack
   yarn`, or `node scripts/...`); Git Bash heredocs break on backticks and `${}` - write a script
   file, or edit with the editor tools.
 - **`jev.mjs invented` on a shared file** (a `register*Handlers.ts`) reads the other listeners as
   invention: pass `file:from-to` for your part.
-- **`live-check inject <Packet> '[values]'`** delivers a server packet through the real parser and
-  listeners. The client has no injection hook of its own; without `live-check`, write the frame to
-  the socket as [Server gaps](server-gaps.md#checking-a-client-feature-without-the-server) describes.
+- **`live-check inject <Packet> '[values]'`** delivers a server packet through the real parser
+  and listeners. The client has no injection hook of its own; without `live-check`, write the frame
+  to the socket as [Server gaps](server-gaps.md#checking-a-client-feature-without-the-server)
+  describes.
 - **Tests that load modules in a `vm`**: arrays and objects from the sandbox are another realm, so
   `deepEqual` fails on identical values - spread them (`[ ...items ]`) before comparing.
 - **Find controls by name, not by screenshot**: `live-check find <name>`, `click --name`,
@@ -77,8 +78,8 @@ Local Jev and `live-check` helpers are optional; confirm availability before usi
 
 ## Room camera and display transforms
 
-Source revision: `WIN63-202609091217-117204808`. Recheck after a revision change. The names below are
-Flash's; the port's camera is nitro-react's `useRoomCamera` over nitro-renderer's
+Source revision: `WIN63-202609091217-117204808`; recheck after a revision change. The names below
+are Flash's; the port's camera is nitro-react's `useRoomCamera` over nitro-renderer's
 `RoomSpriteCanvas.setTransform`.
 
 - **Read branch getters.** `RoomEngine.useOffsetScrolling` returns literal `true`; the alternative
@@ -91,8 +92,8 @@ Flash's; the port's camera is nitro-react's `useRoomCamera` over nitro-renderer'
 - **Following needs initialization and current state.** `RoomEngine.setOwnUserId` assigns the
   camera target; `RoomCamera.targetObjectLoc` copies coordinates. A retained mutable vector hides
   later movement. A React ticker must see the latest committed callback after identity arrives.
-  In the installed Pixi reconciler used during this investigation, `useEffectEvent` failed at
-  runtime despite typechecking; verify runtime support before adopting it.
+  `useEffectEvent` typechecked but failed at runtime in the Pixi reconciler installed at the time;
+  verify runtime support before adopting it.
 - **Dimensions have different meanings.** AS3 `RoomSpriteCanvas.width/height` include `_scale`;
   Nitro exposes unscaled dimensions. `RoomEngine.updateRoomCamera` saves full canvas dimensions
   before shrinking its tracking rectangle. Carry units through comparisons and normalization.

@@ -15,13 +15,13 @@ substituting another extraction; similarly named layouts from another build are 
 
 ## Open the actual flow first
 
-Start Nitro, authenticate against your development server, then use **Me → My Profile**. This requests
-the real profile, badge and relationship packets through the registered handlers.
-The profile is available without entering a room.
+Start Nitro, authenticate against your development server, then use **Me → My Profile** (no room
+needed). This requests the real profile, badge and relationship packets through the registered
+handlers.
 
-Leave `renderer.color.space` empty (sRGB) for Flash comparisons; only `display-p3` changes it, and
-that configuration changes the appearance of the same RGB artwork.
-Refresh the page after changing it; the renderer reads it at startup.
+Leave `renderer.color.space` empty (sRGB) for Flash comparisons; only `display-p3` changes it,
+and that changes the appearance of the same RGB artwork. The renderer reads it at startup, so
+refresh the page after changing it.
 
 ## Repeatable visual states
 
@@ -34,13 +34,13 @@ agent-browser --session nitro eval -b $fixture
 agent-browser --session nitro screenshot populated.png
 ```
 
-Use `empty`, `private`, `blocked` or `restore` in place of `populated`. The base64 form
-avoids the Windows npm shim losing piped stdin. These previews replace browser state
-only. Reloading or `restore` restores server-provided data. Restore before testing
-server actions; the populated preview uses synthetic negative group IDs.
+Use `empty`, `private`, `blocked` or `restore` in place of `populated`. The base64 form avoids
+the Windows npm shim losing piped stdin. These previews replace browser state only; reloading or
+`restore` brings back server-provided data. Restore before testing server actions, since the
+populated preview uses synthetic negative group IDs.
 
-Populated uses the current user's badge images as group placeholders to exercise
-layout and image sizes. It is not an official-Habbo screenshot baseline or a packet test.
+Populated uses the current user's badge images as group placeholders to exercise layout and image
+sizes. It is not an official-Habbo screenshot baseline or a packet test.
 
 Inspect these source contracts:
 
@@ -56,9 +56,9 @@ Inspect these source contracts:
 - Private profiles hide the group section; blocked profiles cover the body with the
   translucent overlay, message panel and 2× Frank image while leaving Close usable.
 
-Compare a reference and Nitro at the same device scale and profile state. Align
-window bounds before comparing pixels. Do not automatically accept a new screenshot
-as a baseline: these previews support inspection, not an assertion of pixel equality.
+Compare a reference and Nitro at the same device scale and profile state, with window bounds
+aligned before comparing pixels. Do not automatically accept a new screenshot as a baseline: these
+previews support inspection, not an assertion of pixel equality.
 
 ## Socket/parser/handler regression checks
 
@@ -75,32 +75,29 @@ window.WebSocket = class extends WebSocket {
 };
 ```
 
-Authenticate normally, then execute:
+Authenticate, then run:
 
 ```powershell
 $checks = node tools/profile-packet-check.mjs --base64
 agent-browser --session nitro eval -b $checks
 ```
 
-The check delivers version-specific binary fixtures to the real socket receiver.
-It asserts complete parser consumption, registered composers, follow-up requests,
-other-user switching, rejection of stale badge/relationship responses, private and
-non-opening responses, refresh gating, and block/unblock response handling.
-During synchronous replay outbound messages are captured, not transmitted. Stores,
-the socket send method and parser are restored in `finally`.
+The check delivers version-specific binary fixtures to the real socket receiver. It asserts
+complete parser consumption, registered composers, follow-up requests, other-user switching,
+rejection of stale badge/relationship responses, private and non-opening responses, refresh
+gating, and block/unblock response handling. During synchronous replay, outbound messages are
+captured, not transmitted. Stores, the socket send method and parser are restored in `finally`.
 
-Run with `--known-broken-parser --base64` to reproduce the original empty parser;
-the wire assertion must fail. This is a negative control, not a full old-revision run.
-These checks establish client behaviour; server persistence and group actions still
-require a server implementing those flows and appropriate test accounts.
+Run with `--known-broken-parser --base64` to reproduce the original empty parser; the wire
+assertion must fail. This is a negative control, not a full old-revision run. These checks
+establish client behaviour; server persistence and group actions still require a server
+implementing those flows and appropriate test accounts.
 
 ## Configuration scope
 
-The contribution preserves the repository's badge host and socket configuration.
-Any development server address, ticket or badge host override belongs in the local
-launch URL, never in the PR. The sRGB renderer default is an intentional shared
-rendering correction: the supplied skin bitmap RGB values are sRGB; interpreting
-those values as Display P3 changes their appearance. It affects all windows, not
-only profiles. Inspect existing windows as well when reviewing that change.
-`image.library.questing.url` uses the official case-sensitive `Quests/` asset path
-for the profile's group-list tiles.
+The contribution preserves the repository's badge host and socket configuration. Any development
+server address, ticket or badge host override belongs in the local launch URL, never in the PR.
+The sRGB renderer default is an intentional shared rendering correction, since the supplied skin
+bitmap RGB values are sRGB. It affects all windows, not only profiles; inspect existing windows as
+well when reviewing that change. `image.library.questing.url` uses the official case-sensitive
+`Quests/` asset path for the profile's group-list tiles.

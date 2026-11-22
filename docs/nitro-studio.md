@@ -7,11 +7,11 @@ is separate from the client runtime's `AssetManager`, which loads textures and b
 client runs.
 
 The application is its own git repository, checked out at `packages/nitro-studio` (this repository
-ignores that folder). There it stays a Yarn workspace of this repository: `@nitrodevco/nitro-api`,
-`@nitrodevco/nitro-renderer` and `@nitrodevco/nitro-theme` resolve as workspace packages. Run
-`yarn install` from this repository's root after checking it out, then follow its README to run it.
-Preserve this workflow even when the application is not installed in the client developer's
-environment. Do not assume that a missing local installation means the tool is obsolete.
+ignores that folder), where it is still a Yarn workspace of this repository:
+`@nitrodevco/nitro-api`, `@nitrodevco/nitro-renderer` and `@nitrodevco/nitro-theme` resolve as
+workspace packages. After checking it out, run `yarn install` from this repository's root, then
+follow its README to run it. Preserve this workflow even when the application is not installed
+locally; a missing local installation does not mean the tool is obsolete.
 
 ## Application structure
 
@@ -27,10 +27,10 @@ the Studio's `shared/layout.ts` maps each folder to its `nitro-config.json` key)
 ## Gamedata and localization
 
 - The server scans the hotel and its client releases on its own. After a client revision bump,
-  open the workspace's Habbo page (Workspace > Habbo) and import what the latest scan and client
-  release bring: furniture and the rest, texts, the UI theme, images, chat styles, effect icons
-  and client data (the room content and placeholder libraries, default localizations, avatar
-  animations and tables, the renderer's bitmaps). Then publish.
+  import what the latest scan and client release bring on the workspace's Habbo page (Workspace >
+  Habbo): furniture and the rest, texts, the UI theme, images, chat styles, effect icons and client
+  data (the room content and placeholder libraries, default localizations, avatar animations and
+  tables, the renderer's bitmaps). Then publish.
 - The workspace provides external variables, external texts, default localizations and avatar
   data. Correct imported/generated text at its source instead of patching the client to compensate.
 - The avatar data the renderer starts from - the client's avatar tables and the hotel's actions and
@@ -43,7 +43,7 @@ the Studio's `shared/layout.ts` maps each folder to its `nitro-config.json` key)
   `bundled/templates/habbo-localization-com.nitro`, built on import and edit. The client parses
   one language of it at a time (`localization.default.language`, then `:lang <code>`).
 - Keep `nitro-config.json` aligned with the workspace's external variables and generated asset URLs.
-  Check the actual files served to the client as well as the workspace's source files.
+  Check the files actually served to the client as well as the workspace's source files.
 - Preserve workspace-specific assets when updating from Habbo. Use the workspace's history
   (versions, compare, go back) rather than replacing its files wholesale.
 - The drift checks read a workspace's `gamedata/` from disk: point `STUDIO_GAMEDATA` at a local
@@ -55,9 +55,9 @@ the Studio's `shared/layout.ts` maps each folder to its `nitro-config.json` key)
 
 The detailed checks are listed in [staying in step](staying-in-step.md):
 
-- `studio.py`: furniture categories against Turbo entities;
-  generated configuration URLs and placeholders against client consumers; showroom room data;
-  custom chat-style bundle names, files, fields and ID ranges against the client loader.
+- `studio.py`: furniture categories against Turbo entities; generated configuration URLs and
+  placeholders against client consumers; showroom room data; custom chat-style bundle names, files,
+  fields and ID ranges against the client loader.
 - `hand_items.py`: hand-item action names, part names and sprite naming against the avatar renderer
   and the workspace's item library. Updates must preserve workspace-specific hand items.
 - `served_gamedata.py`: exported and served avatar actions/animations against their source tables,

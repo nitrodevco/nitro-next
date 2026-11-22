@@ -14,8 +14,8 @@ A tool for changing nitro-react without rebuilding it:
 - add or change theme variants (skins, tints, window layouts, text styles),
 - restyle or re-lay-out existing windows and widgets,
 - build new custom views,
-- and ship all of this as shareable packs the client loads when needed, instead of compiling it
-  into the bundle.
+- and ship it as shareable packs the client loads when needed, instead of compiling it into the
+  bundle.
 
 ## How Flash and the JS client do it
 
@@ -23,19 +23,20 @@ The Habbo client never loaded behaviour at runtime. It loaded the *look*:
 
 - A `<layout>` XML is a tree of elements (`type`, `style`, rect, `name`, vars). `WindowParser`
   builds it into windows on demand.
-- Behaviour is compiled AS3 (`scripts/habbo-as3`, or its JS conversion in `scripts/habbo-js`). The controller builds the layout, then finds
-  elements by name and wires them up: `_window.findChildByName("buy_button").addEventListener(...)`.
+- Behaviour is compiled AS3 (`scripts/habbo-as3`, or its JS conversion in `scripts/habbo-js`).
+  The controller builds the layout, then finds elements by name and wires them up:
+  `_window.findChildByName("buy_button").addEventListener(...)`.
   `findChildByName` appears in 557 files under `scripts/habbo-js`.
 - So a layout can move, restyle, resize or re-skin anything, but it cannot add a feature. An
   element the controller does not look up by name is decoration.
 
-That split is what makes loading views on the fly safe and cheap, and this port should copy it.
+That split makes loading views on the fly safe and cheap, and this port should copy it.
 
 ## Does it make sense? Yes, with that split
 
-**Performance is not the problem.** A window template is tens to a few hundred nodes. Turning
-JSON into React elements takes microseconds to a millisecond. The real costs are the same
-whether the tree comes from a TSX file or a template:
+**Performance is not the problem.** A window template is tens to a few hundred nodes, and turning
+JSON into React elements takes microseconds to a millisecond. The real costs are the same whether
+the tree comes from a TSX file or a template:
 
 - texture uploads and bundle fetches,
 - flash-text rasterisation,
@@ -45,33 +46,31 @@ The client already pays those at runtime. What an interpreted tree does lose:
 
 - React Compiler memoisation of the tree. Get it back by building the element tree once per
   template (cache it by template id and version) and only re-binding what changes.
-- Per-node props merging. This is fine as long as bindings are resolved once per render and not
-  per node per frame.
+- Per-node props merging, which is fine while bindings are resolved once per render, not per
+  node per frame.
 
 The network cost is a small JSON file per window, zipped into a `.nitro` like the library template
-bundles now are. It is lazy-loaded the same way `lazyBundleForAsset` pulls in a library's bundle.
+bundles now are and lazy-loaded the way `lazyBundleForAsset` pulls in a library's bundle.
 
 **The real risks are elsewhere:**
 
-1. **Type safety.** Bindings become strings. A renamed element silently stops working, which is
-   the same failure the Flash client had. Mitigate with a schema for each window that lists the
-   named slots its controller binds, and validate every template against it at load time and in
-   the tool.
+1. **Type safety.** Bindings become strings, so a renamed element silently stops working, as it
+   did in the Flash client. Mitigate with a schema for each window that lists the named slots its
+   controller binds, and validate every template against it at load time and in the tool.
 2. **Security.** Shared packs are untrusted input. Templates must be pure data: no code, no
-   expressions that evaluate, no packet sending by name. Only a whitelist of components and a
-   whitelist of bindings. Code plugins (below) are a separate thing that only the hotel operator
-   installs.
+   expressions that evaluate, no packet sending by name; only whitelisted components and
+   bindings. Code plugins (below) are separate, and only the hotel operator installs them.
 3. **Versioning.** A template written against one controller's slot schema breaks when the
    controller changes. Every pack declares `schemaVersion` and the slot-schema version per
-   window. If a template is invalid or stale, log it and fall back to the built-in view.
-   Never render half of it.
+   window. If a template is invalid or stale, log it and fall back to the built-in view; never
+   render half of it.
 4. **Drift discipline.** The built-in views are held to Flash by `scripts/drift`. Overrides are
-   hotel customisation on top of that, not a replacement for it. The built-ins stay in TS and
-   stay checked.
+   hotel customisation on top of that, not a replacement; the built-ins stay in TS and stay
+   checked.
 
 ## Proposed architecture
 
-Three layers, in order of risk and effort. Each layer is useful on its own.
+Three layers, in order of risk and effort, each useful on its own.
 
 ### 1. Theme packs: data only, low risk, do this first
 
@@ -79,9 +78,8 @@ The `*_VARIANTS` tables are already data wearing TS syntax: a sheet id, a `windo
 name, a tint colour, a text style. Move them to JSON (now `theme-variants.json`, read through
 `themeRegistry` / `useThemeVariant`):
 
-- The built-in variant tables are generated JSON in the `theme` bundle. (Done: Nitro Studio builds
-  it from the client release's window manager library, `server/theme/` there, and nitro-react
-  reads it into `themeRegistry`.)
+- The built-in variant tables are generated JSON in the `theme` bundle. (Done: Nitro Studio's
+  `server/theme/` builds it from the client release's window manager library.)
 - A pack adds or overrides entries by `(type, style id)` and ships its own art atlas. Asset
   names are already globally unique by path, so the pack gets its own prefix
   (`pack-<id>-...`).
@@ -91,10 +89,9 @@ name, a tint colour, a text style. Move them to JSON (now `theme-variants.json`,
 
 ### 2. View templates: look without logic
 
-- **Format:** JSON, not XML. It is the same model as Flash's layout (element type, style,
-  layout box, name, vars), but parsed natively with no XML parser at runtime. (Built: Nitro
-  Studio's `layoutToTemplate` turns the Flash XML into this tree, so the Flash layouts are the
-  templates.)
+- **Format:** JSON, not XML: the same model as Flash's layout (element type, style, layout box,
+  name, vars), parsed natively with no XML parser at runtime. (Built: the Flash layouts are the
+  templates; see Status.)
 - **Renderer:** `<TemplateView id="catalog_ubuntu" bind={...} />` walks the tree and maps each
   element type to a theme component (`Frame`, `Button`, `ThemeText`, `Region`, ...). It uses the
   element-description mapping the generator already knows.
@@ -103,13 +100,12 @@ name, a tint colour, a text style. Move them to JSON (now `theme-variants.json`,
   Slots can be props or whole React subtrees, so complex parts (grids, room previews) stay in
   real code, and the template only positions them.
 - **Controllers stay in TS.** A window that supports overrides becomes controller plus default
-  template, instead of a hand-written view. This is opt-in, one window at a time. Start with the
-  windows hotels actually want to restyle: catalog layouts (already a data-driven,
-  layout-code-keyed system), the navigator, the toolbar, and the infostand.
+  template instead of a hand-written view, opted in one window at a time. Start with the windows
+  hotels want to restyle: catalog layouts (already a data-driven, layout-code-keyed system), the
+  navigator, the toolbar, and the infostand.
 - **Custom pages that need no new logic** can be built from templates plus a small action
-  vocabulary: `openWindow`, `openClientLink`, `openCatalogPage`, `showUrl`. Every one of these
-  is already a client link (`openClientLink`), so actions are strings the client already
-  validates.
+  vocabulary: `openWindow`, `openClientLink`, `openCatalogPage`, `showUrl`. Each is already a
+  client link (`openClientLink`), so actions are strings the client already validates.
 
 ### 3. Code plugins: new behaviour, trusted only
 
@@ -121,8 +117,8 @@ with a dynamic `import()`:
   import map, so a plugin does not bundle its own copies.
 - Only the hotel operator installs plugins, through the config file, never through a pack a
   user shares. Plugins are pinned by content hash.
-- Treat this as a separate project. It is the part that costs real maintenance, because the host
-  API becomes a public contract.
+- Treat this as a separate project: the host API becomes a public contract, which is the part
+  that costs real maintenance.
 
 ## The tool
 
@@ -139,16 +135,15 @@ the hotel's assets, and has a preview surface (`src/preview`). Pages:
 - **Pack builder:** writes `<pack>.nitro` (the templates' JSON, variant JSON, an atlas, and a
   manifest with id, version, schemaVersion and the client revision). The client lists packs in
   `nitro-config.json` (`theme.packs`, `views.packs`).
-- **Dev loop:** Nitro Studio pushes pack changes to a running `yarn dev` over a websocket,
-  and the client swaps the registry entry. That gives hot reload without a Vite rebuild.
+- **Dev loop:** Nitro Studio pushes pack changes to a running `yarn dev` over a websocket and
+  the client swaps the registry entry: hot reload without a Vite rebuild.
 
 ## Production checklist
 
-- Content-hashed pack URLs with immutable caching. The manifest in `nitro-config.json` names
+- Content-hashed pack URLs with immutable caching; the manifest in `nitro-config.json` names
   the hashes.
-- Preload the packs for windows open at boot (`asset.bundles.preload`). Everything else is lazy
-  and fetched on first open, and `useRevealWhenSettled` already hides the frame until it has
-  laid out.
+- Preload the packs for windows open at boot (`asset.bundles.preload`). Everything else is
+  fetched on first open; `useRevealWhenSettled` already hides the frame until it has laid out.
 - Validate at load with the schema, fall back to the built-in, and report once per template.
 - Memoise the parsed tree by `(templateId, packVersion)`.
 - Add a drift-style check in Nitro Studio: every template validated against the current
@@ -159,5 +154,5 @@ the hotel's assets, and has a preview surface (`src/preview`). Pages:
 Build layer 1, then layer 2 for a handful of windows, then decide about layer 3. Theme packs and
 look-only templates give most of the "easy modification" value, keep behaviour typed and
 checked, and are safe to share. Loading arbitrary views with logic on demand is where cost and
-risk grow. Hold it back until there is a concrete feature that templates plus client-link
-actions cannot express.
+risk grow; hold it back until a concrete feature needs what templates plus client-link actions
+cannot express.

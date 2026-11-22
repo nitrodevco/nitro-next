@@ -1,6 +1,6 @@
 # Room renderer verification
 
-Verify the behavior changed by a renderer PR against the AS3 (see
+Verify what a renderer PR changes against the AS3 (see
 [Habbo reference code](development.md#habbo-reference-code)). For floor/wall projection and water
 shore masks, start with `RoomPlane`, `FloorRasterizer`, `WallRasterizer` (the port's `FloorPlane` and
 `WallPlane` are their obfuscated plane classes in `rasterizer/basic`), `FurnitureWaterAreaVisualization`
@@ -21,8 +21,8 @@ reuse, sampling settings, instance isolation and disposal. Keep tests with the b
 ## Browser and GPU checks
 
 Log in to Turbo as [Nitro and Turbo development](turbo-development.md) describes, in a room fixture
-that contains the affected geometry and furniture. Record the client commit, Turbo revision,
-renderer backend, output resolution and fixture setup.
+with the affected geometry and furniture. Record the client commit, Turbo revision, renderer
+backend, output resolution and fixture setup.
 
 There are no browser/GPU rendering runners on this branch (`tools/rendering/` was WIP tooling); when
 one is added, its README says what it needs. Without one, report the visual check as not run.
@@ -38,14 +38,14 @@ Reopen diagnostic pages after changes to imported modules.
   overrides test rendering only, not server-generated adjacency or persistence.
 - Compare matched regions at the same room geometry, output resolution and configuration. Record
   any deliberate visual difference from AS3 separately from parity results.
-- If an extra render pass is introduced, measure performance separately; visual correctness does
-  not establish better frame time or lower GPU memory use.
+- Measure an added render pass's performance separately; visual correctness does not establish
+  better frame time or lower GPU memory use.
 
 ## Evidence and limits
 
 Native AIR captures must identify their source hash, runtime/platform, stage quality and descriptor
 settings. Keep reviewed expected-output fixtures separate from generated measurements. Do not
-regenerate a baseline merely to make a failing check pass. Reproduction against a retained fixture
+regenerate a baseline merely to make a failing check pass. Reproducing against a retained fixture
 and recapturing that fixture are different checks.
 
 Beyond the reporting [AGENTS.md](../AGENTS.md) asks for, give mismatch counts/tolerances and the

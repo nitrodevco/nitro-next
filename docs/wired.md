@@ -30,7 +30,7 @@ singletons; `resetRoom` clears only what Flash drops with the room. The dialog's
 
 An element with its own type picker (`hasCustomTypePicker`: the variable conditions and actions,
 `ValueOrVariableSection` / `ChooseVariableSection` users) can open on a saved source type its
-picker does not list - `CONTEXT` while `wired.variables.context_visible` is off, say. Flash
+picker does not list, such as `CONTEXT` while `wired.variables.context_visible` is off. Flash
 **saves that value unchanged** (AS3 under `roomevents/wired_setup`):
 
 - The picker is built once per window (`createInputs` -> `buildInputs`, cached), with
@@ -42,9 +42,9 @@ picker does not list - `CONTEXT` while `wired.variables.context_visible` is off,
   equal to the value; an unoffered one changes nothing.
 - Saving reads the field (`readIntParamsFromForm` pushes it as it is).
 
-Only a click on another option changes the field. So the form keeps the raw target, and only the
-picker's display falls back to its first option (`WiredSourceTypePicker`, `WiredNewSourceTypePicker`
-- a fresh Flash window's look; a cached one shows the last edit's choice). Do not resolve the form
-at `createForm` (`tools/wired-unoffered-source-type.test.mjs`). `VariableUpdate` is the exception
-that is not one: its target is not saved, so resolving it only retargets the variable picker, as
-Flash's selector does.
+Only a click on another option changes the field, so the form keeps the raw target and only the
+picker's display falls back to its first option (`WiredSourceTypePicker`,
+`WiredNewSourceTypePicker` - a fresh Flash window's look; a cached one shows the last edit's
+choice). Do not resolve the form at `createForm` (`tools/wired-unoffered-source-type.test.mjs`).
+`VariableUpdate` only looks like an exception: its target is not saved, so resolving it just
+retargets the variable picker, as Flash's selector does.

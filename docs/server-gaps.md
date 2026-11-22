@@ -6,8 +6,8 @@ Turbo never sends. On Turbo these features do nothing, or can only be checked by
 server's messages into the client. Use this list to pick server work, and to tell a missing
 server answer from a client bug.
 
-This is the opposite of [Feature gaps](feature-gaps.md), which lists what the client has not
-ported. A feature can be in both lists: the server's half here, the client's there.
+[Feature gaps](feature-gaps.md) is the opposite list: what the client has not ported. A feature
+can be in both, the server's half here and the client's there.
 
 As of client revision `WIN63-202609091217-117204808` and Turbo revision `Revision20260909`:
 15 packets sent and 52 listened to. Update the list when a gap is closed on either side.
@@ -22,13 +22,13 @@ the client and Turbo do not matter.
   header Turbo has no parser registered for (`no parser`), or a parser whose message has no
   handler (`no handler`).
 - **Listened to by the client.** Every incoming message whose class name appears in nitro-react.
-  A gap is a header Turbo has no serializer registered for (`no serializer`), or a composer
-  nothing in Turbo refers to outside the revision's registration, the message primitives and the
-  tests (`never sent`).
+  A gap is a header Turbo has no serializer registered for (`no serializer`: Turbo cannot write
+  the message at all), or a composer nothing in Turbo refers to outside the revision's
+  registration, the message primitives and the tests (`never sent`).
 
-Both checks are by name, not by behaviour. A packet missing from this list is wired up on both
-sides, but its handler can still do less than the client expects. A composer counts as sent as
-soon as anything refers to it, even a method nothing calls. The behaviour gaps the tool cannot
+Both checks are by name, not by behaviour: a packet missing from this list is wired up on both
+sides, but its handler can still do less than the client expects, and a composer counts as sent
+as soon as anything refers to it, even a method nothing calls. The behaviour gaps the tool cannot
 see are under [Known behaviour gaps](#known-behaviour-gaps).
 
 ## Sent by the client, not handled by Turbo
@@ -47,16 +47,13 @@ Every one of these has a header in Turbo but no parser registered for it.
 packet.
 
 The tool also reports `TurboBugReportCapture` (21001) and `TurboClientErrorReport` (21100) here
-and `TurboBugReportRequest` (21000) below as `no Turbo header`. They are not gaps: they are the
+and `TurboBugReportRequest` (21000) below as `no Turbo header`. They are not gaps but the
 `bugreport` extension of Turbo's bug report plugin (`context/bugreport/bugReportCapture.ts`) and
 the `clienterrors` extension of its client errors plugin
-(`context/clienterrors/clientErrorReporter.ts`), not part of the revision, so the revision's
-headers never name them.
+(`context/clienterrors/clientErrorReporter.ts`): not part of the revision, so its headers never
+name them.
 
 ## Listened to by the client, never sent by Turbo
-
-`no serializer` means Turbo cannot write the message at all; `never sent` means it can, but
-nothing sends it.
 
 | Area | Messages | Turbo |
 |---|---|---|
@@ -89,8 +86,8 @@ nothing sends it.
 
 ## Known behaviour gaps
 
-Packets that both sides handle, where Turbo does less than the Flash client expects. The tool
-cannot find these; add them as they are found.
+Packets both sides handle where Turbo does less than the Flash client expects. Add them as they
+are found.
 
 - **Hotel view requests.** `GetIsUserPartOfCompetition`, `ForwardToACompetitionRoom`,
   `ForwardToRandomCompetitionRoom`, `ForwardToASubmittableRoom` and `GetTalentTrack` are parsed
@@ -107,9 +104,9 @@ cannot find these; add them as they are found.
 
 ## Checking a client feature without the server
 
-For a message Turbo never sends, inject it into the client's socket and look at the result.
-Build the frame with nitro-api's `BinaryWriter` (`int length, short header, body`) and hand it to
-the game socket's `onmessage`. Read the client's own store modules from the page with
-`await import('/src/context/...')`, and run the probe against a freshly started dev server: an HMR
-reload splits the modules, and the page then holds two copies of each store. A composer the
-client sends can be checked by wrapping the socket's `send` and reading the header at byte 4.
+For a message Turbo never sends, build the frame with nitro-api's `BinaryWriter`
+(`int length, short header, body`), hand it to the game socket's `onmessage` and look at the
+result. Read the client's own store modules from the page with `await import('/src/context/...')`,
+and run the probe against a freshly started dev server: an HMR reload splits the modules, leaving
+the page two copies of each store. Check a composer the client sends by wrapping the socket's
+`send` and reading the header at byte 4.
