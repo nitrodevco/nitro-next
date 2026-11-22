@@ -11,7 +11,8 @@ src/
                 renderer's bundles behind `NitroView`'s loading screen, the connection last.
                 `MainView` registers the packet handlers and mounts the windows and the room.
   commands/     Plain functions that send packets and write stores - `<feature>/<name>Commands.ts`,
-                in the same feature directories as `handlers/`.
+                in the same feature directories as `handlers/` - and the `on<Event>` work a
+                packet or a room engine event hands them.
   context/      Zustand stores, one feature per directory. `context/communication` is the one
                 React context that is not a store: the socket, read with `useWebSocketContext()`
                 for `send`.
@@ -139,6 +140,13 @@ Rules:
   which takes them (`(data) => { ... }`) - `@stylistic/arrow-parens` enforces both.
 - The handler that consumes an answer also sends the request
   (`on(UserObjectMessage, () => send(new GetIgnoredUsersComposer({})))`).
+- A listener whose work shares helpers, timers or store reads with its feature's commands hands
+  the packet to an `on<Message>` function in that commands file, named after the Flash method it
+  ports (`on(QuestMessage, data => onQuestMessage(data.quest))`); one that shares nothing stays
+  inline. In `commands/`, `on*` means only that: what a packet sets off, or a room engine event a
+  hook passes on (`onObjectPlacedInRoom`). A function the UI calls is named for what it does
+  (`pressTradingAccept`, `followCatalogPageLink`), and one that adds a listener and returns its
+  removal is `subscribe<What>` (`subscribePluginMessage`).
 - Register the file in `handlers/registerHandlers.ts` (the barrel is generated). Only a handler
   that writes a provider store registers from that store's window, with `useRegisterHandlers`
   (the catalogue's, from `CatalogComponent` and `CatalogBuildersClubComponent`, each for its

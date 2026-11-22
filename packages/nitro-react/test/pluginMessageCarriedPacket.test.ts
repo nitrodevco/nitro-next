@@ -6,7 +6,7 @@ import { IncomingHeader, RoomEntryInfoMessage } from '@nitrodevco/nitro-packets'
 
 import { corePacketOf, corePacketParserOf } from '../src/commands/client-modules/clientModuleCorePackets';
 import { parsePluginMessageSchema } from '../src/commands/client-modules/pluginMessageCodec';
-import { onPluginMessage, sendPluginMessage, stopPluginMessages, syncPluginMessages } from '../src/commands/client-modules/pluginMessages';
+import { sendPluginMessage, stopPluginMessages, subscribePluginMessage, syncPluginMessages } from '../src/commands/client-modules/pluginMessages';
 
 // The schema Turbo sends for `PortalRoom(int RoomId, IComposer? Carried = null)`.
 const PORTAL_ROOM = '[["roomId","int"],["carried","packet"]]';
@@ -60,7 +60,7 @@ void test('a module listening by name gets a carried packet as its header and wh
 
     syncPluginMessages(socket, [ { name: 'portals.room', header: 32767, schema: PORTAL_ROOM } ]);
 
-    const stop = onPluginMessage('portals', 'portals.room', data => heard.push(data));
+    const stop = subscribePluginMessage('portals', 'portals.room', data => heard.push(data));
 
     receive(envelope(7, IncomingHeader.RoomEntryInfoMessage, ROOM_ENTRY_INFO));
     stop();
@@ -84,7 +84,7 @@ void test('a carried packet at a header the client has no packet at is undefined
 
     syncPluginMessages(socket, [ { name: 'portals.room', header: 32767, schema: PORTAL_ROOM } ]);
 
-    const stop = onPluginMessage('portals', 'portals.room', data => heard.push(data));
+    const stop = subscribePluginMessage('portals', 'portals.room', data => heard.push(data));
 
     receive(envelope(7, 19999, [ 1, 2, 3 ]));
     sendPluginMessage('portals', 'portals.room', { roomId: 7 });

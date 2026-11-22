@@ -6,7 +6,7 @@
  * - `toggleCatalog`: when the user opens or closes the window an offer still in the mover is
  *   cancelled (`cancelFurniInMover`), and opening it with new additions pending sends
  *   `MarkCatalogNewAdditionsPageOpened` once (`markNewAdditionPageOpened`). The mover's own
- *   hiding and showing are no toggle (`onCatalogVisibilityChanged`).
+ *   hiding and showing are no toggle (`afterCatalogToggle`).
  * - the room engine's `REOE_PLACED` / `REOE_PLACED_ON_USER` (`onObjectPlacedInRoom`,
  *   `onObjectPlaceOnUser`), for a drag this catalogue started.
  * - `INIT_PURCHASE` on the page on show: `PurchaseCatalogWidget.initPurchase`, answered from what
@@ -16,7 +16,7 @@
 import { RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent } from '@nitrodevco/nitro-api';
 import { useEffect, useRef } from 'react';
 
-import { initPurchaseFromPurchaseWidget, onCatalogVisibilityChanged, onObjectPlacedInRoom, onObjectPlacedOnUser } from '#base/commands';
+import { afterCatalogToggle, initPurchaseFromPurchaseWidget, onObjectPlacedInRoom, onObjectPlacedOnUser } from '#base/commands';
 import { CatalogWidgetEventEnum, getCatalogWindowName, useCatalogStore, useCatalogStoreApi, useCatalogType } from '#base/context/catalog';
 import { useWebSocketContext } from '#base/context/communication';
 import { useIsWindowVisible } from '#base/context/system';
@@ -36,7 +36,7 @@ export const useCatalogPurchaseFlow = () => {
 
         wasVisible.current = isVisible;
 
-        onCatalogVisibilityChanged(send, store, isVisible);
+        afterCatalogToggle(send, store, isVisible);
     }, [ isVisible ]);
 
     useRoomEventDispatcher<RoomEngineObjectPlacedEvent>(RoomEngineObjectEvent.PLACED, event => onObjectPlacedInRoom(send, store, event));

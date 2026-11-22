@@ -7,7 +7,7 @@
  * `GuildMembershipsMessage` is handed to it (`onGuildMembershipsMessageEvent`, in
  * `handlers/catalog/registerCatalogGuildHandlers`): it fills its list and selects the favourite
  * group, then the page's first offer. A widget that unmounts unregisters, and an answer with no
- * widget registered goes nowhere, as in Flash. `onGuildVisualSettingsChanged` (the group
+ * widget registered goes nowhere, as in Flash. `refreshGuildSelector` (the group
  * management window saved a group's look) asks again while a widget is registered
  * (`commands/catalog/catalogGuildCommands`).
  */

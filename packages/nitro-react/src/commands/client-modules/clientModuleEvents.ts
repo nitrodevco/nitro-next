@@ -145,7 +145,7 @@ const start = () => {
 };
 
 /** `handle` for every `event` until the returned function is called. */
-export const onClientModuleEvent = <E extends ClientModuleEventName>(moduleKey: string, event: E, handle: (data: ClientModuleEvents[E]) => void) => {
+export const subscribeClientModuleEvent = <E extends ClientModuleEventName>(moduleKey: string, event: E, handle: (data: ClientModuleEvents[E]) => void) => {
     start();
 
     const listener = { moduleKey, handle } as Handler<ClientModuleEventName>;

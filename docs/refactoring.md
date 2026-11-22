@@ -9,13 +9,6 @@ it set none; git history keeps the details.
 
 ## Open
 
-- **Packet callbacks in commands** (a decision, then M). 44 command files export 122 `on*`
-  functions (30 files in October); 107 are called from handlers, and other features keep that
-  logic in the handler. The same prefix also names UI entry points a view calls
-  (`onTradingAcceptPressed`, `onGamesToolbarClick`, `onCatalogPageLink`). Suggested: move the
-  packet callbacks to the handler side and keep `commands/` for what the UI calls, renamed off
-  `on*`; or document the pattern. Count again before starting:
-  `grep -rlE '^export const on[A-Z]' commands`.
 - **The client module runtime** (M). `commands/client-modules` holds 18 modules, most of them a
   runtime rather than commands: the loader (`clientModuleLoader`), the API object
   (`createClientModuleApi`, `ClientModuleApi`), the plugin message codec, HTTP, libraries, the

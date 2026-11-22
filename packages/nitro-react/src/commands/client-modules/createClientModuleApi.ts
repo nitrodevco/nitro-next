@@ -22,14 +22,14 @@ import { ClientModuleApi, ClientModuleDispose, ClientModulePacketValue } from '.
 import { createClientModuleCapabilities } from './clientModuleCapabilities';
 import { createClientModuleChannels } from './clientModuleChannels';
 import { parseClientModuleCorePacket } from './clientModuleCorePackets';
-import { onClientModuleEvent } from './clientModuleEvents';
+import { subscribeClientModuleEvent } from './clientModuleEvents';
 import { clientModuleFetch } from './clientModuleHttp';
 import { getClientModuleLibraries } from './clientModuleLibraries';
 import { normalizeLinkPath } from './clientModuleLinkRoutes';
 import { clientModuleMenuRow, isClientModuleContextMenu } from './clientModuleMenus';
 import { createClientModuleRoomPointer } from './clientModuleRoomPointer';
 import { clientModuleHasPermission, getClientModuleState, subscribeClientModuleState, useClientModuleState } from './clientModuleState';
-import { onPluginMessage, sendPluginMessage } from './pluginMessages';
+import { sendPluginMessage, subscribePluginMessage } from './pluginMessages';
 
 let nextOverlayKey = 1;
 let nextIllustrationKey = 1;
@@ -92,7 +92,7 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
             hasPermission: clientModuleHasPermission,
         },
         events: {
-            on: (event, handler) => track(onClientModuleEvent(moduleKey, event, handler)),
+            on: (event, handler) => track(subscribeClientModuleEvent(moduleKey, event, handler)),
         },
         contextMenu: {
             add: (button) => {
@@ -253,7 +253,7 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
             parseCore: (header, body) => parseClientModuleCorePacket(header, body, message => NitroLogger.warn('ClientModules', `${moduleKey}: parseCore: ${message}`)) as never,
         },
         messages: {
-            on: (name, handler) => track(onPluginMessage(moduleKey, name, handler)),
+            on: (name, handler) => track(subscribePluginMessage(moduleKey, name, handler)),
             send: (name, data) => sendPluginMessage(moduleKey, name, data),
         },
         channels: {

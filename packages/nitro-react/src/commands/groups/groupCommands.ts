@@ -59,7 +59,7 @@ import { configBoolean, systemStore, translate as t } from '#base/context/system
 import { ClientGates, hasClientGate, userStore } from '#base/context/user';
 
 import { openClubCenter } from '../catalog/catalogClubCommands';
-import { onGuildVisualSettingsChanged } from '../catalog/catalogGuildCommands';
+import { refreshGuildSelector } from '../catalog/catalogGuildCommands';
 import { goToRoom, performNavigatorSearch } from '../navigator/navigatorCommands';
 import { openClientLink } from '../system/clientLinkCommands';
 
@@ -365,13 +365,13 @@ const saveGroupManagementView = (send: Send) => {
         case GROUP_MANAGEMENT_VIEW_IDENTITY:
             if (isOwner) send(new UpdateGuildIdentityComposer({ groupId: session.groupId, groupName: session.name, groupDescription: session.description }));
 
-            onGuildVisualSettingsChanged(send);
+            refreshGuildSelector(send);
 
             return;
         case GROUP_MANAGEMENT_VIEW_BADGE:
             if (isOwner) send(new UpdateGuildBadgeComposer({ groupId: session.groupId, badgeSettings: badgeSettingsFromLayers(session.layers, editorData) }));
 
-            onGuildVisualSettingsChanged(send);
+            refreshGuildSelector(send);
 
             return;
         case GROUP_MANAGEMENT_VIEW_COLORS:
@@ -383,7 +383,7 @@ const saveGroupManagementView = (send: Send) => {
                 }));
             }
 
-            onGuildVisualSettingsChanged(send);
+            refreshGuildSelector(send);
 
             return;
         case GROUP_MANAGEMENT_VIEW_SETTINGS:

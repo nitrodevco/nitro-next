@@ -43,7 +43,7 @@ export const LAYOUTS_TEXT_FIELDS: Readonly<Record<string, readonly string[]>> = 
 
 /**
  * The elements `LocalizationCatalogWidget.initLinks` makes clickable, by layout code; `onClickLink`
- * says what each does - `onCatalogPageLink` in `commands/catalog/catalogLinkCommands.ts`, which a layout
+ * says what each does - `followCatalogPageLink` in `commands/catalog/catalogLinkCommands.ts`, which a layout
  * view calls from the element's click.
  *
  * `initStaticImages`, the widget's third part, gives every element tagged `STATIC_IMAGE` the

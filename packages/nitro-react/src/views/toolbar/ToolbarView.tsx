@@ -45,7 +45,7 @@ import { GetTicker } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer, FederatedPointerEvent, Ticker } from 'pixi.js';
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
-import { goToHomeRoom, onGamesToolbarClick, openClientLink, openProfile, quitRoom, showOwnRooms, showQuests, startTakingPhoto, toggleCatalog, toggleNavigator, trackEventLog } from '#base/commands';
+import { checkGameDirectory, goToHomeRoom, openClientLink, openProfile, quitRoom, showOwnRooms, showQuests, startTakingPhoto, toggleCatalog, toggleNavigator, trackEventLog } from '#base/commands';
 import { useClientModulesStore } from '#base/context/client-modules';
 import { useWebSocketContext } from '#base/context/communication';
 import { getUnseenDailyTasksCount, useDailyTasksStore } from '#base/context/daily-tasks';
@@ -386,7 +386,7 @@ export const ToolbarView = () => {
             ),
         },
         // `HabboGameManager.onToolbarClick`.
-        GAMES: { onPointerTap: iconClick(() => onGamesToolbarClick(send)) },
+        GAMES: { onPointerTap: iconClick(() => checkGameDirectory(send)) },
         STORIES: { onPointerTap: iconClick() },
         CATALOGUE: {
             onPointerTap: iconClick(() => toggleCatalog(CatalogTypeEnum.Normal)),

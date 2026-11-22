@@ -10,7 +10,7 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { useSyncExternalStore } from 'react';
 
-import { onPluginMessage, sendPluginMessage } from '#base/commands/client-modules/pluginMessages';
+import { sendPluginMessage, subscribePluginMessage } from '#base/commands/client-modules/pluginMessages';
 
 export const THEME_SESSION_URL_KEY = 'theme.session.url';
 
@@ -103,7 +103,7 @@ export const noteThemeDrawn = (theme: string) => {
 
 /** Keeps the player's choice (empty: the hotel's default); `done` hears whether it was kept, and why not. */
 export const chooseTheme = (key: string, done: (ok: boolean, message: string) => void) => {
-    const stop = onPluginMessage(OWNER, 'turbo.theme.chosen', (data) => {
+    const stop = subscribePluginMessage(OWNER, 'turbo.theme.chosen', (data) => {
         if (data.key !== key) return;
 
         stop();

@@ -19,7 +19,7 @@ import { ASSET_OVERLAYS_KEY, notifyThemeArtChanged, setFontFaceOverrides, setTex
 import { useSyncExternalStore } from 'react';
 
 import { loadDataWindows } from '#base/commands/client-modules/dataWindowCommands';
-import { onPluginMessage } from '#base/commands/client-modules/pluginMessages';
+import { subscribePluginMessage } from '#base/commands/client-modules/pluginMessages';
 import { reloadHotelTexts } from '#base/commands/system/localizationCommands';
 import { systemStore } from '#base/context/system';
 import { reapplyAssetOverlays } from '#base/utils/assetOverlays';
@@ -150,7 +150,7 @@ export const startThemeLive = () => {
 
     started = true;
 
-    onPluginMessage(OWNER, 'turbo.theme.changed', (data) => {
+    subscribePluginMessage(OWNER, 'turbo.theme.changed', (data) => {
         if ((typeof data.url !== 'string') || !data.url.length) return;
 
         latest = { theme: typeof data.theme === 'string' ? data.theme : '', revision: typeof data.revision === 'string' ? data.revision : '', url: data.url };

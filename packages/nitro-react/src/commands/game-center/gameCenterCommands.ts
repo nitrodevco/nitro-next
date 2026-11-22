@@ -285,7 +285,7 @@ export const cancelGameLobby = (send: Send) => {
 // --- The messages (`HabboGameManager.onToolbarClick`, `snowwar/IncomingMessages`) ---
 
 /** `HabboGameManager.onToolbarClick` `HTIE_ICON_GAMES`. */
-export const onGamesToolbarClick = (send: Send) => {
+export const checkGameDirectory = (send: Send) => {
     send(new Game2CheckGameDirectoryStatusComposer({}));
     send(new GetSnowWarGameTokensOfferComposer({}));
 };

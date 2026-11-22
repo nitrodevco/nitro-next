@@ -22,7 +22,7 @@ export const registerGuildSelectorWidget = (send: Send, store: StoreApi<CatalogS
  * the groups manager saved a group's name, badge or colours (`GSCIME_GUILD_VISUAL_SETTINGS_CHANGED`),
  * so a guild selector on show asks for the memberships again and repaints from the answer.
  */
-export const onGuildVisualSettingsChanged = (send: Send) => {
+export const refreshGuildSelector = (send: Send) => {
     if (!getCreatedCatalogStores().some(store => !!store.getState().guildSelectorWidget)) return;
 
     send(new GetGuildMembershipsComposer({}));

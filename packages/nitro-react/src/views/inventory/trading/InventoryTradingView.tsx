@@ -36,7 +36,7 @@
 import { ITradeNftAsset } from '@nitrodevco/nitro-packets';
 import { FederatedPointerEvent } from 'pixi.js';
 
-import { addTradingSilverFee, getCollectibleProductName, onTradingAcceptPressed, onTradingCancelPressed, productImageWidgetPreview, requestRemoveItemFromTrading } from '#base/commands';
+import { addTradingSilverFee, getCollectibleProductName, pressTradingAccept, pressTradingCancel, productImageWidgetPreview, requestRemoveItemFromTrading } from '#base/commands';
 import { COLLECTIBLE_PREVIEW_EASTER_EGG_INITIAL, wrapBaseItem } from '#base/context/collectibles';
 import { useWebSocketContext } from '#base/context/communication';
 import { getTradingItemsTotal, hasTradingOffer, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_TRADING_MAX_ITEMS, INVENTORY_TRADING_STATE_CONFIRMED, INVENTORY_TRADING_STATE_CONFIRMING, INVENTORY_TRADING_STATE_COUNTDOWN, INVENTORY_TRADING_STATE_READY, INVENTORY_TRADING_STATE_RUNNING, InventoryFurniGroup, InventoryTradingUser, isInventoryFurniGroupWallItem, isTradingFeeReached, peekInventoryFurni, useInventoryStore } from '#base/context/inventory';
@@ -228,8 +228,8 @@ export const InventoryTradingView = () => {
         info_border_highlighted: { visible: showHighlight },
         info_text_highlighted: { visible: showHighlight, caption: showHighlight ? t('inventory.trading.warning.credits') : '' },
 
-        button_accept: { caption: acceptCaption, disabled: !acceptEnabled, onPointerTap: () => onTradingAcceptPressed(send) },
-        button_cancel: { disabled: showSilver && (state === INVENTORY_TRADING_STATE_CONFIRMED), onPointerTap: () => onTradingCancelPressed(send) },
+        button_accept: { caption: acceptCaption, disabled: !acceptEnabled, onPointerTap: () => pressTradingAccept(send) },
+        button_cancel: { disabled: showSilver && (state === INVENTORY_TRADING_STATE_CONFIRMED), onPointerTap: () => pressTradingCancel(send) },
 
         ...(showSilver && {
             silver_fee_info_text: { caption: t((requiredSilverFee <= 0) ? 'inventory.trading.note_silver_fee_free_temporarily' : 'inventory.trading.note_silver_fee') },

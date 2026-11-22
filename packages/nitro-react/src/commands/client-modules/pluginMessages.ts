@@ -118,7 +118,7 @@ export const stopPluginMessages = () => {
  * Listens for a message by name. A name the server's map does not list warns once; the listener is
  * kept all the same, as a plugin loading on the server sends its module before its messages' map.
  */
-export const onPluginMessage = (owner: string, name: string, listener: Listener): (() => void) => {
+export const subscribePluginMessage = (owner: string, name: string, listener: Listener): (() => void) => {
     if (listed && !listed.has(name)) warnOnce(`on:${name}`, `${owner}: the server lists no plugin message ${name} yet; nothing will arrive until it does.`);
 
     let set = listeners.get(name);

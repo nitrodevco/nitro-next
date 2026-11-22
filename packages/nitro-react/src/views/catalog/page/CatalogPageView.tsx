@@ -21,7 +21,7 @@
 import { Template, TemplateBindings, TemplateContext, TemplateElement, TemplateWindows } from '@nitrodevco/nitro-theme';
 import { ReactNode, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
-import { onCatalogPageLink } from '#base/commands';
+import { followCatalogPageLink } from '#base/commands';
 import { CatalogPage, CatalogWidgetEnum, CatalogWidgetId, getCatalogPageLinks, getImageElementName, getTextElementName, useCatalogStore } from '#base/context/catalog';
 import { useConfigValue } from '#base/context/system';
 import { findTemplateChild, TemplateWindow, useTemplateLibrary } from '#base/theme';
@@ -97,7 +97,7 @@ const CatalogPageTemplate = ({ page, templateId, template, templates, containers
 
     // `initLinks`.
     for (const name of getCatalogPageLinks(page.layoutCode)) {
-        if (has(name)) mergeBinding(bindings, name, { onPointerTap: () => onCatalogPageLink(page, name) });
+        if (has(name)) mergeBinding(bindings, name, { onPointerTap: () => followCatalogPageLink(page, name) });
     }
 
     const embeddedArranges: { path: string; arrange: NonNullable<CatalogWidgetView['arrange']> }[] = [];

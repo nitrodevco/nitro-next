@@ -1,7 +1,7 @@
 /**
  * The clickable elements of a catalogue page - `LocalizationCatalogWidget.onClickLink`, for the
  * elements `PageLocalization.LAYOUT_LINKS` makes clickable (`initLinks`). A layout view calls
- * `onCatalogPageLink(page, '<element name>')` from the element's click.
+ * `followCatalogPageLink(page, '<element name>')` from the element's click.
  *
  * `onClickLink` also has cases for `frontpage3`, `info_pixels`, `info_credits`, `collectibles` and
  * `club1`, but no layout of the client has those codes and `LAYOUT_LINKS` makes nothing of them
@@ -31,7 +31,7 @@ export const openCatalogExternalLink = (url: string) => {
 };
 
 /** `onClickLink`: what clicking `elementName` on the page does, by the page's layout code. */
-export const onCatalogPageLink = (page: CatalogLocalizedPage, elementName: string) => {
+export const followCatalogPageLink = (page: CatalogLocalizedPage, elementName: string) => {
     const { getLocalizationValue } = systemStore.getState();
 
     switch (page.layoutCode) {

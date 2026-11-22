@@ -19,7 +19,7 @@
  */
 import { useEffect } from 'react';
 
-import { closeWiredTrade, onInventoryClosedDuringTrade, onInventoryTabChangedDuringTrade } from '#base/commands';
+import { closeTradingWithInventory, closeWiredTrade, minimizeTradingForTab } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useInventoryStore } from '#base/context/inventory';
 import { useWiredTradingStore } from '#base/context/wired-trading';
@@ -44,12 +44,12 @@ export const InventoryTradingDock = ({ activeTab }: InventoryTradingDockProps) =
 
     // `TradingModel.categorySwitch`: the trade does not survive the user leaving the furni page.
     useEffect(() => {
-        onInventoryTabChangedDuringTrade(activeTab);
+        minimizeTradingForTab(activeTab);
     }, [ activeTab ]);
 
     // `closingInventoryView`, on the window going rather than on a packet.
     useEffect(() => () => {
-        onInventoryClosedDuringTrade(send);
+        closeTradingWithInventory(send);
         closeWiredTrade(send, true);
     }, [ send ]);
 

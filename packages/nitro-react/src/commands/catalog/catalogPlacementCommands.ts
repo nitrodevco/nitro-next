@@ -294,7 +294,7 @@ export const cancelFurniInMover = () => {
  * still being placed is cancelled. The mover's own hiding and showing are not a toggle; the answer
  * says whether this change was one.
  */
-export const onCatalogWindowToggled = (): boolean => {
+export const cancelMoverOnCatalogToggle = (): boolean => {
     const { windowToggledByMover, setWindowToggledByMover } = catalogPurchaseStore.getState();
 
     if (windowToggledByMover) {

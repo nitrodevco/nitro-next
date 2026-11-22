@@ -290,7 +290,7 @@ export const restoreInventoryTrading = () => {
  * while the tab is neither furni nor collectibles. Cancelling belongs to `subCategorySwitch`, which
  * is the sub page changing (the wired trade taking the dock), not the tab.
  */
-export const onInventoryTabChangedDuringTrade = (tab: string) => {
+export const minimizeTradingForTab = (tab: string) => {
     const { tradingActive, setTradingMinimized } = inventoryStore.getState();
 
     if (!tradingActive) return;
@@ -299,7 +299,7 @@ export const onInventoryTabChangedDuringTrade = (tab: string) => {
 };
 
 /** `TradingModel.closingInventoryView`: shutting the inventory closes a trade that is not being confirmed. */
-export const onInventoryClosedDuringTrade = (send: Send) => {
+export const closeTradingWithInventory = (send: Send) => {
     const { tradingActive, tradingState, tradingRequiredSilverFee, tradingOwnUser, tradingOtherUser } = inventoryStore.getState();
 
     if (!tradingActive) return;
@@ -323,7 +323,7 @@ export const onInventoryClosedDuringTrade = (send: Send) => {
  * Accepting while the other side offers nothing raises `alertPopup(0)`'s scam warning, and the
  * accept still goes out.
  */
-export const onTradingAcceptPressed = (send: Send) => {
+export const pressTradingAccept = (send: Send) => {
     const { tradingState, tradingOwnUser, tradingOtherUser } = inventoryStore.getState();
 
     if (tradingState === INVENTORY_TRADING_STATE_RUNNING) {
@@ -343,7 +343,7 @@ export const onTradingAcceptPressed = (send: Send) => {
 };
 
 /** `TradingView.windowEventProc`'s cancel button: cancel while it runs, decline while it is being confirmed. */
-export const onTradingCancelPressed = (send: Send) => {
+export const pressTradingCancel = (send: Send) => {
     const { tradingState } = inventoryStore.getState();
 
     if (tradingState === INVENTORY_TRADING_STATE_RUNNING) requestCancelTrading(send);

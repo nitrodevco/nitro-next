@@ -18,7 +18,7 @@ import { calculateBundlePrice, gameTokensOfferAsPurchasableOffer } from '#base/u
 
 import { isHabbiconOfferOwned, showHabbiconAlreadyOwnedAlert } from '../habbicons/habbiconCommands';
 import { showNotEnoughActivityPointsAlert, showNotEnoughCreditsAlert } from './catalogClubCommands';
-import { onCatalogWindowToggled, syncPlacedOfferWithPurchase } from './catalogPlacementCommands';
+import { cancelMoverOnCatalogToggle, syncPlacedOfferWithPurchase } from './catalogPlacementCommands';
 import { disposePurchaseDialog } from './catalogPurchaseFlowCommands';
 
 type CatalogStoreApi = StoreApi<CatalogStore>;
@@ -176,8 +176,8 @@ export const initPurchaseFromPurchaseWidget = (store: CatalogStoreApi) => {
  * `CatalogIndexMessage` said there are new additions sends `MarkCatalogNewAdditionsPageOpened`
  * once (`markNewAdditionPageOpened`, clearing `§_-31q§`).
  */
-export const onCatalogVisibilityChanged = (send: Send, store: CatalogStoreApi, visible: boolean) => {
-    if (!onCatalogWindowToggled() || !visible) return;
+export const afterCatalogToggle = (send: Send, store: CatalogStoreApi, visible: boolean) => {
+    if (!cancelMoverOnCatalogToggle() || !visible) return;
 
     const { newAdditionsAvailable, setNewAdditionsAvailable } = store.getState();
 
