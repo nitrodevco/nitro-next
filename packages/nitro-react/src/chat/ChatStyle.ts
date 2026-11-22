@@ -4,6 +4,8 @@ import { Point, Rectangle, Texture } from 'pixi.js';
 
 import { destroyOwnedTexture, RetainedCache, toCssHexColor } from '#base/utils';
 
+import { ChatBubbleTint, subtractChatBubbleTint } from './chatBubbleTheme';
+
 /** Tinted backgrounds kept per style - past this the least recently used colour is rebuilt on demand. */
 const MAX_TINTED_BACKGROUNDS = 32;
 
@@ -122,6 +124,8 @@ const drawTexture = (ctx: CanvasRenderingContext2D, texture: Texture, x: number,
 export class ChatStyle implements IChatStyle {
     private readonly _definition: ChatStyleDefinition;
     private readonly _textures: ChatStyleTextures;
+    /** Not Flash's: how the colour layer takes the colour - a theme's `chat.bubbles` (`multiply` is Flash's). */
+    private readonly _tint: ChatBubbleTint;
     private readonly _textFieldMargins: Rectangle;
     private readonly _overlap: Rectangle;
     private readonly _faceOffset: Point | undefined;
@@ -130,9 +134,10 @@ export class ChatStyle implements IChatStyle {
     /** By colour; past the cap the least recently used one nothing draws is rebuilt on demand. */
     private readonly _tintedBackgrounds = new RetainedCache<number, Texture>(MAX_TINTED_BACKGROUNDS, (color, texture) => this.freeTintedBackground(color, texture));
 
-    constructor(definition: ChatStyleDefinition, textures: ChatStyleTextures) {
+    constructor(definition: ChatStyleDefinition, textures: ChatStyleTextures, tint: ChatBubbleTint = 'multiply') {
         this._definition = definition;
         this._textures = textures;
+        this._tint = tint;
         const { textFieldMargins, overlapRect, faceXY, emblemXY, emblemMultilineXY } = definition.regPoints;
 
         this._textFieldMargins = toRectangle(textFieldMargins);
@@ -341,11 +346,18 @@ export class ChatStyle implements IChatStyle {
 
         if (!drawTexture(tintCtx, colorLayer, 0, 0)) return this._textures.base;
 
-        tintCtx.globalCompositeOperation = 'multiply';
-        tintCtx.fillStyle = toCssHexColor(key);
-        tintCtx.fillRect(0, 0, tinted.width, tinted.height);
-        tintCtx.globalCompositeOperation = 'destination-in';
-        drawTexture(tintCtx, colorLayer, 0, 0);
+        if (this._tint === 'subtract') {
+            const pixels = tintCtx.getImageData(0, 0, tinted.width, tinted.height);
+
+            subtractChatBubbleTint(pixels.data, key);
+            tintCtx.putImageData(pixels, 0, 0);
+        } else {
+            tintCtx.globalCompositeOperation = 'multiply';
+            tintCtx.fillStyle = toCssHexColor(key);
+            tintCtx.fillRect(0, 0, tinted.width, tinted.height);
+            tintCtx.globalCompositeOperation = 'destination-in';
+            drawTexture(tintCtx, colorLayer, 0, 0);
+        }
 
         // Flash's `draw` passes no matrix: the layer lands at 0,0 whatever `colorXY` says (the
         // library reads it into the style and nothing reads it back).

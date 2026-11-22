@@ -3,9 +3,11 @@ import { GetAvatarRenderManager, GetRoomEngine, GetTicker, GetTickerTime } from 
 import { Container as PixiContainer, PointData } from 'pixi.js';
 import { RefObject, useEffect, useRef } from 'react';
 
+import { systemStore } from '#base/context/system';
 import { useLatest } from '#base/theme';
 import { createRoomMapForSize, getValidRoomObjectDirection } from '#base/utils';
 
+import { readRoomPreviewerLook, ROOM_PREVIEWER_KEY } from './roomPreviewerLook';
 import { useRoomBadgeAssetHandler } from './useRoomBadgeAssetHandler';
 
 /** The id of the one object a previewer room shows. */
@@ -91,7 +93,10 @@ const getPreviewerRoom = (roomId: number): IRoom => {
 
         if (map.mapData) room.applyRoomMap(map.mapData);
 
-        room.updateRoomPlaneType('110', '99999', undefined);
+        // Flash's floor 110 and wall 99999, unless a theme gives the showcase room its own (`room.previewer`).
+        const look = readRoomPreviewerLook(systemStore.getState().config[ROOM_PREVIEWER_KEY]);
+
+        room.updateRoomPlaneType(look.floorType, look.wallType, look.landscapeType);
 
         // Flash `RoomPreviewer.applyInvisibleLayerState`: a showcase never draws the layers tagged
         // `invisible`. Set on the room, every furni previewed in it starts with the flag.

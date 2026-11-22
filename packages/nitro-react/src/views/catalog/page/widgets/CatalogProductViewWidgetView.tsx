@@ -18,7 +18,7 @@ import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { CATALOG_LIBRARY } from '../catalogTemplates';
 import { fitWidgetView, useCatalogWidgetView } from '../catalogWidgetView';
 import { bundleProductItem } from './catalogGridItem';
-import { priceBoxItem } from './catalogPrice';
+import { priceBoxItem, priceContextOf } from './catalogPrice';
 import { productExtraItem } from './catalogProductExtra';
 import { isBundle, PREVIEW_MODE_AVATAR, PREVIEW_MODE_FLOOR_FURNITURE, PREVIEW_MODE_NONE, PREVIEW_MODE_WALL_ITEM, PreviewImage, useProductPreview } from './useProductPreview';
 import { useProductPreviewAvatarPose } from './useProductPreviewAvatarPose';
@@ -302,6 +302,7 @@ export const CatalogProductViewWidgetView = ({ page, tags }: CatalogWidgetProps)
 
     useCatalogWidgetView(templates && {
         template: 'productViewWidget',
+        context: offer && { offerId: offer.offerId, ...priceContextOf(offer) },
         bindings: {
             main_container: { added },
             ctlg_teaserimg_1: teaserBinding(previewImage, pageImage ? catalogImageUrl.replace('%name%', pageImage) : ''),

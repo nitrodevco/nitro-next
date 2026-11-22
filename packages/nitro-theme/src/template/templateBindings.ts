@@ -12,6 +12,8 @@ import type { PivotPoint } from '../utils/flashBitmap';
 import type { SpriteFrame } from '../utils/spriteFrame';
 import type { Template, TemplateElement } from './templateData';
 import type { LayoutWindow, TemplateRect } from './templateLayout';
+import { noteTemplatePart, noteTemplatePrototype } from './templateParts';
+import type { TemplateContext } from './templatePatch';
 
 /** A header's button as its window's code reaches it: shown or hidden, and its click. */
 export interface TemplateHeaderButton {
@@ -294,7 +296,29 @@ export interface TemplateItem {
      * (`GenericWidget.configureContentColumn`).
      */
     append?: boolean;
+    /**
+     * Not Flash's: what this clone shows, read-only, for extensions - flat values laid over the
+     * window's context for the functions of the item bindings drawing it (`bind(..., { items: true })`)
+     * and of the bindings of the template it is drawn from (a catalogue tab's page, an offer's prices).
+     */
+    context?: TemplateContext;
 }
+
+/** Not Flash's: which clone of its list an extension's item binding is drawing (`api.templates.bind`'s `items`). */
+export interface TemplateItemContext {
+    /** The item's `key`. */
+    key: string;
+    /** Its place in the list's items (or in what the code added after its own children), from 0. */
+    index: number;
+    /** The name of the window that holds it, `''` for an unnamed one. */
+    list: string;
+}
+
+/**
+ * The bindings a clone is drawn with, given the item the window's code made, which clone it is and
+ * the prototype it was made from: the code's own (`item.bindings`) with an extension's laid over them.
+ */
+export type TemplateItemBindings = (item: TemplateItem, at: TemplateItemContext, prototype: TemplateElement) => TemplateBindings | undefined;
 
 /**
  * Bindings by element name, or by a `/`-separated path of names for a lookup scoped to a parent
@@ -440,11 +464,14 @@ export class TemplateExpander {
     private _cache = new Map<string, ExpandedNode>();
     private _next = new Map<string, ExpandedNode>();
     private _roots: TemplateElement[] = [];
+    private _itemBindings: TemplateItemBindings | undefined;
 
-    public expand(elements: readonly TemplateElement[], bindings: TemplateBindings | undefined): TemplateExpansion {
+    /** `itemBindings`: what each clone is drawn with instead of its item's own `bindings` (extensions' item bindings over them). */
+    public expand(elements: readonly TemplateElement[], bindings: TemplateBindings | undefined, itemBindings?: TemplateItemBindings): TemplateExpansion {
         const expansion: TemplateExpansion = { elements: [], byElement: new Map(), missing: [], arranges: [], skins: {} };
 
         this._next = new Map();
+        this._itemBindings = itemBindings;
 
         const roots = this.scope(elements, bindings, '', false, undefined, elements, expansion);
 
@@ -472,7 +499,7 @@ export class TemplateExpander {
             const section = (inSection || !!own.disableSection) && !source.tags?.includes('DO_NOT_DISABLE');
             const binding = section ? sectionBinding(source, own) : own;
             const childSection = section && sectionEnters(source);
-            const clone = (item: TemplateItem): TemplateElement[] => {
+            const clone = (item: TemplateItem, index: number): TemplateElement[] => {
                 const prototype = typeof item.from === 'string' ? findByKey(prototypes, item.from) : 'tag' in item.from ? item.from : item.from.elements[0];
 
                 if (!prototype) {
@@ -487,9 +514,13 @@ export class TemplateExpander {
 
                 if (entry) expansion.arranges.push(entry);
 
-                const [ made ] = this.scope([ prototype ], item.bindings, `${nodePath}#${item.key}`, true, item.key, prototypes, expansion, !!item.append, childSection);
+                const itemBindings = this._itemBindings ? this._itemBindings(item, { key: item.key, index, list: source.name ?? '' }, prototype) : item.bindings;
+                const [ made ] = this.scope([ prototype ], itemBindings, `${nodePath}#${item.key}`, true, item.key, prototypes, expansion, !!item.append, childSection);
 
                 if (entry) entry.scope = made;
+
+                if (typeof item.from === 'string') noteTemplatePrototype(made, item.from);
+                else if (!('tag' in item.from)) noteTemplatePart(made, item.from);
 
                 return [ made ];
             };

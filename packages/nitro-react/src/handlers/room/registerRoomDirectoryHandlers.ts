@@ -1,7 +1,7 @@
 import { AvatarEffectSelectedComposer, CantConnectMessage, CloseConnectionMessage, FlatAccessDeniedMessage, OpenConnectionMessage, RoomReadyMessage } from '@nitrodevco/nitro-packets';
 import { GetRoomEngine } from '@nitrodevco/nitro-renderer';
 
-import { leaveRoomAsNewUser, onRoomSessionForNoobLobbyOffer } from '#base/commands';
+import { adoptSecondaryRoom, keepRoomBeingLeft, leaveRoomAsNewUser, onRoomSessionForNoobLobbyOffer } from '#base/commands';
 import { WebSocketConnection } from '#base/context/communication';
 import { roomStore } from '#base/context/room';
 import { systemStore } from '#base/context/system';
@@ -43,22 +43,33 @@ export const registerRoomDirectoryHandlers = ({ subscribe, send }: WebSocketConn
      *
      * `force` is RoomSessionManager.createSession: a new session always replaces the current
      * one, even for the same room id.
+     *
+     * Not Flash's: a room a client module keeps is drawn on rather than disposed, and a room a module
+     * already draws is taken as it is (`commands/room/secondaryRooms.ts`).
      */
     const enterRoom = (roomId: number, force: boolean = false) => {
         if (!force && currentRoomId === roomId) return;
 
+        let keepPrevious = false;
+
         if (currentRoomId !== 0) {
             deselectAllEffects();
 
-            GetRoomEngine().disposeRoom(currentRoomId);
-            // `RoomSessionManager.disposeSession`: the ended session's content may go once nothing uses it.
-            GetRoomEngine().purgeRoomContent();
+            keepPrevious = keepRoomBeingLeft(roomStore.getState().room, roomId);
+
+            if (!keepPrevious) {
+                GetRoomEngine().disposeRoom(currentRoomId);
+                // `RoomSessionManager.disposeSession`: the ended session's content may go once nothing uses it.
+                GetRoomEngine().purgeRoomContent();
+            }
         }
+
+        const adopted = (currentRoomId !== roomId) ? adoptSecondaryRoom(roomId) : undefined;
 
         currentRoomId = roomId;
 
         systemStore.getState().setLandingViewVisible(false);
-        roomStore.getState().setRoom(GetRoomEngine().createRoom(roomId));
+        roomStore.getState().setRoom(adopted?.room ?? GetRoomEngine().createRoom(roomId), { state: adopted?.state, keepPrevious });
 
         onRoomSessionForNoobLobbyOffer(send, roomId);
     };
@@ -67,6 +78,8 @@ export const registerRoomDirectoryHandlers = ({ subscribe, send }: WebSocketConn
     const leaveRoom = () => {
         if (currentRoomId !== 0) {
             deselectAllEffects();
+            // A room a module keeps is kept beside another room, not over the hotel view.
+            keepRoomBeingLeft(roomStore.getState().room, undefined);
 
             GetRoomEngine().disposeRoom(currentRoomId);
             // `RoomSessionManager.disposeSession` -> `purgeRoomContent`.

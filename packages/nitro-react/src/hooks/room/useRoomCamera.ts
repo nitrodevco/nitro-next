@@ -14,6 +14,7 @@ import { Room } from '@nitrodevco/nitro-renderer';
 import { Matrix, Point, Rectangle } from 'pixi.js';
 import { useRef } from 'react';
 
+import { takeRoomCameraStart } from '#base/commands';
 import { useRoom, useRoomStore } from '#base/context/room';
 import { useConfigBoolean, useConfigValue } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
@@ -158,9 +159,29 @@ export const useRoomCamera = () => {
         // RoomEngine.updateRoomCamera: no canvas, a scaled canvas or a flipped one is not followed.
         if (!room || !canvas || canvas.scale !== 1 || canvas.isFlipped) return;
 
+        // Whether this call starts the camera of a room drawn before it was entered: no snap.
+        let resumed = false;
+
         // A new room starts with a new camera: where the last room was scrolled to says nothing
         // about this one, and its location has to be initialized on this room's geometry.
-        if (cameraDataRef.current.room !== room) cameraDataRef.current = createCameraData(room);
+        if (cameraDataRef.current.room !== room) {
+            cameraDataRef.current = createCameraData(room);
+
+            /*
+             * Not Flash's: a room the session entered while a client module drew it beside the last
+             * one (`commands/room/secondaryRooms.ts`) keeps its geometry, and its camera starts where it
+             * was drawn and eases on from there rather than snapping to the room's centre.
+             */
+            const start = takeRoomCameraStart(room);
+
+            if (start) {
+                cameraDataRef.current.currentLocation = new Vector3d(-start.x, -start.y);
+                cameraDataRef.current.scale = canvas.geometry.scale;
+                cameraDataRef.current.lastOffsetX = start.x;
+                cameraDataRef.current.lastOffsetY = start.y;
+                resumed = true;
+            }
+        }
 
         const cameraData = cameraDataRef.current;
         const viewport = new Rectangle(0, 0, canvas.width, canvas.height);
@@ -186,7 +207,7 @@ export const useRoomCamera = () => {
             return;
         }
 
-        if (time === -1) cameraDataRef.current.scaleChanged = true;
+        if ((time === -1) && !resumed) cameraDataRef.current.scaleChanged = true;
 
         // RoomCamera.targetObjectLoc copies coordinates; room-object locations mutate in place.
         cameraData.targetObjectLocation = Vector3d.from(goalLocation);

@@ -15,14 +15,40 @@ import { Assets, groupD8, Rectangle, Texture } from 'pixi.js';
 import { useSyncExternalStore } from 'react';
 
 import { themeHost } from '../host';
+import { parseCssHexColor } from '../utils/cssHexColor';
 import { isAssetName } from '../utils/isAssetName';
 import { SpriteFrame } from '../utils/spriteFrame';
+import { isSubtractTint, subtractTintPixels, ThemeTintMode } from '../utils/subtractTint';
 import { getThemeSliceCanvas, ThemeSliceEffect, themeSliceEffectId } from '../utils/themeSprites';
 
 const themeTextures = new Map<string, Texture>();
 const croppedTextures = new Map<string, Texture>();
 /** The keys of the textures derived from the theme's art (`theme:*`): dropped with it (`resetThemeTextures`). */
 const themeDerivedKeys = new Set<string>();
+
+/** Counts each time the theme's art changed while drawn (`notifyThemeArtChanged`). */
+let themeArt = 0;
+const themeArtListeners = new Set<() => void>();
+
+const subscribeThemeArt = (listener: () => void) => {
+    themeArtListeners.add(listener);
+
+    return () => {
+        themeArtListeners.delete(listener);
+    };
+};
+
+const getThemeArt = () => themeArt;
+
+/**
+ * Says the art drawn changed in place - the theme's sprites registered again, or a bitmap of the
+ * asset manager swapped (nitro-react live reload, `theme/themeLive.ts`): every component reading a
+ * texture through these hooks draws again, reading the new one, with nothing mounted again.
+ */
+export const notifyThemeArtChanged = (): void => {
+    themeArt++;
+    themeArtListeners.forEach(listener => listener());
+};
 
 /** Registers one sprite of the theme's sheet under its texture key (`preloadThemeAssets`). */
 export const registerThemeTexture = (key: string, texture: Texture): void => {
@@ -240,6 +266,29 @@ export const getTextureSilhouette = (texture: Texture, color: string): Texture |
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
+
+/**
+ * A loaded texture with the `subtract` tint of `color` (`#rrggbb`) baked in (`subtractTintPixels`),
+ * drawn untinted: one per texture + colour.
+ */
+export const getTextureSubtractTinted = (texture: Texture, color: string): Texture | undefined => getDerivedTexture(texture, `subtract:${color}`, (ctx, canvas) => {
+    const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    subtractTintPixels(image.data, parseCssHexColor(color));
+    ctx.putImageData(image, 0, 0);
+});
+
+/**
+ * What a layer draws `texture` with for its tint: the texture and the colour as a multiply `tint`,
+ * or for `subtract` the tinted copy untinted - the texture itself until its pixels can be read.
+ */
+export const tintedLayerTexture = (texture: Texture, tintColor: string | undefined, tintMode: ThemeTintMode | undefined): { texture: Texture; tint: string | undefined } => {
+    if (!tintColor || !isSubtractTint(tintMode)) return { texture, tint: tintColor };
+
+    const tinted = getTextureSubtractTinted(texture, tintColor);
+
+    return tinted ? { texture: tinted, tint: undefined } : { texture, tint: tintColor };
+};
 
 /** The client's `BitmapDataRenderer` greyscale weights (Rec. 709 luminance): the grey of `r, g, b` (0-255). */
 export const greyscaleLuminance = (r: number, g: number, b: number): number => Math.round((r * 0.212671) + (g * 0.71516) + (b * 0.072169));
@@ -478,6 +527,8 @@ export const useTextureFromUrl = (url: string | undefined): Texture | undefined 
         };
     };
 
+    useSyncExternalStore(subscribeThemeArt, getThemeArt);
+
     return useSyncExternalStore(subscribe, getSnapshot);
 };
 
@@ -486,14 +537,40 @@ export interface PixiTextureOptions {
     standalone?: boolean;
 }
 
+/** Development builds: what is told each theme key a component draws (`watchThemeDraws`). */
+let drawWatcher: ((themeKey: string) => void) | undefined;
+
+/**
+ * Development builds only: `watcher` is told every theme key a component draws, on each of its
+ * renders (the overlay check, nitro-react `utils/assetOverlayCheck.ts`); `undefined` stops it. A
+ * production build never calls it - the call in `usePixiTexture` is compiled out.
+ */
+export const watchThemeDraws = (watcher: ((themeKey: string) => void) | undefined): void => {
+    drawWatcher = watcher;
+};
+
 /**
  * Resolves a theme asset key (`'border-9-default-src'`) to its Pixi Texture - the one the
  * theme's sheet was cut into at boot, read synchronously with no state. `undefined` until the
  * theme has loaded, and for a key the sheet does not carry.
  */
-export const usePixiTexture = (themeKey: string | undefined, options?: PixiTextureOptions): Texture | undefined => (options?.standalone
-    ? getStandaloneThemeTexture(themeKey)
-    : getThemeTexture(themeKey));
+export const usePixiTexture = (themeKey: string | undefined, options?: PixiTextureOptions): Texture | undefined => {
+    // Read again on every render: the compiler would keep the texture of a key, and art changed in
+    // place (`notifyThemeArtChanged`) is another texture under the same key.
+    'use no memo';
+
+    if (import.meta.env.DEV && themeKey) drawWatcher?.(themeKey);
+
+    useSyncExternalStore(subscribeThemeArt, getThemeArt);
+
+    return options?.standalone ? getStandaloneThemeTexture(themeKey) : getThemeTexture(themeKey);
+};
 
 /** A theme key with an effect applied, as a texture - cut out of the sheet once per key + effect. */
-export const usePixiEffectTexture = (themeKey: string | readonly string[] | undefined, effect: ThemeSliceEffect): Texture | undefined => getThemeEffectTexture(themeKey, effect);
+export const usePixiEffectTexture = (themeKey: string | readonly string[] | undefined, effect: ThemeSliceEffect): Texture | undefined => {
+    'use no memo';
+
+    useSyncExternalStore(subscribeThemeArt, getThemeArt);
+
+    return getThemeEffectTexture(themeKey, effect);
+};

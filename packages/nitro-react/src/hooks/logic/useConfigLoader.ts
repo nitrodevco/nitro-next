@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { CLIENT_MODULES_HOSTS_KEY } from '#base/context/client-modules';
 import { useConfigActions, useConfigData } from '#base/context/system';
+import { loadThemeSession, THEME_SESSION_URL_KEY } from '#base/theme/themeSession';
 import { PREVIEW_ALLOWED_ORIGINS_KEY } from '#base/utils';
 
 /**
@@ -35,12 +36,12 @@ export const useConfigLoader = () => {
         else urls.push(window.NitroConfig['nitro.config.url']);
 
         const load = async (urls: string[]) => {
-            let data: Record<string, object> = {};
+            let data: Record<string, unknown> = {};
 
             for (const url of urls) {
                 try {
                     const response = await fetch(url);
-                    const responseData = await response.json() as Record<string, object>;
+                    const responseData = await response.json() as Record<string, unknown>;
 
                     data = { ...data, ...responseData };
                 } catch (err) {
@@ -48,8 +49,13 @@ export const useConfigLoader = () => {
                 }
             }
 
-            const dataToProcess = { ...data, ...window.NitroConfig };
             const urlParams = new URLSearchParams(window.location.search);
+
+            // This player's theme (one in development, or one they chose), read before anything loads from the variables. Never
+            // where the query says: the ticket goes there.
+            data = { ...data, ...await loadThemeSession((window.NitroConfig as Record<string, unknown>)[THEME_SESSION_URL_KEY] ?? data[THEME_SESSION_URL_KEY], urlParams) };
+
+            const dataToProcess = { ...data, ...window.NitroConfig };
 
             // The query never names who may drive the preview host (whoever frames the page writes its URL), nor where client
             // modules may come from (with its own `socket.url`, a link would let any server run code in the hotel's page).

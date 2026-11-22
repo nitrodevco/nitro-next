@@ -1,4 +1,5 @@
-import { usePixiTexture } from '../hooks';
+import { tintedLayerTexture, usePixiTexture } from '../hooks';
+import { ThemeTintMode } from '../utils';
 import { insetLayout, LayerInsets } from './layerLayout';
 
 export interface CompositeLayerPieceProps extends LayerInsets {
@@ -7,10 +8,12 @@ export interface CompositeLayerPieceProps extends LayerInsets {
     alignSelf?: 'center';
 }
 
-const CompositeLayerPieceSprite = ({ piece, tintColor }: { piece: CompositeLayerPieceProps; tintColor?: string }) => {
+const CompositeLayerPieceSprite = ({ piece, tintColor, tintMode }: { piece: CompositeLayerPieceProps; tintColor?: string; tintMode?: ThemeTintMode }) => {
     const texture = usePixiTexture(piece.textureKey);
 
     if (!texture) return null;
+
+    const drawn = tintedLayerTexture(texture, tintColor, tintMode);
 
     // A piece axis with neither inset set used to fall back to the static position - which
     // happens to be the top-left corner only while the container keeps its default flex-start
@@ -23,8 +26,8 @@ const CompositeLayerPieceSprite = ({ piece, tintColor }: { piece: CompositeLayer
 
     return (
         <pixiSprite
-            texture={texture}
-            tint={tintColor}
+            texture={drawn.texture}
+            tint={drawn.tint}
             eventMode="none"
             layout={{ ...insetLayout({ ...piece, left, top }), alignSelf: piece.alignSelf }}
         />
@@ -36,9 +39,10 @@ const CompositeLayerPieceSprite = ({ piece, tintColor }: { piece: CompositeLayer
  * pinned, stretched or centred by the insets Nitro Studio derives from its `BitmapSkinRenderer`
  * scale mode.
  */
-export const CompositeLayer = ({ pieces, tintColor }: {
+export const CompositeLayer = ({ pieces, tintColor, tintMode }: {
     pieces: CompositeLayerPieceProps[];
     tintColor?: string;
+    tintMode?: ThemeTintMode;
 }) => (
     <>
         {pieces.map((piece, index) => (
@@ -46,6 +50,7 @@ export const CompositeLayer = ({ pieces, tintColor }: {
                 key={index}
                 piece={piece}
                 tintColor={tintColor}
+                tintMode={tintMode}
             />
         ))}
     </>

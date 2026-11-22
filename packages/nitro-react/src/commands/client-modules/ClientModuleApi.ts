@@ -1,16 +1,16 @@
 /**
- * Not Flash's: version 1.1 of what a client module is handed - `activate(api)` - by the loader in
+ * Not Flash's: what a client module is handed - `activate(api)` - by the loader in
  * `commands/client-modules`. Everything a module adds through it is taken out again when the module
  * stops, whether or not it disposed of it itself; each `register`/`add`/`handle` also returns the
  * function that takes that one thing out early.
  *
  * Turbo's `docs/client-modules.md` is the module author's side of it.
  */
-import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
-import type { TemplateBinding, TemplateContext, TemplatePatchOp, TemplatePatchReport, TemplateWindows } from '@nitrodevco/nitro-theme';
+import type { IBinaryReader, IMessageDataWrapper } from '@nitrodevco/nitro-api';
+import type { TemplateBinding, TemplateContext, TemplateItemContext, TemplatePatchOp, TemplatePatchReport, TemplateWindows } from '@nitrodevco/nitro-theme';
 import type { ComponentType, ReactNode } from 'react';
 
-import type { ClientModuleAlert, ClientModuleAvatar, ClientModuleChatCommand, ClientModuleContextMenu, ClientModuleContextMenuTargets, ClientModuleEventName, ClientModuleEvents, ClientModuleHotelViewLayerProps, ClientModuleHotelViewWidgetProps, ClientModuleState, ClientModuleWindowProps } from '#base/context/client-modules';
+import type { ClientModuleAlert, ClientModuleAvatar, ClientModuleChatCommand, ClientModuleContextMenu, ClientModuleContextMenuTargets, ClientModuleEventName, ClientModuleEvents, ClientModuleHotelViewLayerProps, ClientModuleHotelViewWidgetProps, ClientModuleRoomPointerEvent, ClientModuleSecondaryRoom, ClientModuleSecondaryRoomOptions, ClientModuleState, ClientModuleWindowProps } from '#base/context/client-modules';
 
 import type { ClientModuleLibraries } from './clientModuleLibraries';
 
@@ -51,11 +51,10 @@ export interface ClientModuleContextMenuButton<M extends ClientModuleContextMenu
 export interface ClientModuleApi {
     readonly version: 1;
     /**
-     * The minor version: 1 for API 1.1 (`state`, `events`, `contextMenu`, `chatCommands`), 2 for 1.2
-     * (`channels`, `links.handle`'s `path`). A plain-JavaScript module that may meet an older client
-     * reads `api.minor ?? 0`.
+     * The minor version. No module outside this project has been published, so the API stays 1.0
+     * while it changes; it counts up from the first one that is.
      */
-    readonly minor: 2;
+    readonly minor: 0;
     /** The module's key: its plugin's. */
     readonly key: string;
     /**
@@ -65,7 +64,7 @@ export interface ClientModuleApi {
     readonly baseUrl: string;
     /**
      * The client's own React, theme and stores, shared rather than bundled a second time. `stores` is
-     * deprecated since 1.1: read `state` and `events`, which keep their shape across releases.
+     * deprecated: read `state` and `events`, which keep their shape across releases.
      */
     readonly libs: ClientModuleLibraries;
     /**
@@ -107,9 +106,10 @@ export interface ClientModuleApi {
         /**
          * A window by id: the component is drawn in the client's window layer while it is open. With
          * `onTop` it stays above every other window (a HUD, a timer), under the client's menus,
-         * hints and modal dialogs.
+         * hints and modal dialogs; with `aboveOnTop` it is drawn over the `onTop` windows too (a
+         * settings window over a HUD purse), still under the menus, hints and modal dialogs.
          */
-        register: (id: string, component: ComponentType<ClientModuleWindowProps>, options?: { onTop?: boolean }) => ClientModuleDispose;
+        register: (id: string, component: ComponentType<ClientModuleWindowProps>, options?: { onTop?: boolean; aboveOnTop?: boolean }) => ClientModuleDispose;
         open: (id: string, params?: Record<string, unknown>) => void;
         close: (id: string) => void;
         toggle: (id: string, params?: Record<string, unknown>) => void;
@@ -143,6 +143,14 @@ export interface ClientModuleApi {
         registerComposer: (header: number) => ClientModuleDispose | undefined;
         /** Sends on a header the module claimed: each value an int, a string or a boolean. */
         send: (header: number, ...values: ClientModulePacketValue[]) => void;
+        /**
+         * Reads a core packet a plugin's packet carries - its header, then its body read from where
+         * `body` stands (a parser's reader, bytes taken out with `readBytes`, or an `ArrayBuffer`) -
+         * with the client's own parser for that header, as the client would have parsed it. Only
+         * parsed: none of the client's handlers hear it. Undefined, and a warning, when the client has
+         * no packet at that header or the body does not read as one.
+         */
+        parseCore: <T = unknown>(header: number, body: IMessageDataWrapper | IBinaryReader | ArrayBuffer) => T | undefined;
     };
     /**
      * The plugin's named messages (Turbo's `client.messages`, `docs/plugin-messages.md`): read and
@@ -152,14 +160,18 @@ export interface ClientModuleApi {
     messages: {
         /**
          * Every `name` message the server sends, as an object of its fields (camelCase, as the
-         * schema names them). A name the server's list does not have warns once; the handler is kept,
-         * since a plugin loading on the server may send its module before its messages' list.
+         * schema names them). A carried packet field (`'packet'`, the last) is `{ header, packet }`:
+         * the core packet as the client's own parser read it (`undefined`, and a warning, for a header
+         * the client has no packet at), which a secondary room's `apply` takes as it is. A name the
+         * server's list does not have warns once; the handler is kept, since a plugin loading on the
+         * server may send its module before its messages' list.
          */
         on: (name: string, handler: (data: Record<string, unknown>) => void) => ClientModuleDispose;
         /**
          * Sends `name` with `data`'s fields, written in the schema's order. A field the schema does
          * not have is ignored and a missing one sent as its default (0, '', false, []), each logged
-         * once; a name the server did not list warns and sends nothing.
+         * once; a name the server did not list, or a message that carries a packet (only the server
+         * sends one), warns and sends nothing.
          */
         send: (name: string, data: Record<string, unknown>) => void;
     };
@@ -174,6 +186,22 @@ export interface ClientModuleApi {
         publish: <T = unknown>(key: string, value: T) => void;
         subscribe: <T = unknown>(key: string, handler: (value: T | undefined, from: string | undefined) => void) => ClientModuleDispose;
         get: <T = unknown>(key: string) => T | undefined;
+    };
+    /**
+     * The Turbo extensions (protocol capabilities) the client asks the server for, which the module
+     * adds to: a capability its plugin registers on the server (`ICapabilityComposer`), so the server
+     * sends its packets to this client. The client asks again with every module's names after the
+     * modules start, and without a module's once it stops; the server answers each request in full,
+     * sending what each accepted extension carries (permission nodes, command tree, plugin messages,
+     * modules) again.
+     */
+    capabilities: {
+        /** Asks for `name` at `version` (1 when left out) while the module runs. A name the client asks for itself is refused. */
+        declare: (name: string, version?: number) => ClientModuleDispose;
+        /** The version the server accepted `name` at, 0 when it did not (or has not answered yet). */
+        version: (name: string) => number;
+        /** Each answer that changes what the server accepted: every name with its version. */
+        subscribe: (listener: (accepted: ReadonlyMap<string, number>) => void) => ClientModuleDispose;
     };
     /**
      * The module's own plugin's web routes (`IPluginWebRoute`) on the hotel's public web host:
@@ -204,6 +232,28 @@ export interface ClientModuleApi {
         avatarOverlay: (render: (avatar: ClientModuleAvatar) => ReactNode) => ClientModuleDispose;
         /** Leaves the room for the hotel view, as the toolbar's hotel view icon does. Nothing outside a room. */
         leave: () => void;
+        /**
+         * The pointer events over the room that the room did not use: a press, a click or hover where
+         * it hit nothing - no avatar, furni, floor or wall, and not a drag or an area selection. Return
+         * `true` to take one: the room's own "nothing here" handling (a click there deselects) is
+         * skipped. The listener added last is asked first. The room's own use always comes first.
+         */
+        onUnhandledPointer: (listener: (event: ClientModuleRoomPointerEvent) => boolean | void) => ClientModuleDispose;
+        /**
+         * Draws room `roomId` beside the room on screen, its tile (0, 0, 0) on that room's tile
+         * `options.offset`, under it and taking no pointer events (its floor tile under the pointer is
+         * `secondaryTile` of `onUnhandledPointer`). It is empty until fed the room's core packets
+         * (`apply`). When the session goes into that room the client takes it as it is drawn - the same
+         * objects, the camera easing on from where it was - and its status is `entered`. `undefined`, with
+         * a warning, for the room the session is in or one drawn already. Disposed when the module stops.
+         */
+        createSecondary: (roomId: number, options?: ClientModuleSecondaryRoomOptions) => ClientModuleSecondaryRoom | undefined;
+        /**
+         * Keeps the room the session is in drawn once the session goes to another room: a secondary room
+         * from then on (`waiting` until then), placed with `options` against the room entered. Leaving for
+         * the hotel view keeps nothing. `undefined`, with a warning, outside a room or for a room kept already.
+         */
+        keepWhenLeft: (options?: ClientModuleSecondaryRoomOptions) => ClientModuleSecondaryRoom | undefined;
     };
     hotelView: {
         /**
@@ -254,9 +304,15 @@ export interface ClientModuleApi {
          * What the window's code would bind, for an element this module added: a caption, a click, a
          * picture - or a function of the window's context giving it. With `override`, an element the
          * window's code binds itself (named as the code names it): this module's value is used for the
-         * fields it sets, and each field the code sets too is reported as a conflict.
+         * fields it sets, and each field the code sets too is reported as a conflict. With `items`, the
+         * element is bound in each clone of a list that has it (a row the code adds per room) instead of
+         * in the window, and a function is also given which clone it draws (`item`: its `key`, its
+         * `index` in the list, the list's name) - every other row a colour of the theme's. A window
+         * drawn inside another as one of its items (a catalogue widget's view in its page, a grid item)
+         * takes the bindings of its own template as a window of it does. A function's context is the
+         * window's, with what the item itself shows over it where the code gives that (`TemplateItem.context`).
          */
-        bind: (template: string, element: string, binding: TemplateBinding | ((context: TemplateContext) => TemplateBinding), options?: { override?: boolean }) => ClientModuleDispose;
+        bind: (template: string, element: string, binding: TemplateBinding | ((context: TemplateContext, item?: TemplateItemContext) => TemplateBinding), options?: { override?: boolean; items?: boolean }) => ClientModuleDispose;
         /**
          * Runs after the window's own `arrange` each time a window of the template is laid out, with its
          * window model (`find(name)`, `root()`: `setRectangle`, `setHeight`, `textHeight`...) and its

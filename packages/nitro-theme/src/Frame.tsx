@@ -8,10 +8,9 @@ import { DragTargetContext, DragTargetController } from './drag/DragTargetContex
 import { reachedUnclaimed } from './drag/useDragTrigger';
 import { Header } from './Header';
 import { ChildBounds, useChildBounds, useFrameDrag, useFrameResize, useThemeVariant } from './hooks';
-import { useThemeConfigValue } from './host';
 import { BackgroundLayer, ShadowLayer } from './layer';
 import { Scaler, ScalerDirection } from './Scaler';
-import { DropShadowConfig, expandSides, FRAME_OVERRIDES_KEY, frameOverrideOf, getWindowLayer, isFramelessVariant, subscribeWindowLayer, ThemeProps, ThemeVariant, WindowPlacedContext } from './utils';
+import { DropShadowConfig, expandSides, FrameOverride, getWindowLayer, isFramelessVariant, subscribeWindowLayer, ThemeProps, ThemeVariant, useFrameOverride, WindowPlacedContext } from './utils';
 
 export type FrameVariant = ThemeVariant;
 
@@ -22,6 +21,12 @@ export interface FrameProps extends Omit<ThemeProps<FrameVariant>, 'dropShadow'>
      * `frame.overrides` entry names the frame by (`frameOverrideOf`).
      */
     name?: string;
+    /**
+     * The look a template patch on its window's root gives the frame (`rootFrameOverride`): over
+     * `frame.overrides` and over what the code passes (`useFrameOverride`). A template's root frame
+     * gets it from `TemplateView`; a frame of its own takes patches naming its `id` without it.
+     */
+    patchOverride?: FrameOverride;
     caption?: string;
     resizeDirection?: ScalerDirection;
     contentLayout?: BoxLayout;
@@ -51,6 +56,12 @@ export interface FrameProps extends Omit<ThemeProps<FrameVariant>, 'dropShadow'>
      * every time.
      */
     rememberPosition?: boolean;
+    /**
+     * Whether a theme's first position for this window (`frame.overrides.<id>.position`) goes over
+     * `defaultPosition`. On by default; `false` for a window whose code weighs the theme's position
+     * itself - the navigator's, which the player's own saved place beats.
+     */
+    themePosition?: boolean;
     /**
      * Whether this window reopens at the size its scaler was last left at. On by default; pass
      * `false` for a window whose size is kept elsewhere - the navigator's comes from the server's
@@ -166,11 +177,15 @@ const frameAxisSize = (fit: boolean, hasMargins: boolean, bound: number | undefi
  * clipped to it.
  */
 export const Frame = ({
-    variant: codeVariant, defaultVariant, tooltip, tooltipDelay, layout, tintColor: codeTintColor, textStyle, textColor, dropShadow, id, name, caption, resizeDirection = 'all', contentLayout, margins,
-    defaultPosition, rememberPosition = true, rememberSize = true, draggable = true, centered, onPositionChange, onClose, onResize, closeButtonVisible, closeButtonVariant, onMenu, helpPage, onHelp, backdrop, fitContent, panes, panesInFront, children,
+    variant: codeVariant, defaultVariant, tooltip, tooltipDelay, layout, tintColor: codeTintColor, tintMode, textStyle, textColor, dropShadow, id, name, patchOverride, caption, resizeDirection = 'all', contentLayout, margins,
+    defaultPosition, rememberPosition = true, themePosition = true, rememberSize = true, draggable = true, centered, onPositionChange, onClose, onResize, closeButtonVisible, closeButtonVariant, onMenu, helpPage, onHelp, backdrop, fitContent, panes, panesInFront, children,
     onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
 }: FrameProps) => {
-    const { frameRef, attachFrame, offset, zIndex, revealed, onHeaderPointerDown, startDrag } = useFrameDrag(id, { defaultPosition, remember: rememberPosition, centered, onPositionChange });
+    // A theme's style for this window (`frame.overrides`, then template patches), over what its code passes.
+    const override = useFrameOverride(id, name, patchOverride);
+    // Its first position as well: where the player left it still wins (`useFrameDrag`'s stored offset).
+    const position = themePosition ? override?.position : undefined;
+    const { frameRef, attachFrame, offset, zIndex, revealed, onHeaderPointerDown, startDrag } = useFrameDrag(id, { defaultPosition: position ?? defaultPosition, remember: rememberPosition, centered: position ? false : centered, onPositionChange });
     /*
      * The window a frame that is no drag target itself is dragged with: `WindowController.update`
      * walks up from a `mouse_dragging_trigger` (a frame skin's header) to the first ancestor with the
@@ -190,8 +205,6 @@ export const Frame = ({
      * one. A frame already on a desktop - every window of the client's own, and a frame nested
      * inside one - stays exactly where it is rendered.
      */
-    // A theme's style for this window (`frame.overrides`), over what its code passes.
-    const override = frameOverrideOf(useThemeConfigValue<unknown>(FRAME_OVERRIDES_KEY), id, name);
     const variant = override?.variant ?? codeVariant;
     const frameless = isFramelessVariant(variant);
     const tintColor = override?.color ?? codeTintColor;
@@ -214,6 +227,7 @@ export const Frame = ({
     const { ownCascade, config, handlers, resolvedLayer, resolvedPlain, resolvedOverlay, resolvedShadow, resolvedTint } = useThemeVariant<FrameVariant>({
         cascadeKey: 'frame', variant: frameless ? undefined : variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, dropShadow, interactive: true, onPointerOver, onPointerOut, onPointerDown: (frameless && draggable) ? onFramelessPointerDown : onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
     });
+    const resolvedTintMode = tintMode ?? config.tintMode;
     const minWidth = layout?.minWidth ?? config.layout?.minWidth ?? 20;
     const minHeight = layout?.minHeight ?? config.layout?.minHeight ?? 20;
     const maxWidth = layout?.maxWidth ?? config.layout?.maxWidth;
@@ -306,6 +320,7 @@ export const Frame = ({
                     <BackgroundLayer
                         layer={resolvedLayer}
                         tintColor={resolvedTint}
+                        tintMode={resolvedTintMode}
                     />
                 ) }
                 {/* The skin's `colorize="false"` pieces, over the tinted art and under the shine. */}
@@ -331,6 +346,9 @@ export const Frame = ({
                                 <Header
                                     caption={caption}
                                     tintColor={resolvedTint}
+                                    tintMode={resolvedTintMode}
+                                    // A colour the window's code gives its frame's text is its title's too.
+                                    textColor={textColor}
                                     onClose={onClose}
                                     closeButtonVisible={closeButtonVisible}
                                     closeVariant={closeButtonVariant}

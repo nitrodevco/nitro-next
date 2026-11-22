@@ -15,8 +15,9 @@
 import { Container, PointData } from 'pixi.js';
 import { createContext } from 'react';
 
-import { resolveTemplateNames } from './template/templateBindings';
 import type { TemplateElement } from './template/templateData';
+import { templateElementKey } from './template/templateElementKey';
+import { templateIdOf, templatePartOf, templatePrototypeOf } from './template/templateParts';
 import type { TemplateContext } from './template/templatePatch';
 
 /** One drawn element, and the element it is drawn in (none for a window's root). */
@@ -114,50 +115,175 @@ export const inspectChain = (node: TemplateInspectNode): TemplateElement[] => {
 
 /**
  * The key that names `node`'s element in its window's template, as a patch's `element` or a
- * binding's key does (`''` the window itself, `'name'`, `'panel/@2'`, `'@0/@1'`): its own name when
- * that finds it, else the nearest named ancestor that does and the child indexes under it.
+ * binding's key does (`''` the window itself, `'name'`, `'panel/@2'`, `'@0/@1'`) - `templateElementKey`.
  * `undefined` for an element the template does not have - a clone a list's code made.
  */
-export const inspectKey = (node: TemplateInspectNode): string | undefined => {
-    const chain = inspectChain(node);
-    const root = chain[0];
-    const target = chain[chain.length - 1];
-    const roots = [ root ];
-    const finds = (key: string) => resolveTemplateNames(roots, [ key ]).targets.get(key) === target;
+export const inspectKey = (node: TemplateInspectNode): string | undefined => templateElementKey(inspectChain(node));
 
-    if (target === root) return '';
+/** `inspectKey` in the template the window draws: a window drawn alone (`part`) is that window of it. */
+export const inspectTemplateKey = (node: TemplateInspectNode, window: TemplateInspectWindow): string | undefined => {
+    const own = inspectKey(node);
 
-    if (target.name && finds(target.name)) return target.name;
+    return ((own === undefined) || !window.part) ? own : own ? `${window.part}/${own}` : window.part;
+};
 
-    // Index steps from `from` (a chain position) down to the target.
-    const indexes = (from: number): string[] | undefined => {
-        const steps: string[] = [];
+/**
+ * The containers drawing the element `key` names (`inspectTemplateKey`) in the windows of template
+ * `id`: the outermost of each drawing, not the boxes inside it. What a preview outlines.
+ */
+export const inspectFind = (stage: Container, id: string, key: string): Container[] => {
+    const found: Container[] = [];
 
-        for (let at = from + 1; at < chain.length; at++) {
-            const index = chain[at - 1].children.indexOf(chain[at]);
+    const visit = (container: Container) => {
+        const holder = targets.get(container);
 
-            if (index < 0) return undefined;
+        // A part built inside the window (a grid item cloned from its template) is found by the part's id and key, a row by its prototype's.
+        const named = (holder?.node && holder.window) ? ((holder.window.id === id) ? inspectTemplateKey(holder.node, holder.window) : undefined) : undefined;
+        const inPart = (holder?.node && holder.window && (named !== key)) ? inspectPart(holder.node, holder.window) : undefined;
 
-            steps.push(`@${index}`);
+        if ((holder?.window?.id === id && named === key && !inPart?.part) || ((inPart?.part || (inPart?.row !== undefined)) && (inPart.template === id) && (inPart.key === key))) {
+            found.push(container);
+
+            return;
         }
 
-        return steps;
+        for (const child of container.children) visit(child);
     };
 
-    for (let at = chain.length - 2; at >= 1; at--) {
-        const name = chain[at].name;
+    visit(stage);
 
-        if (!name || resolveTemplateNames(roots, [ name ]).targets.get(name) !== chain[at]) continue;
+    return found;
+};
 
-        const steps = indexes(at);
-        const key = steps && [ name, ...steps ].join('/');
+/** Where a pressed element is: the template it is drawn from and its key there, crossing into a part built from another template. */
+export interface TemplateInspectPart {
+    /** The template the element's key names it in: a part's (`badgeGridItem`) inside a clone of it, else the window's. */
+    template: string;
+    /** Its key in that template; `undefined` for a clone no key reaches. */
+    key: string | undefined;
+    /** Whether the template is a part built inside the window (a list's clone of another template's root). */
+    part: boolean;
+    /** Inside a clone of one of the window's own elements (a list row): that element's key - what a patch on every row names. */
+    row?: string;
+    /** From the window's root down to the element: each step's template, key (null for a clone), tag and name. */
+    path: { template: string; key: string | null; tag: string; name: string | null }[];
+}
 
-        if (key && finds(key)) return key;
-    }
+/**
+ * `node` named in the template it was built from: inside a clone of another template's root
+ * (`templatePartOf`, a library's template noted with its id) the part's own id and key, as a patch of
+ * that template names the element; else the window's (`inspectTemplateKey`).
+ */
+export const inspectPart = (node: TemplateInspectNode, window: TemplateInspectWindow): TemplateInspectPart => {
+    const nodes: TemplateInspectNode[] = [];
 
-    // From the window itself: a leading `@N` counts in its children.
-    const steps = indexes(0);
-    const key = steps?.join('/');
+    for (let at: TemplateInspectNode | undefined = node; at; at = at.parent) nodes.unshift(at);
 
-    return (key && finds(key)) ? key : undefined;
+    const path: TemplateInspectPart['path'] = [];
+    let template = window.id;
+    let from = 0;
+    let part = false;
+    /** Inside a clone of one of the window's own elements (a row): that element's key, the clone's keys scoped under it. */
+    let prototype: string | undefined;
+
+    nodes.forEach((each, index) => {
+        const made = templatePartOf(each.element);
+        const id = made && templateIdOf(made);
+        const row = templatePrototypeOf(each.element);
+
+        if (id) {
+            template = id;
+            from = index;
+            part = true;
+            prototype = undefined;
+        } else if (row !== undefined) {
+            from = index;
+            prototype = (part || !window.part) ? row : `${window.part}/${row}`;
+        }
+
+        const chain = nodes.slice(from, index + 1).map(step => step.element);
+        const inner = (part || (prototype !== undefined)) ? templateElementKey(chain) : undefined;
+        const key = (prototype !== undefined) ? ((inner === undefined) ? undefined : inner ? `${prototype}/${inner}` : prototype) : part ? inner : inspectTemplateKey(each, window);
+
+        path.push({ template, key: key ?? null, tag: each.element.tag, name: each.element.name ?? null });
+    });
+
+    const last = path[path.length - 1];
+
+    return { template, key: last?.key ?? undefined, part, ...((prototype !== undefined) ? { row: prototype } : {}), path };
+};
+
+/** One element of a window as drawn: where a patch names it, and the containers drawing it (a list's rows each). */
+export interface TemplateInspectElement {
+    template: string;
+    key: string;
+    element: TemplateElement;
+    containers: Container[];
+}
+
+/**
+ * Every element a key reaches drawn in the windows of template `id` and in what is drawn inside them
+ * (the parts built from other templates, a template window such as a catalogue page), each named in
+ * its own template, with the outermost containers drawing it - an editor's outlines of the whole
+ * window at once, in one walk; with no `id`, of every window on the stage. A clone no key reaches is left
+ * out; a hidden element is not drawn.
+ */
+export const inspectElements = (stage: Container, id: string | undefined): TemplateInspectElement[] => {
+    const found = new Map<string, TemplateInspectElement>();
+
+    const visit = (container: Container, drawing: TemplateInspectNode | undefined, inside: boolean) => {
+        if (!container.visible || !container.renderable) return;
+
+        const holder = targets.get(container);
+        let node = drawing;
+        // No id: every window on the stage (a screen of many, the room screen's HUD).
+        const within = inside || (holder?.window !== undefined && ((id === undefined) || (holder.window.id === id)));
+
+        if (within && holder?.node && holder.window && (holder.node !== drawing)) {
+            node = holder.node;
+
+            const part = inspectPart(node, holder.window);
+
+            if (part.key !== undefined) {
+                const entry = `${part.template}|${part.key}`;
+                const known = found.get(entry);
+
+                if (known) known.containers.push(container);
+                else found.set(entry, { template: part.template, key: part.key, element: node.element, containers: [ container ] });
+            }
+        }
+
+        for (const child of container.children) visit(child, node, within);
+    };
+
+    visit(stage, undefined, false);
+
+    return [ ...found.values() ];
+};
+
+/** Every template drawn on the stage now: the windows' and the parts built inside them, each once. */
+export const inspectTemplates = (stage: Container): string[] => {
+    const found = new Set<string>();
+    const seen = new Set<TemplateInspectNode>();
+
+    const visit = (container: Container) => {
+        const holder = targets.get(container);
+
+        if (holder?.window) found.add(holder.window.id);
+
+        for (let at = holder?.node; at && !seen.has(at); at = at.parent) {
+            seen.add(at);
+
+            const made = templatePartOf(at.element);
+            const id = made && templateIdOf(made);
+
+            if (id) found.add(id);
+        }
+
+        for (const child of container.children) visit(child);
+    };
+
+    visit(stage);
+
+    return [ ...found ].sort();
 };

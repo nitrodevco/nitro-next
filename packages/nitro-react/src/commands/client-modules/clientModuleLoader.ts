@@ -30,7 +30,7 @@ import { systemStore } from '#base/context/system';
 import { reportClientExtension } from './clientExtensionReports';
 import { ClientModuleApi } from './ClientModuleApi';
 import { getClientModuleLibraries } from './clientModuleLibraries';
-import { createClientModuleApi } from './createClientModuleApi';
+import { clientModuleCapabilities, createClientModuleApi } from './createClientModuleApi';
 
 /** What a module's file exports: `activate` and `deactivate` on its default export, or as named exports. */
 interface ClientModuleExports {
@@ -203,20 +203,26 @@ const isSameModule = (a: ITurboClientModule, b: ITurboClientModule) => (a.url ==
 
 /**
  * Brings the running modules in line with the server's set: stops those it no longer names or
- * names differently, then starts the new ones, one after another in its order.
+ * names differently, then starts the new ones, one after another in its order. The capabilities
+ * they add or take away are asked for once, when all have run.
  */
 export const syncClientModules = (connection: WebSocketConnection, modules: ITurboClientModule[]) => {
     queue = queue.then(async () => {
         const wanted = new Map(modules.map(module => [ module.key, module ]));
+        const release = clientModuleCapabilities.hold();
 
-        for (const [ key, entry ] of [ ...running ]) {
-            const next = wanted.get(key);
+        try {
+            for (const [ key, entry ] of [ ...running ]) {
+                const next = wanted.get(key);
 
-            if (!next || !isSameModule(entry.module, next)) stopModule(key);
-        }
+                if (!next || !isSameModule(entry.module, next)) stopModule(key);
+            }
 
-        for (const module of wanted.values()) {
-            if (!running.has(module.key)) await startModule(connection, module);
+            for (const module of wanted.values()) {
+                if (!running.has(module.key)) await startModule(connection, module);
+            }
+        } finally {
+            release();
         }
     }).catch(error => NitroLogger.error('ClientModules', error));
 

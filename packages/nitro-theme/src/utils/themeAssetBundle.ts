@@ -52,6 +52,12 @@ const TEXT_STYLES_FILE = 'text-styles';
 /** `text-faces.json`: the faces the theme draws in place of those a layout names itself (`FontFaceOverrides`). */
 const TEXT_FACES_FILE = 'text-faces';
 
+/** The bundle the theme was last loaded from (`preloadThemeAssets`). */
+let themeBundle = BUNDLE_NAME;
+
+/** The loaded theme sheet's manifest frames, by sprite name - their sizes, for the skin map (`themeSkinSprites`); kept with the bundle's data. */
+export const themeSheetFrames = (): SpritesheetData['frames'] | undefined => GetAssetManager().getBundleFile<SpritesheetData>(themeBundle, `${THEME_NAME}_spritesheet`)?.frames;
+
 /**
  * Loads the theme from its bundle - the window manager's, or another the host serves a theme under:
  * art that changed is a bundle of its own, a bundle once fetched being kept by its name
@@ -69,6 +75,8 @@ export const preloadThemeAssets = async (bundle: string = BUNDLE_NAME): Promise<
     const variants = assetManager.getBundleFile<ThemeVariantsData>(bundle, THEME_VARIANTS_FILE);
 
     if (!manifest?.frames || !sheet) return;
+
+    themeBundle = bundle;
 
     if (variants) registerThemeVariants(variants);
 

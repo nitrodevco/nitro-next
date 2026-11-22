@@ -19,6 +19,32 @@ interface NavigatorSearchCacheEntry {
     expiresAt: number;
 }
 
+/** `BlockResultsView.HOT_ROOMS_SEARCH_CODE` / `POPULAR_ROOMS_SEARCH_CODE`. */
+const HOT_ROOMS = 'hot';
+const POPULAR_ROOMS = 'popular';
+
+/** `BlockResultsView.setMinimized`: every copy of the code goes, and one comes back when minimized. */
+const setMinimized = (collapsed: string[], code: string, minimized: boolean) => {
+    const result = collapsed.filter(x => x !== code);
+
+    if (minimized) result.push(code);
+
+    return result;
+};
+
+/**
+ * `BlockResultsView.applyHotelViewExpansionDefaults`: in the hotel view the hot rooms open and popular
+ * closes when there are hot rooms, and the other way round - written into the collapsed list itself.
+ */
+const applyHotelViewExpansionDefaults = (searchResult: ISearchResultSet, collapsed: string[]) => {
+    if (searchResult.searchCodeOriginal !== 'hotel_view') return collapsed;
+
+    const hasHot = searchResult.blocks.some(block => block.searchCode === HOT_ROOMS);
+    const result = setMinimized(collapsed, HOT_ROOMS, !hasHot);
+
+    return searchResult.blocks.some(block => block.searchCode === POPULAR_ROOMS) ? setMinimized(result, POPULAR_ROOMS, hasHot) : result;
+};
+
 /** filter_type_drop_menu options from navigator_frame_2 */
 export type NavigatorFilterType = 'anything' | 'room.name' | 'owner' | 'tag' | 'group';
 
@@ -58,6 +84,11 @@ type State = {
     savedSearches: ISavedSearch[];
     searchResult: ISearchResultSet | undefined;
     collapsedCategories: string[];
+    /**
+     * `BlockResultsView`'s rendered blocks, by index in the results: open or collapsed. Set when results
+     * are displayed and by the expand and collapse buttons only - a force-closed block opens on expand.
+     */
+    blocksOpen: boolean[];
     expandedCategories: string[];
     viewModes: Record<string, number>;
     searchFilter: string;
@@ -80,7 +111,10 @@ type Actions = {
     setSavedSearches: (savedSearches: ISavedSearch[]) => void;
     setSearchResult: (searchResult: ISearchResultSet | undefined) => void;
     setCollapsedCategories: (collapsedCategories: string[]) => void;
-    toggleCollapsedCategory: (code: string) => void;
+    /** `onCategoryCollapseClicked`: the code goes on the collapsed list and the block closes. */
+    collapseCategory: (index: number, code: string) => void;
+    /** `onCategoryExpandClicked`: the code comes off the collapsed list and the block opens. */
+    expandCategory: (index: number, code: string) => void;
     toggleExpandedCategory: (code: string) => void;
     setFilterType: (filterType: NavigatorFilterType) => void;
     setViewMode: (code: string, mode: number) => void;
@@ -105,6 +139,7 @@ export const NavigatorSearchSliceInitialState: State = {
     savedSearches: [],
     searchResult: undefined,
     collapsedCategories: [],
+    blocksOpen: [],
     expandedCategories: [],
     viewModes: {},
     searchFilter: '',
@@ -135,22 +170,36 @@ export const createNavigatorSearchSlice: StateCreator<NavigatorSearchSlice, [], 
             isSearching: false,
             // BlockResultsView reseeds _searchCodeViewMode from the incoming blocks
             viewModes: Object.fromEntries((searchResult?.blocks ?? []).map(block => [ block.searchCode, block.viewMode ])),
+            blocksOpen: [],
         };
 
         if (!searchResult) return cleared;
 
+        // `displayCurrentResults`: a block opens unless minimized - or when it is the only one - and never when force-closed.
+        const collapsedCategories = applyHotelViewExpansionDefaults(searchResult, x.collapsedCategories);
+        const blocksOpen = searchResult.blocks.map(block => (!collapsedCategories.includes(block.searchCode) || searchResult.blocks.length === 1) && !block.forceClosed);
+
         return {
             ...cleared,
+            collapsedCategories,
+            blocksOpen,
             topLevelContext: x.topLevelContexts.find(context => context.searchCode === searchResult.searchCodeOriginal) ?? x.topLevelContext,
             ...splitNavigatorFilter(searchResult.filteringData),
         };
     }),
     setCollapsedCategories: collapsedCategories => set({ collapsedCategories }),
-    toggleCollapsedCategory: code => set(x => ({
-        collapsedCategories: x.collapsedCategories.includes(code)
-            ? x.collapsedCategories.filter(y => y !== code)
-            : [ ...x.collapsedCategories, code ],
+    collapseCategory: (index, code) => set(x => ({
+        collapsedCategories: [ ...x.collapsedCategories, code ],
+        blocksOpen: x.blocksOpen.map((open, i) => (i === index) ? false : open),
     })),
+    expandCategory: (index, code) => set((x) => {
+        const collapsedCategories = [ ...x.collapsedCategories ];
+
+        // Flash's `splice(indexOf(code), 1)`, kept as is: a code not on the list (a force-closed block) takes the last code off.
+        collapsedCategories.splice(collapsedCategories.indexOf(code), 1);
+
+        return { collapsedCategories, blocksOpen: x.blocksOpen.map((open, i) => (i === index) ? true : open) };
+    }),
     toggleExpandedCategory: code => set(x => ({
         expandedCategories: x.expandedCategories.includes(code)
             ? x.expandedCategories.filter(y => y !== code)

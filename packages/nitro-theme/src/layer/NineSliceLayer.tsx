@@ -2,8 +2,8 @@ import { Texture } from 'pixi.js';
 import { Ref, useMemo } from 'react';
 
 import { BoxLayout } from '../Box';
-import { getCroppedTexture, usePixiTexture } from '../hooks';
-import { FillLayout } from '../utils';
+import { getCroppedTexture, tintedLayerTexture, usePixiTexture } from '../hooks';
+import { FillLayout, ThemeTintMode } from '../utils';
 import { LayerNodeProps } from './layerLayout';
 
 export type NineSliceRepeatAxis = 'x' | 'y';
@@ -15,6 +15,8 @@ export interface NineSliceLayerProps extends LayerNodeProps {
     rightWidth: number;
     bottomHeight: number;
     tintColor?: string;
+    /** How `tintColor` colours it (`ThemeTintMode`): multiply unless `subtract`. */
+    tintMode?: ThemeTintMode;
     layout?: BoxLayout;
     repeat?: NineSliceRepeatAxis;
 }
@@ -105,13 +107,16 @@ const TiledNineSlice = ({ texture, leftWidth, topHeight, rightWidth, bottomHeigh
  * A skin drawn as a nine-slice stretched over its parent's box - or, with `repeat`, its centre
  * tiled along an axis, for a skin whose centre entities are `tiled`.
  */
-export const NineSliceLayer = ({ textureKey, leftWidth, topHeight, rightWidth, bottomHeight, tintColor, layout, repeat, ref, alpha, visible }: NineSliceLayerProps) => {
+export const NineSliceLayer = ({ textureKey, leftWidth, topHeight, rightWidth, bottomHeight, tintColor: layerTint, tintMode, layout, repeat, ref, alpha, visible }: NineSliceLayerProps) => {
     // A repeating middle piece goes through `TilingSprite`, which needs a texture that is its
     // own source (see `getStandaloneThemeTexture`); the plain `NineSliceSprite` is happy with
     // the atlas-backed region.
-    const texture = usePixiTexture(textureKey, { standalone: !!repeat });
+    const loaded = usePixiTexture(textureKey, { standalone: !!repeat });
 
-    if (!texture) return null;
+    if (!loaded) return null;
+
+    // A `subtract` tint is the skin's pixels tinted once per colour (a canvas of its own), drawn untinted.
+    const { texture, tint: tintColor } = tintedLayerTexture(loaded, layerTint, tintMode);
 
     if (repeat) {
         return (

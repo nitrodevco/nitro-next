@@ -12,3 +12,5 @@ export * from './roomFurnitureCommands';
 export * from './roomPetCommands';
 export * from './roomThumbnailCameraCommands';
 export * from './roomUserCommands';
+export * from './secondaryRoomGeometry';
+export * from './secondaryRooms';

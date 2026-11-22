@@ -7,10 +7,12 @@
  * field the SDK lets a module pass, and give back what the SDK says it does.
  */
 import type * as Sdk from '@nitrodevco/client-module-sdk/types';
-import type { TemplateBinding, TemplateContext, TemplatePatchOp, TemplatePatchReport, TemplateWindows } from '@nitrodevco/nitro-theme';
+import type { TemplateBinding, TemplateContext, TemplateItemContext, TemplatePatchOp, TemplatePatchReport, TemplateWindows } from '@nitrodevco/nitro-theme';
 import type { ComponentProps } from 'react';
 
+import type { ChatBubbleTheme } from '#base/chat';
 import type * as Theme from '#base/theme';
+import type { LoadingScreenInput } from '#base/views/loading-screen/loadingScreenStyle';
 
 import type { ClientModuleApi } from './ClientModuleApi';
 
@@ -30,6 +32,7 @@ export type ClientModuleSdkConformance = [
     Assert<Sdk.ClientModuleTemplateBinding extends TemplateBinding ? true : false>,
     Assert<Same<TemplatePatchReport, Sdk.ClientModuleTemplatePatchReport>>,
     Assert<Same<TemplateContext, Sdk.ClientModuleTemplateContext>>,
+    Assert<Same<TemplateItemContext, Sdk.ClientModuleTemplateItem>>,
     Assert<TemplateWindows extends Sdk.ClientModuleTemplateWindows ? true : false>,
     Assert<SameKeys<ClientModuleApi['libs'], Sdk.ClientModuleApi['libs']>>,
     Assert<Same<ClientModuleApi['libs']['react'], Sdk.ClientModuleLibraries['react']>>,
@@ -38,4 +41,6 @@ export type ClientModuleSdkConformance = [
     Assert<Sdk.ClientModuleFrameProps extends ComponentProps<typeof Theme.Frame> ? true : false>,
     Assert<Sdk.ClientModuleThemeTextProps extends ComponentProps<typeof Theme.ThemeText> ? true : false>,
     Assert<Sdk.ClientModuleTemplateWindowProps extends ComponentProps<typeof Theme.TemplateWindow> ? true : false>,
+    Assert<Same<Sdk.ClientModuleLoadingScreen, LoadingScreenInput>>,
+    Assert<Same<Sdk.ClientModuleChatBubbles, ChatBubbleTheme>>,
 ];

@@ -7,7 +7,7 @@
 import { CatalogRequestedPageUtilities, ICatalogNode } from '@nitrodevco/nitro-api';
 
 import { catalogInvisiblePageVisited, loadCatalogPage } from '#base/commands';
-import { getCatalogWindowName, useCatalogActions, useCatalogRootNode, useCatalogStore, useCatalogStoreApi, useCatalogType } from '#base/context/catalog';
+import { getCatalogWindowName, isNonTabbedCatalog, useCatalogActions, useCatalogRootNode, useCatalogStore, useCatalogStoreApi, useCatalogType } from '#base/context/catalog';
 import { useWebSocketContext } from '#base/context/communication';
 
 import { useWindowVisibility } from '../system';
@@ -20,7 +20,8 @@ export const useCatalogNavigation = () => {
     const store = useCatalogStoreApi();
     const { setActiveNodes, setOpenNodes, setRequestedPage, setForceRefresh } = useCatalogActions();
     const { getNodeByPageId, getNodeByPageName, getNodesByOfferId } = useCatalogNodeActions();
-    const { isWindowVisible, show } = useWindowVisibility(getCatalogWindowName(useCatalogType()));
+    const catalogType = useCatalogType();
+    const { isWindowVisible, show } = useWindowVisibility(getCatalogWindowName(catalogType));
     const { send } = useWebSocketContext();
 
     /**
@@ -97,6 +98,46 @@ export const useCatalogNavigation = () => {
         if (targetNode.pageId > -1) loadCatalogPage(send, store, targetNode.pageId, offerId);
     };
 
+    /**
+     * `CatalogNavigator.showNodeContent`: a node with children shows the way down to its first
+     * page with a layout (each node on it activated, the page always), else its own page. A tab
+     * selected (`TopViewSelector.selectTabButton`) and the front page come through here. A node
+     * without children is activated too: the open tab and the header are store state here, not
+     * the tab bar's selection.
+     */
+    const showNodeContent = (node: ICatalogNode | undefined) => {
+        if (!node || !node.visible) return;
+
+        const path = node.children.length ? getPathToNodeWithLayout(node) : [];
+
+        if (!path.length) {
+            activateNode(node);
+
+            return;
+        }
+
+        path.forEach((pathNode, index) => {
+            if ((index === path.length - 1) || !activeNodes.includes(pathNode)) activateNode(pathNode);
+        });
+    };
+
+    /**
+     * `CatalogNavigator.openNavigatorAtNode` -> `openCategoryForNode`: the node's tab is selected,
+     * which shows its content (`selectTabByIndex`), its content is shown again, and the node is
+     * activated. So every link into an open catalogue asks for the tab's first page twice between
+     * the two requests of the page itself (official, lab28 + catlab 2026-10-26, 5/5).
+     */
+    const openNavigatorAtNode = (node: ICatalogNode) => {
+        let category = node.parent;
+
+        while (category?.parent?.parent) category = category.parent;
+
+        if (category?.parent) showNodeContent(category);
+
+        showNodeContent(category);
+        activateNode(node);
+    };
+
     /** `CatalogNavigator.openPageById(pageId, offerId)`: the page, with the offer on it picked when one is given. */
     const openPageById = (pageId: number, offerId: number = -1) => {
         if (!isWindowVisible) {
@@ -111,7 +152,8 @@ export const useCatalogNavigation = () => {
             if (!node) return;
 
             setForceRefresh();
-            activateNode(node, offerId);
+            loadCatalogPage(send, store, node.pageId, offerId);
+            openNavigatorAtNode(node);
         }
     };
 
@@ -126,6 +168,24 @@ export const useCatalogNavigation = () => {
         }
 
         return undefined;
+    };
+
+    /** `CatalogNavigator.loadFrontPage`: the content of the first visible node under the index. */
+    const loadFrontPage = () => {
+        if (rootNode) showNodeContent(getFirstNavigable(rootNode));
+    };
+
+    /**
+     * `CatalogNavigator.showIndex`, when an index comes in: the first tab is selected, which shows
+     * its content - the first visible root node, or in a catalogue without tabs (the builders club)
+     * the first root node. `onCatalogIndex` then loads the front page as well, so official asks for
+     * the front page twice on the first opening of a login (lab33 + catlab 2026-10-26, 2/2), and the
+     * builders club for its first page twice (catlab Q3).
+     */
+    const showIndex = () => {
+        if (!rootNode) return;
+
+        showNodeContent(isNonTabbedCatalog(catalogType) ? rootNode.children[0] : rootNode.children.find(child => child.visible));
     };
 
     /**
@@ -143,16 +203,15 @@ export const useCatalogNavigation = () => {
             const node = getNodeByPageName(pageName, rootNode);
 
             if (node && node.visible) {
-                activateNode(node);
+                loadCatalogPage(send, store, node.pageId, -1);
+                openNavigatorAtNode(node);
 
                 return;
             }
 
             if (node) catalogInvisiblePageVisited();
 
-            const front = getFirstNavigable(rootNode);
-
-            if (front) activateNode(front);
+            loadFrontPage();
         }
     };
 
@@ -167,9 +226,10 @@ export const useCatalogNavigation = () => {
             if (!nodes.length) return;
 
             setForceRefresh();
-            activateNode(nodes[0], offerId);
+            loadCatalogPage(send, store, nodes[0].pageId, offerId);
+            openNavigatorAtNode(nodes[0]);
         }
     };
 
-    return { activateNode, openPageById, openPageByName, openPageByOfferId };
+    return { activateNode, showIndex, loadFrontPage, openPageById, openPageByName, openPageByOfferId };
 };

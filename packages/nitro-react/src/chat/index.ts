@@ -2,6 +2,7 @@
 export * from './ChatBubbleContent';
 export * from './ChatBubbleData';
 export * from './ChatBubbleMotion';
+export * from './chatBubbleTheme';
 export * from './chatScreenPoint';
 export * from './ChatStyle';
 export * from './ChatStyleLibrary';

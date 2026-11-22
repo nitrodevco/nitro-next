@@ -25,6 +25,18 @@ export interface ClientModuleTemplateElementChanges {
     vars?: Record<string, ClientModuleTemplateValue>;
     /** Merged into the element's layout flags by key, as `vars` are. */
     params?: ClientModuleTemplateParams;
+    /**
+     * Its size limits - the layout's `width_min`, `width_max`, `height_min`, `height_max` in that
+     * order, `null` for none - replaced whole: a window its layout pins to one width takes another
+     * only with its limits.
+     */
+    limits?: [ number | null, number | null, number | null, number | null ];
+    /**
+     * The window itself (`''`) only, when it is a frame: where it first opens, in whole pixels
+     * from the desktop's top left. A root `style`, `color` and `position` go over what the window's
+     * code sets and over `frame.overrides`.
+     */
+    position?: { x: number; y: number };
 }
 
 /**
@@ -50,8 +62,18 @@ export interface ClientModuleTemplateParams {
  * an op's `element` is: `'help_button'`, `'help_button/@0'`) and the fields given replace the copy's;
  * without `like` it is built from the fields alone, `tag` then needed.
  */
-export interface ClientModuleTemplateElementInput {
-    name: string;
+export type ClientModuleTemplateElementInput = ClientModuleTemplateElementFields & (
+    | { name: string; bindAs?: string }
+    /**
+     * A name the window's code fills that the template lacks (the catalogue's `ctlg_txt1`, a page
+     * text its layout has no field for): the element takes it, so the code's binding (the page's
+     * text) reaches it. One the template already has is a conflict in `report`, and the element is
+     * named `<key>:<name>` (`name`, or `bindAs` without one).
+     */
+    | { name?: string; bindAs: string }
+);
+
+export interface ClientModuleTemplateElementFields {
     tag?: string;
     like?: string;
     x?: number;
@@ -79,20 +101,61 @@ export type ClientModuleTemplateInsertPosition = 'before' | 'after' | 'first' | 
  * inside it, keeping its name - so the window's code still finds and binds it. `wrap` puts a new
  * element in the element's place, at its rect unless given, and the element inside it at (0, 0):
  * wrapped in a `frame`, a part of a window becomes a separately framed pane of it (the window itself,
- * `''`, is not wrapped; `set: { style: 'none' }` on it leaves only its panes framed).
+ * `''`, is not wrapped; `set: { style: 'none' }` on it leaves only its panes framed). `bind`
+ * binds the element as `templates.bind` does, its values data: `${ctx.<key>}`, `${item.<key>}` (with
+ * `items`), `${text.<key>}` filled as it is drawn, a relative `asset` read from the module's base - the
+ * op a theme with no code writes in its `template-patches.json`. `arrange` moves and sizes the element
+ * after the window's layout as `templates.arrange` does, each of `x`, `y`, `width`, `height` a number or a
+ * formula over `${<element>.<measure>}`, `${window.<measure>}` and `${ctx.<key>}` (nitro-next
+ * `docs/template-patches.md`, "An arrangement as data").
  */
 export type ClientModuleTemplatePatchOp
     = | { element: string; set: ClientModuleTemplateElementChanges }
         | { element: string; remove: true }
         | { element: string; insert: ClientModuleTemplateInsertPosition; add: ClientModuleTemplateElementInput }
         | { element: string; move: ClientModuleTemplateInsertPosition; to: string }
-        | { element: string; wrap: ClientModuleTemplateElementInput };
+        | { element: string; wrap: ClientModuleTemplateElementInput }
+        | { element: string; bind: ClientModuleTemplateBindValues; items?: boolean; override?: boolean }
+        | { element: string; arrange: { x?: number | string; y?: number | string; width?: number | string; height?: number | string } };
+
+/** What a `bind` op gives: binding fields, each a value of its type or text with placeholders (`'icons/${item.index}.png'`). */
+export interface ClientModuleTemplateBindValues {
+    caption?: string;
+    htmlText?: string;
+    tooltip?: string;
+    asset?: string;
+    helpPage?: string;
+    visible?: boolean | string;
+    background?: boolean | string;
+    greyscale?: boolean | string;
+    disabled?: boolean | string;
+    selected?: boolean | string;
+    italic?: boolean | string;
+    underline?: boolean | string;
+    crop?: boolean | string;
+    color?: number | string;
+    backgroundColor?: number | string;
+    etchingColor?: number | string;
+    alpha?: number | string;
+    blend?: number | string;
+    rotation?: number | string;
+}
 
 /**
  * What a window tells extensions about what it shows, read-only, flat values (the infostand: the
  * user's `userId`, `figure`, `isOwnUser`, ...; nitro-next `docs/template-patches.md` lists each window's keys).
  */
 export type ClientModuleTemplateContext = Readonly<Record<string, string | number | boolean | null | undefined>>;
+
+/** Which clone of its list an item binding (`bind(..., { items: true })`) is drawing. */
+export interface ClientModuleTemplateItem {
+    /** The item's key, as the window's code gives it (a room's id). */
+    key: string;
+    /** Its place in its list, from 0. */
+    index: number;
+    /** The name of the window that holds it, `''` for an unnamed one. */
+    list: string;
+}
 
 /** One laid-out element of a window, as a post-layout hook moves and sizes it (Flash's `IWindow` rect). */
 export interface ClientModuleTemplateWindow {
@@ -155,4 +218,9 @@ export interface ClientModuleTemplatePatchReport {
     unmatched: { template: string; owner: string; element: string }[];
     /** Extension code that threw - ops or a binding made for a context, a post-layout hook - and was skipped. */
     errors: { template: string; owner: string; message: string }[];
+    /**
+     * `set` fields that matched but change nothing the window draws - its code binds that
+     * field of the element (a caption it sets) - once the window has been drawn; not counted in `applied`.
+     */
+    ineffective?: { template: string; owner: string; element: string; property: string }[];
 }

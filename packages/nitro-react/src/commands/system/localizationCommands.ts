@@ -111,12 +111,36 @@ const loadDefaultEmbedLocalizations = (language: string, fallback: boolean): { l
 };
 
 /**
+ * Not Flash's: the theme the player draws gives texts of its own (`text.overrides`, `{ key: text }`,
+ * Turbo's merged variable: a theme's texts, without the keys staff changed on the hotel). They lie
+ * over the hotel's texts wherever the hotel's are laid down, so a language swap or a texts reload
+ * keeps them.
+ */
+const themeTexts = (): Record<string, string> => {
+    const value: unknown = systemStore.getState().config['text.overrides'];
+    let texts: unknown = value;
+
+    // The object, or the object as JSON text, as every merged variable is read.
+    if (typeof value === 'string') {
+        try {
+            texts = JSON.parse(value) as unknown;
+        } catch {
+            return {};
+        }
+    }
+
+    if (!texts || (typeof texts !== 'object') || Array.isArray(texts)) return {};
+
+    return Object.fromEntries(Object.entries(texts).filter((entry): entry is [ string, string ] => typeof entry[1] === 'string'));
+};
+
+/**
  * The boot's texts: the default language's default localizations from the library's bundle, with
  * the hotel's texts over them, and every `${key}` between them resolved. A hotel whose config names
  * no template bundle url, or whose bundle fails, starts with the hotel's texts alone.
  */
 export const initializeLocalizations = async (externalTexts: Record<string, string>): Promise<void> => {
-    hotelTexts = externalTexts;
+    hotelTexts = { ...externalTexts, ...themeTexts() };
 
     const defaults = (await loadTemplateBundle(LOCALIZATION_LIBRARY)) ? loadDefaultEmbedLocalizations(getDefaultLocalizationLanguage(), true) : undefined;
 
@@ -125,6 +149,45 @@ export const initializeLocalizations = async (externalTexts: Record<string, stri
     activeLanguage = defaults?.language ?? '';
 
     systemStore.getState().setLocalization(resolveLocalizationReferences({ ...defaults?.texts, ...hotelTexts }));
+};
+
+/**
+ * Not Flash's: the hotel's texts read again from `url` (live reload, `theme/themeLive.ts`), the theme's
+ * own (`text.overrides`) over them, and laid over the texts shown key by key, as `parseLocalizationData`
+ * updates them: only a text that changed is set,
+ * its `${key}` references read from the texts shown. Resolves how many changed; 0 when the file did not load.
+ */
+export const reloadHotelTexts = async (url: string): Promise<number> => {
+    try {
+        const body = await fetchExternalTexts(url);
+
+        if (!isLocalizationData(body)) return 0;
+
+        // The theme's own texts lie over the hotel's, as they do at boot.
+        const next = { ...parseLocalizationData(body), ...themeTexts() };
+        const changed: Record<string, string> = {};
+
+        for (const key in next) {
+            if (key.length && next[key].length && (next[key] !== hotelTexts[key])) changed[key] = next[key];
+        }
+
+        hotelTexts = { ...hotelTexts, ...changed };
+
+        const shown = systemStore.getState().localizations;
+        const resolved: Record<string, string> = {};
+
+        for (const [ key, text ] of Object.entries(changed)) resolved[key] = text.includes('${') ? text.replace(/\$\{([^}]+)\}/g, (_, ref: string) => changed[ref] ?? shown[ref] ?? `\${${ref}}`) : text;
+
+        const count = Object.keys(resolved).length;
+
+        if (count) systemStore.getState().setLocalization(resolved);
+
+        return count;
+    } catch (err) {
+        NitroLogger.error(err);
+
+        return 0;
+    }
 };
 
 /**
@@ -266,9 +329,11 @@ const loadLocalizationFromUrl = async (hashesUrl: string): Promise<boolean> => {
             if (!localizations[key].length) delete localizations[key];
         }
 
-        hotelTexts = { ...hotelTexts, ...localizations };
+        const shown = { ...localizations, ...themeTexts() };
 
-        systemStore.getState().setLocalization(localizations);
+        hotelTexts = { ...hotelTexts, ...shown };
+
+        systemStore.getState().setLocalization(shown);
 
         return true;
     } catch (err) {

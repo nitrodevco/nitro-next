@@ -1,4 +1,4 @@
-import { BuildersClubQueryFurniCountComposer, GetBundleDiscountRulesetComposer, GetCatalogIndexComposer, GetClubGiftInfoComposer, GetGiftWrappingConfigurationComposer, GetMarketplaceConfigurationComposer } from '@nitrodevco/nitro-packets';
+import { BuildersClubQueryFurniCountComposer, GetBundleDiscountRulesetComposer, GetCatalogIndexComposer, GetGiftWrappingConfigurationComposer, GetMarketplaceConfigurationComposer } from '@nitrodevco/nitro-packets';
 import { useEffect } from 'react';
 
 import { useCatalogRootNode, useCatalogStoreApi, useCatalogType } from '#base/context/catalog';
@@ -45,7 +45,10 @@ export const CatalogComponent = () => {
     useEffect(() => {
         if (!isVisible || rootNode) return;
 
-        send(new GetGiftWrappingConfigurationComposer({}), new GetClubGiftInfoComposer({}), new GetCatalogIndexComposer({ catalogType }), new BuildersClubQueryFurniCountComposer({}), new GetBundleDiscountRulesetComposer({}), new GetMarketplaceConfigurationComposer({}));
+        // `initCatalog` in its order - `createMarketPlace`, `getGiftWrappingConfiguration`, `initBundleDiscounts`, the builders
+        // club count - then `refreshCatalogIndex` (official client capture 2026-10-26, catlab Q1). The club gift info is the club
+        // gift widget's and the club centre's to ask for (`ClubGiftController.set widget`), not the catalogue's.
+        send(new GetMarketplaceConfigurationComposer({}), new GetGiftWrappingConfigurationComposer({}), new GetBundleDiscountRulesetComposer({}), new BuildersClubQueryFurniCountComposer({}), new GetCatalogIndexComposer({ catalogType }));
     }, [ isVisible, rootNode, catalogType ]);
 
     // The purchase dialogs are windows of their own: a drop into the room opens the confirmation

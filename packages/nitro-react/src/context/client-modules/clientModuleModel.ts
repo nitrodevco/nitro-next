@@ -1,5 +1,5 @@
 /**
- * Not Flash's: what client module API 1.1 hands a module about the client - the read-only state
+ * Not Flash's: what the client module API hands a module about the client - the read-only state
  * (`api.state`), the room events (`api.events`), the context menu buttons (`api.contextMenu`) and the
  * chat commands (`api.chatCommands`) - and the rules that turn the client's own stores into them.
  * Kept free of runtime imports so it can be tested under Node as it stands; the wiring is
@@ -109,6 +109,72 @@ export interface ClientModuleRoomState {
     isOwner: boolean;
     /** `RoomControllerLevelEnum`: 0 none, 1 rights ... 4 owner, 5 moderator. */
     controllerLevel: number;
+}
+
+/** What the pointer did over the room: `move` is hover. */
+export type ClientModuleRoomPointerType = 'move' | 'down' | 'up' | 'click' | 'doubleClick' | 'rightClick';
+
+/** A pointer event over the room that the room did not use (`api.room.onUnhandledPointer`). */
+export interface ClientModuleRoomPointerEvent {
+    type: ClientModuleRoomPointerType;
+    /** Where, in the stage pixels the client's windows are laid out in. */
+    x: number;
+    y: number;
+    altKey: boolean;
+    ctrlKey: boolean;
+    shiftKey: boolean;
+    /**
+     * The tile of the room's floor plane (height 0) under the pointer, in the room's tile coordinates:
+     * also off the room's floor, so negative or past its size.
+     */
+    tile: { x: number; y: number } | undefined;
+    /**
+     * The floor tile of a secondary room (`api.room.createSecondary`) under the pointer, in that room's
+     * tile coordinates and with its height: the room drawn last first; `undefined` over none.
+     */
+    secondaryTile: { roomId: number; x: number; y: number; z: number } | undefined;
+}
+
+/** A place in a room's tile coordinates. */
+export interface ClientModuleRoomTile {
+    x: number;
+    y: number;
+    z: number;
+}
+
+/** How a secondary room is drawn (`api.room.createSecondary`, `keepWhenLeft`, `setOptions`). */
+export interface ClientModuleSecondaryRoomOptions {
+    /** The tile of the room on screen that the secondary room's tile (0, 0, 0) is drawn on: 0, 0, 0 if left out. */
+    offset?: ClientModuleRoomTile;
+    /** 0 (unseen) to 1 (as the room on screen, the default). */
+    alpha?: number;
+    /** 0 (its own colours, the default) to 1 (grey). */
+    greyscale?: number;
+    /** A colour (0xRRGGBB) every pixel of it is multiplied by: 0xffffff, none, the default. */
+    tint?: number;
+}
+
+/**
+ * `drawn`; `waiting` - kept by `keepWhenLeft`, the session still in it; `entered` - the session went
+ * into it, and the server's own packets draw it now; `disposed`.
+ */
+export type ClientModuleSecondaryRoomStatus = 'drawn' | 'waiting' | 'entered' | 'disposed';
+
+/** A room drawn beside the room on screen (`api.room.createSecondary`). */
+export interface ClientModuleSecondaryRoom {
+    readonly roomId: number;
+    readonly status: ClientModuleSecondaryRoomStatus;
+    /**
+     * Feeds the room a core room packet - a plugin message's carried packet field (`{ header, packet }`)
+     * or what `api.packets.parseCore` read - its floor and height maps, papers, furniture, avatars and
+     * their updates, through the client's own room handlers: whether it was applied (a warning names
+     * why not).
+     */
+    apply: (packet: unknown) => boolean;
+    /** Changes how it is drawn; what `options` leaves out stays as it was. */
+    setOptions: (options: ClientModuleSecondaryRoomOptions) => void;
+    /** Takes it away; a room the session went into stays. */
+    dispose: () => void;
 }
 
 /** Everything `api.state` reads, frozen: a part keeps its identity until something in it changes. */

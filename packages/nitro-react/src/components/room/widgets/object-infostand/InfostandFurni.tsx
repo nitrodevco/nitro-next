@@ -181,7 +181,11 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
 
     const details: InfostandFurniDetails = {
         variant,
+        objectId,
+        kind: furniData.isWallItem ? 'wall' : 'floor',
+        typeId: furniData.furnitureData?.id ?? -1,
         name: furniData.name,
+        description: furniData.description ?? '',
         // Flash draws the room object itself (`getRoomObjectImage`): a poster is its own `poster<id>`,
         // the furnidata's one `poster` item has no asset.
         className: roomObject.type.startsWith('poster') ? roomObject.type : (furniData.furnitureData?.className ?? roomObject.type),

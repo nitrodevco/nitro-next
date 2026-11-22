@@ -159,10 +159,9 @@ export const registerRoomFurnitureHandlers = ({ subscribe, send }: WebSocketConn
             };
 
             if (data.delay > 0) {
+                // The room the packet was for, while it lasts: a client module's secondary room is not the one on screen.
                 setTimeout(() => {
-                    const room = getRoom();
-
-                    if (room) remove(room);
+                    if (!room.disposed) remove(room);
                 }, data.delay);
             } else {
                 remove(room);

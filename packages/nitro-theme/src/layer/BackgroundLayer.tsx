@@ -1,5 +1,5 @@
 import { BoxLayout } from '../Box';
-import { deriveHsvLayerColor, SpriteFrame } from '../utils';
+import { deriveHsvLayerColor, SpriteFrame, ThemeTintMode } from '../utils';
 import { CompositeLayer, CompositeLayerPieceProps } from './CompositeLayer';
 import { insetLayout, LayerInsets, LayerNodeProps } from './layerLayout';
 import { NineSliceLayer, NineSliceRepeatAxis } from './NineSliceLayer';
@@ -21,9 +21,11 @@ export type BackgroundLayerConfig
  * place themselves inside the component's box instead. The node props reach the drawn object of
  * a single-node layer (`isSingleNodeLayer`).
  */
-export const BackgroundLayer = ({ layer, tintColor, layout, ref, alpha, visible }: {
+export const BackgroundLayer = ({ layer, tintColor, tintMode, layout, ref, alpha, visible }: {
     layer: BackgroundLayerConfig | undefined;
     tintColor?: string;
+    /** How `tintColor` colours the art: multiply (the client's `ColorTransform`) unless `subtract` (`ThemeTintMode`). */
+    tintMode?: ThemeTintMode;
     layout?: BoxLayout;
 } & LayerNodeProps) => {
     if (!layer) return null;
@@ -50,6 +52,7 @@ export const BackgroundLayer = ({ layer, tintColor, layout, ref, alpha, visible 
             <CompositeLayer
                 pieces={layer.pieces}
                 tintColor={tintColor}
+                tintMode={tintMode}
             />
         );
         case 'sprite': return (
@@ -57,6 +60,7 @@ export const BackgroundLayer = ({ layer, tintColor, layout, ref, alpha, visible 
                 textureKey={layer.textureKey}
                 frame={layer.frame}
                 tintColor={tintColor}
+                tintMode={tintMode}
                 layout={layout}
                 ref={ref}
                 alpha={alpha}
@@ -73,6 +77,7 @@ export const BackgroundLayer = ({ layer, tintColor, layout, ref, alpha, visible 
                 <TileLayer
                     textureKey={layer.textureKey}
                     tintColor={tintColor}
+                    tintMode={tintMode}
                     ref={ref}
                     alpha={alpha}
                     visible={visible}
@@ -98,6 +103,7 @@ export const BackgroundLayer = ({ layer, tintColor, layout, ref, alpha, visible 
                 bottomHeight={layer.bottomHeight}
                 repeat={layer.repeat}
                 tintColor={tintColor}
+                tintMode={tintMode}
                 layout={layout}
                 ref={ref}
                 alpha={alpha}

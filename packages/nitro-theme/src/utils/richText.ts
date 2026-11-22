@@ -32,6 +32,8 @@ export type RichTextBlock
         depth: number;
         /** A list item's marker: `•`, or `1.` in an ordered list. */
         bullet?: string;
+        /** Only line breaks: blank lines (`markup` a space per line), which the text's trimming keeps. */
+        blank?: boolean;
     }
     | { kind: 'image'; src: string; alt: string; width?: number; height?: number; align: RichTextAlign };
 
@@ -176,15 +178,17 @@ export const parseRichText = (html: string, options: RichTextOptions = {}): Rich
 
     const currentAlign = () => [ ...blockStack ].reverse().find(block => block.align)?.align ?? 'left';
 
-    /** Ends the block being written, if it has any text. */
+    /** Ends the block being written, if it has any text - or, with none, a line break: a blank line per break. */
     const flush = () => {
         // Inline tags still open run on into the next block: close them here and open them there.
         const open = inline.map(entry => entry.close).reverse().join('');
         const text = markup + open;
+        const breaks = markup.match(/<br>/g)?.length ?? 0;
+        const block = { role: pending?.role ?? 'p', align: pending?.align ?? currentAlign(), depth: lists.length, ...(pending?.bullet && { bullet: pending.bullet }) };
 
-        if (markup.replace(/<[^>]*>/g, '').trim().length) {
-            blocks.push({ kind: 'text', role: pending?.role ?? 'p', markup: text.trim(), align: pending?.align ?? currentAlign(), depth: lists.length, ...(pending?.bullet && { bullet: pending.bullet }) });
-        }
+        if (markup.replace(/<[^>]*>/g, '').trim().length) blocks.push({ kind: 'text', ...block, markup: text.trim() });
+        // A browser gives an empty block's break a line (`<p><br></p>`, an editor's blank line): a space per line.
+        else if (breaks) blocks.push({ kind: 'text', ...block, markup: Array<string>(breaks).fill(' ').join('<br>'), blank: true });
 
         markup = inline.map(entry => entry.open).join('');
         pending = undefined;

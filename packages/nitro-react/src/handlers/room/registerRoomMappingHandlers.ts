@@ -1,13 +1,16 @@
-import { RoomObjectVariableEnum, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
+import { IRoom, RoomObjectVariableEnum, RoomZoomEvent, SpecialRoomEffectType } from '@nitrodevco/nitro-api';
 import { FloorHeightMapMessage, HeightMapMessage, HeightMapMessageType, HeightMapUpdateMessage, RoomEntryTileMessage, RoomPropertyMessage, RoomVisualizationSettingsMessage, SpecialRoomEffectMessage } from '@nitrodevco/nitro-packets';
 import { RoomPlaneParser, RoomRotatingEffect, RoomShakingEffect } from '@nitrodevco/nitro-renderer';
 
+import { noteRoomFloorModel, wasDrawnBeforeEntry } from '#base/commands';
 import { WebSocketConnection } from '#base/context/communication';
-import { getRoom, roomStore } from '#base/context/room';
+import { getRoom, inRoomStoreScope, roomStore } from '#base/context/room';
 import { configInteger } from '#base/context/system';
 import { buildRoomWallGeometry } from '#base/utils';
 
 import { on, subscribeAll } from '../packetSubscriptions';
+
+type EntryTile = { x: number; y: number; dir: number };
 
 /**
  * The model half of Flash's `RoomMessageHandler`: the floor plan, the two height maps, the
@@ -16,7 +19,11 @@ import { on, subscribeAll } from '../packetSubscriptions';
  */
 export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) => {
     const { setHeightMap, setHeightMapUpdates } = roomStore.getState();
-    let entryTile: { x: number; y: number; dir: number } | undefined = undefined;
+    let entryTile: EntryTile | undefined = undefined;
+    // A client module's secondary room is told its own entry tile (`runInRoomStoreScope`), kept for its own map.
+    const secondaryEntryTiles = new WeakMap<IRoom, EntryTile>();
+    // The map each room was built from: one the session enters while a module draws it is not built again.
+    const builtMaps = new WeakMap<IRoom, string>();
 
     // Flash `HeightMapMessageParser`: the stacking-blocked flag is bit `room.stacking_blocked_mask_bit`
     // (`RoomMessageHandler.onHeightMap` reads it per message, default 14; Habbo's variables set 15), the bits
@@ -48,7 +55,7 @@ export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) 
         return decodeIsRoomTile(data.heights[(y * data.width) + x]);
     };
 
-    const parseMapData = (modelData: string, wallHeight: number) => {
+    const parseMapData = (modelData: string, wallHeight: number, entry: EntryTile | undefined) => {
         const model = modelData.split('\r');
 
         let width = 0;
@@ -128,7 +135,7 @@ export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) 
                 if (
                     ((y > 0 && y < height - 1) || (x > 0 && x < width - 1))
                     && !(tileHeight === RoomPlaneParser.TILE_BLOCKED)
-                    && (!entryTile || (x === entryTile.x && y === entryTile.y))
+                    && (!entry || (x === entry.x && y === entry.y))
                 ) {
                     if (
                         (heightMap[y - 1]?.[x] ?? RoomPlaneParser.TILE_BLOCKED) === RoomPlaneParser.TILE_BLOCKED
@@ -176,11 +183,15 @@ export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) 
 
     return subscribeAll(subscribe, [
         on(RoomEntryTileMessage, (data) => {
-            entryTile = {
+            const tile = {
                 x: data.x,
                 y: data.y,
                 dir: data.rotation,
             };
+            const room = getRoom();
+
+            if (room && inRoomStoreScope()) secondaryEntryTiles.set(room, tile);
+            else entryTile = tile;
         }),
 
         on(FloorHeightMapMessage, (data) => {
@@ -188,10 +199,18 @@ export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) 
 
             if (!room) return;
 
-            const { mapData, wallGeometry } = parseMapData(data.modelData, data.fixedWallsHeight);
+            const map = `${data.fixedWallsHeight}:${data.modelData}`;
 
-            room.applyRoomMap(mapData);
-            room.setLegacyGeometry(wallGeometry);
+            noteRoomFloorModel(room, data.modelData);
+
+            if (!(wasDrawnBeforeEntry(room) && (builtMaps.get(room) === map))) {
+                const { mapData, wallGeometry } = parseMapData(data.modelData, data.fixedWallsHeight, inRoomStoreScope() ? secondaryEntryTiles.get(room) : entryTile);
+
+                room.applyRoomMap(mapData);
+                room.setLegacyGeometry(wallGeometry);
+
+                builtMaps.set(room, map);
+            }
 
             // `RoomEngine.initializeRoom`: where the camera rests until there is an avatar to follow.
             room.setRoomValue(RoomObjectVariableEnum.CameraInitX, data.cameraInitX);
@@ -237,6 +256,9 @@ export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) 
 
             setHeightMap(width, height, heights, stackingBlocked, validTiles);
             room.resetTileObjectMap(width, height);
+
+            // A room the session entered while a module drew it has its furniture already.
+            if (wasDrawnBeforeEntry(room)) room.refreshTileObjectMap();
         }),
 
         on(HeightMapUpdateMessage, (data) => {

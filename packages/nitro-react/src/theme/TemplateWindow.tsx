@@ -3,15 +3,16 @@
  * client's texts and bitmaps. What the window's code does with its named elements comes in as
  * `bindings`.
  */
-import { colorTemplateByTags, findTemplateChild, isTemplateInspecting, subscribeTemplateInspecting, Template, TemplateBindings, TemplateContext, TemplateInspectContext, TemplateInspectWindowContext, TemplateView, TemplateViewProps } from '@nitrodevco/nitro-theme';
+import { Box, colorTemplateByTags, EMPTY_TEMPLATE_CONTEXT, findTemplateChild, isTemplateInspecting, subscribeTemplateInspecting, Template, TemplateBindings, TemplateContext, TemplateInspectContext, TemplateInspectWindowContext, TemplateView, TemplateViewProps } from '@nitrodevco/nitro-theme';
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
 
 import { openClientLink } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useSystemStore, useTranslation } from '#base/context/system';
 
-import { useTemplateExtensionArrange, useTemplateExtensionBindings } from './templatePatches';
-import { useTemplate } from './useTemplate';
+import { noteIneffectiveSets, templateRootLook, useTemplateExtensionArrange, useTemplateExtensionBindings, useTemplateExtensionItemBindings, useTemplatePatchList } from './templatePatches';
+import { useThemeArt } from './themeLive';
+import { templateRootOffset, useTemplate } from './useTemplate';
 
 export interface TemplateWindowProps {
     id: string;
@@ -60,6 +61,8 @@ export const TemplateWindow = ({ id, part, bindings, arrange, context, frame, wi
     // The bindings extensions give the elements they added (`api.templates.bind`), under the window's
     // own - or over them, for an override.
     const allBindings = useTemplateExtensionBindings(id, bindings, context);
+    // Their item bindings, over the code's in each clone of a list (`bind(..., { items: true })`); none while none is added.
+    const itemBindings = useTemplateExtensionItemBindings(id, context);
     // What extensions do after the window's own code has laid it out (`api.templates.arrange`).
     const allArrange = useTemplateExtensionArrange(id, arrange, context);
     const template = useMemo(() => {
@@ -92,22 +95,46 @@ export const TemplateWindow = ({ id, part, bindings, arrange, context, frame, wi
     // drawn in another's element starts its own element chain). Turning it on redraws the view once.
     const inspecting = useSyncExternalStore(subscribeTemplateInspecting, isTemplateInspecting);
     const inspectWindow = useMemo(() => ({ id, part, context }), [ id, part, context ]);
+    // A root patch's frame look (`style`, `color`, `position`), over what the code binds: the window's own frame only.
+    const patchList = useTemplatePatchList();
+    // A live reload that changed a font or a text style draws the window anew (`themeLive.ts`).
+    const art = useThemeArt();
+    const rootOverride = (part === undefined) ? templateRootLook(id, context, patchList) : undefined;
 
     if (!template) return null;
 
-    const view = (
+    // What of the patches the window's bindings leave undrawn is said, not counted as applied.
+    if (part === undefined) noteIneffectiveSets(id, template, context ?? EMPTY_TEMPLATE_CONTEXT, allBindings, patchList);
+
+    // Not Flash's: a root `x`/`y` patched on a window its code places (no frame of its own) moves it from that place.
+    const moved = ((part === undefined) && !frame) ? templateRootOffset(id, template) : undefined;
+
+    const drawn = (
         <TemplateView
-            key={inspecting ? 'inspected' : 'plain'}
+            key={`${inspecting ? 'inspected' : 'plain'}-${art}`}
             template={template}
             bindings={allBindings}
+            itemBindings={itemBindings}
             arrange={allArrange}
             frame={windowFrame}
+            rootOverride={rootOverride}
             width={width}
             height={height}
             resolveText={resolveText}
             imageUrl={imageUrl}
         />
     );
+
+    const view = moved
+        ? (
+                <Box
+                    pointerTransparent
+                    layout={{ position: 'relative', left: moved.x, top: moved.y }}
+                >
+                    {drawn}
+                </Box>
+            )
+        : drawn;
 
     if (!inspecting) return view;
 

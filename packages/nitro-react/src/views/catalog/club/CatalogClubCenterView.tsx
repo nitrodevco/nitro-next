@@ -32,13 +32,13 @@
  * which is the bitmap drawn.
  */
 import { FederatedPointerEvent } from 'pixi.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { isClubKickbackEnabled, openClubCatalogPage, openClubHelpPage, removeClubCenter, showClubCenter, showOfferVideo } from '#base/commands';
 import { useCatalogStore, useCatalogStoreApi } from '#base/context/catalog';
 import { useWebSocketContext } from '#base/context/communication';
 import { getOfferCenterShowingVideo, useOfferCenterStore } from '#base/context/offer-center';
-import { useBadgeImageUrl, useConfigData, useTranslation } from '#base/context/system';
+import { useBadgeImageUrl, useConfigData, useTranslation, useWindowParams } from '#base/context/system';
 import { useOwnClubSubscription, useOwnUserFigure, useOwnUserGender } from '#base/context/user';
 import { GetDesktopSize, getGlobalRect, TemplateWindow, useAvatarImageTexture } from '#base/theme';
 import { CLUB_STATUS_ACTIVE, GetFriendlyTime, replaceFirst, resolveClubStatus } from '#base/utils';
@@ -79,9 +79,16 @@ export const CatalogClubCenterView = () => {
     // `createAvatarImage(figure, "h")`, `setDirection("full", 4)`, `getCroppedImage("full")`: the figure cut to its own bounds.
     const avatar = useAvatarImageTexture(figure, gender, { direction: 4, cropped: true });
 
+    const { openedAt } = useWindowParams('club_center');
+    const created = useRef(false);
+
+    // `showClubCenter` for each `habboUI/open/hccenter`: an open club centre is not built again,
+    // but its data is asked for again when old (bought something, opened it from the purse again).
     useEffect(() => {
-        showClubCenter(send, store, performance.now());
-    }, [ send, store ]);
+        showClubCenter(send, store, performance.now(), !created.current);
+
+        created.current = true;
+    }, [ send, store, openedAt ]);
 
     const kickbackEnabled = isClubKickbackEnabled(config);
     const status = resolveClubStatus(subscription);

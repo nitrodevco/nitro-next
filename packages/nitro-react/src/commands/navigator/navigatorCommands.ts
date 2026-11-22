@@ -164,10 +164,12 @@ const WINDOW_PREFERENCES_INTERVAL_MS = 5000;
  *
  * The first run takes the window as it was created (`createMainWindow`): the preferences the server
  * sent, or the window's own place and size when there were none - with the left pane counted as
- * hidden, which is `_lastLeftPaneHidden`'s default.
+ * hidden, which is `_lastLeftPaneHidden`'s default. A window a theme placed (`windowPlacedByTheme`)
+ * is taken as it is once laid out, so the theme's place goes to the server only when the player
+ * moves or resizes the window: a place they saved on another device stays theirs.
  */
 export const syncNavigatorWindowPreferences = (send: Send) => {
-    const { windowGeometry, sentWindowPreferences, leftPaneHidden, preferences, setSentWindowPreferences } = navigatorStore.getState();
+    const { windowGeometry, sentWindowPreferences, leftPaneHidden, preferences, windowPlacedByTheme, setSentWindowPreferences } = navigatorStore.getState();
 
     if (!windowGeometry) return;
 
@@ -175,6 +177,12 @@ export const syncNavigatorWindowPreferences = (send: Send) => {
     const leftPaneVisible = !leftPaneHidden;
 
     if (!sentWindowPreferences) {
+        if (windowPlacedByTheme) {
+            if (windowGeometry.height > 0) setSentWindowPreferences({ ...windowGeometry, leftPaneVisible, sentAt: now });
+
+            return;
+        }
+
         setSentWindowPreferences(preferences
             ? { x: preferences.windowX, y: preferences.windowY, width: preferences.windowWidth, height: preferences.windowHeight, leftPaneVisible, sentAt: now }
             : { ...windowGeometry, leftPaneVisible: false, sentAt: now });

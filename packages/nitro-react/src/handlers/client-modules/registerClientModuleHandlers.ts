@@ -1,6 +1,6 @@
 import { TurboClientModulesMessage, TurboPluginMessagesMessage, TurboServerCapabilitiesMessage } from '@nitrodevco/nitro-packets';
 
-import { clearClientModuleWebSession, setClientExtensionReportConnection, stopClientModules, stopPluginMessages, syncClientModules, syncPluginMessages } from '#base/commands';
+import { clearClientModuleWebSession, clientModuleCapabilities, setClientExtensionReportConnection, stopClientModules, stopPluginMessages, syncClientModules, syncPluginMessages } from '#base/commands';
 import { TURBO_CLIENT_MESSAGES_CAPABILITY, TURBO_CLIENT_MODULES_CAPABILITY } from '#base/context/client-modules';
 import { WebSocketConnection } from '#base/context/communication';
 import { userStore } from '#base/context/user';
@@ -38,6 +38,8 @@ export const registerClientModuleHandlers = (connection: WebSocketConnection) =>
 
     return () => {
         unsubscribe();
+        // Nothing is asked again of a connection that is gone.
+        clientModuleCapabilities.stop();
         setClientExtensionReportConnection(undefined);
         clearClientModuleWebSession();
         void stopClientModules();

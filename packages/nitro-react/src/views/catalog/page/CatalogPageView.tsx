@@ -18,7 +18,7 @@
  * `CatalogViewer.showCatalogPage` gives the page the container's height (`window.height =
  * container.height`); the window's own width stands, and the container follows it.
  */
-import { Template, TemplateBindings, TemplateElement, TemplateWindows } from '@nitrodevco/nitro-theme';
+import { Template, TemplateBindings, TemplateContext, TemplateElement, TemplateWindows } from '@nitrodevco/nitro-theme';
 import { ReactNode, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
 import { onCatalogPageLink } from '#base/commands';
@@ -101,6 +101,8 @@ const CatalogPageTemplate = ({ page, templateId, template, templates, containers
     }
 
     const embeddedArranges: { path: string; arrange: NonNullable<CatalogWidgetView['arrange']> }[] = [];
+    // Not Flash's: what the page shows, for a theme's patches and bindings of its window.
+    let context: TemplateContext = { layoutCode: page.layoutCode, pageId: page.pageId };
 
     for (const container of containers) {
         const view = views.get(container.path);
@@ -118,9 +120,11 @@ const CatalogPageTemplate = ({ page, templateId, template, templates, containers
 
         if (widgetTemplate) {
             // `attachWidgetView`: the widget's view replaces what the container holds.
-            mergeBinding(bindings, container.path, { items: [ { key: view.template ?? '', from: widgetTemplate, bindings: view.bindings, arrange: view.arrange } ] });
+            mergeBinding(bindings, container.path, { items: [ { key: view.template ?? '', from: widgetTemplate, bindings: view.bindings, arrange: view.arrange, context: view.context } ] });
             continue;
         }
+
+        if (view.context) context = { ...context, ...view.context };
 
         for (const [ key, binding ] of Object.entries(view.bindings)) mergeBinding(bindings, key ? `${container.path}/${key}` : container.path, binding);
 
@@ -140,6 +144,7 @@ const CatalogPageTemplate = ({ page, templateId, template, templates, containers
             id={templateId}
             bindings={bindings}
             arrange={arrange}
+            context={context}
             height={height}
         />
     );

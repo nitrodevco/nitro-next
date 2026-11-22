@@ -28,18 +28,18 @@
  * Flash lays the block out again on every resize from where the photo already is, so it creeps
  * towards a different resting place; here the first layout's formula is used at every size.
  *
- * Not Flash's: a hotel restyles it with `loading.screen` (`loadingScreenStyle.ts`) - its colours, a
- * picture behind it, a logo and a panel in place of the photo frame - as no client module has loaded
- * yet to draw one.
+ * Not Flash's: a hotel restyles it with `loading.screen` (`loadingScreenStyle.ts`) - its colours,
+ * pictures behind it (placed, sized and tiled as CSS backgrounds are), a logo and a panel in place of
+ * the photo frame, the parts' order and the line's wrap - as no client module has loaded yet to draw one.
  */
 import { ColorMatrix, ColorMatrixFilter, Graphics } from 'pixi.js';
-import { useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
 import { useViewportSize } from '#base/hooks';
 import { Box, Region, ThemeImage, ThemeText, useTextureFromUrl } from '#base/theme';
 
-import { LoadingScreenStyle, saturationMatrix } from './loadingScreenStyle';
+import { LOADING_SCREEN_PARTS, LoadingScreenLayer, LoadingScreenPart, LoadingScreenStyle, placeLoadingScreenLayer, saturationMatrix } from './loadingScreenStyle';
 
 /** `HabboLoadingScreen`'s background. */
 const BACKGROUND = '#0e151c';
@@ -64,6 +64,8 @@ const BAR_FILL_BOTTOM = '#8ca1ad';
 const SPACING = 10;
 /** The text's distance below the photo. */
 const TEXT_GAP = 50;
+/** The gap above each part that follows another: the logo's 10 under it, the bar 10 under the text, the percentage 5 under the bar. */
+const PART_GAPS: Record<LoadingScreenPart, number> = { logo: SPACING, text: SPACING, bar: SPACING, percent: SPACING / 2 };
 
 /** `onBarProgressEvent`'s timer. */
 const BAR_TICK_MS = 750;
@@ -128,9 +130,40 @@ export interface LoadingScreenViewProps {
     look?: LoadingScreenStyle;
 }
 
-/** `backgroundImage`: covering the screen, centred, at its `backgroundSaturation`. */
-const LoadingBackgroundImage = ({ url, saturation, width, height }: { url: string; saturation?: number; width: number; height: number }) => {
-    const texture = useTextureFromUrl(url);
+/** One picture of the background, placed as CSS would place it (`placeLoadingScreenLayer`). */
+const LoadingBackgroundLayer = ({ layer, width, height }: { layer: LoadingScreenLayer; width: number; height: number }) => {
+    const texture = useTextureFromUrl(layer.image);
+
+    if (!texture) return null;
+
+    const at = placeLoadingScreenLayer(layer, texture.width, texture.height, width, height);
+
+    return at.tiled
+        ? (
+                <pixiTilingSprite
+                    texture={texture}
+                    x={at.x}
+                    y={at.y}
+                    width={at.width}
+                    height={at.height}
+                    tileScale={{ x: at.scale, y: at.scale }}
+                    tilePosition={{ x: at.tileX, y: at.tileY }}
+                    eventMode="none"
+                />
+            )
+        : (
+                <pixiSprite
+                    texture={texture}
+                    scale={at.scale}
+                    x={at.x}
+                    y={at.y}
+                    eventMode="none"
+                />
+            );
+};
+
+/** `backgroundImage` and `layers`, bottom to top, at their `backgroundSaturation`. */
+const LoadingBackground = ({ layers, saturation, width, height }: { layers: readonly LoadingScreenLayer[]; saturation?: number; width: number; height: number }) => {
     const filters = useMemo(() => {
         if ((saturation === undefined) || (saturation >= 1)) return undefined;
 
@@ -143,19 +176,20 @@ const LoadingBackgroundImage = ({ url, saturation, width, height }: { url: strin
 
     useEffect(() => () => filters?.forEach(filter => filter.destroy()), [ filters ]);
 
-    if (!texture) return null;
-
-    const scale = Math.max(width / texture.width, height / texture.height);
-
     return (
-        <pixiSprite
-            texture={texture}
+        <pixiContainer
             filters={filters}
-            scale={scale}
-            x={Math.round((width - (texture.width * scale)) / 2)}
-            y={Math.round((height - (texture.height * scale)) / 2)}
             eventMode="none"
-        />
+        >
+            {layers.map((layer, index) => (
+                <LoadingBackgroundLayer
+                    key={`${index}:${layer.image}`}
+                    layer={layer}
+                    width={width}
+                    height={height}
+                />
+            ))}
+        </pixiContainer>
     );
 };
 
@@ -191,27 +225,48 @@ export const LoadingScreenView = ({ progress, error, photo, seed, look }: Loadin
     const framed = look?.photo !== false;
     const box = look?.box;
 
-    // The logo (a hotel's), the text, the bar, the percentage and the error, each centred, stacked 10, 5 and 10 apart.
-    const stack = (
-        <>
-            {look?.logo && (
-                <ThemeImage
-                    src={look.logo}
-                    bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
-                    layout={{ marginBottom: SPACING, flexShrink: 0 }}
-                />
-            )}
-            <ThemeText
-                name="textField"
-                text={caption}
-                textStyle="u_headline_small"
-                textOptions={{ fontSize: look?.textSize ?? 28, fill: look?.textColor ?? TEXT_COLOR, align: 'center' }}
-                flashFormat={{ kerning: false }}
-                verticalAlign="top"
+    const textWidth = look?.textWidth;
+    // The logo (a hotel's), the text, the bar and the percentage, each centred, in Habbo's order or the hotel's (`order`):
+    // a part after another is the gap of its own kind below it (`PART_GAPS`), the first none.
+    const parts: Record<LoadingScreenPart, (gap: number) => ReactNode> = {
+        logo: gap => look?.logo && (
+            <ThemeImage
+                key="logo"
+                src={look.logo}
+                bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
+                layout={{ marginTop: gap, flexShrink: 0 }}
             />
+        ),
+        text: (gap) => {
+            const field = (
+                <ThemeText
+                    key="text"
+                    name="textField"
+                    text={caption}
+                    textStyle="u_headline_small"
+                    textOptions={{ fontSize: look?.textSize ?? 28, fill: look?.textColor ?? TEXT_COLOR, align: 'center', ...(textWidth && { wordWrap: true, wordWrapWidth: textWidth - 4 }) }}
+                    flashFormat={{ kerning: false }}
+                    verticalAlign="top"
+                    layout={textWidth ? { width: textWidth } : undefined}
+                />
+            );
+
+            return (gap || textWidth)
+                ? (
+                        <Box
+                            key="text"
+                            layout={{ marginTop: gap, width: textWidth, flexShrink: 0, alignItems: 'center' }}
+                        >
+                            {field}
+                        </Box>
+                    )
+                : field;
+        },
+        bar: gap => (
             <Region
+                key="bar"
                 name="fileLoadingBar"
-                layout={{ marginTop: SPACING, width: barWidth + 1, height: BAR_BOX_HEIGHT, flexShrink: 0 }}
+                layout={{ marginTop: gap, width: barWidth + 1, height: BAR_BOX_HEIGHT, flexShrink: 0 }}
             >
                 <Region
                     backgroundColor={outline}
@@ -247,18 +302,27 @@ export const LoadingScreenView = ({ progress, error, photo, seed, look }: Loadin
                     </>
                 )}
             </Region>
-            {(look?.percent !== false) && (
-                <Box layout={{ marginTop: SPACING / 2, flexShrink: 0 }}>
-                    <ThemeText
-                        name="loadingNumberTextField"
-                        text={(error !== undefined) ? '' : `${Math.round(progress * 100)}%`}
-                        textStyle="u_headline_small"
-                        textOptions={{ fontSize: 14, fill: look?.percentColor ?? NUMBER_COLOR, align: 'center' }}
-                        flashFormat={{ kerning: false }}
-                        verticalAlign="top"
-                    />
-                </Box>
-            )}
+        ),
+        percent: gap => (look?.percent !== false) && (
+            <Box
+                key="percent"
+                layout={{ marginTop: gap, flexShrink: 0 }}
+            >
+                <ThemeText
+                    name="loadingNumberTextField"
+                    text={(error !== undefined) ? '' : `${Math.round(progress * 100)}%`}
+                    textStyle="u_headline_small"
+                    textOptions={{ fontSize: 14, fill: look?.percentColor ?? NUMBER_COLOR, align: 'center' }}
+                    flashFormat={{ kerning: false }}
+                    verticalAlign="top"
+                />
+            </Box>
+        ),
+    };
+    const shown = (look?.order ?? LOADING_SCREEN_PARTS).filter(part => (part !== 'logo' || !!look?.logo) && (part !== 'percent' || look?.percent !== false));
+    const stack = (
+        <>
+            {shown.map((part, index) => parts[part](index ? PART_GAPS[part] : 0))}
             {(error !== undefined) && (
                 <Box layout={{ marginTop: SPACING, width: errorWidth, flexShrink: 0 }}>
                     <ThemeText
@@ -281,9 +345,9 @@ export const LoadingScreenView = ({ progress, error, photo, seed, look }: Loadin
             backgroundColor={look?.background ?? BACKGROUND}
             layout={{ position: 'absolute', left: 0, top: 0, width, height }}
         >
-            {look?.backgroundImage && (
-                <LoadingBackgroundImage
-                    url={look.backgroundImage}
+            {!!look?.layers.length && (
+                <LoadingBackground
+                    layers={look.layers}
                     saturation={look.backgroundSaturation}
                     width={width}
                     height={height}

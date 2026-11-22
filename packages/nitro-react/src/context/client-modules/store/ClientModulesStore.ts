@@ -21,9 +21,14 @@ export interface ClientModuleWindow {
     moduleKey: string;
     /** `<module key>/<id>`: unique across modules. */
     key: string;
-    component: ComponentType<ClientModuleWindowProps>;
+    /** What draws it; none for a plugin's window defined as data (`template`). */
+    component?: ComponentType<ClientModuleWindowProps>;
+    /** A plugin's window defined as data (`theme/dataWindows.ts`), by its template id: drawn from it, with no module. */
+    template?: string;
     /** Drawn above every window that does not ask for it, whichever was raised last. */
     onTop?: boolean;
+    /** Drawn over the `onTop` windows too (a settings window over a HUD), whichever was raised last. */
+    aboveOnTop?: boolean;
 }
 
 export interface ClientModuleToolbarItem {

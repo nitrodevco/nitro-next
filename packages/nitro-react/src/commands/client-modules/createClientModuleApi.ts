@@ -11,18 +11,23 @@ import { WebSocketConnection } from '#base/context/communication';
 import { notificationStore } from '#base/context/notifications';
 import { getRoom } from '#base/context/room';
 import { HOTEL_VIEW_BOTTOM_SLOT, systemStore } from '#base/context/system';
+import { userStore } from '#base/context/user';
 import { GetSoundManager } from '#base/sound';
 import { addTemplateArrange, addTemplateBinding, addTemplatePatch, templatePatchReport } from '#base/theme/templatePatches';
 
 import { quitRoom } from '../navigator/navigatorCommands';
+import { createSecondaryRoom, keepRoomWhenLeft } from '../room/secondaryRooms';
 import { openClientLink } from '../system/clientLinkCommands';
 import { ClientModuleApi, ClientModuleDispose, ClientModulePacketValue } from './ClientModuleApi';
+import { createClientModuleCapabilities } from './clientModuleCapabilities';
 import { createClientModuleChannels } from './clientModuleChannels';
+import { parseClientModuleCorePacket } from './clientModuleCorePackets';
 import { onClientModuleEvent } from './clientModuleEvents';
 import { clientModuleFetch } from './clientModuleHttp';
 import { getClientModuleLibraries } from './clientModuleLibraries';
 import { normalizeLinkPath } from './clientModuleLinkRoutes';
 import { clientModuleMenuRow, isClientModuleContextMenu } from './clientModuleMenus';
+import { createClientModuleRoomPointer } from './clientModuleRoomPointer';
 import { clientModuleHasPermission, getClientModuleState, subscribeClientModuleState, useClientModuleState } from './clientModuleState';
 import { onPluginMessage, sendPluginMessage } from './pluginMessages';
 
@@ -34,6 +39,12 @@ let nextHotelViewWidgetKey = 1;
 
 /** Every module's channels (`api.channels`): one set for the page, so modules meet on them. */
 export const clientModuleChannels = createClientModuleChannels((owner, key, error) => NitroLogger.error('ClientModules', `${owner}: a handler of channel ${key} threw`, error));
+
+/** The Turbo extensions the modules add to the client's own (`api.capabilities`): one list for the connection. */
+export const clientModuleCapabilities = createClientModuleCapabilities(flush => setTimeout(flush, 0));
+
+/** The pointer events over the room that the room did not use (`api.room.onUnhandledPointer`), which `RoomCanvas` offers. */
+export const clientModuleRoomPointer = createClientModuleRoomPointer((owner, error) => NitroLogger.error('ClientModules', `${owner}: an unhandled pointer listener threw`, error));
 
 export const createClientModuleApi = (connection: WebSocketConnection, moduleKey: string, baseUrl: string): { api: ClientModuleApi; dispose: () => void } => {
     const store = clientModulesStore.getState();
@@ -66,9 +77,11 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
         return false;
     };
 
+    const warnRoom = (message: string) => NitroLogger.warn('ClientModules', `${moduleKey}: room.${message}`);
+
     const api: ClientModuleApi = {
         version: 1,
-        minor: 2,
+        minor: 0,
         key: moduleKey,
         baseUrl,
         libs: getClientModuleLibraries(),
@@ -123,7 +136,7 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
             register: (id, component, options = {}) => {
                 const key = windowKey(id);
 
-                store.addWindow({ moduleKey, key, component, onTop: options.onTop === true });
+                store.addWindow({ moduleKey, key, component, onTop: options.onTop === true, aboveOnTop: options.aboveOnTop === true });
 
                 return track(() => clientModulesStore.getState().removeWindow(key));
             },
@@ -237,6 +250,7 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
 
                 connection.send(new Composer(values));
             },
+            parseCore: (header, body) => parseClientModuleCorePacket(header, body, message => NitroLogger.warn('ClientModules', `${moduleKey}: parseCore: ${message}`)) as never,
         },
         messages: {
             on: (name, handler) => track(onPluginMessage(moduleKey, name, handler)),
@@ -246,6 +260,29 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
             publish: (key, value) => clientModuleChannels.publish(moduleKey, key, value),
             subscribe: (key, handler) => track(clientModuleChannels.subscribe(moduleKey, key, handler)),
             get: key => clientModuleChannels.get(key) as never,
+        },
+        capabilities: {
+            declare: (name, version = 1) => {
+                if (!name.length || !Number.isInteger(version) || (version < 1)) {
+                    NitroLogger.warn('ClientModules', `${moduleKey}: capability ${name || '(no name)'} at version ${version} is not one (a name, and a version from 1).`);
+
+                    return () => undefined;
+                }
+
+                const remove = clientModuleCapabilities.declare(moduleKey, name, version);
+
+                if (!remove) {
+                    NitroLogger.warn('ClientModules', `${moduleKey}: ${name} is one of the client's own capabilities.`);
+
+                    return () => undefined;
+                }
+
+                return track(remove);
+            },
+            version: name => userStore.getState().turboCapabilities.get(name) ?? 0,
+            subscribe: listener => track(userStore.subscribe((state, previous) => {
+                if (state.turboCapabilities !== previous.turboCapabilities) listener(state.turboCapabilities);
+            })),
         },
         http: {
             get: (path, query) => clientModuleFetch(connection, moduleKey, 'GET', path, { query }),
@@ -284,6 +321,21 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
 
                 quitRoom(connection.send);
                 systemStore.getState().endRoomSession();
+            },
+            onUnhandledPointer: listener => track(clientModuleRoomPointer.add(moduleKey, listener)),
+            createSecondary: (roomId, options = {}) => {
+                const room = createSecondaryRoom(moduleKey, roomId, options, warnRoom);
+
+                if (room) track(room.dispose);
+
+                return room;
+            },
+            keepWhenLeft: (options = {}) => {
+                const room = keepRoomWhenLeft(moduleKey, options, warnRoom);
+
+                if (room) track(room.dispose);
+
+                return room;
             },
         },
         hotelView: {
@@ -348,7 +400,7 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
             },
         },
         templates: {
-            patch: (template, ops, options = {}) => track(addTemplatePatch({ owner: moduleKey, template, ops, order: options.order })),
+            patch: (template, ops, options = {}) => track(addTemplatePatch({ owner: moduleKey, template, ops, order: options.order }, { base: baseUrl })),
             bind: (template, element, binding, options) => track(addTemplateBinding(moduleKey, template, element, binding, options)),
             arrange: (template, arrange) => track(addTemplateArrange(moduleKey, template, arrange)),
             report: template => templatePatchReport(template),
@@ -365,6 +417,7 @@ export const createClientModuleApi = (connection: WebSocketConnection, moduleKey
         }
 
         clientModuleChannels.removeOwner(moduleKey);
+        clientModuleCapabilities.removeOwner(moduleKey);
         clientModulesStore.getState().removeModule(moduleKey);
     };
 

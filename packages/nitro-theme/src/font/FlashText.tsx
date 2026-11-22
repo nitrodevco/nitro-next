@@ -5,7 +5,7 @@ import { BoxLayout } from '../Box';
 import { useLayoutSize } from '../hooks/useLayoutEvent';
 import { destroyOwnedTexture } from '../utils/destroyOwnedTexture';
 import { insetStretchAxes } from '../utils/layoutInsetStretch';
-import { FlashTextCanvas, flashTextLinkAtPoint } from './flash-text';
+import { flashLinkText, FlashTextCanvas, flashTextLinkAtPoint } from './flash-text';
 
 export interface FlashTextProps {
     /** The rasterised text - see `useFlashTextCanvas`. */
@@ -43,9 +43,6 @@ export interface FlashTextProps {
      */
     onLink?: (link: string) => void;
 }
-
-/** `TextEvent.text`: an `event:` link's text after the prefix; any other href as it is. */
-const linkText = (href: string) => (href.startsWith('event:') ? href.substring(6) : href);
 
 /**
  * Flash-exact text as one sprite. The bitmap is shown 1:1 with nearest-neighbour sampling: the
@@ -90,7 +87,7 @@ export const FlashText = ({ rendered, layout, visible, alpha, x, y, clipWidth: o
         if (href === undefined) return;
 
         event.stopPropagation();
-        onLink?.(linkText(href));
+        onLink?.(flashLinkText(href));
     };
     const onLinkHover = (event: FederatedPointerEvent) => {
         event.currentTarget.cursor = (linkAt(event) === undefined) ? 'default' : 'pointer';

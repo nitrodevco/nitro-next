@@ -2,9 +2,11 @@
  * Not Flash's: reads and writes a Turbo plugin message from the schema the server sends for it
  * (`client.messages`, Turbo's `docs/plugin-messages.md`). The schema is compact JSON: an array of
  * `[name, type]` fields, where a type is `'int'`, `'long'`, `'bool'`, `'string'`, `'double'`,
- * `['array', type]`, `['map', type]` or `['object', fields]`. Fields are written in order in Habbo's
- * wire encoding; an array is an int count and its items, a map (a string-keyed dictionary, read as a
- * plain object) an int count and each key and value, a record its fields.
+ * `['array', type]`, `['map', type]`, `['object', fields]` or, as the last field only, `'packet'`.
+ * Fields are written in order in Habbo's wire encoding; an array is an int count and its items, a map
+ * (a string-keyed dictionary, read as a plain object) an int count and each key and value, a record
+ * its fields. A `'packet'` is the rest of the message: a whole core packet the server carries, its
+ * short header and body, read by the caller's `readPacket` (the client's own parser for that header).
  *
  * The two halves may be a version apart: a field the schema does not know is ignored and a missing
  * one is sent as its default (0, '', false, [], {}); `skew` hears of each so the caller can log it.
@@ -13,7 +15,7 @@ import type { IMessageDataWrapper } from '@nitrodevco/nitro-api';
 
 export type PluginMessageScalar = 'int' | 'long' | 'bool' | 'string' | 'double';
 
-export type PluginMessageType = PluginMessageScalar | { array: PluginMessageType } | { map: PluginMessageType } | { object: PluginMessageField[] };
+export type PluginMessageType = PluginMessageScalar | 'packet' | { array: PluginMessageType } | { map: PluginMessageType } | { object: PluginMessageField[] };
 
 export type PluginMessageField = { name: string; type: PluginMessageType };
 
@@ -23,32 +25,45 @@ export type PluginMessageWireValue = number | string | boolean;
 /** Told of a field one side has and the other has not: `unknown` sent by the module, `missing` from it. */
 export type PluginMessageSkew = (kind: 'unknown' | 'missing', path: string) => void;
 
+/** Reads a carried core packet: its short header, then its body from where `wrapper` stands. */
+export type PluginMessagePacketReader = (wrapper: IMessageDataWrapper, path: string) => unknown;
+
 const SCALARS = new Set<string>([ 'int', 'long', 'bool', 'string', 'double' ]);
 
-const parseType = (raw: unknown, path: string): PluginMessageType => {
+const parseType = (raw: unknown, path: string, last: boolean): PluginMessageType => {
     if ((typeof raw === 'string') && SCALARS.has(raw)) return raw as PluginMessageScalar;
 
+    // The rest of the message, so only its last field.
+    if (raw === 'packet') {
+        if (!last) throw new Error(`${path}: a packet is only a message's last field`);
+
+        return 'packet';
+    }
+
     if (Array.isArray(raw) && (raw.length === 2)) {
-        if (raw[0] === 'array') return { array: parseType(raw[1], `${path}[]`) };
-        if (raw[0] === 'map') return { map: parseType(raw[1], `${path}{}`) };
-        if (raw[0] === 'object') return { object: parseFields(raw[1], path) };
+        if (raw[0] === 'array') return { array: parseType(raw[1], `${path}[]`, false) };
+        if (raw[0] === 'map') return { map: parseType(raw[1], `${path}{}`, false) };
+        if (raw[0] === 'object') return { object: parseFields(raw[1], path, false) };
     }
 
     throw new Error(`${path}: unknown type ${JSON.stringify(raw)}`);
 };
 
-const parseFields = (raw: unknown, path: string): PluginMessageField[] => {
+const parseFields = (raw: unknown, path: string, message: boolean): PluginMessageField[] => {
     if (!Array.isArray(raw)) throw new Error(`${path}: fields are not an array`);
 
-    return raw.map((field: unknown) => {
+    return raw.map((field: unknown, index) => {
         if (!Array.isArray(field) || (field.length !== 2) || (typeof field[0] !== 'string')) throw new Error(`${path}: a field is not [name, type]`);
 
-        return { name: field[0], type: parseType(field[1], `${path}.${field[0]}`) };
+        return { name: field[0], type: parseType(field[1], `${path}.${field[0]}`, message && (index === (raw.length - 1))) };
     });
 };
 
 /** A message's fields from the schema JSON the server sent; throws on one it cannot read. */
-export const parsePluginMessageSchema = (json: string, name = 'message'): PluginMessageField[] => parseFields(JSON.parse(json), name);
+export const parsePluginMessageSchema = (json: string, name = 'message'): PluginMessageField[] => parseFields(JSON.parse(json), name, true);
+
+/** Whether the message carries a core packet: such a message goes only from the server to clients. */
+export const carriesPacket = (fields: PluginMessageField[]) => (fields.at(-1)?.type === 'packet');
 
 const defaultOf = (type: PluginMessageType): unknown => {
     switch (type) {
@@ -60,6 +75,8 @@ const defaultOf = (type: PluginMessageType): unknown => {
             return false;
         case 'string':
             return '';
+        case 'packet':
+            return undefined;
         default:
             if ('array' in type) return [];
             if ('map' in type) return {};
@@ -79,8 +96,10 @@ const readDouble = (wrapper: IMessageDataWrapper) => {
     return view.getFloat64(0);
 };
 
-const readValue = (wrapper: IMessageDataWrapper, type: PluginMessageType): unknown => {
+const readValue = (wrapper: IMessageDataWrapper, type: PluginMessageType, path: string, readPacket: PluginMessagePacketReader): unknown => {
     switch (type) {
+        case 'packet':
+            return readPacket(wrapper, path);
         case 'int':
             return wrapper.readInt();
         case 'long': {
@@ -96,12 +115,12 @@ const readValue = (wrapper: IMessageDataWrapper, type: PluginMessageType): unkno
         case 'double':
             return readDouble(wrapper);
         default: {
-            if ('object' in type) return readFields(wrapper, type.object);
+            if ('object' in type) return readFields(wrapper, type.object, path, readPacket);
 
             if ('map' in type) {
                 const entries: [ string, unknown ][] = [];
 
-                for (let count = wrapper.readInt(); count > 0; count--) entries.push([ wrapper.readString(), readValue(wrapper, type.map) ]);
+                for (let count = wrapper.readInt(); count > 0; count--) entries.push([ wrapper.readString(), readValue(wrapper, type.map, `${path}{}`, readPacket) ]);
 
                 // fromEntries makes each key an own property, `__proto__` included.
                 return Object.fromEntries(entries);
@@ -109,23 +128,26 @@ const readValue = (wrapper: IMessageDataWrapper, type: PluginMessageType): unkno
 
             const items: unknown[] = [];
 
-            for (let count = wrapper.readInt(); count > 0; count--) items.push(readValue(wrapper, type.array));
+            for (let count = wrapper.readInt(); count > 0; count--) items.push(readValue(wrapper, type.array, `${path}[]`, readPacket));
 
             return items;
         }
     }
 };
 
-const readFields = (wrapper: IMessageDataWrapper, fields: PluginMessageField[]) => {
+const readFields = (wrapper: IMessageDataWrapper, fields: PluginMessageField[], path: string, readPacket: PluginMessagePacketReader) => {
     const result: Record<string, unknown> = {};
 
-    for (const field of fields) result[field.name] = readValue(wrapper, field.type);
+    for (const field of fields) result[field.name] = readValue(wrapper, field.type, `${path}.${field.name}`, readPacket);
 
     return result;
 };
 
-/** A message as an object of its fields, read from the packet in schema order. */
-export const decodePluginMessage = (wrapper: IMessageDataWrapper, fields: PluginMessageField[]) => readFields(wrapper, fields);
+/**
+ * A message as an object of its fields, read from the packet in schema order; a carried packet is
+ * what `readPacket` makes of the rest of it (with none given, `undefined`).
+ */
+export const decodePluginMessage = (wrapper: IMessageDataWrapper, fields: PluginMessageField[], name = 'message', readPacket: PluginMessagePacketReader = () => undefined) => readFields(wrapper, fields, name, readPacket);
 
 const writeDouble = (value: number, out: PluginMessageWireValue[]) => {
     const view = new DataView(new ArrayBuffer(8));
@@ -160,6 +182,9 @@ const writeValue = (value: unknown, type: PluginMessageType, path: string, out: 
             return;
         case 'double':
             writeDouble(toNumber(value), out);
+            return;
+        case 'packet':
+            // Only the server sends one: `sendPluginMessage` refuses such a message.
             return;
         default: {
             if ('object' in type) {

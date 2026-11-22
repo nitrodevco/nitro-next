@@ -169,8 +169,10 @@ export const RoomInfoWidget = () => {
                 hideWindow('room_info');
             }}
             onFloorPlanEditor={() => showWindow('floor_plan_editor')}
+            // `RoomInfoViewCtrl.onStaffPick`: flip the caption, send the CURRENT state (the server flips it);
+            // RoomInfoUpdated -> GetGuestRoomResult settles the flag.
             onToggleStaffPick={() => {
-                send(new ToggleStaffPickComposer({ roomId, isStaffPicked: !isStaffPicked }));
+                send(new ToggleStaffPickComposer({ roomId, isStaffPicked }));
                 updateEnteredRoom(roomId, { isStaffPicked: !isStaffPicked });
             }}
             // `RoomInfoViewCtrl.onMuteAllClick` only asks; `MuteAllInRoomMessage` sets the flag the caption follows.

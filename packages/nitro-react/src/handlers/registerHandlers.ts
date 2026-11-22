@@ -1,4 +1,5 @@
 import { WebSocketConnection } from '#base/context/communication';
+import { roomContentConnection } from '#base/context/room';
 
 import { registerAchievementHandlers } from './achievements';
 import { registerCampaignHandlers } from './campaign';
@@ -49,6 +50,8 @@ import { bridgeWiredTradingLifecycle, registerSelfDonationHandlers, registerWire
  * Returns one unsubscribe for all of them.
  */
 export const registerHandlers = (socket: WebSocketConnection) => {
+    // The room's content handlers, kept by packet too: a client module's secondary room is fed through them.
+    const roomContent = roomContentConnection(socket);
     const unsubscribes = [
         registerHotelViewHandlers(socket),
         registerOnboardingHandlers(socket),
@@ -59,9 +62,9 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerRoomDataHandlers(socket),
         registerRoomDirectoryHandlers(socket),
         registerRoomDoorbellHandlers(socket),
-        registerRoomFurnitureHandlers(socket),
+        registerRoomFurnitureHandlers(roomContent),
         registerRoomFurnitureLabelHandlers(socket),
-        registerRoomMappingHandlers(socket),
+        registerRoomMappingHandlers(roomContent),
         registerRoomFloorPlanHandlers(socket),
         registerRoomPermissionsHandlers(socket),
         registerRoomPetHandlers(socket),
@@ -77,7 +80,7 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerRoomFriendRequestHandlers(socket),
         registerRoomInfostandHandlers(socket),
         registerRoomBotHandlers(socket),
-        registerRoomUserHandlers(socket),
+        registerRoomUserHandlers(roomContent),
         registerRoomVariableFxHandlers(socket),
         registerRoomWiredVisualizationHandlers(socket),
         // Furniture dialogs: a payload for a dialog that is not open is dropped by the store.

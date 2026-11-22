@@ -78,6 +78,12 @@ export interface ClientModuleFrameProps {
      */
     variant?: string;
     caption?: string;
+    /** `#rrggbb`: the frame's colour over its style's. */
+    tintColor?: string;
+    /** How `tintColor` colours the art: `multiply` (the client's, the default) or `subtract` (each channel the colour less the art's darkness). */
+    tintMode?: 'multiply' | 'subtract';
+    /** `#rrggbb`: the colour of its text, its header's caption too. */
+    textColor?: string;
     centered?: boolean;
     /** Which way its scaler resizes it: `'none'` for a window of a fixed size. */
     resizeDirection?: 'none' | 'x' | 'y' | 'all';
@@ -196,7 +202,7 @@ export interface ClientModuleThemeTextProps {
     textOptions?: ClientModuleTextOptions;
     /** `text` is Flash `htmlText`: `<b>`, `<i>`, `<u>`, `<font color>`, `<br>`, `<a href>`, in any face. */
     markup?: boolean;
-    /** With `markup`: a click on a link's glyphs (Habbo's own faces). */
+    /** With `markup`: a click on a link's glyphs, in Habbo's own faces and in a face the browser draws alike. */
     onLink?: (link: string) => void;
     layout?: ClientModuleLayout;
 }
@@ -218,6 +224,8 @@ export interface ClientModuleRichTextProps {
     onLink?: (link: string) => void;
     blockSpacing?: number;
     listIndent?: number;
+    /** Where a list item's marker sits in its `listIndent`: at the left (default), or right-aligned `gap` pixels before the text, as a browser draws it. */
+    listMarker?: { align?: 'left' | 'right'; gap?: number };
     layout?: ClientModuleLayout;
 }
 
@@ -238,4 +246,50 @@ export interface ClientModuleTheme {
     RichText: ComponentType<ClientModuleRichTextProps>;
     ThemeText: ComponentType<ClientModuleThemeTextProps>;
     TemplateWindow: ComponentType<ClientModuleTemplateWindowProps>;
+}
+
+/** A picture of the loading screen's background: `backgroundImage` and each of `layers`, placed as a CSS background is. */
+export interface ClientModuleLoadingScreenLayer {
+    image: string;
+    /** `cover` (the default), `contain`, `auto` (its own size) or a scale. */
+    size?: 'cover' | 'contain' | 'auto' | number;
+    /** CSS `background-position` keywords: `"left bottom"`, `"top"`; centred on an axis left out. */
+    position?: string;
+    /** Pixels from that place. */
+    offset?: readonly [ number, number ];
+    /** Tiled from where it sits, across one axis or both. */
+    repeat?: 'no-repeat' | 'repeat-x' | 'repeat-y' | 'repeat';
+}
+
+/**
+ * The hotel variable `loading.screen` (nitro-next `docs/client-modules.md`): the loading screen is up
+ * before any module loads, so a theme styles it with this. Every key may be left out (Habbo's own).
+ */
+export interface ClientModuleLoadingScreen {
+    /** `#rrggbb`. */
+    background?: string;
+    backgroundImage?: string;
+    backgroundSize?: ClientModuleLoadingScreenLayer['size'];
+    backgroundPosition?: string;
+    backgroundOffset?: readonly [ number, number ];
+    backgroundRepeat?: ClientModuleLoadingScreenLayer['repeat'];
+    /** More pictures over `backgroundImage`, bottom to top. */
+    layers?: readonly ClientModuleLoadingScreenLayer[];
+    /** 0-1, every picture's (CSS `saturate()`). */
+    backgroundSaturation?: number;
+    /** `false` leaves out Habbo's photo frame. */
+    photo?: boolean;
+    box?: { width: number; height: number; color?: string; alpha?: number; radius?: number };
+    logo?: string;
+    /** A text key, or the text itself. */
+    text?: string;
+    textColor?: string;
+    textSize?: number;
+    /** The width the line wraps at. */
+    textWidth?: number;
+    bar?: { width?: number; outline?: string; well?: string; fill?: string; fillBottom?: string };
+    percent?: boolean;
+    percentColor?: string;
+    /** The parts top to bottom; one left out follows in Habbo's order (logo, text, bar, percent). */
+    order?: readonly ('logo' | 'text' | 'bar' | 'percent')[];
 }

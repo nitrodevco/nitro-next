@@ -116,6 +116,9 @@ export const priceDisplayBindings = (prices: readonly PriceItem[], config: Recor
     return bindings;
 };
 
+/** Not Flash's: what a price shows, for a theme's bindings of it (a colour per currency). */
+export const priceContextOf = (offer: IPurchasableOffer) => ({ priceInCredits: offer.priceInCredits, priceInActivityPoints: offer.priceInActivityPoints, activityPointType: offer.activityPointType, priceInSilver: offer.priceInSilver });
+
 /** `showPriceInContainer(container, offer, quantity, seasonal, combo)`: the `price_display` clone a container gets. */
 export const priceDisplayItem = (templates: Record<string, Template>, offer: IPurchasableOffer, options: CatalogPriceOptions, key = 'price_display'): TemplateItem => {
     const { config, quantity = 1, seasonal = false, combo = false } = options;
@@ -124,6 +127,7 @@ export const priceDisplayItem = (templates: Record<string, Template>, offer: IPu
     return {
         key,
         from: templates[catalogTemplateId('price_display')],
+        context: priceContextOf(offer),
         bindings: priceDisplayBindings(prices, config, combo),
         arrange: (seasonal && combo)
             ? ({ find }) => {
@@ -160,6 +164,7 @@ export const priceBoxItem = (templates: Record<string, Template>, offer: IPurcha
     return {
         key: 'priceDisplayWidget',
         from: templates[catalogTemplateId('priceDisplayWidget')],
+        context: priceContextOf(offer),
         bindings: {
             '': (color === undefined) ? {} : { color },
             price_box_new: { items: [ priceDisplayItem(templates, offer, options) ] },

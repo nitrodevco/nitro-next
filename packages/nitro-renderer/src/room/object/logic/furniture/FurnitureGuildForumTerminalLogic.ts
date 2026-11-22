@@ -11,6 +11,9 @@ export class FurnitureGuildForumTerminalLogic extends FurnitureGuildCustomizedLo
         return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.INTERNAL_LINK ]);
     }
 
+    /** Flash overrides it with nothing: a click on the terminal opens no group context menu. */
+    protected override openContextMenu(): void { }
+
     public override useObject(): void {
         this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.INTERNAL_LINK, this.object),

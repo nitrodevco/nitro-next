@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import type { ClientModuleMessageOf, ClientModuleMessageSchema } from '../src/index';
+import type { ClientModuleCarriedPacket, ClientModuleMessageOf, ClientModuleMessageSchema } from '../src/index';
 
 type Same<A, B> = [ A ] extends [ B ] ? ([ B ] extends [ A ] ? true : false) : false;
 
@@ -36,4 +36,17 @@ const typedMap: Same<ClientModuleMessageOf<typeof WITH_DICTIONARY>, { counts: Re
 void test('a map in a schema types a string-keyed object', () => {
     assert.equal(typedMap, true);
     assert.equal(WITH_DICTIONARY.length, 2);
+});
+
+// `PortalRoom(int RoomId, IComposer? Carried = null)`: a carried packet, the last field, reads as its header and parsed packet.
+const PORTAL_ROOM = [
+    [ 'roomId', 'int' ],
+    [ 'carried', 'packet' ],
+] as const satisfies ClientModuleMessageSchema;
+
+const typedCarried: Same<ClientModuleMessageOf<typeof PORTAL_ROOM>, { roomId: number; carried: ClientModuleCarriedPacket }> = true;
+
+void test('a carried packet in a schema types its header and parsed packet', () => {
+    assert.equal(typedCarried, true);
+    assert.equal(PORTAL_ROOM.length, 2);
 });

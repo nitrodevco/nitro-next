@@ -38,11 +38,13 @@ import { addNavigatorSavedSearch, collapseNavigatorCategory, deleteNavigatorSave
 import { useWebSocketContext } from '#base/context/communication';
 import { NAVIGATOR_FILTER_TYPES, splitNavigatorFilter, useNavigatorActions, useNavigatorOpeningGeometry, useNavigatorStore } from '#base/context/navigator';
 import { useConfigValue, useGroupBadgeImageUrl, useTranslation, useWindowActions } from '#base/context/system';
-import { PerkCodes, useOwnPerkAllowed } from '#base/context/user';
+import { PerkCodes, useOwnPerkAllowed, useOwnUserId } from '#base/context/user';
 import { useWindowVisibility } from '#base/hooks';
-import { getGlobalRect, LayoutWindow, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows } from '#base/theme';
+import { getGlobalRect, layerFrameOverrides, LayoutWindow, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useFrameOverride } from '#base/theme';
+import { templateRootLook, useTemplatePatchList } from '#base/theme/templatePatches';
 
 import { isRepeatedEnter } from './navigatorEnterGuard';
+import { isNavigatorPlacedByPlayer, navigatorFirstPosition, setNavigatorPlacedByPlayer } from './navigatorFirstPosition';
 import { ALTERNATING_COLOR_MOD, ALTERNATING_COLOR_NONE, getModulatedBackgroundColor, getUserCountColor, ROW_BASE_COLOR } from './NavigatorRoomEntryUtils';
 import { NavigatorRoomInfoPopup } from './NavigatorRoomInfoPopup';
 
@@ -71,9 +73,6 @@ const STARTING_TAB_POSITION = 115;
 /** `WindowParam`'s horizontal stretch bit, which `setLeftPaneVisibility` lifts off the right pane while it narrows the window. */
 const H_STRETCH = 128;
 const PROMOTE_SEARCH_CODES = [ 'roomads_view', 'myworld_view' ];
-/** `BlockResultsView.HOT_ROOMS_SEARCH_CODE` / `POPULAR_ROOMS_SEARCH_CODE`. */
-const HOT_ROOMS = 'hot';
-const POPULAR_ROOMS = 'popular';
 
 /** `ViewMode.isEventViewMode(ViewMode.getViewMode(searchCode))`: room ads and event categories show the ad's name. */
 const isEventView = (searchCode: string) => searchCode === 'roomads_view' || searchCode === 'new_ads' || searchCode.startsWith('eventcategory__');
@@ -97,22 +96,6 @@ const ancestorNamed = (window: LayoutWindow | undefined, name: string) => {
     return undefined;
 };
 
-/**
- * `BlockResultsView.applyHotelViewExpansionDefaults`: in the hotel view the hot rooms open and popular
- * closes when there are hot rooms, and the other way round.
- */
-const collapsedFor = (searchCodeOriginal: string, blocks: readonly ISearchResultList[], collapsed: readonly string[]) => {
-    if (searchCodeOriginal !== 'hotel_view') return collapsed;
-
-    const hasHot = blocks.some(block => block.searchCode === HOT_ROOMS);
-    const result = collapsed.filter(code => code !== HOT_ROOMS && code !== POPULAR_ROOMS);
-
-    if (!hasHot) result.push(HOT_ROOMS);
-    if (hasHot && blocks.some(block => block.searchCode === POPULAR_ROOMS)) result.push(POPULAR_ROOMS);
-
-    return result;
-};
-
 /** The room the info bubble shows and where; `serial` counts each `showRoomInfoBubbleAt`. */
 interface RoomInfoBubble {
     room: IRoomInfo;
@@ -130,10 +113,10 @@ export const NavigatorView = () => {
     const filterType = useNavigatorStore(x => x.filterType);
     const isSearching = useNavigatorStore(x => x.isSearching);
     const leftPaneHidden = useNavigatorStore(x => x.leftPaneHidden);
-    const collapsedCategories = useNavigatorStore(x => x.collapsedCategories);
+    const blocksOpen = useNavigatorStore(x => x.blocksOpen);
     const viewModes = useNavigatorStore(x => x.viewModes);
     const preferences = useNavigatorStore(x => x.preferences);
-    const { setTopLevelContext, setLeftPaneHidden, toggleCollapsedCategory, setViewMode, setSearchFilter, setFilterType, setWindowGeometry } = useNavigatorActions();
+    const { setTopLevelContext, setLeftPaneHidden, collapseCategory, expandCategory, setViewMode, setSearchFilter, setFilterType, setWindowGeometry, setWindowPlacedByTheme } = useNavigatorActions();
     const canToggleView = useOwnPerkAllowed(PerkCodes.NavigatorRoomThumbnailCamera);
     const thumbnailUrlBase = useConfigValue<string>('navigator.thumbnail.url_base') ?? '';
     const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
@@ -150,24 +133,40 @@ export const NavigatorView = () => {
     // once results come without a filter (`setTextAndSearchModeFromFilter`).
     const [ placeholderShown, setPlaceholderShown ] = useState(true);
     const [ placeholderResults, setPlaceholderResults ] = useState(searchResult);
-    // `createMainWindow`: where the window was last, else where the preferences put it.
+    // `createMainWindow`: where the window was last, else where the preferences put it - or a
+    // theme's first place, for a player who has not dragged it (`navigatorFirstPosition`).
     const openingGeometry = useNavigatorOpeningGeometry();
     const openingHeight = openingGeometry?.height || preferences?.windowHeight;
+    const ownUserId = useOwnUserId();
+    const themePosition = layerFrameOverrides(useFrameOverride('navigator', undefined), templateRootLook(TEMPLATE, undefined, useTemplatePatchList()))?.position;
     // The frame's own close and position, made once (`createMainWindow`).
-    const [ frame ] = useState(() => ({
-        id: 'navigator',
-        defaultPosition: { x: openingGeometry?.x ?? preferences?.windowX ?? 20, y: openingGeometry?.y ?? preferences?.windowY ?? 20 },
-        rememberPosition: false,
-        rememberSize: false,
-        onPositionChange: (position: { x: number; y: number }) => setWindowGeometry(position),
-        resizeDirection: 'y' as const,
-        onClose: hide,
-    }));
+    const [ { frame, fromTheme } ] = useState(() => {
+        const { position, fromTheme } = navigatorFirstPosition(openingGeometry, preferences, themePosition, isNavigatorPlacedByPlayer(ownUserId));
+
+        return {
+            fromTheme,
+            frame: {
+                id: 'navigator',
+                defaultPosition: position,
+                rememberPosition: false,
+                themePosition: false,
+                rememberSize: false,
+                onPositionChange: (moved: { x: number; y: number }) => {
+                    setNavigatorPlacedByPlayer(ownUserId);
+                    setWindowGeometry(moved);
+                },
+                resizeDirection: 'y' as const,
+                onClose: hide,
+            },
+        };
+    });
 
     // The window's place until it is first dragged; its size comes from `arrange`.
     useEffect(() => {
         setWindowGeometry(frame.defaultPosition);
-    }, [ frame, setWindowGeometry ]);
+        // A theme's place is not the player's: it is not sent until they move the window (`syncNavigatorWindowPreferences`).
+        setWindowPlacedByTheme(fromTheme);
+    }, [ frame, fromTheme, setWindowGeometry, setWindowPlacedByTheme ]);
 
     // `onSearchResults` ends with `_roomInfoPopup.show(false)`, and puts the results' filter in the field.
     if (roomInfoBubbleResults !== searchResult) {
@@ -219,7 +218,6 @@ export const NavigatorView = () => {
 
     const searchCodeOriginal = searchResult?.searchCodeOriginal ?? '';
     const blocks = searchResult?.blocks ?? [];
-    const collapsed = collapsedFor(searchCodeOriginal, blocks, collapsedCategories);
     const isOfficialView = searchCodeOriginal.includes('official_view');
     const showPromote = PROMOTE_SEARCH_CODES.includes(searchCodeOriginal);
     const eventView = isEventView(searchCodeOriginal);
@@ -270,14 +268,14 @@ export const NavigatorView = () => {
         };
     };
 
-    const collapse = (searchCode: string) => {
+    const collapse = (index: number, searchCode: string) => {
         collapseNavigatorCategory(send, searchCode);
-        toggleCollapsedCategory(searchCode);
+        collapseCategory(index, searchCode);
     };
 
-    const expand = (searchCode: string) => {
+    const expand = (index: number, searchCode: string) => {
         expandNavigatorCategory(send, searchCode);
-        toggleCollapsedCategory(searchCode);
+        expandCategory(index, searchCode);
     };
 
     /** `HabboNewNavigator.addSavedSearch`: sent while there are results, and the left pane shown either way. */
@@ -301,7 +299,7 @@ export const NavigatorView = () => {
     const blockItem = (block: ISearchResultList, index: number): TemplateItem => {
         const title = block.text === '' ? `\${navigator.searchcode.title.${block.searchCode}}` : block.text;
         const key = `${index}:${block.searchCode}`;
-        const open = (!collapsed.includes(block.searchCode) || blocks.length === 1) && !block.forceClosed;
+        const open = blocksOpen[index] ?? false;
         // `CategoryElementFactory` sizes the block to the list it is going into.
         const fitToList = ({ root }: TemplateWindows) => {
             const container = root();
@@ -318,8 +316,15 @@ export const NavigatorView = () => {
                 bindings: {
                     category_name: { caption: title },
                     category_show_more: { visible: block.actionAllowed === 1, onPointerTap: () => showMore(block.searchCode) },
-                    category_expand: { onPointerTap: () => expand(block.searchCode) },
-                    category_name_region: { onPointerTap: () => expand(block.searchCode) },
+                    category_expand: {
+                        onPointerTap: (event) => {
+                            // The button sits in the name region; Flash's MouseEventProcessor.passMouseEvent hands a click its
+                            // window handled no further, so the region's expand does not follow.
+                            event.stopPropagation();
+                            expand(index, block.searchCode);
+                        },
+                    },
+                    category_name_region: { onPointerTap: () => expand(index, block.searchCode) },
                     category_add_quick_link: { visible: !isOfficialView, onPointerTap: () => addQuickLink(block.searchCode) },
                 },
             };
@@ -354,8 +359,8 @@ export const NavigatorView = () => {
             bindings: {
                 category_name: { caption: title },
                 category_back: { visible: block.actionAllowed === 2, onPointerTap: () => goBackNavigatorSearch(send) },
-                category_collapse: { visible: block.actionAllowed !== 2, onPointerTap: () => collapse(block.searchCode) },
-                category_name_region: { onPointerTap: () => collapse(block.searchCode) },
+                category_collapse: { visible: block.actionAllowed !== 2, onPointerTap: () => collapse(index, block.searchCode) },
+                category_name_region: { onPointerTap: () => collapse(index, block.searchCode) },
                 category_show_more: { visible: block.actionAllowed === 1, onPointerTap: () => showMore(block.searchCode) },
                 category_add_quick_link: { visible: !isOfficialView, onPointerTap: () => addQuickLink(block.searchCode) },
                 // Without the thumbnail camera perk both toggles are removed from the controls.
@@ -522,6 +527,7 @@ export const NavigatorView = () => {
                 height={openingHeight}
                 bindings={bindings}
                 arrange={arrange}
+                context={{ tab: topLevelContext?.searchCode ?? '', searchCode: searchCodeOriginal }}
             />
             {roomInfoBubble && (
                 <NavigatorRoomInfoPopup

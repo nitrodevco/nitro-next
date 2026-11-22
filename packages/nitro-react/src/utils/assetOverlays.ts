@@ -13,27 +13,38 @@
  * cutting a slice of an overlaid sprite from the overlay rather than the sheet.
  *
  * An overlay keeps the size of the bitmap it replaces: a frame's nine-slice rects are of the sheet's
- * sprite. One of another size is still used and logged; one that does not load is logged and the
- * library's own stays.
+ * sprite. One of another size is still used and logged; one that does not load is said on the console
+ * (with its address, whatever `log.error` is) and the library's own stays.
+ *
+ * Live reload (`theme/themeLive.ts`) draws a changed `asset.overlays` with no bundle loaded again
+ * (`reapplyAssetOverlays`): each bitmap's own is kept the first time it is replaced, to put back when
+ * an overlay is taken away.
  */
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { GetAssetManager, TextureUtils } from '@nitrodevco/nitro-renderer';
-import { ASSET_OVERLAYS_KEY, overlayTextureName, parseAssetOverlays } from '@nitrodevco/nitro-theme';
+import { ASSET_OVERLAYS_KEY, overlayTextureName, parseAssetOverlays, preloadThemeAssets, resetThemeArtCaches, THEME_SKIN_LIBRARY } from '@nitrodevco/nitro-theme';
+import type { Texture } from 'pixi.js';
+
+import { checkThemeOverlays } from './assetOverlayCheck';
 
 /** Each bundle's overlays, applied once: a bundle is fetched once too. */
 const applied = new Map<string, Promise<void>>();
 /** The bundles whose overlays are still loading: a window drawn from one waits (`assetOverlaysPending`). */
 const pending = new Set<string>();
+/** The library's own texture of each bitmap an overlay replaced, by texture name. */
+const originals = new Map<string, Texture>();
+/** The overlay each replaced bitmap is drawn from now, by texture name. */
+const drawn = new Map<string, { library: string; url: string }>();
 
-const applyOne = async (library: string, asset: string, url: string) => {
+const applyOne = async (library: string, asset: string, url: string): Promise<boolean> => {
     const name = overlayTextureName(library, asset);
     const assetManager = GetAssetManager();
-    const own = assetManager.getTexture(name);
+    const own = originals.get(name) ?? assetManager.getTexture(name);
 
     if (!own) {
         NitroLogger.warn('AssetOverlays', `${library}/${asset}: the library has no such bitmap (${name}); the overlay is not used.`);
 
-        return;
+        return false;
     }
 
     try {
@@ -45,9 +56,20 @@ const applyOne = async (library: string, asset: string, url: string) => {
 
         if (texture.width !== own.width || texture.height !== own.height) NitroLogger.warn('AssetOverlays', `${library}/${asset}: the overlay is ${texture.width}x${texture.height}, the bitmap it replaces ${own.width}x${own.height}.`);
 
+        if (!originals.has(name)) originals.set(name, own);
+
         assetManager.setTexture(name, texture);
+        drawn.set(name, { library, url });
+
+        return true;
     } catch (error) {
-        NitroLogger.error('AssetOverlays', `${library}/${asset}: ${url} did not load (${error instanceof Error ? error.message : String(error)}); the library's own is used.`);
+        const message = `${library}/${asset}: ${url} did not load (${error instanceof Error ? error.message : String(error)}); the library's own is used.`;
+
+        NitroLogger.error('AssetOverlays', message);
+        // Said whatever `log.error` is: the browser's own line is a bare 404 that names no overlay.
+        console.warn('[AssetOverlays]', message);
+
+        return false;
     }
 };
 
@@ -64,6 +86,8 @@ export const applyAssetOverlays = (bundle: string, overlays: unknown): Promise<v
         if (!parsed) NitroLogger.warn('AssetOverlays', `${ASSET_OVERLAYS_KEY} is not JSON: no bitmap is replaced.`);
 
         const assets = parsed?.get(bundle);
+
+        if (import.meta.env.DEV && assets && (bundle === THEME_SKIN_LIBRARY)) checkThemeOverlays(assets.keys());
 
         if (assets) {
             pending.add(bundle);
@@ -88,3 +112,51 @@ export const forgetAssetOverlays = (bundle: string) => {
 
 /** Whether a bundle's overlays are still loading: its bitmaps are not yet the ones to draw. */
 export const assetOverlaysPending = (bundle: string) => pending.has(bundle);
+
+/**
+ * Live reload: draws `overlays` (the hotel's new `asset.overlays`) over the bundles already in - a
+ * bitmap whose overlay changed loaded again, one no longer named put back to the library's own - and
+ * registers the theme's sprites again when one of the theme sheet's changed. Resolves true when any
+ * bitmap changed (what is open is drawn again); never rejects. A bundle loading later reads the
+ * hotel's variables as it loads.
+ */
+export const reapplyAssetOverlays = async (overlays: unknown): Promise<boolean> => {
+    const parsed = parseAssetOverlays(overlays) ?? new Map<string, Map<string, string>>();
+    const wanted = new Map<string, { library: string; asset: string; url: string }>();
+
+    for (const library of applied.keys()) {
+        for (const [ asset, url ] of parsed.get(library) ?? []) wanted.set(overlayTextureName(library, asset), { library, asset, url });
+    }
+
+    const assetManager = GetAssetManager();
+    let changed = false;
+    let theme = false;
+
+    for (const [ name, { library } ] of drawn) {
+        if (wanted.has(name)) continue;
+
+        const original = originals.get(name);
+
+        if (original) assetManager.setTexture(name, original);
+
+        drawn.delete(name);
+        changed = true;
+        theme ||= library === THEME_SKIN_LIBRARY;
+    }
+
+    await Promise.all([ ...wanted ].map(async ([ name, { library, asset, url } ]) => {
+        if (drawn.get(name)?.url === url) return;
+
+        if (!await applyOne(library, asset, url)) return;
+
+        changed = true;
+        theme ||= library === THEME_SKIN_LIBRARY;
+    }));
+
+    if (theme) {
+        resetThemeArtCaches();
+        await preloadThemeAssets();
+    }
+
+    return changed;
+};

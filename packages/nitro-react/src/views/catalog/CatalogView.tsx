@@ -29,7 +29,7 @@ import { refreshBuilderStatus, updateBuilderStatus } from '#base/commands';
 import { CATALOG_HEADER_DESCRIPTION, CATALOG_HEADER_IMAGE, CatalogPage, getCatalogPageImage, getCatalogPageText, getCatalogWindowName, isNonTabbedCatalog, useCatalogRootNode, useCatalogStore, useCatalogStoreApi, useCatalogType } from '#base/context/catalog';
 import { useConfigBoolean, useConfigValue, useTranslation } from '#base/context/system';
 import { useCatalogNavigation, useWindowVisibility } from '#base/hooks';
-import { Box, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useLayoutSize, useTemplateLibrary, useTemplateWindowRect } from '#base/theme';
+import { Box, findTemplateChild, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, templateWrapperOf, useLayoutSize, useTemplateLibrary, useTemplateWindowRect } from '#base/theme';
 import { GetFriendlyTime } from '#base/utils';
 
 import { useCatalogSearch } from './navigation/useCatalogSearch';
@@ -42,9 +42,6 @@ const BUILDERS_CLUB_EXTRA_HEIGHT = 15;
 /** `CatalogViewer.showCatalogPage`: the gap right of `layoutContainer`, and the room the left pane needs. */
 const LAYOUT_CONTAINER_RIGHT_GAP = 8;
 const LEFT_PANE_MIN_X = 130;
-
-/** `CatalogNodeRenderable`: a row's height, which an open branch's child list is sized by. */
-const NODE_ROW_HEIGHT = 21;
 
 /** `refreshCatalogWindowChrome`: the frame's and the header's colours, per mode. */
 const BUILDER_FRAME_COLOR = 16758076;
@@ -140,9 +137,13 @@ export const CatalogView = () => {
     /** `CatalogNavigator.getItemTemplate`: a top item at depth 1 (to 2 with the deep hierarchy), a sub item below. */
     const isTopItem = (node: ICatalogNode) => (isDeepHierarchy ? (node.depth <= 2) : (node.depth === 1));
 
-    /** An open branch's child list: as tall as its rows and their own open lists (`updateChildListHeight`). */
+    /** A row's height: its template's (21 in Habbo's layouts), so a theme's taller rows (a patch's `height`) are not cut. */
+    const topRowHeight = findTemplateChild(windowTemplate.elements, `${mode}_topitem_template`)?.height ?? 0;
+    const subRowHeight = findTemplateChild(windowTemplate.elements, `${mode}_subitem_template`)?.height ?? 0;
+
+    /** An open branch's child list: as tall as its rows and their own open lists (`updateChildListHeight` adds up each item's height). */
     const childListHeight = (node: ICatalogNode): number => node.children.reduce((height, child) => (child.visible
-        ? height + NODE_ROW_HEIGHT + ((openNodes.includes(child) && child.children.length) ? childListHeight(child) : 0)
+        ? height + (isTopItem(child) ? topRowHeight : subRowHeight) + ((openNodes.includes(child) && child.children.length) ? childListHeight(child) : 0)
         : height), 0);
 
     /** `CatalogNodeRenderable.createWindow` and its looks: a row of the navigation list, and an open branch's list after it. */
@@ -237,6 +238,8 @@ export const CatalogView = () => {
                 items: tabs.map((node, index) => ({
                     key: `${index}:${node.pageName}`,
                     from: 'tab_button',
+                    // Not Flash's: the tab's page, for a theme's item bindings (an icon per tab).
+                    context: { pageId: node.pageId, pageName: node.pageName, icon: node.icon, iconUrl: catalogIconUrl.replace('%name%', node.icon.toString()), selected: activeNodes.includes(node) },
                     bindings: {
                         '': {
                             caption: node.localization.length ? node.localization : node.pageName,
@@ -258,20 +261,33 @@ export const CatalogView = () => {
         layoutContainer: { children: <CatalogLayoutContainer /> },
     };
 
-    /** `CatalogViewer.showCatalogPage`: the container as wide as the page, right-aligned; the left pane only with room for it. */
+    /**
+     * `CatalogViewer.showCatalogPage`: the container as wide as the page, right-aligned; the left pane
+     * only with room for it. Not Flash's: in a pane a theme wrapped it in (`templateWrapperOf`) the
+     * theme placed the pane, so the page starts at the pane's origin.
+     */
     const arrange = ({ find }: TemplateWindows) => {
         const container = find('layoutContainer');
 
         if (!container?.parent || pageWidth === undefined) return;
 
         container.setWidth(pageWidth);
-        container.setX(container.parent.width - pageWidth - LAYOUT_CONTAINER_RIGHT_GAP);
+        container.setX(templateWrapperOf(container) ? 0 : container.parent.width - pageWidth - LAYOUT_CONTAINER_RIGHT_GAP);
+    };
+
+    // Not Flash's: what the page shows, for a theme's patches and bindings (`docs/template-patches.md`).
+    const context = {
+        layoutCode: activePage?.layoutCode ?? '',
+        pageId: activePage?.pageId ?? -1,
+        hasHeaderImage: getCatalogPageImage(activePage, CATALOG_HEADER_IMAGE) !== undefined,
+        hasHeaderText: !!getCatalogPageText(activePage, CATALOG_HEADER_DESCRIPTION)?.length,
     };
 
     return (
         <TemplateWindow
             id={windowTemplateId}
             frame={frame}
+            context={context}
             height={isBuilder ? windowTemplate.height + BUILDERS_CLUB_EXTRA_HEIGHT : undefined}
             bindings={bindings}
             arrange={arrange}

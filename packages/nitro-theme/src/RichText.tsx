@@ -28,6 +28,11 @@ export interface RichTextProps {
     blockSpacing?: number;
     /** How far a list item is indented per level, in pixels. */
     listIndent?: number;
+    /**
+     * Where a list item's marker sits in its `listIndent`: at the left (the default), or right-aligned
+     * `gap` pixels before the text, as a browser draws an `li`'s marker (`::before`, `text-align: right`).
+     */
+    listMarker?: { align?: 'left' | 'right'; gap?: number };
     layout?: BoxLayout;
 }
 
@@ -61,7 +66,7 @@ const RichTextImage = ({ block, width }: { block: Extract<RichTextBlock, { kind:
  * bold, italic, underline, colour, safe links) and each text block drawn as `ThemeText` markup, so it
  * renders in the hotel's faces like any other text and nothing of it ever runs.
  */
-export const RichText = ({ html, width, textStyle, textOptions, imageHosts, baseUrl, onLink, blockSpacing = 6, listIndent = 14, layout }: RichTextProps) => {
+export const RichText = ({ html, width, textStyle, textOptions, imageHosts, baseUrl, onLink, blockSpacing = 6, listIndent = 14, listMarker, layout }: RichTextProps) => {
     const pageUrl = baseUrl ?? ((typeof location !== 'undefined') ? location.href : undefined);
     const blocks = useMemo(() => parseRichText(html, { imageHosts, baseUrl: pageUrl }), [ html, imageHosts, pageUrl ]);
     const baseSize = (typeof textOptions?.fontSize === 'number') ? textOptions.fontSize : undefined;
@@ -94,7 +99,7 @@ export const RichText = ({ html, width, textStyle, textOptions, imageHosts, base
                         layout={{ width, flexDirection: 'row', paddingLeft: block.bullet ? Math.max(0, indent - listIndent) : 0, flexShrink: 0 }}
                     >
                         {block.bullet && (
-                            <Box layout={{ width: listIndent, flexShrink: 0 }}>
+                            <Box layout={(listMarker?.align === 'right') ? { width: listIndent, flexShrink: 0, flexDirection: 'column', alignItems: 'flex-end', paddingRight: Math.max(0, listMarker.gap ?? 0) } : { width: listIndent, flexShrink: 0 }}>
                                 <ThemeText
                                     text={block.bullet}
                                     textStyle={textStyle}

@@ -89,7 +89,7 @@ export class FurnitureGuildCustomizedLogic extends FurnitureMultiStateLogic {
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureGuildCustomizedColor2, parseInt(color2, 16));
     }
 
-    private openContextMenu(): void {
+    protected openContextMenu(): void {
         this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.GUILD_FURNI_CONTEXT_MENU, this.object),
         );

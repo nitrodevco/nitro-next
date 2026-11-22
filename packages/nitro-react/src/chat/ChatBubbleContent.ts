@@ -11,6 +11,7 @@ import { Texture } from 'pixi.js';
 import { toCssHexColor } from '#base/utils';
 
 import { ChatBubbleData } from './ChatBubbleData';
+import { chatBubbleTheme, themedChatBubbleLine } from './chatBubbleTheme';
 import { IChatStyle } from './ChatStyle';
 
 export type ChatLocalizer = (key: string, defaultValue?: string, replacements?: Record<string, string>) => string;
@@ -102,11 +103,12 @@ export const buildChatBubbleMarkup = (text: string, userName: string, chatType: 
     const isItalic = (!isSpeak && !isShout && !style.isAnonymous);
     const showName = !style.isAnonymous && !hideUsername;
     const name = tableTabs ? escapeChatTableTabMarker(userName) : userName;
+    // Not Flash's: a theme's `chat.bubbles` lines style the name and the message each on its own.
+    const line = isItalic ? 'whisper' : (isShout ? 'shout' : 'talk');
+    const lineTheme = chatBubbleTheme()?.lines?.[line];
+    const themed = lineTheme ? themedChatBubbleLine(showName ? name : undefined, text, line, lineTheme) : undefined;
 
-    let markup = (isItalic ? '<i>' : '') + (showName ? `<b>${name}: </b>` : '');
-
-    markup += (isShout ? '<b>' : '') + text + (isShout ? '</b>' : '');
-    markup += (isItalic ? '</i>' : '');
+    let markup = themed?.markup ?? ((isItalic ? '<i>' : '') + (showName ? `<b>${name}: </b>` : '') + (isShout ? '<b>' : '') + text + (isShout ? '</b>' : '') + (isItalic ? '</i>' : ''));
 
     for (let i = 0; i < links.length; i++) {
         const url = tableTabs ? escapeChatTableTabMarker(links[i].url) : links[i].url;
@@ -116,7 +118,7 @@ export const buildChatBubbleMarkup = (text: string, userName: string, chatType: 
         markup = markup.replace(`{${i}}`, anchor);
     }
 
-    return { markup, alpha: isItalic ? 0.6 : 1, tableTabs };
+    return { markup, alpha: themed?.alpha ?? (isItalic ? 0.6 : 1), tableTabs };
 };
 
 export interface ChatBubbleLayout {

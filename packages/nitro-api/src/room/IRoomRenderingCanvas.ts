@@ -9,6 +9,11 @@ export interface IRoomRenderingCanvas {
     initialize(width: number, height: number): void;
     setMask(flag: boolean): void;
     setBackgroundVisible(flag: boolean): void;
+    /** Whether the canvas paints its black backing (`setBackgroundVisible`). */
+    readonly backgroundVisible: boolean;
+    /** Not Flash's: a canvas drawn inside another room canvas's room layer leaves the half-size zoom pass to that canvas. */
+    setCompositedByParent(flag: boolean): void;
+    readonly compositedByParent: boolean;
     setScale(scale: number, point?: Point, offsetPoint?: Point): void;
     setFlip(flipped: boolean, point?: Point, offsetPoint?: Point): void;
     render(time: number, update?: boolean): void;

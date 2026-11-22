@@ -34,8 +34,14 @@ export type HeaderVariant = ThemeVariant & {
      * header instead.
      */
     controlsTop?: number;
-    /** Where the window layout pins `header_button_close`, from the header's top right, instead of centring it on the right edge. */
+    /**
+     * Where the window layout pins `header_button_close`, from the header's top right, instead of
+     * centring it on the right edge. Inside the header's box: a press reaches nothing past it (a box
+     * bounds what its children take), so a negative inset is drawn at the edge, with a warning.
+     */
     closeAt?: { right: number; top: number };
+    /** Not Flash's: the caption's margin either side (`header_title_text`'s `margins`, 8 in every header layout). */
+    captionPadding?: number;
     /**
      * The close button style of the layout's `header_button_help`, for the window layouts that
      * have one (`habbo_window_layout_header_3` and `_7`: style 4, left of the close button in
@@ -46,6 +52,27 @@ export type HeaderVariant = ThemeVariant & {
 
 /** `spacing` of the header layouts' `_CONTROLS` item list. */
 const CONTROLS_SPACING = 5;
+
+/** `header_title_text`'s `margins` left and right in `habbo_window_layout_header` and `_3`. */
+const CAPTION_PADDING = 8;
+
+/** The header variants whose `closeAt` was warned about, so each is said once. */
+const warnedCloseAt = new Set<string>();
+
+/**
+ * `closeAt` kept inside the header's box, where a press can reach the button: a negative inset is
+ * the edge (warned once per variant, as a theme author's mistake rather than a look).
+ */
+const closeAtInBox = (closeAt: { right: number; top: number }, variant: string) => {
+    if ((closeAt.right >= 0) && (closeAt.top >= 0)) return closeAt;
+
+    if (!warnedCloseAt.has(variant)) {
+        warnedCloseAt.add(variant);
+        console.warn(`[Theme] header variant '${variant}': closeAt { right: ${closeAt.right}, top: ${closeAt.top} } puts the close button outside the header, where no press reaches it; it is drawn at the header's edge. Widen the header (a border or padding) to place it further out.`);
+    }
+
+    return { right: Math.max(0, closeAt.right), top: Math.max(0, closeAt.top) };
+};
 
 export interface HeaderProps extends ThemeProps<HeaderVariant> {
     caption?: string;
@@ -77,10 +104,10 @@ export interface HeaderProps extends ThemeProps<HeaderVariant> {
  */
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, caption, onClose, closeButtonVisible = true, closeVariant, onMenu, helpPage, onHelp, helpButtonVisible,
+        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, tintMode, textStyle, textColor, visible, caption, onClose, closeButtonVisible = true, closeVariant, onMenu, helpPage, onHelp, helpButtonVisible,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
-        const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<HeaderVariant>({
+        const { resolvedVariant, ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<HeaderVariant>({
             cascadeKey: 'header', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
             onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
@@ -111,8 +138,8 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
             ...(config.captionTop !== undefined
                 ? { alignItems: 'flex-start', paddingTop: config.captionTop }
                 : { alignItems: 'center' }),
-            paddingLeft: 8,
-            paddingRight: 8,
+            paddingLeft: config.captionPadding ?? CAPTION_PADDING,
+            paddingRight: config.captionPadding ?? CAPTION_PADDING,
         };
         const titleNode = config.captionAt
             ? title && <Box layout={{ position: 'absolute', left: config.captionAt.left, top: config.captionAt.top }}>{title}</Box>
@@ -149,8 +176,9 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
         // and the buttons centre in the header. A variant with a close button and nothing else to
         // list places the close button there itself - by the variant, not by whether a help page
         // is set now, so the button is not swapped for another node while the header is mounted.
-        const controlsAt: BoxLayout = config.closeAt
-            ? { position: 'absolute', right: config.closeAt.right, top: config.closeAt.top }
+        const closeAt = config.closeAt && closeAtInBox(config.closeAt, String(resolvedVariant));
+        const controlsAt: BoxLayout = closeAt
+            ? { position: 'absolute', right: closeAt.right, top: closeAt.top }
             : { position: 'absolute', right: 0, ...(config.controlsTop !== undefined && { top: config.controlsTop }) };
         const listed = !!config.helpButton || (!config.closeAt && !!config.needsBgChip);
         const closeNode = listed
@@ -190,6 +218,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
                 <BackgroundLayer
                     layer={resolvedLayer}
                     tintColor={resolvedTint}
+                    tintMode={tintMode ?? config.tintMode}
                 />
                 <BackgroundLayer layer={resolvedOverlay} />
                 <VariantCascadeProvider map={ownCascade}>

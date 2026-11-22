@@ -4,6 +4,8 @@ import { GetRenderer, GetRoomStage, GetTicker, RoomAreaSelectionManager } from '
 import { FederatedPointerEvent, Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 
+import { clientModuleRoomPointer, hasSecondaryRooms, roomPlaneTileAt, secondaryRoomTileAt } from '#base/commands';
+import { ClientModuleRoomPointerType } from '#base/context/client-modules';
 import { getRoomObjectBeingPlaced, useRoom, useRoomMouseActions, useRoomStore } from '#base/context/room';
 import { useRoomCamera } from '#base/hooks';
 import { ClientToStage, DOUBLE_CLICK_MS, useLatest } from '#base/theme';
@@ -27,6 +29,16 @@ const DRAG_THRESHOLD: number = 15;
  * finger, dragging moves it rather than the room, and lifting drops it there.
  */
 const isTouchPlacing = (event: FederatedPointerEvent) => (event.pointerType === 'touch') && !!getRoomObjectBeingPlaced();
+
+/** The room's mouse event types as a client module is told them (`api.room.onUnhandledPointer`). */
+const MODULE_POINTER_TYPES: Record<string, ClientModuleRoomPointerType> = {
+    [MouseEventType.MOUSE_MOVE]: 'move',
+    [MouseEventType.MOUSE_DOWN]: 'down',
+    [MouseEventType.MOUSE_UP]: 'up',
+    [MouseEventType.MOUSE_CLICK]: 'click',
+    [MouseEventType.DOUBLE_CLICK]: 'doubleClick',
+    [MouseEventType.RIGHT_CLICK]: 'rightClick',
+};
 
 export const RoomCanvas = () => {
     const room = useRoom();
@@ -128,6 +140,19 @@ export const RoomCanvas = () => {
         return false;
     };
 
+    /** What the room hit nothing with goes to the client modules listening (`api.room.onUnhandledPointer`): whether one took it. */
+    const offerToClientModules = (x: number, y: number, type: string, altKey: boolean, ctrlKey: boolean, shiftKey: boolean) => {
+        const pointerType = MODULE_POINTER_TYPES[type];
+
+        if (!pointerType || !room?.canvas || !clientModuleRoomPointer.has()) return false;
+
+        return clientModuleRoomPointer.offer({
+            type: pointerType, x, y, altKey, ctrlKey, shiftKey,
+            tile: roomPlaneTileAt(room.canvas, x, y),
+            secondaryTile: hasSecondaryRooms() ? secondaryRoomTileAt(x, y) : undefined,
+        });
+    };
+
     const dispatchMouseEvent = (
         x: number,
         y: number,
@@ -160,6 +185,7 @@ export const RoomCanvas = () => {
         if (
             !handleRoomDragging(x, y, type, altKey, ctrlKey, shiftKey)
             && !room.canvas.handleMouseEvent(x, y, type, altKey, ctrlKey, shiftKey, buttonDown)
+            && !offerToClientModules(x, y, type, altKey, ctrlKey, shiftKey)
         ) {
             let eventType: string = '';
 

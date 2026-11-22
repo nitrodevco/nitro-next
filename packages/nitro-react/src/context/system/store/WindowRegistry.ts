@@ -106,8 +106,11 @@ export type WindowRegistry = {
     /** The vault (`EarningsView`), from `habboUI/open/vault` - the purse's earnings button or the new earnings bubble. */
     earnings: NoWindowParams;
 
-    /** The club centre (`HabboClubCenter`'s `ClubCenterView`), from `habboUI/open/hccenter` - `openClubCenter`, `verifyClubLevel`. */
-    club_center: NoWindowParams;
+    /**
+     * The club centre (`HabboClubCenter`'s `ClubCenterView`), from `habboUI/open/hccenter` - `openClubCenter`, `verifyClubLevel`;
+     * `openedAt` tells each link apart, as each runs `showClubCenter` with the window up too.
+     */
+    club_center: { openedAt?: number };
 
     /** The special items display (`SpecialItemsView`), from a `special_items_display/<key>` link. */
     special_items_display: NoWindowParams;

@@ -99,6 +99,8 @@ export interface TemplateElement {
     itemKey?: string;
     /** A clone its code adds to a list with `addListItem` (`TemplateItem.append`). */
     appended?: boolean;
+    /** Not Flash's: an extension's `wrap` put it round one of the template's elements (a pane of the window). */
+    wraps?: boolean;
 }
 
 export interface Template {

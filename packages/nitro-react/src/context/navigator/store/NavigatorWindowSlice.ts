@@ -27,6 +27,8 @@ type State = {
     windowGeometry: NavigatorWindowGeometry | undefined;
     /** What was last sent; `undefined` until the window has been created (`createMainWindow`). */
     sentWindowPreferences: NavigatorSentWindowPreferences | undefined;
+    /** The window opened at a theme's first place, not the server's: that is not sent until the player moves it. */
+    windowPlacedByTheme: boolean;
 };
 
 type Actions = {
@@ -34,6 +36,7 @@ type Actions = {
     setLeftPaneHidden: (leftPaneHidden: boolean) => void;
     setWindowGeometry: (geometry: Partial<NavigatorWindowGeometry>) => void;
     setSentWindowPreferences: (preferences: NavigatorSentWindowPreferences) => void;
+    setWindowPlacedByTheme: (windowPlacedByTheme: boolean) => void;
 };
 
 export const NavigatorWindowSliceInitialState: State = {
@@ -42,6 +45,7 @@ export const NavigatorWindowSliceInitialState: State = {
     leftPaneHidden: true,
     windowGeometry: undefined,
     sentWindowPreferences: undefined,
+    windowPlacedByTheme: false,
 };
 
 export type NavigatorWindowSlice = State & Actions;
@@ -60,4 +64,5 @@ export const createNavigatorWindowSlice: StateCreator<NavigatorWindowSlice, [], 
         return { windowGeometry: next };
     }),
     setSentWindowPreferences: sentWindowPreferences => set({ sentWindowPreferences }),
+    setWindowPlacedByTheme: windowPlacedByTheme => set({ windowPlacedByTheme }),
 });

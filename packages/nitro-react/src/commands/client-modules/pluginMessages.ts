@@ -9,7 +9,8 @@ import type { ITurboPluginMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
 
-import { decodePluginMessage, encodePluginMessage, parsePluginMessageSchema, PluginMessageField, PluginMessageWireValue } from './pluginMessageCodec';
+import { readCarriedCorePacket } from './clientModuleCorePackets';
+import { carriesPacket, decodePluginMessage, encodePluginMessage, parsePluginMessageSchema, PluginMessageField, PluginMessageWireValue } from './pluginMessageCodec';
 
 type Listener = (data: Record<string, unknown>) => void;
 
@@ -33,7 +34,8 @@ const warnOnce = (key: string, message: string) => {
 const register = (socket: WebSocketConnection, name: string, header: number, fields: PluginMessageField[]): Registered | undefined => {
     const Parser = class {
         public parse(wrapper: IMessageDataWrapper) {
-            return decodePluginMessage(wrapper, fields);
+            // A carried packet is read by the client's own parser for its header: the module gets { header, packet }.
+            return decodePluginMessage(wrapper, fields, name, (reader, path) => readCarriedCorePacket(reader, message => warnOnce(`packet:${path}:${message}`, `${path}: ${message}`)));
         }
     };
     const Composer = class {
@@ -132,12 +134,21 @@ export const onPluginMessage = (owner: string, name: string, listener: Listener)
     };
 };
 
-/** Sends a message by name, written from its schema; a name the server did not list warns and sends nothing. */
+/**
+ * Sends a message by name, written from its schema; a name the server did not list, or a message that
+ * carries a packet (only the server sends one), warns and sends nothing.
+ */
 export const sendPluginMessage = (owner: string, name: string, value: Record<string, unknown>) => {
     const registered = listed?.get(name);
 
     if (!registered || !connection) {
         warnOnce(`send:${name}`, `${owner}: the server lists no plugin message ${name}; not sent.`);
+
+        return;
+    }
+
+    if (carriesPacket(registered.fields)) {
+        warnOnce(`send:${name}`, `${owner}: ${name} carries a packet, which only the server sends; not sent.`);
 
         return;
     }

@@ -55,7 +55,14 @@ const BRANDING_ELEMENT_TEMPLATE = 'habbo-room-ui-com/furni_view_branding_element
 /** Everything the furni infostand shows, worked out by its component. */
 export interface InfostandFurniDetails {
     variant: InfostandFurniVariant;
+    /** The room object's id, as the room has it. */
+    objectId: number;
+    kind: 'floor' | 'wall';
+    /** The furnidata id, -1 when the furnidata has none for it. */
+    typeId: number;
     name: string;
+    /** `set description`: the furnidata's description, a poster's `poster_<id>_desc`. */
+    description: string;
     className: string;
     colorIndex: number;
     isNft: boolean;
@@ -136,9 +143,13 @@ export interface InfostandFurniViewProps {
  * layout has fewer windows (no place more button, custom variables, group or chest), and a binding
  * of a window it does not have binds nothing, as Flash's `findChildByName` finds nothing there.
  *
- * `furni_view` has no `description_text`, so `set description` finds nothing and Flash shows no
- * description; neither does this. The `rarity_item_overlay_widget` (`rarity_item_overlay_preview`)
+ * None of the four layouts has a `description_text`, so `set description` finds nothing and Flash
+ * shows no description; neither does this, though a layout that has one (a theme's) gets the text,
+ * sized as Flash sizes it. The `rarity_item_overlay_widget` (`rarity_item_overlay_preview`)
  * is not drawn: the theme has no such widget, and its container stays hidden.
+ *
+ * Not Flash's: the window's template context says which furni it shows (`docs/template-patches.md`),
+ * so a theme's patch or binding can add a line of its own (the description, say).
  */
 export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWiredInspect, canRecolor, onRecolor, canLabelSettings, onLabelSettings, pickupMode, canSaveBranding, buttonsVisible, moduleButtons = [], onMove, onRotate, onPickup, onUse, onWiredInspect, onPlaceMore, onBuy, onRent, onExtend, onBuyout, onOpenOwner, onOpenGroup, onSaveBranding, onSetCustomVariables, onClose }: InfostandFurniViewProps) => {
     const t = useTranslation();
@@ -207,6 +218,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
         info_border: { color: colors.border },
         'info_border/#close': { onPointerTap: onClose },
         name_text: { caption: details.name },
+        description_text: { caption: details.description },
         // `showChestData`: a chest's own name, its wired lock and its contents.
         name_extra_text: { visible: !!details.chest?.name.length, caption: details.chest?.name ?? '' },
         wired_chest_elements: { visible: !!details.chest?.isWiredEnabled },
@@ -313,6 +325,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
         };
 
         fitText('name_text');
+        fitText('description_text');
 
         if (track) {
             fitText('track_name_text');
@@ -351,6 +364,7 @@ export const InfostandFurniView = ({ details, canMove, canRotate, canUse, canWir
             id={VARIANT_TEMPLATES[details.variant]}
             bindings={layoutBindings}
             arrange={arrange}
+            context={{ type: 'furni', objectId: details.objectId, category: details.kind, typeId: details.typeId, className: details.className, name: details.name, description: details.description, ownerId: details.ownerId, ownerName: details.ownerName }}
         />
     );
 };

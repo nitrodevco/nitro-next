@@ -1,7 +1,7 @@
 import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { execSync } from 'node:child_process';
+import { execFile, execSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, rmdirSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { defineConfig, Plugin } from 'vite';
@@ -71,6 +71,56 @@ const pruneBundledAssets = (): Plugin => ({
         this.info(`Pruned ${removed} bundled asset files from dist/assets`);
     },
 });
+
+/**
+ * The skin map, `skins.json` (`tools/skin-map.mjs`): every skin of the theme, the sprites it draws with
+ * their sizes, and the windows that draw it, from the template bundles `nitro-config.json` names - and beside
+ * it `template-index.json`, every template window's element tree. Written into the build's output; in
+ * development made the first time either is asked for and kept until the server restarts. Only the extension
+ * inspector, the development build's overlay check and the admin panel's windows browser read them, so a
+ * bundle host the build cannot reach only leaves them out, with a warning.
+ */
+const skinMap = (): Plugin => {
+    const make = (out: string) => new Promise<string>((resolve, reject) => {
+        execFile(process.execPath, [ r('../../tools/skin-map.mjs'), '--out', out ], (error, stdout, stderr) => (error ? reject(new Error((stderr || error.message).trim())) : resolve(stdout.trim())));
+    });
+    let command = 'serve';
+
+    return {
+        name: 'nitro-skin-map',
+        configResolved(config) {
+            command = config.command;
+        },
+        async closeBundle() {
+            if (command !== 'build') return;
+
+            try {
+                this.info(await make(r('dist/skins.json')));
+            } catch (error) {
+                this.warn(`skins.json left out: ${(error as Error).message}`);
+            }
+        },
+        configureServer(server) {
+            const cache = r('node_modules/.cache/skins.json');
+            let made: Promise<string> | undefined;
+
+            // One run writes both: `template-index.json` beside `skins.json`.
+            for (const file of [ 'skins.json', 'template-index.json' ]) {
+                server.middlewares.use(`/${file}`, (_request, response) => {
+                    made ??= make(cache);
+                    made.then(() => {
+                        response.setHeader('Content-Type', 'application/json');
+                        response.end(readFileSync(r(`node_modules/.cache/${file}`)));
+                    }, (error: Error) => {
+                        made = undefined;
+                        response.statusCode = 503;
+                        response.end(error.message);
+                    });
+                });
+            }
+        },
+    };
+};
 
 /**
  * Dev-server speed. The workspace packages resolve to their TypeScript sources, so by default
@@ -168,6 +218,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
         pruneBundledAssets(),
+        skinMap(),
         buildMeta(build),
         react(),
         babel({

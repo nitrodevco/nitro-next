@@ -18,11 +18,12 @@ const load = (source, dependencies) => {
 };
 const { Vector3d } = load(readFileSync(new URL('../packages/nitro-api/src/utils/Vector3d.ts', import.meta.url), 'utf8'), {});
 const source = readFileSync(new URL('../packages/nitro-react/src/hooks/room/useRoomCamera.ts', import.meta.url), 'utf8');
-const fixture = ({ width = 800, height = 600, small = false, follow = false, disabled = false, disabledByUser = false, followEnabled = true, configuredSpeed = 12 } = {}) => {
+const fixture = ({ width = 800, height = 600, small = false, follow = false, disabled = false, disabledByUser = false, followEnabled = true, configuredSpeed = 12, cameraStart = undefined } = {}) => {
     let ref;
     const target = new Vector3d(10, 10, 0);
     const bounds = small ? new Rectangle(250, 200, 100, 100) : new Rectangle(-500, -500, 2000, 1600);
-    const geometry = { scale: 64, updateId: 1, direction: new Vector3d(0, 0, 0), getScreenPoint: value => new Point(value.x, value.y), setLocation() {}, adjustLocation() {} };
+    const locations = [];
+    const geometry = { scale: 64, updateId: 1, direction: new Vector3d(0, 0, 0), getScreenPoint: value => new Point(value.x, value.y), setLocation: value => locations.push(value), adjustLocation() {} };
     const canvas = { width, height, scale: 1, geometry, screenOffsetX: 0, screenOffsetY: 0 };
     const offsets = [];
     const values = { RoomMinX: -100, RoomMaxX: 100, RoomMinY: -100, RoomMaxY: 100 };
@@ -42,11 +43,32 @@ const fixture = ({ width = 800, height = 600, small = false, follow = false, dis
         },
         '#base/context/user': { useUserStore: select => select({ isRoomCameraFollowDisabled: disabledByUser }) },
         './useRoomEventDispatcher': { useRoomEventDispatcher() {} },
+        '#base/commands': { takeRoomCameraStart: value => ((value === room) ? cameraStart : undefined) },
     });
     const hook = useRoomCamera();
-    Object.assign(ref.current, { room, currentLocation: new Vector3d(), screenSize: { w: width, h: height }, roomSize: { w: bounds.width, h: bounds.height }, geometryUpdateId: 1 });
-    return { ...hook, camera: ref.current, canvas, geometry, target, offsets, bounds };
+    // A camera already on this room; one with a start is a room just entered, whose camera is made on the first update.
+    if (!cameraStart) Object.assign(ref.current, { room, currentLocation: new Vector3d(), screenSize: { w: width, h: height }, roomSize: { w: bounds.width, h: bounds.height }, geometryUpdateId: 1 });
+    return { ...hook, camera: ref.current, cameraRef: ref, canvas, geometry, target, offsets, bounds, locations };
 };
+
+// The case that needed it: the session walks into a room a client module drew beside the last one; its first frame must not jump.
+await test('a room entered while it was drawn starts its camera where it was drawn: no geometry reset, no snap', () => {
+    const start = { x: 300, y: -120 };
+    const entered = fixture({ follow: true, cameraStart: start });
+
+    entered.updateRoomCamera(-1);
+
+    assert.equal(entered.locations.length, 0, 'the geometry it was drawn with is kept');
+    assert.ok(entered.cameraRef.current.targetLocation, 'it eases on towards the avatar');
+    assert.ok(Math.hypot(entered.offsets[0].x - start.x, entered.offsets[0].y - start.y) < 25, `first offset ${JSON.stringify(entered.offsets[0])} is a step from ${JSON.stringify(start)}`);
+
+    const fresh = fixture({ follow: true });
+
+    fresh.cameraRef.current = { ...fresh.camera, room: undefined };
+    fresh.updateRoomCamera(-1);
+
+    assert.equal(fresh.locations.length, 1, 'a room entered the usual way is centred on its geometry');
+});
 
 await test('movement inside tracking margins does not create a camera target at unchanged canvas size', () => {
     for (const [ width, height ] of [ [ 800, 600 ], [ 400, 300 ], [ 1200, 900 ] ]) {
@@ -212,7 +234,7 @@ await test('the installed room ticker and resize listener use the latest camera 
     const canvas = { master: { on() {}, off() {} }, initialize: () => initialized++ };
     const room = { canvas, roomId: 1, dispatchEvent() {} };
     const { RoomCanvas } = load(component, {
-        '@nitrodevco/nitro-api': { RoomRenderedEvent: class {} },
+        '@nitrodevco/nitro-api': { RoomRenderedEvent: class {}, MouseEventType: {} },
         '@nitrodevco/nitro-renderer': { GetRenderer: () => ({ canvas: { addEventListener() {}, removeEventListener() {} }, screen: { width: 800, height: 600 }, on: (_, fn) => { resize = fn; }, off() {} }), GetTicker: () => ({ add: (fn) => {
             tick = fn;
             registrations++;
@@ -229,6 +251,8 @@ await test('the installed room ticker and resize listener use the latest camera 
         '#base/context/room': { useRoom: () => room, useRoomStore: select => select({}), useRoomMouseActions: () => ({ hasAndResetCursorUpdate: () => false }) },
         '#base/hooks': { useRoomCamera: () => ({ updateRoomCamera: callback }) },
         './touchPlacementDrop': { touchPlacementDrop: { objectId: -1, category: -1 } },
+        'pixi.js': { Point: class {} },
+        '#base/commands': { clientModuleRoomPointer: { has: () => false, offer: () => false }, hasSecondaryRooms: () => false, roomPlaneTileAt: () => undefined, secondaryRoomTileAt: () => undefined },
     });
     callback = time => seen.push([ 'initial', time ]);
     RoomCanvas();

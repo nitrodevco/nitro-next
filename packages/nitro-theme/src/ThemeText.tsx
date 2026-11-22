@@ -1,14 +1,14 @@
-import { CanvasTextMetrics, fontStringFromTextStyle, Graphics, TextDropShadow, TextStyle, TextStyleOptions } from 'pixi.js';
+import { CanvasTextMetrics, FederatedPointerEvent, fontStringFromTextStyle, Graphics, TextDropShadow, TextStyle, TextStyleOptions } from 'pixi.js';
 import { useMemo } from 'react';
 
 import { BoxLayout } from './Box';
 import { useDynamicStyleEffect } from './dynamicstyle';
-import { FlashTextFieldOverrides, FlashTextStyleSheet } from './font/flash-text';
+import { flashLinkText, FlashTextFieldOverrides, FlashTextStyleSheet } from './font/flash-text';
 import { FlashText } from './font/FlashText';
 import { FlashTextCanvasConfig, FlashTextOverflowReplace, useFlashTextCanvas } from './hooks/useFlashTextCanvas';
 import { browserFaceOverride, DEFAULT_TEXT_STYLE, DynamicStyleRole, flashFaceOverride, getPixiTextStyle, insetStretchAxes, resolveFlashStyle, TEXT_DROP_SHADOW, TEXT_STYLES, textObjectPosition, TextStyleKey, TextVerticalAlign, ThemeLayoutMeta, transformColor } from './utils';
 import { GetPixelRatio } from './utils/GetPixelRatio';
-import { NATIVE_UNDERLINE, nativeMarkup } from './utils/nativeTextMarkup';
+import { NATIVE_LINK, NATIVE_UNDERLINE, nativeMarkup } from './utils/nativeTextMarkup';
 
 export type TextConfig = {
     text: string;
@@ -45,8 +45,8 @@ export type TextConfig = {
     /**
      * With `markup`: a click on an `<a href>`'s glyphs, and only there, calls this with the link -
      * the href, an `event:` link's without its prefix (`HTMLTextController.immediateClickHandler`'s
-     * `WindowLinkEvent.link`; an in-client link goes on to `openClientLink`). Exact rendering only:
-     * the browser fallback draws the text without its links.
+     * `WindowLinkEvent.link`; an in-client link goes on to `openClientLink`). The browser fallback
+     * takes a click on a link's runs alike (`nativeMarkup`'s `links`).
      */
     onLink?: (link: string) => void;
     /**
@@ -102,18 +102,24 @@ const runAdvance = (text: string, style: TextStyle): number => {
     return CanvasTextMetrics._measureText(text, style.letterSpacing, context);
 };
 
+type UnderlineRect = { x: number; y: number; width: number; color: number };
+type LinkRect = { x: number; y: number; width: number; height: number; link: number };
+
+const NO_MARKS: { underlines: UnderlineRect[]; links: LinkRect[] } = { underlines: [], links: [] };
+
 /**
- * Where the underlined runs of a tagged canvas text are, one pixel under their baseline: Pixi draws
- * no underline, so `NativeText` draws these over its text. Each run is placed as Pixi's tagged
- * renderer places it - its pen moved by each run's advance, each line by the text's `align` - so a
- * line stays under its glyphs.
+ * Where the marked runs of a tagged canvas text are: the underlined ones' lines, one pixel under
+ * their baseline (Pixi draws no underline, so `NativeText` draws these over its text), and the
+ * boxes of a link's runs, which take its clicks. Each run is placed as Pixi's tagged renderer places
+ * it - its pen moved by each run's advance, each line by the text's `align` - so a mark stays on its glyphs.
  */
-const underlineRects = (metrics: CanvasTextMetrics, style: TextStyle): { x: number; y: number; width: number; color: number }[] => {
+const markedRunRects = (metrics: CanvasTextMetrics, style: TextStyle): { underlines: UnderlineRect[]; links: LinkRect[] } => {
     const lines = metrics.runsByLine;
 
-    if (!lines) return [];
+    if (!lines) return NO_MARKS;
 
-    const rects: { x: number; y: number; width: number; color: number }[] = [];
+    const rects: UnderlineRect[] = [];
+    const links: LinkRect[] = [];
     const halfStroke = (style.stroke ? (style._stroke?.width ?? 0) : 0) / 2;
     let top = halfStroke;
 
@@ -123,18 +129,22 @@ const underlineRects = (metrics: CanvasTextMetrics, style: TextStyle): { x: numb
         let left = halfStroke + ((style.align === 'center') ? free / 2 : (style.align === 'right') ? free : 0);
         const ascent = metrics.lineAscents?.[index] ?? metrics.fontProperties.ascent;
 
+        const lineHeight = metrics.lineHeights?.[index] ?? metrics.lineHeight;
+
         for (const run of runs) {
             const width = runAdvance(run.text, run.style);
+            const marks = run.style as unknown as Record<string, unknown>;
 
-            if ((run.style as unknown as Record<string, unknown>)[NATIVE_UNDERLINE]) rects.push({ x: Math.round(left), y: Math.round(top + ascent + 1), width: Math.round(width), color: runColor(run.style) });
+            if (marks[NATIVE_UNDERLINE]) rects.push({ x: Math.round(left), y: Math.round(top + ascent + 1), width: Math.round(width), color: runColor(run.style) });
+            if (typeof marks[NATIVE_LINK] === 'number') links.push({ x: left, y: top, width, height: lineHeight, link: marks[NATIVE_LINK] });
 
             left += width;
         }
 
-        top += metrics.lineHeights?.[index] ?? metrics.lineHeight;
+        top += lineHeight;
     });
 
-    return rects;
+    return { underlines: rects, links };
 };
 
 /**
@@ -168,7 +178,15 @@ const underlineRects = (metrics: CanvasTextMetrics, style: TextStyle): { x: numb
  * natural size on both axes is what makes it overflow a too-small container instead, matching
  * a `<span>`'s real floor.
  */
-const NativeText = ({ text: source, markup, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y }: TextRenderConfig) => {
+/** An `objectPosition`'s place as a row's flex placement: what puts a box of the text's size where the plain text's `objectPosition` puts its glyphs. */
+const flexPlacement = (position: ReturnType<typeof textObjectPosition>) => {
+    const [ horizontal, vertical ] = position.split(' ');
+    const place = (side: string) => ((side === 'center') ? 'center' : (side === 'right' || side === 'bottom') ? 'flex-end' : 'flex-start');
+
+    return { justifyContent: place(horizontal), alignItems: place(vertical) } as const;
+};
+
+const NativeText = ({ text: source, markup, textStyle, textOptions, flashFormat, layout, verticalAlign, visible, alpha, x, y, onLink }: TextRenderConfig) => {
     // Markup the exact renderer could not take: its runs as the canvas text's tags (`nativeMarkup`).
     const rich = useMemo(() => (markup ? nativeMarkup(source) : undefined), [ markup, source ]);
     const text = rich ? rich.text : source;
@@ -195,37 +213,68 @@ const NativeText = ({ text: source, markup, textStyle, textOptions, flashFormat,
         return tagged;
     }, [ textStyle, textOptions, flashFormat, rich ]);
     const metrics = useMemo(() => (text?.length ? CanvasTextMetrics.measureText(text, style) : undefined), [ text, style ]);
-    const underlines = useMemo(() => (metrics ? underlineRects(metrics, style) : []), [ metrics, style ]);
+    const marks = useMemo(() => (metrics ? markedRunRects(metrics, style) : NO_MARKS), [ metrics, style ]);
+    const underlines = marks.underlines;
+    const hrefs = rich?.links;
+    // As the exact renderer's: only a field with links takes the pointer, and only a link's glyphs take a click.
+    const linked = !!onLink && !!hrefs && (marks.links.length > 0);
 
     if (!text?.length || !metrics) return null;
 
+    const linkAt = (event: FederatedPointerEvent) => {
+        const point = event.getLocalPosition(event.currentTarget);
+        const hit = marks.links.find(rect => point.x >= rect.x && point.x < rect.x + rect.width && point.y >= rect.y && point.y < rect.y + rect.height);
+
+        return hit ? hrefs?.[hit.link] : undefined;
+    };
+    const onLinkTap = (event: FederatedPointerEvent) => {
+        const href = linkAt(event);
+
+        if (href === undefined) return;
+
+        event.stopPropagation();
+        onLink?.(flashLinkText(href));
+    };
+    const onLinkHover = (event: FederatedPointerEvent) => {
+        event.currentTarget.cursor = (linkAt(event) === undefined) ? 'default' : 'pointer';
+    };
+    const linkEvents = linked ? { eventMode: 'static' as const, onPointerTap: onLinkTap, onPointerMove: onLinkHover } : {};
+
     const stretchAxes = insetStretchAxes(layout);
     const objectPosition = textObjectPosition(textOptions?.align, verticalAlign);
-    const label = (labelLayout: BoxLayout | undefined, nudge: boolean) => (underlines.length
+    const label = (labelLayout: BoxLayout | undefined, nudge: boolean) => ((underlines.length || linked)
         ? (
+                // The text and its marks at the text's own size, placed in a box the caller sized (a
+                // paragraph's width) by the text's `align`, as the plain text's `objectPosition` places it.
                 <pixiContainer
-                    eventMode="none"
+                    eventMode={linked ? 'passive' : 'none'}
                     visible={visible}
                     alpha={alpha}
                     x={nudge ? x : undefined}
                     y={nudge ? y : undefined}
-                    layout={{ width: Math.ceil(metrics.width), height: Math.ceil(metrics.height), flexShrink: 0, ...labelLayout }}
+                    layout={{ width: Math.ceil(metrics.width), height: Math.ceil(metrics.height), flexShrink: 0, ...labelLayout, flexDirection: 'row', ...flexPlacement(objectPosition) }}
                 >
-                    <pixiText
-                        text={text}
-                        style={style}
-                        resolution={GetPixelRatio()}
-                        layout={{ position: 'absolute', left: 0, top: 0, width: Math.ceil(metrics.width), height: Math.ceil(metrics.height), objectFit: 'none', objectPosition: 'left top' }}
-                    />
-                    {/* No layout of its own: a laid-out leaf is moved so its bounds start at its box, which would put every line at x 0. */}
-                    <pixiGraphics
-                        eventMode="none"
-                        draw={(g: Graphics) => {
-                            g.clear();
+                    <pixiContainer
+                        eventMode={linked ? 'passive' : 'none'}
+                        layout={{ width: Math.ceil(metrics.width), height: Math.ceil(metrics.height), flexShrink: 0 }}
+                    >
+                        <pixiText
+                            text={text}
+                            style={style}
+                            resolution={GetPixelRatio()}
+                            {...linkEvents}
+                            layout={{ position: 'absolute', left: 0, top: 0, width: Math.ceil(metrics.width), height: Math.ceil(metrics.height), objectFit: 'none', objectPosition: 'left top' }}
+                        />
+                        {/* No layout of its own: a laid-out leaf is moved so its bounds start at its box, which would put every line at x 0. */}
+                        <pixiGraphics
+                            eventMode="none"
+                            draw={(g: Graphics) => {
+                                g.clear();
 
-                            for (const line of underlines) g.rect(line.x, line.y, line.width, 1).fill(line.color);
-                        }}
-                    />
+                                for (const line of underlines) g.rect(line.x, line.y, line.width, 1).fill(line.color);
+                            }}
+                        />
+                    </pixiContainer>
                 </pixiContainer>
             )
         : (
@@ -253,7 +302,7 @@ const NativeText = ({ text: source, markup, textStyle, textOptions, flashFormat,
     if (stretchAxes.x || stretchAxes.y) {
         return (
             <pixiContainer
-                eventMode="none"
+                eventMode={linked ? 'passive' : 'none'}
                 x={x}
                 y={y}
                 layout={layout}

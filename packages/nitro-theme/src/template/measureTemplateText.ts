@@ -5,7 +5,7 @@
  */
 import { FLASH_TEXT_GUTTER, FlashTextFieldOverrides, FlashTextFormat, FlashTextRenderer, FlashTextStyleSheet, HABBO_TEXT_STYLES, parseFlashTextMarkup, renderFlashTextCanvas, resolveFlashTextFormat } from '../font/flash-text';
 import { resolveMarkupFace } from '../hooks/useFlashTextCanvas';
-import { flashFaceOverride, fontFaceOverride, TextStyleKey, themeDefaultTextStyle } from '../utils';
+import { capturedFontFace, flashFaceOverride, fontFaceOverride, TextStyleKey, themeDefaultTextStyle } from '../utils';
 import type { TemplateElement } from './templateData';
 import type { TemplateTextSize } from './templateLayout';
 
@@ -39,16 +39,6 @@ export const templateFontSize = (element: TemplateElement): number | undefined =
     if (typeof overridden === 'number' && overridden > 0) return overridden;
 
     return element.vars.font_size !== undefined && Number.isFinite(size) && size > 0 ? size : undefined;
-};
-
-/** The layout's `font_face` names, as the faces `flashFaceOverride` knows them. */
-const FONT_FACES: Readonly<Record<string, string>> = {
-    Ubuntu: 'Ubuntu',
-    'Ubuntu bold': 'UbuntuBold',
-    'Ubuntu condensed': 'UbuntuCondensed',
-    UbuntuCondensed: 'UbuntuCondensed',
-    Volter: 'Volter',
-    'Volter Bold': 'VolterBold',
 };
 
 /**
@@ -114,7 +104,8 @@ export const templateTextFormat = (element: TemplateElement): { fontFamily?: str
         if (faceOverride?.[field] !== undefined) (flash as Record<string, unknown>)[field] = faceOverride[field];
     }
 
-    return { fontFamily: face ? (FONT_FACES[face] ?? face) : undefined, flash };
+    // The layout's `font_face` names (`Ubuntu bold`, `Volter Bold`) as the faces `flashFaceOverride` knows them.
+    return { fontFamily: face ? (capturedFontFace(face) ?? face) : undefined, flash };
 };
 
 /** The wrap width `ThemeText` is given for a field `fieldWidth` wide: inside its gutters. */

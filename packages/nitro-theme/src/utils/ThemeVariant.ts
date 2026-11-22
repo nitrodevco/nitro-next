@@ -9,6 +9,7 @@ import { InteractionHandlers, InteractionState, InteractionStates } from '../hoo
 import { BackgroundLayerConfig } from '../layer';
 import { DynamicStyleName } from './dynamicStyles';
 import { PointerHandlerProps } from './interaction';
+import { ThemeTintMode } from './subtractTint';
 import { TextStyleKey } from './textStyles';
 
 /**
@@ -58,6 +59,12 @@ export type ThemeBase = {
      * or `plain` (Nitro Studio's theme builder, `server/theme/skinArt.ts` there).
      */
     colorize?: boolean;
+    /**
+     * Not Flash's: how the tint colours the art - `multiply` (the client's `ColorTransform`, the
+     * default) or `subtract` (`ThemeTintMode`), for a theme's skins drawn for that tint. A call
+     * site's value wins over the variant's.
+     */
+    tintMode?: ThemeTintMode;
     textStyle?: TextStyleKey;
     textColor?: string;
     zIndex?: number;

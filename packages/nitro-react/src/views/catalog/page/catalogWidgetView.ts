@@ -11,7 +11,7 @@
  * loads; its bindings and `arrange` then resolve inside it. Without one, or in an `EMBEDDED`
  * container, they resolve inside the container.
  */
-import { TemplateBindings, TemplateWindows } from '@nitrodevco/nitro-theme';
+import { TemplateBindings, TemplateContext, TemplateWindows } from '@nitrodevco/nitro-theme';
 import { createContext, useContext, useLayoutEffect } from 'react';
 
 export interface CatalogWidgetView {
@@ -26,6 +26,11 @@ export interface CatalogWidgetView {
      * (`window.parent.findChildByName`) - another widget's container it hides.
      */
     page?: TemplateBindings;
+    /**
+     * Not Flash's: what the widget shows, for a theme's bindings of it - its view's context (the clone
+     * of `template`), or in an `EMBEDDED` container the page window's, with every such widget's keys.
+     */
+    context?: TemplateContext;
     /**
      * `init()` failed: `CatalogPage.removeWidgets` takes the container off the page with the widgets
      * inside it, which are disposed and hear nothing more.

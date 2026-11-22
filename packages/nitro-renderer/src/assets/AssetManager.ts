@@ -152,7 +152,10 @@ export class AssetManager implements IAssetManager {
     }
 
     public async downloadAsset(url: string): Promise<boolean> {
-        const ext = url ? url.slice(url.lastIndexOf('.') + 1) : '';
+        // The file type of the address's path: a query or fragment after it (a cache tag, a signed
+        // link) is not part of it, as Flash's AssetLibrary.getAssetTypeDeclarationByFileName reads it.
+        const path = url ? url.split(/[?#]/)[0] : '';
+        const ext = path.slice(path.lastIndexOf('.') + 1);
         const measured = (ext === 'nitro') && LoadMetrics.enabled;
 
         let succeeded = false;

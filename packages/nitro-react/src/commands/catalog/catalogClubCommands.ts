@@ -253,16 +253,16 @@ export const isClubKickbackEnabled = (config: Record<string, unknown>): boolean 
 };
 
 /**
- * `HabboClubCenter.showClubCenter` once the `habboUI/open/hccenter` link has opened the window:
- * the new `ClubCenterView` asks for the club centre's offers (its constructor's `getOffers()`),
- * and the data is asked for again when it is more than `DATA_UPDATE_INTERVAL_MSEC` old and no
- * request is out (`updateNeeded` / `updateData`: the badges, the gift info and the kickback info).
- * `now` is `getTimer()`.
+ * `HabboClubCenter.showClubCenter`, on every `habboUI/open/hccenter` link, the window already up
+ * included: a new `ClubCenterView` (`created`) asks for the club centre's offers (its
+ * constructor's `getOffers()`), and the data is asked for again when it is more than
+ * `DATA_UPDATE_INTERVAL_MSEC` old and no request is out (`updateNeeded` / `updateData`: the
+ * badges, the gift info and the kickback info). `now` is `getTimer()`.
  */
-export const showClubCenter = (send: Send, store: CatalogStoreApi, now: number) => {
+export const showClubCenter = (send: Send, store: CatalogStoreApi, now: number, created: boolean) => {
     const { clubCenterUpdating, clubCenterUpdatedAt, setClubCenterUpdating } = store.getState();
 
-    send(new GetClubOffersComposer({ requestSource: CLUB_OFFERS_SOURCE_CLUB_CENTER }));
+    if (created) send(new GetClubOffersComposer({ requestSource: CLUB_OFFERS_SOURCE_CLUB_CENTER }));
 
     if (clubCenterUpdating || ((now - clubCenterUpdatedAt) <= CLUB_CENTER_DATA_UPDATE_INTERVAL)) return;
 

@@ -127,6 +127,7 @@ const hookFixture = (enabled = true) => {
         },
         '#base/context/user': { useUserStore: select => select({}) },
         './useRoomEventDispatcher': { useRoomEventDispatcher: (type, handler) => { listeners[type] = handler; } },
+        '#base/commands': { takeRoomCameraStart: () => undefined },
     };
     const exports = {};
     runInNewContext(ts.transpileModule(hookSource, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText, { exports, require: name => dependencies[name] });

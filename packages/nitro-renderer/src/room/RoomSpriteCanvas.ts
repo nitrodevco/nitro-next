@@ -85,6 +85,7 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
     private _usesExclusionRectangles: boolean = false;
     private _usesMask: boolean = true;
     private _backgroundVisible: boolean = true;
+    private _compositedByParent: boolean = false;
     private _zDirty: boolean = false;
 
     /*
@@ -219,6 +220,14 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._objectCache = undefined!;
         }
 
+        // A canvas drawn inside this one's room layer, under its display - a client module's secondary
+        // room - is its own room's to dispose: let go of here, not destroyed with the layer.
+        if (this._roomLayer) {
+            for (const child of [ ...this._roomLayer.children ]) {
+                if ((child !== this._background) && (child !== this._display) && (child !== this._mask)) this._roomLayer.removeChild(child);
+            }
+        }
+
         if (this._master) {
             while (this._master.children.length) {
                 const child = this._master.removeChildAt(0);
@@ -301,6 +310,29 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
         this._width = width;
         this._height = height;
         this.positionFpsText();
+        this.updateZoomSampling();
+    }
+
+    /** Whether the canvas paints its black backing (`setBackgroundVisible`). */
+    public get backgroundVisible(): boolean {
+        return this._backgroundVisible;
+    }
+
+    /** Whether another room canvas's half-size pass draws this one (`setCompositedByParent`). */
+    public get compositedByParent(): boolean {
+        return this._compositedByParent;
+    }
+
+    /**
+     * Not Flash's: a canvas drawn inside another room canvas's room layer (a client module's secondary
+     * room) is reduced to half size by that canvas's pass at zoom 0, so it runs none of its own: a
+     * second pass nested in the first renders at the filter's resolution into the wrong part of the
+     * outer texture, leaving the room clipped to the top left quarter of the screen.
+     */
+    public setCompositedByParent(flag: boolean): void {
+        if (this._compositedByParent === flag) return;
+
+        this._compositedByParent = flag;
         this.updateZoomSampling();
     }
 
@@ -626,10 +658,11 @@ export class RoomSpriteCanvas implements IRoomRenderingCanvas {
             this._downsampleFilter.resolution = TextureUtils.getRenderer().resolution * 2;
         }
 
-        if (composite !== this._compositeZoom) {
-            this._compositeZoom = composite;
-            this._roomLayer.filters = composite ? [ this._downsampleFilter! ] : [];
-        }
+        this._compositeZoom = composite;
+
+        const pass = composite && !this._compositedByParent;
+
+        if (((this._roomLayer.filters?.length ?? 0) > 0) !== pass) this._roomLayer.filters = pass ? [ this._downsampleFilter! ] : [];
 
         this._roomLayer.filterArea = this._usesMask ? this._master.filterArea : undefined;
 

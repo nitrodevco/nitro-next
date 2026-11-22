@@ -9,6 +9,7 @@ import { calculateBundlePrice, CURRENCY_TYPE_SILVER, getCurrencyIconStyle, getSe
 
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { CatalogWidgetView, useCatalogWidgetView } from '../catalogWidgetView';
+import { priceContextOf } from './catalogPrice';
 
 /** A total and the total before the bundle discount, for one `total_left` / `total_right`. */
 interface Total {
@@ -70,6 +71,7 @@ const totalPriceView = (offer: IPurchasableOffer | undefined, quantity: number, 
     return {
         template: 'totalPriceWidget',
         bindings,
+        context: { ...priceContextOf(offer), quantity },
         arrange: ({ find }) => {
             if (comboIcon) find(comboIcon)?.setWidth(53);
 

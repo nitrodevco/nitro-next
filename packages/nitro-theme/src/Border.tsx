@@ -62,10 +62,11 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
  * parent, not white.
  */
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
-    ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, dropShadow, blend, ownGraphicContext, backgroundColor, backgroundAlpha, dynamicRole, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, tintMode, textStyle, textColor, visible, dropShadow, blend, ownGraphicContext, backgroundColor, backgroundAlpha, dynamicRole, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedPlain, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<BorderVariant>({
             cascadeKey: 'border', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
+        const resolvedTintMode = tintMode ?? config.tintMode;
         const roleEffect = useDynamicStyleEffect(dynamicRole);
         const boxLayout = { ...expandSides(config.layout), ...expandSides(layout) };
         // A skin drawn as one display object (a nine-slice, most borders) with no fill or overlay
@@ -82,6 +83,7 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                     ref={ref}
                     layer={resolvedLayer}
                     tintColor={resolvedTint}
+                    tintMode={resolvedTintMode}
                     alpha={blend}
                     visible={visible}
                     layout={leafBoxLayout(boxLayout)}
@@ -102,6 +104,7 @@ export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiC
                 <BackgroundLayer
                     layer={resolvedLayer}
                     tintColor={resolvedTint}
+                    tintMode={resolvedTintMode}
                     alpha={alone ? skinBlend : undefined}
                 />
                 <BackgroundLayer layer={resolvedOverlay} />

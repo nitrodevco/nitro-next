@@ -45,6 +45,9 @@ export const flashTextCharIndexAtPoint = ({ lineLayout, lineOffsets, lineHeight,
     return -1;
 };
 
+/** `TextEvent.text`: an `event:` link's text after the prefix; any other href as it is. */
+export const flashLinkText = (href: string) => (href.startsWith('event:') ? href.substring(6) : href);
+
 /**
  * The `href` of the `<a>` whose glyphs hold the point, or `undefined` - what a Flash `TextField`
  * resolves a click on it to before it dispatches the link.

@@ -5,7 +5,7 @@ import { parseRichText, safeRichTextLink } from '../src/utils/richText';
 
 const BASE = 'https://hotel.example.com/client/';
 
-test('an editor\'s article body becomes paragraphs of Flash markup, a heading and a list, never raw tags', () => {
+void test('an editor\'s article body becomes paragraphs of Flash markup, a heading and a list, never raw tags', () => {
     const blocks = parseRichText('<h2>Party</h2><p class="ql-align-center">Join the <strong>Anniversary</strong> <em>Party</em>, you <u>must</u> come &amp; <span style="color: rgb(255, 0, 0);">see</span>!</p><ol><li>One</li><li data-list="bullet">Two</li></ol><ul><li>Three</li></ul>', { baseUrl: BASE });
 
     assert.deepEqual(blocks, [
@@ -17,20 +17,20 @@ test('an editor\'s article body becomes paragraphs of Flash markup, a heading an
     ]);
 });
 
-test('scripts, styles and frames go with their text; event handlers, unknown tags and their attributes go, their text stays', () => {
+void test('scripts, styles and frames go with their text; event handlers, unknown tags and their attributes go, their text stays', () => {
     const blocks = parseRichText('<p onclick="steal()">Hi<script>alert(1)</script><style>p{}</style><iframe src="x">frame</iframe> <marquee>there</marquee> &lt;b&gt;</p>');
 
     assert.deepEqual(blocks, [ { kind: 'text', role: 'p', markup: 'Hi there &lt;b&gt;', align: 'left', depth: 0 } ]);
 });
 
-test('only http(s) and in-client links are kept; a javascript: link keeps its text and loses the link', () => {
+void test('only http(s) and in-client links are kept; a javascript: link keeps its text and loses the link', () => {
     const blocks = parseRichText('<p><a href="javascript:alert(1)">bad</a> <a href="/news/2">good</a> <a href="event:navigator/goto/12">room</a></p>', { baseUrl: BASE });
 
     assert.equal(blocks[0].kind === 'text' && blocks[0].markup, 'bad <a href="https://hotel.example.com/news/2"><u>good</u></a> <a href="event:navigator/goto/12"><u>room</u></a>');
     assert.equal(safeRichTextLink('data:text/html,x'), undefined);
 });
 
-test('images only from the page\'s origin or the allowed hosts; others are dropped', () => {
+void test('images only from the page\'s origin or the allowed hosts; others are dropped', () => {
     const blocks = parseRichText('<p>a</p><img src="/c_images/news/1.png" width="45"><img src="https://evil.example.org/x.png"><img src="https://cdn.example.net/y.png" alt="y"><img src="data:image/png;base64,AAAA">', { baseUrl: BASE, imageHosts: [ 'cdn.example.net' ] });
 
     assert.deepEqual(blocks.filter(block => block.kind === 'image'), [
@@ -39,8 +39,19 @@ test('images only from the page\'s origin or the allowed hosts; others are dropp
     ]);
 });
 
-test('a style open across a line break or a misnested end tag is closed in each block it reaches', () => {
+void test('a style open across a line break or a misnested end tag is closed in each block it reaches', () => {
     const blocks = parseRichText('<p><b>one<br>two</p><p>three</b> four</p><p><i><u>x</i> y</u></p>');
 
     assert.deepEqual(blocks.map(block => block.kind === 'text' && block.markup), [ '<b>one<br>two</b>', '<b>three</b> four', '<i><u>x</u></i> y' ]);
+});
+
+void test('an editor\'s blank line (<p><br></p>) is a blank block of a line per break; an empty block with no break is nothing', () => {
+    const blocks = parseRichText('<p>First Place</p><p><br></p><p></p><p><br><br></p><p>Second</p>');
+
+    assert.deepEqual(blocks, [
+        { kind: 'text', role: 'p', markup: 'First Place', align: 'left', depth: 0 },
+        { kind: 'text', role: 'p', markup: ' ', align: 'left', depth: 0, blank: true },
+        { kind: 'text', role: 'p', markup: ' <br> ', align: 'left', depth: 0, blank: true },
+        { kind: 'text', role: 'p', markup: 'Second', align: 'left', depth: 0 },
+    ]);
 });
