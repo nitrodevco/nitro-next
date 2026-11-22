@@ -7,7 +7,7 @@
         "packages/*"
     ],
     "scripts": {
-        "build": "npx update-browserslist-db@latest && yarn workspaces foreach --all -pt run build",
+        "build": "yarn workspaces foreach --all -pt run build",
         "typecheck": "yarn workspaces foreach --all -pt run typecheck",
         "lint": "node --max-old-space-size=8192 node_modules/eslint/bin/eslint.js .",
         "lint:fix": "node --max-old-space-size=8192 node_modules/eslint/bin/eslint.js . --fix",
