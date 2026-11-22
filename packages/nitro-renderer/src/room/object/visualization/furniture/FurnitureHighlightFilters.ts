@@ -71,10 +71,26 @@ export class FurnitureHighlightFilters {
         const offset = 35 * amount;
 
         return colorMatrix([
-            1 - mix + mix * r, cross * g, cross * b, 0, r * offset,
-            cross * r, 1 - mix + mix * g, cross * b, 0, g * offset,
-            cross * r, cross * g, 1 - mix + mix * b, 0, b * offset,
-            0, 0, 0, 1, 0,
+            1 - mix + mix * r,
+            cross * g,
+            cross * b,
+            0,
+            r * offset,
+            cross * r,
+            1 - mix + mix * g,
+            cross * b,
+            0,
+            g * offset,
+            cross * r,
+            cross * g,
+            1 - mix + mix * b,
+            0,
+            b * offset,
+            0,
+            0,
+            0,
+            1,
+            0,
         ]);
     }
 

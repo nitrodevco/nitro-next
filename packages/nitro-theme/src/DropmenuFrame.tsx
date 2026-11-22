@@ -63,12 +63,41 @@ export interface DropmenuFrameProps extends ThemeProps<DropmenuVariant> {
 
 export const DropmenuFrame: ForwardRefExoticComponent<DropmenuFrameProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuFrameProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, zIndex, expanded = false, listHeight, children,
-        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        variant,
+        defaultVariant,
+        tooltip,
+        tooltipDelay,
+        layout,
+        tintColor,
+        textStyle,
+        textColor,
+        visible,
+        zIndex,
+        expanded = false,
+        listHeight,
+        children,
+        onPointerOver,
+        onPointerOut,
+        onPointerDown,
+        onPointerUp,
+        onPointerUpOutside,
+        onPointerTap,
     }, ref) => {
         const { resolvedVariant, ownCascade, config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<DropmenuVariant>({
-            cascadeKey: 'dropmenu', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'dropmenu',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
 
         const arrowTextureKey = (!expanded && (state === 'hovering') && config.arrowHoveringTextureKey) ? config.arrowHoveringTextureKey : config.arrowTextureKey;

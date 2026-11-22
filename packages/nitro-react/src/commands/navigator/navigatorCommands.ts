@@ -6,9 +6,28 @@
  */
 import { RoomTradeModeEnum } from '@nitrodevco/nitro-api';
 import {
-    AddFavouriteRoomComposer, ConvertGlobalRoomIdComposer, CreateFlatComposer, CreateFlatComposerType, DeleteFavouriteRoomComposer, EditEventComposer, GetCustomRoomFilterComposer, GetGuestRoomComposer, GetHabboGroupDetailsComposer, NavigatorAddCollapsedCategoryComposer,
-    NavigatorAddSavedSearchComposer, NavigatorDeleteSavedSearchComposer, NavigatorRemoveCollapsedCategoryComposer, NavigatorSetSearchCodeViewModeComposer, NewNavigatorSearchComposer, OpenFlatConnectionComposer, QuitComposer, RoomNetworkOpenConnectionComposer,
-    SetNewNavigatorWindowPreferencesComposer, UpdateHomeRoomComposer, UpdateRoomCategoryAndTradeSettingsComposer, UpdateRoomFilterComposer,
+    AddFavouriteRoomComposer,
+    ConvertGlobalRoomIdComposer,
+    CreateFlatComposer,
+    CreateFlatComposerType,
+    DeleteFavouriteRoomComposer,
+    EditEventComposer,
+    GetCustomRoomFilterComposer,
+    GetGuestRoomComposer,
+    GetHabboGroupDetailsComposer,
+    NavigatorAddCollapsedCategoryComposer,
+    NavigatorAddSavedSearchComposer,
+    NavigatorDeleteSavedSearchComposer,
+    NavigatorRemoveCollapsedCategoryComposer,
+    NavigatorSetSearchCodeViewModeComposer,
+    NewNavigatorSearchComposer,
+    OpenFlatConnectionComposer,
+    QuitComposer,
+    RoomNetworkOpenConnectionComposer,
+    SetNewNavigatorWindowPreferencesComposer,
+    UpdateHomeRoomComposer,
+    UpdateRoomCategoryAndTradeSettingsComposer,
+    UpdateRoomFilterComposer,
 } from '@nitrodevco/nitro-packets';
 
 import { Send } from '#base/context/communication';

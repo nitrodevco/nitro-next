@@ -19,7 +19,7 @@ export class AvatarAssetDownloadManager {
     private _libraries: Map<string, AvatarAssetDownloadLibrary> = new Map();
     private _missingMandatoryLibs: string[] = AvatarAssetDownloadManager.MANDATORY_LIBRARIES.slice();
     private _figureMap: Map<string, AvatarAssetDownloadLibrary[]> = new Map();
-    private _pendingContainers: [IAvatarFigureContainer, IAvatarImageListener][] = [];
+    private _pendingContainers: [ IAvatarFigureContainer, IAvatarImageListener ][] = [];
     private _figureListeners: Map<string, IAvatarImageListener[]> = new Map();
     private _incompleteFigures: Map<string, AvatarAssetDownloadLibrary[]> = new Map();
     private _pendingDownloadQueue: AvatarAssetDownloadLibrary[] = [];

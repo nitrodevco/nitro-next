@@ -12,9 +12,9 @@ import { StateCreator } from 'zustand';
 import { COLLECTIBLE_PREVIEW_EASTER_EGG_INITIAL, COLLECTIBLE_PREVIEW_NONE, CollectiblePreview, CollectiblePreviewEasterEgg } from './CollectiblesPreview';
 
 /** `MintTokenPurchaseOffer` (product type `MINT_TOKEN`) or `NftStorePurchaseOffer` (product type `n`). */
-export type CollectiblesPurchaseOffer
-    = | { kind: 'mint_token'; offer: IMintTokenOffer }
-        | { kind: 'nft'; offer: INftStoreOffer };
+export type CollectiblesPurchaseOffer =
+    | { kind: 'mint_token'; offer: IMintTokenOffer }
+    | { kind: 'nft'; offer: INftStoreOffer };
 
 type State = {
     purchaseOffer: CollectiblesPurchaseOffer | null;

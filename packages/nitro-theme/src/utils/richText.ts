@@ -21,8 +21,8 @@ export type RichTextBlockRole = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 
 
 export type RichTextAlign = 'left' | 'center' | 'right';
 
-export type RichTextBlock
-    = | {
+export type RichTextBlock =
+    | {
         kind: 'text';
         role: RichTextBlockRole;
         /** Flash `htmlText` markup: `<b>`, `<i>`, `<u>`, `<font color>`, `<a href>`, text escaped. */

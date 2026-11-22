@@ -107,7 +107,7 @@ export class GeometryBodyPart extends Node3D {
     }
 
     public getParts(matrix: Matrix4x4, loc: Vector3D, activeParts: string[], avatar: IAvatarImage): AvatarFigurePartType[] {
-        const parts: [number, GeometryItem][] = [];
+        const parts: [ number, GeometryItem ][] = [];
 
         for (const part of this._parts.values()) {
             if (!part) continue;

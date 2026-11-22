@@ -13,7 +13,7 @@
  */
 
 /** `ChatMarkup.COLOUR_ARRAY` (eight colours since WIN63-202610121624). */
-export const CHAT_COLOURS: [string, number][] = [
+export const CHAT_COLOURS: [ string, number ][] = [
     [ 'red', 9115929 ],
     [ 'orange', 10238720 ],
     [ 'yellow', 7297792 ],
@@ -25,7 +25,7 @@ export const CHAT_COLOURS: [string, number][] = [
 ];
 
 /** The obfuscated second `ChatMarkup` array - the palette for styles whose text colour is white. */
-export const CHAT_COLOURS_ON_DARK: [string, number][] = [
+export const CHAT_COLOURS_ON_DARK: [ string, number ][] = [
     [ 'red', 16745861 ],
     [ 'orange', 16751445 ],
     [ 'yellow', 16769126 ],
@@ -49,7 +49,7 @@ const TABLE_TAB_TAG = 'a';
 const CHAT_COLOUR_NAMES = CHAT_COLOURS.map(([ name ]) => name);
 
 /** `getColourArray`. */
-const getColourArray = (textColor: number): [string, number][] => ((textColor === 0xFFFFFF) ? CHAT_COLOURS_ON_DARK : CHAT_COLOURS);
+const getColourArray = (textColor: number): [ string, number ][] => ((textColor === 0xFFFFFF) ? CHAT_COLOURS_ON_DARK : CHAT_COLOURS);
 
 /**
  * `"#" + colour.toString(16).toUpperCase()`, padded to six digits: Flash wrote `#4C99` and its

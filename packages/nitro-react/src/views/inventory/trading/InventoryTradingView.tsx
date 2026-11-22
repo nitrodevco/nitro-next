@@ -39,11 +39,7 @@ import { FederatedPointerEvent } from 'pixi.js';
 import { addTradingSilverFee, getCollectibleProductName, onTradingAcceptPressed, onTradingCancelPressed, productImageWidgetPreview, requestRemoveItemFromTrading } from '#base/commands';
 import { COLLECTIBLE_PREVIEW_EASTER_EGG_INITIAL, wrapBaseItem } from '#base/context/collectibles';
 import { useWebSocketContext } from '#base/context/communication';
-import { getTradingItemsTotal, hasTradingOffer,
-    INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_TRADING_MAX_ITEMS, INVENTORY_TRADING_STATE_CONFIRMED, INVENTORY_TRADING_STATE_CONFIRMING,
-    INVENTORY_TRADING_STATE_COUNTDOWN, INVENTORY_TRADING_STATE_READY, INVENTORY_TRADING_STATE_RUNNING, InventoryFurniGroup, InventoryTradingUser, isInventoryFurniGroupWallItem,
-    isTradingFeeReached, peekInventoryFurni, useInventoryStore,
-} from '#base/context/inventory';
+import { getTradingItemsTotal, hasTradingOffer, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_TRADING_MAX_ITEMS, INVENTORY_TRADING_STATE_CONFIRMED, INVENTORY_TRADING_STATE_CONFIRMING, INVENTORY_TRADING_STATE_COUNTDOWN, INVENTORY_TRADING_STATE_READY, INVENTORY_TRADING_STATE_RUNNING, InventoryFurniGroup, InventoryTradingUser, isInventoryFurniGroupWallItem, isTradingFeeReached, peekInventoryFurni, useInventoryStore } from '#base/context/inventory';
 import { useSystemStore, useTranslation } from '#base/context/system';
 import { useUserStore } from '#base/context/user';
 import { Template, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplateLibrary } from '#base/theme';
@@ -68,9 +64,9 @@ const SILVER_MET_COLOR = '000000';
 const SILVER_SHORT_COLOR = 'AC232A';
 
 /** What a cell holds: a stack of furni or one collectible (`updateItemsGrid` fills them in that order). */
-type TradingSlotContent
-    = | { kind: 'furni'; group: InventoryFurniGroup }
-        | { kind: 'nft'; asset: ITradeNftAsset };
+type TradingSlotContent =
+    | { kind: 'furni'; group: InventoryFurniGroup }
+    | { kind: 'nft'; asset: ITradeNftAsset };
 
 /**
  * A furni group's thumb - `GroupItem.window` (`inventory_thumb_xml`) as `updateAllThumbDataVisuals`

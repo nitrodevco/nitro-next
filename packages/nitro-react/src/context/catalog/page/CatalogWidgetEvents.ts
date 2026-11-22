@@ -232,26 +232,26 @@ export interface CatalogWidgetBundleDisplayExtraInfoEvent {
 }
 
 /** Every event a page's dispatcher carries. */
-export type AnyCatalogWidgetEvent
-    = | CatalogWidgetEvent
-        | SelectProductEvent
-        | SetExtraPurchaseParameterEvent
-        | CatalogWidgetColoursEvent
-        | CatalogWidgetMultiColoursEvent
-        | CatalogWidgetColourIndexEvent
-        | TextInputEvent
-        | CatalogWidgetApproveNameResultEvent
-        | CatalogWidgetPurchaseOverrideEvent
-        | CatalogWidgetSellablePetPalettesEvent
-        | CatalogWidgetInitPurchaseEvent
-        | CatalogWidgetUpdateRoomPreviewEvent
-        | CatalogWidgetGuildSelectedEvent
-        | ProductOfferUpdatedEvent
-        | SetRoomPreviewerStuffDataEvent
-        | CatalogWidgetToggleEvent
-        | CatalogWidgetShowWarningTextEvent
-        | CatalogWidgetSpinnerEvent
-        | CatalogWidgetBundleDisplayExtraInfoEvent;
+export type AnyCatalogWidgetEvent =
+    | CatalogWidgetEvent
+    | SelectProductEvent
+    | SetExtraPurchaseParameterEvent
+    | CatalogWidgetColoursEvent
+    | CatalogWidgetMultiColoursEvent
+    | CatalogWidgetColourIndexEvent
+    | TextInputEvent
+    | CatalogWidgetApproveNameResultEvent
+    | CatalogWidgetPurchaseOverrideEvent
+    | CatalogWidgetSellablePetPalettesEvent
+    | CatalogWidgetInitPurchaseEvent
+    | CatalogWidgetUpdateRoomPreviewEvent
+    | CatalogWidgetGuildSelectedEvent
+    | ProductOfferUpdatedEvent
+    | SetRoomPreviewerStuffDataEvent
+    | CatalogWidgetToggleEvent
+    | CatalogWidgetShowWarningTextEvent
+    | CatalogWidgetSpinnerEvent
+    | CatalogWidgetBundleDisplayExtraInfoEvent;
 
 export type CatalogWidgetEventType = AnyCatalogWidgetEvent['type'];
 

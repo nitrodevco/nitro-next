@@ -125,7 +125,7 @@ export class AvatarModelGeometry {
 
         const geometryParts = this.getBodyPartsOfType(geometryType);
         const parts = this.getBodyPartsInAvatarSet(geometryParts, setType);
-        const sets: [number, GeometryBodyPart][] = [];
+        const sets: [ number, GeometryBodyPart ][] = [];
         const transformation = Matrix4x4.getYRotationMatrix(direction);
 
         for (const part of parts.values()) {

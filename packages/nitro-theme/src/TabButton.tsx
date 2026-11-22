@@ -25,12 +25,41 @@ export interface TabButtonProps extends ThemeProps<TabButtonVariant> {
 /** Flash's `TabButtonController` (`tab_button`): the state's skin behind its caption, selected or not. */
 export const TabButton: ForwardRefExoticComponent<TabButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, TabButtonProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, selected, children,
-        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        variant,
+        defaultVariant,
+        tooltip,
+        tooltipDelay,
+        layout,
+        tintColor,
+        textStyle,
+        textColor,
+        visible,
+        selected,
+        children,
+        onPointerOver,
+        onPointerOut,
+        onPointerDown,
+        onPointerUp,
+        onPointerUpOutside,
+        onPointerTap,
     }, ref) => {
         const { resolvedVariant, ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<TabButtonVariant>({
-            cascadeKey: 'tabButton', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled: false, selected,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'tabButton',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            disabled: false,
+            selected,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
 
         const skinHeight = SKIN_HEIGHT[resolvedVariant];

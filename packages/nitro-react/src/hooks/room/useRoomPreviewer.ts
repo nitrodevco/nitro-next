@@ -37,10 +37,10 @@ export interface RoomPreviewerOptions {
 }
 
 /** The last object a consumer asked the preview to show - replayed into a room that arrives or is recreated later. */
-type PreviewRequest
-    = | { kind: 'avatar'; figure: string; gender?: string; effect: number }
-        | { kind: 'floor'; classId: number; direction: IVector3D; objectData?: IObjectData; extra: number }
-        | { kind: 'wall'; classId: number; direction: IVector3D; objectData: string };
+type PreviewRequest =
+    | { kind: 'avatar'; figure: string; gender?: string; effect: number }
+    | { kind: 'floor'; classId: number; direction: IVector3D; objectData?: IObjectData; extra: number }
+    | { kind: 'wall'; classId: number; direction: IVector3D; objectData: string };
 
 /** What `useRoomPreviewer` returns - also the `RoomPreviewer` component's ref handle. */
 export interface RoomPreviewerApi {

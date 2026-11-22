@@ -35,8 +35,14 @@ const roomSettingsSaveError = (errorCode: number, info: string): RoomSettingsFor
  */
 export const registerRoomSettingsHandlers = ({ subscribe }: WebSocketConnection) => {
     const {
-        setRoomSettingsForm, setRoomSettingsFormError, setRoomSettingsFormSaving,
-        setRoomControllers, addRoomController, removeRoomController, setRoomBannedUsers, removeRoomBannedUser,
+        setRoomSettingsForm,
+        setRoomSettingsFormError,
+        setRoomSettingsFormSaving,
+        setRoomControllers,
+        addRoomController,
+        removeRoomController,
+        setRoomBannedUsers,
+        removeRoomBannedUser,
     } = roomStore.getState();
 
     return subscribeAll(subscribe, [

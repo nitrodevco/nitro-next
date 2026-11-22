@@ -8,7 +8,7 @@ export interface ILegacyWallGeometry {
     getLocation(width: number, height: number, localX: number, localY: number, direction: string): IVector3D;
     getLocationFromString(loc: string): { width: number; height: number; localX: number; localY: number; direction: string };
     getLocationOldFormat(k: number, _arg_2: number, dir: string): IVector3D;
-    getOldLocation(loc: IVector3D, angle: number): [number, number, number, number, string] | undefined;
+    getOldLocation(loc: IVector3D, angle: number): [ number, number, number, number, string ] | undefined;
     getOldLocationString(loc: IVector3D, angle: number): string;
     getDirection(dir: string): number;
     getFloorAltitude(x: number, y: number): number;

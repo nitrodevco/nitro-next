@@ -30,7 +30,8 @@ import {
     IVariableFxConfigUpdateData,
     IVariableFxStatusRemoveData,
     IVariableFxStatusUpdateData,
-    IVector3D, IWiredVisualizationStateEntry,
+    IVector3D,
+    IWiredVisualizationStateEntry,
     LegacyDataType,
     MapDataType,
     ObjectDataFlagsEnum,
@@ -102,7 +103,8 @@ import {
     RoomObjectFurnitureTransparencyUpdateMessage,
     RoomObjectUpdateMessage,
     RoomObjectVariableFxStatusRemoveMessage,
-    RoomObjectVariableFxStatusUpdateMessage } from './messages';
+    RoomObjectVariableFxStatusUpdateMessage,
+} from './messages';
 import { FurnitureVisualization, MovingObjectLogic, RoomLogic, RoomObjectManager, RoomObjectModel } from './object';
 import { VariableFxRoomData } from './object/variablefx/VariableFxRoomData';
 import { isVariableFxVisualizationHost } from './object/visualization/variablefx/IVariableFxVisualizationRoomData';

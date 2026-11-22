@@ -1,7 +1,7 @@
 import { Box, LayoutImage, ThemeImage } from '#base/theme';
 
 /** The `unique_item_label_number_glyphs` strip: `x, width` of each digit, from the window manager manifest. */
-const GLYPHS: [number, number][] = [ [ 1, 5 ], [ 6, 3 ], [ 9, 5 ], [ 14, 5 ], [ 19, 5 ], [ 24, 5 ], [ 29, 5 ], [ 34, 5 ], [ 39, 5 ], [ 44, 5 ] ];
+const GLYPHS: [ number, number ][] = [ [ 1, 5 ], [ 6, 3 ], [ 9, 5 ], [ 14, 5 ], [ 19, 5 ], [ 24, 5 ], [ 29, 5 ], [ 34, 5 ], [ 39, 5 ], [ 44, 5 ] ];
 const GLYPH_HEIGHT = 5;
 const GLYPH_STRIP = LayoutImage('habbo-window-manager-com/unique_item_label_number_glyphs.png');
 /** `LimitedItemNumberBitmap.createBitmap` draws nothing for anything it cannot fit in six digits. */

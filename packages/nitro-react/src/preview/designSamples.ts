@@ -30,8 +30,20 @@ const SAMPLE_FURNI_COUNT = 12;
 const FRIEND_FIGURE = 'hr-115-42.hd-195-19.ch-3030-82.lg-275-1408.fa-1201.ca-1804-64';
 
 const friend = (playerId: number, name: string, isOnline: boolean, motto: string): IMessengerFriend => ({
-    playerId, name, gender: AvatarGenderType.Male, isOnline, canFollow: isOnline, figure: FRIEND_FIGURE, categoryId: 0, motto, realName: '', facebookId: '',
-    persistedUser: true, vipMember: false, pocketHabboUser: false, relationshipType: MessengerFriendRelationType.Zero,
+    playerId,
+    name,
+    gender: AvatarGenderType.Male,
+    isOnline,
+    canFollow: isOnline,
+    figure: FRIEND_FIGURE,
+    categoryId: 0,
+    motto,
+    realName: '',
+    facebookId: '',
+    persistedUser: true,
+    vipMember: false,
+    pocketHabboUser: false,
+    relationshipType: MessengerFriendRelationType.Zero,
 });
 
 /** The user's friends, online and offline: the friends list's rows and the friend bar's tabs. */
@@ -71,9 +83,22 @@ const sampleFurni = (): Map<number, IFurniListAddOrUpdateFurni> => {
     const types = Object.values(systemStore.getState().floorItems).slice(0, SAMPLE_FURNI_COUNT);
 
     return new Map(types.map((type, index) => [ index + 1, {
-        itemId: index + 1, itemType: 'S', roomItemId: index + 1, itemTypeId: type.id, category: 1, stuffData: new LegacyDataType(),
-        isGroupable: true, isRecyclable: false, isTradeable: true, isSellable: true, secondsToExpiration: -1, extra: 0, flatId: -1,
-        isWallItem: false, hasRentPeriodStarted: false, expirationTimeStamp: 0,
+        itemId: index + 1,
+        itemType: 'S',
+        roomItemId: index + 1,
+        itemTypeId: type.id,
+        category: 1,
+        stuffData: new LegacyDataType(),
+        isGroupable: true,
+        isRecyclable: false,
+        isTradeable: true,
+        isSellable: true,
+        secondsToExpiration: -1,
+        extra: 0,
+        flatId: -1,
+        isWallItem: false,
+        hasRentPeriodStarted: false,
+        expirationTimeStamp: 0,
     } ]));
 };
 

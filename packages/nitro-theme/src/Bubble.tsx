@@ -164,7 +164,19 @@ export interface BubbleProps extends ThemeProps<BubbleVariant> {
 export const Bubble: ForwardRefExoticComponent<BubbleProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubbleProps>(
     ({ variant, defaultVariant, tooltip, layout, tintColor, textStyle, textColor, visible, usePointer = true, pointer = 'down', alpha, margins, pointerOffset, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { resolvedVariant, ownCascade, config, handlers, resolvedLayer, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<BubbleVariant>({
-            cascadeKey: 'bubble', variant, defaultVariant, tooltip, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'bubble',
+            variant,
+            defaultVariant,
+            tooltip,
+            tintColor,
+            textStyle,
+            textColor,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
         const [ host, setHost ] = useState<PixiContainer | null>(null);
         const measured = useLayoutSize(host);

@@ -6,9 +6,14 @@ import {
     IRoomObjectSpriteVisualization,
     IRoomRenderingCanvas,
     IRoomSpriteMouseEvent,
-    MouseEventType, RoomGeometryScaleType,
+    MouseEventType,
+    RoomGeometryScaleType,
     RoomObjectSpriteData,
-    RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, RoomSpriteMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
+    RoomObjectSpriteTypeEnum,
+    RoomObjectVariableEnum,
+    RoomSpriteMouseEvent,
+    Vector3d,
+} from '@nitrodevco/nitro-api';
 import { Container, Graphics, Matrix, Point, Rectangle, Sprite, Text, TextStyle, Texture } from 'pixi.js';
 
 import { ExtendedSprite, GetTicker, TextureUtils } from '../utils';

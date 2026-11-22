@@ -30,8 +30,19 @@ import { useEffect, useState } from 'react';
 import { voteCommunityGoal } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    COMMUNITY_GOAL_METER_BUILDUP_MS, COMMUNITY_GOAL_METER_DELAY_MS, COMMUNITY_GOAL_NEEDLE_BASE_FRAMES, communityGoalNeedleFrame, communityGoalVsNeedleFrame, hotelViewColorableBindings, HotelViewCommonSettings,
-    hotelViewProperty, LandingViewWidgetType, useConfigBoolean, useConfigData, useSystemStore, useWindowActions,
+    COMMUNITY_GOAL_METER_BUILDUP_MS,
+    COMMUNITY_GOAL_METER_DELAY_MS,
+    COMMUNITY_GOAL_NEEDLE_BASE_FRAMES,
+    communityGoalNeedleFrame,
+    communityGoalVsNeedleFrame,
+    hotelViewColorableBindings,
+    HotelViewCommonSettings,
+    hotelViewProperty,
+    LandingViewWidgetType,
+    useConfigBoolean,
+    useConfigData,
+    useSystemStore,
+    useWindowActions,
 } from '#base/context/system';
 import { Box, LayoutImage, TemplateBindings, TemplateWindow, TemplateWindows } from '#base/theme';
 

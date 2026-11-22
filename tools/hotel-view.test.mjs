@@ -120,14 +120,34 @@ await test('generic widget conf, layout and common settings follow GenericWidget
 });
 
 const INCOMING = [
-    'CurrentTimingCodeMessage', 'SecondsUntilMessage', 'BonusRareInfoMessage', 'PromoArticlesMessage', 'CommunityGoalProgressMessage', 'CommunityVoteReceivedMessage', 'CatalogPageWithEarliestExpiryMessage',
-    'LimitedOfferAppearingNextMessage', 'IsBadgeRequestFulfilledEventMessage', 'WiredRewardResultMessage', 'IsUserPartOfCompetitionMessage',
-    'QuestDailyMessage', 'ConcurrentUsersGoalProgressMessage', 'CommunityGoalHallOfFameMessage',
+    'CurrentTimingCodeMessage',
+    'SecondsUntilMessage',
+    'BonusRareInfoMessage',
+    'PromoArticlesMessage',
+    'CommunityGoalProgressMessage',
+    'CommunityVoteReceivedMessage',
+    'CatalogPageWithEarliestExpiryMessage',
+    'LimitedOfferAppearingNextMessage',
+    'IsBadgeRequestFulfilledEventMessage',
+    'WiredRewardResultMessage',
+    'IsUserPartOfCompetitionMessage',
+    'QuestDailyMessage',
+    'ConcurrentUsersGoalProgressMessage',
+    'CommunityGoalHallOfFameMessage',
 ];
 const OUTGOING = [
-    'GetCurrentTimingCodeComposer', 'GetSecondsUntilComposer', 'GetBonusRareInfoComposer', 'GetPromoArticlesComposer', 'GetCommunityGoalProgressComposer', 'GetCatalogPageWithEarliestExpiryComposer',
-    'GetLimitedOfferAppearingNextComposer', 'GetIsBadgeRequestFulfilledComposer', 'GetIsUserPartOfCompetitionComposer',
-    'GetDailyQuestComposer', 'GetConcurrentUsersGoalProgressComposer', 'GetCommunityGoalHallOfFameComposer',
+    'GetCurrentTimingCodeComposer',
+    'GetSecondsUntilComposer',
+    'GetBonusRareInfoComposer',
+    'GetPromoArticlesComposer',
+    'GetCommunityGoalProgressComposer',
+    'GetCatalogPageWithEarliestExpiryComposer',
+    'GetLimitedOfferAppearingNextComposer',
+    'GetIsBadgeRequestFulfilledComposer',
+    'GetIsUserPartOfCompetitionComposer',
+    'GetDailyQuestComposer',
+    'GetConcurrentUsersGoalProgressComposer',
+    'GetCommunityGoalHallOfFameComposer',
 ];
 const composer = name => class {
     constructor(params) {
@@ -163,7 +183,11 @@ await test('activation refreshes every slot widget; container slots follow their
     };
     const listeners = new Set();
     const state = {
-        config: slotConfig, landingViewVisible: true, hotelViewBackgrounds: {}, hotelViewTimingCodes: {}, hotelViewSecondsUntil: {},
+        config: slotConfig,
+        landingViewVisible: true,
+        hotelViewBackgrounds: {},
+        hotelViewTimingCodes: {},
+        hotelViewSecondsUntil: {},
         setHotelViewBackgrounds: (value) => {
             state.hotelViewBackgrounds = value;
         },
@@ -249,7 +273,8 @@ await test('the expiring page and next limited rare widgets ask at most every th
             'landing.view.dynamic.slot.2.widget': 'nextlimitedrarecountdown',
             'landing.view.dynamic.slot.6.widget': 'communitygoal',
         },
-        landingViewVisible: true, hotelViewBackgrounds: {},
+        landingViewVisible: true,
+        hotelViewBackgrounds: {},
         setHotelViewBackgrounds: () => {},
         setHotelViewTimingCode: () => {},
         setHotelViewSecondsUntil: () => {},
@@ -343,7 +368,9 @@ await test('generic widget elements ask what they show; badge buttons ask again 
             'landing.view.dynamic.slot.1.widget': 'generic',
             'landing.view.dynamic.slot.1.conf': 'requestbadgebutton,b.caption,BADGE1,10,20;submitcompetitionroom,c.start,c.done,GOAL;communitygoaltimer,false,0,0,t.left,t.over;communitygoalscore,8,25,5000,false,0,0',
         },
-        landingViewVisible: true, hotelViewBackgrounds: {}, hotelViewReactivations: 0,
+        landingViewVisible: true,
+        hotelViewBackgrounds: {},
+        hotelViewReactivations: 0,
         hotelViewBadgeRequestsFulfilled: {},
         setHotelViewBackgrounds: () => {},
         setHotelViewTimingCode: () => {},

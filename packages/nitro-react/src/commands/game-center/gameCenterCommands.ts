@@ -21,7 +21,12 @@
  */
 import type { Game2GameDirectoryStatusMessageType, IGameLobbyData, IGameLobbyPlayerData } from '@nitrodevco/nitro-packets';
 import {
-    EventLogComposer, Game2CheckGameDirectoryStatusComposer, Game2GetAccountGameStatusComposer, Game2LeaveGameComposer, Game2QuickJoinGameComposer, GetSnowWarGameTokensOfferComposer,
+    EventLogComposer,
+    Game2CheckGameDirectoryStatusComposer,
+    Game2GetAccountGameStatusComposer,
+    Game2LeaveGameComposer,
+    Game2QuickJoinGameComposer,
+    GetSnowWarGameTokensOfferComposer,
 } from '@nitrodevco/nitro-packets';
 
 import { Send } from '#base/context/communication';

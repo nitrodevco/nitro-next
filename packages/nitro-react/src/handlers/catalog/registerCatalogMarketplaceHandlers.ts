@@ -38,8 +38,14 @@ const BUY_RESULT_NOT_ENOUGH_CREDITS = 4;
 
 export const registerCatalogMarketplaceHandlers = (store: StoreApi<CatalogStore>, { send, subscribe }: WebSocketConnection) => {
     const {
-        setMarketplaceOffers, updateMarketplaceOffers, setMarketplaceOwnOffers, removeMarketplaceOwnOffers, setMarketplacePendingClearCategory,
-        setMarketplaceAveragePricePeriod, setMarketplaceItemStats, setMarketplaceConfirmation,
+        setMarketplaceOffers,
+        updateMarketplaceOffers,
+        setMarketplaceOwnOffers,
+        removeMarketplaceOwnOffers,
+        setMarketplacePendingClearCategory,
+        setMarketplaceAveragePricePeriod,
+        setMarketplaceItemStats,
+        setMarketplaceConfirmation,
     } = store.getState();
 
     const alert = (title: string, message: string) => {

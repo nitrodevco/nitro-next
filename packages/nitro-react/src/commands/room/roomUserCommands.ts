@@ -8,7 +8,32 @@
  */
 import { AvatarExpressionEnum, PostureTypeEnum } from '@nitrodevco/nitro-api';
 import {
-    AmbassadorAlertComposer, AssignRightsComposer, AvatarExpressionComposer, BanUserWithDurationComposer, ChangeMottoComposer, ChangePostureComposer, CommandBotComposer, DanceComposer, DropCarryItemComposer, GetExtendedProfileComposer, GetRelationshipStatusInfoComposer, GetSelectedBadgesComposer, IgnoreUserComposer, KickUserComposer, MuteUserComposer, OpenTradingComposer, PassCarryItemComposer, RemoveBotFromFlatComposer, RemoveRightsComposer, ReplenishRespectComposer, RequestFriendComposer, RespectUserComposer, SetRelationshipStatusComposer, SignComposer, UnignoreUserComposer, UnmuteUserComposer,
+    AmbassadorAlertComposer,
+    AssignRightsComposer,
+    AvatarExpressionComposer,
+    BanUserWithDurationComposer,
+    ChangeMottoComposer,
+    ChangePostureComposer,
+    CommandBotComposer,
+    DanceComposer,
+    DropCarryItemComposer,
+    GetExtendedProfileComposer,
+    GetRelationshipStatusInfoComposer,
+    GetSelectedBadgesComposer,
+    IgnoreUserComposer,
+    KickUserComposer,
+    MuteUserComposer,
+    OpenTradingComposer,
+    PassCarryItemComposer,
+    RemoveBotFromFlatComposer,
+    RemoveRightsComposer,
+    ReplenishRespectComposer,
+    RequestFriendComposer,
+    RespectUserComposer,
+    SetRelationshipStatusComposer,
+    SignComposer,
+    UnignoreUserComposer,
+    UnmuteUserComposer,
 } from '@nitrodevco/nitro-packets';
 
 import { Send } from '#base/context/communication';

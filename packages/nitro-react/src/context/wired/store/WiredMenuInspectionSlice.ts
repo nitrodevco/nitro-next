@@ -22,13 +22,13 @@ export const WIRED_INSPECTION_STATE_DISPLAYING = 3;
  * room index). It is only changed where Flash calls `updatePreviewUI`, so a fetch in flight
  * keeps the previous object on screen.
  */
-export type WiredInspectionPreview
-    = | { kind: 'none' }
-        | { kind: 'furni_instructions' }
-        | { kind: 'user_instructions' }
-        | { kind: 'global' }
-        | { kind: 'furni'; objectId: number }
-        | { kind: 'user'; userIndex: number };
+export type WiredInspectionPreview =
+    | { kind: 'none' }
+    | { kind: 'furni_instructions' }
+    | { kind: 'user_instructions' }
+    | { kind: 'global' }
+    | { kind: 'furni'; objectId: number }
+    | { kind: 'user'; userIndex: number };
 
 /** One row of the variable values table - `VariableValueTableObject` without its display flags. */
 export interface WiredVariableValueRow {

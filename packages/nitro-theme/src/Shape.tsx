@@ -36,7 +36,16 @@ export interface ShapeProps extends ThemeLayoutMeta {
  * before that.
  */
 export const Shape = forwardRef<PixiContainer, ShapeProps>(({
-    shape = 'rectangle', color = '#ffffff', strokeColor = '#000000', strokeThickness = 0, strokeHsvShade = 0, radius = 0, alpha, blendMode, layout, visible,
+    shape = 'rectangle',
+    color = '#ffffff',
+    strokeColor = '#000000',
+    strokeThickness = 0,
+    strokeHsvShade = 0,
+    radius = 0,
+    alpha,
+    blendMode,
+    layout,
+    visible,
 }, ref) => {
     const [ host, setHost ] = useState<PixiContainer | null>(null);
     const measured = useLayoutSize(host);

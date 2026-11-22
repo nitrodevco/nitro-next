@@ -13,8 +13,26 @@ import { useResolvedVariant } from './useResolvedVariant';
  * that state and show its tooltip.
  */
 export const useThemeVariant = <T extends AnyThemeVariant>({
-    cascadeKey, variant, defaultVariant = '0', tintColor, textStyle, textColor, dropShadow, tooltip, tooltipDelay, disabled, selected, pressed, interactive, stopsPropagation,
-    onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    cascadeKey,
+    variant,
+    defaultVariant = '0',
+    tintColor,
+    textStyle,
+    textColor,
+    dropShadow,
+    tooltip,
+    tooltipDelay,
+    disabled,
+    selected,
+    pressed,
+    interactive,
+    stopsPropagation,
+    onPointerOver,
+    onPointerOut,
+    onPointerDown,
+    onPointerUp,
+    onPointerUpOutside,
+    onPointerTap,
 }: ThemeOptions<T>): ThemeResult<T> => {
     const { resolvedVariant, ownCascade } = useResolvedVariant(cascadeKey, variant, defaultVariant);
     // The Flash skins define many more `style` ids than have art here (border style 15, button
@@ -27,7 +45,13 @@ export const useThemeVariant = <T extends AnyThemeVariant>({
     // keeps the arrow rather than reading as clickable.
     const tooltipHandlers = useTooltipHandlers(tooltip, tooltipDelay);
     const { state: pointerState, handlers } = useInteractionState({
-        disabled, interactive, stopsPropagation, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        disabled,
+        interactive,
+        stopsPropagation,
+        onPointerDown,
+        onPointerUp,
+        onPointerUpOutside,
+        onPointerTap,
         onPointerOver: compose(tooltipHandlers.onPointerOver, onPointerOver),
         onPointerOut: compose(tooltipHandlers.onPointerOut, onPointerOut),
     });

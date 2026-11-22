@@ -25,8 +25,15 @@
 import { IGuildEditorData } from '@nitrodevco/nitro-packets';
 
 import {
-    GROUP_MANAGEMENT_VIEW_BADGE, GROUP_MANAGEMENT_VIEW_COLORS, GROUP_MANAGEMENT_VIEW_CONFIRM, GROUP_MANAGEMENT_VIEW_IDENTITY, GROUP_MANAGEMENT_VIEW_SETTINGS,
-    GroupManagementSession, GUILD_RIGHTS_ADMINS, GUILD_RIGHTS_MEMBERS, limitGroupManagementStep,
+    GROUP_MANAGEMENT_VIEW_BADGE,
+    GROUP_MANAGEMENT_VIEW_COLORS,
+    GROUP_MANAGEMENT_VIEW_CONFIRM,
+    GROUP_MANAGEMENT_VIEW_IDENTITY,
+    GROUP_MANAGEMENT_VIEW_SETTINGS,
+    GroupManagementSession,
+    GUILD_RIGHTS_ADMINS,
+    GUILD_RIGHTS_MEMBERS,
+    limitGroupManagementStep,
 } from '#base/context/groups';
 import { useGroupBadgeImageUrl, useTranslation } from '#base/context/system';
 import { TemplateBindings, TemplateWindow, TemplateWindows, useTemplateFrame, useTemplateLibrary } from '#base/theme';
@@ -91,9 +98,30 @@ const BUY_BORDER_DISABLED_COLOR = 0xFFAAAAAA;
 const TYPE_RADIOS = [ 'rb_type_regular', 'rb_type_exclusive', 'rb_type_private' ] as const;
 
 export const GroupManagementView = ({
-    session, step, editorData, pickingLayerIndex, hasVip, onClose, onStep, onName, onDescription, onBaseRoom, onCreateRoom, onMembers,
-    onPickPart, onSelectPart, onPosition, onLayerColor, onResetBadge, onPrimaryColor, onSecondaryColor, onResetColors,
-    onGuildType, onRightsLevel, onBuy, onBuyClub,
+    session,
+    step,
+    editorData,
+    pickingLayerIndex,
+    hasVip,
+    onClose,
+    onStep,
+    onName,
+    onDescription,
+    onBaseRoom,
+    onCreateRoom,
+    onMembers,
+    onPickPart,
+    onSelectPart,
+    onPosition,
+    onLayerColor,
+    onResetBadge,
+    onPrimaryColor,
+    onSecondaryColor,
+    onResetColors,
+    onGuildType,
+    onRightsLevel,
+    onBuy,
+    onBuyClub,
 }: GroupManagementViewProps) => {
     const t = useTranslation();
     const groupBadgeUrl = useGroupBadgeImageUrl();

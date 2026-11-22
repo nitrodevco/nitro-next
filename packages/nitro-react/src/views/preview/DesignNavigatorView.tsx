@@ -18,8 +18,29 @@ const CONTEXTS: ITopLevelContext[] = [ 'official_view', 'hotel_view', 'roomads_v
 
 /** A room as a search result lists it. */
 const room = (roomId: number, name: string, ownerName: string, population: number, playersMax: number) => ({
-    roomId, name, ownerId: roomId, ownerName, doorMode: 0, population, playersMax, description: `${name} - come and hang out`, tradeType: 0, score: 3, ranking: 0, categoryId: 1, tags: [],
-    officialRoomPicRef: '', groupId: 0, groupName: '', groupBadge: '', adName: '', adDescription: '', adExpiresIn: 0, showOwner: true, allowPets: false, displayAd: false,
+    roomId,
+    name,
+    ownerId: roomId,
+    ownerName,
+    doorMode: 0,
+    population,
+    playersMax,
+    description: `${name} - come and hang out`,
+    tradeType: 0,
+    score: 3,
+    ranking: 0,
+    categoryId: 1,
+    tags: [],
+    officialRoomPicRef: '',
+    groupId: 0,
+    groupName: '',
+    groupBadge: '',
+    adName: '',
+    adDescription: '',
+    adExpiresIn: 0,
+    showOwner: true,
+    allowPets: false,
+    displayAd: false,
 }) as unknown as IRoomInfo;
 
 const block = (searchCode: string, text: string, viewMode: number, rooms: IRoomInfo[]): ISearchResultList => ({ searchCode, text, actionAllowed: 1, forceClosed: false, viewMode, guestRooms: rooms });

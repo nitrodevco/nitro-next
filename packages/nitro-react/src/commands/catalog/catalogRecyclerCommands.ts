@@ -18,7 +18,14 @@ import { GetRecyclerPrizesComposer, GetRecyclerStatusComposer, IPrizeLevelMessag
 import { Send } from '#base/context/communication';
 import { getSelectedFurniGroup, INVENTORY_RECYCLER_STATE_ACTIVE, INVENTORY_RECYCLER_STATE_READY, inventoryStore, isInventoryFurniGroupWallItem, peekInventoryFurni } from '#base/context/inventory';
 import {
-    RECYCLER_STATUS_OFF, RECYCLER_STATUS_READY, RECYCLER_STATUS_WAITING_FOR_SERVER, RECYCLER_SYSTEM_STATUS_CLOSED, RECYCLER_SYSTEM_STATUS_TIMEOUT, RecyclerPrizeLevel, RecyclerSlotItem, recyclerStore,
+    RECYCLER_STATUS_OFF,
+    RECYCLER_STATUS_READY,
+    RECYCLER_STATUS_WAITING_FOR_SERVER,
+    RECYCLER_SYSTEM_STATUS_CLOSED,
+    RECYCLER_SYSTEM_STATUS_TIMEOUT,
+    RecyclerPrizeLevel,
+    RecyclerSlotItem,
+    recyclerStore,
 } from '#base/context/recycler';
 import { getRoom } from '#base/context/room';
 import { configInteger, systemStore } from '#base/context/system';
@@ -333,12 +340,22 @@ export const storeRecyclerPrizeTable = (levels: readonly IPrizeLevelMessageData[
         probabilityDenominator: level.probabilityDenominator,
         prizes: level.prizes.map(prize => (prize.isDeal
             ? {
-                    productItemType: 'deal', productItemTypeId: -1, furnitureData: undefined, oddsLevelId: level.prizeLevelId, isDeal: true,
-                    subProducts: prize.subProducts, furnitureDatas: prize.subProducts.map(product => furniData(product.productItemType, product.productItemTypeId)),
+                    productItemType: 'deal',
+                    productItemTypeId: -1,
+                    furnitureData: undefined,
+                    oddsLevelId: level.prizeLevelId,
+                    isDeal: true,
+                    subProducts: prize.subProducts,
+                    furnitureDatas: prize.subProducts.map(product => furniData(product.productItemType, product.productItemTypeId)),
                 }
             : {
-                    productItemType: prize.productItemType, productItemTypeId: prize.productItemTypeId, furnitureData: furniData(prize.productItemType, prize.productItemTypeId),
-                    oddsLevelId: level.prizeLevelId, isDeal: false, subProducts: [], furnitureDatas: [],
+                    productItemType: prize.productItemType,
+                    productItemTypeId: prize.productItemTypeId,
+                    furnitureData: furniData(prize.productItemType, prize.productItemTypeId),
+                    oddsLevelId: level.prizeLevelId,
+                    isDeal: false,
+                    subProducts: [],
+                    furnitureDatas: [],
                 })),
     }));
 

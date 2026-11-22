@@ -3,7 +3,13 @@ import {
     IRoomMapData,
     IRoomObjectUpdateMessage,
     IRoomSpriteMouseEvent,
-    MouseEventType, RoomObjectMouseEvent, RoomObjectTileMouseEvent, RoomObjectVariableEnum, RoomObjectWallMouseEvent, Vector3d } from '@nitrodevco/nitro-api';
+    MouseEventType,
+    RoomObjectMouseEvent,
+    RoomObjectTileMouseEvent,
+    RoomObjectVariableEnum,
+    RoomObjectWallMouseEvent,
+    Vector3d,
+} from '@nitrodevco/nitro-api';
 import { Point } from 'pixi.js';
 
 import { GetTickerTime } from '../../../utils';

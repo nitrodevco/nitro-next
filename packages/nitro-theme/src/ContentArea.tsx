@@ -24,7 +24,14 @@ export interface ContentAreaProps extends ThemeProps<ContentAreaVariant> {
 export const ContentArea: ForwardRefExoticComponent<ContentAreaProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContentAreaProps>(
     ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, clipOutset, children }, ref) => {
         const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<ContentAreaVariant>({
-            cascadeKey: 'contentArea', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
+            cascadeKey: 'contentArea',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
         });
 
         return (

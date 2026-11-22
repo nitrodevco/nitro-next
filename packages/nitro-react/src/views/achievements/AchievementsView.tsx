@@ -11,8 +11,16 @@ import { useState } from 'react';
 import { pickAchievement, pickAchievementCategory } from '#base/commands';
 import type { AchievementCategory } from '#base/context/achievements';
 import {
-    achievedBadgeCode, achievementProgress, achievementVisibleInCategory, categoryProgress, categoryVisibleInList, firstLevelAchieved,
-    selectedAchievement, totalProgress, useAchievementsActions, useAchievementsStore,
+    achievedBadgeCode,
+    achievementProgress,
+    achievementVisibleInCategory,
+    categoryProgress,
+    categoryVisibleInList,
+    firstLevelAchieved,
+    selectedAchievement,
+    totalProgress,
+    useAchievementsActions,
+    useAchievementsStore,
 } from '#base/context/achievements';
 import { useWebSocketContext } from '#base/context/communication';
 import { useBadgeImageUrl, useBadgePointLimits, useConfigData, useTranslation } from '#base/context/system';

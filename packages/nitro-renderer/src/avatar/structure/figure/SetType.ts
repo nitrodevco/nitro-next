@@ -7,7 +7,7 @@ export class SetType implements ISetType {
     private _type: AvatarFigurePartType;
     private _paletteId: number;
     private _partSets: Map<number, IFigurePartSet>;
-    private _isMandatory: Record<AvatarGenderType, [boolean, boolean]>;
+    private _isMandatory: Record<AvatarGenderType, [ boolean, boolean ]>;
 
     constructor(data: IFigureDataSetType) {
         this._type = data.type;

@@ -51,8 +51,25 @@ export const QuestMessageDataParser = (wrapper: IMessageDataWrapper): IQuestMess
     const secondsLeft = isSeasonal ? wrapper.readInt() : 0;
 
     return {
-        campaignCode, completedQuestsInCampaign, questCountInCampaign, activityPointType, id, accepted, type, imageVersion, rewardCurrencyAmount,
-        localizationCode, completedSteps, totalSteps, sortOrder, catalogPageName, chainCode, easy, isSeasonal, secondsLeft, receiveTime: Date.now(),
+        campaignCode,
+        completedQuestsInCampaign,
+        questCountInCampaign,
+        activityPointType,
+        id,
+        accepted,
+        type,
+        imageVersion,
+        rewardCurrencyAmount,
+        localizationCode,
+        completedSteps,
+        totalSteps,
+        sortOrder,
+        catalogPageName,
+        chainCode,
+        easy,
+        isSeasonal,
+        secondsLeft,
+        receiveTime: Date.now(),
     };
 };
 

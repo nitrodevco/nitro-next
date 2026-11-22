@@ -20,9 +20,16 @@ const methods = (path, names) => {
 const Canvas = methods('../packages/nitro-renderer/src/room/RoomSpriteCanvas.ts', [ 'setScale', 'setFlip', 'setTransform', 'displayScale', 'isFlipped', 'isSpriteVisible', 'handleMouseEvent' ]);
 const Room = methods('../packages/nitro-renderer/src/room/Room.ts', [ 'getRoomObjectBoundingRectangle', 'getRoomObjectScreenLocation' ]);
 const fixture = () => Object.assign(new Canvas(), {
-    _master: {}, _display: {}, _scale: 1, _isFlipped: false,
-    _width: 800, _height: 600, screenOffsetX: 30, screenOffsetY: -20,
-    _mouseLocation: {}, _mouseCheckCount: 0,
+    _master: {},
+    _display: {},
+    _scale: 1,
+    _isFlipped: false,
+    _width: 800,
+    _height: 600,
+    screenOffsetX: 30,
+    screenOffsetY: -20,
+    _mouseLocation: {},
+    _mouseCheckCount: 0,
 });
 
 await test('flip mirrors both axes around the viewport centre and two flips restore offsets', () => {
@@ -118,7 +125,8 @@ const hookFixture = (enabled = true) => {
     }
     const dependencies = {
         '@nitrodevco/nitro-api': { Vector3d, RoomEngineEvent, RoomZoomEvent: { ROOM_ZOOM: 'zoom' }, RoomDraggedEvent: { ROOM_DRAGGED: 'drag' }, RoomGeometryScaleType: { ZoomedIn: 64 } },
-        '@nitrodevco/nitro-renderer': {}, 'pixi.js': { Point, Rectangle },
+        '@nitrodevco/nitro-renderer': {},
+        'pixi.js': { Point, Rectangle },
         react: { useRef: value => (ref = { current: value }) },
         '#base/context/room': { useRoom: () => room, useRoomStore: select => select({}) },
         '#base/context/system': {

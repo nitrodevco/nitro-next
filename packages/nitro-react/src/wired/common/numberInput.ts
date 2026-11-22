@@ -116,9 +116,9 @@ export const parseNumberInputText = (text: string, { min, precision = 0, endsWit
     return VALID_INT.test(digits) ? toInt(Number(digits)) : NaN;
 };
 
-export type WiredNumberInputResult
-    = | { valid: true; value: number }
-        | { valid: false; reason: 'invalid' | 'range' };
+export type WiredNumberInputResult =
+    | { valid: true; value: number }
+    | { valid: false; reason: 'invalid' | 'range' };
 
 /** `onTextChange` - the value a text stands for, or why it stands for none. */
 export const readNumberInputText = (text: string, rules: WiredNumberInputRules): WiredNumberInputResult => {

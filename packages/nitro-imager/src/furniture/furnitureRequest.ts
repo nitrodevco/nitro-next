@@ -48,5 +48,13 @@ export const parseFurnitureRequest = (query: Record<string, string | undefined>)
 
 /** The request as one string, in a fixed order: the cache key. */
 export const furnitureRequestKey = (request: FurnitureRenderRequest): string => JSON.stringify([
-    request.name, request.id, request.wall, request.state, request.size, request.direction, request.frame, request.animate, request.format,
+    request.name,
+    request.id,
+    request.wall,
+    request.state,
+    request.size,
+    request.direction,
+    request.frame,
+    request.animate,
+    request.format,
 ]);

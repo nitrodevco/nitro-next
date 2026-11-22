@@ -22,7 +22,7 @@ import { LayoutImage, TemplateWindow, TemplateWindows } from '#base/theme';
 const DARK_THEME_CHEST_NAMES = [ 'wf_storage_coins1' ];
 
 /** `CHEST_STATES`, highest threshold last. */
-const CHEST_STATES: [number, string][] = [ [ 0, 'zero' ], [ 1, 'low' ], [ 20, 'medium' ], [ 100, 'high' ] ];
+const CHEST_STATES: [ number, string ][] = [ [ 0, 'zero' ], [ 1, 'low' ], [ 20, 'medium' ], [ 100, 'high' ] ];
 
 export const WIRED_COIN_CHEST_WIDTH = 413;
 export const WIRED_COIN_CHEST_HEIGHT = 263;

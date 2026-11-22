@@ -70,7 +70,16 @@ const VIP_ICON_STYLE = '14';
  * `mannequin.widget.savetext`.
  */
 export const FurnitureMannequinView = ({
-    name, figure, gender, clubLevel, screen, onScreenChange, onSaveName, onSaveOutfit, onWear, onClose,
+    name,
+    figure,
+    gender,
+    clubLevel,
+    screen,
+    onScreenChange,
+    onSaveName,
+    onSaveOutfit,
+    onWear,
+    onClose,
 }: FurnitureMannequinViewProps) => {
     const t = useTranslation();
     const templates = useTemplateLibrary(LIBRARY);

@@ -15,10 +15,32 @@ export const DesignInfostandView = ({ state }: { state: string }) => {
     const furni = useSystemStore(x => Object.values(x.floorItems)[0]);
     const owner = designState(INFOSTAND_FURNI_WINDOW, state)?.tab === 'owner';
     const details: InfostandFurniDetails = {
-        variant: 'furni', objectId: 1, kind: 'floor', typeId: furni?.id ?? 0, name: furni?.localizedName ?? 'Chair', description: furni?.description ?? 'A comfy chair',
-        className: furni?.className ?? '', colorIndex: 0, isNft: false, ownerKind: 'user', ownerId: 1, ownerName: 'Bonnie', expiration: -1, group: undefined,
-        uniqueSerial: undefined, chest: undefined, customVariables: undefined, staffDetails: undefined, crackable: undefined, jukebox: undefined, songDisk: undefined,
-        canPlaceMore: false, canBuy: true, canRent: false, canExtend: false, canBuyout: false,
+        variant: 'furni',
+        objectId: 1,
+        kind: 'floor',
+        typeId: furni?.id ?? 0,
+        name: furni?.localizedName ?? 'Chair',
+        description: furni?.description ?? 'A comfy chair',
+        className: furni?.className ?? '',
+        colorIndex: 0,
+        isNft: false,
+        ownerKind: 'user',
+        ownerId: 1,
+        ownerName: 'Bonnie',
+        expiration: -1,
+        group: undefined,
+        uniqueSerial: undefined,
+        chest: undefined,
+        customVariables: undefined,
+        staffDetails: undefined,
+        crackable: undefined,
+        jukebox: undefined,
+        songDisk: undefined,
+        canPlaceMore: false,
+        canBuy: true,
+        canRent: false,
+        canExtend: false,
+        canBuyout: false,
     };
 
     // The infostand's corner: bottom right, over the room's toolbar.

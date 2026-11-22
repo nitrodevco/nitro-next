@@ -21,7 +21,13 @@ export interface FurnitureGuildMenuViewProps {
 }
 
 export const FurnitureGuildMenuView = ({
-    guildName, isMember, hasForum, onJoin, onHomeRoom, onForum, onProfile,
+    guildName,
+    isMember,
+    hasForum,
+    onJoin,
+    onHomeRoom,
+    onForum,
+    onProfile,
 }: FurnitureGuildMenuViewProps) => {
     const t = useTranslation();
 

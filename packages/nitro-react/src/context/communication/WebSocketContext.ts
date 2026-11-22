@@ -22,9 +22,9 @@ type WebSocketStore = {
 };
 
 /** A client module's own packet: a parser at an incoming header or a composer at an outgoing one. */
-export type ExtensionPacket
-    = | { direction: 'incoming'; header: number; ctor: IncomingPacketConstructor<object> }
-        | { direction: 'outgoing'; header: number; ctor: OutgoingPacketConstructor<object> };
+export type ExtensionPacket =
+    | { direction: 'incoming'; header: number; ctor: IncomingPacketConstructor<object> }
+    | { direction: 'outgoing'; header: number; ctor: OutgoingPacketConstructor<object> };
 
 /**
  * The part of the socket that code outside React needs: packet handlers subscribe through it,

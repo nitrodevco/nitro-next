@@ -65,15 +65,15 @@ export const isTemplateArrangeOp = (op: object): op is TemplateArrangeOp => 'arr
 
 type Value = number | string | boolean | null;
 
-type Node
-    = | { kind: 'value'; value: Value }
-        | { kind: 'ctx'; key: string }
-        | { kind: 'measure'; element: string; measure: Measure }
-        | { kind: 'style'; name: string }
-        | { kind: 'unary'; operator: '-' | '!'; operand: Node }
-        | { kind: 'binary'; operator: string; left: Node; right: Node }
-        | { kind: 'if'; test: Node; then: Node; otherwise: Node }
-        | { kind: 'call'; name: string; args: Node[] };
+type Node =
+    | { kind: 'value'; value: Value }
+    | { kind: 'ctx'; key: string }
+    | { kind: 'measure'; element: string; measure: Measure }
+    | { kind: 'style'; name: string }
+    | { kind: 'unary'; operator: '-' | '!'; operand: Node }
+    | { kind: 'binary'; operator: string; left: Node; right: Node }
+    | { kind: 'if'; test: Node; then: Node; otherwise: Node }
+    | { kind: 'call'; name: string; args: Node[] };
 
 type Token = { kind: 'number' | 'string' | 'ref' | 'name' | 'operator'; text: string; value?: Value };
 

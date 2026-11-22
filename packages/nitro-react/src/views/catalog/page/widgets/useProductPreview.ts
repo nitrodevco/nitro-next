@@ -29,12 +29,12 @@ const productDisplayWrapper = (product: IProduct): CollectibleProductInfo | null
 export const isBundle = (offer: IPurchasableOffer) => (Number(offer.pricingModel) === Number(CatalogPricingModelEnum.Bundle));
 
 /** What the `ctlg_teaserimg_1` bitmap shows once an offer is selected (`setPreviewImage`). */
-export type PreviewImage
-    = | { kind: 'none' }
-        | { kind: 'url'; url: string }
-        | { kind: 'deal' }
-        | { kind: 'bot'; figure: string }
-        | { kind: 'habbicon'; habbiconId: number };
+export type PreviewImage =
+    | { kind: 'none' }
+    | { kind: 'url'; url: string }
+    | { kind: 'deal' }
+    | { kind: 'bot'; figure: string }
+    | { kind: 'habbicon'; habbiconId: number };
 
 /**
  * `ProductViewCatalogWidget.onPreviewProduct` and `setPreviewMode`: the selected offer, what the

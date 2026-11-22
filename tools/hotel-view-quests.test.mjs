@@ -53,8 +53,23 @@ const quests = load('nitro-react/src/context/system/store/HotelViewQuestWidgets'
 
 /** `QuestMessageData`'s reads, a non-seasonal quest. */
 const QUEST_FIELDS = [
-    [ 'String', 'daily' ], [ 'Int', 1 ], [ 'Int', 5 ], [ 'Int', 0 ], [ 'Int', 42 ], [ 'Boolean', false ], [ 'String', 'ROOM' ], [ 'String', 'v1' ], [ 'Int', 10 ],
-    [ 'String', 'dance' ], [ 'Int', 0 ], [ 'Int', 1 ], [ 'Int', 3 ], [ 'String', '' ], [ 'String', 'chainA' ], [ 'Boolean', true ], [ 'Boolean', false ],
+    [ 'String', 'daily' ],
+    [ 'Int', 1 ],
+    [ 'Int', 5 ],
+    [ 'Int', 0 ],
+    [ 'Int', 42 ],
+    [ 'Boolean', false ],
+    [ 'String', 'ROOM' ],
+    [ 'String', 'v1' ],
+    [ 'Int', 10 ],
+    [ 'String', 'dance' ],
+    [ 'Int', 0 ],
+    [ 'Int', 1 ],
+    [ 'Int', 3 ],
+    [ 'String', '' ],
+    [ 'String', 'chainA' ],
+    [ 'Boolean', true ],
+    [ 'Boolean', false ],
 ];
 
 await test('QuestDailyMessage reads the flag, then the quest and both counts only when it is set', () => {
@@ -82,9 +97,18 @@ await test('ConcurrentUsersGoalProgressMessage reads state, users and goal; the 
     assert.equal(progress.left(), 0);
 
     const hof = wrapper([
-        [ 'String', 'gardening' ], [ 'Int', 2 ],
-        [ 'Int', 7 ], [ 'String', 'Leader' ], [ 'String', 'hd-180-1' ], [ 'Int', 1 ], [ 'Int', 500 ],
-        [ 'Int', 8 ], [ 'String', 'Second' ], [ 'String', 'hd-180-2' ], [ 'Int', 2 ], [ 'Int', 400 ],
+        [ 'String', 'gardening' ],
+        [ 'Int', 2 ],
+        [ 'Int', 7 ],
+        [ 'String', 'Leader' ],
+        [ 'String', 'hd-180-1' ],
+        [ 'Int', 1 ],
+        [ 'Int', 500 ],
+        [ 'Int', 8 ],
+        [ 'String', 'Second' ],
+        [ 'String', 'hd-180-2' ],
+        [ 'Int', 2 ],
+        [ 'Int', 400 ],
     ]);
     const { data } = new CommunityGoalHallOfFameMessage().parse(hof);
 
@@ -142,13 +166,33 @@ await test('the hall of fame list keeps UserListWidget defaults unless the timin
 });
 
 const INCOMING = [
-    'CurrentTimingCodeMessage', 'SecondsUntilMessage', 'BonusRareInfoMessage', 'PromoArticlesMessage', 'CommunityGoalProgressMessage', 'CommunityVoteReceivedMessage', 'CatalogPageWithEarliestExpiryMessage',
-    'LimitedOfferAppearingNextMessage', 'IsBadgeRequestFulfilledEventMessage', 'WiredRewardResultMessage', 'IsUserPartOfCompetitionMessage', 'QuestDailyMessage', 'ConcurrentUsersGoalProgressMessage',
+    'CurrentTimingCodeMessage',
+    'SecondsUntilMessage',
+    'BonusRareInfoMessage',
+    'PromoArticlesMessage',
+    'CommunityGoalProgressMessage',
+    'CommunityVoteReceivedMessage',
+    'CatalogPageWithEarliestExpiryMessage',
+    'LimitedOfferAppearingNextMessage',
+    'IsBadgeRequestFulfilledEventMessage',
+    'WiredRewardResultMessage',
+    'IsUserPartOfCompetitionMessage',
+    'QuestDailyMessage',
+    'ConcurrentUsersGoalProgressMessage',
     'CommunityGoalHallOfFameMessage',
 ];
 const OUTGOING = [
-    'GetCurrentTimingCodeComposer', 'GetSecondsUntilComposer', 'GetBonusRareInfoComposer', 'GetPromoArticlesComposer', 'GetCommunityGoalProgressComposer', 'GetCatalogPageWithEarliestExpiryComposer',
-    'GetLimitedOfferAppearingNextComposer', 'GetIsBadgeRequestFulfilledComposer', 'GetIsUserPartOfCompetitionComposer', 'GetDailyQuestComposer', 'GetConcurrentUsersGoalProgressComposer',
+    'GetCurrentTimingCodeComposer',
+    'GetSecondsUntilComposer',
+    'GetBonusRareInfoComposer',
+    'GetPromoArticlesComposer',
+    'GetCommunityGoalProgressComposer',
+    'GetCatalogPageWithEarliestExpiryComposer',
+    'GetLimitedOfferAppearingNextComposer',
+    'GetIsBadgeRequestFulfilledComposer',
+    'GetIsUserPartOfCompetitionComposer',
+    'GetDailyQuestComposer',
+    'GetConcurrentUsersGoalProgressComposer',
     'GetCommunityGoalHallOfFameComposer',
 ];
 const composer = name => class {
@@ -173,7 +217,9 @@ await test('daily quest and concurrent users elements ask on refresh; the users 
             'landing.view.dynamic.slot.2.widget': 'achievementcompetition_hall_of_fame',
             'landing.view.dynamic.slot.6.conf': 'hof-schedule',
         },
-        landingViewVisible: true, hotelViewBackgrounds: {}, hotelViewTimingCodes: {},
+        landingViewVisible: true,
+        hotelViewBackgrounds: {},
+        hotelViewTimingCodes: {},
         setHotelViewBackgrounds: () => {},
         setHotelViewBackgroundCode: () => {},
         setHotelViewTimingCode: (schedule, code) => {

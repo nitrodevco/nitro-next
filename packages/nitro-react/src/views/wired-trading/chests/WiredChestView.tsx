@@ -40,8 +40,19 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useConfigData, useInterpolate, useSystemStore, useTranslation, useWindowActions } from '#base/context/system';
 import { useWiredHasReadPermission, useWiredHasWritePermission } from '#base/context/wired';
 import {
-    useWiredChestActions, useWiredTradingStore, WIRED_CHEST_KEY_AUTO_LOCK, WIRED_CHEST_KEY_CAPACITY, WIRED_CHEST_KEY_CAPACITY_LEVEL, WIRED_CHEST_KEY_DESC, WIRED_CHEST_KEY_EVERYONE_CAN_DONATE,
-    WIRED_CHEST_KEY_IS_WIRED_ENABLED, WIRED_CHEST_KEY_LOCKED, WIRED_CHEST_KEY_NAME, WIRED_CHEST_TYPE_COIN, WiredChestFurniData, WiredChestView as WiredChestViewData,
+    useWiredChestActions,
+    useWiredTradingStore,
+    WIRED_CHEST_KEY_AUTO_LOCK,
+    WIRED_CHEST_KEY_CAPACITY,
+    WIRED_CHEST_KEY_CAPACITY_LEVEL,
+    WIRED_CHEST_KEY_DESC,
+    WIRED_CHEST_KEY_EVERYONE_CAN_DONATE,
+    WIRED_CHEST_KEY_IS_WIRED_ENABLED,
+    WIRED_CHEST_KEY_LOCKED,
+    WIRED_CHEST_KEY_NAME,
+    WIRED_CHEST_TYPE_COIN,
+    WiredChestFurniData,
+    WiredChestView as WiredChestViewData,
 } from '#base/context/wired-trading';
 import { Box, TemplateWindow, TemplateWindows, useOutsideClick, useTemplateFrame } from '#base/theme';
 import { getWiredTradingBubbleAnchor, WiredTradingBubbleAnchor } from '#base/views/wired-trading/common/wiredTradingBubbleAnchor';

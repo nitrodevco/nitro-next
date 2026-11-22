@@ -7,13 +7,13 @@ import { SpriteLayer } from './SpriteLayer';
 import { TileLayer } from './TileLayer';
 
 /** One layer of a theme variant's art, as the window manager bundle's `theme-variants.json` describes it. */
-export type BackgroundLayerConfig
-    = | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; repeat?: NineSliceRepeatAxis }
-        | { kind: 'sprite'; textureKey: string; frame?: SpriteFrame }
-        | ({ kind: 'tile'; textureKey: string } & LayerInsets)
-        | { kind: 'composite'; pieces: CompositeLayerPieceProps[] }
+export type BackgroundLayerConfig =
+    | { kind: 'nineSlice'; textureKey: string; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number; repeat?: NineSliceRepeatAxis }
+    | { kind: 'sprite'; textureKey: string; frame?: SpriteFrame }
+    | ({ kind: 'tile'; textureKey: string } & LayerInsets)
+    | { kind: 'composite'; pieces: CompositeLayerPieceProps[] }
         /** A recolourable skin (`colorizeMethod="hsv_layer"`): one nine-slice sheet per shade, stacked in order, each tinted with the client's derived colour for its shade. */
-        | { kind: 'hsvNineSlice'; layers: { textureKey: string; shade: number }[]; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number };
+    | { kind: 'hsvNineSlice'; layers: { textureKey: string; shade: number }[]; leftWidth: number; topHeight: number; rightWidth: number; bottomHeight: number };
 
 /**
  * Draws one layer. `layout` sizes the layer kinds that fill a box (nine-slice, sprite, a tile

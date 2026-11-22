@@ -27,8 +27,22 @@ import { useState } from 'react';
 import { activateDailyQuest, cancelDailyQuest, goToPromotedRoom, redeemConcurrentUsersReward, requestDailyQuest } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    CONCURRENT_USERS_BODYTEXT_KEY, CONCURRENT_USERS_STATE_REDEEM, concurrentUsersBadgeAsset, concurrentUsersMeterAsset, concurrentUsersTextKeys, hotelViewColorableBindings, HotelViewCommonSettings, HotelViewGenericElement, hotelViewProperty,
-    isConcurrentUsersGoalReached, LANDING_VIEW_ELEMENT_CONCURRENTUSERSINFO, LANDING_VIEW_ELEMENT_CONCURRENTUSERSMETER, LANDING_VIEW_ELEMENT_DAILYQUEST, useConfigData, useSystemStore, useTranslation,
+    CONCURRENT_USERS_BODYTEXT_KEY,
+    CONCURRENT_USERS_STATE_REDEEM,
+    concurrentUsersBadgeAsset,
+    concurrentUsersMeterAsset,
+    concurrentUsersTextKeys,
+    hotelViewColorableBindings,
+    HotelViewCommonSettings,
+    HotelViewGenericElement,
+    hotelViewProperty,
+    isConcurrentUsersGoalReached,
+    LANDING_VIEW_ELEMENT_CONCURRENTUSERSINFO,
+    LANDING_VIEW_ELEMENT_CONCURRENTUSERSMETER,
+    LANDING_VIEW_ELEMENT_DAILYQUEST,
+    useConfigData,
+    useSystemStore,
+    useTranslation,
 } from '#base/context/system';
 import type { Template, TemplateItem } from '#base/theme';
 

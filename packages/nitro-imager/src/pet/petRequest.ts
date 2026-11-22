@@ -92,8 +92,19 @@ export const parsePetRequest = (query: Record<string, string | undefined>): PetR
 
 /** The request as one string, in a fixed order: the cache key. */
 export const petRequestKey = (request: PetRenderRequest): string => JSON.stringify([
-    request.type, request.paletteId, request.color, request.parts, request.size, request.direction, request.headDirection,
-    request.headOnly, request.posture, request.gesture, request.frame, request.animate, request.format,
+    request.type,
+    request.paletteId,
+    request.color,
+    request.parts,
+    request.size,
+    request.direction,
+    request.headDirection,
+    request.headOnly,
+    request.posture,
+    request.gesture,
+    request.frame,
+    request.animate,
+    request.format,
 ]);
 
 /** `count (layer part palette)...`, as `PetFigureData.getCustomData` reads it: the count must match what follows. */

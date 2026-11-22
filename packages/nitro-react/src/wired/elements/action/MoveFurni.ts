@@ -12,9 +12,17 @@ import { ActionTypeCodes } from './actionCodes';
 
 /** The movement radio's icon options after "no movement", in `buildInputs`' order: `[ id, icon ]`. */
 export const MOVE_FURNI_MOVEMENTS: [ number, string ][] = [
-    [ 4, 'move_0' ], [ 8, 'move_1' ], [ 5, 'move_2' ], [ 9, 'move_3' ],
-    [ 6, 'move_4' ], [ 10, 'move_5' ], [ 7, 'move_6' ], [ 11, 'move_7' ],
-    [ 2, 'move_diag' ], [ 3, 'move_vrt' ], [ 1, 'move_rnd' ],
+    [ 4, 'move_0' ],
+    [ 8, 'move_1' ],
+    [ 5, 'move_2' ],
+    [ 9, 'move_3' ],
+    [ 6, 'move_4' ],
+    [ 10, 'move_5' ],
+    [ 7, 'move_6' ],
+    [ 11, 'move_7' ],
+    [ 2, 'move_diag' ],
+    [ 3, 'move_vrt' ],
+    [ 1, 'move_rnd' ],
 ];
 
 export interface MoveFurniActionForm {

@@ -215,7 +215,7 @@ export class LegacyWallGeometry implements ILegacyWallGeometry {
         return this.getLocation(finalX, finalY, (this.scale / 2) * _local_6, _local_11, dir);
     }
 
-    public getOldLocation(loc: IVector3D, angle: number): [number, number, number, number, string] | undefined {
+    public getOldLocation(loc: IVector3D, angle: number): [ number, number, number, number, string ] | undefined {
         if (!loc) return undefined;
 
         let x = 0;

@@ -62,7 +62,13 @@ const NO_CONTROL_WIDTH_REDUCTION = 250;
 const PARAM_SCALE_HORIZONTAL = 128;
 
 export const FurnitureYoutubeView = ({
-    playlists, selectedPlaylistId, videoId, canControl, onSelectPlaylist, onControl, onClose,
+    playlists,
+    selectedPlaylistId,
+    videoId,
+    canControl,
+    onSelectPlaylist,
+    onControl,
+    onClose,
 }: FurnitureYoutubeViewProps) => {
     const t = useTranslation();
     const hasSelection = !!selectedPlaylistId.length;

@@ -78,7 +78,25 @@ const gridItems = (items: CraftingGridItem[], onPress: (key: string) => void): T
 }));
 
 export const FurnitureCraftingView = ({
-    recipes, inventory, mixer, infoText, infoText1, infoText2, icon, buttonVisible, buttonEnabled, buttonCaption, isOwner, progressVisible, progress, onRecipe, onInventoryItem, onMixerItem, onCraft, onCancel, onClose,
+    recipes,
+    inventory,
+    mixer,
+    infoText,
+    infoText1,
+    infoText2,
+    icon,
+    buttonVisible,
+    buttonEnabled,
+    buttonCaption,
+    isOwner,
+    progressVisible,
+    progress,
+    onRecipe,
+    onInventoryItem,
+    onMixerItem,
+    onCraft,
+    onCancel,
+    onClose,
 }: FurnitureCraftingViewProps) => {
     const t = useTranslation();
     const frame = useTemplateFrame({ id: 'furniture-crafting', modal: true, draggable: false, rememberPosition: false, onClose });

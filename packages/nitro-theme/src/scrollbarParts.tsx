@@ -35,8 +35,19 @@ export const createScrollbarButton = (displayName: string, cascadeKey: string): 
     const Component = forwardRef<PixiContainer, ScrollbarPartProps>(
         ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
             const { config, handlers, resolvedLayer, resolvedTint } = useThemeVariant<ThemeWithStatesVariant>({
-                cascadeKey, variant, defaultVariant, tooltip, tooltipDelay, tintColor, disabled,
-                onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+                cascadeKey,
+                variant,
+                defaultVariant,
+                tooltip,
+                tooltipDelay,
+                tintColor,
+                disabled,
+                onPointerOver,
+                onPointerOut,
+                onPointerDown,
+                onPointerUp,
+                onPointerUpOutside,
+                onPointerTap,
             });
 
             if (resolvedLayer?.kind !== 'sprite') return null;
@@ -63,8 +74,21 @@ export const createScrollbarTrack = (displayName: string, cascadeKey: string): S
     const Component = forwardRef<PixiContainer, ScrollbarTrackProps>(
         ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, disabled, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
             const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<ThemeWithStatesVariant>({
-                cascadeKey, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled,
-                onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+                cascadeKey,
+                variant,
+                defaultVariant,
+                tooltip,
+                tooltipDelay,
+                tintColor,
+                textStyle,
+                textColor,
+                disabled,
+                onPointerOver,
+                onPointerOut,
+                onPointerDown,
+                onPointerUp,
+                onPointerUpOutside,
+                onPointerTap,
             });
 
             return (
@@ -96,8 +120,19 @@ export const createScrollbarLift = (displayName: string, cascadeKey: string): Sc
     const Component = forwardRef<PixiContainer, ScrollbarPartProps>(
         ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, disabled, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
             const { config, state, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant<ThemeWithStatesVariant>({
-                cascadeKey, variant, defaultVariant, tooltip, tooltipDelay, tintColor, disabled,
-                onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+                cascadeKey,
+                variant,
+                defaultVariant,
+                tooltip,
+                tooltipDelay,
+                tintColor,
+                disabled,
+                onPointerOver,
+                onPointerOut,
+                onPointerDown,
+                onPointerUp,
+                onPointerUpOutside,
+                onPointerTap,
             });
 
             return (

@@ -5,7 +5,13 @@
  * closes the window. These run after the room's own furni handlers, so the model is current.
  */
 import {
-    ObjectRemoveMessage, ObjectRemoveMultipleMessage, ObjectUpdateMessage, WiredLinkConfigurationInvalidatedMessage, WiredLinkConfigurationMessage, WiredLinkConnectionsMessage, WiredLinkOpenMessage,
+    ObjectRemoveMessage,
+    ObjectRemoveMultipleMessage,
+    ObjectUpdateMessage,
+    WiredLinkConfigurationInvalidatedMessage,
+    WiredLinkConfigurationMessage,
+    WiredLinkConnectionsMessage,
+    WiredLinkOpenMessage,
     WiredLinkOperationResultMessage,
 } from '@nitrodevco/nitro-packets';
 

@@ -49,10 +49,12 @@ export type FlashTextFace = Pick<FlashTextFormat, 'fontFamily' | 'bold' | 'itali
  * are all optional. The three Pixi has its own vocabulary for - `font_face`, `font_size` and
  * `text_color` - travel in `textOptions` as `fontFamily`, `fontSize` and `fill` instead.
  */
-export type FlashTextFieldOverrides = Partial<Pick<FlashTextFormat,
+export type FlashTextFieldOverrides = Partial<Pick<
+    FlashTextFormat,
     'bold' | 'italic' | 'underline' | 'letterSpacing' | 'leading'
     | 'antiAliasType' | 'gridFitType' | 'thickness' | 'sharpness' | 'kerning'
-    | 'etchingColor' | 'etchingPosition'>>;
+    | 'etchingColor' | 'etchingPosition'
+>>;
 
 /**
  * What a `TextField` renders with when its style names nothing else.

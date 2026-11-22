@@ -12,8 +12,15 @@ import { encodeImage } from '../src/output/encodeImage';
 void describe('parseAvatarRequest', () => {
     void it('reads Habbo imaging parameters', () => {
         const request = parseAvatarRequest({
-            figure: 'hd-180-1.ch-210-66', gender: 'f', size: 'l', direction: '4', head_direction: '3',
-            action: 'sit,wav,crr=6', gesture: 'sml', headonly: '1', img_format: 'gif',
+            figure: 'hd-180-1.ch-210-66',
+            gender: 'f',
+            size: 'l',
+            direction: '4',
+            head_direction: '3',
+            action: 'sit,wav,crr=6',
+            gesture: 'sml',
+            headonly: '1',
+            img_format: 'gif',
         });
 
         assert.equal(request.gender, AvatarGenderType.Female);

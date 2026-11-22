@@ -3,16 +3,16 @@ import { TemplateBindings, TemplateWindow } from '#base/theme';
 import { useButtonMenu, useMinimizedMenu } from '../object-menu/useButtonMenu';
 
 /** The `use_product_menu` row each product mode shows (`UseProductView.updateButtons`). */
-export type UseProductMenuRow
-    = | 'use_product'
-        | 'use_product_shampoo'
-        | 'use_product_custom_part'
-        | 'use_product_custom_part_shampoo'
-        | 'use_product_saddle'
-        | 'replace_product_saddle'
-        | 'revive_monsterplant'
-        | 'rebreed_monsterplant'
-        | 'fertilize_monsterplant';
+export type UseProductMenuRow =
+    | 'use_product'
+    | 'use_product_shampoo'
+    | 'use_product_custom_part'
+    | 'use_product_custom_part_shampoo'
+    | 'use_product_saddle'
+    | 'replace_product_saddle'
+    | 'revive_monsterplant'
+    | 'rebreed_monsterplant'
+    | 'fertilize_monsterplant';
 
 export interface UseProductMenuViewProps {
     /** The pet this bubble floats over. */

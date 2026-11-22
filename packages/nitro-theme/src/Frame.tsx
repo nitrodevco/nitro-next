@@ -144,13 +144,24 @@ const marginsLayout = (
     fitHeight: boolean,
     bounds: ChildBounds | null,
 ): BoxLayout => ({
-    position: 'absolute', left, top,
+    position: 'absolute',
+    left,
+    top,
     ...(fitWidth ? (bounds && { width: bounds.right }) : { right }),
     ...(fitHeight ? (bounds && { height: bounds.bottom }) : { bottom }),
     // Every side of both, by name: the variant places the content with its own margins, and a
     // shorthand `margin: 0` beside a `marginLeft` the variant set is two styles, not an override.
-    flex: undefined, padding: 0, paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: 0,
-    margin: 0, marginLeft: 0, marginTop: 0, marginRight: 0, marginBottom: 0,
+    flex: undefined,
+    padding: 0,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 0,
+    margin: 0,
+    marginLeft: 0,
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
 });
 
 /**
@@ -177,9 +188,48 @@ const frameAxisSize = (fit: boolean, hasMargins: boolean, bound: number | undefi
  * clipped to it.
  */
 export const Frame = ({
-    variant: codeVariant, defaultVariant, tooltip, tooltipDelay, layout, tintColor: codeTintColor, tintMode, textStyle, textColor, dropShadow, id, name, patchOverride, caption, resizeDirection = 'all', contentLayout, margins,
-    defaultPosition, rememberPosition = true, themePosition = true, rememberSize = true, draggable = true, centered, onPositionChange, onClose, onResize, closeButtonVisible, closeButtonVariant, onMenu, helpPage, onHelp, backdrop, fitContent, panes, panesInFront, children,
-    onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
+    variant: codeVariant,
+    defaultVariant,
+    tooltip,
+    tooltipDelay,
+    layout,
+    tintColor: codeTintColor,
+    tintMode,
+    textStyle,
+    textColor,
+    dropShadow,
+    id,
+    name,
+    patchOverride,
+    caption,
+    resizeDirection = 'all',
+    contentLayout,
+    margins,
+    defaultPosition,
+    rememberPosition = true,
+    themePosition = true,
+    rememberSize = true,
+    draggable = true,
+    centered,
+    onPositionChange,
+    onClose,
+    onResize,
+    closeButtonVisible,
+    closeButtonVariant,
+    onMenu,
+    helpPage,
+    onHelp,
+    backdrop,
+    fitContent,
+    panes,
+    panesInFront,
+    children,
+    onPointerOver,
+    onPointerOut,
+    onPointerDown: onPointerDownProp,
+    onPointerUp,
+    onPointerUpOutside,
+    onPointerTap,
 }: FrameProps) => {
     // A theme's style for this window (`frame.overrides`, then template patches), over what its code passes.
     const override = useFrameOverride(id, name, patchOverride);
@@ -225,7 +275,22 @@ export const Frame = ({
                     }
                 : undefined);
     const { ownCascade, config, handlers, resolvedLayer, resolvedPlain, resolvedOverlay, resolvedShadow, resolvedTint } = useThemeVariant<FrameVariant>({
-        cascadeKey: 'frame', variant: frameless ? undefined : variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, dropShadow, interactive: true, onPointerOver, onPointerOut, onPointerDown: (frameless && draggable) ? onFramelessPointerDown : onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
+        cascadeKey: 'frame',
+        variant: frameless ? undefined : variant,
+        defaultVariant,
+        tooltip,
+        tooltipDelay,
+        tintColor,
+        textStyle,
+        textColor,
+        dropShadow,
+        interactive: true,
+        onPointerOver,
+        onPointerOut,
+        onPointerDown: (frameless && draggable) ? onFramelessPointerDown : onPointerDownProp,
+        onPointerUp,
+        onPointerUpOutside,
+        onPointerTap,
     });
     const resolvedTintMode = tintMode ?? config.tintMode;
     const minWidth = layout?.minWidth ?? config.layout?.minWidth ?? 20;

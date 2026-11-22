@@ -27,7 +27,14 @@ export interface DroplistProps extends ThemeProps<DroplistVariant> {
 export const Droplist: ForwardRefExoticComponent<DroplistProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DroplistProps>(
     ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, children }, ref) => {
         const { ownCascade, config, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<DroplistVariant>({
-            cascadeKey: 'droplist', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
+            cascadeKey: 'droplist',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
         });
 
         // The caption stops short of the arrow, which keeps its distance to the top right corner.

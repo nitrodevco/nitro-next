@@ -15,8 +15,15 @@
  * Retained while a room is open, like the Flash window.
  */
 import {
-    BonusRareInfoMessageType, CatalogPageWithEarliestExpiryMessageType, CommunityGoalProgressMessageType, ConcurrentUsersGoalProgressMessageType, ICommunityGoalHallOfFameData, IsUserPartOfCompetitionMessageType, LimitedOfferAppearingNextMessageType,
-    PromoArticleData, QuestDailyMessageType,
+    BonusRareInfoMessageType,
+    CatalogPageWithEarliestExpiryMessageType,
+    CommunityGoalProgressMessageType,
+    ConcurrentUsersGoalProgressMessageType,
+    ICommunityGoalHallOfFameData,
+    IsUserPartOfCompetitionMessageType,
+    LimitedOfferAppearingNextMessageType,
+    PromoArticleData,
+    QuestDailyMessageType,
 } from '@nitrodevco/nitro-packets';
 import { StateCreator } from 'zustand';
 

@@ -21,9 +21,18 @@ export const GroupManagementComponent = () => {
     const editorData = useGroupStore(x => x.editorData);
     const pickingLayerIndex = useGroupStore(x => x.pickingLayerIndex);
     const {
-        setGroupManagementName, setGroupManagementDescription, setGroupManagementBaseRoom, setGroupBadgeLayer, resetGroupBadge,
-        resetGroupColors, setGroupPrimaryColor, setGroupSecondaryColor, setGroupType, setGroupRightsLevel,
-        openBadgePartPicker, closeBadgePartPicker,
+        setGroupManagementName,
+        setGroupManagementDescription,
+        setGroupManagementBaseRoom,
+        setGroupBadgeLayer,
+        resetGroupBadge,
+        resetGroupColors,
+        setGroupPrimaryColor,
+        setGroupSecondaryColor,
+        setGroupType,
+        setGroupRightsLevel,
+        openBadgePartPicker,
+        closeBadgePartPicker,
     } = useGroupActions();
     const { send } = useWebSocketContext();
     const { showWindow } = useWindowActions();

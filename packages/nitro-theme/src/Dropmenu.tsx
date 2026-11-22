@@ -112,8 +112,22 @@ interface OpenMenu {
 }
 
 export const Dropmenu = ({
-    variant, defaultVariant, tooltip, tintColor, textStyle, textColor, caption = '', captionContent, options = [], disabled = false,
-    itemHeight: itemHeightProp, layout, visible, zIndex, onOpenChange, openRequest,
+    variant,
+    defaultVariant,
+    tooltip,
+    tintColor,
+    textStyle,
+    textColor,
+    caption = '',
+    captionContent,
+    options = [],
+    disabled = false,
+    itemHeight: itemHeightProp,
+    layout,
+    visible,
+    zIndex,
+    onOpenChange,
+    openRequest,
 }: DropmenuProps) => {
     const anchorRef = useRef<PixiContainer>(null);
     // Set while the press that just closed the view from outside may still end as a tap on the menu.

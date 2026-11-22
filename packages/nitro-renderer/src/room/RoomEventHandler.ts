@@ -6,7 +6,10 @@ import {
     IRoomObjectEvent,
     IRoomSpriteMouseEvent,
     RoomObjectCategoryEnum,
-    type RoomObjectEvent, RoomObjectFurniIconAssetEvent, RoomSpriteMouseEvent } from '@nitrodevco/nitro-api';
+    type RoomObjectEvent,
+    RoomObjectFurniIconAssetEvent,
+    RoomSpriteMouseEvent,
+} from '@nitrodevco/nitro-api';
 
 import { GetFurniIconImageManager } from './FurniIconImageManager';
 import { RoomEnterEffect } from './utils';

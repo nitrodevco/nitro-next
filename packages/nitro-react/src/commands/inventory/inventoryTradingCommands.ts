@@ -12,15 +12,43 @@
  * trade moves from `COUNTDOWN` to `CONFIRMING` and the accept button turns into confirm.
  */
 import {
-    AcceptTradingComposer, AddItemsToTradeComposer, AddItemToTradeComposer, AddNftToTradeComposer, CloseTradingComposer, ConfirmAcceptTradingComposer, ConfirmDeclineTradingComposer,
-    GetNftTradeInventoryComposer, RemoveItemFromTradeComposer, RemoveNftFromTradeComposer, SilverFeeComposer, UnacceptTradingComposer,
+    AcceptTradingComposer,
+    AddItemsToTradeComposer,
+    AddItemToTradeComposer,
+    AddNftToTradeComposer,
+    CloseTradingComposer,
+    ConfirmAcceptTradingComposer,
+    ConfirmDeclineTradingComposer,
+    GetNftTradeInventoryComposer,
+    RemoveItemFromTradeComposer,
+    RemoveNftFromTradeComposer,
+    SilverFeeComposer,
+    UnacceptTradingComposer,
 } from '@nitrodevco/nitro-packets';
 
 import { Send } from '#base/context/communication';
 import {
-    canAddToTrading, getInventoryFurniItemsForTrade, getSelectedFurniGroup, hasTradingOffer, INVENTORY_FURNI_CATEGORY_GUILD_FURNI, INVENTORY_FURNI_CATEGORY_POSTER, INVENTORY_TRADE_MAX_ITEMS, INVENTORY_TRADING_COUNTDOWN_SECONDS, INVENTORY_TRADING_STATE_CANCELLED,
-    INVENTORY_TRADING_STATE_COMPLETED, INVENTORY_TRADING_STATE_CONFIRMED, INVENTORY_TRADING_STATE_CONFIRMING,
-    INVENTORY_TRADING_STATE_COUNTDOWN, INVENTORY_TRADING_STATE_READY, INVENTORY_TRADING_STATE_RUNNING, InventoryFurniGroup, InventoryFurniItem, inventoryStore, InventoryTradingUserSetup, isWeb3Trading, peekInventoryFurni,
+    canAddToTrading,
+    getInventoryFurniItemsForTrade,
+    getSelectedFurniGroup,
+    hasTradingOffer,
+    INVENTORY_FURNI_CATEGORY_GUILD_FURNI,
+    INVENTORY_FURNI_CATEGORY_POSTER,
+    INVENTORY_TRADE_MAX_ITEMS,
+    INVENTORY_TRADING_COUNTDOWN_SECONDS,
+    INVENTORY_TRADING_STATE_CANCELLED,
+    INVENTORY_TRADING_STATE_COMPLETED,
+    INVENTORY_TRADING_STATE_CONFIRMED,
+    INVENTORY_TRADING_STATE_CONFIRMING,
+    INVENTORY_TRADING_STATE_COUNTDOWN,
+    INVENTORY_TRADING_STATE_READY,
+    INVENTORY_TRADING_STATE_RUNNING,
+    InventoryFurniGroup,
+    InventoryFurniItem,
+    inventoryStore,
+    InventoryTradingUserSetup,
+    isWeb3Trading,
+    peekInventoryFurni,
 } from '#base/context/inventory';
 import { notificationStore } from '#base/context/notifications';
 import { systemStore } from '#base/context/system';

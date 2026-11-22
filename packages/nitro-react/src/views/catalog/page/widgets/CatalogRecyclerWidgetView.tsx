@@ -3,8 +3,15 @@ import { TemplateBindings, TemplateElement, TemplateItem } from '@nitrodevco/nit
 import { useEffect, useRef, useState } from 'react';
 
 import {
-    cancelRecycler, executeRecycler, getRecyclerTimeout, hasEnoughDucketsForRecycler, initRecycler, RECYCLER_SLOT_CATEGORY_FLOOR,
-    RECYCLER_SLOT_CATEGORY_WALL, releaseRecyclerSlot, setRecyclerNextAllowedTimestamp,
+    cancelRecycler,
+    executeRecycler,
+    getRecyclerTimeout,
+    hasEnoughDucketsForRecycler,
+    initRecycler,
+    RECYCLER_SLOT_CATEGORY_FLOOR,
+    RECYCLER_SLOT_CATEGORY_WALL,
+    releaseRecyclerSlot,
+    setRecyclerNextAllowedTimestamp,
 } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useInventoryTradingActive } from '#base/context/inventory';

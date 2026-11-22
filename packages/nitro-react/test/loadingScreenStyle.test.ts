@@ -6,17 +6,32 @@ import { LOADING_SCREEN_PARTS, parseLoadingScreenStyle, placeLoadingScreenLayer,
 // The case: a restyled hotel's loading screen matched 1.3% (its look: the hotel view greyed, a 300x197 panel, a logo, a white bar), as no module can draw it.
 void test('a hotel\'s look, as JSON text: colours, the picture greyed, a panel and a logo in place of the photo frame', () => {
     const look = parseLoadingScreenStyle(JSON.stringify({
-        backgroundImage: '/images/reception.png', backgroundSaturation: 0.1, photo: false,
-        box: { width: 300, height: 197, color: '#656159', radius: 8 }, logo: '/images/logo.png',
-        text: 'loading.message', textColor: '#FFFFFF', bar: { outline: '#ffffff', fill: '#ffffff' }, percent: false,
+        backgroundImage: '/images/reception.png',
+        backgroundSaturation: 0.1,
+        photo: false,
+        box: { width: 300, height: 197, color: '#656159', radius: 8 },
+        logo: '/images/logo.png',
+        text: 'loading.message',
+        textColor: '#FFFFFF',
+        bar: { outline: '#ffffff', fill: '#ffffff' },
+        percent: false,
     }));
 
     assert.deepEqual(look, {
-        background: undefined, backgroundSaturation: 0.1, photo: false,
+        background: undefined,
+        backgroundSaturation: 0.1,
+        photo: false,
         layers: [ { image: '/images/reception.png', size: 'cover', alignX: 'center', alignY: 'center', offsetX: 0, offsetY: 0, repeat: 'no-repeat' } ],
-        box: { width: 300, height: 197, color: '#656159', alpha: 1, radius: 8 }, logo: '/images/logo.png',
-        text: 'loading.message', textColor: '#ffffff', textSize: undefined, textWidth: undefined, order: LOADING_SCREEN_PARTS,
-        bar: { width: undefined, outline: '#ffffff', well: undefined, fill: '#ffffff', fillBottom: undefined }, percent: false, percentColor: undefined,
+        box: { width: 300, height: 197, color: '#656159', alpha: 1, radius: 8 },
+        logo: '/images/logo.png',
+        text: 'loading.message',
+        textColor: '#ffffff',
+        textSize: undefined,
+        textWidth: undefined,
+        order: LOADING_SCREEN_PARTS,
+        bar: { width: undefined, outline: '#ffffff', well: undefined, fill: '#ffffff', fillBottom: undefined },
+        percent: false,
+        percentColor: undefined,
     });
 });
 
@@ -36,9 +51,13 @@ void test('none, or values of the wrong type, leave Habbo\'s own screen', () => 
 // matched one aspect only as one covering picture; its stack is logo, bar, text, the text wrapping in the bar's 143 px column.
 void test('a hotel view of layers: each at its own size, at a corner or tiled across, and the hotel order and wrap', () => {
     const look = parseLoadingScreenStyle({
-        backgroundImage: '/sky.png', backgroundSize: 'auto', backgroundPosition: 'top', backgroundRepeat: 'repeat-x',
+        backgroundImage: '/sky.png',
+        backgroundSize: 'auto',
+        backgroundPosition: 'top',
+        backgroundRepeat: 'repeat-x',
         layers: [ { image: '/left.png', size: 'auto', position: 'left bottom' }, { image: '/right.png', size: 'auto', position: 'bottom right', offset: [ -10, 4 ] } ],
-        order: [ 'logo', 'bar', 'text' ], textWidth: 143,
+        order: [ 'logo', 'bar', 'text' ],
+        textWidth: 143,
     });
 
     assert.deepEqual(look.layers.map(layer => [ layer.image, layer.alignX, layer.alignY, layer.offsetX, layer.offsetY, layer.repeat ]), [

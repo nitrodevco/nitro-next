@@ -15,8 +15,15 @@ import type { IWiredVariable } from '@nitrodevco/nitro-packets';
 import { VariableType } from '@nitrodevco/nitro-packets';
 
 import {
-    decodeLinkDataframe, encodeLinkDataframe, LINK_DATAFRAME_MAX_ROWS, LINK_DATAFRAME_PLACEHOLDER_DESTINATION, LINK_DATAFRAME_VARIABLE_DESTINATION, linkDataframeKeyError, linkDataframePlaceholderError,
-    linkDataframeStorageError, normalizeLinkDataframeKey,
+    decodeLinkDataframe,
+    encodeLinkDataframe,
+    LINK_DATAFRAME_MAX_ROWS,
+    LINK_DATAFRAME_PLACEHOLDER_DESTINATION,
+    LINK_DATAFRAME_VARIABLE_DESTINATION,
+    linkDataframeKeyError,
+    linkDataframePlaceholderError,
+    linkDataframeStorageError,
+    normalizeLinkDataframeKey,
 } from '../../common/linkDataframe';
 import { createVariablePickerState, finalizePickerSelection, getPickerSelectedVariable, WIRED_VARIABLE_ID_NONE, type WiredVariablePickerState } from '../../common/WiredVariablePickerModel';
 import type { WiredElementContext, WiredElementDefinition } from '../../WiredElement';

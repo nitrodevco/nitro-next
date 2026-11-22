@@ -34,7 +34,20 @@ export interface BubblePointerProps extends ThemeProps<BubblePointerVariant> {
 export const BubblePointer: ForwardRefExoticComponent<BubblePointerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubblePointerProps>(
     ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, direction, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant<BubblePointerVariant>({
-            cascadeKey: CASCADE_KEYS[direction], variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: CASCADE_KEYS[direction],
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
 
         // A plain sprite skin with nothing layered over it is the sprite itself - one node, no Box.

@@ -20,9 +20,19 @@ const parameterFields = (name, description) => [ name, 1, false, 0, false, 0, de
 
 await test('v2 tree reads parameter metadata and syntax branch parameters', () => {
     const values = [
-        1, 'group', 0, 'General', 'Manage groups', ':group', -1, true,
+        1,
+        'group',
+        0,
+        'General',
+        'Manage groups',
+        ':group',
+        -1,
+        true,
         0, // Root parameters
-        1, 'add', ':group add <name>', 1,
+        1,
+        'add',
+        ':group add <name>',
+        1,
         ...parameterFields('name', 'Group name'),
     ];
     const wrapper = Object.fromEntries([ 'readInt', 'readString', 'readBoolean' ].map(method => [ method, () => values.shift() ]));
@@ -30,8 +40,18 @@ await test('v2 tree reads parameter metadata and syntax branch parameters', () =
     assert.equal(command.parameters.length, 0);
     assert.equal(command.syntax?.[0].path, 'add');
     assert.deepEqual(command.syntax?.[0].parameters[0], {
-        name: 'name', kind: 1, optional: false, suggest: 0, selectors: false, members: [],
-        description: 'Group name', minimum: '1', maximum: '20', minLength: 1, maxLength: 12, defaultValue: '3',
+        name: 'name',
+        kind: 1,
+        optional: false,
+        suggest: 0,
+        selectors: false,
+        members: [],
+        description: 'Group name',
+        minimum: '1',
+        maximum: '20',
+        minLength: 1,
+        maxLength: 12,
+        defaultValue: '3',
     });
     assert.equal(values.length, 0);
 });

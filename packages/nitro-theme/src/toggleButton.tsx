@@ -27,11 +27,44 @@ export interface ToggleButtonProps extends ThemeProps<ThemeWithStatesVariant> {
  */
 export const createToggleButton = (displayName: string, cascadeKey: string): ForwardRefExoticComponent<ToggleButtonProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ToggleButtonProps>(
-        ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, disabled, selected, alpha, children,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+        ({
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            layout,
+            tintColor,
+            textStyle,
+            textColor,
+            visible,
+            disabled,
+            selected,
+            alpha,
+            children,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
+        }, ref) => {
             const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<ThemeWithStatesVariant>({
-                cascadeKey, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, selected,
-                onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+                cascadeKey,
+                variant,
+                defaultVariant,
+                tooltip,
+                tooltipDelay,
+                tintColor,
+                textStyle,
+                textColor,
+                disabled,
+                selected,
+                onPointerOver,
+                onPointerOut,
+                onPointerDown,
+                onPointerUp,
+                onPointerUpOutside,
+                onPointerTap,
             });
 
             // The skin's layout entities are `fixed`: `BitmapSkinRenderer.draw` copies them at their own

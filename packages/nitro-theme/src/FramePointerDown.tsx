@@ -15,8 +15,20 @@ export type FramePointerDownProps = ThemeProps<FramePointerDownVariant>;
 export const FramePointerDown: ForwardRefExoticComponent<FramePointerDownProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, FramePointerDownProps>(
     ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant<FramePointerDownVariant>({
-            cascadeKey: 'framePointerDown', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'framePointerDown',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
 
         // A plain sprite skin with nothing layered over it is the sprite itself - one node, no Box.

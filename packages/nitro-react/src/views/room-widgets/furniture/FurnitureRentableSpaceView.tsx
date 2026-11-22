@@ -53,7 +53,17 @@ const RENT_ERROR_MESSAGES: Record<number, string> = {
 const NOT_ENOUGH_CREDITS = 200;
 
 export const FurnitureRentableSpaceView = ({
-    rented, canCancelRent, canRent, canRentErrorCode, canAfford, renterName, timeRemaining, price, onRent, onCancelRent, onClose,
+    rented,
+    canCancelRent,
+    canRent,
+    canRentErrorCode,
+    canAfford,
+    renterName,
+    timeRemaining,
+    price,
+    onRent,
+    onCancelRent,
+    onClose,
 }: FurnitureRentableSpaceViewProps) => {
     const t = useTranslation();
     const frame = useTemplateFrame({ id: 'furniture-rentable-space', centered: true, rememberPosition: false, onClose });

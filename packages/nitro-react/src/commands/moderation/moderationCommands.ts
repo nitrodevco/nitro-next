@@ -6,9 +6,29 @@
  */
 import type { ModeratorInitMessageType } from '@nitrodevco/nitro-packets';
 import {
-    CloseIssueDefaultActionComposer, CloseIssuesComposer, DefaultSanctionComposer, FollowFriendComposer, GetCfhChatlogComposer, GetGuestRoomComposer, GetModeratorRoomInfoComposer,
-    GetModeratorUserInfoComposer, GetRoomChatlogComposer, GetRoomVisitsComposer, GetUserChatlogComposer, ModAlertComposer, ModBanComposer, ModerateRoomComposer, ModeratorActionComposer, ModKickComposer, ModMessageComposer, ModMuteComposer,
-    ModToolPreferencesComposer, ModToolSanctionComposer, ModTradingLockComposer, PickIssuesComposer, ReleaseIssuesComposer,
+    CloseIssueDefaultActionComposer,
+    CloseIssuesComposer,
+    DefaultSanctionComposer,
+    FollowFriendComposer,
+    GetCfhChatlogComposer,
+    GetGuestRoomComposer,
+    GetModeratorRoomInfoComposer,
+    GetModeratorUserInfoComposer,
+    GetRoomChatlogComposer,
+    GetRoomVisitsComposer,
+    GetUserChatlogComposer,
+    ModAlertComposer,
+    ModBanComposer,
+    ModerateRoomComposer,
+    ModeratorActionComposer,
+    ModKickComposer,
+    ModMessageComposer,
+    ModMuteComposer,
+    ModToolPreferencesComposer,
+    ModToolSanctionComposer,
+    ModTradingLockComposer,
+    PickIssuesComposer,
+    ReleaseIssuesComposer,
 } from '@nitrodevco/nitro-packets';
 
 import { Send } from '#base/context/communication';

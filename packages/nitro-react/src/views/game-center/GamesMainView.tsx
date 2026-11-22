@@ -19,8 +19,20 @@ import { AvatarGenderType } from '@nitrodevco/nitro-api';
 import { useEffect, useState } from 'react';
 
 import {
-    buyGameTokens, cancelGameLobby, closeGamesMainWindow, GAME_INSTRUCTION_FRAME_LENGTH, GAME_INSTRUCTION_PAGES, GAME_PLAY_BUTTON_BLOCKED_COLOR, GAME_PLAY_BUTTON_COLOR, GAME_TOKEN_BUTTONS, GAMES_LEFT_COLOR,
-    GAMES_LEFT_NONE_COLOR, openGamesClubCenter, playGame, showGameInstructionPage, showGameInstructions,
+    buyGameTokens,
+    cancelGameLobby,
+    closeGamesMainWindow,
+    GAME_INSTRUCTION_FRAME_LENGTH,
+    GAME_INSTRUCTION_PAGES,
+    GAME_PLAY_BUTTON_BLOCKED_COLOR,
+    GAME_PLAY_BUTTON_COLOR,
+    GAME_TOKEN_BUTTONS,
+    GAMES_LEFT_COLOR,
+    GAMES_LEFT_NONE_COLOR,
+    openGamesClubCenter,
+    playGame,
+    showGameInstructionPage,
+    showGameInstructions,
 } from '#base/commands';
 import { AvatarImage } from '#base/components';
 import { useWebSocketContext } from '#base/context/communication';

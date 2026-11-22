@@ -11,7 +11,7 @@ export class EffectAssetDownloadManager {
     private _structure: AvatarStructure;
     private _missingMandatoryLibs: string[] = EffectAssetDownloadManager.MANDATORY_LIBRARIES;
     private _effectMap: Map<string, EffectAssetDownloadLibrary[]> = new Map();
-    private _pendingDownloads: [number, IAvatarEffectListener][] = [];
+    private _pendingDownloads: [ number, IAvatarEffectListener ][] = [];
     private _effectListeners: Map<number, IAvatarEffectListener[]> = new Map();
     private _incompleteEffects: Map<number, EffectAssetDownloadLibrary[]> = new Map();
     private _pendingDownloadQueue: EffectAssetDownloadLibrary[] = [];

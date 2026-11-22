@@ -1,8 +1,4 @@
-import { IAssetData, IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent,
-    MapDataType,
-    MouseEventType,
-    RoomObjectRoomAdEvent, RoomObjectVariableEnum,
-    RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import { IAssetData, IRoomGeometry, IRoomObjectUpdateMessage, IRoomSpriteMouseEvent, MapDataType, MouseEventType, RoomObjectRoomAdEvent, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
 
 import { GetAssetManager } from '../../../../assets';
 import { ObjectAdUpdateMessage, ObjectDataUpdateMessage } from '../../../messages';

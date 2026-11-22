@@ -26,7 +26,7 @@ export const parseFigureString = (figure: string): FigureParts => {
 };
 
 export const buildFigureString = (parts: FigureParts): string => Object.entries(parts)
-    .filter((entry): entry is [string, { setId: number; colorIds: number[] }] => !!entry[1] && entry[1].setId >= 0)
+    .filter((entry): entry is [ string, { setId: number; colorIds: number[] } ] => !!entry[1] && entry[1].setId >= 0)
     .map(([ setType, part ]) => [ setType, part.setId, ...part.colorIds ].join('-'))
     .join('.');
 

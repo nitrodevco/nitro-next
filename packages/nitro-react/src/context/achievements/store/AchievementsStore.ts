@@ -40,8 +40,15 @@ interface AchievementsActions {
 }
 
 const initialState: AchievementsState = {
-    requested: false, categories: undefined, openRequested: false, pendingCategory: undefined,
-    category: '', selectedId: undefined, unseen: [], score: 0, pending: undefined,
+    requested: false,
+    categories: undefined,
+    openRequested: false,
+    pendingCategory: undefined,
+    category: '',
+    selectedId: undefined,
+    unseen: [],
+    score: 0,
+    pending: undefined,
 };
 
 export const selectedAchievement = (state: AchievementsState) => state.categories
@@ -120,7 +127,8 @@ export const createAchievementsStore = () => createStore<AchievementsState & Ach
                 const running = !!state.pending;
 
                 set({
-                    unseen, pending: achievement,
+                    unseen,
+                    pending: achievement,
                     categories: updateCategories(state.categories, withMaxProgress(current)),
                 });
 

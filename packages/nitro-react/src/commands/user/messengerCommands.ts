@@ -19,8 +19,18 @@ import { EventLogComposer, FollowFriendComposer, GetExtendedProfileComposer, Get
 
 import { Send } from '#base/context/communication';
 import {
-    MESSENGER_ENTRY_INFO, MESSENGER_ENTRY_INVITATION, MESSENGER_ENTRY_NOTIFICATION, MESSENGER_ENTRY_OTHER, MESSENGER_ENTRY_OWN, MESSENGER_ERROR_MESSAGES,
-    MESSENGER_HISTORY_REFETCH_MS, MESSENGER_NO_CONVERSATION, MessengerChatEntry, MessengerConversation, MessengerMessage, messengerStore,
+    MESSENGER_ENTRY_INFO,
+    MESSENGER_ENTRY_INVITATION,
+    MESSENGER_ENTRY_NOTIFICATION,
+    MESSENGER_ENTRY_OTHER,
+    MESSENGER_ENTRY_OWN,
+    MESSENGER_ERROR_MESSAGES,
+    MESSENGER_HISTORY_REFETCH_MS,
+    MESSENGER_NO_CONVERSATION,
+    MessengerChatEntry,
+    MessengerConversation,
+    MessengerMessage,
+    messengerStore,
 } from '#base/context/messenger';
 import { systemStore } from '#base/context/system';
 import { userStore } from '#base/context/user';
@@ -163,7 +173,15 @@ const recordChatEntry = (send: Send, chatId: number, entry: MessengerChatEntry, 
 };
 
 const noticeEntry = (type: number, message: MessengerMessage): MessengerChatEntry => ({
-    type, chatId: 0, message, sentAt: performance.now(), senderId: 0, senderName: '', senderFigure: '', messageId: '', awaitConfirmationId: 0,
+    type,
+    chatId: 0,
+    message,
+    sentAt: performance.now(),
+    senderId: 0,
+    senderName: '',
+    senderFigure: '',
+    messageId: '',
+    awaitConfirmationId: 0,
 });
 
 /** `MainView.recordNotificationMessage`. */

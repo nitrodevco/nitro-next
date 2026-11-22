@@ -33,8 +33,21 @@ import { claimRewardTrackPrize, getRewardTrackTaskIconAssetName, hideRewardTrack
 import { AvatarImage } from '#base/components';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    getRewardTrackClaimedPrizeCount, getRewardTrackCompletedTaskCount, getRewardTrackTaskActiveLevel, getRewardTrackTaskActiveLevelIndex, getRewardTrackTaskProgressRatio, isRewardTrackPrizeAvailable, isRewardTrackPrizeClaimable,
-    isRewardTrackPrizePremiumLocked, isRewardTrackTaskComplete, RewardTrack, RewardTrackPrize, rewardTrackPrizeHasEnoughPoints, RewardTrackTask, rewardTrackTaskHasProgress, useRewardTrackStore,
+    getRewardTrackClaimedPrizeCount,
+    getRewardTrackCompletedTaskCount,
+    getRewardTrackTaskActiveLevel,
+    getRewardTrackTaskActiveLevelIndex,
+    getRewardTrackTaskProgressRatio,
+    isRewardTrackPrizeAvailable,
+    isRewardTrackPrizeClaimable,
+    isRewardTrackPrizePremiumLocked,
+    isRewardTrackTaskComplete,
+    RewardTrack,
+    RewardTrackPrize,
+    rewardTrackPrizeHasEnoughPoints,
+    RewardTrackTask,
+    rewardTrackTaskHasProgress,
+    useRewardTrackStore,
 } from '#base/context/reward-track';
 import { useConfigData, useTranslation } from '#base/context/system';
 import { useOwnUserFigure, useOwnUserGender } from '#base/context/user';

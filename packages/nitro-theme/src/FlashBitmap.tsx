@@ -98,8 +98,26 @@ const placeTile = (pivotPlace: number, window: number, drawn: number, flip: bool
  * `FlashBitmap` is what `ThemeImage` renders when it is given `bitmap` vars; see there.
  */
 export const FlashBitmap = forwardRef<PixiContainer, FlashBitmapProps>(({
-    texture, vars, tint, greyscale = false, alpha, blendMode, effect, dynamic = false, layout, visible, zIndex, hitThreshold: hitThresholdProp = 0, eventMode, cursor,
-    onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    texture,
+    vars,
+    tint,
+    greyscale = false,
+    alpha,
+    blendMode,
+    effect,
+    dynamic = false,
+    layout,
+    visible,
+    zIndex,
+    hitThreshold: hitThresholdProp = 0,
+    eventMode,
+    cursor,
+    onPointerOver,
+    onPointerOut,
+    onPointerDown,
+    onPointerUp,
+    onPointerUpOutside,
+    onPointerTap,
 }, ref) => {
     const [ host, setHost ] = useState<PixiContainer | null>(null);
     const [ mask, setMask ] = useState<PixiGraphics | null>(null);

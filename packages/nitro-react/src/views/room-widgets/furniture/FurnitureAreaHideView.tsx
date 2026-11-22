@@ -38,8 +38,18 @@ const TEXT_NAMES = [ 'hidearea_info', 'areaselection_title', 'areaselection_info
  * the button, because the widget sends its draft only on Apply.
  */
 export const FurnitureAreaHideView = ({
-    width, length, invisible, wallItems, inverted, isOn,
-    onToggleOption, onSelect, onClear, onApply, onToggle, onClose,
+    width,
+    length,
+    invisible,
+    wallItems,
+    inverted,
+    isOn,
+    onToggleOption,
+    onSelect,
+    onClear,
+    onApply,
+    onToggle,
+    onClose,
 }: FurnitureAreaHideViewProps) => {
     const hasArea = ((width > 0) && (length > 0));
     const blend = (isOn ? 0.5 : 1);

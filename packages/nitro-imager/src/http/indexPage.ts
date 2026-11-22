@@ -12,7 +12,7 @@ const EXAMPLE_FIGURE = 'hd-180-1.hr-115-42.ch-210-66.lg-270-82.sh-290-80';
 const EXAMPLE_BADGE = 'b05114s06114';
 
 /** Examples every hotel has: the classic pets' and furniture's libraries. */
-const PET_EXAMPLES: [string, string][] = [
+const PET_EXAMPLES: [ string, string ][] = [
     [ 'type=dog', 'A dog, standing' ],
     [ 'figure=0+3+ffffff', 'Its figure string, palette 3' ],
     [ 'type=cat&posture=sit&direction=4', 'A cat, sitting' ],
@@ -21,7 +21,7 @@ const PET_EXAMPLES: [string, string][] = [
     [ 'type=dog&headonly=1&size=l', 'Head only, large' ],
 ];
 
-const FURNITURE_EXAMPLES: [string, string][] = [
+const FURNITURE_EXAMPLES: [ string, string ][] = [
     [ 'name=throne', 'By class name' ],
     [ 'name=rare_dragonlamp*4&state=1', 'A colour, switched on' ],
     [ 'name=rare_dragonlamp*4&state=1&animate=1', 'Its animation' ],

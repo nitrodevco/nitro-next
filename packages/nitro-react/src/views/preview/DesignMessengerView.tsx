@@ -14,7 +14,15 @@ import { MessengerView } from '#base/views/messenger/MessengerView';
 const FIGURE = 'hr-115-42.hd-195-19.ch-3030-82.lg-275-1408.fa-1201.ca-1804-64';
 
 const line = (chatId: number, type: number, text: string, senderName: string, minutesAgo: number, index: number): MessengerChatEntry => ({
-    type, chatId, message: { text, habbiconId: 0 }, sentAt: performance.now() - (minutesAgo * 60000), senderId: (type === MESSENGER_ENTRY_OWN) ? 0 : chatId, senderName, senderFigure: FIGURE, messageId: `${chatId}-${index}`, awaitConfirmationId: 0,
+    type,
+    chatId,
+    message: { text, habbiconId: 0 },
+    sentAt: performance.now() - (minutesAgo * 60000),
+    senderId: (type === MESSENGER_ENTRY_OWN) ? 0 : chatId,
+    senderName,
+    senderFigure: FIGURE,
+    messageId: `${chatId}-${index}`,
+    awaitConfirmationId: 0,
 });
 
 export const DesignMessengerView = () => {

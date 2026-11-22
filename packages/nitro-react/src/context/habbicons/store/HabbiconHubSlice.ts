@@ -14,9 +14,9 @@ import { StateCreator } from 'zustand';
 import type { HabbiconEntryModel, HabbiconSetModel } from '../HabbiconAlbumModel';
 import { HabbiconTabMode, HabbiconTabModeName } from '../HabbiconState';
 
-export type HabbiconPurchaseRequest
-    = | { mode: 'habbicon'; item: HabbiconEntryModel }
-        | { mode: 'set'; set: HabbiconSetModel };
+export type HabbiconPurchaseRequest =
+    | { mode: 'habbicon'; item: HabbiconEntryModel }
+    | { mode: 'set'; set: HabbiconSetModel };
 
 export interface HabbiconPurchaseConfirmation {
     /** Tells one confirmation from the next, so a view opened anew starts from its own state. */

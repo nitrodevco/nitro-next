@@ -75,8 +75,27 @@ const AVATAR_WIDGET_WIDTH = 34;
 const BADGE_SLOTS = 5;
 
 export const UserProfileView = ({
-    profile, badges, relationships, selectedGroupId, ownUserId, activityDisplayEnabled, relationshipsEnabled, canAskForFriend, isBlocked,
-    onClose, onAddFriend, onRooms, onChangeLooks, onChangeBadges, onBadgeCount, onSelectGroup, onOpenProfile, onFindFriends, onToggleBlock, onShowGroups, onFavouriteGroup,
+    profile,
+    badges,
+    relationships,
+    selectedGroupId,
+    ownUserId,
+    activityDisplayEnabled,
+    relationshipsEnabled,
+    canAskForFriend,
+    isBlocked,
+    onClose,
+    onAddFriend,
+    onRooms,
+    onChangeLooks,
+    onChangeBadges,
+    onBadgeCount,
+    onSelectGroup,
+    onOpenProfile,
+    onFindFriends,
+    onToggleBlock,
+    onShowGroups,
+    onFavouriteGroup,
 }: UserProfileViewProps) => {
     const t = useTranslation();
     const badgeUrl = useBadgeImageUrl();

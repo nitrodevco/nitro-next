@@ -44,7 +44,17 @@ import { UnseenItemCounterView } from '#base/views/shared/UnseenItemCounterView'
 
 import { FRIEND_BAR_BOTTOM_OFFSET, FRIEND_BAR_COLLAPSE_MS, FRIEND_BAR_HEIGHT, FRIEND_BAR_TOOLS_WIDTH, friendBarWidth, layoutFriendBar, maxFriendBarTabs, pageFriendBar } from './friendBarLayout';
 import {
-    CONTROLS_PIECE_TEMPLATE, FIND_FRIENDS_TAB_TEMPLATE, findFriendsTabItem, FRIEND_TAB_TEMPLATE, friendTabItem, friendTokens, growSelectedFindFriendsTab, growSelectedFriendTab, listItemAt, MESSAGE_PIECE_TEMPLATE, TokenTexts,
+    CONTROLS_PIECE_TEMPLATE,
+    FIND_FRIENDS_TAB_TEMPLATE,
+    findFriendsTabItem,
+    FRIEND_TAB_TEMPLATE,
+    friendTabItem,
+    friendTokens,
+    growSelectedFindFriendsTab,
+    growSelectedFriendTab,
+    listItemAt,
+    MESSAGE_PIECE_TEMPLATE,
+    TokenTexts,
 } from './friendBarTabs';
 import { GAME_TOKEN_TYPE } from './FriendBarTokenIcon';
 import { useFriendBarMessengerIcon } from './useFriendBarMessengerIcon';

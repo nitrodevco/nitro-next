@@ -10,18 +10,18 @@ interface PalettePixels {
     height: number;
 }
 
-const BLACK: [number, number, number] = [ 0, 0, 0 ];
+const BLACK: [ number, number, number ] = [ 0, 0, 0 ];
 
 /** Port of Flash `GraphicAssetPalette`. */
 export class GraphicAssetPalette implements IGraphicAssetPalette {
     /** The 2D canvas frames are copied on (`readFramePixels`): made on first use, kept for the next. */
     private static _scratch: CanvasRenderingContext2D | null | undefined = undefined;
 
-    private _palette: [number, number, number][];
+    private _palette: [ number, number, number ][];
     private _primaryColor: number;
     private _secondaryColor: number;
 
-    constructor(palette: [number, number, number][], primaryColor: number, secondaryColor: number) {
+    constructor(palette: [ number, number, number ][], primaryColor: number, secondaryColor: number) {
         this._palette = palette;
 
         while (this._palette.length < 256) this._palette.push([ 0, 0, 0 ]);

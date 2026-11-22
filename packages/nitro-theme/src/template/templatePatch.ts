@@ -69,36 +69,36 @@ export type TemplateElementInput = Partial<Omit<TemplateElement, 'children' | 'n
 
 export type TemplateInsertPosition = 'before' | 'after' | 'first' | 'last';
 
-export type TemplatePatchOp
-    = | { element: string; set: TemplateElementChanges }
-        | { element: string; remove: true }
-        | { element: string; insert: TemplateInsertPosition; add: TemplateElementInput }
+export type TemplatePatchOp =
+    | { element: string; set: TemplateElementChanges }
+    | { element: string; remove: true }
+    | { element: string; insert: TemplateInsertPosition; add: TemplateElementInput }
         /**
          * Moves the element - its children with it - `before` / `after` the element `to` names, or
          * `first` / `last` inside it. It keeps its name, so the window's code still reaches it with
          * `findChildByName` and its bindings still apply; its `x` / `y` are now its new parent's.
          */
-        | { element: string; move: TemplateInsertPosition; to: string }
+    | { element: string; move: TemplateInsertPosition; to: string }
         /**
          * Puts a new element (`add`, as `insert` builds it) in the element's place and the element - its
          * children with it, its name kept - inside it at (0, 0). The new one takes the element's rect
          * unless `add` gives its own: wrapping a part of a window in a `frame` makes it a separately
          * framed pane of the window (`docs/template-patches.md`). The window itself (`''`) is not wrapped.
          */
-        | { element: string; wrap: TemplateElementInput }
+    | { element: string; wrap: TemplateElementInput }
         /**
          * Binds the element as `api.templates.bind` does, its values data with placeholders
          * (`templatePatchBind.ts`): it changes no template - the binding is added beside the patch - and
          * counts as applied when the patched template has the element.
          */
-        | TemplateBindOp
+    | TemplateBindOp
         /**
          * Moves and sizes the element after the window's own `arrange`, as `api.templates.arrange` does,
          * its rect data - numbers and formulas over what the layout measured (`templatePatchArrange.ts`):
          * it changes no template, and counts as applied when the patched template has the element and
          * every element its formulas read.
          */
-        | TemplateArrangeOp;
+    | TemplateArrangeOp;
 
 /**
  * What a window tells patches about what it shows, read-only: the infostand's user id, type and

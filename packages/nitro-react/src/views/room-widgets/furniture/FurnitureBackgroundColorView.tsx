@@ -31,7 +31,14 @@ export interface FurnitureBackgroundColorViewProps {
  * no "off" text for it.
  */
 export const FurnitureBackgroundColorView = ({
-    hue, saturation, lightness, previewColor, onChange, onApply, onToggle, onClose,
+    hue,
+    saturation,
+    lightness,
+    previewColor,
+    onChange,
+    onApply,
+    onToggle,
+    onClose,
 }: FurnitureBackgroundColorViewProps) => {
     const hueSlider = useFurnitureSlider({ container: 'hue_container', value: hue, min: MIN_VALUE, max: MAX_VALUE, reportOnEveryEvent: true, onChange: value => onChange(value, saturation, lightness) });
     const saturationSlider = useFurnitureSlider({ container: 'saturation_container', value: saturation, min: MIN_VALUE, max: MAX_VALUE, reportOnEveryEvent: true, onChange: value => onChange(hue, value, lightness) });

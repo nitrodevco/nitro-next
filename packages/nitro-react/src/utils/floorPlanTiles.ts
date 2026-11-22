@@ -25,7 +25,23 @@ export const FLOOR_PLAN_TILE_IMAGES = {
  * gave them, and the order is load-bearing - the index *is* the mask.
  */
 export const FLOOR_PLAN_PREVIEW_TILE_NAMES = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'entry',
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'entry',
 ];
 
 export const FLOOR_PLAN_PREVIEW_TILE_IMAGES = FLOOR_PLAN_PREVIEW_TILE_NAMES.map(name => `window-manager/tile_preview_${name}.png`);
@@ -51,7 +67,7 @@ const hueToRgb = (p: number, q: number, t: number): number => {
 };
 
 /** `HeightMapEditor.hslToRgb` - components in 0..1, as the colour transform multipliers Flash used them for. */
-const hslToRgb = (h: number, s: number, l: number): [number, number, number] => {
+const hslToRgb = (h: number, s: number, l: number): [ number, number, number ] => {
     if (s === 0) return [ l, l, l ];
 
     const q = (l < 0.5) ? (l * (1 + s)) : (l + s - (l * s));
@@ -61,7 +77,7 @@ const hslToRgb = (h: number, s: number, l: number): [number, number, number] => 
 };
 
 /** `uint(255 * v)` per component, as Pixi wants a tint - truncated, the way Flash's `uint` cast is. */
-const toTint = ([ r, g, b ]: [number, number, number]): number => (Math.trunc(255 * r) << 16) + (Math.trunc(255 * g) << 8) + Math.trunc(255 * b);
+const toTint = ([ r, g, b ]: [ number, number, number ]): number => (Math.trunc(255 * r) << 16) + (Math.trunc(255 * g) << 8) + Math.trunc(255 * b);
 
 /**
  * The hue `HeightMapEditor`'s constructor starts its colour ramp at, and how far down it walks

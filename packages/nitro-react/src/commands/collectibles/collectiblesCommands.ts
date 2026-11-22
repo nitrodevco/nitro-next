@@ -24,8 +24,19 @@ import { GetAvatarRenderManager } from '@nitrodevco/nitro-renderer';
 
 import { GetChatStyleLibrary } from '#base/chat';
 import {
-    COLLECTIBLE_PREVIEW_NONE, COLLECTIBLE_PRODUCT_TYPE_BADGE, COLLECTIBLE_PRODUCT_TYPE_CHAT_STYLE, COLLECTIBLE_PRODUCT_TYPE_CLOTHING, COLLECTIBLE_PRODUCT_TYPE_EFFECT, COLLECTIBLE_PRODUCT_TYPE_FLOOR, COLLECTIBLE_PRODUCT_TYPE_PET,
-    COLLECTIBLE_PRODUCT_TYPE_UNKNOWN, COLLECTIBLE_PRODUCT_TYPE_WALL, CollectiblePreview, CollectiblePreviewEasterEgg, CollectibleProductInfo, collectiblesStore,
+    COLLECTIBLE_PREVIEW_NONE,
+    COLLECTIBLE_PRODUCT_TYPE_BADGE,
+    COLLECTIBLE_PRODUCT_TYPE_CHAT_STYLE,
+    COLLECTIBLE_PRODUCT_TYPE_CLOTHING,
+    COLLECTIBLE_PRODUCT_TYPE_EFFECT,
+    COLLECTIBLE_PRODUCT_TYPE_FLOOR,
+    COLLECTIBLE_PRODUCT_TYPE_PET,
+    COLLECTIBLE_PRODUCT_TYPE_UNKNOWN,
+    COLLECTIBLE_PRODUCT_TYPE_WALL,
+    CollectiblePreview,
+    CollectiblePreviewEasterEgg,
+    CollectibleProductInfo,
+    collectiblesStore,
 } from '#base/context/collectibles';
 import { Send } from '#base/context/communication';
 import { notificationStore } from '#base/context/notifications';

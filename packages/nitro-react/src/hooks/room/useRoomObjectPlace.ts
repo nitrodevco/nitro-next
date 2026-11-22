@@ -68,7 +68,12 @@ export const useRoomObjectPlace = () => {
                     send(new PlacePostItComposer({ itemId: objectId, wallLocation }));
                 } else {
                     send(new PlaceObjectComposer({
-                        itemId: objectId, category, wallLocation, x: Math.trunc(x), y: Math.trunc(y), rotation: direction,
+                        itemId: objectId,
+                        category,
+                        wallLocation,
+                        x: Math.trunc(x),
+                        y: Math.trunc(y),
+                        rotation: direction,
                     }));
                 }
             }

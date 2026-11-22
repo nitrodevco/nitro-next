@@ -34,7 +34,7 @@ export type ShadowLayerProps = DropShadowConfig & {
 
 const FLASH_DEFAULTS = { distance: 0, angle: 45, color: '#000000', alpha: 1, blur: 0 };
 
-const parseColor = (color: string): [number, number, number] => {
+const parseColor = (color: string): [ number, number, number ] => {
     const value = parseCssHexColor(color);
 
     return [ (value >> 16) & 255, (value >> 8) & 255, value & 255 ];

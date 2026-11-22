@@ -34,13 +34,13 @@ export const MOD_CHATLOG_CFH = 3;
  * `issueId` (`IssueMessageData` passed along, `UserInfoCtrl._-C2S`), which the actions it sends carry; it is no
  * part of the window's key (`WindowTracker` ids are the user's).
  */
-export type ModerationWindow
-    = | { kind: 'userInfo'; userId: number; issueId?: number }
-        | { kind: 'roomTool'; roomId: number }
-        | { kind: 'chatlog'; type: number; id: number }
-        | { kind: 'sendMessage'; userId: number; userName: string; issueId?: number }
-        | { kind: 'modAction'; userId: number; userName: string; issueId?: number }
-        | { kind: 'roomVisits'; userId: number };
+export type ModerationWindow =
+    | { kind: 'userInfo'; userId: number; issueId?: number }
+    | { kind: 'roomTool'; roomId: number }
+    | { kind: 'chatlog'; type: number; id: number }
+    | { kind: 'sendMessage'; userId: number; userName: string; issueId?: number }
+    | { kind: 'modAction'; userId: number; userName: string; issueId?: number }
+    | { kind: 'roomVisits'; userId: number };
 
 /** The start panel's `rects` key, and where its layout puts it (`start_panel.xml`: 120, 64, 170 x 170). */
 export const START_PANEL = 'startPanel';

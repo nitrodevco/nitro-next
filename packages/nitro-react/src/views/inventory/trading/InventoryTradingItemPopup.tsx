@@ -64,9 +64,9 @@ export interface InventoryTradingItemPopupAnchor {
 }
 
 /** What `updateContent` is given: a furni's picture and limited edition, or a collectible's product. */
-export type InventoryTradingItemPopupContent
-    = | { kind: 'furni'; imageUrl: string; uniqueSerialNumber: number; uniqueSeriesSize: number }
-        | { kind: 'nft'; preview: CollectiblePreview };
+export type InventoryTradingItemPopupContent =
+    | { kind: 'furni'; imageUrl: string; uniqueSerialNumber: number; uniqueSeriesSize: number }
+    | { kind: 'nft'; preview: CollectiblePreview };
 
 interface InventoryTradingItemPopupProps {
     anchor: InventoryTradingItemPopupAnchor;

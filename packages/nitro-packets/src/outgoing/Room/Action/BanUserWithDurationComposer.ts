@@ -12,7 +12,9 @@ export class BanUserWithDurationComposer implements IOutgoingPacket<BanUserWithD
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.userId, this.params.roomId, this.params.banType,
+            this.params.userId,
+            this.params.roomId,
+            this.params.banType,
         ];
     }
 }

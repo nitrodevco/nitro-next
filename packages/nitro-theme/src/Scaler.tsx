@@ -34,12 +34,38 @@ export interface ScalerProps extends ThemeProps<ScalerVariant> {
  */
 export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScalerProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, direction = 'all',
-        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        variant,
+        defaultVariant,
+        tooltip,
+        tooltipDelay,
+        layout,
+        tintColor,
+        textStyle,
+        textColor,
+        visible,
+        direction = 'all',
+        onPointerOver,
+        onPointerOut,
+        onPointerDown,
+        onPointerUp,
+        onPointerUpOutside,
+        onPointerTap,
     }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant<ScalerVariant>({
-            cascadeKey: 'scaler', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'scaler',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
 
         // The skin's own size: Flash's scaler is as big as its bitmap unless its layout says otherwise.

@@ -1,6 +1,14 @@
 import { AvatarEditorCategory } from '@nitrodevco/nitro-api';
 import {
-    AvatarEffectActivatedMessage, AvatarEffectExpiredMessage, AvatarEffectMessage, AvatarEffectSelectedMessage, FigureSetIdsEventMessage, HotLooksMessage, UserNftWardrobeMessage, UserNftWardrobeSelectionMessage, WardrobeMessage,
+    AvatarEffectActivatedMessage,
+    AvatarEffectExpiredMessage,
+    AvatarEffectMessage,
+    AvatarEffectSelectedMessage,
+    FigureSetIdsEventMessage,
+    HotLooksMessage,
+    UserNftWardrobeMessage,
+    UserNftWardrobeSelectionMessage,
+    WardrobeMessage,
 } from '@nitrodevco/nitro-packets';
 
 import { avatarEditorStore, AvatarEditorWardrobeOutfit, DEFAULT_WARDROBE_SLOTS, normalizeGender, WARDROBE_SLOTS_KEY } from '#base/context/avatar-editor';

@@ -71,9 +71,9 @@ const SPLIT_ICON = LayoutImage('habbo-window-manager-com/inventory_trading_tradi
 const CREDITS_ICON = LayoutImage('habbo-window-manager-com/inventory_furni_icon_credits.png');
 
 /** What a cell holds: a group of furni, or the box's credits (`CreditTradingItem`). */
-type WiredTradeSlotContent
-    = | { kind: 'furni'; group: InventoryFurniGroup }
-        | { kind: 'credits'; credits: number };
+type WiredTradeSlotContent =
+    | { kind: 'furni'; group: InventoryFurniGroup }
+    | { kind: 'credits'; credits: number };
 
 /**
  * A cell's thumb: a furni group's `inventory_thumb_xml` as the user trade shows it, or the

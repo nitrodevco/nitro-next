@@ -19,12 +19,39 @@ export interface DropmenuItemProps extends ThemeProps<DropmenuItemVariant> {
  */
 export const DropmenuItem: ForwardRefExoticComponent<DropmenuItemProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuItemProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, selected, children,
-        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        variant,
+        defaultVariant,
+        tooltip,
+        tooltipDelay,
+        layout,
+        tintColor,
+        textStyle,
+        textColor,
+        selected,
+        children,
+        onPointerOver,
+        onPointerOut,
+        onPointerDown,
+        onPointerUp,
+        onPointerUpOutside,
+        onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<DropmenuItemVariant>({
-            cascadeKey: 'dropmenuItem', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, selected,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'dropmenuItem',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            selected,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
 
         return (

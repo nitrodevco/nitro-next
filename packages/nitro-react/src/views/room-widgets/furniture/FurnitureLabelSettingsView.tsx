@@ -7,8 +7,14 @@ const TEMPLATE = 'habbo-room-ui-com/furniture_label_settings_xml';
 
 /** The colour menu's entries (`colorDropdown.populate`), with their English fallbacks. */
 const COLOR_NAMES: readonly [ string, string ][] = [
-    [ 'blue', 'Blue' ], [ 'teal', 'Teal' ], [ 'green', 'Green' ], [ 'gold', 'Gold' ],
-    [ 'orange', 'Orange' ], [ 'red', 'Red' ], [ 'purple', 'Purple' ], [ 'charcoal', 'Charcoal' ],
+    [ 'blue', 'Blue' ],
+    [ 'teal', 'Teal' ],
+    [ 'green', 'Green' ],
+    [ 'gold', 'Gold' ],
+    [ 'orange', 'Orange' ],
+    [ 'red', 'Red' ],
+    [ 'purple', 'Purple' ],
+    [ 'charcoal', 'Charcoal' ],
 ];
 
 export interface FurnitureLabelSettingsViewProps {

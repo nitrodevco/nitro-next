@@ -7,8 +7,15 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useSystemStore, useTranslation, useWindowActions } from '#base/context/system';
 import { findTemplateChild, useTemplateLibrary } from '#base/theme';
 import {
-    formatMarketplaceStatusTime, getMarketplaceOfferTexts, MARKETPLACE_OFFER_STATUS_EXPIRED, MARKETPLACE_OFFER_STATUS_ONGOING, MARKETPLACE_OFFER_STATUS_SOLD, MARKETPLACE_OWN_CATEGORY_EXPIRED,
-    MARKETPLACE_OWN_CATEGORY_OPEN, MARKETPLACE_OWN_CATEGORY_SOLD, MarketplaceOfferData,
+    formatMarketplaceStatusTime,
+    getMarketplaceOfferTexts,
+    MARKETPLACE_OFFER_STATUS_EXPIRED,
+    MARKETPLACE_OFFER_STATUS_ONGOING,
+    MARKETPLACE_OFFER_STATUS_SOLD,
+    MARKETPLACE_OWN_CATEGORY_EXPIRED,
+    MARKETPLACE_OWN_CATEGORY_OPEN,
+    MARKETPLACE_OWN_CATEGORY_SOLD,
+    MarketplaceOfferData,
 } from '#base/utils';
 import { marketplaceOfferImageBindings } from '#base/views/catalog/marketplace/marketplaceOfferImage';
 

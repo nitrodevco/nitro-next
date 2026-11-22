@@ -171,8 +171,19 @@ export const parseAvatarRequest = (query: Record<string, string | undefined>): A
 
 /** The request as one string, in a fixed order: the cache key. */
 export const avatarRequestKey = (request: AvatarRenderRequest): string => JSON.stringify([
-    request.figure, request.gender, request.size, request.direction, request.headDirection, request.headOnly,
-    request.posture, request.actions, request.effect, request.frame, request.animate, request.crop, request.format,
+    request.figure,
+    request.gender,
+    request.size,
+    request.direction,
+    request.headDirection,
+    request.headOnly,
+    request.posture,
+    request.actions,
+    request.effect,
+    request.frame,
+    request.animate,
+    request.crop,
+    request.format,
 ]);
 
 const readInteger = (value: string | undefined, name: string, min: number, max: number, fallback: number): number => {

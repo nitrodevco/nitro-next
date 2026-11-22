@@ -29,7 +29,15 @@ import { goToHallOfFameRoom, openProfile } from '#base/commands';
 import { AvatarImage } from '#base/components/AvatarImage';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    HALL_OF_FAME_AVATAR_DIRECTIONS, HALL_OF_FAME_ENTRY_COUNT, HALL_OF_FAME_ENTRY_TOP, HALL_OF_FAME_POPUP_BOTTOM, hallOfFameLayout, hallOfFameSchedule, hotelViewProperty, useConfigData, useSystemStore,
+    HALL_OF_FAME_AVATAR_DIRECTIONS,
+    HALL_OF_FAME_ENTRY_COUNT,
+    HALL_OF_FAME_ENTRY_TOP,
+    HALL_OF_FAME_POPUP_BOTTOM,
+    hallOfFameLayout,
+    hallOfFameSchedule,
+    hotelViewProperty,
+    useConfigData,
+    useSystemStore,
 } from '#base/context/system';
 import { TemplateItem, TemplateWindow, useTemplateLibrary } from '#base/theme';
 

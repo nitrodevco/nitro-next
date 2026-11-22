@@ -147,7 +147,12 @@ export const RoomCanvas = () => {
         if (!pointerType || !room?.canvas || !clientModuleRoomPointer.has()) return false;
 
         return clientModuleRoomPointer.offer({
-            type: pointerType, x, y, altKey, ctrlKey, shiftKey,
+            type: pointerType,
+            x,
+            y,
+            altKey,
+            ctrlKey,
+            shiftKey,
             tile: roomPlaneTileAt(room.canvas, x, y),
             secondaryTile: hasSecondaryRooms() ? secondaryRoomTileAt(x, y) : undefined,
         });

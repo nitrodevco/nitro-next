@@ -11,8 +11,19 @@ import { useLatest } from '#base/theme';
 
 import { NotificationFrame, NotificationsBubble } from './NotificationsBubble';
 import {
-    countVisible, createRuntime, duplicateFadeThreshold, findItemToReplace, isReadyOrFading, isSpaceAvailable, nextAvailablePosition, NOTIFICATION_SPACING,
-    restack, StackEntry, startPhase, updateRuntime, updateVerticalTargets,
+    countVisible,
+    createRuntime,
+    duplicateFadeThreshold,
+    findItemToReplace,
+    isReadyOrFading,
+    isSpaceAvailable,
+    nextAvailablePosition,
+    NOTIFICATION_SPACING,
+    restack,
+    StackEntry,
+    startPhase,
+    updateRuntime,
+    updateVerticalTargets,
 } from './notificationStack';
 
 /** The bubbles share one place in the window order: a new one comes up over the open windows, a window clicked after it goes over them. */

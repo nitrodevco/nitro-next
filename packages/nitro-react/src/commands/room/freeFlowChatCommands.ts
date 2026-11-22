@@ -20,8 +20,15 @@ import { clientModuleAvatarOf, emitClientModuleEvent, hasClientModuleEventHandle
 const MODULE_CHAT_KINDS: Partial<Record<RoomChatTypeEnum, 'talk' | 'shout' | 'whisper'>> = { [RoomChatTypeEnum.Speak]: 'talk', [RoomChatTypeEnum.Shout]: 'shout', [RoomChatTypeEnum.Whisper]: 'whisper' };
 
 const SYSTEM_NOTIFICATION_CHAT_TYPES: ReadonlySet<RoomChatTypeEnum> = new Set([
-    RoomChatTypeEnum.Respect, RoomChatTypeEnum.PetRespect, RoomChatTypeEnum.HandItem, RoomChatTypeEnum.PetTreat, RoomChatTypeEnum.PetRevive,
-    RoomChatTypeEnum.PetRebreed, RoomChatTypeEnum.PetSpeed, RoomChatTypeEnum.MuteRemaining, RoomChatTypeEnum.SpecialSystem,
+    RoomChatTypeEnum.Respect,
+    RoomChatTypeEnum.PetRespect,
+    RoomChatTypeEnum.HandItem,
+    RoomChatTypeEnum.PetTreat,
+    RoomChatTypeEnum.PetRevive,
+    RoomChatTypeEnum.PetRebreed,
+    RoomChatTypeEnum.PetSpeed,
+    RoomChatTypeEnum.MuteRemaining,
+    RoomChatTypeEnum.SpecialSystem,
 ]);
 
 /** `SystemChatStyleEnum.GENERIC` - the anonymous grey bubble every system notice uses. */

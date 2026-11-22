@@ -44,7 +44,15 @@ export const isReadyOrFading = (runtime: NotificationRuntime) => (runtime.phase 
 export const stackHeight = (item: NotificationItem, runtime: NotificationRuntime) => NOTIFICATION_VIEWS[item.layout].height ?? runtime.measuredHeight;
 
 export const createRuntime = (key: number, margin: number, measuredHeight: number): NotificationRuntime => ({
-    key, phase: 'fade_in', elapsed: 0, margin, targetMargin: margin, hovering: false, blend: 0, swipe: 0, measuredHeight,
+    key,
+    phase: 'fade_in',
+    elapsed: 0,
+    margin,
+    targetMargin: margin,
+    hovering: false,
+    blend: 0,
+    swipe: 0,
+    measuredHeight,
 });
 
 export const startPhase = (runtime: NotificationRuntime, phase: NotificationPhase) => {

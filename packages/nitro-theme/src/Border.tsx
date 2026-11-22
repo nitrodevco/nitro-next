@@ -64,7 +64,20 @@ export interface BorderProps extends ThemeProps<BorderVariant> {
 export const Border: ForwardRefExoticComponent<BorderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BorderProps>(
     ({ variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, tintMode, textStyle, textColor, visible, dropShadow, blend, ownGraphicContext, backgroundColor, backgroundAlpha, dynamicRole, children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedPlain, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<BorderVariant>({
-            cascadeKey: 'border', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'border',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
         const resolvedTintMode = tintMode ?? config.tintMode;
         const roleEffect = useDynamicStyleEffect(dynamicRole);

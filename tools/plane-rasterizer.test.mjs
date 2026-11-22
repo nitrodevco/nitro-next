@@ -37,8 +37,12 @@ await test('half-size room composition preserves overlay and restores clipping a
     const overlay = {};
     Object.assign(canvas, {
         _master: { filterArea: viewport, children: [ overlay ] },
-        _roomLayer: {}, _display: {}, _mask: {},
-        _scale: 0.5, _usesMask: true, _compositeZoom: false,
+        _roomLayer: {},
+        _display: {},
+        _mask: {},
+        _scale: 0.5,
+        _usesMask: true,
+        _compositeZoom: false,
     });
     canvas.updateZoomSampling();
     assert.equal(canvas._roomLayer.filters.length, 1);
@@ -139,7 +143,10 @@ await test('floor and wall with no matching visualization produce no texture', (
 const createPool = () => {
     const destroyed = [];
     const RenderTexture = { create: ({ width, height, antialias }) => ({ width, height, destroyed: false, source: {
-        antialias, style: { scaleMode: 'nearest', update() {} }, destroyed: false, destroy() { this.destroyed = true; },
+        antialias,
+        style: { scaleMode: 'nearest', update() {} },
+        destroyed: false,
+        destroy() { this.destroyed = true; },
     } }) };
     const { TexturePool } = load('utils/TexturePool', {
         '@nitrodevco/nitro-api': { NitroLogger: { log() {} } },
@@ -221,7 +228,9 @@ await test('final plane sampling minifies linearly but preserves nearest magnifi
     } };
     const texture = { source: { style } };
     const { preparePlaneSampling } = load('room/object/visualization/room/rasterizer/PlaneCanvas', {
-        'pixi.js': { Container: class {} }, '#renderer/utils': {}, './PlaneColorFilter': {},
+        'pixi.js': { Container: class {} },
+        '#renderer/utils': {},
+        './PlaneColorFilter': {},
     });
     assert.equal(preparePlaneSampling(texture), texture);
     assert.equal(style.minFilter, 'linear');
@@ -264,10 +273,14 @@ await test('RoomPlane rebuilds an unchanged door mask when the texture dimension
     });
     const original = { width: 544, height: 115 };
     const plane = {
-        _useMask: true, _bitmapMasks: [],
+        _useMask: true,
+        _bitmapMasks: [],
         _rectangleMasks: [ { leftSideLoc: 0, rightSideLoc: 0, leftSideLength: 1, rightSideLength: 2 } ],
-        _maskChanged: false, _maskManager: {}, _maskTexture: original,
-        _leftSide: { length: 17 }, _rightSide: { length: 3.6 },
+        _maskChanged: false,
+        _maskManager: {},
+        _maskTexture: original,
+        _leftSide: { length: 17 },
+        _rightSide: { length: 3.6 },
     };
     const geometry = { getCoordinatePosition: () => ({}) };
     const resized = RoomPlane.prototype.getMergedMasks.call(plane, geometry, 272, 58);

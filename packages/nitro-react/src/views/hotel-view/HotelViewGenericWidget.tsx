@@ -62,9 +62,24 @@ import { useState } from 'react';
 import { goToCompetitionRoom, goToHomeRoom, goToPrivateRoom, goToPromotedRoom, openCatalogExternalLink, openClientLink, openClubCenter, openCreditsHabblet, requestHotelViewBadge, submitCompetitionRoom } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    hotelViewBadgeRequestCode, hotelViewColorableBindings, hotelViewColorableFormat, HotelViewCommonSettings, hotelViewGenericConf, HotelViewGenericElement, hotelViewPaneWidths, hotelViewProperty, HotelViewSecondsUntil,
-    hotelViewTimerTimeStr, isFloatingHotelViewQuestElement,
-    isWideHotelViewSlot, LANDING_VIEW_ELEMENT_REQUESTBADGEBUTTONS, parseHotelViewGenericConf, parseHotelViewGenericLayout, useConfigData, useSystemStore, useWindowActions,
+    hotelViewBadgeRequestCode,
+    hotelViewColorableBindings,
+    hotelViewColorableFormat,
+    HotelViewCommonSettings,
+    hotelViewGenericConf,
+    HotelViewGenericElement,
+    hotelViewPaneWidths,
+    hotelViewProperty,
+    HotelViewSecondsUntil,
+    hotelViewTimerTimeStr,
+    isFloatingHotelViewQuestElement,
+    isWideHotelViewSlot,
+    LANDING_VIEW_ELEMENT_REQUESTBADGEBUTTONS,
+    parseHotelViewGenericConf,
+    parseHotelViewGenericLayout,
+    useConfigData,
+    useSystemStore,
+    useWindowActions,
 } from '#base/context/system';
 import { useSecondsClock } from '#base/hooks';
 import { Box, CountdownWidget, RunningNumberWidget, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useTemplateLibrary } from '#base/theme';

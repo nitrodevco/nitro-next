@@ -21,7 +21,7 @@ export class ActionDefinition implements IActionDefinition {
     private _types: Map<string, ActionType>;
     private _params: Map<string, string>;
     private _defaultParameterValue: string;
-    private _canvasOffsets: Map<AvatarScaleType, Map<number, [number, number, number]>>;
+    private _canvasOffsets: Map<AvatarScaleType, Map<number, [ number, number, number ]>>;
 
     constructor(data: IAssetAvatarAction | undefined = undefined) {
         this._id = AvatarActionType.Default;
@@ -80,11 +80,11 @@ export class ActionDefinition implements IActionDefinition {
         }
     }
 
-    public getOffsets(size: AvatarScaleType, direction: number): [number, number, number] {
+    public getOffsets(size: AvatarScaleType, direction: number): [ number, number, number ] {
         return this._canvasOffsets.get(size)?.get(direction) ?? [ 0, 0, 0 ];
     }
 
-    public setOffsets(size: AvatarScaleType, direction: number, offset: [number, number, number]): void {
+    public setOffsets(size: AvatarScaleType, direction: number, offset: [ number, number, number ]): void {
         let existing = this._canvasOffsets.get(size);
 
         if (!existing) {

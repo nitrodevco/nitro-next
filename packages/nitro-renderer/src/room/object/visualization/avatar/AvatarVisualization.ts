@@ -9,7 +9,9 @@ import {
     type IGraphicAsset,
     type IObjectVisualizationData,
     type IRoomGeometry,
-    IRoomObject, IRoomObjectModel, type IRoomObjectSprite,
+    IRoomObject,
+    IRoomObjectModel,
+    type IRoomObjectSprite,
     IVariableFxStatusModelData,
     RoomObjectSpriteData,
     RoomObjectSpriteTypeEnum,
@@ -27,17 +29,7 @@ import { RoomObjectSprite } from '../RoomObjectSprite';
 import { RoomObjectSpriteVisualization } from '../RoomObjectSpriteVisualization';
 import { IVariableFxVisualizationHost, IVariableFxVisualizationRoomData } from '../variablefx/IVariableFxVisualizationRoomData';
 import { VariableFxStatusReconciler } from '../variablefx/VariableFxStatusReconciler';
-import { ExpressionAdditionFactory,
-    FloatingIdleZAddition,
-    GameClickTargetAddition,
-    GuideStatusBubbleAddition,
-    HabbiconBubble,
-    IAvatarAddition,
-    MutedBubbleAddition,
-    NumberBubbleAddition,
-    StackedAdditions,
-    TypingBubbleAddition,
-} from './additions';
+import { ExpressionAdditionFactory, FloatingIdleZAddition, GameClickTargetAddition, GuideStatusBubbleAddition, HabbiconBubble, IAvatarAddition, MutedBubbleAddition, NumberBubbleAddition, StackedAdditions, TypingBubbleAddition } from './additions';
 import { AvatarVisualizationData } from './AvatarVisualizationData';
 
 /**

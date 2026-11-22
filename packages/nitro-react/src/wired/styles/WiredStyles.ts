@@ -35,17 +35,32 @@ export const getWiredStyleByName = (name: string | null | undefined): WiredStyle
  * `public/assets/wired`. Only illumina and volter have their own.
  */
 const STYLE_ASSET_NAMES: readonly string[] = [
-    'furni_picks_1', 'furni_picks_2',
-    'move_0', 'move_1', 'move_2', 'move_3', 'move_4', 'move_5', 'move_6', 'move_7', 'move_diag', 'move_rnd', 'move_vrt',
-    'rotate_ccw', 'rotate_cw', 'slider_obj',
+    'furni_picks_1',
+    'furni_picks_2',
+    'move_0',
+    'move_1',
+    'move_2',
+    'move_3',
+    'move_4',
+    'move_5',
+    'move_6',
+    'move_7',
+    'move_diag',
+    'move_rnd',
+    'move_vrt',
+    'rotate_ccw',
+    'rotate_cw',
+    'slider_obj',
 ];
 
 const STYLE_ASSETS: ReadonlySet<string> = new Set([
     ...STYLE_ASSET_NAMES.map(name => `wired_styles_illumina_${name}`),
     ...STYLE_ASSET_NAMES.map(name => `wired_styles_volter_${name}`),
     'wired_styles_volter_slider_bg',
-    'wired_styles_illumina_icon_source_furni', 'wired_styles_illumina_icon_source_users',
-    'wired_styles_illumina_icon_source_global', 'wired_styles_illumina_icon_source_context',
+    'wired_styles_illumina_icon_source_furni',
+    'wired_styles_illumina_icon_source_users',
+    'wired_styles_illumina_icon_source_global',
+    'wired_styles_illumina_icon_source_context',
 ]);
 
 /**

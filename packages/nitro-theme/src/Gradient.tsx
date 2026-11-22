@@ -32,7 +32,15 @@ export interface GradientProps extends ThemeLayoutMeta {
  * out is read back once laid out.
  */
 export const Gradient = forwardRef<PixiContainer, GradientProps>(({
-    color1 = 0xFFFFFFFF, color2 = 0xFF000000, mode = 'linear', direction = 'down', alpha, blendMode, layout, visible, children,
+    color1 = 0xFFFFFFFF,
+    color2 = 0xFF000000,
+    mode = 'linear',
+    direction = 'down',
+    alpha,
+    blendMode,
+    layout,
+    visible,
+    children,
 }, ref) => {
     const [ host, setHost ] = useState<PixiContainer | null>(null);
     const measured = useLayoutSize(host);

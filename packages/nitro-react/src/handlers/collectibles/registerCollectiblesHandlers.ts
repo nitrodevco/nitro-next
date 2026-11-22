@@ -10,14 +10,47 @@
  * Flash, where the listeners only exist once `showCollectibleHub` has made the view.
  */
 import {
-    CollectableMintableItemTypesMessage, CollectibleMintableItemResultMessage, CollectibleMintingEnabledMessage, CollectibleMintTokenCountMessage, CollectibleMintTokenOffersMessage, CollectibleWalletAddressesMessage, NftBonusItemClaimResultMessage, NftClaimResultMessage,
-    NftClaimsMessage, NftCollectionsMessage, NftCollectionsScoreMessage, NftRewardItemClaimResultMessage, NftStoreOffersMessage, NftStorePurchaseMessage, NftTransferAssetsResultMessage, NftTransferFeeMessage, PurchaseErrorMessage, PurchaseOKMessage,
-    RedeemNftLootBoxResultMessage, RedeemNftLootBoxStateMessage,
+    CollectableMintableItemTypesMessage,
+    CollectibleMintableItemResultMessage,
+    CollectibleMintingEnabledMessage,
+    CollectibleMintTokenCountMessage,
+    CollectibleMintTokenOffersMessage,
+    CollectibleWalletAddressesMessage,
+    NftBonusItemClaimResultMessage,
+    NftClaimResultMessage,
+    NftClaimsMessage,
+    NftCollectionsMessage,
+    NftCollectionsScoreMessage,
+    NftRewardItemClaimResultMessage,
+    NftStoreOffersMessage,
+    NftStorePurchaseMessage,
+    NftTransferAssetsResultMessage,
+    NftTransferFeeMessage,
+    PurchaseErrorMessage,
+    PurchaseOKMessage,
+    RedeemNftLootBoxResultMessage,
+    RedeemNftLootBoxStateMessage,
 } from '@nitrodevco/nitro-packets';
 
 import {
-    onCollectableMintableItemTypes, onCollectibleMintableItemResult, onCollectibleMintingEnabled, onCollectibleMintTokenCount, onCollectibleMintTokenOffers, onCollectiblesPurchaseAnswered, onCollectibleWalletAddresses, onCollectionClaimResult, onCollectorScore,
-    onNftClaimResult, onNftClaims, onNftCollections, onNftStoreOffers, onNftStorePurchase, onNftTransferFee, onNftTransferResult, onRedeemNftLootBoxResult, onRedeemNftLootBoxState,
+    onCollectableMintableItemTypes,
+    onCollectibleMintableItemResult,
+    onCollectibleMintingEnabled,
+    onCollectibleMintTokenCount,
+    onCollectibleMintTokenOffers,
+    onCollectiblesPurchaseAnswered,
+    onCollectibleWalletAddresses,
+    onCollectionClaimResult,
+    onCollectorScore,
+    onNftClaimResult,
+    onNftClaims,
+    onNftCollections,
+    onNftStoreOffers,
+    onNftStorePurchase,
+    onNftTransferFee,
+    onNftTransferResult,
+    onRedeemNftLootBoxResult,
+    onRedeemNftLootBoxState,
 } from '#base/commands';
 import { collectiblesStore } from '#base/context/collectibles';
 import { WebSocketConnection } from '#base/context/communication';

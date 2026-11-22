@@ -57,8 +57,19 @@ export interface FurnitureDimmerViewProps {
  * (see `useFurnitureSlider`), reporting a value only when the button is released.
  */
 export const FurnitureDimmerView = ({
-    presets, selectedPresetId, isOn, color, brightness, effectId,
-    onSelectPreset, onChangeColor, onChangeBrightness, onChangeEffect, onApply, onToggle, onClose,
+    presets,
+    selectedPresetId,
+    isOn,
+    color,
+    brightness,
+    effectId,
+    onSelectPreset,
+    onChangeColor,
+    onChangeBrightness,
+    onChangeEffect,
+    onApply,
+    onToggle,
+    onClose,
 }: FurnitureDimmerViewProps) => {
     const cell = useTemplate(`${LIBRARY}/dimmer_color_chooser_cell`);
     const slider = useFurnitureSlider({ container: 'brightness_container', value: brightness, min: MIN_BRIGHTNESS, max: MAX_BRIGHTNESS, reportOnEveryEvent: false, onChange: onChangeBrightness });

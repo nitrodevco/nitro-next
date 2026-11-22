@@ -322,8 +322,14 @@ export const registerRoomMappingHandlers = ({ subscribe }: WebSocketConnection) 
                     // tick past the end of the list, whose missing colour coerces to 0 and is
                     // applied to the background only.
                     const colors = [
-                        0x0072BB, 0xFF4C3B, 0xFFD034, 0x99FF00,
-                        0x0072BB, 0xFF4C3B, 0xFFD034, 0x99FF00,
+                        0x0072BB,
+                        0xFF4C3B,
+                        0xFFD034,
+                        0x99FF00,
+                        0x0072BB,
+                        0xFF4C3B,
+                        0xFFD034,
+                        0x99FF00,
                         0x000000,
                     ];
                     const roomId = room.roomId;

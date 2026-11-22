@@ -7,5 +7,5 @@ export interface IAssetPalette {
     colorTag?: number;
     color1?: string;
     color2?: string;
-    rgb?: [number, number, number][];
+    rgb?: [ number, number, number ][];
 }

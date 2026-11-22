@@ -33,9 +33,9 @@ export interface InventoryMarketplaceConfiguration {
 }
 
 /** What `MarketplaceView` shows: the offer dialog for an item, or the token offer. */
-export type InventoryMarketplaceView
-    = | { kind: 'make_offer'; item: InventoryFurniItem; maxAmount: number }
-        | { kind: 'buy_tokens'; price: number; count: number };
+export type InventoryMarketplaceView =
+    | { kind: 'make_offer'; item: InventoryFurniItem; maxAmount: number }
+    | { kind: 'buy_tokens'; price: number; count: number };
 
 type State = {
     marketplaceConfiguration: InventoryMarketplaceConfiguration;
@@ -61,8 +61,17 @@ type Actions = {
 
 export const InventoryMarketplaceSliceInitialState: State = {
     marketplaceConfiguration: {
-        isEnabled: false, commission: 0, tokenBatchPrice: 0, tokenBatchSize: 0, offerMinPrice: 0, offerMaxPrice: 0, expirationHours: 0,
-        averagePricePeriod: 0, sellingFeePercentage: 0, revenueLimit: 0, halfTaxLimit: 0,
+        isEnabled: false,
+        commission: 0,
+        tokenBatchPrice: 0,
+        tokenBatchSize: 0,
+        offerMinPrice: 0,
+        offerMaxPrice: 0,
+        expirationHours: 0,
+        averagePricePeriod: 0,
+        sellingFeePercentage: 0,
+        revenueLimit: 0,
+        halfTaxLimit: 0,
     },
     marketplaceCategoryInitialized: false,
     marketplaceOfferGroupId: -1,

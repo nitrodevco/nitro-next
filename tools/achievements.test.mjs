@@ -52,7 +52,8 @@ await test('initialization requests the catalog once per session, and the badge 
     const { requestAchievements } = load('nitro-react/src/commands/achievements/achievementCommands', {
         '@nitrodevco/nitro-packets': { GetAchievementsComposer, GetBadgePointLimitsComposer },
         '#base/context/achievements': { achievementsStore: store },
-        '#base/context/system': {}, '#base/context/wired': {},
+        '#base/context/system': {},
+        '#base/context/wired': {},
     });
     const sent = [];
     const send = packet => sent.push(packet.constructor.name);
@@ -120,9 +121,12 @@ await test('raised thresholds keep AS3 raw values; the bar width never goes belo
 
 await test('categories follow AS3: misc last, archive and wired_games always, new only with entries', () => {
     const categories = model.buildCategories([
-        achievement({ category: 'misc' }), achievement({ category: 'social' }),
-        achievement({ category: 'pets', state: 2 }), achievement({ category: 'identity', state: 0 }),
-        achievement({ category: 'identity', state: 4 }), achievement({ category: 'wired_games', state: 4 }),
+        achievement({ category: 'misc' }),
+        achievement({ category: 'social' }),
+        achievement({ category: 'pets', state: 2 }),
+        achievement({ category: 'identity', state: 0 }),
+        achievement({ category: 'identity', state: 4 }),
+        achievement({ category: 'wired_games', state: 4 }),
         achievement({ category: '' }),
     ], [ 'Login' ]);
 

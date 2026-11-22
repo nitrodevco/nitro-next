@@ -75,14 +75,14 @@ export const registerThemeAtlas = (sheet: ThemeAtlas, frames: Record<string, { f
 };
 
 /** What a slice is cut out as: the sprite as it is, or its drop shadow. */
-export type ThemeSliceEffect
-    = | { kind: 'plain' }
+export type ThemeSliceEffect =
+    | { kind: 'plain' }
         /**
          * A Flash `DropShadowFilter` of the sprite: its silhouette in `color` at `alpha`,
          * box-blurred `blurX` x `blurY` wide (quality 1), on a canvas padded `pad` on every side
          * so the blur has room to spread past the art's edge.
          */
-        | { kind: 'shadow'; color: string; alpha: number; blurX: number; blurY: number; pad: number };
+    | { kind: 'shadow'; color: string; alpha: number; blurX: number; blurY: number; pad: number };
 
 /** An effect's part of a slice's cache key. */
 export const themeSliceEffectId = (effect: ThemeSliceEffect): string => ((effect.kind === 'shadow')

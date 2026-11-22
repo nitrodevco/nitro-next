@@ -33,9 +33,29 @@ import type { IExtendedForumData, IForumData, IPostMessage, IThreadData } from '
 import { useLayoutEffect, useRef, useState } from 'react';
 
 import {
-    closeGroupForum, deleteGroupForumMessage, deleteGroupForumThread, getGroupForumThreadLastReadIndex, goToGroupForumMessage, GROUP_FORUM_PAGE_SIZE, GROUP_FORUM_STATE_HIDDEN_BY_ADMIN, GROUP_FORUM_STATE_HIDDEN_BY_STAFF, markGroupForumAsRead,
-    markGroupForumsListAsRead, openClientLink, openGroupForumCompose, openGroupForumSettings, openGroupForumsList, openGroupForumWindow, openProfile, requestGroupForumMessages, requestGroupForumThreads,
-    setGroupForumWindowRect, takeGroupForumGoTo, undeleteGroupForumMessage, undeleteGroupForumThread, updateGroupForumThread,
+    closeGroupForum,
+    deleteGroupForumMessage,
+    deleteGroupForumThread,
+    getGroupForumThreadLastReadIndex,
+    goToGroupForumMessage,
+    GROUP_FORUM_PAGE_SIZE,
+    GROUP_FORUM_STATE_HIDDEN_BY_ADMIN,
+    GROUP_FORUM_STATE_HIDDEN_BY_STAFF,
+    markGroupForumAsRead,
+    markGroupForumsListAsRead,
+    openClientLink,
+    openGroupForumCompose,
+    openGroupForumSettings,
+    openGroupForumsList,
+    openGroupForumWindow,
+    openProfile,
+    requestGroupForumMessages,
+    requestGroupForumThreads,
+    setGroupForumWindowRect,
+    takeGroupForumGoTo,
+    undeleteGroupForumMessage,
+    undeleteGroupForumThread,
+    updateGroupForumThread,
 } from '#base/commands';
 import { reportGroupForumMessage, reportGroupForumThread } from '#base/commands/help/helpCommands';
 import { AvatarImage } from '#base/components';

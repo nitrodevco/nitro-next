@@ -44,8 +44,19 @@ import { AvatarImage } from '#base/components/AvatarImage';
 import { useWebSocketContext } from '#base/context/communication';
 import { useHabbiconsStore } from '#base/context/habbicons';
 import {
-    groupMessengerEntries, MESSENGER_ENTRY_INFO, MESSENGER_ENTRY_INVITATION, MESSENGER_ENTRY_NOTIFICATION, MESSENGER_ENTRY_OTHER, MESSENGER_ENTRY_OWN, MESSENGER_ITEM_WIDTH_INSET,
-    MESSENGER_NO_CONVERSATION, MESSENGER_NOTIFICATION_ICON_WIDTH, MessengerChatEntry, MessengerConversation, useMessengerActions, useMessengerStore,
+    groupMessengerEntries,
+    MESSENGER_ENTRY_INFO,
+    MESSENGER_ENTRY_INVITATION,
+    MESSENGER_ENTRY_NOTIFICATION,
+    MESSENGER_ENTRY_OTHER,
+    MESSENGER_ENTRY_OWN,
+    MESSENGER_ITEM_WIDTH_INSET,
+    MESSENGER_NO_CONVERSATION,
+    MESSENGER_NOTIFICATION_ICON_WIDTH,
+    MessengerChatEntry,
+    MessengerConversation,
+    useMessengerActions,
+    useMessengerStore,
 } from '#base/context/messenger';
 import { useConfigBoolean, useGroupBadgeImageUrl } from '#base/context/system';
 import { useFriends, useOwnUserFigure, useOwnUserGender, useUserStore } from '#base/context/user';

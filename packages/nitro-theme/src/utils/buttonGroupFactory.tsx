@@ -29,12 +29,42 @@ export const createButtonGroupComponent = (
 ): ForwardRefExoticComponent<ButtonGroupComponentProps & RefAttributes<PixiContainer>> => {
     const Component = forwardRef<PixiContainer, ButtonGroupComponentProps>(
         ({
-            variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            layout,
+            tintColor,
+            textStyle,
+            textColor,
+            visible,
+            disabled,
+            selected,
+            children,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         }, ref) => {
             const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<ButtonGroupVariant>({
-                cascadeKey, variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, selected,
-                onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+                cascadeKey,
+                variant,
+                defaultVariant,
+                tooltip,
+                tooltipDelay,
+                tintColor,
+                textStyle,
+                textColor,
+                disabled,
+                selected,
+                onPointerOver,
+                onPointerOut,
+                onPointerDown,
+                onPointerUp,
+                onPointerUpOutside,
+                onPointerTap,
             });
 
             return (

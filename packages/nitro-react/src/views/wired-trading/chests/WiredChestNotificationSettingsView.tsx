@@ -18,8 +18,15 @@ import { saveWiredChestNotificationPreferences } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import {
-    WIRED_CHEST_KEY_IS_WIRED_ENABLED, WIRED_CHEST_KEY_NOTIFICATION_CHEST_EMPTY, WIRED_CHEST_KEY_NOTIFICATION_CHEST_FULL, WIRED_CHEST_KEY_NOTIFICATION_DONATION, WIRED_CHEST_KEY_NOTIFICATION_WIRED_TRANSACTION,
-    WIRED_CHEST_KEY_NOTIFICATION_WITHDRAWS, WIRED_CHEST_KEY_NOTIFY_MODE, WIRED_CHEST_TYPE_FURNI, WiredChestNotificationSettingsRequest,
+    WIRED_CHEST_KEY_IS_WIRED_ENABLED,
+    WIRED_CHEST_KEY_NOTIFICATION_CHEST_EMPTY,
+    WIRED_CHEST_KEY_NOTIFICATION_CHEST_FULL,
+    WIRED_CHEST_KEY_NOTIFICATION_DONATION,
+    WIRED_CHEST_KEY_NOTIFICATION_WIRED_TRANSACTION,
+    WIRED_CHEST_KEY_NOTIFICATION_WITHDRAWS,
+    WIRED_CHEST_KEY_NOTIFY_MODE,
+    WIRED_CHEST_TYPE_FURNI,
+    WiredChestNotificationSettingsRequest,
 } from '#base/context/wired-trading';
 import { useViewportSize } from '#base/hooks';
 import { WiredCheckboxGroup } from '#base/views/wired-setup/kit/WiredCheckboxGroup';

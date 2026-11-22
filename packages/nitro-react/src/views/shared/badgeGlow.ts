@@ -54,9 +54,25 @@ export const badgeTintMatrix = (color: number, strength: number): number[] => {
     const offset = 80 * strength;
 
     return [
-        1 - amount + (amount * r), cross * g, cross * b, 0, r * offset,
-        cross * r, 1 - amount + (amount * g), cross * b, 0, g * offset,
-        cross * r, cross * g, 1 - amount + (amount * b), 0, b * offset,
-        0, 0, 0, 1, 0,
+        1 - amount + (amount * r),
+        cross * g,
+        cross * b,
+        0,
+        r * offset,
+        cross * r,
+        1 - amount + (amount * g),
+        cross * b,
+        0,
+        g * offset,
+        cross * r,
+        cross * g,
+        1 - amount + (amount * b),
+        0,
+        b * offset,
+        0,
+        0,
+        0,
+        1,
+        0,
     ];
 };

@@ -16,7 +16,20 @@ import { StateCreator } from 'zustand';
 
 /** `EarningsView._rewardCategories` - a reward's `rewardCategory` is its index here. */
 export const EARNINGS_REWARD_CATEGORIES = [
-    'tutorial', 'dailygift', 'achievements', 'marketplace', 'habboclub', 'levelprogression', 'roombundlesales', 'bonusbag', 'donation', 'surprise', 'snowstorm', 'games', 'wiredchest', 'agency',
+    'tutorial',
+    'dailygift',
+    'achievements',
+    'marketplace',
+    'habboclub',
+    'levelprogression',
+    'roombundlesales',
+    'bonusbag',
+    'donation',
+    'surprise',
+    'snowstorm',
+    'games',
+    'wiredchest',
+    'agency',
 ] as const;
 
 export type EarningsRewardCategoryName = typeof EARNINGS_REWARD_CATEGORIES[number];
@@ -33,7 +46,18 @@ export const EARNINGS_CLAIM_ALL_BUTTON = 'claim_all_btn';
 
 /** The categories `vault_view.xml` has a row for - the ones whose `<name>DucketValue` `findChildByName` finds. */
 const LAYOUT_CATEGORIES: ReadonlySet<EarningsRewardCategoryName> = new Set([
-    'dailygift', 'games', 'wiredchest', 'achievements', 'marketplace', 'habboclub', 'levelprogression', 'donation', 'bonusbag', 'surprise', 'snowstorm', 'agency',
+    'dailygift',
+    'games',
+    'wiredchest',
+    'achievements',
+    'marketplace',
+    'habboclub',
+    'levelprogression',
+    'donation',
+    'bonusbag',
+    'surprise',
+    'snowstorm',
+    'agency',
 ]);
 
 /** A category's claim button: `<name>_claim_button`. */

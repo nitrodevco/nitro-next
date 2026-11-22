@@ -14,8 +14,17 @@
  * server - Turbo does (`RoomWiredChestSystem.CloseOtherChestsAsync`).
  */
 import {
-    ChestPreferencesUpdateSuccessMessage, CoinsChestContentsMessage, ItemsChestContentsChunkMessage, ItemsChestContentsUpdatedMessage, ObjectDataUpdateMessage, ObjectRemoveMessage, ObjectRemoveMultipleMessage,
-    ObjectsDataUpdateMessage, ObjectUpdateMessage, OpenChestMessage, UpgradeChestResultMessage,
+    ChestPreferencesUpdateSuccessMessage,
+    CoinsChestContentsMessage,
+    ItemsChestContentsChunkMessage,
+    ItemsChestContentsUpdatedMessage,
+    ObjectDataUpdateMessage,
+    ObjectRemoveMessage,
+    ObjectRemoveMultipleMessage,
+    ObjectsDataUpdateMessage,
+    ObjectUpdateMessage,
+    OpenChestMessage,
+    UpgradeChestResultMessage,
 } from '@nitrodevco/nitro-packets';
 
 import { checkWiredChestAccess, closeWiredChest, openWiredChest, readWiredChestFurniData, showWiredChest } from '#base/commands';

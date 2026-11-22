@@ -32,7 +32,13 @@ const messenger = () => {
     const sounds = [];
     const sent = [];
     const state = {
-        conversations: [], entries: {}, historyFetches: {}, seenMessageIds: {}, selectedChatId: -1, moderationInfoShown: false, confirmationId: 0,
+        conversations: [],
+        entries: {},
+        historyFetches: {},
+        seenMessageIds: {},
+        selectedChatId: -1,
+        moderationInfoShown: false,
+        confirmationId: 0,
         setConversations: (value) => { state.conversations = value; },
         setEntries: (chatId, list) => { state.entries = { ...state.entries, [chatId]: list }; },
         setHistoryFetch: (chatId, at) => { state.historyFetches = { ...state.historyFetches, [chatId]: at }; },
@@ -55,15 +61,24 @@ const messenger = () => {
     const commands = load('nitro-react/src/commands/user/messengerCommands', {
         '@nitrodevco/nitro-api': { AvatarGenderType: { Male: 0 } },
         '@nitrodevco/nitro-packets': {
-            EventLogComposer: class {}, FollowFriendComposer: class {}, GetExtendedProfileComposer: class {}, GetHabboGroupDetailsComposer: class {},
+            EventLogComposer: class {},
+            FollowFriendComposer: class {},
+            GetExtendedProfileComposer: class {},
+            GetHabboGroupDetailsComposer: class {},
             GetMessengerHistoryComposer: class { constructor(data) { this.data = data; } },
             SendHabbiconComposer: class { constructor(data) { this.data = data; } },
             SendMsgComposer: class { constructor(data) { this.data = data; } },
         },
         '#base/context/communication': {},
         '#base/context/messenger': {
-            MESSENGER_ENTRY_OWN: 1, MESSENGER_ENTRY_OTHER: 2, MESSENGER_ENTRY_NOTIFICATION: 3, MESSENGER_ENTRY_INFO: 4, MESSENGER_ENTRY_INVITATION: 5,
-            MESSENGER_NO_CONVERSATION: -1, MESSENGER_ERROR_MESSAGES: {}, MESSENGER_HISTORY_REFETCH_MS: 60000,
+            MESSENGER_ENTRY_OWN: 1,
+            MESSENGER_ENTRY_OTHER: 2,
+            MESSENGER_ENTRY_NOTIFICATION: 3,
+            MESSENGER_ENTRY_INFO: 4,
+            MESSENGER_ENTRY_INVITATION: 5,
+            MESSENGER_NO_CONVERSATION: -1,
+            MESSENGER_ERROR_MESSAGES: {},
+            MESSENGER_HISTORY_REFETCH_MS: 60000,
             messengerStore: { getState: () => state },
         },
         '#base/context/system': { systemStore: { getState: () => windows } },

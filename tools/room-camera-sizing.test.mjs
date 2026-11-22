@@ -188,7 +188,11 @@ await test('own-avatar camera target is assigned in both login packet orders, ne
     for (const delayedIdentity of [ false, true ]) {
         const callbacks = new Map();
         let identity = delayedIdentity ? -1 : 10;
-        const state = { ownRoomIndex: -1, targetId: -1, targetCategory: -2, users: [],
+        const state = {
+            ownRoomIndex: -1,
+            targetId: -1,
+            targetCategory: -2,
+            users: [],
             setOwnRoomIndex: (id) => { state.ownRoomIndex = id; },
             setTarget: (id, category) => {
                 state.targetId = id;

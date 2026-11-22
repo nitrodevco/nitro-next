@@ -85,15 +85,59 @@ export interface RegionProps extends ThemeProps<RegionVariant> {
  */
 export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, RegionProps>(
     ({
-        variant, defaultVariant, tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, zIndex, visible, dropShadow, dynamicStyle, dynamicRole, backgroundColor, backgroundAlpha, cursor, blendMode, alpha, disabled, interactive = false, pointerTransparent, dragTarget = false, dragTrigger = false, boundToParentRect, dropToLayout, children,
-        onPointerOver, onPointerOut, onPointerDown: onPointerDownProp, onPointerUp, onPointerUpOutside, onPointerTap,
+        variant,
+        defaultVariant,
+        tooltip,
+        tooltipDelay,
+        layout,
+        tintColor,
+        textStyle,
+        textColor,
+        zIndex,
+        visible,
+        dropShadow,
+        dynamicStyle,
+        dynamicRole,
+        backgroundColor,
+        backgroundAlpha,
+        cursor,
+        blendMode,
+        alpha,
+        disabled,
+        interactive = false,
+        pointerTransparent,
+        dragTarget = false,
+        dragTrigger = false,
+        boundToParentRect,
+        dropToLayout,
+        children,
+        onPointerOver,
+        onPointerOut,
+        onPointerDown: onPointerDownProp,
+        onPointerUp,
+        onPointerUpOutside,
+        onPointerTap,
     }, ref) => {
         const drag = useDragTarget(dragTarget, { boundToParentRect, dropToLayout });
         const startDrag = useDragTrigger(dragTrigger, drag.controller);
         const onPointerDown = compose(onPointerDownProp, startDrag);
         const { ownCascade, config, state, handlers, resolvedTextStyle, resolvedTextColor } = useThemeVariant<RegionVariant>({
-            cascadeKey: 'region', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, interactive: interactive || !!dynamicStyle,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'region',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            disabled,
+            interactive: interactive || !!dynamicStyle,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
         const hostEffect = useHostDynamicStyleEffect(dynamicStyle, state);
         const childEffect = useDynamicStyleEffect(dynamicRole);

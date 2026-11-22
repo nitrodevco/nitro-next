@@ -95,7 +95,13 @@ const selectionBindings = (selected: boolean, selectedColor: number): TemplateBi
 const statusWindow = (key: string, template: Template | undefined, bindings?: TemplateBindings): TemplateItem[] => (template ? [ { key, from: template, bindings } ] : []);
 
 export const FurniturePlaylistEditorView = ({
-    inventory, playList, maxLength, nowPlaying, onAdd, onRemove, onClose,
+    inventory,
+    playList,
+    maxLength,
+    nowPlaying,
+    onAdd,
+    onRemove,
+    onClose,
 }: FurniturePlaylistEditorViewProps) => {
     const { showWindow } = useWindowActions();
     const inventoryItemTemplate = useTemplate(INVENTORY_ITEM_TEMPLATE);

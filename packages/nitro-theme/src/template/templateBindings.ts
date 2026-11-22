@@ -430,9 +430,26 @@ interface ExpandedNode {
 const SECTION_BUTTONS = new Set([ 'button', 'button_thick', 'button_group_left', 'button_group_center', 'button_group_right' ]);
 /** The containers `disableSection` enters without fading them; a border and a background fade too. */
 const SECTION_CONTAINERS = new Set([
-    'container', 'region', 'frame', 'header', 'itemlist', 'itemlist_vertical', 'itemlist_horizontal', 'scrollable_itemlist', 'scrollable_itemlist_vertical',
-    'scrollable_itemlist_horizontal', 'itemgrid', 'itemgrid_vertical', 'itemgrid_horizontal', 'scrollable_itemgrid_vertical', 'scrollable_itemgrid_horizontal',
-    'selector', 'selector_list', 'tab_selector', 'tab_context', 'widget',
+    'container',
+    'region',
+    'frame',
+    'header',
+    'itemlist',
+    'itemlist_vertical',
+    'itemlist_horizontal',
+    'scrollable_itemlist',
+    'scrollable_itemlist_vertical',
+    'scrollable_itemlist_horizontal',
+    'itemgrid',
+    'itemgrid_vertical',
+    'itemgrid_horizontal',
+    'scrollable_itemgrid_vertical',
+    'scrollable_itemgrid_horizontal',
+    'selector',
+    'selector_list',
+    'tab_selector',
+    'tab_context',
+    'widget',
 ]);
 
 /**

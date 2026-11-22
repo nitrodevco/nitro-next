@@ -6,8 +6,17 @@
  */
 import { RoomObjectCategoryEnum, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 import {
-    WiredLinkConfigurationInvalidatedMessageType, WiredLinkConfigurationMessageType, WiredLinkConnectionsMessageType, WiredLinkCreateNetworkComposer, WiredLinkDeleteNetworkComposer, WiredLinkGetConfigurationComposer,
-    WiredLinkGetConnectionsComposer, WiredLinkNetworkType, WiredLinkOperationResultMessageType, WiredLinkRenameNetworkComposer, WiredLinkSaveConfigurationComposer,
+    WiredLinkConfigurationInvalidatedMessageType,
+    WiredLinkConfigurationMessageType,
+    WiredLinkConnectionsMessageType,
+    WiredLinkCreateNetworkComposer,
+    WiredLinkDeleteNetworkComposer,
+    WiredLinkGetConfigurationComposer,
+    WiredLinkGetConnectionsComposer,
+    WiredLinkNetworkType,
+    WiredLinkOperationResultMessageType,
+    WiredLinkRenameNetworkComposer,
+    WiredLinkSaveConfigurationComposer,
 } from '@nitrodevco/nitro-packets';
 
 import { Send } from '#base/context/communication';

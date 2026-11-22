@@ -5,8 +5,17 @@ import { FLOOR_PLAN_WALL_HEIGHT_LIMIT } from '#base/context/room';
 import { useRoomFloorPlanDrawing } from '#base/hooks';
 import { Shape, TemplateBindings, TemplateWindow, TemplateWindows, useAvatarImageTexture } from '#base/theme';
 import {
-    buildFloorPlanHeightMap, buildFloorPlanPreview, FLOOR_PLAN_DRAW_MODES, FLOOR_PLAN_LEVELS, FLOOR_PLAN_ZOOM_LARGE,
-    FLOOR_PLAN_ZOOM_NORMAL, FloorPlanDrawMode, floorPlanHeightColors, FloorPlanModel, floorPlanOccupiedHeightColors, FloorPlanTile,
+    buildFloorPlanHeightMap,
+    buildFloorPlanPreview,
+    FLOOR_PLAN_DRAW_MODES,
+    FLOOR_PLAN_LEVELS,
+    FLOOR_PLAN_ZOOM_LARGE,
+    FLOOR_PLAN_ZOOM_NORMAL,
+    FloorPlanDrawMode,
+    floorPlanHeightColors,
+    FloorPlanModel,
+    floorPlanOccupiedHeightColors,
+    FloorPlanTile,
     toCssHexColor,
 } from '#base/utils';
 
@@ -95,9 +104,24 @@ const COLORMAP_BANDS = Array.from({ length: FLOOR_PLAN_LEVELS }, (_, level) => {
 const CENTERED = 0.5;
 
 export const FloorPlanEditorView = ({
-    model, modelData, receivedModel, entryPoint, entryPointDir, wallThickness, floorThickness, fixedWallsHeight, canSave,
-    onCommit, onSizeLimitReached, onEntryPointDirChange, onThicknessChange, onFixedWallsHeightChange,
-    onSave, onReload, onSaveImport, onClose,
+    model,
+    modelData,
+    receivedModel,
+    entryPoint,
+    entryPointDir,
+    wallThickness,
+    floorThickness,
+    fixedWallsHeight,
+    canSave,
+    onCommit,
+    onSizeLimitReached,
+    onEntryPointDirChange,
+    onThicknessChange,
+    onFixedWallsHeightChange,
+    onSave,
+    onReload,
+    onSaveImport,
+    onClose,
 }: FloorPlanEditorViewProps) => {
     const [ drawMode, setDrawMode ] = useState<FloorPlanDrawMode>(FLOOR_PLAN_DRAW_MODES[0]);
     const [ drawingHeight, setDrawingHeight ] = useState(0);

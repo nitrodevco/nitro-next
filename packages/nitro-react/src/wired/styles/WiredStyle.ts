@@ -133,24 +133,31 @@ export interface WiredStyleAssetButtonTemplate {
  * (`PressedButtonMiniAssetIconButtonPreset`); `flat` is the volters' coloured region between
  * two 2px end caps (`VolterMiniAssetIconButtonPreset`).
  */
-export type WiredStyleMiniButtonTemplate
-    = | { kind: 'pressed'; variant: string; size: number; iconX: number; iconY: number; iconWidth: number; iconHeight: number }
-        | { kind: 'flat'; width: number; height: number; borderColor: string; fillColor: string; iconWidth: number; iconHeight: number };
+export type WiredStyleMiniButtonTemplate =
+    | { kind: 'pressed'; variant: string; size: number; iconX: number; iconY: number; iconWidth: number; iconHeight: number }
+    | { kind: 'flat'; width: number; height: number; borderColor: string; fillColor: string; iconWidth: number; iconHeight: number };
 
 /**
  * `sourcetype_selector_view`. `segmented` is the template tagged `NEW` (`NewSourceTypePicker`:
  * left / middle / right container buttons with splitters); `flat` is `SourceTypePicker`'s row of
  * coloured regions between two end caps.
  */
-export type WiredStyleSourceTypeSelectorTemplate
-    = | {
+export type WiredStyleSourceTypeSelectorTemplate =
+    | {
         kind: 'segmented';
         height: number;
-        leftVariant: string; middleVariant: string; rightVariant: string;
-        leftWidth: number; middleWidth: number; rightWidth: number;
+        leftVariant: string;
+        middleVariant: string;
+        rightVariant: string;
+        leftWidth: number;
+        middleWidth: number;
+        rightWidth: number;
         /** The icons' `x` inside the left / middle / right button. */
-        leftIconX: number; middleIconX: number; rightIconX: number;
-        splitterColor: string; splitterShadowColor: string;
+        leftIconX: number;
+        middleIconX: number;
+        rightIconX: number;
+        splitterColor: string;
+        splitterShadowColor: string;
         /** `<library>/<prefix>` of the `<type>` icons, for `LayoutImage`: `habbo-window-manager-com/wired_styles_illumina_icon_source_`. */
         assetPrefix: string;
         /** The three button templates' `dynamic_style` (`button` in illumina's), each around its `#icon` `type_image`. */

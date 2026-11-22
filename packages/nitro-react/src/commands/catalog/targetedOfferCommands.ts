@@ -13,8 +13,18 @@ import { EventLogComposer, PurchaseTargetedOfferComposer, SetTargetedOfferStateC
 import { Send } from '#base/context/communication';
 import { configString } from '#base/context/system';
 import {
-    HabboMallOffer, isTargetedOfferExpired, purchasedTargetedOffer, TARGETED_OFFER_DIALOG_LAYOUT, TARGETED_OFFER_DIALOG_VARIATION_LAYOUT, TARGETED_OFFER_STATE_MAXIMIZED, TARGETED_OFFER_STATE_MINIMIZED,
-    TARGETED_OFFER_STATE_PREVIEWED, TARGETED_OFFER_STATE_REJECTED, TARGETED_OFFER_STATE_SELECTED, TargetedOffer, targetedOfferStore,
+    HabboMallOffer,
+    isTargetedOfferExpired,
+    purchasedTargetedOffer,
+    TARGETED_OFFER_DIALOG_LAYOUT,
+    TARGETED_OFFER_DIALOG_VARIATION_LAYOUT,
+    TARGETED_OFFER_STATE_MAXIMIZED,
+    TARGETED_OFFER_STATE_MINIMIZED,
+    TARGETED_OFFER_STATE_PREVIEWED,
+    TARGETED_OFFER_STATE_REJECTED,
+    TARGETED_OFFER_STATE_SELECTED,
+    TargetedOffer,
+    targetedOfferStore,
 } from '#base/context/targeted-offers';
 
 import { openCreditsHabblet } from './catalogClubCommands';

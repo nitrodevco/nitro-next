@@ -22,8 +22,10 @@ async function preview(scenario) {
         const profile = profileStore.getState();
         if (!profile.profile) throw new Error('Open My Profile first to capture the real response.');
         window[key] = {
-            profile, groups: groupStore.getState().detailsById,
-            badgeUrl: system.config['badge.asset.group.url'], blockedUserIds: userStore.getState().blockedUserIds,
+            profile,
+            groups: groupStore.getState().detailsById,
+            badgeUrl: system.config['badge.asset.group.url'],
+            blockedUserIds: userStore.getState().blockedUserIds,
         };
     }
 
@@ -41,16 +43,30 @@ async function preview(scenario) {
             groupId: -1000 - index,
             groupName: `Layout preview ${index + 1}`,
             badgeCode: badges[index % Math.max(1, badges.length)]?.badgeCode ?? '',
-            primaryColor: 'ffffff', secondaryColor: 'ffffff', favourite: index === 0,
-            ownerId: 0, hasForum: false,
+            primaryColor: 'ffffff',
+            secondaryColor: 'ffffff',
+            favourite: index === 0,
+            ownerId: 0,
+            hasForum: false,
         }));
         for (const guild of guilds) {
             groupStore.getState().setGroupDetails({
-                ...guild, isGuild: true, type: 0, roomId: 0, roomName: 'Preview room',
+                ...guild,
+                isGuild: true,
+                type: 0,
+                roomId: 0,
+                roomName: 'Preview room',
                 description: 'A group description long enough to check wrapping and scrolling. '.repeat(4),
-                status: 1, totalMembers: 16, creationDate: '12-06-2017',
-                isOwner: false, isAdmin: false, ownerName: 'Preview owner', openDetails: false,
-                membersCanDecorate: false, pendingMemberCount: 0, hasBoard: false,
+                status: 1,
+                totalMembers: 16,
+                creationDate: '12-06-2017',
+                isOwner: false,
+                isAdmin: false,
+                ownerName: 'Preview owner',
+                openDetails: false,
+                membersCanDecorate: false,
+                pendingMemberCount: 0,
+                hasBoard: false,
             });
         }
         profile = { ...profile, guilds, totalBadges: 192, totalBadgesRank: 3, accountLevel: 20 };

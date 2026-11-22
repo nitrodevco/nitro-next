@@ -27,7 +27,17 @@ import { hotelViewTemplateId } from './hotelViewTemplate';
 
 /** The texts the layout tags `COLORABLE`. */
 const COLORABLE = [
-    'caption_txt', 'info_txt', 'reward_name_txt', 'reward_info_txt', 'rank_1_txt', 'rank_1_info_txt', 'rank_2_txt', 'rank_2_info_txt', 'rank_3_txt', 'rank_3_info_txt', 'user_rank_txt',
+    'caption_txt',
+    'info_txt',
+    'reward_name_txt',
+    'reward_info_txt',
+    'rank_1_txt',
+    'rank_1_info_txt',
+    'rank_2_txt',
+    'rank_2_info_txt',
+    'rank_3_txt',
+    'rank_3_info_txt',
+    'user_rank_txt',
     'user_rank_info_txt',
 ] as const;
 

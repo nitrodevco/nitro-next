@@ -54,7 +54,15 @@ export interface UseInteractionStateOptions extends PointerHandlerProps {
  * see - a component with no real interactivity stays `passive`, exactly like a plain `<Box>`.
  */
 export const useInteractionState = ({
-    disabled, stopsPropagation = false, interactive = false, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+    disabled,
+    stopsPropagation = false,
+    interactive = false,
+    onPointerOver,
+    onPointerOut,
+    onPointerDown,
+    onPointerUp,
+    onPointerUpOutside,
+    onPointerTap,
 }: UseInteractionStateOptions = {}): { state: InteractionState; handlers: InteractionHandlers } => {
     const [ state, setState ] = useState<InteractionState>('default');
     const isInteractive = interactive || hasAnyPointerHandler({ onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap });

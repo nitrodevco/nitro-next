@@ -4,22 +4,22 @@ import { TemplateBindings, TemplateWindow } from '#base/theme';
 import { useButtonMenu, useMinimizedMenu } from './useButtonMenu';
 
 /** What the pet's menu can be asked to do. */
-export type PetMenuAction
-    = | 'respect'
-        | 'pick_up'
-        | 'mount'
-        | 'dismount'
-        | 'saddle_off'
-        | 'toggle_riding_permission'
-        | 'toggle_breeding_permission'
-        | 'harvest'
-        | 'revive'
-        | 'treat'
-        | 'compost'
-        | 'pass_handitem'
-        | 'train'
-        | 'breed'
-        | 'wired_inspect';
+export type PetMenuAction =
+    | 'respect'
+    | 'pick_up'
+    | 'mount'
+    | 'dismount'
+    | 'saddle_off'
+    | 'toggle_riding_permission'
+    | 'toggle_breeding_permission'
+    | 'harvest'
+    | 'revive'
+    | 'treat'
+    | 'compost'
+    | 'pass_handitem'
+    | 'train'
+    | 'breed'
+    | 'wired_inspect';
 
 export interface InfoBubblePetViewProps {
     name: string;
@@ -71,8 +71,28 @@ export interface InfoBubblePetViewProps {
  * `train` opens the training window (`openTrainingView` -> `PetCommandTool`, `PetTrainingView`).
  */
 export const InfoBubblePetView = ({
-    name, isOwner, canRespect, respectsLeft, isMountable, isRiding, hasSaddle, ridingPermissionOpen, sharedRidingEnabled,
-    canBreed, hasBreedingPermission, canHarvest, canRevive, canTreat, treatEnabled, canCompost, canPassHandItem, canStartBreeding, showWiredInspect, canTrain, onAction, onClose,
+    name,
+    isOwner,
+    canRespect,
+    respectsLeft,
+    isMountable,
+    isRiding,
+    hasSaddle,
+    ridingPermissionOpen,
+    sharedRidingEnabled,
+    canBreed,
+    hasBreedingPermission,
+    canHarvest,
+    canRevive,
+    canTreat,
+    treatEnabled,
+    canCompost,
+    canPassHandItem,
+    canStartBreeding,
+    showWiredInspect,
+    canTrain,
+    onAction,
+    onClose,
 }: InfoBubblePetViewProps) => {
     const t = useTranslation();
     const { showButton } = useButtonMenu();

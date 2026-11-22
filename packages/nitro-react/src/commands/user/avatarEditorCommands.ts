@@ -32,9 +32,18 @@ const HOT_LOOKS_AMOUNT = 20;
 /** The set types of the editor's part categories (`getCategoryValues`). */
 const CATEGORY_SET_TYPES: readonly string[] = [
     AvatarFigurePartType.Head,
-    AvatarFigurePartType.Hair, AvatarFigurePartType.HeadAccessory, AvatarFigurePartType.HeadAccessoryExtra, AvatarFigurePartType.EyeAccessory, AvatarFigurePartType.FaceAccessory,
-    AvatarFigurePartType.Chest, AvatarFigurePartType.ChestPrint, AvatarFigurePartType.CoatChest, AvatarFigurePartType.ChestAccessory,
-    AvatarFigurePartType.Legs, AvatarFigurePartType.Shoes, AvatarFigurePartType.WaistAccessory,
+    AvatarFigurePartType.Hair,
+    AvatarFigurePartType.HeadAccessory,
+    AvatarFigurePartType.HeadAccessoryExtra,
+    AvatarFigurePartType.EyeAccessory,
+    AvatarFigurePartType.FaceAccessory,
+    AvatarFigurePartType.Chest,
+    AvatarFigurePartType.ChestPrint,
+    AvatarFigurePartType.CoatChest,
+    AvatarFigurePartType.ChestAccessory,
+    AvatarFigurePartType.Legs,
+    AvatarFigurePartType.Shoes,
+    AvatarFigurePartType.WaistAccessory,
 ];
 const MISC_SET_TYPES: readonly string[] = [ AvatarFigurePartType.Pet, AvatarFigurePartType.Misc ];
 

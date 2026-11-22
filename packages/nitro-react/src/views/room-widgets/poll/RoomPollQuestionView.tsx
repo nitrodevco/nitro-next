@@ -57,7 +57,16 @@ const arrange = ({ root, find }: TemplateWindows) => {
 };
 
 export const RoomPollQuestionView = ({
-    headline, question, number, count, selected, text, onToggleChoice, onChangeText, onSubmit, onCancel,
+    headline,
+    question,
+    number,
+    count,
+    selected,
+    text,
+    onToggleChoice,
+    onChangeText,
+    onSubmit,
+    onCancel,
 }: RoomPollQuestionViewProps) => {
     const t = useTranslation();
     const radioTemplate = useTemplate(RADIO_TEMPLATE);

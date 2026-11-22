@@ -13,10 +13,25 @@
  * `userStore` holds.
  */
 import {
-    CloseConnectionMessage, FlatCreatedMessage, GetGuestRoomResultMessage, GroupDetailsChangedMessage, GroupMembershipRequestedMessage, GuildCreatedMessage,
-    GuildCreationInfoMessage, GuildEditFailedMessage, GuildEditInfoMessage, GuildEditorDataMessage, GuildMemberFurniCountInHQMessage, GuildMemberMgmtFailedMessage,
-    GuildMembershipRejectedMessage, GuildMembershipUpdatedMessage, GuildMembersMessage, HabboGroupDeactivatedMessage, HabboGroupDetailsMessage,
-    HabboGroupJoinFailedMessage, RoomEntryInfoMessage,
+    CloseConnectionMessage,
+    FlatCreatedMessage,
+    GetGuestRoomResultMessage,
+    GroupDetailsChangedMessage,
+    GroupMembershipRequestedMessage,
+    GuildCreatedMessage,
+    GuildCreationInfoMessage,
+    GuildEditFailedMessage,
+    GuildEditInfoMessage,
+    GuildEditorDataMessage,
+    GuildMemberFurniCountInHQMessage,
+    GuildMemberMgmtFailedMessage,
+    GuildMembershipRejectedMessage,
+    GuildMembershipUpdatedMessage,
+    GuildMembersMessage,
+    HabboGroupDeactivatedMessage,
+    HabboGroupDetailsMessage,
+    HabboGroupJoinFailedMessage,
+    RoomEntryInfoMessage,
 } from '@nitrodevco/nitro-packets';
 
 import { confirmGroupMemberKick, forwardToRoom, reloadGroupMembers, requestGroupDetails, requestGuildEditorData } from '#base/commands';
@@ -35,10 +50,21 @@ const EDIT_FAIL_CLUB_REQUIRED = 2;
 
 export const registerGroupHandlers = ({ send, subscribe }: WebSocketConnection) => {
     const {
-        setGroupDetails, forgetGroup, closeGroupInfo,
-        setGroupMembers, updateGroupMember,
-        openGroupCreation, openGroupEdit, closeGroupManagement, addGroupManagementRoom, setGuildEditorData, setCreatedGroupId, setHcRequiredFor,
-        setGroupRoomExpectation, setGroupRoomInfo, closeGroupRoomInfo,
+        setGroupDetails,
+        forgetGroup,
+        closeGroupInfo,
+        setGroupMembers,
+        updateGroupMember,
+        openGroupCreation,
+        openGroupEdit,
+        closeGroupManagement,
+        addGroupManagementRoom,
+        setGuildEditorData,
+        setCreatedGroupId,
+        setHcRequiredFor,
+        setGroupRoomExpectation,
+        setGroupRoomInfo,
+        closeGroupRoomInfo,
     } = groupStore.getState();
 
     /** `onJoinFailed` / `onGuildEditFailed`: one localized alert per reason, with the key as its own fallback. */

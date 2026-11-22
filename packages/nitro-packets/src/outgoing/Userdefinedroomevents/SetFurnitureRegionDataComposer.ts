@@ -12,7 +12,15 @@ export class SetFurnitureRegionDataComposer implements IOutgoingPacket<Furniture
         const { furnitureId, title, description, xOffset, yOffset, minWidth, minHeight, color, areas } = this.params;
 
         return [
-            furnitureId, title, description, xOffset, yOffset, minWidth, minHeight, color, areas.length,
+            furnitureId,
+            title,
+            description,
+            xOffset,
+            yOffset,
+            minWidth,
+            minHeight,
+            color,
+            areas.length,
             ...areas.flatMap(area => [ Math.trunc(area.x), Math.trunc(area.y), Math.trunc(area.width), Math.trunc(area.height) ]),
         ];
     }

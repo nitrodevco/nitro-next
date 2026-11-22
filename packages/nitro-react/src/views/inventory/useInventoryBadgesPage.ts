@@ -33,8 +33,21 @@ import { useEffect, useState } from 'react';
 import { checkInventoryBadgesInitialization, toggleInventoryBadgeWearing } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import {
-    getInventoryBadgeRarityIds, getInventoryBadges, INVENTORY_BADGE_FILTER_ACHIEVEMENTS, INVENTORY_BADGE_FILTER_ALL, INVENTORY_BADGE_FILTER_NORMAL, INVENTORY_BADGE_RARITY_ALL, INVENTORY_BADGE_RARITY_COMMON, INVENTORY_BADGES_ACTIVE,
-    INVENTORY_BADGES_INACTIVE, INVENTORY_MAX_ACTIVE_BADGES, InventoryBadge, isInventoryBadgeRarityFilterEnabled, passInventoryBadgeFilter, useInventoryBadgesActions, useInventoryStore,
+    getInventoryBadgeRarityIds,
+    getInventoryBadges,
+    INVENTORY_BADGE_FILTER_ACHIEVEMENTS,
+    INVENTORY_BADGE_FILTER_ALL,
+    INVENTORY_BADGE_FILTER_NORMAL,
+    INVENTORY_BADGE_RARITY_ALL,
+    INVENTORY_BADGE_RARITY_COMMON,
+    INVENTORY_BADGES_ACTIVE,
+    INVENTORY_BADGES_INACTIVE,
+    INVENTORY_MAX_ACTIVE_BADGES,
+    InventoryBadge,
+    isInventoryBadgeRarityFilterEnabled,
+    passInventoryBadgeFilter,
+    useInventoryBadgesActions,
+    useInventoryStore,
 } from '#base/context/inventory';
 import { useBadgeImageUrl, useBadgePointLimits, useConfigBoolean, useTranslation } from '#base/context/system';
 import { TemplateItem } from '#base/theme';

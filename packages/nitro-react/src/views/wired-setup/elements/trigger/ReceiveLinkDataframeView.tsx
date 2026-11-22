@@ -6,8 +6,15 @@
  * wide as the widest (`createLabel`).
  */
 import {
-    getWiredRoomVariables, LINK_DATAFRAME_KEY_MAX_LENGTH, LINK_DATAFRAME_MAX_ROWS, LINK_DATAFRAME_PLACEHOLDER_DESTINATION, LINK_DATAFRAME_RECEIVE_KIND_OPTIONS, LinkDataframeReceiveRow,
-    linkDataframeReceiveVariableFilter, ReceiveLinkDataframeForm, WiredElementView,
+    getWiredRoomVariables,
+    LINK_DATAFRAME_KEY_MAX_LENGTH,
+    LINK_DATAFRAME_MAX_ROWS,
+    LINK_DATAFRAME_PLACEHOLDER_DESTINATION,
+    LINK_DATAFRAME_RECEIVE_KIND_OPTIONS,
+    LinkDataframeReceiveRow,
+    linkDataframeReceiveVariableFilter,
+    ReceiveLinkDataframeForm,
+    WiredElementView,
 } from '#base/wired';
 
 import { useWiredCaption } from '../../kit/useWiredCaption';

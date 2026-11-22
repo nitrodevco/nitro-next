@@ -130,7 +130,14 @@ const placeSprites = (visualization: IRoomObjectSpriteVisualization): PlacedSpri
 
 /** What a frame shows, as a string: two frames with the same key draw the same image. */
 const frameKey = (sprites: PlacedSprite[]): string => sprites.map(sprite => [
-    sprite.texture.uid, sprite.x, sprite.y, sprite.flipH, sprite.flipV, sprite.alpha, sprite.tint, sprite.blendMode,
+    sprite.texture.uid,
+    sprite.x,
+    sprite.y,
+    sprite.flipH,
+    sprite.flipV,
+    sprite.alpha,
+    sprite.tint,
+    sprite.blendMode,
 ].join(':')).join('|');
 
 /**

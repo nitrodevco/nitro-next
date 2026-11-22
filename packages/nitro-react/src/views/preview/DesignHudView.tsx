@@ -43,9 +43,32 @@ const ROOM_TAGS = [ 'cafe', 'chill' ];
 const SAMPLE_USER_OBJECT = 1;
 
 const SAMPLE_USER = {
-    id: SAMPLE_USER_OBJECT, objectId: SAMPLE_USER_OBJECT, category: RoomObjectCategoryEnum.Unit, name: 'Bonnie', userType: RoomObjectUserType.User, gender: AvatarGenderType.Female,
-    figure: 'hr-515-33.hd-600-1.ch-635-70.lg-716-66-62.sh-735-68', custom: 'Coffee first', webID: 1, activityPoints: 1250, groupId: 0, groupName: '', groupStatus: 0, ownerId: 0, ownerName: '',
-    rarityLevel: 0, hasSaddle: false, isRiding: false, canBreed: false, canHarvest: false, canRevive: false, hasBreedingPermission: false, petLevel: 0, petPosture: '', botSkills: [], isModerator: false,
+    id: SAMPLE_USER_OBJECT,
+    objectId: SAMPLE_USER_OBJECT,
+    category: RoomObjectCategoryEnum.Unit,
+    name: 'Bonnie',
+    userType: RoomObjectUserType.User,
+    gender: AvatarGenderType.Female,
+    figure: 'hr-515-33.hd-600-1.ch-635-70.lg-716-66-62.sh-735-68',
+    custom: 'Coffee first',
+    webID: 1,
+    activityPoints: 1250,
+    groupId: 0,
+    groupName: '',
+    groupStatus: 0,
+    ownerId: 0,
+    ownerName: '',
+    rarityLevel: 0,
+    hasSaddle: false,
+    isRiding: false,
+    canBreed: false,
+    canHarvest: false,
+    canRevive: false,
+    hasBreedingPermission: false,
+    petLevel: 0,
+    petPosture: '',
+    botSkills: [],
+    isModerator: false,
 } as IRoomUserData;
 
 /**
@@ -66,8 +89,19 @@ const LINES: { name: string; text: string; color: number; x: number; y: number }
 
 /** A sample line as the room's chat gives it a bubble (`RoomChatBubbles`): the default style, a forced speaker. */
 const lineData = (index: number): ChatBubbleData => ({
-    id: -100 - index, roomId: 1, objectId: -1, text: LINES[index].text, chatType: RoomChatTypeEnum.Speak, styleId: 0, links: [], userLocation: undefined,
-    timestamp: 0, extraParam: 0, forcedUserName: LINES[index].name, forcedFigure: FIGURE, forcedColor: LINES[index].color,
+    id: -100 - index,
+    roomId: 1,
+    objectId: -1,
+    text: LINES[index].text,
+    chatType: RoomChatTypeEnum.Speak,
+    styleId: 0,
+    links: [],
+    userLocation: undefined,
+    timestamp: 0,
+    extraParam: 0,
+    forcedUserName: LINES[index].name,
+    forcedFigure: FIGURE,
+    forcedColor: LINES[index].color,
 });
 
 const ChatLine = ({ index }: { index: number }) => {

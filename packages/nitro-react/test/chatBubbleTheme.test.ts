@@ -37,21 +37,51 @@ void test('none, or values of the wrong type, leave Habbo\'s bubbles', () => {
 // Expected values: the original client's tint, each channel `colour - (255 - layer)` clamped at 0, alpha kept.
 void test('the subtracting tint: white takes the colour, greys go darker than a multiply, black and transparent stay', () => {
     const pixels = new Uint8ClampedArray([
-        255, 255, 255, 255,
-        128, 128, 128, 255,
-        200, 220, 240, 128,
-        0, 0, 0, 255,
-        90, 90, 90, 0,
+        255,
+        255,
+        255,
+        255,
+        128,
+        128,
+        128,
+        255,
+        200,
+        220,
+        240,
+        128,
+        0,
+        0,
+        0,
+        255,
+        90,
+        90,
+        90,
+        0,
     ]);
 
     subtractChatBubbleTint(pixels, 0x3366cc);
 
     assert.deepEqual([ ...pixels ], [
-        0x33, 0x66, 0xcc, 255,
-        0, 0, 77, 255,
-        0, 67, 189, 128,
-        0, 0, 0, 255,
-        90, 90, 90, 0,
+        0x33,
+        0x66,
+        0xcc,
+        255,
+        0,
+        0,
+        77,
+        255,
+        0,
+        67,
+        189,
+        128,
+        0,
+        0,
+        0,
+        255,
+        90,
+        90,
+        90,
+        0,
     ]);
 });
 

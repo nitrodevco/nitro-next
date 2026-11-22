@@ -46,10 +46,10 @@ const EXTRA_BUBBLE_TEXTS_HEIGHT = 147;
 const EXTRA_TEXTS_WIDTH = 293;
 
 /** `TransactionItemView`'s three kinds. */
-type TransactionCell
-    = | { kind: 'coins'; count: number }
-        | { kind: 'furni'; count: number; furni: IWiredTransactionFurniAmount }
-        | { kind: 'incomplete'; count: number };
+type TransactionCell =
+    | { kind: 'coins'; count: number }
+    | { kind: 'furni'; count: number; furni: IWiredTransactionFurniAmount }
+    | { kind: 'incomplete'; count: number };
 
 /** `TransactionOverviewView.itemsInitialize`. */
 const cellsOf = (coins: number, furnis: IWiredTransactionFurniAmount[], furniCount: number, isIncompleteData: boolean): TransactionCell[] => {

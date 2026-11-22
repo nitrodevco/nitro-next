@@ -20,8 +20,16 @@ import { saveWiredChestPreferences } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue, useTranslation } from '#base/context/system';
 import {
-    WIRED_CHEST_KEY_DESC, WIRED_CHEST_KEY_EVERYONE_CAN_DONATE, WIRED_CHEST_KEY_EVERYONE_CAN_OPEN, WIRED_CHEST_KEY_IS_WIRED_ENABLED, WIRED_CHEST_KEY_NAME, WIRED_CHEST_KEY_PREVIEW_AMOUNT, WIRED_CHEST_KEY_PREVIEW_MODE,
-    WIRED_CHEST_KEY_STATE_CONTROL_MODE, WIRED_CHEST_TYPE_FURNI, WiredChestSettingsRequest,
+    WIRED_CHEST_KEY_DESC,
+    WIRED_CHEST_KEY_EVERYONE_CAN_DONATE,
+    WIRED_CHEST_KEY_EVERYONE_CAN_OPEN,
+    WIRED_CHEST_KEY_IS_WIRED_ENABLED,
+    WIRED_CHEST_KEY_NAME,
+    WIRED_CHEST_KEY_PREVIEW_AMOUNT,
+    WIRED_CHEST_KEY_PREVIEW_MODE,
+    WIRED_CHEST_KEY_STATE_CONTROL_MODE,
+    WIRED_CHEST_TYPE_FURNI,
+    WiredChestSettingsRequest,
 } from '#base/context/wired-trading';
 import { useViewportSize } from '#base/hooks';
 import { WiredAlignCenter } from '#base/views/wired-setup/kit/WiredAlignCenter';

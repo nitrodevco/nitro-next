@@ -9,7 +9,8 @@ export class RemoveRightsComposer implements IOutgoingPacket<RemoveRightsCompose
 
     public compose(): (number | string | boolean)[] {
         return [
-            this.params.userIds.length, ...this.params.userIds,
+            this.params.userIds.length,
+            ...this.params.userIds,
         ];
     }
 }

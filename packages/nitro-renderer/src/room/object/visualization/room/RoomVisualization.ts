@@ -1,5 +1,6 @@
 import {
-    AlphaTolerance, IObjectVisualizationData,
+    AlphaTolerance,
+    IObjectVisualizationData,
     IPlaneVisualization,
     IRoomGeometry,
     IRoomObjectModel,
@@ -7,7 +8,11 @@ import {
     IRoomPlane,
     IVector3D,
     RoomGeometryScaleType,
-    RoomObjectSpriteTypeEnum, RoomObjectVariableEnum, ToInt32, Vector3d } from '@nitrodevco/nitro-api';
+    RoomObjectSpriteTypeEnum,
+    RoomObjectVariableEnum,
+    ToInt32,
+    Vector3d,
+} from '@nitrodevco/nitro-api';
 import { Filter, Rectangle, Texture } from 'pixi.js';
 
 import { RoomMapData } from '../../RoomMapData';

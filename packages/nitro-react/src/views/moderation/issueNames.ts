@@ -31,10 +31,31 @@ export const issueCategoryName = (topicId: number) => {
     if (text.length) return text;
 
     const names: Record<number, string> = {
-        0: 'Automatic', 101: 'Sex', 102: 'PII', 103: 'Scam', 104: 'Bullying', 105: 'Disruption', 106: 'Other',
-        111: 'Sex', 112: 'Scam', 113: 'Disruption', 114: 'Other', 121: 'Sex', 122: 'PII', 123: 'Bullying', 124: 'Other',
-        130: 'Hate', 131: 'Violence', 132: 'Sex', 133: 'Illegal', 134: 'PII', 135: 'Copyright', 136: 'Spam',
-        1024: 'Guide', 1025: 'Bullying', 1026: 'Severe Alert',
+        0: 'Automatic',
+        101: 'Sex',
+        102: 'PII',
+        103: 'Scam',
+        104: 'Bullying',
+        105: 'Disruption',
+        106: 'Other',
+        111: 'Sex',
+        112: 'Scam',
+        113: 'Disruption',
+        114: 'Other',
+        121: 'Sex',
+        122: 'PII',
+        123: 'Bullying',
+        124: 'Other',
+        130: 'Hate',
+        131: 'Violence',
+        132: 'Sex',
+        133: 'Illegal',
+        134: 'PII',
+        135: 'Copyright',
+        136: 'Spam',
+        1024: 'Guide',
+        1025: 'Bullying',
+        1026: 'Severe Alert',
     };
 
     return names[topicId] ?? 'Unknown';

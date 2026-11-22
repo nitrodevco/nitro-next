@@ -4,7 +4,8 @@ import {
     IVector3D,
     RoomObjectCategoryEnum,
     RoomObjectOperationType,
-    Vector3d } from '@nitrodevco/nitro-api';
+    Vector3d,
+} from '@nitrodevco/nitro-api';
 
 /** Port of Flash `SelectedRoomObjectData`. */
 export class SelectedRoomObjectData implements ISelectedRoomObjectData {

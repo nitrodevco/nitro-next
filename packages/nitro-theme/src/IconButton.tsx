@@ -24,12 +24,41 @@ export interface IconButtonProps extends ThemeProps<IconButtonVariant> {
 export const IconButton: ForwardRefExoticComponent<IconButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, IconButtonProps>(
     ({
         // There is no style 0 to fall back on, so the "+" is the default rather than `useThemeVariant`'s.
-        variant, defaultVariant = '3', tooltip, tooltipDelay, layout, tintColor, textStyle, textColor, visible, disabled, selected,
-        onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+        variant,
+        defaultVariant = '3',
+        tooltip,
+        tooltipDelay,
+        layout,
+        tintColor,
+        textStyle,
+        textColor,
+        visible,
+        disabled,
+        selected,
+        onPointerOver,
+        onPointerOut,
+        onPointerDown,
+        onPointerUp,
+        onPointerUpOutside,
+        onPointerTap,
     }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant<IconButtonVariant>({
-            cascadeKey: 'iconButton', variant, defaultVariant, tooltip, tooltipDelay, tintColor, textStyle, textColor, disabled, selected,
-            onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
+            cascadeKey: 'iconButton',
+            variant,
+            defaultVariant,
+            tooltip,
+            tooltipDelay,
+            tintColor,
+            textStyle,
+            textColor,
+            disabled,
+            selected,
+            onPointerOver,
+            onPointerOut,
+            onPointerDown,
+            onPointerUp,
+            onPointerUpOutside,
+            onPointerTap,
         });
 
         // The skin is a single sprite with nothing layered over it, so the sprite is the button.

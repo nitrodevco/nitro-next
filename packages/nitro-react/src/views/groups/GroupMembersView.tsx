@@ -71,7 +71,19 @@ const crossBindings = (region: string, lit: boolean): TemplateBindings => ({
 });
 
 export const GroupMembersView = ({
-    members, filterText, searching, ownUserId, blockingEnabled, onClose, onFilterTextChange, onSearchType, onPage, onProfile, onAction, onRemove, onBlock,
+    members,
+    filterText,
+    searching,
+    ownUserId,
+    blockingEnabled,
+    onClose,
+    onFilterTextChange,
+    onSearchType,
+    onPage,
+    onProfile,
+    onAction,
+    onRemove,
+    onBlock,
 }: GroupMembersViewProps) => {
     const t = useTranslation();
     const groupBadgeUrl = useGroupBadgeImageUrl();

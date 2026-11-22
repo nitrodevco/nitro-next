@@ -693,10 +693,32 @@ export class LayoutWindow {
 
 /** The window types that have an `iterator` - `ContainerController` and those built on it. */
 const ITERABLE_TAGS = new Set([
-    'background', 'border', 'boxsizer', 'bubble', 'container', 'container_button', 'droplist', 'droplist_item', 'frame', 'header',
-    'itemlist', 'itemlist_horizontal', 'itemlist_vertical', 'itemgrid', 'itemgrid_horizontal', 'itemgrid_vertical', 'region',
-    'scrollable_itemlist_vertical', 'scrollable_itemgrid_vertical', 'selector', 'selector_list', 'tab_container_button', 'tab_content',
-    'tab_context', 'tab_selector', 'widget',
+    'background',
+    'border',
+    'boxsizer',
+    'bubble',
+    'container',
+    'container_button',
+    'droplist',
+    'droplist_item',
+    'frame',
+    'header',
+    'itemlist',
+    'itemlist_horizontal',
+    'itemlist_vertical',
+    'itemgrid',
+    'itemgrid_horizontal',
+    'itemgrid_vertical',
+    'region',
+    'scrollable_itemlist_vertical',
+    'scrollable_itemgrid_vertical',
+    'selector',
+    'selector_list',
+    'tab_container_button',
+    'tab_content',
+    'tab_context',
+    'tab_selector',
+    'widget',
 ]);
 
 const flashBool = (value: TemplateValue | undefined) => value === true || value === 'true';

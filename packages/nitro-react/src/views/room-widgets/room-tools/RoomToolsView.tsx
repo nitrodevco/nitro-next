@@ -75,9 +75,21 @@ const EXPAND_TARGET_X = 1;
 const ANIMATION_DURATION_MS = 140;
 
 export const RoomToolsView = ({
-    buttons, zoomLevel, canZoomIn, canZoomOut, onZoomIn, onZoomOut,
-    canGoBack, canGoForward, canOpenHistory, onGoBack, onGoForward, onToggleHistory,
-    collapsed, onToggleCollapsed, history,
+    buttons,
+    zoomLevel,
+    canZoomIn,
+    canZoomOut,
+    onZoomIn,
+    onZoomOut,
+    canGoBack,
+    canGoForward,
+    canOpenHistory,
+    onGoBack,
+    onGoForward,
+    onToggleHistory,
+    collapsed,
+    onToggleCollapsed,
+    history,
 }: RoomToolsViewProps) => {
     // `applyExpandedBranchOffset`: `window_bg` sits at 1 + the offset, which slides between 0 and the collapsed one.
     const offsetX = useTween(collapsed ? COLLAPSED_OFFSET_X : 0, ANIMATION_DURATION_MS, easeOutCubic);

@@ -31,10 +31,10 @@ export interface GroupForumMessagesList {
  * or a thread's messages (`openMessagesList`) - each with the lists it came through, which its back
  * button returns to.
  */
-export type GroupForumView
-    = | { kind: 'forums'; forums: GroupForumsList }
-        | { kind: 'threads'; forums: GroupForumsList | undefined; forum: IExtendedForumData; threads: GroupForumThreadsList }
-        | { kind: 'messages'; forums: GroupForumsList | undefined; forum: IExtendedForumData; threads: GroupForumThreadsList; messages: GroupForumMessagesList };
+export type GroupForumView =
+    | { kind: 'forums'; forums: GroupForumsList }
+    | { kind: 'threads'; forums: GroupForumsList | undefined; forum: IExtendedForumData; threads: GroupForumThreadsList }
+    | { kind: 'messages'; forums: GroupForumsList | undefined; forum: IExtendedForumData; threads: GroupForumThreadsList; messages: GroupForumMessagesList };
 
 /**
  * `ComposeMessageView`: a new thread (no `thread`) or a reply to one, the message it quotes when it
