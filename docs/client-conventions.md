@@ -54,7 +54,8 @@ there, and never edit one by hand. `theme/index.ts` is curated by hand; `views/`
   reports a module nothing imports, an export nothing else names and a registered window nothing
   opens; CI runs it.
 
-Lint enforces the style: 4-space indent, single quotes, `[ a, b ]` array spacing, trailing commas
+Lint enforces the style: 4-space indent, single quotes, `[ a, b ]` and `{ a, b }` spacing, a list
+that breaks over lines with each item on its own line (`@stylistic/list-style`), trailing commas
 on multiline, `simple-import-sort` with `#base/*` as its own group. Run `eslint --fix` rather
 than hand-formatting.
 

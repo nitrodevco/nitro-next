@@ -112,12 +112,22 @@ const config = [
             '@typescript-eslint/no-unsafe-return': 'off',
 
             // --- Explicit overrides on top of the customize() baseline above ---
-            // Deliberately the opposite of Prettier's own (non-configurable) array formatting.
-            '@stylistic/array-bracket-spacing': ['error', 'always'],
-            '@stylistic/object-curly-spacing': ['error', 'always'],
+            // Every bracketed list - arrays, objects, imports, parameters, arguments, type lists. On one
+            // line: spaces inside [ ] and { } (deliberately the opposite of Prettier's own,
+            // non-configurable, array formatting) and none inside ( ) or < >. Over several lines: each
+            // item on its own line, the brackets on lines of their own; a list may also hug a single
+            // multi-line item, `fn(() => {...})`, or end on one, `useEffect(() => {...}, [])`.
+            '@stylistic/list-style': ['error', {
+                empty: 'ignore',
+                singleLine: { spacing: 'never' },
+                multiLine: { minItems: 0 },
+                overrides: {
+                    '[]': { singleLine: { spacing: 'always' } },
+                    '{}': { singleLine: { spacing: 'always' } },
+                },
+            }],
             '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
             '@stylistic/linebreak-style': ['error', 'unix'],
-            '@stylistic/function-paren-newline': ['error', 'multiline-arguments'],
             // Lets `case x: doThing(); break;` stay on one line - `break;` no longer counts
             // toward the per-line statement limit, so the case body itself still must be a
             // single statement, just followed by its break.
