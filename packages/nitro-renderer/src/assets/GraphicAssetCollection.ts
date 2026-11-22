@@ -17,6 +17,13 @@ import { GraphicAssetPalette } from './GraphicAssetPalette';
 export class GraphicAssetCollection implements IGraphicAssetCollection {
     private static PALETTE_ASSET_DISPOSE_THRESHOLD: number = 10;
 
+    /** Not Flash's: one more whenever any collection's assets change (`AssetManager.getAsset` keeps its answers until then). */
+    private static _assetsVersion: number = 0;
+
+    public static get assetsVersion(): number {
+        return GraphicAssetCollection._assetsVersion;
+    }
+
     private _referenceCount: number = 0;
     /**
      * Flash `GraphicAssetCollection`'s reference timestamp, which `RoomContentLoader.purge` reads
@@ -66,6 +73,8 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
             for (const asset of this._assets.values()) asset.recycle();
 
             this._assets.clear();
+
+            GraphicAssetCollection._assetsVersion++;
         }
     }
 
@@ -151,6 +160,8 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
 
         this._assets.set(name, asset);
 
+        GraphicAssetCollection._assetsVersion++;
+
         return asset;
     }
 
@@ -158,6 +169,8 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
         const asset = this._assets.get(name);
 
         if (!asset || !this._assets.delete(name)) return;
+
+        GraphicAssetCollection._assetsVersion++;
 
         if (asset.texture) {
             const isSubTexture = asset.texture.frame.x !== 0
@@ -255,6 +268,8 @@ export class GraphicAssetCollection implements IGraphicAssetCollection {
             if (existing && (existing.source === undefined || existing.source === existing.name)) continue;
 
             this._assets.set(asset.name, GraphicAsset.createAsset(asset.name, source, texture, x, y, flipH, flipV, usesPalette));
+
+            GraphicAssetCollection._assetsVersion++;
         }
     }
 

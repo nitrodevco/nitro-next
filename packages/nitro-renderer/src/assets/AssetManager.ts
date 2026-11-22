@@ -10,10 +10,23 @@ import { GraphicAssetCollection } from './GraphicAssetCollection';
  * and the UI draw from, by name. Flash keeps an `AssetLibrary` per component; the port has one.
  */
 export class AssetManager implements IAssetManager {
+    /** Past this many names `getAsset`'s answers start over, so a long stretch without changes cannot grow them without end. */
+    private static MAX_ASSET_LOOKUP_SIZE: number = 16384;
+
     private _textures: Map<string, Texture> = new Map();
     private _collections: Map<string, IGraphicAssetCollection> = new Map();
     private _bundles: Map<string, NitroBundle> = new Map();
     private _bundlePromises: Map<string, Promise<IGraphicAssetCollection | undefined>> = new Map();
+    /**
+     * `getAsset`'s answers by name (`null` for none), so a name is looked for through every collection
+     * once rather than on every call - an avatar part tries up to four names, most of them missing.
+     * Kept while no collection is added or removed (`_collectionsVersion`) and no collection's assets
+     * change (`GraphicAssetCollection.assetsVersion`).
+     */
+    private _assetLookup: Map<string, IGraphicAsset | null> = new Map();
+    private _collectionsVersion: number = 0;
+    private _lookupCollectionsVersion: number = -1;
+    private _lookupAssetsVersion: number = -1;
 
     public getTexture(name: string): Texture | undefined {
         return this._textures.get(name);
@@ -34,17 +47,37 @@ export class AssetManager implements IAssetManager {
     public getAsset(name: string): IGraphicAsset | undefined {
         if (!name || !name.length) return undefined;
 
-        for (const collection of this._collections.values()) {
-            if (!collection) continue;
+        const assetsVersion = GraphicAssetCollection.assetsVersion;
 
-            const existing = collection.getAsset(name);
+        if ((this._lookupCollectionsVersion !== this._collectionsVersion) || (this._lookupAssetsVersion !== assetsVersion) || (this._assetLookup.size >= AssetManager.MAX_ASSET_LOOKUP_SIZE)) {
+            this._assetLookup.clear();
 
-            if (!existing) continue;
-
-            return existing;
+            this._lookupCollectionsVersion = this._collectionsVersion;
+            this._lookupAssetsVersion = assetsVersion;
         }
 
-        NitroLogger.warn(`AssetManager: Asset not found: ${name}`);
+        let asset = this._assetLookup.get(name);
+
+        if (asset === undefined) {
+            asset = null;
+
+            // The first collection (in the order they were added) with the name wins.
+            for (const collection of this._collections.values()) {
+                const existing = collection?.getAsset(name);
+
+                if (!existing) continue;
+
+                asset = existing;
+
+                break;
+            }
+
+            this._assetLookup.set(name, asset);
+        }
+
+        if (asset) return asset;
+
+        if (NitroLogger.LOG_WARN) NitroLogger.warn(`AssetManager: Asset not found: ${name}`);
 
         return undefined;
     }
@@ -88,6 +121,7 @@ export class AssetManager implements IAssetManager {
         }
 
         this._collections.delete(name);
+        this._collectionsVersion++;
 
         collection.dispose();
 
@@ -106,6 +140,7 @@ export class AssetManager implements IAssetManager {
         for (const [ name, texture ] of collection.textures.entries()) this.setTexture(name, texture);
 
         this._collections.set(collection.name, collection);
+        this._collectionsVersion++;
 
         return collection;
     }
