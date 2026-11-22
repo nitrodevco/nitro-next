@@ -593,7 +593,12 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
             _local_1 = _local_1 + 1;
         }
 
-        this._planes = this._planes.slice(0, this._planes.length - _local_4);
+        // The highlight planes are the last ones: dropped, their textures go back to the pool.
+        const keptPlanes = this._planes.length - _local_4;
+
+        for (let index = keptPlanes; index < this._planes.length; index++) this._planes[index]?.dispose();
+
+        this._planes = this._planes.slice(0, keptPlanes);
         this._planeParserIndexes = this._planeParserIndexes.slice(0, this._planes.length);
         this._parserPlanesCreated = this._roomPlaneParser.planeCount;
         this.createSprites(this._planes.length);
