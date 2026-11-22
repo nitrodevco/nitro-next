@@ -50,6 +50,13 @@ const config = [
             '**/eslint.config.js',
             '**/postcss.config.js',
             '**/vite.config.*',
+            // Git-ignored and local (docs/development.md): Habbo's reference client - thousands of
+            // generated JavaScript files lint would run out of memory reading - the drift checks,
+            // and generated captures and notes.
+            'scripts/**',
+            'tmp/**',
+            // Claude Code's session worktrees: whole copies of this repository.
+            '.claude/**',
             // Nitro Studio's converter (it began as nitro-tools'): it keeps its own (non-strict)
             // tsconfig and style, which lint's autofix would break.
             'packages/nitro-studio/converter/**',
@@ -57,9 +64,7 @@ const config = [
             // tsconfig (they need `.ts`-extension imports for plain `node` execution,
             // which the app's tsc project disallows) - no tsconfig covers them for
             // typescript-eslint's type-aware rules to run against.
-            '**/scripts/build-asset-bundles.ts',
-            '**/scripts/extract-skin-assets.ts',
-            '**/scripts/sync-generated-packets.ts',
+            'packages/*/scripts/**',
             // Client module examples: plain JavaScript a hotel serves as written, outside every
             // tsconfig, so the type-aware rules cannot run on them.
             'docs/examples/**',

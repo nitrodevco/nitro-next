@@ -3,7 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "test": "tsx --test test/*.test.ts"
+        "test": "tsx --test test/*.test.ts",
+        "typecheck": "tsc -p tsconfig.json --noEmit"
     },
     "exports": {
         ".": "./src/index.ts",
@@ -24,6 +25,7 @@
     },
     "devDependencies": {
         "@types/react": "^19.2.17",
-        "tsx": "^4.23.15"
+        "tsx": "^4.23.15",
+        "typescript": "^5.9.3"
     }
 }

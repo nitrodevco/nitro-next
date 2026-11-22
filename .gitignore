@@ -32,9 +32,9 @@ Thumbs.db
 public/renderer-config*
 public/ui-config*
 public/config/*.json
-**/scripts/binaryData
-**/scripts/images
-**/scripts/**/*
+# Habbo's reference client and the local drift checks (docs/development.md). The packages'
+# own scripts/ folders are shared code and are committed.
+/scripts/
 
 # Nitro Studio is its own git repository, checked out here as a workspace package.
 packages/nitro-studio/

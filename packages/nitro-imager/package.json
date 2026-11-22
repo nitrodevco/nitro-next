@@ -6,7 +6,8 @@
         "build": "node build.ts",
         "start": "node --enable-source-maps dist/main.js",
         "dev": "tsx watch src/main.ts",
-        "test": "tsx --test test/*.test.ts"
+        "test": "tsx --test test/*.test.ts",
+        "typecheck": "tsc -p tsconfig.json --noEmit"
     },
     "dependencies": {
         "@hono/node-server": "^2.1.4",

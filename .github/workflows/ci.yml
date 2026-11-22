@@ -40,10 +40,41 @@ jobs:
         run: yarn install --no-immutable
 
       - name: Typecheck the client
-        run: yarn tsc -p packages/nitro-react/tsconfig.typecheck.json
+        run: yarn workspace @nitrodevco/nitro-react typecheck
+
+      - name: Typecheck the theme
+        run: yarn workspace @nitrodevco/nitro-theme typecheck
+
+      - name: Typecheck the imager
+        run: yarn workspace @nitrodevco/nitro-imager typecheck
 
       - name: Typecheck the client module SDK
         run: yarn workspace @nitrodevco/client-module-sdk typecheck
+
+  # The conventions a reviewer would otherwise check by hand (docs/client-conventions.md). They read
+  # only the source, so nothing is installed.
+  conventions:
+    name: conventions
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      - name: Barrels match the modules on disk
+        working-directory: packages/nitro-react
+        run: node scripts/generate-barrels.ts --check
+
+      - name: Views and components reach stores through hooks
+        run: node tools/store-access.mjs
+
+      - name: No module, export or window nothing reaches
+        run: node tools/dead-code.mjs
 
   lint:
     name: lint

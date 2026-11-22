@@ -50,8 +50,9 @@ there, and never edit one by hand. `theme/index.ts` is curated by hand; `views/`
 - No `eslint-disable` (`nitro-react` has none); restructure instead.
 - No `TODO`. Do the thing, or say in the docblock what is missing and why.
 - No copy-paste stubs and no dead code: a file nothing imports, or a slice that duplicates
-  another under a different name, is deleted, not kept for later. `scripts/drift/dead_code.py`
-  reports a module nothing imports and a registered window nothing opens.
+  another under a different name, is deleted, not kept for later. `node tools/dead-code.mjs`
+  reports a module nothing imports, an export nothing else names and a registered window nothing
+  opens; CI runs it.
 
 Lint enforces the style: 4-space indent, single quotes, `[ a, b ]` array spacing, trailing commas
 on multiline, `simple-import-sort` with `#base/*` as its own group. Run `eslint --fix` rather
@@ -96,8 +97,8 @@ Imports go through the aliases: `#base/context/<feature>` (never `#base/context`
   hook nothing imports is dead code. An action a component needs that the hooks do not offer is
   added to the slice's hook (or a new `useRoom<Slice>Actions.ts`), not reached through
   `xStore.getState()` - that call belongs in handlers and commands only.
-  `scripts/drift/store_access.py` reports an action selected from a store and a `getState()` in a
-  view or component.
+  `node tools/store-access.mjs` reports an action selected from a store and a `getState()` in a
+  view or component; CI runs it.
 
 ### Packet handlers (`handlers/`)
 

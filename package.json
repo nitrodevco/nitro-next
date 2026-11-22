@@ -9,8 +9,8 @@
     "scripts": {
         "build": "npx update-browserslist-db@latest && yarn workspaces foreach --all -pt run build",
         "typecheck": "yarn workspaces foreach --all -pt run typecheck",
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix",
+        "lint": "node --max-old-space-size=8192 node_modules/eslint/bin/eslint.js .",
+        "lint:fix": "node --max-old-space-size=8192 node_modules/eslint/bin/eslint.js . --fix",
         "clean": "yarn workspaces foreach --all -pt run clean",
         "dev": "yarn workspace @nitrodevco/nitro-react dev",
         "build-client": "yarn workspace @nitrodevco/nitro-react build",

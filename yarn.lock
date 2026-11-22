@@ -1781,6 +1781,7 @@ __metadata:
     pixi.js: "npm:^8.18.1"
     react: "npm:^19.2.6"
     tsx: "npm:^4.23.15"
+    typescript: "npm:^5.9.3"
     yoga-layout: "npm:^3.2.1"
   languageName: unknown
   linkType: soft
