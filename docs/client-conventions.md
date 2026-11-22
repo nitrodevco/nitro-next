@@ -29,6 +29,9 @@ src/
   chat/         Chat bubble models.
   wired/        Wired element definitions - see [Wired](wired.md).
   sound/        The sound manager.
+  preview/      The preview host's logic, which `views/preview` draws: the messages an admin
+                panel posts, applying a draft, and the sample content the design window fills
+                the stores with. No barrel: imported by path, `#base/preview/designSamples`.
   utils/        Pure helpers.
 ```
 

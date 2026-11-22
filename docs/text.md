@@ -76,7 +76,7 @@ text naming it passes the face through as `fontFamily` and draws in browser text
   style override's `fontFamily` or a layout's `font_face` can name it. The exact renderer has none
   of its glyphs, so those texts are browser text in the theme's face. A file that fails to load is
   logged to the console with its url. The panel's preview host reloads each draft's `text.fonts`
-  and text overrides, as it does its `asset.overlays` (`views/preview/designOverlays.ts`: each
+  and text overrides, as it does its `asset.overlays` (`preview/designOverlays.ts`: each
   replaced bitmap swapped in the asset manager, the theme's sprites registered again, the library's
   own put back when a draft leaves it).
 - Fonts are captured bundles in `public/assets/fonts/*.air51.json`, shipped in `fonts.nitro` and

@@ -7,9 +7,8 @@
 import { useLayoutEffect, useSyncExternalStore } from 'react';
 
 import { useChatBubbleVisual } from '#base/hooks';
+import { ChatBubbleShown, chatBubbleShown, sayChatBubble, subscribeChatBubble } from '#base/preview/chatBubblePreview';
 import { ChatBubbleBody } from '#base/views/room-widgets/chat/ChatBubbleBody';
-
-import { ChatBubbleShown, chatBubbleShown, sayChatBubble, subscribeChatBubble } from './chatBubblePreview';
 
 /** Where the bubble is drawn on the desktop: the panel crops round it. */
 const AT = { x: 20, y: 20 };

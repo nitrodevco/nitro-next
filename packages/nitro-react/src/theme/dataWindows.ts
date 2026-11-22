@@ -45,13 +45,6 @@ export interface DataWindow {
     entries: readonly DataWindowEntry[];
 }
 
-/** The id the template of the window `<owner>/<name>` is read under. */
-export const dataWindowTemplateId = (id: string) => {
-    const at = id.indexOf('/');
-
-    return `${id.slice(0, at)}/windows/${id.slice(at + 1)}`;
-};
-
 const NAME = /^[a-z0-9][a-z0-9_-]{0,63}$/;
 /** A file of its own: an image beside the window's file, not a bundle's bitmap name. */
 const RELATIVE_IMAGE = /^(?![a-z][a-z\d+.-]*:|\/|\$\{)[^?#]+\.(?:png|gif|jpe?g|webp)(?:[?#].*)?$/i;

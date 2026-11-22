@@ -7,11 +7,12 @@
 import { IRoomInfo, ISearchResultList, ITopLevelContext } from '@nitrodevco/nitro-packets';
 import { useEffect } from 'react';
 
-import { navigatorStore } from '#base/context/navigator';
-import { systemStore } from '#base/context/system';
+import { useNavigatorActions } from '#base/context/navigator';
+import { useWindowActions } from '#base/context/system';
+import { keepNavigator } from '#base/preview/designSamples';
+import { designState, NAVIGATOR_WINDOW } from '#base/preview/designStates';
+import { usePreviewSample } from '#base/preview/usePreviewSample';
 import { NavigatorView } from '#base/views/navigator/NavigatorView';
-
-import { designState, NAVIGATOR_WINDOW } from './designStates';
 
 const CONTEXTS: ITopLevelContext[] = [ 'official_view', 'hotel_view', 'roomads_view', 'myworld_view' ].map(searchCode => ({ searchCode, quickLinks: [] }));
 
@@ -24,18 +25,20 @@ const room = (roomId: number, name: string, ownerName: string, population: numbe
 const block = (searchCode: string, text: string, viewMode: number, rooms: IRoomInfo[]): ISearchResultList => ({ searchCode, text, actionAllowed: 1, forceClosed: false, viewMode, guestRooms: rooms });
 
 export const DesignNavigatorView = ({ state }: { state: string }) => {
-    useEffect(() => {
-        const own = navigatorStore.getState();
+    const { showWindow } = useWindowActions();
+    const { setTopLevelContexts, setTopLevelContext, setSearchResult, setIsSearching } = useNavigatorActions();
 
-        systemStore.getState().showWindow('navigator');
+    usePreviewSample(() => {
+        const putBack = keepNavigator();
 
-        return () => navigatorStore.setState(own, true);
-    }, []);
+        showWindow('navigator');
+
+        return putBack;
+    });
 
     // After the view's own opening search: the sample result in its place.
     useEffect(() => {
         const viewMode = designState(NAVIGATOR_WINDOW, state)?.viewMode ?? 0;
-        const { setTopLevelContexts, setTopLevelContext, setSearchResult, setIsSearching } = navigatorStore.getState();
 
         setTopLevelContexts(CONTEXTS);
         // Tiles are the public tab's (`official_view` keeps each block's view mode); elsewhere only a perk may toggle them.

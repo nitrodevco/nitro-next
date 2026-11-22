@@ -10,10 +10,11 @@ import { AvatarGenderType, IRoom, IRoomUserData, RoomChatTypeEnum, RoomObjectCat
 import { useEffect, useLayoutEffect } from 'react';
 
 import { ChatBubbleData } from '#base/chat';
-import { roomStore } from '#base/context/room';
-import { systemStore, useTranslation } from '#base/context/system';
-import { UiFlagEnum, userStore } from '#base/context/user';
+import { useSystemActions, useTranslation } from '#base/context/system';
+import { UiFlagEnum } from '#base/context/user';
 import { useChatBubbleVisual } from '#base/hooks';
+import { fillSampleRoom } from '#base/preview/designSamples';
+import { designState, HUD_WINDOW } from '#base/preview/designStates';
 import { Box } from '#base/theme';
 import { NotificationsBubble } from '#base/views/notifications/NotificationsBubble';
 import { PurseTemplateView } from '#base/views/purse/PurseTemplateView';
@@ -26,9 +27,7 @@ import { RoomToolsInfoView } from '#base/views/room-widgets/room-tools/RoomTools
 import { RoomToolsView } from '#base/views/room-widgets/room-tools/RoomToolsView';
 import { ToolbarView } from '#base/views/toolbar/ToolbarView';
 
-import { SAMPLE_FRIENDS } from './DesignFriendListView';
 import { DesignInfostandView } from './DesignInfostandView';
-import { designState, HUD_WINDOW } from './designStates';
 
 const none = () => undefined;
 
@@ -95,41 +94,30 @@ const ChatLine = ({ index }: { index: number }) => {
 
 /** The stores as the packets would fill them in a room, put back as they were when the view goes. */
 const useRoomSample = () => {
-    useLayoutEffect(() => {
-        const ownUser = userStore.getState();
-        const ownSystem = systemStore.getState();
-        const ownRoom = roomStore.getState();
-
-        ownUser.processFriends(SAMPLE_FRIENDS);
-        userStore.setState({
+    useLayoutEffect(() => fillSampleRoom({
+        user: {
             name: 'Me',
             figure: FIGURE,
-            // The friend bar open, its friends' tabs shown (`setFriendBarState`).
-            uiFlags: ownUser.uiFlags | UiFlagEnum.FriendBarExpanded,
             credits: 3820,
             activityPoints: ACTIVITY_POINTS,
             clubSubscription: { clubDays: 23, clubPeriods: 2, isVip: true, pastClubDays: 400, pastVipDays: 400, isExpiring: false, minutesUntilExpiration: 33120, minutesSinceLastModified: 0 },
-        });
-        systemStore.setState({ landingViewVisible: false });
-        roomStore.setState({ room: SAMPLE_ROOM, usersByRoomObjectId: { [SAMPLE_USER_OBJECT]: SAMPLE_USER } });
-
-        return () => {
-            roomStore.setState(ownRoom, true);
-            systemStore.setState({ landingViewVisible: ownSystem.landingViewVisible, toolbarMenu: undefined });
-            userStore.setState(ownUser, true);
-        };
-    }, []);
+        },
+        // The friend bar open, its friends' tabs shown (`setFriendBarState`).
+        uiFlags: UiFlagEnum.FriendBarExpanded,
+        room: { room: SAMPLE_ROOM, usersByRoomObjectId: { [SAMPLE_USER_OBJECT]: SAMPLE_USER } },
+    }), []);
 };
 
 export const DesignHudView = ({ state }: { state: string }) => {
     const shown = designState(HUD_WINDOW, state)?.tab ?? 'room';
     const t = useTranslation();
+    const { setToolbarMenu } = useSystemActions();
 
     useRoomSample();
 
     // The Me menu opens as its icon opens it.
     useEffect(() => {
-        systemStore.getState().setToolbarMenu((shown === 'memenu') ? 'me' : undefined);
+        setToolbarMenu((shown === 'memenu') ? 'me' : undefined);
     }, [ shown ]);
 
     return (

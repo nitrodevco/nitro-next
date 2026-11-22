@@ -42,6 +42,10 @@ import { useEffect } from 'react';
 import { loadHabbiconAssets, onRewardTracks, openRewardTrack } from '#base/commands';
 import { useConfigValue } from '#base/context/system';
 import { useUserInfoActions } from '#base/context/user';
+import { ChatBubbleReport, showChatBubble } from '#base/preview/chatBubblePreview';
+import { boxDesign, DesignReply, highlightDesign, pickDesign, showDesign } from '#base/preview/designPreview';
+import { designStateList } from '#base/preview/designStates';
+import { toChatBubbleMessage, toDesignMessage, toRewardTracksMessage } from '#base/preview/previewMessages';
 import { ModalLayer, readTemplateSource, Template, TooltipLayer, WindowLayer } from '#base/theme';
 import { parsePreviewAllowedOrigins, PREVIEW_ALLOWED_ORIGINS_KEY, PREVIEW_MESSAGE_TYPE } from '#base/utils';
 import { RewardTrackPremiumConfirmationView } from '#base/views/reward-track/RewardTrackPremiumConfirmationView';
@@ -49,12 +53,8 @@ import { RewardTrackView } from '#base/views/reward-track/RewardTrackView';
 import { SystemDialogsView } from '#base/views/system/SystemDialogsView';
 import { ViewErrorBoundaries } from '#base/views/system/ViewErrorBoundary';
 
-import { ChatBubbleReport, showChatBubble } from './chatBubblePreview';
 import { ChatBubblePreviewView } from './ChatBubblePreviewView';
-import { boxDesign, DesignReply, highlightDesign, pickDesign, showDesign } from './designPreview';
 import { DesignPreviewView } from './DesignPreviewView';
-import { designStateList } from './designStates';
-import { toChatBubbleMessage, toDesignMessage, toRewardTracksMessage } from './previewMessages';
 
 /** The windows the host can show. */
 const PREVIEW_WINDOWS = [ 'rewardtrack', 'design', 'chatbubble' ];

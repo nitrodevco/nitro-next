@@ -10,10 +10,10 @@ import { useEffect } from 'react';
 
 import { showCatalogPage } from '#base/commands';
 import { CatalogContextProvider, getCatalogStore } from '#base/context/catalog';
+import { fillSampleBadges } from '#base/preview/designSamples';
+import { CATALOG_WINDOW, DESIGN_STATES } from '#base/preview/designStates';
+import { usePreviewSample } from '#base/preview/usePreviewSample';
 import { CatalogView } from '#base/views/catalog/CatalogView';
-
-import { useSampleBadges } from './designSamples';
-import { CATALOG_WINDOW, DESIGN_STATES } from './designStates';
 
 /** A catalogue node as the index packet brings one. */
 const node = (pageId: number, localization: string, depth: number, children: ICatalogNode[] = []): ICatalogNode => ({ depth, parent: undefined, visible: true, icon: 1, pageId, pageName: localization.toLowerCase().replace(/\s+/g, '_'), localization, offerIds: [], children });
@@ -53,7 +53,7 @@ const showSamplePage = (state: string) => {
 
 export const DesignCatalogView = ({ state }: { state: string }) => {
     // The badge display page lists the user's badges.
-    useSampleBadges();
+    usePreviewSample(fillSampleBadges);
 
     useEffect(() => {
         showSamplePage(state);

@@ -6,26 +6,22 @@
  */
 import { useEffect } from 'react';
 
-import { userStore } from '#base/context/user';
+import { keepUser, setSampleUser } from '#base/preview/designSamples';
+import { designState, PURSE_WINDOW } from '#base/preview/designStates';
+import { usePreviewSample } from '#base/preview/usePreviewSample';
 import { Box } from '#base/theme';
 import { PurseTemplateView } from '#base/views/purse/PurseTemplateView';
-
-import { designState, PURSE_WINDOW } from './designStates';
 
 /** Activity point types: duckets (0) and diamonds (5). */
 const ACTIVITY_POINTS = { 0: 1250, 5: 75 };
 
 export const DesignPurseView = ({ state }: { state: string }) => {
-    useEffect(() => {
-        const own = userStore.getState();
-
-        return () => userStore.setState(own, true);
-    }, []);
+    usePreviewSample(keepUser);
 
     useEffect(() => {
         const club = designState(PURSE_WINDOW, state)?.tab === 'club';
 
-        userStore.setState({
+        setSampleUser({
             credits: 3820,
             activityPoints: ACTIVITY_POINTS,
             clubSubscription: { clubDays: club ? 23 : 0, clubPeriods: club ? 2 : 0, isVip: club, pastClubDays: club ? 400 : 0, pastVipDays: club ? 400 : 0, isExpiring: false, minutesUntilExpiration: club ? 33120 : 0, minutesSinceLastModified: 0 },

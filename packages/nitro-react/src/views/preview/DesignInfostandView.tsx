@@ -5,10 +5,9 @@
  * button sends nothing. Not a Flash feature.
  */
 import { useSystemStore } from '#base/context/system';
+import { designState, INFOSTAND_FURNI_WINDOW } from '#base/preview/designStates';
 import { Box } from '#base/theme';
 import { InfostandFurniDetails, InfostandFurniView } from '#base/views/room-widgets/object-infostand/InfostandFurniView';
-
-import { designState, INFOSTAND_FURNI_WINDOW } from './designStates';
 
 const none = () => undefined;
 

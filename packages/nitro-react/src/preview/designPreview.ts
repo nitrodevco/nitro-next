@@ -316,6 +316,20 @@ export const designHighlightIn = () => highlightIn;
 /** Says a press's pick to the panel that drew the window. */
 export const sayDesign = (reply: DesignReply) => say?.(reply);
 
+/** Each `${key}` a caption or a variable shows, with the text the client shows for it now (the key itself when it has none): a pick's `texts`. */
+export const designShownTexts = (values: readonly unknown[]): Record<string, string> => {
+    const { localizations } = systemStore.getState();
+    const texts: Record<string, string> = {};
+
+    for (const value of values) {
+        if (typeof value !== 'string') continue;
+
+        for (const match of value.matchAll(/\$\{([^${}]+)\}/g)) texts[match[1]] = localizations[match[1]] ?? match[1];
+    }
+
+    return texts;
+};
+
 let drawnTemplates: (() => string[]) | undefined;
 
 /** What lists the templates drawn on the page (`DesignPreviewView` while it draws): the report's `parts`. */

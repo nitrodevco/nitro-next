@@ -3,8 +3,9 @@ import { useApplication } from '@pixi/react';
 import { useEffect, useState } from 'react';
 
 import { clientModuleLinkConflicts } from '#base/commands';
-import { clientModulesStore } from '#base/context/client-modules';
-import { ClientGates, passesClientGate, useClientGate, userStore } from '#base/context/user';
+import { useClientModulesStore } from '#base/context/client-modules';
+import { ClientGates, useClientGate } from '#base/context/user';
+import { useLatest } from '#base/theme';
 import { templatePatchList } from '#base/theme/templatePatches';
 import { loadSkinMap, skinWindowsLine } from '#base/utils';
 
@@ -21,8 +22,10 @@ import { MotdNotificationView } from '../notifications/MotdNotificationView';
  * or a bundle. Drawn in the message-of-the-day window.
  */
 export const ExtensionInspectorView = () => {
-    const devInspector = useDevInspector();
-    const allowed = useClientGate(ClientGates.ExtensionInspector) || devInspector;
+    const held = useClientGate(ClientGates.ExtensionInspector);
+    const devInspector = useDevInspector(held);
+    const allowed = held || devInspector;
+    const linkHandlers = useLatest(useClientModulesStore(state => state.linkHandlers));
     const { app } = useApplication();
     const [ lines, setLines ] = useState<string[] | null>(null);
 
@@ -56,7 +59,7 @@ export const ExtensionInspectorView = () => {
 
             // The windows drawing a skin are the skin map's, fetched the first time.
             void loadSkinMap().then((map) => {
-                const report = describe(hit, map, overlay);
+                const report = describe(hit, map, overlay, linkConflictLines(linkHandlers.current));
 
                 console.info('[Inspector]', report.summary);
                 void navigator.clipboard?.writeText(report.copied).catch(() => undefined);
@@ -94,8 +97,9 @@ const DEV_INSPECTOR_KEY = 'nitro.inspector';
  * open windows drawn again to follow (`setTemplateInspecting`), and says so; staff holding
  * `client.inspector` have it on whatever this says.
  */
-const useDevInspector = () => {
+const useDevInspector = (held: boolean) => {
     const [ on, setOn ] = useState(() => import.meta.env.DEV && (window.localStorage.getItem(DEV_INSPECTOR_KEY) === '1'));
+    const heldNow = useLatest(held);
 
     useEffect(() => {
         if (!import.meta.env.DEV) return;
@@ -106,7 +110,7 @@ const useDevInspector = () => {
 
             setOn(value);
 
-            const held = passesClientGate(userStore.getState(), ClientGates.ExtensionInspector);
+            const held = heldNow.current;
 
             // Not `[Inspector]`, which starts each element report.
             console.info('[NitroInspector]', value
@@ -148,7 +152,7 @@ const opsShown = (patch: TemplatePatch, hit: TemplateInspectHit): readonly Templ
 const describeOp = (op: TemplatePatchOp) => ('set' in op ? `set ${JSON.stringify(op.set)}` : 'bind' in op ? `bind ${JSON.stringify(op.bind)}${op.items ? ' in each row' : ''}${op.override ? ' over the window' : ''}` : 'arrange' in op ? `arrange ${JSON.stringify(op.arrange)}` : 'remove' in op ? 'remove' : 'move' in op ? `move ${op.move} '${op.to}'` : 'wrap' in op ? `wrap in ${op.wrap.tag ?? op.wrap.like ?? ''} ${op.wrap.name}` : `insert ${op.insert} ${op.add.name}`);
 
 /** Link prefixes and paths more than one module handles: each of them gets all their links. */
-const linkConflictLines = () => clientModuleLinkConflicts(clientModulesStore.getState().linkHandlers)
+const linkConflictLines = (linkHandlers: Parameters<typeof clientModuleLinkConflicts>[0]) => clientModuleLinkConflicts(linkHandlers)
     .map(conflict => `Link ${conflict.prefix}/${conflict.path || '...'} is handled by ${conflict.modules.join(', ')}: each gets its links.`);
 
 /** A skin as a line names it: `frame 3`. */
@@ -189,7 +193,7 @@ const describeSkins = (chain: TemplateElement[], map: SkinMap | undefined) => {
 };
 
 /** The template id the patches name: one window of a template drawn alone is still that template's. */
-const describe = (hit: TemplateInspectHit, map: SkinMap | undefined, overlayWanted: boolean) => {
+const describe = (hit: TemplateInspectHit, map: SkinMap | undefined, overlayWanted: boolean, linkConflicts: string[]) => {
     const { id, part } = hit.window;
     const chain = inspectChain(hit.node);
     const element = hit.node.element;
@@ -221,7 +225,7 @@ const describe = (hit: TemplateInspectHit, map: SkinMap | undefined, overlayWant
         ...(patches.length ? patches.map(line => `Patched by ${line}`) : [ 'No plugin patches it or what it is in.' ]),
         ...skins.lines,
         ...(skins.overlay ? [ `An overlay keeps its sprite's size and re-skins every window drawing ${skins.skins.join(', ')}.${(copied === patch) ? ' Alt+Shift-click copies the overlay entry.' : ''}` ] : []),
-        ...linkConflictLines(),
+        ...linkConflicts,
         `Copied to the clipboard:\n${copied}`,
     ];
 

@@ -68,7 +68,7 @@ export class ChatStyleLibrary {
 
     /**
      * Not Flash's: a style drawn from a draft, not the bundle - the preview host's chat bubble
-     * (`views/preview/chatBubblePreview.ts`) - under `definition.id`, which no bundle style has;
+     * (`preview/chatBubblePreview.ts`) - under `definition.id`, which no bundle style has;
      * `removeStyle` takes it out again.
      */
     public addDraftStyle(definition: ChatStyleDefinition, textures: ChatStyleTextures): ChatStyle {

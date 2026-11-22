@@ -15,7 +15,9 @@ import { useApplication } from '@pixi/react';
 import { Container, Graphics } from 'pixi.js';
 import { ComponentType, useEffect, useMemo, useSyncExternalStore } from 'react';
 
-import { systemStore } from '#base/context/system';
+import { DesignBox, designBoxesOn, designHighlight, designHighlightIn, designShown, designShownTexts, sayDesign, setDesignPicker, setDesignTemplatesReader, subscribeDesign } from '#base/preview/designPreview';
+import { CATALOG_WINDOW, FRIENDS_WINDOW, HUD_WINDOW, INFOSTAND_FURNI_WINDOW, INVENTORY_WINDOW, MESSENGER_WINDOW, NAVIGATOR_WINDOW, PURSE_WINDOW } from '#base/preview/designStates';
+import type { DesignMessage } from '#base/preview/previewMessages';
 import { Frame, TemplateWindow } from '#base/theme';
 
 import { DesignCatalogView } from './DesignCatalogView';
@@ -25,10 +27,7 @@ import { DesignInfostandView } from './DesignInfostandView';
 import { DesignInventoryView } from './DesignInventoryView';
 import { DesignMessengerView } from './DesignMessengerView';
 import { DesignNavigatorView } from './DesignNavigatorView';
-import { DesignBox, designBoxesOn, designHighlight, designHighlightIn, designShown, sayDesign, setDesignPicker, setDesignTemplatesReader, subscribeDesign } from './designPreview';
 import { DesignPurseView } from './DesignPurseView';
-import { CATALOG_WINDOW, FRIENDS_WINDOW, HUD_WINDOW, INFOSTAND_FURNI_WINDOW, INVENTORY_WINDOW, MESSENGER_WINDOW, NAVIGATOR_WINDOW, PURSE_WINDOW } from './designStates';
-import type { DesignMessage } from './previewMessages';
 
 /** The game's own view each window with states (`DESIGN_STATES`) is drawn by, with sample content. */
 const DESIGN_VIEWS: Readonly<Record<string, ComponentType<{ state: string }>>> = {
@@ -66,20 +65,6 @@ const boxesOf = (stage: Container, canvas: HTMLCanvasElement, containers: readon
 
 /** Where the containers drawing the element `key` names are, in the page's CSS pixels. */
 const drawnBoxes = (stage: Container, canvas: HTMLCanvasElement, template: string, key: string): DesignBox[] => boxesOf(stage, canvas, inspectFind(stage, template, key));
-
-/** Each `${key}` a caption or a variable shows, with the text the client shows for it now (the key itself when it has none). */
-const shownTexts = (values: readonly unknown[]): Record<string, string> => {
-    const { localizations } = systemStore.getState();
-    const texts: Record<string, string> = {};
-
-    for (const value of values) {
-        if (typeof value !== 'string') continue;
-
-        for (const match of value.matchAll(/\$\{([^${}]+)\}/g)) texts[match[1]] = localizations[match[1]] ?? match[1];
-    }
-
-    return texts;
-};
 
 /** A list's sample rows as the bindings its code would give it. */
 const sampleBindings = (items: DesignMessage['items']): TemplateBindings => Object.fromEntries(Object.entries(items).map(([ name, rows ]) => [ name, {
@@ -156,7 +141,7 @@ export const DesignPreviewView = () => {
                 name: element.name ?? null,
                 style: (element.style !== undefined) ? String(element.style) : null,
                 caption: element.caption ?? null,
-                texts: shownTexts([ element.caption, ...Object.values(element.vars ?? {}) ]),
+                texts: designShownTexts([ element.caption, ...Object.values(element.vars ?? {}) ]),
                 element: { x: element.x, y: element.y, width: element.width, height: element.height, color: element.color ?? null, hidden: !!element.hidden, vars: { ...element.vars }, params: { ...element.params } },
                 rects: (key === undefined) ? [] : drawnBoxes(app.stage, canvas, named.template, key),
             });
