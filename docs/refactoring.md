@@ -9,9 +9,30 @@ it set none; git history keeps the details.
 
 ## Open
 
-- **Packet callbacks in commands** (a decision). 30 command files export `on*` callbacks that
-  handlers call; other features keep that logic in the handler. Document the pattern or apply one
-  placement.
+- **Packet callbacks in commands** (a decision, then M). 44 command files export 122 `on*`
+  functions (30 files in October); 107 are called from handlers, and other features keep that
+  logic in the handler. The same prefix also names UI entry points a view calls
+  (`onTradingAcceptPressed`, `onGamesToolbarClick`, `onCatalogPageLink`). Suggested: move the
+  packet callbacks to the handler side and keep `commands/` for what the UI calls, renamed off
+  `on*`; or document the pattern. Count again before starting:
+  `grep -rlE '^export const on[A-Z]' commands`.
+- **The client module runtime** (M). `commands/client-modules` holds 18 modules, most of them a
+  runtime rather than commands: the loader (`clientModuleLoader`), the API object
+  (`createClientModuleApi`, `ClientModuleApi`), the plugin message codec, HTTP, libraries, the
+  event bus. `theme/` carries the extension side of templates (`templatePatches.ts`, 820 lines,
+  `themeLive`, `themeSession`, `dataWindows`), against "no feature code in `theme/`". Move the
+  runtime to its own `src/client-modules/` as `chat/`, `sound/` and `preview/` are, and leave in
+  `commands/` only functions that send packets and write stores.
+- **nitro-theme's template monoliths** (M, `packages/nitro-theme/src/template`).
+  `TemplateView.tsx` is 2,261 lines, of which `ElementContent` is 452 and `ownFaceOf` 404: split
+  the faces by element type. `templateLayout.ts` is 1,995 lines holding about ten Flash window
+  classes (`LayoutWindow` 531, `ListWindow`, `GridWindow`, `ScrollableWindow`, `BoxSizerWindow`,
+  ...): one file per class, as nitro-renderer keeps its ports.
+- **Two kinds of test** (M, `tools/`). 67 `tools/*.test.mjs` sit beside 35 package
+  `test/*.test.ts`. 51 of the tools tests each carry their own `ts.transpileModule` plus
+  `runInNewContext` loader with hand-written stubs, and none is typechecked (`checkJs: false`).
+  Give them one shared loader (a source path and a stub map), put tests of modules that import
+  cleanly in Node in their package's `test/`, and add a root `yarn test` that runs both, as CI does.
 - **Nitro Studio's copies** (the Studio repository's change). Its pet figure builder
   (`preview/engine/chat.ts`) can use nitro-renderer's `petImageValue`, and its chat copies
   (`src/lib/chatBubble.ts`, `src/lib/flashText.ts`, `src/preview/engine/chat.ts`) can import
@@ -64,6 +85,11 @@ Rules finished refactors set that [Client code conventions](client-conventions.m
 - The chat definitions (`ChatStyleDefinitions`, `ChatConstants`, `ChatMarkup`, `ChatTabLayout`,
   `ChatBubbleText`) are nitro-theme's `src/chat`.
 - `Send` is exported once, from `context/communication/WebSocketContext.ts`.
+- The checks that read only the source - `tools/store-access.mjs`, `tools/dead-code.mjs` and
+  `generate-barrels.ts --check` - are committed and run in CI's `conventions` job, so a merged
+  branch cannot bring back what they report; the drift checks that need Habbo's client stay local.
+- The preview host's logic is `src/preview/` and its views `views/preview`: a view fills the
+  stores with samples through `preview/designSamples.ts` and takes actions from the action hooks.
 
 Left as they are, on purpose:
 
