@@ -1704,7 +1704,7 @@ __metadata:
     "@simplewebauthn/server": "npm:^14.1.0"
     "@tailwindcss/vite": "npm:^4.3.5"
     "@tanstack/react-query": "npm:^5.108.2"
-    "@tanstack/react-virtual": "npm:^3.14.27"
+    "@tanstack/react-virtual": "npm:^3.14.28"
     "@types/bytebuffer": "npm:^5.0.49"
     "@types/lzma-native": "npm:^4.0.4"
     "@types/nodemailer": "npm:^8.0.2"
@@ -2685,22 +2685,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-virtual@npm:^3.14.27":
-  version: 3.14.27
-  resolution: "@tanstack/react-virtual@npm:3.14.27"
+"@tanstack/react-virtual@npm:^3.14.28":
+  version: 3.14.28
+  resolution: "@tanstack/react-virtual@npm:3.14.28"
   dependencies:
-    "@tanstack/virtual-core": "npm:3.19.12"
+    "@tanstack/virtual-core": "npm:3.19.13"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/afe21594db12089edba5969d581718afdcf9714195157f5f0faf6151ec460bf47f556cdb5c1aa0efc18c8300547546acda6e742061384a4aad6c2e008cf1e85d
+  checksum: 10c0/82c4667e17476769ac87f0e5c6deb6180dbbd364cf4a8dce3c1a58ec9699bbb40ef51cf18232d322c53dd001e4bff090ba1b7981c7723e49aa8e3bc6a27562b7
   languageName: node
   linkType: hard
 
-"@tanstack/virtual-core@npm:3.19.12":
-  version: 3.19.12
-  resolution: "@tanstack/virtual-core@npm:3.19.12"
-  checksum: 10c0/889763e6950cce4a428ddf3bec3c79cdad90409353867e2994c17e2b3326ea07334e8fb4e87e1b798589f1a29830ef8d4cb99e674352850219e1309a1c3cc0f8
+"@tanstack/virtual-core@npm:3.19.13":
+  version: 3.19.13
+  resolution: "@tanstack/virtual-core@npm:3.19.13"
+  checksum: 10c0/c28d58fa76035e9fe78f8c1b69e859d37baca86a111775c9f2e041d703950f67e5bde05c67dcf5664e4d5ba7a550623020a80005cb7d96193f3566af49bc1f3f
   languageName: node
   linkType: hard
 
