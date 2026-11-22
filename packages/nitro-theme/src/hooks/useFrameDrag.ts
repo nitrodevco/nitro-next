@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { themeHost, useThemeWindowZIndex } from '../host';
 import { clamp, ClientToStage, GetDesktopSize, getGlobalRect } from '../utils';
 import { getStoredFramePosition, setStoredFramePosition } from '../utils/frameStorage';
+import { useLatest } from './useLatest';
 import { useLayoutEvent } from './useLayoutEvent';
 import { useRevealWhenSettled } from './useRevealWhenSettled';
 import { useWindowPointerDrag } from './useWindowPointerDrag';
@@ -53,7 +54,8 @@ export interface FrameDragOptions {
  * A frame's place on the desktop: its drag by the header (Flash's `WindowMouseDragger`), its stack
  * order (raised on mount and on a press), `window.center()`, and the position it reopens at, kept
  * per frame `id` (`frameStorage`). The offset is applied as the container's own `x`/`y`,
- * which @pixi/layout adds on top of the position Yoga computes. The drag runs on window-level
+ * which @pixi/layout adds on top of the position Yoga computes; a drag writes them on the container
+ * as it goes and puts the offset in state at the release (see `startDrag`). The drag runs on window-level
  * `pointermove` / `pointerup` listeners: Pixi's `FederatedPointerEvent` has no pointer capture.
  */
 export const useFrameDrag = (id: string | undefined, { defaultPosition, remember = true, centered = false, onPositionChange }: FrameDragOptions = {}) => {
@@ -135,8 +137,20 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
         onPositionChange?.({ x: next.dx, y: next.dy });
     });
 
-    // `WindowMouseDragger.begin` for this frame: the press that grabs it, wherever it landed.
-    const startDrag = (event: FederatedPointerEvent | PointerEvent) => {
+    // What the release reads, so `startDrag` itself never changes.
+    const dropOptionsRef = useLatest({ id, remember, onPositionChange });
+
+    /*
+     * `WindowMouseDragger.begin` for this frame: the press that grabs it, wherever it landed.
+     *
+     * The moves go straight onto the container, and the offset is committed once, at the release.
+     * As state on every move, each one re-rendered the frame - its header, layers and scaler, the
+     * mask its content area redraws (which makes Pixi rebuild the stage's whole instruction set) -
+     * and nothing on screen needed any of it. It is a stable callback for the same reason: it is
+     * the `DragTargetContext` value the frame hands its content, so a new one on each render
+     * re-rendered every drag trigger in the window as well.
+     */
+    const startDrag = useCallback((event: FederatedPointerEvent | PointerEvent) => {
         if (event.button !== 0) return;
 
         const node = frameRef.current;
@@ -152,14 +166,15 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
             startGlobalX: rect.x,
             startGlobalY: rect.y,
             width: rect.width,
-            origDx: offset.dx,
-            origDy: offset.dy,
+            // The container's own position is the offset - and, while a drag is under way, ahead of the state.
+            origDx: node.x,
+            origDy: node.y,
         };
 
         const handleMove = (moveEvent: PointerEvent) => {
             const dragState = dragStateRef.current;
 
-            if (!dragState || moveEvent.pointerId !== dragState.pointerId) return;
+            if (!dragState || moveEvent.pointerId !== dragState.pointerId || node.destroyed) return;
 
             const dx = Math.floor(ClientToStage(moveEvent.clientX) - dragState.startX);
             const dy = Math.floor(ClientToStage(moveEvent.clientY) - dragState.startY);
@@ -175,7 +190,9 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
 
             latestOffsetRef.current = next;
 
-            setOffset(next);
+            // What the frame's `x`/`y` props set; they only write again once the state changes.
+            node.x = next.dx;
+            node.y = next.dy;
         };
 
         const handleUp = (upEvent: PointerEvent) => {
@@ -187,21 +204,25 @@ export const useFrameDrag = (id: string | undefined, { defaultPosition, remember
 
             if (!dropped) return;
 
-            if (id && remember) setStoredFramePosition(id, dropped);
+            setOffset(dropped);
 
-            onPositionChange?.({ x: dropped.dx, y: dropped.dy });
+            const { id: dropId, remember: dropRemember, onPositionChange: dropPositionChange } = dropOptionsRef.current;
+
+            if (dropId && dropRemember) setStoredFramePosition(dropId, dropped);
+
+            dropPositionChange?.({ x: dropped.dx, y: dropped.dy });
         };
 
         startPointerDrag(event.pointerId, { onMove: handleMove, onEnd: handleUp });
-    };
+    }, [ dropOptionsRef, startPointerDrag, stopDragging ]);
 
-    const handleHeaderPointerDown = (event: FederatedPointerEvent | PointerEvent) => {
+    const handleHeaderPointerDown = useCallback((event: FederatedPointerEvent | PointerEvent) => {
         // Only a press on the header itself drags: one on a button in it (help, menu) is that
         // button's, as `MouseEventProcessor` gives a press to the window under the pointer.
         if (event instanceof FederatedPointerEvent && event.target !== event.currentTarget) return;
 
         startDrag(event);
-    };
+    }, [ startDrag ]);
 
     // A press anywhere in the window raises it, before whatever it lands on handles it - in the
     // capture phase, so a child that stops the press (a close button, a scrollbar) still raises it.
