@@ -534,17 +534,20 @@ export const AvatarEditor = () => {
     const hasParts = thumbs.length > 0;
     // `showPalettes(colorLayerCount)`: none without parts.
     const layers = parts.length ? palettes.length : 0;
+    // `initFromList` empties the grids (`removeGridItems`) and refills them each time a category, sub tab or
+    // gender is shown (`CategoryBaseView.updateGridView`, `HabboAvatarEditor.gender`), so they start at the top.
+    const gridScrollKey = `${shownCategory}/${activeSetType}/${gender}`;
 
     const bindings: TemplateBindings = {
         ...viewBindings,
-        thumbs: { visible: hasParts, items: thumbs },
-        palette0: { visible: layers > 0, items: paletteItems(0) },
-        palette1: { visible: layers > 1, items: paletteItems(1) },
+        thumbs: { visible: hasParts, items: thumbs, scrollResetKey: gridScrollKey },
+        palette0: { visible: layers > 0, items: paletteItems(0), scrollResetKey: gridScrollKey },
+        palette1: { visible: layers > 1, items: paletteItems(1), scrollResetKey: gridScrollKey },
         content_title: { visible: !hasParts },
         content_notification: { visible: !hasParts },
         // `AvatarEditorGridViewEffects.initFromList` / `showPalettes(0)`.
         ...(effectsShown && {
-            thumbs: { visible: effectsTab.hasEffects, items: effectsTab.thumbs },
+            thumbs: { visible: effectsTab.hasEffects, items: effectsTab.thumbs, scrollResetKey: gridScrollKey },
             palette0: { visible: false },
             palette1: { visible: false },
             content_title: { visible: !effectsTab.hasEffects },
