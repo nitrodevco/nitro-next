@@ -67,6 +67,10 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
     private _landscapeType: string | undefined = undefined;
     private _typeVisibility: boolean[] = [];
     private _assetUpdateCounter: number = 0;
+    /** When `update` last brought the planes up to date (Flash `_lastUpdateTime`). */
+    private _lastUpdateTime: number = -1000;
+    /** Whether a plane was left undrawn by the last pass's raster budget (`RoomPlane.rasterPending`). */
+    private _rasterPending: boolean = false;
     private _maskData: RoomMapMaskData | undefined = undefined;
     private _isPlaneSet: boolean = false;
 
@@ -148,6 +152,12 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
 
         if (this.updateMasksAndColors(objectModel)) needsUpdate = true;
 
+        // Flash: with the geometry, masks and colours as they were, the planes are brought up to date
+        // at most every 250 ms. Not Flash's: a changed model (a new floor or wall type, a hidden wall)
+        // is taken at once, as are planes the last pass left undrawn - the raster budget spreads a
+        // room's drawing over frames, which waiting 250 ms between them would stretch out.
+        if (!needsUpdate && !this._rasterPending && (objectModel.updateCounter === this.updateModelCounter) && (time < (this._lastUpdateTime + 250))) return;
+
         if (this.updatePlaneTexturesAndVisibilities(objectModel)) needsUpdate = true;
 
         if (this.updatePlanes(geometry, geometryUpdate, time)) needsUpdate = true;
@@ -176,11 +186,13 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
 
                 index++;
             }
+
+            // Flash `increaseUpdateId` only here: unchanged planes leave the canvas their sprites as placed.
+            this.updateSpriteCounter++;
         }
 
-        this.updateSpriteCounter++;
-
         this.updateModelCounter = objectModel.updateCounter;
+        this._lastUpdateTime = time;
     }
 
     private updateGeometry(geometry: IRoomGeometry): boolean {
@@ -782,6 +794,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
         let updated = false;
         let index = 0;
 
+        this._rasterPending = false;
+
         while (index < visiblePlanes.length) {
             let id = index;
 
@@ -815,6 +829,8 @@ export class RoomVisualization extends RoomObjectSpriteVisualization implements 
 
                         updated = true;
                     }
+
+                    if (plane.rasterPending) this._rasterPending = true;
 
                     // A plane whose texture was drawn for another geometry stays hidden until its own is drawn.
                     if (sprite.visible != (plane.visible && this._typeVisibility[plane.type] && !plane.textureOutOfPlace)) {
