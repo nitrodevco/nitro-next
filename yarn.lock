@@ -1647,7 +1647,7 @@ __metadata:
     eslint-plugin-import-x: "npm:^4.18.1"
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-refresh: "npm:^0.5.8"
-    eslint-plugin-simple-import-sort: "npm:^13.0.0"
+    eslint-plugin-simple-import-sort: "npm:^14.0.0"
     eslint-plugin-unused-imports: "npm:^4.4.1"
     jszip: "npm:^3.10.2"
     pixi-filters: "npm:^6.1.5"
@@ -1676,7 +1676,7 @@ __metadata:
     eslint-plugin-import-x: "npm:^4.18.1"
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-refresh: "npm:^0.5.8"
-    eslint-plugin-simple-import-sort: "npm:^13.0.0"
+    eslint-plugin-simple-import-sort: "npm:^14.0.0"
     eslint-plugin-unused-imports: "npm:^4.4.1"
     pixi-filters: "npm:^6.1.5"
     pixi.js: "npm:^8.18.1"
@@ -3989,12 +3989,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-simple-import-sort@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "eslint-plugin-simple-import-sort@npm:13.0.0"
+"eslint-plugin-simple-import-sort@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "eslint-plugin-simple-import-sort@npm:14.0.0"
   peerDependencies:
     eslint: ">=5.0.0"
-  checksum: 10c0/f561f3483c1c18dfa2705326d38d62c62d4aeb5947ed6d1f028299c5dc668586b5ef144926e68fe187b3a937ee0159738dcbca8c286fe56f489de52fd8f9e678
+  checksum: 10c0/eee9d53a071ff59f3b3612b189af906859e841cab64296241999042d2a28d1b133cd21cbd9ffd79fe73e4cbe3b8eed3910f7fe484e1c4619bd9836f4edb77ca4
   languageName: node
   linkType: hard
 
@@ -5059,7 +5059,7 @@ __metadata:
     eslint-plugin-import-x: "npm:^4.18.1"
     eslint-plugin-react-hooks: "npm:^7.1.1"
     eslint-plugin-react-refresh: "npm:^0.5.8"
-    eslint-plugin-simple-import-sort: "npm:^13.0.0"
+    eslint-plugin-simple-import-sort: "npm:^14.0.0"
     eslint-plugin-unused-imports: "npm:^4.4.1"
     globals: "npm:^17.14.0"
     pixi.js: "npm:^8.18.1"
