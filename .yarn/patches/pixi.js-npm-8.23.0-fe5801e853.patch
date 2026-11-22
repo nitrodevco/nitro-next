@@ -1,38 +1,38 @@
 diff --git a/lib/events/EventBoundary.js b/lib/events/EventBoundary.js
-index 79c512c8d572ca9f5e495b562bc87f011715d734..53356604facfc4295da624d215e1e588f679a62f 100644
+index 403a1f23a1b4b5882c79b66af7e76a1b3e4b0fce..bcaaf59b7c4a30d2c5b99b393ac96ff9785ca2ca 100644
 --- a/lib/events/EventBoundary.js
 +++ b/lib/events/EventBoundary.js
-@@ -374,7 +374,9 @@ class EventBoundary {
+@@ -377,7 +377,9 @@ class EventBoundary {
      }
      type ?? (type = e.type);
-     const handlerKey = `on${type}`;
+     const handlerKey = handlerKeys[type] ?? (handlerKeys[type] = `on${type}`);
 -    e.currentTarget[handlerKey]?.(e);
 +    if (e.eventPhase !== e.CAPTURING_PHASE) {
 +      e.currentTarget[handlerKey]?.(e);
 +    }
-     const key = e.eventPhase === e.CAPTURING_PHASE || e.eventPhase === e.AT_TARGET ? `${type}capture` : type;
+     const key = e.eventPhase === e.CAPTURING_PHASE || e.eventPhase === e.AT_TARGET ? captureKeys[type] ?? (captureKeys[type] = `${type}capture`) : type;
      this._notifyListeners(e, key);
      if (e.eventPhase === e.AT_TARGET) {
 diff --git a/lib/events/EventBoundary.mjs b/lib/events/EventBoundary.mjs
-index 7630d15d9493e2fdc04d5753bacba00bbe248080..5b389d2ec4f448edd76b3d6a0ae8a1c990ae9d6b 100644
+index 4f2fcb6367b0b1f3fa3d5758adc395bdf40331ec..735a9924ed2281f88e507fc998f686bc801bbc1b 100644
 --- a/lib/events/EventBoundary.mjs
 +++ b/lib/events/EventBoundary.mjs
-@@ -372,7 +372,9 @@ class EventBoundary {
+@@ -375,7 +375,9 @@ class EventBoundary {
      }
      type ?? (type = e.type);
-     const handlerKey = `on${type}`;
+     const handlerKey = handlerKeys[type] ?? (handlerKeys[type] = `on${type}`);
 -    e.currentTarget[handlerKey]?.(e);
 +    if (e.eventPhase !== e.CAPTURING_PHASE) {
 +      e.currentTarget[handlerKey]?.(e);
 +    }
-     const key = e.eventPhase === e.CAPTURING_PHASE || e.eventPhase === e.AT_TARGET ? `${type}capture` : type;
+     const key = e.eventPhase === e.CAPTURING_PHASE || e.eventPhase === e.AT_TARGET ? captureKeys[type] ?? (captureKeys[type] = `${type}capture`) : type;
      this._notifyListeners(e, key);
      if (e.eventPhase === e.AT_TARGET) {
 diff --git a/lib/index.js b/lib/index.js
-index d05452eef05d5dd4fb6b0fabea40165e2270d3b7..49f95e837cc0619013769632da64c7d168980df1 100644
+index 62b71ea2fedf5fcc7fe924f5ecf474165be9ee3e..dffd6f011e0589d7cfdc2030027612e4513585ce 100644
 --- a/lib/index.js
 +++ b/lib/index.js
-@@ -829,6 +829,7 @@ exports.getMaxTexturesPerBatch = maxRecommendedTextures.getMaxTexturesPerBatch;
+@@ -863,6 +863,7 @@ exports.getMaxTexturesPerBatch = maxRecommendedTextures.getMaxTexturesPerBatch;
  exports.generateGPULayout = generateGPULayout.generateGPULayout;
  exports.generateLayout = generateLayout.generateLayout;
  exports.getTextureBatchBindGroup = getTextureBatchBindGroup.getTextureBatchBindGroup;
@@ -41,7 +41,7 @@ index d05452eef05d5dd4fb6b0fabea40165e2270d3b7..49f95e837cc0619013769632da64c7d1
  exports.Batch = Batcher.Batch;
  exports.Batcher = Batcher.Batcher;
 diff --git a/lib/index.mjs b/lib/index.mjs
-index 19eddc0fa2d0b4d2745bc00a0851b8185181d1a8..7c3d3e414b64aba439de59a95366a35ec732b641 100644
+index d7a63ab2aff58b5eda35c5e1371cc3a525a60dab..0d925522813310723c030e1f6400951d4bb8e13b 100644
 --- a/lib/index.mjs
 +++ b/lib/index.mjs
 @@ -190,7 +190,7 @@ export { checkMaxIfStatementsInShader } from './rendering/batcher/gl/utils/check
@@ -368,10 +368,10 @@ index 433fedc5a99dea5dd01d0f55f0aba7dffdb6c795..cf598cc9f69d2c6ef2a493aaf13f640a
 +export { getTextureBatchBindGroup, isTextureBatchBindGroupAlive, pruneTextureBatchBindGroups };
  //# sourceMappingURL=getTextureBatchBindGroup.mjs.map
 diff --git a/lib/rendering/index.js b/lib/rendering/index.js
-index e078f85c4a469e7e5b8195db6df86a407bd7ee3f..85df4be4d95ac20e0a9a90d0d074be5c67bbb357 100644
+index d0108757b521c14f0300540c10fb93d3a1b5b55f..fc86afaf3770de36df1dc0f764bada223273ab4b 100644
 --- a/lib/rendering/index.js
 +++ b/lib/rendering/index.js
-@@ -250,6 +250,7 @@ exports.getMaxTexturesPerBatch = maxRecommendedTextures.getMaxTexturesPerBatch;
+@@ -259,6 +259,7 @@ exports.getMaxTexturesPerBatch = maxRecommendedTextures.getMaxTexturesPerBatch;
  exports.generateGPULayout = generateGPULayout.generateGPULayout;
  exports.generateLayout = generateLayout.generateLayout;
  exports.getTextureBatchBindGroup = getTextureBatchBindGroup.getTextureBatchBindGroup;
@@ -380,7 +380,7 @@ index e078f85c4a469e7e5b8195db6df86a407bd7ee3f..85df4be4d95ac20e0a9a90d0d074be5c
  exports.Batch = Batcher.Batch;
  exports.Batcher = Batcher.Batcher;
 diff --git a/lib/rendering/index.mjs b/lib/rendering/index.mjs
-index 75de38551df6130b63ee6495562813c42ef9a24c..6d254712f8a6c9a0653ad7b7b42d10fbc4cf92d8 100644
+index e827e35bc89a4b643fe61db8321d4ebf4dd9557d..68874be7dde96cf1a64509d9331eb91707069993 100644
 --- a/lib/rendering/index.mjs
 +++ b/lib/rendering/index.mjs
 @@ -4,7 +4,7 @@ export { checkMaxIfStatementsInShader } from './batcher/gl/utils/checkMaxIfState
@@ -393,10 +393,10 @@ index 75de38551df6130b63ee6495562813c42ef9a24c..6d254712f8a6c9a0653ad7b7b42d10fb
  export { Batch, Batcher } from './batcher/shared/Batcher.mjs';
  export { BatcherPipe } from './batcher/shared/BatcherPipe.mjs';
 diff --git a/lib/rendering/renderers/gpu/BindGroupSystem.js b/lib/rendering/renderers/gpu/BindGroupSystem.js
-index efc1c53ae3aabf7c0b382096d9ae6322b03967d1..e29947ac9512d7988ec00d22c32d68fc5e3d5288 100644
+index 5035c274d69b7f4af22774db6d8e3fd7c7e4fcd1..a76f7a7fdcef713b4f6409f723c3e61dd26e9ed7 100644
 --- a/lib/rendering/renderers/gpu/BindGroupSystem.js
 +++ b/lib/rendering/renderers/gpu/BindGroupSystem.js
-@@ -1,8 +1,36 @@
+@@ -1,9 +1,37 @@
  'use strict';
  
  var Extensions = require('../../../extensions/Extensions.js');
@@ -404,12 +404,13 @@ index efc1c53ae3aabf7c0b382096d9ae6322b03967d1..e29947ac9512d7988ec00d22c32d68fc
 +var Texture = require('../shared/texture/Texture.js');
  
  "use strict";
+ let nextCacheId = 0;
 +/**
-+ * What a slot of a bind group binds when its resource was destroyed while a shader still uses it:
-+ * the empty texture for a 2d float texture slot, its sampler for a filtering sampler slot, nothing
-+ * (so the bind group still throws) for anything else. Every path that drew a destroyed texture -
-+ * and `BindGroup.onResourceChange` nulls the slot of each group that held it - otherwise threw here
-+ * and stopped the ticker: one early `destroy` blacked out the whole client.
++ * What a slot of a bind group binds when it has no usable resource - most often one destroyed while a
++ * shader still uses it: the empty texture for a 2d float texture slot, its sampler for a filtering
++ * sampler slot, nothing (so the bind group still throws) for anything else. Every path that drew a
++ * destroyed texture - and `BindGroup.onResourceChange` nulls the slot of each group that held it -
++ * otherwise threw here and stopped the ticker: one early `destroy` blacked out the whole client.
 + * @param program - The program the group is bound for.
 + * @param groupIndex - The group's index in the program.
 + * @param binding - The slot's binding in the group.
@@ -431,12 +432,12 @@ index efc1c53ae3aabf7c0b382096d9ae6322b03967d1..e29947ac9512d7988ec00d22c32d68fc
 +  return void 0;
 +}
  class GpuBindGroupEntry {
-   constructor(gpuBindGroup, now) {
+   constructor(gpuBindGroup, now, keyLow, keyHigh, layoutKey, cacheId) {
      this.autoGarbageCollect = true;
-@@ -23,6 +51,17 @@ class GpuBindGroupEntry {
- class BindGroupSystem {
-   constructor(renderer) {
+@@ -34,6 +62,17 @@ class BindGroupSystem {
+      */
      this._hash = /* @__PURE__ */ Object.create(null);
+     this._cacheId = 0;
 +    /**
 +     * How long, in ms, a cached bind group may go unbound before it is dropped. A key holds the ids of
 +     * the resources bound, so every texture combination a batch, avatar frame or window ever drew made
@@ -451,8 +452,8 @@ index efc1c53ae3aabf7c0b382096d9ae6322b03967d1..e29947ac9512d7988ec00d22c32d68fc
      this._renderer = renderer;
      renderer.gc.addResourceHash(this, "_hash", "resource");
      renderer.gc.addCollection(this, "_hash", "hash");
-@@ -31,6 +70,18 @@ class BindGroupSystem {
-     this._gpu = gpu;
+@@ -43,6 +82,18 @@ class BindGroupSystem {
+     this._cacheId = ++nextCacheId;
      this._hash = /* @__PURE__ */ Object.create(null);
    }
 +  postrender() {
@@ -468,41 +469,42 @@ index efc1c53ae3aabf7c0b382096d9ae6322b03967d1..e29947ac9512d7988ec00d22c32d68fc
 +    }
 +  }
    getBindGroup(bindGroup, program, groupIndex) {
-     const key = `${bindGroup._key}:${program._layoutKey << 4 | groupIndex}`;
-     const entry = this._hash[key];
-@@ -46,9 +97,14 @@ class BindGroupSystem {
+     const layoutKey = program._layoutKey << 4 | groupIndex;
+     let entry = bindGroup._gpuEntry;
+@@ -79,9 +130,14 @@ class BindGroupSystem {
      const entries = [];
      const renderer = this._renderer;
-     for (const j in groupLayout) {
--      const resource = group.resources[j] ?? group.resources[groupLayout[j]];
-+      let resource = group.resources?.[j] ?? group.resources?.[groupLayout[j]];
+     for (const j in programLayout) {
+-      const resource = group.resources[groupLayout ? groupLayout[j] : programLayout[j]];
++      let resource = group.resources?.[groupLayout ? groupLayout[j] : programLayout[j]];
        if (!resource || resource.destroyed) {
--        throw new Error(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it. Remove it from the shader before destroying it.`);
-+        const standIn = getEmptyStandIn(program, groupIndex, groupLayout[j]);
+-        throw new Error(`[BindGroup] no usable resource for the shader's '${j}' binding: it was never set, was destroyed while a shader still uses it, or is missing from the bind group's layout.`);
++        const standIn = getEmptyStandIn(program, groupIndex, programLayout[j]);
 +        if (!standIn) {
-+          throw new Error(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it. Remove it from the shader before destroying it.`);
++          throw new Error(`[BindGroup] no usable resource for the shader's '${j}' binding: it was never set, was destroyed while a shader still uses it, or is missing from the bind group's layout.`);
 +        }
-+        warn.warn(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it; it is drawn empty. Whatever draws it destroyed it too early.`);
++        warn.warn(`[BindGroup] no usable resource for the shader's '${j}' binding - most likely destroyed while a shader still uses it; it is drawn empty. Whatever draws it destroyed it too early.`);
 +        resource = standIn;
        }
        let gpuResource;
        if (resource._resourceType === "uniformGroup") {
 diff --git a/lib/rendering/renderers/gpu/BindGroupSystem.mjs b/lib/rendering/renderers/gpu/BindGroupSystem.mjs
-index 3f7c953cc7ff84ce42e3fa671b8f213e6e17d810..67342c4ac31c0baf57b5ef9f1b197fdfd2490720 100644
+index e3ddba5c5e3416dd5ccfa46995b037158e21e59d..9849318914c012fab824bf0f58ea9179e2b7343d 100644
 --- a/lib/rendering/renderers/gpu/BindGroupSystem.mjs
 +++ b/lib/rendering/renderers/gpu/BindGroupSystem.mjs
-@@ -1,6 +1,34 @@
+@@ -1,7 +1,35 @@
  import { ExtensionType } from '../../../extensions/Extensions.mjs';
 +import { warn } from '../../../utils/logging/warn.mjs';
 +import { Texture } from '../shared/texture/Texture.mjs';
  
  "use strict";
+ let nextCacheId = 0;
 +/**
-+ * What a slot of a bind group binds when its resource was destroyed while a shader still uses it:
-+ * the empty texture for a 2d float texture slot, its sampler for a filtering sampler slot, nothing
-+ * (so the bind group still throws) for anything else. Every path that drew a destroyed texture -
-+ * and `BindGroup.onResourceChange` nulls the slot of each group that held it - otherwise threw here
-+ * and stopped the ticker: one early `destroy` blacked out the whole client.
++ * What a slot of a bind group binds when it has no usable resource - most often one destroyed while a
++ * shader still uses it: the empty texture for a 2d float texture slot, its sampler for a filtering
++ * sampler slot, nothing (so the bind group still throws) for anything else. Every path that drew a
++ * destroyed texture - and `BindGroup.onResourceChange` nulls the slot of each group that held it -
++ * otherwise threw here and stopped the ticker: one early `destroy` blacked out the whole client.
 + * @param program - The program the group is bound for.
 + * @param groupIndex - The group's index in the program.
 + * @param binding - The slot's binding in the group.
@@ -524,12 +526,12 @@ index 3f7c953cc7ff84ce42e3fa671b8f213e6e17d810..67342c4ac31c0baf57b5ef9f1b197fdf
 +  return void 0;
 +}
  class GpuBindGroupEntry {
-   constructor(gpuBindGroup, now) {
+   constructor(gpuBindGroup, now, keyLow, keyHigh, layoutKey, cacheId) {
      this.autoGarbageCollect = true;
-@@ -21,6 +49,17 @@ class GpuBindGroupEntry {
- class BindGroupSystem {
-   constructor(renderer) {
+@@ -32,6 +60,17 @@ class BindGroupSystem {
+      */
      this._hash = /* @__PURE__ */ Object.create(null);
+     this._cacheId = 0;
 +    /**
 +     * How long, in ms, a cached bind group may go unbound before it is dropped. A key holds the ids of
 +     * the resources bound, so every texture combination a batch, avatar frame or window ever drew made
@@ -544,8 +546,8 @@ index 3f7c953cc7ff84ce42e3fa671b8f213e6e17d810..67342c4ac31c0baf57b5ef9f1b197fdf
      this._renderer = renderer;
      renderer.gc.addResourceHash(this, "_hash", "resource");
      renderer.gc.addCollection(this, "_hash", "hash");
-@@ -29,6 +68,18 @@ class BindGroupSystem {
-     this._gpu = gpu;
+@@ -41,6 +80,18 @@ class BindGroupSystem {
+     this._cacheId = ++nextCacheId;
      this._hash = /* @__PURE__ */ Object.create(null);
    }
 +  postrender() {
@@ -561,30 +563,30 @@ index 3f7c953cc7ff84ce42e3fa671b8f213e6e17d810..67342c4ac31c0baf57b5ef9f1b197fdf
 +    }
 +  }
    getBindGroup(bindGroup, program, groupIndex) {
-     const key = `${bindGroup._key}:${program._layoutKey << 4 | groupIndex}`;
-     const entry = this._hash[key];
-@@ -44,9 +95,14 @@ class BindGroupSystem {
+     const layoutKey = program._layoutKey << 4 | groupIndex;
+     let entry = bindGroup._gpuEntry;
+@@ -77,9 +128,14 @@ class BindGroupSystem {
      const entries = [];
      const renderer = this._renderer;
-     for (const j in groupLayout) {
--      const resource = group.resources[j] ?? group.resources[groupLayout[j]];
-+      let resource = group.resources?.[j] ?? group.resources?.[groupLayout[j]];
+     for (const j in programLayout) {
+-      const resource = group.resources[groupLayout ? groupLayout[j] : programLayout[j]];
++      let resource = group.resources?.[groupLayout ? groupLayout[j] : programLayout[j]];
        if (!resource || resource.destroyed) {
--        throw new Error(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it. Remove it from the shader before destroying it.`);
-+        const standIn = getEmptyStandIn(program, groupIndex, groupLayout[j]);
+-        throw new Error(`[BindGroup] no usable resource for the shader's '${j}' binding: it was never set, was destroyed while a shader still uses it, or is missing from the bind group's layout.`);
++        const standIn = getEmptyStandIn(program, groupIndex, programLayout[j]);
 +        if (!standIn) {
-+          throw new Error(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it. Remove it from the shader before destroying it.`);
++          throw new Error(`[BindGroup] no usable resource for the shader's '${j}' binding: it was never set, was destroyed while a shader still uses it, or is missing from the bind group's layout.`);
 +        }
-+        warn(`[BindGroup] the resource bound as '${j}' was destroyed while a shader still uses it; it is drawn empty. Whatever draws it destroyed it too early.`);
++        warn(`[BindGroup] no usable resource for the shader's '${j}' binding - most likely destroyed while a shader still uses it; it is drawn empty. Whatever draws it destroyed it too early.`);
 +        resource = standIn;
        }
        let gpuResource;
        if (resource._resourceType === "uniformGroup") {
 diff --git a/lib/rendering/renderers/gpu/shader/BindGroup.d.ts b/lib/rendering/renderers/gpu/shader/BindGroup.d.ts
-index 89d340f065e87f6d84bcef4c2eabb6e07635433e..c0982cf3247118d9ca3e02224cf6c2e8d38e7e82 100644
+index 402c9e3d256a41fda1614766b74106a862db3147..49f202c6639c4f0aedbcd8815ef9395b8c586726 100644
 --- a/lib/rendering/renderers/gpu/shader/BindGroup.d.ts
 +++ b/lib/rendering/renderers/gpu/shader/BindGroup.d.ts
-@@ -63,6 +63,10 @@ export declare class BindGroup {
+@@ -176,6 +176,10 @@ export declare class BindGroup {
       * @internal
       */
      _touch(now: number): void;
@@ -592,38 +594,29 @@ index 89d340f065e87f6d84bcef4c2eabb6e07635433e..c0982cf3247118d9ca3e02224cf6c2e8
 +    _detach(): void;
 +    /** @internal */
 +    _reattach(): void;
+     /** The binding numbers {@link BindGroup#_touch} stamps, see {@link BindGroup#_touchKeysValue}. */
+     private get _touchKeys();
      /** Destroys this bind group and removes all listeners. */
-     destroy(): void;
-     protected onResourceChange(resource: BindResource): void;
 diff --git a/lib/rendering/renderers/gpu/shader/BindGroup.js b/lib/rendering/renderers/gpu/shader/BindGroup.js
-index 54aee731d5bf4d2451525f3b26906aaf6b76ef20..45568caf241345c8965b320eb5e16bc77b373839 100644
+index 0da8db035904d943563f8caa321f330ead4d31e6..6f9af59e895eac1316ccc8896fee902ec2f6be30 100644
 --- a/lib/rendering/renderers/gpu/shader/BindGroup.js
 +++ b/lib/rendering/renderers/gpu/shader/BindGroup.js
-@@ -24,7 +24,7 @@ class BindGroup {
-    * @internal
-    */
-   get _key() {
--    if (this._dirty) {
-+    if (this._dirty || this._detached) {
-       this._dirty = false;
-       const keyParts = [];
-       let index = 0;
-@@ -67,6 +67,8 @@ class BindGroup {
+@@ -188,6 +188,8 @@ class BindGroup {
     * @internal
     */
    _touch(now) {
 +    this._lastUsed = now;
 +    if (this._detached) this._reattach();
      const resources = this.resources;
-     for (const i in resources) {
-       const resource = resources[i];
-@@ -75,6 +77,36 @@ class BindGroup {
-     }
+     const keys = this._touchKeys;
+     for (let i = 0; i < keys.length; i++) {
+@@ -201,6 +203,46 @@ class BindGroup {
+     this._touchKeysValue ?? (this._touchKeysValue = this._resourceKeys.filter((index) => this.resources[index]?._resourceType !== "textureSampler"));
+     return this._touchKeysValue;
    }
-   /** Destroys this bind group and removes all listeners. */
 +  /**
 +   * Stops listening to its resources, so they no longer keep this group alive. The group stays
-+   * usable: its key is recomputed on every use, and it listens again on its next draw.
++   * usable: it listens again, and catches up on what it missed, on its next draw (`_touch`).
 +   * @internal
 +   */
 +  _detach() {
@@ -637,52 +630,53 @@ index 54aee731d5bf4d2451525f3b26906aaf6b76ef20..45568caf241345c8965b320eb5e16bc7
 +    }
 +    this._detached = true;
 +  }
-+  /** @internal */
++  /**
++   * Listens to its resources again after `_detach`. A resource destroyed meanwhile leaves its slot,
++   * as `onResourceChange` would have done, and one that changed meanwhile moves the key, so the next
++   * bind cannot reuse a GPU bind group made from what the resource was before.
++   * @internal
++   */
 +  _reattach() {
 +    this._detached = false;
-+    this._dirty = true;
 +    const resources = this.resources;
 +    if (!resources) return;
-+    for (const i in resources) {
-+      const resource = resources[i];
++    const keys = this._resourceKeys;
++    for (let i = 0; i < keys.length; i++) {
++      const index = keys[i];
++      const resource = resources[index];
 +      if (!resource) continue;
-+      if (resource.destroyed) this.onResourceChange(resource);
-+      else resource.on?.("change", this.onResourceChange, this);
++      if (resource.destroyed) {
++        this.onResourceChange(resource);
++        continue;
++      }
++      resource.on?.("change", this.onResourceChange, this);
++      if (this._keyedIds[index] !== resource._resourceId) this._rekey(index, resource._resourceId);
 +    }
 +    this._onReattach?.(this);
 +  }
+   /** Destroys this bind group and removes all listeners. */
    destroy() {
      const resources = this.resources;
-     for (const i in resources) {
 diff --git a/lib/rendering/renderers/gpu/shader/BindGroup.mjs b/lib/rendering/renderers/gpu/shader/BindGroup.mjs
-index 6c0d131c4eca916aaed87f4cb5098c00a426f579..ba00630e6499c824791ab580551e41f3d09c9daf 100644
+index 20ac4b156ae3106fc7297de0d556743117f02915..c4c013a77a643a7c96159aa3c2b1862faa9bba5f 100644
 --- a/lib/rendering/renderers/gpu/shader/BindGroup.mjs
 +++ b/lib/rendering/renderers/gpu/shader/BindGroup.mjs
-@@ -22,7 +22,7 @@ class BindGroup {
-    * @internal
-    */
-   get _key() {
--    if (this._dirty) {
-+    if (this._dirty || this._detached) {
-       this._dirty = false;
-       const keyParts = [];
-       let index = 0;
-@@ -65,6 +65,8 @@ class BindGroup {
+@@ -186,6 +186,8 @@ class BindGroup {
     * @internal
     */
    _touch(now) {
 +    this._lastUsed = now;
 +    if (this._detached) this._reattach();
      const resources = this.resources;
-     for (const i in resources) {
-       const resource = resources[i];
-@@ -73,6 +75,36 @@ class BindGroup {
-     }
+     const keys = this._touchKeys;
+     for (let i = 0; i < keys.length; i++) {
+@@ -199,6 +201,46 @@ class BindGroup {
+     this._touchKeysValue ?? (this._touchKeysValue = this._resourceKeys.filter((index) => this.resources[index]?._resourceType !== "textureSampler"));
+     return this._touchKeysValue;
    }
-   /** Destroys this bind group and removes all listeners. */
 +  /**
 +   * Stops listening to its resources, so they no longer keep this group alive. The group stays
-+   * usable: its key is recomputed on every use, and it listens again on its next draw.
++   * usable: it listens again, and catches up on what it missed, on its next draw (`_touch`).
 +   * @internal
 +   */
 +  _detach() {
@@ -696,28 +690,38 @@ index 6c0d131c4eca916aaed87f4cb5098c00a426f579..ba00630e6499c824791ab580551e41f3
 +    }
 +    this._detached = true;
 +  }
-+  /** @internal */
++  /**
++   * Listens to its resources again after `_detach`. A resource destroyed meanwhile leaves its slot,
++   * as `onResourceChange` would have done, and one that changed meanwhile moves the key, so the next
++   * bind cannot reuse a GPU bind group made from what the resource was before.
++   * @internal
++   */
 +  _reattach() {
 +    this._detached = false;
-+    this._dirty = true;
 +    const resources = this.resources;
 +    if (!resources) return;
-+    for (const i in resources) {
-+      const resource = resources[i];
++    const keys = this._resourceKeys;
++    for (let i = 0; i < keys.length; i++) {
++      const index = keys[i];
++      const resource = resources[index];
 +      if (!resource) continue;
-+      if (resource.destroyed) this.onResourceChange(resource);
-+      else resource.on?.("change", this.onResourceChange, this);
++      if (resource.destroyed) {
++        this.onResourceChange(resource);
++        continue;
++      }
++      resource.on?.("change", this.onResourceChange, this);
++      if (this._keyedIds[index] !== resource._resourceId) this._rekey(index, resource._resourceId);
 +    }
 +    this._onReattach?.(this);
 +  }
+   /** Destroys this bind group and removes all listeners. */
    destroy() {
      const resources = this.resources;
-     for (const i in resources) {
-diff --git a/lib/scene/graphics/gpu/GpuGraphicsAdaptor.js b/lib/scene/graphics/gpu/GpuGraphicsAdaptor.js
-index 87eb96c74b6b9d5530070a048270620433a757c0..3e8a5af0a8d5ac87feadd166086bba2360eebae5 100644
---- a/lib/scene/graphics/gpu/GpuGraphicsAdaptor.js
-+++ b/lib/scene/graphics/gpu/GpuGraphicsAdaptor.js
-@@ -69,8 +69,7 @@ class GpuGraphicsAdaptor {
+diff --git a/lib/scene/graphics/gpu/AbstractGpuGraphicsAdaptor.js b/lib/scene/graphics/gpu/AbstractGpuGraphicsAdaptor.js
+index a7e2ca0b505e6494ee98656a28ebe7bc939e8f32..ec201cbd5a1cf67b590a02d7925be09224b9e3c9 100644
+--- a/lib/scene/graphics/gpu/AbstractGpuGraphicsAdaptor.js
++++ b/lib/scene/graphics/gpu/AbstractGpuGraphicsAdaptor.js
+@@ -52,8 +52,7 @@ class AbstractGpuGraphicsAdaptor {
            shader._overrides
          );
        }
@@ -727,7 +731,7 @@ index 87eb96c74b6b9d5530070a048270620433a757c0..3e8a5af0a8d5ac87feadd166086bba23
          const textureBatch = batch.textures;
          batch.bindGroup = getTextureBatchBindGroup.getTextureBatchBindGroup(
            textureBatch.textures,
-@@ -83,6 +82,7 @@ class GpuGraphicsAdaptor {
+@@ -66,6 +65,7 @@ class AbstractGpuGraphicsAdaptor {
            1
          );
        }
@@ -735,19 +739,17 @@ index 87eb96c74b6b9d5530070a048270620433a757c0..3e8a5af0a8d5ac87feadd166086bba23
        encoder.setBindGroup(1, batch.bindGroup, shader.gpuProgram);
        encoder.renderPassEncoder.drawIndexed(batch.size, 1, batch.start);
      }
-diff --git a/lib/scene/graphics/gpu/GpuGraphicsAdaptor.mjs b/lib/scene/graphics/gpu/GpuGraphicsAdaptor.mjs
-index e10754a4837a013112854e3b73d0064672d4b7ff..9e9732246093e58d288d1f053eae568347ecbdf6 100644
---- a/lib/scene/graphics/gpu/GpuGraphicsAdaptor.mjs
-+++ b/lib/scene/graphics/gpu/GpuGraphicsAdaptor.mjs
-@@ -1,6 +1,6 @@
- import { ExtensionType } from '../../../extensions/Extensions.mjs';
- import { Matrix } from '../../../maths/matrix/Matrix.mjs';
+diff --git a/lib/scene/graphics/gpu/AbstractGpuGraphicsAdaptor.mjs b/lib/scene/graphics/gpu/AbstractGpuGraphicsAdaptor.mjs
+index dbfef19f32862a0d57ed1a971c9c4cfe435fc1d5..ec93d9dc729213151c8822a6f6602033cd10b43e 100644
+--- a/lib/scene/graphics/gpu/AbstractGpuGraphicsAdaptor.mjs
++++ b/lib/scene/graphics/gpu/AbstractGpuGraphicsAdaptor.mjs
+@@ -1,4 +1,4 @@
 -import { getTextureBatchBindGroup } from '../../../rendering/batcher/gpu/getTextureBatchBindGroup.mjs';
 +import { getTextureBatchBindGroup, isTextureBatchBindGroupAlive } from '../../../rendering/batcher/gpu/getTextureBatchBindGroup.mjs';
- import { compileHighShaderGpuProgram } from '../../../rendering/high-shader/compileHighShaderToProgram.mjs';
- import { colorBit } from '../../../rendering/high-shader/shader-bits/colorBit.mjs';
- import { generateTextureBatchBit } from '../../../rendering/high-shader/shader-bits/generateTextureBatchBit.mjs';
-@@ -67,8 +67,7 @@ class GpuGraphicsAdaptor {
+ 
+ "use strict";
+ class AbstractGpuGraphicsAdaptor {
+@@ -50,8 +50,7 @@ class AbstractGpuGraphicsAdaptor {
            shader._overrides
          );
        }
@@ -757,7 +759,7 @@ index e10754a4837a013112854e3b73d0064672d4b7ff..9e9732246093e58d288d1f053eae5683
          const textureBatch = batch.textures;
          batch.bindGroup = getTextureBatchBindGroup(
            textureBatch.textures,
-@@ -81,6 +80,7 @@ class GpuGraphicsAdaptor {
+@@ -64,6 +63,7 @@ class AbstractGpuGraphicsAdaptor {
            1
          );
        }

@@ -19,6 +19,12 @@ type BindEmitter = {
     removeAllListeners(event: string): void;
 };
 
+/** A `BindGroup`'s slots and the (private) key update its `onResourceChange` makes when one empties. */
+type BindGroupSlots = {
+    resources: Record<string, unknown>;
+    _rekey(index: number, id: number): void;
+};
+
 export class TextureUtils {
     /** Containers whose render groups draw room textures (`RoomSpriteCanvas`'s): `destroyTexture` rebuilds their batches. */
     private static _batchOwners: Set<Container> = new Set();
@@ -91,8 +97,9 @@ export class TextureUtils {
      * The WebGPU batcher caches a bind group for every texture combination it has drawn and never evicts
      * one, so a pooled texture reused across frames ends up subscribed to hundreds of them. Destroying the
      * source then warns once per group (`a 'textureSampler' was destroyed while still bound`), flooding the
-     * console and stalling the frame. This does what `BindGroup.onResourceChange` would - clears the slot
-     * and marks the key dirty - without the warning; the groups are unreachable once the source is gone.
+     * console and stalling the frame. This does what `BindGroup.onResourceChange` would - empties the slot
+     * and moves the group's key off it (`_rekey` to -1) - without the warning. An emptied texture batch
+     * group counts as dead, so a batch still holding it builds a new one instead of binding it.
      */
     private static releaseBatchBindGroups(source: TextureSource): void {
         if (!source || source.destroyed) return;
@@ -118,11 +125,16 @@ export class TextureUtils {
                     continue;
                 }
 
-                for (const key in context.resources) {
-                    if ((context.resources[key] as unknown) === emitter) delete context.resources[key];
-                }
+                const group = context as unknown as BindGroupSlots;
 
-                (context as unknown as { _dirty: boolean })._dirty = true;
+                // Emptied, not deleted: the group keeps a list of its binding numbers, and a key it no
+                // longer has would be keyed in again on top of the old id if the slot were set later.
+                for (const key in group.resources) {
+                    if (group.resources[key] !== emitter) continue;
+
+                    group.resources[key] = null;
+                    group._rekey(Number(key), -1);
+                }
             }
 
             if (kept.length === listeners.length) continue;

@@ -98,6 +98,6 @@ await test('a destroyed slot that takes no 2d texture or sampler still throws', 
         const group = new BindGroup({ 0: tex, 1: tex.style, 2: tex, 3: tex.style });
 
         group.resources[4] = null;
-        assert.throws(() => silenced(() => system().getBindGroup(group, program(extra), 1)), /\[BindGroup\] the resource bound as 'extra'/);
+        assert.throws(() => silenced(() => system().getBindGroup(group, program(extra), 1)), /\[BindGroup\] no usable resource for the shader's 'extra' binding/);
     }
 });

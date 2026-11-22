@@ -46,7 +46,8 @@ const draw = (batch) => {
             getContextRenderData: () => ({ batcher: { geometry: {} }, instructions: { instructions: [ batch ], instructionSize: 1 } }),
         },
     };
-    const shader = { gpuProgram: {}, resources: { localUniforms: {} }, groups: [] };
+    // `layout` lists the program's bind groups; the adaptor binds any past the first three itself.
+    const shader = { gpuProgram: { layout: [] }, resources: { localUniforms: {} }, groups: [] };
 
     adaptor._maxTextures = MAX_TEXTURES;
     adaptor.execute({ renderer, state: {} }, { context: { customShader: shader } });

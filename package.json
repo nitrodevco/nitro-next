@@ -20,7 +20,7 @@
         "pixi.js": "^8.18.1"
     },
     "resolutions": {
-        "pixi.js@npm:^8.18.1": "patch:pixi.js@npm%3A8.21.0#~/.yarn/patches/pixi.js-npm-8.21.0-d776aa6eb9.patch",
+        "pixi.js@npm:^8.18.1": "patch:pixi.js@npm%3A8.23.0#~/.yarn/patches/pixi.js-npm-8.23.0-fe5801e853.patch",
         "@pixi/react@npm:^8.0.0": "patch:@pixi/react@npm%3A8.0.5#~/.yarn/patches/@pixi-react-npm-8.0.5-b9686ce1cd.patch",
         "@pixi/react@npm:^8.0.5": "patch:@pixi/react@npm%3A8.0.5#~/.yarn/patches/@pixi-react-npm-8.0.5-b9686ce1cd.patch"
     },

@@ -1746,7 +1746,7 @@ __metadata:
     nodemailer: "npm:^10.0.12"
     pg: "npm:^8.23.0"
     pixi-filters: "npm:^6.1.5"
-    pixi.js: "patch:pixi.js@npm%3A8.21.0#~/.yarn/patches/pixi.js-npm-8.21.0-d776aa6eb9.patch"
+    pixi.js: "patch:pixi.js@npm%3A8.23.0#~/.yarn/patches/pixi.js-npm-8.23.0-fe5801e853.patch"
     png-stream: "npm:^1.0.5"
     pngjs: "npm:^7.0.0"
     puppeteer-core: "npm:^25.12.0"
@@ -2124,13 +2124,6 @@ __metadata:
     tslib: "npm:^2.8.1"
     tsyringe: "npm:^4.10.0"
   checksum: 10c0/d40c4b19496cea92252ca9dad18e5801f35435e9f6db417528f3c66960b3bc9d273e207df41a30f642208529c3a65b24d61bbd4ae18ef9bbe30a25999f432133
-  languageName: node
-  linkType: hard
-
-"@pixi/colord@npm:^2.9.6":
-  version: 2.9.6
-  resolution: "@pixi/colord@npm:2.9.6"
-  checksum: 10c0/513636a67140b8bb3292eb4a7a3a5303a394525410fe972ebfe1e5db3749f27f7c0f176e4c84fcb9ab0fa22ee1d8ce2a15b3e32db7021e65ac0561941d2933a3
   languageName: node
   linkType: hard
 
@@ -3673,6 +3666,13 @@ __metadata:
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: 10c0/a1a3f914156960902f46f7f56bc62effc6c94e84b2cae157a526b1c1f74b677a47ec602bf68a61abfa2b42d15b7c5651c6dbe72a43af720bc588dff885b10f95
+  languageName: node
+  linkType: hard
+
+"colord@npm:^2.11.0":
+  version: 2.14.0
+  resolution: "colord@npm:2.14.0"
+  checksum: 10c0/e16b472899b8958881375a0cf4db259bae35e36f1de1ba00af908e5896fdc3d3f5d7d801baf54942a404c1de5275f9e7433daf4e86ca5bd703f9894570ef319e
   languageName: node
   linkType: hard
 
@@ -6201,39 +6201,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pixi.js@npm:8.21.0":
-  version: 8.21.0
-  resolution: "pixi.js@npm:8.21.0"
+"pixi.js@npm:8.23.0":
+  version: 8.23.0
+  resolution: "pixi.js@npm:8.23.0"
   dependencies:
-    "@pixi/colord": "npm:^2.9.6"
     "@types/earcut": "npm:^3.0.0"
     "@webgpu/types": "npm:^0.1.69"
     "@xmldom/xmldom": "npm:^0.8.15"
+    colord: "npm:^2.11.0"
     earcut: "npm:^3.0.2"
     eventemitter3: "npm:^5.0.1"
     gifuct-js: "npm:^2.1.2"
     ismobilejs: "npm:^1.1.1"
     parse-svg-path: "npm:^0.2.0"
     tiny-lru: "npm:^11.4.7"
-  checksum: 10c0/c21f1d33c489d86163457309d340a164ebaf0c300b2c6749d1a86afba84c4ef783d758c143a57cf22658a5fb31de482c2eaddde15dcaa2cb4242ecb3849c4b58
+  checksum: 10c0/5a7c7f89156f079785ec72b50ff6f625b8c336b84fa14f75c2e3fa3d7fffadd601f218cad3fe1b8d3d4db1d0a5d50303d7e263d4f141c5bd4e32ba047695a5c8
   languageName: node
   linkType: hard
 
-"pixi.js@patch:pixi.js@npm%3A8.21.0#~/.yarn/patches/pixi.js-npm-8.21.0-d776aa6eb9.patch":
-  version: 8.21.0
-  resolution: "pixi.js@patch:pixi.js@npm%3A8.21.0#~/.yarn/patches/pixi.js-npm-8.21.0-d776aa6eb9.patch::version=8.21.0&hash=a89431"
+"pixi.js@patch:pixi.js@npm%3A8.23.0#~/.yarn/patches/pixi.js-npm-8.23.0-fe5801e853.patch":
+  version: 8.23.0
+  resolution: "pixi.js@patch:pixi.js@npm%3A8.23.0#~/.yarn/patches/pixi.js-npm-8.23.0-fe5801e853.patch::version=8.23.0&hash=a18ccd"
   dependencies:
-    "@pixi/colord": "npm:^2.9.6"
     "@types/earcut": "npm:^3.0.0"
     "@webgpu/types": "npm:^0.1.69"
     "@xmldom/xmldom": "npm:^0.8.15"
+    colord: "npm:^2.11.0"
     earcut: "npm:^3.0.2"
     eventemitter3: "npm:^5.0.1"
     gifuct-js: "npm:^2.1.2"
     ismobilejs: "npm:^1.1.1"
     parse-svg-path: "npm:^0.2.0"
     tiny-lru: "npm:^11.4.7"
-  checksum: 10c0/75eb878d5ff019b80da829898f287fa17b445604ba7564c65002bb5cfc01a431925d907a57e7b11feda2a7803822e536350ba1595a24a0355d852f5d21bfdce2
+  checksum: 10c0/5bdfd796deec648ac9dd5b1cf68fa9a22194e493477bb185fcdd18fe9fe0af2606913971b40c544d9baec1bad7bb82e2ca54a766678c583cf6a2cf3f8bdbcf8b
   languageName: node
   linkType: hard
 

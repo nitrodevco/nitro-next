@@ -72,13 +72,55 @@ await test('a prune detaches only idle groups and keeps foreign listeners', () =
     assert.equal(listeners(empty).filter(listener => live.includes(listener.context)).length, live.length * (MAX_TEXTURES - 2));
     assert.ok(listeners(shared).some(listener => (listener.fn === foreign) && (listener.context === 'foreign')));
 
-    // A live group still hears a change to its texture.
+    // A live group still hears a change to its texture: a resize gives the source a new resource id,
+    // which moves the group's key off the GPU bind group made from the old one.
     const group = live[0];
+    const key = group._keyLow;
 
-    group._dirty = false;
-    group.resources[0].emit('change', group.resources[0]);
+    group.resources[0].resize(8, 8);
 
-    assert.equal(group._dirty, true);
+    assert.notEqual(group._keyLow, key);
+});
+
+await test('a pruned group catches up on its next draw with what changed while it was detached', () => {
+    clearCache();
+
+    const resized = source();
+    const destroyed = source();
+    const [ group ] = createGroups(1, resized);
+    const [ other ] = createGroups(1, destroyed);
+
+    assert.equal(pruneTextureBatchBindGroups(FAR_FUTURE, 0), 2);
+
+    // Neither group hears these: it is detached.
+    const key = group._keyLow;
+
+    group._gpuEntry = {};
+    resized.resize(8, 8);
+    destroyed.destroy();
+
+    // The shared source sits after the group's own, in slots 2 (source) and 3 (its style).
+    assert.equal(group._keyLow, key);
+    assert.equal(other.resources[2], destroyed);
+
+    group._touch(FAR_FUTURE);
+    const warned = [];
+    const original = console.warn;
+
+    console.warn = (...args) => warned.push(args.join(' '));
+    try {
+        other._touch(FAR_FUTURE);
+    } finally {
+        console.warn = original;
+    }
+
+    // The resized source moved the key and dropped the GPU entry made from it; the destroyed source and
+    // the style it destroyed with it left their slots, warning once each.
+    assert.notEqual(group._keyLow, key);
+    assert.equal(group._gpuEntry, null);
+    assert.equal(other.resources[2], null);
+    assert.equal(other.resources[3], null);
+    assert.equal(warned.filter(w => /\[BindGroup\].*destroyed/.test(w)).length, 2);
 });
 
 await test('a pruned group rejoins its textures and the cache on its next draw', () => {
