@@ -12,6 +12,16 @@ development](turbo-development.md) describes. Each developer supplies their own 
 credentials and reference locations; do not commit tickets, personal paths or captured account
 data.
 
+## TypeScript 6 and 7
+
+Two TypeScripts are installed, as Microsoft recommends while tools catch up with 7. `tsc` - the
+`typecheck` scripts, CI and the gates in AGENTS.md - is TypeScript 7, the native compiler
+(`@typescript/native`, an alias of `typescript@7`). The package named `typescript` is
+`@typescript/typescript6`: TypeScript 7.0 ships no JavaScript API, and typescript-eslint, the
+`tools/` tests' `ts.transpileModule` loaders and the editor (`.vscode/settings.json`'s tsdk) need
+one. Its compiler is `tsc6`. Drop it once typescript-eslint supports TypeScript 7 (its issue
+#10940, built on 7.1's API) and the tools tests no longer call `transpileModule`.
+
 ## Habbo reference code
 
 Habbo's own client is checked out locally under the repository-root `scripts/` folder. It is

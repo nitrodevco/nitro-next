@@ -19,8 +19,9 @@
         "pixi.js": "^8.18.1"
     },
     "devDependencies": {
+        "@typescript/native": "npm:typescript@^7.0.2",
         "esbuild": "^0.28.2",
         "tsx": "^4.23.15",
-        "typescript": "^6.0.3"
+        "typescript": "npm:@typescript/typescript6@^6.0.2"
     }
 }

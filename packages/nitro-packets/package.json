@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "pixi.js": "^8.18.1",
-        "typescript": "^6.0.3"
+        "typescript": "npm:@typescript/typescript6@^6.0.2"
     },
     "dependencies": {
         "@nitrodevco/nitro-api": "workspace:*"
