@@ -6,7 +6,7 @@
  * earlier confirmation cannot remain actionable after logout. Web logout redirects belong
  * to the hosting site and are not handled here.
  */
-import { reportRendererError } from '#base/context/clienterrors';
+import { reportRendererError } from '#base/context/client-errors';
 import { systemStore } from '#base/context/system';
 import type { GpuLoss } from '#base/theme';
 

@@ -35,7 +35,7 @@ import {
 import { bridgeSoundManager, registerSoundManagerHandlers } from './sound';
 import { registerSpecialItemsHandlers } from './special-items';
 import { registerBugReportHandlers, registerFurnitureDataHandlers, registerHotelViewHandlers, registerLatencyHandlers, registerTrackingHandlers } from './system';
-import { registerAvatarEditorHandlers, registerAvatarEffectsHandlers, registerChatCommandHandlers, registerFriendBarHandlers, registerMessengerHandlers, registerOnboardingHandlers, registerUserInfoHandlers, registerUserSocialHandlers, registerWalletHandlers, registerWordFilterHandlers } from './user';
+import { registerAvatarEditorHandlers, registerAvatarEffectsHandlers, registerChatCommandHandlers, registerFriendBarHandlers, registerMessengerHandlers, registerOnboardingHandlers, registerPurseHandlers, registerUserInfoHandlers, registerUserSocialHandlers, registerWordFilterHandlers } from './user';
 import { registerProfileHandlers } from './user-profile';
 import { bridgeWiredRoomLifecycle, registerWiredEnvironmentHandlers, registerWiredLinkHandlers, registerWiredMenuHandlers, registerWiredPermissionsHandlers, registerWiredSetupHandlers, registerWiredVariableLeaderboardHandlers, registerWiredVariablesHandlers, registerWiredWebApiKeyHandlers } from './wired';
 import { bridgeWiredTradingLifecycle, registerSelfDonationHandlers, registerWiredChestHandlers, registerWiredContractHandlers, registerWiredTradeHandlers, registerWiredTransactionHandlers, registerWiredTransactionNotificationHandlers } from './wired-trading';
@@ -126,7 +126,7 @@ export const registerHandlers = (socket: WebSocketConnection) => {
         registerAvatarEditorHandlers(socket),
         registerMessengerHandlers(socket),
         registerFriendBarHandlers(socket),
-        registerWalletHandlers(socket),
+        registerPurseHandlers(socket),
         // The account's own word filter, whose list the settings window asks for when it opens.
         registerWordFilterHandlers(socket),
         // The catalogue's voucher answers - alerts only, whichever catalogue window is open.

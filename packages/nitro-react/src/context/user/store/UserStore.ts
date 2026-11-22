@@ -6,14 +6,14 @@ import { createUserChatCommandsSlice, UserChatCommandsSlice } from './UserChatCo
 import { createUserEffectsSlice, UserEffectsSlice } from './UserEffectsSlice';
 import { createUserFriendsSlice, UserFriendsSlice } from './UserFriendsSlice';
 import { createUserInfoSlice, UserInfoSlice } from './UserInfoSlice';
+import { createUserPurseSlice, UserPurseSlice } from './UserPurseSlice';
 import { createUserSocialSlice, UserSocialSlice } from './UserSocialSlice';
 import { createUserSoundSettingsSlice, UserSoundSettingsSlice } from './UserSoundSettingsSlice';
-import { createUserWalletSlice, UserWalletSlice } from './UserWalletSlice';
 import { createUserWordFilterSlice, UserWordFilterSlice } from './UserWordFilterSlice';
 
 /**
  * The user store: everything about the logged-in account - `SessionDataManager`'s rights, perks,
- * preferences and availability, plus the info, friends, wallet, effects, social, sound settings,
+ * preferences and availability, plus the info, friends, purse, effects, social, sound settings,
  * word filter and chat command slices.
  */
 type State = {
@@ -178,7 +178,7 @@ const initialState: State = {
     mysteryKeyColor: '',
 };
 
-export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserWalletSlice & UserEffectsSlice & UserSocialSlice & UserSoundSettingsSlice & UserWordFilterSlice & UserChatCommandsSlice;
+export type UserStore = State & Actions & UserInfoSlice & UserFriendsSlice & UserPurseSlice & UserEffectsSlice & UserSocialSlice & UserSoundSettingsSlice & UserWordFilterSlice & UserChatCommandsSlice;
 
 export const createUserStore = () => createStore<UserStore>()((set, get, store) => ({
     ...initialState,
@@ -219,7 +219,7 @@ export const createUserStore = () => createStore<UserStore>()((set, get, store) 
     setMysteryBoxKeys: (mysteryBoxColor: string, mysteryKeyColor: string) => set({ mysteryBoxColor, mysteryKeyColor }),
     ...createUserInfoSlice(set, get, store),
     ...createUserFriendsSlice(set, get, store),
-    ...createUserWalletSlice(set, get, store),
+    ...createUserPurseSlice(set, get, store),
     ...createUserEffectsSlice(set, get, store),
     ...createUserSocialSlice(set, get, store),
     ...createUserSoundSettingsSlice(set, get, store),

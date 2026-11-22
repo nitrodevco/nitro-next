@@ -14,7 +14,7 @@ import { on, subscribeAll } from '../packetSubscriptions';
  * register for every credit balance but the session's first, and the ducket sound for a change of
  * duckets (type 0).
  */
-export const registerWalletHandlers = ({ subscribe }: WebSocketConnection) => {
+export const registerPurseHandlers = ({ subscribe }: WebSocketConnection) => {
     const { setCredits, setEmeralds, setSilver, setActivityPoints, setManyActivityPoints } = userStore.getState();
     // `HabboCatalog`'s first-balance flag: the balance the login brings is not a purchase.
     let firstCreditBalance = true;

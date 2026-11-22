@@ -48,9 +48,9 @@ packet.
 
 The tool also reports `TurboBugReportCapture` (21001) and `TurboClientErrorReport` (21100) here
 and `TurboBugReportRequest` (21000) below as `no Turbo header`. They are not gaps but the
-`bugreport` extension of Turbo's bug report plugin (`context/bugreport/bugReportCapture.ts`) and
+`bugreport` extension of Turbo's bug report plugin (`context/bug-report/bugReportCapture.ts`) and
 the `clienterrors` extension of its client errors plugin
-(`context/clienterrors/clientErrorReporter.ts`): not part of the revision, so its headers never
+(`context/client-errors/clientErrorReporter.ts`): not part of the revision, so its headers never
 name them.
 
 ## Listened to by the client, never sent by Turbo

@@ -12,8 +12,8 @@ import { GetTickerTime } from '@nitrodevco/nitro-renderer';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { DISCONNECT_REASON_SOCKET_CLOSED, getDisconnectReasonName, isConnectionClosingServerError, showConnectionClosed, showServerError, trackLoginStep } from '#base/commands';
-import { recordBugReportPacket } from '#base/context/bugreport';
-import { recordClientErrorBreadcrumb } from '#base/context/clienterrors';
+import { recordBugReportPacket } from '#base/context/bug-report';
+import { recordClientErrorBreadcrumb } from '#base/context/client-errors';
 import { onboardingStore } from '#base/context/onboarding';
 import { useCommunicationIncoming, useCommunicationOutgoing } from '#base/hooks/communication';
 import { isPreviewHost } from '#base/utils';

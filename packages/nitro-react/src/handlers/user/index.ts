@@ -5,7 +5,7 @@ export * from './registerChatCommandHandlers';
 export * from './registerFriendBarHandlers';
 export * from './registerMessengerHandlers';
 export * from './registerOnboardingHandlers';
+export * from './registerPurseHandlers';
 export * from './registerUserInfoHandlers';
 export * from './registerUserSocialHandlers';
-export * from './registerWalletHandlers';
 export * from './registerWordFilterHandlers';

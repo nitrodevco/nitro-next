@@ -44,7 +44,7 @@ type Actions = {
     setClubSubscription: (clubSubscription: ClubSubscription) => void;
 };
 
-export const UserWalletSliceInitialState: State = {
+export const UserPurseSliceInitialState: State = {
     credits: 0,
     emeralds: 0,
     silver: 0,
@@ -52,10 +52,10 @@ export const UserWalletSliceInitialState: State = {
     clubSubscription: { clubDays: 0, clubPeriods: 0, isVip: false, pastClubDays: 0, pastVipDays: 0, isExpiring: false, minutesUntilExpiration: 0, minutesSinceLastModified: 0 },
 };
 
-export type UserWalletSlice = State & Actions;
+export type UserPurseSlice = State & Actions;
 
-export const createUserWalletSlice: StateCreator<UserWalletSlice, [], [], UserWalletSlice> = set => ({
-    ...UserWalletSliceInitialState,
+export const createUserPurseSlice: StateCreator<UserPurseSlice, [], [], UserPurseSlice> = set => ({
+    ...UserPurseSliceInitialState,
     setCredits: (credits: number) => set({ credits }),
     setEmeralds: (emeralds: number) => set({ emeralds }),
     setSilver: (silver: number) => set({ silver }),

@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 import { useWebSocketContext } from '#base/context/communication';
 import { useUserStore } from '#base/context/user';
 
-export const WalletComponent = () => {
+export const PurseComponent = () => {
     const { send } = useWebSocketContext();
     const minutesUntilExpiration = useUserStore(x => x.clubSubscription.minutesUntilExpiration);
     const isCountingDown = (minutesUntilExpiration > 0) && (minutesUntilExpiration < 86400000);

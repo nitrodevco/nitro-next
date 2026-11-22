@@ -8,7 +8,7 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useConfigValue } from '#base/context/system';
 import { useWindowVisibility } from '#base/hooks';
 
-import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MysteryBoxToolbarExtensionComponent, NavigatorComponent, NavigatorRoomEventInfoComponent, RoomWrapper, ToolbarChatSettingsComponent, ToolbarOtherSettingsComponent, ToolbarSoundSettingsComponent, ToolbarWordFilterComponent, WalletComponent, WiredChestComponent, WiredContractComponent, WiredLinkComponent, WiredMenuComponent, WiredRewardNotificationsComponent, WiredSelfDonationComponent, WiredSetupComponent, WiredTransactionsComponent } from './components';
+import { AvatarEditorComponent, CatalogWrapper, FriendListWrapper, InventoryComponent, MysteryBoxToolbarExtensionComponent, NavigatorComponent, NavigatorRoomEventInfoComponent, PurseComponent, RoomWrapper, ToolbarChatSettingsComponent, ToolbarOtherSettingsComponent, ToolbarSoundSettingsComponent, ToolbarWordFilterComponent, WiredChestComponent, WiredContractComponent, WiredLinkComponent, WiredMenuComponent, WiredRewardNotificationsComponent, WiredSelfDonationComponent, WiredSetupComponent, WiredTransactionsComponent } from './components';
 import { AchievementsComponent } from './components/achievements';
 import { TargetedOfferComponent } from './components/catalog/TargetedOfferComponent';
 import { CollectiblesComponent } from './components/collectibles';
@@ -173,7 +173,7 @@ export const MainView = () => {
                     {isMessengerVisible && <MessengerView />}
                     {/* `RoomSettingsCtrl` is the navigator's, not the room's: it also edits a room you are not in. */}
                     <RoomSettingsWidget />
-                    <WalletComponent />
+                    <PurseComponent />
                     <WiredSetupComponent />
                     <WiredMenuComponent />
                     <WiredLinkComponent />

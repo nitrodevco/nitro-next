@@ -5,7 +5,7 @@
  */
 import { TurboBugReportCaptureComposer, TurboBugReportRequestMessage } from '@nitrodevco/nitro-packets';
 
-import { takeBugReportCapture } from '#base/context/bugreport';
+import { takeBugReportCapture } from '#base/context/bug-report';
 import { WebSocketConnection } from '#base/context/communication';
 
 import { on, subscribeAll } from '../packetSubscriptions';

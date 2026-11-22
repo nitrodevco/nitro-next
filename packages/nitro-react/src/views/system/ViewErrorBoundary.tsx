@@ -8,7 +8,7 @@
 import { NitroLogger } from '@nitrodevco/nitro-api';
 import { Children, Component, ErrorInfo, isValidElement, ReactNode } from 'react';
 
-import { reportReactError } from '#base/context/clienterrors';
+import { reportReactError } from '#base/context/client-errors';
 
 interface ViewErrorBoundaryProps {
     children?: ReactNode;

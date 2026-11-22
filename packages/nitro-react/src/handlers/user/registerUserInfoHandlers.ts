@@ -3,9 +3,9 @@ import { AccountPreferencesEventMessage, AccountSafetyLockStatusChangeMessage, A
 import { clampChatFontSizeMode } from '@nitrodevco/nitro-theme/chat';
 
 import { clientModuleCapabilities, onNameChangeChanged, openClientLink, TURBO_LIVE_NOTICES_CAPABILITY } from '#base/commands';
-import { setBugReportCaptureEnabled, TURBO_BUG_REPORT_CAPABILITY } from '#base/context/bugreport';
+import { setBugReportCaptureEnabled, TURBO_BUG_REPORT_CAPABILITY } from '#base/context/bug-report';
+import { setClientErrorReporting, TURBO_CLIENT_ERRORS_CAPABILITY } from '#base/context/client-errors';
 import { TURBO_CLIENT_MESSAGES_CAPABILITY, TURBO_CLIENT_MODULES_CAPABILITY, TURBO_WEB_SESSION_CAPABILITY } from '#base/context/client-modules';
-import { setClientErrorReporting, TURBO_CLIENT_ERRORS_CAPABILITY } from '#base/context/clienterrors';
 import { WebSocketConnection } from '#base/context/communication';
 import { TURBO_STARTER_ROOMS_CAPABILITY } from '#base/context/onboarding';
 import { configBoolean, systemStore } from '#base/context/system';
