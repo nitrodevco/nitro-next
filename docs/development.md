@@ -17,10 +17,10 @@ data.
 Two TypeScripts are installed, as Microsoft recommends while tools catch up with 7. `tsc` - the
 `typecheck` scripts, CI and the gates in AGENTS.md - is TypeScript 7, the native compiler
 (`@typescript/native`, an alias of `typescript@7`). The package named `typescript` is
-`@typescript/typescript6`: TypeScript 7.0 ships no JavaScript API, and typescript-eslint, the
-`tools/` tests' `ts.transpileModule` loaders and the editor (`.vscode/settings.json`'s tsdk) need
-one. Its compiler is `tsc6`. Drop it once typescript-eslint supports TypeScript 7 (its issue
-#10940, built on 7.1's API) and the tools tests no longer call `transpileModule`.
+`@typescript/typescript6`: TypeScript 7.0 ships no JavaScript API, and typescript-eslint and the
+editor (`.vscode/settings.json`'s tsdk) need one. Its compiler is `tsc6`. Drop it once
+typescript-eslint supports TypeScript 7 (its issue #10940, built on 7.1's API). The `tools/` tests
+need neither: they load sources through `tools/load-source.mjs`, with esbuild.
 
 ## Habbo reference code
 

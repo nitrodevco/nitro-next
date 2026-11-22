@@ -8,23 +8,13 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { loadModule } from './load-source.mjs';
 
 const read = path => readFileSync(new URL(`../packages/${path}`, import.meta.url), 'utf8');
 
 const load = (path, dependencies) => {
-    const { outputText } = ts.transpileModule(read(path), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
-    const exports = {};
-
-    runInNewContext(outputText, { exports, require: (name) => {
-        assert.ok(Object.hasOwn(dependencies, name), `Unexpected dependency: ${name}`);
-
-        return dependencies[name];
-    } });
-
-    return exports;
+    return loadModule(read(path), dependencies);
 };
 
 const FT = 'nitro-theme/src/font/flash-text';

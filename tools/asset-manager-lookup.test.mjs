@@ -8,7 +8,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 const TextureUtils = { destroyTexture() {}, destroySource() {} };
 const cache = new Map();
@@ -25,7 +25,7 @@ const loadFile = (url) => {
     if (cache.has(url.href)) return cache.get(url.href);
 
     const source = readFileSync(url, 'utf8');
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(source);
     const exports = {};
 
     cache.set(url.href, exports);

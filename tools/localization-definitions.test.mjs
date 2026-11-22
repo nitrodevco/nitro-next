@@ -9,13 +9,13 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
-const transpile = url => ts.transpileModule(readFileSync(url, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
+const transpileFile = url => transpile(readFileSync(url, 'utf8'));
 
 const localizationData = {};
 
-runInNewContext(transpile(new URL('../packages/nitro-react/src/utils/localizationData.ts', import.meta.url)), { exports: localizationData });
+runInNewContext(transpileFile(new URL('../packages/nitro-react/src/utils/localizationData.ts', import.meta.url)), { exports: localizationData });
 
 const state = { config: {}, localizations: { a: 'old a', b: 'old b' } };
 
@@ -66,7 +66,7 @@ const stubs = {
     } },
 };
 
-runInNewContext(transpile(new URL('../packages/nitro-react/src/commands/system/localizationCommands.ts', import.meta.url)), {
+runInNewContext(transpileFile(new URL('../packages/nitro-react/src/commands/system/localizationCommands.ts', import.meta.url)), {
     exports: commands,
     fetch,
     TextDecoder,

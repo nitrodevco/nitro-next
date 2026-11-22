@@ -5,17 +5,16 @@ import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
 import { Point, Rectangle } from 'pixi.js';
-import ts from 'typescript';
+
+import { classMembers, transpile } from './load-source.mjs';
 
 // Run the production methods without constructing a GPU renderer or loading room assets.
 const methods = (path, names) => {
     const source = readFileSync(new URL(path, import.meta.url), 'utf8');
-    const ast = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true);
-    const cls = ast.statements.find(ts.isClassDeclaration);
-    const members = cls.members.filter(m => names.includes(m.name?.getText(ast)));
+    const members = classMembers(source, names);
     assert.equal(members.length, names.length);
-    const code = `class Subject { ${members.map(m => m.getText(ast)).join('\n')} }; Subject;`;
-    return runInNewContext(ts.transpileModule(code, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, { Point, MouseEventType: { MOUSE_MOVE: 'move' } });
+    const code = `class Subject { ${members.join('\n')} }; Subject;`;
+    return runInNewContext(transpile(code, { format: 'script' }), { Point, MouseEventType: { MOUSE_MOVE: 'move' } });
 };
 const Canvas = methods('../packages/nitro-renderer/src/room/RoomSpriteCanvas.ts', [ 'setScale', 'setFlip', 'setTransform', 'displayScale', 'isFlipped', 'isSpriteVisible', 'handleMouseEvent' ]);
 const Room = methods('../packages/nitro-renderer/src/room/Room.ts', [ 'getRoomObjectBoundingRectangle', 'getRoomObjectScreenLocation' ]);
@@ -138,7 +137,7 @@ const hookFixture = (enabled = true) => {
         '#base/commands': { takeRoomCameraStart: () => undefined },
     };
     const exports = {};
-    runInNewContext(ts.transpileModule(hookSource, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText, { exports, require: name => dependencies[name] });
+    runInNewContext(transpile(hookSource), { exports, require: name => dependencies[name] });
     const hook = exports.useRoomCamera();
     return { ...hook, c, events, listeners, ref };
 };

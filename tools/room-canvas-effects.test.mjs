@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { classMembers, transpile } from './load-source.mjs';
 
 class Vector3d {
     constructor(x = 0, y = 0, z = 0) {
@@ -31,12 +31,11 @@ const RoomRotatingEffect = { isVisualizationOn: () => effects.rotating };
 
 // Run the production methods without constructing a GPU renderer or loading room assets.
 const source = readFileSync(new URL('../packages/nitro-renderer/src/room/RoomSpriteCanvas.ts', import.meta.url), 'utf8');
-const ast = ts.createSourceFile('RoomSpriteCanvas.ts', source, ts.ScriptTarget.Latest, true);
 const names = [ 'render', 'doMagic', 'changeShaking', 'changeRotation' ];
-const members = ast.statements.find(ts.isClassDeclaration).members.filter(m => names.includes(m.name?.getText(ast)));
+const members = classMembers(source, names);
 assert.equal(members.length, names.length);
-const code = `class Subject { ${members.map(m => m.getText(ast)).join('\n')} }; Subject;`;
-const Canvas = runInNewContext(ts.transpileModule(code, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, { Vector3d, RoomShakingEffect, RoomRotatingEffect, performance, drawnRoomSpriteShift: () => 0 });
+const code = `class Subject { ${members.join('\n')} }; Subject;`;
+const Canvas = runInNewContext(transpile(code, { format: 'script' }), { Vector3d, RoomShakingEffect, RoomRotatingEffect, performance, drawnRoomSpriteShift: () => 0 });
 
 const BASE = Object.freeze({ x: -45, y: 30, z: 0 });
 

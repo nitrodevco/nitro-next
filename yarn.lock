@@ -5256,10 +5256,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nitro-next@workspace:."
   dependencies:
+    "@babel/parser": "npm:^8.1.3"
     "@eslint/js": "npm:^10.0.1"
     "@stylistic/eslint-plugin": "npm:^6.0.1"
     "@types/node": "npm:^26.6.6"
     "@typescript/native": "npm:typescript@^7.0.2"
+    esbuild: "npm:^0.28.2"
     eslint: "npm:^10.15.0"
     eslint-plugin-import-x: "npm:^4.18.1"
     eslint-plugin-react-hooks: "npm:^7.1.1"

@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 // `VariablePickerPreset.finalizeSelection`: a box's `readVariableIds` sends a picked variable only
 // while the room's list still has it, and `WiredVariable.§_-7h§` ("n") otherwise - the p-code's
@@ -18,7 +18,7 @@ const loadFile = (url, external) => {
     if (cache.has(url.href)) return cache.get(url.href);
 
     const source = readFileSync(url, 'utf8');
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(source);
     const exports = {};
 
     cache.set(url.href, exports);

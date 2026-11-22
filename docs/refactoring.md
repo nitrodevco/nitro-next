@@ -29,10 +29,11 @@ it set none; git history keeps the details.
   classes (`LayoutWindow` 531, `ListWindow`, `GridWindow`, `ScrollableWindow`, `BoxSizerWindow`,
   ...): one file per class, as nitro-renderer keeps its ports.
 - **Two kinds of test** (M, `tools/`). 67 `tools/*.test.mjs` sit beside 35 package
-  `test/*.test.ts`. 51 of the tools tests each carry their own `ts.transpileModule` plus
-  `runInNewContext` loader with hand-written stubs, and none is typechecked (`checkJs: false`).
-  Give them one shared loader (a source path and a stub map), put tests of modules that import
-  cleanly in Node in their package's `test/`, and add a root `yarn test` that runs both, as CI does.
+  `test/*.test.ts`. The tools tests transpile through `tools/load-source.mjs` (esbuild), and six
+  load through its `loadModule`; the other 45 still run their output with a `runInNewContext`
+  of their own, with stubs of their own, and none is typechecked (`checkJs: false`). Move the rest
+  onto `loadModule` where the shape allows, put tests of modules that import cleanly in Node in
+  their package's `test/`, and add a root `yarn test` that runs both, as CI does.
 - **Nitro Studio's copies** (the Studio repository's change). Its pet figure builder
   (`preview/engine/chat.ts`) can use nitro-renderer's `petImageValue`, and its chat copies
   (`src/lib/chatBubble.ts`, `src/lib/flashText.ts`, `src/preview/engine/chat.ts`) can import

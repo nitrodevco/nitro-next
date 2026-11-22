@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 /** A 4x2 RGBA sheet: the left frame (0,0 2x2) opaque only at (1,1), the right frame (2,0 2x2) opaque only at (0,0). */
 const SHEET_WIDTH = 4;
@@ -24,7 +24,7 @@ const sheetRgba = () => {
 
 const load = (overrides = {}) => {
     const source = readFileSync(new URL('../packages/nitro-renderer/src/utils/ExtendedSprite.ts', import.meta.url), 'utf8');
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(source);
     const gpuReads = [];
 
     class Sprite {

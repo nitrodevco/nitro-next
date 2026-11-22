@@ -5,10 +5,11 @@ import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
 import { Matrix, Point, Rectangle } from 'pixi.js';
-import ts from 'typescript';
+
+import { transpile } from './load-source.mjs';
 
 const load = (source, dependencies) => {
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(source);
     const exports = {};
     runInNewContext(outputText, { exports, window: { innerWidth: 800, innerHeight: 600, addEventListener() {}, removeEventListener() {} }, require: (name) => {
         assert.ok(Object.hasOwn(dependencies, name), `Unexpected dependency: ${name}`);

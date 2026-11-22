@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 // Pixi's own matrix maths, by file: the package's exports do not reach it.
 const { Matrix } = await import(new URL('../node_modules/pixi.js/lib/maths/matrix/Matrix.mjs', import.meta.url).href);
@@ -37,7 +37,7 @@ const EMPTY = { frame: { width: 0, height: 0 }, orig: { width: 0, height: 0 } };
 
 const load = (partAlphas) => {
     const source = readFileSync(new URL('../packages/nitro-renderer/src/avatar/AvatarHitAlpha.ts', import.meta.url), 'utf8');
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(source);
     const exports = {};
     const ExtendedSprite = { getFrameAlpha: texture => partAlphas.get(texture) };
 

@@ -2,13 +2,13 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 // Transpiled rather than imported as `.ts`: Node's type stripping rejects the packets' enums. Both
 // import only types, so the module has no imports left once transpiled.
 const load = async (path) => {
     const source = readFileSync(new URL(`../packages/nitro-packets/src/${path}.ts`, import.meta.url), 'utf8');
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(source, { format: 'esm' });
 
     return import(`data:text/javascript,${encodeURIComponent(outputText)}`);
 };

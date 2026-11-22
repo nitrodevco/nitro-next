@@ -8,11 +8,11 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 const source = readFileSync(new URL('../packages/nitro-renderer/src/room/utils/snapRoomSpriteCoordinate.ts', import.meta.url), 'utf8');
 const exports = {};
-runInNewContext(ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText, { exports });
+runInNewContext(transpile(source), { exports });
 const { drawnRoomSpriteShift } = exports;
 
 await test('an offset off the twip grid draws the room a pixel up / left', () => {

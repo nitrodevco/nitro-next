@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 // Transpiled rather than imported as `.ts`, as turbo-command-packets.test.mjs does; each module
 // imports only types, or a class replaced below by a stand-in, so nothing is left to resolve.
@@ -11,7 +11,7 @@ const load = async (path, inline = {}) => {
 
     for (const [ line, body ] of Object.entries(inline)) source = source.replace(line, body);
 
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(source, { format: 'esm' });
 
     return import(`data:text/javascript,${encodeURIComponent(outputText)}`);
 };

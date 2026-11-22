@@ -10,11 +10,9 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { createContext, runInContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
-const transpile = path => ts.transpileModule(readFileSync(new URL(`../packages/nitro-renderer/src/${path}`, import.meta.url), 'utf8'), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-}).outputText;
+const transpileFile = path => transpile(readFileSync(new URL(`../packages/nitro-renderer/src/${path}`, import.meta.url), 'utf8'));
 
 /** A decoded sheet: RGBA, row by row. Closed, it has no size (`ImageBitmap.close`). */
 class FakeBitmap {
@@ -199,7 +197,7 @@ const load = ({ gpuPixels } = {}) => {
             throw new Error(`Unexpected dependency: ${dependency}`);
         };
 
-        runInContext(`(function (exports, require) { ${transpile(path)}\n})(exports, require);`, context);
+        runInContext(`(function (exports, require) { ${transpileFile(path)}\n})(exports, require);`, context);
 
         modules[`./${name}`] = exports;
 

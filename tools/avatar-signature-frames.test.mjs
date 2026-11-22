@@ -9,7 +9,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 // Pixi's own matrix maths, by file: the package's exports do not reach it.
 const { Matrix } = await import(new URL('../node_modules/pixi.js/lib/maths/matrix/Matrix.mjs', import.meta.url).href);
@@ -96,14 +96,12 @@ class ActiveActionData {
     }
 }
 
-const transpile = file => ts.transpileModule(readFileSync(new URL(file, import.meta.url), 'utf8'), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-}).outputText;
+const transpileFile = file => transpile(readFileSync(new URL(file, import.meta.url), 'utf8'));
 
 const run = (file, dependencies) => {
     const exports = {};
 
-    runInNewContext(transpile(file), {
+    runInNewContext(transpileFile(file), {
         exports,
         require: (name) => {
             assert.ok(Object.hasOwn(dependencies, name), `Unexpected dependency: ${name}`);

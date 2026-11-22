@@ -8,11 +8,11 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 const load = (path, dependencies = {}) => {
     const source = readFileSync(new URL(`../packages/${path}.ts`, import.meta.url), 'utf8');
-    const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(source);
     const exports = {};
 
     runInNewContext(outputText, { exports, performance: { now: () => 0 }, Object, Array, Number, String, require: (name) => {

@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 
-import ts from 'typescript';
+import { transpile } from './load-source.mjs';
 
 const FT = new URL('../packages/nitro-theme/src/font/flash-text/', import.meta.url);
 
@@ -19,7 +19,7 @@ const modules = new Map();
 const load = (url) => {
     if (modules.has(url.href)) return modules.get(url.href);
 
-    const { outputText } = ts.transpileModule(readFileSync(url, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } });
+    const outputText = transpile(readFileSync(url, 'utf8'));
     const exports = {};
 
     modules.set(url.href, exports);
