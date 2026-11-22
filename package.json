@@ -1,6 +1,6 @@
 {
     "name": "nitro-next",
-    "packageManager": "yarn@4.15.0",
+    "packageManager": "yarn@4.19.0",
     "private": true,
     "type": "module",
     "workspaces": [
