@@ -1625,7 +1625,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@nitrodevco/nitro-packets@workspace:packages/nitro-packets"
   dependencies:
+    "@nitrodevco/nitro-api": "workspace:*"
+    pixi.js: "npm:^8.18.1"
     typescript: "npm:^5.9.3"
+  peerDependencies:
+    pixi.js: ^8.18.1
   languageName: unknown
   linkType: soft
 
@@ -1644,7 +1648,6 @@ __metadata:
     "@pixi/react": "patch:@pixi/react@npm%3A8.0.5#~/.yarn/patches/@pixi-react-npm-8.0.5-b9686ce1cd.patch"
     "@rolldown/plugin-babel": "npm:^0.3.1"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
-    "@tailwindcss/vite": "npm:^4.3.5"
     "@types/react": "npm:^19.3.0"
     "@types/react-dom": "npm:^19.3.0"
     "@vitejs/plugin-react": "npm:^6.3.0"
@@ -1661,7 +1664,6 @@ __metadata:
     react: "npm:^19.3.1"
     react-dom: "npm:^19.3.1"
     rolldown: "npm:^1.3.3"
-    tailwindcss: "npm:^4.3.5"
     tsx: "npm:^4.23.15"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.73.0"
@@ -2676,7 +2678,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/vite@npm:^4.3.2, @tailwindcss/vite@npm:^4.3.5":
+"@tailwindcss/vite@npm:^4.3.2":
   version: 4.3.5
   resolution: "@tailwindcss/vite@npm:4.3.5"
   dependencies:
@@ -6241,7 +6243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.3.5, tailwindcss@npm:^4.3.2, tailwindcss@npm:^4.3.5":
+"tailwindcss@npm:4.3.5, tailwindcss@npm:^4.3.2":
   version: 4.3.5
   resolution: "tailwindcss@npm:4.3.5"
   checksum: 10c0/a02a1759cc3aaad5d9b5da7919bc2d5570432960e0f933be752185ced814fc8a193885effd9628bc3067c81552c13293e469b8e46e5a43b148dbfc97f00b5994

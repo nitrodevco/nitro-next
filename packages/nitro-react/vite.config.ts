@@ -1,5 +1,4 @@
 import babel from '@rolldown/plugin-babel';
-import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { execFile, execSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, rmdirSync, rmSync, statSync } from 'node:fs';
@@ -228,14 +227,12 @@ export default defineConfig(({ mode }) => {
             // The theme's components are compiled with the client's: they are the same React tree.
             include: [ /[\\/]packages[\\/]nitro-(?:react|theme)[\\/]src[\\/].*\.(?:[jt]sx?|[cm][jt]s)(?:$|\?)/ ],
         }),
-        tailwindcss(),
     ],
     resolve: {
         tsconfigPaths: true,
         dedupe: ['pixi.js'],
         alias: [
             { find: /^#base\/(.*)/, replacement: r('src/$1') },
-            { find: /^#themes\/(.*)/, replacement: r('themes/$1') },
             // Pre-bundling needs the packages reached as bare imports (their `exports` already
             // point at the sources); the aliases are for the plain source-served mode.
             ...(prebundleWorkspace

@@ -9,10 +9,14 @@
     "exports": {
         ".": "./src/index.ts"
     },
-    "files": [
-        "dist"
-    ],
     "devDependencies": {
+        "pixi.js": "^8.18.1",
         "typescript": "^5.9.3"
+    },
+    "dependencies": {
+        "@nitrodevco/nitro-api": "workspace:*"
+    },
+    "peerDependencies": {
+        "pixi.js": "^8.18.1"
     }
 }
