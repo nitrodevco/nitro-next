@@ -3,9 +3,21 @@ import { Texture } from 'pixi.js';
 
 import { GetTickerTime, TextureUtils } from '#renderer/utils';
 
-import { createTransparentBitmap, disposeBitmap, getBitmapContext, VariableFxBitmap } from '../variablefx/rendering/VariableFxBitmap';
+import { createTransparentBitmap, disposeBitmap, getBitmapContext, getBitmapVersion, VariableFxBitmap } from '../variablefx/rendering/VariableFxBitmap';
 import { IStackedAddition } from './IStackedAddition';
 import { StackedAdditionEntry } from './StackedAdditionEntry';
+
+/** One entry as the stack's bitmap last drew it: whose pixels (and their version), where and how. */
+class StackedAdditionComposedEntry {
+    public bitmap: VariableFxBitmap | undefined = undefined;
+    public version: number = 0;
+    public width: number = 0;
+    public height: number = 0;
+    public x: number = 0;
+    public y: number = 0;
+    public alpha: number = 0;
+    public operation: GlobalCompositeOperation = 'source-over';
+}
 
 class StackedAdditionBounds {
     public minX: number = 0;
@@ -64,6 +76,9 @@ export class StackedAdditionStack {
     private _lastHadVisibleEntries: boolean = false;
     private _requiresAnimationTick: boolean = false;
     private _sortDirty: boolean = false;
+    /** What `_bitmap` holds, entry by entry, so a compose that would draw the same picture is skipped. */
+    private _composed: StackedAdditionComposedEntry[] = [];
+    private _composedCount: number = 0;
 
     public get isEmpty(): boolean {
         return this._entries.length === 0;
@@ -202,6 +217,8 @@ export class StackedAdditionStack {
         const bounds = new StackedAdditionBounds();
         const visibleEntries: StackedAdditionEntry[] = [];
 
+        const layoutWasDirty = this._layoutDirty;
+
         let previousY = 0;
         let previous: StackedAdditionEntry | undefined = undefined;
         let changed = false;
@@ -248,15 +265,23 @@ export class StackedAdditionStack {
         this.ensureBitmap(bounds.width, bounds.height);
 
         const bitmap = this._bitmap!;
-        const context = getBitmapContext(bitmap);
 
-        context.clearRect(0, 0, bitmap.width, bitmap.height);
+        // The same entries, pixels and placement draw the same picture: the bitmap and its uploaded
+        // texture already hold it, so the clear, the redraw and the upload are skipped.
+        if (layoutWasDirty || !this._texture || (this._texture.source.resource !== bitmap) || !this.isComposed(visibleEntries, bounds)) {
+            const context = getBitmapContext(bitmap);
 
-        for (const entry of visibleEntries) this.drawEntry(context, entry, bounds);
+            context.clearRect(0, 0, bitmap.width, bitmap.height);
+
+            for (const entry of visibleEntries) this.drawEntry(context, entry, bounds);
+
+            this.applyTexture(sprite);
+            this.rememberComposed(visibleEntries, bounds);
+        } else if (sprite.texture !== this._texture) {
+            sprite.texture = this._texture;
+        }
 
         const last = visibleEntries[visibleEntries.length - 1];
-
-        this.applyTexture(sprite);
 
         sprite.offsetX = bounds.minX;
         sprite.offsetY = stackBottomY + bounds.minY;
@@ -286,16 +311,73 @@ export class StackedAdditionStack {
     }
 
     private drawEntry(context: CanvasRenderingContext2D, entry: StackedAdditionEntry, bounds: StackedAdditionBounds): void {
-        const entrySprite = entry.sprite!;
-        const bitmap = entrySprite.bitmap!;
-        const x = entrySprite.offsetX - bounds.minX;
-        const y = entrySprite.offsetY + Math.round(entry.y.value) - bounds.minY - bitmap.height;
-
         context.save();
-        context.globalAlpha = Math.max(0, Math.min(1, entrySprite.alpha / 255));
-        context.globalCompositeOperation = BLEND_OPERATIONS[entrySprite.blendMode] ?? 'source-over';
-        context.drawImage(bitmap, x, y);
+        context.globalAlpha = StackedAdditionStack.getEntryAlpha(entry);
+        context.globalCompositeOperation = StackedAdditionStack.getEntryOperation(entry);
+        context.drawImage(entry.sprite!.bitmap!, StackedAdditionStack.getEntryX(entry, bounds), StackedAdditionStack.getEntryY(entry, bounds));
         context.restore();
+    }
+
+    private static getEntryX(entry: StackedAdditionEntry, bounds: StackedAdditionBounds): number {
+        return entry.sprite!.offsetX - bounds.minX;
+    }
+
+    private static getEntryY(entry: StackedAdditionEntry, bounds: StackedAdditionBounds): number {
+        const entrySprite = entry.sprite!;
+
+        return entrySprite.offsetY + Math.round(entry.y.value) - bounds.minY - entrySprite.bitmap!.height;
+    }
+
+    private static getEntryAlpha(entry: StackedAdditionEntry): number {
+        return Math.max(0, Math.min(1, entry.sprite!.alpha / 255));
+    }
+
+    private static getEntryOperation(entry: StackedAdditionEntry): GlobalCompositeOperation {
+        return BLEND_OPERATIONS[entry.sprite!.blendMode] ?? 'source-over';
+    }
+
+    /** Whether `_bitmap` already shows these entries: the same bitmaps, undrawn since, placed and blended the same. */
+    private isComposed(entries: StackedAdditionEntry[], bounds: StackedAdditionBounds): boolean {
+        if (entries.length !== this._composedCount) return false;
+
+        for (let i = 0; i < entries.length; i++) {
+            const entry = entries[i];
+            const bitmap = entry.sprite!.bitmap!;
+            const composed = this._composed[i];
+
+            if ((composed.bitmap !== bitmap)
+                || (composed.version !== getBitmapVersion(bitmap))
+                || (composed.width !== bitmap.width)
+                || (composed.height !== bitmap.height)
+                || (composed.x !== StackedAdditionStack.getEntryX(entry, bounds))
+                || (composed.y !== StackedAdditionStack.getEntryY(entry, bounds))
+                || (composed.alpha !== StackedAdditionStack.getEntryAlpha(entry))
+                || (composed.operation !== StackedAdditionStack.getEntryOperation(entry))) return false;
+        }
+
+        return true;
+    }
+
+    private rememberComposed(entries: StackedAdditionEntry[], bounds: StackedAdditionBounds): void {
+        for (let i = 0; i < entries.length; i++) {
+            const entry = entries[i];
+            const bitmap = entry.sprite!.bitmap!;
+            const composed = this._composed[i] ?? (this._composed[i] = new StackedAdditionComposedEntry());
+
+            composed.bitmap = bitmap;
+            composed.version = getBitmapVersion(bitmap);
+            composed.width = bitmap.width;
+            composed.height = bitmap.height;
+            composed.x = StackedAdditionStack.getEntryX(entry, bounds);
+            composed.y = StackedAdditionStack.getEntryY(entry, bounds);
+            composed.alpha = StackedAdditionStack.getEntryAlpha(entry);
+            composed.operation = StackedAdditionStack.getEntryOperation(entry);
+        }
+
+        // Let go of bitmaps no longer in the stack.
+        for (let i = entries.length; i < this._composedCount; i++) this._composed[i].bitmap = undefined;
+
+        this._composedCount = entries.length;
     }
 
     private removeFinishedAdditions(): boolean {
@@ -356,6 +438,10 @@ export class StackedAdditionStack {
         disposeBitmap(this._bitmap);
 
         this._bitmap = undefined;
+
+        for (let i = 0; i < this._composedCount; i++) this._composed[i].bitmap = undefined;
+
+        this._composedCount = 0;
     }
 
     private sortEntries(): void {

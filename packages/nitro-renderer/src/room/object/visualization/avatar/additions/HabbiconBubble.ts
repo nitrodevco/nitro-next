@@ -281,6 +281,9 @@ export class HabbiconBubble implements IStackedAddition {
         const elapsed = now - this._startTime;
         let recompose = false;
 
+        // Reported only when the bubble changed, so an unchanged one leaves the stack and its sprite as they are.
+        const { bitmap, offsetX, offsetY, relativeDepth, alpha, visible } = sprite;
+
         this._runtimeAsset = HabbiconAssetManager.getRuntimeAsset(this._habbiconId);
 
         if (this._runtimeAsset && (this._runtimeAsset.animated !== this._animated)) {
@@ -312,14 +315,18 @@ export class HabbiconBubble implements IStackedAddition {
             this._expired = true;
             sprite.alpha = 0;
             sprite.visible = false;
-
-            return true;
+        } else {
+            sprite.alpha = 255;
+            sprite.visible = Math.max(sourceAlpha, backgroundAlpha) > 0;
         }
 
-        sprite.alpha = 255;
-        sprite.visible = Math.max(sourceAlpha, backgroundAlpha) > 0;
-
-        return true;
+        return recompose
+            || (sprite.bitmap !== bitmap)
+            || (sprite.offsetX !== offsetX)
+            || (sprite.offsetY !== offsetY)
+            || (sprite.relativeDepth !== relativeDepth)
+            || (sprite.alpha !== alpha)
+            || (sprite.visible !== visible);
     }
 
     /** Out of a stack, the room's offset raised for a sitting (half) or lying (whole) avatar. */
