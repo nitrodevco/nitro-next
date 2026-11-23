@@ -27,8 +27,14 @@ const THUMB_DIRECTIONS = [ 2, 6, 0, 4, 3, 1 ];
 const BUILD_RETRIES = 10;
 const BUILD_RETRY_DELAY_MS = 100;
 
-/** `AvatarEditorGridPartItem.DRAW_ORDER` (AvatarFigurePartType values, back to front). Checked against Flash by `scripts/drift/constants.py`. */
+/**
+ * `AvatarEditorGridPartItem.DRAW_ORDER` (AvatarFigurePartType values, back to front), as a newer
+ * client than the AS3 has it: `mcu` at the back and `mco` at the front (build 95's
+ * `AvatarEditorGridPartItem.js`); a type it does not list sorts behind them all. Checked against
+ * Flash by `scripts/drift/constants.py`.
+ */
 const DRAW_ORDER = [
+    AvatarFigurePartType.MiscUnder,
     AvatarFigurePartType.LeftHandItem,
     AvatarFigurePartType.LeftHand,
     AvatarFigurePartType.LeftSleeve,
@@ -60,6 +66,7 @@ const DRAW_ORDER = [
     AvatarFigurePartType.HeadAccessory,
     AvatarFigurePartType.HeadAccessoryExtra,
     AvatarFigurePartType.RightHandItem,
+    AvatarFigurePartType.MiscOver,
 ];
 
 /** One sprite of a thumbnail: a shared library texture, its position within the thumbnail, and which colour layer tints it (0 = none). */

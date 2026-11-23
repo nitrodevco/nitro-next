@@ -28,18 +28,12 @@ import { useWebSocketContext } from '#base/context/communication';
 import { useTranslation } from '#base/context/system';
 import { useOwnIsAnyRoomController } from '#base/context/user';
 import { useViewportSize } from '#base/hooks';
-import { ModalDialog, TemplateBindings, TemplateItem, TemplateWindow, useTemplateFrame } from '#base/theme';
+import { findTemplateChild, ModalDialog, Template, TemplateBindings, TemplateItem, TemplateWindow, useTemplate, useTemplateFrame } from '#base/theme';
 
 const TEMPLATE = 'habbo-toolbar-com/campaign_calendar_xml';
 
 /** `CalendarView.MARGIN`: the stage's width left free either side. */
 const MARGIN = 75;
-/** The layout's `btn_slot` width and `calendar_itemlist` spacing (`itemWidth` / `itemGap`). */
-const ITEM_WIDTH = 202;
-const ITEM_GAP = 4;
-/** `btn_back`'s x and `btn_forward`'s width in the layout. */
-const BACK_X = 4;
-const FORWARD_WIDTH = 33;
 /** `CalendarSpinnerUtil`'s shade: `0x0F1020` from 0.6 to 0.2 alpha towards the selected door. */
 const SHADE_COLOR = 0x0f1020;
 const SHADE_STEP = 2;
@@ -67,8 +61,23 @@ const STATE_TEXTS: Record<number, string> = {
     [STATE_FUTURE]: 'campaign.calendar.info.future',
 };
 
-/** `calculateItemListWidth`: `count` doors with the gaps between them. */
-const listWidth = (count: number) => (count * ITEM_WIDTH) + (Math.max(0, count - 1) * ITEM_GAP);
+/**
+ * What `onResize` and the gradients read off the window: `itemWidth` (the list's first item,
+ * `btn_slot`), `itemGap` (the list's `spacing`), the list's height, `btn_back`'s x and
+ * `btn_forward`'s width.
+ */
+const calendarGeometry = (template: Template) => {
+    const list = findTemplateChild(template.elements, 'calendar_itemlist');
+    const spacing = list?.vars.spacing;
+
+    return {
+        itemWidth: list?.children[0]?.width ?? 0,
+        itemGap: (typeof spacing === 'number') ? spacing : 0,
+        listHeight: list?.height ?? 0,
+        backX: findTemplateChild(template.elements, 'btn_back')?.x ?? 0,
+        forwardWidth: findTemplateChild(template.elements, 'btn_forward')?.width ?? 0,
+    };
+};
 
 /**
  * `CalendarItemWiggle`: the window lifted 10 px, then bounced on an 80 ms timer, each of its 7
@@ -138,13 +147,14 @@ const Shade = ({ width, height, from, to }: { width: number; height: number; fro
 export const CampaignCalendarView = () => {
     const visible = useCampaignCalendarStore(x => x.visible);
     const calendar = useCampaignCalendarStore(x => x.calendar);
+    const template = useTemplate(TEMPLATE);
 
-    if (!visible || !calendar) return null;
+    if (!visible || !calendar || !template) return null;
 
-    return <CampaignCalendarWindow />;
+    return <CampaignCalendarWindow template={template} />;
 };
 
-const CampaignCalendarWindow = () => {
+const CampaignCalendarWindow = ({ template }: { template: Template }) => {
     const calendar = useCampaignCalendarStore(x => x.calendar)!;
     const selected = useCampaignCalendarStore(x => x.selected);
     const received = useCampaignCalendarStore(x => x.received);
@@ -167,14 +177,17 @@ const CampaignCalendarWindow = () => {
     const state = selected >= 0 ? resolveDayState(openedDays, missedDays, currentDay, selected) : 0;
 
     // `onResize`.
-    const itemsOnScreen = Math.max(1, Math.floor((stageWidth - (MARGIN * 2)) / (ITEM_WIDTH + ITEM_GAP)));
+    const { itemWidth, itemGap, listHeight, backX, forwardWidth } = calendarGeometry(template);
+    /** `calculateItemListWidth`: `count` doors with the gaps between them. */
+    const listWidth = (count: number) => (count * itemWidth) + (Math.max(0, count - 1) * itemGap);
+    const itemsOnScreen = Math.max(1, Math.floor((stageWidth - (MARGIN * 2)) / Math.max(1, itemWidth + itemGap)));
     const scrollerWidth = listWidth(itemsOnScreen);
     const maxScroll = Math.max(0, listWidth(campaignDays) - scrollerWidth);
     // `calculateCenteredItemScrollH`, as the list keeps it: from its start to its end.
-    const scrollH = (selected >= 0 && maxScroll > 0) ? Math.min(1, Math.max(0, (listWidth(selected) - ((scrollerWidth - ITEM_WIDTH) * 0.5)) / maxScroll)) : 0;
+    const scrollH = (selected >= 0 && maxScroll > 0) ? Math.min(1, Math.max(0, (listWidth(selected) - ((scrollerWidth - itemWidth) * 0.5)) / maxScroll)) : 0;
     // `CalendarSpinnerUtil.createGradients`.
     const leftShade = Math.max(1, listWidth(Math.max(0, selected)) - (scrollH * maxScroll));
-    const rightShade = Math.max(1, scrollerWidth - (leftShade + ITEM_WIDTH + ITEM_GAP));
+    const rightShade = Math.max(1, scrollerWidth - (leftShade + itemWidth + itemGap));
 
     // `updateState` wiggles the selected door when it can be opened; `updateThumbnail` the picture it got.
     const doorWiggle = useWiggle((state === STATE_AVAILABLE && !received) ? `door-${selected}` : undefined);
@@ -222,7 +235,7 @@ const CampaignCalendarWindow = () => {
             children: (
                 <Shade
                     width={leftShade}
-                    height={447}
+                    height={listHeight}
                     from={0.6}
                     to={0.2}
                 />
@@ -232,7 +245,7 @@ const CampaignCalendarWindow = () => {
             children: (
                 <Shade
                     width={rightShade}
-                    height={447}
+                    height={listHeight}
                     from={0.2}
                     to={0.6}
                 />
@@ -264,7 +277,7 @@ const CampaignCalendarWindow = () => {
                     // The list has no scrollbar for `scrollH` to go through: its doors moved by the scroll.
                     if (list) for (const door of list.children) door.x -= Math.round(scrollH * maxScroll);
 
-                    if (forward) forward.x = scrollerWidth - BACK_X - FORWARD_WIDTH;
+                    if (forward) forward.x = scrollerWidth - backX - forwardWidth;
                     if (right) right.x = scrollerWidth - rightShade;
                 }}
             />

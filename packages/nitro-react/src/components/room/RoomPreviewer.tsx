@@ -3,7 +3,7 @@ import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import { RoomPreviewerApi, RoomPreviewerOptions, useRoomPreviewer } from '#base/hooks';
-import { Box, BoxLayout } from '#base/theme';
+import { Box, BoxLayout, useLatest } from '#base/theme';
 
 /** What a parent drives the preview with, through a ref - the hook's own API. */
 export type RoomPreviewerHandle = RoomPreviewerApi;
@@ -22,13 +22,8 @@ export interface RoomPreviewerProps extends RoomPreviewerOptions {
 }
 
 const useReadyCallback = (api: RoomPreviewerApi, onReady?: (api: RoomPreviewerApi) => void) => {
-    const latest = useRef({ api, onReady });
-
-    // Kept current from an effect (not during render) so the room effect below can call the
-    // newest callback with the newest api without depending on either.
-    useEffect(() => {
-        latest.current = { api, onReady };
-    });
+    // The room effect below calls the newest callback with the newest api without depending on either.
+    const latest = useLatest({ api, onReady });
 
     useEffect(() => {
         if (api.room) latest.current.onReady?.(latest.current.api);

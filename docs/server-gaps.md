@@ -10,7 +10,7 @@ server answer from a client bug.
 can be in both, the server's half here and the client's there.
 
 As of client revision `WIN63-202609091217-117204808` and Turbo revision `Revision20260909`:
-15 packets sent and 52 listened to. Update the list when a gap is closed on either side.
+15 packets sent and 51 listened to. Update the list when a gap is closed on either side.
 
 ## How the list is made
 
@@ -74,7 +74,7 @@ name them.
 | Game tokens | `SnowWarGameTokens` | never sent |
 | Game centre | `Game2GameLongData`, `Game2InArenaQueue`, `Game2UserBlocked` | never sent |
 | Quests | `CitizenshipVipOfferPromoEnabled` | never sent |
-| User and account | `InClientLink` (its serializer writes nothing), `EmailStatusResult`, `AccountSafetyLockStatusChange`, `AvatarEffectSelected` | never sent |
+| User and account | `InClientLink` (its serializer writes nothing), `EmailStatusResult`, `AvatarEffectSelected` | never sent |
 | Chat styles | `UserPurchasableChatStyleChanged` | no serializer |
 | Messenger | `MiniMailNew`, `MiniMailUnreadCount` | never sent |
 | Notifications | `RoomMessageNotification`, `ElementPointer` (the hint arrow), `EpicPopup` | never sent |

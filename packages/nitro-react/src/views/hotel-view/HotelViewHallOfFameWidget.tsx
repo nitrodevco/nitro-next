@@ -35,11 +35,11 @@ import {
     HALL_OF_FAME_POPUP_BOTTOM,
     hallOfFameLayout,
     hallOfFameSchedule,
-    hotelViewProperty,
     useConfigData,
     useSystemStore,
 } from '#base/context/system';
 import { TemplateItem, TemplateWindow, useTemplateLibrary } from '#base/theme';
+import { configReader } from '#base/utils';
 
 import { HOTEL_VIEW_LIBRARY, hotelViewTemplate, hotelViewTemplateId } from './hotelViewTemplate';
 
@@ -60,7 +60,8 @@ export const HotelViewHallOfFameWidget = () => {
 
     if (hallOfFame && entryTemplate && popupTemplate) {
         const { startOffset, offsetsY, widths } = hallOfFameLayout(config, code);
-        const hasExtraLink = hotelViewProperty(config, 'landing.view.communitygoalhof.hasroomlink') === 'true';
+        // `hasExtraLink`: `getBoolean`, so a hotel's "1" shows the link too.
+        const hasExtraLink = configReader(config).configBoolean('landing.view.communitygoalhof.hasroomlink');
         const entryWidth = (index: number) => ((widths.length > index) ? widths[index] : entryTemplate.width);
         const entryX: number[] = [];
 

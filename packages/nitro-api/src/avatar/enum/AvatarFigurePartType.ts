@@ -1,4 +1,9 @@
-﻿export enum AvatarFigurePartType {
+﻿/**
+ * Flash's `avatar/enum/AvatarFigurePartType`, with the set types only the figure data names. `mco`
+ * and `mcu` are a newer client's (build 93's `AvatarFigurePartType.js`, unnamed there): the AS3
+ * decompile predates them.
+ */
+export enum AvatarFigurePartType {
     None = '',
     Body = 'bd',
     BodySwim = 'bds',
@@ -33,6 +38,8 @@
     Misc = 'mc',
     MiscRight = 'mcr',
     MiscLeft = 'mcl',
+    MiscOver = 'mco',
+    MiscUnder = 'mcu',
     Pet = 'pt',
     PetRight = 'ptr',
     PetLeft = 'ptl',

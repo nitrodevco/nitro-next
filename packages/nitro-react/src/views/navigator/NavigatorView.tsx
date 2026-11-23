@@ -37,7 +37,7 @@ import { useEffect, useState } from 'react';
 import { addNavigatorSavedSearch, collapseNavigatorCategory, deleteNavigatorSavedSearch, expandNavigatorCategory, goBackNavigatorSearch, goToPrivateRoom, goToPromotedRoom, openClientLink, performNavigatorSearch, refreshNavigatorSearch, requestRoomGroupDetails, setNavigatorViewMode } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
 import { NAVIGATOR_FILTER_TYPES, splitNavigatorFilter, useNavigatorActions, useNavigatorOpeningGeometry, useNavigatorStore } from '#base/context/navigator';
-import { useConfigValue, useGroupBadgeImageUrl, useTranslation, useWindowActions } from '#base/context/system';
+import { useConfigBoolean, useConfigValue, useGroupBadgeImageUrl, useTranslation, useWindowActions } from '#base/context/system';
 import { PerkCodes, useOwnPerkAllowed, useOwnUserId } from '#base/context/user';
 import { useWindowVisibility } from '#base/hooks';
 import { getGlobalRect, layerFrameOverrides, LayoutWindow, TemplateBindings, TemplateItem, TemplateWindow, TemplateWindows, useFrameOverride } from '#base/theme';
@@ -120,7 +120,7 @@ export const NavigatorView = () => {
     const canToggleView = useOwnPerkAllowed(PerkCodes.NavigatorRoomThumbnailCamera);
     const thumbnailUrlBase = useConfigValue<string>('navigator.thumbnail.url_base') ?? '';
     const imageLibraryUrl = useConfigValue<string>('image.library.url') ?? '';
-    const thumbnailsInAmazon = useConfigValue<boolean | string>('new.navigator.official.room.thumbnails.in.amazon');
+    const thumbnailsInAmazon = useConfigBoolean('new.navigator.official.room.thumbnails.in.amazon');
     const groupBadgeUrl = useGroupBadgeImageUrl();
     const { hide } = useWindowVisibility('navigator');
     const { showWindow } = useWindowActions();
@@ -255,7 +255,7 @@ export const NavigatorView = () => {
 
     /** `getNewTileElement`: the group's badge, and the room's picture - official, or its camera thumbnail. */
     const tileItem = (room: IRoomInfo): TemplateItem => {
-        const officialBase = (thumbnailsInAmazon === true || thumbnailsInAmazon === 'true') ? thumbnailUrlBase : imageLibraryUrl;
+        const officialBase = thumbnailsInAmazon ? thumbnailUrlBase : imageLibraryUrl;
 
         return {
             key: String(room.roomId),

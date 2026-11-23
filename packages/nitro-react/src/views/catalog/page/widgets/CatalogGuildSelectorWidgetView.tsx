@@ -7,7 +7,7 @@ import { CATALOG_NO_GUILD_SELECTED, CatalogGuildSelector, CatalogPage, CatalogWi
 import { useWebSocketContext } from '#base/context/communication';
 import { ClientGates, useClientGate, useOwnUserId } from '#base/context/user';
 import { useCatalogWidgetEvent } from '#base/hooks';
-import { Dropmenu, getOrBuildTexture, TemplateWindow, ThemeImage, toCssHexColor } from '#base/theme';
+import { Dropmenu, getOrBuildTexture, TemplateWindow, ThemeImage, toCssHexColor, useLatest } from '#base/theme';
 
 import { CatalogWidgetProps } from '../CatalogPageRegistry';
 import { catalogTemplateId } from '../catalogTemplates';
@@ -168,11 +168,7 @@ const GuildSelector = ({ page, forum }: GuildSelectorProps) => {
         else select(lastSelection.current, filtered);
     };
 
-    const latest = useRef({ populateAndSelectFavorite });
-
-    useEffect(() => {
-        latest.current = { populateAndSelectFavorite };
-    });
+    const latest = useLatest({ populateAndSelectFavorite });
 
     // The controller holds one object for the widget's life, which calls the latest render's code.
     const [ widget ] = useState<CatalogGuildSelector>(() => ({

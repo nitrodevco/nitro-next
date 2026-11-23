@@ -148,9 +148,6 @@ export const actionElements: WiredElementEntry[] = [
     defineWiredElement(botTalkDirectToAvatarAction, BotTalkDirectToAvatarView),
     defineWiredElement(controlClockAction, ControlClockView),
     defineWiredElement(setFurniAltitudeAction, SetFurniAltitudeView),
-    defineWiredElement(setFurniHighlightAction, SetFurniHighlightView),
-    defineWiredElement(sendLinkMessageAction, SendLinkMessageView),
-    defineWiredElement(sendLinkDataframeAction, SendLinkDataframeView),
     defineWiredElement(sendSignalAction, SendSignalView),
     defineWiredElement(freezeUserAction, FreezeUserView),
     defineWiredElement(unfreezeUserAction),
@@ -179,4 +176,7 @@ export const actionElements: WiredElementEntry[] = [
     defineWiredElement(progressRewardTrackAction, ProgressRewardTrackView),
     defineWiredElement(resetRewardTrackAction, ResetRewardTrackView),
     defineWiredElement(setFurniTransparencyAction, SetFurniTransparencyView),
+    defineWiredElement(setFurniHighlightAction, SetFurniHighlightView),
+    defineWiredElement(sendLinkMessageAction, SendLinkMessageView),
+    defineWiredElement(sendLinkDataframeAction, SendLinkDataframeView),
 ];

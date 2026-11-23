@@ -10,10 +10,10 @@
  */
 import { GetTicker } from '@nitrodevco/nitro-renderer';
 import { Container as PixiContainer, Sprite, Texture, Ticker } from 'pixi.js';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { hotelViewProperty, useConfigData, useSystemStore } from '#base/context/system';
-import { Box, loadTexture } from '#base/theme';
+import { Box, loadTexture, useLatest } from '#base/theme';
 
 import { createMovingBackgroundObjects, MovingBackgroundObject, updateMovingBackgroundObjects } from './movingBackgroundObjects';
 
@@ -29,11 +29,7 @@ export const HotelViewMovingObjects = ({ width, height }: HotelViewMovingObjects
     const code = useSystemStore(x => x.hotelViewBackgroundCode);
     const config = useConfigData();
     const [ container, setContainer ] = useState<PixiContainer | null>(null);
-    const size = useRef({ width, height });
-
-    useEffect(() => {
-        size.current = { width, height };
-    }, [ width, height ]);
+    const size = useLatest({ width, height });
 
     useEffect(() => {
         if (!container || (code === undefined)) return;
