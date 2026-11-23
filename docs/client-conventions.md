@@ -223,6 +223,8 @@ counts as a new warning at the verification gate.
   that opened it - or past a window, which clips its content anyway - is a `FloatingPopup` (the
   window layer, whole-area hit testing, `onOutsideClick`), placed with `getGlobalRect(anchor)`.
   An absolutely positioned child of a small box draws but answers only where it overlaps the box.
+  So does a window dragged out of the box that placed it: that box is `pointerTransparent` (see
+  [porting gotchas](porting-gotchas.md), "A dragged window leaves its box").
 - **DOM coordinates are not stage coordinates.** The canvas draws in the screen's own pixels at a
   whole resolution, so at 125% or 150% Windows scaling a stage pixel is smaller than a CSS pixel.
   Use a Pixi event's `global`; convert a native event's `clientX` / `clientY` (or a delta of them)

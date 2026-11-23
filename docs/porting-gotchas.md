@@ -37,6 +37,17 @@ costs you time. Rules with a longer story live in the other guides in `docs/`.
   container (the messenger's is (120, 120)), or the window opens in the top-left corner.
 - **Check the available scrolling API.** `scrollResetKey` resets to the start. Chat auto-scroll
   belongs with the messenger implementation; do not assume a WIP branch's props exist.
+- **A dragged window leaves its box.** A window that drags itself without a frame
+  (`draggable_with_mouse` on a container: the trophy, stickie, ecotron card, external image,
+  camera, quest tracker) moves inside whatever `Box` the view placed it with. That box's hit area
+  prunes the window wherever it is dragged out of it: the part outside draws but takes no press,
+  which goes to the room, and the window cannot be grabbed there again. A box that only places such
+  a window, and every box between it and the desktop, is `pointerTransparent`
+  (`FurnitureTemplatePanel`, `CameraView`). A frame is not affected: it moves onto the desktop.
+  A window Flash docks in an item list is the list's: the list puts it back on its axis after each
+  move and clips it to the list (`arrangedIn` binding, and a clipping slot - `QuestTrackerView`).
+  Development builds warn on the first drag of a window that is cut off (`findDragCutOff`, theme
+  `drag/dragCutOff.ts`).
 - **Pixel art goes on whole pixels.** `@pixi/layout` centres a sprite in its box by its
   `objectPosition` unrounded, so an odd difference puts it on a half pixel, and `roundPixels` then
   rounds its two edges apart: some GPUs drop or double a column of the bitmap, a different one

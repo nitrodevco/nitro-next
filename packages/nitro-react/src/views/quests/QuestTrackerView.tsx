@@ -60,7 +60,10 @@ export const QuestTrackerView = ({ tracker }: { tracker: QuestTrackerState }) =>
     const progress = quest.totalSteps > 0 ? Math.ceil((100 * quest.completedSteps) / quest.totalSteps) : 0;
     const successFrame = (phase === 'completed') ? TRACKER_SUCCESS_FRAMES[frame] : 0;
 
-    const bindings: Record<string, { visible?: boolean; caption?: string; asset?: string; onPointerTap?: () => void; added?: TemplateItem[]; children?: ReactNode }> = {
+    const bindings: Record<string, { visible?: boolean; caption?: string; asset?: string; onPointerTap?: () => void; added?: TemplateItem[]; children?: ReactNode; arrangedIn?: 'vertical' }> = {
+        // `draggable_with_mouse`, docked in `extension_grid`, a vertical list that puts it back in its slot
+        // after every move: the tracker only slides sideways.
+        quest_tracker: { arrangedIn: 'vertical' },
         quest_header_txt: { caption: t('quests.tracker.caption', 'quests.tracker.caption', { quest_name: name }) },
         desc_txt: { caption: t(`${questKey(quest)}.desc`, `${questKey(quest)}.desc`) },
         // `more_info_region` is the hit (`onMoreInfo`); the text over it takes the tap too, as Flash's mouse-disabled text lets it through.
@@ -90,8 +93,15 @@ export const QuestTrackerView = ({ tracker }: { tracker: QuestTrackerState }) =>
     for (const letter of [ 'a', 'b', 'c', 'd' ]) bindings[`prompt_pic_${letter}`] = { visible: false };
 
     return (
-        // 2 below what is over it, `extension_grid`'s spacing.
-        <Box layout={{ position: 'relative', width: WIDTH, height: HEIGHT, marginTop: 2, flexShrink: 0 }}>
+        // 2 below what is over it, `extension_grid`'s spacing. Its slot in the column, clipped as Flash clips
+        // it: the tracker draws into the list's graphic context (`use_parent_graphic_context`), cut at the
+        // list's 192 px and at its own rect, both windows clipping by default - what slides out of the
+        // column is gone, and takes no press there either (the mask bounds the presses). Nothing to hit
+        // of its own.
+        <Box
+            pointerTransparent
+            layout={{ position: 'relative', width: WIDTH, height: HEIGHT, marginTop: 2, flexShrink: 0, overflow: 'hidden' }}
+        >
             <TemplateWindow
                 id={`${QUEST_LIBRARY}/QuestTracker`}
                 bindings={bindings}

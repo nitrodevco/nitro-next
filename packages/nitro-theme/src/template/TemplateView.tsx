@@ -1747,6 +1747,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                 dragTrigger={dragTriggerOf(element) || undefined}
                 boundToParentRect={element.params?.boundToParent || undefined}
                 dropToLayout={binding?.dropToLayout}
+                arrangedIn={binding?.arrangedIn}
                 disabled={binding?.disabled}
                 // A clickable face takes the tap itself; the region around it holding the same
                 // handler would run it again as the tap bubbles.

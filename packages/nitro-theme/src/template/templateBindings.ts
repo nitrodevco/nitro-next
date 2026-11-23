@@ -259,6 +259,13 @@ export interface TemplateBinding {
      */
     dropToLayout?: boolean;
     /**
+     * A drag target the code docks in an auto-arranging item list, by the list's direction: the list
+     * puts it straight back on its axis after every move (`ItemListController.updateScrollAreaRegion`
+     * on `WE_CHILD_RELOCATED`) - the quest tracker in the toolbar's vertical extension list only
+     * slides sideways.
+     */
+    arrangedIn?: 'vertical' | 'horizontal';
+    /**
      * Clones added after its own children (`addChild` of a window built with `buildFromXML` or
      * cloned), laid out with them - placed by their own rects and their `arrange`.
      */
@@ -645,6 +652,7 @@ export const sameTemplateBinding = (a: TemplateBinding | undefined, b: TemplateB
         && a.children === b.children
         && a.keepMounted === b.keepMounted
         && a.dropToLayout === b.dropToLayout
+        && a.arrangedIn === b.arrangedIn
         && a.background === b.background
         && a.pivot === b.pivot
         && a.rotation === b.rotation

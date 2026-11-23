@@ -63,6 +63,8 @@ export interface RegionProps extends ThemeProps<RegionVariant> {
     boundToParentRect?: boolean;
     /** A `dragTarget` whose move goes at the release, its code laying it out where it belongs (`useDragTarget`). */
     dropToLayout?: boolean;
+    /** A `dragTarget` that is an item of an auto-arranging list, put back on the list's axis after each move (`useDragTarget`). */
+    arrangedIn?: 'vertical' | 'horizontal';
     children?: ReactNode;
 }
 
@@ -110,6 +112,7 @@ export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiC
         dragTrigger = false,
         boundToParentRect,
         dropToLayout,
+        arrangedIn,
         children,
         onPointerOver,
         onPointerOut,
@@ -118,7 +121,7 @@ export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiC
         onPointerUpOutside,
         onPointerTap,
     }, ref) => {
-        const drag = useDragTarget(dragTarget, { boundToParentRect, dropToLayout });
+        const drag = useDragTarget(dragTarget, { boundToParentRect, dropToLayout, arrangedIn });
         const startDrag = useDragTrigger(dragTrigger, drag.controller);
         const onPointerDown = compose(onPointerDownProp, startDrag);
         const { ownCascade, config, state, handlers, resolvedTextStyle, resolvedTextColor } = useThemeVariant<RegionVariant>({

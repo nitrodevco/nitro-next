@@ -31,7 +31,13 @@ export const FurnitureTemplatePanel = ({ position, size, ...props }: FurnitureTe
     const top = (position === 'center') ? Math.max(0, Math.floor((viewport.height - height) / 2)) : position.y;
 
     return (
-        <Box layout={{ position: 'absolute', left, top, width, height }}>
+        // Its place on the desktop, nothing to hit: the window drags away from this box (its root moves
+        // inside it), and a hit box here cut every part dragged out of it off from the pointer - the
+        // plaque could no longer be grabbed there, and the press went to the room.
+        <Box
+            pointerTransparent
+            layout={{ position: 'absolute', left, top, width, height }}
+        >
             <TemplateWindow {...props} />
         </Box>
     );
