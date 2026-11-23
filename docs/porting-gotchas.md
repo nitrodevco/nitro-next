@@ -37,6 +37,13 @@ costs you time. Rules with a longer story live in the other guides in `docs/`.
   container (the messenger's is (120, 120)), or the window opens in the top-left corner.
 - **Check the available scrolling API.** `scrollResetKey` resets to the start. Chat auto-scroll
   belongs with the messenger implementation; do not assume a WIP branch's props exist.
+- **Pixel art goes on whole pixels.** `@pixi/layout` centres a sprite in its box by its
+  `objectPosition` unrounded, so an odd difference puts it on a half pixel, and `roundPixels` then
+  rounds its two edges apart: some GPUs drop or double a column of the bitmap, a different one
+  wherever the window is dragged (the trophy's title lost a column of its "p"). Flash floors such
+  offsets - `TextSkinRenderer.draw` puts a field at `Math.floor(width / 2 - field.width / 2)`, a
+  centred window goes at `Math.floor(parent / 2) - Math.floor(size / 2)` - and so does the port
+  where it places one: `FlashText` floors its sprite's offset (`placeOnWholePixels`).
 
 ## Reference material
 

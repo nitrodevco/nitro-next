@@ -1,11 +1,12 @@
 import { FederatedPointerEvent, Rectangle, Sprite as PixiSprite, Texture } from 'pixi.js';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { BoxLayout } from '../Box';
 import { useLayoutSize } from '../hooks/useLayoutEvent';
 import { destroyOwnedTexture } from '../utils/destroyOwnedTexture';
 import { insetStretchAxes } from '../utils/layoutInsetStretch';
 import { flashLinkText, FlashTextCanvas, flashTextLinkAtPoint } from './flash-text';
+import { placeOnWholePixels } from './placeOnWholePixels';
 
 export interface FlashTextProps {
     /** The rasterised text - see `useFlashTextCanvas`. */
@@ -45,11 +46,17 @@ export interface FlashTextProps {
 }
 
 /**
- * Flash-exact text as one sprite. The bitmap is shown 1:1 with nearest-neighbour sampling: the
- * rasterizer already grid-fitted every glyph to whole pixels, and any resampling would undo it.
+ * Flash-exact text as one sprite. The bitmap is shown 1:1 with nearest-neighbour sampling at whole
+ * pixels (`placeOnWholePixels`): the rasterizer already grid-fitted every glyph to whole pixels, and
+ * any resampling would undo it.
  */
 export const FlashText = ({ rendered, layout, visible, alpha, x, y, clipWidth: ownClipWidth, clipHeight: ownClipHeight, clipAlign = 'left', clip = false, onLink }: FlashTextProps) => {
     const [ node, setNode ] = useState<PixiSprite | null>(null);
+    const attach = useCallback((sprite: PixiSprite | null) => {
+        if (sprite) placeOnWholePixels(sprite);
+
+        setNode(sprite);
+    }, []);
     const measured = useLayoutSize(node);
     // A box the layout sizes (not a number, not left to the texture) is known only after layout.
     const laidOut = (size: BoxLayout['width']) => clip && size !== undefined && typeof size !== 'number';
@@ -94,7 +101,7 @@ export const FlashText = ({ rendered, layout, visible, alpha, x, y, clipWidth: o
     };
     const sprite = (spriteLayout: BoxLayout | undefined, nudge: boolean) => (
         <pixiSprite
-            ref={setNode}
+            ref={attach}
             texture={texture}
             visible={visible}
             alpha={alpha}
