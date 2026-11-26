@@ -1,8 +1,9 @@
-import { ISimpleRoomObjectData, RoomControllerLevelEnum } from '@nitrodevco/nitro-api';
+import { ISimpleRoomObjectData } from '@nitrodevco/nitro-api';
 
 import { commandBot, openClientLink, pickUpBot } from '#base/commands';
 import { useWebSocketContext } from '#base/context/communication';
-import { BOT_SKILL_CHANGE_NAME, BOT_SKILL_SETUP_CHAT, useIsRoomOwner, useOwnControllerLevel, useRoomBotsActions, useRoomStore, useRoomUserByObjectId } from '#base/context/room';
+import { BOT_SKILL_CHANGE_NAME, BOT_SKILL_SETUP_CHAT, useIsRoomOwner, useRoomBotsActions, useRoomStore, useRoomUserByObjectId } from '#base/context/room';
+import { useOwnIsAnyRoomController } from '#base/context/user';
 import { useWiredShowInspectButton } from '#base/context/wired';
 import { TemplateBindings, TemplateWindow } from '#base/theme';
 
@@ -60,7 +61,7 @@ export const InfoBubbleRentableBotView = ({ objectData, onClose }: InfoBubbleRen
     const userData = useRoomUserByObjectId(objectData.objectId);
     const skillsWithCommands = useRoomStore(x => (userData ? x.botSkillsById[userData.webID] : undefined));
     const isRoomOwner = useIsRoomOwner();
-    const controllerLevel = useOwnControllerLevel();
+    const isAnyRoomController = useOwnIsAnyRoomController();
     const { send } = useWebSocketContext();
     const { openBotSkillConfiguration } = useRoomBotsActions();
     const showWiredInspect = useWiredShowInspectButton();
@@ -73,7 +74,8 @@ export const InfoBubbleRentableBotView = ({ objectData, onClose }: InfoBubbleRen
     const botId = userData.webID;
     const skills = userData.botSkills ?? [];
     const has = (skill: number) => skills.includes(skill);
-    const canManage = isRoomOwner || (controllerLevel >= RoomControllerLevelEnum.Guest);
+    // `updateButtons`: `amIOwner || amIAnyRoomController` - room rights alone do not pick a bot up.
+    const canManage = isRoomOwner || isAnyRoomController;
     const command = (skill: number, data = '') => () => commandBot(send, botId, skill, data);
     const configure = (skill: number) => () => openBotSkillConfiguration(botId, skill);
 

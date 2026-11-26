@@ -9,6 +9,9 @@ import { useOwnIsAnyRoomController, useOwnUserId, useUserActions, useUserStore }
 import { useRoomObjectModify } from '#base/hooks';
 import { InfostandPetView } from '#base/views/room-widgets/object-infostand/InfostandPetView';
 
+/** `InfoStandWidget.UPDATE_INTERVAL_MS`. */
+const UPDATE_INTERVAL_MS = 3000;
+
 /**
  * The pet panel. The room knows a pet's name and figure from the moment it walks in, but nothing
  * else - the rest is asked for when the pet is clicked, which is what `InfoStandWidgetHandler`
@@ -47,6 +50,18 @@ export const InfostandPet = ({ objectData, onClose }: { objectData: ISimpleRoomO
 
         send(new GetPetInfoComposer({ petId }));
     }, [ petId, petSelectEnabled, send ]);
+
+    // `InfoStandWidget.onUpdateTimer`: once the pet's info is up (`onPetInfo` starts the timer), it is
+    // asked for again every 3 s (`RWUAM_REQUEST_PET_UPDATE`), so its energy, happiness and respects keep up.
+    const hasInfo = !!info;
+
+    useEffect(() => {
+        if (!petId || !hasInfo) return;
+
+        const interval = setInterval(() => send(new GetPetInfoComposer({ petId })), UPDATE_INTERVAL_MS);
+
+        return () => clearInterval(interval);
+    }, [ petId, hasInfo, send ]);
 
     if (!userData) return null;
 

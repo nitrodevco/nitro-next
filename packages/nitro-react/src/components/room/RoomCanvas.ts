@@ -1,12 +1,13 @@
 /** Room canvas lifecycle and input bridge, including RoomEngine camera updates on each render tick. */
-import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent, RoomRenderedEvent } from '@nitrodevco/nitro-api';
+import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomEngineEvent, RoomGeometryScaleType, RoomObjectMouseEvent, RoomRenderedEvent } from '@nitrodevco/nitro-api';
 import { GetRenderer, GetRoomStage, GetTicker, GetTickerFrameTime, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
-import { FederatedPointerEvent, Ticker } from 'pixi.js';
+import { FederatedPointerEvent, Point, Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 
 import { clientModuleRoomPointer, hasSecondaryRooms, roomPlaneTileAt, secondaryRoomTileAt } from '#base/commands';
 import { ClientModuleRoomPointerType } from '#base/context/client-modules';
 import { getRoomObjectBeingPlaced, useRoom, useRoomMouseActions, useRoomStore } from '#base/context/room';
+import { useConfigBoolean } from '#base/context/system';
 import { useRoomCamera } from '#base/hooks';
 import { ClientToStage, DOUBLE_CLICK_MS, useLatest } from '#base/theme';
 
@@ -52,6 +53,7 @@ export const RoomCanvas = () => {
     const updateCameraRef = useLatest(updateRoomCamera);
     const isDecoratingRef = useLatest(isDecorating);
     const isPlayingGameRef = useLatest(isPlayingGame);
+    const zoomEnabledRef = useLatest(useConfigBoolean('zoom.enabled'));
     const { hasAndResetCursorUpdate, hasCursorOwners } = useRoomMouseActions();
     const mouseDataRef = useRef<MouseData>({
         mouseXY: { x: 0, y: 0 },
@@ -172,6 +174,20 @@ export const RoomCanvas = () => {
         buttonDown: boolean,
     ) => {
         if (!room?.canvas) return;
+
+        // `RoomEngine.handleRoomCanvasMouseEvent`: a click with Ctrl and Alt zooms in on the pointer, and out
+        // with Shift held as well - `setRoomCanvasScale`, which wants `zoom.enabled` and rests on 0.5 or a whole scale.
+        if ((type === MouseEventType.MOUSE_CLICK) && ctrlKey && altKey) {
+            if (!zoomEnabledRef.current) return;
+
+            const scale = room.canvas.scale;
+            const next = shiftKey ? (scale >> 1) : ((scale < 1) ? 1 : (scale << 1));
+
+            room.canvas.setScale((next < 1) ? 0.5 : Math.floor(next), new Point(x, y));
+            room.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.ROOM_ZOOMED, room.roomId));
+
+            return;
+        }
 
         const sprite = room.getRoomOverlayIconSprite();
 

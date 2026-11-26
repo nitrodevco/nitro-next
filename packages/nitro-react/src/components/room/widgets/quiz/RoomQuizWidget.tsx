@@ -119,7 +119,11 @@ const QuizAnswerSign = ({ userId, liked, seconds, onExpire }: QuizAnswerSignProp
     if (objectId === undefined) return null;
 
     return (
-        <RoomObjectMenuBubble objectData={{ objectId, category: RoomObjectCategoryEnum.Unit }}>
+        <RoomObjectMenuBubble
+            objectData={{ objectId, category: RoomObjectCategoryEnum.Unit }}
+            // `wordquiz_like` is not bound to the screen.
+            keepOnScreen={false}
+        >
             <RoomQuizAnswerSignView liked={liked} />
         </RoomObjectMenuBubble>
     );

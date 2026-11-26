@@ -8,6 +8,12 @@
  * Flash's `RoomEngine.useOffsetScrolling` is hard-coded true in the reference revision; its
  * alternative geometry-scrolling branches are unreachable. A forced canvas flip
  * (`RoomZoomEvent.isFlipForced`) turns the canvas over and stops the camera until it is upright.
+ *
+ * The camera's location is the canvas offset as it would be at scale 1
+ * (`normalizeScreenOffsetForScale`): every change of scale re-reads it from the canvas
+ * (`syncRoomCameraLocationToCanvasOffset`, on `REE_ROOM_ZOOMED`), and so does the end of a drag.
+ * Left raw, a room dragged while zoomed jumped sideways on the first camera update back at scale 1.
+ * The Me toolbar icon has it look for the target again (`RoomEngine.onToolbarClicked`).
  */
 import { IRoom, IVector3D, RoomDraggedEvent, RoomEngineEvent, RoomGeometryScaleType, RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomZoomEvent, Vector3d } from '@nitrodevco/nitro-api';
 import { Room } from '@nitrodevco/nitro-renderer';
@@ -39,9 +45,23 @@ interface RoomCameraData {
     scaleChanged: boolean;
     lastOffsetX: number;
     lastOffsetY: number;
+    /** The store's `cameraResetRequests` this camera has answered. */
+    resetRequests: number;
 }
 
-const createCameraData = (room: IRoom | undefined): RoomCameraData => ({
+/**
+ * `RoomEngine.normalizeScreenOffsetForScale`: a canvas offset at `scale` as the offset the canvas
+ * has at scale 1. `size` is the canvas's unscaled size - the AS3 passes its scaled one and divides.
+ */
+const normalizeScreenOffsetForScale = (offset: number, size: number, scale: number) => {
+    if ((scale === 0) || (scale === 1)) return offset;
+
+    const half = size / 2;
+
+    return half - ((half - offset) / scale);
+};
+
+const createCameraData = (room: IRoom | undefined, resetRequests: number = 0): RoomCameraData => ({
     room,
     currentLocation: undefined,
     targetLocation: undefined,
@@ -58,6 +78,7 @@ const createCameraData = (room: IRoom | undefined): RoomCameraData => ({
     scaleChanged: false,
     lastOffsetX: 0,
     lastOffsetY: 0,
+    resetRequests,
 });
 
 export const useRoomCamera = () => {
@@ -68,6 +89,7 @@ export const useRoomCamera = () => {
     // `SessionDataManager.isRoomCameraFollowDisabled` - the account's "disable room camera follow" setting.
     const followDisabledByUser = useUserStore(x => x.isRoomCameraFollowDisabled);
     const followDuration = useRoomStore(x => x.followDuration);
+    const cameraResetRequests = useRoomStore(x => x.cameraResetRequests);
     // `RoomEngine.cameraFollowDuration`: `getBoolean("room.camera.follow_user") ? 1000 : 0`.
     const configuredMoveSpeedDenominator = useConfigValue<number>('camera.move.speed');
     const moveSpeedDenominator = (configuredMoveSpeedDenominator !== undefined)
@@ -165,7 +187,7 @@ export const useRoomCamera = () => {
         // A new room starts with a new camera: where the last room was scrolled to says nothing
         // about this one, and its location has to be initialized on this room's geometry.
         if (cameraDataRef.current.room !== room) {
-            cameraDataRef.current = createCameraData(room);
+            cameraDataRef.current = createCameraData(room, cameraResetRequests);
 
             /*
              * Not Flash's: a room the session entered while a client module drew it beside the last
@@ -184,6 +206,13 @@ export const useRoomCamera = () => {
         }
 
         const cameraData = cameraDataRef.current;
+
+        // `RoomCamera.reset`: asked to look again, the camera takes its target afresh on this update.
+        if (cameraData.resetRequests !== cameraResetRequests) {
+            cameraData.resetRequests = cameraResetRequests;
+            cameraData.geometryUpdateId = -1;
+        }
+
         const viewport = new Rectangle(0, 0, canvas.width, canvas.height);
         const roomBounds = room.getRoomObjectBoundingRectangle(Room.ROOM_OBJECT_ID, RoomObjectCategoryEnum.Room);
 
@@ -393,6 +422,32 @@ export const useRoomCamera = () => {
         }
     };
 
+    /** `RoomCamera.resetLocation` to the canvas offset, as it is at scale 1 - `transformScale` negative for a flipped canvas. */
+    const resetLocationToCanvasOffset = (transformScale: number) => {
+        const canvas = room?.canvas;
+
+        if (!canvas) return;
+
+        // AS3 width/height already include scale; Nitro exposes the unscaled canvas size.
+        cameraDataRef.current.currentLocation = new Vector3d(
+            -normalizeScreenOffsetForScale(canvas.screenOffsetX, canvas.width, transformScale),
+            -normalizeScreenOffsetForScale(canvas.screenOffsetY, canvas.height, transformScale),
+        );
+    };
+
+    /**
+     * `RoomEngine.syncRoomCameraLocationToCanvasOffset`, which `setRoomCanvasScale` runs after every
+     * change of scale or flip: it skips the inverted display, then restores the unscaled camera
+     * position when the next effect turns it upright again.
+     */
+    useRoomEventDispatcher<RoomEngineEvent>(RoomEngineEvent.ROOM_ZOOMED, (event) => {
+        const canvas = room?.canvas;
+
+        if (!room || !canvas || (event.roomId !== room.roomId) || canvas.isFlipped) return;
+
+        resetLocationToCanvasOffset(canvas.scale);
+    });
+
     /**
      * Forced-flip branch of Flash `RoomUI.onRoomEngineZoomEvent` / `RoomEngine.setRoomCanvasScale`.
      * Ordinary toolbar zoom remains in `useRoomZoom`; this listener only handles forced flips.
@@ -404,28 +459,21 @@ export const useRoomCamera = () => {
 
         canvas.setFlip(!canvas.isFlipped);
 
-        // `syncRoomCameraLocationToCanvasOffset` skips the inverted display, then restores
-        // the unscaled camera position when the next effect turns it upright again.
-        if (!canvas.isFlipped) {
-            // AS3 width/height already include scale; Nitro exposes the unscaled canvas size.
-            const halfWidth = canvas.width / 2;
-            const halfHeight = canvas.height / 2;
-
-            cameraDataRef.current.currentLocation = new Vector3d(
-                -(halfWidth - (halfWidth - canvas.screenOffsetX) / canvas.scale),
-                -(halfHeight - (halfHeight - canvas.screenOffsetY) / canvas.scale),
-            );
-        }
-
+        // The camera follows the canvas from `REE_ROOM_ZOOMED`, above.
         room.eventDispatcher.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.ROOM_ZOOMED, room.roomId));
     });
 
-    useRoomEventDispatcher<RoomDraggedEvent>(RoomDraggedEvent.ROOM_DRAGGED, (event) => {
+    // `RoomEngine.handleRoomDragging`, the release of a drag: the camera stays where the room was left.
+    useRoomEventDispatcher<RoomDraggedEvent>(RoomDraggedEvent.ROOM_DRAGGED, () => {
+        const canvas = room?.canvas;
         const cameraData = cameraDataRef.current;
+
+        if (!canvas) return;
 
         if (cameraData.currentLocation === undefined || cameraData.targetLocation === undefined) cameraData.centeredLocation = { x: false, y: false };
 
-        cameraData.currentLocation = new Vector3d(event.offsetX, event.offsetY);
+        // `getCanvasTransformScale`.
+        resetLocationToCanvasOffset(canvas.isFlipped ? -canvas.scale : canvas.scale);
     });
 
     return { updateRoomCamera };

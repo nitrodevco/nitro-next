@@ -29,6 +29,7 @@ export const RoomObjectMenuNameBubble = (props: RoomObjectMenuNameBubbleProps) =
             objectData={objectData}
             userType={nameData.userType}
             fades={true}
+            keepOnScreen={false}
             onClose={onClose}
             targetRef={targetRef}
         >

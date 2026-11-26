@@ -13,6 +13,7 @@ import { InfoBubbleOwnAvatarView } from '#base/views/room-widgets/object-menu/In
 import { InfoBubbleRentableBotView } from '#base/views/room-widgets/object-menu/InfoBubbleRentableBotView';
 
 import { RoomObjectMenuBubble } from './RoomObjectMenuBubble';
+import { RoomObjectMenuFriendNames } from './RoomObjectMenuFriendNames';
 import { RoomObjectMenuNameBubble } from './RoomObjectMenuNameBubble';
 import { RoomObjectMenuPet } from './RoomObjectMenuPet';
 
@@ -24,7 +25,8 @@ const AVATAR_HIGHLIGHT_MS = 5000;
  *
  * Selecting a unit opens its menu: your own, another user's, a pet's or a rentable bot's; a plain
  * bot only ever gets its name. Hovering shows a name bubble, but not while a menu is up. While you
- * decorate, your own avatar carries the decorate bubble instead of a menu.
+ * decorate, your own avatar carries the decorate bubble instead of a menu. Friends wear a name tag
+ * of their own when they come in (`RoomObjectMenuFriendNames`).
  *
  * While the room's wired listens for clicks on users (`hasClickUserWired`), a unit's menu is held
  * back (`maybeSetupMenuView`) until the server answers the reported click
@@ -146,6 +148,9 @@ export const RoomObjectMenuWidget = () => {
     });
 
     if (!room) return null;
+
+    // `updateUserView`: setting up another user's `AvatarMenuView` takes their friend name tag down, held back by wired or not.
+    const avatarMenuObjectId = (selectedData && (selectedData.category === RoomObjectCategoryEnum.Unit) && (selectedUserType === RoomObjectUserType.User) && (selectedData.objectId !== ownRoomObjectId) && !isPlayingGame) ? selectedData.objectId : undefined;
 
     const renderSelected = () => {
         if (!selectedData || (selectedData.objectId < 0)) return null;
@@ -272,6 +277,7 @@ export const RoomObjectMenuWidget = () => {
                 </RoomObjectMenuBubble>
             )}
             {renderUnitBubble()}
+            {!isSpectating && <RoomObjectMenuFriendNames menuObjectId={avatarMenuObjectId} />}
         </>
     );
 };

@@ -1,6 +1,6 @@
-import { RoomZoomEvent } from '@nitrodevco/nitro-api';
+import { RoomEngineEvent, RoomZoomEvent } from '@nitrodevco/nitro-api';
 import { GetTicker } from '@nitrodevco/nitro-renderer';
-import { Ticker } from 'pixi.js';
+import { Ticker, UPDATE_PRIORITY } from 'pixi.js';
 import { useEffect, useRef, useState } from 'react';
 
 import { getRoom } from '#base/context/room';
@@ -23,6 +23,9 @@ const LEVELS_PER_FRAME = 0.14;
 const REFERENCE_FRAME_MS = 1000 / 60;
 const MAX_FRAME_MS = 50;
 
+/** Ahead of the room engine's `UPDATE_PRIORITY.HIGH` tick. */
+const ZOOM_STEP_PRIORITY = UPDATE_PRIORITY.HIGH + 1;
+
 /** Close enough to the target to stop animating and sit exactly on it. */
 const SETTLE_EPSILON = 0.01;
 
@@ -40,6 +43,13 @@ const toLevel = (scale: number) => Math.log(scale) / Math.LN2;
  * needs `zoom.enabled` as `RoomEngine.setRoomCanvasScale` does. One that forces a flip (the upside
  * down special room effect) is `useRoomCamera`'s, which turns the canvas and re-syncs the camera
  * to it; answering it here as well would turn the canvas straight back.
+ *
+ * Each step runs before the room engine's tick draws the frame, as `RoomDesktop.update` (under
+ * `RoomUI`, priority 0) runs before `RoomEngine.update` (priority 1): the room is drawn at the
+ * scale everything placed over it is placed by. Stepped after the draw, the bubbles ran one zoom
+ * step ahead of the room. Every change of scale is announced (`REE_ROOM_ZOOMED`, as
+ * `RoomEngine.setRoomCanvasScale` does) for the camera to follow, and one made elsewhere - the
+ * room's Ctrl+Alt click - is taken as the level the buttons act on.
  */
 export const useRoomZoom = () => {
     const enabled = useConfigBoolean('zoom.enabled');
@@ -51,17 +61,23 @@ export const useRoomZoom = () => {
     // canvas, so the buttons counted up and the room never moved.
     useEffect(() => {
         const step = (ticker: Ticker) => {
-            const canvas = getRoom()?.canvas;
+            const room = getRoom();
+            const canvas = room?.canvas;
             const target = targetRef.current;
 
-            if (!canvas || (target === undefined)) return;
+            if (!room || !canvas || (target === undefined)) return;
+
+            const setScale = (scale: number) => {
+                canvas.setScale(scale);
+                room.eventDispatcher.dispatchEvent(new RoomEngineEvent(RoomEngineEvent.ROOM_ZOOMED, room.roomId));
+            };
 
             const from = toLevel(canvas.scale);
             const distance = toLevel(target) - from;
 
             if (Math.abs(distance) <= SETTLE_EPSILON) {
-                canvas.setScale(target);
                 targetRef.current = undefined;
+                setScale(target);
 
                 return;
             }
@@ -71,10 +87,10 @@ export const useRoomZoom = () => {
                 LEVELS_PER_FRAME * Math.min(ticker.deltaMS, MAX_FRAME_MS) / REFERENCE_FRAME_MS,
             );
 
-            canvas.setScale(Math.pow(2, from + ((distance < 0) ? -travel : travel)));
+            setScale(Math.pow(2, from + ((distance < 0) ? -travel : travel)));
         };
 
-        GetTicker().add(step);
+        GetTicker().add(step, undefined, ZOOM_STEP_PRIORITY);
 
         return () => {
             GetTicker().remove(step);
@@ -93,6 +109,13 @@ export const useRoomZoom = () => {
 
         // `1 << (min(5, floor(level)) - 1)`: level 1 is scale 1, and anything under 1 is half.
         zoomTo((event.level < 1) ? 0.5 : (1 << (Math.min(5, Math.floor(event.level)) - 1)));
+    });
+
+    // A scale set while no zoom is running is someone else's: the buttons go on from it.
+    useRoomEventDispatcher<RoomEngineEvent>(RoomEngineEvent.ROOM_ZOOMED, () => {
+        const canvas = getRoom()?.canvas;
+
+        if (canvas && (targetRef.current === undefined) && (canvas.scale !== scale)) setScale(canvas.scale);
     });
 
     const index = ZOOM_SCALES.indexOf(scale);

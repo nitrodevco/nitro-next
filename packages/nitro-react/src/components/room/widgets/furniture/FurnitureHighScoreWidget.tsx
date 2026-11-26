@@ -24,7 +24,11 @@ export const FurnitureHighScoreWidget = () => {
     const { scoreType, clearType, entries } = furnitureData.stuffData;
 
     return (
-        <RoomObjectMenuBubble objectData={{ objectId: request.objectId, category: request.category }}>
+        <RoomObjectMenuBubble
+            objectData={{ objectId: request.objectId, category: request.category }}
+            // `high_score_display` is not bound to the screen.
+            keepOnScreen={false}
+        >
             <FurnitureHighScoreView
                 scoreType={scoreType}
                 clearType={clearType}

@@ -55,6 +55,9 @@ export const FurnitureContextMenuView = ({ objectData, menu, onClose }: Furnitur
 
             title = t('furni.mnstr_seed.name');
             caption = t('widget.monsterplant_seed.button.use');
+            // `MonsterPlantSeedContextMenuView.buttonEventProc`: `showPlantSeedConfirmationDialog`, the
+            // dialog the seed's logic asks for on use - planting is only sent from its confirm.
+            viaLogic = true;
             break;
         case ContextMenuEnum.FRIEND_FURNITURE:
             title = t('friendfurni.context.title');

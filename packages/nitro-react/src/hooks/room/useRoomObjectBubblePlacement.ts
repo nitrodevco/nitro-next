@@ -27,7 +27,6 @@ import { getLayoutSize, useRoomFramePlacement } from './useRoomFramePlacement';
 const BUBBLE_DROP_SPEED = 3;
 /** `getMaximumVerticalLead`: the smoothed top may not lag the real one by more than this share of the object's height. */
 const MAX_VERTICAL_LEAD_RATIO = 0.05;
-const SPACE_AROUND_EDGES = 10;
 
 /** `AvatarContextInfoView.getOffset`: a bubble over a person clears the head by this much... */
 const AVATAR_GAP = 10;
@@ -44,7 +43,11 @@ export interface RoomObjectBubblePlacementOptions {
     isAvatar: boolean;
     /** How many recent heights the drop smoothing takes its maximum over. */
     stackSize: number;
-    /** Keep the bubble `SPACE_AROUND_EDGES` inside the window. */
+    /**
+     * Keep the bubble inside the window, edge to edge: a layout whose window carries
+     * `bound_to_parent_rect` (the menus). One without it (a name, the high score board) leaves the
+     * screen with its object.
+     */
     keepOnScreen?: boolean;
     /**
      * Called after every room frame with whether the bubble could be placed, and again, with no
@@ -106,20 +109,23 @@ export const useRoomObjectBubblePlacement = (bubbleRef: RefObject<PixiContainer 
         let x = (location.x - (nodeWidth / 2));
         let y = Math.max((location.y - highest) + offset, lowest);
 
+        x = Math.trunc(x);
+        y = Math.trunc(y);
+
+        // `WindowController.setRectangle` under `bound_to_parent_rect`: not past the left or top edge,
+        // then pulled back by whatever still hangs over the right or bottom one.
         if (keepOnScreen) {
             const desktop = GetDesktopSize();
-            const maxLeft = ((desktop.width - nodeWidth) - SPACE_AROUND_EDGES);
-            const maxTop = ((desktop.height - nodeHeight) - SPACE_AROUND_EDGES);
 
-            if (x < SPACE_AROUND_EDGES) x = SPACE_AROUND_EDGES;
-            else if (x > maxLeft) x = maxLeft;
+            if (x < 0) x = 0;
+            if (y < 0) y = 0;
 
-            if (y < SPACE_AROUND_EDGES) y = SPACE_AROUND_EDGES;
-            else if (y > maxTop) y = maxTop;
+            if ((x + nodeWidth) > desktop.width) x -= ((x + nodeWidth) - desktop.width);
+            if ((y + nodeHeight) > desktop.height) y -= ((y + nodeHeight) - desktop.height);
         }
 
-        node.x = Math.trunc(x);
-        node.y = Math.trunc(y);
+        node.x = x;
+        node.y = y;
 
         return true;
     };

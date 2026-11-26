@@ -22,7 +22,7 @@ import { useIsRoomOwner, useOwnControllerLevel, useRoom, useRoomPlayTestMode, us
 import { useConfigBoolean, useTranslation, useWindowActions } from '#base/context/system';
 import { ClientGates, useClientGate, useOwnUserId } from '#base/context/user';
 import { useWiredHasWritePermission, useWiredShowInspectButton } from '#base/context/wired';
-import { useCanPlaceWithBuildersClub, useRoomFurnitureData, useRoomObjectInteraction, useRoomObjectModify, useSecondsClock } from '#base/hooks';
+import { useCanPlaceWithBuildersClub, useRoomFurnitureData, useRoomObjectModify, useSecondsClock } from '#base/hooks';
 import { FURNITURE_LABEL_SETTINGS_WIDGET, FURNITURE_RECOLOR_WIDGET, getFurniturePickupMode, PICKUP_FULL, PICKUP_NONE } from '#base/utils';
 import { InfostandFurniDetails, InfostandFurniVariant, InfostandFurniView } from '#base/views/room-widgets/object-infostand/InfostandFurniView';
 import { useClientModuleMenuButtons } from '#base/views/room-widgets/object-menu/useClientModuleMenuButtons';
@@ -69,7 +69,6 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
     const buildersClubEnabled = useConfigBoolean('builders.club.enabled');
     const canPlaceWithBuildersClub = useCanPlaceWithBuildersClub();
     const { modifyRoomObject } = useRoomObjectModify();
-    const { changeItemState } = useRoomObjectInteraction();
     const { openRoomWidget } = useRoomWidgetActions();
     const { showWindow, hideWindow, showConfirm } = useWindowActions();
     const t = useTranslation();
@@ -249,7 +248,9 @@ export const InfostandFurni = ({ objectData, onClose }: InfostandFurniProps) => 
 
                 modifyRoomObject(objectId, category, RoomObjectOperationType.OBJECT_PICKUP);
             }}
-            onUse={() => changeItemState(objectId, category, 0, false)}
+            // `RWFAM_USE` -> `RoomEngine.useRoomObjectInActiveRoom`: the object's own logic uses it, so a
+            // jukebox or a dimmer opens its widget where a plain furni changes state.
+            onUse={() => roomObject.logic?.useObject()}
             onWiredInspect={() => (wiredInspectId !== undefined) && openClientLink(send, `wiredmenu/open/inspection/0/${wiredInspectId}`)}
             onBuy={() => showWindow('catalog', { offerId: furniData.furnitureData?.purchaseOfferId })}
             onRent={() => showWindow('catalog', { offerId: furniData.furnitureData?.rentOfferId })}

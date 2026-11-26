@@ -55,7 +55,7 @@ import { useInventoryStore, useInventoryUnseenTotalCount } from '#base/context/i
 import { useMessengerStore } from '#base/context/messenger';
 import { useNavigatorStore } from '#base/context/navigator';
 import { getRewardTrackClaimableCount, getRewardTrackTrackClaimableCount, useRewardTrackStore } from '#base/context/reward-track';
-import { useOwnRoomObjectId } from '#base/context/room';
+import { useOwnRoomObjectId, useRoomCameraActions } from '#base/context/room';
 import { ToolbarTransitionIcon, useConfigBoolean, useConfigValue, useIsLandingViewVisible, useSystemActions, useSystemStore, useTranslation, useWindowActions } from '#base/context/system';
 import { PerkCodes, useOwnPerkAllowed, useOwnUserFigure, useOwnUserGender, useOwnUserId, useUserStore } from '#base/context/user';
 import { useWiredShowToolbarMenuButton } from '#base/context/wired';
@@ -347,7 +347,11 @@ export const ToolbarView = () => {
      * instead (`dispatchOwnAvatarInfo`: the name bubble, or the minimized menu when the name can be
      * changed), which is not ported.
      */
+    const { reactivateCameraFollowing } = useRoomCameraActions();
     const selectOwnAvatar = () => {
+        // `RoomEngine.onToolbarClicked`: the Me icon also has the room's camera look for your avatar again, after a drag left it behind.
+        reactivateCameraFollowing();
+
         if (simpleMeMenu && (ownRoomObjectId >= 0)) selectObject(ownRoomObjectId, RoomObjectCategoryEnum.Unit);
     };
 

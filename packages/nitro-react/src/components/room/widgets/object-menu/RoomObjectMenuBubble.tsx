@@ -1,6 +1,6 @@
 /**
  * A bubble that follows a room object - Flash's `ContextInfoView`, placed by
- * `useRoomObjectBubblePlacement` and kept inside the window.
+ * `useRoomObjectBubblePlacement`, and kept inside the window where its layout binds it to the screen.
  *
  * The bubble is drawn fully transparent until its own layout has been measured: positioning a
  * bubble whose width and height are still zero would put it somewhere else for a frame, and
@@ -26,6 +26,14 @@ type RoomObjectMenuBubbleProps = {
     /** Humanoid units get the taller gap above the head; furniture and pets leave this out. */
     userType?: RoomObjectUserType;
     fades?: boolean;
+    /** How long, in ms, a fading bubble stays before its fade starts - `ContextInfoView`'s delay timer. */
+    fadeDelay?: number;
+    /**
+     * Whether the layout's window is bound to the screen (`bound_to_parent_rect`), as the menus'
+     * are. The name bubble's (`avatar_info_widget`), the high score board's and the quiz thumbs'
+     * are not: those leave the screen with their object.
+     */
+    keepOnScreen?: boolean;
     children?: ReactNode;
     onClose?: () => void;
     /** The bubble's window, for whoever needs it as well (a hint target). */
@@ -35,7 +43,7 @@ type RoomObjectMenuBubbleProps = {
 const isAvatar = (userType: RoomObjectUserType | undefined) => (userType === RoomObjectUserType.User) || (userType === RoomObjectUserType.Bot) || (userType === RoomObjectUserType.RentableBot);
 
 export const RoomObjectMenuBubble = (props: RoomObjectMenuBubbleProps) => {
-    const { objectData, userType, fades = false, children, onClose = undefined, targetRef = undefined } = props;
+    const { objectData, userType, fades = false, fadeDelay = FADE_DELAY, keepOnScreen = true, children, onClose = undefined, targetRef = undefined } = props;
     const { objectId, category } = objectData;
     const isFading = useRef<boolean>(false);
     const fadeTime = useRef<number>(1);
@@ -73,7 +81,7 @@ export const RoomObjectMenuBubble = (props: RoomObjectMenuBubbleProps) => {
         category,
         isAvatar: isAvatar(userType),
         stackSize: LOCATION_STACK_SIZE,
-        keepOnScreen: true,
+        keepOnScreen,
         onRendered: (placed, time) => {
             updateFade(time);
 
@@ -87,10 +95,10 @@ export const RoomObjectMenuBubble = (props: RoomObjectMenuBubbleProps) => {
 
         if (!fades) return;
 
-        const timeout = setTimeout(() => isFading.current = true, FADE_DELAY);
+        const timeout = setTimeout(() => isFading.current = true, fadeDelay);
 
         return () => clearTimeout(timeout);
-    }, [ fades, objectId, category ]);
+    }, [ fades, fadeDelay, objectId, category ]);
 
     useLayoutEffect(() => {
         fadeTime.current = 1;
