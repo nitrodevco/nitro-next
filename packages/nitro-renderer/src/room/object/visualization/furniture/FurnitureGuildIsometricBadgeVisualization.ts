@@ -1,7 +1,6 @@
 import { IGraphicAsset, IRoomObjectSprite, RoomGeometryScaleType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
-import { Matrix, Sprite, Texture } from 'pixi.js';
+import { Texture } from 'pixi.js';
 
-import { TextureUtils } from '../../../../utils';
 import { IsometricImageFurniVisualization } from './IsometricImageFurniVisualization';
 
 /**
@@ -37,52 +36,6 @@ export class FurnitureGuildIsometricBadgeVisualization extends IsometricImageFur
         this._color2 = color2 ? color2 : FurnitureGuildIsometricBadgeVisualization.DEFAULT_COLOR_2;
 
         return flag;
-    }
-
-    protected override generateTransformedThumbnail(texture: Texture, asset: IGraphicAsset): Texture {
-        const scale = 1.1;
-        const matrix = new Matrix();
-        const difference = asset.width / texture.width;
-
-        switch (this.direction) {
-            case 2:
-                matrix.a = difference;
-                matrix.b = -0.5 * difference;
-                matrix.c = 0;
-                matrix.d = difference * scale;
-                matrix.tx = 0;
-                matrix.ty = 0.5 * difference * texture.width;
-                break;
-            case 0:
-            case 4:
-                matrix.a = difference;
-                matrix.b = 0.5 * difference;
-                matrix.c = 0;
-                matrix.d = difference * scale;
-                matrix.tx = 0;
-                matrix.ty = 0;
-                break;
-            default:
-                matrix.a = difference;
-                matrix.b = 0;
-                matrix.c = 0;
-                matrix.d = difference;
-                matrix.tx = 0;
-                matrix.ty = 0;
-        }
-
-        const sprite = new Sprite(texture);
-
-        sprite.setFromMatrix(matrix);
-
-        sprite.x = 0;
-        sprite.y = 0;
-
-        const badge = TextureUtils.generateTexture(sprite);
-
-        sprite.destroy();
-
-        return badge;
     }
 
     protected override getLayerColor(scale: RoomGeometryScaleType, layerId: number, colorId: number): number {
