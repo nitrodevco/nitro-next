@@ -9,6 +9,11 @@
  * it that is selected or hovered (`newSourceTypeSplitterColor`). The icon is centred vertically
  * the way `NewSourceTypeOption` places it: `int((height + 1) / 2 - (iconHeight + 1) / 2)`.
  *
+ * The selected segment is held pressed: `updateVisuals` sets state flag 16, which is the pressed
+ * state to the skin (its pressed face) and to the dynamic style (`getStyleByWindowState(16)`), so
+ * the `button` style's pressed `#icon` rule darkens its icon to 0.8. That rule also sinks the icon
+ * a pixel; Nitro keeps it level, by preference, so it lines up with the idle ones.
+ *
  * Controlled like `WiredSourceTypePicker`: `selected` comes from the form, a value that is not
  * among `options` shows the first one (`resolveSourceTypeSelection`), and `onSelect` fires only
  * for a type other than the selected one. Flash's picker has no disabled state; the kit's
@@ -23,7 +28,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context/system';
-import { Box, ContainerButton, LayoutImage, parseCssHexColor, Region, ThemeImage } from '#base/theme';
+import { Box, ContainerButton, LayoutImage, parseCssHexColor, Region, resolveDynamicStyleRule, ThemeImage } from '#base/theme';
 import { getTypeNameForSource, newSourceTypeOptionColor, newSourceTypeSplitterColor, resolveSourceTypeSelection, uintToHexColor } from '#base/wired';
 
 import { useWiredDisabled, wiredDisabledAlpha } from './useWiredDisabled';
@@ -57,6 +62,9 @@ export const WiredNewSourceTypePicker = ({ options, selected, onSelect, disabled
     const active = resolveSourceTypeSelection(options, selected);
     const segments = options.map(sourceType => ({ sourceType, active: sourceType === active, hovered: !disabled && (sourceType === hovered) }));
     const splitterBase = parseCssHexColor(template.splitterColor);
+    // How far the pressed `#icon` rule sinks the selected segment's icon - taken back off its place.
+    // A disabled button draws its disabled rule instead, which moves nothing.
+    const pressedSink = (template.dynamicStyle && !disabled) ? (resolveDynamicStyleRule(template.dynamicStyle, 'icon', 'pressed').offsetY ?? 0) : 0;
 
     return (
         <Box
@@ -81,7 +89,7 @@ export const WiredNewSourceTypePicker = ({ options, selected, onSelect, disabled
                         variant={variant}
                         tooltip={t(`wiredfurni.params.sourcetype.${name}`, `wiredfurni.params.sourcetype.${name}`)}
                         tintColor={uintToHexColor(newSourceTypeOptionColor(segment.sourceType, segment.active, segment.hovered))}
-                        selected={segment.active}
+                        pressed={segment.active}
                         dynamicStyle={template.dynamicStyle}
                         disabled={disabled}
                         onPointerOver={() => setHovered(segment.sourceType)}
@@ -95,7 +103,7 @@ export const WiredNewSourceTypePicker = ({ options, selected, onSelect, disabled
                             bitmap={{ stretchedX: false, stretchedY: false, fitSizeToContents: true }}
                             dynamicRole="icon"
                             eventMode="none"
-                            layout={{ position: 'absolute', left: iconX, top: iconY }}
+                            layout={{ position: 'absolute', left: iconX, top: iconY - (segment.active ? pressedSink : 0) }}
                         />
                     </ContainerButton>,
                     next && (
