@@ -15,7 +15,6 @@ import { touchPlacementDrop } from './touchPlacementDrop';
 type MouseData = {
     mouseXY: { x: number; y: number };
     dragStartXY: { x: number; y: number };
-    dragXY: { x: number; y: number };
     isDragged: boolean;
     wasDragged: boolean;
 };
@@ -57,7 +56,6 @@ export const RoomCanvas = () => {
     const mouseDataRef = useRef<MouseData>({
         mouseXY: { x: 0, y: 0 },
         dragStartXY: { x: 0, y: 0 },
-        dragXY: { x: 0, y: 0 },
         isDragged: false,
         wasDragged: false,
     });
@@ -120,11 +118,17 @@ export const RoomCanvas = () => {
                 }
 
                 if (!(offsetX == 0) || !(offsetY == 0)) {
-                    mouseData.dragXY.x += offsetX;
-                    mouseData.dragXY.y += offsetY;
                     mouseData.wasDragged = true;
 
                     room.dispatchEvent(new RoomDragEvent(room.roomId, -(room.canvas.screenOffsetX - offsetX), -(room.canvas.screenOffsetY - offsetY)));
+
+                    /*
+                     * `RoomEngine.handleRoomDragging` moves the canvas here, in the mouse event, so the
+                     * frame's room render draws it there. Moved after that render instead, the room
+                     * is drawn a frame behind everything placed over it (the menu and name bubbles),
+                     * which then swim about over it for as long as the drag lasts.
+                     */
+                    room.setRoomInstanceRenderingCanvasOffset({ x: (room.canvas.screenOffsetX + offsetX), y: (room.canvas.screenOffsetY + offsetY) });
                 }
             }
         } else if (type === MouseEventType.MOUSE_CLICK || type === MouseEventType.DOUBLE_CLICK) {
@@ -255,7 +259,7 @@ export const RoomCanvas = () => {
         renderer.on('resize', resizeCanvas);
 
         // The room itself is advanced by the engine's HIGH-priority tick; this NORMAL-priority
-        // one only does the presentation that follows it (camera, drag, cursor, DOM blit).
+        // one only does the presentation that follows it (camera, cursor, DOM blit).
         const tick = (ticker: Ticker) => {
             if (!room || !canvas || !container) return;
 
@@ -263,15 +267,6 @@ export const RoomCanvas = () => {
             const time = GetTickerFrameTime(ticker);
 
             if (!mouseData.isDragged) updateCameraRef.current(time);
-
-            if (mouseData.wasDragged) {
-                const offsetX = canvas.screenOffsetX || 0;
-                const offsetY = canvas.screenOffsetY || 0;
-
-                room.setRoomInstanceRenderingCanvasOffset({ x: (offsetX + mouseData.dragXY.x), y: (offsetY + mouseData.dragXY.y) });
-
-                mouseData.dragXY = { x: 0, y: 0 };
-            }
 
             if (hasAndResetCursorUpdate()) container.cursor = hasCursorOwners() ? 'pointer' : 'auto';
 
