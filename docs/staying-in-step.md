@@ -89,9 +89,12 @@ Rules that come out of that:
 - **The UI theme is loaded, not compiled in.** Nitro Studio builds every variant from the client
   release's window manager library: its fields from the element description row and the window
   layout it names, its art from its skin, as `BitmapSkinRenderer` draws it (`server/theme/skinArt.ts`
-  there). Where the port draws a field the client's files do not give (`captionTop`, a pointer's
-  margin), `theme-rules.json` holds it, with a note; the art is always the client's. After a
-  revision bump, import the UI theme on Workspace > Habbo and publish.
+  there). Which layer a group of skin entities becomes - sprite, nine-slice, composite, tile - and
+  where each entity sits in it is the theme's own rule, `skinLayers` in nitro-theme, so the builder
+  and the components that draw its layers share one contract; Studio reads the skin and cuts or
+  draws the bitmaps those layers ask for. Where the port draws a field the client's files do not
+  give (`captionTop`, a pointer's margin), `theme-rules.json` holds it, with a note; the art is
+  always the client's. After a revision bump, import the UI theme on Workspace > Habbo and publish.
 - An entity marked `colorize="false"` is one `BitmapSkinRenderer.draw` copies *without* the
   window's colour, so it never goes into a layer the theme tints: the builder draws such pieces as
   an untinted `overlay` (`ThemeWithStatesVariant.overlays`), or as `plain` where a frame needs all

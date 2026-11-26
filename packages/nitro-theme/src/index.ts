@@ -141,6 +141,7 @@ export * from './utils/modalLayer';
 export * from './utils/nativeTextMarkup';
 export * from './utils/richText';
 export * from './utils/ScrollViewport';
+export * from './utils/skinLayers';
 export * from './utils/spriteFrame';
 export * from './utils/textStyles';
 export * from './utils/themeAssetBundle';
