@@ -55,6 +55,14 @@ costs you time. Rules with a longer story live in the other guides in `docs/`.
   offsets - `TextSkinRenderer.draw` puts a field at `Math.floor(width / 2 - field.width / 2)`, a
   centred window goes at `Math.floor(parent / 2) - Math.floor(size / 2)` - and so does the port
   where it places one: `FlashText` floors its sprite's offset (`placeOnWholePixels`).
+- **A window's clip cuts only what draws into its graphic context.** A child with
+  `use_parent_graphic_context` (param 16) is cut at its parent's rect; a child with a context of
+  its own is a display object beside the parent's, which no parent masks, so it draws whole. A
+  frame's `_CONTENT` follows the same rule: the group forum's `top_part` at `x="-5"` runs over the
+  frame's margins to its edges, the navigator's pale border at (-3, -3) stops at the content area.
+  The template engine draws such a child through its clipping ancestor's escape layer
+  (`ClipEscapeContext`, the frame's own in `FrameContentClip`); `ContentArea` still crops at the
+  frame's rectangle.
 
 ## Reference material
 

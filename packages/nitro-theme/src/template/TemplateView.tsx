@@ -1471,9 +1471,6 @@ const drawsAsBareBitmap = (element: TemplateElement, binding: TemplateBinding | 
 /** A bubble's `direction` var: the side its pointer is on. */
 const POINTER_DIRECTIONS = new Set<PointerDirection>([ 'up', 'down', 'left', 'right' ]);
 
-/** The frame's own outline, which nothing of its content draws over. */
-const FRAME_OUTLINE = 1;
-
 interface FrameContentClipProps {
     /** The frame's size and its content area's insets (`margins`). */
     width: number;
@@ -1485,40 +1482,60 @@ interface FrameContentClipProps {
     frameName?: string;
     /** A root patch's look for it (`rootOverride`). */
     patchOverride?: FrameOverride;
-    children: ReactNode;
+    /**
+     * The frame's children, built with the layer its escaping windows draw through (`undefined` for
+     * a frameless one): every window with a context of its own - a direct child, one under a split
+     * or lifted sibling, one under a clipping window - goes through that one layer, so they keep
+     * their tree order among themselves, as `setupGraphicsContext` adds every child's context in it.
+     */
+    children: (escape: RenderLayer | undefined) => ReactNode;
 }
 
 /**
- * A frame's children, cut as the client shows them: to the content area at its sides and bottom -
- * `navigator_frame_2`'s pale border at (-3, -3) stops there rather than covering the frame's edge
- * columns - and, above the content area, out to the frame's one-pixel outline, where that layout's
- * white strip and tabs run up to the title bar and across to the edge.
+ * A frame's children, cut as the client cuts them - the rule a clipping window follows
+ * (`ClipEscapeContext`), for the frame's `_CONTENT` container: a child drawn into it
+ * (`use_parent_graphic_context`) is cut at the content area (`WindowRenderer.childRectToClippedDrawRegion`
+ * clips to each such parent's rect), so `navigator_frame_2`'s pale border at (-3, -3) stops there
+ * rather than covering the frame's edge columns. A child with a graphic context of its own is a
+ * display object beside the frame's, which no parent masks: it draws whole, out over the margins -
+ * the group forum's `top_part` at x -5 to the frame's edges on both sides, the navigator's
+ * `white_background` up to the title bar and across. `ContentArea` still crops it at the frame's
+ * rectangle.
  */
 const FrameContentClip = ({ width, height, margins, variant, frameId, frameName, patchOverride, children }: FrameContentClipProps) => {
     const [ mask, setMask ] = useState<PixiGraphics | null>(null);
+    // The frame's own: its escaping children stop at its crop, whatever clips round the frame.
+    const [ escape ] = useState(() => new RenderLayer());
     const frameless = isFramelessVariant(useFrameOverride(frameId, frameName, patchOverride)?.variant ?? variant);
     const [ left, top, right, bottom ] = margins;
     const contentWidth = Math.max(0, width - left - right);
     const contentHeight = Math.max(0, height - top - bottom);
-    const toOutline = (margin: number) => Math.max(0, margin - FRAME_OUTLINE);
 
     return (
-        <pixiContainer
-            mask={frameless ? undefined : (mask ?? undefined)}
-            layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}
-        >
-            <pixiGraphics
-                ref={setMask}
-                visible={!frameless}
-                eventMode="none"
-                draw={(g) => {
-                    g.clear();
-                    g.rect(-toOutline(left), -top, contentWidth + toOutline(left) + toOutline(right), top).fill(0xFFFFFF);
-                    g.rect(0, 0, contentWidth, contentHeight).fill(0xFFFFFF);
-                }}
-            />
-            {children}
-        </pixiContainer>
+        <>
+            <pixiContainer
+                mask={frameless ? undefined : (mask ?? undefined)}
+                layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}
+            >
+                <pixiGraphics
+                    ref={setMask}
+                    visible={!frameless}
+                    eventMode="none"
+                    draw={(g) => {
+                        g.clear();
+                        g.rect(0, 0, contentWidth, contentHeight).fill(0xFFFFFF);
+                    }}
+                />
+                {frameless
+                    ? children(undefined)
+                    : (
+                            <ClipEscapeContext.Provider value={escape}>
+                                {children(escape)}
+                            </ClipEscapeContext.Provider>
+                        )}
+            </pixiContainer>
+            {!frameless && <DrawSlot layer={escape} />}
+        </>
     );
 };
 
@@ -1632,8 +1649,9 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
     const ownTint = tintOf(element, binding);
     // What its code adds, which can read the window's laid-out rect (`useTemplateWindowRect`).
     const ownChildren = binding?.children && <TemplateWindowRectContext.Provider value={rect}>{binding.children}</TemplateWindowRectContext.Provider>;
-    // Its children, all of them or those a scrolled list builds (a selector is never one).
-    const childrenOf = (views: ReactNode[]) => (
+    // Its children, all of them or those a scrolled list builds (a selector is never one), their
+    // escaping windows through `escape` (a frame's own, past its content's crop).
+    const childrenOf = (views: ReactNode[], escape: RenderLayer | undefined = clipEscape) => (
         <ParentTintContext.Provider value={ownTint ?? parentTint}>
             {element.tag === 'selector'
                 ? (
@@ -1653,7 +1671,7 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                             ))}
                         </Box>
                     )
-                : treeOrderedChildren(drawOrder, moved, new Map(drawOrder.map((index, position) => [ index, views[position] ])), drawLayers, split, clipEscape, lifted)}
+                : treeOrderedChildren(drawOrder, moved, new Map(drawOrder.map((index, position) => [ index, views[position] ])), drawLayers, split, escape, lifted)}
             {ownChildren}
         </ParentTintContext.Provider>
     );
@@ -1836,7 +1854,8 @@ const ElementContent = ({ element, context, id, flow, shown, reveal }: ElementVi
                     frameName={element.name}
                     patchOverride={patchOverride}
                 >
-                    {children}
+                    {/* A frameless one crops nothing: its windows escape as they did round it. */}
+                    {escape => childrenOf(childViews, escape ?? clipEscape)}
                 </FrameContentClip>
             </Frame>
         );
