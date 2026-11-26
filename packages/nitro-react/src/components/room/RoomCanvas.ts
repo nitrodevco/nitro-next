@@ -1,6 +1,6 @@
 /** Room canvas lifecycle and input bridge, including RoomEngine camera updates on each render tick. */
 import { IRoomObject, MouseEventType, RoomDragEvent, RoomDraggedEvent, RoomGeometryScaleType, RoomObjectMouseEvent, RoomRenderedEvent } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetRoomStage, GetTicker, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
+import { GetRenderer, GetRoomStage, GetTicker, GetTickerFrameTime, RoomAreaSelectionManager } from '@nitrodevco/nitro-renderer';
 import { FederatedPointerEvent, Ticker } from 'pixi.js';
 import { useEffect, useRef } from 'react';
 
@@ -260,7 +260,7 @@ export const RoomCanvas = () => {
             if (!room || !canvas || !container) return;
 
             const mouseData = mouseDataRef.current;
-            const time = ticker.lastTime;
+            const time = GetTickerFrameTime(ticker);
 
             if (!mouseData.isDragged) updateCameraRef.current(time);
 

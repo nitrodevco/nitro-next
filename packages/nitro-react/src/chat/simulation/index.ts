@@ -2,6 +2,7 @@
 export * from './ChatBubbleCollisionEvent';
 export * from './ChatBubbleSimulationEntity';
 export * from './ChatBubbleSimulationWithLimitedWideRect';
+export * from './ChatFlowClock';
 export * from './ChatFlowGravity';
 export * from './ChatFlowSpacer';
 export * from './ChatFlowStage';

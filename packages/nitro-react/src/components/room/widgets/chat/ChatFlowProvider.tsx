@@ -1,10 +1,10 @@
 import { IVector3D, RoomChatModeType, RoomObjectCategoryEnum } from '@nitrodevco/nitro-api';
-import { GetRenderer, GetTicker } from '@nitrodevco/nitro-renderer';
+import { GetRenderer, GetTicker, GetTickerFrameTime } from '@nitrodevco/nitro-renderer';
 import { chatBubbleWidthFromSetting } from '@nitrodevco/nitro-theme/chat';
 import { Point, PointData, Ticker } from 'pixi.js';
 import { ReactNode, useEffect, useMemo, useRef } from 'react';
 
-import { ChatBubbleMotion, ChatFlowStage, chatScreenPoint, IChatFlowHost, IChatFlowSettings } from '#base/chat';
+import { ChatBubbleMotion, ChatFlowClock, ChatFlowStage, chatScreenPoint, IChatFlowHost, IChatFlowSettings } from '#base/chat';
 import { useRoom, useRoomChatActions } from '#base/context/room';
 import { useUserStore } from '#base/context/user';
 import { ChatFlowContext, ChatFlowContextValue, useRoomObjectSelect } from '#base/hooks';
@@ -21,7 +21,8 @@ interface ChatFlowProviderProps {
 /**
  * The Flash `HabboFreeFlowChat` + `ChatFlowViewer` as a provider: owns the FreeFlow simulation
  * (`ChatFlowStage`) for the current room, advances it and every registered bubble's motion
- * from the shared ticker, keeps the flow glued to the room horizontally as the canvas pans,
+ * from the shared ticker by the real time that passed (`ChatFlowClock`, which also catches up
+ * the time a hidden page ran no frames), keeps the flow glued to the room horizontally as the canvas pans,
  * and projects room locations to the screen for the bubbles. Bubbles register themselves once
  * laid out (`useChatFlow().addBubble`) and are dropped from the store when the simulation is
  * done with them.
@@ -36,6 +37,7 @@ export const ChatFlowProvider = ({ children }: ChatFlowProviderProps) => {
     const settings = useMemo<IChatFlowSettings>(() => ({ mode: chatMode, bubbleWidth: chatBubbleWidth, scrollSpeed: chatScrollSpeed }), [ chatMode, chatBubbleWidth, chatScrollSpeed ]);
     const settingsRef = useLatest(settings);
     const stageRef = useRef<ChatFlowStage | null>(null);
+    const clockRef = useRef<ChatFlowClock | null>(null);
     const bubblesRef = useRef<Set<ChatBubbleMotion>>(new Set());
     const lastCanvasOffsetXRef = useRef(0);
     const lastAddedRoomIdRef = useRef(-1);
@@ -90,11 +92,7 @@ export const ChatFlowProvider = ({ children }: ChatFlowProviderProps) => {
         const stage = new ChatFlowStage(host);
         const bubbles = bubblesRef.current;
 
-        stageRef.current = stage;
-
-        const tick = (ticker: Ticker) => {
-            const elapsedMs = ticker.deltaMS;
-
+        const step = (elapsedMs: number) => {
             stage.update(elapsedMs);
 
             // `ChatFlowViewer.update`: when the room canvas pans, every bubble's pan offset follows.
@@ -111,6 +109,15 @@ export const ChatFlowProvider = ({ children }: ChatFlowProviderProps) => {
             for (const bubble of bubbles) bubble.update(elapsedMs);
         };
 
+        // The flow runs on the real time since its last update, not the ticker's capped `deltaMS`, so
+        // the time a hidden page ran no frames is caught up on the first frame back.
+        const clock = new ChatFlowClock(performance.now(), step, () => stage.hasBubbles);
+
+        stageRef.current = stage;
+        clockRef.current = clock;
+
+        const tick = (ticker: Ticker) => clock.advanceTo(GetTickerFrameTime(ticker));
+
         const onResize = () => stage.resize();
 
         GetTicker().add(tick);
@@ -123,6 +130,7 @@ export const ChatFlowProvider = ({ children }: ChatFlowProviderProps) => {
             stage.dispose();
 
             if (stageRef.current === stage) stageRef.current = null;
+            if (clockRef.current === clock) clockRef.current = null;
 
             bubbles.clear();
         };
@@ -136,6 +144,8 @@ export const ChatFlowProvider = ({ children }: ChatFlowProviderProps) => {
             const stage = stageRef.current;
 
             if (!stage || bubblesRef.current.has(bubble)) return;
+
+            clockRef.current?.catchUpTo(bubble.timestamp);
 
             const position = stage.addBubble(bubble);
 

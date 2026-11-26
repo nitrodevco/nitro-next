@@ -18,7 +18,7 @@ import { ImageLike, Texture, Ticker, UPDATE_PRIORITY } from 'pixi.js';
 
 import { GetAvatarRenderManager } from '#renderer/avatar';
 import { PetFigureData } from '#renderer/session';
-import { GetTicker, LoadMetrics, NumberBank, PurgeTrigger, TextureUtils } from '#renderer/utils';
+import { GetTicker, GetTickerFrameTime, LoadMetrics, NumberBank, PurgeTrigger, TextureUtils, TrackTickerFrameTime } from '#renderer/utils';
 
 import { GetRoomContentLoader } from './GetRoomContentLoader';
 import { ObjectDataUpdateMessage, ObjectRoomMaskUpdateMessage } from './messages';
@@ -37,7 +37,7 @@ export class RoomEngine implements IRoomEngine {
     private _rooms: Map<number, IRoom> = new Map();
     private _imageObjectIdBank = new NumberBank(1000);
     private _imageListeners: Record<number, IGetImageListener[]> = {};
-    private _tick = (ticker: Ticker) => this.update(ticker.lastTime);
+    private _tick = (ticker: Ticker) => this.update(GetTickerFrameTime(ticker));
     private _ticking: boolean = false;
 
     public async init(): Promise<void> {
@@ -65,13 +65,16 @@ export class RoomEngine implements IRoomEngine {
      * Registers the single room tick on the shared ticker. It runs at HIGH priority so every
      * room's objects and sprite canvas are advanced before the NORMAL-priority presentation
      * work registered by the UI (camera, preview centring, DOM blits) and before Pixi's own
-     * LOW-priority render of the frame.
+     * LOW-priority render of the frame. Every room is updated to the time of the frame it
+     * draws, which `GetTickerTime` follows through the frame, so the first frame after a
+     * hidden page draws the room as it is now.
      */
     public start(): void {
         if (this._ticking) return;
 
         this._ticking = true;
 
+        TrackTickerFrameTime(true);
         GetTicker().add(this._tick, undefined, UPDATE_PRIORITY.HIGH);
     }
 
@@ -81,6 +84,7 @@ export class RoomEngine implements IRoomEngine {
         this._ticking = false;
 
         GetTicker().remove(this._tick);
+        TrackTickerFrameTime(false);
     }
 
     /**

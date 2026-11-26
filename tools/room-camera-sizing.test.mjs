@@ -240,7 +240,7 @@ await test('the installed room ticker and resize listener use the latest camera 
         '@nitrodevco/nitro-renderer': { GetRenderer: () => ({ canvas: { addEventListener() {}, removeEventListener() {} }, screen: { width: 800, height: 600 }, on: (_, fn) => { resize = fn; }, off() {} }), GetTicker: () => ({ add: (fn) => {
             tick = fn;
             registrations++;
-        }, remove() {} }) },
+        }, remove() {} }), GetTickerFrameTime: ticker => ticker.lastTime + ticker.elapsedMS },
         react: { useRef: value => (refs[refIndex++] ??= { current: value }), useEffect: (fn) => { effect ??= fn; }, useLayoutEffect: fn => fn() },
         // nitro-theme's: a ref the commit (here, at once) writes the latest value into.
         '#base/theme': { ClientToStage: value => value, useLatest: (value) => {
@@ -259,17 +259,19 @@ await test('the installed room ticker and resize listener use the latest camera 
     callback = time => seen.push([ 'initial', time ]);
     RoomCanvas();
     effect();
-    tick({ lastTime: 1, deltaTime: 1 });
+    // A listener still sees the frame before's `lastTime` (Pixi moves it on after every listener ran):
+    // the camera is given the time of the frame being run.
+    tick({ lastTime: 0, elapsedMS: 1, deltaTime: 1 });
     callback = time => seen.push([ 'updated target/settings', time ]);
     refIndex = 0;
     RoomCanvas();
-    tick({ lastTime: 2, deltaTime: 1 });
+    tick({ lastTime: 1, elapsedMS: 1, deltaTime: 1 });
     // A resize only re-initializes the canvas (`RoomEngine.modifyRoomCanvas`); the next tick's camera
     // update eases to the new size, so the listener itself never updates the camera.
     const before = initialized;
     resize();
     assert.equal(initialized, before + 1);
-    tick({ lastTime: 3, deltaTime: 1 });
+    tick({ lastTime: 2, elapsedMS: 1, deltaTime: 1 });
     assert.deepEqual(seen, [ [ 'initial', -1 ], [ 'initial', 1 ], [ 'updated target/settings', 2 ], [ 'updated target/settings', 3 ] ]);
     assert.equal(registrations, 1);
 });

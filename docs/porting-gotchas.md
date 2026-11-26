@@ -94,6 +94,20 @@ Local Jev and `live-check` helpers are optional; confirm availability before usi
 - **Find controls by name, not by screenshot**: `live-check find <name>`, `click --name`,
   `wait-for --name`, `state <store> <field>`. A screenshot is for how it looks, not where it is.
 
+## Frame time and hidden pages
+
+- **Inside a ticker listener, `ticker.lastTime` is the frame before's.** Pixi moves it on only after
+  every listener has run. A listener that advances state by time uses `GetTickerFrameTime(ticker)`;
+  outside one, `GetTickerTime()` follows the frame being run while the room engine ticks.
+- **`ticker.deltaMS` stops at 100 ms; Flash update receivers got the whole `getTimer()` gap.**
+  Simulations that must keep real time (the chat flow, `ChatFlowClock`) measure it themselves and
+  step through a long gap, since one Flash-style update runs at most one timed cycle.
+- **A hidden page runs no frames but still handles packets.** `GetTickerTime()` reads the real
+  time while the page is hidden, so packet-driven timers (signs, gestures, talk) start when they
+  arrive. To check this live, hide the page in-page (`document.hidden` and a held
+  `requestAnimationFrame`): the desktop app's browser pane stops a background tab's frames
+  without reporting it hidden.
+
 ## Room camera and display transforms
 
 Source revision: `WIN63-202609091217-117204808`; recheck after a revision change. The names below

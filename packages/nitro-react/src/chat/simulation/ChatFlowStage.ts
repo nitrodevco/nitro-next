@@ -87,6 +87,11 @@ export class ChatFlowStage {
         return !this._context;
     }
 
+    /** Whether a bubble is still in the flow; the invisible line-by-line spacers do not count. */
+    public get hasBubbles(): boolean {
+        return this._bubbles.some(entity => !entity.isSpacer);
+    }
+
     /** Places a freshly built bubble and returns where the viewer should show it - `_Str_12872`. */
     public addBubble(bubble: IChatFlowBubble): Point {
         const context = this._context;
