@@ -258,7 +258,9 @@ counts as a new warning at the verification gate.
 - A drop menu is the theme's `Dropmenu`: `caption`, `options` (each with its own `onSelect`,
   `keepOpen` for an entry that lists more). It opens Flash's expanded view over itself, fits it on
   the screen and scrolls it (`placeExpandedDropmenu`), and closes on a pick or an outside press.
-  Wrap it for a feature (`WiredDropdown`); do not build another list popup.
+  Its width comes from its `layout` (a size, or a fill), never from its caption: a caption longer
+  than the menu is cut before the arrow, as Flash cuts the title label. The open list still grows
+  to its widest entry. Wrap it for a feature (`WiredDropdown`); do not build another list popup.
 - Every `Frame` stays unrendered until its size and position settle (`useRevealWhenSettled`), so
   a window never flashes small in a corner first. Content that keeps changing still shows after
   12 frames.

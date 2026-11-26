@@ -40,6 +40,26 @@ export type DropmenuVariant = (ThemeVariant | ThemeWithStatesVariant) & {
 const DEFAULT_ARROW_LAYOUT: BoxLayout = { right: 5, top: 2, width: 16, height: 16 };
 
 /**
+ * The closed menu's caption box. `DropMenuController.closeExpandedMenuView` sets the title label
+ * to the menu's own width (`region.x + region.width - label.x`) after each change of caption, and
+ * the label draws only inside its rectangle: a caption longer than the menu is cut off there, and
+ * the menu keeps the width its parent gives it. So the caption takes the room the frame leaves it
+ * and adds none of its own (a text leaf would otherwise widen the menu, arrow and all, past the
+ * window that holds it), clipped to that room, and placed in it as the frame would have placed it.
+ */
+const captionLayout = (frame: BoxLayout): BoxLayout => ({
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+    minWidth: 0,
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    ...((frame.alignItems !== undefined) ? { alignItems: frame.alignItems } : {}),
+    ...((frame.justifyContent !== undefined) ? { justifyContent: frame.justifyContent } : {}),
+    overflow: 'hidden',
+});
+
+/**
  * Where the closed menu's caption starts: the skin layout's `_DROPLIST_TITLETEXT` x - 10 in
  * `habbo_window_layout_dropmenu` / `_black` / `illumina_light_dropmenu`, 6 in `_dropmenu_3`. In every
  * one that is where the open list's text starts too: `_DROPLIST_ITEMLIST`'s x (`listInset`) plus the
@@ -114,13 +134,14 @@ export const DropmenuFrame: ForwardRefExoticComponent<DropmenuFrameProps & RefAt
                 }
             : { paddingLeft: titleInsetLeft(resolvedVariant, defaultVariant ?? '0', inset), paddingRight: 2 };
         const content = wrapTextChildren(children, { textStyle: resolvedTextStyle, textColor: resolvedTextColor });
+        const frameLayout: BoxLayout = { position: 'relative', ...contentLayout, ...config.layout, ...layout };
 
         return (
             <Box
                 ref={ref}
                 visible={visible}
                 zIndex={zIndex}
-                layout={{ position: 'relative', ...contentLayout, ...config.layout, ...layout }}
+                layout={frameLayout}
                 {...handlers}
             >
                 {resolvedLayer && (
@@ -147,7 +168,17 @@ export const DropmenuFrame: ForwardRefExoticComponent<DropmenuFrameProps & RefAt
                                     {content}
                                 </ScrollArea>
                             )
-                        : content}
+                        : expanded
+                            ? content
+                            : (
+                                    // No handlers of its own: a tap goes through to the frame's.
+                                    <Box
+                                        pointerTransparent
+                                        layout={captionLayout(frameLayout)}
+                                    >
+                                        {content}
+                                    </Box>
+                                )}
                 </VariantCascadeProvider>
             </Box>
         );
