@@ -23,8 +23,6 @@ export class FurnitureBadgeDisplayLogic extends FurnitureLogic {
             const data = message.data;
 
             if (data instanceof StringDataType) this.updateBadge(data.getValue(1));
-
-            return;
         }
 
         if (message instanceof ObjectGroupBadgeUpdateMessage) {
@@ -47,8 +45,6 @@ export class FurnitureBadgeDisplayLogic extends FurnitureLogic {
 
     protected updateBadge(badgeId: string): void {
         if (badgeId === '') return;
-
-        this.object.model.setValue(RoomObjectVariableEnum.FurnitureBadgeImageStatus, -1);
 
         this.handleRoomObjectEvent(
             new RoomObjectBadgeAssetEvent(RoomObjectBadgeAssetEvent.LOAD_BADGE, this.object, badgeId, false),

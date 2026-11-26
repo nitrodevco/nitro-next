@@ -13,7 +13,8 @@ export class ObjectDataUpdateMessage extends RoomObjectUpdateMessage {
 
         this._state = state;
         this._data = data;
-        this._extra = extra ?? 0;
+        // NaN is Flash's "no extra": the logic then leaves the stored one alone.
+        this._extra = extra ?? NaN;
     }
 
     public get state(): number {

@@ -1,4 +1,4 @@
-import { RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent, RoomRenderedEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomRenderedEvent, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { SetAdjacentCustomStackingHeightComposer, SetCustomStackingHeightComposer } from '@nitrodevco/nitro-packets';
 
 import { useWebSocketContext } from '#base/context/communication';
@@ -25,14 +25,14 @@ const useRoomObjectZ = (objectId: number, category: RoomObjectCategoryEnum): num
  * Flash's handler did. Heights travel in hundredths of a tile.
  */
 export const FurnitureStackHeightWidget = () => {
-    const request = useRoomWidget(RoomObjectWidgetRequestEvent.STACK_HEIGHT);
+    const request = useRoomWidget(RoomWidgetEnum.CUSTOM_STACK_HEIGHT);
     const room = useRoom();
     const furnitureData = useRoomFurnitureData(request?.objectId ?? -1, request?.category ?? 0);
     const { closeRoomWidget } = useRoomWidgetActions();
     const { send } = useWebSocketContext();
     const height = useRoomObjectZ(request?.objectId ?? -1, request?.category ?? 0);
 
-    const onClose = () => closeRoomWidget(RoomObjectWidgetRequestEvent.STACK_HEIGHT);
+    const onClose = () => closeRoomWidget(RoomWidgetEnum.CUSTOM_STACK_HEIGHT);
 
     if (!request || !room) return null;
 

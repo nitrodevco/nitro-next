@@ -22,17 +22,16 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
             RoomObjectSamplePlaybackEvent.ROOM_OBJECT_INITIALIZED,
             RoomObjectSamplePlaybackEvent.ROOM_OBJECT_DISPOSED,
             RoomObjectSamplePlaybackEvent.PLAY_SAMPLE,
-            RoomObjectSamplePlaybackEvent.CHANGE_PITCH,
         ]);
     }
 
     public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (asset?.logic?.soundSample) {
-            this._sampleId = asset.logic.soundSample.id as number;
-            this._noPitch = asset.logic.soundSample.noPitch as boolean;
-        }
+        if (!asset?.logic?.soundSample) return;
+
+        this._sampleId = asset.logic.soundSample.id as number;
+        this._noPitch = asset.logic.soundSample.noPitch as boolean;
 
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureSoundblockRelativeAnimationSpeed, 1);
     }
@@ -54,8 +53,9 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
         super.processUpdateMessage(message);
 
         if (message instanceof ObjectDataUpdateMessage) {
-            if (this.isRealRoomObject()) {
-                if (this._state === FurnitureSoundBlockLogic.STATE_UNINITIALIZED) {
+            if (this._state === FurnitureSoundBlockLogic.STATE_UNINITIALIZED) {
+                // Only a real room object announces itself; a pitch change needs no such test.
+                if (this.isRealRoomObject()) {
                     this._lastLocZ = this.object.location.z;
 
                     this.handleRoomObjectEvent(
@@ -66,18 +66,18 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
                             this.getPitchForHeight(this.object.location.z),
                         ),
                     );
-                } else if (this._lastLocZ !== this.object.location.z) {
-                    this._lastLocZ = this.object.location.z;
-
-                    this.handleRoomObjectEvent(
-                        new RoomObjectSamplePlaybackEvent(
-                            RoomObjectSamplePlaybackEvent.CHANGE_PITCH,
-                            this.object,
-                            this._sampleId,
-                            this.getPitchForHeight(this.object.location.z),
-                        ),
-                    );
                 }
+            } else if (this._lastLocZ !== this.object.location.z) {
+                this._lastLocZ = this.object.location.z;
+
+                this.handleRoomObjectEvent(
+                    new RoomObjectSamplePlaybackEvent(
+                        RoomObjectSamplePlaybackEvent.CHANGE_PITCH,
+                        this.object,
+                        this._sampleId,
+                        this.getPitchForHeight(this.object.location.z),
+                    ),
+                );
             }
 
             if (this._state !== FurnitureSoundBlockLogic.STATE_UNINITIALIZED && message.state !== this._state)
@@ -105,7 +105,7 @@ export class FurnitureSoundBlockLogic extends FurnitureMultiStateLogic {
     private getPitchForHeight(height: number): number {
         if (this._noPitch) return 1;
 
-        let heightScaled: number = height * 2;
+        let heightScaled: number = Math.trunc(height * 2);
 
         if (heightScaled > FurnitureSoundBlockLogic.HIGHEST_SEMITONE) {
             heightScaled = Math.min(

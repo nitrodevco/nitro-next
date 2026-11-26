@@ -11,7 +11,7 @@ export class FurnitureSongDiskLogic extends FurnitureLogic {
         super.processUpdateMessage(message);
 
         if (this.isRealRoomObject()) {
-            const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
+            const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras) || 0;
 
             this.object.model.setValue<string>(
                 RoomObjectVariableEnum.InfostandExtraParam,

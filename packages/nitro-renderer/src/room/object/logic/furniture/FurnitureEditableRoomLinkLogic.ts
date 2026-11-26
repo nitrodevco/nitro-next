@@ -7,7 +7,7 @@ import { FurnitureLogic } from './FurnitureLogic';
  * `furniture_editable_room_link`.
  */
 export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
-    private _timer: ReturnType<typeof setTimeout> | undefined = undefined;
+    private _timers: ReturnType<typeof setInterval>[] = [];
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [ RoomObjectWidgetRequestEvent.ROOM_LINK ]);
@@ -16,15 +16,14 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
     public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        if (asset?.logic?.action?.link) this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureInternalLink, asset.logic.action.link ?? '');
+        // Written whenever the logic has an `action`, with or without a link.
+        if (asset?.logic?.action) this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureInternalLink, asset.logic.action.link ?? '');
     }
 
     public override dispose(): void {
-        if (this._timer) {
-            clearTimeout(this._timer);
+        for (const timer of this._timers) clearInterval(timer);
 
-            this._timer = undefined;
-        }
+        this._timers = [];
 
         super.dispose();
     }
@@ -32,17 +31,9 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
     public override useObject(): void {
         this.setAutomaticStateIndex(1);
 
-        if (this._timer) {
-            clearTimeout(this._timer);
-
-            this._timer = undefined;
-        }
-
-        this._timer = setTimeout(() => {
-            this.setAutomaticStateIndex(0);
-
-            this._timer = undefined;
-        }, 2500);
+        // Flash starts a repeating `Timer(2500)` on every use and stops none of them, so an earlier
+        // use's timer can end a later one's animation early.
+        this._timers.push(setInterval(() => this.setAutomaticStateIndex(0), 2500));
 
         this.handleRoomObjectEvent(
             new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.ROOM_LINK, this.object),
@@ -50,6 +41,8 @@ export class FurnitureEditableRoomLinkLogic extends FurnitureLogic {
     }
 
     private setAutomaticStateIndex(state: number): void {
+        if (!this.object) return;
+
         this.object.model.setValue<number>(RoomObjectVariableEnum.FurnitureAutomaticStateIndex, state);
     }
 }

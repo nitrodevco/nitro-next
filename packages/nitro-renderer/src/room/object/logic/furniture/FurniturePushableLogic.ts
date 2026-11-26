@@ -61,7 +61,8 @@ export class FurniturePushableLogic extends FurnitureMultiStateLogic {
 
         if (message instanceof ObjectDataUpdateMessage) {
             if (message.state > 0) {
-                this.setMoveUpdateInterval(MovingObjectLogic.DEFAULT_UPDATE_INTERVAL / this.getUpdateIntervalValue(message.state));
+                // Both the divisor and the interval are ints in Flash: states 1-9 divide by 0 and land on 1 ms.
+                this.setMoveUpdateInterval((MovingObjectLogic.DEFAULT_UPDATE_INTERVAL / this.getUpdateIntervalValue(message.state)) | 0);
             } else {
                 this.setMoveUpdateInterval(1);
             }
@@ -81,7 +82,7 @@ export class FurniturePushableLogic extends FurnitureMultiStateLogic {
     }
 
     protected getUpdateIntervalValue(value: number) {
-        return value / FurniturePushableLogic.MAX_ANIMATION_COUNT;
+        return Math.trunc(value / FurniturePushableLogic.MAX_ANIMATION_COUNT);
     }
 
     protected getAnimationValue(value: number) {

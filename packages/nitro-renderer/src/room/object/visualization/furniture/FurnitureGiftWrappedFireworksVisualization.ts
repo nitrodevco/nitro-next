@@ -25,7 +25,7 @@ export class FurnitureGiftWrappedFireworksVisualization extends FurnitureFirewor
         if (!this.object) return;
 
         const local3 = 1000;
-        const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
+        const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras) || 0;
         const packetType = Math.floor(extras / local3);
         const ribbonType = extras % local3;
 

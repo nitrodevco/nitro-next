@@ -1,4 +1,4 @@
-import { RoomObjectCategoryEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectCategoryEnum, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { ControlYoutubeDisplayPlaybackComposer, SetYoutubeDisplayPlaylistComposer } from '@nitrodevco/nitro-packets';
 
 import { useWebSocketContext } from '#base/context/communication';
@@ -15,7 +15,7 @@ import { FurnitureYoutubeView } from '#base/views/room-widgets/furniture/Furnitu
  * else only gets to see what is on.
  */
 export const FurnitureYoutubeWidget = () => {
-    const request = useRoomWidget<YoutubeData>(RoomObjectWidgetRequestEvent.YOUTUBE);
+    const request = useRoomWidget<YoutubeData>(RoomWidgetEnum.YOUTUBE);
     const room = useRoom();
     const ownUserId = useOwnUserId();
     const controlsAny = useClientGate(ClientGates.YoutubeControlAny);
@@ -36,7 +36,7 @@ export const FurnitureYoutubeWidget = () => {
             canControl={canControl}
             onSelectPlaylist={playlistId => send(new SetYoutubeDisplayPlaylistComposer({ objectId: request.objectId, playlistId }))}
             onControl={commandId => send(new ControlYoutubeDisplayPlaybackComposer({ objectId: request.objectId, commandId }))}
-            onClose={() => closeRoomWidget(RoomObjectWidgetRequestEvent.YOUTUBE)}
+            onClose={() => closeRoomWidget(RoomWidgetEnum.YOUTUBE)}
         />
     );
 };

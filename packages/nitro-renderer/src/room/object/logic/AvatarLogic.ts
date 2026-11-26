@@ -361,9 +361,9 @@ export class AvatarLogic extends MovingObjectLogic {
         }
     }
 
-    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
-        // Flash tests `object == null || param1 == null`; the geometry is always the room's here
-        if (!event || !this.object || !geometry) return;
+    public override mouseEvent(event: IRoomSpriteMouseEvent, _geometry: IRoomGeometry | undefined): void {
+        // Flash tests `object == null || param1 == null`; the geometry is not used.
+        if (!event || !this.object) return;
 
         let eventType: string | undefined = undefined;
 
@@ -621,13 +621,12 @@ export class AvatarLogic extends MovingObjectLogic {
     protected override getCurveStrength(message: ObjectMoveUpdateMessage): number {
         if (!message || !this.object) return super.getCurveStrength(message);
 
-        if (message instanceof ObjectAvatarUpdateMessage) {
-            return message.jumpingPower;
-        }
+        // The curve strength is an `int` in Flash: fractions are cut and a missing power is 0.
+        if (message instanceof ObjectAvatarUpdateMessage) return Math.trunc(message.jumpingPower) || 0;
 
         const jumpingPower = this.object.model.getValue<number>(RoomObjectVariableEnum.FigureJumpingPower);
 
-        if (jumpingPower !== undefined) return jumpingPower;
+        if (typeof jumpingPower === 'number') return Math.trunc(jumpingPower) || 0;
 
         return super.getCurveStrength(message);
     }

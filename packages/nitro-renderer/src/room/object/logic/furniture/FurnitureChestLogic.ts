@@ -1,5 +1,7 @@
 import { IRoomObjectUpdateMessage, MapDataType, RoomObjectVariableEnum } from '@nitrodevco/nitro-api';
 
+import { GetTickerTime } from '#renderer/utils';
+
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureLogic } from './FurnitureLogic';
 
@@ -25,5 +27,7 @@ export class FurnitureChestLogic extends FurnitureLogic {
         this._isWiredEnabled = isWiredEnabled;
 
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureChestIsWiredEnabled, isWiredEnabled ? 1 : 0);
+
+        this.update(GetTickerTime());
     }
 }

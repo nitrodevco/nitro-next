@@ -40,8 +40,8 @@ export class FurnitureRoomBackgroundColorLogic extends FurnitureMultiStateLogic 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         super.processUpdateMessage(message);
 
-        if (message instanceof ObjectDataUpdateMessage) {
-            message.data?.writeRoomObjectModel(this.object.model);
+        if (message instanceof ObjectDataUpdateMessage && message.data) {
+            message.data.writeRoomObjectModel(this.object.model);
 
             if (this.isRealRoomObject()) this.processColorUpdate();
         }
@@ -83,7 +83,7 @@ export class FurnitureRoomBackgroundColorLogic extends FurnitureMultiStateLogic 
                 new RoomObjectHSLColorEnableEvent(
                     RoomObjectHSLColorEnableEvent.ROOM_BACKGROUND_COLOR,
                     this.object,
-                    state === 1,
+                    Boolean(state),
                     hue,
                     saturation,
                     lightness,

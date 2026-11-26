@@ -1,4 +1,4 @@
-import { RoomObjectDataRequestEvent, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomObjectDataRequestEvent, RoomObjectVariableEnum, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 
 import { FurnitureLogic } from './FurnitureLogic';
 
@@ -8,22 +8,22 @@ import { FurnitureLogic } from './FurnitureLogic';
  */
 export class FurnitureYoutubeLogic extends FurnitureLogic {
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [
-            RoomObjectWidgetRequestEvent.YOUTUBE,
-            RoomObjectDataRequestEvent.RODRE_URL_PREFIX,
-        ]);
+        return this.mergeTypes(super.getEventTypes(), [ RoomObjectDataRequestEvent.RODRE_URL_PREFIX ]);
     }
 
     public override update(time: number): void {
         super.update(time);
 
-        if (!this.object.model.getValue<string>(RoomObjectVariableEnum.SessionUrlPrefix))
+        const prefix = this.object.model.getValue<string>(RoomObjectVariableEnum.SessionUrlPrefix);
+
+        // `hasString`: an empty prefix is still a prefix.
+        if (prefix === undefined || prefix === null)
             this.handleRoomObjectEvent(
                 new RoomObjectDataRequestEvent(RoomObjectDataRequestEvent.RODRE_URL_PREFIX, this.object),
             );
     }
 
-    public override useObject(): void {
-        this.handleRoomObjectEvent(new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.YOUTUBE, this.object));
+    public override get widget(): string {
+        return RoomWidgetEnum.YOUTUBE;
     }
 }

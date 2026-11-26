@@ -42,42 +42,10 @@ export class FurniturePresentLogic extends FurnitureLogic {
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         super.processUpdateMessage(message);
 
-        if (message instanceof ObjectDataUpdateMessage) {
-            message.data?.writeRoomObjectModel(this.object.model);
+        if (message instanceof ObjectDataUpdateMessage && message.data) {
+            message.data.writeRoomObjectModel(this.object.model);
 
-            const stuffData = new MapDataType();
-
-            stuffData.initializeFromRoomObjectModel(this.object.model);
-
-            const presentMessage = stuffData.getValue(FurniturePresentLogic.MESSAGE);
-            const data = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureData);
-
-            if (!presentMessage && typeof data === 'string') {
-                this.object.model.setValue(RoomObjectVariableEnum.FurnitureData, data.substr(1));
-            } else {
-                this.object.model.setValue(
-                    RoomObjectVariableEnum.FurnitureData,
-                    stuffData.getValue(FurniturePresentLogic.MESSAGE),
-                );
-            }
-
-            this.object.model.setValue(
-                RoomObjectVariableEnum.FurnitureTypeId,
-                stuffData.getValue(FurniturePresentLogic.PRODUCT_CODE),
-            );
-            this.object.model.setValue(
-                RoomObjectVariableEnum.FurniturePurchaserName,
-                stuffData.getValue(FurniturePresentLogic.PURCHASER_NAME),
-            );
-            this.object.model.setValue(
-                RoomObjectVariableEnum.FurniturePurchaserFigure,
-                stuffData.getValue(FurniturePresentLogic.PURCHASER_FIGURE),
-            );
-            // Set by the server for gifts from staff; anything else gets the untrusted-sender banner.
-            this.object.model.setValue(
-                RoomObjectVariableEnum.FurnitureTrustedSender,
-                (stuffData.getValue(FurniturePresentLogic.TRUSTED_SENDER) === 'true') ? 1 : 0,
-            );
+            this.setObjectVariables();
         }
 
         if (message instanceof ObjectModelDataUpdateMessage) {
@@ -88,6 +56,43 @@ export class FurniturePresentLogic extends FurnitureLogic {
                 );
             }
         }
+    }
+
+    /** `FurniturePresentLogic.setObjectVariables` */
+    private setObjectVariables(): void {
+        const model = this.object.model;
+        const stuffData = new MapDataType();
+
+        stuffData.initializeFromRoomObjectModel(model);
+
+        const presentMessage = stuffData.getValue(FurniturePresentLogic.MESSAGE);
+        const data = model.getValue<string>(RoomObjectVariableEnum.FurnitureData);
+
+        if ((presentMessage === undefined || presentMessage === null) && typeof data === 'string') {
+            model.setValue(RoomObjectVariableEnum.FurnitureData, data.substr(1));
+        } else {
+            model.setValue(RoomObjectVariableEnum.FurnitureData, presentMessage);
+        }
+
+        /*
+         * Flash also stores PRODUCT_CODE as the string `furniture_type_id`. Its model keeps strings
+         * apart from numbers, so the numeric type id stays, and nothing reads the string. This
+         * model has one value per key, so the string is left out and the type id kept.
+         */
+        const purchaserName = stuffData.getValue(FurniturePresentLogic.PURCHASER_NAME);
+        const purchaserFigure = stuffData.getValue(FurniturePresentLogic.PURCHASER_FIGURE);
+
+        if (purchaserName !== undefined && purchaserName !== null)
+            model.setValue(RoomObjectVariableEnum.FurniturePurchaserName, purchaserName);
+
+        if (purchaserFigure !== undefined && purchaserFigure !== null)
+            model.setValue(RoomObjectVariableEnum.FurniturePurchaserFigure, purchaserFigure);
+
+        // Set by the server for gifts from staff; anything else gets the untrusted-sender banner.
+        model.setValue(
+            RoomObjectVariableEnum.FurnitureTrustedSender,
+            (stuffData.getValue(FurniturePresentLogic.TRUSTED_SENDER) === 'true') ? 1 : 0,
+        );
     }
 
     public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {

@@ -1,4 +1,4 @@
-import { IRoomObjectUpdateMessage, RoomObjectFurnitureActionEvent, RoomObjectVariableEnum, RoomWidgetEnumItemExtradataParameter } from '@nitrodevco/nitro-api';
+import { IRoomObjectUpdateMessage, RoomObjectFurnitureActionEvent } from '@nitrodevco/nitro-api';
 
 import { ObjectDataUpdateMessage } from '../../../messages';
 import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
@@ -33,11 +33,6 @@ export class FurnitureSoundMachineLogic extends FurnitureMultiStateLogic {
         if (!this.isRealRoomObject()) return;
 
         if (!this._isInitialized) this.requestInit();
-
-        this.object.model.setValue<string>(
-            RoomObjectVariableEnum.InfostandExtraParam,
-            RoomWidgetEnumItemExtradataParameter.JUKEBOX,
-        );
 
         if (message instanceof ObjectDataUpdateMessage) {
             const state = this.object.getState(0);
@@ -76,6 +71,8 @@ export class FurnitureSoundMachineLogic extends FurnitureMultiStateLogic {
     }
 
     private requestDispose(): void {
+        if (!this._disposeEventsAllowed) return;
+
         this.handleRoomObjectEvent(
             new RoomObjectFurnitureActionEvent(RoomObjectFurnitureActionEvent.SOUND_MACHINE_DISPOSE, this.object),
         );

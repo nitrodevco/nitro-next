@@ -1,4 +1,4 @@
-import { RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { IYoutubeDisplayPlaylist, YoutubeDisplayPlaylistsMessage, YoutubeDisplayVideoMessage } from '@nitrodevco/nitro-packets';
 
 import { WebSocketConnection } from '#base/context/communication';
@@ -22,7 +22,7 @@ export const registerRoomYoutubeHandlers = ({ subscribe }: WebSocketConnection) 
     const { mergeRoomWidgetData } = roomStore.getState();
 
     const merge = (data: Partial<YoutubeData>) => {
-        mergeRoomWidgetData<YoutubeData>(RoomObjectWidgetRequestEvent.YOUTUBE, data);
+        mergeRoomWidgetData<YoutubeData>(RoomWidgetEnum.YOUTUBE, data);
     };
 
     return subscribeAll(subscribe, [

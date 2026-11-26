@@ -8,7 +8,8 @@ import { FurnitureMultiStateLogic } from './FurnitureMultiStateLogic';
  * `furniture_cuckoo_clock`.
  */
 export class FurnitureCuckooClockLogic extends FurnitureMultiStateLogic {
-    private _state: number = 1;
+    private _state: number = -1;
+    private _height: number | undefined = undefined;
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [ RoomObjectPlaySoundIdEvent.PLAY_SOUND_AT_PITCH ]);
@@ -18,9 +19,15 @@ export class FurnitureCuckooClockLogic extends FurnitureMultiStateLogic {
         super.processUpdateMessage(message);
 
         if (message instanceof ObjectDataUpdateMessage) {
-            if (this._state !== -1 && message.state !== this._state) this.dispatchSoundEvent(this.object.location.z);
+            // The pitch follows the height the clock was last sent to, not where a slide has it now.
+            if (this._state !== -1 && message.state !== this._state)
+                this.dispatchSoundEvent(this._height ?? this.object.location.z);
 
             this._state = message.state;
+        } else if (message?.location) {
+            // Flash also takes the missing location of a message that has none, and then fails on
+            // the next chime; the last known height is kept here instead.
+            this._height = message.location.z;
         }
     }
 

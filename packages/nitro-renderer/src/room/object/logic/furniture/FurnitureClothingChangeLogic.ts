@@ -33,10 +33,11 @@ export class FurnitureClothingChangeLogic extends FurnitureLogic {
     private updateClothingData(data: string): void {
         if (!data || !data.length) return;
 
-        const [ male, female ] = data.split(',');
+        const parts = data.split(',');
 
-        if (male && male.length) this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureClothingBoy, male);
-        if (female && female.length)
-            this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureClothingGirl, female);
+        // An empty half is written too, so it clears the figure it replaces.
+        this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureClothingBoy, parts[0]);
+
+        if (parts.length > 1) this.object.model.setValue<string>(RoomObjectVariableEnum.FurnitureClothingGirl, parts[1]);
     }
 }

@@ -59,7 +59,8 @@ const world = (groups, selectedId, selectedItemIndex = -1) => {
             RoomObjectCategoryEnum: { Floor: 10, Wall: 20 },
             RoomObjectPlacementSource: { INVENTORY: 'inventory' },
             RoomEngineObjectPlacedEvent: class {},
-            RoomObjectWidgetRequestEvent: { PET_PRODUCT_MENU: 'pet_product', EXTERNAL_IMAGE: 'external_image' },
+            RoomObjectWidgetRequestEvent: { PET_PRODUCT_MENU: 'pet_product' },
+            RoomWidgetEnum: { EXTERNAL_IMAGE: 'external_image' },
         },
         '@nitrodevco/nitro-packets': {
             RequestFurniInventoryComposer: class {},

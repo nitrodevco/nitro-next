@@ -14,11 +14,12 @@ export class FurnitureCreditLogic extends FurnitureLogic {
     public override initialize(asset: IAssetData | undefined): void {
         super.initialize(asset);
 
-        let creditValue = 0;
+        const credits = asset?.logic?.credits;
 
-        if (asset?.logic) creditValue = parseInt(asset.logic.credits ?? '0');
+        // Only an asset that carries `credits` gives the furni a value.
+        if (credits === undefined || credits === null) return;
 
-        this.object.model.setValue(RoomObjectVariableEnum.FurnitureCreditValue, creditValue);
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureCreditValue, Number(credits));
     }
 
     public override useObject(): void {

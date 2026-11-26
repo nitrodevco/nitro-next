@@ -9,7 +9,6 @@ import { AnimatedFurnitureVisualization } from './AnimatedFurnitureVisualization
 export class FurnitureBadgeDisplayVisualization extends AnimatedFurnitureVisualization {
     private static BADGE: string = 'BADGE';
 
-    private _badgeId: string = '';
     private _badgeAssetNameNormalScale: string = '';
     private _badgeAssetNameSmallScale: string = '';
     private _badgeVisibleInState: number = -1;
@@ -18,14 +17,10 @@ export class FurnitureBadgeDisplayVisualization extends AnimatedFurnitureVisuali
         let updateModel = super.updateModel(scale);
 
         const badgeStatus = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureBadgeImageStatus);
-        const badgeId = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBadgeAssetName);
 
-        if (badgeStatus === -1) {
-            this._badgeAssetNameNormalScale = '';
-            this._badgeAssetNameSmallScale = '';
-        } else if (badgeStatus === 1 && badgeId !== this._badgeId) {
-            this._badgeId = badgeId;
-            this._badgeAssetNameNormalScale = this._badgeId;
+        // The first badge to load is the one shown from then on, as in Flash.
+        if (typeof badgeStatus === 'number' && !isNaN(badgeStatus) && badgeStatus !== 0 && this._badgeAssetNameNormalScale === '') {
+            this._badgeAssetNameNormalScale = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBadgeAssetName) ?? '';
 
             if (this._badgeAssetNameSmallScale === '')
                 this._badgeAssetNameSmallScale = this._badgeAssetNameNormalScale + '_32';
@@ -34,7 +29,7 @@ export class FurnitureBadgeDisplayVisualization extends AnimatedFurnitureVisuali
                 RoomObjectVariableEnum.FurnitureBadgeVisibleInState,
             );
 
-            if (!isNaN(visibleInState)) this._badgeVisibleInState = visibleInState;
+            if (typeof visibleInState === 'number' && !isNaN(visibleInState)) this._badgeVisibleInState = visibleInState;
 
             updateModel = true;
         }
@@ -66,8 +61,14 @@ export class FurnitureBadgeDisplayVisualization extends AnimatedFurnitureVisuali
             );
 
             if (asset) {
-                if (scale === RoomGeometryScaleType.ZoomedIn) offset += (40 - asset.width) / 2;
-                else offset += (20 - asset.width) / 2;
+                if (scale === RoomGeometryScaleType.ZoomedIn) {
+                    offset += (40 - asset.width) / 2;
+
+                    if (direction === 2 && (this._type === 'china_c24_resolution1' || this._type === 'china_c24_resolution2'))
+                        offset -= 40;
+                } else {
+                    offset += (20 - asset.width) / 2;
+                }
             }
         }
 

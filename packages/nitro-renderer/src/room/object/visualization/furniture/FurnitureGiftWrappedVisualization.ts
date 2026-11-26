@@ -19,7 +19,7 @@ export class FurnitureGiftWrappedVisualization extends FurnitureVisualization {
     private updatePresentWrap(): void {
         if (!this.object) return;
 
-        const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras);
+        const extras = this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureExtras) || 0;
 
         const local3 = 1000;
 

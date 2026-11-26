@@ -13,10 +13,11 @@ export class FurnitureHighScoreLogic extends FurnitureLogic {
     private _state = -1;
 
     public override getEventTypes(): string[] {
-        return this.mergeTypes(super.getEventTypes(), [
+        // Flash returns these two alone, without the base logic's types.
+        return [
             RoomObjectWidgetRequestEvent.HIGH_SCORE_DISPLAY,
             RoomObjectWidgetRequestEvent.HIDE_HIGH_SCORE_DISPLAY,
-        ]);
+        ];
     }
 
     public override tearDown(): void {

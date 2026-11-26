@@ -117,14 +117,18 @@ export class RoomLogic extends ObjectLogicBase {
                     if (message.maskCategory === ObjectRoomMaskUpdateMessage.HOLE)
                         maskCategory = RoomPlaneBitmapMaskData.HOLE;
 
-                    if (message.maskId && message.maskType && message.maskLocation) this._planeBitmapMaskParser.addMask(
-                        message.maskId,
-                        message.maskType,
-                        message.maskLocation,
-                        maskCategory,
-                    );
+                    // `addMask` refuses a mask with no id, type or location, and then nothing is republished.
+                    if (message.maskId && message.maskType && message.maskLocation) {
+                        this._planeBitmapMaskParser.addMask(
+                            message.maskId,
+                            message.maskType,
+                            message.maskLocation,
+                            maskCategory,
+                        );
 
-                    update = true;
+                        update = true;
+                    }
+
                     break;
                 }
                 case ObjectRoomMaskUpdateMessage.REMOVE_MASK:

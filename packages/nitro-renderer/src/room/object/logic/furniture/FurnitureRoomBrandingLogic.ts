@@ -15,6 +15,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
 
     protected _disableFurnitureSelection: boolean = true;
     protected _hasClickUrl: boolean = false;
+    private _loadingImageUrl: string | undefined = undefined;
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [ RoomObjectRoomAdEvent.ROOM_AD_LOAD_IMAGE ]);
@@ -56,60 +57,81 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         super.mouseEvent(event, geometry);
     }
 
+    /** `FurnitureRoomBrandingLogic.setupImageFromFurnitureData` */
     private processAdDataUpdateMessage(message: ObjectDataUpdateMessage): void {
         if (!message) return;
 
+        const model = this.object.model;
         const objectData = new MapDataType();
 
-        objectData.initializeFromRoomObjectModel(this.object.model);
+        objectData.initializeFromRoomObjectModel(model);
 
-        const state = parseInt(objectData.getValue(FurnitureRoomBrandingLogic.STATE));
+        // Flash reads no state out of the data: a branding furni always shows state 0.
+        if (this.object.getState(0) !== 0) this.object.setState(0, 0);
 
-        if (!isNaN(state) && this.object.getState(0) !== state) this.object.setState(state, 0);
+        const imageUrl = FurnitureRoomBrandingLogic.forceImageUrlToUseHttps(
+            objectData.getValue(FurnitureRoomBrandingLogic.IMAGEURL_KEY),
+        );
 
-        const imageUrl = objectData.getValue(FurnitureRoomBrandingLogic.IMAGEURL_KEY);
-        const existingUrl = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingImageUrl);
+        if (imageUrl !== undefined) {
+            const existingUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingImageUrl);
 
-        if (!existingUrl || existingUrl !== imageUrl) {
-            this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingImageUrl, imageUrl);
-            this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingImageStatus, 0);
-
-            void this.downloadBackground();
+            if (
+                existingUrl === undefined
+                || existingUrl === null
+                || FurnitureRoomBrandingLogic.forceImageUrlToUseHttps(existingUrl) !== imageUrl
+            ) {
+                model.setValue(RoomObjectVariableEnum.FurnitureBrandingImageUrl, imageUrl);
+                model.setValue(RoomObjectVariableEnum.FurnitureBrandingImageStatus, 0);
+            }
         }
 
         const clickUrl = objectData.getValue(FurnitureRoomBrandingLogic.CLICKURL_KEY);
 
-        if (clickUrl) {
-            const existingUrl = this.object.model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingUrl);
-
-            if (!existingUrl || existingUrl !== clickUrl) {
-                if (this.object.model)
-                    this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingUrl, clickUrl);
-            }
+        if (clickUrl !== undefined && clickUrl !== null) {
+            if (model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingUrl) !== clickUrl)
+                model.setValue(RoomObjectVariableEnum.FurnitureBrandingUrl, clickUrl);
         }
 
-        const offsetX = parseInt(objectData.getValue(FurnitureRoomBrandingLogic.OFFSETX_KEY));
-        const offsetY = parseInt(objectData.getValue(FurnitureRoomBrandingLogic.OFFSETY_KEY));
-        const offsetZ = parseInt(objectData.getValue(FurnitureRoomBrandingLogic.OFFSETZ_KEY));
+        this.updateOffset(RoomObjectVariableEnum.FurnitureBrandingOffsetX, objectData.getValue(FurnitureRoomBrandingLogic.OFFSETX_KEY));
+        this.updateOffset(RoomObjectVariableEnum.FurnitureBrandingOffsetY, objectData.getValue(FurnitureRoomBrandingLogic.OFFSETY_KEY));
+        this.updateOffset(RoomObjectVariableEnum.FurnitureBrandingOffsetZ, objectData.getValue(FurnitureRoomBrandingLogic.OFFSETZ_KEY));
 
-        if (!isNaN(offsetX)) this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingOffsetX, offsetX);
-        if (!isNaN(offsetY)) this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingOffsetY, offsetY);
-        if (!isNaN(offsetZ)) this.object.model.setValue(RoomObjectVariableEnum.FurnitureBrandingOffsetZ, offsetZ);
+        // The infostand options come from what the model holds, not from this update alone.
+        const storedImageUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingImageUrl);
+        const storedClickUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingUrl);
+        const offsetX = Math.trunc(model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetX)) || 0;
+        const offsetY = Math.trunc(model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetY)) || 0;
+        const offsetZ = Math.trunc(model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingOffsetZ)) || 0;
 
-        let options = FurnitureRoomBrandingLogic.IMAGEURL_KEY + '=' + (imageUrl !== null ? imageUrl : '') + '\t';
+        // Flash dispatches RORAE_ROOM_AD_LOAD_IMAGE on every data update while a url is stored,
+        // which also retries an image that failed. The port loads the image itself.
+        if (storedImageUrl !== undefined && storedImageUrl !== null) void this.downloadBackground();
 
-        if (this._hasClickUrl)
-            options
-                = options + (FurnitureRoomBrandingLogic.CLICKURL_KEY + '=' + (clickUrl !== null ? clickUrl : '') + '\t');
+        let options = FurnitureRoomBrandingLogic.IMAGEURL_KEY + '=' + (storedImageUrl ?? '') + '\t';
 
-        options = options + (FurnitureRoomBrandingLogic.OFFSETX_KEY + '=' + offsetX + '\t');
-        options = options + (FurnitureRoomBrandingLogic.OFFSETY_KEY + '=' + offsetY + '\t');
-        options = options + (FurnitureRoomBrandingLogic.OFFSETZ_KEY + '=' + offsetZ + '\t');
+        if (this._hasClickUrl) options += FurnitureRoomBrandingLogic.CLICKURL_KEY + '=' + (storedClickUrl ?? '') + '\t';
 
-        this.object.model.setValue(
+        options += FurnitureRoomBrandingLogic.OFFSETX_KEY + '=' + offsetX + '\t';
+        options += FurnitureRoomBrandingLogic.OFFSETY_KEY + '=' + offsetY + '\t';
+        options += FurnitureRoomBrandingLogic.OFFSETZ_KEY + '=' + offsetZ + '\t';
+
+        model.setValue(
             RoomObjectVariableEnum.InfostandExtraParam,
             RoomWidgetEnumItemExtradataParameter.BRANDING_OPTIONS + options,
         );
+    }
+
+    private updateOffset(key: RoomObjectVariableEnum, value: string): void {
+        const offset = parseInt(value);
+
+        if (isNaN(offset)) return;
+
+        if ((Math.trunc(this.object.model.getValue<number>(key)) || 0) !== offset) this.object.model.setValue(key, offset);
+    }
+
+    private static forceImageUrlToUseHttps(url: string | undefined | null): string | undefined {
+        return (url !== undefined && url !== null) ? url.replace('http:', 'https:') : undefined;
     }
 
     private async downloadBackground(): Promise<void> {
@@ -120,7 +142,7 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         const imageUrl = model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingImageUrl);
         const imageStatus = model.getValue<number>(RoomObjectVariableEnum.FurnitureBrandingImageStatus);
 
-        if (!imageUrl || imageUrl === '' || imageStatus === 1) return;
+        if (!imageUrl || imageUrl === '' || imageStatus === 1 || this._loadingImageUrl === imageUrl) return;
 
         const asset = GetAssetManager();
 
@@ -129,7 +151,11 @@ export class FurnitureRoomBrandingLogic extends FurnitureLogic {
         const texture = asset.getTexture(imageUrl);
 
         if (!texture) {
+            this._loadingImageUrl = imageUrl;
+
             const status = await asset.downloadAsset(imageUrl);
+
+            if (this._loadingImageUrl === imageUrl) this._loadingImageUrl = undefined;
 
             // The room may have gone while the image downloaded. Flash's engine only tells live
             // objects that their image loaded or failed (FurnitureRoomBrandingLogic.as:60-71), so a

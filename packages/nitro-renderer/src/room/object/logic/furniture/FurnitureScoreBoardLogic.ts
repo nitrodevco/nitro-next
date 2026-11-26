@@ -23,7 +23,7 @@ export class FurnitureScoreBoardLogic extends FurnitureLogic {
 
         if (currentScore !== this._score && time >= this._scoreTimer + this._scoreIncreaser) {
             const _local_3 = time - this._scoreTimer;
-            let _local_4 = _local_3 / this._scoreIncreaser;
+            let _local_4 = Math.trunc(_local_3 / this._scoreIncreaser);
             let _local_5 = 1;
 
             if (this._score < currentScore) _local_5 = -1;
@@ -50,11 +50,14 @@ export class FurnitureScoreBoardLogic extends FurnitureLogic {
                 if (difference < 0) difference = -difference;
 
                 if (difference * FurnitureScoreBoardLogic.UPDATE_INTERVAL > FurnitureScoreBoardLogic.MAX_UPDATE_TIME)
-                    this._scoreIncreaser = FurnitureScoreBoardLogic.MAX_UPDATE_TIME / difference;
+                    this._scoreIncreaser = Math.max(1, Math.trunc(FurnitureScoreBoardLogic.MAX_UPDATE_TIME / difference));
                 else this._scoreIncreaser = FurnitureScoreBoardLogic.UPDATE_INTERVAL;
 
                 this._scoreTimer = GetTickerTime();
             }
+
+            // The state is not set here: `update` counts it towards the score.
+            return;
         }
 
         super.processUpdateMessage(message);

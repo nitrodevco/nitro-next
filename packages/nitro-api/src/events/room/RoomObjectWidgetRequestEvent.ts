@@ -5,9 +5,8 @@
  * `com.sulake.habbo.room.events.RoomObjectWidgetRequestEvent`, values included (`ROWRE__CREDITFURNI`
  * and `ROWRE__STICKIE` carry Flash's double underscore); checked by `scripts/drift/enums.py`.
  *
- * `STACK_HEIGHT`, `EXTERNAL_IMAGE` and `YOUTUBE` are Nitro's own: Flash opens those widgets with
- * `OPEN_WIDGET` and the logic's `widget` name, the port gives each its own request type. Every
- * member is handled by `furnitureWidgetRegistry` or `useRoomWidgetRequestHandler`, or is listed in
+ * A widget Flash opens with `OPEN_WIDGET` and the logic's `widget` name (a `RoomWidgetEnum` value)
+ * has no member here. Every member is handled by `furnitureWidgetRegistry` or `useRoomWidgetRequestHandler`, or is listed in
  * `known.WIDGET_REQUESTS_UNHANDLED` with the reason.
  */
 export class RoomObjectWidgetRequestEvent extends RoomObjectEvent {
@@ -17,8 +16,6 @@ export class RoomObjectWidgetRequestEvent extends RoomObjectEvent {
     public static CLOSE_FURNI_CONTEXT_MENU: string = 'ROWRE_CLOSE_FURNI_CONTEXT_MENU' as const;
     public static PLACEHOLDER: string = 'ROWRE_PLACEHOLDER' as const;
     public static CREDITFURNI: string = 'ROWRE__CREDITFURNI' as const;
-    public static STACK_HEIGHT: string = 'ROWRE_STACK_HEIGHT' as const;
-    public static EXTERNAL_IMAGE: string = 'ROWRE_EXTERNAL_IMAGE' as const;
     public static STICKIE: string = 'ROWRE__STICKIE' as const;
     public static PRESENT: string = 'ROWRE_PRESENT' as const;
     public static TROPHY: string = 'ROWRE_TROPHY' as const;
@@ -51,5 +48,4 @@ export class RoomObjectWidgetRequestEvent extends RoomObjectEvent {
     public static HIDE_HIGH_SCORE_DISPLAY: string = 'ROWRE_HIDE_HIGH_SCORE_DISPLAY' as const;
     public static INTERNAL_LINK: string = 'ROWRE_INTERNAL_LINK' as const;
     public static ROOM_LINK: string = 'ROWRE_ROOM_LINK' as const;
-    public static YOUTUBE: string = 'ROWRE_YOUTUBE' as const;
 }

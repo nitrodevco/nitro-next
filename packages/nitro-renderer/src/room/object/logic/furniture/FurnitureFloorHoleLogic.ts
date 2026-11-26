@@ -11,7 +11,7 @@ export class FurnitureFloorHoleLogic extends FurnitureMultiStateLogic {
     private static STATE_HOLE: number = 0;
 
     private _currentState: number = -1;
-    private _currentLocation: IVector3D = new Vector3d();
+    private _currentLocation: IVector3D | undefined = undefined;
 
     public override getEventTypes(): string[] {
         return this.mergeTypes(super.getEventTypes(), [
@@ -42,7 +42,10 @@ export class FurnitureFloorHoleLogic extends FurnitureMultiStateLogic {
 
         const location = this.object.getLocation();
 
-        if (location.x !== this._currentLocation.x || location.y !== this._currentLocation.y) {
+        // The first message only records where the hole is.
+        if (!this._currentLocation) {
+            this._currentLocation = new Vector3d();
+        } else if (location.x !== this._currentLocation.x || location.y !== this._currentLocation.y) {
             if (this._currentState === FurnitureFloorHoleLogic.STATE_HOLE)
                 this.handleRoomObjectEvent(
                     new RoomObjectFloorHoleEvent(RoomObjectFloorHoleEvent.ADD_HOLE, this.object),

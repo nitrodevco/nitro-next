@@ -21,7 +21,7 @@ export class FurnitureVoteCounterLogic extends FurnitureMultiStateLogic {
 
         if (this.currentTotal !== this._total && time >= this._lastUpdate + this._interval) {
             const diff = time - this._lastUpdate;
-            let _local_3 = diff / this._interval;
+            let _local_3 = Math.trunc(diff / this._interval);
             let _local_4 = 1;
 
             if (this._total < this.currentTotal) _local_4 = -1;
@@ -63,7 +63,7 @@ export class FurnitureVoteCounterLogic extends FurnitureMultiStateLogic {
             const difference = Math.abs(this._total - this.currentTotal);
 
             if (difference * FurnitureVoteCounterLogic.UPDATE_INTERVAL > FurnitureVoteCounterLogic.MAX_UPDATE_TIME) {
-                this._interval = FurnitureVoteCounterLogic.MAX_UPDATE_TIME / difference;
+                this._interval = Math.max(1, Math.trunc(FurnitureVoteCounterLogic.MAX_UPDATE_TIME / difference));
             } else {
                 this._interval = FurnitureVoteCounterLogic.UPDATE_INTERVAL;
             }
@@ -73,6 +73,6 @@ export class FurnitureVoteCounterLogic extends FurnitureMultiStateLogic {
     }
 
     private get currentTotal(): number {
-        return this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureVoteCounterCount);
+        return Math.trunc(this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureVoteCounterCount)) || 0;
     }
 }

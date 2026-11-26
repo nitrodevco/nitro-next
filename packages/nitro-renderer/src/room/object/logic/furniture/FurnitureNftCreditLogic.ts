@@ -24,9 +24,9 @@ export class FurnitureNftCreditLogic extends FurnitureLogic {
         const type = this.object.type;
         const trailingDigits = type.match(/\d+$/);
 
-        // Flash stores the parsed number in an `int`, so its `isNaN` test for "no trailing number"
-        // can never be true and the emerald furni show 0. The two prices are plainly meant to
-        // apply, so they do here; the server decides what a redeem actually pays either way.
+        // The decompiled AS3 holds the parsed number in an `int`, whose `isNaN` test for "no trailing
+        // number" could never be true; Habbo's JavaScript client keeps it a Number, so the emerald
+        // prices apply, as they do here. The server decides what a redeem pays either way.
         let creditValue = trailingDigits ? parseInt(trailingDigits[0]) : 0;
 
         if (!trailingDigits) {

@@ -54,6 +54,9 @@ export const useRoomWidgetRequestHandler = () => {
 
                 if (widget === RoomWidgetEnum.CRAFTING) openCraftingTable(send);
 
+                // A video display is asked what it can play and what it is playing.
+                if (widget === RoomWidgetEnum.YOUTUBE) send(new GetYoutubeDisplayStatusComposer({ objectId: event.objectId }));
+
                 return;
             }
             case RoomObjectWidgetRequestEvent.OPEN_FURNI_CONTEXT_MENU: {
@@ -118,11 +121,6 @@ export const useRoomWidgetRequestHandler = () => {
                 send(new GetJukeboxPlayListComposer({}));
                 send(new GetUserSongDisksComposer({}));
                 send(new GetNowPlayingComposer({}));
-                openRoomWidget(request);
-                return;
-            // A video display is asked what it can play and what it is playing.
-            case RoomObjectWidgetRequestEvent.YOUTUBE:
-                send(new GetYoutubeDisplayStatusComposer({ objectId: event.objectId }));
                 openRoomWidget(request);
                 return;
             // A mystery box only starts a wait; the dialog appears when the server says it has.

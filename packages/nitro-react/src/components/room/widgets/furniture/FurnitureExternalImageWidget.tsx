@@ -1,4 +1,4 @@
-import { NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { NitroLogger, RoomControllerLevelEnum, RoomObjectCategoryEnum, RoomObjectVariableEnum, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { RemoveItemComposer } from '@nitrodevco/nitro-packets';
 import { GetRoomContentLoader } from '@nitrodevco/nitro-renderer';
 import { useEffect, useState } from 'react';
@@ -88,7 +88,7 @@ const usePhotoData = (furnitureData: string | undefined): { photo: PhotoData | u
  * as the item leaves the room.
  */
 export const FurnitureExternalImageWidget = () => {
-    const request = useRoomWidget<Partial<InventoryExternalImageRequest>>(RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE);
+    const request = useRoomWidget<Partial<InventoryExternalImageRequest>>(RoomWidgetEnum.EXTERNAL_IMAGE);
     const room = useRoom();
     const { send } = useWebSocketContext();
     const { closeRoomWidget } = useRoomWidgetActions();
@@ -111,7 +111,7 @@ export const FurnitureExternalImageWidget = () => {
 
     if (!request || !room) return null;
 
-    const onClose = () => closeRoomWidget(RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE);
+    const onClose = () => closeRoomWidget(RoomWidgetEnum.EXTERNAL_IMAGE);
 
     if (inventoryItemId !== undefined) {
         if (!inventoryItem) return null;

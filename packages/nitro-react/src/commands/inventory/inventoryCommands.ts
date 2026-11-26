@@ -8,7 +8,7 @@
  * the wired trade (`WiredTradingModel`) while that one does, and nothing otherwise - in that
  * order, as Flash checks them.
  */
-import { RoomEngineObjectPlacedEvent, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectWidgetRequestEvent } from '@nitrodevco/nitro-api';
+import { RoomEngineObjectPlacedEvent, RoomObjectCategoryEnum, RoomObjectPlacementSource, RoomObjectWidgetRequestEvent, RoomWidgetEnum } from '@nitrodevco/nitro-api';
 import { RequestFurniInventoryComposer, RequestFurniInventoryWhenNotInRoomComposer, RequestRoomPropertySetComposer } from '@nitrodevco/nitro-packets';
 
 import { Send } from '#base/context/communication';
@@ -285,7 +285,7 @@ export const showInventoryUseProductSelection = (ref: number, typeId: number, it
     if (getInventoryWallItemById(inventoryStore.getState().furniGroups, itemId)) {
         const request: InventoryExternalImageRequest = { inventoryItemId: itemId };
 
-        openRoomWidget({ type: RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE, objectId: -1, category: RoomObjectCategoryEnum.Wall, objectType: '' });
-        updateRoomWidgetData(RoomObjectWidgetRequestEvent.EXTERNAL_IMAGE, request);
+        openRoomWidget({ type: RoomWidgetEnum.EXTERNAL_IMAGE, objectId: -1, category: RoomObjectCategoryEnum.Wall, objectType: '' });
+        updateRoomWidgetData(RoomWidgetEnum.EXTERNAL_IMAGE, request);
     }
 };

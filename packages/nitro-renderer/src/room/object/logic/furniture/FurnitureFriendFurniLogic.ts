@@ -26,9 +26,9 @@ export class FurnitureFriendFurniLogic extends FurnitureMultiStateLogic {
 
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         if (message instanceof ObjectDataUpdateMessage) {
-            const data = message.data as StringDataType;
+            const data = message.data;
 
-            if (data) {
+            if (data instanceof StringDataType) {
                 this._state = data.state;
             } else {
                 this._state = message.state;

@@ -36,8 +36,6 @@ export class FurnitureInternalLinkLogic extends FurnitureLogic {
 
         if (this._showStateOnceRendered && this._updateCount === 20) {
             this.setAutomaticStateIndex(1);
-
-            this._showStateOnceRendered = false;
         }
     }
 

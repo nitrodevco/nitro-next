@@ -13,7 +13,7 @@ export class FurnitureRoomBillboardLogic extends FurnitureRoomBrandingLogic {
         this._hasClickUrl = true;
     }
 
-    protected override getAdClickUrl(model: IRoomObjectModel): string {
+    protected override getAdClickUrl(model: IRoomObjectModel): string | undefined {
         return model.getValue<string>(RoomObjectVariableEnum.FurnitureBrandingUrl);
     }
 

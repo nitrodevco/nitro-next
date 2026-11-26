@@ -72,42 +72,34 @@ export class FurnitureLogic extends MovingObjectLogic {
     public override initialize(asset: IAssetData | undefined): void {
         if (!asset) return;
 
-        if (asset.logic) {
-            if (asset.logic.model) {
-                const dimensions = asset.logic.model.dimensions;
+        const dimensions = asset.logic?.model?.dimensions;
 
-                if (dimensions) {
-                    this._sizeX = dimensions.x;
-                    this._sizeY = dimensions.y;
-                    this._sizeZ = dimensions.z ?? 0;
+        // Without dimensions Flash leaves the model as it was.
+        if (!dimensions) return;
 
-                    this._centerX = this._sizeX / 2;
-                    this._centerY = this._sizeY / 2;
-                    // `FurnitureLogic.initialize`: an explicit `centerZ` wins over half the height.
-                    this._centerZ = dimensions.centerZ ?? (this._sizeZ / 2);
-                }
+        this._sizeX = dimensions.x;
+        this._sizeY = dimensions.y;
+        this._sizeZ = dimensions.z ?? 0;
 
-                const directions = asset.logic.model.directions;
+        this._centerX = this._sizeX / 2;
+        this._centerY = this._sizeY / 2;
+        // `FurnitureLogic.initialize`: an explicit `centerZ` wins over half the height.
+        this._centerZ = dimensions.centerZ ?? (this._sizeZ / 2);
 
-                if (directions && directions.length) {
-                    for (const direction of directions) this._directions.push(direction);
+        const directions = asset.logic?.model?.directions;
 
-                    this._directions.sort((a, b) => a - b);
-                }
-            }
+        if (directions && directions.length) {
+            for (const direction of directions) this._directions.push(direction);
 
-            if (asset.logic.customVars) {
-                const variables = asset.logic.customVars.variables;
-
-                if (variables && variables.length) {
-                    this.object.model.setValue(RoomObjectVariableEnum.FurnitureCustomVariables, variables);
-                }
-            }
+            this._directions.sort((a, b) => a - b);
         }
 
+        this.object.model.setValue(RoomObjectVariableEnum.FurnitureCustomVariables, asset.logic?.customVars?.variables ?? []);
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureSizeX, this._sizeX);
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureSizeY, this._sizeY);
-        this.object.model.setValue(RoomObjectVariableEnum.FurnitureSizeZ, this._sizeZ);
+        // A height the server already gave the object outlives the asset's own.
+        if (typeof this.object.model.getValue<number>(RoomObjectVariableEnum.FurnitureSizeZ) !== 'number')
+            this.object.model.setValue(RoomObjectVariableEnum.FurnitureSizeZ, this._sizeZ);
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterX, this._centerX);
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterY, this._centerY);
         this.object.model.setValue(RoomObjectVariableEnum.FurnitureCenterZ, this._centerZ);
@@ -153,8 +145,11 @@ export class FurnitureLogic extends MovingObjectLogic {
 
             message.data?.writeRoomObjectModel(this.object.model);
 
-            this.object.model.setValue(RoomObjectVariableEnum.FurnitureExtras, message.extra);
-            this.object.model.setValue(RoomObjectVariableEnum.FurnitureExtra, message.extra);
+            if (!isNaN(message.extra)) {
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureExtras, message.extra);
+                this.object.model.setValue(RoomObjectVariableEnum.FurnitureExtra, message.extra);
+            }
+
             this.object.model.setValue(RoomObjectVariableEnum.FurnitureStateUpdateTime, this.lastUpdateTime);
 
             return;
@@ -327,7 +322,13 @@ export class FurnitureLogic extends MovingObjectLogic {
                         new RoomObjectRoomAdEvent(RoomObjectRoomAdEvent.ROOM_AD_TOOLTIP_HIDE, this.object),
                     );
 
-                if (adUrl && adUrl.length) this.handleAdClick(this.object.id, this.object.type, adUrl);
+                // Any url the model holds counts, an empty one included.
+                if (adUrl !== undefined && adUrl !== null) this.handleAdClick(this.object.id, this.object.type, adUrl);
+
+                if (this.contextMenu)
+                    this.handleRoomObjectEvent(
+                        new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.OPEN_FURNI_CONTEXT_MENU, this.object),
+                    );
 
                 return;
             }
@@ -373,7 +374,7 @@ export class FurnitureLogic extends MovingObjectLogic {
         if (object && object.getLocation().length) this._directionInitialized = true;
     }
 
-    protected getAdClickUrl(model: IRoomObjectModel): string {
+    protected getAdClickUrl(model: IRoomObjectModel): string | undefined {
         return model.getValue<string>(RoomObjectVariableEnum.FurnitureAdUrl);
     }
 

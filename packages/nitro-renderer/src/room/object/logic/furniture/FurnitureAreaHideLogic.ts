@@ -15,8 +15,8 @@ export class FurnitureAreaHideLogic extends FurnitureMultiStateLogic {
     public override processUpdateMessage(message: IRoomObjectUpdateMessage): void {
         super.processUpdateMessage(message);
 
-        if (message instanceof ObjectDataUpdateMessage) {
-            message.data?.writeRoomObjectModel(this.object.model);
+        if (message instanceof ObjectDataUpdateMessage && message.data) {
+            message.data.writeRoomObjectModel(this.object.model);
 
             if (this.isRealRoomObject()) this.setupObject();
         }

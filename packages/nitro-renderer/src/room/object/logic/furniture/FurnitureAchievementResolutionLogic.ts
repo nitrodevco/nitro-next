@@ -12,7 +12,7 @@ export class FurnitureAchievementResolutionLogic extends FurnitureBadgeDisplayLo
     public static STATE_RESOLUTION_IN_PROGRESS: number = 1;
     public static STATE_RESOLUTION_ACHIEVED: number = 2;
     public static STATE_RESOLUTION_FAILED: number = 3;
-    private static ACH_NOT_SET: string = 'ach_0';
+    private static ACH_NOT_SET: string = 'ACH_0';
     private static BADGE_VISIBLE_IN_STATE: number = 2;
 
     public override getEventTypes(): string[] {
@@ -36,7 +36,7 @@ export class FurnitureAchievementResolutionLogic extends FurnitureBadgeDisplayLo
             }
         }
 
-        if (message instanceof ObjectSelectedMessage) {
+        if (message instanceof ObjectSelectedMessage && !message.selected) {
             this.handleRoomObjectEvent(
                 new RoomObjectWidgetRequestEvent(RoomObjectWidgetRequestEvent.CLOSE_FURNI_CONTEXT_MENU, this.object),
             );

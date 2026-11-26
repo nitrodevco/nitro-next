@@ -31,7 +31,7 @@ import { MovingObjectLogic } from './MovingObjectLogic';
 /** Port of Flash `PetLogic`, the logic `RoomObjectFactory` builds for `pet`. */
 export class PetLogic extends MovingObjectLogic {
     private _selected: boolean = false;
-    private _reportedLocation: IVector3D = new Vector3d();
+    private _reportedLocation: IVector3D | undefined = undefined;
     private _postureIndex: number = 0;
     private _gestureIndex: number = 0;
     private _headDirectionDelta: number = 0;
@@ -59,7 +59,7 @@ export class PetLogic extends MovingObjectLogic {
                 if (directions && directions.length) {
                     for (const direction of directions) this._directions.push(direction);
 
-                    this._directions.sort();
+                    this._directions.sort((a, b) => a - b);
                 }
             }
         }
@@ -72,7 +72,9 @@ export class PetLogic extends MovingObjectLogic {
             this.handleRoomObjectEvent(new RoomObjectMoveEvent(RoomObjectMoveEvent.OBJECT_REMOVED, this.object));
 
         this._directions = null!;
-        this._reportedLocation = null!;
+        this._reportedLocation = undefined;
+
+        super.dispose();
     }
 
     public override update(time: number): void {
@@ -167,7 +169,7 @@ export class PetLogic extends MovingObjectLogic {
 
         if (message instanceof ObjectAvatarSelectedMessage) {
             this._selected = message.selected;
-            this._reportedLocation = new Vector3d();
+            this._reportedLocation = undefined;
 
             return;
         }
@@ -180,8 +182,9 @@ export class PetLogic extends MovingObjectLogic {
         }
     }
 
-    public override mouseEvent(event: IRoomSpriteMouseEvent, geometry: IRoomGeometry | undefined): void {
-        if (!event || !geometry) return;
+    public override mouseEvent(event: IRoomSpriteMouseEvent, _geometry: IRoomGeometry | undefined): void {
+        // Flash tests the object and the event only; the geometry is not used.
+        if (!event || !this.object) return;
 
         // Only these are passed on; any other sprite event goes no further than the logic.
         let eventType: string | undefined = undefined;
